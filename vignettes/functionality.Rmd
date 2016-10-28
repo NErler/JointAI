@@ -1,0 +1,57 @@
+---
+title: "What the package can and can't do"
+author: "Nicole Erler"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{What the package can and can't do}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Aimed functionality:
+## Formula components
+### Fixed effects
+
+**linear effects**
+
+* of baseline covariates
+* of time-varying covariates
+    - no missing values allowed
+      <span style = "color:red">(=> should create an error message!)</span>
+    - have to be observed together (at the same time points) with the outcome
+      <span style = "color:red">(=> check and error message)</span>
+
+    
+    
+**Interactions**
+
+* 2-way interactions between baseline covariates (may contain missing values)
+* 2-way interactions involving time-varying covariates
+    - time-varying covariates have to be complete
+* interactions with the time variable
+  <span style = "color:red"> haven't thought about if this requires other
+  restrictions than interaction with time-varying covariates</span>
+* <span style = "color:blue"> interactions involving more than 2 variables???</span>
+
+
+**non-linear effects**
+
+* splines (using the `splines` package)
+    - only completely observed variables
+    - should be possible for baseline, time-varying covariates and the time variable
+    - <span style = "color:red"> need to check the functionalities of the
+      splines package, if there are other functions than `bs()` and `ns()` that
+      should be considered</span>
+* `log()`, `sqrt()`, `x^2`, `I()`
+
+
+### Random effects
+
+
+# Implemented and tested
+
+
+## More Examples
+
+You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
