@@ -166,7 +166,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
 
   DF.mis <- DF
   for (i in 1:length(misvar)) {
-    if (check_td(DF[, misvar[i]], "id")) {
+    if (check_tvar(DF[, misvar[i]], "id")) {
       DF.mis[sample.int(nrow(DF), nrow(DF) * misperc[i]), misvar[i]] <- NA
     } else {
       DF.mis[DF.mis$id %in% misid[[i]], misvar[i]] <- NA

@@ -1,13 +1,15 @@
 Package: JointAI
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Joint Analysis and Imputation of missing values
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
+Author: Nicole S. Erler
+Maintainer: Nicole S. Erler <n.erler@erasmusmc.nl>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
 LazyData: TRUE
 RoxygenNote: 5.0.1
+Imports: MASS
 Suggests: knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr

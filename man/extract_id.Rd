@@ -4,10 +4,10 @@
 \alias{extract_id}
 \title{Extract id variable from fixed effects formula}
 \usage{
-extract_id(fixed)
+extract_id(random)
 }
 \arguments{
-\item{fixed}{a formula describing fixed effects structure}
+\item{random}{a formula describing random effects structure}
 }
 \value{
 a character string, giving the name of the id variable or NULL
