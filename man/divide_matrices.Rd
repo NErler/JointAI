@@ -4,7 +4,7 @@
 \alias{divide_matrices}
 \title{Create data matrices for time constant and time-varying variables}
 \usage{
-divide_matrices(DF, fixed, random = NULL, auxvars = NULL, id = NULL)
+divide_matrices(DF, fixed, random = NULL, auxvars = NULL)
 }
 \arguments{
 \item{DF}{a dataframe}
@@ -14,9 +14,6 @@ divide_matrices(DF, fixed, random = NULL, auxvars = NULL, id = NULL)
 \item{random}{an optional formula describing the random effects (check this!)}
 
 \item{auxvars}{vector containing the names of auxiliary variables}
-
-\item{id}{a character string identifying the id variable if there is a
-grouping, otherwise NULL}
 }
 \value{
 a list containing the matrices

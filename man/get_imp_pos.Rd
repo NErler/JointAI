@@ -14,6 +14,9 @@ the imputation models}
 
 \item{Mlist}{a named list with the entries "Xc", "Xic", "Xl", "Xil", "Z"}
 }
+\value{
+a list?
+}
 \description{
 Determine positions of incomplete variables in the data matrices
 }

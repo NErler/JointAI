@@ -2,7 +2,7 @@
 #' @param ncols, named list specifying the column numbers of the matrices Xc,
 #'        Xic, Xl and Xil
 #' @param hc_list named vector or list specifying hierarchical centering
-#'        structure
+#'        structure (see \code{\link{get_hc_list}})
 #' @return a matrix specifying the range of regression coefficients per
 #'         component of the analysis model
 #' @note Auxiliary variables are treated the same way as variables that are
@@ -17,13 +17,15 @@ get_model_dim <- function(ncols, hc_list){
   K["Xc", ] <- cumsum(c(1, ncols$Xc - 1))
   if (!is.null(ncols$Xic)) K["Xic", ] <- c(1, ncols$Xic) + max(K, na.rm = T)
   if (!is.null(hc_list)) {
-    K[names(hc_list), ] <- t(sapply(hc_list, function(i) {
-      if (length(i) > 0) {
-        c(1, length(i)) + max(K, na.rm = T)
+    for (i in 1:length(hc_list)) {
+    K[names(hc_list)[i], ] <-
+      if (length(hc_list[[i]]) > 0) {
+        c(1, max(1, sum(attr(hc_list[[i]], "matrix") %in% c("Xc", "Z"), na.rm = T))) +
+          max(K, na.rm = T)
       } else {
         c(NA, NA)
       }
-    }))
+    }
   }
   if (!is.null(ncols$Xl)) K["Xl", ] <- c(1, ncols$Xl) + max(K, na.rm = T)
   if (!is.null(ncols$Xil)) K["Xil", ] <- c(1, ncols$Xil) + max(K, na.rm = T)
@@ -38,6 +40,7 @@ get_model_dim <- function(ncols, hc_list){
 #'        the imputation models
 #' @param DF data frame
 #' @param Mlist a named list with the entries "Xc", "Xic", "Xl", "Xil", "Z"
+#' @return a list?
 #' @export
 get_imp_pos <- function(meth, DF, Mlist){
   if (is.null(meth)) return(NULL)
@@ -47,7 +50,7 @@ get_imp_pos <- function(meth, DF, Mlist){
   }
 
   # positions of the variables in the cross-sectional data matrix Xc
-  pos_Xc <- sapply(names(meth), match_positions, DF, Xc)
+  pos_Xc <- sapply(names(meth), match_positions, DF, colnames(Xc), simplify = F)
 
   # positions of the interaction variables in the cross-sectional matrix Xic
   if (!is.null(Xic)) {
@@ -68,11 +71,14 @@ get_imp_pos <- function(meth, DF, Mlist){
                           colnames(Z)), match, x = i))
     })
     names(pos_Xil) <- colnames(Xil)
+  } else {
+    pos_Xil <- NULL
+  }
 
     return(list(pos_Xc = pos_Xc,
                 pos_Xic = pos_Xic,
-                pos_Xil = pos_Xil))
-  }
+                pos_Xil = pos_Xil,
+                cat_pos = NULL))
 }
 
 
@@ -83,7 +89,6 @@ get_imp_pos <- function(meth, DF, Mlist){
 #' @return a matrix specifying the range of regression coefficients per
 #'         imputation model
 #' @export
-
 get_imp_dim <- function(meth, pos_Xc){
   if (is.null(meth)) return(NULL)
 

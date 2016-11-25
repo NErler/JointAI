@@ -1,0 +1,56 @@
+#' Function to build JAGS model
+#' @param type analysis model type (character string)
+#' @param meth named vector specifying imputation methods and ordering
+#' @param Ntot number of observations
+#' @param N number of individuals
+#' @param y_name name of outcome variable
+#' @param Mlist list of design matrices
+#' @param Z random effects design matrix
+#' @param Xic design matrix of time-constant interactions
+#' @param Xl design matrix of time-varying covariates
+#' @param Xil design matrix of interactions involving time-varying covariates
+#' @param hc_list list specifying hierarchical centring structure
+#' @param K matrix specifying range of regression coefficients used for each
+#' component of the analysis model
+#' @export
+build_JAGS <- function(type, meth = NULL, Ntot, N, y_name,  Mlist = NULL,
+                        Z = NULL, Xic = NULL, Xl = NULL, Xil = NULL,
+                        hc_list = NULL, K, imp_par_list) {
+  arglist <- as.list(match.call())[-1]
+
+  analysis_model <- switch(type,
+                           "lme" = lme_model,
+                           "lm" = lm_model)
+  analysis_priors <- switch(type,
+                            "lme" = lme_priors)
+
+
+  imputation_part <- if (!is.null(meth)) {
+    paste0(
+      "# Imputation models", "\n",
+      "for(i in 1:", N, "){", "\n",
+      paste0(sapply(imp_par_list, paste_imp_model), collapse = "\n"),
+      "}", "\n",
+      "# Priors for the imputation models", "\n",
+      paste0(sapply(imp_par_list, paste_imp_priors), collapse = "\n")
+    )
+  }
+
+  paste0(
+    "model {", "\n",
+    "for(j in 1:", Ntot,"){", "\n",
+    paste0(do.call(analysis_model, arglist), collapse = "\n"), "\n",
+    "}", "\n\n",
+    paste0(do.call(analysis_priors, arglist), collapse = "\n"),
+    "\n\n",
+    imputation_part,
+    "}"
+  )
+}
+
+
+
+
+
+
+

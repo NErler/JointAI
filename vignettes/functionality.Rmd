@@ -71,6 +71,8 @@ vignette: >
   moment because id is expected to have length 1 and the extraction of the id
   variable only finds the last one. </span>
 * <span style = "color:blue"> random effects for multiple variables???</span>
+* <span style = "color:blue"> missing values in random effects variables???</span>
+  variables in the random effects need to be complete at the moment
 
 
 ## Analysis and imputation models

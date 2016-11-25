@@ -4,7 +4,7 @@
 \alias{match_positions}
 \title{Find the position(s) of a variable in a model matrix}
 \usage{
-match_positions(varname, DF, X)
+match_positions(varname, DF, colnams)
 }
 \arguments{
 \item{varname}{character string to look for}

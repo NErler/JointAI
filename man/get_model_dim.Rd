@@ -4,14 +4,14 @@
 \alias{get_model_dim}
 \title{Determine number of fixed effects / regression coefficients in the analysis model}
 \usage{
-get_model_dim(ncols, time_hc)
+get_model_dim(ncols, hc_list)
 }
 \arguments{
 \item{ncols, }{named list specifying the column numbers of the matrices Xc,
 Xic, Xl and Xil}
 
-\item{time_hc}{named vector or list specifying hierarchical centering
-structure}
+\item{hc_list}{named vector or list specifying hierarchical centering
+structure (see \code{\link{get_hc_list}})}
 }
 \value{
 a matrix specifying the range of regression coefficients per
