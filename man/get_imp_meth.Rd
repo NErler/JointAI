@@ -4,7 +4,7 @@
 \alias{get_imp_meth}
 \title{Set default imputation methods}
 \usage{
-get_imp_meth(DF, fixed = NULL, random = NULL, id = NULL, auxvars = NULL)
+get_imp_meth(DF, fixed = NULL, random = NULL, auxvars = NULL)
 }
 \arguments{
 \item{DF}{a dataframe}
@@ -12,9 +12,6 @@ get_imp_meth(DF, fixed = NULL, random = NULL, id = NULL, auxvars = NULL)
 \item{fixed}{a formula}
 
 \item{random}{a formula specifying a random effects structure}
-
-\item{id}{a character string identifying the id variable if there is a
-grouping, otherwise NULL}
 
 \item{auxvars}{vector of variable names as auxiliary variables}
 }

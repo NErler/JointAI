@@ -3,17 +3,20 @@
 #' @param fixed a formula describing the mean structure
 #' @param random an optional formula describing the random effects (check this!)
 #' @param auxvars vector containing the names of auxiliary variables
+#' @inheritParams base::scale
 #' @return a list containing the matrices
 #' @export
 
-divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL){
+divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, center = T, scale = T){
   id <- extract_id(random)
 
-  idvar <- if (!is.null(id)) {
+  groups <- if (!is.null(id)) {
     DF[, id]
   } else {
     1:nrow(DF)
   }
+
+  y <- DF[, extract_y(fixed), drop = F]
 
   # remove grouping specification from random effects formula
   random2 <- remove_grouping(random)
@@ -34,6 +37,27 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL){
   contr <- as.list(rep("contr.treatment", length(ord)))
   names(contr) <- ord
 
+  DF_orig <- DF
+  if (any(center, scale)) {
+    scale_vars <- all.vars(fixed2)[which(!all.vars(fixed2) %in%
+                                           c(colnames(y), colnames(Z),
+                                             names(DF)[sapply(DF, is.factor)]))]
+    scale_pars <- matrix(ncol = 2, nrow = length(scale_vars),
+                         dimnames = list(scale_vars, c("center", "scale")))
+
+    for (i in scale_vars) {
+      if (!check_tvar(x = DF_orig[, i], groups)) {
+        shortrows <- match(unique(groups), groups)
+        longrows <- match(groups, unique(groups))
+      } else {
+        shortrows <- longrows <- 1:nrow(DF)
+      }
+      scv <- scale(DF[shortrows, i], center = center, scale = scale)
+      DF[, i] <- scv[longrows]
+      scale_pars[i, ] <- c(attr(scv, "scaled:center"), attr(scv, "scaled:scale"))
+    }
+  }
+
 
   X <- model.matrix(fixed,
                     model.frame(fixed, DF, na.action = na.pass),
@@ -47,10 +71,10 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL){
     colnames(X2)[!colnames(X2) %in% colnames(X)]
   }
 
-  tvar <- apply(X2, 2, check_tvar, idvar)
+  tvar <- apply(X2, 2, check_tvar, groups)
 
   # time-constant part of X
-  Xcross <- X2[match(unique(idvar), idvar), !tvar, drop = F]
+  Xcross <- X2[match(unique(groups), groups), !tvar, drop = F]
   interact <- grep(":", colnames(Xcross), fixed = T, value = T)
 
   Xc <- Xcross[, !colnames(Xcross) %in% interact, drop = F]
@@ -60,13 +84,16 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL){
     Xcross[, interact, drop = F]
   }
 
-  cat_vars <- names(which(lapply(lapply(DF[, all.vars(fixed2)], levels),
-                                 length) > 2))
+  cat_vars <- names(which(lapply(
+    lapply(DF[, colSums(is.na(DF)) > 0 & names(DF) %in% all.vars(fixed2)], levels),
+    # lapply(DF[, all.vars(fixed2)], levels),
+    length) > 2))
   cat_vars <- sapply(cat_vars, match_positions, DF, colnames(Xc), simplify = F)
 
   Xcat <- if (length(cat_vars) > 0) {
-    DF[match(unique(idvar), idvar), names(cat_vars)]
+    DF[match(unique(groups), groups), names(cat_vars), drop = F]
   }
+  Xc[, sapply(cat_vars, names)] <- NA
 
   hc_list <- get_hc_list(colnames(X2), colnames(Xc), colnames(Z))
 
@@ -100,7 +127,8 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL){
     Xl <- Xil <- NULL
   }
 
-  return(list(Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat,
+
+  return(list(y = y, Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat,
               Z = Z, hc_list = hc_list, cat_vars = cat_vars,
-              auxvars = auxvars))
+              auxvars = auxvars, groups = groups, scale_pars = scale_pars))
 }

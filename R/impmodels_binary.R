@@ -11,12 +11,12 @@ impmodel_logit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, ...)
     stop("The size of the design matrix and length of parameter vector don't match!")
   }
 
-  indent <- nchar(varname) + 16
+  indent <- nchar(varname) + 18
   predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
 
-  paste0("# logistic imputation of ", varname,"\n",
-        "Xc[i, ", dest_col, "] ~ dbern(p.", varname, "[i])", "\n",
-        "logit(p.", varname, "[i]) <- ", predictor, "\n\n")
+  paste0(tab(), "# logistic model for ", varname,"\n",
+         tab(), "Xc[i, ", dest_col, "] ~ dbern(p_", varname, "[i])", "\n",
+         tab(), "logit(p_", varname, "[i]) <- ", predictor, "\n\n")
 }
 
 
@@ -26,9 +26,9 @@ impmodel_logit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, ...)
 #' @param par_name name of the parameter
 #' @export
 impprior_logit <- function(varname, par_elmts, par_name, ...){
-  paste0("# Priors for ", varname,"\n",
-         "for(k in ", min(par_elmts), ":", max(par_elmts), "){", "\n",
-         "  ", par_name, "[k] ~ dnorm(0, 4/9)", "\n",
-         "}", "\n\n\n"
+  paste0(tab(), "# Priors for ", varname,"\n",
+         tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
+         tab(4), par_name, "[k] ~ dnorm(mu_reg_logit, tau_reg_logit)", "\n",
+         tab(), "}", "\n\n"
   )
 }

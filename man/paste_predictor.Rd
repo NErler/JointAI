@@ -4,12 +4,12 @@
 \alias{paste_predictor}
 \title{Build linear predictor for imputation models}
 \usage{
-paste_predictor(varname, par_els, Xc_cols, par_name, indent)
+paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
 }
 \arguments{
 \item{varname}{character string, name of the variable to be imputed}
 
-\item{par_els}{numeric vector specifying the elements of the vector of
+\item{par_elmts}{numeric vector specifying the elements of the vector of
 regression parameters}
 
 \item{Xc_cols}{numeric vector specifying the columns in the design matrix Xc}

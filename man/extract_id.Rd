@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpfunctions.R
 \name{extract_id}
 \alias{extract_id}
-\title{Extract id variable from fixed effects formula}
+\title{Extract id variable from random effects formula}
 \usage{
 extract_id(random)
 }
@@ -13,6 +13,6 @@ extract_id(random)
 a character string, giving the name of the id variable or NULL
 }
 \description{
-Extract id variable from fixed effects formula
+Extract id variable from random effects formula
 }
 

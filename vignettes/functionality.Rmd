@@ -96,6 +96,10 @@ vignette: >
 * <span style = "color:blue"> Beta regression (for restricted variables?) </span>
 
 
+## Methods for existing functions
+* update (update formula in lme or glm)
+
+
 ## Other
 * change imputation methods that are chosen by default
 * set reference category for categorical covariates (default is largest category)
@@ -115,4 +119,7 @@ missing values in the time variable? </span>
 # Implemented and tested
 
 # Notes
-* check if `id` should be removed as input variable from `get_mis_method`
+* check if it works when there is no data given, but the formula is specified
+  using data vectors (e.g. DF$y ~ DF$x | DF$id)
+* allow use of data in form of matrix
+* check / discuss with DR if the choice of reference also matters for binary variables

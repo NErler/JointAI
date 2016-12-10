@@ -8,7 +8,8 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 LazyData: TRUE
 RoxygenNote: 5.0.1
-Imports: MASS
+Depends: R (>= 3.3.1), rjags
+Imports: MASS, rjags
 Suggests: knitr,
     rmarkdown,
     testthat

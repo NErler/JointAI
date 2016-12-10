@@ -1,4 +1,4 @@
-#' Extract id variable from fixed effects formula
+#' Extract id variable from random effects formula
 #' @param random a formula describing random effects structure
 #' @return a character string, giving the name of the id variable or NULL
 #' @export
@@ -13,6 +13,23 @@ extract_id <- function(random) {
     id <- NULL
   }
   return(id)
+}
+
+
+#' Extract outcome variable from fixed effects formula
+#' @param fixed a formula describing fixed effects structure
+#' @return a character string, giving the name of the outcome variable
+#' @export
+extract_y <- function(fixed) {
+  if (!inherits(fixed, "formula")) {
+    fixed <- as.formula(fixed)
+  }
+  y <- sub("[[:space:]]*\\~[[:print:]]*", "",
+                     deparse(fixed, width.cutoff = 500))
+  if (y == "" | is.na(y) | is.null(y)) {
+    stop("\nUnable to extract the outcome variable.")
+  }
+ return(y)
 }
 
 

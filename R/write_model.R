@@ -25,6 +25,5 @@ write_model <- function(type, meth = NULL, Ntot, N, y_name,  Mlist = NULL,
   build_model <- switch(package,
                            "JAGS" = build_JAGS)
 
-
-  cat(build_model(arglist), file = file)
+  cat(do.call(build_model, arglist), file = file)
 }
