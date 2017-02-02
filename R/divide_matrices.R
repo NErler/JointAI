@@ -83,6 +83,9 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, center = T
   Xic <- if (length(interact) > 0) {
     Xcross[, interact, drop = F]
   }
+  if (!is.null(Xic)) {
+    Xic[, colSums(is.na(Xic)) > 0] <- NA
+  }
 
   cat_vars <- names(which(lapply(
     lapply(DF[, colSums(is.na(DF)) > 0 & names(DF) %in% all.vars(fixed2)], levels),
@@ -93,7 +96,9 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, center = T
   Xcat <- if (length(cat_vars) > 0) {
     DF[match(unique(groups), groups), names(cat_vars), drop = F]
   }
-  Xc[, sapply(cat_vars, names)] <- NA
+  if (!is.null(Xcat)) {
+    Xc[, sapply(cat_vars, names)] <- NA
+  }
 
   hc_list <- get_hc_list(colnames(X2), colnames(Xc), colnames(Z))
 

@@ -55,7 +55,7 @@ lme_imp <- function(fixed, data, random, auxvars = NULL,
 
   imp_par_list <- mapply(get_imp_par_list, meth, names(meth),
                          MoreArgs = list(Mlist$Xc, Mlist$Xcat, K_imp, dest_cols,
-                                         refcats, center, scale),
+                                         refcats),
                          SIMPLIFY = F)
 
 
@@ -65,7 +65,7 @@ lme_imp <- function(fixed, data, random, auxvars = NULL,
               imp_par_list = imp_par_list,
               file = modelfile)
 
-  data_list <- get_data_list(type = "lme", meth, Mlist, center, scale)
+  data_list <- get_data_list(type = "lme", meth, Mlist)
 
   if (runJAGS) {
     adapt <- rjags::jags.model(file = modelfile, data = data_list, inits = NULL,

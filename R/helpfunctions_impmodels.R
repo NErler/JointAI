@@ -66,6 +66,7 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
 }
 
 
+
 #' Specify the reference category for a categorical variable
 #' @param varname name of the variable
 #' @param Xcat matrix of categorical covariates
@@ -156,13 +157,13 @@ paste_imp_model <- function(imp_par_list) {
 #' @param imp_par_list list of parameters
 paste_imp_priors <- function(imp_par_list) {
 
-  imp_model <- switch(imp_par_list$impmeth,
+  imp_prior <- switch(imp_par_list$impmeth,
                       norm = impprior_normal,
                       logit = impprior_logit,
                       multinomial = impprior_multinomial,
                       ordinal = impprior_ordinal)
 
-  do.call(imp_model, imp_par_list)
+  do.call(imp_prior, imp_par_list)
 }
 
 
@@ -171,3 +172,17 @@ tab <- function(times = 2) {
   tb <- " "
   paste(rep(tb, times), collapse = "")
 }
+
+
+#' Paste interaction terms for JAGS model
+paste_interactions <- function(index, mat0, mat1, mat2,
+                               mat0_col, mat1_col, mat2_col) {
+  mat0_skip <- sapply(max(nchar(mat0_col)) - nchar(mat0_col), tab)
+  mat1_skip <- sapply(max(nchar(mat1_col)) - nchar(mat1_col), tab)
+  mat2_skip <- sapply(max(nchar(mat2_col)) - nchar(mat2_col), tab)
+
+  paste0(tab(4), mat0, "[", index, ", ", mat0_skip, mat0_col, "] <- ",
+         mat1, "[", index, ", ", mat1_skip, mat1_col, "] * ",
+         mat2, "[", index, ", ", mat2_skip, mat2_col, "]")
+}
+

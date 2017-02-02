@@ -4,8 +4,9 @@
 \alias{lm_imp}
 \title{Main function for analysis with a linear model}
 \usage{
-lm_imp(fixed, data, auxvars = NULL, refcats = "largest", modelfile = NULL,
-  n.chains = 3, n.adapt = 100, n.iter = 0, runJAGS = F)
+lm_imp(fixed, data, auxvars = NULL, monitor_params = NULL,
+  refcats = "largest", modelfile = NULL, n.chains = 3, n.adapt = 100,
+  n.iter = 0, runJAGS = F)
 }
 \arguments{
 \item{fixed}{a two sided formula describing the fixed-effects part of the

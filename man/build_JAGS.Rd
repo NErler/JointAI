@@ -6,7 +6,7 @@
 \usage{
 build_JAGS(type, meth = NULL, Ntot, N, y_name, Mlist = NULL, Z = NULL,
   Xic = NULL, Xl = NULL, Xil = NULL, hc_list = NULL, K, imp_par_list,
-  ...)
+  imp_interact_list, ...)
 }
 \arguments{
 \item{type}{analysis model type (character string)}

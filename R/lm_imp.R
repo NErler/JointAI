@@ -18,7 +18,7 @@
 #' @param runJAGS logical
 #' @export
 lm_imp <- function(fixed, data, auxvars = NULL,
-                   refcats = "largest", modelfile = NULL,
+                   monitor_params = NULL, refcats = "largest", modelfile = NULL,
                    n.chains = 3, n.adapt = 100, n.iter = 0, runJAGS = F){
   this_call <- match.call()
 
@@ -55,19 +55,26 @@ lm_imp <- function(fixed, data, auxvars = NULL,
               file = modelfile)
 
   data_list <- get_data_list(type = "lm", meth, Mlist)
+
   if (runJAGS) {
-    adapt <- jags.model(file = modelfile, data = data_list, inits = NULL,
-                        n.chains = n.chains, n.adapt = n.adapt)
+    adapt <- rjags::jags.model(file = modelfile, data = data_list, inits = NULL,
+                               n.chains = n.chains, n.adapt = n.adapt)
+
     mcmc <- if (n.iter > 0) {
-      coda.samples(adapt, n.iter = n.iter,
-                   variable.names = get_params(meth, type = "lme",
-                                               y_name = colnames(Mlist$y),
-                                               Zcols = ncol(Mlist$Z),
-                                               betas = T, tau_y = T, D = T,
-                                               Xc = Mlist$Xc, Xcat = Mlist$Xcat),
-                   na.rm = F)
+      if (is.null(monitor_params)) {
+        monitor_params <- c("analysis_main" = T)
+      }
+      var.names <- do.call(get_params, c(list(meth = meth, analysis_type = "lm",
+                                              y_name = colnames(Mlist$y),
+                                              Zcols = ncol(Mlist$Z),
+                                              Xc = Mlist$Xc, Xcat = Mlist$Xcat),
+                                         monitor_params))
+      print(var.names)
+
+      rjags::coda.samples(adapt, n.iter = n.iter,
+                          variable.names = var.names,
+                          na.rm = F)
     }
   }
-
-  return(list(this_call, data_list = data_list, sample = if (runJAGS) {mcmc}))
+  return(list(call = this_call, data_list = data_list, sample = if (runJAGS) {mcmc}))
 }

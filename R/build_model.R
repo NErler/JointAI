@@ -15,7 +15,7 @@
 #' @export
 build_JAGS <- function(type, meth = NULL, Ntot, N, y_name,  Mlist = NULL,
                         Z = NULL, Xic = NULL, Xl = NULL, Xil = NULL,
-                        hc_list = NULL, K, imp_par_list, ...) {
+                        hc_list = NULL, K, imp_par_list, imp_interact_list, ...) {
   arglist <- as.list(match.call())[-1]
 
   analysis_model <- switch(type,
@@ -25,6 +25,25 @@ build_JAGS <- function(type, meth = NULL, Ntot, N, y_name,  Mlist = NULL,
                             "lme" = lme_priors,
                             "lm" = lm_priors)
 
+  Xic <- Mlist$Xic
+
+  interactions <- if (!is.null(Xic)) {
+    splitnam <- sapply(colnames(Xic)[apply(is.na(Xic), 2, any)],
+                       strsplit, split = ":")
+    Xc_pos <- sapply(splitnam, match, colnames(Mlist$Xc))
+    Xic_pos <- match(colnames(Xic)[apply(is.na(Xic), 2, any)], colnames(Xic))
+
+    paste0(
+      tab(), "# -------------------------------------------- #", "\n",
+      tab(), "# Interactions involving incomplete covariates #", "\n",
+      tab(), "# -------------------------------------------- #", "\n\n",
+      tab(), "for (i in 1:", N, ") {", "\n",
+      paste0(paste_interactions(index = "i", mat0 = "Xic", mat1 = "Xc",
+                                mat2 = "Xc", mat0_col = Xic_pos,
+                                mat1_col = Xc_pos[1, ], mat2_col = Xc_pos[2, ]),
+             collapse = "\n"), "\n",
+      tab(), "}", "\n")
+  }
 
   imputation_part <- if (!is.null(meth)) {
     paste0(
@@ -41,6 +60,7 @@ build_JAGS <- function(type, meth = NULL, Ntot, N, y_name,  Mlist = NULL,
     )
   }
 
+
   paste0(
     "model {", "\n",
     tab(), "# -------------- #", "\n",
@@ -54,7 +74,8 @@ build_JAGS <- function(type, meth = NULL, Ntot, N, y_name,  Mlist = NULL,
     tab(), "# ----------------------------- #", "\n\n",
     paste0(do.call(analysis_priors, arglist), collapse = "\n"),
     "\n\n",
-    imputation_part,
+    imputation_part, "\n\n",
+    interactions, "\n",
     "}"
   )
 }
