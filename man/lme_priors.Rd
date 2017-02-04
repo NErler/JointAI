@@ -16,4 +16,3 @@ lme_priors(K, y_name, Z = NULL, Mlist = NULL, ...)
 \description{
 Write priors for a linear mixed model
 }
-

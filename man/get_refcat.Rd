@@ -17,4 +17,3 @@ each categorical variable}
 \description{
 Specify the reference category for a categorical variable
 }
-

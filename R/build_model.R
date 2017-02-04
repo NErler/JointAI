@@ -13,24 +13,25 @@
 #' @param K matrix specifying range of regression coefficients used for each
 #' component of the analysis model
 #' @export
-build_JAGS <- function(type, meth = NULL, Ntot, N, y_name,  Mlist = NULL,
+build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
+                       Ntot, N, y_name,  Mlist = NULL,
                         Z = NULL, Xic = NULL, Xl = NULL, Xil = NULL,
                         hc_list = NULL, K, imp_par_list, imp_interact_list, ...) {
   arglist <- as.list(match.call())[-1]
 
-  analysis_model <- switch(type,
+  analysis_model <- switch(analysis_type,
                            "lme" = lme_model,
-                           "lm" = lm_model)
-  analysis_priors <- switch(type,
+                           "glm" = glm_model)
+  analysis_priors <- switch(analysis_type,
                             "lme" = lme_priors,
-                            "lm" = lm_priors)
+                            "glm" = glm_priors)
 
   Xic <- Mlist$Xic
 
-  interactions <- if (!is.null(Xic)) {
+  interactions <- if (any(is.na(Xic))) {
     splitnam <- sapply(colnames(Xic)[apply(is.na(Xic), 2, any)],
                        strsplit, split = ":")
-    Xc_pos <- sapply(splitnam, match, colnames(Mlist$Xc))
+    Xc_pos <- lapply(splitnam, match, colnames(Mlist$Xc))
     Xic_pos <- match(colnames(Xic)[apply(is.na(Xic), 2, any)], colnames(Xic))
 
     paste0(
@@ -39,8 +40,7 @@ build_JAGS <- function(type, meth = NULL, Ntot, N, y_name,  Mlist = NULL,
       tab(), "# -------------------------------------------- #", "\n\n",
       tab(), "for (i in 1:", N, ") {", "\n",
       paste0(paste_interactions(index = "i", mat0 = "Xic", mat1 = "Xc",
-                                mat2 = "Xc", mat0_col = Xic_pos,
-                                mat1_col = Xc_pos[1, ], mat2_col = Xc_pos[2, ]),
+                                mat0_col = Xic_pos, mat1_col = Xc_pos),
              collapse = "\n"), "\n",
       tab(), "}", "\n")
   }

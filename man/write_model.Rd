@@ -4,13 +4,12 @@
 \alias{write_model}
 \title{Write model syntax to file}
 \usage{
-write_model(type, meth = NULL, Ntot, N, y_name, Mlist = NULL, Z = NULL,
-  Xic = NULL, Xl = NULL, Xil = NULL, hc_list = NULL, K, imp_par_list,
-  file = NULL, package = "JAGS")
+write_model(analysis_type, family = NULL, link = NULL, meth = NULL, Ntot,
+  N, y_name, Mlist = NULL, Z = NULL, Xic = NULL, Xl = NULL,
+  Xil = NULL, hc_list = NULL, K, imp_par_list, file = NULL,
+  package = "JAGS")
 }
 \arguments{
-\item{type}{analysis model type (character string)}
-
 \item{meth}{named vector specifying imputation methods and ordering}
 
 \item{Ntot}{number of observations}
@@ -37,8 +36,9 @@ component of the analysis model}
 \item{file}{path and file name}
 
 \item{package}{currently only JAGS is implemented}
+
+\item{type}{analysis model type (character string)}
 }
 \description{
 Write model syntax to file
 }
-

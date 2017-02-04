@@ -19,4 +19,3 @@ named vector specifying the columns in X that relate to varname
 \description{
 Find the position(s) of a variable in a model matrix
 }
-

@@ -29,4 +29,3 @@ A named list with an entry for each level of random effects, omitting
 \description{
 Hierarchical centering structure
 }
-

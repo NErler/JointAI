@@ -12,4 +12,3 @@ paste_imp_model(imp_par_list)
 \description{
 Call and paste imputation models
 }
-

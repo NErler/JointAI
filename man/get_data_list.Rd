@@ -16,4 +16,3 @@ get_data_list(type, meth, Mlist)
 \description{
 Create list of data passed to JAGS
 }
-

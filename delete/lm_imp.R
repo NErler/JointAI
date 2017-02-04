@@ -16,11 +16,19 @@
 #' @param n.adapt number of iterations in adaptive phase
 #' @param n.iter number of iterations in sampling
 #' @param runJAGS logical
+#'
+#' @examples
+#' data(wideDF)
+#' fixed <- y ~ C1 + C2 * B1 + O2
+#' res <- lm_imp(fixed, wideDF)
+#'
 #' @export
 lm_imp <- function(fixed, data, auxvars = NULL,
                    monitor_params = NULL, refcats = "largest", modelfile = NULL,
                    n.chains = 3, n.adapt = 100, n.iter = 0, runJAGS = F){
-  this_call <- match.call()
+
+
+  args <- mget(names(formals()), sys.frame(sys.nframe()))
 
   if (is.null(fixed)) {
     stop("\nNo fixed effects structure specified.")

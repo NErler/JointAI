@@ -24,4 +24,3 @@ to be imputed}
 \description{
 Creates a list of parameters that will be passed to the functions generating the imputation models
 }
-

@@ -16,4 +16,3 @@ impprior_ordinal(varname, par_elmts, par_name, ncat, ...)
 \description{
 Priors for ordinal imputation model
 }
-

@@ -56,6 +56,8 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, center = T
       DF[, i] <- scv[longrows]
       scale_pars[i, ] <- c(attr(scv, "scaled:center"), attr(scv, "scaled:scale"))
     }
+  }else{
+    scale_pars <- NULL
   }
 
 

@@ -18,4 +18,3 @@ get_dest_column(varname, DF, Xc_names, Xcat_names)
 \description{
 Find which column in either Xc or Xcat contains the variable to be imputed
 }
-

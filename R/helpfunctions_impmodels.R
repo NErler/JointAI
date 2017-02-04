@@ -175,14 +175,24 @@ tab <- function(times = 2) {
 
 
 #' Paste interaction terms for JAGS model
-paste_interactions <- function(index, mat0, mat1, mat2,
-                               mat0_col, mat1_col, mat2_col) {
+# paste_interactions <- function(index, mat0, mat1, mat2,
+#                                mat0_col, mat1_col, mat2_col) {
+#   mat0_skip <- sapply(max(nchar(mat0_col)) - nchar(mat0_col), tab)
+#   mat1_skip <- sapply(max(nchar(mat1_col)) - nchar(mat1_col), tab)
+#   mat2_skip <- sapply(max(nchar(mat2_col)) - nchar(mat2_col), tab)
+#
+#   paste0(tab(4), mat0, "[", index, ", ", mat0_skip, mat0_col, "] <- ",
+#          mat1, "[", index, ", ", mat1_skip, mat1_col, "] * ",
+#          mat2, "[", index, ", ", mat2_skip, mat2_col, "]")
+# }
+
+paste_interactions <- function(index, mat0, mat1, mat0_col, mat1_col) {
   mat0_skip <- sapply(max(nchar(mat0_col)) - nchar(mat0_col), tab)
-  mat1_skip <- sapply(max(nchar(mat1_col)) - nchar(mat1_col), tab)
-  mat2_skip <- sapply(max(nchar(mat2_col)) - nchar(mat2_col), tab)
 
-  paste0(tab(4), mat0, "[", index, ", ", mat0_skip, mat0_col, "] <- ",
-         mat1, "[", index, ", ", mat1_skip, mat1_col, "] * ",
-         mat2, "[", index, ", ", mat2_skip, mat2_col, "]")
+  paste0(tab(4),
+         paste0(mat0, "[", index, ", ", mat0_skip, mat0_col, "] <- "),
+         lapply(mat1_col, function(x){
+           paste0(mat1, "[", index, ", ", x, "]", collapse = " * ")
+         })
+  )
 }
-

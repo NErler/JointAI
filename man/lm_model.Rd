@@ -26,4 +26,3 @@ fixed effects}
 \description{
 Function to write linear regression model as analysis model
 }
-

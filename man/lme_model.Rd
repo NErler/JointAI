@@ -26,4 +26,3 @@ fixed effects}
 \description{
 Function to write linear mixed model as analysis model
 }
-

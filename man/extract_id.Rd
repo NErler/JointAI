@@ -15,4 +15,3 @@ a character string, giving the name of the id variable or NULL
 \description{
 Extract id variable from random effects formula
 }
-

@@ -59,4 +59,3 @@ get_params(meth, analysis_type, Xc, Xcat, y_name = NULL, Zcols = NULL,
 \description{
 Get parameters to follow
 }
-

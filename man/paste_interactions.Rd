@@ -4,9 +4,8 @@
 \alias{paste_interactions}
 \title{Paste interaction terms for JAGS model}
 \usage{
-paste_interactions(index, mat0, mat1, mat2, mat0_col, mat1_col, mat2_col)
+paste_interactions(index, mat0, mat1, mat0_col, mat1_col)
 }
 \description{
 Paste interaction terms for JAGS model
 }
-

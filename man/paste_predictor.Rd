@@ -20,4 +20,3 @@ parameters (e.g. "alpha")}
 \description{
 Build linear predictor for imputation models
 }
-

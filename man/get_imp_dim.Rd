@@ -19,4 +19,3 @@ a matrix specifying the range of regression coefficients per
 \description{
 Determine number of parameters in the imputation models
 }
-

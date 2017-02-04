@@ -28,4 +28,3 @@ a list containing the matrices
 \description{
 Create data matrices for time constant and time-varying variables
 }
-

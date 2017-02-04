@@ -179,3 +179,12 @@ get_hc_list <- function(X2_names, Xc_names, Z_names) {
   return(hc_list)
 }
 
+
+
+capitalize <- function (string)
+{
+  capped <- grep("^[^A-Z]*$", string, perl = TRUE)
+  substr(string[capped], 1, 1) <- toupper(substr(string[capped],
+                                                 1, 1))
+  return(string)
+}

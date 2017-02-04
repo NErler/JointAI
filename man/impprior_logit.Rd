@@ -16,4 +16,3 @@ impprior_logit(varname, par_elmts, par_name, ...)
 \description{
 Priors for logistic imputation model
 }
-

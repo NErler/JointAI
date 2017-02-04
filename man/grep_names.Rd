@@ -14,4 +14,3 @@ grep_names(nams1, nams2)
 \description{
 Find names in a vector of names
 }
-

@@ -20,4 +20,3 @@ impmodel_normal(varname, dest_col, Xc_cols, par_elmts, par_name, ...)
 \description{
 Imputation by Bayesian linear regression
 }
-

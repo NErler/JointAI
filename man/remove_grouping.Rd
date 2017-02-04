@@ -16,4 +16,3 @@ returns the formula without the grouping part, i.e., with out
 \description{
 Remove grouping from formula
 }
-

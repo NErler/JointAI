@@ -17,4 +17,3 @@ a logical value
 \description{
 Check if a variable is time-varying
 }
-

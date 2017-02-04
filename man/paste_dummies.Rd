@@ -18,4 +18,3 @@ the dummy variables corresponding to the categorical variable}
 \description{
 Write syntax to divide categorical variable into dummy variables in JAGS
 }
-

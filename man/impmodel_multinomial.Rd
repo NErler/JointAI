@@ -21,4 +21,3 @@ impmodel_multinomial(varname, dest_col, Xc_cols, par_elmts, par_name,
 \description{
 Imputation by cumulative logistic regression
 }
-

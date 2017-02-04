@@ -25,4 +25,3 @@ a named vector containing those variables in DF
 \description{
 Set default imputation methods
 }
-

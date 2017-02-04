@@ -17,4 +17,3 @@ integer
 \description{
 Find position of variable names in a vector of variable names
 }
-

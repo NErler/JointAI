@@ -15,4 +15,3 @@ a character string, giving the name of the outcome variable
 \description{
 Extract outcome variable from fixed effects formula
 }
-

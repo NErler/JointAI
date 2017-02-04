@@ -16,4 +16,3 @@ impprior_multinomial(varname, par_elmts, par_name, ...)
 \description{
 Priors for multinomial imputation model
 }
-

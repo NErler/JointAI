@@ -15,4 +15,3 @@ vector
 \description{
 Generate pattern
 }
-

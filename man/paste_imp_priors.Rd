@@ -12,4 +12,3 @@ paste_imp_priors(imp_par_list)
 \description{
 Call and paste imputation priors
 }
-

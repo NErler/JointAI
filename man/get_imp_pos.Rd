@@ -20,4 +20,3 @@ a list?
 \description{
 Determine positions of incomplete variables in the data matrices
 }
-

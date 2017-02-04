@@ -24,4 +24,3 @@ Determine number of fixed effects / regression coefficients in the analysis mode
 Auxiliary variables are treated the same way as variables that are
       actually in the model.
 }
-

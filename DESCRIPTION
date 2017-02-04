@@ -7,7 +7,7 @@ Maintainer: Nicole S. Erler <n.erler@erasmusmc.nl>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.0
 Depends: R (>= 3.3.1), rjags
 Imports: MASS, rjags
 Suggests: knitr,
