@@ -14,6 +14,7 @@
 #' @param monitor_params a character vector giving the names of variables to be monitored, see details
 #' @param modelfile optional name (and path) of the file the JAGS model will be
 #'                  written to
+#' @param overwrite logical
 #' @inheritParams rjags::jags.model
 #' @inheritParams rjags::coda.samples
 #' @param runMCMC logical
@@ -88,12 +89,19 @@ model_imp <- function(arglist) {
 
   cat("imp_par_list done", "\n")
 
+  if (!file.exists(modelfile) | (file.exists(modelfile) & overwrite == T)) {
   write_model(analysis_type = analysis_type, family = family,
               link = link, meth = meth, Ntot = nrow(Mlist$y),
               N = nrow(Mlist$Xc),
               y_name = names(Mlist$y), Mlist = Mlist, K = K,
               imp_par_list = imp_par_list,
               file = modelfile)
+  } else {
+    warning(expr = paste0("The file '", modelfile, "' already exists and no new model was written.",
+                   "\n",
+                   "To overwrite the model set 'overwrite = T'."),
+            call. = F, immediate. = T)
+  }
   cat("model written", "\n")
 
   data_list <- get_data_list(analysis_type, meth, Mlist)
@@ -141,7 +149,8 @@ model_imp <- function(arglist) {
 #' @rdname model_imp
 #' @export
 lm_imp <- function(fixed, data, auxvars = NULL,
-                   monitor_params = NULL, refcats = "largest", modelfile = NULL,
+                   monitor_params = NULL, refcats = "largest",
+                   modelfile = NULL, overwrite = F,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
                    MCMCpackage = "JAGS", center = T, scale = T,
                    meth = NULL, Mlist = NULL, K = NULL, K_imp = NULL,
@@ -158,7 +167,8 @@ lm_imp <- function(fixed, data, auxvars = NULL,
 #' @rdname model_imp
 #' @export
 lme_imp <- function(fixed, data, random, auxvars = NULL,
-                    monitor_params = NULL, refcats = "largest", modelfile = NULL,
+                    monitor_params = NULL, refcats = "largest",
+                    modelfile = NULL, overwrite = F,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
                     MCMCpackage = "JAGS",
                     meth = NULL, Mlist = NULL, K = NULL, K_imp = NULL,
@@ -176,7 +186,8 @@ lme_imp <- function(fixed, data, random, auxvars = NULL,
 #' @rdname model_imp
 #' @export
 glm_imp <- function(fixed, family, data, auxvars = NULL,
-                    monitor_params = NULL, refcats = "largest", modelfile = NULL,
+                    monitor_params = NULL, refcats = "largest",
+                    modelfile = NULL, overwrite = F,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
                     MCMCpackage = "JAGS", center = F, scale = F,
                     meth = NULL, Mlist = NULL, K = NULL, K_imp = NULL,
