@@ -26,7 +26,10 @@ model_imp <- function(arglist) {
   list2env(arglist, sys.frame(sys.nframe()))
 
   if (!exists("random")) random <- NULL
-  if (!exists("family")) family <- NULL
+  if (!"family" %in% names(arglist)) {
+    family <- NULL
+    link <- NULL
+  }
 
   cat("list2env", "\n")
 
@@ -85,15 +88,15 @@ model_imp <- function(arglist) {
 
   cat("imp_par_list done", "\n")
 
-  write_model(analysis_type = analysis_type, family = family$family,
-              link = family$link, meth = meth, Ntot = nrow(Mlist$y),
+  write_model(analysis_type = analysis_type, family = family,
+              link = link, meth = meth, Ntot = nrow(Mlist$y),
               N = nrow(Mlist$Xc),
               y_name = names(Mlist$y), Mlist = Mlist, K = K,
               imp_par_list = imp_par_list,
               file = modelfile)
   cat("model written", "\n")
 
-  data_list <- get_data_list(type = analysis_type, meth, Mlist)
+  data_list <- get_data_list(analysis_type, meth, Mlist)
 
   cat("data_list written", "\n")
 
@@ -130,8 +133,8 @@ model_imp <- function(arglist) {
   return(list(meth = meth, Mlist = Mlist, K = K, K_imp = K_imp,
               mcmc_settings = mcmc_settings,
               data_list = data_list,
-              model = adapt,
-              sample = if (runMCMC) {mcmc}))
+              model = if (runMCMC) adapt,
+              sample = if (runMCMC) mcmc))
 }
 
 
@@ -181,11 +184,9 @@ glm_imp <- function(fixed, family, data, auxvars = NULL,
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
 
-  # if (family$family == "binomial" & family$link == "logit"){
-  #   arglist$analysis_type <- "logit"
-  # }
-
   arglist$analysis_type <- "glm"
+  arglist$family <- family$family
+  arglist$link <- family$link
 
 
   res <- model_imp(arglist)

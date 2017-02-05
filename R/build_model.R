@@ -21,28 +21,32 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
 
   analysis_model <- switch(analysis_type,
                            "lme" = lme_model,
+                           "lm" = lm_model,
                            "glm" = glm_model)
   analysis_priors <- switch(analysis_type,
                             "lme" = lme_priors,
-                            "glm" = glm_priors)
+                            "glm" = glm_priors,
+                            "lm" = lm_priors)
 
   Xic <- Mlist$Xic
 
-  interactions <- if (any(is.na(Xic))) {
-    splitnam <- sapply(colnames(Xic)[apply(is.na(Xic), 2, any)],
-                       strsplit, split = ":")
-    Xc_pos <- lapply(splitnam, match, colnames(Mlist$Xc))
-    Xic_pos <- match(colnames(Xic)[apply(is.na(Xic), 2, any)], colnames(Xic))
+  interactions <- if (!is.null(Xic)) {
+    if (any(is.na(Xic))) {
+      splitnam <- sapply(colnames(Xic)[apply(is.na(Xic), 2, any)],
+                         strsplit, split = ":")
+      Xc_pos <- lapply(splitnam, match, colnames(Mlist$Xc))
+      Xic_pos <- match(colnames(Xic)[apply(is.na(Xic), 2, any)], colnames(Xic))
 
-    paste0(
-      tab(), "# -------------------------------------------- #", "\n",
-      tab(), "# Interactions involving incomplete covariates #", "\n",
-      tab(), "# -------------------------------------------- #", "\n\n",
-      tab(), "for (i in 1:", N, ") {", "\n",
-      paste0(paste_interactions(index = "i", mat0 = "Xic", mat1 = "Xc",
-                                mat0_col = Xic_pos, mat1_col = Xc_pos),
-             collapse = "\n"), "\n",
-      tab(), "}", "\n")
+      paste0(
+        tab(), "# -------------------------------------------- #", "\n",
+        tab(), "# Interactions involving incomplete covariates #", "\n",
+        tab(), "# -------------------------------------------- #", "\n\n",
+        tab(), "for (i in 1:", N, ") {", "\n",
+        paste0(paste_interactions(index = "i", mat0 = "Xic", mat1 = "Xc",
+                                  mat0_col = Xic_pos, mat1_col = Xc_pos),
+               collapse = "\n"), "\n",
+        tab(), "}", "\n")
+    }
   }
 
   imputation_part <- if (!is.null(meth)) {

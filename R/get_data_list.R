@@ -3,7 +3,7 @@
 #' @param meth vector of imputation methods
 #' @param Mlist list of data matrices etc.
 #' @export
-get_data_list <- function(type, meth, Mlist) {
+get_data_list <- function(analysis_type, meth, Mlist) {
 
   l <- list()
   l <- c(l,
@@ -11,7 +11,7 @@ get_data_list <- function(type, meth, Mlist) {
          sapply(Mlist[!sapply(Mlist, is.null) &
                            names(Mlist) %in% c("Xc", "Xcat", "Xic",
                                                "Xl", "Xil", "Z")],
-                   data.matrix))
+                   data.matrix, simplify = FALSE))
 
   # hyperparameters analysis model
   l$mu_reg_main <- 0
@@ -19,7 +19,7 @@ get_data_list <- function(type, meth, Mlist) {
   l$a_tau_main <- 0.01
   l$b_tau_main <- 0.001
 
-  if (type == "lme") {
+  if (analysis_type == "lme") {
     l$groups <- match(Mlist$groups, unique(Mlist$groups))
     if (ncol(Mlist$Z) > 1) {
       l$RinvD <- diag(rep(NA, ncol(Mlist$Z)))
