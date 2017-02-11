@@ -138,11 +138,13 @@ model_imp <- function(arglist) {
                         variable.names = if (exists("var.names")) var.names,
                         thin = thin)
 
-  return(list(meth = meth, Mlist = Mlist, K = K, K_imp = K_imp,
+  return(structure(
+    list(meth = meth, Mlist = Mlist, K = K, K_imp = K_imp,
               mcmc_settings = mcmc_settings,
               data_list = data_list,
               model = if (runMCMC) adapt,
-              sample = if (runMCMC) mcmc))
+              sample = if (runMCMC) mcmc), class = "JointAI")
+  )
 }
 
 
@@ -170,7 +172,7 @@ lme_imp <- function(fixed, data, random, auxvars = NULL,
                     monitor_params = NULL, refcats = "largest",
                     modelfile = NULL, overwrite = F,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
-                    MCMCpackage = "JAGS",
+                    MCMCpackage = "JAGS", center = T, scale = T,
                     meth = NULL, Mlist = NULL, K = NULL, K_imp = NULL,
                     imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL){
 

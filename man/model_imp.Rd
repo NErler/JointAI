@@ -8,22 +8,25 @@
 \title{Joint analysis and imputation}
 \usage{
 lm_imp(fixed, data, auxvars = NULL, monitor_params = NULL,
-  refcats = "largest", modelfile = NULL, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, runMCMC = F, MCMCpackage = "JAGS", center = T,
-  scale = T, meth = NULL, Mlist = NULL, K = NULL, K_imp = NULL,
-  imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL)
+  refcats = "largest", modelfile = NULL, overwrite = F, n.chains = 3,
+  n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
+  MCMCpackage = "JAGS", center = T, scale = T, meth = NULL,
+  Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
+  dest_cols = NULL, imp_par_list = NULL)
 
 lme_imp(fixed, data, random, auxvars = NULL, monitor_params = NULL,
-  refcats = "largest", modelfile = NULL, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, runMCMC = F, MCMCpackage = "JAGS",
-  meth = NULL, Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
+  refcats = "largest", modelfile = NULL, overwrite = F, n.chains = 3,
+  n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
+  MCMCpackage = "JAGS", center = T, scale = T, meth = NULL,
+  Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
   dest_cols = NULL, imp_par_list = NULL)
 
 glm_imp(fixed, family, data, auxvars = NULL, monitor_params = NULL,
-  refcats = "largest", modelfile = NULL, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, runMCMC = F, MCMCpackage = "JAGS", center = F,
-  scale = F, meth = NULL, Mlist = NULL, K = NULL, K_imp = NULL,
-  imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL)
+  refcats = "largest", modelfile = NULL, overwrite = F, n.chains = 3,
+  n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
+  MCMCpackage = "JAGS", center = F, scale = F, meth = NULL,
+  Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
+  dest_cols = NULL, imp_par_list = NULL)
 }
 \arguments{
 \item{fixed}{a two sided formula describing the fixed-effects part of the
@@ -45,6 +48,8 @@ categorical variable.}
 
 \item{modelfile}{optional name (and path) of the file the JAGS model will be
 written to}
+
+\item{overwrite}{logical}
 
 \item{n.chains}{the number of parallel chains for the model}
 

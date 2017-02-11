@@ -28,6 +28,8 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
                             "glm" = glm_priors,
                             "lm" = lm_priors)
 
+
+  # Interactions within cross-sectional variables inlcuding missing values
   Xic <- Mlist$Xic
 
   interactions <- if (!is.null(Xic)) {
@@ -49,6 +51,9 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
     }
   }
 
+
+  # imputation section of the model
+
   imputation_part <- if (!is.null(meth)) {
     paste0(
       tab(), "# ----------------- #", "\n",
@@ -65,6 +70,8 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
   }
 
 
+
+  # Analysis part and insert the rest
   paste0(
     "model {", "\n",
     tab(), "# -------------- #", "\n",

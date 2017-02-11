@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpfunctions.R
 \name{grep_names}
 \alias{grep_names}
-\title{Find names in a vector of names}
+\title{Find names in a vector of names (used in get_hc_list)}
 \usage{
 grep_names(nams1, nams2)
 }
@@ -12,5 +12,5 @@ grep_names(nams1, nams2)
 \item{nams2}{the vector of names to search in}
 }
 \description{
-Find names in a vector of names
+Find names in a vector of names (used in get_hc_list)
 }

@@ -102,12 +102,14 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, center = T
     Xc[, sapply(cat_vars, names)] <- NA
   }
 
-  hc_list <- get_hc_list(colnames(X2), colnames(Xc), colnames(Z))
-
+  # hc_list <- get_hc_list(colnames(X2), colnames(Xc), colnames(Z))
 
   Xlong <- if (sum(!names(tvar)[tvar] %in% colnames(Z)) > 0) {
     X2[, which(tvar & !names(tvar) %in% colnames(Z)), drop = F]
   }
+
+  hc_list <- get_hc_list(X2, Xc, Z, Xlong)
+
 
   if (!is.null(Xlong)) {
     linteract <- if (any(grepl(":", colnames(Xlong), fixed = T))) {
@@ -118,11 +120,11 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, center = T
       Xlong[, !colnames(Xlong) %in% linteract, drop = F]
     }
 
-    Xcinteract <- unlist(sapply(hc_list, function(x) {
-      names(x)[na.omit(match("Xc", attr(x, "matrix")))]
+    hc_interact <- unlist(sapply(hc_list, function(x) {
+      names(which(attr(x, "matrix") == "Xc"))
     }))
-    Xil <- if (!is.null(linteract) & any(!linteract %in% Xcinteract)) {
-      Xlong[, linteract[!linteract %in% Xcinteract], drop = F]
+    Xil <- if (!is.null(linteract) & any(!linteract %in% hc_interact)) {
+      Xlong[, linteract[!linteract %in% hc_interact], drop = F]
     }
 
     if (!is.null(Xl)) {

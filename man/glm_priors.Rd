@@ -4,7 +4,7 @@
 \alias{glm_priors}
 \title{Write priors for the regression coefficients of the linear model}
 \usage{
-glm_priors(K, y_name, ...)
+glm_priors(family, K, y_name, ...)
 }
 \arguments{
 \item{K}{K}

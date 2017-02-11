@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpfunctions.R
 \name{gen_pat}
 \alias{gen_pat}
-\title{Generate pattern}
+\title{Generate pattern (used in get_hc_list)}
 \usage{
 gen_pat(nam)
 }
@@ -13,5 +13,5 @@ gen_pat(nam)
 vector
 }
 \description{
-Generate pattern
+Generate pattern (used in get_hc_list)
 }

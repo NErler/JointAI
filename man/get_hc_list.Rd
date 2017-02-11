@@ -4,14 +4,14 @@
 \alias{get_hc_list}
 \title{Hierarchical centering structure}
 \usage{
-get_hc_list(X2_names, Xc_names, Z_names)
+get_hc_list(X2, Xc, Z, Xlong)
 }
 \arguments{
 \item{X2_names}{vector of column names in the extended fixed effects design matrix}
 
-\item{Xc_names}{vector of column names of the matrix of baseline covariates}
-
 \item{Z_names}{vector of column names of the random effects design matrix}
+
+\item{Xc_names}{vector of column names of the matrix of baseline covariates}
 }
 \value{
 A named list with an entry for each level of random effects, omitting

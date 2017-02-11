@@ -15,7 +15,7 @@ glm_model <- function(family, link, N, y_name, Xic = NULL,
   distr <- switch(family,
                   "gaussian" = function(y_name) {
                     paste0("dnorm(mu_", y_name, "[j], tau_", y_name, ")")
-                    },
+                  },
                   "binomial" =  function(y_name) {
                     paste0("dbern(mu_", y_name, "[j])")
                   },
@@ -67,9 +67,9 @@ glm_model <- function(family, link, N, y_name, Xic = NULL,
          tab(), y_name, "[j] ~ ", distr(y_name), "\n",
          repar,
          tab(), linkfun(paste0("mu_", y_name, "[j]")),
-                " <- inprod(Xc[j, ], beta[", K['Xc', 1], ":", K['Xc', 2], "])",
+         " <- inprod(Xc[j, ], beta[", K['Xc', 1], ":", K['Xc', 2], "])",
          paste_Xic
-         )
+  )
 }
 
 
@@ -78,13 +78,23 @@ glm_model <- function(family, link, N, y_name, Xic = NULL,
 #' @param K K
 #' @param y_name character string, name of outcome
 #' @export
-glm_priors <- function(K, y_name, ...){
+glm_priors <- function(family, K, y_name, ...){
+
+  secndpar <- switch(family,
+                     "gaussian" = paste0("\n",
+                                         tab(), "tau_", y_name ," ~ dgamma(a_tau_main, b_tau_main)", "\n",
+                                         tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")"),
+                     "binomial" = NULL,
+                     "Gamma" = paste0("\n",
+                                      tab(), "tau_", y_name ," ~ dgamma(a_tau_main, b_tau_main)", "\n",
+                                      tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")"),
+                     "Poisson" = NULL)
+
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
     tab(), "for (k in 1:", max(K, na.rm = T), ") {", "\n",
     tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main)", "\n",
-    tab(), "}", "\n",
-    tab(), "tau_", y_name ," ~ dgamma(a_tau_main, b_tau_main)", "\n",
-    tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")", "\n\n")
+    tab(), "}",
+    secndpar, "\n\n")
 }
 
