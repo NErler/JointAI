@@ -32,15 +32,21 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     if (!is.null(object$Mlist$Xc))
       cbind(paste0("beta[", object$K["Xc", 1]:object$K["Xc", 2], "]"),
             colnames(object$Mlist$Xc)),
-    if (!is.null(hc_list))
-      cbind(unlist(sapply(names(hc_list), function(x)
-        paste0("beta[", object$K[x, 1]:object$K[x, 2], "]"))),
-        unlist(lapply(hc_list, function(x) {
-          names(x)[which(attr(x, "matrix") %in% c("Xc", "Z"))]
-        }))),
     if (!is.null(object$Mlist$Xic))
       cbind(paste0("beta[", object$K["Xic", 1]:object$K["Xic", 2], "]"),
             colnames(object$Mlist$Xic)),
+    if (!is.null(hc_list))
+      cbind(
+        unlist(
+          sapply(names(hc_list)[rowSums(is.na(object$K[names(hc_list), ])) == 0],
+                 function(x) {
+                   paste0("beta[", object$K[x, 1]:object$K[x, 2], "]")
+                 })
+        ),
+        unlist(lapply(hc_list, function(x) {
+          names(x)[which(attr(x, "matrix") %in% c("Xc", "Z"))]
+        }))
+        ),
     if (!is.null(object$Mlist$Xl))
       cbind(paste0("beta[", object$K["Xl", 1]:object$K["Xl", 2], "]"),
             colnames(object$Mlist$Xl)),
