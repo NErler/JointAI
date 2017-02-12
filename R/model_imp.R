@@ -45,7 +45,7 @@ model_imp <- function(arglist) {
                         format(Sys.time(), "%Y-%m-%d_%H-%M"), ".txt")
   }
 
-  cat("modelfile", "\n")
+  cat("specify name of modelfile", "\n")
 
   # default imputation methods, if not specified
   if (is.null(meth)) {
