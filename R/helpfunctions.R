@@ -12,6 +12,10 @@ extract_id <- function(random) {
   } else {
     id <- NULL
   }
+
+  if (is.null(id) & !is.null(random))
+    warning("No id variable could be identified. Assuming all observations are
+            independent.")
   return(id)
 }
 
