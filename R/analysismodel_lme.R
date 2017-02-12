@@ -46,7 +46,7 @@ lme_model <- function(N, y_name, Z = NULL, Xic = NULL, Xl = NULL,
          tab(4), "b[i, 1:", ncol(Z), "] ~ ", norm.distr, "(mu_b[i, ], invD[ , ])", "\n",
          tab(4), "mu_b[i, 1] <- inprod(beta[", K["Xc", 1], ":", K["Xc", 2], "], Xc[i, ])",
          paste_Xic, "\n",
-         tab(4), paste_rdslopes(Z, hc_list, K)
+         paste_rdslopes(Z, hc_list, K)
   )
 }
 
@@ -58,7 +58,7 @@ paste_rdslopes <- function(Z, hc_list, K){
       beta_start <- K[colnames(Z)[k], 1]
       beta_end <- K[colnames(Z)[k], 2]
       Xc_pos <- if (any(attr(hc_list[[k - 1]], "matrix") == "Xc")) {
-        hc_list[[k - 1]][which(attr(hc_list[[k - 1]], "matrix") == c("Z", "Xc"))]
+        hc_list[[k - 1]][which(attr(hc_list[[k - 1]], "matrix") %in% c("Z", "Xc"))]
       }
 
       hc_interact <- if (!is.null(hc_list[[colnames(Z)[k]]])) {
@@ -75,7 +75,7 @@ paste_rdslopes <- function(Z, hc_list, K){
         "0"
       }
 
-      rd_slopes[[k - 1]] <- paste0("mu_b[i, ", k,"] <- ",
+      rd_slopes[[k - 1]] <- paste0(tab(4), "mu_b[i, ", k,"] <- ",
                                    paste0(hc_interact, sep = "", collapse = " + "))
     }
     paste(rd_slopes, collapse = "\n")
