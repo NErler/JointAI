@@ -4,7 +4,7 @@
 \alias{get_hc_list}
 \title{Hierarchical centering structure}
 \usage{
-get_hc_list(X2, Xc, Z, Xlong)
+get_hc_list(X2, Xc, Xic, Z, Xlong)
 }
 \arguments{
 \item{X2_names}{vector of column names in the extended fixed effects design matrix}

@@ -10,8 +10,8 @@ get_data_list <- function(analysis_type, meth, Mlist) {
          c(Mlist$y),
          sapply(Mlist[!sapply(Mlist, is.null) &
                            names(Mlist) %in% c("Xc", "Xcat", "Xic",
-                                               "Xl", "Xil", "Z")],
-                   data.matrix, simplify = FALSE))
+                                               "Xl", "Xil")],
+                   scaled_data.matrix, simplify = FALSE))
 
   # hyperparameters analysis model
   l$mu_reg_main <- 0

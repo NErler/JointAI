@@ -215,10 +215,29 @@ get_hc_list <- function(X2, Xc, Xic, Z, Xlong) {
 
 
 
-capitalize <- function (string)
+capitalize <- function(string)
 {
   capped <- grep("^[^A-Z]*$", string, perl = TRUE)
   substr(string[capped], 1, 1) <- toupper(substr(string[capped],
                                                  1, 1))
   return(string)
 }
+
+
+scaled_data.matrix <- function(X, scale_vars, scaling) {
+  if (any(colnames(X) %in% scale_vars)) {
+    scale_pars <- list()
+    for (i in scale_vars[scale_vars %in% colnames(X)]) {
+      scv <- scale(X[, i])
+      X[, i] <- scv
+      scale_pars[[i]] <- c(center = attr(scv, "scaled:center"),
+                           scale = attr(scv, "scaled:scale"))
+    }
+  } else {
+    scale_pars <- NULL
+  }
+  return(list(X = data.matrix(X), scale_pars = scale_pars))
+}
+
+
+

@@ -7,7 +7,7 @@
 #' @return a list containing the matrices
 #' @export
 
-divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, center = T, scale = T){
+divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scaling = T) {
   id <- extract_id(random)
 
   groups <- if (!is.null(id)) {
@@ -37,25 +37,24 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, center = T
   contr <- as.list(rep("contr.treatment", length(ord)))
   names(contr) <- ord
 
-  DF_orig <- DF
-  if (any(center, scale)) {
+  if (scaling == T) {
     scale_vars <- all.vars(fixed2)[which(!all.vars(fixed2) %in%
                                            c(colnames(y), colnames(Z),
                                              names(DF)[sapply(DF, is.factor)]))]
-    scale_pars <- matrix(ncol = 2, nrow = length(scale_vars),
-                         dimnames = list(scale_vars, c("center", "scale")))
-
-    for (i in scale_vars) {
-      if (!check_tvar(x = DF_orig[, i], groups)) {
-        shortrows <- match(unique(groups), groups)
-        longrows <- match(groups, unique(groups))
-      } else {
-        shortrows <- longrows <- 1:nrow(DF)
-      }
-      scv <- scale(DF[shortrows, i], center = center, scale = scale)
-      DF[, i] <- scv[longrows]
-      scale_pars[i, ] <- c(attr(scv, "scaled:center"), attr(scv, "scaled:scale"))
-    }
+    # scale_pars <- matrix(ncol = 2, nrow = length(scale_vars),
+    #                      dimnames = list(scale_vars, c("center", "scale")))
+    #
+    # for (i in scale_vars) {
+    #   if (!check_tvar(x = DF_orig[, i], groups)) {
+    #     shortrows <- match(unique(groups), groups)
+    #     longrows <- match(groups, unique(groups))
+    #   } else {
+    #     shortrows <- longrows <- 1:nrow(DF)
+    #   }
+    #   scv <- scale(DF[shortrows, i])#, center = center, scale = scale)
+    #   DF[, i] <- scv[longrows]
+    #   scale_pars[i, ] <- c(attr(scv, "scaled:center"), attr(scv, "scaled:scale"))
+    # }
   }else{
     scale_pars <- NULL
   }
