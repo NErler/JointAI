@@ -14,8 +14,9 @@ extract_id <- function(random) {
   }
 
   if (is.null(id) & !is.null(random))
-    warning("No id variable could be identified. Assuming all observations are
-            independent.")
+    warning(paste0("\nNo id variable could be identified.\n",
+                   "I'll assume that all observations are independent."),
+            call. = F, immediate. = T)
   return(id)
 }
 
