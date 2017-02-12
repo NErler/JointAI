@@ -180,7 +180,7 @@ grep_names <- function(nams1, nams2){
   #     hc_list[[i]] <- hc_vec
   #   }
   # }
-get_hc_list <- function(X2, Xc, Z, Xlong) {
+get_hc_list <- function(X2, Xc, Xic, Z, Xlong) {
   hc_vars <- hc_list <- if (ncol(Z) > 1) {
     lapply(sapply(colnames(Z)[-1], gen_pat, simplify = F),
            grep_names, colnames(X2))
@@ -193,7 +193,7 @@ get_hc_list <- function(X2, Xc, Z, Xlong) {
       a <- sapply(
         apply(
           as.array(sapply(
-            lapply(list(Xc = Xc, Z = Z, Xlong = Xlong), colnames),
+            lapply(list(Xc = Xc, Xic = Xic, Z = Z, Xlong = Xlong), colnames),
             FUN = function(x) matchvars %in% x)), 1, which), names)
 
 
@@ -202,7 +202,7 @@ get_hc_list <- function(X2, Xc, Z, Xlong) {
       names(a) <- hc_vars[[i]]
 
       pos <- mapply(FUN = function(i, i_nam) {
-        match(i_nam, lapply(list(Xc = Xc, Z = Z, Xlong = Xlong), colnames)[[i]])
+        match(i_nam, lapply(list(Xc = Xc, Xic = Xic, Z = Z, Xlong = Xlong), colnames)[[i]])
       }, i = a, i_nam = matchvars)
 
       attr(pos, "matrix") <- a

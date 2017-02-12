@@ -108,7 +108,7 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, center = T
     X2[, which(tvar & !names(tvar) %in% colnames(Z)), drop = F]
   }
 
-  hc_list <- get_hc_list(X2, Xc, Z, Xlong)
+  hc_list <- get_hc_list(X2, Xc, Xic, Z, Xlong)
 
 
   if (!is.null(Xlong)) {
