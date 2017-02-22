@@ -27,6 +27,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
   hc_list <- object$Mlist$hc_list
+  scale_pars <- object$scale_pars
 
   coefs <- rbind(
     if (!is.null(object$Mlist$Xc))
@@ -38,7 +39,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     if (!is.null(hc_list))
       cbind(
         unlist(
-          sapply(names(hc_list)[rowSums(is.na(object$K[names(hc_list), ])) == 0],
+          sapply(names(hc_list)[rowSums(is.na(object$K[names(hc_list), , drop = F])) == 0],
                  function(x) {
                    paste0("beta[", object$K[x, 1]:object$K[x, 2], "]")
                  })
@@ -56,14 +57,23 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   )
 
 
-  coefnam <- colnames(MCMC)
+  colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
 
-  coefnam[match(coefs[, 1], coefnam)] <- coefs[, 2]
 
+  # re-scale parameters
+  if (!is.null(scale_pars)) {
+    MCMC[, names(scale_pars)] <- sapply(names(scale_pars),
+                                        function(x) MCMC[, x]/scale_pars["scale", x])
+
+    MCMC[, "(Intercept)"] <- MCMC[, "(Intercept)"] -
+      MCMC[, names(scale_pars)] %*% t(scale_pars["center", ])
+  }
+
+  # create results matrix
   statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"))
   stats <- matrix(nrow = length(colnames(MCMC)),
                   ncol = length(statnames),
-                  dimnames = list(coefnam, statnames))
+                  dimnames = list(colnames(MCMC), statnames))
 
   stats[, "Mean"] <- apply(MCMC, 2, mean)
   stats[,  "SD"] <- apply(MCMC, 2, sd)
@@ -96,3 +106,37 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3)) {
   cat("\n")
   invisible(x)
 }
+
+
+
+
+
+
+scale_pars <- lme1$scale_pars
+new_names <- colnames(attr(terms(fixed), "factors"))[
+  colnames(attr(terms(fixed), "factors")) %in% rownames(attr(terms(fixed), "factors")) &
+    !colnames(attr(terms(fixed), "factors")) %in% names(scale_pars)]
+
+scale_pars[c("center", "scale"), new_names] <- c(0, 1)
+
+
+rescale <- function(x, fixed, scale_pars, MCMC) {
+  coefs <- colnames(attr(terms(fixed), "factors"))
+  coef_split <- strsplit(coefs, ":")
+  names(coef_split) <- coefs
+
+  pars <- sapply(coef_split, "%in%", x = x)
+
+  vec <- MCMC[, x, drop = F]
+  interact <- names(pars[names(pars) != x & pars])
+
+  interactions <- sapply(interact, function(i) {
+    other <- coef_split[[i]][coef_split[[i]] != x]
+    MCMC[ , i] / prod(scale_pars["scale", coef_split[[i]]]) * scale_pars["center", other]
+  })
+
+  new_vec <- vec / scale_pars["scale", x] - rowSums(interactions)
+
+  return(new_vec)
+}
+

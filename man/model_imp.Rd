@@ -10,23 +10,23 @@
 lm_imp(fixed, data, auxvars = NULL, monitor_params = NULL,
   refcats = "largest", modelfile = NULL, overwrite = F, n.chains = 3,
   n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
-  MCMCpackage = "JAGS", center = T, scale = T, meth = NULL,
-  Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
-  dest_cols = NULL, imp_par_list = NULL)
+  MCMCpackage = "JAGS", meth = NULL, Mlist = NULL, K = NULL,
+  K_imp = NULL, imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL,
+  scale_vars = NULL, scale_pars = NULL)
 
 lme_imp(fixed, data, random, auxvars = NULL, monitor_params = NULL,
   refcats = "largest", modelfile = NULL, overwrite = F, n.chains = 3,
   n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
-  MCMCpackage = "JAGS", center = T, scale = T, meth = NULL,
-  Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
-  dest_cols = NULL, imp_par_list = NULL)
+  MCMCpackage = "JAGS", meth = NULL, Mlist = NULL, K = NULL,
+  K_imp = NULL, imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL,
+  scale_vars = NULL, scale_pars = NULL)
 
 glm_imp(fixed, family, data, auxvars = NULL, monitor_params = NULL,
   refcats = "largest", modelfile = NULL, overwrite = F, n.chains = 3,
   n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
-  MCMCpackage = "JAGS", center = F, scale = F, meth = NULL,
-  Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
-  dest_cols = NULL, imp_par_list = NULL)
+  MCMCpackage = "JAGS", meth = NULL, Mlist = NULL, K = NULL,
+  K_imp = NULL, imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL,
+  scale_vars = NULL, scale_pars = NULL)
 }
 \arguments{
 \item{fixed}{a two sided formula describing the fixed-effects part of the
@@ -63,11 +63,7 @@ written to}
 
 \item{runMCMC}{logical}
 
-\item{center}{either a logical value or a numeric vector of length
-    equal to the number of columns of \code{x}.}
-
-\item{scale}{either a logical value or a numeric vector of length
-    equal to the number of columns of \code{x}.}
+\item{scale_vars}{NULL or a vector of variables to scale}
 
 \item{family}{a description of the error distribution and link
     function to be used in the model.  For \code{glm} this can be a

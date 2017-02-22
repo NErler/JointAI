@@ -18,7 +18,7 @@
 #' @inheritParams rjags::jags.model
 #' @inheritParams rjags::coda.samples
 #' @param runMCMC logical
-#' @inheritParams base::scale
+#' @param scale_vars NULL or a vector of variables to scale
 #' @name model_imp
 NULL
 
@@ -26,10 +26,13 @@ model_imp <- function(arglist) {
   cat("Start model_imp", "\n")
   list2env(arglist, sys.frame(sys.nframe()))
 
-  if (!exists("random")) random <- NULL
   if (!"family" %in% names(arglist)) {
     family <- NULL
     link <- NULL
+  }
+
+  for (x in c("random", "scale_vars", "scale_pars", "auxvars")) {
+    if (!exists(x)) assign(x, NULL)
   }
 
   cat("list2env", "\n")
@@ -38,6 +41,7 @@ model_imp <- function(arglist) {
   if (is.null(fixed)) {
     stop("\nNo fixed effects structure specified.")
   }
+
 
   # generate default name for model file if not specified
   if (is.null(modelfile)) {
@@ -52,9 +56,13 @@ model_imp <- function(arglist) {
     meth <- get_imp_meth(data, fixed, auxvars)
   }
 
+  cat("meth done \n")
+
+
+  print(scale_vars)
   if (is.null(Mlist)) {
-    Mlist <- divide_matrices(data, fixed, random, auxvars,
-                             center = center, scale = scale)
+    Mlist <- divide_matrices(data, fixed, random = random, auxvars = auxvars,
+                             scale_vars = scale_vars)
   }
 
   cat("Mlist done", "\n")
@@ -104,12 +112,12 @@ model_imp <- function(arglist) {
   }
   cat("model written", "\n")
 
-  data_list <- get_data_list(analysis_type, meth, Mlist)
+  data_list <- get_data_list(analysis_type, meth, Mlist, scale_pars = scale_pars)
 
   cat("data_list written", "\n")
 
   if (runMCMC) {
-    adapt <- rjags::jags.model(file = modelfile, data = data_list,
+    adapt <- rjags::jags.model(file = modelfile, data = data_list$data_list,
                                inits = NULL,
                                n.chains = n.chains, n.adapt = n.adapt)
 
@@ -141,7 +149,8 @@ model_imp <- function(arglist) {
   return(structure(
     list(meth = meth, Mlist = Mlist, K = K, K_imp = K_imp,
               mcmc_settings = mcmc_settings,
-              data_list = data_list,
+              data_list = data_list$data_list,
+              scale_pars = data_list$scale_pars,
               model = if (runMCMC) adapt,
               sample = if (runMCMC) mcmc), class = "JointAI")
   )
@@ -154,9 +163,10 @@ lm_imp <- function(fixed, data, auxvars = NULL,
                    monitor_params = NULL, refcats = "largest",
                    modelfile = NULL, overwrite = F,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
-                   MCMCpackage = "JAGS", center = T, scale = T,
+                   MCMCpackage = "JAGS",
                    meth = NULL, Mlist = NULL, K = NULL, K_imp = NULL,
-                   imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL){
+                   imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL,
+                   scale_vars = NULL, scale_pars = NULL){
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$analysis_type <- "lm"
@@ -172,9 +182,10 @@ lme_imp <- function(fixed, data, random, auxvars = NULL,
                     monitor_params = NULL, refcats = "largest",
                     modelfile = NULL, overwrite = F,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
-                    MCMCpackage = "JAGS", center = T, scale = T,
+                    MCMCpackage = "JAGS",
                     meth = NULL, Mlist = NULL, K = NULL, K_imp = NULL,
-                    imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL){
+                    imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL,
+                    scale_vars = NULL, scale_pars = NULL){
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$analysis_type <- "lme"
@@ -191,9 +202,10 @@ glm_imp <- function(fixed, family, data, auxvars = NULL,
                     monitor_params = NULL, refcats = "largest",
                     modelfile = NULL, overwrite = F,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
-                    MCMCpackage = "JAGS", center = F, scale = F,
+                    MCMCpackage = "JAGS",
                     meth = NULL, Mlist = NULL, K = NULL, K_imp = NULL,
-                    imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL){
+                    imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL,
+                    scale_vars = NULL, scale_pars = NULL){
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
 

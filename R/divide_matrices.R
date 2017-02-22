@@ -7,7 +7,7 @@
 #' @return a list containing the matrices
 #' @export
 
-divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scaling = T) {
+divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scale_vars = NULL) {
   id <- extract_id(random)
 
   groups <- if (!is.null(id)) {
@@ -21,12 +21,10 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scaling = 
   # remove grouping specification from random effects formula
   random2 <- remove_grouping(random)
 
-
   # random effects design matrix
   Z <- if (!is.null(random)) {
     model.matrix(as.formula(random2), DF)
   }
-
 
   # fixed effects design matrices
   fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed), fixed = T),
@@ -37,27 +35,8 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scaling = 
   contr <- as.list(rep("contr.treatment", length(ord)))
   names(contr) <- ord
 
-  if (scaling == T) {
-    scale_vars <- all.vars(fixed2)[which(!all.vars(fixed2) %in%
-                                           c(colnames(y), colnames(Z),
-                                             names(DF)[sapply(DF, is.factor)]))]
-    # scale_pars <- matrix(ncol = 2, nrow = length(scale_vars),
-    #                      dimnames = list(scale_vars, c("center", "scale")))
-    #
-    # for (i in scale_vars) {
-    #   if (!check_tvar(x = DF_orig[, i], groups)) {
-    #     shortrows <- match(unique(groups), groups)
-    #     longrows <- match(groups, unique(groups))
-    #   } else {
-    #     shortrows <- longrows <- 1:nrow(DF)
-    #   }
-    #   scv <- scale(DF[shortrows, i])#, center = center, scale = scale)
-    #   DF[, i] <- scv[longrows]
-    #   scale_pars[i, ] <- c(attr(scv, "scaled:center"), attr(scv, "scaled:scale"))
-    # }
-  }else{
-    scale_pars <- NULL
-  }
+
+  if (is.null(scale_vars)) scale_vars <- find_continuous_main(fixed2, DF)
 
 
   X <- model.matrix(fixed,
@@ -107,7 +86,7 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scaling = 
     X2[, which(tvar & !names(tvar) %in% colnames(Z)), drop = F]
   }
 
-  hc_list <- get_hc_list(X2, Xc, Xic, Z, Xlong)
+  hc_list <- if (!is.null(random)) get_hc_list(X2, Xc, Xic, Z, Xlong)
 
 
   if (!is.null(Xlong)) {
@@ -138,5 +117,5 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scaling = 
 
   return(list(y = y, Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat,
               Z = Z, hc_list = hc_list, cat_vars = cat_vars,
-              auxvars = auxvars, groups = groups, scale_pars = scale_pars))
+              auxvars = auxvars, groups = groups, scale_vars = scale_vars))
 }

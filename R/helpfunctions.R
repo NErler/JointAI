@@ -30,11 +30,11 @@ extract_y <- function(fixed) {
     fixed <- as.formula(fixed)
   }
   y <- sub("[[:space:]]*\\~[[:print:]]*", "",
-                     deparse(fixed, width.cutoff = 500))
+           deparse(fixed, width.cutoff = 500))
   if (y == "" | is.na(y) | is.null(y)) {
     stop("\nUnable to extract the outcome variable.")
   }
- return(y)
+  return(y)
 }
 
 
@@ -88,7 +88,7 @@ find_positions <- function(nams1, nams2) {
 #' Find the position(s) of a variable in a model matrix
 #' @param varname character string to look for
 #' @param DF data frame containing the variable
-#' @param X model matrix
+#' @param colnams column names of model matrix
 #' @return named vector specifying the columns in X that relate to varname
 #' @export
 match_positions <- function(varname, DF, colnams) {
@@ -150,37 +150,37 @@ grep_names <- function(nams1, nams2){
 #'
 #' @export
 # get_hc_list <- function(X2_names, Xc_names, Z_names) {
-  # hc_vars <- hc_list <- if (length(Z_names) > 1) {
-  #   lapply(sapply(Z_names[-1], gen_pat, simplify = F),
-  #          grep_names, X2_names)
-  # }
-  # for (i in 1:length(hc_vars)) {
-  #   if (length(hc_vars[[i]]) > 0) {
-  #     matchvars <- gsub(paste(gen_pat(names(hc_vars)[i]), collapse = "|"),
-  #                       "", hc_vars[[i]])
-  #
-  #     a <- character(length(matchvars))
-  #     hc_vec <- NA
-  #     for (j in 1:length(matchvars)) {
-  #       if (is.na(matchvars[j])) {
-  #         a[j] <- NA
-  #         hc_vec[j] <- NA
-  #       } else {
-  #         if (matchvars[j] == "") {
-  #           a[j] <- "Z"
-  #           hc_vec[j] <- NA # match(names(hc_vars)[i], Z_names)
-  #         } else {
-  #           a[j] <- if (matchvars[j] %in% Xc_names) "Xc" else NA
-  #           hc_vec[j] <- match(matchvars[j], Xc_names)
-  #         }
-  #       }
-  #     }
-  #     attr(hc_vec, "matrix") <- a
-  #     names(hc_vec) <- hc_vars[[i]]
-  #
-  #     hc_list[[i]] <- hc_vec
-  #   }
-  # }
+# hc_vars <- hc_list <- if (length(Z_names) > 1) {
+#   lapply(sapply(Z_names[-1], gen_pat, simplify = F),
+#          grep_names, X2_names)
+# }
+# for (i in 1:length(hc_vars)) {
+#   if (length(hc_vars[[i]]) > 0) {
+#     matchvars <- gsub(paste(gen_pat(names(hc_vars)[i]), collapse = "|"),
+#                       "", hc_vars[[i]])
+#
+#     a <- character(length(matchvars))
+#     hc_vec <- NA
+#     for (j in 1:length(matchvars)) {
+#       if (is.na(matchvars[j])) {
+#         a[j] <- NA
+#         hc_vec[j] <- NA
+#       } else {
+#         if (matchvars[j] == "") {
+#           a[j] <- "Z"
+#           hc_vec[j] <- NA # match(names(hc_vars)[i], Z_names)
+#         } else {
+#           a[j] <- if (matchvars[j] %in% Xc_names) "Xc" else NA
+#           hc_vec[j] <- match(matchvars[j], Xc_names)
+#         }
+#       }
+#     }
+#     attr(hc_vec, "matrix") <- a
+#     names(hc_vec) <- hc_vars[[i]]
+#
+#     hc_list[[i]] <- hc_vec
+#   }
+# }
 get_hc_list <- function(X2, Xc, Xic, Z, Xlong) {
   hc_vars <- hc_list <- if (ncol(Z) > 1) {
     lapply(sapply(colnames(Z)[-1], gen_pat, simplify = F),
@@ -224,20 +224,77 @@ capitalize <- function(string)
 }
 
 
-scaled_data.matrix <- function(X, scale_vars, scaling) {
-  if (any(colnames(X) %in% scale_vars)) {
-    scale_pars <- list()
-    for (i in scale_vars[scale_vars %in% colnames(X)]) {
-      scv <- scale(X[, i])
-      X[, i] <- scv
-      scale_pars[[i]] <- c(center = attr(scv, "scaled:center"),
-                           scale = attr(scv, "scaled:scale"))
+scaled_data.matrix <- function(X, scale_vars, scale_pars) {
+  if (any(scale_pars == F, scale_vars == F))
+    scale_pars <- scale_vars <- F
+
+  if (is.matrix(scale_pars)) {
+    if (any(colnames(X) %in% colnames(scale_pars))) {
+      X[, colnames(scale_pars)] <-
+        sapply(colnames(scale_pars),
+               function(x) (x - scale_pars["center", x])/scale_pars["scale", x]
+        )
     }
   } else {
-    scale_pars <- NULL
+    if (is.null(scale_pars) & any(colnames(X) %in% scale_vars)) {
+      scale_pars <- list()
+      for (i in scale_vars[scale_vars %in% colnames(X)]) {
+        scv <- scale(X[, i])
+        X[, i] <- scv
+        scale_pars[[i]] <- c(center = attr(scv, "scaled:center"),
+                             scale = attr(scv, "scaled:scale"))
+      }
+    } else {
+      scale_pars <- NULL
+    }
+
   }
   return(list(X = data.matrix(X), scale_pars = scale_pars))
 }
 
 
+#' Function to find the names of columns in the model matrix that involve
+#' continuous covariates (and hence may need to be scaled)
+#' for now not used
+find_continuous <- function(fixed, DF, contr = NULL) {
+  # remove left side of formula
+  fmla <- as.formula(sub("[[:print:]]*\\~", "~",
+                         deparse(fixed, width.cutoff = 500)))
+
+  # check which variables involved are continuous
+  is_continuous <- !sapply(DF[, all.vars(fmla)], is.factor)
+
+  elmts <- attr(terms(fmla), "term.labels")
+
+  fixed_c <- as.formula(
+    paste("~",
+          paste(elmts[unique(unlist(sapply(names(is_continuous)[is_continuous],
+                                           grep, elmts)))],
+                collapse = " + ")
+    )
+  )
+
+  colnames(model.matrix(fixed_c, DF, contrasts.arg = contr)[, -1L , drop = F])
+}
+
+
+#' Function to find the names of columns in the model matrix that involve
+#' continuous covariates (and hence may need to be scaled) - only main effects
+find_continuous_main <- function(fixed, DF) {
+  # remove left side of formula
+  fmla <- as.formula(sub("[[:print:]]*\\~", "~",
+                         deparse(fixed, width.cutoff = 500)))
+
+  # check which variables involved are continuous
+  is_continuous <- !sapply(model.frame(fmla, DF), is.factor)
+
+  names(is_continuous)[is_continuous]
+}
+
+
+#' Split an * in a formula into + and :
+split_interaction <- function(x) {
+  elmts <- strsplit(x, "[*]")[[1]]
+  paste(c(elmts, paste(elmts, collapse = ":")), collapse = " + ")
+}
 

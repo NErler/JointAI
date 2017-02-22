@@ -11,7 +11,7 @@ match_positions(varname, DF, colnams)
 
 \item{DF}{data frame containing the variable}
 
-\item{X}{model matrix}
+\item{colnams}{column names of model matrix}
 }
 \value{
 named vector specifying the columns in X that relate to varname
