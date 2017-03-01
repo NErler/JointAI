@@ -7,22 +7,22 @@
 \alias{glm_imp}
 \title{Joint analysis and imputation}
 \usage{
-lm_imp(fixed, data, auxvars = NULL, monitor_params = NULL,
-  refcats = "largest", modelfile = NULL, overwrite = F, n.chains = 3,
-  n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
-  MCMCpackage = "JAGS", meth = NULL, Mlist = NULL, K = NULL,
-  K_imp = NULL, imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL,
-  scale_vars = NULL, scale_pars = NULL)
+lm_imp(fixed, data, auxvars = NULL, monitor_params = NULL, refcats = NULL,
+  modelfile = NULL, overwrite = F, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, runMCMC = F, MCMCpackage = "JAGS",
+  meth = NULL, Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
+  dest_cols = NULL, imp_par_list = NULL, scale_vars = NULL,
+  scale_pars = NULL)
 
 lme_imp(fixed, data, random, auxvars = NULL, monitor_params = NULL,
-  refcats = "largest", modelfile = NULL, overwrite = F, n.chains = 3,
+  refcats = NULL, modelfile = NULL, overwrite = F, n.chains = 3,
   n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
   MCMCpackage = "JAGS", meth = NULL, Mlist = NULL, K = NULL,
   K_imp = NULL, imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL,
   scale_vars = NULL, scale_pars = NULL)
 
 glm_imp(fixed, family, data, auxvars = NULL, monitor_params = NULL,
-  refcats = "largest", modelfile = NULL, overwrite = F, n.chains = 3,
+  refcats = NULL, modelfile = NULL, overwrite = F, n.chains = 3,
   n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
   MCMCpackage = "JAGS", meth = NULL, Mlist = NULL, K = NULL,
   K_imp = NULL, imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL,

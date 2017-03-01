@@ -38,11 +38,10 @@ get_model_dim <- function(ncols, hc_list){
 #' Determine positions of incomplete variables in the data matrices
 #' @param meth named vector specifying the imputation methods and ordering of
 #'        the imputation models
-#' @param DF data frame
 #' @param Mlist a named list with the entries "Xc", "Xic", "Xl", "Xil", "Z"
 #' @return a list?
 #' @export
-get_imp_pos <- function(meth, DF, Mlist){
+get_imp_pos <- function(meth, Mlist){
   if (is.null(meth)) return(NULL)
 
   for (i in 1:length(Mlist)) {
@@ -50,7 +49,15 @@ get_imp_pos <- function(meth, DF, Mlist){
   }
 
   # positions of the variables in the cross-sectional data matrix Xc
-  pos_Xc <- sapply(names(meth), match_positions, DF, colnames(Xc), simplify = F)
+  pos_Xc <- sapply(names(meth), function(x) {
+    nams <- if (x %in% names(refs)) {
+      paste0(x, levels(refs[[x]])[levels(refs[[x]]) != refs[[x]]])
+    } else {
+      x
+    }
+    setNames(match(nams, colnames(Xc)), nams)
+  }, simplify = F)
+  # pos_Xc <- sapply(names(meth), match_positions, DF, colnames(Xc), simplify = F)
 
   # positions of the interaction variables in the cross-sectional matrix Xic
   if (!is.null(Xic)) {

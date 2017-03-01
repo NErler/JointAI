@@ -34,7 +34,7 @@ paste_predictor <- function(varname, par_elmts, Xc_cols, par_name, indent) {
 #' to be imputed
 #' @export
 get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
-                             refcats) {
+                             refs) {
   list(varname = varname,
        impmeth = impmeth,
        intercept = !impmeth %in% c("ordinal"),
@@ -58,8 +58,9 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
        ncat = if (impmeth %in% c("ordinal", "multinomial")) {
          length(dest_cols[[varname]]$Xc) + 1
        },
-       refcat = if (impmeth %in% c("ordinal", "multinomial")) {
-         get_refcat(varname, Xcat, refcats)
+       refcat = if (impmeth %in% c("logit", "ordinal", "multinomial")) {
+         which(refs[[varname]] == levels(refs[[varname]]))
+         # get_refcat(varname, Xcat, refcats)
        },
        par_name = "alpha"
   )
@@ -106,6 +107,7 @@ get_refcat <- function(varname, Xcat, refcats) {
 #' @param varname variable name
 #' @param Xc_names column names of the design matrix of baseline effects
 #' @param Xcat_names column names of the matrix of categorical variables
+#' @export
 # get_dest_column <- function(meth, varname, Xc, Xcat) {
 #   match(varname,
 #         if (impmeth %in% c("multinomial", "ordinal")) {
@@ -114,9 +116,13 @@ get_refcat <- function(varname, Xcat, refcats) {
 #           colnames(Xc)
 #         })
 # }
-get_dest_column <- function(varname, DF, Xc_names, Xcat_names) {
-  list("Xc" = match_positions(varname, DF, Xc_names),
-       "Xcat" = match(varname, Xcat_names))
+get_dest_column <- function(varname, refs, Xc_names, Xcat_names) {
+  nams <- paste0(varname,
+                 levels(refs[[varname]])[levels(refs[[varname]]) !=
+                                           refs[[varname]]])
+
+  list("Xc" = setNames(match(nams, Xc_names), nams),
+       "Xcat" = setNames(match(varname, Xcat_names), varname))
 }
 
 

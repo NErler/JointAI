@@ -31,7 +31,8 @@ model_imp <- function(arglist) {
     link <- NULL
   }
 
-  for (x in c("random", "scale_vars", "scale_pars", "auxvars")) {
+  for (x in c("meth", "random", "scale_vars", "scale_pars", "auxvars",
+              "refcats", "modelfile", "Mlist", "K", "K_imp")) {
     if (!exists(x)) assign(x, NULL)
   }
 
@@ -62,7 +63,7 @@ model_imp <- function(arglist) {
   print(scale_vars)
   if (is.null(Mlist)) {
     Mlist <- divide_matrices(data, fixed, random = random, auxvars = auxvars,
-                             scale_vars = scale_vars)
+                             scale_vars = scale_vars, refcats = refcats)
   }
 
   cat("Mlist done", "\n")
@@ -74,7 +75,7 @@ model_imp <- function(arglist) {
   cat("K done", "\n")
 
   if (is.null(imp_pos)) {
-    imp_pos <- get_imp_pos(meth, data, Mlist)
+    imp_pos <- get_imp_pos(meth, Mlist)
   }
 
   if (is.null(K_imp)) {
@@ -82,7 +83,7 @@ model_imp <- function(arglist) {
   }
 
   if (is.null(dest_cols)) {
-    dest_cols <- sapply(names(meth), get_dest_column, data, colnames(Mlist$Xc),
+    dest_cols <- sapply(names(meth), get_dest_column, Mlist$refs, colnames(Mlist$Xc),
                         colnames(Mlist$Xcat), simplify = F)
   }
 
@@ -91,7 +92,7 @@ model_imp <- function(arglist) {
   if (is.null(imp_par_list)) {
     imp_par_list <- mapply(get_imp_par_list, meth, names(meth),
                            MoreArgs = list(Mlist$Xc, Mlist$Xcat, K_imp, dest_cols,
-                                           refcats),
+                                           Mlist$refs),
                            SIMPLIFY = F)
   }
 
@@ -117,9 +118,9 @@ model_imp <- function(arglist) {
   cat("data_list written", "\n")
 
   if (runMCMC) {
-    adapt <- rjags::jags.model(file = modelfile, data = data_list$data_list,
+    adapt <- try(rjags::jags.model(file = modelfile, data = data_list$data_list,
                                inits = NULL,
-                               n.chains = n.chains, n.adapt = n.adapt)
+                               n.chains = n.chains, n.adapt = n.adapt))
 
     if (is.null(monitor_params)) {
       monitor_params <- c("analysis_main" = T)
@@ -131,9 +132,9 @@ model_imp <- function(arglist) {
                                        monitor_params))
 
     mcmc <- if (n.iter > 0) {
-      rjags::coda.samples(adapt, n.iter = n.iter,
+      try(rjags::coda.samples(adapt, n.iter = n.iter,
                           variable.names = var.names,
-                          na.rm = F)
+                          na.rm = F))
     }
   }
 
@@ -147,7 +148,7 @@ model_imp <- function(arglist) {
                         thin = thin)
 
   return(structure(
-    list(meth = meth, Mlist = Mlist, K = K, K_imp = K_imp,
+    list(meth = meth, fixed = fixed, random = random, Mlist = Mlist, K = K, K_imp = K_imp,
               mcmc_settings = mcmc_settings,
               data_list = data_list$data_list,
               scale_pars = data_list$scale_pars,
@@ -160,7 +161,7 @@ model_imp <- function(arglist) {
 #' @rdname model_imp
 #' @export
 lm_imp <- function(fixed, data, auxvars = NULL,
-                   monitor_params = NULL, refcats = "largest",
+                   monitor_params = NULL, refcats = NULL,
                    modelfile = NULL, overwrite = F,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
                    MCMCpackage = "JAGS",
@@ -179,7 +180,7 @@ lm_imp <- function(fixed, data, auxvars = NULL,
 #' @rdname model_imp
 #' @export
 lme_imp <- function(fixed, data, random, auxvars = NULL,
-                    monitor_params = NULL, refcats = "largest",
+                    monitor_params = NULL, refcats = NULL,
                     modelfile = NULL, overwrite = F,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
                     MCMCpackage = "JAGS",
@@ -199,7 +200,7 @@ lme_imp <- function(fixed, data, random, auxvars = NULL,
 #' @rdname model_imp
 #' @export
 glm_imp <- function(fixed, family, data, auxvars = NULL,
-                    monitor_params = NULL, refcats = "largest",
+                    monitor_params = NULL, refcats = NULL,
                     modelfile = NULL, overwrite = F,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
                     MCMCpackage = "JAGS",

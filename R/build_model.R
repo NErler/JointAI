@@ -33,11 +33,12 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
   Xic <- Mlist$Xic
 
   interactions <- if (!is.null(Xic)) {
-    if (any(is.na(Xic))) {
+    #if (any(is.na(Xic))) {
       splitnam <- sapply(colnames(Xic)[apply(is.na(Xic), 2, any)],
                          strsplit, split = ":")
       Xc_pos <- lapply(splitnam, match, colnames(Mlist$Xc))
       Xic_pos <- match(colnames(Xic)[apply(is.na(Xic), 2, any)], colnames(Xic))
+      #  the above line may be too complicated (left over from previous version)
 
       paste0(
         tab(), "# -------------------------------------------- #", "\n",
@@ -48,7 +49,7 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
                                   mat0_col = Xic_pos, mat1_col = Xc_pos),
                collapse = "\n"), "\n",
         tab(), "}", "\n")
-    }
+    # }
   }
 
 

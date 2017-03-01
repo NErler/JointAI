@@ -224,33 +224,7 @@ capitalize <- function(string)
 }
 
 
-scaled_data.matrix <- function(X, scale_vars, scale_pars) {
-  if (any(scale_pars == F, scale_vars == F))
-    scale_pars <- scale_vars <- F
 
-  if (is.matrix(scale_pars)) {
-    if (any(colnames(X) %in% colnames(scale_pars))) {
-      X[, colnames(scale_pars)] <-
-        sapply(colnames(scale_pars),
-               function(x) (x - scale_pars["center", x])/scale_pars["scale", x]
-        )
-    }
-  } else {
-    if (is.null(scale_pars) & any(colnames(X) %in% scale_vars)) {
-      scale_pars <- list()
-      for (i in scale_vars[scale_vars %in% colnames(X)]) {
-        scv <- scale(X[, i])
-        X[, i] <- scv
-        scale_pars[[i]] <- c(center = attr(scv, "scaled:center"),
-                             scale = attr(scv, "scaled:scale"))
-      }
-    } else {
-      scale_pars <- NULL
-    }
-
-  }
-  return(list(X = data.matrix(X), scale_pars = scale_pars))
-}
 
 
 #' Function to find the names of columns in the model matrix that involve
@@ -287,6 +261,7 @@ find_continuous_main <- function(fixed, DF) {
 
   # check which variables involved are continuous
   is_continuous <- !sapply(model.frame(fmla, DF), is.factor)
+  # Note: does this have to be so complicated? can't I just take the columns of DF???
 
   names(is_continuous)[is_continuous]
 }

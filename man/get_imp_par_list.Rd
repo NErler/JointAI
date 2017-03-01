@@ -4,7 +4,7 @@
 \alias{get_imp_par_list}
 \title{Creates a list of parameters that will be passed to the functions generating the imputation models}
 \usage{
-get_imp_par_list(impmeth, varname, Xc, Xcat, K_imp, dest_cols, refcats)
+get_imp_par_list(impmeth, varname, Xc, Xcat, K_imp, dest_cols, refs)
 }
 \arguments{
 \item{impmeth}{character string specifying the imputation method}

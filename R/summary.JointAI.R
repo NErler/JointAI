@@ -62,11 +62,12 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
   # re-scale parameters
   if (!is.null(scale_pars)) {
-    MCMC[, names(scale_pars)] <- sapply(names(scale_pars),
-                                        function(x) MCMC[, x]/scale_pars["scale", x])
-
-    MCMC[, "(Intercept)"] <- MCMC[, "(Intercept)"] -
-      MCMC[, names(scale_pars)] %*% t(scale_pars["center", ])
+    MCMC <- sapply(colnames(MCMC), rescale, object$fixed, scale_pars, MCMC, object$Mlist$refs)
+    # MCMC[, names(scale_pars)] <- sapply(names(scale_pars),
+    #                                     function(x) MCMC[, x]/scale_pars["scale", x])
+    #
+    # MCMC[, "(Intercept)"] <- MCMC[, "(Intercept)"] -
+    #   MCMC[, names(scale_pars)] %*% t(scale_pars["center", ])
   }
 
   # create results matrix
@@ -109,34 +110,20 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3)) {
 
 
 
+#
+# refcats <- list("B2" = factor(0, levels = c(0,1)),
+#                 "O2" = factor(1, levels = levels(longDF$O2)))
+#
 
 
 
-scale_pars <- lme1$scale_pars
-new_names <- colnames(attr(terms(fixed), "factors"))[
-  colnames(attr(terms(fixed), "factors")) %in% rownames(attr(terms(fixed), "factors")) &
-    !colnames(attr(terms(fixed), "factors")) %in% names(scale_pars)]
+# new_names <- colnames(attr(terms(fixed), "factors"))[
+#   colnames(attr(terms(fixed), "factors")) %in% rownames(attr(terms(fixed), "factors")) &
+#     !colnames(attr(terms(fixed), "factors")) %in% names(scale_pars)]
+#
+# for (k in get_dummies(new_names, refcats)) {
+#   scale_pars[c("center", "scale"), k] <- c(0, 1)
+# }
 
-scale_pars[c("center", "scale"), new_names] <- c(0, 1)
 
-
-rescale <- function(x, fixed, scale_pars, MCMC) {
-  coefs <- colnames(attr(terms(fixed), "factors"))
-  coef_split <- strsplit(coefs, ":")
-  names(coef_split) <- coefs
-
-  pars <- sapply(coef_split, "%in%", x = x)
-
-  vec <- MCMC[, x, drop = F]
-  interact <- names(pars[names(pars) != x & pars])
-
-  interactions <- sapply(interact, function(i) {
-    other <- coef_split[[i]][coef_split[[i]] != x]
-    MCMC[ , i] / prod(scale_pars["scale", coef_split[[i]]]) * scale_pars["center", other]
-  })
-
-  new_vec <- vec / scale_pars["scale", x] - rowSums(interactions)
-
-  return(new_vec)
-}
 

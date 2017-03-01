@@ -7,7 +7,7 @@
 #' @return a list containing the matrices
 #' @export
 
-divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scale_vars = NULL) {
+divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scale_vars = NULL, refcats = NULL) {
   id <- extract_id(random)
 
   groups <- if (!is.null(id)) {
@@ -35,6 +35,16 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scale_vars
   contr <- as.list(rep("contr.treatment", length(ord)))
   names(contr) <- ord
 
+  # refcats <- list("B2" = factor(0, levels = c(0,1)),
+  #                 "O2" = factor(1, levels = levels(longDF$O2)))
+
+
+  factors <- all.vars(fixed2)[sapply(DF[, all.vars(fixed2)], is.factor)]
+
+  refs <- get_refs(factors, refcats, DF)
+  for (i in names(refs)) {
+    DF[, i] <- relevel(factor(DF[, i], ordered = F), as.character(refs[[i]]))
+  }
 
   if (is.null(scale_vars)) scale_vars <- find_continuous_main(fixed2, DF)
 
@@ -64,7 +74,8 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scale_vars
     Xcross[, interact, drop = F]
   }
   if (!is.null(Xic)) {
-    Xic[, colSums(is.na(Xic)) > 0] <- NA
+    # Xic[, colSums(is.na(Xic)) > 0] <- NA
+    Xic <- Xic * NA
   }
 
   cat_vars <- names(which(lapply(
@@ -116,6 +127,6 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scale_vars
 
 
   return(list(y = y, Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat,
-              Z = Z, hc_list = hc_list, cat_vars = cat_vars,
+              Z = Z, hc_list = hc_list, cat_vars = cat_vars, refs = refs,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars))
 }

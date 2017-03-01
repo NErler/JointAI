@@ -4,13 +4,11 @@
 \alias{get_imp_pos}
 \title{Determine positions of incomplete variables in the data matrices}
 \usage{
-get_imp_pos(meth, DF, Mlist)
+get_imp_pos(meth, Mlist)
 }
 \arguments{
 \item{meth}{named vector specifying the imputation methods and ordering of
 the imputation models}
-
-\item{DF}{data frame}
 
 \item{Mlist}{a named list with the entries "Xc", "Xic", "Xl", "Xil", "Z"}
 }
