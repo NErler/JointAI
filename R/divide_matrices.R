@@ -124,6 +124,10 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scale_vars
       Xlong[, linteract[!linteract %in% hc_interact], drop = F]
     }
 
+    if (!is.null(Xil)) {
+      Xil <- Xil * NA
+    }
+
     if (!is.null(Xl)) {
       if (sum(is.na(Xl)) > 0) {
         stop("Missing values in the longitudinal variables are not allowed.")

@@ -41,9 +41,9 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
       #  the above line may be too complicated (left over from previous version)
 
       paste0(
-        tab(), "# -------------------------------------------- #", "\n",
-        tab(), "# Interactions involving incomplete covariates #", "\n",
-        tab(), "# -------------------------------------------- #", "\n\n",
+        tab(), "# ------------------------------------------------------ #", "\n",
+        tab(), "# Interactions involving only cross-sectional covariates #", "\n",
+        tab(), "# ------------------------------------------------------ #", "\n\n",
         tab(), "for (i in 1:", N, ") {", "\n",
         paste0(paste_interactions(index = "i", mat0 = "Xic", mat1 = "Xc",
                                   mat0_col = Xic_pos, mat1_col = Xc_pos),
@@ -52,6 +52,40 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
     # }
   }
 
+  # Interactions within longitudinal variables
+  Xil <- Mlist$Xil
+
+  interactions_long <- if (!is.null(Xil)) {
+    splitnam <- sapply(colnames(Xil)[apply(is.na(Xil), 2, any)],
+                       strsplit, split = ":")
+    Xc_pos <- lapply(splitnam, match, colnames(Mlist$Xc))
+    Xl_pos <- lapply(splitnam, match, colnames(Mlist$Xl))
+    Xil_pos <- match(names(splitnam), colnames(Xil))
+
+    mat1 <- sapply(names(splitnam), function(x) {
+      a <- vector("character", length(splitnam[[x]]))
+      a[which(!is.na(Xc_pos[[x]]))] <- "Xc"
+      a[which(!is.na(Xl_pos[[x]]))] <- "Xl"
+      a
+    }, simplify = F)
+    mat1_col <- sapply(names(splitnam), function(x) {
+      a <- vector("numeric", length(splitnam[[x]]))
+      a[which(!is.na(Xc_pos[[x]]))] <- Xc_pos[[x]][which(!is.na(Xc_pos[[x]]))]
+      a[which(!is.na(Xl_pos[[x]]))] <- Xl_pos[[x]][which(!is.na(Xl_pos[[x]]))]
+      a
+    }, simplify = F)
+
+    paste0(
+      tab(), "# ---------------------------------------------- #", "\n",
+      tab(), "# Interactions involving longitudinal covariates #", "\n",
+      tab(), "# ---------------------------------------------- #", "\n\n",
+      tab(), "for (j in 1:", Ntot, ") {", "\n",
+      paste0(paste_long_interactions(index = "j", mat0 = "Xil", mat1 = mat1,
+                                mat0_col = Xil_pos, mat1_col = mat1_col),
+             collapse = "\n"), "\n",
+      tab(), "}", "\n")
+    # }
+  }
 
   # imputation section of the model
 
@@ -88,6 +122,7 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
     "\n\n",
     imputation_part, "\n\n",
     interactions, "\n",
+    interactions_long, "\n",
     "}"
   )
 }
