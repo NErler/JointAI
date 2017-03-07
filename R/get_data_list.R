@@ -3,7 +3,7 @@
 #' @param meth vector of imputation methods
 #' @param Mlist list of data matrices etc.
 #' @export
-get_data_list <- function(analysis_type, meth, Mlist, scale_pars = NULL) {
+get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvas, scale_pars = NULL) {
 
   scaled <- get_scaling(Mlist, scale_pars)
 
@@ -11,7 +11,7 @@ get_data_list <- function(analysis_type, meth, Mlist, scale_pars = NULL) {
   l[[names(Mlist$y)]] <- if (any(sapply(Mlist$y, is.factor))) {
     c(sapply(Mlist$y, as.numeric) - 1)
   } else {
-    c(Mlist$y)
+    unname(unlist(Mlist$y))
   }
   l <- c(l,
          scaled$scaled_matrices
@@ -24,8 +24,11 @@ get_data_list <- function(analysis_type, meth, Mlist, scale_pars = NULL) {
   # hyperparameters analysis model
   l$mu_reg_main <- 0
   l$tau_reg_main <- 0.01
-  l$a_tau_main <- 0.01
-  l$b_tau_main <- 0.001
+  if (!family %in% c("binomial", "Poisson")) {
+    l$a_tau_main <- 0.01
+    l$b_tau_main <- 0.001
+  }
+
 
   if (analysis_type == "lme") {
     l$groups <- match(Mlist$groups, unique(Mlist$groups))
@@ -62,6 +65,19 @@ get_data_list <- function(analysis_type, meth, Mlist, scale_pars = NULL) {
     l$tau_reg_ordinal <- 4/9
     l$mu_delta_ordinal <- 0
     l$tau_delta_ordinal <- 0.001
+  }
+
+  if (!is.null(Mlist$auxvars)) {
+    l$beta <- setNames(rep(NA, max(K, na.rm = T)), get_coef_names(Mlist, K)[, 2])
+    nams <- sapply(Mlist$auxvars, function(x) {
+      if (x %in% names(Mlist$refs)) {
+        paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) !=
+                                            Mlist$refs[[x]]])
+      } else {
+        x
+      }
+    })
+    l$beta[unlist(nams)] <- 0
   }
 
   return(list(data_list = l,

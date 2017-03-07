@@ -33,7 +33,8 @@ scaled_data.matrix <- function(X, scale_vars, scale_pars) {
 }
 
 
-
+#' function for scaling
+#' @export
 get_scaling <- function(Mlist, scale_pars = NULL) {
   # if (is.null(scale_pars)) {
   #   scale_vars <- Mlist$scale_vars
@@ -53,13 +54,13 @@ get_scaling <- function(Mlist, scale_pars = NULL) {
     names(scale_pars) <- unlist(lapply(lapply(scaled_dat, "[[", 2), names))
 
 
-    scale_terms1 <- attr(terms(fixed), "factors")[names(scale_pars), , drop = F]
-    scale_terms2 <- attr(terms(fixed), "factors")[, which(colSums(scale_terms1) > 0), drop = F]
+    scale_terms1 <- attr(terms(Mlist$fixed2), "factors")[names(scale_pars), , drop = F]
+    scale_terms2 <- attr(terms(Mlist$fixed2), "factors")[, which(colSums(scale_terms1) > 0), drop = F]
     scale_terms2 <- scale_terms2[which(rowSums(scale_terms2) > 0), , drop = F]
     scale_terms3 <- scale_terms2
 
     for (i in 1:nrow(scale_terms3)) {
-      invin.col <- which(scale_terms2[i, , drop = F] == 1)
+      invin.col <- which(scale_terms2[i, , drop = F] > 0)
       invin.row <- which(rowSums(scale_terms2[, invin.col, drop = F]) > 0)
       scale_terms3[invin.row, i] <- 1
     }

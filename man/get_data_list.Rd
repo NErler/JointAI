@@ -4,7 +4,8 @@
 \alias{get_data_list}
 \title{Create list of data passed to JAGS}
 \usage{
-get_data_list(analysis_type, meth, Mlist, scale_pars = NULL)
+get_data_list(analysis_type, family, meth, Mlist, K, auxvas,
+  scale_pars = NULL)
 }
 \arguments{
 \item{meth}{vector of imputation methods}

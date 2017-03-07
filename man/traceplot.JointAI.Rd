@@ -4,7 +4,8 @@
 \alias{traceplot.JointAI}
 \title{Traceplots}
 \usage{
-\method{traceplot}{JointAI}(x)
+\method{traceplot}{JointAI}(x, start = NULL, end = NULL, thin = NULL,
+  subset = NULL)
 }
 \description{
 Traceplots

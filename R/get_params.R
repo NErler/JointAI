@@ -22,7 +22,7 @@
 #' @param delta_imp logical
 #' @param imps logical
 #' @export
-get_params <- function(meth, analysis_type,
+get_params <- function(meth, analysis_type, family,
                        Xc, Xcat, y_name = NULL, Zcols = NULL,
                        analysis_main = F,
                        analysis_random = F,
@@ -38,8 +38,10 @@ get_params <- function(meth, analysis_type,
 
   if (analysis_main) {
     if (is.null(betas)) betas <- TRUE
-    if (is.null(tau_y)) tau_y <- TRUE
-    if (is.null(sigma_y)) sigma_y <- TRUE
+    if (!family %in% c("binomial", "Poisson")) {
+      if (is.null(tau_y)) tau_y <- TRUE
+      if (is.null(sigma_y)) sigma_y <- TRUE
+    }
   }
 
   if (analysis_random) {
@@ -101,6 +103,7 @@ get_params <- function(meth, analysis_type,
                 paste0("Xcat[", apply(Xcat_NA, 1, paste, collapse = ","), "]")
     )
   }
+
   return(params)
 }
 

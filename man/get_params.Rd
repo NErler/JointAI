@@ -4,12 +4,12 @@
 \alias{get_params}
 \title{Get parameters to follow}
 \usage{
-get_params(meth, analysis_type, Xc, Xcat, y_name = NULL, Zcols = NULL,
-  analysis_main = F, analysis_random = F, imputation_pars = F,
-  imp_pars = F, imps = NULL, betas = NULL, tau_y = NULL,
-  sigma_y = NULL, ranef = NULL, invD = NULL, D = NULL, RinvD = NULL,
-  alphas = NULL, tau_imp = NULL, gamma_imp = NULL, delta_imp = NULL,
-  other = NULL)
+get_params(meth, analysis_type, family, Xc, Xcat, y_name = NULL,
+  Zcols = NULL, analysis_main = F, analysis_random = F,
+  imputation_pars = F, imp_pars = F, imps = NULL, betas = NULL,
+  tau_y = NULL, sigma_y = NULL, ranef = NULL, invD = NULL, D = NULL,
+  RinvD = NULL, alphas = NULL, tau_imp = NULL, gamma_imp = NULL,
+  delta_imp = NULL, other = NULL)
 }
 \arguments{
 \item{meth}{imputation method}

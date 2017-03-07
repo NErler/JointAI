@@ -62,7 +62,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
   # re-scale parameters
   if (!is.null(scale_pars)) {
-    MCMC <- sapply(colnames(MCMC), rescale, object$fixed, scale_pars, MCMC, object$Mlist$refs)
+    MCMC <- sapply(colnames(MCMC), rescale, object$Mlist$fixed2, scale_pars,
+                   MCMC, object$Mlist$refs)
     # MCMC[, names(scale_pars)] <- sapply(names(scale_pars),
     #                                     function(x) MCMC[, x]/scale_pars["scale", x])
     #

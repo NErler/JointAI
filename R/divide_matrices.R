@@ -35,15 +35,21 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scale_vars
   contr <- as.list(rep("contr.treatment", length(ord)))
   names(contr) <- ord
 
-  # refcats <- list("B2" = factor(0, levels = c(0,1)),
-  #                 "O2" = factor(1, levels = levels(longDF$O2)))
-
-
-  factors <- all.vars(fixed2)[sapply(DF[, all.vars(fixed2)], is.factor)]
+  covars <- all.vars(fixed2)[all.vars(fixed2) != extract_y(fixed2)]
+  factors <- covars[sapply(DF[, covars], is.factor)]
 
   refs <- get_refs(factors, refcats, DF)
   for (i in names(refs)) {
     DF[, i] <- relevel(factor(DF[, i], ordered = F), as.character(refs[[i]]))
+  }
+
+  if (!is.null(auxvars)) {
+    for (x in auxvars) {
+      if (x %in% names(refs)) {
+        dummies <- paste0(x, levels(refs[[x]])[levels(refs[[x]]) != refs[[x]]])
+        attr(refs[[x]], "dummies") <- dummies
+      }
+    }
   }
 
   if (is.null(scale_vars)) scale_vars <- find_continuous_main(fixed2, DF)
@@ -57,9 +63,11 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scale_vars
                      model.frame(fixed2, DF, na.action = na.pass),
                      contrasts.arg = contr)
 
-  auxvars <- if (any(is.na(match(colnames(X2), colnames(X))))) {
-    colnames(X2)[!colnames(X2) %in% colnames(X)]
-  }
+  # if (any(is.na(match(colnames(X2), c(colnames(X), auxvars))))) {
+    # warning("Interactions without main effects not allowed.",
+            # call. = F, immediate. = T)
+    # colnames(X2)[!colnames(X2) %in% colnames(X)]
+  # }
 
   tvar <- apply(X2, 2, check_tvar, groups)
 
@@ -79,7 +87,7 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scale_vars
   }
 
   cat_vars <- names(which(lapply(
-    lapply(DF[, colSums(is.na(DF)) > 0 & names(DF) %in% all.vars(fixed2)], levels),
+    lapply(DF[, colSums(is.na(DF)) > 0 & names(DF) %in% all.vars(fixed2), drop = F], levels),
     # lapply(DF[, all.vars(fixed2)], levels),
     length) > 2))
   cat_vars <- sapply(cat_vars, match_positions, DF, colnames(Xc), simplify = F)
@@ -128,5 +136,6 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scale_vars
 
   return(list(y = y, Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat,
               Z = Z, hc_list = hc_list, cat_vars = cat_vars, refs = refs,
-              auxvars = auxvars, groups = groups, scale_vars = scale_vars))
+              auxvars = auxvars, groups = groups, scale_vars = scale_vars,
+              fixed2 = fixed2))
 }

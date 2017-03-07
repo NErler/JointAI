@@ -1,6 +1,6 @@
 
-rescale <- function(x, fixed, scale_pars, MCMC, refs) {
-  coefs <- coef_lvl <- colnames(attr(terms(fixed), "factors"))
+rescale <- function(x, fixed2, scale_pars, MCMC, refs) {
+  coefs <- coef_lvl <- colnames(attr(terms(fixed2), "factors"))
 
   for (i in coefs[coefs %in% names(refs)]) {
     lvls <- levels(refs[[i]])[levels(refs[[i]]) != refs[[i]]]

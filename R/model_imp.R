@@ -54,7 +54,7 @@ model_imp <- function(arglist) {
 
   # default imputation methods, if not specified
   if (is.null(meth)) {
-    meth <- get_imp_meth(data, fixed, auxvars)
+    meth <- get_imp_meth(data, fixed, random, auxvars)
   }
 
   cat("meth done \n")
@@ -113,7 +113,8 @@ model_imp <- function(arglist) {
   }
   cat("model written", "\n")
 
-  data_list <- get_data_list(analysis_type, meth, Mlist, scale_pars = scale_pars)
+  data_list <- try(get_data_list(analysis_type, family, meth, Mlist, K, auxvars,
+                                 scale_pars = scale_pars))
 
   cat("data_list written", "\n")
 
@@ -126,6 +127,7 @@ model_imp <- function(arglist) {
       monitor_params <- c("analysis_main" = T)
     }
     var.names <- do.call(get_params, c(list(meth = meth, analysis_type = analysis_type,
+                                            family = family,
                                             y_name = colnames(Mlist$y),
                                             Zcols = ncol(Mlist$Z),
                                             Xc = Mlist$Xc, Xcat = Mlist$Xcat),
@@ -171,6 +173,7 @@ lm_imp <- function(fixed, data, auxvars = NULL,
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$analysis_type <- "lm"
+  arglist$family <- "gaussian"
 
   res <- model_imp(arglist)
   return(res)
@@ -190,6 +193,7 @@ lme_imp <- function(fixed, data, random, auxvars = NULL,
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$analysis_type <- "lme"
+  arglist$family <- "gaussian"
 
   res <- model_imp(arglist)
   return(res)
