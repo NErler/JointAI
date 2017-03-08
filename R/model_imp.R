@@ -65,7 +65,7 @@ model_imp <- function(arglist) {
 
   for (x in c("auxvars", "meth", "random", "monitor_params", "refcats",
               "modelfile", "scale_vars", "scale_pars", "Mlist", "K", "K_imp",
-              "imp_pos", "dest_cols", "imp_par_list")) {
+              "imp_pos", "dest_cols", "imp_par_list", "data_list")) {
     if (!x %in% ls()) assign(x, NULL)
   }
 
@@ -148,8 +148,12 @@ model_imp <- function(arglist) {
             call. = F, immediate. = T)
   }
 
-  data_list <- try(get_data_list(analysis_type, family, meth, Mlist, K, auxvars,
+
+  if (is.null(data_list)) {
+    data_list <- try(get_data_list(analysis_type, family, meth, Mlist, K, auxvars,
                                  scale_pars = scale_pars))
+  }
+
 
 
   adapt <- try(rjags::jags.model(file = modelfile, data = data_list$data_list,
