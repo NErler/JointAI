@@ -3,30 +3,18 @@
 \name{model_imp}
 \alias{model_imp}
 \alias{lm_imp}
-\alias{lme_imp}
 \alias{glm_imp}
+\alias{lme_imp}
 \title{Joint analysis and imputation}
 \usage{
-lm_imp(fixed, data, auxvars = NULL, monitor_params = NULL, refcats = NULL,
-  modelfile = NULL, overwrite = F, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, runMCMC = F, MCMCpackage = "JAGS",
-  meth = NULL, Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
-  dest_cols = NULL, imp_par_list = NULL, scale_vars = NULL,
-  scale_pars = NULL)
+lm_imp(fixed, data, n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+  MCMCpackage = "JAGS", ...)
 
-lme_imp(fixed, data, random, auxvars = NULL, monitor_params = NULL,
-  refcats = NULL, modelfile = NULL, overwrite = F, n.chains = 3,
-  n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
-  MCMCpackage = "JAGS", meth = NULL, Mlist = NULL, K = NULL,
-  K_imp = NULL, imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL,
-  scale_vars = NULL, scale_pars = NULL)
+glm_imp(fixed, family, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, MCMCpackage = "JAGS", ...)
 
-glm_imp(fixed, family, data, auxvars = NULL, monitor_params = NULL,
-  refcats = NULL, modelfile = NULL, overwrite = F, n.chains = 3,
-  n.adapt = 100, n.iter = 0, thin = 1, runMCMC = F,
-  MCMCpackage = "JAGS", meth = NULL, Mlist = NULL, K = NULL,
-  K_imp = NULL, imp_pos = NULL, dest_cols = NULL, imp_par_list = NULL,
-  scale_vars = NULL, scale_pars = NULL)
+lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, MCMCpackage = "JAGS", ...)
 }
 \arguments{
 \item{fixed}{a two sided formula describing the fixed-effects part of the
@@ -34,44 +22,63 @@ model (see \code{\link[stats]{formula}})}
 
 \item{data}{a data frame containing the variabels named in \code{fixed}}
 
-\item{auxvars}{an optional vector of variable names that shoud be included
-as predictors in the imputation procedure but are not part of
-the analysis model}
-
-\item{monitor_params}{a character vector giving the names of variables to be monitored, see details}
-
-\item{refcats}{a named vector specifying which category should be treated as
-as reference category for each categorical variable, "first"
-or "largest" (default). When \code{refcat = "largest"}, the
-category with the most observations is chosen for each
-categorical variable.}
-
-\item{modelfile}{optional name (and path) of the file the JAGS model will be
-written to}
-
-\item{overwrite}{logical}
-
 \item{n.chains}{the number of parallel chains for the model}
 
-\item{n.adapt}{the number of iterations for adaptation. See 
-    \code{\link{adapt}} for details. If \code{n.adapt = 0} then no 
-    adaptation takes place.}
+\item{n.adapt}{the number of iterations for adaptation.
+See \code{\link[rjags]{adapt}} for details. If n.adapt = 0
+then no adaptation takes place.}
 
 \item{n.iter}{number of iterations to monitor}
 
 \item{thin}{thinning interval for monitors}
 
-\item{runMCMC}{logical}
+\item{...}{additional, optional parameters, see below}
 
-\item{scale_vars}{NULL or a vector of variables to scale}
+\item{family}{only for \code{glm_imp}:
+a description of the error distribution and link function to
+be used in the model. This can be a character string naming a
+family function, a family function or the result of a call to
+a family function. (See \code{\link[stats]{family}} and the
+`Details` section below.)}
 
-\item{family}{a description of the error distribution and link
-    function to be used in the model.  For \code{glm} this can be a
-    character string naming a family function, a family function or the
-    result of a call to a family function.  For \code{glm.fit} only the
-    third option is supported.  (See \code{\link{family}} for details of
-    family functions.)}
+\item{random}{only for \code{lme_imp}:
+a one-sided formula of the form \code{~x1 + ... + xn | g},
+where \code{x1 + ... + xn} specifies the model for the random
+effects and \code{g} the grouping variable}
 }
 \description{
-Joint analysis and imputation
+\code{lm_imp}, \code{glm_imp} and \code{lme_imp} estimate linear, generalized
+linear and linear mixed models, respectively, using MCMC sampling.
 }
+\section{Optional arguments}{
+
+There are some optional parameters that can be passed to \code{...}
+\tabular{ll}{
+\code{auxvars} \tab vector of variable names that shoud be used as
+                    predictors in the imputation procedure (and will be
+                    imputed if necessary) but are not part of the analysis
+                    model\cr
+\code{refcats} \tab a named list specifying which category should be used as
+                    reference category for the categorical variables. "first"
+               or "largest" (default). When \code{refcat = "largest"}, the
+               category with the most observations is chosen for each
+               categorical variable.\cr
+\code{scale_vars} \tab named vector of (continuous) variables that will be
+                       scaled (so that mean = 0 and sd = 1) to improve
+                       convergence of the MCMC sampling. Default is that all
+                       continuous variables will be scaled.\cr
+\code{monitor_params} \tab a character vector giving the names of variables
+                           to be monitored, see details\cr
+\code{model file} \tab optional name (and path) of the file the JAGS model
+                       will be written to. Needs to be specified including
+                       the file ending. Possible file endings are \code{.R}
+                       or {.txt}.\cr
+\code{overwrite} \tab some explanation\cr
+}
+}
+
+\section{Details}{
+
+Some more details
+}
+
