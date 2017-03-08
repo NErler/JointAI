@@ -7,7 +7,9 @@
 #' @return a list containing the matrices
 #' @export
 
-divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scale_vars = NULL, refcats = NULL) {
+divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
+                            scale_vars = NULL, refcats = NULL,
+                            scale_functions = F) {
   id <- extract_id(random)
 
   groups <- if (!is.null(id)) {
@@ -53,7 +55,10 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL, scale_vars
   }
 
   if (is.null(scale_vars)) scale_vars <- find_continuous_main(fixed2, DF)
-
+  if (!scale_functions) {
+    scale_vars <- scale_vars[which(
+      !scale_vars %in% grep("[[:alpha:]]*\\(", scale_vars))]
+  }
 
   X <- model.matrix(fixed,
                     model.frame(fixed, DF, na.action = na.pass),
