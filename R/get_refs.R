@@ -1,7 +1,10 @@
 get_refs <- function(factors, refcats, DF = NULL) {
+
   if (is.null(refcats)) {
     refcats <- rep("largest", length(factors))
     names(refcats) <- factors
+  } else if (refcats %in% c("first", "largest")) {
+    refcats <- setNames(rep(refcats, length(factors)), factors)
   } else if (any(!factors %in% names(refcats))) {
     add <- factors[!factors %in% names(refcats)]
     refcats <- c(refcats,  setNames(rep("largest", length(add)), add))
@@ -15,8 +18,8 @@ get_refs <- function(factors, refcats, DF = NULL) {
     } else if (refcats[x] == 'largest') {
       refcats[x] <- which.max(table(DF[, x]))
     }
-    factor(levels(DF[, x])[as.numeric(refcats[x])], levels(DF[, x]))
+    res <- factor(levels(DF[, x])[as.numeric(refcats[x])], levels(DF[, x]))
+    attr(res, "dummies") <- paste0(x, levels(res)[levels(res) != res])
+      res
   }, simplify = F)
 }
-
-
