@@ -4,7 +4,7 @@
 \name{longDF}
 \alias{longDF}
 \title{Longitudinal example dataset}
-\format{An object of class \code{data.frame} with 385 rows and 13 columns.}
+\format{An object of class \code{data.frame} with 381 rows and 13 columns.}
 \source{
 simulated by \code{\link{simulate_data}}
 }
