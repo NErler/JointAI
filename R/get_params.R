@@ -7,7 +7,6 @@
 #' @param Xcat matrix
 #' @param analysis_main logical
 #' @param analysis_random logical
-#' @param imputation_pars logical
 #' @param imp_pars logical
 #' @param betas logical
 #' @param tau_y logical
@@ -26,7 +25,6 @@ get_params <- function(meth, analysis_type, family,
                        Xc, Xcat, y_name = NULL, Zcols = NULL,
                        analysis_main = F,
                        analysis_random = F,
-                       imputation_pars = F,
                        imp_pars = F,
                        imps = NULL,
                        betas = NULL, tau_y = NULL, sigma_y = NULL,
@@ -46,9 +44,9 @@ get_params <- function(meth, analysis_type, family,
 
   if (analysis_random) {
     if (is.null(ranef)) ranef <- TRUE
-    if (is.null()) invD <- TRUE
-    if (is.null()) D <- TRUE
-    if (is.null()) RinvD <- TRUE
+    if (is.null(invD)) invD <- TRUE
+    if (is.null(D)) D <- TRUE
+    if (is.null(RinvD)) RinvD <- TRUE
   }
 
   if (imp_pars) {
@@ -94,13 +92,15 @@ get_params <- function(meth, analysis_type, family,
   }
 
   if (imps) {
-    Xc_NA <- which(is.na(Xc), arr.ind = T)
+    Xc_NA <- if (any(is.na(Xc))) which(is.na(Xc), arr.ind = T)
     Xc_NA <- Xc_NA[Xc_NA[, 2] %in% which(colSums(!is.na(Xc)) > 0), ]
-    Xcat_NA <- which(is.na(Xcat), arr.ind = T)
+    Xcat_NA <- if (any(is.na(Xcat))) which(is.na(Xcat), arr.ind = T)
 
     params <- c(params,
-                paste0("Xc[", apply(Xc_NA, 1, paste, collapse = ","), "]"),
-                paste0("Xcat[", apply(Xcat_NA, 1, paste, collapse = ","), "]")
+                if (!is.null(Xc_NA))
+                  paste0("Xc[", apply(Xc_NA, 1, paste, collapse = ","), "]"),
+                if (!is.null(Xcat_NA))
+                  paste0("Xcat[", apply(Xcat_NA, 1, paste, collapse = ","), "]")
     )
   }
 
