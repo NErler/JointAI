@@ -54,11 +54,12 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
     }
   }
 
-  if (is.null(scale_vars)) scale_vars <- find_continuous_main(fixed2, DF)
-  if (!scale_functions) {
-    scale_vars <- scale_vars[which(
-      !scale_vars %in% grep("[[:alpha:]]*\\(", scale_vars))]
+  if (is.null(scale_vars)) {
+    scale_vars <- find_continuous_main(fixed2, DF)
+    excl <- grep("^[nsb]{2}\\(", scale_vars, value = T, fixed = F)
+    scale_vars <- scale_vars[which(!scale_vars %in% excl)]
   }
+
 
   X <- model.matrix(fixed,
                     model.frame(fixed, DF, na.action = na.pass),
