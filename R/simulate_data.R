@@ -34,7 +34,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
                      coef = NULL, misvar = NULL, nmisvar = 7,
                      format = "long") {
 
-  # time-constant covariates
+  # time-constant covariates -------------------------------------------------------------
   if (is.list(norm)) {
     stop("Not yet implemented")
   } else {
@@ -106,7 +106,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   DF <- data.frame(DF.norm, DF.bin, DF.multi, DF.ord)
   covars <- names(DF)
 
-  # observation times of outcome
+  # observation times of outcome ---------------------------------------------------------
   nrep <- sample(Jmin:Jmax, N, replace = T)
   DF <- DF[rep(1:N, times = nrep), ]
 
@@ -134,7 +134,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   DF$time <- unlist(sapply(1:N, function(i) sort(runif(nrep[i], tmin, tmax))))
 
 
-  # fixed effects
+  # fixed effects ------------------------------------------------------------------------
   fmla <- as.formula(paste("~", paste(names(DF)[names(DF) != "id"],
                                       collapse = "+")))
 
@@ -145,7 +145,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
     coef <- rnorm(ncol(X))
   }
 
-  # random effects
+  # random effects -----------------------------------------------------------------------
   D <- rWishart(1, df = 2, Sigma = diag(rep(0.1, 2)))[, , 1]
   b <- MASS::mvrnorm(N, c(0,0), Sigma = D)
   Z <- model.matrix(~time, DF)
@@ -165,13 +165,13 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   )
 
   DF.mis <- DF
-  for (i in 1:length(misvar)) {
-    if (check_tvar(DF[, misvar[i]], "id")) {
+  for (i in seq_along(misvar)) {
+    if (check_tvar(DF[, misvar[i]], DF$id)) {
       DF.mis[sample.int(nrow(DF), nrow(DF) * misperc[i]), misvar[i]] <- NA
     } else {
       DF.mis[DF.mis$id %in% misid[[i]], misvar[i]] <- NA
     }
   }
-  return(DF.mis)
+  return(list(DF = DF, DF.mis = DF.mis))
 }
 
