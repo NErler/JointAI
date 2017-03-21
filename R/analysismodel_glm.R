@@ -10,7 +10,6 @@
 #' @export
 glm_model <- function(family, link, N, y_name, Xic = NULL,
                       K, ...){
-  cat("inside glm_model\n")
 
   distr <- switch(family,
                   "gaussian" = function(y_name) {
@@ -50,11 +49,6 @@ glm_model <- function(family, link, N, y_name, Xic = NULL,
 
   cat("distr, linkfun etc. changed")
 
-  # if (!is.null(Mlist)) {
-  #   for (i in 1:length(Mlist)) {
-  #     assign(names(Mlist)[i], Mlist[[i]])
-  #   }
-  # }
 
   paste_Xic <- if (!is.null(Xic)) {
     paste0(" + \n", tab(12 + nchar(y_name)),
