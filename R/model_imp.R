@@ -58,10 +58,6 @@ NULL
 model_imp <- function(arglist) {
   list2env(arglist, sys.frame(sys.nframe()))
 
-  if (!"family" %in% names(arglist)) {
-    family <- NULL
-    link <- NULL
-  }
 
   for (x in c("auxvars", "meth", "random", "monitor_params", "refcats",
               "modelfile", "scale_vars", "scale_pars", "Mlist", "K", "K_imp",
@@ -186,8 +182,13 @@ model_imp <- function(arglist) {
                         variable.names = if (exists("var.names")) var.names,
                         thin = thin)
 
+  attr(analysis_type, "family") <- family
+  attr(analysis_type, "link") <- link
+
   return(structure(
-    list(meth = meth, fixed = fixed, random = random, Mlist = Mlist, K = K, K_imp = K_imp,
+    list(analysis_type = analysis_type,
+         data = data, meth = meth, fixed = fixed, random = random,
+         Mlist = Mlist, K = K, K_imp = K_imp,
          mcmc_settings = mcmc_settings,
          data_list = data_list$data_list,
          scale_pars = data_list$scale_pars,
@@ -211,6 +212,7 @@ lm_imp <- function(fixed, data,
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$analysis_type <- "lm"
   arglist$family <- "gaussian"
+  arglist$link <- "identity"
 
   thiscall <- as.list(match.call())[-1L]
   thiscall <- lapply(thiscall, function(x) {
@@ -275,6 +277,8 @@ lme_imp <- function(fixed, data, random,
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$analysis_type <- "lme"
   arglist$family <- "gaussian"
+  arglist$link <- "identity"
+
 
   thiscall <- as.list(match.call())[-1L]
   thiscall <- lapply(thiscall, function(x) {

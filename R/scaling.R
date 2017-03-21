@@ -48,7 +48,8 @@ get_scaling <- function(Mlist, scale_pars = NULL) {
                        simplify = FALSE)
 
 
-  scale_pars <- as.data.frame(lapply(scaled_dat, "[[", 2))
+  scale_pars <- lapply(scaled_dat, "[[", 2)
+  scale_pars <- as.data.frame(scale_pars[!sapply(scale_pars, is.null)])
 
   if (nrow(scale_pars) > 0) {
     names(scale_pars) <- unlist(lapply(lapply(scaled_dat, "[[", 2), names))
@@ -73,7 +74,11 @@ get_scaling <- function(Mlist, scale_pars = NULL) {
     #   scale_pars["center", x] <- 0#-prod(scale_pars["center", nams])
     # }
 
-    new_names <- names(refs)[!names(refs) %in% colnames(scale_pars)]
+    tf <- attr(terms(Mlist$fixed2), "factors")
+    new_names <- c(names(refs),
+                   rownames(tf)[rownames(tf) %in% colnames(tf)])
+    new_names <- new_names[!new_names %in% colnames(scale_pars)]
+    # new_names <- names(refs)[!names(refs) %in% colnames(scale_pars)]
     for (k in unlist(sapply(new_names, get_dummies, refs))) {
       scale_pars[c("center", "scale"), k] <- c(0, 1)
     }

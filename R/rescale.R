@@ -1,15 +1,15 @@
 
 rescale <- function(x, fixed2, scale_pars, MCMC, refs) {
-  coefs <- coef_lvl <- colnames(attr(terms(fixed2), "factors"))
+  coefs <- coef_lvl <- colnames(MCMC)#colnames(attr(terms(fixed2), "factors"))
 
-  for (i in coefs[coefs %in% names(refs)]) {
-    lvls <- levels(refs[[i]])[levels(refs[[i]]) != refs[[i]]]
-    orig <- unname(unlist(sapply(gen_pat(i), grep, coefs, value = T)))
-    for (j in lvls) {
-      coef_lvl <- append(coef_lvl, gsub(i, paste0(i, j), orig))
-    }
-    coef_lvl <- coef_lvl[which(!coef_lvl %in% orig)]
-  }
+  # for (i in coefs[coefs %in% names(refs)]) {
+  #   lvls <- levels(refs[[i]])[levels(refs[[i]]) != refs[[i]]]
+  #   orig <- unname(unlist(sapply(gen_pat(i), grep, coefs, value = T)))
+  #   for (j in lvls) {
+  #     coef_lvl <- append(coef_lvl, gsub(i, paste0(i, j), orig))
+  #   }
+  #   coef_lvl <- coef_lvl[which(!coef_lvl %in% orig)]
+  # }
 
   coef_split <- sapply(coef_lvl, splitstring, pattern = x)
   names(coef_split) <- coef_lvl
@@ -46,7 +46,8 @@ rescale <- function(x, fixed2, scale_pars, MCMC, refs) {
 
 
 splitstring = function(input, pattern){
-  splitres = strsplit(input, pattern)[[1]]
+  pat <- paste0(c(":", "^"), x)
+  splitres = strsplit(input, pat)[[1]]
 
   T1 <- splitres[1] == "" | substr(splitres[1],
                                    start = nchar(splitres[1]),
