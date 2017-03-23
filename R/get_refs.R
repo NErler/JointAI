@@ -1,7 +1,7 @@
 get_refs <- function(factors, refcats, DF = NULL) {
 
   if (is.null(refcats)) {
-    refcats <- rep("largest", length(factors))
+    refcats <- rep("first", length(factors))
     names(refcats) <- factors
   } else if (refcats %in% c("first", "largest")) {
     refcats <- setNames(rep(refcats, length(factors)), factors)

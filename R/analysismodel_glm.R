@@ -47,8 +47,6 @@ glm_model <- function(family, link, N, y_name, Xic = NULL,
                     "inverse"  = function(x) paste0("1/", x)
   )
 
-  cat("distr, linkfun etc. changed")
-
 
   paste_Xic <- if (!is.null(Xic)) {
     paste0(" + \n", tab(12 + nchar(y_name)),

@@ -1,0 +1,212 @@
+---
+title: "Analysis of generalized linear models with missing covariate values using JointAI"
+author: "Nicole Erler"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Linear Regression}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+  
+## Data: `pbc`
+We will use the `pbc` data from the package `survival`.
+Since several of the categorical variables are specified as integer values, we re-code
+all variables with less than 6 different values as factors.
+```{r}
+library(survival)
+for (i in 1:ncol(pbc)){
+  if (length(unique(pbc[, i])) < 6){
+    pbc[, i] <- factor(pbc[, i])
+  }
+}
+```
+
+For now, we will work with the complete cases only.
+```{r}
+pbc.cc <- subset(pbc, complete.cases(pbc))
+```
+
+
+
+## Binary regression
+We are interested in the following model:
+$$hepato \sim age + stage + albumin + trig + bili + spiders$$
+
+
+```{r}
+fmla <- hepato ~ age + stage + albumin + trig + bili + spiders
+
+factors <- sapply(pbc.cc[, all.vars(fmla)], is.factor)
+factors["id"] <- NA
+```
+Where
+``r names(factors[which(!factors)])[-sum(!factors, na.rm = T)]`` and 
+``r names(factors[which(!factors)])[sum(!factors, na.rm = T)]``
+are continuous, and
+``r names(factors[which(factors)])[-sum(factors, na.rm = T)]``
+and 
+``r names(factors[which(factors)])[sum(factors, na.rm = T)]``
+are categorical covariates.
+
+```{r, Histogramms of continuous variables, fig.width = 6, fig.height = 5}
+par(mfrow = c(2, 2), mar = c(3, 3, 2, 1), mgp = c(2, 0.6, 0))
+for (x in names(factors)[which(!factors)]) {
+  hist(pbc.cc[, x], main = x, nclass = 30, xlab = "value")
+}
+```
+
+
+```{r, tables of factors, results = 'asis'}
+for (x in names(factors)[which(factors)]) {
+  tab <- table(pbc.cc[, x])
+  print(
+    knitr::kable(
+      array(tab, dim = c(1, length(tab)),
+            dimnames = list(c(), names(tab))),
+      caption = x)
+  )
+}
+```
+
+
+Using the standard function `glm` the model can be fitted with the following syntax:
+```{r}
+fm0 <- glm(fmla, family = binomial(link = "logit"), data = pbc.cc)
+```
+
+The specification using the **JointAI** is very similar, only the number of iterations
+`n.iter` needs to be specified additionally.
+```{r, jm0, cache = T, message = F}
+library(JointAI)
+jm0 <- glm_imp(fmla, family = binomial(link = "logit"), data = pbc.cc, n.iter = 1000)
+```
+
+The convergence of the MCMC chains can be checked using a traceplot:
+```{r, fig.width = 7, fig.height = 5}
+traceplot(jm0)
+```
+Each line represents the samples from one chain (3 chains are used by default) throughout
+all iterations. If the sampler has converged, the lines should form a horizontal band with
+no visual pattern. This is the case for `age`, `albumin`, `trig`, `bili` and `spiders`
+but not for `stage` and the intercept. When MCMC chains have not converged, one possible
+solution is to increase the number of iterations. However, in this example, the problem
+is likely the choice of the reference category for `stage`.
+By default, the first category is chosen to be the reference category. For unbalanced
+categorical variables (i.e., when the groups do not have approximately equal size) it is
+often better to use the largest group to be the reference category. 
+
+The reference category can be set using the argument `refcats`. Possible specifications
+are:
+```{r, eval = F}
+refcats = "first" # (the default)
+refcats = "largest" # largest category for all categorical variables
+refcats = c(stage = 3) # 3rd category for stage and the default for all others
+refcats = c(stage = "largest") # largest category for stage and the default for all others
+refcats = c(stage = 3, spiders = "0") # 3rd category for stage and category "0" for spiders
+```
+
+When we change the reference category to the largest category for `stage`, all parameters
+converge nicely:
+```{r, jm1, cache = T, message = F, fig.width = 7, fig.height = 6}
+jm1 <- glm_imp(fmla, family = binomial(link = "logit"), data = pbc.cc, n.iter = 1000,
+               refcats = c(stage = "largest"))
+traceplot(jm1)
+```
+
+The summary of this model can be displayed using the `summary` function
+```{r}
+summary(jm1)
+```
+In the top part of the summary, some characteristics of the sampling are given:
+
+* the range of the iterations used for the summary (starting at 101, since the first 100
+  iterations were used in the adaptive phase)
+* the thinning interval
+* the number of MCMC chains
+* the number of iterations per chain
+
+In the second part the posterior distribution of the parameters is given by
+
+* the posterior mean
+* the posterior standard deviation
+* the 2.5% and 97.5% quantiles of the posterior sample
+
+The posterior distributions can be visualized using `densplot`:
+```{r, fig.width = 7, fig.height = 6}
+densplot(jm1)
+```
+
+Vertical lines can be added to each of the density plots. For example to mark zero
+```{r, fig.width = 7, fig.height = 6}
+densplot(jm1, vlines = list(v = rep(0, 9)))
+```
+
+or to add the parameter estimates from the frequentist glm (for which we need to change
+the reference category as well)
+```{r, fig.width = 7, fig.height = 6}
+pbc.cc$stage <- relevel(pbc.cc$stage, ref = 3)
+fm1 <- update(fm0)
+densplot(jm1, vlines = list(list(v = rep(0, 9)),
+                            list(v = coef(fm1), lty = 2)))
+```
+
+Together with the x-coordinates of the vertical lines (must be named "v"), graphical
+parameters, that will be passed to `abline`, such as the line type `lwd`, color `col` 
+or width `lwd`, can be supplied.
+```{r, fig.width = 7, fig.height = 6}
+densplot(jm1, vlines = list(list(v = rep(0, 9), col = grey(0.9)),
+                            list(v = coef(fm1), lty = 1, lwd = 2),
+                            list(v = coef(fm1) - 1.96 * sqrt(diag(vcov(fm1))), lty = 2, lwd = 2),
+                            list(v = coef(fm1) + 1.96 * sqrt(diag(vcov(fm1))), lty = 2, lwd = 2))
+)
+```
+
+<span style = "color:red"> The glm obviously has some problems here!!! The std. error of
+stage1 is huge.</span>
+
+
+
+### Imputation
+When the data contain missing values, the same syntax as used above will automatically
+impute missing covariate values.
+```{r, jm2, cache = T}
+jm2 <- glm_imp(fmla, family = binomial(link = "logit"), data = pbc, n.iter = 1000,
+               refcats = c(stage = "largest"))
+
+```
+
+```{r}
+traceplot(jm2)
+```
+The traceplot shows that the MCMC chains have converged, but there is some increase or
+decrease in the first 200 iterations for some of the parameter. Those samples can be 
+excluded from the traceplot and the summary by specifying a `start` value.
+```{r}
+traceplot(jm2, start = 401)
+summary(jm2, start = 401)
+```
+
+To be able to evaluate the imputed values, we need to monitor their MCMC chains.
+```{r, jm2, cache = T}
+jm3 <- glm_imp(fmla, family = binomial(link = "logit"), data = pbc, n.iter = 1000,
+               refcats = c(stage = "largest"),
+               monitor_params = c(analysis_main = T, imps = T))
+
+```
+
+The default setting for the parameters to display in the traceplot, densplot or summary
+is set to the main parameters of the analysis model (`subset` = "main"). To display all
+MCMC chains it must be set to `NULL`, or another subset of parameters can be chosen.
+```{r}
+# traceplot(jm3, subset = NULL)
+traceplot(jm3, subset = c(1:12))
+```
+
+
+### Non-default choices
+`glm_imp` (as well as `lm_imp` and `lme_imp`) has a number of default settings pre-specified.
+Most of these defaults can be canged.
+
+
+

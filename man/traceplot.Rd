@@ -2,10 +2,17 @@
 % Please edit documentation in R/methods.R
 \name{traceplot}
 \alias{traceplot}
-\title{Traceplot}
+\alias{traceplot.JointAI}
+\title{Traceplots}
 \usage{
 traceplot(x, ...)
+
+\method{traceplot}{JointAI}(x, start = NULL, end = NULL, thin = NULL,
+  subset = NULL)
+}
+\arguments{
+\item{x}{object}
 }
 \description{
-Traceplot
+Traceplots
 }

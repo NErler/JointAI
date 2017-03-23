@@ -148,11 +148,13 @@ model_imp <- function(arglist) {
   if (is.null(data_list)) {
     data_list <- try(get_data_list(analysis_type, family, meth, Mlist, K, auxvars,
                                  scale_pars = scale_pars))
+    scale_pars <- data_list$scale_pars
+    data_list <- data_list$data_list
   }
 
 
 
-  adapt <- try(rjags::jags.model(file = modelfile, data = data_list$data_list,
+  adapt <- try(rjags::jags.model(file = modelfile, data = data_list,
                           inits = NULL,
                           n.chains = n.chains, n.adapt = n.adapt))
 
@@ -190,8 +192,8 @@ model_imp <- function(arglist) {
          data = data, meth = meth, fixed = fixed, random = random,
          Mlist = Mlist, K = K, K_imp = K_imp,
          mcmc_settings = mcmc_settings,
-         data_list = data_list$data_list,
-         scale_pars = data_list$scale_pars,
+         data_list = data_list,
+         scale_pars = scale_pars,
          model = if (n.adapt > 0) adapt,
          sample = if (n.iter > 0) mcmc), class = "JointAI")
   )

@@ -127,23 +127,3 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3)) {
   cat("\n")
   invisible(x)
 }
-
-
-
-#
-# refcats <- list("B2" = factor(0, levels = c(0,1)),
-#                 "O2" = factor(1, levels = levels(longDF$O2)))
-#
-
-
-
-# new_names <- colnames(attr(terms(fixed), "factors"))[
-#   colnames(attr(terms(fixed), "factors")) %in% rownames(attr(terms(fixed), "factors")) &
-#     !colnames(attr(terms(fixed), "factors")) %in% names(scale_pars)]
-#
-# for (k in get_dummies(new_names, refcats)) {
-#   scale_pars[c("center", "scale"), k] <- c(0, 1)
-# }
-
-
-
