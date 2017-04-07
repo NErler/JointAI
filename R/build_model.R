@@ -18,6 +18,9 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
                         Z = NULL, Xic = NULL, Xl = NULL, Xil = NULL,
                         hc_list = NULL, K, imp_par_list, imp_interact_list, ...) {
   arglist <- as.list(match.call())[-1]
+  if (is.null(arglist$Xic)) {
+    arglist$Xic <- Mlist$Xic
+  }
 
   analysis_model <- switch(analysis_type,
                            "lme" = lme_model,

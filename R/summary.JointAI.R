@@ -25,69 +25,44 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                          end = end,
                          thin = thin))
 
-  hc_list <- object$Mlist$hc_list
+  # hc_list <- object$Mlist$hc_list
 
   coefs <- get_coef_names(object$Mlist, object$K)
-  # coefs <- rbind(
-  #   if (!is.null(object$Mlist$Xc))
-  #     cbind(paste0("beta[", object$K["Xc", 1]:object$K["Xc", 2], "]"),
-  #           colnames(object$Mlist$Xc)),
-  #   if (!is.null(object$Mlist$Xic))
-  #     cbind(paste0("beta[", object$K["Xic", 1]:object$K["Xic", 2], "]"),
-  #           colnames(object$Mlist$Xic)),
-  #   if (!is.null(hc_list))
-  #     cbind(
-  #       unlist(
-  #         sapply(names(hc_list)[rowSums(is.na(object$K[names(hc_list), , drop = F])) == 0],
-  #                function(x) {
-  #                  paste0("beta[", object$K[x, 1]:object$K[x, 2], "]")
-  #                })
-  #       ),
-  #       unlist(lapply(hc_list, function(x) {
-  #         names(x)[which(attr(x, "matrix") %in% c("Xc", "Z"))]
-  #       }))
-  #     ),
-  #   if (!is.null(object$Mlist$Xl))
-  #     cbind(paste0("beta[", object$K["Xl", 1]:object$K["Xl", 2], "]"),
-  #           colnames(object$Mlist$Xl)),
-  #   if (!is.null(object$Mlist$Xil))
-  #     cbind(paste0("beta[", object$K["Xil", 1]:object$K["Xil", 2], "]"),
-  #           colnames(object$Mlist$Xil))
-  # )
-
 
   colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
 
   scale_pars <- object$scale_pars
   if (!is.null(scale_pars)) {
-    scale_pars <- cbind(scale_pars,
-                        sapply(colnames(MCMC)[!colnames(MCMC) %in%
-                                                colnames(scale_pars)],
-                               function(x) scale_pars[, x] <- c(0,1)
-                        )
-    )
-
-    if (!is.null(subset)) {
-      if (subset == "main") {
-        subset <- coefs[, 2]
-        if (object$analysis_type == "lm" |
-            (object$analysis_type == "glm" &
-             attr(object$analysis_type, "family") %in% c("Gamma", "gaussian"))) {
-          subset <- c(subset, paste0("sigma_", names(object$Mlist$y)))
-        }
-        if (object$analysis_type == "lme") {
-          subset <- c(subset,
-                      paste0("sigma_", names(object$Mlist$y)),
-                      grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", colnames(MCMC), value = T))
-        }
-      }
-      MCMC <- MCMC[, subset]
-    }
-
-        # re-scale parameters
+    # re-scale parameters
     MCMC <- sapply(colnames(MCMC), rescale, object$Mlist$fixed2, scale_pars,
                    MCMC, object$Mlist$refs)
   }
+
+  #   scale_pars <- cbind(scale_pars,
+  #                       sapply(colnames(MCMC)[!colnames(MCMC) %in%
+  #                                               colnames(scale_pars)],
+  #                              function(x) scale_pars[, x] <- c(0,1)
+  #                       )
+  #   )
+
+  if (!is.null(subset)) {
+    MCMC <- get_subset(subset, MCMC, object)
+    # if (any(subset == "main")) {
+    #   subset <- coefs[, 2]
+    #   if (object$analysis_type == "lm" |
+    #       (object$analysis_type == "glm" &
+    #        attr(object$analysis_type, "family") %in% c("Gamma", "gaussian"))) {
+    #     subset <- c(subset, paste0("sigma_", names(object$Mlist$y)))
+    #   }
+    #   if (object$analysis_type == "lme") {
+    #     subset <- c(subset,
+    #                 paste0("sigma_", names(object$Mlist$y)),
+    #                 grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", colnames(MCMC), value = T))
+    #   }
+    # }
+    # MCMC <- MCMC[, subset]
+  }
+
 
 
   # create results matrix

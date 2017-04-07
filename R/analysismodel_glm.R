@@ -42,8 +42,8 @@ glm_model <- function(family, link, N, y_name, Xic = NULL,
                     "logit"    = function(x) paste0("logit(", x, ")"),
                     "probit"   = function(x) paste0("probit(", x, ")"),
                     "log"      = function(x) paste0("log(", x, ")"),
-                    "cloglog"  = function(x) paste0("clog(", x, ")"),
-                    "sqrt"     = function(x) paste0("sqrt(", x, ")"),
+                    "cloglog"  = function(x) paste0("cloglog(", x, ")"),
+                    # "sqrt"     = function(x) paste0("sqrt(", x, ")"),
                     "inverse"  = function(x) paste0("1/", x)
   )
 

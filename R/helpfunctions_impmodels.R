@@ -152,6 +152,7 @@ paste_imp_model <- function(imp_par_list) {
 
   imp_model <- switch(imp_par_list$impmeth,
                       norm = impmodel_normal,
+                      lognorm = impmodel_lognormal,
                       logit = impmodel_logit,
                       multinomial = impmodel_multinomial,
                       ordinal = impmodel_ordinal)
@@ -165,6 +166,7 @@ paste_imp_priors <- function(imp_par_list) {
 
   imp_prior <- switch(imp_par_list$impmeth,
                       norm = impprior_normal,
+                      lognorm = impprior_lognormal,
                       logit = impprior_logit,
                       multinomial = impprior_multinomial,
                       ordinal = impprior_ordinal)

@@ -4,7 +4,7 @@
 \alias{get_scaling}
 \title{function for scaling}
 \usage{
-get_scaling(Mlist, scale_pars = NULL)
+get_scaling(Mlist, scale_pars = NULL, meth)
 }
 \description{
 function for scaling

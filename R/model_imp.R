@@ -89,8 +89,10 @@ model_imp <- function(arglist) {
 
   # generate default name for model file if not specified
   if (is.null(modelfile)) {
-    modelfile <- paste0("FitAI_JAGSmodel_",
-                        format(Sys.time(), "%Y-%m-%d_%H-%M"), ".txt")
+    tmpdir <- tempdir()
+    modelfile <- file.path(tmpdir,
+                           paste0("FitAI_JAGSmodel_",
+                                  format(Sys.time(), "%Y-%m-%d_%H-%M-%S"), ".R"))
   }
 
 
@@ -102,8 +104,7 @@ model_imp <- function(arglist) {
 
   if (is.null(Mlist)) {
     Mlist <- divide_matrices(data, fixed, random = random, auxvars = auxvars,
-                             scale_vars = scale_vars, refcats = refcats,
-                             scale_functions = scale_functions)
+                             scale_vars = scale_vars, refcats = refcats, meth = meth)
   }
 
   if (is.null(K)) {
@@ -153,11 +154,12 @@ model_imp <- function(arglist) {
   }
 
 
+  if (any(n.adapt > 0, n.iter > 0)) {
 
-  adapt <- try(rjags::jags.model(file = modelfile, data = data_list,
-                          inits = NULL,
-                          n.chains = n.chains, n.adapt = n.adapt))
-
+    adapt <- try(rjags::jags.model(file = modelfile, data = data_list,
+                                   inits = NULL,
+                                   n.chains = n.chains, n.adapt = n.adapt))
+  }
   if (is.null(monitor_params)) {
     monitor_params <- c("analysis_main" = T)
   }

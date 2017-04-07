@@ -4,7 +4,7 @@
 \alias{scaled_data.matrix}
 \title{calculate scaled data matrix}
 \usage{
-scaled_data.matrix(X, scale_vars, scale_pars)
+scaled_data.matrix(X, scale_vars, scale_pars, meth)
 }
 \arguments{
 \item{X}{a matrix}

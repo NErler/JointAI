@@ -4,25 +4,32 @@
 #' @param scale_pars a matrix of scaling parameters or FALSE or NULL
 #' @export
 
-scaled_data.matrix <- function(X, scale_vars, scale_pars) {
-  if (any(scale_pars == F, scale_vars == F))
+scaled_data.matrix <- function(X, scale_vars, scale_pars, meth) {
+  if (any(class(scale_pars) == "logical" & scale_pars == F,
+          class(scale_vars) == "logical" & scale_vars == F))
     scale_pars <- scale_vars <- F
 
-  if (is.matrix(scale_pars)) {
+
+  if (is.data.frame(scale_pars)) {
     if (any(colnames(X) %in% colnames(scale_pars))) {
       X[, colnames(scale_pars)] <-
         sapply(colnames(scale_pars),
-               function(x) (x - scale_pars["center", x])/scale_pars["scale", x]
+               function(x) (X[, x] - scale_pars["center", x])/scale_pars["scale", x]
         )
     }
   } else {
     if (is.null(scale_pars) & any(colnames(X) %in% scale_vars)) {
       scale_pars <- list()
       for (i in scale_vars[scale_vars %in% colnames(X)]) {
-        scv <- scale(X[, i])
+
+        usecenter <- if (!i %in% names(meth)) TRUE else meth[i] != "lognorm"
+        scv <- scale(X[, i], center = usecenter)
         X[, i] <- scv
         scale_pars[[i]] <- c(center = attr(scv, "scaled:center"),
-                             scale = attr(scv, "scaled:scale"))
+                             scale = if (is.null(attr(scv, "scaled:scale"))) {
+                               0
+                             } else {attr(scv, "scaled:scale")}
+        )
       }
     } else {
       scale_pars <- NULL
@@ -35,16 +42,17 @@ scaled_data.matrix <- function(X, scale_vars, scale_pars) {
 
 #' function for scaling
 #' @export
-get_scaling <- function(Mlist, scale_pars = NULL) {
+get_scaling <- function(Mlist, scale_pars = NULL, meth) {
   # if (is.null(scale_pars)) {
   #   scale_vars <- Mlist$scale_vars
   # }
   refs <- Mlist$refs
 
+
   scaled_dat <- sapply(Mlist[!sapply(Mlist, is.null) &
                                names(Mlist) %in% c("Xc", "Xl", "Z")],
                        scaled_data.matrix, scale_vars = Mlist$scale_vars,
-                       scale_pars = scale_pars,
+                       scale_pars = scale_pars, meth = meth,
                        simplify = FALSE)
 
 

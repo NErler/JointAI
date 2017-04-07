@@ -3,13 +3,11 @@
 #' @param fixed a formula describing the mean structure
 #' @param random an optional formula describing the random effects (check this!)
 #' @param auxvars vector containing the names of auxiliary variables
-#' @inheritParams base::scale
 #' @return a list containing the matrices
 #' @export
 
 divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
-                            scale_vars = NULL, refcats = NULL,
-                            scale_functions = F) {
+                            scale_vars = NULL, refcats = NULL, meth) {
   id <- extract_id(random)
 
   groups <- if (!is.null(id)) {
@@ -57,6 +55,7 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   if (is.null(scale_vars)) {
     scale_vars <- find_continuous_main(fixed2, DF)
     excl <- grep("^[nsb]{2}\\(", scale_vars, value = T, fixed = F)
+    # excl <- c(excl, names(meth)[meth == "lognorm"])
     scale_vars <- scale_vars[which(!scale_vars %in% excl)]
   }
 

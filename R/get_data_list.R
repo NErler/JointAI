@@ -5,7 +5,7 @@
 #' @export
 get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvas, scale_pars = NULL) {
 
-  scaled <- get_scaling(Mlist, scale_pars)
+  scaled <- get_scaling(Mlist, scale_pars, meth)
 
   l <- list()
   l[[names(Mlist$y)]] <- if (any(sapply(Mlist$y, is.factor))) {
@@ -43,7 +43,7 @@ get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvas, scale_p
   }
 
   # hyperparameters imputation models
-  if (any(meth == "norm")) {
+  if (any(meth %in% c("norm", "lognorm"))) {
     l$mu_reg_norm <- 0
     l$tau_reg_norm <- 0.001
     l$a_tau_norm <- 0.01

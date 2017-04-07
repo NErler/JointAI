@@ -5,7 +5,7 @@
 \title{Create data matrices for time constant and time-varying variables}
 \usage{
 divide_matrices(DF, fixed, random = NULL, auxvars = NULL,
-  scale_vars = NULL, refcats = NULL, scale_functions = F)
+  scale_vars = NULL, refcats = NULL, meth)
 }
 \arguments{
 \item{DF}{a dataframe}
