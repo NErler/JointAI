@@ -367,4 +367,15 @@ pooled_results <- summary(MIcombine(MIextract(mods, fun = coef),
 
 
 ## Other elements of the `JointAI-object`
+JAGS model file:
+```{r}
+jm1$mcmc_settings$modelfile
+names(jm1$data_list)
 
+jm1$data_list[-c(1:2)]
+```
+
+* `mu_reg_main` and `tau_reg_main` are the parameters of the priors for the regression coefficients in the analysis model
+* `mu_reg_norm` and `tau_reg_norm` the parameters of the priors of the regression coefficients in the (log)normal imputation models
+* `mu_reg_logit` and `tau_reg_logit` the parameters of the priors of the regression coefficients in the normal imputation model
+* (`mu_reg_multinomial`, `tau_reg_logit`, `mu_reg_ordinal, `tau_reg_ordinal` analogue)
