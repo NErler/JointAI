@@ -6,7 +6,7 @@
 #'
 #' @keywords datasets
 #'
-#' @source simulated by \code{\link{simulate_data}}
+#' @source simulated by \code{\link{sim_data}}
 #'
 "longDF"
 
@@ -20,6 +20,6 @@
 #'
 #' @keywords datasets
 #'
-#' @source simulated by \code{\link{simulate_data}}
+#' @source simulated by \code{\link{sim_data}}
 #'
 "wideDF"

@@ -36,7 +36,7 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   names(contr) <- ord
 
   covars <- all.vars(fixed2)[all.vars(fixed2) != extract_y(fixed2)]
-  factors <- covars[sapply(DF[, covars], is.factor)]
+  factors <- covars[sapply(DF[, covars, drop = F], is.factor)]
 
   refs <- get_refs(factors, refcats, DF)
   for (i in names(refs)) {
@@ -50,13 +50,6 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
         attr(refs[[x]], "dummies") <- dummies
       }
     }
-  }
-
-  if (is.null(scale_vars)) {
-    scale_vars <- find_continuous_main(fixed2, DF)
-    excl <- grep("^[nsb]{2}\\(", scale_vars, value = T, fixed = F)
-    # excl <- c(excl, names(meth)[meth == "lognorm"])
-    scale_vars <- scale_vars[which(!scale_vars %in% excl)]
   }
 
 
@@ -89,7 +82,9 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   if (!is.null(Xic)) {
     # Xic[, colSums(is.na(Xic)) > 0] <- NA
     Xic <- Xic * NA
+    Xic[is.na(Xic)] <- NA # to overwrite possible NaN's
   }
+
 
   cat_vars <- names(which(lapply(
     lapply(DF[, colSums(is.na(DF)) > 0 & names(DF) %in% all.vars(fixed2), drop = F], levels),
@@ -104,8 +99,31 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
     Xc[, sapply(cat_vars, names)] <- NA
   }
 
+  # Xtrafo ---------------------------------------------------------------------
+  trafos <- extract_fcts(fixed, DF)
+  Xtrafo <- if(!is.null(trafos)) {
+    fmla_trafo <- as.formula(
+      paste("~", paste0(unique(trafos$var), collapse = " + "))
+      # paste("~",
+      #       paste(names(meth)[!names(meth) %in% c(colnames(Xc), colnames(Xcat))],
+      #             collapse = " + "))
+    )
+    if(!any(sapply(DF[, all.vars(fmla_trafo), drop = F], is.factor)))
+      contr <- NULL
+    model.matrix(fmla_trafo,
+                 model.frame(fmla_trafo, DF, na.action = na.pass),
+                 contrasts.arg = contr
+    )[match(unique(groups), groups), -1, drop = F]
+  }
+  if(!is.null(Xtrafo)) {
+    Xc[, as.character(trafos$Xc_var)] <- NA
+  }
+
+
+
   # hc_list <- get_hc_list(colnames(X2), colnames(Xc), colnames(Z))
 
+  # Xlong ----------------------------------------------------------------------
   Xlong <- if (sum(!names(tvar)[tvar] %in% colnames(Z)) > 0) {
     X2[, which(tvar & !names(tvar) %in% colnames(Z)), drop = F]
   }
@@ -142,9 +160,19 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
     Xl <- Xil <- NULL
   }
 
+  if (is.null(scale_vars)) {
+    scale_vars <- find_continuous_main(fixed2, DF)
+    # excl <- grep("^[nsb]{2}\\(", scale_vars, value = T, fixed = F)
+    excl <- grep("[[:alpha:]]*\\(", scale_vars, value = T)
+    # excl <- c(excl, names(meth)[meth == "lognorm"])
+    excl <- c(excl, unique(trafos$Xc_var))
+    scale_vars <- scale_vars[which(!scale_vars %in% excl)]
+  }
+
 
   return(list(y = y, Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat,
+              Xtrafo = Xtrafo, trafos = trafos,
               Z = Z, hc_list = hc_list, cat_vars = cat_vars, refs = refs,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars,
-              fixed2 = fixed2))
+              fixed2 = fixed2, X2_names = colnames(X2)))
 }

@@ -4,15 +4,15 @@
 \alias{get_data_list}
 \title{Create list of data passed to JAGS}
 \usage{
-get_data_list(analysis_type, family, meth, Mlist, K, auxvas,
+get_data_list(analysis_type, family, meth, Mlist, K, auxvars,
   scale_pars = NULL)
 }
 \arguments{
+\item{analysis_type}{analysis model type}
+
 \item{meth}{vector of imputation methods}
 
 \item{Mlist}{list of data matrices etc.}
-
-\item{type}{analysis model type}
 }
 \description{
 Create list of data passed to JAGS

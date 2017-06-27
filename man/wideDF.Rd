@@ -6,7 +6,7 @@
 \title{Cross-sectional example dataset}
 \format{An object of class \code{data.frame} with 100 rows and 13 columns.}
 \source{
-simulated by \code{\link{simulate_data}}
+simulated by \code{\link{sim_data}}
 }
 \usage{
 data(wideDF)

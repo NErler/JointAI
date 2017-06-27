@@ -1,9 +1,9 @@
 #' Create list of data passed to JAGS
-#' @param type analysis model type
+#' @param analysis_type analysis model type
 #' @param meth vector of imputation methods
 #' @param Mlist list of data matrices etc.
 #' @export
-get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvas, scale_pars = NULL) {
+get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvars, scale_pars = NULL) {
 
   scaled <- get_scaling(Mlist, scale_pars, meth)
 
@@ -19,11 +19,12 @@ get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvas, scale_p
   if (!is.null(Mlist$Xcat))  l$Xcat <- data.matrix(Mlist$Xcat)
   if (!is.null(Mlist$Xic)) l$Xic <- data.matrix(Mlist$Xic)
   if (!is.null(Mlist$Xil)) l$Xil <- data.matrix(Mlist$Xil)
+  if (!is.null(Mlist$Xtrafo)) l$Xtrafo <- data.matrix(Mlist$Xtrafo)
 
 
   # hyperparameters analysis model
   l$mu_reg_main <- 0
-  l$tau_reg_main <- 0.01
+  l$tau_reg_main <- 0.0001
   if (!family %in% c("binomial", "Poisson")) {
     l$a_tau_main <- 0.01
     l$b_tau_main <- 0.001
@@ -45,7 +46,7 @@ get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvas, scale_p
   # hyperparameters imputation models
   if (any(meth %in% c("norm", "lognorm"))) {
     l$mu_reg_norm <- 0
-    l$tau_reg_norm <- 0.001
+    l$tau_reg_norm <- 0.0001
     l$a_tau_norm <- 0.01
     l$b_tau_norm <- 0.01
   }
@@ -64,7 +65,7 @@ get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvas, scale_p
     l$mu_reg_ordinal <- 0
     l$tau_reg_ordinal <- 4/9
     l$mu_delta_ordinal <- 0
-    l$tau_delta_ordinal <- 0.001
+    l$tau_delta_ordinal <- 0.0001
   }
 
   if (!is.null(Mlist$auxvars)) {

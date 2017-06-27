@@ -52,6 +52,8 @@ get_imp_pos <- function(meth, Mlist){
   pos_Xc <- sapply(names(meth), function(x) {
     nams <- if (x %in% names(refs)) {
       paste0(x, levels(refs[[x]])[levels(refs[[x]]) != refs[[x]]])
+    } else if (x %in% trafos$var){
+      trafos$Xc_var[trafos$var == x]
     } else {
       x
     }
@@ -105,7 +107,7 @@ get_imp_dim <- function(meth, pos_Xc){
 
   for (i in 1:length(meth)) {
     n_imp_coef[names(meth)[i]] <-
-      pos_Xc[[names(meth)[i]]][1] - 1 - as.numeric(meth[i] == "ordinal")
+      min(pos_Xc[[names(meth)[i]]]) - 1 - as.numeric(meth[i] == "ordinal")
     if (meth[i] == "multinomial") {
       n_imp_coef <- append(x = n_imp_coef,
                            values = rep(n_imp_coef[names(meth)[i]],

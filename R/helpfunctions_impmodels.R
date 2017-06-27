@@ -34,13 +34,20 @@ paste_predictor <- function(varname, par_elmts, Xc_cols, par_name, indent) {
 #' to be imputed
 #' @export
 get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
-                             refs) {
+                             refs, trafos) {
+
   list(varname = varname,
        impmeth = impmeth,
        intercept = !impmeth %in% c("ordinal"),
-       dest_mat = if (impmeth %in% c("multinomial", "ordinal")) {"Xcat"} else {"Xc"},
+       dest_mat = if (impmeth %in% c("multinomial", "ordinal")) {
+         "Xcat"
+       } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
+         "Xtrafo"
+       } else {"Xc"},
        dest_col = if (impmeth %in% c("multinomial", "ordinal")) {
          dest_cols[[varname]]$Xcat
+       } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
+         dest_cols[[varname]]$Xtrafo
        } else {
          dest_cols[[varname]]$Xc
        },
@@ -62,11 +69,42 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
          which(refs[[varname]] == levels(refs[[varname]]))
          # get_refcat(varname, Xcat, refcats)
        },
+       trafo_cols = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
+         dest_cols[[varname]]$Xc
+       },
+       trfo_fct = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
+         apply(trafos[trafos[, "var"] == varname, ], 1, get_trafo,
+               dest_col = dest_cols[[varname]]$Xtrafo)
+       },
+       trafos = trafos,
        par_name = "alpha"
   )
 }
 
 
+get_trafo <- function(trafo_vec, dest_col) {
+  if(trafo_vec["type"] == "identity") {
+    ret <- paste0("Xtrafo[i, ", dest_col, "]")
+  }
+  if(trafo_vec["type"] == "log") {
+    ret <- paste0("log(Xtrafo[i, ", dest_col, "])")
+  }
+  if(trafo_vec["type"] == "sqrt") {
+    ret <- paste0("sqrt(Xtrafo[i, ", dest_col, "])")
+  }
+  if(trafo_vec["type"] == "exp") {
+    ret <- paste0("exp(Xtrafo[i, ", dest_col, "])")
+  }
+  if(trafo_vec["type"] == "I") {
+    is_power <- regexpr(paste0(trafo_vec["var"], "\\^[[:digit:]]+"),
+                        trafo_vec["fct"]) > 0
+    if(is_power) {
+      pow <- gsub(paste0(trafo_vec["var"], "\\^"), "", trafo_vec["fct"])
+      ret <- paste0("pow(Xtrafo[i, ", dest_col, "], ", pow, ")")
+    }
+  }
+  ret
+}
 
 #' Specify the reference category for a categorical variable
 #' @param varname name of the variable
@@ -116,13 +154,22 @@ get_refcat <- function(varname, Xcat, refcats) {
 #           colnames(Xc)
 #         })
 # }
-get_dest_column <- function(varname, refs, Xc_names, Xcat_names) {
-  nams <- paste0(varname,
-                 levels(refs[[varname]])[levels(refs[[varname]]) !=
-                                           refs[[varname]]])
+get_dest_column <- function(varname, refs, Xc_names, Xcat_names, Xtrafo_names,
+                            trafos) {
+  nams <- if(varname %in% names(refs)) {
+    attr(refs[[varname]], "dummies")
+    # paste0(varname,
+    #              levels(refs[[varname]])[levels(refs[[varname]]) !=
+    #                                        refs[[varname]]])
+  } else if (varname %in% trafos$var) {
+    trafos$Xc_var[trafos$var == varname]
+  } else {
+    varname
+  }
 
   list("Xc" = setNames(match(nams, Xc_names), nams),
-       "Xcat" = setNames(match(varname, Xcat_names), varname))
+       "Xcat" = setNames(match(varname, Xcat_names), varname),
+       "Xtrafo" = setNames(match(varname, Xtrafo_names), varname))
 }
 
 
@@ -144,6 +191,13 @@ paste_dummies <- function(categories, dest_col, dummy_cols, ...){
   }, dummy_cols, categories)
 }
 
+
+# paste trafo
+paste_trafos <- function(dest_col, trafo_cols, trafos,...) {
+  mapply(function(trafo_cols, trafo) {
+    paste0(tab(), "Xc[i, ", trafo_cols, "] <- ", trafo)#(paste0("Xtrafo[i, ", dest_col, "]")))
+  }, trafo_cols = trafo_cols, trafo = trafos)
+}
 
 
 #' Call and paste imputation models

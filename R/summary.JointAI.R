@@ -1,13 +1,22 @@
 #' Summary of an JointAI object
 #' @param object an object of class JointAIObject
 #' @inheritParams coda::window.mcmc
+#' @inheritParams base::print
 #' @param quantiles posterior quantiles
+#' @param subset subset of monitored nodes (columns in the MCMC sample) to use.
+#'               Can be specified as a numeric vector of columns,  a vector of
+#'               column names, as \code{subset = "main"} or \code{NULL}.
+#'               If \code{NULL}, all monitored nodes will be plotted.
+#'               \code{subset = "main"} (default) the main parameters of the
+#'               analysis model will be plotted (regression coefficients,
+#'               standard deviation of the residual, random effects covariance
+#'               matrix).
 #' @export
 summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
-                            quantiles = c(0.025, 0.975), subset = "main") {
+                            quantiles = c(0.025, 0.975), subset = "main", ...) {
 
   if (is.null(object$sample))
-    error("No mcmc sample.")
+    stop("No mcmc sample.")
 
 
   if (is.null(start))
@@ -35,7 +44,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   if (!is.null(scale_pars)) {
     # re-scale parameters
     MCMC <- sapply(colnames(MCMC), rescale, object$Mlist$fixed2, scale_pars,
-                   MCMC, object$Mlist$refs)
+                   MCMC, object$Mlist$refs, object$Mlist$X2_names)
   }
 
   #   scale_pars <- cbind(scale_pars,
@@ -66,16 +75,18 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
   # create results matrix
-  statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"))
+  statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.")
   stats <- matrix(nrow = length(colnames(MCMC)),
                   ncol = length(statnames),
                   dimnames = list(colnames(MCMC), statnames))
 
   stats[, "Mean"] <- apply(MCMC, 2, mean)
   stats[,  "SD"] <- apply(MCMC, 2, sd)
-  stats[, -c(1:2)] <- t(apply(MCMC, 2, quantile, quantiles))
+  stats[, -c(1,2, ncol(stats))] <- t(apply(MCMC, 2, quantile, quantiles))
+  stats[, ncol(stats)] <- apply(MCMC, 2, computeP)
 
   out <- list()
+  out$call <- object$call
   out$start <- start
   out$end <- end
   out$thin <- thin
@@ -89,16 +100,23 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 #' @rdname summary.JointAI
 #' @export
-print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3)) {
-  cat("\n", "Iterations = ", x$start, ":", x$end, "\n", sep = "")
+print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3), ...) {
+  if (!inherits(x, "summary.JointAI"))
+    stop("Use only with 'summary.JointAI' objects.\n")
+
+  cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
+      "\n\n", sep = "")
+  cat("Posterior summary:\n")
+  print(x$stats, digits = digits)
+  cat("\n\n")
+  cat("MCMC settings:\n")
+  cat("Iterations = ", x$start, ":", x$end, "\n", sep = "")
+  cat("Sample size per chain =", (x$end - x$start)/x$thin +
+        1, "\n")
   cat("Thinning interval =", x$thin, "\n")
   cat("Number of chains =", x$nchain, "\n")
-  cat("Sample size per chain =", (x$end - x$start)/x$thin +
-        1, "\n\n")
   # cat("\n1. Empirical mean and standard deviation for each variable,")
   # cat("\n   plus standard error of the mean:\n\n")
-  cat("Posterior summary:\n\n")
-  print(x$stats, digits = digits)
   cat("\n")
   invisible(x)
 }

@@ -22,15 +22,9 @@ model (see \code{\link[stats]{formula}})}
 
 \item{data}{a data frame containing the variabels named in \code{fixed}}
 
-\item{n.chains}{the number of parallel chains for the model}
-
-\item{n.adapt}{the number of iterations for adaptation.
-See \code{\link[rjags]{adapt}} for details. If n.adapt = 0
-then no adaptation takes place.}
-
-\item{n.iter}{number of iterations to monitor}
-
-\item{thin}{thinning interval for monitors}
+\item{n.iter}{number of iterations of the MCMC sampler per chain
+(passed to \code{\link[rjags]{coda.samples}}).
+If \code{n.iter = 0}, no MCMC sample is produced.}
 
 \item{...}{additional, optional parameters, see below}
 
@@ -53,32 +47,163 @@ linear and linear mixed models, respectively, using MCMC sampling.
 \section{Optional arguments}{
 
 There are some optional parameters that can be passed to \code{...}
+\subsection{Imputation settings}{
+\describe{
+\item{\code{meth}}{named vector specifying imputation model types and order or
+                 NULL (default). If NULL, imputation models will be determined
+                 automatically based on the class of the columns of \code{data}
+                 that contain missing values. The default order is according
+                 to the proportion of missing values (increasing).
+                 Implemented models are:
 \tabular{ll}{
-\code{auxvars} \tab vector of variable names that shoud be used as
+\code{norm} \tab linear model\cr
+\code{lognormal} \tab log-linear model for skewed continuous data\cr
+\code{logit} \tab logistic model for binary data\cr
+\code{multinomial} \tab multinomial logit model for unordered categorical variables\cr
+\code{ordinal} \tab cumulative logit model for ordered categorical variables\cr
+}}
+\item{\code{auxvars}}{vector of variable names that shoud be used as
                     predictors in the imputation procedure (and will be
                     imputed if necessary) but are not part of the analysis
-                    model\cr
-\code{refcats} \tab a named list specifying which category should be used as
-                    reference category for the categorical variables. "first"
-               or "largest" (default). When \code{refcat = "largest"}, the
-               category with the most observations is chosen for each
-               categorical variable.\cr
-\code{scale_vars} \tab named vector of (continuous) variables that will be
+                    model}
+\item{\code{refcats}}{a named list specifying which category should be used as
+                    reference category for each of the categorical variables.
+                    Options are the category label, the category number,
+                    'first" (the first cateogry) or "largest" (chooses the
+                    category with the most observations).
+                    Default is "first" }
+}}
+
+\subsection{}{
+\describe{
+\item{\code{scale_vars}}{named vector of (continuous) variables that will be
                        scaled (so that mean = 0 and sd = 1) to improve
                        convergence of the MCMC sampling. Default is that all
-                       continuous variables will be scaled.\cr
-\code{monitor_params} \tab a character vector giving the names of variables
-                           to be monitored, see details\cr
-\code{model file} \tab optional name (and path) of the file the JAGS model
-                       will be written to. Needs to be specified including
-                       the file ending. Possible file endings are \code{.R}
-                       or {.txt}.\cr
-\code{overwrite} \tab some explanation\cr
-}
+                       continuous variables will be scaled.}
+}}
+
+\subsection{MCMC settings}{
+\describe{
+\item{\code{n.chains}}{the number of parallel chains for the model}
+\item{\code{n.adapt}}{the number of iterations for adaptation (default = 100).
+               See \code{\link[rjags]{jags.model}} for details. If n.adapt = 0
+               then no adaptation takes place.}
+\item{\code{thin}}{thinning interval for monitors
+                 (passed to \code{\link[rjags]{coda.samples}})}
+\item{\code{inits}}{optional specification of initial values in the form of
+                    a list or a function (see \code{\link[rjags]{jags.model}}).
+                    If omitted, initial values will be generated automatically.}
+\item{\code{monitor_params}}{a character vector giving the names of variables
+                           to be monitored, see `Details'.}
+\item{\code{modelname}}{character string specifying the name of the file
+                       containing the JAGS model (or in which the model will
+                       be writen), including the file ending (\code{.R}
+                       or \code{.txt}). If not specified a random name will be
+                       created.}
+\item{\code{modeldir}}{directory containing the model or directory in which
+the model should be written. If not specified, a temporary directory is created.}
+\item{\code{overwrite}}{In case the specified model file already exists, should
+it be overwritten? Default is \code{FALSE}}
+\item{\code{keep_model}}{A logical value to specify if the model file should be
+                       stored after the calculation finishes (default is \code{FALSE}).}
+\item{\code{quiet}}{see \code{\link[rjags]{jags.model}}}
+\item{\code{progress.bar}}{see \code{\link[rjags]{update.jags}}}
+\item{\code{MCMCpackage}}{currently only \code{JAGS} is implemented}
+}}
+
+\subsection{Other settings}{
+\describe{
+\item{\code{scale_vars}}{optional vector of variable names that should be scaled and
+centered during for the MCMC sampling for better convergence (results and
+imputations will be returned on the original scale). If not specified,
+all continuous covariates are scaled, except if they are included in the
+model formula in a spline function). If set to \code{FALSE} no scaling will
+be done (not suggested).}
+\item{\code{scale_pars}}{optional matrix of parameters used for centering and
+scaling continuous covariates. If not specified, this will be calculated
+automatically. If \code{FALSE}, no scaling will be done.}
+}}
 }
 
 \section{Details}{
 
-Some more details
+\subsection{Implemented distribution families and link functions for \code{glm_imp}}{
+\tabular{ll}{
+\emph{family} \tab \emph{link}\cr
+gaussian: \tab \code{identity}, \code{log}, \code{inverse}\cr
+binomial: \tab \code{logit}, \code{probit}, \code{log}, \code{cloglog}\cr
+Gamma:    \tab \code{inverse}, \code{identity}, \code{log}\cr
+poisson:  \tab \code{log}, \code{identity}\cr
+}}
+
+
+
+\subsection{Details on \code{monitor_pars}}{
+\tabular{ll}{
+\code{analysis_main} \tab \cr
+\code{analysis_random} \tab \cr
+\code{imp_pars} \tab \cr
+\code{imps} \tab \cr
+\code{betas} \tab \cr
+\code{tau_y} \tab \cr
+\code{sigma_y} \tab \cr
+\code{ranef} \tab \cr
+\code{invD} \tab \cr
+\code{D} \tab \cr
+\code{RinvD} \tab \cr
+\code{alphas} \tab \cr
+\code{tau_imp} \tab \cr
+\code{gamma_imp} \tab \cr
+\code{delta_imp} \tab \cr
+\code{other} \tab \cr
+}}
 }
 
+\section{Value}{
+
+An object of class \code{JointAI} with elements
+\describe{
+\item{\code{call}}{the original call}
+\item{\code{analysis_type}}{\code{lm}, \code{glm} or \code{lme}, with attributes
+                            \code{family} and \code{link}}
+\item{\code{data}}{the original dataset}
+\item{\code{meth}}{named vector specifying imputation methods and sequence}
+\item{\code{fixed}}{supplied fixed effects structure}
+\item{\code{random}}{supplied random effects structure}
+\item{\code{Mlist}}{}
+\item{\code{K}}{}
+\item{\code{K_imp}}{}
+\item{\code{mcmc_settings}}{a list with elements
+     \describe{
+     \item{\code{MCMCpackage}}{}
+     \item{\code{modelfile}}{}
+     \item{\code{n.chains}}{}
+     \item{\code{n.adapt}}{}
+     \item{\code{n.iter}}{}
+     \item{\code{variable.names}}{}
+     \item{\code{thin}}{}
+     }}
+\item{\code{data_list}}{list with data that was passed to JAGS}
+\item{\code{scale_pars}}{matrix with parameters used to center and scale the continuous variables}
+\item{\code{model}}{JAGS model}
+\item{\code{sample}}{MCMC sample (Note: if continuous variables have been scaled
+during the sampling, the posterior sample here is on the scaled scale, not on
+the original scale.)}
+}
+}
+
+\examples{
+\dontrun{
+mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+mod2 <- glm_imp(B1 ~ C1 + C2 + M2, data = wideDF,
+                family = binomial(link = "logit"), n.iter = 100)
+mod3 <- lme_imp(y ~ C1 + B2 + L1 + time, random = ~ time|id,
+                data = longDF, n.iter = 500)
+}
+
+}
+\seealso{
+\code{\link{traceplot}}, \code{\link{densplot}},
+         \code{\link{summary.JointAI}}, \code{\link{MC_error}},
+         \code{\link{GR_crit}}
+}

@@ -215,6 +215,7 @@ get_hc_list <- function(X2, Xc, Xic, Z, Xlong) {
 
 
 
+
 capitalize <- function(string)
 {
   capped <- grep("^[^A-Z]*$", string, perl = TRUE)
@@ -225,11 +226,9 @@ capitalize <- function(string)
 
 
 
-
-
-#' Function to find the names of columns in the model matrix that involve
-#' continuous covariates (and hence may need to be scaled)
-#' for now not used
+# Function to find the names of columns in the model matrix that involve
+# continuous covariates (and hence may need to be scaled)
+# for now not used
 find_continuous <- function(fixed, DF, contr = NULL) {
   # remove left side of formula
   fmla <- as.formula(sub("[[:print:]]*\\~", "~",
@@ -252,8 +251,8 @@ find_continuous <- function(fixed, DF, contr = NULL) {
 }
 
 
-#' Function to find the names of columns in the model matrix that involve
-#' continuous covariates (and hence may need to be scaled) - only main effects
+# Function to find the names of columns in the model matrix that involve
+# continuous covariates (and hence may need to be scaled) - only main effects
 find_continuous_main <- function(fixed, DF) {
   # remove left side of formula
   fmla <- as.formula(sub("[[:print:]]*\\~", "~",
@@ -267,9 +266,88 @@ find_continuous_main <- function(fixed, DF) {
 }
 
 
-#' Split an * in a formula into + and :
+
+# Split an * in a formula into + and :
 split_interaction <- function(x) {
   elmts <- strsplit(x, "[*]")[[1]]
   paste(c(elmts, paste(elmts, collapse = ":")), collapse = " + ")
+}
+
+
+# Extract functions from formula
+extract_fcts <- function(fixed, DF) {
+  log_pat <- "log\\([[:print:]]+\\)"
+  I_pat <- "I\\([[:print:]]+\\)"
+  exp_pat <- "exp\\([[:print:]]+\\)"
+  sqrt_pat <- "sqrt\\([[:print:]]+\\)"
+
+  # pattern to extract variable(s) from function
+  var_pat <- "[[:print:]]+\\(.+\\)"
+  var_pat <- "\\(.+\\)"
+
+
+  # remove outcome from formula
+  predictor <- as.formula(sub("[[:print:]]*\\~", "~",
+                              deparse(fixed, width.cutoff = 500)))
+
+  # split into elements
+  elmts <- unique(unlist(strsplit(deparse(predictor, width.cutoff = 500), "[ ]*[+*~][ ]*")))
+
+
+  m_log <- regexpr(log_pat, elmts)
+  m_I <- regexpr(I_pat, elmts)
+  m_exp <- regexpr(exp_pat, elmts)
+  m_sqrt <- regexpr(sqrt_pat, elmts)
+
+
+  log_fcts = regmatches(elmts, m_log)
+  I_fcts = gsub("I\\(|\\)", "", regmatches(elmts, m_I))
+  exp_fcts = regmatches(elmts, m_exp)
+  sqrt_fcts = regmatches(elmts, m_sqrt)
+
+  I_Xc_var <- regmatches(elmts, m_I)
+  log_Xc_var <- log_fcts
+  sqrt_Xc_var <- sqrt_fcts
+  exp_Xc_var <- exp_fcts
+
+  m_log <- regexpr(var_pat, log_fcts)
+  # m_I <- regexpr(var_pat, I_fcts)
+  m_exp <- regexpr(var_pat, exp_fcts)
+  m_sqrt <- regexpr(var_pat, sqrt_fcts)
+
+  log_vars <- gsub("[\\(\\)]", "", regmatches(log_fcts, m_log))
+
+  I_vars <- unlist(strsplit(I_fcts, "[ ]*[+\\-\\*/:][ ]*|\\^[[:digit:]]*"))
+  # I_vars <- gsub("[\\(\\)]", "", regmatches(I_fcts, m_I))
+  exp_vars <- gsub("[\\(\\)]", "", regmatches(exp_fcts, m_exp))
+  sqrt_vars <- gsub("[\\(\\)]", "", regmatches(sqrt_fcts, m_sqrt))
+
+
+  var_fcts <- as.data.frame(
+    do.call(rbind,
+                  sapply(c("log", "I", "exp", "sqrt"), function(x){
+                    if(length(get(paste0(x, "_vars"))) > 0){
+                      cbind(var = get(paste0(x, "_vars")),
+                            Xc_var = get(paste0(x, "_Xc_var")),
+                            fct = get(paste0(x, "_fcts")),
+                            type = x)
+                    }
+                  })
+    ), stringsAsFactors = F)
+
+
+  var_fcts <- var_fcts[colSums(is.na(DF[, var_fcts$var, drop = F])) > 0, ]
+
+  if(any(unique(var_fcts$var) %in% elmts)) {
+    add_vars <- elmts[match(unique(var_fcts$var), elmts)]
+    var_fcts <- rbind(var_fcts,
+                      cbind(var = add_vars,
+                            Xc_var = add_vars,
+                            fct = paste0("I(", add_vars, ")"),
+                            type = "identity")
+    )
+  }
+
+  return(if(nrow(var_fcts) > 0) var_fcts)
 }
 

@@ -4,7 +4,8 @@
 \alias{impmodel_lognormal}
 \title{Imputation by Bayesian log-normal regression}
 \usage{
-impmodel_lognormal(varname, dest_col, Xc_cols, par_elmts, par_name, ...)
+impmodel_lognormal(varname, dest_col, dest_mat, Xc_cols, par_elmts, par_name,
+  ...)
 }
 \arguments{
 \item{varname}{name of the variable to be imputed}

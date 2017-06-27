@@ -6,9 +6,9 @@
 \title{Summary of an JointAI object}
 \usage{
 \method{summary}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
-  quantiles = c(0.025, 0.975), subset = "main")
+  quantiles = c(0.025, 0.975), subset = "main", ...)
 
-\method{print}{summary.JointAI}(x, digits = max(3, .Options$digits - 3))
+\method{print}{summary.JointAI}(x, digits = max(3, .Options$digits - 3), ...)
 }
 \arguments{
 \item{object}{an object of class JointAIObject}
@@ -21,7 +21,21 @@
 
 \item{quantiles}{posterior quantiles}
 
+\item{subset}{subset of monitored nodes (columns in the MCMC sample) to use.
+Can be specified as a numeric vector of columns,  a vector of
+column names, as \code{subset = "main"} or \code{NULL}.
+If \code{NULL}, all monitored nodes will be plotted.
+\code{subset = "main"} (default) the main parameters of the
+analysis model will be plotted (regression coefficients,
+standard deviation of the residual, random effects covariance
+matrix).}
+
+\item{...}{futher arguments for future methods}
+
 \item{x}{an mcmc object}
+
+\item{digits}{minimal number of \emph{significant} digits, see
+    \code{\link{print.default}}.}
 }
 \description{
 Summary of an JointAI object

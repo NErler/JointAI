@@ -43,3 +43,12 @@ get_subset <- function(subset, MCMC, object) {
   }
   return(MCMC[, subset, drop = F])
 }
+
+
+
+
+computeP <- function(x) {
+    above <- mean(x >= 0)
+    below <- mean(x < 0)
+    2 * min(above, below)
+}

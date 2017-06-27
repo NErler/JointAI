@@ -9,6 +9,8 @@ build_JAGS(analysis_type, family = NULL, link = NULL, meth = NULL, Ntot,
   Xil = NULL, hc_list = NULL, K, imp_par_list, imp_interact_list, ...)
 }
 \arguments{
+\item{analysis_type}{analysis model type (character string)}
+
 \item{meth}{named vector specifying imputation methods and ordering}
 
 \item{Ntot}{number of observations}
@@ -31,8 +33,6 @@ build_JAGS(analysis_type, family = NULL, link = NULL, meth = NULL, Ntot,
 
 \item{K}{matrix specifying range of regression coefficients used for each
 component of the analysis model}
-
-\item{type}{analysis model type (character string)}
 }
 \description{
 Function to build JAGS model

@@ -7,6 +7,7 @@
 #' @param hc_list hierarchical centering specification
 #' @param K matrix specifying the number of parameters for each component of the
 #'        fixed effects
+#'
 #' @export
 glm_model <- function(family, link, N, y_name, Xic = NULL,
                       K, ...){

@@ -10,8 +10,55 @@ MC_error(object, subset = "main", start = NULL, end = NULL, thin = NULL,
 \arguments{
 \item{object}{JointAI object}
 
-\item{...}{parameters passed to \code{\link[mcmcse]{mcmc.mat}}}
+\item{subset}{subset of monitored nodes (columns in the MCMC sample) to use.
+Can be specified as a numeric vector of columns,  a vector of
+column names, as \code{subset = "main"} or \code{NULL}.
+If \code{NULL}, all monitored nodes will be plotted.
+\code{subset = "main"} (default) the main parameters of the
+analysis model will be plotted (regression coefficients,
+standard deviation of the residual, random effects covariance
+matrix).}
+
+\item{start}{the first iteration of interest}
+
+\item{end}{the last iteration of interest}
+
+\item{thin}{the required interval between successive samples}
+
+\item{...}{Arguments passed on to \code{mcmcse::mcse.mat}
+\describe{
+  \item{x}{a matrix or data frame with each row being a
+  draw from the multivariate distribution of interest.}
+  \item{size}{the batch size. The default value is
+  \dQuote{\code{sqroot}}, which uses the square root of the
+  sample size. \dQuote{\code{cuberoot}} will cause the
+  function to use the cube root of the sample size. A
+  numeric value may be provided if neither
+  \dQuote{\code{sqroot}} nor \dQuote{\code{cuberoot}} is
+  satisfactory.}
+  \item{g}{a function such that \eqn{E(g(x))} is the
+  quantity of interest. The default is \code{NULL}, which
+  causes the identity function to be used.}
+  \item{method}{the method used to compute the standard
+  error. This is one of \dQuote{\code{bm}} (batch means,
+  the default), \dQuote{\code{obm}} (overlapping batch
+  means), \dQuote{\code{tukey}} (spectral variance method
+  with a Tukey-Hanning window), or \dQuote{\code{bartlett}}
+  (spectral variance method with a Bartlett window).}
+}}
 }
 \description{
 Monte Carlo error
+}
+\examples{
+\dontrun{
+mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+GR_crit(mod1)
+}
+
+}
+\references{
+Lesaffre, E., & Lawson, A. B. (2012).
+\emph{Bayesian biostatistics}.
+John Wiley & Sons.
 }

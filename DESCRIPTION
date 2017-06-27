@@ -1,16 +1,17 @@
 Package: JointAI
-Type: Package
-Title: Joint Analysis and Imputation of missing values
 Version: 0.1.0
+Title: Joint Analysis and Imputation of missing values
 Author: Nicole S. Erler
 Maintainer: Nicole S. Erler <n.erler@erasmusmc.nl>
 Description: More about what it does (maybe more than one line).
-License: Something on the license
+License: GPL (>= 2)
+BugReports: https://github.com/nerler/JointAI
 LazyData: TRUE
-RoxygenNote: 6.0.0
-Depends: R (>= 3.3.1), rjags
-Imports: MASS
-Suggests: knitr,
+RoxygenNote: 6.0.1
+Depends: R (>= 3.4.0), rjags (>= 4-6), coda
+SystemRequirements: JAGS 4.x.y
+Imports: MASS, mcmcse
+Suggests: knitr, mitools,
     rmarkdown,
     testthat
 VignetteBuilder: knitr

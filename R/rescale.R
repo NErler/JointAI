@@ -1,9 +1,11 @@
 
-rescale <- function(x, fixed2, scale_pars, MCMC, refs) {
+rescale <- function(x, fixed2, scale_pars, MCMC, refs, X2_names) {
   # if (!x %in% c("(Intercept)", colnames(scale_pars))) {
   #   MCMC[, x]
   # } else {
-  coefs <- coef_lvl <- colnames(attr(terms(fixed2), "factors")) # colnames(MCMC)
+  coef_lvl <- X2_names
+
+  coefs <- colnames(attr(terms(fixed2), "factors")) # colnames(MCMC)
 
   # for (i in coefs[coefs %in% names(refs)]) {
   #    lvls <- levels(refs[[i]])[levels(refs[[i]]) != refs[[i]]]
@@ -14,10 +16,10 @@ rescale <- function(x, fixed2, scale_pars, MCMC, refs) {
   #    coef_lvl <- coef_lvl[which(!coef_lvl %in% orig)]
   # }
 
-  for (i in seq_along(refs)) {
-    coef_lvl <- append(coef_lvl, attr(refs[[i]], "dummies"))
-    coef_lvl <- coef_lvl[-which(coef_lvl == names(refs)[i])]
-  }
+  # for (i in seq_along(refs)) {
+  #   coef_lvl <- append(coef_lvl, attr(refs[[i]], "dummies"))
+  #   coef_lvl <- coef_lvl[-which(coef_lvl == names(refs)[i])]
+  # }
 
   x_split <- unlist(strsplit(x, ":"))
 
@@ -88,7 +90,7 @@ splitstring2 <- function(input, x, x_split) {
     }
   }
   # pat <- paste0(c(":", "^"), pattern)
-  splitres <- strsplit(input, x)[[1]]
+  splitres <- strsplit(input, x, fixed = T)[[1]]
 
 
   T1 <- splitres[1] == "" | substr(splitres[1],

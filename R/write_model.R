@@ -1,5 +1,5 @@
 #' Write model syntax to file
-#' @param type analysis model type (character string)
+#' @param analysis_type analysis model type (character string)
 #' @param meth named vector specifying imputation methods and ordering
 #' @param Ntot number of observations
 #' @param N number of individuals

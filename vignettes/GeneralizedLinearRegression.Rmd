@@ -33,17 +33,7 @@ available.
 
 ## Example: Binary regression
 ### Data: `pbc`
-We will use the `pbc` data from the package `survival` for illustration.
-Since several of the categorical variables are specified as integer values, we re-code
-all variables with less than 6 different values as factors.
-```{r}
-library(survival)
-for (i in 1:ncol(pbc)){
-  if (length(unique(pbc[, i])) < 6){
-    pbc[, i] <- factor(pbc[, i])
-  }
-}
-```
+We will use the `pbc` data  for illustration.
 
 
 ### Analysis model
@@ -52,6 +42,7 @@ $$hepato \sim age + albumin + trig + bili + spiders$$
 
 
 ```{r}
+library(JointAI)
 fmla <- hepato ~ age + albumin + trig + bili + spiders
 ```
 
@@ -73,7 +64,6 @@ are categorical covariates.
 The model specification using the **JointAI** package is very similar to the use of the
 standard functions `lm()`, `glm()` or `lme()` (from the package **nlme**).
 ```{r, jm0, cache = T}
-library(JointAI)
 jm0 <- glm_imp(fixed = fmla, family = binomial(link = "logit"), data = pbc, n.iter = 500)
 ```
 
@@ -210,10 +200,10 @@ Analogue to `summary()`, the arguments `start`, `end`, `thin` and `subset` are a
 To evaluate the convergence and precision of the MCMC sample, two methods are available.
 
 ### Gelman-Rubin diagnostic
-`gr_crit()` calls the function `gelman.diag()` from the package `coda` and allows for the
+`GR_crit()` calls the function `gelman.diag()` from the package `coda` and allows for the
 same options. Additionally, `subset`, `start`, `end` and `thin` can be specified.
 ```{r}
-gr_crit(jm1)
+GR_crit(jm1)
 ```
 
 

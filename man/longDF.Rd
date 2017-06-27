@@ -6,7 +6,7 @@
 \title{Longitudinal example dataset}
 \format{An object of class \code{data.frame} with 381 rows and 13 columns.}
 \source{
-simulated by \code{\link{simulate_data}}
+simulated by \code{\link{sim_data}}
 }
 \usage{
 data(longDF)

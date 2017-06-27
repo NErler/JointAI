@@ -4,7 +4,8 @@
 \alias{impmodel_normal}
 \title{Imputation by Bayesian linear regression}
 \usage{
-impmodel_normal(varname, dest_col, Xc_cols, par_elmts, par_name, ...)
+impmodel_normal(varname, dest_col, dest_mat, trafo_cols, trafos, trfo_fct,
+  Xc_cols, par_elmts, par_name, ...)
 }
 \arguments{
 \item{varname}{name of the variable to be imputed}

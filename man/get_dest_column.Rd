@@ -4,7 +4,7 @@
 \alias{get_dest_column}
 \title{Find which column in either Xc or Xcat contains the variable to be imputed}
 \usage{
-get_dest_column(varname, refs, Xc_names, Xcat_names)
+get_dest_column(varname, refs, Xc_names, Xcat_names, Xtrafo_names, trafos)
 }
 \arguments{
 \item{varname}{variable name}

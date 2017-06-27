@@ -1,16 +1,71 @@
-#' Traceplots
-#' @param object object
+#' Plot MCMC output from JointAI
+#'
+#' Creates a set of traceplots or densityplots from the MCMC sample of a JointAI-object
+#'
+#' @param object a \code{JointAI}-object
+#' @param start from which iteration onwards the MCMC samples should be included
+#'              (see \code{\link[coda]{window.mcmc}})
+#' @param end last iteration included in the plot
+#'            (see \code{\link[coda]{window.mcmc}})
+#' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
+#' @param subset subset of monitored nodes (columns in the MCMC sample) to use.
+#'               Can be specified as a numeric vector of columns,  a vector of
+#'               column names, as \code{subset = "main"} or \code{NULL}.
+#'               If \code{NULL}, all monitored nodes will be plotted.
+#'               \code{subset = "main"} (default) the main parameters of the
+#'               analysis model will be plotted (regression coefficients,
+#'               standard deviation of the residual, random effects covariance
+#'               matrix).
+#' @param vlines only for densplot; list where each element specifies parameters
+#'               to create a vertical line in each of the plots. The list
+#'               elements need to have a named element \code{v = [x location]}
+#'               and may have more named elements that can be passed to
+#'               \code{\link[graphics]{abline}}
+#' @param nrow number of rows in the plotting layout; determined automatically
+#'             if not specified
+#' @param ncol number of columns in the plotting layout; determined automatically
+#'             if not specified
+#'
+#' @seealso \code{\link{summary.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
+#'           \code{\link{lm_imp}}
+#' @examples
+#' \dontrun{
+#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' traceplot(mod1)
+#' densplot(mod1)
+#' densplot(mod1, vlines = list(list(v = rep(0, nrow(summary(mod1)$stats)),
+#'                                   col = grey(0.8)),
+#'                              list(v = summary(mod1)$stats[, "Mean"], lty = 1, lwd = 2),
+#'                              list(v = summary(mod1)$stats[, "2.5%"], lty = 2),
+#'                              list(v = summary(mod1)$stats[, "97.5%"], lty = 2))
+#'         )
+#' }
+#'
+#' @name plot
+NULL
+
+
+#' @rdname plot
 #' @export
 traceplot <- function(object, ...) {
   UseMethod("traceplot", object)
 }
 
 
-
-#' @rdname traceplot
+#' @rdname plot
 #' @export
-traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL, subset = "main",
-                              nrow = NULL, ncol = NULL, ...) {
+densplot <- function(object, ...) {
+  UseMethod("densplot", object)
+}
+
+
+
+
+# traceplot --------------------------------------------------------------------
+#' @rdname plot
+#' @export
+traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
+                              subset = "main", nrow = NULL, ncol = NULL, ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin, subset = subset,
                     nrow = nrow, ncol = ncol)
@@ -26,19 +81,13 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL, sub
 }
 
 
-#' Densplots
-#' @param object object
+
+# densplot ---------------------------------------------------------------------
+#' @rdname plot
 #' @export
-densplot <- function(object, ...) {
-  UseMethod("densplot", object)
-}
-
-
-
-#' @rdname densplot
-#' @export
-densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL, subset = "main",
-                             vlines = NULL, nrow = NULL, ncol = NULL, ...) {
+densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
+                             subset = "main", vlines = NULL, nrow = NULL,
+                             ncol = NULL, ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin, subset = subset,
                     nrow = nrow, ncol = ncol)
@@ -102,8 +151,8 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
   if (!is.null(scale_pars)) {
     # re-scale parameters
     MCMC <- as.mcmc.list(lapply(MCMC, function(i) {
-      as.mcmc(sapply(colnames(i), JointAI:::rescale, fixed2 = object$Mlist$fixed2, scale_pars = scale_pars,
-                     MCMC = i, refs = object$Mlist$refs))
+      as.mcmc(sapply(colnames(i), rescale, fixed2 = object$Mlist$fixed2, scale_pars = scale_pars,
+                     MCMC = i, refs = object$Mlist$refs, object$Mlist$X2_names))
     }))
   }
 

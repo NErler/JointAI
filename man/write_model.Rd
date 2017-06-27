@@ -10,6 +10,8 @@ write_model(analysis_type, family = NULL, link = NULL, meth = NULL, Ntot,
   package = "JAGS")
 }
 \arguments{
+\item{analysis_type}{analysis model type (character string)}
+
 \item{meth}{named vector specifying imputation methods and ordering}
 
 \item{Ntot}{number of observations}
@@ -36,8 +38,6 @@ component of the analysis model}
 \item{file}{path and file name}
 
 \item{package}{currently only JAGS is implemented}
-
-\item{type}{analysis model type (character string)}
 }
 \description{
 Write model syntax to file
