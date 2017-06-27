@@ -96,7 +96,7 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
     DF[match(unique(groups), groups), names(cat_vars), drop = F]
   }
   if (!is.null(Xcat)) {
-    Xc[, sapply(cat_vars, names)] <- NA
+    Xc[, unlist(sapply(cat_vars, names))] <- NA
   }
 
   # Xtrafo ---------------------------------------------------------------------
