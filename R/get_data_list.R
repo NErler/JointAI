@@ -1,8 +1,8 @@
-#' Create list of data passed to JAGS
-#' @param analysis_type analysis model type
-#' @param meth vector of imputation methods
-#' @param Mlist list of data matrices etc.
-#' @export
+# Create list of data passed to JAGS
+# @param analysis_type analysis model type
+# @param meth vector of imputation methods
+# @param Mlist list of data matrices etc.
+# @export
 get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvars, scale_pars = NULL) {
 
   scaled <- get_scaling(Mlist, scale_pars, meth)

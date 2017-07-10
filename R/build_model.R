@@ -1,22 +1,25 @@
-#' Function to build JAGS model
-#' @param analysis_type analysis model type (character string)
-#' @param meth named vector specifying imputation methods and ordering
-#' @param Ntot number of observations
-#' @param N number of individuals
-#' @param y_name name of outcome variable
-#' @param Mlist list of design matrices
-#' @param Z random effects design matrix
-#' @param Xic design matrix of time-constant interactions
-#' @param Xl design matrix of time-varying covariates
-#' @param Xil design matrix of interactions involving time-varying covariates
-#' @param hc_list list specifying hierarchical centring structure
-#' @param K matrix specifying range of regression coefficients used for each
-#' component of the analysis model
-#' @export
+# Function to build JAGS model
+# @param analysis_type analysis model type (character string)
+# @param family model family
+# @param link link function
+# @param meth named vector specifying imputation methods and ordering
+# @param Ntot number of observations
+# @param N number of individuals
+# @param y_name name of outcome variable
+# @param Mlist list of design matrices
+# @param Z random effects design matrix
+# @param Xic design matrix of time-constant interactions
+# @param Xl design matrix of time-varying covariates
+# @param Xil design matrix of interactions involving time-varying covariates
+# @param hc_list list specifying hierarchical centring structure
+# @param K matrix specifying range of regression coefficients used for each
+# component of the analysis model
+# @param imp_par_list output from get_imp_par_list
+# @export
 build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
                        Ntot, N, y_name,  Mlist = NULL,
                         Z = NULL, Xic = NULL, Xl = NULL, Xil = NULL,
-                        hc_list = NULL, K, imp_par_list, imp_interact_list, ...) {
+                        hc_list = NULL, K, imp_par_list, ...) {
   arglist <- as.list(match.call())[-1]
   if (is.null(arglist$Xic)) {
     arglist$Xic <- Mlist$Xic

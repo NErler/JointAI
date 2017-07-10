@@ -1,10 +1,10 @@
-#' Imputation by Bayesian linear regression
-#' @param varname name of the variable to be imputed
-#' @param dest_col column of Xc containing the variable to be imputed
-#' @param Xc_cols columns of the design matrix to used in linear predictor
-#' @param par_elmts elements of the parameter vector to be used
-#' @param par_name name of the parameter
-#' @export
+# Imputation by Bayesian linear regression
+# @param varname name of the variable to be imputed
+# @param dest_col column of Xc containing the variable to be imputed
+# @param Xc_cols columns of the design matrix to used in linear predictor
+# @param par_elmts elements of the parameter vector to be used
+# @param par_name name of the parameter
+# @export
 impmodel_normal <- function(varname, dest_col, dest_mat, trafo_cols, trafos, trfo_fct, Xc_cols, par_elmts, par_name, ...){
 
   if (length(Xc_cols) != length(par_elmts)) {
@@ -51,13 +51,13 @@ impprior_normal <- function(varname, par_elmts, par_name, ...){
 
 
 
-#' Imputation by Bayesian log-normal regression
-#' @param varname name of the variable to be imputed
-#' @param dest_col column of Xc containing the variable to be imputed
-#' @param Xc_cols columns of the design matrix to used in linear predictor
-#' @param par_elmts elements of the parameter vector to be used
-#' @param par_name name of the parameter
-#' @export
+# Imputation by Bayesian log-normal regression
+# @param varname name of the variable to be imputed
+# @param dest_col column of Xc containing the variable to be imputed
+# @param Xc_cols columns of the design matrix to used in linear predictor
+# @param par_elmts elements of the parameter vector to be used
+# @param par_name name of the parameter
+# @export
 impmodel_lognormal <- function(varname, dest_col, dest_mat, Xc_cols, par_elmts, par_name, ...){
 
   if (length(Xc_cols) != length(par_elmts)) {

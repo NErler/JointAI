@@ -1,14 +1,14 @@
-#' Set default imputation methods
-#' @param DF a dataframe
-#' @param fixed a formula
-#' @param random a formula specifying a random effects structure
-#' @param auxvars vector of variable names as auxiliary variables
-#' @return a named vector containing those variables in DF
-#'         (check what happens if DF doesn't match fixed) that have missing
-#'         values and their assigned default imputation methods, sorted by
-#'         proportion of missing values (first cross-sectional variables,
-#'         then longitudinal variables)
-#' @export
+# Set default imputation methods
+# @param DF a dataframe
+# @param fixed a formula
+# @param random a formula specifying a random effects structure
+# @param auxvars vector of variable names as auxiliary variables
+# @return a named vector containing those variables in DF
+#         (check what happens if DF doesn't match fixed) that have missing
+#         values and their assigned default imputation methods, sorted by
+#         proportion of missing values (first cross-sectional variables,
+#         then longitudinal variables)
+# @export
 get_imp_meth <- function(DF, fixed = NULL, random = NULL, auxvars = NULL){
 
   random2 <- remove_grouping(random)
@@ -20,12 +20,6 @@ get_imp_meth <- function(DF, fixed = NULL, random = NULL, auxvars = NULL){
   } else {
     1:nrow(DF)
   }
-
-  # if (all(sapply(list(random, id), is.null))) {
-  #   message(paste("Warning: fixed, random and id are all NULL.",
-  #                 "All variables are assumed to be time-constant."))
-  # }
-
 
   allvars <- unique(c(all.vars(fixed[[3]]), all.vars(random2[2]), auxvars))
 

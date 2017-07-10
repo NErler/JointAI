@@ -3,7 +3,7 @@ Version: 0.1.0
 Title: Joint Analysis and Imputation of missing values
 Author: Nicole S. Erler
 Maintainer: Nicole S. Erler <n.erler@erasmusmc.nl>
-Description: More about what it does (maybe more than one line).
+Description: Joint imputation and analysis of linear regression models, generalized linear regression models or linear mixed models with incomplete (covariate) data in the Bayesian framework. The package performs some pre-processing of the data and creates a JAGS model, which will then automatically be passed to JAGS with the help of the package rjags. It also provides a summary and plotting functions for the output.
 License: GPL (>= 2)
 BugReports: https://github.com/nerler/JointAI
 LazyData: TRUE

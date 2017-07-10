@@ -1,14 +1,14 @@
-#' Function to write generalized linear regression model as analysis model
-#' @param N number of subjects / random intercepts
-#' @param y y
-#' @param Z random effects design matrix
-#' @param Xic design matrix of cross-sectional interaction effects
-#' @param Xl design matrix of longitudinal covariates
-#' @param hc_list hierarchical centering specification
-#' @param K matrix specifying the number of parameters for each component of the
-#'        fixed effects
-#'
-#' @export
+# Function to write generalized linear regression model as analysis model
+# @param N number of subjects / random intercepts
+# @param y y
+# @param Z random effects design matrix
+# @param Xic design matrix of cross-sectional interaction effects
+# @param Xl design matrix of longitudinal covariates
+# @param hc_list hierarchical centering specification
+# @param K matrix specifying the number of parameters for each component of the
+#        fixed effects
+#
+# @export
 glm_model <- function(family, link, N, y_name, Xic = NULL,
                       K, ...){
 
@@ -67,10 +67,10 @@ glm_model <- function(family, link, N, y_name, Xic = NULL,
 
 
 
-#' Write priors for the regression coefficients of the linear model
-#' @param K K
-#' @param y_name character string, name of outcome
-#' @export
+# Write priors for the regression coefficients of the linear model
+# @param K K
+# @param y_name character string, name of outcome
+# @export
 glm_priors <- function(family, K, y_name, ...){
 
   secndpar <- switch(family,

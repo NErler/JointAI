@@ -1,10 +1,10 @@
-#' Imputation by cumulative logistic regression
-#' @param varname name of the variable to be imputed
-#' @param dest_col column of Xc containing the variable to be imputed
-#' @param Xc_cols columns of the design matrix to used in linear predictor
-#' @param par_elmts elements of the parameter vector to be used
-#' @param par_name name of the parameter
-#' @export
+# Imputation by cumulative logistic regression
+# @param varname name of the variable to be imputed
+# @param dest_col column of Xc containing the variable to be imputed
+# @param Xc_cols columns of the design matrix to used in linear predictor
+# @param par_elmts elements of the parameter vector to be used
+# @param par_name name of the parameter
+# @export
 impmodel_ordinal <- function(varname, dest_col, Xc_cols, par_elmts, par_name, dummy_cols, ncat, refcat, ...){
 
   if (length(Xc_cols) != length(par_elmts)) {
@@ -38,11 +38,11 @@ impmodel_ordinal <- function(varname, dest_col, Xc_cols, par_elmts, par_name, du
 
 
 
-#' Priors for ordinal imputation model
-#' @param varname name of the variable to be imputed
-#' @param par_elmts elements of the parameter vector to be used
-#' @param par_name name of the parameter
-#' @export
+# Priors for ordinal imputation model
+# @param varname name of the variable to be imputed
+# @param par_elmts elements of the parameter vector to be used
+# @param par_name name of the parameter
+# @export
 impprior_ordinal <- function(varname, par_elmts, par_name, ncat, ...){
   deltas <- sapply(1:(ncat - 1), function(k) {
     paste0(tab(), "delta_", varname, "[", k, "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")

@@ -1,26 +1,26 @@
-#' Get parameters to follow
-#' @param meth imputation method
-#' @param analysis_type analysis model type
-#' @param y_name name of the outcome variable
-#' @param Zcols number of columns in random effects design matrix
-#' @param Xc matrix
-#' @param Xcat matrix
-#' @param analysis_main logical
-#' @param analysis_random logical
-#' @param imp_pars logical
-#' @param betas logical
-#' @param tau_y logical
-#' @param sigma_y logical
-#' @param ranef logical
-#' @param invD logical
-#' @param D logical
-#' @param RinvD logical
-#' @param alphas logical
-#' @param tau_imp logical
-#' @param gamma_imp logical
-#' @param delta_imp logical
-#' @param imps logical
-#' @export
+# Get parameters to follow
+# @param meth imputation method
+# @param analysis_type analysis model type
+# @param y_name name of the outcome variable
+# @param Zcols number of columns in random effects design matrix
+# @param Xc matrix
+# @param Xcat matrix
+# @param analysis_main logical
+# @param analysis_random logical
+# @param imp_pars logical
+# @param betas logical
+# @param tau_y logical
+# @param sigma_y logical
+# @param ranef logical
+# @param invD logical
+# @param D logical
+# @param RinvD logical
+# @param alphas logical
+# @param tau_imp logical
+# @param gamma_imp logical
+# @param delta_imp logical
+# @param imps logical
+# @export
 get_params <- function(meth, analysis_type, family,
                        Xc, Xcat, y_name = NULL, Zcols = NULL,
                        analysis_main = F,

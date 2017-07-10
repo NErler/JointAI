@@ -71,7 +71,7 @@ There are some optional parameters that can be passed to \code{...}
                     Options are the category label, the category number,
                     'first" (the first cateogry) or "largest" (chooses the
                     category with the most observations).
-                    Default is "first" }
+                    Default is "first".}
 }}
 
 \subsection{}{
@@ -139,24 +139,34 @@ poisson:  \tab \code{log}, \code{identity}\cr
 
 
 \subsection{Details on \code{monitor_pars}}{
+Named vector specifying which parameters should be monitored. Possible elements are
 \tabular{ll}{
-\code{analysis_main} \tab \cr
-\code{analysis_random} \tab \cr
-\code{imp_pars} \tab \cr
-\code{imps} \tab \cr
-\code{betas} \tab \cr
-\code{tau_y} \tab \cr
-\code{sigma_y} \tab \cr
-\code{ranef} \tab \cr
-\code{invD} \tab \cr
-\code{D} \tab \cr
-\code{RinvD} \tab \cr
-\code{alphas} \tab \cr
-\code{tau_imp} \tab \cr
-\code{gamma_imp} \tab \cr
-\code{delta_imp} \tab \cr
-\code{other} \tab \cr
-}}
+\code{analysis_main} \tab \code{betas}, \code{tau_y} and \code{sigma_y}\cr
+\code{analysis_random} \tab \code{ranef}, \code{D}, \code{invD}, \code{RinvD}\cr
+\code{imp_pars} \tab \code{alphas}, \code{tau_imp}, \code{gamma_imp}, \code{delta_imp}\cr
+\code{imps} \tab imputed values\cr
+\code{betas} \tab regression coefficients of the analysis model\cr
+\code{tau_y} \tab precision of the residuals from the analysis model\cr
+\code{sigma_y} \tab standard deviation of the residuals from the analysis model\cr
+\code{ranef} \tab random effects\cr
+\code{D} \tab covariance matrix of the random effects\cr
+\code{invD} \tab inverse of \code{D}\cr
+\code{RinvD} \tab matrix in prior for \code{invD}\cr
+\code{alphas} \tab regression coefficients in the imputation models\cr
+\code{tau_imp} \tab precision parameters of the residuals from imputation models\cr
+\code{gamma_imp} \tab intercepts in ordinal imputation models\cr
+\code{delta_imp} \tab increments of ordinal intercepts\cr
+\code{other} \tab additional parameters\cr
+}
+Examples:
+
+\code{monitor_pars = c("analysis_main" = T, "tau_y" = F)}
+would monitor the regression parameters \code{betas} and residual standard
+deviation \code{sigma_y}, but not the residual precision.
+}
+\code{monitor_pars = c(imps = T)} would monitor \code{betas}, \code{tau_y},
+and \code{sigma_y} (because \code{analysis_main = T} by default) as well as
+the imputed values.
 }
 
 \section{Value}{
@@ -170,18 +180,30 @@ An object of class \code{JointAI} with elements
 \item{\code{meth}}{named vector specifying imputation methods and sequence}
 \item{\code{fixed}}{supplied fixed effects structure}
 \item{\code{random}}{supplied random effects structure}
-\item{\code{Mlist}}{}
-\item{\code{K}}{}
-\item{\code{K_imp}}{}
+\item{\code{Mlist}}{a list of matrices that contain the data split up into
+       outcome (y), cross-sectional main effects (Xc), cross-sectional interactions (Xic),
+       longitudinal main effects (Xl), longitudinal interactions (Xil),
+       categorical incomplete variables (Xcat), transformed cross-sectional
+       variables (Xtrafo), random effects design matrix (Z),
+       the vector of variables to be scaled (scale_vars), reference values
+       and dummies for categorical variables (refs), specification for
+       transformations (trafos), specification for hierarchical centering (hc_list),
+       vector of auxiliary variables (auxvars), grouping specification (groups),
+       updated fixed effects structure (fixed2), names of updated design matrix
+       (X2_names)}
+\item{\code{K}}{matrix specifying the indices of the regression coefficients
+that are related to different parts of the model}
+\item{\code{K_imp}}{matrix specifying the indices of regression coefficients
+for the imputation models relating to different covariates}
 \item{\code{mcmc_settings}}{a list with elements
      \describe{
-     \item{\code{MCMCpackage}}{}
-     \item{\code{modelfile}}{}
-     \item{\code{n.chains}}{}
-     \item{\code{n.adapt}}{}
-     \item{\code{n.iter}}{}
-     \item{\code{variable.names}}{}
-     \item{\code{thin}}{}
+     \item{\code{MCMCpackage}}{which package has been used (at the moment only JAGS is implemented)}
+     \item{\code{modelfile}}{name and path of JAGS model file}
+     \item{\code{n.chains}}{number of MCMC chains}
+     \item{\code{n.adapt}}{number of iterations in the adaptive phase}
+     \item{\code{n.iter}}{number of iterations in the MCMC sample}
+     \item{\code{variable.names}}{monitored nodes}
+     \item{\code{thin}}{thinning of the MCMC sample}
      }}
 \item{\code{data_list}}{list with data that was passed to JAGS}
 \item{\code{scale_pars}}{matrix with parameters used to center and scale the continuous variables}

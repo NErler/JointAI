@@ -1,10 +1,15 @@
-#' Create data matrices for time constant and time-varying variables
-#' @param DF a dataframe
-#' @param fixed a formula describing the mean structure
-#' @param random an optional formula describing the random effects (check this!)
-#' @param auxvars vector containing the names of auxiliary variables
-#' @return a list containing the matrices
-#' @export
+# Create data matrices for time constant and time-varying variables
+# @param DF a dataframe
+# @param fixed a formula describing the mean structure
+# @param random an optional formula describing the random effects (check this!)
+# @param auxvars vector containing the names of auxiliary variables
+# @param scale_vars vector naming which variables should be scaled.
+#      If \code{NULL} (default) all continuous variables will be scaled during
+#        the MCMC sampling, except when a transformed version of them is used.
+#        If \code{FALSE} no scaling will be done.
+# @param refcats specification of reference categories. If \code{NULL}, defaults will be used.
+# @return a list containing matrices and other objects needed for other functions
+# @export
 
 divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
                             scale_vars = NULL, refcats = NULL, meth) {

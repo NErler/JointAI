@@ -1,10 +1,10 @@
-#' Build linear predictor for imputation models
-#' @param varname character string, name of the variable to be imputed
-#' @param par_elmts numeric vector specifying the elements of the vector of
-#' regression parameters
-#' @param Xc_cols numeric vector specifying the columns in the design matrix Xc
-#' @param par_name character string, specifying the name of the regression
-#' parameters (e.g. "alpha")
+# Build linear predictor for imputation models
+# @param varname character string, name of the variable to be imputed
+# @param par_elmts numeric vector specifying the elements of the vector of
+# regression parameters
+# @param Xc_cols numeric vector specifying the columns in the design matrix Xc
+# @param par_name character string, specifying the name of the regression
+# parameters (e.g. "alpha")
 paste_predictor <- function(varname, par_elmts, Xc_cols, par_name, indent) {
   if (!is.list(par_elmts)) {
     par_elmts <- list(par_elmts)
@@ -23,16 +23,17 @@ paste_predictor <- function(varname, par_elmts, Xc_cols, par_name, indent) {
 }
 
 
-#' Creates a list of parameters that will be passed to the functions generating the imputation models
-#' @param impmeth character string specifying the imputation method
-#' @param varname name of the variable to be imputed
-#' @param Xc design matrix of time-constant covariates
-#' @param Xcat matrix of incomplete categorical covariates with more than 2 categories
-#' @param K_imp matrix specifying the range of elements of the vector of regression
-#' coefficients to be used in each imputation model
-#' @param imp_pos list specifying which column(s) of Xc contain(s) the variable
-#' to be imputed
-#' @export
+# Creates a list of parameters that will be passed to the functions generating the imputation models
+# @param impmeth character string specifying the imputation method
+# @param varname name of the variable to be imputed
+# @param Xc design matrix of time-constant covariates
+# @param Xcat matrix of incomplete categorical covariates with more than 2 categories
+# @param K_imp matrix specifying the range of elements of the vector of regression
+# coefficients to be used in each imputation model
+# @param dest_cols column numbers in Xc matrix
+# @param refs list of reference values
+# @param trafos matrix of transformations
+# @export
 get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
                              refs, trafos) {
 
@@ -106,11 +107,11 @@ get_trafo <- function(trafo_vec, dest_col) {
   ret
 }
 
-#' Specify the reference category for a categorical variable
-#' @param varname name of the variable
-#' @param Xcat matrix of categorical covariates
-#' @param refcats character string or named vector of reference categories for
-#'                each categorical variable
+# Specify the reference category for a categorical variable
+# @param varname name of the variable
+# @param Xcat matrix of categorical covariates
+# @param refcats character string or named vector of reference categories for
+#                each categorical variable
 get_refcat <- function(varname, Xcat, refcats) {
   if (refcats %in% c("first", "largest")) {
     useval <- refcats
@@ -140,20 +141,11 @@ get_refcat <- function(varname, Xcat, refcats) {
 
 
 
-#' Find which column in either Xc or Xcat contains the variable to be imputed
-#' @param impmeth imputation method
-#' @param varname variable name
-#' @param Xc_names column names of the design matrix of baseline effects
-#' @param Xcat_names column names of the matrix of categorical variables
-#' @export
-# get_dest_column <- function(meth, varname, Xc, Xcat) {
-#   match(varname,
-#         if (impmeth %in% c("multinomial", "ordinal")) {
-#           colnames(Xcat)
-#         } else {
-#           colnames(Xc)
-#         })
-# }
+# Find which column in either Xc or Xcat contains the variable to be imputed
+# @param impmeth imputation method
+# @param varname variable name
+# @param Xc_names column names of the design matrix of baseline effects
+# @param Xcat_names column names of the matrix of categorical variables
 get_dest_column <- function(varname, refs, Xc_names, Xcat_names, Xtrafo_names,
                             trafos) {
   nams <- if(varname %in% names(refs)) {
@@ -174,12 +166,12 @@ get_dest_column <- function(varname, refs, Xc_names, Xcat_names, Xtrafo_names,
 
 
 
-#' Write syntax to divide categorical variable into dummy variables in JAGS
-#' @param categories numeric vector of categories for which dummy variables
-#' need to be created (i.e., excluding the reference category)
-#' @param dest_col integer specifying the column in Xcat that contains the categorical variable
-#' @param dummy_cols numeric vector specifying the columns in Xc that contain
-#' the dummy variables corresponding to the categorical variable
+# Write syntax to divide categorical variable into dummy variables in JAGS
+# @param categories numeric vector of categories for which dummy variables
+# need to be created (i.e., excluding the reference category)
+# @param dest_col integer specifying the column in Xcat that contains the categorical variable
+# @param dummy_cols numeric vector specifying the columns in Xc that contain
+# the dummy variables corresponding to the categorical variable
 paste_dummies <- function(categories, dest_col, dummy_cols, ...){
   sapply(dummy_cols, function(k) {
     paste0(tab(), "Xc[i, ", k, "] <- ifelse(Xcat[i, ", dest_col, "] == ",
@@ -200,8 +192,8 @@ paste_trafos <- function(dest_col, trafo_cols, trafos,...) {
 }
 
 
-#' Call and paste imputation models
-#' @param imp_par_list list of parameters
+# Call and paste imputation models
+# @param imp_par_list list of parameters
 paste_imp_model <- function(imp_par_list) {
 
   imp_model <- switch(imp_par_list$impmeth,
@@ -214,8 +206,8 @@ paste_imp_model <- function(imp_par_list) {
   do.call(imp_model, imp_par_list)
 }
 
-#' Call and paste imputation priors
-#' @param imp_par_list list of parameters
+# Call and paste imputation priors
+# @param imp_par_list list of parameters
 paste_imp_priors <- function(imp_par_list) {
 
   imp_prior <- switch(imp_par_list$impmeth,
@@ -229,25 +221,14 @@ paste_imp_priors <- function(imp_par_list) {
 }
 
 
-#' Help function for indenting lines in model files
+# Help function for indenting lines in model files
 tab <- function(times = 2) {
   tb <- " "
   paste(rep(tb, times), collapse = "")
 }
 
 
-#' Paste interaction terms for JAGS model
-# paste_interactions <- function(index, mat0, mat1, mat2,
-#                                mat0_col, mat1_col, mat2_col) {
-#   mat0_skip <- sapply(max(nchar(mat0_col)) - nchar(mat0_col), tab)
-#   mat1_skip <- sapply(max(nchar(mat1_col)) - nchar(mat1_col), tab)
-#   mat2_skip <- sapply(max(nchar(mat2_col)) - nchar(mat2_col), tab)
-#
-#   paste0(tab(4), mat0, "[", index, ", ", mat0_skip, mat0_col, "] <- ",
-#          mat1, "[", index, ", ", mat1_skip, mat1_col, "] * ",
-#          mat2, "[", index, ", ", mat2_skip, mat2_col, "]")
-# }
-
+# Paste interaction terms for JAGS model
 paste_interactions <- function(index, mat0, mat1, mat0_col, mat1_col) {
   mat0_skip <- sapply(max(nchar(mat0_col)) - nchar(mat0_col), tab)
 

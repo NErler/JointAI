@@ -1,13 +1,13 @@
-#' Function to write linear mixed model as analysis model
-#' @param N number of subjects / random intercepts
-#' @param y y
-#' @param Z random effects design matrix
-#' @param Xic design matrix of cross-sectional interaction effects
-#' @param Xl design matrix of longitudinal covariates
-#' @param hc_list hierarchical centering specification
-#' @param K matrix specifying the number of parameters for each component of the
-#'        fixed effects
-#' @export
+# Function to write linear mixed model as analysis model
+# @param N number of subjects / random intercepts
+# @param y y
+# @param Z random effects design matrix
+# @param Xic design matrix of cross-sectional interaction effects
+# @param Xl design matrix of longitudinal covariates
+# @param hc_list hierarchical centering specification
+# @param K matrix specifying the number of parameters for each component of the
+#        fixed effects
+# @export
 lme_model <- function(N, y_name, Z = NULL, Xic = NULL, Xl = NULL,
                       Xil = NULL, hc_list = NULL, Mlist = NULL, K, ...){
 
@@ -83,11 +83,11 @@ paste_rdslopes <- function(Z, hc_list, K){
 }
 
 
-#' Write priors for a linear mixed model
-#' @param K K
-#' @param y_name name of the outcome
-#' @param Z random effects design matrix
-#' @export
+# Write priors for a linear mixed model
+# @param K K
+# @param y_name name of the outcome
+# @param Z random effects design matrix
+# @export
 lme_priors <- function(K, y_name, Z = NULL, Mlist = NULL, ...){
   if (is.null(Z) & !is.null(Mlist)) {
     Z <- Mlist$Z

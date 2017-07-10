@@ -1,20 +1,20 @@
-#' Write model syntax to file
-#' @param analysis_type analysis model type (character string)
-#' @param meth named vector specifying imputation methods and ordering
-#' @param Ntot number of observations
-#' @param N number of individuals
-#' @param y_name name of outcome variable
-#' @param Mlist list of design matrices
-#' @param Z random effects design matrix
-#' @param Xic design matrix of time-constant interactions
-#' @param Xl design matrix of time-varying covariates
-#' @param Xil design matrix of interactions involving time-varying covariates
-#' @param hc_list list specifying hierarchical centring structure
-#' @param K matrix specifying range of regression coefficients used for each
-#' component of the analysis model
-#' @param file path and file name
-#' @param package currently only JAGS is implemented
-#' @export
+# Write model syntax to file
+# @param analysis_type analysis model type (character string)
+# @param meth named vector specifying imputation methods and ordering
+# @param Ntot number of observations
+# @param N number of individuals
+# @param y_name name of outcome variable
+# @param Mlist list of design matrices
+# @param Z random effects design matrix
+# @param Xic design matrix of time-constant interactions
+# @param Xl design matrix of time-varying covariates
+# @param Xil design matrix of interactions involving time-varying covariates
+# @param hc_list list specifying hierarchical centring structure
+# @param K matrix specifying range of regression coefficients used for each
+# component of the analysis model
+# @param file path and file name
+# @param package currently only JAGS is implemented
+# @export
 write_model <- function(analysis_type, family = NULL, link = NULL,
                         meth = NULL, Ntot, N, y_name,  Mlist = NULL,
                         Z = NULL, Xic = NULL, Xl = NULL, Xil = NULL,

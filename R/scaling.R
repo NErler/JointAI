@@ -1,8 +1,8 @@
-#' calculate scaled data matrix
-#' @param X a matrix
-#' @param scale_vars a vector of variable names or FALSE
-#' @param scale_pars a matrix of scaling parameters or FALSE or NULL
-#' @export
+# calculate scaled data matrix
+# @param X a matrix
+# @param scale_vars a vector of variable names or FALSE
+# @param scale_pars a matrix of scaling parameters or FALSE or NULL
+# @export
 
 scaled_data.matrix <- function(X, scale_vars, scale_pars, meth) {
   if (any(class(scale_pars) == "logical" & scale_pars == F,
@@ -40,12 +40,9 @@ scaled_data.matrix <- function(X, scale_vars, scale_pars, meth) {
 }
 
 
-#' function for scaling
-#' @export
+# function for scaling
+# @export
 get_scaling <- function(Mlist, scale_pars = NULL, meth) {
-  # if (is.null(scale_pars)) {
-  #   scale_vars <- Mlist$scale_vars
-  # }
   refs <- Mlist$refs
 
 
@@ -107,9 +104,3 @@ get_dummies <- function(x, refs) {
   paste0(x, lvls)
 }
 
-#
-# new_names <- colnames(attr(terms(fixed), "factors"))[
-#   colnames(attr(terms(fixed), "factors")) %in% rownames(attr(terms(fixed), "factors")) &
-#     !colnames(attr(terms(fixed), "factors")) %in% names(scale_pars)]
-#
-#

@@ -1,13 +1,13 @@
-#' Determine number of fixed effects / regression coefficients in the analysis model
-#' @param ncols, named list specifying the column numbers of the matrices Xc,
-#'        Xic, Xl and Xil
-#' @param hc_list named vector or list specifying hierarchical centering
-#'        structure (see \code{\link{get_hc_list}})
-#' @return a matrix specifying the range of regression coefficients per
-#'         component of the analysis model
-#' @note Auxiliary variables are treated the same way as variables that are
-#'       actually in the model.
-#' @export
+# Determine number of fixed effects / regression coefficients in the analysis model
+# @param ncols, named list specifying the column numbers of the matrices Xc,
+#        Xic, Xl and Xil
+# @param hc_list named vector or list specifying hierarchical centering
+#        structure (see \code{\link{get_hc_list}})
+# @return a matrix specifying the range of regression coefficients per
+#         component of the analysis model
+# @note Auxiliary variables are treated the same way as variables that are
+#       actually in the model.
+# @export
 get_model_dim <- function(ncols, hc_list){
 
   K <- matrix(NA, nrow = 4 + length(hc_list), ncol = 2,
@@ -35,12 +35,12 @@ get_model_dim <- function(ncols, hc_list){
 
 
 
-#' Determine positions of incomplete variables in the data matrices
-#' @param meth named vector specifying the imputation methods and ordering of
-#'        the imputation models
-#' @param Mlist a named list with the entries "Xc", "Xic", "Xl", "Xil", "Z"
-#' @return a list?
-#' @export
+# Determine positions of incomplete variables in the data matrices
+# @param meth named vector specifying the imputation methods and ordering of
+#        the imputation models
+# @param Mlist a named list with the entries "Xc", "Xic", "Xl", "Xil", "Z"
+# @return a list?
+# @export
 get_imp_pos <- function(meth, Mlist){
   if (is.null(meth)) return(NULL)
 
@@ -91,13 +91,13 @@ get_imp_pos <- function(meth, Mlist){
 }
 
 
-#' Determine number of parameters in the imputation models
-#' @param meth named vector specifying the imputation methods and ordering of
-#'        the imputation models
-#' @param pos_Xc a list containing the positions of the incomplete variables in Xc
-#' @return a matrix specifying the range of regression coefficients per
-#'         imputation model
-#' @export
+# Determine number of parameters in the imputation models
+# @param meth named vector specifying the imputation methods and ordering of
+#        the imputation models
+# @param pos_Xc a list containing the positions of the incomplete variables in Xc
+# @return a matrix specifying the range of regression coefficients per
+#         imputation model
+# @export
 get_imp_dim <- function(meth, pos_Xc){
   if (is.null(meth)) return(NULL)
 

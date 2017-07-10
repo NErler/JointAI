@@ -1,10 +1,10 @@
-#' Imputation by Bayesian logistic regression
-#' @param varname name of the variable to be imputed
-#' @param dest_col column of Xc containing the variable to be imputed
-#' @param Xc_cols columns of the design matrix to used in linear predictor
-#' @param par_elmts elements of the parameter vector to be used
-#' @param par_name name of the parameter
-#' @export
+# Imputation by Bayesian logistic regression
+# @param varname name of the variable to be imputed
+# @param dest_col column of Xc containing the variable to be imputed
+# @param Xc_cols columns of the design matrix to used in linear predictor
+# @param par_elmts elements of the parameter vector to be used
+# @param par_name name of the parameter
+# @export
 impmodel_logit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, ...){
 
   if (length(Xc_cols) != length(par_elmts)) {
@@ -20,11 +20,11 @@ impmodel_logit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, ...)
 }
 
 
-#' Priors for logistic imputation model
-#' @param varname name of the variable to be imputed
-#' @param par_elmts elements of the parameter vector to be used
-#' @param par_name name of the parameter
-#' @export
+# Priors for logistic imputation model
+# @param varname name of the variable to be imputed
+# @param par_elmts elements of the parameter vector to be used
+# @param par_name name of the parameter
+# @export
 impprior_logit <- function(varname, par_elmts, par_name, ...){
   paste0(tab(), "# Priors for ", varname,"\n",
          tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
