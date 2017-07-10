@@ -216,6 +216,7 @@ the original scale.)}
 
 \examples{
 \dontrun{
+library(JointAI)
 mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 mod2 <- glm_imp(B1 ~ C1 + C2 + M2, data = wideDF,
                 family = binomial(link = "logit"), n.iter = 100)
