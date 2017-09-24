@@ -362,16 +362,18 @@ model_imp <- function(arglist) {
 
 #' @rdname model_imp
 #' @export
-lm_imp <- function(fixed, data,
+lm_imp <- function(formula, data,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                    MCMCpackage = "JAGS", ...){
 
-  if (missing(fixed))
-    stop("No fixed effects structure specified.")
+  if (missing(formula))
+    stop("No model formula specified.")
   if (missing(data))
     stop("No dataset given.")
 
+
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$fixed <- arglist$formula
   arglist$analysis_type <- "lm"
   arglist$family <- "gaussian"
   arglist$link <- "identity"
@@ -393,12 +395,12 @@ lm_imp <- function(fixed, data,
 
 #' @rdname model_imp
 #' @export
-glm_imp <- function(fixed, family, data,
+glm_imp <- function(formula, family, data,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                     MCMCpackage = "JAGS", ...){
 
-  if (missing(fixed))
-    stop("No fixed effects structure specified.")
+  if (missing(formula))
+    stop("No model formula specified.")
   if (missing(data))
     stop("No dataset given.")
   if (missing(family))
@@ -406,6 +408,8 @@ glm_imp <- function(fixed, family, data,
 
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$fixed <- arglist$formula
+
 
   arglist$analysis_type <- "glm"
   if (is.character(family)) {
