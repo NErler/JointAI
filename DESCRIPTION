@@ -9,7 +9,6 @@ BugReports: https://github.com/nerler/JointAI
 LazyData: TRUE
 RoxygenNote: 6.0.1
 Depends: R (>= 3.4.0), rjags (>= 4-6), coda
-SystemRequirements: JAGS 4.x.y
 Imports: MASS, mcmcse
 Suggests: knitr, mitools,
     rmarkdown,
