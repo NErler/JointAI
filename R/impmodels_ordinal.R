@@ -5,7 +5,7 @@
 # @param par_elmts elements of the parameter vector to be used
 # @param par_name name of the parameter
 # @export
-impmodel_ordinal <- function(varname, dest_col, Xc_cols, par_elmts, par_name, dummy_cols, ncat, refcat, ...){
+impmodel_cumlogit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, dummy_cols, ncat, refcat, ...){
 
   if (length(Xc_cols) != length(par_elmts)) {
     stop("The size of the design matrix and length of parameter vector don't match!")
@@ -43,7 +43,7 @@ impmodel_ordinal <- function(varname, dest_col, Xc_cols, par_elmts, par_name, du
 # @param par_elmts elements of the parameter vector to be used
 # @param par_name name of the parameter
 # @export
-impprior_ordinal <- function(varname, par_elmts, par_name, ncat, ...){
+impprior_cumlogit <- function(varname, par_elmts, par_name, ncat, ...){
   deltas <- sapply(1:(ncat - 1), function(k) {
     paste0(tab(), "delta_", varname, "[", k, "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
   })

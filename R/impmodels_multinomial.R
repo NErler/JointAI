@@ -5,7 +5,7 @@
 # @param par_elmts elements of the parameter vector to be used
 # @param par_name name of the parameter
 # @export
-impmodel_multinomial <- function(varname, dest_col, Xc_cols, par_elmts, par_name, dummy_cols, ncat, refcat, ...){
+impmodel_multilogit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, dummy_cols, ncat, refcat, ...){
 
   indent <- nchar(varname) + 21
   predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
@@ -39,7 +39,7 @@ impmodel_multinomial <- function(varname, dest_col, Xc_cols, par_elmts, par_name
 # @param par_elmts elements of the parameter vector to be used
 # @param par_name name of the parameter
 # @export
-impprior_multinomial <- function(varname, par_elmts, par_name, ...){
+impprior_multilogit <- function(varname, par_elmts, par_name, ...){
   paste0(tab(), "# Priors for ", varname,"\n",
          tab(), "for (k in ", min(unlist(par_elmts)), ":", max(unlist(par_elmts)), ") {", "\n",
          tab(4), par_name, "[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)", "\n",

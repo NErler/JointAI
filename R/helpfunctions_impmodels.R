@@ -39,34 +39,34 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
 
   list(varname = varname,
        impmeth = impmeth,
-       intercept = !impmeth %in% c("ordinal"),
-       dest_mat = if (impmeth %in% c("multinomial", "ordinal")) {
+       intercept = !impmeth %in% c("cumlogit"),
+       dest_mat = if (impmeth %in% c("multilogit", "cumlogit")) {
          "Xcat"
        } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          "Xtrafo"
        } else {"Xc"},
-       dest_col = if (impmeth %in% c("multinomial", "ordinal")) {
+       dest_col = if (impmeth %in% c("multilogit", "cumlogit")) {
          dest_cols[[varname]]$Xcat
        } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          dest_cols[[varname]]$Xtrafo
        } else {
          dest_cols[[varname]]$Xc
        },
-       par_elmts = if (impmeth == "multinomial") {
+       par_elmts = if (impmeth == "multilogit") {
          sapply(names(dest_cols[[varname]]$Xc), function(i) {
            K_imp[i, 1]:K_imp[i, 2]
          }, simplify = F)
        } else {
          K_imp[varname, 1]:K_imp[varname, 2]
        },
-       Xc_cols = (1 + (impmeth == "ordinal")):(min(dest_cols[[varname]]$Xc) - 1),
-       dummy_cols = if (impmeth %in% c("ordinal", "multinomial")) {
+       Xc_cols = (1 + (impmeth == "cumlogit")):(min(dest_cols[[varname]]$Xc) - 1),
+       dummy_cols = if (impmeth %in% c("cumlogit", "multilogit")) {
          dest_cols[[varname]]$Xc
        },
-       ncat = if (impmeth %in% c("ordinal", "multinomial")) {
+       ncat = if (impmeth %in% c("cumlogit", "multilogit")) {
          length(dest_cols[[varname]]$Xc) + 1
        },
-       refcat = if (impmeth %in% c("logit", "ordinal", "multinomial")) {
+       refcat = if (impmeth %in% c("logit", "cumlogit", "multilogit")) {
          which(refs[[varname]] == levels(refs[[varname]]))
          # get_refcat(varname, Xcat, refcats)
        },
@@ -84,22 +84,22 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
 
 
 get_trafo <- function(trafo_vec, dest_col) {
-  if(trafo_vec["type"] == "identity") {
+  if (trafo_vec["type"] == "identity") {
     ret <- paste0("Xtrafo[i, ", dest_col, "]")
   }
-  if(trafo_vec["type"] == "log") {
+  if (trafo_vec["type"] == "log") {
     ret <- paste0("log(Xtrafo[i, ", dest_col, "])")
   }
-  if(trafo_vec["type"] == "sqrt") {
+  if (trafo_vec["type"] == "sqrt") {
     ret <- paste0("sqrt(Xtrafo[i, ", dest_col, "])")
   }
-  if(trafo_vec["type"] == "exp") {
+  if (trafo_vec["type"] == "exp") {
     ret <- paste0("exp(Xtrafo[i, ", dest_col, "])")
   }
-  if(trafo_vec["type"] == "I") {
+  if (trafo_vec["type"] == "I") {
     is_power <- regexpr(paste0(trafo_vec["var"], "\\^[[:digit:]]+"),
                         trafo_vec["fct"]) > 0
-    if(is_power) {
+    if (is_power) {
       pow <- gsub(paste0(trafo_vec["var"], "\\^"), "", trafo_vec["fct"])
       ret <- paste0("pow(Xtrafo[i, ", dest_col, "], ", pow, ")")
     }
@@ -200,8 +200,8 @@ paste_imp_model <- function(imp_par_list) {
                       norm = impmodel_normal,
                       lognorm = impmodel_lognormal,
                       logit = impmodel_logit,
-                      multinomial = impmodel_multinomial,
-                      ordinal = impmodel_ordinal)
+                      multilogit = impmodel_multilogit,
+                      cumlogit = impmodel_cumlogit)
 
   do.call(imp_model, imp_par_list)
 }
@@ -214,8 +214,8 @@ paste_imp_priors <- function(imp_par_list) {
                       norm = impprior_normal,
                       lognorm = impprior_lognormal,
                       logit = impprior_logit,
-                      multinomial = impprior_multinomial,
-                      ordinal = impprior_ordinal)
+                      multilogit = impprior_multilogit,
+                      cumlogit = impprior_cumlogit)
 
   do.call(imp_prior, imp_par_list)
 }

@@ -7,18 +7,17 @@
 \alias{lme_imp}
 \title{Joint analysis and imputation}
 \usage{
-lm_imp(fixed, data, n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
   MCMCpackage = "JAGS", ...)
 
-glm_imp(fixed, family, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+glm_imp(formula, family, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, MCMCpackage = "JAGS", ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, MCMCpackage = "JAGS", ...)
 }
 \arguments{
-\item{fixed}{a two sided formula describing the fixed-effects part of the
-model (see \code{\link[stats]{formula}})}
+\item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
 
 \item{data}{a data frame containing the variabels named in \code{fixed}}
 
@@ -34,6 +33,9 @@ be used in the model. This can be a character string naming a
 family function, a family function or the result of a call to
 a family function. (See \code{\link[stats]{family}} and the
 `Details` section below.)}
+
+\item{fixed}{a two sided formula describing the fixed-effects part of the
+model (see \code{\link[stats]{formula}})}
 
 \item{random}{only for \code{lme_imp}:
 a one-sided formula of the form \code{~x1 + ... + xn | g},

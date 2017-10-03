@@ -86,7 +86,7 @@ write_imp_spss <- function(object, m = 10, seed = NULL, resdir = NULL, filename 
     }
 
     # imputation of categorical variables ----------------------------------------------------
-    if (meth[i] %in% c("ordinal", "multinomial")) {
+    if (meth[i] %in% c("cumlogit", "multilogit")) {
       pat <- paste0("Xcat\\[[[:digit:]]*,",
                     match(names(meth)[i], colnames(object$data_list$Xcat)),
                     "\\]")
@@ -96,7 +96,7 @@ write_imp_spss <- function(object, m = 10, seed = NULL, resdir = NULL, filename 
         for (j in (1:m) + 1) {
           vec <- as.numeric(DF_list[[j]][, names(meth)[i]])
           vec[is.na(vec)] <- impval[j - 1, ]
-          if (meth[i] == "ordinal") {
+          if (meth[i] == "cumlogit") {
             vec <- as.ordered(vec)
           }else{
             vec <- as.factor(vec)

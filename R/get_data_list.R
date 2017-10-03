@@ -56,12 +56,12 @@ get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvars, scale_
     l$tau_reg_logit <- 4/9
   }
 
-  if (any(meth == "multinomial")) {
+  if (any(meth == "multilogit")) {
     l$mu_reg_multinomial <- 0
     l$tau_reg_multinomial <- 4/9
   }
 
-  if (any(meth == "ordinal")) {
+  if (any(meth == "cumlogit")) {
     l$mu_reg_ordinal <- 0
     l$tau_reg_ordinal <- 4/9
     l$mu_delta_ordinal <- 0

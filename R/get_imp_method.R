@@ -1,15 +1,28 @@
-# Set default imputation methods
-# @param DF a dataframe
-# @param fixed a formula
-# @param random a formula specifying a random effects structure
-# @param auxvars vector of variable names as auxiliary variables
-# @return a named vector containing those variables in DF
-#         (check what happens if DF doesn't match fixed) that have missing
-#         values and their assigned default imputation methods, sorted by
-#         proportion of missing values (first cross-sectional variables,
-#         then longitudinal variables)
-# @export
-get_imp_meth <- function(DF, fixed = NULL, random = NULL, auxvars = NULL){
+#' Set default imputation methods
+#' @inheritParams model_imp
+#' @param auxvars vector of variable names that shoud be used as predictors in
+#'                the imputation procedure (and will be imputed if necessary)
+#'                but are not part of the analysis model
+#' @return a named vector containing those variables in DF
+#'         (check what happens if DF doesn't match fixed) that have missing
+#'         values and their assigned default imputation methods, sorted by
+#'         proportion of missing values (first cross-sectional variables,
+#'         then longitudinal variables)
+#' @export
+get_imp_meth <- function(formula = NULL, fixed = NULL, random = NULL, data,
+                         auxvars = NULL){
+
+  if (is.null(formula) & is.null(fixed))
+    stop("No formula specified.")
+
+  if (missing(data))
+    stop("No dataset given.")
+
+
+  if (is.null(fixed) & !is.null(formula))
+    fixed <- formula
+
+  DF <- data
 
   random2 <- remove_grouping(random)
 
@@ -49,8 +62,8 @@ get_imp_meth <- function(DF, fixed = NULL, random = NULL, auxvars = NULL){
     meth[nlevel == 0 & !tvar[names(nlevel)]] <- "norm"
     # meth[nlevel == 0 &  tvar[names(nlevel)]] <- "lmm"
     meth[nlevel == 2] <- "logit"
-    meth[nlevel  > 2] <- "multinomial"
-    meth[sapply(DF[, names(nlevel), drop = F], is.ordered)] <- "ordinal"
+    meth[nlevel  > 2] <- "multilogit"
+    meth[sapply(DF[, names(nlevel), drop = F], is.ordered)] <- "cumlogit"
   }
 
   if (length(meth) == 0)

@@ -3,6 +3,7 @@
 #' \code{lm_imp}, \code{glm_imp} and \code{lme_imp} estimate linear, generalized
 #' linear and linear mixed models, respectively, using MCMC sampling.
 #'
+#' @param formula a two sided model formula (see \code{\link[stats]{formula}})
 #' @param fixed a two sided formula describing the fixed-effects part of the
 #' model (see \code{\link[stats]{formula}})
 #' @param random only for \code{lme_imp}:
@@ -250,7 +251,8 @@ model_imp <- function(arglist) {
 
   # default imputation methods, if not specified
   if (is.null(meth)) {
-    meth <- get_imp_meth(data, fixed, random, auxvars)
+    meth <- get_imp_meth(fixed = fixed, random = random, data = data,
+                         auxvars = auxvars)
   }
 
 
@@ -362,12 +364,12 @@ model_imp <- function(arglist) {
 
 #' @rdname model_imp
 #' @export
-lm_imp <- function(fixed, data,
+lm_imp <- function(formula, data,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                    MCMCpackage = "JAGS", ...){
 
-  if (missing(fixed))
-    stop("No fixed effects structure specified.")
+  if (missing(formula))
+    stop("No formula specified.")
   if (missing(data))
     stop("No dataset given.")
 
@@ -375,6 +377,7 @@ lm_imp <- function(fixed, data,
   arglist$analysis_type <- "lm"
   arglist$family <- "gaussian"
   arglist$link <- "identity"
+  arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]
   thiscall <- lapply(thiscall, function(x) {
@@ -393,30 +396,39 @@ lm_imp <- function(fixed, data,
 
 #' @rdname model_imp
 #' @export
-glm_imp <- function(fixed, family, data,
+glm_imp <- function(formula, family, data,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                     MCMCpackage = "JAGS", ...){
 
-  if (missing(fixed))
-    stop("No fixed effects structure specified.")
+  if (missing(formula))
+    stop("No model formula specified.")
   if (missing(data))
     stop("No dataset given.")
   if (missing(family))
     stop("The family needs to be specified.")
 
-
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
 
   arglist$analysis_type <- "glm"
+
+
   if (is.character(family)) {
     family <- get(family, mode = "function", envir = parent.frame())
     arglist$family <- family()$family
     arglist$link <- family()$link
   }
+
+  if (is.function(family)) {
+    arglist$family <- family()$family
+    arglist$link <- family()$link
+  }
+
   if (inherits(family, "family")) {
     arglist$family <- family$family
     arglist$link <- family$link
   }
+
+  arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]
   thiscall <- lapply(thiscall, function(x) {
