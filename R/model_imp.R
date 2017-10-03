@@ -369,11 +369,14 @@ lm_imp <- function(formula, data,
                    MCMCpackage = "JAGS", ...){
 
   if (missing(formula))
-    stop("No formula specified.")
+    stop("No model formula specified.")
+
   if (missing(data))
     stop("No dataset given.")
 
+
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$fixed <- arglist$formula
   arglist$analysis_type <- "lm"
   arglist$family <- "gaussian"
   arglist$link <- "identity"
@@ -408,6 +411,8 @@ glm_imp <- function(formula, family, data,
     stop("The family needs to be specified.")
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$fixed <- arglist$formula
+
 
   arglist$analysis_type <- "glm"
 
