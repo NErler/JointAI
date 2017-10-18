@@ -25,10 +25,15 @@ scaled_data.matrix <- function(X, scale_vars, scale_pars, meth) {
         usecenter <- if (!i %in% names(meth)) TRUE else meth[i] != "lognorm"
         scv <- scale(X[, i], center = usecenter)
         X[, i] <- scv
-        scale_pars[[i]] <- c(center = attr(scv, "scaled:center"),
-                             scale = if (is.null(attr(scv, "scaled:scale"))) {
-                               0
-                             } else {attr(scv, "scaled:scale")}
+        scale_pars[[i]] <- c(
+          center = if (is.null(attr(scv, "scaled:center"))) {
+            0
+          } else {
+            attr(scv, "scaled:center")
+          },
+          scale = if (is.null(attr(scv, "scaled:scale"))) {
+            1
+          } else {attr(scv, "scaled:scale")}
         )
       }
     } else {

@@ -8,8 +8,8 @@ License: GPL (>= 2)
 BugReports: https://github.com/nerler/JointAI
 LazyData: TRUE
 RoxygenNote: 6.0.1
-Depends: R (>= 3.4.0), rjags (>= 4-6), coda
-Imports: MASS, mcmcse
+Depends: R (>= 3.4.0),
+Imports: MASS, mcmcse, rjags (>= 4-6), coda
 Suggests: knitr, mitools,
     rmarkdown,
     testthat

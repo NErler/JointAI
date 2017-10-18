@@ -64,7 +64,7 @@ are categorical covariates.
 The model specification using the **JointAI** package is very similar to the use of the
 standard functions `lm()`, `glm()` or `lme()` (from the package **nlme**).
 ```{r, jm0, cache = T}
-jm0 <- glm_imp(fixed = fmla, family = binomial(link = "logit"), data = pbc, n.iter = 500)
+jm0 <- glm_imp(formula = fmla, family = binomial(link = "logit"), data = pbc, n.iter = 500)
 ```
 
 The (fixed effects) design matrix may also contain interaction terms, i.e.,

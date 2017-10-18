@@ -58,7 +58,7 @@ impprior_normal <- function(varname, par_elmts, par_name, ...){
 # @param par_elmts elements of the parameter vector to be used
 # @param par_name name of the parameter
 # @export
-impmodel_lognormal <- function(varname, dest_col, dest_mat, Xc_cols, par_elmts, par_name, ...){
+impmodel_lognorm <- function(varname, dest_col, dest_mat, Xc_cols, par_elmts, par_name, ...){
 
   if (length(Xc_cols) != length(par_elmts)) {
     stop("The size of the design matrix and length of parameter vector don't match!")
@@ -74,7 +74,7 @@ impmodel_lognormal <- function(varname, dest_col, dest_mat, Xc_cols, par_elmts, 
 
 
 # Priors for log-normal imputation model
-impprior_lognormal <- function(varname, par_elmts, par_name, ...){
+impprior_lognorm <- function(varname, par_elmts, par_name, ...){
   paste0(tab(), "# Priors for ", varname, "\n",
          tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
          tab(4), par_name, "[k] ~ dnorm(mu_reg_norm, tau_reg_norm)", "\n",
