@@ -1,13 +1,15 @@
 get_refs <- function(factors, refcats, DF = NULL) {
 
+  default <- "first"
+
   if (is.null(refcats)) {
-    refcats <- rep("first", length(factors))
+    refcats <- rep(default, length(factors))
     names(refcats) <- factors
-  } else if (refcats %in% c("first", "largest")) {
-    refcats <- setNames(rep(refcats, length(factors)), factors)
   } else if (any(!factors %in% names(refcats))) {
     add <- factors[!factors %in% names(refcats)]
-    refcats <- c(refcats,  setNames(rep("largest", length(add)), add))
+    refcats <- c(refcats,  setNames(rep(default, length(add)), add))
+  } else if (refcats %in% c("first", "largest")) {
+    refcats <- setNames(rep(refcats, length(factors)), factors)
   }
 
   sapply(factors, function(x){

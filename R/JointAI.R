@@ -1,4 +1,4 @@
-#' JointAI: Joint Analysis and Imputation of missing values
+#' JointAI: Joint Analysis and Imputation of Missing Values
 #'
 #' The JointAI package performs simultaneous imputation and inference for
 #' incomplete data using the Bayesian framework.

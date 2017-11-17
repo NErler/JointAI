@@ -6,31 +6,29 @@
 \title{Mayo Clinic Primary Biliary Cirrhosis, baseline data}
 \format{A data frame with 418 rows and 19 variables:
 \describe{
-  \tabular{ll}{
-  \code{age}      \tab in years\cr
-  \code{albumin}  \tab serum albumin (g/dl)\cr
-  \code{alk.phos} \tab alkaline phosphotase (U/liter)\cr
-  \code{ascites}  \tab presence of ascites\cr
-  \code{ast}      \tab aspartate aminotransferase, once called SGOT (U/ml)\cr
-  \code{bili}     \tab serum bilirunbin (mg/dl)\cr
-  \code{chol}     \tab	serum cholesterol (mg/dl)\cr
-  \code{copper}   \tab urine copper (ug/day)\cr
-  \code{edema}    \tab 0 no edema, 0.5 untreated or successfully treated,
-                       1 edema despite diuretic therapy\cr
-  \code{hepato}   \tab	presence of hepatomegaly or enlarged liver\cr
-  \code{id}       \tab	case number\cr
-  \code{platelet} \tab	platelet count\cr
-  \code{protime}  \tab	standardised blood clotting time\cr
-  \code{sex}      \tab	male (m) or female (f)\cr
-  \code{spiders}  \tab	blood vessel malformations in the skin\cr
-  \code{stage}    \tab	histologic stage of disease (needs biopsy)\cr
-  \code{status}   \tab	status at endpoint, 0/1/2 for censored, transplant, dead\cr
-  \code{time}     \tab	number of days between registration and the earlier of death,
-                       transplantion, or study analysis in July, 1986\cr
-  \code{trt}      \tab	1/2/NA for D-penicillmain, placebo, not randomised\cr
-  \code{trig}     \tab triglycerides (mg/dl)\cr
-  }
-}}
+  \item{age}{in years}
+  \item{albumin}{serum albumin (g/dl)}
+  \item{alk.phos}{alkaline phosphotase (U/liter)}
+  \item{ascites}{presence of ascites}
+  \item{ast}{aspartate aminotransferase, once called SGOT (U/ml)}
+  \item{bili}{serum bilirunbin (mg/dl)}
+  \item{chol}{serum cholesterol (mg/dl)}
+  \item{copper}{urine copper (ug/day)}
+  \item{edema}{0 no edema, 0.5 untreated or successfully treated,
+                       1 edema despite diuretic therapy}
+  \item{hepato}{presence of hepatomegaly or enlarged liver}
+  \item{id}{case number}
+  \item{platelet}{platelet count}
+  \item{protime}{standardised blood clotting time}
+  \item{sex}{male (m) or female (f)}
+  \item{spiders}{blood vessel malformations in the skin}
+  \item{stage}{histologic stage of disease (needs biopsy)}
+  \item{status}{status at endpoint, 0/1/2 for censored, transplant, dead}
+  \item{time}{number of days between registration and the earlier of death,
+                       transplantion, or study analysis in July, 1986}
+  \item{trt}{1/2/NA for D-penicillmain, placebo, not randomised}
+  \item{trig}{triglycerides (mg/dl)}
+  }}
 \source{
 Therneau, T. and Grambsch, P. (2000)
             \emph{Modeling Survival Data: Extending the Cox Model}.

@@ -1,30 +1,15 @@
-#' Plot MCMC output from JointAI
+#' Traceplot MCMC output from JointAI
 #'
-#' Creates a set of traceplots or densityplots from the MCMC sample of a JointAI-object
+#' Creates a set of traceplots rom the MCMC sample of a JointAI-object
 #'
 #' @param object a \code{JointAI}-object
-#' @param start from which iteration onwards the MCMC samples should be included
-#'              (see \code{\link[coda]{window.mcmc}})
-#' @param end last iteration included in the plot
-#'            (see \code{\link[coda]{window.mcmc}})
-#' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
-#' @param subset subset of monitored nodes (columns in the MCMC sample) to use.
-#'               Can be specified as a numeric vector of columns,  a vector of
-#'               column names, as \code{subset = "main"} or \code{NULL}.
-#'               If \code{NULL}, all monitored nodes will be plotted.
-#'               \code{subset = "main"} (default) the main parameters of the
-#'               analysis model will be plotted (regression coefficients,
-#'               standard deviation of the residual, random effects covariance
-#'               matrix).
-#' @param vlines only for densplot; list where each element specifies parameters
-#'               to create a vertical line in each of the plots. The list
-#'               elements need to have a named element \code{v = [x location]}
-#'               and may have more named elements that can be passed to
-#'               \code{\link[graphics]{abline}}
-#' @param nrow number of rows in the plotting layout; determined automatically
-#'             if not specified
-#' @param ncol number of columns in the plotting layout; determined automatically
-#'             if not specified
+#' @inheritParams summary.JointAI
+#' @param nrow optional; number of rows in the plotting layout
+#'             (determined automatically if not specified)
+#' @param ncol optional; number of columns in the plotting layout
+#'             (determined automatically if not specified)
+#' @inheritDotParams graphics::matplot -x -y -type -xlab -ylab -pch
+#' @name traceplot
 #'
 #' @seealso \code{\link{summary.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
 #'           \code{\link{lm_imp}}
@@ -32,37 +17,13 @@
 #' \dontrun{
 #' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #' traceplot(mod1)
-#' densplot(mod1)
-#' densplot(mod1, vlines = list(list(v = rep(0, nrow(summary(mod1)$stats)),
-#'                                   col = grey(0.8)),
-#'                              list(v = summary(mod1)$stats[, "Mean"], lty = 1, lwd = 2),
-#'                              list(v = summary(mod1)$stats[, "2.5%"], lty = 2),
-#'                              list(v = summary(mod1)$stats[, "97.5%"], lty = 2))
-#'         )
 #' }
-#'
-#' @name plot
-NULL
-
-
-#' @rdname plot
 #' @export
 traceplot <- function(object, ...) {
-  UseMethod("traceplot", object)
+  UseMethod("traceplot")
 }
 
-
-#' @rdname plot
-#' @export
-densplot <- function(object, ...) {
-  UseMethod("densplot", object)
-}
-
-
-
-
-# traceplot --------------------------------------------------------------------
-#' @rdname plot
+#' @rdname traceplot
 #' @export
 traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                               subset = "main", nrow = NULL, ncol = NULL, ...) {
@@ -78,19 +39,62 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     matplot(as.array(prep$MCMC)[, i, ], type = "l", xlab = "Iterations", ylab = "",
             main = colnames(prep$MCMC[[1]])[i], ...)
   }
+  par(mfrow = c(1,1))
 }
 
 
 
-# densplot ---------------------------------------------------------------------
-#' @rdname plot
+
+
+
+
+#' Plot posterior density of MCMC output from JointAI
+#'
+#' Plots a set of densities (per MC chain and coefficient) from the MCMC sample
+#' of a JointAI-object
+#' @inheritParams traceplot
+#' @param vlines list, where each element is a named list of parameters that
+#'               can be passed to \code{\link[graphics]{abline}} to create
+#'               vertical lines.
+#'               Each of the list elements needs to contain at least
+#'               \code{v = <x location>}, where <x location> is a vector of the
+#'               same length as the number of plots (see examples).
+#' @param ... additional parameters passed to \code{\link[graphics]{plot}}
+#' @examples
+#' \dontrun{
+#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#'
+#' # densplot without vertical lines
+#' densplot(mod1)
+#'
+#' # use vlines to mark zero
+#' densplot(mod1, col = c("darkred", "darkblue", "darkgreen"),
+#'          vlines = list(list(v = rep(0, nrow(summary(mod1)$stats)),
+#'                             col = grey(0.8)))
+#'         )
+#'
+#' # use vlines to visualize the posterior mean and 2.5% and 97.5% quantiles
+#' densplot(mod1, vlines = list(list(v = summary(mod1)$stats[, "Mean"], lty = 1, lwd = 2),
+#'                              list(v = summary(mod1)$stats[, "2.5%"], lty = 2),
+#'                              list(v = summary(mod1)$stats[, "97.5%"], lty = 2))
+#'         )
+#' }
+#' @name densplot
+#'
+NULL
+
+densplot <- function(object, ...) {
+  UseMethod("densplot")
+}
+
+#' @rdname densplot
 #' @export
 densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                              subset = "main", vlines = NULL, nrow = NULL,
                              ncol = NULL, ...) {
 
-  prep <- plot_prep(object, start = start, end = end, thin = thin, subset = subset,
-                    nrow = nrow, ncol = ncol)
+  prep <- plot_prep(object, start = start, end = end, thin = thin,
+                    subset = subset, nrow = nrow, ncol = ncol)
 
 
   par(mfrow = c(prep$nrow, prep$ncol), mar = c(3, 3, 2, 1), mgp = c(2, 0.6, 0),
@@ -103,10 +107,10 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       vlines$v
     }
     plot(NULL,
-         xlim = range(lapply(dens, "[[", "x"), vline_range),
-         ylim = range(lapply(dens, "[[", "y")),
+         xlim = range(lapply(dens, "[[", "x"), vline_range, na.rm = T),
+         ylim = range(lapply(dens, "[[", "y"), na.rm = T),
          main = colnames(prep$MCMC[[1]])[i],
-         xlab = "", ylab = "density"
+         xlab = "", ylab = "density", ...
     )
 
     for (j in 1:length(prep$MCMC)) {
@@ -120,7 +124,10 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       }
     }
   }
+  par(mfrow = c(1,1))
 }
+
+
 
 
 
@@ -207,6 +214,7 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
   return(list(MCMC = MCMC, ask = ask, nrow = nrow, ncol = ncol,
               thin = thin, time = time, subset = subset))
 }
+
 
 # #' Coefplot
 # #' @export

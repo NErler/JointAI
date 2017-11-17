@@ -2,33 +2,45 @@
 % Please edit documentation in R/convergence_criteria.R
 \name{MC_error}
 \alias{MC_error}
+\alias{plot.MCElist}
 \title{Monte Carlo error}
 \usage{
-MC_error(object, subset = "main", start = NULL, end = NULL, thin = NULL,
-  ...)
+MC_error(x, subset = "main", start = NULL, end = NULL, thin = NULL,
+  digits = 2, ...)
+
+\method{plot}{MCElist}(x, scaled = T, plotpars = NULL, ablinepars = list(v
+  = 0.05), ...)
 }
 \arguments{
-\item{object}{JointAI object}
+\item{x}{JointAI object}
 
-\item{subset}{subset of monitored nodes (columns in the MCMC sample) to use.
-Can be specified as a numeric vector of columns,  a vector of
+\item{subset}{subset of monitored parameters (columns in the MCMC sample).
+Can be specified as a numeric vector of columns, a vector of
 column names, as \code{subset = "main"} or \code{NULL}.
 If \code{NULL}, all monitored nodes will be plotted.
 \code{subset = "main"} (default) the main parameters of the
-analysis model will be plotted (regression coefficients,
-standard deviation of the residual, random effects covariance
-matrix).}
+analysis model will be plotted (regression coefficients/fixed
+effects, and, if available, standard deviation of the residual
+and random effects covariance matrix).}
 
-\item{start}{the first iteration of interest}
+\item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
-\item{end}{the last iteration of interest}
+\item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
-\item{thin}{the required interval between successive samples}
+\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
+
+\item{digits}{number of digits for output}
+
+\item{...}{futher arguments for future methods}
+
+\item{scaled}{use the scaled or unscaled version, default = T}
+
+\item{plotpars}{optional; list of parameters passed to \code{plot}}
+
+\item{ablinepars}{optional; list of parameters passed to \code{abline}}
 
 \item{...}{Arguments passed on to \code{mcmcse::mcse.mat}
 \describe{
-  \item{x}{a matrix or data frame with each row being a
-  draw from the multivariate distribution of interest.}
   \item{size}{the batch size. The default value is
   \dQuote{\code{sqroot}}, which uses the square root of the
   sample size. \dQuote{\code{cuberoot}} will cause the
@@ -48,8 +60,13 @@ matrix).}
 }}
 }
 \description{
-Monte Carlo error
+Calculate and plot the Monte Carlo error of a JointAI model
 }
+\section{Methods (by generic)}{
+\itemize{
+\item \code{plot}: plot Monte Carlo error
+}}
+
 \examples{
 \dontrun{
 mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)

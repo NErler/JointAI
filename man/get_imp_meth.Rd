@@ -2,35 +2,32 @@
 % Please edit documentation in R/get_imp_method.R
 \name{get_imp_meth}
 \alias{get_imp_meth}
-\title{Set default imputation methods}
+\title{Find default imputation methods and order}
 \usage{
-get_imp_meth(formula = NULL, fixed = NULL, random = NULL, data,
-  auxvars = NULL)
+get_imp_meth(fixed, random = NULL, data, auxvars = NULL)
 }
 \arguments{
-\item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
-
-\item{fixed}{a two sided formula describing the fixed-effects part of the
-model (see \code{\link[stats]{formula}})}
+\item{fixed}{a two sided (fixed effects) model formula (see \code{\link[stats]{formula}}).}
 
 \item{random}{only for \code{lme_imp}:
 a one-sided formula of the form \code{~x1 + ... + xn | g},
 where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}
 
-\item{data}{a data frame containing the variabels named in \code{fixed}}
+\item{data}{a data frame}
 
 \item{auxvars}{vector of variable names that shoud be used as predictors in
 the imputation procedure (and will be imputed if necessary)
 but are not part of the analysis model}
 }
 \value{
-a named vector containing those variables in DF
-        (check what happens if DF doesn't match fixed) that have missing
-        values and their assigned default imputation methods, sorted by
-        proportion of missing values (first cross-sectional variables,
-        then longitudinal variables)
+a named vector containing those variables in \code{data}
+        that have missing values and their assigned default imputation methods,
+        sorted by proportion of missing values
 }
 \description{
-Set default imputation methods
+Find default imputation methods and order
+}
+\examples{
+get_imp_meth(y ~ C1 + C2 + B2 + O2 + M2, data = wideDF)
 }

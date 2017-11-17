@@ -44,15 +44,19 @@ get_model_dim <- function(ncols, hc_list){
 get_imp_pos <- function(meth, Mlist){
   if (is.null(meth)) return(NULL)
 
-  for (i in 1:length(Mlist)) {
-    assign(names(Mlist)[i], Mlist[[i]])
-  }
+  refs <- Mlist$refs
+  trafos <- Mlist$trafos
+  Xc <- Mlist$Xc
+  Xic <- Mlist$Xic
+  Xl <- Mlist$Xl
+  Xil <- Mlist$Xil
+  Z <- Mlist$Z
 
   # positions of the variables in the cross-sectional data matrix Xc
   pos_Xc <- sapply(names(meth), function(x) {
     nams <- if (x %in% names(refs)) {
       paste0(x, levels(refs[[x]])[levels(refs[[x]]) != refs[[x]]])
-    } else if (x %in% trafos$var){
+    } else if (x %in% trafos$var) {
       trafos$Xc_var[trafos$var == x]
     } else {
       x

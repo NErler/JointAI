@@ -19,11 +19,21 @@ lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
 
-\item{data}{a data frame containing the variabels named in \code{fixed}}
+\item{data}{a data frame}
+
+\item{n.chains}{the number of parallel chains for the model}
+
+\item{n.adapt}{the number of iterations for adaptation. See 
+    \code{\link{adapt}} for details. If \code{n.adapt = 0} then no 
+    adaptation takes place.}
 
 \item{n.iter}{number of iterations of the MCMC sampler per chain
 (passed to \code{\link[rjags]{coda.samples}}).
 If \code{n.iter = 0}, no MCMC sample is produced.}
+
+\item{thin}{thinning interval for monitors}
+
+\item{MCMCpackage}{currently not used (only "JAGS" is implemented)}
 
 \item{...}{additional, optional parameters, see below}
 
@@ -218,7 +228,7 @@ the original scale.)}
 
 \examples{
 \dontrun{
-library(JointAI)
+
 mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 mod2 <- glm_imp(B1 ~ C1 + C2 + M2, data = wideDF,
                 family = binomial(link = "logit"), n.iter = 100)

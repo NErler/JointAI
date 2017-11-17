@@ -50,8 +50,8 @@ remove_grouping <- function(fmla){
 #' Check if a variable is time-varying
 #' @param x a vector, the variable to be tested
 #' @param idvar a vector specifying a grouping
+#' @keywords internal
 #' @return a logical value
-#' @export
 check_tvar <- function(x, idvar) {
   !all(sapply(split(x, idvar),
               function(z) all(z == z[1], na.rm = T)

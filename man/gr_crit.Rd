@@ -44,7 +44,7 @@ matrix).}
 \item{thin}{the required interval between successive samples}
 }
 \description{
-Gelman-Rubin criterion for convergence
+Gelman-Rubin criterion for convergence (uses \code{\link[coda]{gelman.diag}})
 }
 \examples{
 \dontrun{

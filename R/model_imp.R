@@ -10,7 +10,7 @@
 #'               a one-sided formula of the form \code{~x1 + ... + xn | g},
 #'               where \code{x1 + ... + xn} specifies the model for the random
 #'               effects and \code{g} the grouping variable
-#' @param data a data frame containing the variabels named in \code{fixed}
+#' @param data a data frame
 #' @param family only for \code{glm_imp}:
 #'               a description of the error distribution and link function to
 #'               be used in the model. This can be a character string naming a
@@ -21,6 +21,9 @@
 #'               (passed to \code{\link[rjags]{coda.samples}}).
 #'               If \code{n.iter = 0}, no MCMC sample is produced.
 #' @param ... additional, optional parameters, see below
+#' @inheritParams rjags::jags.model
+#' @inheritParams rjags::coda.samples
+#' @param MCMCpackage currently not used (only "JAGS" is implemented)
 #'
 #'
 #' @section Optional arguments:
@@ -194,7 +197,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' library(JointAI)
+#'
 #' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #' mod2 <- glm_imp(B1 ~ C1 + C2 + M2, data = wideDF,
 #'                 family = binomial(link = "logit"), n.iter = 100)
@@ -205,20 +208,36 @@
 #' @name model_imp
 NULL
 
-model_imp <- function(arglist) {
-  list2env(arglist, sys.frame(sys.nframe()))
-
-  for (x in c("auxvars", "meth", "random", "monitor_params", "refcats",
-              "modelname", "modeldir", "scale_vars", "scale_pars", "Mlist", "K", "K_imp",
-              "imp_pos", "dest_cols", "imp_par_list", "data_list", "inits")) {
-    if (!x %in% ls()) assign(x, NULL)
-  }
-
-  for (x in c("overwrite", "quiet", "keep_model")) {
-    if (!x %in% ls()) assign(x, FALSE)
-  }
-
-  if (!"progress.bar" %in% ls()) assign("progress.bar", "text")
+model_imp <- function(fixed, data, random = NULL, link, family,
+                      auxvars = NULL, meth = NULL, refcats = NULL,
+                      scale_vars = NULL, scale_pars = NULL,
+                      Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
+                      dest_cols = NULL, imp_par_list = NULL,
+                      modelname = NULL, modeldir = NULL, data_list = NULL,
+                      monitor_params = NULL, inits = NULL,
+                      n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                      MCMCpackage = "JAGS", analysis_type,
+                      overwrite = F, keep_model = F,
+                      quiet = T, progress.bar = "text", ...) {
+# model_imp <- function(arglist, ...) {
+  # list2env(arglist, sys.frame(sys.nframe()))
+  #
+  # for (x in c("auxvars", "meth", "random", "monitor_params", "refcats",
+  #             "modelname", "modeldir", "scale_vars", "scale_pars", "Mlist", "K", "K_imp",
+  #             "imp_pos", "dest_cols", "imp_par_list", "data_list", "inits")) {
+  #   if (!x %in% ls()) assign(x, NULL)
+  # }
+  #
+  # for (x in c("overwrite", "keep_model")) {
+  #   if (!x %in% ls()) assign(x, FALSE)
+  # }
+  #
+  # for (x in c("quiet")) {
+  #   if (!x %in% ls()) assign(x, TRUE)
+  # }
+  #
+  #
+  # if (!"progress.bar" %in% ls()) assign("progress.bar", "text")
 
   # Checks & warnings -------------------------------------------------------
   if (missing(fixed)) {
@@ -312,6 +331,7 @@ model_imp <- function(arglist) {
 
 
   # run JAGS -----------------------------------------------------------------
+  t0 <- Sys.time()
   if (any(n.adapt > 0, n.iter > 0)) {
 
     adapt <- try(rjags::jags.model(file = modelfile, data = data_list,
@@ -333,6 +353,7 @@ model_imp <- function(arglist) {
                             variable.names = var.names,
                             na.rm = F, progress.bar = progress.bar))
   }
+  t1 <- Sys.time()
 
 
   if (!keep_model) {file.remove(modelfile)}
@@ -349,15 +370,16 @@ model_imp <- function(arglist) {
   attr(analysis_type, "link") <- link
 
   return(structure(
-    list(call = thecall,
-         analysis_type = analysis_type,
+    list(analysis_type = analysis_type,
          data = data, meth = meth, fixed = fixed, random = random,
          Mlist = Mlist, K = K, K_imp = K_imp,
          mcmc_settings = mcmc_settings,
          data_list = data_list,
          scale_pars = scale_pars,
          model = if (n.adapt > 0) adapt,
-         sample = if (n.iter > 0) mcmc), class = "JointAI")
+         sample = if (n.iter > 0) mcmc,
+         time = t1 - t0
+         ), class = "JointAI")
   )
 }
 
@@ -391,7 +413,8 @@ lm_imp <- function(formula, data,
                arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
-  res <- model_imp(arglist)
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
   return(res)
 }
 
@@ -445,7 +468,8 @@ glm_imp <- function(formula, family, data,
                thiscall[!names(thiscall) %in% names(arglist)])
 
 
-  res <- model_imp(arglist)
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
   return(res)
 }
 
@@ -480,6 +504,8 @@ lme_imp <- function(fixed, data, random,
                thiscall[!names(thiscall) %in% names(arglist)])
 
 
-  res <- model_imp(arglist)
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+
   return(res)
 }

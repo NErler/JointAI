@@ -1,4 +1,6 @@
 #' Gelman-Rubin criterion for convergence
+#'
+#' Gelman-Rubin criterion for convergence (uses \code{\link[coda]{gelman.diag}})
 #' @param object JointAI object
 #' @inheritParams coda::gelman.diag
 #' @param start the first iteration of interest
@@ -65,19 +67,12 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 
 
 #' Monte Carlo error
-#' @param object JointAI object
-#' @param subset subset of monitored nodes (columns in the MCMC sample) to use.
-#'               Can be specified as a numeric vector of columns,  a vector of
-#'               column names, as \code{subset = "main"} or \code{NULL}.
-#'               If \code{NULL}, all monitored nodes will be plotted.
-#'               \code{subset = "main"} (default) the main parameters of the
-#'               analysis model will be plotted (regression coefficients,
-#'               standard deviation of the residual, random effects covariance
-#'               matrix).
-#' @param start the first iteration of interest
-#' @param end the last iteration of interest
-#' @param thin the required interval between successive samples
-#' @inheritDotParams mcmcse::mcse.mat
+#'
+#' Calculate and plot the Monte Carlo error of a JointAI model
+#' @param x JointAI object
+#' @inheritParams summary.JointAI
+#' @param digits number of digits for output
+#' @inheritDotParams mcmcse::mcse.mat -x
 #'
 #' @references
 #' Lesaffre, E., & Lawson, A. B. (2012).
@@ -91,57 +86,104 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #' }
 #'
 #' @export
-MC_error <- function(object, subset = "main", start = NULL, end = NULL, thin = NULL, ...) {
+MC_error <- function(x, subset = "main", start = NULL, end = NULL, thin = NULL,
+                     digits = 2, ...) {
 
-  if (!inherits(object, "JointAI"))
-    stop("Object must be of class JointAI.")
+  if (!inherits(x, "JointAI"))
+    stop("x must be of class JointAI.")
 
-  if (is.null(object$sample))
+  if (is.null(x$sample))
     stop("No mcmc sample.")
 
   if (is.null(start))
-    start <- start(object$sample)
+    start <- start(x$sample)
 
   if (is.null(end))
-    end <- end(object$sample)
+    end <- end(x$sample)
 
   if (is.null(thin))
-    thin <- thin(object$sample)
+    thin <- thin(x$sample)
 
 
-  MCMC <- do.call(rbind, window(object$sample, start = start, end = end, thin = thin))
-  coefs <- get_coef_names(object$Mlist, object$K)
+  MCMC <- do.call(rbind, window(x$sample, start = start, end = end, thin = thin))
+  coefs <- get_coef_names(x$Mlist, x$K)
   colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
 
   if (!is.null(subset)) {
-    MCMC <- get_subset(subset, MCMC, object)
+    MCMC <- get_subset(subset, MCMC, x)
   }
 
   res1 <- mcmcse::mcse.mat(x = MCMC, ...)
+  colnames(res1) <- gsub("se", "MCSE", colnames(res1))
 
-  scale_pars <- object$scale_pars
+  scale_pars <- x$scale_pars
   if (!is.null(scale_pars)) {
     # re-scale parameters
-    MCMC <- sapply(colnames(MCMC), rescale, object$Mlist$fixed2, scale_pars,
-                   MCMC, object$Mlist$refs, object$Mlist$X2_names)
+    MCMC <- sapply(colnames(MCMC), rescale, x$Mlist$fixed2, scale_pars,
+                   MCMC, x$Mlist$refs, x$Mlist$X2_names)
   }
 
   res2 <- mcmcse::mcse.mat(x = MCMC, ...)
+  colnames(res2) <- gsub("se", "MCSE", colnames(res2))
 
-  summary_obj <- summary(object)
+  summary_obj <- summary(x)
   res1 <- cbind(res1,
                 SD = summary_obj$stats[match(row.names(summary_obj$stats),
                                              row.names(res1)), "SD"]
   )
   res1 <- cbind(res1,
-                'se/SD' = res1[, "se"]/res1[, "SD"])
+                'MCSE/SD' = res1[, "MCSE"]/res1[, "SD"])
   res2 <- cbind(res2,
                 SD = summary_obj$stats[match(row.names(summary_obj$stats),
                                              row.names(res1)), "SD"]
   )
   res2 <- cbind(res2,
-                'se/SD' = res2[, "se"]/res2[, "SD"])
+                'MCSE/SD' = res2[, "MCSE"]/res2[, "SD"])
 
-  return(list(unscaled = res1, scaled = res2))
+  out <- list(unscaled = res1, scaled = res2, digits = digits)
+  class(out) <- "MCElist"
+  return(out)
 }
 
+
+#' @export
+print.MCElist <- function(x, ...) {
+  print(x$scaled, digits = x$digits)
+}
+
+
+# plot Monte Carlo error
+#' @param scaled use the scaled or unscaled version, default = T
+#' @param plotpars optional; list of parameters passed to \code{plot}
+#' @param ablinepars optional; list of parameters passed to \code{abline}
+#' @describeIn MC_error plot Monte Carlo error
+#' @export
+
+plot.MCElist <- function(x, scaled = T, plotpars = NULL,
+                         ablinepars = list(v = 0.05), ...) {
+
+  theaxis <- NULL
+  names <- rownames(x$scaled)
+  names <- abbreviate(names, minlength = 12)
+
+  plotpars$x <- x$scaled[, 4]
+  plotpars$y <- nrow(x$scaled:1)
+  if (is.null(plotpars$xlab))
+    plotpars$xlab <- "MCE/SD"
+  if (is.null(plotpars$ylab))
+    plotpars$ylab <- ""
+  if (is.null(plotpars$yaxt)) {
+    plotpars$yaxt <- "n"
+    theaxis <- expression(axis(side = 2, at = nrow(x$scaled):1, labels = names,
+                               las = 2, cex.axis = 0.8))
+  }
+
+  do.call(plot, plotpars)
+  eval(theaxis)
+  do.call(abline, ablinepars)
+
+  # plot(x$scaled[, 4], nrow(x$scaled):1, xlab = "MCE/SD", ylab = "",
+  #      yaxt = "n", ...)
+  # axis(side = 2, at = nrow(x$scaled):1, labels = names, las = 2, cex.axis = 0.8)
+  # abline(v = abline, ...)
+}

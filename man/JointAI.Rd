@@ -4,7 +4,7 @@
 \name{JointAI}
 \alias{JointAI}
 \alias{JointAI-package}
-\title{JointAI: Joint Analysis and Imputation of missing values}
+\title{JointAI: Joint Analysis and Imputation of Missing Values}
 \description{
 The JointAI package performs simultaneous imputation and inference for
 incomplete data using the Bayesian framework.

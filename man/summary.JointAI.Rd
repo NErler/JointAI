@@ -13,22 +13,22 @@
 \arguments{
 \item{object}{an object of class JointAIObject}
 
-\item{start}{the first iteration of interest}
+\item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
-\item{end}{the last iteration of interest}
+\item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
-\item{thin}{the required interval between successive samples}
+\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
 \item{quantiles}{posterior quantiles}
 
-\item{subset}{subset of monitored nodes (columns in the MCMC sample) to use.
-Can be specified as a numeric vector of columns,  a vector of
+\item{subset}{subset of monitored parameters (columns in the MCMC sample).
+Can be specified as a numeric vector of columns, a vector of
 column names, as \code{subset = "main"} or \code{NULL}.
 If \code{NULL}, all monitored nodes will be plotted.
 \code{subset = "main"} (default) the main parameters of the
-analysis model will be plotted (regression coefficients,
-standard deviation of the residual, random effects covariance
-matrix).}
+analysis model will be plotted (regression coefficients/fixed
+effects, and, if available, standard deviation of the residual
+and random effects covariance matrix).}
 
 \item{...}{futher arguments for future methods}
 

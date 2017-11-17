@@ -1,29 +1,39 @@
 #' Summary of an JointAI object
 #' @param object an object of class JointAIObject
+#' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
+#' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
+#' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
 #' @inheritParams coda::window.mcmc
 #' @inheritParams base::print
 #' @param quantiles posterior quantiles
-#' @param subset subset of monitored nodes (columns in the MCMC sample) to use.
-#'               Can be specified as a numeric vector of columns,  a vector of
+#' @param subset subset of monitored parameters (columns in the MCMC sample).
+#'               Can be specified as a numeric vector of columns, a vector of
 #'               column names, as \code{subset = "main"} or \code{NULL}.
 #'               If \code{NULL}, all monitored nodes will be plotted.
 #'               \code{subset = "main"} (default) the main parameters of the
-#'               analysis model will be plotted (regression coefficients,
-#'               standard deviation of the residual, random effects covariance
-#'               matrix).
+#'               analysis model will be plotted (regression coefficients/fixed
+#'               effects, and, if available, standard deviation of the residual
+#'               and random effects covariance matrix).
 #' @export
 summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
-                            quantiles = c(0.025, 0.975), subset = "main", ...) {
+                            quantiles = c(0.025, 0.975), subset = "main",
+                            ...) {
 
   if (is.null(object$sample))
     stop("No mcmc sample.")
 
 
-  if (is.null(start))
+  if (is.null(start)) {
     start <- start(object$sample)
+  } else {
+    start <- max(start, start(object$sample))
+  }
 
-  if (is.null(end))
+  if (is.null(end)) {
     end <- end(object$sample)
+  } else {
+    end <- min(end, end(object$sample))
+  }
 
   if (is.null(thin))
     thin <- thin(object$sample)
