@@ -4,7 +4,7 @@
 #'
 #' @usage data(longDF)
 #'
-#' @format A data frame with 318 rows and 13 variables:
+#' @format A simulated data frame with 318 rows and 13 variables:
 #' \describe{
 #'   \item{C1}{continuous, complete baseline variable}
 #'   \item{C2}{continuous, incomplete baseline variable}
@@ -23,7 +23,6 @@
 #'
 #' @keywords datasets
 #'
-#' @source simulated with \code{\link{sim_data}}
 #'
 "longDF"
 
@@ -35,7 +34,7 @@
 #'
 #' @usage data(wideDF)
 #'
-#' @format A data frame with 100 rows and 13 variables:
+#' @format A simulated data frame with 100 rows and 13 variables:
 #' \describe{
 #'   \item{C1}{continuous, complete variable}
 #'   \item{C2}{continuous, incomplete variable}
@@ -53,6 +52,6 @@
 #'}
 #' @keywords datasets
 #'
-#' @source simulated with \code{\link{sim_data}}
+#'
 #'
 "wideDF"

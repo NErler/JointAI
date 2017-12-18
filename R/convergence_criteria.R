@@ -1,19 +1,9 @@
 #' Gelman-Rubin criterion for convergence
 #'
 #' Gelman-Rubin criterion for convergence (uses \code{\link[coda]{gelman.diag}})
-#' @param object JointAI object
+#' @param object inheriting from class \code{JointAI}
 #' @inheritParams coda::gelman.diag
-#' @param start the first iteration of interest
-#' @param end the last iteration of interest
-#' @param thin the required interval between successive samples
-#' @param subset subset of monitored nodes (columns in the MCMC sample) to use.
-#'               Can be specified as a numeric vector of columns,  a vector of
-#'               column names, as \code{subset = "main"} or \code{NULL}.
-#'               If \code{NULL}, all monitored nodes will be plotted.
-#'               \code{subset = "main"} (default) the main parameters of the
-#'               analysis model will be plotted (regression coefficients,
-#'               standard deviation of the residual, random effects covariance
-#'               matrix).
+#' @inheritParams summary.JointAI
 #' @references
 #' Gelman, A., Meng, X. L., & Stern, H. (1996).
 #' Posterior predictive assessment of model fitness via realized discrepancies.
@@ -28,7 +18,7 @@
 #' @export
 GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = TRUE,
                     multivariate = TRUE, subset = "main", start = NULL, end = NULL,
-                    thin = NULL) {
+                    thin = NULL, ...) {
 
   if (!inherits(object, "JointAI"))
     stop("Object must be of class JointAI.")
@@ -68,11 +58,32 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 
 #' Monte Carlo error
 #'
-#' Calculate and plot the Monte Carlo error of a JointAI model
-#' @param x JointAI object
-#' @inheritParams summary.JointAI
+#' Calculate and plot the Monte Carlo error of the samples from a JointAI model
+#' @param x object inheriting from class \code{JointAI}
+#' @param subset subset of monitored parameters (columns in the MCMC sample).
+#'               Can be specified as a numeric vector of columns, a vector of
+#'               column names, as \code{subset = "main"} or \code{NULL}.
+#'               If \code{NULL}, all monitored nodes will be plotted.
+#'               \code{subset = "main"} (default) the main parameters of the
+#'               analysis model will be plotted (regression coefficients/fixed
+#'               effects, and, if available, standard deviation of the residual
+#'               and random effects covariance matrix).
+#' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
+#' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
+#' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
 #' @param digits number of digits for output
 #' @inheritDotParams mcmcse::mcse.mat -x
+#'
+#' @return an object of class \code{MCElist} with elements \code{unscaled},
+#'         \code{scaled} and \code{digits}. The first two are matrices with
+#'         columns \code{est} (posterior mean), \code{MCSE} (Monte Carlo error),
+#'         \code{SD} (posterior standard deviation) and \code{MCSE/SD}
+#'         (Monte Carlo error divided by post. standard deviation.)
+#'
+#' @note Lesaffre & Lawson (2012) [p. 195] suggest the Monte Carlo error of a
+#'       parameter should not be more than 5\% of the posterior standard
+#'       deviation of this parameter (i.e., \eqn{MCSE/SD \le 0.05}).
+#'
 #'
 #' @references
 #' Lesaffre, E., & Lawson, A. B. (2012).
@@ -82,7 +93,7 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #' @examples
 #' \dontrun{
 #' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-#' GR_crit(mod1)
+#' MC_error(mod1)
 #' }
 #'
 #' @export
@@ -153,9 +164,9 @@ print.MCElist <- function(x, ...) {
 
 
 # plot Monte Carlo error
-#' @param scaled use the scaled or unscaled version, default = T
-#' @param plotpars optional; list of parameters passed to \code{plot}
-#' @param ablinepars optional; list of parameters passed to \code{abline}
+#' @param scaled use the scaled or unscaled version, default is \code{TRUE}
+#' @param plotpars optional; list of parameters passed to \code{\link[graphics]{plot}()}
+#' @param ablinepars optional; list of parameters passed to \code{\link[graphics]{abline}()}
 #' @describeIn MC_error plot Monte Carlo error
 #' @export
 

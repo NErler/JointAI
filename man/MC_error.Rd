@@ -12,7 +12,7 @@ MC_error(x, subset = "main", start = NULL, end = NULL, thin = NULL,
   = 0.05), ...)
 }
 \arguments{
-\item{x}{JointAI object}
+\item{x}{object inheriting from class \code{JointAI}}
 
 \item{subset}{subset of monitored parameters (columns in the MCMC sample).
 Can be specified as a numeric vector of columns, a vector of
@@ -30,14 +30,6 @@ and random effects covariance matrix).}
 \item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
 \item{digits}{number of digits for output}
-
-\item{...}{futher arguments for future methods}
-
-\item{scaled}{use the scaled or unscaled version, default = T}
-
-\item{plotpars}{optional; list of parameters passed to \code{plot}}
-
-\item{ablinepars}{optional; list of parameters passed to \code{abline}}
 
 \item{...}{Arguments passed on to \code{mcmcse::mcse.mat}
 \describe{
@@ -58,19 +50,37 @@ and random effects covariance matrix).}
   with a Tukey-Hanning window), or \dQuote{\code{bartlett}}
   (spectral variance method with a Bartlett window).}
 }}
+
+\item{scaled}{use the scaled or unscaled version, default is \code{TRUE}}
+
+\item{plotpars}{optional; list of parameters passed to \code{\link[graphics]{plot}()}}
+
+\item{ablinepars}{optional; list of parameters passed to \code{\link[graphics]{abline}()}}
+}
+\value{
+an object of class \code{MCElist} with elements \code{unscaled},
+        \code{scaled} and \code{digits}. The first two are matrices with
+        columns \code{est} (posterior mean), \code{MCSE} (Monte Carlo error),
+        \code{SD} (posterior standard deviation) and \code{MCSE/SD}
+        (Monte Carlo error divided by post. standard deviation.)
 }
 \description{
-Calculate and plot the Monte Carlo error of a JointAI model
+Calculate and plot the Monte Carlo error of the samples from a JointAI model
 }
 \section{Methods (by generic)}{
 \itemize{
 \item \code{plot}: plot Monte Carlo error
 }}
 
+\note{
+Lesaffre & Lawson (2012) [p. 195] suggest the Monte Carlo error of a
+      parameter should not be more than 5\% of the posterior standard
+      deviation of this parameter (i.e., \eqn{MCSE/SD \le 0.05}).
+}
 \examples{
 \dontrun{
 mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-GR_crit(mod1)
+MC_error(mod1)
 }
 
 }

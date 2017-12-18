@@ -1,9 +1,19 @@
-#' Traceplot MCMC output from JointAI
+#' Traceplot of a JointAI model
 #'
-#' Creates a set of traceplots rom the MCMC sample of a JointAI-object
+#' Creates a set of traceplots from the MCMC sample of a JointAI object
 #'
-#' @param object a \code{JointAI}-object
-#' @inheritParams summary.JointAI
+#' @param object object inheriting from class \code{JointAI}
+#' @param subset subset of monitored parameters (columns in the MCMC sample).
+#'               Can be specified as a numeric vector of columns, a vector of
+#'               column names, as \code{subset = "main"} or \code{NULL}.
+#'               If \code{NULL}, all monitored nodes will be plotted.
+#'               \code{subset = "main"} (default) the main parameters of the
+#'               analysis model will be plotted (regression coefficients/fixed
+#'               effects, and, if available, standard deviation of the residual
+#'               and random effects covariance matrix).
+#' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
+#' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
+#' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
 #' @param nrow optional; number of rows in the plotting layout
 #'             (determined automatically if not specified)
 #' @param ncol optional; number of columns in the plotting layout
@@ -48,10 +58,10 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
 
-#' Plot posterior density of MCMC output from JointAI
+#' Plot posterior density from JointAI model
 #'
 #' Plots a set of densities (per MC chain and coefficient) from the MCMC sample
-#' of a JointAI-object
+#' of a JointAI object
 #' @inheritParams traceplot
 #' @param vlines list, where each element is a named list of parameters that
 #'               can be passed to \code{\link[graphics]{abline}} to create

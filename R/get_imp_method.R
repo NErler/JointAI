@@ -1,9 +1,9 @@
 #' Find default imputation methods and order
 #' @param fixed a two sided (fixed effects) model formula (see \code{\link[stats]{formula}}).
 #' @inheritParams model_imp
-#' @param auxvars vector of variable names that shoud be used as predictors in
-#'                the imputation procedure (and will be imputed if necessary)
-#'                but are not part of the analysis model
+# @param auxvars vector of variable names that should be used as predictors in
+#                the imputation procedure (and will be imputed if necessary)
+#                but are not part of the analysis model
 #' @return a named vector containing those variables in \code{data}
 #'         that have missing values and their assigned default imputation methods,
 #'         sorted by proportion of missing values

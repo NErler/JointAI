@@ -8,7 +8,7 @@ write_imp_spss(object, m = 10, seed = NULL, resdir = NULL,
   filename = NULL, write_to_SPSS = T)
 }
 \arguments{
-\item{object}{JointAI object}
+\item{object}{object inheriting from class \code{JointAI}}
 
 \item{m}{number of imputed datasets}
 

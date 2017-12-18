@@ -4,7 +4,7 @@
 \name{wideDF}
 \alias{wideDF}
 \title{Cross-sectional example dataset}
-\format{A data frame with 318 rows and 13 variables:
+\format{A simulated data frame with 100 rows and 13 variables:
 \describe{
   \item{C1}{continuous, complete variable}
   \item{C2}{continuous, incomplete variable}
@@ -20,9 +20,6 @@
   \item{time}{continuous complete variable}
   \item{y}{continuous, complete variable}
 }}
-\source{
-simulated by \code{\link{sim_data}}
-}
 \usage{
 data(wideDF)
 }

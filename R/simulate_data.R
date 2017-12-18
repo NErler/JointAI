@@ -14,7 +14,7 @@
 #' @param ord integer giving the number of ordinal variables or list
 #' @param count integer giving the number of ordinal variables or list (not yet used)
 #' @param long integer giving the number of longitudinal (normally distributed)
-#'        varaibles or list containing parameters
+#'        variables or list containing parameters
 #' @param coef vector of parameters used to create the outcome (optional), if
 #'        NULL, the parameters are drawn from a normal distribution
 #' @param misvar vector of variable names or positions (??? check this) to
@@ -28,6 +28,7 @@
 #'          At the moment only the integer option is implemented for the
 #'          parameters norm, bin, multi, etc.
 #' @export
+#' @keywords internal
 sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
                      norm = 2, bin = 2, multi = 2, ord = 2, count = NULL,
                      long = 2,

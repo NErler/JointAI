@@ -3,7 +3,7 @@
 \name{traceplot}
 \alias{traceplot}
 \alias{traceplot.JointAI}
-\title{Traceplot MCMC output from JointAI}
+\title{Traceplot of a JointAI model}
 \usage{
 traceplot(object, ...)
 
@@ -11,30 +11,7 @@ traceplot(object, ...)
   subset = "main", nrow = NULL, ncol = NULL, ...)
 }
 \arguments{
-\item{object}{a \code{JointAI}-object}
-
-\item{...}{futher arguments for future methods}
-
-\item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
-
-\item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
-
-\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
-
-\item{subset}{subset of monitored parameters (columns in the MCMC sample).
-Can be specified as a numeric vector of columns, a vector of
-column names, as \code{subset = "main"} or \code{NULL}.
-If \code{NULL}, all monitored nodes will be plotted.
-\code{subset = "main"} (default) the main parameters of the
-analysis model will be plotted (regression coefficients/fixed
-effects, and, if available, standard deviation of the residual
-and random effects covariance matrix).}
-
-\item{nrow}{optional; number of rows in the plotting layout
-(determined automatically if not specified)}
-
-\item{ncol}{optional; number of columns in the plotting layout
-(determined automatically if not specified)}
+\item{object}{object inheriting from class \code{JointAI}}
 
 \item{...}{Arguments passed on to \code{graphics::matplot}
 \describe{
@@ -68,9 +45,30 @@ and random effects covariance matrix).}
   \item{verbose}{logical.  If \code{TRUE}, write one line of what is
     done.}
 }}
+
+\item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
+
+\item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
+
+\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
+
+\item{subset}{subset of monitored parameters (columns in the MCMC sample).
+Can be specified as a numeric vector of columns, a vector of
+column names, as \code{subset = "main"} or \code{NULL}.
+If \code{NULL}, all monitored nodes will be plotted.
+\code{subset = "main"} (default) the main parameters of the
+analysis model will be plotted (regression coefficients/fixed
+effects, and, if available, standard deviation of the residual
+and random effects covariance matrix).}
+
+\item{nrow}{optional; number of rows in the plotting layout
+(determined automatically if not specified)}
+
+\item{ncol}{optional; number of columns in the plotting layout
+(determined automatically if not specified)}
 }
 \description{
-Creates a set of traceplots rom the MCMC sample of a JointAI-object
+Creates a set of traceplots from the MCMC sample of a JointAI object
 }
 \examples{
 \dontrun{

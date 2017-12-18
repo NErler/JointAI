@@ -37,7 +37,7 @@ get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvars, scale_
       l$RinvD <- diag(rep(NA, ncol(Mlist$Z)))
       l$KinvD <- ncol(Mlist$Z)
     } else {
-      l$RinvD <- NA
+      l$RinvD <- matrix(ncol = 1, nrow = 1, NA)
     }
     l$a_diag_RinvD <- 0.1
     l$b_diag_RinvD <- 0.01

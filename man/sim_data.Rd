@@ -33,7 +33,7 @@ drawn from distributions.}
 \item{count}{integer giving the number of ordinal variables or list (not yet used)}
 
 \item{long}{integer giving the number of longitudinal (normally distributed)
-varaibles or list containing parameters}
+variables or list containing parameters}
 
 \item{coef}{vector of parameters used to create the outcome (optional), if
 NULL, the parameters are drawn from a normal distribution}
@@ -55,3 +55,4 @@ The time variable has a uniform distribution between tmin and tmax.
          At the moment only the integer option is implemented for the
          parameters norm, bin, multi, etc.
 }
+\keyword{internal}

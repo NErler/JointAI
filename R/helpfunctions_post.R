@@ -38,7 +38,7 @@ get_subset <- function(subset, MCMC, object) {
     if (object$analysis_type == "lme") {
       subset <- c(subset,
                   paste0("sigma_", names(object$Mlist$y)),
-                  grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", colnames(MCMC[[1]]), value = T))
+                  grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", colnames(MCMC), value = T))
     }
   }
   return(MCMC[, subset, drop = F])

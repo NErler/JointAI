@@ -31,10 +31,10 @@ glm_model <- function(family, link, N, y_name, Xic = NULL,
                   "gaussian" = NULL,
                   "binomial" = NULL,
                   "Gamma" = paste0(tab(), "shape_", y_name, "[j] <- pow(mu_", y_name,
-                                   "[j], 2) / pow(sd_", y_name, "[j], 2)",
+                                   "[j], 2) / pow(sigma_", y_name, ", 2)",
                                    "\n",
                                    tab(), "rate_", y_name, "[j]  <- mu_", y_name,
-                                   "[j] / pow(sd_", y_name, "[j], 2)", "\n"),
+                                   "[j] / pow(sigma_", y_name, ", 2)", "\n"),
                   "Poisson" = NULL)
 
 

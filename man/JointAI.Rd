@@ -22,7 +22,7 @@ versions (\code{\link[stats]{lm}}, \code{\link[stats]{glm}} and
 \code{\link[nlme]{lme}}).
 
 
-Results can be summarizd and printed with \code{\link{summary.JointAI}},
+Results can be summarized and printed with \code{\link{summary.JointAI}},
 and visualized using
 \code{\link{traceplot}} or \code{\link{densplot}}.
 }

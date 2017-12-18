@@ -1,5 +1,5 @@
 #' Summary of an JointAI object
-#' @param object an object of class JointAIObject
+#' @param object object inheriting from class \code{JointAI}
 #' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
 #' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
 #' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
@@ -14,10 +14,22 @@
 #'               analysis model will be plotted (regression coefficients/fixed
 #'               effects, and, if available, standard deviation of the residual
 #'               and random effects covariance matrix).
+#' @param ... currently not used
+#'
+#' @examples
+#' \dontrun{
+#'
+#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' summary(mod1)
+#'
+#' }
+#'
+#' @seealso The model fitting functions \code{\link{lm_imp}},
+#'          \code{\link{glm_imp}}, \code{\link{lme_imp}}
+#'
 #' @export
 summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
-                            quantiles = c(0.025, 0.975), subset = "main",
-                            ...) {
+                            quantiles = c(0.025, 0.975), subset = "main", ...) {
 
   if (is.null(object$sample))
     stop("No mcmc sample.")
@@ -101,23 +113,52 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$end <- end
   out$thin <- thin
   out$nchain <- nchain(object$sample)
-  out$stats <- stats
+
+  out$ranefvar <- if (object$analysis_type == "lme")
+    stats[grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", rownames(stats), value = T), , drop = F]
+  out$sigma <- if (attr(object$analysis_type, "family") == "gaussian")
+    stats[grep(paste0("sigma_", names(object$Mlist$y)), rownames(stats), value = T), , drop = F]
+  out$stats <- stats[!rownames(stats) %in% c(rownames(out$ranefvar), rownames(out$sigma)), ]
+
+  out$analysis_type <- object$analysis_type
+  out$size <- nrow(object$data)
+  out$groups <- length(unique(object$Mlist$groups))
 
   class(out) <- "summary.JointAI"
   return(out)
 }
 
 
+print_type <- function(x) {
+  a <- switch(x,
+              lm = "Linear model",
+              glm = "Generalized linear model",
+              lme = "Linear mixed model")
+  paste0(a, " fitted with JointAI")
+}
+
 #' @rdname summary.JointAI
+#' @param x an object of class \code{summary.JointAI}
 #' @export
 print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3), ...) {
   if (!inherits(x, "summary.JointAI"))
     stop("Use only with 'summary.JointAI' objects.\n")
 
+  cat("\n", print_type(x$analysis_type), "\n")
   cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
       "\n\n", sep = "")
   cat("Posterior summary:\n")
   print(x$stats, digits = digits)
+  if (x$analysis_type == "lme") {
+    cat("\n")
+    cat("Posterior summary of random effects covariance matrix:\n")
+    print(x$ranefvar, digits = digits)
+  }
+  if (attr(x$analysis_type, "family") %in% c("gaussian", "Gamma")) {
+    cat("\n")
+    cat("Posterior summary of residual std. deviation:\n")
+    print(x$sigma, digits = digits)
+  }
   cat("\n\n")
   cat("MCMC settings:\n")
   cat("Iterations = ", x$start, ":", x$end, "\n", sep = "")
@@ -128,5 +169,8 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3), ...) 
   # cat("\n1. Empirical mean and standard deviation for each variable,")
   # cat("\n   plus standard error of the mean:\n\n")
   cat("\n")
+  cat("Number of observations:", x$size, "\n")
+  if (x$analysis_type == "lme")
+    cat("Number of groups:", x$groups)
   invisible(x)
 }

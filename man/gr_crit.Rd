@@ -6,10 +6,10 @@
 \usage{
 GR_crit(object, confidence = 0.95, transform = FALSE, autoburnin = TRUE,
   multivariate = TRUE, subset = "main", start = NULL, end = NULL,
-  thin = NULL)
+  thin = NULL, ...)
 }
 \arguments{
-\item{object}{JointAI object}
+\item{object}{object inheriting from class \code{JointAI}}
 
 \item{confidence}{the coverage probability of the confidence interval for the
 potential scale reduction factor}
@@ -28,20 +28,24 @@ appropriate, will be applied.}
 potential scale reduction factor should be calculated for multivariate
 chains}
 
-\item{subset}{subset of monitored nodes (columns in the MCMC sample) to use.
-Can be specified as a numeric vector of columns,  a vector of
+\item{subset}{subset of monitored parameters (columns in the MCMC sample).
+Can be specified as a numeric vector of columns, a vector of
 column names, as \code{subset = "main"} or \code{NULL}.
 If \code{NULL}, all monitored nodes will be plotted.
 \code{subset = "main"} (default) the main parameters of the
-analysis model will be plotted (regression coefficients,
-standard deviation of the residual, random effects covariance
-matrix).}
+analysis model will be plotted (regression coefficients/fixed
+effects, and, if available, standard deviation of the residual
+and random effects covariance matrix).}
 
-\item{start}{the first iteration of interest}
+\item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
-\item{end}{the last iteration of interest}
+\item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
-\item{thin}{the required interval between successive samples}
+\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
+
+\item{...}{currently not used}
+
+\item{an}{object inheriting from class \code{JointAI}}
 }
 \description{
 Gelman-Rubin criterion for convergence (uses \code{\link[coda]{gelman.diag}})

@@ -40,6 +40,9 @@ get_params <- function(meth, analysis_type, family,
       if (is.null(tau_y)) tau_y <- TRUE
       if (is.null(sigma_y)) sigma_y <- TRUE
     }
+    if (analysis_type == "lme") {
+      if (is.null(D)) D <- TRUE
+    }
   }
 
   if (analysis_random) {

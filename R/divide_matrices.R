@@ -106,21 +106,21 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
 
   # Xtrafo ---------------------------------------------------------------------
   trafos <- extract_fcts(fixed, DF)
-  Xtrafo <- if(!is.null(trafos)) {
+  Xtrafo <- if (!is.null(trafos)) {
     fmla_trafo <- as.formula(
       paste("~", paste0(unique(trafos$var), collapse = " + "))
       # paste("~",
       #       paste(names(meth)[!names(meth) %in% c(colnames(Xc), colnames(Xcat))],
       #             collapse = " + "))
     )
-    if(!any(sapply(DF[, all.vars(fmla_trafo), drop = F], is.factor)))
+    if (!any(sapply(DF[, all.vars(fmla_trafo), drop = F], is.factor)))
       contr <- NULL
     model.matrix(fmla_trafo,
                  model.frame(fmla_trafo, DF, na.action = na.pass),
                  contrasts.arg = contr
     )[match(unique(groups), groups), -1, drop = F]
   }
-  if(!is.null(Xtrafo)) {
+  if (!is.null(Xtrafo)) {
     Xc[, as.character(trafos$Xc_var)] <- NA
   }
 

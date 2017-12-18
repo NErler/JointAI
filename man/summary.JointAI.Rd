@@ -11,7 +11,7 @@
 \method{print}{summary.JointAI}(x, digits = max(3, .Options$digits - 3), ...)
 }
 \arguments{
-\item{object}{an object of class JointAIObject}
+\item{object}{object inheriting from class \code{JointAI}}
 
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
@@ -30,13 +30,26 @@ analysis model will be plotted (regression coefficients/fixed
 effects, and, if available, standard deviation of the residual
 and random effects covariance matrix).}
 
-\item{...}{futher arguments for future methods}
+\item{...}{currently not used}
 
-\item{x}{an mcmc object}
+\item{x}{an object of class \code{summary.JointAI}}
 
 \item{digits}{minimal number of \emph{significant} digits, see
     \code{\link{print.default}}.}
 }
 \description{
 Summary of an JointAI object
+}
+\examples{
+\dontrun{
+
+mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+summary(mod1)
+
+}
+
+}
+\seealso{
+The model fitting functions \code{\link{lm_imp}},
+         \code{\link{glm_imp}}, \code{\link{lme_imp}}
 }

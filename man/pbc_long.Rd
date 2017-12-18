@@ -11,22 +11,22 @@
   \item{alk.phos}{alkaline phosphotase (U/liter)}
   \item{ascites}{presence of ascites}
   \item{ast}{aspartate aminotransferase, once called SGOT (U/ml)}
-  \item{bili}{serum bilirunbin (mg/dl)}
+  \item{bili}{serum bilirubin (mg/dl)}
   \item{chol}{serum cholesterol (mg/dl)}
   \item{day}{number of days between enrollment and this visit date}
   \item{edema}{0 no edema, 0.5 untreated or successfully treated,
                        1 edema despite diuretic therapy}
   \item{futime}{number of days between registration and the earlier of death,
-                       transplantion, or study analysis in July, 1986}
+                       transplantation, or study analysis in July, 1986}
   \item{hepato}{presence of hepatomegaly or enlarged liver}
   \item{id}{case number}
   \item{platelet}{platelet count}
-  \item{protime}{standardised blood clotting time}
+  \item{protime}{standardized blood clotting time}
   \item{sex}{male (m) or female (f)}
   \item{spiders}{blood vessel malformations in the skin}
   \item{stage}{histologic stage of disease (needs biopsy)}
   \item{status}{status at endpoint, 0/1/2 for censored, transplant, dead}
-  \item{trt}{1/2/NA for D-penicillmain, placebo, not randomised}
+  \item{trt}{1/2/NA for D-penicillamine, placebo, not randomized}
 }}
 \source{
 Therneau, T. and Grambsch, P. (2000)
@@ -41,9 +41,10 @@ This data is a continuation of the \link{pbc} data set, and contains the follow-
 laboratory data for the 312 randomized patients study patient.
 Some baseline data values in this file differ from the original PBC file,
 for instance, the data errors in prothrombin time and age which were discovered after
-the orignal analysis (see Fleming and Harrington, figure 4.6.7).
+the original analysis (see Fleming and Harrington, figure 4.6.7).
 }
 \examples{
 summary(pbc_long)
 }
 \keyword{datasets}
+\keyword{internal}

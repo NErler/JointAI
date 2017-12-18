@@ -16,9 +16,9 @@ effects and \code{g} the grouping variable}
 
 \item{data}{a data frame}
 
-\item{auxvars}{vector of variable names that shoud be used as predictors in
-the imputation procedure (and will be imputed if necessary)
-but are not part of the analysis model}
+\item{auxvars}{optional vector of variable names that should be used as
+predictors in the imputation procedure (and will be imputed
+if necessary) but are not part of the analysis model}
 }
 \value{
 a named vector containing those variables in \code{data}

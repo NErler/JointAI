@@ -1,6 +1,6 @@
 Package: JointAI
 Version: 0.1.0
-Title: Joint Analysis and Imputation of Missing Values
+Title: Joint Analysis and Imputation of Incomplete Data
 Author: Nicole S. Erler
 Maintainer: Nicole S. Erler <n.erler@erasmusmc.nl>
 Description: Joint imputation and analysis of linear regression models,

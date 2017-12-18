@@ -11,7 +11,7 @@
   \item{alk.phos}{alkaline phosphotase (U/liter)}
   \item{ascites}{presence of ascites}
   \item{ast}{aspartate aminotransferase, once called SGOT (U/ml)}
-  \item{bili}{serum bilirunbin (mg/dl)}
+  \item{bili}{serum bilirubin (mg/dl)}
   \item{chol}{serum cholesterol (mg/dl)}
   \item{copper}{urine copper (ug/day)}
   \item{edema}{0 no edema, 0.5 untreated or successfully treated,
@@ -19,14 +19,14 @@
   \item{hepato}{presence of hepatomegaly or enlarged liver}
   \item{id}{case number}
   \item{platelet}{platelet count}
-  \item{protime}{standardised blood clotting time}
+  \item{protime}{standardized blood clotting time}
   \item{sex}{male (m) or female (f)}
   \item{spiders}{blood vessel malformations in the skin}
   \item{stage}{histologic stage of disease (needs biopsy)}
   \item{status}{status at endpoint, 0/1/2 for censored, transplant, dead}
   \item{time}{number of days between registration and the earlier of death,
-                       transplantion, or study analysis in July, 1986}
-  \item{trt}{1/2/NA for D-penicillmain, placebo, not randomised}
+                       transplantation, or study analysis in July, 1986}
+  \item{trt}{1/2/NA for D-penicillamine, placebo, not randomized}
   \item{trig}{triglycerides (mg/dl)}
   }}
 \source{
@@ -49,3 +49,4 @@ to have basic measurements recorded and to be followed for survival
 summary(pbc)
 }
 \keyword{datasets}
+\keyword{internal}

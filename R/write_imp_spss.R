@@ -1,5 +1,5 @@
 #' Write imputed dataset to a .sav file
-#' @param object JointAI object
+#' @param object object inheriting from class \code{JointAI}
 #' @param m number of imputed datasets
 #' @param seed optional seed
 #' @param resdir optional directory for results
