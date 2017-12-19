@@ -237,6 +237,13 @@ extract_fcts <- function(fixed, DF) {
   # split into elements
   elmts <- unique(unlist(strsplit(deparse(predictor, width.cutoff = 500), "[ ]*[+*~][ ]*")))
 
+  m <- gregexpr(pattern = "[[:alpha:]]*\\([^)]*\\)",
+                text = deparse(predictor, width.cutoff = 500))
+  elmts <- unlist(c(regmatches(deparse(predictor, width.cutoff = 500), m),
+                     lapply(regmatches(deparse(predictor, width.cutoff = 500),
+                      m, invert = T), gsub, pattern = "[+*~ ]",
+                            replacement = "")))
+
 
   m_log <- regexpr(log_pat, elmts)
   m_I <- regexpr(I_pat, elmts)
@@ -249,28 +256,37 @@ extract_fcts <- function(fixed, DF) {
   exp_fcts = regmatches(elmts, m_exp)
   sqrt_fcts = regmatches(elmts, m_sqrt)
 
-  I_Xc_var <- regmatches(elmts, m_I)
-  log_Xc_var <- log_fcts
-  sqrt_Xc_var <- sqrt_fcts
-  exp_Xc_var <- exp_fcts
+  # I_Xc_var <- regmatches(elmts, m_I)
+  # log_Xc_var <- log_fcts
+  # sqrt_Xc_var <- sqrt_fcts
+  # exp_Xc_var <- exp_fcts
 
   m_log <- regexpr(var_pat, log_fcts)
-  # m_I <- regexpr(var_pat, I_fcts)
+  m_I <- regexpr(var_pat, I_fcts)
   m_exp <- regexpr(var_pat, exp_fcts)
   m_sqrt <- regexpr(var_pat, sqrt_fcts)
 
   log_vars <- gsub("[\\(\\)]", "", regmatches(log_fcts, m_log))
-
   I_vars <- unlist(strsplit(I_fcts, "[ ]*[+\\-\\*/:][ ]*|\\^[[:digit:]]*"))
   # I_vars <- gsub("[\\(\\)]", "", regmatches(I_fcts, m_I))
   exp_vars <- gsub("[\\(\\)]", "", regmatches(exp_fcts, m_exp))
   sqrt_vars <- gsub("[\\(\\)]", "", regmatches(sqrt_fcts, m_sqrt))
 
 
+  for (k in seq_along(I_vars)) {
+    if (!I_vars[k] %in% names(DF)) {
+      if (inherits(try(eval(parse(text = I_vars[k]))), "try-error")) {
+        error(paste0("Can't find ", I_vars[k], "."))
+      } else {
+        I_vars <- I_vars[-k]
+      }
+    }
+  }
+
   var_fcts <- as.data.frame(
     do.call(rbind,
-                  sapply(c("log", "I", "exp", "sqrt"), function(x){
-                    if(length(get(paste0(x, "_vars"))) > 0){
+                  sapply(c("log", "I", "exp", "sqrt"), function(x) {
+                    if (length(get(paste0(x, "_vars"))) > 0) {
                       cbind(var = get(paste0(x, "_vars")),
                             Xc_var = get(paste0(x, "_Xc_var")),
                             fct = get(paste0(x, "_fcts")),
@@ -282,7 +298,7 @@ extract_fcts <- function(fixed, DF) {
 
   var_fcts <- var_fcts[colSums(is.na(DF[, var_fcts$var, drop = F])) > 0, ]
 
-  if(any(unique(var_fcts$var) %in% elmts)) {
+  if (any(unique(var_fcts$var) %in% elmts)) {
     add_vars <- elmts[match(unique(var_fcts$var), elmts)]
     var_fcts <- rbind(var_fcts,
                       cbind(var = add_vars,
