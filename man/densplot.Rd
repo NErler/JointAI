@@ -5,11 +5,15 @@
 \alias{densplot.JointAI}
 \title{Plot posterior density from JointAI model}
 \usage{
+densplot(object, ...)
+
 \method{densplot}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
   subset = "main", vlines = NULL, nrow = NULL, ncol = NULL, ...)
 }
 \arguments{
 \item{object}{object inheriting from class \code{JointAI}}
+
+\item{...}{additional parameters passed to \code{\link[graphics]{plot}}}
 
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
@@ -38,8 +42,6 @@ same length as the number of plots (see examples).}
 
 \item{ncol}{optional; number of columns in the plotting layout
 (determined automatically if not specified)}
-
-\item{...}{additional parameters passed to \code{\link[graphics]{plot}}}
 }
 \description{
 Plots a set of densities (per MC chain and coefficient) from the MCMC sample

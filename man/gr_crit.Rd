@@ -9,7 +9,7 @@ GR_crit(object, confidence = 0.95, transform = FALSE, autoburnin = TRUE,
   thin = NULL, ...)
 }
 \arguments{
-\item{object}{object inheriting from class \code{JointAI}}
+\item{object}{inheriting from class \code{JointAI}}
 
 \item{confidence}{the coverage probability of the confidence interval for the
 potential scale reduction factor}
@@ -44,8 +44,6 @@ and random effects covariance matrix).}
 \item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
 \item{...}{currently not used}
-
-\item{an}{object inheriting from class \code{JointAI}}
 }
 \description{
 Gelman-Rubin criterion for convergence (uses \code{\link[coda]{gelman.diag}})

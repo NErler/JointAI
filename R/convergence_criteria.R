@@ -137,16 +137,13 @@ MC_error <- function(x, subset = "main", start = NULL, end = NULL, thin = NULL,
   res2 <- mcmcse::mcse.mat(x = MCMC, ...)
   colnames(res2) <- gsub("se", "MCSE", colnames(res2))
 
-  summary_obj <- summary(x)
   res1 <- cbind(res1,
-                SD = summary_obj$stats[match(row.names(summary_obj$stats),
-                                             row.names(res1)), "SD"]
+                SD = apply(MCMC, 2, sd)[match(colnames(MCMC), row.names(res1))]
   )
   res1 <- cbind(res1,
                 'MCSE/SD' = res1[, "MCSE"]/res1[, "SD"])
   res2 <- cbind(res2,
-                SD = summary_obj$stats[match(row.names(summary_obj$stats),
-                                             row.names(res1)), "SD"]
+                SD = apply(MCMC, 2, sd)[match(colnames(MCMC), row.names(res2))]
   )
   res2 <- cbind(res2,
                 'MCSE/SD' = res2[, "MCSE"]/res2[, "SD"])
@@ -178,7 +175,10 @@ plot.MCElist <- function(x, scaled = T, plotpars = NULL,
   names <- abbreviate(names, minlength = 12)
 
   plotpars$x <- x$scaled[, 4]
-  plotpars$y <- nrow(x$scaled:1)
+  plotpars$y <- nrow(x$scaled):1
+
+  if (is.null(plotpars$xlim))
+    plotpars$xlim <- range(0, plotpars$x)
   if (is.null(plotpars$xlab))
     plotpars$xlab <- "MCE/SD"
   if (is.null(plotpars$ylab))
@@ -188,6 +188,8 @@ plot.MCElist <- function(x, scaled = T, plotpars = NULL,
     theaxis <- expression(axis(side = 2, at = nrow(x$scaled):1, labels = names,
                                las = 2, cex.axis = 0.8))
   }
+  if (is.null(ablinepars$v))
+    ablinepars$v <- 0.05
 
   do.call(plot, plotpars)
   eval(theaxis)

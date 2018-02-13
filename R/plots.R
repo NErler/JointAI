@@ -46,15 +46,11 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       ask = prep$ask)
 
   for (i in 1:nvar(prep$MCMC)) {
-    matplot(as.array(prep$MCMC)[, i, ], type = "l", xlab = "Iterations", ylab = "",
+    matplot(x = prep$time, as.array(prep$MCMC)[, i, ], type = "l", xlab = "Iterations", ylab = "",
             main = colnames(prep$MCMC[[1]])[i], ...)
   }
   par(mfrow = c(1,1))
 }
-
-
-
-
 
 
 
@@ -89,13 +85,11 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #'                              list(v = summary(mod1)$stats[, "97.5%"], lty = 2))
 #'         )
 #' }
-#' @name densplot
-#'
-NULL
-
+#' @export
 densplot <- function(object, ...) {
   UseMethod("densplot")
 }
+
 
 #' @rdname densplot
 #' @export
@@ -226,8 +220,8 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 }
 
 
-# #' Coefplot
-# #' @export
+# Coefplot
+# @export
 # coefplot <- function(x, ...) {
 #   UseMethod("coefplot", x)
 # }

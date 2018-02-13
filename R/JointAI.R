@@ -27,7 +27,7 @@
 #' estimate are available:
 #' \code{\link{GR_crit}} and \code{\link{MC_error}}
 #'
-#' Imputed data can be exported to SPSS data using \code{\link{write_imp_spss}}.
+#' Imputed data can be exported to SPSS data using \code{\link{get_MIdat}}.
 #'
 #'
 #' @references Erler, N. S., Rizopoulos, D., Rosmalen, J. V., Jaddoe,

@@ -48,7 +48,7 @@ get_subset <- function(subset, MCMC, object) {
 
 
 computeP <- function(x) {
-    above <- mean(x >= 0)
+    above <- mean(x > 0)
     below <- mean(x < 0)
     2 * min(above, below)
 }

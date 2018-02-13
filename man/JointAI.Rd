@@ -33,7 +33,7 @@ Two criteria for evaluation of convergence and precision of the posterior
 estimate are available:
 \code{\link{GR_crit}} and \code{\link{MC_error}}
 
-Imputed data can be exported to SPSS data using \code{\link{write_imp_spss}}.
+Imputed data can be exported to SPSS data using \code{\link{get_MIdat}}.
 }
 
 \references{
