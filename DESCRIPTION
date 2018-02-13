@@ -17,6 +17,6 @@ RoxygenNote: 6.0.1
 Depends: R (>= 3.4.0),
 Imports: MASS, mcmcse, rjags (>= 4-6), coda
 Suggests: knitr, mitools,
-    rmarkdown,
+    rmarkdown, mice,
     testthat
 VignetteBuilder: knitr
