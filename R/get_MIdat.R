@@ -1,14 +1,29 @@
-#' Write imputed dataset to a .sav file
+#' Extract multiple imputed datasets (and export to SPSS)
+#'
+#' Extracts a dataset containing multiple imputed datasets. These data can be
+#' automatically exported to SPSS (i.e., a .txt file containing the data and a
+#' .sps file containing syntax to generate a .sav file).
 #' @param object object inheriting from class \code{JointAI}
 #' @param m number of imputed datasets
+#' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
 #' @param seed optional seed
-#' @param resdir optional directory for results
-#' @param filename optional file name (without ending)
-#' @param write_to_SPSS logical
+#' @param resdir optional directory for results (if unspecified and
+#'               \code{export_to_SPSS = T} the current working directory is used)
+#' @param filename optional file name (without ending; if unspecified and
+#'                 \code{export_to_SPSS = T} a name is generated automatically)
+#' @param export_to_SPSS logical
+#'
+#' @return A dataframe containing the imputed values (and original data) stacked.
+#'        The variable \code{Imputation_} identifies the imputations.
+#' @examples
+#' \dontrun{
+#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' MIs <- get_MIdat(mod1, m = 3)
+#' }
 #' @export
 #'
-write_imp_spss <- function(object, m = 10, seed = NULL, resdir = NULL, filename = NULL,
-                           write_to_SPSS = T){
+get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
+                      filename = NULL, export_to_SPSS = F){
 
   if (is.null(object$meth))
     stop("This JointAI object did not impute any values.")
@@ -30,7 +45,13 @@ write_imp_spss <- function(object, m = 10, seed = NULL, resdir = NULL, filename 
 
   meth <- object$meth
 
-  MCMC <- do.call(rbind, object$sample)
+  if (is.null(start)) {
+    start <- start(object$sample)
+  } else {
+    start <- max(start, start(object$sample))
+  }
+
+  MCMC <- do.call(rbind, window(object$sample, start = start))
   if (nrow(MCMC) < m)
     stop(paste0("\nThe number of imputations must be chosen to be less than or equal to ",
                 "the number of MCMC samples (= ", nrow(MCMC), ")."))
@@ -127,7 +148,7 @@ write_imp_spss <- function(object, m = 10, seed = NULL, resdir = NULL, filename 
   if (is.null(filename))
     filename <- paste0("JointAI-imputation_", Sys.Date())
 
-  if (write_to_SPSS == T) {
+  if (export_to_SPSS == T) {
     write_SPSS(impDF,
                file.path(resdir, paste0(filename, ".txt")),
                file.path(resdir, paste0(filename, ".sps"))
