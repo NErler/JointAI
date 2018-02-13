@@ -167,10 +167,15 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
 
   if (is.null(scale_vars)) {
     scale_vars <- find_continuous_main(fixed2, DF)
+    fcts <- extract_fcts(fixed2, DF, complete = T)
+    compl_fcts_vars <- fcts$Xc_var[fcts$type != "identity" &
+                                     colSums(is.na(DF[, fcts$var, drop = F])) == 0]
+
     # excl <- grep("^[nsb]{2}\\(", scale_vars, value = T, fixed = F)
     excl <- grep("[[:alpha:]]*\\(", scale_vars, value = T)
     # excl <- c(excl, names(meth)[meth == "lognorm"])
     excl <- c(excl, unique(trafos$Xc_var))
+    excl <- excl[!excl %in% compl_fcts_vars]
     scale_vars <- scale_vars[which(!scale_vars %in% excl)]
   }
 

@@ -218,15 +218,136 @@ split_interaction <- function(x) {
 }
 
 
+# # Extract functions from formula
+# extract_fcts <- function(fixed, DF, complete = F) {
+#   log_pat <- "log\\([[:print:]]+\\)"
+#   I_pat <- "I\\([[:print:]]+\\)"
+#   exp_pat <- "exp\\([[:print:]]+\\)"
+#   sqrt_pat <- "sqrt\\([[:print:]]+\\)"
+#
+#   # pattern to extract variable(s) from function
+#   var_pat <- "[[:print:]]+\\(.+\\)"
+#   var_pat <- "\\(.+\\)"
+#
+#
+#   # remove outcome from formula
+#   predictor <- as.formula(sub("[[:print:]]*\\~", "~",
+#                               deparse(fixed, width.cutoff = 500)))
+#
+#   # split into elements
+#   elmts <- unique(unlist(strsplit(deparse(predictor, width.cutoff = 500), "[ ]*[+*~][ ]*")))
+#   fkt_elmts <- gsub("[[:alpha:]]*[()]", "", grep("[()]", elmts, value = T))
+#
+#   # find functions
+#   m <- gregexpr(pattern = "[[:alpha:]]*\\([^)]*\\)",
+#                 text = deparse(predictor, width.cutoff = 500))
+#   fkts <- unlist(regmatches(deparse(predictor, width.cutoff = 500), m))
+#
+#   # elmts <- unlist(c(regmatches(deparse(predictor, width.cutoff = 500), m),
+#   #
+#   #                    lapply(regmatches(deparse(predictor, width.cutoff = 500),
+#   #                     m, invert = T), gsub, pattern = "[+*~ ]",
+#   #                           replacement = "")
+#   #                   ))
+#
+#
+#   m_log <- regexpr(log_pat, fkts)
+#   m_I <- regexpr(I_pat, fkts)
+#   m_exp <- regexpr(exp_pat, fkts)
+#   m_sqrt <- regexpr(sqrt_pat, fkts)
+#
+#
+#   log_fcts = regmatches(fkts, m_log)
+#   I_fcts = gsub("I\\(|\\)", "", regmatches(fkts, m_I))
+#   exp_fcts = regmatches(fkts, m_exp)
+#   sqrt_fcts = regmatches(fkts, m_sqrt)
+#
+#   I_Xc_var <- regmatches(fkts, m_I)
+#   log_Xc_var <- log_fcts
+#   sqrt_Xc_var <- sqrt_fcts
+#   exp_Xc_var <- exp_fcts
+#
+#   m_log <- regexpr(var_pat, log_fcts)
+#   m_I <- regexpr(var_pat, I_fcts)
+#   m_exp <- regexpr(var_pat, exp_fcts)
+#   m_sqrt <- regexpr(var_pat, sqrt_fcts)
+#
+#   log_vars <- gsub("[\\(\\)]", "", regmatches(log_fcts, m_log))
+#   I_vars <- unlist(strsplit(I_fcts, "[ ]*[+\\-\\*/:][ ]*|\\^[[:digit:]]*"))
+#   # I_vars <- gsub("[\\(\\)]", "", regmatches(I_fcts, m_I))
+#   exp_vars <- gsub("[\\(\\)]", "", regmatches(exp_fcts, m_exp))
+#   sqrt_vars <- gsub("[\\(\\)]", "", regmatches(sqrt_fcts, m_sqrt))
+#
+#
+#   for (k in seq_along(I_vars)) {
+#     if (!I_vars[k] %in% names(DF)) {
+#       if (inherits(try(eval(parse(text = I_vars[k]))), "try-error")) {
+#         stop(paste0("Can't find ", I_vars[k], "."))
+#       } else {
+#         I_vars <- I_vars[-k]
+#       }
+#     }
+#   }
+#
+#   var_fcts <- as.data.frame(
+#     do.call(rbind,
+#                   sapply(c("log", "I", "exp", "sqrt"), function(x) {
+#                     if (length(get(paste0(x, "_vars"))) > 0) {
+#                       cbind(var = get(paste0(x, "_vars")),
+#                             Xc_var = get(paste0(x, "_Xc_var")),
+#                             fct = get(paste0(x, "_fcts")),
+#                             type = x)
+#                     }
+#                   })
+#     ), stringsAsFactors = F)
+#
+#
+#   if (any(!var_fcts$var %in% names(DF)))
+#     stop(paste0("Variable ",
+#                  var_fcts$var[!var_fcts$var %in% names(DF)], " is unknown."))
+#
+#   if (complete == F) {
+#     # variables that are in functions but are complete
+#     compl_fkt_vars <- var_fcts[colSums(is.na(DF[, var_fcts$var, drop = F])) == 0, ]
+#     # find all variables that share functions with those variables
+#     partners <- lapply(sapply(compl_fkt_vars$var, grep, fkts, value = T, simplify = F),
+#                        function(x) which(var_fcts$Xc_var %in% x))
+#
+#     # are all members of the function complete?
+#     allcomplete <- sapply(partners,
+#                           function(x) {
+#                             any(colSums(is.na(DF[, var_fcts$var[x]])) != 0)
+#                           })
+#     keep <- compl_fkt_vars[allcomplete, ]
+#
+#     keep <- unique(c(which(colSums(is.na(DF[, var_fcts$var, drop = F])) > 0),
+#                      shared))
+#     var_fcts <- var_fcts[sort(keep), ]
+#   }
+#
+#   if (any(unique(var_fcts$var) %in% elmts)) {
+#     add_vars <- intersect(unique(var_fcts$var), elmts)
+#     var_fcts <- rbind(var_fcts,
+#                       cbind(var = add_vars,
+#                             Xc_var = add_vars,
+#                             fct = paste0("I(", add_vars, ")"),
+#                             type = "identity")
+#     )
+#   }
+#
+#   return(if (nrow(var_fcts) > 0) var_fcts)
+# }
+#
 # Extract functions from formula
-extract_fcts <- function(fixed, DF) {
+extract_fcts <- function(fixed, DF, complete = F) {
   log_pat <- "log\\([[:print:]]+\\)"
   I_pat <- "I\\([[:print:]]+\\)"
   exp_pat <- "exp\\([[:print:]]+\\)"
   sqrt_pat <- "sqrt\\([[:print:]]+\\)"
+  spline_pat <- "[nb]s\\([[:print:]]+\\)"
 
   # pattern to extract variable(s) from function
-  var_pat <- "[[:print:]]+\\(.+\\)"
+  # var_pat <- "[[:print:]]+\\(.+\\)"
   var_pat <- "\\(.+\\)"
 
 
@@ -236,70 +357,92 @@ extract_fcts <- function(fixed, DF) {
 
   # split into elements
   elmts <- unique(unlist(strsplit(deparse(predictor, width.cutoff = 500), "[ ]*[+*~][ ]*")))
+  elmts <- gsub("\\)$", "", gsub("^\\(", "", elmts))
+  # fkt_elmts <- gsub("[[:alpha:]]*[()]", "", grep("[()]", elmts, value = T))
 
+  # find functions
   m <- gregexpr(pattern = "[[:alpha:]]*\\([^)]*\\)",
                 text = deparse(predictor, width.cutoff = 500))
-  elmts <- unlist(c(regmatches(deparse(predictor, width.cutoff = 500), m),
-                     lapply(regmatches(deparse(predictor, width.cutoff = 500),
-                      m, invert = T), gsub, pattern = "[+*~ ]",
-                            replacement = "")))
+  fkts <- unlist(regmatches(deparse(predictor, width.cutoff = 500), m))
 
 
-  m_log <- regexpr(log_pat, elmts)
-  m_I <- regexpr(I_pat, elmts)
-  m_exp <- regexpr(exp_pat, elmts)
-  m_sqrt <- regexpr(sqrt_pat, elmts)
+  m_log <- regexpr(log_pat, fkts)
+  m_I <- regexpr(I_pat, fkts)
+  m_exp <- regexpr(exp_pat, fkts)
+  m_sqrt <- regexpr(sqrt_pat, fkts)
+  # m_spline <- regexpr(spline_pat, fkts)
 
 
-  log_fcts = regmatches(elmts, m_log)
-  I_fcts = gsub("I\\(|\\)", "", regmatches(elmts, m_I))
-  exp_fcts = regmatches(elmts, m_exp)
-  sqrt_fcts = regmatches(elmts, m_sqrt)
+  log_fcts = regmatches(fkts, m_log)
+  I_fcts = gsub("I\\(|\\)", "", regmatches(fkts, m_I))
+  exp_fcts = regmatches(fkts, m_exp)
+  sqrt_fcts = regmatches(fkts, m_sqrt)
+  # spline_fcts = regmatches(fkts, m_spline)
 
-  # I_Xc_var <- regmatches(elmts, m_I)
-  # log_Xc_var <- log_fcts
-  # sqrt_Xc_var <- sqrt_fcts
-  # exp_Xc_var <- exp_fcts
+
+  I_Xc_var <- regmatches(fkts, m_I)
+  log_Xc_var <- log_fcts
+  sqrt_Xc_var <- sqrt_fcts
+  exp_Xc_var <- exp_fcts
+
 
   m_log <- regexpr(var_pat, log_fcts)
   m_I <- regexpr(var_pat, I_fcts)
   m_exp <- regexpr(var_pat, exp_fcts)
   m_sqrt <- regexpr(var_pat, sqrt_fcts)
 
-  log_vars <- gsub("[\\(\\)]", "", regmatches(log_fcts, m_log))
-  I_vars <- unlist(strsplit(I_fcts, "[ ]*[+\\-\\*/:][ ]*|\\^[[:digit:]]*"))
-  # I_vars <- gsub("[\\(\\)]", "", regmatches(I_fcts, m_I))
-  exp_vars <- gsub("[\\(\\)]", "", regmatches(exp_fcts, m_exp))
-  sqrt_vars <- gsub("[\\(\\)]", "", regmatches(sqrt_fcts, m_sqrt))
 
 
-  for (k in seq_along(I_vars)) {
-    if (!I_vars[k] %in% names(DF)) {
-      if (inherits(try(eval(parse(text = I_vars[k]))), "try-error")) {
-        error(paste0("Can't find ", I_vars[k], "."))
-      } else {
-        I_vars <- I_vars[-k]
+  log_vars <- strsplit(gsub("[\\(\\)]", "", regmatches(log_fcts, m_log)),
+                       "[ ]*[+\\-\\*/:][ ]*")
+  I_vars <- strsplit(I_fcts, "[ ]*[+\\-\\*/:][ ]*|\\^[[:digit:]]*")
+  exp_vars <- strsplit(gsub("[\\(\\)]", "", regmatches(exp_fcts, m_exp)),
+                       "[ ]*[+\\-\\*/:][ ]*")
+  sqrt_vars <- strsplit(gsub("[\\(\\)]", "", regmatches(sqrt_fcts, m_sqrt)),
+                        "[ ]*[+\\-\\*/:][ ]*")
+
+
+  for (q in seq_along(I_vars)) {
+    for (k in seq_along(I_vars[[q]])) {
+      if (!I_vars[[q]][k] %in% names(DF)) {
+        if (inherits(try(eval(parse(text = I_vars[[q]][k]))), "try-error")) {
+          stop(paste0("Can't find ", I_vars[[q]][k], "."))
+        } else {
+          I_vars[[q]] <- I_vars[[q]][-k]
+        }
       }
     }
   }
 
   var_fcts <- as.data.frame(
     do.call(rbind,
-                  sapply(c("log", "I", "exp", "sqrt"), function(x) {
-                    if (length(get(paste0(x, "_vars"))) > 0) {
-                      cbind(var = get(paste0(x, "_vars")),
-                            Xc_var = get(paste0(x, "_Xc_var")),
-                            fct = get(paste0(x, "_fcts")),
-                            type = x)
-                    }
-                  })
+            sapply(c("log", "I", "exp", "sqrt"), function(x) {
+              if (length(get(paste0(x, "_vars"))) > 0) {
+                cbind(var = unlist(get(paste0(x, "_vars"))),
+                      Xc_var = rep(get(paste0(x, "_Xc_var")),
+                                   sapply(get(paste0(x, "_vars")), length)),
+                      fct = rep(get(paste0(x, "_fcts")),
+                                sapply(get(paste0(x, "_vars")), length)),
+                      type = x)
+              }
+            })
     ), stringsAsFactors = F)
 
 
-  var_fcts <- var_fcts[colSums(is.na(DF[, var_fcts$var, drop = F])) > 0, ]
+  if (any(!var_fcts$var %in% names(DF)))
+    stop(paste0("Variable ",
+                var_fcts$var[!var_fcts$var %in% names(DF)], " is unknown."))
+
+  if (complete == F & nrow(var_fcts) > 0) {
+    compl <- colSums(is.na(DF[, var_fcts$var, drop = F])) == 0
+    partners <- sapply(var_fcts$Xc_var,
+                       function(x) which(var_fcts$Xc_var %in% x), simplify = F)
+    anymis <- sapply(partners, function(x) any(!compl[x]))
+    var_fcts <- var_fcts[anymis, , drop = F]
+  }
 
   if (any(unique(var_fcts$var) %in% elmts)) {
-    add_vars <- elmts[match(unique(var_fcts$var), elmts)]
+    add_vars <- intersect(unique(var_fcts$var), elmts)
     var_fcts <- rbind(var_fcts,
                       cbind(var = add_vars,
                             Xc_var = add_vars,
@@ -308,6 +451,6 @@ extract_fcts <- function(fixed, DF) {
     )
   }
 
-  return(if(nrow(var_fcts) > 0) var_fcts)
+  return(if (nrow(var_fcts) > 0) var_fcts)
 }
 
