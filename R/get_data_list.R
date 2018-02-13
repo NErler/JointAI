@@ -65,7 +65,7 @@ get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvars, scale_
     l$mu_reg_ordinal <- 0
     l$tau_reg_ordinal <- 4/9
     l$mu_delta_ordinal <- 0
-    l$tau_delta_ordinal <- 0.0001
+    l$tau_delta_ordinal <- 4/9
   }
 
   if (!is.null(Mlist$auxvars)) {
