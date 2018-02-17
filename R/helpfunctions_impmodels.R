@@ -37,9 +37,12 @@ paste_predictor <- function(varname, par_elmts, Xc_cols, par_name, indent) {
 get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
                              refs, trafos) {
 
+  intercept = ifelse(impmeth %in% c("cumlogit"),
+                     ifelse(K_imp[varname, "end"] == 1, T, F), T)
+
   list(varname = varname,
        impmeth = impmeth,
-       intercept = !impmeth %in% c("cumlogit"),
+       intercept = intercept,
        dest_mat = if (impmeth %in% c("multilogit", "cumlogit")) {
          "Xcat"
        } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
@@ -59,7 +62,7 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
        } else {
          K_imp[varname, 1]:K_imp[varname, 2]
        },
-       Xc_cols = (1 + (impmeth == "cumlogit")):(min(dest_cols[[varname]]$Xc) - 1),
+       Xc_cols = (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1),
        dummy_cols = if (impmeth %in% c("cumlogit", "multilogit")) {
          dest_cols[[varname]]$Xc
        },
@@ -78,8 +81,7 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
                dest_col = dest_cols[[varname]]$Xtrafo)
        },
        trafos = trafos,
-       par_name = "alpha"
-  )
+       par_name = "alpha")
 }
 
 

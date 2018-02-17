@@ -111,7 +111,7 @@ get_imp_dim <- function(meth, pos_Xc){
 
   for (i in 1:length(meth)) {
     n_imp_coef[names(meth)[i]] <-
-      min(pos_Xc[[names(meth)[i]]]) - 1 - as.numeric(meth[i] == "cumlogit")
+      max(1, min(pos_Xc[[names(meth)[i]]]) - 1 - as.numeric(meth[i] == "cumlogit"))
     if (meth[i] == "multilogit") {
       n_imp_coef <- append(x = n_imp_coef,
                            values = rep(n_imp_coef[names(meth)[i]],
