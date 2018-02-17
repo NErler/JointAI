@@ -36,7 +36,7 @@ get_params <- function(meth, analysis_type, family,
 
   if (analysis_main) {
     if (is.null(betas)) betas <- TRUE
-    if (!family %in% c("binomial", "Poisson")) {
+    if (!family %in% c("binomial", "poisson")) {
       if (is.null(tau_y)) tau_y <- TRUE
       if (is.null(sigma_y)) sigma_y <- TRUE
     }
