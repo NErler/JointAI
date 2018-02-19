@@ -3,10 +3,15 @@
 # @param meth vector of imputation methods
 # @param Mlist list of data matrices etc.
 # @export
-get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvars, scale_pars = NULL) {
+get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvars,
+                          scale_pars = NULL, hyperpars = NULL) {
 
   scaled <- get_scaling(Mlist, scale_pars, meth)
-  defs <- default_hyperpars(family, link, ncol(Mlist$Z))
+  if (is.null(hyperpars)) {
+    defs <- default_hyperpars(family, link, ncol(Mlist$Z))
+  } else {
+    defs <- hyperpars
+  }
 
   l <- list()
   l[[names(Mlist$y)]] <- if (any(sapply(Mlist$y, is.factor))) {
