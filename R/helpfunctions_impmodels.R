@@ -37,8 +37,13 @@ paste_predictor <- function(varname, par_elmts, Xc_cols, par_name, indent) {
 get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
                              refs, trafos) {
 
+  # intercept = ifelse(impmeth %in% c("cumlogit"),
+  #                    ifelse(K_imp[varname, "end"] == 1, T, F), T)
+  #
   intercept = ifelse(impmeth %in% c("cumlogit"),
-                     ifelse(K_imp[varname, "end"] == 1, T, F), T)
+                     ifelse(min(dest_cols[[varname]]$Xc) > 2, F, T), T)
+
+  dest_cols[[varname]]$Xc
 
   list(varname = varname,
        impmeth = impmeth,
