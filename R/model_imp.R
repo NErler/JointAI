@@ -63,6 +63,9 @@
 #'                   for which \code{"lognorm"} is set as imputation model are
 #'                   only scaled with regards to the standard deviation, but not
 #'                   centered. If set to \code{FALSE} no scaling will be done.
+#' @param hyperpars list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
+#'                  only needs to be supplied if hyperparameters other than the
+#'                  default should be used
 #' @param ... additional, optional arguments, see below
 #'
 #'
@@ -158,12 +161,12 @@ NULL
 
 model_imp <- function(fixed, data, random = NULL, link, family,
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                      monitor_params = NULL, inits = NULL,
+                      monitor_params = NULL, inits = T,
                       modelname = NULL, modeldir = NULL,
                       overwrite = F, keep_model = F,
                       quiet = T, progress.bar = "text", warn = F,
                       auxvars = NULL, meth = NULL, refcats = NULL,
-                      scale_vars = NULL, scale_pars = NULL,
+                      scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                       MCMCpackage = "JAGS", analysis_type,
                       Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
                       dest_cols = NULL, imp_par_list = NULL,  data_list = NULL, ...) {
@@ -200,6 +203,13 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     keep_model <- TRUE
   }
   modelfile <- file.path(modeldir, modelname)
+
+  # check if initial values are supplied or should be generated
+  if (!(is.null(inits) | inherits(inits, c("logical", "function", "list")))) {
+    warning("The object supplied to 'inits' could not be recognized.
+            Default function to create initial values is used.")
+    inits <- T
+  }
 
 
   # default imputation methods, if not specified
@@ -259,11 +269,18 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   if (is.null(data_list)) {
     data_list <- try(get_data_list(analysis_type, family, meth, Mlist, K, auxvars,
-                                 scale_pars = scale_pars))
+                                 scale_pars = scale_pars, hyperpars = hyperpars))
     scale_pars <- data_list$scale_pars
     data_list <- data_list$data_list
   }
 
+  if (is.logical(inits)) {
+    inits <- if (inits)
+      replicate(n.chains,
+                get_inits.default(meth = meth, Mlist = Mlist, K = K, K_imp = K_imp,
+                       analysis_type = analysis_type, family = family), simplify = F
+      )
+  }
 
   # run JAGS -----------------------------------------------------------------
   t0 <- Sys.time()
@@ -299,7 +316,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                         n.adapt = n.adapt,
                         n.iter = n.iter,
                         variable.names = if (exists("var.names")) var.names,
-                        thin = thin)
+                        thin = thin,
+                        inits = inits)
 
   attr(analysis_type, "family") <- family
   attr(analysis_type, "link") <- link
@@ -312,6 +330,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
          mcmc_settings = mcmc_settings,
          data_list = data_list,
          scale_pars = scale_pars,
+         hyperpars = hyperpars,
          model = if (n.adapt > 0) adapt,
          sample = if (n.iter > 0) mcmc,
          time = t1 - t0
@@ -324,12 +343,12 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 #' @export
 lm_imp <- function(formula, data,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                   monitor_params = NULL, inits = NULL,
+                   monitor_params = NULL, inits = T,
                    modelname = NULL, modeldir = NULL,
                    overwrite = F, keep_model = F,
                    quiet = T, progress.bar = "text", warn = T,
                    auxvars = NULL, meth = NULL, refcats = NULL,
-                   scale_vars = NULL, ...){
+                   scale_vars = NULL, hyperpars = NULL, ...){
 
   if (missing(formula))
     stop("No model formula specified.")
@@ -365,12 +384,12 @@ lm_imp <- function(formula, data,
 #' @export
 glm_imp <- function(formula, family, data,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = NULL, inits = NULL,
+                    monitor_params = NULL, inits = T,
                     modelname = NULL, modeldir = NULL,
                     overwrite = F, keep_model = F,
                     quiet = T, progress.bar = "text", warn = T,
                     auxvars = NULL, meth = NULL, refcats = NULL,
-                    scale_vars = NULL, ...){
+                    scale_vars = NULL, hyperpars = NULL, ...){
 
   if (missing(formula))
     stop("No model formula specified.")
@@ -430,12 +449,12 @@ glm_imp <- function(formula, family, data,
 #' @export
 lme_imp <- function(fixed, data, random,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = NULL, inits = NULL,
+                    monitor_params = NULL, inits = T,
                     modelname = NULL, modeldir = NULL,
                     overwrite = F, keep_model = F,
                     quiet = T, progress.bar = "text", warn = T,
                     auxvars = NULL, meth = NULL, refcats = NULL,
-                    scale_vars = NULL, ...){
+                    scale_vars = NULL, hyperpars = NULL, ...){
 
   if (missing(fixed))
     stop("No fixed effects structure specified.")

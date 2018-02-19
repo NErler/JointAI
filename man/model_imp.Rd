@@ -8,22 +8,22 @@
 \title{Joint analysis and imputation of incomplete data}
 \usage{
 lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-  monitor_params = NULL, inits = NULL, modelname = NULL,
-  modeldir = NULL, overwrite = F, keep_model = F, quiet = T,
-  progress.bar = "text", warn = T, auxvars = NULL, meth = NULL,
-  refcats = NULL, scale_vars = NULL, ...)
+  monitor_params = NULL, inits = T, modelname = NULL, modeldir = NULL,
+  overwrite = F, keep_model = F, quiet = T, progress.bar = "text",
+  warn = T, auxvars = NULL, meth = NULL, refcats = NULL,
+  scale_vars = NULL, hyperpars = NULL, ...)
 
 glm_imp(formula, family, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = NULL, modelname = NULL,
+  thin = 1, monitor_params = NULL, inits = T, modelname = NULL,
   modeldir = NULL, overwrite = F, keep_model = F, quiet = T,
   progress.bar = "text", warn = T, auxvars = NULL, meth = NULL,
-  refcats = NULL, scale_vars = NULL, ...)
+  refcats = NULL, scale_vars = NULL, hyperpars = NULL, ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = NULL, modelname = NULL,
+  thin = 1, monitor_params = NULL, inits = T, modelname = NULL,
   modeldir = NULL, overwrite = F, keep_model = F, quiet = T,
   progress.bar = "text", warn = T, auxvars = NULL, meth = NULL,
-  refcats = NULL, scale_vars = NULL, ...)
+  refcats = NULL, scale_vars = NULL, hyperpars = NULL, ...)
 }
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
@@ -99,6 +99,10 @@ continuous variables that are not transformed by a function
 for which \code{"lognorm"} is set as imputation model are
 only scaled with regards to the standard deviation, but not
 centered. If set to \code{FALSE} no scaling will be done.}
+
+\item{hyperpars}{list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
+only needs to be supplied if hyperparameters other than the
+default should be used}
 
 \item{...}{additional, optional arguments, see below}
 
