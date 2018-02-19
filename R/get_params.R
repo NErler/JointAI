@@ -74,11 +74,11 @@ get_params <- function(meth, analysis_type, family,
               if (tau_imp & any(meth == "norm")) {
                 paste0("tau_", names(meth)[meth == "norm"])
               },
-              if (gamma_imp & any(meth == "ordinal")) {
-                paste0("gamma_", names(meth)[meth == "ordinal"])
+              if (gamma_imp & any(meth == "cumlogit")) {
+                paste0("gamma_", names(meth)[meth == "cumlogit"])
               },
-              if (delta_imp & any(meth == "ordinal")) {
-                paste0("delta_", names(meth)[meth == "ordinal"])
+              if (delta_imp & any(meth == "cumlogit")) {
+                paste0("delta_", names(meth)[meth == "cumlogit"])
               },
               other
   )
