@@ -44,11 +44,11 @@ impmodel_cumlogit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, d
 # @param par_name name of the parameter
 # @export
 impprior_cumlogit <- function(varname, par_elmts, par_name, ncat, ...){
-  deltas <- sapply(1:(ncat - 1), function(k) {
+  deltas <- sapply(1:(ncat - 2), function(k) {
     paste0(tab(), "delta_", varname, "[", k, "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
   })
 
-  gammas <- sapply(1:ncat, function(k) {
+  gammas <- sapply(1:(ncat - 1), function(k) {
     if (k == 1) {
       paste0(tab(), "gamma_", varname, "[", k, "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
     } else {
