@@ -112,9 +112,12 @@ lmereg_priors <- function(K, y_name){
 ranef_priors <- function(Z){
   paste0(
     tab(), "# Priors for the covariance of the random effects", "\n",
-    tab(), "for (k in 1:", ncol(Z), "){", "\n",
-    tab(4), "RinvD[k, k] ~ dgamma(a_diag_RinvD, b_diag_RinvD)", "\n",
-    tab(), "}", "\n",
+    if (ncol(Z) > 1) {
+      paste0(
+      tab(), "for (k in 1:", ncol(Z), "){", "\n",
+      tab(4), "RinvD[k, k] ~ dgamma(a_diag_RinvD, b_diag_RinvD)", "\n",
+      tab(), "}", "\n")
+    },
     tab(), "invD[1:", ncol(Z), ", 1:", ncol(Z),"] ~ ", invD_distr(Z), "\n",
     tab(), "D[1:", ncol(Z),", 1:", ncol(Z),"] <- inverse(invD[ , ])"
   )

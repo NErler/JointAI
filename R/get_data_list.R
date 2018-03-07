@@ -39,8 +39,10 @@ get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvars,
 
   if (analysis_type == "lme") {
     l$groups <- match(Mlist$groups, unique(Mlist$groups))
-    l$RinvD <- defs$Z$RinvD
-    l$KinvD <- defs$Z$KinvD
+    if (ncol(Mlist$Z) > 1) {
+      l$RinvD <- defs$Z$RinvD
+      l$KinvD <- defs$Z$KinvD
+    }
     l$a_diag_RinvD <- defs$Z$a_diag_RinvD
     l$b_diag_RinvD <- defs$Z$b_diag_RinvD
   }

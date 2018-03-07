@@ -20,16 +20,19 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family){
     l[["b"]] = matrix(nrow = nrow(Mlist$Xc),
                       ncol = ncol(Mlist$Z),
                       data = rnorm(nrow(Mlist$Xc  * ncol(Mlist$Z))))
-    l[["priorR.invD"]] = if (ncol(Mlist$Z) == 1) {
+
+
+
+    l[["invD"]] = if (ncol(Mlist$Z) == 1) {
       matrix(nrow = 1, ncol = 1, data = rgamma(1, var(Mlist$y)*10, 10))
     } else {
       RinvD <- matrix(ncol = ncol(Mlist$Z),
-                      nrow = ncol(Mlist$Z), data = NA)
+                      nrow = ncol(Mlist$Z), data = 0)
       diag(RinvD) <- c(rgamma(ncol(Mlist$Z),
-                             shape = apply(cbind(Mlist$y,
-                                                 Mlist$Z[, -1]), 2, var) * 10,
-                             rate = 10))
-      RinvD
+                              shape = apply(cbind(Mlist$y,
+                                                  Mlist$Z[, -1]), 2, var) * 10,
+                              rate = 10))
+      rWishart(1, ncol(Mlist$Z), RinvD)[, , 1]
     }
   }
 
@@ -48,8 +51,9 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family){
   # group specific intercepts of ordinal covariates
   if (any(meth == "cumlogit")) {
     for (k in names(meth)[meth ==  "cumlogit"]) {
-      l[[paste0("delta_", k)]] = rnorm(imp_par_list[[k]]$ncat - 2, 0, 0.5)
-      l[[paste0("gamma_", k)]] = c(rnorm(1, 0, 0.5), rep(NA, imp_par_list[[k]]$ncat - 2))
+      l[[paste0("delta_", k)]] = rnorm(length(levels(Mlist$refs[[k]])) - 2, 0, 0.5)
+      l[[paste0("gamma_", k)]] = c(rnorm(1, 0, 0.5),
+                                   rep(NA, length(levels(Mlist$refs[[k]])) - 2))
     }
   }
 
