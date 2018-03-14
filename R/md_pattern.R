@@ -8,7 +8,8 @@
 #' @param xaxis_pars list of optional parameters for the x-axis
 #' @param yaxis_pars list of optional parameters for the y-axis
 #' @param printN logical; should the title "N" of the y-axis be printed?
-#' @param ... optinal additional parameters passed to \code{\link[graphics]{image}()}
+#' @param print should the missing data pattern be returned as a matrix?
+#' @param ... optional additional parameters passed to \code{\link[graphics]{image}()}
 #' @export
 #'
 #' @examples
@@ -26,7 +27,7 @@ md_pattern <- function(data, plot = T, xlab = "", ylab = "",
   M <- t(MDP[-nrow(MDP), -ncol(MDP)])
 
   if (plot == T) {
-    image(1:nrow(M), 1:ncol(M), M[, ncol(M):1], col = grey(c(0.7, 0.1)),
+    image(1:nrow(M), 1:ncol(M), M[, ncol(M):1], col = grDevices::grey(c(0.7, 0.1)),
           xaxt = "n", yaxt = "n", xlab = xlab, ylab = ylab, cex.lab = 1, ...)
 
     if (is.null(yaxis_pars$side)) yaxis_pars$side <- 4
@@ -53,9 +54,9 @@ md_pattern <- function(data, plot = T, xlab = "", ylab = "",
     if (is.null(xaxis_pars$tck)) xaxis_pars$tck <- 0
     do.call(axis, xaxis_pars)
 
-    abline(v = c(0:nrow(M)) + 0.5, col = grey(0.5))
-    abline(h = c(0:ncol(M)) + 0.5, col = grey(0.5))
-    p <- recordPlot()
+    abline(v = c(0:nrow(M)) + 0.5, col = grDevices::grey(0.5))
+    abline(h = c(0:ncol(M)) + 0.5, col = grDevices::grey(0.5))
+    p <- grDevices::recordPlot()
     print(p)
   }
   if (print)

@@ -24,7 +24,9 @@ md_pattern(data, plot = T, xlab = "", ylab = "", xaxis_pars = list(),
 
 \item{printN}{logical; should the title "N" of the y-axis be printed?}
 
-\item{...}{optinal additional parameters passed to \code{\link[graphics]{image}()}}
+\item{print}{should the missing data pattern be returned as a matrix?}
+
+\item{...}{optional additional parameters passed to \code{\link[graphics]{image}()}}
 }
 \description{
 Missing data pattern
