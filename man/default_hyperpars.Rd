@@ -23,7 +23,7 @@ Prints the list of default values for the hyperparameters
 }
 \section{Value}{
 
-A list containing the defaul hyperparameters for JointAI models. The elements
+A list containing the default hyperparameters for JointAI models. The elements
 of the list are
 
 \strong{analysis_model:} hyperparameters for the analysis model
@@ -47,7 +47,7 @@ of the list are
 \tabular{ll}{
 \code{mu_reg_norm} \tab mean in the priors for regression coefficients\cr
 \code{tau_reg_norm} \tab precision in the priors for regression coefficients\cr
-\code{a_tau_norm} \tab scale parameter in gamma prior for precision of imputed variabe\cr
+\code{a_tau_norm} \tab scale parameter in gamma prior for precision of imputed variable\cr
 \code{b_tau_norm} \tab rate parameter in gamma prior for precision of imputed variable\cr
 }
 
