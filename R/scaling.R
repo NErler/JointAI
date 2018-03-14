@@ -2,110 +2,67 @@
 # @param X a matrix
 # @param scale_vars a vector of variable names or FALSE
 # @param scale_pars a matrix of scaling parameters or FALSE or NULL
+# @param meth
 # @export
 
-scaled_data.matrix <- function(X, scale_vars, scale_pars, meth) {
-  if (any(class(scale_pars) == "logical" & scale_pars == F,
-          class(scale_vars) == "logical" & scale_vars == F))
-    scale_pars <- scale_vars <- F
+scale_matrix <- function(X, scale_vars, scale_pars, meth) {
+  Xsc <- X
+  if (!is.null(X) & any(scale_vars %in% colnames(X))) {
 
-
-  if (is.data.frame(scale_pars)) {
-    if (any(colnames(X) %in% colnames(scale_pars))) {
-      X[, colnames(scale_pars)] <-
-        sapply(colnames(scale_pars),
-               function(x) (X[, x] - scale_pars["center", x])/scale_pars["scale", x]
-        )
-    }
-  } else {
-    if (is.null(scale_pars) & any(colnames(X) %in% scale_vars)) {
-      scale_pars <- list()
-      for (i in scale_vars[scale_vars %in% colnames(X)]) {
-
-        usecenter <- if (!i %in% names(meth)) TRUE else meth[i] != "lognorm"
-        scv <- scale(X[, i], center = usecenter)
-        X[, i] <- scv
-        scale_pars[[i]] <- c(
-          center = if (is.null(attr(scv, "scaled:center"))) {
-            0
-          } else {
-            attr(scv, "scaled:center")
-          },
-          scale = if (is.null(attr(scv, "scaled:scale"))) {
-            1
-          } else {attr(scv, "scaled:scale")}
-        )
+    if (is.null(scale_pars)) {
+      scale_pars <- matrix(nrow = 2,
+                           ncol = length(scale_vars[scale_vars %in% colnames(X)]),
+                           dimnames = list(c("scale", "center"),
+                                           scale_vars[scale_vars %in% colnames(X)]))
+      for (k in scale_vars[scale_vars %in% colnames(X)]) {
+        usecenter <- if (!k %in% names(meth)) TRUE else meth[k] != "lognorm"
+        xsc <- scale(X[, k], center = usecenter)
+        Xsc[, k] <- xsc
+        scale_pars["scale", k] <- ifelse(!is.null(attr(xsc, "scaled:scale")),
+                                             attr(xsc, "scaled:scale"), 1)
+        scale_pars["center", k] <- ifelse(!is.null(attr(xsc, "scaled:center")),
+                                              attr(xsc, "scaled:center"), 0)
       }
     } else {
-      scale_pars <- NULL
+      if (is.matrix(scale_pars)) {
+        for (k in colnames(scale_pars)) {
+          Xsc[, k] <- (X[, k] - scale_pars["center", k])/scale_pars["scale", k]
+        }
+      } else stop("Scale matrix could not be recognized.")
     }
-
   }
-  return(list(X = data.matrix(X), scale_pars = scale_pars))
+  return(list(X = Xsc,
+              scale_pars = scale_pars))
 }
 
 
 # function for scaling
 # @export
-get_scaling <- function(Mlist, scale_pars = NULL, meth) {
-  refs <- Mlist$refs
+get_scaling <- function(Mlist, scale_pars, meth, data) {
+  varnams <- unique(unlist(strsplit(colnames(model.matrix(Mlist$fixed2, data)),
+                                    "[:|*]")))
+  scale_pars_new <- matrix(nrow = 2, ncol = length(varnams),
+                           data = c(1, 0),
+                           dimnames = list(c("scale", "center"),
+                                           varnams))
 
 
-  scaled_dat <- sapply(Mlist[!sapply(Mlist, is.null) &
-                               names(Mlist) %in% c("Xc", "Xl", "Z")],
-                       scaled_data.matrix, scale_vars = Mlist$scale_vars,
-                       scale_pars = scale_pars, meth = meth,
-                       simplify = FALSE)
+  scaled_dat <- sapply(Mlist[c("Xc", "Xl", "Z")], scale_matrix,
+                       scale_vars = Mlist$scale_vars,
+                       scale_pars = scale_pars,
+                       meth = meth, simplify = F)
 
 
-  scale_pars <- lapply(scaled_dat, "[[", 2)
-  scale_pars <- as.data.frame(scale_pars[!sapply(scale_pars, is.null)])
+  scale_pars <- do.call(cbind, sapply(scaled_dat, "[[", 2))
+  if (any(duplicated(colnames(scale_pars))))
+    stop("Duplicate scale parameters found.")
 
-  if (nrow(scale_pars) > 0) {
-    names(scale_pars) <- unlist(lapply(lapply(scaled_dat, "[[", 2), names))
+  if (!any(colnames(scale_pars) %in% colnames(scale_pars_new)))
+    stop("Scale parameters could not be matched to variables.")
 
+  scale_pars_new[c("scale", "center"), colnames(scale_pars)] <-
+    scale_pars[c("scale", "center"), ]
 
-    scale_terms1 <- attr(terms(Mlist$fixed2), "factors")[names(scale_pars), , drop = F]
-    scale_terms2 <- attr(terms(Mlist$fixed2), "factors")[, which(colSums(scale_terms1) > 0), drop = F]
-    scale_terms2 <- scale_terms2[which(rowSums(scale_terms2) > 0), , drop = F]
-    scale_terms3 <- scale_terms2
-
-    for (i in 1:nrow(scale_terms3)) {
-      invin.col <- which(scale_terms2[i, , drop = F] > 0)
-      invin.row <- which(rowSums(scale_terms2[, invin.col, drop = F]) > 0)
-      scale_terms3[invin.row, i] <- 1
-    }
-
-    add_scale <- unique(unlist(dimnames(scale_terms2)))
-    add_scale <- add_scale[which(!add_scale %in% colnames(scale_pars))]
-    # for (x in add_scale) {
-    #   # nams <- names(which(scale_terms1[, x] == 1))
-    #   scale_pars["scale", x] <- 1 #prod(scale_pars["scale", nams])
-    #   scale_pars["center", x] <- 0#-prod(scale_pars["center", nams])
-    # }
-
-    tf <- attr(terms(Mlist$fixed2), "factors")
-    new_names <- c(names(refs),
-                   rownames(tf)[rownames(tf) %in% colnames(tf)])
-    new_names <- new_names[!new_names %in% colnames(scale_pars)]
-    # new_names <- names(refs)[!names(refs) %in% colnames(scale_pars)]
-    for (k in unlist(sapply(new_names, get_dummies, refs))) {
-      scale_pars[c("center", "scale"), k] <- c(0, 1)
-    }
-
-  } else {
-    scale_pars <- NULL
-  }
-
-  return(list(scaled_matrices = lapply(scaled_dat, "[[", 1),
-              scale_pars = scale_pars)
-  )
+  return(list(scaled_matrices = sapply(scaled_dat, "[[", 1, simplify = F),
+              scale_pars = scale_pars_new))
 }
-
-
-
-get_dummies <- function(x, refs) {
-  lvls <- levels(refs[[x]])[levels(refs[[x]]) != refs[[x]]]
-  paste0(x, lvls)
-}
-

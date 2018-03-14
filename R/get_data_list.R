@@ -3,10 +3,10 @@
 # @param meth vector of imputation methods
 # @param Mlist list of data matrices etc.
 # @export
-get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvars,
-                          scale_pars = NULL, hyperpars = NULL) {
+get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
+                          scale_pars = NULL, hyperpars = NULL, data) {
 
-  scaled <- get_scaling(Mlist, scale_pars, meth)
+  scaled <- get_scaling(Mlist, scale_pars, meth, data)
   if (is.null(hyperpars)) {
     defs <- default_hyperpars(family, link, ncol(Mlist$Z))
   } else {
@@ -20,7 +20,7 @@ get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvars,
     unname(unlist(Mlist$y))
   }
   l <- c(l,
-         scaled$scaled_matrices
+         scaled$scaled_matrices[!sapply(scaled$scaled_matrices, is.null)]
   )
   if (!is.null(Mlist$Xcat))  l$Xcat <- data.matrix(Mlist$Xcat)
   if (!is.null(Mlist$Xic)) l$Xic <- data.matrix(Mlist$Xic)
@@ -101,7 +101,7 @@ get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvars,
 #' @param nranef number of random effects
 #'
 #' @section Value:
-#' A list containing the defaul hyperparameters for JointAI models. The elements
+#' A list containing the default hyperparameters for JointAI models. The elements
 #' of the list are
 #'
 #' \strong{analysis_model:} hyperparameters for the analysis model
@@ -125,7 +125,7 @@ get_data_list <- function(analysis_type, family, meth, Mlist, K, auxvars,
 #' \tabular{ll}{
 #' \code{mu_reg_norm} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_norm} \tab precision in the priors for regression coefficients\cr
-#' \code{a_tau_norm} \tab scale parameter in gamma prior for precision of imputed variabe\cr
+#' \code{a_tau_norm} \tab scale parameter in gamma prior for precision of imputed variable\cr
 #' \code{b_tau_norm} \tab rate parameter in gamma prior for precision of imputed variable\cr
 #' }
 #'
