@@ -213,5 +213,5 @@ mod3 <- lme_imp(y ~ C1 + B2 + L1 + time, random = ~ time|id,
 \code{\link{traceplot}}, \code{\link{densplot}},
          \code{\link{summary.JointAI}}, \code{\link{MC_error}},
          \code{\link{GR_crit}}, \code{\link[rjags]{jags.model}},
-         \code{\link[rjags]{coda.samples}}
+         \code{\link[rjags]{coda.samples}}, \code{predict.JointAI}
 }

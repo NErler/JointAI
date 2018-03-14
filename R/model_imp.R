@@ -144,7 +144,7 @@
 #' @seealso \code{\link{traceplot}}, \code{\link{densplot}},
 #'          \code{\link{summary.JointAI}}, \code{\link{MC_error}},
 #'          \code{\link{GR_crit}}, \code{\link[rjags]{jags.model}},
-#'          \code{\link[rjags]{coda.samples}}
+#'          \code{\link[rjags]{coda.samples}}, \code{predict.JointAI}
 #'
 #' @examples
 #' \dontrun{
@@ -191,6 +191,10 @@ model_imp <- function(fixed, data, random = NULL, link, family,
       message(paste0("Note: No MCMC sample will be created when n.iter is set to ",
                      n.iter, "."))
   }
+
+  # set contrasts to dummies
+  opt <- getOption("contrasts")
+  options(contrasts = rep("contr.treatment", 2))
 
 
   # generate default name for model file if not specified
@@ -268,8 +272,9 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   if (is.null(data_list)) {
-    data_list <- try(get_data_list(analysis_type, family, meth, Mlist, K, auxvars,
-                                 scale_pars = scale_pars, hyperpars = hyperpars))
+    data_list <- try(get_data_list(analysis_type, family, link, meth, Mlist, K, auxvars,
+                                 scale_pars = scale_pars, hyperpars = hyperpars,
+                                 data = data))
     scale_pars <- data_list$scale_pars
     data_list <- data_list$data_list
   }
@@ -308,6 +313,21 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   t1 <- Sys.time()
 
 
+  if (n.iter > 0) {
+    MCMC <- do.call(rbind, mcmc)
+
+    coefs <- get_coef_names(Mlist, K)
+
+    colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
+
+    if (!is.null(scale_pars)) {
+      # re-scale parameters
+      MCMC <- sapply(colnames(MCMC), rescale, Mlist$fixed2, scale_pars,
+                     MCMC, Mlist$refs, Mlist$X2_names)
+    }
+  }
+
+
   if (!keep_model) {file.remove(modelfile)}
 
   mcmc_settings <- list(MCMCpackage = MCMCpackage,
@@ -322,6 +342,9 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   attr(analysis_type, "family") <- family
   attr(analysis_type, "link") <- link
 
+  # set contrasts back to what they were
+  options(contrasts = opt)
+
   return(structure(
     list(analysis_type = analysis_type,
          data = data, meth = meth, fixed = fixed, random = random,
@@ -333,6 +356,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
          hyperpars = hyperpars,
          model = if (n.adapt > 0) adapt,
          sample = if (n.iter > 0) mcmc,
+         MCMC = if (n.iter > 0) as.mcmc(MCMC),
          time = t1 - t0
          ), class = "JointAI")
   )
