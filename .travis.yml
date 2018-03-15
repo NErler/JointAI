@@ -1,5 +1,26 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R
-sudo: false
+language: r
 cache: packages
+sudo: required
+warnings_are_errors: false
+
+r_check_args: '--as-cran --ignore-vignettes --no-examples'
+
+before_install:
+  - sudo apt-get install jags
+
+os:
+  - linux
+
+r:
+  - oldrel
+  - release
+  - devel
+
+cran: http://cran.rstudio.com
+repos:
+  CRAN: http://cran.rstudio.com
+
+r_packages:
+  - rjags
