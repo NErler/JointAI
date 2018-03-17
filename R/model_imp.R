@@ -200,7 +200,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   # generate default name for model file if not specified
   if (is.null(modeldir)) modeldir <- tempdir()
   if (is.null(modelname)) {
-    modelname <- paste0("FitAI_JAGSmodel_",
+    modelname <- paste0("JointAI_JAGSmodel_",
                         format(Sys.time(), "%Y-%m-%d"),
                         "_", sample.int(1e6, 1), ".R")
   } else {
