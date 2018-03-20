@@ -3,7 +3,7 @@
 \name{summary.JointAI}
 \alias{summary.JointAI}
 \alias{print.summary.JointAI}
-\title{Summary of an JointAI object}
+\title{Summary of an object of class JointAI}
 \usage{
 \method{summary}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
   quantiles = c(0.025, 0.975), subset = "main", ...)
@@ -38,7 +38,7 @@ and random effects covariance matrix).}
     \code{\link{print.default}}.}
 }
 \description{
-Summary of an JointAI object
+Summary of an object of class JointAI
 }
 \examples{
 \dontrun{

@@ -25,7 +25,6 @@ predDF <- function(...) {
 
 
 #' @rdname predDF
-#' @export
 predDF.default <- function(formula, dat, var, ...) {
   allvars <- all.vars(formula)
 
@@ -59,10 +58,10 @@ predDF.JointAI <- function(object, var, ...) {
 
 
 
-#' Predict values from a JointAI object
+#' Predict values from an object of class JointAI
 #'
 #' Calculates the expected outcome value for a given set of covariate values
-#' and a \code{JontAI} object, and corresponding 2.5\% and 97.5\% (or other
+#' and an object of class JointAI, and corresponding 2.5\% and 97.5\% (or other
 #' quantiles) credible intervals.
 #' @inheritParams summary.JointAI
 #' @param newdata new dataset for prediction

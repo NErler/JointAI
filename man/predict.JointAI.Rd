@@ -2,7 +2,7 @@
 % Please edit documentation in R/predict.R
 \name{predict.JointAI}
 \alias{predict.JointAI}
-\title{Predict values from a JointAI object}
+\title{Predict values from an object of class JointAI}
 \usage{
 \method{predict}{JointAI}(object, newdata, quantiles = c(0.025, 0.975),
   start = NULL, end = NULL, thin = NULL, ...)
@@ -30,7 +30,7 @@ A list with entries "fit" and "quantiles", where
 }
 \description{
 Calculates the expected outcome value for a given set of covariate values
-and a \code{JontAI} object, and corresponding 2.5\% and 97.5\% (or other
+and an object of class JointAI, and corresponding 2.5\% and 97.5\% (or other
 quantiles) credible intervals.
 }
 \details{

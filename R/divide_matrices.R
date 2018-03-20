@@ -66,12 +66,6 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
                      model.frame(fixed2, DF, na.action = na.pass),
                      contrasts.arg = contr)
 
-  # if (any(is.na(match(colnames(X2), c(colnames(X), auxvars))))) {
-    # warning("Interactions without main effects not allowed.",
-            # call. = F, immediate. = T)
-    # colnames(X2)[!colnames(X2) %in% colnames(X)]
-  # }
-
   tvar <- apply(X2, 2, check_tvar, groups)
 
   # time-constant part of X
@@ -85,7 +79,6 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
     Xcross[, interact, drop = F]
   }
   if (!is.null(Xic)) {
-    # Xic[, colSums(is.na(Xic)) > 0] <- NA
     Xic <- Xic * NA
     Xic[is.na(Xic)] <- NA # to overwrite possible NaN's
   }
@@ -93,7 +86,6 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
 
   cat_vars <- names(which(lapply(
     lapply(DF[, colSums(is.na(DF)) > 0 & names(DF) %in% all.vars(fixed2), drop = F], levels),
-    # lapply(DF[, all.vars(fixed2)], levels),
     length) > 2))
   cat_vars <- sapply(cat_vars, match_positions, DF, colnames(Xc), simplify = F)
 
@@ -109,9 +101,6 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   Xtrafo <- if (!is.null(trafos)) {
     fmla_trafo <- as.formula(
       paste("~", paste0(unique(trafos$var), collapse = " + "))
-      # paste("~",
-      #       paste(names(meth)[!names(meth) %in% c(colnames(Xc), colnames(Xcat))],
-      #             collapse = " + "))
     )
     if (!any(sapply(DF[, all.vars(fmla_trafo), drop = F], is.factor)))
       contr <- NULL
@@ -125,8 +114,6 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   }
 
 
-
-  # hc_list <- get_hc_list(colnames(X2), colnames(Xc), colnames(Z))
 
   # Xlong ----------------------------------------------------------------------
   Xlong <- if (sum(!names(tvar)[tvar] %in% colnames(Z)) > 0) {
@@ -171,9 +158,7 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
     compl_fcts_vars <- fcts$Xc_var[fcts$type != "identity" &
                                      colSums(is.na(DF[, fcts$var, drop = F])) == 0]
 
-    # excl <- grep("^[nsb]{2}\\(", scale_vars, value = T, fixed = F)
     excl <- grep("[[:alpha:]]*\\(", scale_vars, value = T)
-    # excl <- c(excl, names(meth)[meth == "lognorm"])
     excl <- c(excl, unique(trafos$Xc_var))
     excl <- excl[!excl %in% compl_fcts_vars]
     scale_vars <- scale_vars[which(!scale_vars %in% excl)]

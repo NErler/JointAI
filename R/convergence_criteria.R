@@ -87,7 +87,7 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #'
 #' @references
 #' Lesaffre, E., & Lawson, A. B. (2012).
-#' \emph{Bayesian biostatistics}.
+#' \emph{Bayesian Biostatistics}.
 #' John Wiley & Sons.
 #'
 #' @examples
@@ -105,6 +105,9 @@ MC_error <- function(x, subset = "main", start = NULL, end = NULL, thin = NULL,
 
   if (is.null(x$sample))
     stop("No mcmc sample.")
+
+  if (!"mcmcse" %in% installed.packages()[, "Package"])
+    stop("The package 'mcmcse' needs to be installed for 'MC_error' to work.")
 
   if (is.null(start))
     start <- start(x$sample)
@@ -195,8 +198,4 @@ plot.MCElist <- function(x, scaled = T, plotpars = NULL,
   eval(theaxis)
   do.call(abline, ablinepars)
 
-  # plot(x$scaled[, 4], nrow(x$scaled):1, xlab = "MCE/SD", ylab = "",
-  #      yaxt = "n", ...)
-  # axis(side = 2, at = nrow(x$scaled):1, labels = names, las = 2, cex.axis = 0.8)
-  # abline(v = abline, ...)
 }

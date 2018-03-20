@@ -1,6 +1,6 @@
 #' Traceplot of a JointAI model
 #'
-#' Creates a set of traceplots from the MCMC sample of a JointAI object
+#' Creates a set of traceplots from the MCMC sample of an object of class JointAI
 #'
 #' @param object object inheriting from class \code{JointAI}
 #' @param subset subset of monitored parameters (columns in the MCMC sample).
@@ -41,15 +41,14 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   prep <- plot_prep(object, start = start, end = end, thin = thin, subset = subset,
                     nrow = nrow, ncol = ncol)
 
-
-  par(mfrow = c(prep$nrow, prep$ncol), mar = c(3.2, 2.5, 2, 1), mgp = c(2, 0.6, 0),
-      ask = prep$ask)
+  op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(3.2, 2.5, 2, 1),
+            mgp = c(2, 0.6, 0), ask = prep$ask)
 
   for (i in 1:nvar(prep$MCMC)) {
     matplot(x = prep$time, as.array(prep$MCMC)[, i, ], type = "l", xlab = "Iterations", ylab = "",
             main = colnames(prep$MCMC[[1]])[i], ...)
   }
-  par(mfrow = c(1,1))
+  par(op)
 }
 
 
@@ -57,7 +56,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' Plot posterior density from JointAI model
 #'
 #' Plots a set of densities (per MC chain and coefficient) from the MCMC sample
-#' of a JointAI object
+#' of an object of class JointAI
 #' @inheritParams traceplot
 #' @param vlines list, where each element is a named list of parameters that
 #'               can be passed to \code{\link[graphics]{abline}} to create
@@ -101,8 +100,8 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                     subset = subset, nrow = nrow, ncol = ncol)
 
 
-  par(mfrow = c(prep$nrow, prep$ncol), mar = c(3, 3, 2, 1), mgp = c(2, 0.6, 0),
-      ask = prep$ask)
+  op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(3, 3, 2, 1),
+            mgp = c(2, 0.6, 0), ask = prep$ask)
   for (i in 1:ncol(prep$MCMC[[1]])) {
     dens <- lapply(prep$MCMC[, i], density)
     vline_range <- if (is.list(vlines[[1]])) {
@@ -128,7 +127,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       }
     }
   }
-  par(mfrow = c(1,1))
+  par(op)
 }
 
 
@@ -169,30 +168,6 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 
   if (!is.null(subset)) {
     MCMC <- get_subset(subset, MCMC, object)
-
-    # if (any(subset == "main")) {
-    #   subset <- subset[which(subset != "main")]
-    #   subset <- sapply(subset, function(i) {
-    #     if (is.na(match(i, colnames(MCMC[[1]])))) {
-    #       colnames(MCMC[[1]])[as.numeric(i)]
-    #     } else {
-    #       i
-    #     }
-    #   })
-    #
-    #   subset <- append(subset[which(subset != "main")], coefs[, 2], after = 0)
-    #   if (object$analysis_type == "lm" |
-    #       (object$analysis_type == "glm" &
-    #        attr(object$analysis_type, "family") %in% c("Gamma", "gaussian"))) {
-    #     subset <- c(subset, paste0("sigma_", names(object$Mlist$y)))
-    #   }
-    #   if (object$analysis_type == "lme") {
-    #     subset <- c(subset,
-    #                 paste0("sigma_", names(object$Mlist$y)),
-    #                 grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", colnames(MCMC[[1]]), value = T))
-    #   }
-    # }
-    # MCMC <- MCMC[, subset]
   }
 
 
@@ -218,39 +193,3 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
   return(list(MCMC = MCMC, ask = ask, nrow = nrow, ncol = ncol,
               thin = thin, time = time, subset = subset))
 }
-
-
-# Coefplot
-# @export
-# coefplot <- function(x, ...) {
-#   UseMethod("coefplot", x)
-# }
-#
-# coef.plot.JointAI <- function(x, start = NULL, end = NULL, thin = NULL,
-#                               subset = NULL) {
-#   MCMC <- if (!is.null(subset)) {
-#     x$sample[, subset]
-#   } else {
-#     MCMC <- x$sample
-#   }
-#
-#   if (is.null(start))
-#     start <- start(x$sample)
-#
-#   if (is.null(end))
-#     end <- end(x$sample)
-#
-#   if (is.null(thin))
-#     thin <- thin(x$sample)
-#
-#
-#   nams <- get_coef_names(x$Mlist, x$K)
-#
-#   for (i in 1:length(MCMC)) {
-#     colnames(MCMC[[i]])[na.omit(match(nams[, 1], colnames(MCMC[[i]])))] <-
-#       nams[na.omit(match(colnames(MCMC[[i]]), nams[, 1])), 2]
-#   }
-#
-#
-#
-# }

@@ -2,9 +2,8 @@
 % Please edit documentation in R/JointAIObject.R
 \name{JointAIObject}
 \alias{JointAIObject}
-\title{Fitted JointAI Object}
+\title{Fitted object of class JointAI}
 \value{
-\item{\code{call}}{the original call}
 \item{\code{analysis_type}}{\code{lm}, \code{glm} or \code{lme}, with attributes
                             \code{family} and \code{link}}
 \item{\code{data}}{the original dataset}
@@ -22,6 +21,7 @@
        vector of auxiliary variables (auxvars), grouping specification (groups),
        updated fixed effects structure (fixed2), names of updated design matrix
        (X2_names)}
+\item{\code{refcats}}{A list naming the reference categories for all categorical covariates.}
 \item{\code{K}}{matrix specifying the indices of the regression coefficients
 that are related to different parts of the model}
 \item{\code{K_imp}}{matrix specifying the indices of regression coefficients
@@ -35,13 +35,18 @@ for the imputation models relating to different covariates}
      \item{\code{n.iter}}{number of iterations in the MCMC sample}
      \item{\code{variable.names}}{monitored nodes}
      \item{\code{thin}}{thinning of the MCMC sample}
+     \item{\code{inits}}{a list containing the inital values that were used}
      }}
 \item{\code{data_list}}{list with data that was passed to JAGS}
 \item{\code{scale_pars}}{matrix with parameters used to center and scale the continuous variables}
+\item{\code{hyperpars}}{a list containing the values of the hyperparameters used}
 \item{\code{model}}{JAGS model}
 \item{\code{sample}}{MCMC sample (Note: if continuous variables have been scaled
 during the sampling, the posterior sample here is on the scaled scale, not on
 the original scale.)}
+\item{\code{MCMC}}{if scaling was done: MCMC sample, scaled back to original scale}
+\item{\code{time}}{the computational time used for the sampling (adaptive phase + sampling)}
+\item{\code{call}}{the original call}
 }
 \description{
 An object returned by one of the functions \code{\link{lm_imp}()},

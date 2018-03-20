@@ -86,6 +86,6 @@ MC_error(mod1)
 }
 \references{
 Lesaffre, E., & Lawson, A. B. (2012).
-\emph{Bayesian biostatistics}.
+\emph{Bayesian Biostatistics}.
 John Wiley & Sons.
 }

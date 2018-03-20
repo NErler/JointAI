@@ -1,6 +1,6 @@
-#' Add samples to a JointAI object
+#' Add samples to an object of class JointAI
 #'
-#' Allows to continue sampling from an existing JointAI object
+#' Allows to continue sampling from an existing object of class JointAI
 #' @param object object inheriting from class \code{JointAI}
 #' @inheritParams model_imp
 #' @param add logical; should the new MCMC samples be added to the existing

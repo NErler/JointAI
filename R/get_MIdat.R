@@ -53,8 +53,9 @@ get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
 
   MCMC <- do.call(rbind, window(object$sample, start = start))
   if (nrow(MCMC) < m)
-    stop(paste0("\nThe number of imputations must be chosen to be less than or equal to ",
-                "the number of MCMC samples (= ", nrow(MCMC), ")."))
+    stop("The number of imputations must be chosen to be less than or",
+         gettextf("equal to the number of MCMC samples (= %s).",
+                  nrow(MCMC)))
 
 
   # randomly draw which iterations should be used as imputation

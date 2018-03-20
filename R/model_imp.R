@@ -176,20 +176,19 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     message("This is new software. Please report any bug to the package maintainer.")
 
   if (missing(fixed)) {
-    stop("\nNo fixed effects structure specified.")
+    stop("No fixed effects structure specified.")
   }
 
   if (analysis_type != "lme" & !is.null(random)) {
     if (warn)
-      warning(paste0("Random effects structure not used in a model of type `",
-                     analysis_type, "'."), immediate. = T, call. = F)
+      warning(gettextf("Random effects structure not used in a model of type %s.",
+                       sQuote(analysis_type)), immediate. = T, call. = F)
     random <- NULL
   }
 
   if (n.iter == 0) {
     if (warn)
-      message(paste0("Note: No MCMC sample will be created when n.iter is set to ",
-                     n.iter, "."))
+      message("Note: No MCMC sample will be created when n.iter is set to 0.")
   }
 
   # set contrasts to dummies
@@ -264,10 +263,10 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                 file = modelfile)
   } else {
     if (warn)
-      warning(expr = paste0("\nThe file '", modelfile, "' already exists and no new model was written.",
-                            "\n",
-                            "To overwrite the model set 'overwrite = T'."),
-              call. = F, immediate. = T)
+    warning(gettextf("\nThe file %s already exists and no new model was written.",
+                     dQuote(modelfile)),
+            "\nTo overwrite the model set 'overwrite = T'.",
+            call. = F, immediate. = T)
   }
 
 
@@ -276,6 +275,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                                  scale_pars = scale_pars, hyperpars = hyperpars,
                                  data = data))
     scale_pars <- data_list$scale_pars
+    hyperpars <- data_list$hyperpars
     data_list <- data_list$data_list
   }
 
@@ -314,18 +314,22 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   if (n.iter > 0) {
-    MCMC <- do.call(rbind, mcmc)
-
+    # MCMC <- do.call(rbind, mcmc)
     coefs <- get_coef_names(Mlist, K)
 
-    colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
 
-    if (!is.null(scale_pars)) {
-      # re-scale parameters
-      MCMC <- sapply(colnames(MCMC), rescale, Mlist$fixed2, scale_pars,
-                     MCMC, Mlist$refs, Mlist$X2_names)
+    MCMC <- mcmc
+    for (k in 1:length(MCMC)) {
+      colnames(MCMC[[k]])[match(coefs[, 1], colnames(MCMC[[k]]))] <- coefs[, 2]
+      if (!is.null(scale_pars)) {
+        # re-scale parameters
+        MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
+                            scale_pars, MCMC[[k]], Mlist$refs, Mlist$X2_names))
+        attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
+      }
     }
-  }
+    # colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
+}
 
 
   if (!keep_model) {file.remove(modelfile)}
@@ -356,7 +360,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
          hyperpars = hyperpars,
          model = if (n.adapt > 0) adapt,
          sample = if (n.iter > 0) mcmc,
-         MCMC = if (n.iter > 0) as.mcmc(MCMC),
+         MCMC = if (n.iter > 0) as.mcmc.list(MCMC),
          time = t1 - t0
          ), class = "JointAI")
   )
@@ -459,7 +463,8 @@ glm_imp <- function(formula, family, data,
 
   if (!arglist$link %in% c("identity", "log", "logit", "probit", "log",
                            "cloglog"))
-    stop(paste0(arglist$link), " is not an allowed link function.")
+    stop(gettextf("%s is not an allowed link function.",
+                  dQuote(arglist$link)))
 
 
   res <- do.call(model_imp, arglist)

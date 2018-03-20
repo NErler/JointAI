@@ -33,9 +33,9 @@ get_imp_meth <- function(fixed, random = NULL, data,
   allvars <- unique(c(all.vars(fixed[[3]]), all.vars(random2[2]), auxvars))
 
   if (any(!allvars %in% names(data))) {
-    stop(paste0("Variable(s)" ,
-                paste0(allvars[!allvars %in% names(data)], collapse = ", "),
-                " were not found in the data."))
+    stop(gettextf("Variable(s) %s were not found in the data." ,
+        paste(dQuote(allvars[!allvars %in% names(data)]), collapse = ", "))
+    )
   }
 
   tvar <- sapply(data[, allvars, drop = F], check_tvar, idvar)

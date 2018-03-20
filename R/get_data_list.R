@@ -86,7 +86,8 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
   }
 
   return(list(data_list = l,
-              scale_pars = scaled$scale_pars))
+              scale_pars = scaled$scale_pars,
+              hyperpars = defs))
 }
 
 

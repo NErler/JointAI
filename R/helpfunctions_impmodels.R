@@ -129,15 +129,16 @@ get_refcat <- function(varname, Xcat, refcats) {
       useval <- refcats[varname]
     } else {
       useval <- "largest"
-      message(paste0("Wrong specification of the reference category for ",
-                    varname, ". Default used instead."))
+      message(gettextf("Wrong specification of the reference category for %s. Default used instead.",
+                       dQuote(varname)))
+
     }
   } else if (is.character(refcats[varname])) {
     useval <- match(refcats[varname], names(Xcat))
     if (is.na(useval)) {
       useval <- "largest"
-      message(paste0("Wrong specification of the reference category for ",
-                    varname, ". Default used instead."))
+      message(gettextf("Wrong specification of the reference category for %s. Default used instead.",
+                       dQuote(varname)))
     }
   }
 
@@ -155,7 +156,7 @@ get_refcat <- function(varname, Xcat, refcats) {
 # @param Xcat_names column names of the matrix of categorical variables
 get_dest_column <- function(varname, refs, Xc_names, Xcat_names, Xtrafo_names,
                             trafos) {
-  nams <- if(varname %in% names(refs)) {
+  nams <- if (varname %in% names(refs)) {
     attr(refs[[varname]], "dummies")
     # paste0(varname,
     #              levels(refs[[varname]])[levels(refs[[varname]]) !=

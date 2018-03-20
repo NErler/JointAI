@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_samples.R
 \name{add_samples}
 \alias{add_samples}
-\title{Add samples to a JointAI object}
+\title{Add samples to an object of class JointAI}
 \usage{
 add_samples(object, n.iter, add = T, thin = NULL, monitor_params = NULL,
   progress.bar = "text")
@@ -25,7 +25,7 @@ monitored, see details.}
     \code{"text"}, \code{"gui"}, and \code{"none"}. See Details.}
 }
 \description{
-Allows to continue sampling from an existing JointAI object
+Allows to continue sampling from an existing object of class JointAI
 }
 \examples{
 \dontrun{

@@ -45,7 +45,7 @@ same length as the number of plots (see examples).}
 }
 \description{
 Plots a set of densities (per MC chain and coefficient) from the MCMC sample
-of a JointAI object
+of an object of class JointAI
 }
 \examples{
 \dontrun{
