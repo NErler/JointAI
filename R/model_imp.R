@@ -320,7 +320,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
     MCMC <- mcmc
     for (k in 1:length(MCMC)) {
-      colnames(MCMC[[k]])[match(coefs[, 1], colnames(MCMC[[k]]))] <- coefs[, 2]
+      colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <- coefs[, 2]
       if (!is.null(scale_pars)) {
         # re-scale parameters
         MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,

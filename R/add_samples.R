@@ -24,6 +24,8 @@ add_samples <- function(object, n.iter, add = T, thin = NULL,
 
   if (is.null(thin))
     thin <- object$mcmc_settings$thin
+
+
   if (is.null(monitor_params)) {
     var.names <- object$mcmc_settings$variable.names
   } else {
@@ -37,12 +39,32 @@ add_samples <- function(object, n.iter, add = T, thin = NULL,
                                        monitor_params))
   }
 
+  if (any(var.names != object$mcmc_settings$variable.names) & add == T)
+    stop("The provided parameters to monitor do not match the monitored parameters in the original JointAI object.")
+
   t0 <- Sys.time()
   mcmc <- rjags::coda.samples(object$model, variable.names = var.names,
                               n.iter = n.iter, thin = thin,
                               na.rm = F, progress.bar = progress.bar)
   t1 <- Sys.time()
 
+
+  coefs <- get_coef_names(object$Mlist, object$K)
+
+  MCMC <- mcmc
+  for (k in 1:length(MCMC)) {
+    colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <- coefs[, 2]
+    if (!is.null(object$scale_pars)) {
+      # re-scale parameters
+      MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale,
+                                  object$Mlist$fixed2,
+                                  object$scale_pars,
+                                  MCMC[[k]], object$Mlist$refs,
+                                  object$Mlist$X2_names)
+      )
+      attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
+    }
+  }
 
   if (add == T) {
     new <- as.mcmc.list(lapply(1:length(mcmc),
@@ -52,12 +74,23 @@ add_samples <- function(object, n.iter, add = T, thin = NULL,
                                                 end = end(object$sample) + niter(mcmc[[x]])
                                )
     ))
+
+    newMCMC <- as.mcmc.list(lapply(1:length(MCMC),
+                                   function(x) mcmc(rbind(object$MCMC[[k]],
+                                                          MCMC[[k]]),
+                                                    start = start(object$MCMC),
+                                                    end = end(object$MCMC) +
+                                                      niter(mcmc[[x]]))
+    ))
+
   } else {
     new <- mcmc
+    newMCMC <- MCMC
   }
 
   newobject <- object
   newobject$sample <- new
+  newobject$MCMC <- newMCMC
   newobject$call <- c(object$call, match.call())
   newobject$mcmc_settings$n.iter <- niter(new)
   newobject$mcmc_settings$variable.names <- var.names
