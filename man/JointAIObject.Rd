@@ -35,7 +35,7 @@ for the imputation models relating to different covariates}
      \item{\code{n.iter}}{number of iterations in the MCMC sample}
      \item{\code{variable.names}}{monitored nodes}
      \item{\code{thin}}{thinning of the MCMC sample}
-     \item{\code{inits}}{a list containing the inital values that were used}
+     \item{\code{inits}}{a list containing the initial values that were used}
      }}
 \item{\code{data_list}}{list with data that was passed to JAGS}
 \item{\code{scale_pars}}{matrix with parameters used to center and scale the continuous variables}
