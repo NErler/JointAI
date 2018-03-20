@@ -6,7 +6,7 @@ Maintainer: Nicole S. Erler <n.erler@erasmusmc.nl>
 Description: Joint Analysis and Imputation of linear regression models,
     generalized linear regression models or linear mixed models with incomplete
     (covariate) data in the Bayesian framework.
-    The package performs some pre-processing of the data and creates a 'JAGS'
+    The package performs some preprocessing of the data and creates a 'JAGS'
     model, which will then automatically be passed to 'JAGS' 
     <http://mcmc-jags.sourceforge.net> with the help of 
     the package 'rjags'.
