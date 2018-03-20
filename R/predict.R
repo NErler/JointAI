@@ -25,7 +25,9 @@ predDF <- function(...) {
 
 
 #' @rdname predDF
-predDF.default <- function(formula, dat, var, ...) {
+#' @export
+predDF.formula <- function(formula, dat, var, ...) {
+
   allvars <- all.vars(formula)
 
   vals <- sapply(allvars, function(k) {
@@ -46,13 +48,15 @@ predDF.default <- function(formula, dat, var, ...) {
   expand.grid(vals)
 }
 
+
 #' @rdname predDF
 #' @export
 predDF.JointAI <- function(object, var, ...) {
+
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
-  predDF(object$fixed, dat = object$data, var = var, ...)
+  predDF(formula = object$fixed, dat = object$data, var = var, ...)
 }
 
 
@@ -109,16 +113,18 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
   if (is.null(thin))
     thin <- thin(object$sample)
 
-  MCMC <- window(object$MCMC,
-                 start = start,
-                 end = end,
-                 thin = thin)
+  MCMC <- do.call(rbind,
+                  window(object$MCMC,
+                         start = start,
+                         end = end,
+                         thin = thin)
+  )
 
 
   mf <- model.frame(object$fixed, object$data)
   mt <- attr(mf, "terms")
 
-  oldop <- getOption(contrasts)
+  oldop <- getOption("contrasts")
   options(contrasts = rep("contr.treatment", 2))
   X <- model.matrix(mt, data = newdata)
   options(contrasts = oldop)
