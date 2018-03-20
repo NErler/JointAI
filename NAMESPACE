@@ -3,7 +3,6 @@
 S3method(densplot,JointAI)
 S3method(plot,MCElist)
 S3method(predDF,JointAI)
-S3method(predDF,default)
 S3method(predict,JointAI)
 S3method(print,MCElist)
 S3method(print,summary.JointAI)
