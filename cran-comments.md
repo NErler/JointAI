@@ -4,7 +4,7 @@
 
 ## Test environments
 * local Windows 7, R 3.4.3
-* ubuntu 14.04 (on travis-ci), R 3.3.3, R 3.4.2, devel
+* ubuntu 14.04 (on travis-ci), R 3.3.3, R 3.4.4, devel
 * win-builder (devel and release)
 
 ## R CMD check results
