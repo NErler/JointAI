@@ -3,7 +3,7 @@
 ---
 
 ## Test environments
-* local Windows 7, R 3.4.3
+* local Windows 7, R 3.4.4
 * ubuntu 14.04 (on travis-ci), R 3.3.3, R 3.4.4, devel
 * win-builder (devel and release)
 
