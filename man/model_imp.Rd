@@ -199,14 +199,13 @@ the imputed values.
 }
 
 \examples{
-\dontrun{
 
 mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 mod2 <- glm_imp(B1 ~ C1 + C2 + M2, data = wideDF,
                 family = binomial(link = "logit"), n.iter = 100)
 mod3 <- lme_imp(y ~ C1 + B2 + L1 + time, random = ~ time|id,
                 data = longDF, n.iter = 500)
-}
+
 
 }
 \seealso{

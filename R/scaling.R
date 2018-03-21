@@ -53,9 +53,18 @@ get_scaling <- function(Mlist, scale_pars, meth, data) {
                        meth = meth, simplify = FALSE)
 
 
-  scale_pars <- do.call(cbind, sapply(scaled_dat, "[[", 2))
-  if (any(duplicated(colnames(scale_pars))))
+  scale_pars <- do.call(cbind, lapply(scaled_dat, "[[", 2))
+
+  # remove identical duplicate columns
+  dupl <- lapply(unique(colnames(scale_pars)), function(x) {
+    t(unique(t(scale_pars[, which(colnames(scale_pars) == x), drop = F])))
+  })
+
+  if (any(sapply(dupl, ncol) > 1)) {
     stop("Duplicate scale parameters found.")
+  } else {
+    scale_pars <- do.call(cbind, dupl)
+  }
 
   if (!any(colnames(scale_pars) %in% colnames(scale_pars_new)))
     stop("Scale parameters could not be matched to variables.")

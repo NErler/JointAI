@@ -10,10 +10,10 @@
 #' \emph{Statistica Sinica}, 733-760.
 #'
 #' @examples
-#' \dontrun{
+#'
 #' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #' GR_crit(mod1)
-#' }
+#'
 #'
 #' @export
 GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = TRUE,
@@ -91,10 +91,9 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #' John Wiley & Sons.
 #'
 #' @examples
-#' \dontrun{
-#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-#' MC_error(mod1)
-#' }
+#' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' MC_error(mod)
+#'
 #'
 #' @export
 MC_error <- function(x, subset = "main", start = NULL, end = NULL, thin = NULL,

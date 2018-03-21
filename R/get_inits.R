@@ -8,7 +8,7 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family){
 
   # analysis model ---------------------------------------------------------------
   # fixed parameters: beta and precision parameter
-  mean.betas <- c(colMeans(Mlist$y, na.rm = TRUE),
+  mean.betas <- c(colMeans(apply(Mlist$y, 2, as.numeric), na.rm = TRUE),
                   rep(0, max(K[, "end"], na.rm = TRUE) - 1))
   l[["beta"]] = rnorm(length(mean.betas), mean.betas, 1)
   if (family %in% c('gaussian', 'Gamma'))

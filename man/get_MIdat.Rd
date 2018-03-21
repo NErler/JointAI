@@ -34,8 +34,14 @@ automatically exported to SPSS (i.e., a .txt file containing the data and a
 .sps file containing syntax to generate a .sav file).
 }
 \examples{
+
+mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+MIs <- get_MIdat(mod, m = 3, seed = 123)
+
 \dontrun{
-mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-MIs <- get_MIdat(mod1, m = 3)
+# or with export for SPSS (here: to a temporary directory)
+MIs <- get_MIdat(mod, m = 3, seed = 123, resdir = tempdir(),
+                 filename = "example_imputation", export_to_SPSS = TRUE)
+
 }
 }

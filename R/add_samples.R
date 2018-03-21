@@ -9,12 +9,14 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' mod_add <- add_samples(mod, n.iter = 200, add = TRUE)
 #'
-#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-#' mod1_add <- add_samples(mod1, n.iter = 200)
+#' # or to additionally sample imputed values
+#' imps <- add_samples(mod, n.iter = 200, monitor_params = c("imps" = TRUE),
+#'                     add = FALSE)
 #'
-#' }
+#'
 
 add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                         monitor_params = NULL,
@@ -39,7 +41,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                        monitor_params))
   }
 
-  if (any(var.names != object$mcmc_settings$variable.names) & add == TRUE)
+  if (!identical(var.names, object$mcmc_settings$variable.names) & add == TRUE)
     stop("The provided parameters to monitor do not match the monitored parameters in the original JointAI object.")
 
   t0 <- Sys.time()

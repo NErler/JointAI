@@ -78,10 +78,9 @@ Lesaffre & Lawson (2012) [p. 195] suggest the Monte Carlo error of a
       deviation of this parameter (i.e., \eqn{MCSE/SD \le 0.05}).
 }
 \examples{
-\dontrun{
-mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-MC_error(mod1)
-}
+mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+MC_error(mod)
+
 
 }
 \references{

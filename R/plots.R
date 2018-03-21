@@ -24,10 +24,9 @@
 #' @seealso \code{\link{summary.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
 #'           \code{\link{lm_imp}}
 #' @examples
-#' \dontrun{
-#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-#' traceplot(mod1)
-#' }
+#' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' traceplot(mod)
+#'
 #' @export
 traceplot <- function(object, ...) {
   UseMethod("traceplot")
@@ -66,24 +65,22 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #'               same length as the number of plots (see examples).
 #' @param ... additional parameters passed to \code{\link[graphics]{plot}}
 #' @examples
-#' \dontrun{
-#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#'
+#' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
 #' # densplot without vertical lines
 #' densplot(mod1)
 #'
 #' # use vlines to mark zero
-#' densplot(mod1, col = c("darkred", "darkblue", "darkgreen"),
-#'          vlines = list(list(v = rep(0, nrow(summary(mod1)$stats)),
-#'                             col = grey(0.8)))
-#'         )
+#' densplot(mod, col = c("darkred", "darkblue", "darkgreen"),
+#'          vlines = list(list(v = rep(0, nrow(summary(mod)$stats)),
+#'                             col = grey(0.8))))
 #'
 #' # use vlines to visualize the posterior mean and 2.5% and 97.5% quantiles
-#' densplot(mod1, vlines = list(list(v = summary(mod1)$stats[, "Mean"], lty = 1, lwd = 2),
-#'                              list(v = summary(mod1)$stats[, "2.5%"], lty = 2),
-#'                              list(v = summary(mod1)$stats[, "97.5%"], lty = 2))
-#'         )
-#' }
+#' densplot(mod, vlines = list(list(v = summary(mod)$stats[, "Mean"], lty = 1, lwd = 2),
+#'                             list(v = summary(mod)$stats[, "2.5%"], lty = 2),
+#'                             list(v = summary(mod)$stats[, "97.5%"], lty = 2)))
+#'
 #' @export
 densplot <- function(object, ...) {
   UseMethod("densplot")
