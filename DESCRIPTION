@@ -3,7 +3,7 @@ Version: 0.1.0
 Title: Joint Analysis and Imputation of Incomplete Data
 Author: Nicole S. Erler
 Maintainer: Nicole S. Erler <n.erler@erasmusmc.nl>
-Description: Joint Analysis and Imputation of linear regression models,
+Description: Provides joint analysis and imputation of linear regression models,
     generalized linear regression models or linear mixed models with incomplete
     (covariate) data in the Bayesian framework.
     The package performs some preprocessing of the data and creates a 'JAGS'
@@ -12,11 +12,11 @@ Description: Joint Analysis and Imputation of linear regression models,
     the package 'rjags'.
     It also provides summary and plotting functions for the output.
 License: GPL (>= 2)
-Date: 2018-03-20
+Date: 2018-03-21
 BugReports: https://github.com/nerler/JointAI
 LazyData: TRUE
 RoxygenNote: 6.0.1
 Depends: rjags (>= 4-6)
 Imports: MASS, mcmcse, coda
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
-Suggests: knitr, rmarkdown, mice
+Suggests: knitr, rmarkdown, mice, foreign
