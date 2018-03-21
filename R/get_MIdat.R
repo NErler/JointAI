@@ -2,7 +2,8 @@
 #'
 #' Extracts a dataset containing multiple imputed datasets. These data can be
 #' automatically exported to SPSS (i.e., a .txt file containing the data and a
-#' .sps file containing syntax to generate a .sav file).
+#' .sps file containing syntax to generate a .sav file). For the export function
+#' the \href{https://CRAN.R-project.org/package=foreign}{foreign} package needs to be installed.
 #' @param object object inheriting from class \code{JointAI}
 #' @param m number of imputed datasets
 #' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
@@ -23,7 +24,8 @@
 #' \dontrun{
 #' # or with export for SPSS (here: to a temporary directory)
 #' MIs <- get_MIdat(mod, m = 3, seed = 123, resdir = tempdir(),
-#'                  filename = "example_imputation", export_to_SPSS = TRUE)
+#'                  filename = "example_imputation",
+#'                  export_to_SPSS = TRUE)
 #'
 #' }
 #' @export
@@ -33,6 +35,9 @@ get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
 
   if (is.null(object$meth))
     stop("This JointAI object did not impute any values.")
+
+  if (!"foreign" %in% rownames(installed.packages()))
+    stop("This function requires the 'foreign' package to be installed.")
 
   if (!is.null(seed))
     set.seed(seed)
@@ -156,7 +161,7 @@ get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
     filename <- paste0("JointAI-imputation_", Sys.Date())
 
   if (export_to_SPSS == TRUE) {
-    write_SPSS(impDF,
+    foreign::write.foreign(impDF,
                file.path(resdir, paste0(filename, ".txt")),
                file.path(resdir, paste0(filename, ".sps"))
     )

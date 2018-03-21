@@ -31,7 +31,8 @@ A dataframe containing the imputed values (and original data) stacked.
 \description{
 Extracts a dataset containing multiple imputed datasets. These data can be
 automatically exported to SPSS (i.e., a .txt file containing the data and a
-.sps file containing syntax to generate a .sav file).
+.sps file containing syntax to generate a .sav file). For the export function
+the \href{https://CRAN.R-project.org/package=foreign}{foreign} package needs to be installed.
 }
 \examples{
 
@@ -41,7 +42,8 @@ MIs <- get_MIdat(mod, m = 3, seed = 123)
 \dontrun{
 # or with export for SPSS (here: to a temporary directory)
 MIs <- get_MIdat(mod, m = 3, seed = 123, resdir = tempdir(),
-                 filename = "example_imputation", export_to_SPSS = TRUE)
+                 filename = "example_imputation",
+                 export_to_SPSS = TRUE)
 
 }
 }
