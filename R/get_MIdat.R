@@ -22,8 +22,9 @@
 #' MIs <- get_MIdat(mod, m = 3, seed = 123)
 #'
 #' \dontrun{
-#' # or with export for SPSS (here: to a temporary directory)
-#' MIs <- get_MIdat(mod, m = 3, seed = 123, resdir = tempdir(),
+#' # or with export for SPSS (here: to the temporary directory "temp_dir")
+#' temp_dir <- tempdir()
+#' MIs <- get_MIdat(mod, m = 3, seed = 123, resdir = temp_dir,
 #'                  filename = "example_imputation",
 #'                  export_to_SPSS = TRUE)
 #'
