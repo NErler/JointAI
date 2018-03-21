@@ -69,7 +69,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
 #' # densplot without vertical lines
-#' densplot(mod1)
+#' densplot(mod)
 #'
 #' # use vlines to mark zero
 #' densplot(mod, col = c("darkred", "darkblue", "darkgreen"),
