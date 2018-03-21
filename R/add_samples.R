@@ -16,7 +16,7 @@
 #'
 #' }
 
-add_samples <- function(object, n.iter, add = T, thin = NULL,
+add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                         monitor_params = NULL,
                         progress.bar = "text") {
   if (!inherits(object, "JointAI"))
@@ -39,13 +39,13 @@ add_samples <- function(object, n.iter, add = T, thin = NULL,
                                        monitor_params))
   }
 
-  if (any(var.names != object$mcmc_settings$variable.names) & add == T)
+  if (any(var.names != object$mcmc_settings$variable.names) & add == TRUE)
     stop("The provided parameters to monitor do not match the monitored parameters in the original JointAI object.")
 
   t0 <- Sys.time()
   mcmc <- rjags::coda.samples(object$model, variable.names = var.names,
                               n.iter = n.iter, thin = thin,
-                              na.rm = F, progress.bar = progress.bar)
+                              na.rm = FALSE, progress.bar = progress.bar)
   t1 <- Sys.time()
 
 
@@ -66,7 +66,7 @@ add_samples <- function(object, n.iter, add = T, thin = NULL,
     }
   }
 
-  if (add == T) {
+  if (add == TRUE) {
     new <- as.mcmc.list(lapply(1:length(mcmc),
                                function(x) mcmc(rbind(object$sample[[x]],
                                                       mcmc[[x]]),

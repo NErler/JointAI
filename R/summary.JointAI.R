@@ -92,9 +92,9 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$nchain <- nchain(object$sample)
 
   out$ranefvar <- if (object$analysis_type == "lme")
-    stats[grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", rownames(stats), value = T), -5, drop = F]
+    stats[grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", rownames(stats), value = TRUE), -5, drop = FALSE]
   out$sigma <- if (attr(object$analysis_type, "family") == "gaussian")
-    stats[grep(paste0("sigma_", names(object$Mlist$y)), rownames(stats), value = T), -5, drop = F]
+    stats[grep(paste0("sigma_", names(object$Mlist$y)), rownames(stats), value = TRUE), -5, drop = FALSE]
   out$stats <- stats[!rownames(stats) %in% c(rownames(out$ranefvar), rownames(out$sigma)), ]
 
   out$analysis_type <- object$analysis_type

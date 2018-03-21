@@ -32,8 +32,8 @@ predDF.formula <- function(formula, dat, var, ...) {
 
   vals <- sapply(allvars, function(k) {
     if (k == var) {
-      seq(min(dat[, k], na.rm = T),
-          max(dat[, k], na.rm = T), length = 100)
+      seq(min(dat[, k], na.rm = TRUE),
+          max(dat[, k], na.rm = TRUE), length = 100)
     } else {
       if (is.factor(dat[, k])) {
         factor(levels(dat[, k])[1], levels = levels(dat[, k]))
@@ -41,7 +41,7 @@ predDF.formula <- function(formula, dat, var, ...) {
         factor(levels(as.factor(dat[, k]))[1],
                levels = levels(as.factor(dat[, k])))
       } else if (is.numeric(dat[, k])) {
-        median(dat[, k], na.rm = T)
+        median(dat[, k], na.rm = TRUE)
       }
     }
   })

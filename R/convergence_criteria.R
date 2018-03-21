@@ -170,7 +170,7 @@ print.MCElist <- function(x, ...) {
 #' @describeIn MC_error plot Monte Carlo error
 #' @export
 
-plot.MCElist <- function(x, scaled = T, plotpars = NULL,
+plot.MCElist <- function(x, scaled = TRUE, plotpars = NULL,
                          ablinepars = list(v = 0.05), ...) {
 
   theaxis <- NULL

@@ -8,8 +8,8 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family){
 
   # analysis model ---------------------------------------------------------------
   # fixed parameters: beta and precision parameter
-  mean.betas <- c(colMeans(Mlist$y, na.rm = T),
-                  rep(0, max(K[, "end"], na.rm = T) - 1))
+  mean.betas <- c(colMeans(Mlist$y, na.rm = TRUE),
+                  rep(0, max(K[, "end"], na.rm = TRUE) - 1))
   l[["beta"]] = rnorm(length(mean.betas), mean.betas, 1)
   if (family %in% c('gaussian', 'Gamma'))
     l[[paste0("tau_", colnames(Mlist$y))]] = rgamma(1, 1, 1)

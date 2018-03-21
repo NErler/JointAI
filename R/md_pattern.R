@@ -17,16 +17,16 @@
 #' par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
 #' md_pattern(longDF, yaxis_pars = list(cex.axis = 0.8))
 #'
-md_pattern <- function(data, plot = T, xlab = "", ylab = "",
-                      xaxis_pars = list(), yaxis_pars = list(), printN = T,
-                      print = T, ...) {
+md_pattern <- function(data, plot = TRUE, xlab = "", ylab = "",
+                      xaxis_pars = list(), yaxis_pars = list(), printN = TRUE,
+                      print = TRUE, ...) {
   if (!"mice" %in% rownames(installed.packages()))
     stop("This function requires the 'mice' package to be installed.")
 
   MDP <- mice::md.pattern(data)
   M <- t(MDP[-nrow(MDP), -ncol(MDP)])
 
-  if (plot == T) {
+  if (plot == TRUE) {
     image(1:nrow(M), 1:ncol(M), M[, ncol(M):1], col = grDevices::grey(c(0.7, 0.1)),
           xaxt = "n", yaxt = "n", xlab = xlab, ylab = ylab, cex.lab = 1, ...)
 

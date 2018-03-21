@@ -6,8 +6,8 @@
 Plot the pattern of missing data. The missing data pattern is determined
 using the function \code{link[mice]{md.pattern}} from the \code{mice} package.}
 \usage{
-md_pattern(data, plot = T, xlab = "", ylab = "", xaxis_pars = list(),
-  yaxis_pars = list(), printN = T, print = T, ...)
+md_pattern(data, plot = TRUE, xlab = "", ylab = "", xaxis_pars = list(),
+  yaxis_pars = list(), printN = TRUE, print = TRUE, ...)
 }
 \arguments{
 \item{data}{data frame}

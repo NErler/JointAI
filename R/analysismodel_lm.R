@@ -40,7 +40,7 @@ lm_model <- function(N, y_name, Z = NULL, Xic = NULL, Xl = NULL,
 lm_priors <- function(K, y_name, ...){
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
-    tab(), "for (k in 1:", max(K, na.rm = T), ") {", "\n",
+    tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
     tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main)", "\n",
     tab(), "}", "\n",
     tab(), "tau_", y_name ," ~ dgamma(a_tau_main, b_tau_main)", "\n",

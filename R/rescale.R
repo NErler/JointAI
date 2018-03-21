@@ -9,7 +9,7 @@ rescale <- function(x, fixed2, scale_pars, MCMC, refs, X2_names) {
 
   # for (i in coefs[coefs %in% names(refs)]) {
   #    lvls <- levels(refs[[i]])[levels(refs[[i]]) != refs[[i]]]
-  #    orig <- unname(unlist(sapply(gen_pat(i), grep, coefs, value = T)))
+  #    orig <- unname(unlist(sapply(gen_pat(i), grep, coefs, value = TRUE)))
   #    for (j in lvls) {
   #      coef_lvl <- append(coef_lvl, gsub(i, paste0(i, j), orig))
   #    }
@@ -23,7 +23,7 @@ rescale <- function(x, fixed2, scale_pars, MCMC, refs, X2_names) {
 
   x_split <- unlist(strsplit(x, ":"))
 
-  coef_split <- sapply(coef_lvl, splitstring2, x = x, x_split = x_split, simplify = F)
+  coef_split <- sapply(coef_lvl, splitstring2, x = x, x_split = x_split, simplify = FALSE)
   names(coef_split) <- coef_lvl
 
 
@@ -36,7 +36,7 @@ rescale <- function(x, fixed2, scale_pars, MCMC, refs, X2_names) {
 
   interact <- names(pars[names(pars) != x & pars])
 
-  vec <- MCMC[, x, drop = F]
+  vec <- MCMC[, x, drop = FALSE]
 
   interactions <- sapply(interact, function(i) {
     other <- coef_split[[i]][coef_split[[i]] != x]
@@ -90,7 +90,7 @@ splitstring2 <- function(input, x, x_split) {
     }
   }
   # pat <- paste0(c(":", "^"), pattern)
-  splitres <- strsplit(input, x, fixed = T)[[1]]
+  splitres <- strsplit(input, x, fixed = TRUE)[[1]]
 
 
   T1 <- splitres[1] == "" | substr(splitres[1],

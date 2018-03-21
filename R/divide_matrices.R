@@ -21,7 +21,7 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
     1:nrow(DF)
   }
 
-  y <- DF[, extract_y(fixed), drop = F]
+  y <- DF[, extract_y(fixed), drop = FALSE]
 
   # remove grouping specification from random effects formula
   random2 <- remove_grouping(random)
@@ -32,7 +32,7 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   }
 
   # fixed effects design matrices
-  fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed), fixed = T),
+  fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed), fixed = TRUE),
                                auxvars), collapse = " + "))
 
 
@@ -41,11 +41,11 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   names(contr) <- ord
 
   covars <- all.vars(fixed2)[all.vars(fixed2) != extract_y(fixed2)]
-  factors <- covars[sapply(DF[, covars, drop = F], is.factor)]
+  factors <- covars[sapply(DF[, covars, drop = FALSE], is.factor)]
 
   refs <- get_refs(factors, refcats, DF)
   for (i in names(refs)) {
-    DF[, i] <- relevel(factor(DF[, i], ordered = F), as.character(refs[[i]]))
+    DF[, i] <- relevel(factor(DF[, i], ordered = FALSE), as.character(refs[[i]]))
   }
 
   if (!is.null(auxvars)) {
@@ -69,14 +69,14 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   tvar <- apply(X2, 2, check_tvar, groups)
 
   # time-constant part of X
-  Xcross <- X2[match(unique(groups), groups), !tvar, drop = F]
-  interact <- grep(":", colnames(Xcross), fixed = T, value = T)
+  Xcross <- X2[match(unique(groups), groups), !tvar, drop = FALSE]
+  interact <- grep(":", colnames(Xcross), fixed = TRUE, value = TRUE)
 
-  Xc <- Xcross[, !colnames(Xcross) %in% interact, drop = F]
-  Xc <- Xc[, order(colSums(is.na(Xc))), drop = F]
+  Xc <- Xcross[, !colnames(Xcross) %in% interact, drop = FALSE]
+  Xc <- Xc[, order(colSums(is.na(Xc))), drop = FALSE]
 
   Xic <- if (length(interact) > 0) {
-    Xcross[, interact, drop = F]
+    Xcross[, interact, drop = FALSE]
   }
   if (!is.null(Xic)) {
     Xic <- Xic * NA
@@ -85,12 +85,12 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
 
 
   cat_vars <- names(which(lapply(
-    lapply(DF[, colSums(is.na(DF)) > 0 & names(DF) %in% all.vars(fixed2), drop = F], levels),
+    lapply(DF[, colSums(is.na(DF)) > 0 & names(DF) %in% all.vars(fixed2), drop = FALSE], levels),
     length) > 2))
-  cat_vars <- sapply(cat_vars, match_positions, DF, colnames(Xc), simplify = F)
+  cat_vars <- sapply(cat_vars, match_positions, DF, colnames(Xc), simplify = FALSE)
 
   Xcat <- if (length(cat_vars) > 0) {
-    DF[match(unique(groups), groups), names(cat_vars), drop = F]
+    DF[match(unique(groups), groups), names(cat_vars), drop = FALSE]
   }
   if (!is.null(Xcat)) {
     Xc[, unlist(sapply(cat_vars, names))] <- NA
@@ -102,12 +102,12 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
     fmla_trafo <- as.formula(
       paste("~", paste0(unique(trafos$var), collapse = " + "))
     )
-    if (!any(sapply(DF[, all.vars(fmla_trafo), drop = F], is.factor)))
+    if (!any(sapply(DF[, all.vars(fmla_trafo), drop = FALSE], is.factor)))
       contr <- NULL
     model.matrix(fmla_trafo,
                  model.frame(fmla_trafo, DF, na.action = na.pass),
                  contrasts.arg = contr
-    )[match(unique(groups), groups), -1, drop = F]
+    )[match(unique(groups), groups), -1, drop = FALSE]
   }
   if (!is.null(Xtrafo)) {
     Xc[, as.character(trafos$Xc_var)] <- NA
@@ -117,26 +117,26 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
 
   # Xlong ----------------------------------------------------------------------
   Xlong <- if (sum(!names(tvar)[tvar] %in% colnames(Z)) > 0) {
-    X2[, which(tvar & !names(tvar) %in% colnames(Z)), drop = F]
+    X2[, which(tvar & !names(tvar) %in% colnames(Z)), drop = FALSE]
   }
 
   hc_list <- if (!is.null(random)) get_hc_list(X2, Xc, Xic, Z, Xlong)
 
 
   if (!is.null(Xlong)) {
-    linteract <- if (any(grepl(":", colnames(Xlong), fixed = T))) {
-      grep(":", colnames(Xlong), fixed = T, value = T)
+    linteract <- if (any(grepl(":", colnames(Xlong), fixed = TRUE))) {
+      grep(":", colnames(Xlong), fixed = TRUE, value = TRUE)
     }
 
     Xl <- if (any(!colnames(Xlong) %in% linteract)) {
-      Xlong[, !colnames(Xlong) %in% linteract, drop = F]
+      Xlong[, !colnames(Xlong) %in% linteract, drop = FALSE]
     }
 
     hc_interact <- unlist(sapply(hc_list, function(x) {
       names(which(attr(x, "matrix") == "Xc"))
     }))
     Xil <- if (!is.null(linteract) & any(!linteract %in% hc_interact)) {
-      Xlong[, linteract[!linteract %in% hc_interact], drop = F]
+      Xlong[, linteract[!linteract %in% hc_interact], drop = FALSE]
     }
 
     if (!is.null(Xil)) {
@@ -154,11 +154,11 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
 
   if (is.null(scale_vars)) {
     scale_vars <- find_continuous_main(fixed2, DF)
-    fcts <- extract_fcts(fixed2, DF, complete = T)
+    fcts <- extract_fcts(fixed2, DF, complete = TRUE)
     compl_fcts_vars <- fcts$Xc_var[fcts$type != "identity" &
-                                     colSums(is.na(DF[, fcts$var, drop = F])) == 0]
+                                     colSums(is.na(DF[, fcts$var, drop = FALSE])) == 0]
 
-    excl <- grep("[[:alpha:]]*\\(", scale_vars, value = T)
+    excl <- grep("[[:alpha:]]*\\(", scale_vars, value = TRUE)
     excl <- c(excl, unique(trafos$Xc_var))
     excl <- excl[!excl %in% compl_fcts_vars]
     scale_vars <- scale_vars[which(!scale_vars %in% excl)]

@@ -79,10 +79,10 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
       n.multi <- multi
       multi.names <- paste0("Xmulti", 1:n.multi)
     }
-    ncat.multi <- sample(3:5, n.multi, replace = T)
+    ncat.multi <- sample(3:5, n.multi, replace = TRUE)
     DF.multi <- sapply(1:n.multi,
                        function(i) factor(sample.int(ncat.multi[i],
-                                                     N, replace = T)))
+                                                     N, replace = TRUE)))
     colnames(DF.multi) <- multi.names
   }
 
@@ -97,10 +97,10 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
       n.ord <- ord
       ord.names <- paste0("Xord", 1:n.ord)
     }
-    ncat.ord <- sample(3:5, n.ord, replace = T)
+    ncat.ord <- sample(3:5, n.ord, replace = TRUE)
     DF.ord <- sapply(1:n.ord,
                      function(i) factor(sample.int(ncat.multi[i],
-                                                   N, replace = T)))
+                                                   N, replace = TRUE)))
     colnames(DF.ord) <- ord.names
   }
 
@@ -108,7 +108,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   covars <- names(DF)
 
   # observation times of outcome ---------------------------------------------------------
-  nrep <- sample(Jmin:Jmax, N, replace = T)
+  nrep <- sample(Jmin:Jmax, N, replace = TRUE)
   DF <- DF[rep(1:N, times = nrep), ]
 
   if (is.list(long)) {

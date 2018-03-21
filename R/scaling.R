@@ -50,7 +50,7 @@ get_scaling <- function(Mlist, scale_pars, meth, data) {
   scaled_dat <- sapply(Mlist[c("Xc", "Xl", "Z")], scale_matrix,
                        scale_vars = Mlist$scale_vars,
                        scale_pars = scale_pars,
-                       meth = meth, simplify = F)
+                       meth = meth, simplify = FALSE)
 
 
   scale_pars <- do.call(cbind, sapply(scaled_dat, "[[", 2))
@@ -63,6 +63,6 @@ get_scaling <- function(Mlist, scale_pars, meth, data) {
   scale_pars_new[c("scale", "center"), colnames(scale_pars)] <-
     scale_pars[c("scale", "center"), ]
 
-  return(list(scaled_matrices = sapply(scaled_dat, "[[", 1, simplify = F),
+  return(list(scaled_matrices = sapply(scaled_dat, "[[", 1, simplify = FALSE),
               scale_pars = scale_pars_new))
 }

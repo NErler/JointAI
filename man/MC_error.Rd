@@ -8,8 +8,8 @@
 MC_error(x, subset = "main", start = NULL, end = NULL, thin = NULL,
   digits = 2, ...)
 
-\method{plot}{MCElist}(x, scaled = T, plotpars = NULL, ablinepars = list(v
-  = 0.05), ...)
+\method{plot}{MCElist}(x, scaled = TRUE, plotpars = NULL,
+  ablinepars = list(v = 0.05), ...)
 }
 \arguments{
 \item{x}{object inheriting from class \code{JointAI}}

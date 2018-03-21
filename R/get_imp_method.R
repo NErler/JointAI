@@ -38,10 +38,10 @@ get_imp_meth <- function(fixed, random = NULL, data,
     )
   }
 
-  tvar <- sapply(data[, allvars, drop = F], check_tvar, idvar)
+  tvar <- sapply(data[, allvars, drop = FALSE], check_tvar, idvar)
 
   # find predictor variables with missing values
-  misvar <- names(data[, allvars, drop = F])[colSums(is.na(data[, allvars, drop = F])) > 0]
+  misvar <- names(data[, allvars, drop = FALSE])[colSums(is.na(data[, allvars, drop = FALSE])) > 0]
   # crossectional incomplete variables:
   misvar_c <- misvar[misvar %in% names(tvar)[!tvar]]
 
@@ -49,8 +49,8 @@ get_imp_meth <- function(fixed, random = NULL, data,
   misvar_l <- misvar[misvar %in% names(tvar)[tvar]]
 
   # sort by number of missing values
-  misvar <- c(misvar_c[order(colSums(is.na(data[, misvar_c, drop = F])))],
-              misvar_l[order(colSums(is.na(data[, misvar_l, drop = F])))]
+  misvar <- c(misvar_c[order(colSums(is.na(data[, misvar_c, drop = FALSE])))],
+              misvar_l[order(colSums(is.na(data[, misvar_l, drop = FALSE])))]
   )
 
 
@@ -58,14 +58,14 @@ get_imp_meth <- function(fixed, random = NULL, data,
   meth <- rep("", length(misvar))
   names(meth) <- misvar
 
-  nlevel <- sapply(sapply(data[, misvar, drop = F], levels, simplify = F), length)
+  nlevel <- sapply(sapply(data[, misvar, drop = FALSE], levels, simplify = FALSE), length)
 
   if (length(nlevel) > 0) {
     meth[nlevel == 0 & !tvar[names(nlevel)]] <- "norm"
     # meth[nlevel == 0 &  tvar[names(nlevel)]] <- "lmm"
     meth[nlevel == 2] <- "logit"
     meth[nlevel  > 2] <- "multilogit"
-    meth[sapply(data[, names(nlevel), drop = F], is.ordered)] <- "cumlogit"
+    meth[sapply(data[, names(nlevel), drop = FALSE], is.ordered)] <- "cumlogit"
   }
 
   if (length(meth) == 0)

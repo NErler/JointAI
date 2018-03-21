@@ -73,7 +73,7 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
   }
 
   if (!is.null(Mlist$auxvars)) {
-    l$beta <- setNames(rep(NA, max(K, na.rm = T)), get_coef_names(Mlist, K)[, 2])
+    l$beta <- setNames(rep(NA, max(K, na.rm = TRUE)), get_coef_names(Mlist, K)[, 2])
     nams <- sapply(Mlist$auxvars, function(x) {
       if (x %in% names(Mlist$refs)) {
         paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) !=

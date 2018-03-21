@@ -15,20 +15,20 @@ get_model_dim <- function(ncols, hc_list){
                               c("start", "end")))
 
   K["Xc", ] <- cumsum(c(1, ncols$Xc - 1))
-  if (!is.null(ncols$Xic)) K["Xic", ] <- c(1, ncols$Xic) + max(K, na.rm = T)
+  if (!is.null(ncols$Xic)) K["Xic", ] <- c(1, ncols$Xic) + max(K, na.rm = TRUE)
   if (!is.null(hc_list)) {
     for (i in 1:length(hc_list)) {
     K[names(hc_list)[i], ] <-
       if (length(hc_list[[i]]) > 0) {
-        c(1, max(1, sum(attr(hc_list[[i]], "matrix") %in% c("Xc", "Z"), na.rm = T))) +
-          max(K, na.rm = T)
+        c(1, max(1, sum(attr(hc_list[[i]], "matrix") %in% c("Xc", "Z"), na.rm = TRUE))) +
+          max(K, na.rm = TRUE)
       } else {
         c(NA, NA)
       }
     }
   }
-  if (!is.null(ncols$Xl)) K["Xl", ] <- c(1, ncols$Xl) + max(K, na.rm = T)
-  if (!is.null(ncols$Xil)) K["Xil", ] <- c(1, ncols$Xil) + max(K, na.rm = T)
+  if (!is.null(ncols$Xl)) K["Xl", ] <- c(1, ncols$Xl) + max(K, na.rm = TRUE)
+  if (!is.null(ncols$Xil)) K["Xil", ] <- c(1, ncols$Xil) + max(K, na.rm = TRUE)
   return(K)
 }
 
@@ -62,8 +62,8 @@ get_imp_pos <- function(meth, Mlist){
       x
     }
     setNames(match(nams, colnames(Xc)), nams)
-  }, simplify = F)
-  # pos_Xc <- sapply(names(meth), match_positions, DF, colnames(Xc), simplify = F)
+  }, simplify = FALSE)
+  # pos_Xc <- sapply(names(meth), match_positions, DF, colnames(Xc), simplify = FALSE)
 
   # positions of the interaction variables in the cross-sectional matrix Xic
   if (!is.null(Xic)) {

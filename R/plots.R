@@ -110,8 +110,8 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       vlines$v
     }
     plot(NULL,
-         xlim = range(lapply(dens, "[[", "x"), vline_range, na.rm = T),
-         ylim = range(lapply(dens, "[[", "y"), na.rm = T),
+         xlim = range(lapply(dens, "[[", "x"), vline_range, na.rm = TRUE),
+         ylim = range(lapply(dens, "[[", "y"), na.rm = TRUE),
          main = colnames(prep$MCMC[[1]])[i],
          xlab = "", ylab = "density", ...
     )

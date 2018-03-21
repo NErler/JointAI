@@ -4,7 +4,7 @@ extract_id <- function(random) {
                      deparse(random, width.cutoff = 500))
   if (idmatch > 0) {
     id <- unlist(regmatches(deparse(random, width.cutoff = 500),
-                            idmatch, invert = T))
+                            idmatch, invert = TRUE))
     id <- id[id != ""]
   } else {
     id <- NULL
@@ -12,7 +12,7 @@ extract_id <- function(random) {
 
   if (is.null(id) & !is.null(random))
     warning('No "id" variable could be identified. I will assume that all observations are independent.',
-            call. = F, immediate. = T)
+            call. = FALSE, immediate. = TRUE)
   return(id)
 }
 
@@ -53,7 +53,7 @@ remove_grouping <- function(fmla){
 #' @return a logical value
 check_tvar <- function(x, idvar) {
   !all(sapply(split(x, idvar),
-              function(z) all(z == z[1], na.rm = T)
+              function(z) all(z == z[1], na.rm = TRUE)
   )
   )
 }
@@ -90,20 +90,20 @@ match_positions <- function(varname, DF, colnams) {
 
 
 prep_name <- function(nam) {
-  glob2rx(gsub("^", "\\^", nam, fixed = T))
+  glob2rx(gsub("^", "\\^", nam, fixed = TRUE))
 }
 
 # Generate pattern (used in get_hc_list)
 gen_pat <- function(nam) {
-  nam <- gsub("^", "\\^", nam, fixed = T)
+  nam <- gsub("^", "\\^", nam, fixed = TRUE)
   glob2rx(c(nam,
             paste0("*:", nam),
-            paste0(nam, ":*")), trim.head = T)
+            paste0(nam, ":*")), trim.head = TRUE)
 }
 
 # Find names in a vector of names (used in get_hc_list)
 grep_names <- function(nams1, nams2){
-  res <- unique(unlist(sapply(nams1, grep, nams2, value = T, simplify = F)))
+  res <- unique(unlist(sapply(nams1, grep, nams2, value = TRUE, simplify = FALSE)))
   if (length(res) > 0) res
 }
 
@@ -126,7 +126,7 @@ grep_names <- function(nams1, nams2){
 #
 get_hc_list <- function(X2, Xc, Xic, Z, Xlong) {
   hc_vars <- hc_list <- if (ncol(Z) > 1) {
-    lapply(sapply(colnames(Z)[-1], gen_pat, simplify = F),
+    lapply(sapply(colnames(Z)[-1], gen_pat, simplify = FALSE),
            grep_names, colnames(X2))
   }
   for (i in 1:length(hc_vars)) {
@@ -190,7 +190,7 @@ find_continuous <- function(fixed, DF, contr = NULL) {
     )
   )
 
-  colnames(model.matrix(fixed_c, DF, contrasts.arg = contr)[, -1L , drop = F])
+  colnames(model.matrix(fixed_c, DF, contrasts.arg = contr)[, -1L , drop = FALSE])
 }
 
 
@@ -218,7 +218,7 @@ split_interaction <- function(x) {
 
 
 # Extract functions from formula
-extract_fcts <- function(fixed, DF, complete = F) {
+extract_fcts <- function(fixed, DF, complete = FALSE) {
   log_pat <- "log\\([[:print:]]+\\)"
   I_pat <- "I\\([[:print:]]+\\)"
   exp_pat <- "exp\\([[:print:]]+\\)"
@@ -304,19 +304,19 @@ extract_fcts <- function(fixed, DF, complete = F) {
                       type = x)
               }
             })
-    ), stringsAsFactors = F)
+    ), stringsAsFactors = FALSE)
 
 
   if (any(!var_fcts$var %in% names(DF)))
     stop(gettextf("Variable %s is unknown.",
                   dQuote(var_fcts$var[!var_fcts$var %in% names(DF)])))
 
-  if (complete == F & nrow(var_fcts) > 0) {
-    compl <- colSums(is.na(DF[, var_fcts$var, drop = F])) == 0
+  if (complete == FALSE & nrow(var_fcts) > 0) {
+    compl <- colSums(is.na(DF[, var_fcts$var, drop = FALSE])) == 0
     partners <- sapply(var_fcts$Xc_var,
-                       function(x) which(var_fcts$Xc_var %in% x), simplify = F)
+                       function(x) which(var_fcts$Xc_var %in% x), simplify = FALSE)
     anymis <- sapply(partners, function(x) any(!compl[x]))
-    var_fcts <- var_fcts[anymis, , drop = F]
+    var_fcts <- var_fcts[anymis, , drop = FALSE]
   }
 
   if (any(unique(var_fcts$var) %in% elmts)) {

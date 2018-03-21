@@ -73,13 +73,13 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
       a[which(!is.na(Xc_pos[[x]]))] <- "Xc"
       a[which(!is.na(Xl_pos[[x]]))] <- "Xl"
       a
-    }, simplify = F)
+    }, simplify = FALSE)
     mat1_col <- sapply(names(splitnam), function(x) {
       a <- vector("numeric", length(splitnam[[x]]))
       a[which(!is.na(Xc_pos[[x]]))] <- Xc_pos[[x]][which(!is.na(Xc_pos[[x]]))]
       a[which(!is.na(Xl_pos[[x]]))] <- Xl_pos[[x]][which(!is.na(Xl_pos[[x]]))]
       a
-    }, simplify = F)
+    }, simplify = FALSE)
 
     paste0(
       tab(), "# ---------------------------------------------- #", "\n",

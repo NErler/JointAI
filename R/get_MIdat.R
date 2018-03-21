@@ -8,9 +8,9 @@
 #' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
 #' @param seed optional seed
 #' @param resdir optional directory for results (if unspecified and
-#'               \code{export_to_SPSS = T} the current working directory is used)
+#'               \code{export_to_SPSS = TRUE} the current working directory is used)
 #' @param filename optional file name (without ending; if unspecified and
-#'                 \code{export_to_SPSS = T} a name is generated automatically)
+#'                 \code{export_to_SPSS = TRUE} a name is generated automatically)
 #' @param export_to_SPSS logical
 #'
 #' @return A dataframe containing the imputed values (and original data) stacked.
@@ -23,7 +23,7 @@
 #' @export
 #'
 get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
-                      filename = NULL, export_to_SPSS = F){
+                      filename = NULL, export_to_SPSS = FALSE){
 
   if (is.null(object$meth))
     stop("This JointAI object did not impute any values.")
@@ -62,7 +62,7 @@ get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
   imp.iters <- sort(sample.int(nrow(MCMC), size = m))
 
   # reduce MCMC to relevant rows
-  MCMC <- MCMC[imp.iters, , drop = F]
+  MCMC <- MCMC[imp.iters, , drop = FALSE]
 
   DF_list <- list()
   for (i in 1:(m + 1)) {
@@ -77,7 +77,7 @@ get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
                     match(names(meth)[i], colnames(object$data_list$Xc)),
                     "\\]")
 
-      impval <- MCMC[, grep(pat, colnames(MCMC), value = T)]
+      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE)]
       impval <- impval * object$scale_pars["scale", names(meth)[i]]  +
         object$scale_pars["center", names(meth)[i]]
 
@@ -94,7 +94,7 @@ get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
                     match(attr(object$Mlist$refs[[names(meth)[i]]], "dummies"),
                           colnames(object$data_list$Xc)),
                     "\\]")
-      impval <- MCMC[, grep(pat, colnames(MCMC), value = T), drop = F]
+      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
 
       if (length(impval) > 0) {
         for (j in (1:m) + 1) {
@@ -112,7 +112,7 @@ get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
       pat <- paste0("Xcat\\[[[:digit:]]*,",
                     match(names(meth)[i], colnames(object$data_list$Xcat)),
                     "\\]")
-      impval <- MCMC[, grep(pat, colnames(MCMC), value = T)]
+      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE)]
 
       if (length(impval) > 0) {
         for (j in (1:m) + 1) {
@@ -149,7 +149,7 @@ get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
   if (is.null(filename))
     filename <- paste0("JointAI-imputation_", Sys.Date())
 
-  if (export_to_SPSS == T) {
+  if (export_to_SPSS == TRUE) {
     write_SPSS(impDF,
                file.path(resdir, paste0(filename, ".txt")),
                file.path(resdir, paste0(filename, ".sps"))
