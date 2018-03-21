@@ -57,7 +57,7 @@ get_scaling <- function(Mlist, scale_pars, meth, data) {
 
   # remove identical duplicate columns
   dupl <- lapply(unique(colnames(scale_pars)), function(x) {
-    t(unique(t(scale_pars[, which(colnames(scale_pars) == x), drop = F])))
+    t(unique(t(scale_pars[, which(colnames(scale_pars) == x), drop = FALSE])))
   })
 
   if (any(sapply(dupl, ncol) > 1)) {
