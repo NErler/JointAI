@@ -1,6 +1,8 @@
 #' Missing data pattern
+#'
 #' Plot the pattern of missing data. The missing data pattern is determined
-#' using the function \code{link[mice]{md.pattern}} from the \code{mice} package.
+#' using the function \code{\link[mice]{md.pattern}} from the
+#' \href{https://CRAN.R-project.org/package=mice}{\code{mice}} package.
 #' @param data data frame
 #' @param plot logical; should the missing data pattern be plotted?
 #' @param xlab label for the x-axis
@@ -14,6 +16,7 @@
 #'
 #' @examples
 #' md_pattern(wideDF)
+#'
 #' par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
 #' md_pattern(longDF, yaxis_pars = list(cex.axis = 0.8))
 #'
