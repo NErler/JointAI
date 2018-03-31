@@ -26,7 +26,7 @@ md_pattern <- function(data, plot = TRUE, xlab = "", ylab = "",
   if (!"mice" %in% rownames(installed.packages()))
     stop("This function requires the 'mice' package to be installed.")
 
-  MDP <- mice::md.pattern(data)
+  MDP <- mice::md.pattern(data, plot = F)
   M <- t(MDP[-nrow(MDP), -ncol(MDP)])
 
   if (plot == TRUE) {
@@ -60,7 +60,7 @@ md_pattern <- function(data, plot = TRUE, xlab = "", ylab = "",
     abline(v = c(0:nrow(M)) + 0.5, col = grDevices::grey(0.5))
     abline(h = c(0:ncol(M)) + 0.5, col = grDevices::grey(0.5))
     p <- grDevices::recordPlot()
-    print(p)
+    # print(p)
   }
   if (print)
     return(MDP)
