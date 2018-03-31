@@ -68,13 +68,12 @@ and random effects covariance matrix).}
 (determined automatically if not specified)}
 }
 \description{
-Creates a set of traceplots from the MCMC sample of a JointAI object
+Creates a set of traceplots from the MCMC sample of an object of class JointAI
 }
 \examples{
-\dontrun{
-mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-traceplot(mod1)
-}
+mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+traceplot(mod)
+
 }
 \seealso{
 \code{\link{summary.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},

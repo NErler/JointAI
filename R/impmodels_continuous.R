@@ -8,26 +8,28 @@
 impmodel_normal <- function(varname, dest_col, dest_mat, trafo_cols, trafos, trfo_fct, Xc_cols, par_elmts, par_name, ...){
 
   if (length(Xc_cols) != length(par_elmts)) {
-    stop("The size of the design matrix and length of parameter vector don't match!")
+    stop("The size of the design matrix and length of parameter vector do not match!")
   }
 
   indent <- nchar(varname) + 12
   predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
 
-  trfs <- if(dest_mat != "Xc") {
+  trfs <- if (dest_mat != "Xc") {
     paste_trafos(dest_col, trafo_cols, trafos = trfo_fct)
   }
 
-  trunc <- if(varname %in% trafos$var &
+  trunc <- if (varname %in% trafos$var &
               any(!trafos$type[trafos$var == varname] %in% c("I", "identity", "exp"))) {
     "T(1e-10, 1e10)"
   }
-  if(!is.null(trunc))
-    message(paste0("Note: The imputation model for ", varname,
-                   " will be restricted to be larger than 0 to prevent problems",
-                   " in calculating ",
-                   trafos$Xc_var[trafos$var == varname & trafos$type %in% c("log", "sqrt")],
-                   "."))
+  if (!is.null(trunc))
+    message(gettextf("Note: The imputation model for %s", dQuote(varname)),
+            " will be restricted to be larger than 0 to prevent problems ",
+            gettextf("in calculating %s.",
+                     dQuote(trafos$Xc_var[trafos$var == varname &
+                                            trafos$type %in% c("log", "sqrt")]))
+    )
+
 
   paste0(tab(), "# normal model for ", varname, "\n",
          tab(), dest_mat, "[i, ", dest_col, "] ~ dnorm(mu_", varname,
@@ -61,7 +63,7 @@ impprior_normal <- function(varname, par_elmts, par_name, ...){
 impmodel_lognorm <- function(varname, dest_col, dest_mat, Xc_cols, par_elmts, par_name, ...){
 
   if (length(Xc_cols) != length(par_elmts)) {
-    stop("The size of the design matrix and length of parameter vector don't match!")
+    stop("The size of the design matrix and length of parameter vector do not match!")
   }
 
   indent <- nchar(varname) + 12

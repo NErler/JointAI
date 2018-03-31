@@ -10,10 +10,10 @@
 #' \emph{Statistica Sinica}, 733-760.
 #'
 #' @examples
-#' \dontrun{
+#'
 #' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #' GR_crit(mod1)
-#' }
+#'
 #'
 #' @export
 GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = TRUE,
@@ -87,14 +87,13 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #'
 #' @references
 #' Lesaffre, E., & Lawson, A. B. (2012).
-#' \emph{Bayesian biostatistics}.
+#' \emph{Bayesian Biostatistics}.
 #' John Wiley & Sons.
 #'
 #' @examples
-#' \dontrun{
-#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-#' MC_error(mod1)
-#' }
+#' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' MC_error(mod)
+#'
 #'
 #' @export
 MC_error <- function(x, subset = "main", start = NULL, end = NULL, thin = NULL,
@@ -105,6 +104,9 @@ MC_error <- function(x, subset = "main", start = NULL, end = NULL, thin = NULL,
 
   if (is.null(x$sample))
     stop("No mcmc sample.")
+
+  if (!"mcmcse" %in% installed.packages()[, "Package"])
+    stop("The package 'mcmcse' needs to be installed for 'MC_error' to work.")
 
   if (is.null(start))
     start <- start(x$sample)
@@ -167,7 +169,7 @@ print.MCElist <- function(x, ...) {
 #' @describeIn MC_error plot Monte Carlo error
 #' @export
 
-plot.MCElist <- function(x, scaled = T, plotpars = NULL,
+plot.MCElist <- function(x, scaled = TRUE, plotpars = NULL,
                          ablinepars = list(v = 0.05), ...) {
 
   theaxis <- NULL
@@ -195,8 +197,4 @@ plot.MCElist <- function(x, scaled = T, plotpars = NULL,
   eval(theaxis)
   do.call(abline, ablinepars)
 
-  # plot(x$scaled[, 4], nrow(x$scaled):1, xlab = "MCE/SD", ylab = "",
-  #      yaxt = "n", ...)
-  # axis(side = 2, at = nrow(x$scaled):1, labels = names, las = 2, cex.axis = 0.8)
-  # abline(v = abline, ...)
 }

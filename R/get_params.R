@@ -23,9 +23,9 @@
 # @export
 get_params <- function(meth, analysis_type, family,
                        Xc, Xcat, y_name = NULL, Zcols = NULL,
-                       analysis_main = F,
-                       analysis_random = F,
-                       imp_pars = F,
+                       analysis_main = FALSE,
+                       analysis_random = FALSE,
+                       imp_pars = FALSE,
                        imps = NULL,
                        betas = NULL, tau_y = NULL, sigma_y = NULL,
                        ranef = NULL, invD = NULL, D = NULL, RinvD = NULL,
@@ -95,9 +95,9 @@ get_params <- function(meth, analysis_type, family,
   }
 
   if (imps) {
-    Xc_NA <- if (any(is.na(Xc))) which(is.na(Xc), arr.ind = T)
+    Xc_NA <- if (any(is.na(Xc))) which(is.na(Xc), arr.ind = TRUE)
     Xc_NA <- Xc_NA[Xc_NA[, 2] %in% which(colSums(!is.na(Xc)) > 0), ]
-    Xcat_NA <- if (any(is.na(Xcat))) which(is.na(Xcat), arr.ind = T)
+    Xcat_NA <- if (any(is.na(Xcat))) which(is.na(Xcat), arr.ind = TRUE)
 
     params <- c(params,
                 if (!is.null(Xc_NA))

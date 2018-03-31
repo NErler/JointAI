@@ -2,12 +2,10 @@
 % Please edit documentation in R/md_pattern.R
 \name{md_pattern}
 \alias{md_pattern}
-\title{Missing data pattern
-Plot the pattern of missing data. The missing data pattern is determined
-using the function \code{link[mice]{md.pattern}} from the \code{mice} package.}
+\title{Missing data pattern}
 \usage{
-md_pattern(data, plot = T, xlab = "", ylab = "", xaxis_pars = list(),
-  yaxis_pars = list(), printN = T, print = T, ...)
+md_pattern(data, plot = TRUE, xlab = "", ylab = "", xaxis_pars = list(),
+  yaxis_pars = list(), printN = TRUE, print = TRUE, ...)
 }
 \arguments{
 \item{data}{data frame}
@@ -29,12 +27,13 @@ md_pattern(data, plot = T, xlab = "", ylab = "", xaxis_pars = list(),
 \item{...}{optional additional parameters passed to \code{\link[graphics]{image}()}}
 }
 \description{
-Missing data pattern
 Plot the pattern of missing data. The missing data pattern is determined
-using the function \code{link[mice]{md.pattern}} from the \code{mice} package.
+using the function \code{\link[mice]{md.pattern}} from the
+\href{https://CRAN.R-project.org/package=mice}{\code{mice}} package.
 }
 \examples{
 md_pattern(wideDF)
+
 par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
 md_pattern(longDF, yaxis_pars = list(cex.axis = 0.8))
 

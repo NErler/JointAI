@@ -1,4 +1,4 @@
-#' Summary of an JointAI object
+#' Summary of an object of class JointAI
 #' @param object object inheriting from class \code{JointAI}
 #' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
 #' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
@@ -17,12 +17,9 @@
 #' @param ... currently not used
 #'
 #' @examples
-#' \dontrun{
-#'
 #' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #' summary(mod1)
 #'
-#' }
 #'
 #' @seealso The model fitting functions \code{\link{lm_imp}},
 #'          \code{\link{glm_imp}}, \code{\link{lme_imp}}
@@ -51,47 +48,24 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     thin <- thin(object$sample)
 
   MCMC <- do.call(rbind,
-                  window(object$sample,
+                  window(object$MCMC,
                          start = start,
                          end = end,
                          thin = thin))
 
-  # hc_list <- object$Mlist$hc_list
-
-  coefs <- get_coef_names(object$Mlist, object$K)
-
-  colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
-
-  scale_pars <- object$scale_pars
-  if (!is.null(scale_pars)) {
-    # re-scale parameters
-    MCMC <- sapply(colnames(MCMC), rescale, object$Mlist$fixed2, scale_pars,
-                   MCMC, object$Mlist$refs, object$Mlist$X2_names)
-  }
-
-  #   scale_pars <- cbind(scale_pars,
-  #                       sapply(colnames(MCMC)[!colnames(MCMC) %in%
-  #                                               colnames(scale_pars)],
-  #                              function(x) scale_pars[, x] <- c(0,1)
-  #                       )
-  #   )
+  # coefs <- get_coef_names(object$Mlist, object$K)
+  #
+  # colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
+  #
+  # scale_pars <- object$scale_pars
+  # if (!is.null(scale_pars)) {
+  #   # re-scale parameters
+  #   MCMC <- sapply(colnames(MCMC), rescale, object$Mlist$fixed2, scale_pars,
+  #                  MCMC, object$Mlist$refs, object$Mlist$X2_names)
+  # }
 
   if (!is.null(subset)) {
     MCMC <- get_subset(subset, MCMC, object)
-    # if (any(subset == "main")) {
-    #   subset <- coefs[, 2]
-    #   if (object$analysis_type == "lm" |
-    #       (object$analysis_type == "glm" &
-    #        attr(object$analysis_type, "family") %in% c("Gamma", "gaussian"))) {
-    #     subset <- c(subset, paste0("sigma_", names(object$Mlist$y)))
-    #   }
-    #   if (object$analysis_type == "lme") {
-    #     subset <- c(subset,
-    #                 paste0("sigma_", names(object$Mlist$y)),
-    #                 grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", colnames(MCMC), value = T))
-    #   }
-    # }
-    # MCMC <- MCMC[, subset]
   }
 
 
@@ -115,9 +89,9 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$nchain <- nchain(object$sample)
 
   out$ranefvar <- if (object$analysis_type == "lme")
-    stats[grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", rownames(stats), value = T), -5, drop = F]
+    stats[grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", rownames(stats), value = TRUE), -5, drop = FALSE]
   out$sigma <- if (attr(object$analysis_type, "family") == "gaussian")
-    stats[grep(paste0("sigma_", names(object$Mlist$y)), rownames(stats), value = T), -5, drop = F]
+    stats[grep(paste0("sigma_", names(object$Mlist$y)), rownames(stats), value = TRUE), -5, drop = FALSE]
   out$stats <- stats[!rownames(stats) %in% c(rownames(out$ranefvar), rownames(out$sigma)), ]
 
   out$analysis_type <- object$analysis_type

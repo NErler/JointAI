@@ -13,10 +13,9 @@
 #' @seealso \code{\link{predict.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
 #'           \code{\link{lm_imp}}
 #' @examples
-#' \dontrun{
-#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-#' newDF <- predDF(mod1)
-#' }
+#' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' newDF <- predDF(mod, var = "C2")
+#'
 #' @export
 
 predDF <- function(...) {
@@ -26,13 +25,14 @@ predDF <- function(...) {
 
 #' @rdname predDF
 #' @export
-predDF.default <- function(formula, dat, var, ...) {
+predDF.formula <- function(formula, dat, var, ...) {
+
   allvars <- all.vars(formula)
 
   vals <- sapply(allvars, function(k) {
     if (k == var) {
-      seq(min(dat[, k], na.rm = T),
-          max(dat[, k], na.rm = T), length = 100)
+      seq(min(dat[, k], na.rm = TRUE),
+          max(dat[, k], na.rm = TRUE), length = 100)
     } else {
       if (is.factor(dat[, k])) {
         factor(levels(dat[, k])[1], levels = levels(dat[, k]))
@@ -40,29 +40,31 @@ predDF.default <- function(formula, dat, var, ...) {
         factor(levels(as.factor(dat[, k]))[1],
                levels = levels(as.factor(dat[, k])))
       } else if (is.numeric(dat[, k])) {
-        median(dat[, k], na.rm = T)
+        median(dat[, k], na.rm = TRUE)
       }
     }
   })
   expand.grid(vals)
 }
 
+
 #' @rdname predDF
 #' @export
 predDF.JointAI <- function(object, var, ...) {
+
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
-  predDF(object$fixed, dat = object$data, var = var, ...)
+  predDF(formula = object$fixed, dat = object$data, var = var, ...)
 }
 
 
 
 
-#' Predict values from a JointAI object
+#' Predict values from an object of class JointAI
 #'
 #' Calculates the expected outcome value for a given set of covariate values
-#' and a \code{JontAI} object, and corresponding 2.5\% and 97.5\% (or other
+#' and an object of class JointAI, and corresponding 2.5\% and 97.5\% (or other
 #' quantiles) credible intervals.
 #' @inheritParams summary.JointAI
 #' @param newdata new dataset for prediction
@@ -83,11 +85,20 @@ predDF.JointAI <- function(object, var, ...) {
 #'           \code{\link{lm_imp}}
 #'
 #' @examples
-#' \dontrun{
-#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-#' newDF <- predDF(mod1, var = "C1")
-#' predict(mod1, newdata = newDF)
-#' }
+#' # fit model
+#' mod <- lm_imp(y ~ C1 + C2 + I(C2^2), data = wideDF, n.iter = 100)
+#'
+#' # create dataset for prediction
+#' newDF <- predDF(mod, var = "C2")
+#'
+#' # obtain predicted values
+#' pred <- predict(mod, newdata = newDF)
+#'
+#' # plot predicted values and 95% confidence band
+#' plot(newDF$C2, pred$fit, type = "l", ylim = range(pred$quantiles),
+#'      xlab = "C2", ylab = "predicted values")
+#' matplot(newDF$C2, t(pred$quantiles), lty = 2, add = TRUE, type = "l", col = 1)
+#'
 
 #' @export
 predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
@@ -110,16 +121,18 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
   if (is.null(thin))
     thin <- thin(object$sample)
 
-  MCMC <- window(object$MCMC,
-                 start = start,
-                 end = end,
-                 thin = thin)
+  MCMC <- do.call(rbind,
+                  window(object$MCMC,
+                         start = start,
+                         end = end,
+                         thin = thin)
+  )
 
 
   mf <- model.frame(object$fixed, object$data)
   mt <- attr(mf, "terms")
 
-  oldop <- getOption(contrasts)
+  oldop <- getOption("contrasts")
   options(contrasts = rep("contr.treatment", 2))
   X <- model.matrix(mt, data = newdata)
   options(contrasts = oldop)

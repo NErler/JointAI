@@ -2,7 +2,7 @@
 % Please edit documentation in R/predict.R
 \name{predict.JointAI}
 \alias{predict.JointAI}
-\title{Predict values from a JointAI object}
+\title{Predict values from an object of class JointAI}
 \usage{
 \method{predict}{JointAI}(object, newdata, quantiles = c(0.025, 0.975),
   start = NULL, end = NULL, thin = NULL, ...)
@@ -30,7 +30,7 @@ A list with entries "fit" and "quantiles", where
 }
 \description{
 Calculates the expected outcome value for a given set of covariate values
-and a \code{JontAI} object, and corresponding 2.5\% and 97.5\% (or other
+and an object of class JointAI, and corresponding 2.5\% and 97.5\% (or other
 quantiles) credible intervals.
 }
 \details{
@@ -42,11 +42,20 @@ A \code{model.matrix} $X$ is created from the model formula (fixed
          \code{end} and  \code{thin}.
 }
 \examples{
-\dontrun{
-mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-newDF <- predDF(mod1, var = "C1")
-predict(mod1, newdata = newDF)
-}
+# fit model
+mod <- lm_imp(y ~ C1 + C2 + I(C2^2), data = wideDF, n.iter = 100)
+
+# create dataset for prediction
+newDF <- predDF(mod, var = "C2")
+
+# obtain predicted values
+pred <- predict(mod, newdata = newDF)
+
+# plot predicted values and 95\% confidence band
+plot(newDF$C2, pred$fit, type = "l", ylim = range(pred$quantiles),
+     xlab = "C2", ylab = "predicted values")
+matplot(newDF$C2, t(pred$quantiles), lty = 2, add = TRUE, type = "l", col = 1)
+
 }
 \seealso{
 \code{\link{predDF.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},

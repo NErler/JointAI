@@ -8,7 +8,7 @@
 impmodel_logit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, ...){
 
   if (length(Xc_cols) != length(par_elmts)) {
-    stop("The size of the design matrix and length of parameter vector don't match!")
+    stop("The size of the design matrix and length of parameter vector do not match!")
   }
 
   indent <- nchar(varname) + 18

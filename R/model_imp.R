@@ -105,7 +105,7 @@
 #' of the key words summarizing a number of parameters. Except for \code{other},
 #' in which parameter names are specified directly, parameter (groups) are just
 #' set as \code{TRUE} or \code{FALSE}.
-#' If left unspecified, \code{monitor_params = c("analysis_main" = T)} will be used.
+#' If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)} will be used.
 #' \tabular{ll}{
 #' \strong{name/key word} \tab \strong{what is monitored}\cr
 #' \code{analysis_main} \tab \code{betas}, \code{tau_y} and \code{sigma_y}\cr
@@ -127,12 +127,12 @@
 #' }
 #' For example:
 #'
-#' \code{monitor_params = c("analysis_main" = T, "tau_y" = F)}
+#' \code{monitor_params = c("analysis_main" = TRUE, "tau_y" = FALSE)}
 #' would monitor the regression parameters \code{betas} and residual standard
 #' deviation \code{sigma_y}, but not the residual precision.
 #'
-#' \code{monitor_params = c(imps = T)} would monitor \code{betas}, \code{tau_y},
-#' and \code{sigma_y} (because \code{analysis_main = T} by default) as well as
+#' \code{monitor_params = c(imps = TRUE)} would monitor \code{betas}, \code{tau_y},
+#' and \code{sigma_y} (because \code{analysis_main = TRUE} by default) as well as
 #' the imputed values.
 #'}
 #'
@@ -147,24 +147,23 @@
 #'          \code{\link[rjags]{coda.samples}}, \code{predict.JointAI}
 #'
 #' @examples
-#' \dontrun{
 #'
 #' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #' mod2 <- glm_imp(B1 ~ C1 + C2 + M2, data = wideDF,
 #'                 family = binomial(link = "logit"), n.iter = 100)
 #' mod3 <- lme_imp(y ~ C1 + B2 + L1 + time, random = ~ time|id,
 #'                 data = longDF, n.iter = 500)
-#' }
+#'
 #'
 #' @name model_imp
 NULL
 
 model_imp <- function(fixed, data, random = NULL, link, family,
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                      monitor_params = NULL, inits = T,
+                      monitor_params = NULL, inits = TRUE,
                       modelname = NULL, modeldir = NULL,
-                      overwrite = F, keep_model = F,
-                      quiet = T, progress.bar = "text", warn = F,
+                      overwrite = FALSE, keep_model = FALSE,
+                      quiet = TRUE, progress.bar = "text", warn = FALSE,
                       auxvars = NULL, meth = NULL, refcats = NULL,
                       scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                       MCMCpackage = "JAGS", analysis_type,
@@ -176,20 +175,19 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     message("This is new software. Please report any bug to the package maintainer.")
 
   if (missing(fixed)) {
-    stop("\nNo fixed effects structure specified.")
+    stop("No fixed effects structure specified.")
   }
 
   if (analysis_type != "lme" & !is.null(random)) {
     if (warn)
-      warning(paste0("Random effects structure not used in a model of type `",
-                     analysis_type, "'."), immediate. = T, call. = F)
+      warning(gettextf("Random effects structure not used in a model of type %s.",
+                       sQuote(analysis_type)), immediate. = TRUE, call. = FALSE)
     random <- NULL
   }
 
   if (n.iter == 0) {
     if (warn)
-      message(paste0("Note: No MCMC sample will be created when n.iter is set to ",
-                     n.iter, "."))
+      message("Note: No MCMC sample will be created when n.iter is set to 0.")
   }
 
   # set contrasts to dummies
@@ -200,7 +198,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   # generate default name for model file if not specified
   if (is.null(modeldir)) modeldir <- tempdir()
   if (is.null(modelname)) {
-    modelname <- paste0("FitAI_JAGSmodel_",
+    modelname <- paste0("JointAI_JAGSmodel_",
                         format(Sys.time(), "%Y-%m-%d"),
                         "_", sample.int(1e6, 1), ".R")
   } else {
@@ -212,7 +210,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   if (!(is.null(inits) | inherits(inits, c("logical", "function", "list")))) {
     warning("The object supplied to 'inits' could not be recognized.
             Default function to create initial values is used.")
-    inits <- T
+    inits <- TRUE
   }
 
 
@@ -244,18 +242,18 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   if (is.null(dest_cols)) {
     dest_cols <- sapply(names(meth), get_dest_column, Mlist$refs,
                         colnames(Mlist$Xc), colnames(Mlist$Xcat),
-                        colnames(Mlist$Xtrafo), Mlist$trafos, simplify = F)
+                        colnames(Mlist$Xtrafo), Mlist$trafos, simplify = FALSE)
   }
 
   if (is.null(imp_par_list)) {
     imp_par_list <- mapply(get_imp_par_list, meth, names(meth),
                            MoreArgs = list(Mlist$Xc, Mlist$Xcat, K_imp, dest_cols,
                                            Mlist$refs, Mlist$trafos),
-                           SIMPLIFY = F)
+                           SIMPLIFY = FALSE)
   }
 
   # write model ----------------------------------------------------------------
-  if (!file.exists(modelfile) | (file.exists(modelfile) & overwrite == T)) {
+  if (!file.exists(modelfile) | (file.exists(modelfile) & overwrite == TRUE)) {
     write_model(analysis_type = analysis_type, family = family,
                 link = link, meth = meth, Ntot = nrow(Mlist$y),
                 N = nrow(Mlist$Xc),
@@ -264,10 +262,10 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                 file = modelfile)
   } else {
     if (warn)
-      warning(expr = paste0("\nThe file '", modelfile, "' already exists and no new model was written.",
-                            "\n",
-                            "To overwrite the model set 'overwrite = T'."),
-              call. = F, immediate. = T)
+    warning(gettextf("\nThe file %s already exists and no new model was written.",
+                     dQuote(modelfile)),
+            "\nTo overwrite the model set 'overwrite = TRUE'.",
+            call. = FALSE, immediate. = TRUE)
   }
 
 
@@ -276,6 +274,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                                  scale_pars = scale_pars, hyperpars = hyperpars,
                                  data = data))
     scale_pars <- data_list$scale_pars
+    hyperpars <- data_list$hyperpars
     data_list <- data_list$data_list
   }
 
@@ -283,7 +282,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     inits <- if (inits)
       replicate(n.chains,
                 get_inits.default(meth = meth, Mlist = Mlist, K = K, K_imp = K_imp,
-                       analysis_type = analysis_type, family = family), simplify = F
+                       analysis_type = analysis_type, family = family), simplify = FALSE
       )
   }
 
@@ -296,7 +295,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                                    n.chains = n.chains, n.adapt = n.adapt))
   }
   if (is.null(monitor_params)) {
-    monitor_params <- c("analysis_main" = T)
+    monitor_params <- c("analysis_main" = TRUE)
   }
   var.names <- do.call(get_params, c(list(meth = meth, analysis_type = analysis_type,
                                           family = family,
@@ -308,24 +307,28 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   mcmc <- if (n.iter > 0) {
     try(rjags::coda.samples(adapt, n.iter = n.iter, thin = thin,
                             variable.names = var.names,
-                            na.rm = F, progress.bar = progress.bar))
+                            na.rm = FALSE, progress.bar = progress.bar))
   }
   t1 <- Sys.time()
 
 
   if (n.iter > 0) {
-    MCMC <- do.call(rbind, mcmc)
-
+    # MCMC <- do.call(rbind, mcmc)
     coefs <- get_coef_names(Mlist, K)
 
-    colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
 
-    if (!is.null(scale_pars)) {
-      # re-scale parameters
-      MCMC <- sapply(colnames(MCMC), rescale, Mlist$fixed2, scale_pars,
-                     MCMC, Mlist$refs, Mlist$X2_names)
+    MCMC <- mcmc
+    for (k in 1:length(MCMC)) {
+      colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <- coefs[, 2]
+      if (!is.null(scale_pars)) {
+        # re-scale parameters
+        MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
+                            scale_pars, MCMC[[k]], Mlist$refs, Mlist$X2_names))
+        attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
+      }
     }
-  }
+    # colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
+}
 
 
   if (!keep_model) {file.remove(modelfile)}
@@ -356,7 +359,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
          hyperpars = hyperpars,
          model = if (n.adapt > 0) adapt,
          sample = if (n.iter > 0) mcmc,
-         MCMC = if (n.iter > 0) as.mcmc(MCMC),
+         MCMC = if (n.iter > 0) as.mcmc.list(MCMC),
          time = t1 - t0
          ), class = "JointAI")
   )
@@ -367,10 +370,10 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 #' @export
 lm_imp <- function(formula, data,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                   monitor_params = NULL, inits = T,
+                   monitor_params = NULL, inits = TRUE,
                    modelname = NULL, modeldir = NULL,
-                   overwrite = F, keep_model = F,
-                   quiet = T, progress.bar = "text", warn = T,
+                   overwrite = FALSE, keep_model = FALSE,
+                   quiet = TRUE, progress.bar = "text", warn = TRUE,
                    auxvars = NULL, meth = NULL, refcats = NULL,
                    scale_vars = NULL, hyperpars = NULL, ...){
 
@@ -408,10 +411,10 @@ lm_imp <- function(formula, data,
 #' @export
 glm_imp <- function(formula, family, data,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = NULL, inits = T,
+                    monitor_params = NULL, inits = TRUE,
                     modelname = NULL, modeldir = NULL,
-                    overwrite = F, keep_model = F,
-                    quiet = T, progress.bar = "text", warn = T,
+                    overwrite = FALSE, keep_model = FALSE,
+                    quiet = TRUE, progress.bar = "text", warn = TRUE,
                     auxvars = NULL, meth = NULL, refcats = NULL,
                     scale_vars = NULL, hyperpars = NULL, ...){
 
@@ -459,7 +462,8 @@ glm_imp <- function(formula, family, data,
 
   if (!arglist$link %in% c("identity", "log", "logit", "probit", "log",
                            "cloglog"))
-    stop(paste0(arglist$link), " is not an allowed link function.")
+    stop(gettextf("%s is not an allowed link function.",
+                  dQuote(arglist$link)))
 
 
   res <- do.call(model_imp, arglist)
@@ -473,10 +477,10 @@ glm_imp <- function(formula, family, data,
 #' @export
 lme_imp <- function(fixed, data, random,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = NULL, inits = T,
+                    monitor_params = NULL, inits = TRUE,
                     modelname = NULL, modeldir = NULL,
-                    overwrite = F, keep_model = F,
-                    quiet = T, progress.bar = "text", warn = T,
+                    overwrite = FALSE, keep_model = FALSE,
+                    quiet = TRUE, progress.bar = "text", warn = TRUE,
                     auxvars = NULL, meth = NULL, refcats = NULL,
                     scale_vars = NULL, hyperpars = NULL, ...){
 

@@ -63,7 +63,7 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
        par_elmts = if (impmeth == "multilogit") {
          sapply(names(dest_cols[[varname]]$Xc), function(i) {
            K_imp[i, 1]:K_imp[i, 2]
-         }, simplify = F)
+         }, simplify = FALSE)
        } else {
          K_imp[varname, 1]:K_imp[varname, 2]
        },
@@ -76,7 +76,6 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
        },
        refcat = if (impmeth %in% c("logit", "cumlogit", "multilogit")) {
          which(refs[[varname]] == levels(refs[[varname]]))
-         # get_refcat(varname, Xcat, refcats)
        },
        trafo_cols = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          dest_cols[[varname]]$Xc
@@ -129,15 +128,16 @@ get_refcat <- function(varname, Xcat, refcats) {
       useval <- refcats[varname]
     } else {
       useval <- "largest"
-      message(paste0("Wrong specification of the reference category for ",
-                    varname, ". Default used instead."))
+      message(gettextf("Wrong specification of the reference category for %s. Default used instead.",
+                       dQuote(varname)))
+
     }
   } else if (is.character(refcats[varname])) {
     useval <- match(refcats[varname], names(Xcat))
     if (is.na(useval)) {
       useval <- "largest"
-      message(paste0("Wrong specification of the reference category for ",
-                    varname, ". Default used instead."))
+      message(gettextf("Wrong specification of the reference category for %s. Default used instead.",
+                       dQuote(varname)))
     }
   }
 
@@ -155,7 +155,7 @@ get_refcat <- function(varname, Xcat, refcats) {
 # @param Xcat_names column names of the matrix of categorical variables
 get_dest_column <- function(varname, refs, Xc_names, Xcat_names, Xtrafo_names,
                             trafos) {
-  nams <- if(varname %in% names(refs)) {
+  nams <- if (varname %in% names(refs)) {
     attr(refs[[varname]], "dummies")
     # paste0(varname,
     #              levels(refs[[varname]])[levels(refs[[varname]]) !=
@@ -194,7 +194,7 @@ paste_dummies <- function(categories, dest_col, dummy_cols, ...){
 # paste trafo
 paste_trafos <- function(dest_col, trafo_cols, trafos,...) {
   mapply(function(trafo_cols, trafo) {
-    paste0(tab(), "Xc[i, ", trafo_cols, "] <- ", trafo)#(paste0("Xtrafo[i, ", dest_col, "]")))
+    paste0(tab(), "Xc[i, ", trafo_cols, "] <- ", trafo)
   }, trafo_cols = trafo_cols, trafo = trafos)
 }
 
@@ -259,6 +259,6 @@ paste_long_interactions <- function(index, mat0, mat1, mat0_col, mat1_col) {
   )
   out <- gsub(paste0("Xc[", index, ","),
               paste0("Xc[groups[", index, "],"),
-              out, fixed = T)
+              out, fixed = TRUE)
   out
 }

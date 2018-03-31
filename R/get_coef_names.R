@@ -14,7 +14,7 @@ get_coef_names <- function(Mlist, K) {
     if (!is.null(Mlist$hc_list))
       cbind(
         unlist(
-          sapply(names(Mlist$hc_list)[rowSums(is.na(K[names(Mlist$hc_list), , drop = F])) == 0],
+          sapply(names(Mlist$hc_list)[rowSums(is.na(K[names(Mlist$hc_list), , drop = FALSE])) == 0],
                  function(x) {
                    paste0("beta[", K[x, 1]:K[x, 2], "]")
                  })

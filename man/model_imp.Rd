@@ -8,21 +8,21 @@
 \title{Joint analysis and imputation of incomplete data}
 \usage{
 lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-  monitor_params = NULL, inits = T, modelname = NULL, modeldir = NULL,
-  overwrite = F, keep_model = F, quiet = T, progress.bar = "text",
-  warn = T, auxvars = NULL, meth = NULL, refcats = NULL,
-  scale_vars = NULL, hyperpars = NULL, ...)
+  monitor_params = NULL, inits = TRUE, modelname = NULL,
+  modeldir = NULL, overwrite = FALSE, keep_model = FALSE, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, auxvars = NULL, meth = NULL,
+  refcats = NULL, scale_vars = NULL, hyperpars = NULL, ...)
 
 glm_imp(formula, family, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = T, modelname = NULL,
-  modeldir = NULL, overwrite = F, keep_model = F, quiet = T,
-  progress.bar = "text", warn = T, auxvars = NULL, meth = NULL,
+  thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
+  modeldir = NULL, overwrite = FALSE, keep_model = FALSE, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, auxvars = NULL, meth = NULL,
   refcats = NULL, scale_vars = NULL, hyperpars = NULL, ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = T, modelname = NULL,
-  modeldir = NULL, overwrite = F, keep_model = F, quiet = T,
-  progress.bar = "text", warn = T, auxvars = NULL, meth = NULL,
+  thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
+  modeldir = NULL, overwrite = FALSE, keep_model = FALSE, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, auxvars = NULL, meth = NULL,
   refcats = NULL, scale_vars = NULL, hyperpars = NULL, ...)
 }
 \arguments{
@@ -166,7 +166,7 @@ either directly by specifying the name of the parameter or indirectly by one
 of the key words summarizing a number of parameters. Except for \code{other},
 in which parameter names are specified directly, parameter (groups) are just
 set as \code{TRUE} or \code{FALSE}.
-If left unspecified, \code{monitor_params = c("analysis_main" = T)} will be used.
+If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)} will be used.
 \tabular{ll}{
 \strong{name/key word} \tab \strong{what is monitored}\cr
 \code{analysis_main} \tab \code{betas}, \code{tau_y} and \code{sigma_y}\cr
@@ -188,25 +188,24 @@ If left unspecified, \code{monitor_params = c("analysis_main" = T)} will be used
 }
 For example:
 
-\code{monitor_params = c("analysis_main" = T, "tau_y" = F)}
+\code{monitor_params = c("analysis_main" = TRUE, "tau_y" = FALSE)}
 would monitor the regression parameters \code{betas} and residual standard
 deviation \code{sigma_y}, but not the residual precision.
 
-\code{monitor_params = c(imps = T)} would monitor \code{betas}, \code{tau_y},
-and \code{sigma_y} (because \code{analysis_main = T} by default) as well as
+\code{monitor_params = c(imps = TRUE)} would monitor \code{betas}, \code{tau_y},
+and \code{sigma_y} (because \code{analysis_main = TRUE} by default) as well as
 the imputed values.
 }
 }
 
 \examples{
-\dontrun{
 
 mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 mod2 <- glm_imp(B1 ~ C1 + C2 + M2, data = wideDF,
                 family = binomial(link = "logit"), n.iter = 100)
 mod3 <- lme_imp(y ~ C1 + B2 + L1 + time, random = ~ time|id,
                 data = longDF, n.iter = 500)
-}
+
 
 }
 \seealso{

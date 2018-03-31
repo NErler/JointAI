@@ -49,10 +49,10 @@ and random effects covariance matrix).}
 Gelman-Rubin criterion for convergence (uses \code{\link[coda]{gelman.diag}})
 }
 \examples{
-\dontrun{
+
 mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 GR_crit(mod1)
-}
+
 
 }
 \references{

@@ -2,13 +2,13 @@
 % Please edit documentation in R/predict.R
 \name{predDF}
 \alias{predDF}
-\alias{predDF.default}
+\alias{predDF.formula}
 \alias{predDF.JointAI}
 \title{Create a new dataframe for prediction}
 \usage{
 predDF(...)
 
-\method{predDF}{default}(formula, dat, var, ...)
+\method{predDF}{formula}(formula, dat, var, ...)
 
 \method{predDF}{JointAI}(object, var, ...)
 }
@@ -29,10 +29,9 @@ varies and all other variables are set to the reference value (median for
 continuous variables.)
 }
 \examples{
-\dontrun{
-mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-newDF <- predDF(mod1)
-}
+mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+newDF <- predDF(mod, var = "C2")
+
 }
 \seealso{
 \code{\link{predict.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},

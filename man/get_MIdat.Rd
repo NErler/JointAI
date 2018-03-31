@@ -5,7 +5,7 @@
 \title{Extract multiple imputed datasets (and export to SPSS)}
 \usage{
 get_MIdat(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
-  filename = NULL, export_to_SPSS = F)
+  filename = NULL, export_to_SPSS = FALSE)
 }
 \arguments{
 \item{object}{object inheriting from class \code{JointAI}}
@@ -17,10 +17,10 @@ get_MIdat(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
 \item{seed}{optional seed}
 
 \item{resdir}{optional directory for results (if unspecified and
-\code{export_to_SPSS = T} the current working directory is used)}
+\code{export_to_SPSS = TRUE} the current working directory is used)}
 
 \item{filename}{optional file name (without ending; if unspecified and
-\code{export_to_SPSS = T} a name is generated automatically)}
+\code{export_to_SPSS = TRUE} a name is generated automatically)}
 
 \item{export_to_SPSS}{logical}
 }
@@ -31,11 +31,20 @@ A dataframe containing the imputed values (and original data) stacked.
 \description{
 Extracts a dataset containing multiple imputed datasets. These data can be
 automatically exported to SPSS (i.e., a .txt file containing the data and a
-.sps file containing syntax to generate a .sav file).
+.sps file containing syntax to generate a .sav file). For the export function
+the \href{https://CRAN.R-project.org/package=foreign}{foreign} package needs to be installed.
 }
 \examples{
+
+mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+MIs <- get_MIdat(mod, m = 3, seed = 123)
+
 \dontrun{
-mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-MIs <- get_MIdat(mod1, m = 3)
+# or with export for SPSS (here: to the temporary directory "temp_dir")
+temp_dir <- tempdir()
+MIs <- get_MIdat(mod, m = 3, seed = 123, resdir = temp_dir,
+                 filename = "example_imputation",
+                 export_to_SPSS = TRUE)
+
 }
 }
