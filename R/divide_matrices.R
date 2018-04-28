@@ -66,6 +66,8 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
                      model.frame(fixed2, DF, na.action = na.pass),
                      contrasts.arg = contr)
 
+  X2[is.nan(X2)] <- NA
+
   tvar <- apply(X2, 2, check_tvar, groups)
 
   # time-constant part of X
