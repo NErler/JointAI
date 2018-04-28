@@ -26,7 +26,13 @@ md_pattern <- function(data, plot = TRUE, xlab = "", ylab = "",
   if (!"mice" %in% rownames(installed.packages()))
     stop("This function requires the 'mice' package to be installed.")
 
-  MDP <- mice::md.pattern(data, plot = F)
+
+  if (packageVersion("mice") > "2.46.0") {
+    MDP <- mice::md.pattern(data, plot = FALSE)
+  } else {
+    MDP <- mice::md.pattern(data)
+  }
+
   M <- t(MDP[-nrow(MDP), -ncol(MDP)])
 
   if (plot == TRUE) {
