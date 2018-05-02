@@ -41,10 +41,11 @@ scale_matrix <- function(X, scale_vars, scale_pars, meth) {
 get_scaling <- function(Mlist, scale_pars, meth, data) {
   varnams <- unique(unlist(strsplit(colnames(model.matrix(Mlist$fixed2, data)),
                                     "[:|*]")))
-  scale_pars_new <- matrix(nrow = 2, ncol = length(varnams),
-                           data = c(1, 0),
-                           dimnames = list(c("scale", "center"),
-                                           varnams))
+  scale_pars_new <- if (!is.null(Mlist$scale_vars))
+    matrix(nrow = 2, ncol = length(varnams),
+           data = c(1, 0),
+           dimnames = list(c("scale", "center"),
+                           varnams))
 
 
   scaled_dat <- sapply(Mlist[c("Xc", "Xl", "Z")], scale_matrix,
@@ -66,7 +67,7 @@ get_scaling <- function(Mlist, scale_pars, meth, data) {
     scale_pars <- do.call(cbind, dupl)
   }
 
-  if (!any(colnames(scale_pars) %in% colnames(scale_pars_new)))
+  if (!any(colnames(scale_pars) %in% colnames(scale_pars_new)) & !is.null(scale_pars_new))
     stop("Scale parameters could not be matched to variables.")
 
   scale_pars_new[c("scale", "center"), colnames(scale_pars)] <-

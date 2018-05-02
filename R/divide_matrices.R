@@ -164,6 +164,7 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
     excl <- c(excl, unique(trafos$Xc_var))
     excl <- excl[!excl %in% compl_fcts_vars]
     scale_vars <- scale_vars[which(!scale_vars %in% excl)]
+    if (length(scale_vars) == 0) scale_vars <- NULL
   }
 
 
