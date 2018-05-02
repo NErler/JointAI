@@ -4,5 +4,4 @@
 ^README\.Rmd$
 ^README-.*\.png$
 ^inst/WORDLIST$
-^inst$
 ^cran-comments\.md$
