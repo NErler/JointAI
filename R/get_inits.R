@@ -10,7 +10,24 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family){
   # fixed parameters: beta and precision parameter
   mean.betas <- c(colMeans(apply(Mlist$y, 2, as.numeric), na.rm = TRUE),
                   rep(0, max(K[, "end"], na.rm = TRUE) - 1))
-  l[["beta"]] = rnorm(length(mean.betas), mean.betas, 1)
+
+  l[["beta"]] <- setNames(rnorm(length(mean.betas), mean.betas, 1),
+                          get_coef_names(Mlist, K)[, 2])
+  # l[["beta"]] = rnorm(length(mean.betas), mean.betas, 1)
+
+  if (!is.null(Mlist$auxvars)) {
+    nams <- sapply(Mlist$auxvars, function(x) {
+      if (x %in% names(Mlist$refs)) {
+        paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) !=
+                                            Mlist$refs[[x]]])
+      } else {
+        x
+      }
+    })
+
+    l[["beta"]][nams] <- NA
+  }
+
   if (family %in% c('gaussian', 'Gamma'))
     l[[paste0("tau_", colnames(Mlist$y))]] = rgamma(1, 1, 1)
 
