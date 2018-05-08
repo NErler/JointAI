@@ -67,11 +67,13 @@ get_scaling <- function(Mlist, scale_pars, meth, data) {
     scale_pars <- do.call(cbind, dupl)
   }
 
-  if (!any(colnames(scale_pars) %in% colnames(scale_pars_new)) & !is.null(scale_pars_new))
-    stop("Scale parameters could not be matched to variables.")
+  if (!is.null(scale_pars)) {
+    if (!any(colnames(scale_pars) %in% colnames(scale_pars_new)) & !is.null(scale_pars_new))
+      stop("Scale parameters could not be matched to variables.")
 
-  scale_pars_new[c("scale", "center"), colnames(scale_pars)] <-
-    scale_pars[c("scale", "center"), ]
+    scale_pars_new[c("scale", "center"), colnames(scale_pars)] <-
+      scale_pars[c("scale", "center"), ]
+  } else {scale_pars_new <- NULL}
 
   return(list(scaled_matrices = sapply(scaled_dat, "[[", 1, simplify = FALSE),
               scale_pars = scale_pars_new))
