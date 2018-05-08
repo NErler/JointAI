@@ -90,13 +90,18 @@ get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
                     "\\]")
 
       impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE)]
-      impval <- impval * object$scale_pars["scale", names(meth)[i]]  +
-        object$scale_pars["center", names(meth)[i]]
+      if (!is.null(object$scale_pars)) {
+        impval <- impval * object$scale_pars["scale", names(meth)[i]]  +
+          object$scale_pars["center", names(meth)[i]]
+      }
 
       if (length(impval) > 0) {
+        rownrs <- gsub(",[[:digit:]]*\\]", "",
+                       gsub("[[:alpha:]]*\\[", "", colnames(impval)))
+
         for (j in (1:m) + 1) {
           DF_list[[j]][is.na(DF_list[[j]][, names(meth)[i]]), names(meth)[i]] <-
-            impval[j - 1, ]
+            impval[j - 1, order(as.numeric(rownrs))]
         }
       }
     }
@@ -109,9 +114,12 @@ get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
       impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
 
       if (length(impval) > 0) {
+        rownrs <- gsub(",[[:digit:]]*\\]", "",
+                       gsub("[[:alpha:]]*\\[", "", colnames(impval)))
+
         for (j in (1:m) + 1) {
           vec <- as.numeric(DF_list[[j]][, names(meth)[i]]) - 1
-          vec[is.na(vec)] <- impval[j - 1, ]
+          vec[is.na(vec)] <- impval[j - 1, order(as.numeric(rownrs))]
           vec <- as.factor(vec)
           levels(vec) <- levels(DF_list[[j]][, names(meth)[i]])
           DF_list[[j]][, names(meth)[i]] <- vec
@@ -127,9 +135,12 @@ get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
       impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE)]
 
       if (length(impval) > 0) {
+        rownrs <- gsub(",[[:digit:]]*\\]", "",
+                       gsub("[[:alpha:]]*\\[", "", colnames(impval)))
+
         for (j in (1:m) + 1) {
           vec <- as.numeric(DF_list[[j]][, names(meth)[i]])
-          vec[is.na(vec)] <- impval[j - 1, ]
+          vec[is.na(vec)] <- impval[j - 1, order(as.numeric(rownrs))]
           if (meth[i] == "cumlogit") {
             vec <- as.ordered(vec)
           }else{
