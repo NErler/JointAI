@@ -4,6 +4,7 @@
 # @param y_name name of the outcome variable
 # @param Zcols number of columns in random effects design matrix
 # @param Xc matrix
+# @param Xtrafo matrix
 # @param Xcat matrix
 # @param analysis_main logical
 # @param analysis_random logical
@@ -22,7 +23,7 @@
 # @param imps logical
 # @export
 get_params <- function(meth, analysis_type, family,
-                       Xc, Xcat, y_name = NULL, Zcols = NULL,
+                       Xc, Xcat, Xtrafo, y_name = NULL, Zcols = NULL,
                        analysis_main = FALSE,
                        analysis_random = FALSE,
                        imp_pars = FALSE,
@@ -98,10 +99,13 @@ get_params <- function(meth, analysis_type, family,
     Xc_NA <- if (any(is.na(Xc))) which(is.na(Xc), arr.ind = TRUE)
     Xc_NA <- Xc_NA[Xc_NA[, 2] %in% which(colSums(!is.na(Xc)) > 0), ]
     Xcat_NA <- if (any(is.na(Xcat))) which(is.na(Xcat), arr.ind = TRUE)
+    Xtrafo_NA <- if (any(is.na(Xtrafo))) which(is.na(Xtrafo), arr.ind = TRUE)
 
     params <- c(params,
                 if (!is.null(Xc_NA))
                   paste0("Xc[", apply(Xc_NA, 1, paste, collapse = ","), "]"),
+                if (!is.null(Xtrafo_NA))
+                  paste0("Xtrafo[", apply(Xtrafo_NA, 1, paste, collapse = ","), "]"),
                 if (!is.null(Xcat_NA))
                   paste0("Xcat[", apply(Xcat_NA, 1, paste, collapse = ","), "]")
     )

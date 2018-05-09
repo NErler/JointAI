@@ -85,9 +85,15 @@ get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
     impval <- NULL
     # imputation by linear regression --------------------------------------------------------
     if (meth[i] %in% c("norm")) {
-      pat <- paste0("Xc\\[[[:digit:]]*,",
-                    match(names(meth)[i], colnames(object$data_list$Xc)),
-                    "\\]")
+      if (names(meth[i]) %in% colnames(object$data_list$Xtrafo)) {
+        pat <- paste0("Xtrafo\\[[[:digit:]]*,",
+                      match(names(meth)[i], colnames(object$data_list$Xtrafo)),
+                      "\\]")
+      } else {
+        pat <- paste0("Xc\\[[[:digit:]]*,",
+                      match(names(meth)[i], colnames(object$data_list$Xc)),
+                      "\\]")
+      }
 
       impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE)]
       if (!is.null(object$scale_pars)) {
