@@ -37,7 +37,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                             y_name = colnames(object$Mlist$y),
                                             Zcols = ncol(object$Mlist$Z),
                                             Xc = object$Mlist$Xc,
-                                            Xcat = object$Mlist$Xcat),
+                                            Xcat = object$Mlist$Xcat,
+                                            Xtrafo = object$Mlist$Xtrafo),
                                        monitor_params))
   }
 

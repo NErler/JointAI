@@ -301,7 +301,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                                           family = family,
                                           y_name = colnames(Mlist$y),
                                           Zcols = ncol(Mlist$Z),
-                                          Xc = Mlist$Xc, Xcat = Mlist$Xcat),
+                                          Xc = Mlist$Xc, Xtrafo = Mlist$Xtrafo,
+                                          Xcat = Mlist$Xcat),
                                      monitor_params))
 
   mcmc <- if (n.iter > 0) {
