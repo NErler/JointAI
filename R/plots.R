@@ -159,7 +159,8 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
     # re-scale parameters
     MCMC <- as.mcmc.list(lapply(MCMC, function(i) {
       as.mcmc(sapply(colnames(i), rescale, fixed2 = object$Mlist$fixed2, scale_pars = scale_pars,
-                     MCMC = i, refs = object$Mlist$refs, object$Mlist$X2_names))
+                     MCMC = i, refs = object$Mlist$refs, object$Mlist$X2_names,
+                     object$Mlist$trafos))
     }))
   }
 

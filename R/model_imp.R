@@ -324,12 +324,13 @@ model_imp <- function(fixed, data, random = NULL, link, family,
       if (!is.null(scale_pars)) {
         # re-scale parameters
         MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
-                            scale_pars, MCMC[[k]], Mlist$refs, Mlist$X2_names))
+                            scale_pars, MCMC[[k]], Mlist$refs, Mlist$X2_names,
+                            Mlist$trafos))
         attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
       }
     }
     # colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
-}
+  }
 
 
   if (!keep_model) {file.remove(modelfile)}

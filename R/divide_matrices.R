@@ -99,7 +99,7 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   }
 
   # Xtrafo ---------------------------------------------------------------------
-  trafos <- extract_fcts(fixed, DF)
+  trafos <- extract_fcts(fixed2, DF)
   Xtrafo <- if (!is.null(trafos)) {
     fmla_trafo <- as.formula(
       paste("~", paste0(unique(trafos$var), collapse = " + "))
@@ -163,6 +163,14 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
     excl <- grep("[[:alpha:]]*\\(", scale_vars, value = TRUE)
     excl <- c(excl, unique(trafos$Xc_var))
     excl <- excl[!excl %in% compl_fcts_vars]
+
+    if (!is.null(trafos)) {
+      qdrtrafos <- unlist(sapply(split(trafos, trafos$var), function(x) {
+        if (all(x$Xc_var %in% c(x$var, paste0("I(", x$var, "^2)")))) x$Xc_var
+      }))
+      excl <- excl[!excl %in% qdrtrafos]
+    }
+
     scale_vars <- scale_vars[which(!scale_vars %in% excl)]
     if (length(scale_vars) == 0) scale_vars <- NULL
   }

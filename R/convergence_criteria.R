@@ -133,7 +133,7 @@ MC_error <- function(x, subset = "main", start = NULL, end = NULL, thin = NULL,
   if (!is.null(scale_pars)) {
     # re-scale parameters
     MCMC <- sapply(colnames(MCMC), rescale, x$Mlist$fixed2, scale_pars,
-                   MCMC, x$Mlist$refs, x$Mlist$X2_names)
+                   MCMC, x$Mlist$refs, x$Mlist$X2_names, x$Mlist$trafos)
   }
 
   res2 <- mcmcse::mcse.mat(x = MCMC, ...)
