@@ -75,7 +75,7 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   interact <- grep(":", colnames(Xcross), fixed = TRUE, value = TRUE)
 
   Xc <- Xcross[, !colnames(Xcross) %in% interact, drop = FALSE]
-  Xc <- Xc[, order(colSums(is.na(Xc))), drop = FALSE]
+  # Xc <- Xc[, order(colSums(is.na(Xc))), drop = FALSE]
 
   Xic <- if (length(interact) > 0) {
     Xcross[, interact, drop = FALSE]
@@ -115,6 +115,19 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
     Xc[, as.character(trafos$Xc_var)] <- NA
   }
 
+  # re-order columns in Xc
+  Xc_seq <- c(which(colSums(is.na(Xc)) == 0),
+              unlist(lapply(names(meth), match_positions, DF, colnames(Xc)))
+  )
+  for (x in unique(trafos$var)) {
+    Xc_seq <- append(Xc_seq,
+                     match(trafos$Xc_var[trafos$var == x & trafos$Xc_var != x], colnames(Xc)),
+                     after = match(x, names(Xc_seq)))
+  }
+
+  Xc_seq <- c(Xc_seq, which(!1:ncol(Xc) %in% Xc_seq))
+
+  Xc <- Xc[, Xc_seq, drop = FALSE]
 
 
   # Xlong ----------------------------------------------------------------------
