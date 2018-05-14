@@ -166,9 +166,9 @@ get_dest_column <- function(varname, refs, Xc_names, Xcat_names, Xtrafo_names,
     varname
   }
 
-  list("Xc" = setNames(match(nams, Xc_names), nams),
-       "Xcat" = setNames(match(varname, Xcat_names), varname),
-       "Xtrafo" = setNames(match(varname, Xtrafo_names), varname))
+  list("Xc" = setNames(match(make.names(nams), make.names(Xc_names)), nams),
+       "Xcat" = setNames(match(make.names(varname), make.names(Xcat_names)), varname),
+       "Xtrafo" = setNames(match(make.names(varname), make.names(Xtrafo_names)), varname))
 }
 
 

@@ -10,12 +10,15 @@
       \item fixed bug with scaling when no continuous covariates are in the model or scaling is deselected
       \item fixed bug in initial value specification for coefficient for auxiliary variables
       \item fixed bug in \code{get_MIdat}: imputed values are now filled in in the correct order
+      \item imputed values of transformed variables are now included in imputed datasets created with \code{get_MIdat}
+      \item fixed bug that occured when factor labels had non valid names
     }
   }
   \subsection{Small changes}{
     \itemize{
       \item adaptation to new version of \code{md.pattern()} from the mice package
       \item internally change all \code{NaN} to \code{NA}
+      \item allow for scaling of incomplete covariates with quadratic effects
     }
   }
 }

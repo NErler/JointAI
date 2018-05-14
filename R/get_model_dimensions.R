@@ -61,7 +61,7 @@ get_imp_pos <- function(meth, Mlist){
     } else {
       x
     }
-    setNames(match(nams, colnames(Xc)), nams)
+    setNames(match(make.names(nams), make.names(colnames(Xc))), nams)
   }, simplify = FALSE)
   # pos_Xc <- sapply(names(meth), match_positions, DF, colnames(Xc), simplify = FALSE)
 
