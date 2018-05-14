@@ -12,6 +12,7 @@
       \item fixed bug in \code{get_MIdat}: imputed values are now filled in in the correct order
       \item imputed values of transformed variables are now included in imputed datasets created with \code{get_MIdat}
       \item fixed bug that occured when factor labels had non valid names
+      \item data matrix is now ordered according to order in user-specified \code{meth} argument
     }
   }
   \subsection{Small changes}{

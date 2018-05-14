@@ -75,7 +75,11 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   interact <- grep(":", colnames(Xcross), fixed = TRUE, value = TRUE)
 
   Xc <- Xcross[, !colnames(Xcross) %in% interact, drop = FALSE]
-  Xc <- Xc[, order(colSums(is.na(Xc))), drop = FALSE]
+  # Xc <- Xc[, order(colSums(is.na(Xc))), drop = FALSE]
+  Xc <- Xc[, c(which(colSums(is.na(Xc)) == 0),
+               unlist(sapply(names(meth), match_positions, DF, colnames(Xc)))),
+           drop = FALSE]
+
 
   Xic <- if (length(interact) > 0) {
     Xcross[, interact, drop = FALSE]
