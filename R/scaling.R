@@ -18,8 +18,19 @@ scale_matrix <- function(X, scale_vars, scale_pars, meth) {
                              dimnames = list(c("scale", "center"),
                                              scale_vars[scale_vars %in% colnames(Xsub)]))
         for (k in scale_vars[scale_vars %in% colnames(Xsub)]) {
-          usecenter <- if (!k %in% names(meth)) TRUE else meth[k] != "lognorm"
-          xsc <- scale(X[, k], center = usecenter)
+          usecenter <- if (!k %in% names(meth)) {
+            TRUE
+          } else {
+            !meth[k] %in% c("lognorm", "gamma")
+          }
+
+          usescale <- if (!k %in% names(meth)) {
+            TRUE
+          } else {
+            !meth[k] %in% c("gamma")
+          }
+
+          xsc <- scale(X[, k], center = usecenter, scale = usescale)
           Xsc[, k] <- xsc
           scale_pars["scale", k] <- ifelse(!is.null(attr(xsc, "scaled:scale")),
                                            attr(xsc, "scaled:scale"), 1)
