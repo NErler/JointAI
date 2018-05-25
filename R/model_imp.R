@@ -94,6 +94,7 @@
 #' \tabular{ll}{
 #' \code{norm} \tab linear model\cr
 #' \code{lognorm} \tab log-linear model for skewed continuous data\cr
+#' \code{gamma} \tab gamma model for skewed continuous data\cr
 #' \code{logit} \tab logistic model for binary data\cr
 #' \code{multilogit} \tab multinomial logit model for unordered categorical variables\cr
 #' \code{cumlogit} \tab cumulative logit model for ordered categorical variables\cr

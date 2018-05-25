@@ -55,6 +55,13 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
     l$b_tau_norm <- defs$norm["b_tau_norm"]
   }
 
+  if (any(meth %in% c("gamma"))) {
+    l$mu_reg_gamma <- defs$gamma["mu_reg_gamma"]
+    l$tau_reg_gamma <- defs$gamma["tau_reg_gamma"]
+    l$a_tau_gamma <- defs$gamma["a_tau_gamma"]
+    l$b_tau_gamma <- defs$gamma["b_tau_gamma"]
+  }
+
   if (any(meth == "logit")) {
     l$mu_reg_logit <- defs$logit["mu_reg_logit"]
     l$tau_reg_logit <- defs$logit["tau_reg_logit"]
@@ -128,6 +135,14 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
 #' \code{tau_reg_norm} \tab precision in the priors for regression coefficients\cr
 #' \code{a_tau_norm} \tab scale parameter in gamma prior for precision of imputed variable\cr
 #' \code{b_tau_norm} \tab rate parameter in gamma prior for precision of imputed variable\cr
+#' }
+#'
+#' \strong{gamma:} hyperparameters for gamma imputation models
+#' \tabular{ll}{
+#' \code{mu_reg_gamma} \tab mean in the priors for regression coefficients\cr
+#' \code{tau_reg_gamma} \tab precision in the priors for regression coefficients\cr
+#' \code{a_tau_gamma} \tab scale parameter in gamma prior for precision of imputed variable\cr
+#' \code{b_tau_gamma} \tab rate parameter in gamma prior for precision of imputed variable\cr
 #' }
 #'
 #' \strong{logit:} hyperparameters for logistic imputation models
@@ -215,6 +230,14 @@ default_hyperpars <- function(family = 'gaussian', link = "identity", nranef = N
     b_tau_norm = 0.01
   )
 
+  gamma <- c(
+    mu_reg_gamma = 0,
+    tau_reg_gamma = 0.0001,
+    a_tau_gamma = 0.01,
+    b_tau_gamma = 0.01
+  )
+
+
   logit <- c(
     mu_reg_logit = 0,
     tau_reg_logit = 4/9
@@ -237,6 +260,7 @@ default_hyperpars <- function(family = 'gaussian', link = "identity", nranef = N
     analysis_model = analysis_model,
     Z = Z,
     norm = norm,
+    gamma = gamma,
     logit = logit,
     multinomial = multinomial,
     ordinal = ordinal

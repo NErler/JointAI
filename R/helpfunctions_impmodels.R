@@ -206,6 +206,7 @@ paste_imp_model <- function(imp_par_list) {
   imp_model <- switch(imp_par_list$impmeth,
                       norm = impmodel_normal,
                       lognorm = impmodel_lognorm,
+                      gamma = impmodel_gamma,
                       logit = impmodel_logit,
                       multilogit = impmodel_multilogit,
                       cumlogit = impmodel_cumlogit)
@@ -220,6 +221,7 @@ paste_imp_priors <- function(imp_par_list) {
   imp_prior <- switch(imp_par_list$impmeth,
                       norm = impprior_normal,
                       lognorm = impprior_lognorm,
+                      gamma = impprior_gamma,
                       logit = impprior_logit,
                       multilogit = impprior_multilogit,
                       cumlogit = impprior_cumlogit)
