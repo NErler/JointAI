@@ -84,7 +84,7 @@ get_MIdat <- function(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
   for (i in seq_along(meth)) {
     impval <- NULL
     # imputation by linear regression --------------------------------------------------------
-    if (meth[i] %in% c("norm", "lognorm", "gamma")) {
+    if (meth[i] %in% c("norm", "lognorm", "gamma", "beta")) {
       if (names(meth[i]) %in% colnames(object$data_list$Xtrafo)) {
         pat <- paste0("Xtrafo\\[[[:digit:]]*,",
                       match(names(meth)[i], colnames(object$data_list$Xtrafo)),

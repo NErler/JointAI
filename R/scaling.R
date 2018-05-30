@@ -21,13 +21,13 @@ scale_matrix <- function(X, scale_vars, scale_pars, meth) {
           usecenter <- if (!k %in% names(meth)) {
             TRUE
           } else {
-            !meth[k] %in% c("lognorm", "gamma")
+            !meth[k] %in% c("lognorm", "gamma", "beta")
           }
 
           usescale <- if (!k %in% names(meth)) {
             TRUE
           } else {
-            !meth[k] %in% c("gamma")
+            !meth[k] %in% c("gamma", "beta")
           }
 
           xsc <- scale(X[, k], center = usecenter, scale = usescale)

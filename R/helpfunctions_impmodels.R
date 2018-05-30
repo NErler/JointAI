@@ -207,6 +207,7 @@ paste_imp_model <- function(imp_par_list) {
                       norm = impmodel_normal,
                       lognorm = impmodel_lognorm,
                       gamma = impmodel_gamma,
+                      beta = impmodel_beta,
                       logit = impmodel_logit,
                       multilogit = impmodel_multilogit,
                       cumlogit = impmodel_cumlogit)
@@ -222,6 +223,7 @@ paste_imp_priors <- function(imp_par_list) {
                       norm = impprior_normal,
                       lognorm = impprior_lognorm,
                       gamma = impprior_gamma,
+                      beta = impprior_beta,
                       logit = impprior_logit,
                       multilogit = impprior_multilogit,
                       cumlogit = impprior_cumlogit)

@@ -59,6 +59,14 @@ of the list are
 \code{b_tau_gamma} \tab rate parameter in gamma prior for precision of imputed variable\cr
 }
 
+\strong{beta:} hyperparameters for beta imputation models
+\tabular{ll}{
+\code{mu_reg_beta} \tab mean in the priors for regression coefficients\cr
+\code{tau_reg_beta} \tab precision in the priors for regression coefficients\cr
+\code{a_tau_beta} \tab scale parameter in gamma prior for precision of imputed variable\cr
+\code{b_tau_beta} \tab rate parameter in gamma prior for precision of imputed variable\cr
+}
+
 \strong{logit:} hyperparameters for logistic imputation models
 \tabular{ll}{
 \code{mu_reg_logit} \tab mean in the priors for regression coefficients\cr

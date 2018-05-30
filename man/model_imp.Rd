@@ -155,7 +155,8 @@ Implemented imputation models that can be chosen in the argument \code{meth} are
 \tabular{ll}{
 \code{norm} \tab linear model\cr
 \code{lognorm} \tab log-linear model for skewed continuous data\cr
-\code{gamma} \tab gamma model for skewed continuous data\cr
+\code{gamma} \tab gamma model (with log-link) for skewed continuous data\cr
+\code{beta} \tab beta model (with logit-link) for skewed continuous data in (0, 1)\cr
 \code{logit} \tab logistic model for binary data\cr
 \code{multilogit} \tab multinomial logit model for unordered categorical variables\cr
 \code{cumlogit} \tab cumulative logit model for ordered categorical variables\cr

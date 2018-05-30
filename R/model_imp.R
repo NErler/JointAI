@@ -94,7 +94,8 @@
 #' \tabular{ll}{
 #' \code{norm} \tab linear model\cr
 #' \code{lognorm} \tab log-linear model for skewed continuous data\cr
-#' \code{gamma} \tab gamma model for skewed continuous data\cr
+#' \code{gamma} \tab gamma model (with log-link) for skewed continuous data\cr
+#' \code{beta} \tab beta model (with logit-link) for skewed continuous data in (0, 1)\cr
 #' \code{logit} \tab logistic model for binary data\cr
 #' \code{multilogit} \tab multinomial logit model for unordered categorical variables\cr
 #' \code{cumlogit} \tab cumulative logit model for ordered categorical variables\cr
@@ -290,6 +291,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   # run JAGS -----------------------------------------------------------------
   t0 <- Sys.time()
   if (any(n.adapt > 0, n.iter > 0)) {
+    rjags::load.module("glm")
 
     adapt <- try(rjags::jags.model(file = modelfile, data = data_list,
                                    inits = inits, quiet = quiet,

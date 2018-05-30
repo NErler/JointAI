@@ -25,7 +25,7 @@
   }
   \subsection{Extensions}{
     \itemize{
-      \item implemented \code{gamma} imputation method
+      \item implemented \code{gamma} and \code{beta} imputation methods
     }
   }
 }

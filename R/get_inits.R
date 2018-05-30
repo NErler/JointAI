@@ -58,6 +58,15 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family){
   if (!is.null(K_imp))
     l[["alpha"]] = rnorm(max(K_imp), 0, 1)
 
+  if (any(meth == "beta")) {
+    whichalpha <- K_imp[names(meth[meth == "beta"]), "start"]:K_imp[names(meth[meth == "beta"]), "end"]
+    l[["alpha"]][whichalpha] <- rnorm(length(whichalpha), 0, 0.1)
+
+    for (k in names(meth)[meth %in% c("beta")]) {
+      l[[paste0("tau_", k)]] <- rgamma(1, 15, 0.1)
+    }
+  }
+
   # precision parameters for normal imputation models
   if  (any(meth %in% c("norm", "lognorm"))) {
     for (k in names(meth)[meth %in% c("norm", "lognorm")]) {
