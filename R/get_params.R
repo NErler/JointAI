@@ -74,8 +74,8 @@ get_params <- function(meth, analysis_type, family,
               if (tau_y) paste0("tau_", y_name),
               if (sigma_y) paste0("sigma_", y_name),
               if (alphas) "alpha",
-              if (tau_imp & any(meth == "norm")) {
-                paste0("tau_", names(meth)[meth == "norm"])
+              if (tau_imp & any(meth %in% c("norm", "lognorm", "gamma", "beta"))) {
+                paste0("tau_", names(meth)[meth %in% c("norm", "lognorm", "gamma", "beta")])
               },
               if (gamma_imp & any(meth == "cumlogit")) {
                 paste0("gamma_", names(meth)[meth == "cumlogit"])
@@ -83,10 +83,13 @@ get_params <- function(meth, analysis_type, family,
               if (delta_imp & any(meth == "cumlogit")) {
                 paste0("delta_", names(meth)[meth == "cumlogit"])
               },
-              if (shaperate_imp & any(meth %in% c("gamma", "beta"))) {
+              if (shaperate_imp & any(meth %in% c("beta"))) {
                 c(paste0("shape1_", names(meth[meth == "beta"])),
-                  paste0("shape2_", names(meth[meth == "beta"])),
-                  paste0("shape_", names(meth[meth == "gamma"])),
+                  paste0("shape2_", names(meth[meth == "beta"]))
+                )
+              },
+              if (shaperate_imp & any(meth %in% c("gamma"))) {
+                c(paste0("shape_", names(meth[meth == "gamma"])),
                   paste0("rate_", names(meth[meth == "gamma"]))
                 )
               },

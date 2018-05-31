@@ -146,9 +146,8 @@ impmodel_beta <- function(varname, dest_col, dest_mat, Xc_cols, par_elmts, par_n
   paste0(tab(), "# beta model for ", varname, "\n",
          tab(), "Xc[i, ", dest_col, "] ~ dbeta(shape1_", varname, "[i], shape2_", varname, "[i])T(1e-15, 1 - 1e-15)", "\n",
          tab(), "logit(mu_", varname,"[i]) <- ", predictor, "\n",
-         tab(), "shape2_", varname,"[i] <- mu_", varname, "[i] * pow(1 - mu_", varname, "[i], 2) / ",
-                                          "sigma_", varname, " + mu_", varname, "[i] - 1", "\n",
-         tab(), "shape1_", varname, "[i] <- mu_", varname, "[i] / (1 - mu_", varname, "[i]) * shape2_", varname, "[i]", "\n\n")
+         tab(), "shape1_", varname,"[i] <- mu_", varname, "[i] * tau_", varname, "\n",
+         tab(), "shape2_", varname, "[i] <- (1 - mu_", varname, "[i]) * tau_", varname, "\n\n")
 }
 
 # Priors for beta imputation model
@@ -157,7 +156,6 @@ impprior_beta <- function(varname, par_elmts, par_name, ...){
          tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
          tab(4), par_name, "[k] ~ dnorm(mu_reg_beta, tau_reg_beta)", "\n",
          tab(), "}", "\n",
-         tab(), "tau_", varname,  " ~ dgamma(a_tau_beta, b_tau_beta)", "\n",
-         tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")", "\n\n"
+         tab(), "tau_", varname,  " ~ dgamma(a_tau_beta, b_tau_beta)", "\n"
   )
 }
