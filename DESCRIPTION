@@ -1,5 +1,5 @@
 Package: JointAI
-Version: 0.1.0
+Version: 0.2.0
 Title: Joint Analysis and Imputation of Incomplete Data
 Author: Nicole S. Erler
 Maintainer: Nicole S. Erler <n.erler@erasmusmc.nl>
@@ -12,7 +12,7 @@ Description: Provides joint analysis and imputation of linear regression models,
     the package 'rjags'.
     It also provides summary and plotting functions for the output.
 License: GPL (>= 2)
-Date: 2018-03-21
+Date: 2018-07-05
 BugReports: https://github.com/nerler/JointAI
 LazyData: TRUE
 RoxygenNote: 6.0.1
