@@ -1,4 +1,4 @@
-# JointAI (version 0.1.0)
+# JointAI (version 0.2.0)
 
 ---
 
@@ -11,7 +11,28 @@
 
 ### R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 notes
+
+
+### Reverse dependencies
+
+There are no reverse dependencies.
+
+---
+
+
+# JointAI (version 0.1.0)
+
+## Round 1
+
+### Test environments
+* local Windows 7, R 3.5.1
+* ubuntu 14.04 (on travis-ci), R 3.3.3, R 3.5.1, devel
+* win-builder (devel and release)
+
+### R CMD check results
+
+0 errors | 0 warnings | 0 note
 
 * checking CRAN incoming feasibility ... NOTE
 
@@ -22,7 +43,7 @@
 
 This is a new release, so there are no reverse dependencies.
 
----
+
 
 ### Reviewer comments
 2018-03-21 Swetlana Herbrandt
@@ -67,7 +88,7 @@ would be desirable.
 Please fix and resubmit.
 ```
 
---- 
+ 
 
 ## Round 2
 ### Submission comments
@@ -88,3 +109,11 @@ Addressed all previous comments, specifically:
 * Removed `\dontrun{}` from all but one example (all examples can be executed
   in <5 seconds). The example still in `\dontrun{}` exports a dataset and writes
   files into a temporary directory.
+
+
+### Reviewer comments
+2018-03-22 Swetlana Herbrandt
+
+```
+Thanks, on CRAN now.
+```
