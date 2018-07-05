@@ -1,8 +1,8 @@
 Package: JointAI
 Version: 0.2.0
 Title: Joint Analysis and Imputation of Incomplete Data
-Author: Nicole S. Erler
-Maintainer: Nicole S. Erler <n.erler@erasmusmc.nl>
+Authors@R: person("Nicole S.", "Erler", email = "n.erler@erasmusmc.nl",
+                  role = c("aut", "cre"))
 Description: Provides joint analysis and imputation of linear regression models,
     generalized linear regression models or linear mixed models with incomplete
     (covariate) data in the Bayesian framework.
@@ -11,6 +11,7 @@ Description: Provides joint analysis and imputation of linear regression models,
     <http://mcmc-jags.sourceforge.net> with the help of 
     the package 'rjags'.
     It also provides summary and plotting functions for the output.
+URL: https://github.com/nerler/JointAI
 License: GPL (>= 2)
 Date: 2018-07-05
 BugReports: https://github.com/nerler/JointAI
