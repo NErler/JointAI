@@ -204,7 +204,7 @@ default_hyperpars <- function(family = 'gaussian', link = "identity", nranef = N
 
   # hyperparameters analysis model
   if (thefamily == "binomial" & thelink == "logit") {
-    tau_reg_main <- 4/9
+    tau_reg_main <- 0.001
   } else if (thefamily == "binomial" & thelink == "probit") {
     tau_reg_main <- 1
   } else {
@@ -262,19 +262,19 @@ default_hyperpars <- function(family = 'gaussian', link = "identity", nranef = N
 
   logit <- c(
     mu_reg_logit = 0,
-    tau_reg_logit = 4/9
+    tau_reg_logit = 0.001
   )
 
   multinomial <- c(
     mu_reg_multinomial = 0,
-    tau_reg_multinomial = 4/9
+    tau_reg_multinomial = 0.001
   )
 
   ordinal <- c(
     mu_reg_ordinal = 0,
-    tau_reg_ordinal = 4/9,
+    tau_reg_ordinal = 0.001,
     mu_delta_ordinal = 0,
-    tau_delta_ordinal = 4/9
+    tau_delta_ordinal = 0.001
   )
 
 
