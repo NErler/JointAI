@@ -18,7 +18,7 @@
 #'             (determined automatically if not specified)
 #' @param ncol optional; number of columns in the plotting layout
 #'             (determined automatically if not specified)
-#' @inheritDotParams graphics::matplot -x -y -type -xlab -ylab -pch
+#' @inheritDotParams graphics::matplot -x -y -type -xlab -ylab -pch -log
 #' @name traceplot
 #'
 #' @seealso \code{\link{summary.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
