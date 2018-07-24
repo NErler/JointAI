@@ -32,9 +32,7 @@
 
 <meta property="og:title" content="Missing data pattern — md_pattern" />
 
-<meta property="og:description" content="Plot the pattern of missing data. The missing data pattern is determined
-using the function md.pattern from the
-mice package." />
+<meta property="og:description" content="Plot the pattern of missing data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +61,7 @@ mice package." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
       </span>
     </div>
 
@@ -77,6 +75,18 @@ mice package." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -115,14 +125,14 @@ mice package." />
 
     <div class="ref-description">
     
-    <p>Plot the pattern of missing data. The missing data pattern is determined
-using the function <code><a href='http://stefvanbuuren.github.io/mice/reference/md.pattern.html'>md.pattern</a></code> from the
-<a href='https://CRAN.R-project.org/package=mice'><code>mice</code></a> package.</p>
+    <p>Plot the pattern of missing data.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>md_pattern</span>(<span class='no'>data</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>xaxis_pars</span> <span class='kw'>=</span> <span class='fu'>list</span>(),
-  <span class='kw'>yaxis_pars</span> <span class='kw'>=</span> <span class='fu'>list</span>(), <span class='kw'>printN</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>md_pattern</span>(<span class='no'>data</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/grDevices/topics/gray'>grey</a></span>(<span class='fl'>0.1</span>), <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/grDevices/topics/gray'>grey</a></span>(<span class='fl'>0.7</span>)),
+  <span class='kw'>border</span> <span class='kw'>=</span> <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/grDevices/topics/gray'>grey</a></span>(<span class='fl'>0.5</span>), <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>print_xaxis</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Number of observations per pattern"</span>,
+  <span class='kw'>print_yaxis</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>legend.position</span> <span class='kw'>=</span> <span class='st'>"bottom"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -132,79 +142,47 @@ using the function <code><a href='http://stefvanbuuren.github.io/mice/reference/
       <td><p>data frame</p></td>
     </tr>
     <tr>
+      <th>color</th>
+      <td><p>vector of length 2, that specifies the color used to indicate
+observed and missing  (in that order)</p></td>
+    </tr>
+    <tr>
+      <th>border</th>
+      <td><p>color of the grid</p></td>
+    </tr>
+    <tr>
       <th>plot</th>
       <td><p>logical; should the missing data pattern be plotted?</p></td>
     </tr>
     <tr>
-      <th>xlab</th>
-      <td><p>label for the x-axis</p></td>
+      <th>pattern</th>
+      <td><p>logical; should the missing data pattern be returned as matrix?</p></td>
+    </tr>
+    <tr>
+      <th>print_xaxis, print_yaxis</th>
+      <td><p>logical; should the x-axis (below the plot) and
+y-axis (on the right) be printed?</p></td>
     </tr>
     <tr>
       <th>ylab</th>
-      <td><p>label for the y-axis</p></td>
+      <td><p>y-axis label</p></td>
     </tr>
     <tr>
-      <th>xaxis_pars</th>
-      <td><p>list of optional parameters for the x-axis</p></td>
-    </tr>
-    <tr>
-      <th>yaxis_pars</th>
-      <td><p>list of optional parameters for the y-axis</p></td>
-    </tr>
-    <tr>
-      <th>printN</th>
-      <td><p>logical; should the title "N" of the y-axis be printed?</p></td>
-    </tr>
-    <tr>
-      <th>print</th>
-      <td><p>should the missing data pattern be returned as a matrix?</p></td>
+      <th>legend.position</th>
+      <td><p>the position of legends ("none", "left", "right",
+"bottom", "top", or two-element numeric vector)</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>optional additional parameters passed to <code><a href='http://www.rdocumentation.org/packages/graphics/topics/image'>image</a>()</code></p></td>
+      <td><p>optional additional parameters, currently not used</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>md_pattern</span>(<span class='no'>wideDF</span>)</div><div class='img'><img src='md_pattern-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    C1 B1 M1 O1 L1 L2 id time y O2 M2 C2 B2   
-#&gt; 74  1  1  1  1  1  1  1    1 1  1  1  1  1  0
-#&gt; 17  1  1  1  1  1  1  1    1 1  1  1  1  0  1
-#&gt; 3   1  1  1  1  1  1  1    1 1  1  1  0  1  1
-#&gt; 1   1  1  1  1  1  1  1    1 1  1  1  0  0  2
-#&gt; 1   1  1  1  1  1  1  1    1 1  1  0  1  1  1
-#&gt; 2   1  1  1  1  1  1  1    1 1  1  0  1  0  2
-#&gt; 2   1  1  1  1  1  1  1    1 1  0  1  1  1  1
-#&gt;     0  0  0  0  0  0  0    0 0  2  3  4 20 29</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>md_pattern</span>(<span class='no'>wideDF</span>)</div><div class='img'><img src='md_pattern-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'>par</span>(<span class='kw'>mar</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1.5</span>, <span class='fl'>1.5</span>), <span class='kw'>mgp</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>0.6</span>, <span class='fl'>0</span>))
-<span class='fu'>md_pattern</span>(<span class='no'>longDF</span>, <span class='kw'>yaxis_pars</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>cex.axis</span> <span class='kw'>=</span> <span class='fl'>0.8</span>))</div><div class='img'><img src='md_pattern-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;    C1 B1 M1 O1 L1 id time y M2 O2  B2  C2  L2    
-#&gt; 75  1  1  1  1  1  1    1 1  1  1   1   1   1   0
-#&gt; 40  1  1  1  1  1  1    1 1  1  1   1   1   0   1
-#&gt; 44  1  1  1  1  1  1    1 1  1  1   1   0   1   1
-#&gt; 41  1  1  1  1  1  1    1 1  1  1   1   0   0   2
-#&gt; 23  1  1  1  1  1  1    1 1  1  1   0   1   1   1
-#&gt; 32  1  1  1  1  1  1    1 1  1  1   0   1   0   2
-#&gt; 22  1  1  1  1  1  1    1 1  1  1   0   0   1   2
-#&gt; 18  1  1  1  1  1  1    1 1  1  1   0   0   0   3
-#&gt; 14  1  1  1  1  1  1    1 1  1  0   1   1   1   1
-#&gt; 15  1  1  1  1  1  1    1 1  1  0   1   1   0   2
-#&gt; 2   1  1  1  1  1  1    1 1  1  0   1   0   1   2
-#&gt; 3   1  1  1  1  1  1    1 1  1  0   1   0   0   3
-#&gt; 10  1  1  1  1  1  1    1 1  1  0   0   1   1   2
-#&gt; 12  1  1  1  1  1  1    1 1  1  0   0   1   0   3
-#&gt; 4   1  1  1  1  1  1    1 1  1  0   0   0   1   3
-#&gt; 1   1  1  1  1  1  1    1 1  1  0   0   0   0   4
-#&gt; 5   1  1  1  1  1  1    1 1  0  1   1   1   1   1
-#&gt; 2   1  1  1  1  1  1    1 1  0  1   1   1   0   2
-#&gt; 2   1  1  1  1  1  1    1 1  0  1   1   0   1   2
-#&gt; 3   1  1  1  1  1  1    1 1  0  1   1   0   0   3
-#&gt; 3   1  1  1  1  1  1    1 1  0  1   0   1   1   2
-#&gt; 1   1  1  1  1  1  1    1 1  0  1   0   1   0   3
-#&gt; 4   1  1  1  1  1  1    1 1  0  1   0   0   1   3
-#&gt; 1   1  1  1  1  1  1    1 1  0  1   0   0   0   4
-#&gt; 1   1  1  1  1  1  1    1 1  0  0   1   0   1   3
-#&gt; 3   1  1  1  1  1  1    1 1  0  0   1   0   0   4
-#&gt;     0  0  0  0  0  0    0 0 25 65 131 149 172 542</div><div class='input'>
+<span class='fu'>md_pattern</span>(<span class='no'>longDF</span>, <span class='kw'>print_ylab</span> <span class='kw'>=</span> <span class='no'>F</span>)</div><div class='img'><img src='md_pattern-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

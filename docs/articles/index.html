@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find default imputation methods and order — get_imp_meth • JointAI</title>
+<title>Articles • JointAI</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,7 @@
 
 
 
-<meta property="og:title" content="Find default imputation methods and order — get_imp_meth" />
-
-<meta property="og:description" content="Find default imputation methods and order" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Articles" />
 
 
 
@@ -49,7 +46,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-article-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -118,66 +115,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find default imputation methods and order</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/get_imp_method.R'><code>R/get_imp_method.R</code></a></small>
-    <div class="hidden name"><code>get_imp_meth.Rd</code></div>
+      <h1>Articles</h1>
     </div>
 
-    <div class="ref-description">
-    
-    <p>Find default imputation methods and order</p>
-    
+    <div class="section ">
+      <h3>All vignettes</h3>
+      <p class="section-desc"></p>
+
+      <ul>
+        <li><a href="VisualizingIncompleteData.html">Visualizing Incomplete Data</a></li>
+      </ul>
     </div>
-
-    <pre class="usage"><span class='fu'>get_imp_meth</span>(<span class='no'>fixed</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>data</span>, <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>fixed</th>
-      <td><p>a two sided (fixed effects) model formula (see <code><a href='http://www.rdocumentation.org/packages/stats/topics/formula'>formula</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>random</th>
-      <td><p>only for <code>lme_imp</code>:
-a one-sided formula of the form <code>~x1 + ... + xn | g</code>,
-where <code>x1 + ... + xn</code> specifies the model for the random
-effects and <code>g</code> the grouping variable</p></td>
-    </tr>
-    <tr>
-      <th>data</th>
-      <td><p>a data frame</p></td>
-    </tr>
-    <tr>
-      <th>auxvars</th>
-      <td><p>optional vector of variable names that should be used as
-predictors in the imputation procedure (and will be imputed
-if necessary) but are not part of the analysis model</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>a named vector containing those variables in <code>data</code>
-        that have missing values and their assigned default imputation methods,
-        sorted by proportion of missing values</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>get_imp_meth</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>B2</span> + <span class='no'>O2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>)</div><div class='output co'>#&gt;           O2           M2           C2           B2 
-#&gt;   "cumlogit" "multilogit"       "norm"      "logit" </div></pre>
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
   </div>
 </div>
 

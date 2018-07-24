@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
       </span>
     </div>
 
@@ -75,6 +75,18 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -194,17 +206,17 @@ Posterior predictive assessment of model fitness via realized discrepancies.
 <span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>GR_crit</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; Potential scale reduction factors:
 #&gt; 
 #&gt;             Point est. Upper C.I.
-#&gt; (Intercept)      1.000       1.00
-#&gt; C1               1.010       1.04
-#&gt; M22              1.003       1.01
-#&gt; M23              0.999       1.01
-#&gt; M24              1.001       1.01
-#&gt; C2               1.003       1.00
-#&gt; sigma_y          1.003       1.02
+#&gt; (Intercept)      1.005       1.03
+#&gt; C1               1.002       1.02
+#&gt; M22              0.999       1.00
+#&gt; M23              1.002       1.02
+#&gt; M24              1.011       1.04
+#&gt; C2               1.017       1.05
+#&gt; sigma_y          1.002       1.02
 #&gt; 
 #&gt; Multivariate psrf
 #&gt; 
-#&gt; 1.01</div><div class='input'>
+#&gt; 1.03</div><div class='input'>
 
 </div></pre>
   </div>

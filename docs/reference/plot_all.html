@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find default imputation methods and order — get_imp_meth • JointAI</title>
+<title>Visualize the distribution of all variables in the dataset — plot_all • JointAI</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="Find default imputation methods and order — get_imp_meth" />
+<meta property="og:title" content="Visualize the distribution of all variables in the dataset — plot_all" />
 
-<meta property="og:description" content="Find default imputation methods and order" />
+<meta property="og:description" content="Plots a grid of histograms (for continuous variables) and barplots (for
+categorical variables) together with the proportion of missing values and
+the name of each variable." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,63 +120,70 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find default imputation methods and order</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/get_imp_method.R'><code>R/get_imp_method.R</code></a></small>
-    <div class="hidden name"><code>get_imp_meth.Rd</code></div>
+    <h1>Visualize the distribution of all variables in the dataset</h1>
+    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/plots.R'><code>R/plots.R</code></a></small>
+    <div class="hidden name"><code>plot_all.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Find default imputation methods and order</p>
+    <p>Plots a grid of histograms (for continuous variables) and barplots (for
+categorical variables) together with the proportion of missing values and
+the name of each variable.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_imp_meth</span>(<span class='no'>fixed</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>data</span>, <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_all</span>(<span class='no'>data</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/grDevices/topics/gray'>grey</a></span>(<span class='fl'>0.8</span>),
+  <span class='kw'>border</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>allNA</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"frequency"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>fixed</th>
-      <td><p>a two sided (fixed effects) model formula (see <code><a href='http://www.rdocumentation.org/packages/stats/topics/formula'>formula</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>random</th>
-      <td><p>only for <code>lme_imp</code>:
-a one-sided formula of the form <code>~x1 + ... + xn | g</code>,
-where <code>x1 + ... + xn</code> specifies the model for the random
-effects and <code>g</code> the grouping variable</p></td>
-    </tr>
-    <tr>
       <th>data</th>
-      <td><p>a data frame</p></td>
+      <td><p>a data frame (or a matrix)</p></td>
     </tr>
     <tr>
-      <th>auxvars</th>
-      <td><p>optional vector of variable names that should be used as
-predictors in the imputation procedure (and will be imputed
-if necessary) but are not part of the analysis model</p></td>
+      <th>nrow, ncol</th>
+      <td><p>number of rows and columns in the plot layout;
+automatically chosen if unspecified</p></td>
+    </tr>
+    <tr>
+      <th>fill</th>
+      <td><p>color the histograms and bars are filled with</p></td>
+    </tr>
+    <tr>
+      <th>border</th>
+      <td><p>color of the borders of the histograms and bars</p></td>
+    </tr>
+    <tr>
+      <th>allNA</th>
+      <td><p>logical; if <code>FALSE</code> (default) the proportion of missing
+values is only given for variables that have missing values,
+if <code>TRUE</code> it is given for all variables</p></td>
+    </tr>
+    <tr>
+      <th>xlab, ylab</th>
+      <td><p>labels of the x- and y-axis</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional parameters passed to <code><a href='http://www.rdocumentation.org/packages/graphics/topics/barplot'>barplot</a></code>
+and <code><a href='http://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a></code></p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>a named vector containing those variables in <code>data</code>
-        that have missing values and their assigned default imputation methods,
-        sorted by proportion of missing values</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>get_imp_meth</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>B2</span> + <span class='no'>O2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>)</div><div class='output co'>#&gt;           O2           M2           C2           B2 
-#&gt;   "cumlogit" "multilogit"       "norm"      "logit" </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>par</span>(<span class='kw'>mar</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>1</span>), <span class='kw'>mgp</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>0.6</span>, <span class='fl'>0</span>))
+<span class='fu'>plot_all</span>(<span class='no'>wideDF</span>)</div><div class='img'><img src='plot_all-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

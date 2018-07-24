@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
       </span>
     </div>
 
@@ -75,6 +75,18 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -221,14 +233,14 @@ John Wiley &amp; Sons.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                 est  MCSE    SD MCSE/SD
-#&gt; (Intercept)  33.859 1.076 24.75   0.043
-#&gt; C1          -25.617 0.756 17.27   0.044
-#&gt; M22          -0.361 0.049  0.70   0.070
-#&gt; M23           0.095 0.038  0.66   0.057
-#&gt; M24          -1.190 0.046  0.68   0.067
-#&gt; C2            0.969 0.040  0.65   0.061
-#&gt; sigma_y       2.223 0.013  0.17   0.079</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                est  MCSE    SD MCSE/SD
+#&gt; (Intercept)  36.86 1.155 23.71   0.049
+#&gt; C1          -27.74 0.805 16.53   0.049
+#&gt; M22          -0.36 0.051  0.69   0.075
+#&gt; M23           0.14 0.044  0.69   0.064
+#&gt; M24          -1.11 0.045  0.74   0.061
+#&gt; C2            0.86 0.047  0.68   0.068
+#&gt; sigma_y       2.23 0.010  0.15   0.066</div><div class='input'>
 
 </div></pre>
   </div>
