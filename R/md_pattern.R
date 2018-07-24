@@ -12,6 +12,7 @@
 #' @param ylab y-axis label
 #' @inheritParams ggplot2::theme
 #' @param ... optional additional parameters, currently not used
+#' @importFrom rlang .data
 #' @export
 #'
 #' @examples
@@ -20,7 +21,9 @@
 #' par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
 #' md_pattern(longDF, print_ylab = F)
 #'
-md_pattern <- function(data, color = c(grey(0.1), grey(0.7)), border = grey(0.5),
+md_pattern <- function(data, color = c(grDevices::grey(0.1),
+                                       grDevices::grey(0.7)),
+                       border = grDevices::grey(0.5),
                        plot = TRUE, pattern = FALSE, print_xaxis = TRUE,
                        ylab = 'Number of observations per pattern',
                        print_yaxis = TRUE, legend.position = 'bottom', ...) {
@@ -55,38 +58,39 @@ md_pattern <- function(data, color = c(grey(0.1), grey(0.7)), border = grey(0.5)
     if (!"reshape2" %in% rownames(installed.packages()))
       stop("This function requires the 'ggplot2' package to be installed.")
 
-    library(ggplot2)
 
     if (print_yaxis == FALSE) {
       ylab <- ''
     }
 
-    p <- ggplot(reshape2::melt(unaX), aes(Var2, Var1, fill = as.character(value))) +
-      geom_tile(color = border) +
-      scale_y_continuous(position = 'right',
+    p <- ggplot2::ggplot(reshape2::melt(unaX),
+                         ggplot2::aes(.data$Var2, .data$Var1,
+                                      fill = as.character(.data$value))) +
+      ggplot2::geom_tile(color = border) +
+      ggplot2::scale_y_continuous(position = 'right',
                          breaks = length(Npat):1,
                          labels = if (print_yaxis) Npat else rep('', length(Npat)),
                          expand = c(0,0)) +
-      scale_x_continuous(position = 'top',
+      ggplot2::scale_x_continuous(position = 'top',
                          breaks = 1:ncol(unaX),
                          labels = vars,
                          sec.axis = if (print_xaxis)
-                           sec_axis(~.,
+                           ggplot2::sec_axis(~.,
                                     name = 'Number of missing values',
                                     breaks = 1:ncol(unaX),
-                                    labels = Nmis) else waiver(),
+                                    labels = Nmis) else ggplot2::waiver(),
                          expand = c(0, 0)) +
-      scale_fill_manual(name = '',
+      ggplot2::scale_fill_manual(name = '',
                         limits = c(1, 0),
                         values = color,
                         labels = c('observed', 'missing')) +
-      theme(legend.position = legend.position,
-            panel.background = element_blank(),
-            panel.grid = element_blank(),
-            axis.ticks = element_blank(),
-            axis.text.x.top = element_text(angle = -90, hjust = 1)) +
-      ylab(ylab) +
-      xlab('')
+      ggplot2::theme(legend.position = legend.position,
+            panel.background = ggplot2::element_blank(),
+            panel.grid = ggplot2::element_blank(),
+            axis.ticks = ggplot2::element_blank(),
+            axis.text.x.top = ggplot2::element_text(angle = -90, hjust = 1)) +
+      ggplot2::ylab(ylab) +
+      ggplot2::xlab('')
     print(p)
   }
 
@@ -97,6 +101,7 @@ md_pattern <- function(data, color = c(grey(0.1), grey(0.7)), border = grey(0.5)
           Nmis = c(Nmis, sum(Nmis)))
   }
 }
+
 
 # md_pattern <- function(data, plot = TRUE, xlab = "", ylab = "",
 #                       xaxis_pars = list(), yaxis_pars = list(), printN = TRUE,

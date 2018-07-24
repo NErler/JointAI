@@ -4,10 +4,10 @@
 \alias{md_pattern}
 \title{Missing data pattern}
 \usage{
-md_pattern(data, color = c(grey(0.1), grey(0.7)), border = grey(0.5),
-  plot = TRUE, pattern = FALSE, print_xaxis = TRUE,
-  ylab = "Number of observations per pattern", print_yaxis = TRUE,
-  legend.position = "bottom", ...)
+md_pattern(data, color = c(grDevices::grey(0.1), grDevices::grey(0.7)),
+  border = grDevices::grey(0.5), plot = TRUE, pattern = FALSE,
+  print_xaxis = TRUE, ylab = "Number of observations per pattern",
+  print_yaxis = TRUE, legend.position = "bottom", ...)
 }
 \arguments{
 \item{data}{data frame}

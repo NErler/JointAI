@@ -212,7 +212,7 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 #'
 #' @export
 
-plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grey(0.8),
+plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8),
                      border = 'black', allNA = FALSE,
                      xlab = '', ylab = 'frequency', ...) {
 

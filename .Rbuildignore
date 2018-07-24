@@ -4,8 +4,7 @@
 ^README\.Rmd$
 ^README-.*\.png$
 ^inst/WORDLIST$
-^inst/ideas.*$
+^inst/Ideas\.*$
 ^cran-comments\.md$
 ^docs$
-^inst$
 ^_pkgdown.yml$

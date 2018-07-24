@@ -1,5 +1,5 @@
 Package: JointAI
-Version: 0.2.0
+Version: 0.2.1
 Title: Joint Analysis and Imputation of Incomplete Data
 Authors@R: person("Nicole S.", "Erler", email = "n.erler@erasmusmc.nl",
                   role = c("aut", "cre"))
@@ -18,7 +18,7 @@ BugReports: https://github.com/nerler/JointAI
 LazyData: TRUE
 RoxygenNote: 6.0.1
 Depends: rjags (>= 4-6)
-Imports: MASS, mcmcse, coda
+Imports: MASS, mcmcse, coda, rlang
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
 Suggests: knitr, rmarkdown, foreign, ggplot2, reshape2
 VignetteBuilder: knitr

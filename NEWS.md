@@ -1,5 +1,4 @@
-# JointAI development version
-## Bug fixes
+# JointAI 0.2.1
 
 ## Minor changes
 * `md.pattern()` now uses ggplot, which scales better than the previous version
@@ -8,7 +7,7 @@
 * `plot_all()` function added
 
 
-
+--------------------------------------------------------------------------------
 # JointAI 0.2.0
 ## Bug fixes
 * `md_pattern()`: does not generate duplicate plot any more
