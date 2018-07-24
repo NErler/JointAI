@@ -128,10 +128,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 }
 
 
-
-
-
-
+# Helpfunction for densityplot and traceplot
 plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL,
                       nrow = NULL, ncol = NULL) {
   if (is.null(start))
@@ -190,4 +187,82 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 
   return(list(MCMC = MCMC, ask = ask, nrow = nrow, ncol = ncol,
               thin = thin, time = time, subset = subset))
+}
+
+
+#' Visualize the distribution of all variables in the dataset
+#'
+#' Plots a grid of histograms (for continuous variables) and barplots (for
+#' categorical variables) together with the proportion of missing values and
+#' the name of each variable.
+#' @param data a data frame (or a matrix)
+#' @param nrow,ncol number of rows and columns in the plot layout;
+#'                  automatically chosen if unspecified
+#' @param fill color the histograms and bars are filled with
+#' @param border color of the borders of the histograms and bars
+#' @param allNA logical; if \code{FALSE} (default) the proportion of missing
+#'              values is only given for variables that have missing values,
+#'              if \code{TRUE} it is given for all variables
+#' @param xlab,ylab labels of the x- and y-axis
+#' @param ... additional parameters passed to \code{\link[graphics]{barplot}}
+#'            and \code{\link[graphics]{hist}}
+#' @examples
+#' par(mar = c(1,2,3,1), mgp = c(2, 0.6, 0))
+#' plot_all(wideDF)
+#'
+#' @export
+
+plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grey(0.8),
+                     border = 'black', allNA = FALSE,
+                     xlab = '', ylab = 'frequency', ...) {
+
+  args <- as.list(match.call())
+  args <- args[!names(args) %in% names(formals(plot_all))]
+  args_hist <- unlist(args[names(args) %in% names(formals(hist.default))])
+  args_barplot <- unlist(args[names(args) %in% names(formals(barplot.default))])
+
+  # get number of rows and columns of plots
+  if (is.null(nrow) & is.null(ncol)) {
+    dims <- grDevices::n2mfrow(ncol(data))
+  } else if (is.null(nrow) & !is.null(ncol)) {
+    dims <- c(ceiling(ncol(data)/ncol), ncol)
+  } else if (is.null(ncol) & !is.null(nrow)) {
+    dims <- c(ncol, ceiling(ncol(data)/nrow))
+  }
+
+  op <- par(mfrow = dims)
+  for (i in 1:ncol(data)) {
+    # specify plot title, including % missing values for incomplete variables
+    main <- if (any(is.na(data[, i])) | allNA) {
+      paste0(names(data)[i], " (", round(mean(is.na(data[, i]))*100, 1), "% NA)")
+    } else {
+      names(data)[i]
+    }
+
+    if (is.factor(data[, i])) {
+      if (any(is.na(data[, i]))) {
+        x <- factor(data[, i], levels = c(levels(data[, i]), "NA"), ordered = T)
+        x[is.na(x)] <- "NA"
+      } else {
+        x <- data[, i]
+      }
+      if (is.null(args_barplot)) {
+        barplot(table(x), ylab = ylab, main = main, col = fill,
+                border = border, xlab = xlab)
+      } else {
+        barplot(table(x), ylab = ylab, main = main, col = fill,
+                border = border, xlab = xlab, args_barplot)
+      }
+    } else {
+      if (is.null(args_hist)) {
+        hist(data[, i], ylab = ylab, main = main,
+             col = fill, border = border, xlab = xlab)
+      } else {
+        hist(data[, i], ylab = ylab, main = main,
+             col = fill, border = border, xlab = xlab, args_hist)
+      }
+    }
+  }
+
+  par(op)
 }

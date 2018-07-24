@@ -1,3 +1,13 @@
+# JointAI development version
+## Bug fixes
+
+## Minor changes
+
+## Extensions
+* `plot_all()` function added
+
+
+
 # JointAI 0.2.0
 ## Bug fixes
 * `md_pattern()`: does not generate duplicate plot any more

@@ -1,7 +1,5 @@
 # JointAI (version 0.2.0)
 
----
-
 ## Round 1
 
 ### Test environments
