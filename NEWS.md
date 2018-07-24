@@ -2,6 +2,7 @@
 ## Bug fixes
 
 ## Minor changes
+* `md.pattern()` now uses ggplot, which scales better than the previous version
 
 ## Extensions
 * `plot_all()` function added
