@@ -8,7 +8,8 @@
 densplot(object, ...)
 
 \method{densplot}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
-  subset = "main", vlines = NULL, nrow = NULL, ncol = NULL, ...)
+  subset = "main", vlines = NULL, nrow = NULL, ncol = NULL,
+  joined = FALSE, use_ggplot = FALSE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class \code{JointAI}}
@@ -42,6 +43,10 @@ same length as the number of plots (see examples).}
 
 \item{ncol}{optional; number of columns in the plotting layout
 (determined automatically if not specified)}
+
+\item{joined}{logical; should the chains be combined before plotting?}
+
+\item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
 }
 \description{
 Plots a set of densities (per MC chain and coefficient) from the MCMC sample

@@ -8,7 +8,7 @@
 traceplot(object, ...)
 
 \method{traceplot}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
-  subset = "main", nrow = NULL, ncol = NULL, ...)
+  subset = "main", nrow = NULL, ncol = NULL, use_ggplot = FALSE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class \code{JointAI}}
@@ -66,6 +66,8 @@ and random effects covariance matrix).}
 
 \item{ncol}{optional; number of columns in the plotting layout
 (determined automatically if not specified)}
+
+\item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
 }
 \description{
 Creates a set of traceplots from the MCMC sample of an object of class JointAI

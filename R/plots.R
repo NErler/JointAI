@@ -18,6 +18,7 @@
 #'             (determined automatically if not specified)
 #' @param ncol optional; number of columns in the plotting layout
 #'             (determined automatically if not specified)
+#' @param use_ggplot logical; Should ggplot be used instead of the base graphics?
 #' @inheritDotParams graphics::matplot -x -y -type -xlab -ylab -pch -log
 #' @name traceplot
 #'
@@ -35,19 +36,35 @@ traceplot <- function(object, ...) {
 #' @rdname traceplot
 #' @export
 traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
-                              subset = "main", nrow = NULL, ncol = NULL, ...) {
+                              subset = "main", nrow = NULL, ncol = NULL,
+                              use_ggplot = FALSE, ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin, subset = subset,
                     nrow = nrow, ncol = ncol)
 
-  op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(3.2, 2.5, 2, 1),
-            mgp = c(2, 0.6, 0), ask = prep$ask)
 
-  for (i in 1:nvar(prep$MCMC)) {
-    matplot(x = prep$time, as.array(prep$MCMC)[, i, ], type = "l", xlab = "Iterations", ylab = "",
-            main = colnames(prep$MCMC[[1]])[i], ...)
+  if (use_ggplot) {
+    meltMCMC <- reshape2::melt(lapply(prep$MCMC, as.matrix),
+                               varnames = c('iteration',
+                                            'variable'))
+    meltMCMC$chain <- factor(meltMCMC$L1)
+
+
+    ggplot2::ggplot(meltMCMC,
+                    ggplot2::aes(.data$iteration, .data$value, color = .data$chain)) +
+      ggplot2::geom_line() +
+      ggplot2::facet_wrap('variable', scales = 'free')
+  } else {
+    op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(3.2, 2.5, 2, 1),
+              mgp = c(2, 0.6, 0), ask = prep$ask)
+
+    for (i in 1:nvar(prep$MCMC)) {
+      matplot(x = prep$time, as.array(prep$MCMC)[, i, ], type = "l",
+              xlab = "Iterations", ylab = "",
+              main = colnames(prep$MCMC[[1]])[i], ...)
+    }
+    par(op)
   }
-  par(op)
 }
 
 
@@ -63,6 +80,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #'               Each of the list elements needs to contain at least
 #'               \code{v = <x location>}, where <x location> is a vector of the
 #'               same length as the number of plots (see examples).
+#' @param joined logical; should the chains be combined before plotting?
 #' @param ... additional parameters passed to \code{\link[graphics]{plot}}
 #' @examples
 #'
@@ -91,40 +109,55 @@ densplot <- function(object, ...) {
 #' @export
 densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                              subset = "main", vlines = NULL, nrow = NULL,
-                             ncol = NULL, ...) {
+                             ncol = NULL, joined = FALSE, use_ggplot = FALSE, ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin,
                     subset = subset, nrow = nrow, ncol = ncol)
 
+  if (joined)
+    prep$MCMC <- as.mcmc.list(as.mcmc(do.call(rbind, prep$MCMC)))
 
-  op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(3, 3, 2, 1),
-            mgp = c(2, 0.6, 0), ask = prep$ask)
-  for (i in 1:ncol(prep$MCMC[[1]])) {
-    dens <- lapply(prep$MCMC[, i], density)
-    vline_range <- if (is.list(vlines[[1]])) {
-      lapply(lapply(vlines, "[[", "v"), "[", i)
-    }else{
-      vlines$v
-    }
-    plot(NULL,
-         xlim = range(lapply(dens, "[[", "x"), vline_range, na.rm = TRUE),
-         ylim = range(lapply(dens, "[[", "y"), na.rm = TRUE),
-         main = colnames(prep$MCMC[[1]])[i],
-         xlab = "", ylab = "density", ...
-    )
 
-    for (j in 1:length(prep$MCMC)) {
-      lines(dens[[j]], col = j)
-    }
-    if (!is.null(vlines)) {
-      for (l in 1:length(vlines)) {
-        args <- if (is.list(vlines[[l]])) vlines[[l]] else vlines
-        args$v <- args$v[i]
-        do.call(abline, args)
+  if (use_ggplot) {
+    meltMCMC <- reshape2::melt(lapply(prep$MCMC, as.matrix),
+                               varnames = c('iteration',
+                                            'variable'))
+    meltMCMC$chain <- factor(meltMCMC$L1)
+
+
+    ggplot2::ggplot(meltMCMC, ggplot2::aes(.data$value, color = .data$chain)) +
+      ggplot2::geom_density() +
+      ggplot2::facet_wrap('variable', scales = 'free')
+  } else {
+    op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(3, 3, 2, 1),
+              mgp = c(2, 0.6, 0), ask = prep$ask)
+    for (i in 1:ncol(prep$MCMC[[1]])) {
+      dens <- lapply(prep$MCMC[, i], density)
+      vline_range <- if (is.list(vlines[[1]])) {
+        lapply(lapply(vlines, "[[", "v"), "[", i)
+      }else{
+        vlines$v
+      }
+      plot(NULL,
+           xlim = range(lapply(dens, "[[", "x"), vline_range, na.rm = TRUE),
+           ylim = range(lapply(dens, "[[", "y"), na.rm = TRUE),
+           main = colnames(prep$MCMC[[1]])[i],
+           xlab = "", ylab = "density", ...
+      )
+
+      for (j in 1:length(prep$MCMC)) {
+        lines(dens[[j]], col = j)
+      }
+      if (!is.null(vlines)) {
+        for (l in 1:length(vlines)) {
+          args <- if (is.list(vlines[[l]])) vlines[[l]] else vlines
+          args$v <- args$v[i]
+          do.call(abline, args)
+        }
       }
     }
+    par(op)
   }
-  par(op)
 }
 
 
