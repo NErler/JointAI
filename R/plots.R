@@ -206,6 +206,8 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 #' @param xlab,ylab labels of the x- and y-axis
 #' @param ... additional parameters passed to \code{\link[graphics]{barplot}}
 #'            and \code{\link[graphics]{hist}}
+#'
+#' @seealso Vignette: \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
 #' @examples
 #' par(mar = c(1,2,3,1), mgp = c(2, 0.6, 0))
 #' plot_all(wideDF)

@@ -35,9 +35,11 @@ y-axis (on the right) be printed?}
 Plot the pattern of missing data.
 }
 \examples{
+par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
 md_pattern(wideDF)
 
-par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
-md_pattern(longDF, print_ylab = F)
 
+}
+\seealso{
+Vignette: \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
 }

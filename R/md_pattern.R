@@ -13,13 +13,14 @@
 #' @inheritParams ggplot2::theme
 #' @param ... optional additional parameters, currently not used
 #' @importFrom rlang .data
+#'
+#' @seealso Vignette: \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
 #' @export
 #'
 #' @examples
+#' par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
 #' md_pattern(wideDF)
 #'
-#' par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
-#' md_pattern(longDF, print_ylab = F)
 #'
 md_pattern <- function(data, color = c(grDevices::grey(0.1),
                                        grDevices::grey(0.7)),

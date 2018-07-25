@@ -36,3 +36,6 @@ par(mar = c(1,2,3,1), mgp = c(2, 0.6, 0))
 plot_all(wideDF)
 
 }
+\seealso{
+Vignette: \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
+}
