@@ -84,6 +84,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/BasicExample.html">Minimal Example</a>
+    </li>
+    <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
     </li>
   </ul>
@@ -199,17 +202,17 @@ and random effects covariance matrix).</p></td>
 #&gt; lm_imp(formula = y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #&gt; 
 #&gt; Posterior summary:
-#&gt;                  Mean      SD     2.5%    97.5% tail-prob.
-#&gt; (Intercept)  35.52422 25.4853 -17.4679 89.26885    0.20000
-#&gt; C1          -26.77464 17.7901 -64.8850 10.25333    0.14000
-#&gt; M22          -0.39415  0.7018  -1.8914  0.96885    0.56000
-#&gt; M23           0.09649  0.6942  -1.3076  1.35554    0.90000
-#&gt; M24          -1.22085  0.6950  -2.5066  0.06818    0.07333
-#&gt; C2            0.87308  0.6652  -0.4155  2.17918    0.18667
+#&gt;                  Mean      SD     2.5%   97.5% tail-prob.
+#&gt; (Intercept)  35.90966 26.2740 -16.1505 86.5434    0.14000
+#&gt; C1          -27.02063 18.3260 -62.4985  8.9485    0.10667
+#&gt; M22          -0.42690  0.6413  -1.6405  0.8266    0.50667
+#&gt; M23           0.05881  0.6711  -1.1772  1.3386    0.97333
+#&gt; M24          -1.20822  0.6911  -2.6570  0.1250    0.06667
+#&gt; C2            1.03367  0.6758  -0.1911  2.4654    0.11333
 #&gt; 
 #&gt; Posterior summary of residual std. deviation:
 #&gt;          Mean     SD  2.5% 97.5%
-#&gt; sigma_y 2.248 0.1709 1.954 2.593
+#&gt; sigma_y 2.218 0.1602 1.959 2.552
 #&gt; 
 #&gt; 
 #&gt; MCMC settings:

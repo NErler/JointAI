@@ -84,6 +84,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/BasicExample.html">Minimal Example</a>
+    </li>
+    <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
     </li>
   </ul>
@@ -133,7 +136,7 @@
 
 <span class='co'># S3 method for JointAI</span>
 <span class='fu'>traceplot</span>(<span class='no'>object</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='st'>"main"</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='st'>"main"</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,6 +211,10 @@ and random effects covariance matrix).</p></td>
       <th>ncol</th>
       <td><p>optional; number of columns in the plotting layout
 (determined automatically if not specified)</p></td>
+    </tr>
+    <tr>
+      <th>use_ggplot</th>
+      <td><p>logical; Should ggplot be used instead of the base graphics?</p></td>
     </tr>
     </table>
     

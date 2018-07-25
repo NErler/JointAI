@@ -30,13 +30,19 @@ investigate the pattern of missing values.
 Currently, the package **JointAI** has two function that help this fist
 exploration of an unknown dataset.
 
+In this vignette, we use the NHANES data that are part of the **JointAI** package.
+For more info on this data, check the
+[help file](https://nerler.github.io/JointAI/reference/NHANES.html) for the NHANES data or
+go to the [web page of the National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/index.htm).
+
+
 ## Visualize the distribution of each variable
 Using `plot_all()`, an array of histograms (for continuous variables) and
 barplots (for categorical variables) can be obtained.
 
-```{r, fig.height = 7}
+```{r, fig.height = 8}
 par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
-plot_all(wideDF)
+plot_all(NHANES)
 ```
 
 **Note:** Here, we are looking at the marginal distribution of each variable.
@@ -64,17 +70,17 @@ It is also possible to provide some of the other arguments of [`hist()`](https:/
 or [`barplot()`](https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/barplot.html).
 
 For example:
-```{r, fig.width = 8, fig.height = 10}
+```{r, fig.width = 8, fig.height = 6}
 par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
-plot_all(wideDF, allNA = TRUE, fill = '#18bc9c', border = '#2C3E50',
-         ncol = 3, nclass = 30)
+plot_all(NHANES, allNA = TRUE, fill = '#18bc9c', border = '#2C3E50',
+         ncol = 4, nclass = 30)
 ```
 
 
 ## Missing Data Pattern
 The pattern of the missing data can be visualized with the function `md_pattern()`:
 ```{r, fig.height = 6}
-md_pattern(wideDF)
+md_pattern(NHANES)
 ```
 
 In the resulting plot, variables are given in the columns and each row corresponds
@@ -94,7 +100,7 @@ When the argument `pattern = TRUE` is set, the missing data pattern is returned
 as a matrix, where observed values are represented by a `1` and missing values
 by a `0`:
 ```{r}
-md_pattern(wideDF, pattern = T, plot = F)
+md_pattern(NHANES, pattern = T, plot = F)
 ```
 
 
@@ -117,7 +123,7 @@ To change the title of the y-axis, you can change the argument `ylab`. Setting
 missing data pattern.
 
 ```{r, fig.height = 5}
-md_pattern(wideDF, color = c('#2C3E50', '#E74C3C'), border = 'white',
+md_pattern(NHANES, color = c('#2C3E50', '#E74C3C'), border = 'white',
            legend.position = 'none', print_xaxis = FALSE, 
            ylab = 'Alternative axis title')
 ```

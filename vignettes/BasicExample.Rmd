@@ -1,0 +1,146 @@
+---
+title: "Minimal Example"
+author: "Nicole Erler"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Basic Example & Visualization of the MCMC sample}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = '100%'
+)
+
+library(JointAI)
+```
+
+In this vignette, we use the NHANES data that are part of the **JointAI** package.
+For more info on this data, check the
+[help file](https://nerler.github.io/JointAI/reference/NHANES.html) for the NHANES data,
+go to the [web page of the National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/index.htm) and check out the vignette 
+[Visualizing Incomplete Data](https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html),
+in which the NHANES data is explored.
+
+##  Fitting a linear regression model
+To fit a linear regression model with **JointAI** is straightforward with the
+function `lm_imp()`:
+```{r fit_lm1, cache = T, message = F}
+lm1 <- lm_imp(SBP ~ gender + age + race + WC + alc + educ + creat +
+                albu + uricacid + bili,
+              data = NHANES, n.iter = 500)
+```
+
+The specification of `lm_imp()` is similar to the specification of a
+linear regression model for complete data using `lm()`. In this minimal example
+the only difference is that for `lm_imp()` the number of iterations `n.iter`
+has to be specified. Of course there are many more parameters that can or should
+be specified, but we will look at that later.
+
+`n.iter` specifies the length of the [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain)
+does, i.e., the number of draws from the posterior distribution of the parameter
+or unobserved value.
+
+How many iterations are necessary depends on the data and complexity of the
+model and can vary from as few as 100 up to thousands or millions. 
+
+One important criterion is that the Markov chains need to have converged.
+This can be evaluated visually with a traceplot.
+
+## Traceplot
+```{r results_lm1, fig.width = 8, fig.height = 5, out.width = '100%'}
+traceplot(lm1)
+```
+
+The function `traceplot()` produces a plot of the sampled values accross 
+iterations per parameter. By default, three Markov chains are produced for
+each parameter and represented by different colors.
+
+When the sampler has converged the chains show a horizontal band, as in the
+above figure. Consequently, when traces show a trend, convergence has not been
+reached  and more iterations are necessary (e.g., using
+[`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.html)).
+
+When convergence has been achieved, we can obtain the result of the model
+from the model summary.
+
+## Model Summary
+Results from a JointAI model can be printed using
+```{r}
+summary(lm1)
+```
+
+The output gives the posterior summary, i.e., the summary of the 
+MCMC ([Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo))
+sample (which consists of all Markov chains combined.
+
+By default, `summary()` will only print the posterior summary for the main
+model parameters of the analysis model.
+
+This summary consists of the posterior mean, the standard deviation and the 
+2.5% and 97.5% quantiles of the MCMC sample, and the tail probability.
+The tail probability is a measure of how likely the value 0 is under the 
+estimated posterior distribution, and is calculated as 
+\[2\times\min\left\{Pr(\theta > 0), Pr(\theta < 0)\right\}\]
+(where $\theta$ is the parameter of interest).
+
+In the following graphics, the shaded areas represent the minimum of 
+$Pr(\theta > 0)$ and $Pr(\theta < 0)$:
+```{r, echo = F, fig.width = 8, fig.height = 2}
+par(mfrow = c(1, 3), mgp = c(1, 0.6, 0), mar = c(2.5, 1, 2, 1))
+mus <- c(1, -1.5, -2.5)
+
+for (i in seq_along(mus)) {
+  x <- seq(-3.5, 3.5, length = 1000) + mus[i]
+  y <- dnorm(x, mean = mus[i])
+  
+  plot(x,y, type  = 'l', yaxt = 'n', xaxt = 'n',
+       xlab = expression(theta), ylab = "",
+       main = paste0('tail prob. = ', round(2*pnorm(0, abs(mus[i])), 3)))
+  
+  if (mus[i] > 0) {
+    polygon(x = c(x[x < 0], max(x[x < 0])),
+            y = c(y[x < 0], min(y)), col = "#18bc9c", border = NA)
+  } else {
+    polygon(x = c(x[x > 0], min(x[x > 0])),
+            y = c(y[x > 0], min(y)), col = "#18bc9c", border = NA)
+  }
+  lines(x,y)
+  axis(side = 1, at = 0)
+  abline(v = 0, lty = 2)
+}
+```
+
+
+Additionally, some important characteristics of the MCMC samples on which the
+summary is based, is given. This includes the range and number of iterations
+(= `Sample size per chain`), thinning interval and number of chains.
+
+Furthermore, the number of observations (the sample size of the data) is given.
+
+With the arguments `start`, `end` and `thin` it is possible to
+select which iterations from the MCMC sample are included in the summary.
+
+For example: When the traceplot shows that the chains only converged after
+1500 iterations, `start = 1500` should be specified in `summary()`.
+
+## Plot of the posterior distributions
+The posterior distributions can be visualized using the function `densplot()`:
+```{r, fig.width = 8, fig.height = 5}
+densplot(lm1)
+```
+
+By default, `densplot()` plots the empirical distribution of each of the chains
+separately. When `joined = TRUE` the distributions of the combined chains
+are plotted.
+
+```{r, fig.width = 8, fig.height = 5}
+densplot(lm1, joined = T)
+```
+

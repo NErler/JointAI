@@ -84,6 +84,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/BasicExample.html">Minimal Example</a>
+    </li>
+    <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
     </li>
   </ul>
@@ -206,17 +209,17 @@ Posterior predictive assessment of model fitness via realized discrepancies.
 <span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>GR_crit</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; Potential scale reduction factors:
 #&gt; 
 #&gt;             Point est. Upper C.I.
-#&gt; (Intercept)      1.005       1.03
-#&gt; C1               1.002       1.02
-#&gt; M22              0.999       1.00
-#&gt; M23              1.002       1.02
-#&gt; M24              1.011       1.04
-#&gt; C2               1.017       1.05
-#&gt; sigma_y          1.002       1.02
+#&gt; (Intercept)      0.998       1.00
+#&gt; C1               1.008       1.04
+#&gt; M22              0.997       1.00
+#&gt; M23              1.007       1.02
+#&gt; M24              1.003       1.01
+#&gt; C2               1.006       1.02
+#&gt; sigma_y          1.009       1.03
 #&gt; 
 #&gt; Multivariate psrf
 #&gt; 
-#&gt; 1.03</div><div class='input'>
+#&gt; 1.02</div><div class='input'>
 
 </div></pre>
   </div>

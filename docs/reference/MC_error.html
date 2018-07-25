@@ -84,6 +84,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/BasicExample.html">Minimal Example</a>
+    </li>
+    <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
     </li>
   </ul>
@@ -233,14 +236,14 @@ John Wiley &amp; Sons.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                est  MCSE    SD MCSE/SD
-#&gt; (Intercept)  36.86 1.155 23.71   0.049
-#&gt; C1          -27.74 0.805 16.53   0.049
-#&gt; M22          -0.36 0.051  0.69   0.075
-#&gt; M23           0.14 0.044  0.69   0.064
-#&gt; M24          -1.11 0.045  0.74   0.061
-#&gt; C2            0.86 0.047  0.68   0.068
-#&gt; sigma_y       2.23 0.010  0.15   0.066</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                 est  MCSE    SD MCSE/SD
+#&gt; (Intercept)  35.839 1.375 23.73   0.058
+#&gt; C1          -27.006 0.959 16.56   0.058
+#&gt; M22          -0.366 0.027  0.70   0.039
+#&gt; M23           0.082 0.039  0.69   0.056
+#&gt; M24          -1.143 0.037  0.70   0.052
+#&gt; C2            0.908 0.051  0.68   0.076
+#&gt; sigma_y       2.230 0.010  0.15   0.067</div><div class='input'>
 
 </div></pre>
   </div>
