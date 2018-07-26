@@ -299,7 +299,15 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
   if (is.null(monitor_params)) {
     monitor_params <- c("analysis_main" = TRUE)
-  }
+  } else {
+    if (!is.null(scale_pars) & any(grepl('beta[', unlist(monitor_params), fixed = T))) {
+      monitor_params <- c(sapply(monitor_params, function(x) {
+        if (any(grepl('beta[', x, fixed = TRUE)))
+          x[-grep('beta[', x, fixed = TRUE)]
+        else x}, simplify = F),
+        analysis_main = TRUE)
+      message('Note: Main model parameter were added to the list of parameters to follow.')
+    }}
   var.names <- do.call(get_params, c(list(meth = meth, analysis_type = analysis_type,
                                           family = family,
                                           y_name = colnames(Mlist$y),
@@ -323,7 +331,10 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
     MCMC <- mcmc
     for (k in 1:length(MCMC)) {
-      colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <- coefs[, 2]
+      # change names of MCMC to variable names where possible
+      colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <-
+        coefs[na.omit(match(colnames(MCMC[[k]]), coefs[, 1])), 2]
+
       if (!is.null(scale_pars)) {
         # re-scale parameters
         MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
