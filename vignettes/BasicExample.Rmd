@@ -31,7 +31,7 @@ in which the NHANES data is explored.
 ##  Fitting a linear regression model
 To fit a linear regression model with **JointAI** is straightforward with the
 function `lm_imp()`:
-```{r fit_lm1, cache = T, message = F}
+```{r fit_lm1, cache = F, message = F}
 lm1 <- lm_imp(SBP ~ gender + age + race + WC + alc + educ + creat +
                 albu + uricacid + bili,
               data = NHANES, n.iter = 500)
