@@ -7,6 +7,7 @@
 * `plot_all()` function added
 * `densplot()` and `traceplot()` optional with ggplot
 * `densplot()` option to combine chains before plotting
+* example datasets `NHANES`, `simLong` and `simWide` added
 
 
 --------------------------------------------------------------------------------
