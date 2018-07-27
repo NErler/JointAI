@@ -164,6 +164,9 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 # Helpfunction for densityplot and traceplot
 plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL,
                       nrow = NULL, ncol = NULL) {
+  if(is.null(object$sample))
+    stop("There is no MCMC sample.")
+
   if (is.null(start))
     start <- start(object$sample)
 
