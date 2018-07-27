@@ -25,7 +25,7 @@
 # @export
 get_params <- function(meth, analysis_type, family,
                        Xc, Xcat, Xtrafo, y_name = NULL, Zcols = NULL,
-                       analysis_main = FALSE,
+                       analysis_main = TRUE,
                        analysis_random = FALSE,
                        imp_pars = FALSE,
                        imps = NULL,
