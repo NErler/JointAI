@@ -376,6 +376,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   return(structure(
     list(analysis_type = analysis_type,
+         family = family,
+         link = link,
          data = data, meth = meth, fixed = fixed, random = random,
          Mlist = Mlist,
          refcats = Mlist$refs, K = K, K_imp = K_imp,
