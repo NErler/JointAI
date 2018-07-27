@@ -15,7 +15,7 @@ impmodel_logit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, ...)
   predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
 
   paste0(tab(), "# logistic model for ", varname,"\n",
-         tab(), "Xc[i, ", dest_col, "] ~ dbern(max(1e-10, min(1-1e-10, p_", varname, "[i])))", "\n",
+         tab(), "Xc[i, ", dest_col, "] ~ dbern(max(1e-7, min(1-1e-7, p_", varname, "[i])))", "\n",
          tab(), "logit(p_", varname, "[i]) <- ", predictor, "\n\n")
 }
 
