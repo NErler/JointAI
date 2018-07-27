@@ -15,7 +15,7 @@ impmodel_cumlogit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, d
   predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
 
   probs <- sapply(2:(ncat - 1), function(k){
-    paste0(tab(), "p_", varname, "[i, ", k, "] <- max(1e-6, min(0.999999, psum_",
+    paste0(tab(), "p_", varname, "[i, ", k, "] <- max(1e-10, min(1-1e-10, psum_",
            varname, "[i, ", k,"] - psum_", varname, "[i, ", k - 1, "]))")})
 
   logits <- sapply(1:(ncat - 1), function(k) {
@@ -28,9 +28,9 @@ impmodel_cumlogit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, d
   paste0(tab(), "# ordinal model for ", varname, "\n",
          tab(), "Xcat[i, ", dest_col, "] ~ dcat(p_", varname, "[i, 1:", ncat, "])", "\n",
          tab(), "eta_", varname,"[i] <- ", predictor, "\n\n",
-         tab(), "p_", varname, "[i, 1] <- max(1e-6, min(0.999999, psum_", varname, "[i, 1]))", "\n",
+         tab(), "p_", varname, "[i, 1] <- max(1e-10, min(1-1e-10, psum_", varname, "[i, 1]))", "\n",
          paste(probs, collapse = "\n"), "\n",
-         tab(), "p_", varname, "[i, ", ncat, "] <- 1 - max(1e-6, min(0.999999, sum(p_",
+         tab(), "p_", varname, "[i, ", ncat, "] <- 1 - max(1e-10, min(1-1e-10, sum(p_",
          varname, "[i, 1:", ncat - 1,"])))", "\n\n",
          paste0(logits, collapse = "\n"), "\n\n",
          paste0(dummies, collapse = "\n"), "\n\n")

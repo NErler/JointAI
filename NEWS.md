@@ -2,6 +2,7 @@
 
 ## Bug fixes
 * `monitor_params` is now checked to avoid problems when only part of the main parameters is selected
+* categorical imputation models now use min-max trick to prevent probabilities outside [0, 1]
 
 ## Minor changes
 * `md.pattern()` now uses ggplot, which scales better than the previous version

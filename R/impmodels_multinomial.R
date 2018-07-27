@@ -26,7 +26,7 @@ impmodel_multilogit <- function(varname, dest_col, Xc_cols, par_elmts, par_name,
   dummies <- paste_dummies(c(1:ncat)[-refcat], dest_col, dummy_cols)
 
   paste0(tab(), "# multinomial model for ", varname, "\n",
-         tab(), "Xcat[i, ", dest_col, "] ~ dcat(p_", varname, "[i, 1:", ncat, "])", "\n\n",
+         tab(), "Xcat[i, ", dest_col, "] ~ dcat(min(1-1e-10, max(1e-10, p_", varname, "[i, 1:", ncat, "])))", "\n\n",
          paste(probs, collapse = "\n"), "\n\n",
          paste0(logs, collapse = "\n"), "\n\n",
          paste0(dummies, collapse = "\n"), "\n\n")
