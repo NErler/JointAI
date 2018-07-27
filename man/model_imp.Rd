@@ -9,19 +9,19 @@
 \usage{
 lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
   monitor_params = NULL, inits = TRUE, modelname = NULL,
-  modeldir = NULL, overwrite = FALSE, keep_model = FALSE, quiet = TRUE,
+  modeldir = NULL, overwrite = NULL, keep_model = FALSE, quiet = TRUE,
   progress.bar = "text", warn = TRUE, auxvars = NULL, meth = NULL,
   refcats = NULL, scale_vars = NULL, hyperpars = NULL, ...)
 
 glm_imp(formula, family, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
-  modeldir = NULL, overwrite = FALSE, keep_model = FALSE, quiet = TRUE,
+  modeldir = NULL, overwrite = NULL, keep_model = FALSE, quiet = TRUE,
   progress.bar = "text", warn = TRUE, auxvars = NULL, meth = NULL,
   refcats = NULL, scale_vars = NULL, hyperpars = NULL, ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
-  modeldir = NULL, overwrite = FALSE, keep_model = FALSE, quiet = TRUE,
+  modeldir = NULL, overwrite = NULL, keep_model = FALSE, quiet = TRUE,
   progress.bar = "text", warn = TRUE, auxvars = NULL, meth = NULL,
   refcats = NULL, scale_vars = NULL, hyperpars = NULL, ...)
 }

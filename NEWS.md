@@ -6,6 +6,7 @@
 
 ## Minor changes
 * `md.pattern()` now uses ggplot, which scales better than the previous version
+* `lm_imp()`, `glm_imp()` and `lme_imp()` now ask about overwriting a model file
 
 ## Extensions
 * `plot_all()` function added

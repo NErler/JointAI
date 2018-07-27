@@ -164,7 +164,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                       monitor_params = NULL, inits = TRUE,
                       modelname = NULL, modeldir = NULL,
-                      overwrite = FALSE, keep_model = FALSE,
+                      overwrite = NULL, keep_model = FALSE,
                       quiet = TRUE, progress.bar = "text", warn = FALSE,
                       auxvars = NULL, meth = NULL, refcats = NULL,
                       scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
@@ -255,6 +255,23 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
   # write model ----------------------------------------------------------------
+  if (file.exists(modelfile) & is.null(overwrite)) {
+    question_asked <- TRUE
+    warning(gettextf("\nThe file %s already exists in %s.",
+                     dQuote(modelname), dQuote(modeldir)),
+            call. = FALSE, immediate. = TRUE)
+    reply <- menu(c('yes', 'no'),
+                  title = "\nDo you want me to overwrite this file?")
+    if (reply == 1) {
+      message('The modelfile was overwritten.')
+    overwrite = TRUE
+    } else {
+      overwrite = FALSE
+      message('The old model will be used.')
+    }
+    message("To skip this question in the future, set 'overwrite = TRUE' or 'overwrite = FALSE'.")
+  }
+
   if (!file.exists(modelfile) | (file.exists(modelfile) & overwrite == TRUE)) {
     write_model(analysis_type = analysis_type, family = family,
                 link = link, meth = meth, Ntot = nrow(Mlist$y),
@@ -262,14 +279,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                 y_name = names(Mlist$y), Mlist = Mlist, K = K,
                 imp_par_list = imp_par_list,
                 file = modelfile)
-  } else {
-    if (warn)
-    warning(gettextf("\nThe file %s already exists and no new model was written.",
-                     dQuote(modelfile)),
-            "\nTo overwrite the model set 'overwrite = TRUE'.",
-            call. = FALSE, immediate. = TRUE)
   }
-
 
   if (is.null(data_list)) {
     data_list <- try(get_data_list(analysis_type, family, link, meth, Mlist, K, auxvars,
@@ -388,7 +398,7 @@ lm_imp <- function(formula, data,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                    monitor_params = NULL, inits = TRUE,
                    modelname = NULL, modeldir = NULL,
-                   overwrite = FALSE, keep_model = FALSE,
+                   overwrite = NULL, keep_model = FALSE,
                    quiet = TRUE, progress.bar = "text", warn = TRUE,
                    auxvars = NULL, meth = NULL, refcats = NULL,
                    scale_vars = NULL, hyperpars = NULL, ...){
@@ -429,7 +439,7 @@ glm_imp <- function(formula, family, data,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                     monitor_params = NULL, inits = TRUE,
                     modelname = NULL, modeldir = NULL,
-                    overwrite = FALSE, keep_model = FALSE,
+                    overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     auxvars = NULL, meth = NULL, refcats = NULL,
                     scale_vars = NULL, hyperpars = NULL, ...){
@@ -495,7 +505,7 @@ lme_imp <- function(fixed, data, random,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                     monitor_params = NULL, inits = TRUE,
                     modelname = NULL, modeldir = NULL,
-                    overwrite = FALSE, keep_model = FALSE,
+                    overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     auxvars = NULL, meth = NULL, refcats = NULL,
                     scale_vars = NULL, hyperpars = NULL, ...){
