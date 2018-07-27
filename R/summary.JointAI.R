@@ -29,7 +29,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                             quantiles = c(0.025, 0.975), subset = "main", ...) {
 
   if (is.null(object$sample))
-    stop("No mcmc sample.")
+    stop("There is no mcmc sample.")
 
 
   if (is.null(start)) {
