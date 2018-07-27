@@ -3,10 +3,14 @@
 ## Bug fixes
 * `monitor_params` is now checked to avoid problems when only part of the main parameters is selected
 * categorical imputation models now use min-max trick to prevent probabilities outside [0, 1]
+* initial value generation for logistic analysis model fixed
+* `lm_imp()`, `glm_imp()` and `lme_imp()` return family and link that was used (needed in for `add_sample`)
+
 
 ## Minor changes
 * `md.pattern()` now uses ggplot, which scales better than the previous version
 * `lm_imp()`, `glm_imp()` and `lme_imp()` now ask about overwriting a model file
+* `analysis_main = T` stays selected when other parameters are followed as well
 
 ## Extensions
 * `plot_all()` function added
