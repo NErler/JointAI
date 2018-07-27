@@ -301,7 +301,6 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   # run JAGS -----------------------------------------------------------------
   t0 <- Sys.time()
   if (any(n.adapt > 0, n.iter > 0)) {
-    rjags::load.module("glm")
 
     adapt <- try(rjags::jags.model(file = modelfile, data = data_list,
                                    inits = inits, quiet = quiet,
@@ -539,4 +538,8 @@ lme_imp <- function(fixed, data, random,
   res$call <- match.call()
 
   return(res)
+}
+
+.onLoad <- function(libname, pkgname) {
+  rjags::load.module("glm", quiet = TRUE)
 }
