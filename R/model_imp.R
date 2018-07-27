@@ -272,7 +272,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     message("To skip this question in the future, set 'overwrite = TRUE' or 'overwrite = FALSE'.")
   }
 
-  if (!file.exists(modelfile) | (file.exists(modelfile) & overwrite == TRUE)) {
+  if (!file.exists(modelfile) || (file.exists(modelfile) & overwrite == TRUE)) {
     write_model(analysis_type = analysis_type, family = family,
                 link = link, meth = meth, Ntot = nrow(Mlist$y),
                 N = nrow(Mlist$Xc),
