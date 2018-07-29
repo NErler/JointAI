@@ -11,6 +11,8 @@
 * `md.pattern()` now uses ggplot, which scales better than the previous version
 * `lm_imp()`, `glm_imp()` and `lme_imp()` now ask about overwriting a model file
 * `analysis_main = T` stays selected when other parameters are followed as well
+* `get_MIdat()`: argument `include` added to select if original data are included
+  and id variable `.id` is added to the dataset
 
 ## Extensions
 * `plot_all()` function added

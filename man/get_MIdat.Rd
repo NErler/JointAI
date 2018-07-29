@@ -4,25 +4,27 @@
 \alias{get_MIdat}
 \title{Extract multiple imputed datasets (and export to SPSS)}
 \usage{
-get_MIdat(object, m = 10, start = NULL, seed = NULL, resdir = NULL,
-  filename = NULL, export_to_SPSS = FALSE)
+get_MIdat(object, m = 10, include = TRUE, start = NULL, seed = NULL,
+  export_to_SPSS = FALSE, resdir = NULL, filename = NULL)
 }
 \arguments{
 \item{object}{object inheriting from class \code{JointAI}}
 
 \item{m}{number of imputed datasets}
 
+\item{include}{should the original, incomplete data be included?}
+
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
 \item{seed}{optional seed}
+
+\item{export_to_SPSS}{logical; should the completed data be exported to SPSS?}
 
 \item{resdir}{optional directory for results (if unspecified and
 \code{export_to_SPSS = TRUE} the current working directory is used)}
 
 \item{filename}{optional file name (without ending; if unspecified and
 \code{export_to_SPSS = TRUE} a name is generated automatically)}
-
-\item{export_to_SPSS}{logical}
 }
 \value{
 A dataframe containing the imputed values (and original data) stacked.
