@@ -69,7 +69,7 @@ impmodel_lognorm <- function(varname, dest_col, dest_mat, Xc_cols, par_elmts, pa
   indent <- nchar(varname) + 12
   predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
 
-  paste0(tab(), "# normal model for ", varname, "\n",
+  paste0(tab(), "# Log-normal model for ", varname, "\n",
          tab(), "Xc[i, ", dest_col, "] ~ dlnorm(mu_", varname, "[i], tau_", varname,")", "\n",
          tab(), "mu_", varname,"[i] <- ", predictor, "\n\n")
 }
@@ -104,7 +104,7 @@ impmodel_gamma <- function(varname, dest_col, dest_mat, Xc_cols, par_elmts, par_
   indent <- nchar(varname) + 12
   predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
 
-  paste0(tab(), "# gamma model for ", varname, "\n",
+  paste0(tab(), "# Gamma model for ", varname, "\n",
          tab(), "Xc[i, ", dest_col, "] ~ dgamma(shape_", varname, "[i], rate_", varname, "[i])", "\n",
          tab(), "log(mu_", varname,"[i]) <- ", predictor, "\n",
          tab(), "shape_", varname,"[i] <- pow(mu_", varname, "[i], 2) / pow(sigma_", varname, ", 2)", "\n",

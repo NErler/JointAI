@@ -123,41 +123,41 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
 #' \tabular{ll}{
 #' \code{mu_reg_main} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_main} \tab precision in the priors for regression coefficients\cr
-#' \code{a_tau_main} \tab scale parameter in gamma prior for precision of outcome\cr
-#' \code{b_tau_main} \tab rate parameter in gamma prior for precision of outcome\cr
+#' \code{a_tau_main} \tab scale parameter in Gamma prior for precision of outcome\cr
+#' \code{b_tau_main} \tab rate parameter in Gamma prior for precision of outcome\cr
 #' }
 #'
 #' \strong{Z:} hyperparameters for the random effects in mixed models
 #' \tabular{ll}{
 #' \code{RinvD} \tab scale matrix in Wishart prior (*) for random effects covariance matrix\cr
 #' \code{KinvD} \tab degrees of freedom in Wishart prior for random effects covariance matrix\cr
-#' \code{a_diag_RinvD} \tab scale parameter in gamma prior for the diagonal elements of \code{RinvD}\cr
-#' \code{b_diag_RinvD} \tab rate parameter in gamma prior for the diagonal elements of \code{RinvD}\cr
+#' \code{a_diag_RinvD} \tab scale parameter in Gamma prior for the diagonal elements of \code{RinvD}\cr
+#' \code{b_diag_RinvD} \tab rate parameter in Gamma prior for the diagonal elements of \code{RinvD}\cr
 #' }
-#' (*) when there is only one random effect a gamma distribution is used instead of the Wishart
+#' (*) when there is only one random effect a Gamma distribution is used instead of the Wishart
 #'
 #' \strong{norm:} hyperparameters for normal and lognormal imputation models
 #' \tabular{ll}{
 #' \code{mu_reg_norm} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_norm} \tab precision in the priors for regression coefficients\cr
-#' \code{a_tau_norm} \tab scale parameter in gamma prior for precision of imputed variable\cr
-#' \code{b_tau_norm} \tab rate parameter in gamma prior for precision of imputed variable\cr
+#' \code{a_tau_norm} \tab scale parameter in Gamma prior for precision of imputed variable\cr
+#' \code{b_tau_norm} \tab rate parameter in Gamma prior for precision of imputed variable\cr
 #' }
 #'
-#' \strong{gamma:} hyperparameters for gamma imputation models
+#' \strong{gamma:} hyperparameters for Gamma imputation models
 #' \tabular{ll}{
 #' \code{mu_reg_gamma} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_gamma} \tab precision in the priors for regression coefficients\cr
-#' \code{a_tau_gamma} \tab scale parameter in gamma prior for precision of imputed variable\cr
-#' \code{b_tau_gamma} \tab rate parameter in gamma prior for precision of imputed variable\cr
+#' \code{a_tau_gamma} \tab scale parameter in Gamma prior for precision of imputed variable\cr
+#' \code{b_tau_gamma} \tab rate parameter in Gamma prior for precision of imputed variable\cr
 #' }
 #'
 #' \strong{beta:} hyperparameters for beta imputation models
 #' \tabular{ll}{
 #' \code{mu_reg_beta} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_beta} \tab precision in the priors for regression coefficients\cr
-#' \code{a_tau_beta} \tab scale parameter in gamma prior for precision of imputed variable\cr
-#' \code{b_tau_beta} \tab rate parameter in gamma prior for precision of imputed variable\cr
+#' \code{a_tau_beta} \tab scale parameter in Gamma prior for precision of imputed variable\cr
+#' \code{b_tau_beta} \tab rate parameter in Gamma prior for precision of imputed variable\cr
 #' }
 #'
 #' \strong{logit:} hyperparameters for logistic imputation models
