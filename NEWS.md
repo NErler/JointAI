@@ -17,6 +17,7 @@
 * `densplot()` and `traceplot()` optional with ggplot
 * `densplot()` option to combine chains before plotting
 * example datasets `NHANES`, `simLong` and `simWide` added
+* `list_impmodels` to print information on the imputation models and hyperparameters
 
 
 --------------------------------------------------------------------------------
