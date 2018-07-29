@@ -28,6 +28,16 @@
 #' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #' traceplot(mod)
 #'
+#' # ggplot option
+#' traceplot(mod, use_ggplot = TRUE)
+#'
+#' library(ggplot2)
+#' traceplot(mod, use_ggplot = TRUE) +
+#' theme(legend.position = 'botto') +
+#' xlab('iteration') +
+#' ylab('value') +
+#' scale_color_discrete(name = 'chain')
+#'
 #' @export
 traceplot <- function(object, ...) {
   UseMethod("traceplot")
@@ -98,6 +108,15 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' densplot(mod, vlines = list(list(v = summary(mod)$stats[, "Mean"], lty = 1, lwd = 2),
 #'                             list(v = summary(mod)$stats[, "2.5%"], lty = 2),
 #'                             list(v = summary(mod)$stats[, "97.5%"], lty = 2)))
+#'
+#' # ggplot version
+#' densplot(mod, use_ggplot = TRUE)
+#'
+#' library(ggplot2)
+#' densplot(mod, use_ggplot = TRUE) +
+#' xlab("value") +
+#' theme(legend.position = 'bottom') +
+#' scale_color_brewer(palette = 'Dark2', name = 'chain')
 #'
 #' @export
 densplot <- function(object, ...) {

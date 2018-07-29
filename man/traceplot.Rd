@@ -76,6 +76,16 @@ Creates a set of traceplots from the MCMC sample of an object of class JointAI
 mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 traceplot(mod)
 
+# ggplot option
+traceplot(mod, use_ggplot = TRUE)
+
+library(ggplot2)
+traceplot(mod, use_ggplot = TRUE) +
+theme(legend.position = 'botto') +
+xlab('iteration') +
+ylab('value') +
+scale_color_discrete(name = 'chain')
+
 }
 \seealso{
 \code{\link{summary.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},

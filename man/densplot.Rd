@@ -69,4 +69,13 @@ densplot(mod, vlines = list(list(v = summary(mod)$stats[, "Mean"], lty = 1, lwd 
                             list(v = summary(mod)$stats[, "2.5\%"], lty = 2),
                             list(v = summary(mod)$stats[, "97.5\%"], lty = 2)))
 
+# ggplot version
+densplot(mod, use_ggplot = TRUE)
+
+library(ggplot2)
+densplot(mod, use_ggplot = TRUE) +
+xlab("value") +
+theme(legend.position = 'bottom') +
+scale_color_brewer(palette = 'Dark2', name = 'chain')
+
 }
