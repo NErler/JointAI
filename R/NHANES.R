@@ -10,7 +10,7 @@
 #' demonstration of the functionality of the JointAI package,
 #' and no clinical conclusions should be derived from it.
 #'
-#' @format A data frame with 198 rows and 11 variables:
+#' @format A data frame with 186 rows and 13 variables:
 #' \describe{
 #'   \item{SBP}{systolic blood pressure}
 #'   \item{gender}{male or female}
@@ -23,6 +23,8 @@
 #'   \item{albu}{albumin concentration in g/dL}
 #'   \item{uricacid}{uric acid concentration in mg/dL}
 #'   \item{bili}{bilirubin concentration in mg/dL}
+#'   \item{occup}{occupational status (3 categories)}
+#'   \item{smoke}{smoking status (3 ordered categories)}
 #'   }
 #'
 #' @usage data(NHANES)

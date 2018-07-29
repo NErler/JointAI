@@ -6,9 +6,9 @@
 \alias{simLong}
 \alias{simWide}
 \title{Simulated Longitudinal Data in Long and Wide Format}
-\format{\code{simLong}: A data frame in long format with 3903 rows and 12 variables
+\format{\code{simLong}: A data frame in long format with 3908 rows and 13 variables
 
-\code{simWide}: A data frame in wide format with 500 rows and 44 variables}
+\code{simWide}: A data frame in wide format with 500 rows and 45 variables}
 \usage{
 simLong
 
@@ -35,6 +35,7 @@ with information on the mothers' demographics and socioeconomic status.
                (3 ordered categories: never smoked during pregnancy,
                 smoked until pregnancy was known, continued smoking in pregnancy)}
   \item{EDUC}{educational level of the mother (3 ordered categories: low, mid, high)}
+  \item{MARITAL}{marital status (3 categories)}
   \item{ID}{subject identifier}
   }
 }
