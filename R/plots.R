@@ -131,12 +131,12 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     meltMCMC$chain <- factor(meltMCMC$L1)
 
 
-    ggplot2::ggplot(meltMCMC, ggplot2::aes(.data$value, color = .data$chain)) +
+    ggplot2::ggplot(meltMCMC, ggplot2::aes(value, color = chain)) +
       ggplot2::geom_density() +
       ggplot2::facet_wrap('variable', scales = 'free')
   } else {
     op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(3, 3, 2, 1),
-              mgp = c(2, 0.6, 0), ask = prep$ask)
+              mgp = c(2, 0.6, 0))
     for (i in 1:ncol(prep$MCMC[[1]])) {
       dens <- lapply(prep$MCMC[, i], density)
       vline_range <- if (is.list(vlines[[1]])) {
@@ -182,52 +182,67 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
   if (is.null(thin))
     thin <- thin(object$sample)
 
-  MCMC <- window(object$sample, start = start, end = end, thin = thin)
+  MCMC <- get_subset(object, subset, as.list(match.call()), warn = warn)
+  MCMC <- window(MCMC,
+                 start = start,
+                 end = end,
+                 thin = thin)
+
+  # MCMC <- window(object$sample, start = start, end = end, thin = thin)
   time <- time(MCMC)
 
-  coefs <- get_coef_names(object$Mlist, object$K)
-  nams <- colnames(MCMC[[1]])
-  nams[match(coefs[, 1], nams)] <- coefs[, 2]
+  # coefs <- get_coef_names(object$Mlist, object$K)
+  # nams <- colnames(MCMC[[1]])
+  # nams[match(coefs[, 1], nams)] <- coefs[, 2]
+  #
+  # for (i in 1:length(MCMC)) {
+  #   colnames(MCMC[[i]]) <- nams
+  # }
 
-  for (i in 1:length(MCMC)) {
-    colnames(MCMC[[i]]) <- nams
+  # scale_pars <- object$scale_pars
+  # if (!is.null(scale_pars)) {
+  #   # re-scale parameters
+  #   MCMC <- as.mcmc.list(lapply(MCMC, function(i) {
+  #     as.mcmc(sapply(colnames(i), rescale, fixed2 = object$Mlist$fixed2, scale_pars = scale_pars,
+  #                    MCMC = i, refs = object$Mlist$refs, object$Mlist$X2_names,
+  #                    object$Mlist$trafos))
+  #   }))
+  # }
+
+  # if (!is.null(subset)) {
+  #   MCMC <- get_subset(subset, MCMC, object)
+  # }
+  #
+  #
+
+  # get number of rows and columns of plots
+  if (is.null(nrow) & is.null(ncol)) {
+    dims <- grDevices::n2mfrow(ncol(MCMC[[1]]))
+  } else if (is.null(nrow) & !is.null(ncol)) {
+    dims <- c(ceiling(ncol(MCMC[[1]])/ncol), ncol)
+  } else if (is.null(ncol) & !is.null(nrow)) {
+    dims <- c(ncol, ceiling(ncol(MCMC[[1]])/nrow))
   }
 
-  scale_pars <- object$scale_pars
-  if (!is.null(scale_pars)) {
-    # re-scale parameters
-    MCMC <- as.mcmc.list(lapply(MCMC, function(i) {
-      as.mcmc(sapply(colnames(i), rescale, fixed2 = object$Mlist$fixed2, scale_pars = scale_pars,
-                     MCMC = i, refs = object$Mlist$refs, object$Mlist$X2_names,
-                     object$Mlist$trafos))
-    }))
-  }
+  # ask <- ncol(MCMC[[1]]) > 30
+  #
+  # if (is.null(nrow)) {
+  #   if (is.null(ncol)) {
+  #     nrow <- floor(sqrt(ncol(MCMC[[1]])))
+  #   } else {
+  #     nrow <- ceiling(ncol(MCMC[[1]])/ncol)
+  #   }
+  # }
+  #
+  # if (is.null(ncol))
+  #   ncol <- ceiling(ncol(MCMC[[1]])/nrow)
+  #
+  # if (ask) {
+  #   nrow = 5
+  #   ncol = 6
+  # }
 
-  if (!is.null(subset)) {
-    MCMC <- get_subset(subset, MCMC, object)
-  }
-
-
-
-  ask <- ncol(MCMC[[1]]) > 30
-
-  if (is.null(nrow)) {
-    if (is.null(ncol)) {
-      nrow <- floor(sqrt(ncol(MCMC[[1]])))
-    } else {
-      nrow <- ceiling(ncol(MCMC[[1]])/ncol)
-    }
-  }
-
-  if (is.null(ncol))
-    ncol <- ceiling(ncol(MCMC[[1]])/nrow)
-
-  if (ask) {
-    nrow = 5
-    ncol = 6
-  }
-
-  return(list(MCMC = MCMC, ask = ask, nrow = nrow, ncol = ncol,
+  return(list(MCMC = MCMC, nrow = dims[1], ncol = dims[2],
               thin = thin, time = time, subset = subset))
 }
 
@@ -238,14 +253,12 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 #' categorical variables) together with the proportion of missing values and
 #' the name of each variable.
 #' @param data a data frame (or a matrix)
-#' @param nrow,ncol number of rows and columns in the plot layout;
-#'                  automatically chosen if unspecified
 #' @param fill color the histograms and bars are filled with
 #' @param border color of the borders of the histograms and bars
 #' @param allNA logical; if \code{FALSE} (default) the proportion of missing
 #'              values is only given for variables that have missing values,
 #'              if \code{TRUE} it is given for all variables
-#' @param xlab,ylab labels of the x- and y-axis
+#' @inheritParams sharedParams
 #' @param ... additional parameters passed to \code{\link[graphics]{barplot}}
 #'            and \code{\link[graphics]{hist}}
 #'
