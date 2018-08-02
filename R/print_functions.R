@@ -135,3 +135,48 @@ print_seq <- function(min, max) {
   else
     paste0(min, ":", max)
 }
+
+
+#' Parameter names of an JointAI object
+#' Returns the names of the parameters/nodes of an object of class JointAI.
+#' If the object does not contain any MCMC samples, the parameters/nodes for
+#' which a monitor is set is returned
+#'
+#' @inheritParams sharedParams
+#' @param ... currently not used
+#'
+#' @examples
+#' # (does not need MCMC samples to work, so we will set n.adapt = 0 and n.iter = 0
+#' to save computational time)
+#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0)
+#' variable.names(mod1)
+#'
+#' @export
+#'
+parameters <- function(object, mess = TRUE, warn = TRUE) {
+  if (!inherits(object, "JointAI"))
+    stop("Use only with 'JointAI' objects.\n")
+
+  args <- as.list(match.call())
+
+  if (is.null(object$MCMC)) {
+    if (mess)
+    message(paste0("'", args$object, "' does not contain MCMC samples."))
+  }
+
+  vnam <- object$mcmc_settings$variable.names
+  if ('beta' %in% vnam) {
+    pos <- grep('beta', vnam)
+    vnam <- append(vnam, unique(c(colnames(object$data_list$Xc),
+                                  colnames(object$data_list$Xl),
+                                  colnames(object$data_list$Xic),
+                                  colnames(object$data_list$Xil),
+                                  colnames(object$data_list$Z))),
+                   after = pos)[-pos]
+  }
+
+  # if (!is.null(object$MCMC) & !setequal(vnam, colnames(object$MCMC[[1]])))
+  #   stop('Difference beetween MCMC and vnam.')
+
+  return(vnam)
+}
