@@ -12,7 +12,6 @@
 #' @param ylab y-axis label
 #' @inheritParams ggplot2::theme
 #' @param ... optional additional parameters, currently not used
-#' @importFrom rlang .data
 #'
 #' @seealso Vignette: \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
 #' @export
@@ -65,8 +64,8 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
     }
 
     p <- ggplot2::ggplot(reshape2::melt(unaX),
-                         ggplot2::aes(.data$Var2, .data$Var1,
-                                      fill = as.character(.data$value))) +
+                         ggplot2::aes(Var2, Var1,
+                                      fill = as.character(value))) +
       ggplot2::geom_tile(color = border) +
       ggplot2::scale_y_continuous(position = 'right',
                          breaks = length(Npat):1,

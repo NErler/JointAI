@@ -552,6 +552,3 @@ lme_imp <- function(fixed, data, random,
   return(res)
 }
 
-.onLoad <- function(libname, pkgname) {
-  rjags::load.module("glm", quiet = TRUE)
-}
