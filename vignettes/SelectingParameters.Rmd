@@ -6,7 +6,7 @@ output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Monitoring Parameters}
+  %\VignetteIndexEntry{Parameter Selection}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -24,12 +24,14 @@ library(JointAI)
 ```
 
 ## Monitoring parameters
-**JointAI** uses JAGS for performing the MCMC sampling.
+**JointAI** uses [JAGS](http://mcmc-jags.sourceforge.net/)
+for performing the MCMC ([Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo)) sampling.
 Since JAGS only saves the values of MC chains for those parameters/variables for
 which the user has specified that they should be monitored, this is also the
 case in **JointAI**.
 
-For this purpose, `lm_imp()`, `glm_imp()` and `lme_imp()` have an argument
+For this purpose, [`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html), [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) and
+[`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) have an argument
 `monitor_params`.
 
 `monitor_params` takes a named list (often a named vector also works) with
@@ -139,7 +141,8 @@ list_impmodels(lm2)
 ```
 
 #### Side note: How to extract imputed datasets
-Imputed datasets can be extracted and exported with the function `get_MIdat()`.
+Imputed datasets can be extracted and exported with the function 
+[`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.html).
 A completed dataset is created by taking the imputed values from a randomly 
 chosen iteration of the MCMC sample (transforming them back to the original scale,
 if scaling had been performed during the MCMC sampling)
@@ -164,8 +167,8 @@ tab <- rbind(object = 'a JointAI object',
                                      " to SPSS, i.e., written as .txt and .sps file? ",
                                      "If `export_to_SPSS = FALSE` (default) the",
                                      " imputed data is only returned `data.frame`"),
-             filename = 'the name of the .txt and .sps files',
-             resdir = 'directory the files are exported to') 
+             resdir = 'directory the files are exported to',
+             filename = 'the name of the .txt and .sps files') 
 
 tab <- cbind(paste0("`", rownames(tab), "`"), tab)
 colnames(tab) <- c('argument', 'explanation')
@@ -235,7 +238,10 @@ parameters(lm4)
 
 
 ## Subsets of Parameters for Plots, Summaries, etc.
-The functions `summary()`, `traceplot()`, `densplot()`, `GR_crit()` and `MC_error()`
+The functions [`summary()`](https://nerler.github.io/JointAI/reference/summary.JointAI.html), [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html),
+[`densplot()`](https://nerler.github.io/JointAI/reference/densplot.html),
+[`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.html) and 
+[`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html)
 all have an argument `subset`. This argument allows to select a subset of 
 parameters to be shown in the output.
 Especially when not only the parameters of the main
