@@ -117,14 +117,18 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   }
 
   # re-order columns in Xc
-  Xc_seq <- c(which(colSums(is.na(Xc)) == 0),
-              unlist(lapply(names(meth), match_positions, DF, colnames(Xc)))
-  )
-  for (x in unique(trafos$var)) {
-    Xc_seq <- append(Xc_seq,
-                     match(trafos$Xc_var[trafos$var == x & trafos$Xc_var != x], colnames(Xc)),
-                     after = match(x, names(Xc_seq)))
+  colnams <- colnames(Xc)
+  for(i in seq_along(trafos$var)) {
+    colnams <- gsub(trafos$Xc_var[i], trafos$var[i], colnams, fixed = T)
   }
+  Xc_seq <- c(which(colSums(is.na(Xc)) == 0),
+              unlist(lapply(names(meth), match_positions, DF, colnams))
+  )
+  # for (x in unique(trafos$var)) {
+  #   Xc_seq <- append(Xc_seq,
+  #                    match(trafos$Xc_var[trafos$var == x & trafos$Xc_var != x], colnames(Xc)),
+  #                    after = match(x, names(Xc_seq)))
+  # }
 
   Xc_seq <- c(Xc_seq, which(!1:ncol(Xc) %in% Xc_seq))
 
