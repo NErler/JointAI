@@ -5,7 +5,9 @@
 # @param par_elmts elements of the parameter vector to be used
 # @param par_name name of the parameter
 # @export
-impmodel_normal <- function(varname, dest_col, dest_mat, trafo_cols, trafos, trfo_fct, Xc_cols, par_elmts, par_name, ...){
+impmodel_normal <- function(varname, dest_col, dest_mat, trafo_cols, trafos,
+                            trfo_fct, Xc_cols, par_elmts, par_name, mess = TRUE,
+                            ...){
 
   if (length(Xc_cols) != length(par_elmts)) {
     stop("The size of the design matrix and length of parameter vector do not match!")
@@ -22,13 +24,15 @@ impmodel_normal <- function(varname, dest_col, dest_mat, trafo_cols, trafos, trf
               any(!trafos$type[trafos$var == varname] %in% c("I", "identity", "exp"))) {
     "T(1e-10, 1e10)"
   }
-  if (!is.null(trunc))
+  if (!is.null(trunc)) {
+    if (mess)
     message(gettextf("Note: The imputation model for %s", dQuote(varname)),
             " will be restricted to be larger than 0 to prevent problems ",
             gettextf("in calculating %s.",
                      dQuote(trafos$Xc_var[trafos$var == varname &
                                             trafos$type %in% c("log", "sqrt")]))
     )
+  }
 
 
   paste0(tab(), "# normal model for ", varname, "\n",

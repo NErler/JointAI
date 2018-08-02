@@ -5,8 +5,8 @@
 \alias{plot.MCElist}
 \title{Monte Carlo error}
 \usage{
-MC_error(x, subset = "main", start = NULL, end = NULL, thin = NULL,
-  digits = 2, ...)
+MC_error(x, subset = NULL, start = NULL, end = NULL, thin = NULL,
+  digits = 2, warn = TRUE, ...)
 
 \method{plot}{MCElist}(x, scaled = TRUE, plotpars = NULL,
   ablinepars = list(v = 0.05), ...)
@@ -25,6 +25,10 @@ Defauls to the parameters of the analysis model.}
 \item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
 \item{digits}{number of digits for output}
+
+\item{warn}{logical; should warnings be given?; default is
+\code{TRUE}. Note: this applies only to warnings
+given directly by \strong{JointAI}.}
 
 \item{...}{Arguments passed on to \code{mcmcse::mcse.mat}
 \describe{

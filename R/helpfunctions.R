@@ -1,5 +1,5 @@
 # Extract id variable from random effects formula
-extract_id <- function(random) {
+extract_id <- function(random, warn = TRUE) {
   idmatch <- regexpr(pattern = "[[:print:]]*\\|[[:space:]]*",
                      deparse(random, width.cutoff = 500))
   if (idmatch > 0) {
@@ -11,6 +11,7 @@ extract_id <- function(random) {
   }
 
   if (is.null(id) & !is.null(random))
+    if (warn)
     warning('No "id" variable could be identified. I will assume that all observations are independent.',
             call. = FALSE, immediate. = TRUE)
   return(id)

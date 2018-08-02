@@ -17,8 +17,8 @@
 #'
 #' @export
 GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = TRUE,
-                    multivariate = TRUE, subset = "main", start = NULL, end = NULL,
-                    thin = NULL, ...) {
+                    multivariate = TRUE, subset = NULL,
+                    start = NULL, end = NULL, thin = NULL, warn = TRUE, ...) {
 
   if (!inherits(object, "JointAI"))
     stop("Object must be of class JointAI.")
@@ -86,8 +86,9 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #'
 #'
 #' @export
-MC_error <- function(x, subset = "main", start = NULL, end = NULL, thin = NULL,
-                     digits = 2, ...) {
+MC_error <- function(x, subset = NULL,
+                     start = NULL, end = NULL, thin = NULL,
+                     digits = 2, warn = TRUE, ...) {
 
   if (!inherits(x, "JointAI"))
     stop("x must be of class JointAI.")

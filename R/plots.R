@@ -30,11 +30,13 @@ traceplot <- function(object, ...) {
 #' @rdname traceplot
 #' @export
 traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
-                              subset = "main", nrow = NULL, ncol = NULL,
-                              use_ggplot = FALSE, ...) {
+                              subset = c(analysis_main = TRUE),
+                              nrow = NULL, ncol = NULL,
+                              use_ggplot = FALSE, warn = TRUE,
+                              ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin, subset = subset,
-                    nrow = nrow, ncol = ncol)
+                    nrow = nrow, ncol = ncol, warn = warn)
 
 
   if (use_ggplot) {
@@ -45,12 +47,12 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
     ggplot2::ggplot(meltMCMC,
-                    ggplot2::aes(.data$iteration, .data$value, color = .data$chain)) +
+                    ggplot2::aes(iteration, value, color = chain)) +
       ggplot2::geom_line() +
       ggplot2::facet_wrap('variable', scales = 'free')
   } else {
     op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(3.2, 2.5, 2, 1),
-              mgp = c(2, 0.6, 0), ask = prep$ask)
+              mgp = c(2, 0.6, 0))
 
     for (i in 1:nvar(prep$MCMC)) {
       matplot(x = prep$time, as.array(prep$MCMC)[, i, ], type = "l",
@@ -167,7 +169,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 # Helpfunction for densityplot and traceplot
 plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL,
-                      nrow = NULL, ncol = NULL) {
+                      nrow = NULL, ncol = NULL, warn = TRUE, ...) {
   if(is.null(object$sample))
     stop("There is no MCMC sample.")
 

@@ -118,7 +118,7 @@ get_trafo <- function(trafo_vec, dest_col) {
 # @param Xcat matrix of categorical covariates
 # @param refcats character string or named vector of reference categories for
 #                each categorical variable
-get_refcat <- function(varname, Xcat, refcats) {
+get_refcat <- function(varname, Xcat, refcats, mess = TRUE) {
   if (refcats %in% c("first", "largest")) {
     useval <- refcats
   } else if (refcats[varname] %in% c("first", "largest")) {
@@ -128,16 +128,18 @@ get_refcat <- function(varname, Xcat, refcats) {
       useval <- refcats[varname]
     } else {
       useval <- "largest"
-      message(gettextf("Wrong specification of the reference category for %s. Default used instead.",
-                       dQuote(varname)))
+      if (mess)
+        message(gettextf("Wrong specification of the reference category for %s. Default used instead.",
+                         dQuote(varname)))
 
     }
   } else if (is.character(refcats[varname])) {
     useval <- match(refcats[varname], names(Xcat))
     if (is.na(useval)) {
       useval <- "largest"
-      message(gettextf("Wrong specification of the reference category for %s. Default used instead.",
-                       dQuote(varname)))
+      if (mess)
+        message(gettextf("Wrong specification of the reference category for %s. Default used instead.",
+                         dQuote(varname)))
     }
   }
 

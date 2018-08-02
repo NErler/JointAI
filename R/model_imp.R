@@ -163,7 +163,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       monitor_params = NULL, inits = TRUE,
                       modelname = NULL, modeldir = NULL,
                       overwrite = NULL, keep_model = FALSE,
-                      quiet = TRUE, progress.bar = "text", warn = FALSE,
+                      quiet = TRUE, progress.bar = "text", warn = TRUE,
+                      mess = TRUE,
                       auxvars = NULL, meth = NULL, refcats = NULL,
                       scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                       MCMCpackage = "JAGS", analysis_type,
@@ -171,7 +172,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       dest_cols = NULL, imp_par_list = NULL,  data_list = NULL, ...) {
 
   # Checks & warnings -------------------------------------------------------
-  if (warn)
+  if (mess)
     message("This is new software. Please report any bug to the package maintainer.")
 
   if (missing(fixed)) {
@@ -186,7 +187,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
   if (n.iter == 0) {
-    if (warn)
+    if (mess)
       message("Note: No MCMC sample will be created when n.iter is set to 0.")
   }
 
@@ -208,7 +209,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   # check if initial values are supplied or should be generated
   if (!(is.null(inits) | inherits(inits, c("logical", "function", "list")))) {
-    warning("The object supplied to 'inits' could not be recognized.
+    if (warn)
+      warning("The object supplied to 'inits' could not be recognized.
             Default function to create initial values is used.")
     inits <- TRUE
   }
@@ -223,7 +225,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   if (is.null(Mlist)) {
     Mlist <- divide_matrices(data, fixed, random = random, auxvars = auxvars,
-                             scale_vars = scale_vars, refcats = refcats, meth = meth)
+                             scale_vars = scale_vars, refcats = refcats,
+                             meth = meth, warn = warn, mess = mess)
   }
 
   if (is.null(K)) {
@@ -255,18 +258,22 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   # write model ----------------------------------------------------------------
   if (file.exists(modelfile) & is.null(overwrite)) {
     question_asked <- TRUE
+    # This warning can not be switched off by warn = FALSE, because an input is required.
     warning(gettextf("\nThe file %s already exists in %s.",
                      dQuote(modelname), dQuote(modeldir)),
-            call. = FALSE, immediate. = TRUE)
+              call. = FALSE, immediate. = TRUE)
     reply <- menu(c('yes', 'no'),
                   title = "\nDo you want me to overwrite this file?")
     if (reply == 1) {
-      message('The modelfile was overwritten.')
+      if (mess)
+        message('The modelfile was overwritten.')
     overwrite = TRUE
     } else {
       overwrite = FALSE
-      message('The old model will be used.')
+      if (mess)
+        message('The old model will be used.')
     }
+    if (mess)
     message("To skip this question in the future, set 'overwrite = TRUE' or 'overwrite = FALSE'.")
   }
 
@@ -313,7 +320,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
           x[-grep('beta[', x, fixed = TRUE)]
         else x}, simplify = F),
         analysis_main = TRUE)
-      message('Note: Main model parameter were added to the list of parameters to follow.')
+      if (mess)
+        message('Note: Main model parameter were added to the list of parameters to follow.')
     }}
   var.names <- do.call(get_params, c(list(meth = meth, analysis_type = analysis_type,
                                           family = family,
@@ -399,6 +407,7 @@ lm_imp <- function(formula, data,
                    modelname = NULL, modeldir = NULL,
                    overwrite = NULL, keep_model = FALSE,
                    quiet = TRUE, progress.bar = "text", warn = TRUE,
+                   mess = TRUE,
                    auxvars = NULL, meth = NULL, refcats = NULL,
                    scale_vars = NULL, hyperpars = NULL, ...){
 
@@ -440,6 +449,7 @@ glm_imp <- function(formula, family, data,
                     modelname = NULL, modeldir = NULL,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
+                    mess = TRUE,
                     auxvars = NULL, meth = NULL, refcats = NULL,
                     scale_vars = NULL, hyperpars = NULL, ...){
 
@@ -506,6 +516,7 @@ lme_imp <- function(fixed, data, random,
                     modelname = NULL, modeldir = NULL,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
+                    mess = TRUE,
                     auxvars = NULL, meth = NULL, refcats = NULL,
                     scale_vars = NULL, hyperpars = NULL, ...){
 

@@ -6,7 +6,8 @@
 \title{Summary of an object of class JointAI}
 \usage{
 \method{summary}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
-  quantiles = c(0.025, 0.975), subset = "main", ...)
+  quantiles = c(0.025, 0.975), subset = NULL, warn = TRUE, mess = TRUE,
+  ...)
 
 \method{print}{summary.JointAI}(x, digits = max(3, .Options$digits - 3), ...)
 }

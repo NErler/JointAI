@@ -12,8 +12,9 @@
 # @export
 
 divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
-                            scale_vars = NULL, refcats = NULL, meth) {
-  id <- extract_id(random)
+                            scale_vars = NULL, refcats = NULL, meth, warn = TRUE,
+                            mess = TRUE, ...) {
+  id <- extract_id(random, warn = warn)
 
   groups <- if (!is.null(id)) {
     DF[, id]
