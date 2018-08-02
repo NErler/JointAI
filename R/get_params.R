@@ -24,7 +24,7 @@
 # @param imps logical
 # @export
 get_params <- function(meth, analysis_type, family,
-                       Xc, Xcat, Xtrafo, y_name = NULL, Zcols = NULL,
+                       Xc, Xcat, Xtrafo, y_name = NULL, y = NULL, Zcols = NULL, Z = NULL,
                        analysis_main = TRUE,
                        analysis_random = FALSE,
                        imp_pars = FALSE,
@@ -32,8 +32,12 @@ get_params <- function(meth, analysis_type, family,
                        betas = NULL, tau_y = NULL, sigma_y = NULL,
                        ranef = NULL, invD = NULL, D = NULL, RinvD = NULL,
                        alphas = NULL, tau_imp = NULL, gamma_imp = NULL,
-                       delta_imp = NULL, shaperate_imp = NULL, other = NULL){
+                       delta_imp = NULL, shaperate_imp = NULL, other = NULL, ...){
 
+
+  if(is.null(y_name)) {
+    y_name <- names(y)
+  }
 
 
   if (analysis_main) {
@@ -97,6 +101,10 @@ get_params <- function(meth, analysis_type, family,
   )
 
   if (analysis_type == "lme") {
+    if (is.null(Zcols)) {
+      Zcols <- colnames(Z)
+    }
+
     params <- c(params,
                 if (ranef) "b",
                 if (invD) unlist(sapply(1:Zcols, function(x)
@@ -125,5 +133,3 @@ get_params <- function(meth, analysis_type, family,
 
   return(params)
 }
-
-

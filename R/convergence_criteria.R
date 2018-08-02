@@ -36,19 +36,16 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
   if (is.null(thin))
     thin <- thin(object$sample)
 
+  MCMC <- get_subset(object, subset, call_orig = as.list(match.call()), warn = warn)
+  MCMC <- window(MCMC, start = start, end = end, thin = thin)
 
-  MCMC <- window(object$sample, start = start, end = end, thin = thin)
-  coefs <- get_coef_names(object$Mlist, object$K)
-  nams <- colnames(MCMC[[1]])
-  nams[match(coefs[, 1], nams)] <- coefs[, 2]
-
-  for (i in 1:length(MCMC)) {
-    colnames(MCMC[[i]]) <- nams
-  }
-
-  if (!is.null(subset)) {
-    MCMC <- get_subset(subset, MCMC, object)
-  }
+  # coefs <- get_coef_names(object$Mlist, object$K)
+  # nams <- colnames(MCMC[[1]])
+  # nams[match(coefs[, 1], nams)] <- coefs[, 2]
+  #
+  # for (i in 1:length(MCMC)) {
+  #   colnames(MCMC[[i]]) <- nams
+  # }
 
   gelman.diag(x = MCMC, confidence = confidence, transform = transform,
               autoburnin = autoburnin, multivariate = multivariate)
@@ -108,14 +105,12 @@ MC_error <- function(x, subset = NULL,
   if (is.null(thin))
     thin <- thin(x$sample)
 
+  MCMC <- get_subset(object = x, subset = subset,
+                     call_orig = as.list(match.call()), warn = warn)
 
   MCMC <- do.call(rbind, window(x$sample, start = start, end = end, thin = thin))
   coefs <- get_coef_names(x$Mlist, x$K)
   colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
-
-  if (!is.null(subset)) {
-    MCMC <- get_subset(subset, MCMC, x)
-  }
 
   res1 <- mcmcse::mcse.mat(x = MCMC, ...)
   colnames(res1) <- gsub("se", "MCSE", colnames(res1))

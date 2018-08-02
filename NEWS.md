@@ -13,6 +13,7 @@
 * `analysis_main = T` stays selected when other parameters are followed as well
 * `get_MIdat()`: argument `include` added to select if original data are included
   and id variable `.id` is added to the dataset
+* `subset` argument uses same logit as `monitor_params` argument
 
 ## Extensions
 * `plot_all()` function added

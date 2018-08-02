@@ -36,27 +36,13 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   if (is.null(thin))
     thin <- thin(object$sample)
 
+  MCMC <- get_subset(object, subset, as.list(match.call()), warn = warn)
+
   MCMC <- do.call(rbind,
-                  window(object$MCMC,
+                  window(MCMC,
                          start = start,
                          end = end,
                          thin = thin))
-
-  # coefs <- get_coef_names(object$Mlist, object$K)
-  #
-  # colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
-  #
-  # scale_pars <- object$scale_pars
-  # if (!is.null(scale_pars)) {
-  #   # re-scale parameters
-  #   MCMC <- sapply(colnames(MCMC), rescale, object$Mlist$fixed2, scale_pars,
-  #                  MCMC, object$Mlist$refs, object$Mlist$X2_names)
-  # }
-
-  if (!is.null(subset)) {
-    MCMC <- get_subset(subset, MCMC, object)
-  }
-
 
 
   # create results matrix
