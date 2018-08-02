@@ -29,11 +29,8 @@ If the object does not contain any MCMC samples, the parameters/nodes for
 which a monitor is set is returned
 }
 \examples{
-# a model with MCMC samples
-mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.iter = 100)
+# (does not need MCMC samples to work, so we will set n.adapt = 0 and n.iter = 0 to save computational time)
+mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0)
 variable.names(mod1)
 
-# a model without MCMC samples
-mod2 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.iter = 0, n.adapt = 0)
-variable.names(mod2)
 }
