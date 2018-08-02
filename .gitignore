@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 inst/doc
+vignettes/SelectingParameters_cache
+vignettes/SelectingParameters_files
