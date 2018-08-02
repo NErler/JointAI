@@ -5,7 +5,7 @@
 * categorical imputation models now use min-max trick to prevent probabilities outside [0, 1]
 * initial value generation for logistic analysis model fixed
 * `lm_imp()`, `glm_imp()` and `lme_imp()` return family and link that was used (needed in for `add_sample`)
-
+* bug in re-ordering columns when a function is part of the linear predictor fixed
 
 ## Minor changes
 * `md.pattern()` now uses ggplot, which scales better than the previous version
@@ -14,6 +14,7 @@
 * `get_MIdat()`: argument `include` added to select if original data are included
   and id variable `.id` is added to the dataset
 * `subset` argument uses same logit as `monitor_params` argument
+* added switch to hide messages; distinction between messages and warnings
 
 ## Extensions
 * `plot_all()` function added
@@ -21,6 +22,8 @@
 * `densplot()` option to combine chains before plotting
 * example datasets `NHANES`, `simLong` and `simWide` added
 * `list_impmodels` to print information on the imputation models and hyperparameters
+* `parameters()` added to display the parameters to be/that were monitored
+* added vignettes *Minimal Example*, *Visualizing Incomplete Data* and *Parameter Selection*
 
 
 --------------------------------------------------------------------------------
