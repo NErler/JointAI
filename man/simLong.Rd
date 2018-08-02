@@ -18,7 +18,7 @@ simWide
 This data was simulated to mimic data from a longitudinal cohort study
 following mothers and their child from birth until approximately 4 years of
 age.
-It contains 3903 observations of 500 mother-child pairs. Childrens' BMI and
+It contains 3903 observations of 500 mother-child pairs. Children's BMI and
 head circumference was measured repeatedly and their age in months was recorded
 at each measurement. Furthermore, the data contain several baseline variables
 with information on the mothers' demographics and socioeconomic status.

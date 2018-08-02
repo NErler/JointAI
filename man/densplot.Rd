@@ -24,7 +24,7 @@ densplot(object, ...)
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
-Defauls to the parameters of the analysis model.}
+\code{\link{lm_imp}}, \code{\link{glm_imp}} and \code{\link{lme_imp}}.}
 
 \item{vlines}{list, where each element is a named list of parameters that
 can be passed to \code{\link[graphics]{abline}} to create

@@ -30,7 +30,7 @@ chains}
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
-Defauls to the parameters of the analysis model.}
+\code{\link{lm_imp}}, \code{\link{glm_imp}} and \code{\link{lme_imp}}.}
 
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 

@@ -15,11 +15,11 @@
 #'   \item{SBP}{systolic blood pressure}
 #'   \item{gender}{male or female}
 #'   \item{age}{in years}
-#'   \item{race}{race / hispanic origin (5 categories)}
+#'   \item{race}{race / Hispanic origin (5 categories)}
 #'   \item{WC}{waist circumference in cm}
 #'   \item{alc}{alcohol consumption (binary: <1 drink per week vs. >= 1 drink per week)}
 #'   \item{educ}{educational level (binary: low vs. high)}
-#'   \item{creat}{creatinine concentrationin in mg/dL}
+#'   \item{creat}{creatinine concentration in mg/dL}
 #'   \item{albu}{albumin concentration in g/dL}
 #'   \item{uricacid}{uric acid concentration in mg/dL}
 #'   \item{bili}{bilirubin concentration in mg/dL}

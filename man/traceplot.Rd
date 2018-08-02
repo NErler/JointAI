@@ -55,7 +55,7 @@ traceplot(object, ...)
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
-Defauls to the parameters of the analysis model.}
+\code{\link{lm_imp}}, \code{\link{glm_imp}} and \code{\link{lme_imp}}.}
 
 \item{nrow}{optional number of rows and columns in the plot layout;
 automatically chosen if unspecified}

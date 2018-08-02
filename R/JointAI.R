@@ -59,7 +59,7 @@ utils::globalVariables(c("Var1", "Var2", "iteration", "value", "chain"))
 #' @param object object inheriting from class \code{JointAI}
 #' @param subset subset of parameters/variables/nodes (columns in the MCMC sample).
 #'               Uses the same logic as the argument \code{monitor_params} in
-#'               Defauls to the parameters of the analysis model.
+#'               \code{\link{lm_imp}}, \code{\link{glm_imp}} and \code{\link{lme_imp}}.
 #' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
 #' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
 #' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
