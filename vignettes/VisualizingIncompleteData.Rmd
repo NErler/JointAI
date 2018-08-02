@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
   out.width = '100%'
 )
 library(JointAI)
+options(width = 80)
 ```
 
 
@@ -70,10 +71,10 @@ It is also possible to provide some of the other arguments of [`hist()`](https:/
 or [`barplot()`](https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/barplot.html).
 
 For example:
-```{r, fig.width = 8, fig.height = 6}
+```{r, fig.width = 8, fig.height = 10}
 par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
 plot_all(NHANES, allNA = TRUE, fill = '#18bc9c', border = '#2C3E50',
-         ncol = 4, nclass = 30)
+         ncol = 3, nclass = 30)
 ```
 
 
