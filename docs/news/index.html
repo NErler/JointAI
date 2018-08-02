@@ -81,7 +81,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/BasicExample.html">Minimal Example</a>
+      <a href="../articles/MinimalExample.html">Minimal Example</a>
+    </li>
+    <li>
+      <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
@@ -126,12 +129,34 @@
 <h1 class="page-header">
 <a href="#jointai-0-2-1" class="anchor"></a>JointAI 0.2.1<small> Unreleased </small>
 </h1>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>
+<code>monitor_params</code> is now checked to avoid problems when only part of the main parameters is selected</li>
+<li>categorical imputation models now use min-max trick to prevent probabilities outside [0, 1]</li>
+<li>initial value generation for logistic analysis model fixed</li>
+<li>
+<code><a href="../reference/model_imp.html">lm_imp()</a></code>, <code><a href="../reference/model_imp.html">glm_imp()</a></code> and <code><a href="../reference/model_imp.html">lme_imp()</a></code> return family and link that was used (needed in for <code>add_sample</code>)</li>
+<li>bug in re-ordering columns when a function is part of the linear predictor fixed</li>
+</ul>
+</div>
 <div id="minor-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>
 <code>md.pattern()</code> now uses ggplot, which scales better than the previous version</li>
+<li>
+<code><a href="../reference/model_imp.html">lm_imp()</a></code>, <code><a href="../reference/model_imp.html">glm_imp()</a></code> and <code><a href="../reference/model_imp.html">lme_imp()</a></code> now ask about overwriting a model file</li>
+<li>
+<code>analysis_main = T</code> stays selected when other parameters are followed as well</li>
+<li>
+<code><a href="../reference/get_MIdat.html">get_MIdat()</a></code>: argument <code>include</code> added to select if original data are included and id variable <code>.id</code> is added to the dataset</li>
+<li>
+<code>subset</code> argument uses same logit as <code>monitor_params</code> argument</li>
+<li>added switch to hide messages; distinction between messages and warnings</li>
 </ul>
 </div>
 <div id="extensions" class="section level2">
@@ -144,6 +169,13 @@
 <code><a href="../reference/densplot.html">densplot()</a></code> and <code><a href="../reference/traceplot.html">traceplot()</a></code> optional with ggplot</li>
 <li>
 <code><a href="../reference/densplot.html">densplot()</a></code> option to combine chains before plotting</li>
+<li>example datasets <code>NHANES</code>, <code>simLong</code> and <code>simWide</code> added</li>
+<li>
+<code>list_impmodels</code> to print information on the imputation models and hyperparameters</li>
+<li>
+<code><a href="../reference/parameters.html">parameters()</a></code> added to display the parameters to be/that were monitored</li>
+<li>added vignettes <em>Minimal Example</em>, <em>Visualizing Incomplete Data</em> and <em>Parameter Selection</em>
+</li>
 </ul>
 <hr>
 </div>
@@ -152,9 +184,9 @@
 <h1 class="page-header">
 <a href="#jointai-0-2-0" class="anchor"></a>JointAI 0.2.0<small> 2018-07-05 </small>
 </h1>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/md_pattern.html">md_pattern()</a></code>: does not generate duplicate plot any more</li>

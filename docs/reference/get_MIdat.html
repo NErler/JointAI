@@ -87,7 +87,10 @@ the foreign package needs to be installed." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/BasicExample.html">Minimal Example</a>
+      <a href="../articles/MinimalExample.html">Minimal Example</a>
+    </li>
+    <li>
+      <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
@@ -138,8 +141,8 @@ the <a href='https://CRAN.R-project.org/package=foreign'>foreign</a> package nee
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_MIdat</span>(<span class='no'>object</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>resdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>export_to_SPSS</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>get_MIdat</span>(<span class='no'>object</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>export_to_SPSS</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>resdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,12 +156,20 @@ the <a href='https://CRAN.R-project.org/package=foreign'>foreign</a> package nee
       <td><p>number of imputed datasets</p></td>
     </tr>
     <tr>
+      <th>include</th>
+      <td><p>should the original, incomplete data be included?</p></td>
+    </tr>
+    <tr>
       <th>start</th>
       <td><p>the first iteration of interest (see <code><a href='http://www.rdocumentation.org/packages/coda/topics/window.mcmc'>window.mcmc</a></code>)</p></td>
     </tr>
     <tr>
       <th>seed</th>
       <td><p>optional seed</p></td>
+    </tr>
+    <tr>
+      <th>export_to_SPSS</th>
+      <td><p>logical; should the completed data be exported to SPSS?</p></td>
     </tr>
     <tr>
       <th>resdir</th>
@@ -169,10 +180,6 @@ the <a href='https://CRAN.R-project.org/package=foreign'>foreign</a> package nee
       <th>filename</th>
       <td><p>optional file name (without ending; if unspecified and
 <code>export_to_SPSS = TRUE</code> a name is generated automatically)</p></td>
-    </tr>
-    <tr>
-      <th>export_to_SPSS</th>
-      <td><p>logical</p></td>
     </tr>
     </table>
     

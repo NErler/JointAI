@@ -52,7 +52,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/BasicExample.html">Minimal Example</a>
+      <a href="../articles/MinimalExample.html">Minimal Example</a>
+    </li>
+    <li>
+      <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
@@ -91,7 +94,7 @@
       <h1>Visualizing Incomplete Data</h1>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2018-07-25</h4>
+            <h4 class="date">2018-08-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/VisualizingIncompleteData.Rmd"><code>vignettes/VisualizingIncompleteData.Rmd</code></a></small>
       <div class="hidden name"><code>VisualizingIncompleteData.Rmd</code></div>
@@ -133,7 +136,7 @@
 <p>For example:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="fl">2.5</span>, <span class="dv">3</span>, <span class="fl">2.5</span>, <span class="dv">1</span>), <span class="dt">mgp =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="fl">0.8</span>, <span class="dv">0</span>))</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/plot_all.html">plot_all</a></span>(NHANES, <span class="dt">allNA =</span> <span class="ot">TRUE</span>, <span class="dt">fill =</span> <span class="st">'#18bc9c'</span>, <span class="dt">border =</span> <span class="st">'#2C3E50'</span>,</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">         <span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">nclass =</span> <span class="dv">30</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-3" data-line-number="3">         <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">nclass =</span> <span class="dv">30</span>)</a></code></pre></div>
 <p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-2-1.png" width="100%"></p>
 </div>
 </div>
@@ -150,15 +153,20 @@
 <a href="#missing-data-pattern-as-a-matrix" class="anchor"></a>Missing data pattern as a matrix</h4>
 <p>When the argument <code>pattern = TRUE</code> is set, the missing data pattern is returned as a matrix, where observed values are represented by a <code>1</code> and missing values by a <code>0</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/md_pattern.html">md_pattern</a></span>(NHANES, <span class="dt">pattern =</span> T, <span class="dt">plot =</span> F)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt;      SBP gender age race educ WC creat albu uricacid bili alc Npat</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; 1      1      1   1    1    1  1     1    1        1    1   1  140</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; 2      1      1   1    1    1  1     1    1        1    1   0   36</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; 3      1      1   1    1    1  1     0    0        0    0   1    7</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; 4      1      1   1    1    1  1     0    0        0    0   0    7</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; 5      1      1   1    1    1  0     1    1        1    1   0    4</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; 6      1      1   1    1    1  0     1    1        1    1   1    3</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; 7      1      1   1    1    1  0     0    0        0    0   1    1</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; Nmis   0      0   0    0    0  8    15   15       15   15  47  115</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt;      SBP gender age race educ WC smoke creat albu uricacid bili occup alc Npat</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; 1      1      1   1    1    1  1     1     1    1        1    1     1   1  116</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; 2      1      1   1    1    1  1     1     1    1        1    1     1   0   29</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; 3      1      1   1    1    1  1     1     1    1        1    1     0   1   24</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; 4      1      1   1    1    1  1     0     1    1        1    1     1   1    5</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; 5      1      1   1    1    1  1     1     0    0        0    0     1   1    4</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; 6      1      1   1    1    1  1     1     0    0        0    0     0   0    2</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; 7      1      1   1    1    1  1     0     1    1        1    1     0   1    1</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; 8      1      1   1    1    1  0     1     1    1        1    1     1   0    1</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; 9      1      1   1    1    1  1     1     1    1        1    1     0   0    1</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; 10     1      1   1    1    1  1     1     0    0        0    0     1   0    1</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; 11     1      1   1    1    1  0     1     1    1        1    1     1   1    1</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; 12     1      1   1    1    1  1     0     0    0        0    0     1   1    1</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; Nmis   0      0   0    0    0  2     7     8    8        8    8    28  34  103</span></a></code></pre></div>
 </div>
 <div id="changing-colors-1" class="section level3">
 <h3 class="hasAnchor">

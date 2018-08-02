@@ -87,7 +87,10 @@ National Center for Health Statistics." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/BasicExample.html">Minimal Example</a>
+      <a href="../articles/MinimalExample.html">Minimal Example</a>
+    </li>
+    <li>
+      <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
@@ -142,18 +145,20 @@ status of adults and children in the United States, conduced by the
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 198 rows and 11 variables:</p><dl class='dl-horizontal'>
+    <p>A data frame with 186 rows and 13 variables:</p><dl class='dl-horizontal'>
   <dt>SBP</dt><dd><p>systolic blood pressure</p></dd>
   <dt>gender</dt><dd><p>male or female</p></dd>
   <dt>age</dt><dd><p>in years</p></dd>
-  <dt>race</dt><dd><p>race / hispanic origin (5 categories)</p></dd>
+  <dt>race</dt><dd><p>race / Hispanic origin (5 categories)</p></dd>
   <dt>WC</dt><dd><p>waist circumference in cm</p></dd>
   <dt>alc</dt><dd><p>alcohol consumption (binary: &lt;1 drink per week vs. &gt;= 1 drink per week)</p></dd>
   <dt>educ</dt><dd><p>educational level (binary: low vs. high)</p></dd>
-  <dt>creat</dt><dd><p>creatinine concentrationin in mg/dL</p></dd>
+  <dt>creat</dt><dd><p>creatinine concentration in mg/dL</p></dd>
   <dt>albu</dt><dd><p>albumin concentration in g/dL</p></dd>
   <dt>uricacid</dt><dd><p>uric acid concentration in mg/dL</p></dd>
   <dt>bili</dt><dd><p>bilirubin concentration in mg/dL</p></dd>
+  <dt>occup</dt><dd><p>occupational status (3 categories)</p></dd>
+  <dt>smoke</dt><dd><p>smoking status (3 ordered categories)</p></dd>
   </dl>
     
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
@@ -171,30 +176,30 @@ and no clinical conclusions should be derived from it.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>summary</span>(<span class='no'>NHANES</span>)</div><div class='output co'>#&gt;       SBP            gender         age                        race   
-#&gt;  Min.   : 93.33   male  :119   Min.   :20.00   Mexican American  :26  
-#&gt;  1st Qu.:117.33   female: 79   1st Qu.:35.00   Other Hispanic    :24  
-#&gt;  Median :127.33                Median :43.50   Non-Hispanic White:71  
-#&gt;  Mean   :130.80                Mean   :44.81   Non-Hispanic Black:47  
-#&gt;  3rd Qu.:140.67                3rd Qu.:55.00   other             :30  
-#&gt;  Max.   :222.00                Max.   :78.00                          
-#&gt;                                                                       
-#&gt;        WC          alc       educ         creat             albu      
-#&gt;  Min.   : 70.5   &lt;1  :76   low :112   Min.   :0.4000   Min.   :3.200  
-#&gt;  1st Qu.: 93.2   &gt;=1 :75   high: 86   1st Qu.:0.7150   1st Qu.:4.100  
-#&gt;  Median :102.4   NA's:47              Median :0.8400   Median :4.300  
-#&gt;  Mean   :102.8                        Mean   :0.8472   Mean   :4.299  
-#&gt;  3rd Qu.:111.3                        3rd Qu.:0.9400   3rd Qu.:4.500  
-#&gt;  Max.   :151.0                        Max.   :2.3000   Max.   :5.200  
-#&gt;  NA's   :8                            NA's   :15       NA's   :15     
-#&gt;     uricacid          bili       
-#&gt;  Min.   :2.500   Min.   :0.2000  
-#&gt;  1st Qu.:4.600   1st Qu.:0.5000  
-#&gt;  Median :5.500   Median :0.6000  
-#&gt;  Mean   :5.534   Mean   :0.6956  
-#&gt;  3rd Qu.:6.400   3rd Qu.:0.8000  
-#&gt;  Max.   :9.100   Max.   :1.8000  
-#&gt;  NA's   :15      NA's   :15      </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>summary</span>(<span class='no'>NHANES</span>)</div><div class='output co'>#&gt;       SBP           gender         age                        race   
+#&gt;  Min.   : 86.0   male  :100   Min.   :20.00   Mexican American  :28  
+#&gt;  1st Qu.:109.3   female: 86   1st Qu.:32.00   Other Hispanic    :10  
+#&gt;  Median :116.7                Median :42.00   Non-Hispanic White:73  
+#&gt;  Mean   :119.3                Mean   :43.51   Non-Hispanic Black:32  
+#&gt;  3rd Qu.:127.2                3rd Qu.:55.75   other             :43  
+#&gt;  Max.   :177.3                Max.   :78.00                          
+#&gt;                                                                      
+#&gt;        WC           alc       educ         creat             albu      
+#&gt;  Min.   : 64.80   &lt;1  :94   low : 70   Min.   :0.4700   Min.   :3.500  
+#&gt;  1st Qu.: 82.92   &gt;=1 :58   high:116   1st Qu.:0.7200   1st Qu.:4.100  
+#&gt;  Median : 93.85   NA's:34              Median :0.8300   Median :4.350  
+#&gt;  Mean   : 95.00                        Mean   :0.8438   Mean   :4.346  
+#&gt;  3rd Qu.:104.20                        3rd Qu.:0.9575   3rd Qu.:4.500  
+#&gt;  Max.   :135.80                        Max.   :1.3800   Max.   :5.200  
+#&gt;  NA's   :2                             NA's   :8        NA's   :8      
+#&gt;     uricacid          bili                     occup        smoke    
+#&gt;  Min.   :2.500   Min.   :0.3000   working         :98   never  :107  
+#&gt;  1st Qu.:4.500   1st Qu.:0.6000   looking for work: 5   former : 36  
+#&gt;  Median :5.400   Median :0.7000   not working     :55   current: 36  
+#&gt;  Mean   :5.353   Mean   :0.7208   NA's            :28   NA's   :  7  
+#&gt;  3rd Qu.:6.100   3rd Qu.:0.8000                                      
+#&gt;  Max.   :8.800   Max.   :1.4000                                      
+#&gt;  NA's   :8       NA's   :8                                           </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

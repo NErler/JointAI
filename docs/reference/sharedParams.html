@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Summary of an object of class JointAI — summary.JointAI • JointAI</title>
+<title>Parameters used by several functions in JointAI — sharedParams • JointAI</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Summary of an object of class JointAI — summary.JointAI" />
+<meta property="og:title" content="Parameters used by several functions in JointAI — sharedParams" />
 
-<meta property="og:description" content="Summary of an object of class JointAI" />
+<meta property="og:description" content="Parameters used by several functions in JointAI" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,24 +124,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Summary of an object of class JointAI</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/summary.JointAI.R'><code>R/summary.JointAI.R</code></a></small>
-    <div class="hidden name"><code>summary.JointAI.Rd</code></div>
+    <h1>Parameters used by several functions in JointAI</h1>
+    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/JointAI.R'><code>R/JointAI.R</code></a></small>
+    <div class="hidden name"><code>sharedParams.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Summary of an object of class JointAI</p>
+    <p>Parameters used by several functions in JointAI</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for JointAI</span>
-<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>), <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>)
-
-<span class='co'># S3 method for summary.JointAI</span>
-<span class='fu'>print</span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'>max</span>(<span class='fl'>3</span>, <span class='no'>.Options</span>$<span class='no'>digits</span> - <span class='fl'>3</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,6 +142,12 @@
     <tr>
       <th>object</th>
       <td><p>object inheriting from class <code>JointAI</code></p></td>
+    </tr>
+    <tr>
+      <th>subset</th>
+      <td><p>subset of parameters/variables/nodes (columns in the MCMC sample).
+Uses the same logic as the argument <code>monitor_params</code> in
+<code><a href='model_imp.html'>lm_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code> and <code><a href='model_imp.html'>lme_imp</a></code>.</p></td>
     </tr>
     <tr>
       <th>start</th>
@@ -163,14 +162,13 @@
       <td><p>thinning interval (see <code><a href='http://www.rdocumentation.org/packages/coda/topics/window.mcmc'>window.mcmc</a></code>)</p></td>
     </tr>
     <tr>
-      <th>quantiles</th>
-      <td><p>posterior quantiles</p></td>
+      <th>nrow, ncol</th>
+      <td><p>optional number of rows and columns in the plot layout;
+automatically chosen if unspecified</p></td>
     </tr>
     <tr>
-      <th>subset</th>
-      <td><p>subset of parameters/variables/nodes (columns in the MCMC sample).
-Uses the same logic as the argument <code>monitor_params</code> in
-<code><a href='model_imp.html'>lm_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code> and <code><a href='model_imp.html'>lme_imp</a></code>.</p></td>
+      <th>use_ggplot</th>
+      <td><p>logical; Should ggplot be used instead of the base graphics?</p></td>
     </tr>
     <tr>
       <th>warn</th>
@@ -185,67 +183,18 @@ given directly by <strong>JointAI</strong>.</p></td>
 given directly by <strong>JointAI</strong>.</p></td>
     </tr>
     <tr>
-      <th>&#8230;</th>
-      <td><p>currently not used</p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>an object of class <code>summary.JointAI</code></p></td>
-    </tr>
-    <tr>
-      <th>digits</th>
-      <td><p>minimal number of <em>significant</em> digits, see
-    <code>print.default</code>.</p></td>
+      <th>xlab, ylab</th>
+      <td><p>labels for the x- and y-axis</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The model fitting functions <code><a href='model_imp.html'>lm_imp</a></code>,
-         <code><a href='model_imp.html'>glm_imp</a></code>, <code><a href='model_imp.html'>lme_imp</a></code></p></div>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>summary</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; 
-#&gt;  Linear model fitted with JointAI 
-#&gt; 
-#&gt; Call:
-#&gt; lm_imp(formula = y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
-#&gt; 
-#&gt; Posterior summary:
-#&gt;                  Mean       SD     2.5%   97.5% tail-prob.
-#&gt; (Intercept)  33.67597 24.94764 -12.1905 84.1335    0.15333
-#&gt; C1          -25.49293 17.42928 -60.4167  6.7491    0.12667
-#&gt; M22          -0.38739  0.70016  -1.6843  1.1463    0.51333
-#&gt; M23           0.06714  0.68821  -1.3252  1.4954    0.95333
-#&gt; M24          -1.12611  0.65308  -2.3733  0.1782    0.09333
-#&gt; C2            0.93750  0.72790  -0.5055  2.3846    0.17333
-#&gt; tau_y         0.20444  0.03033   0.1543  0.2722    0.00000
-#&gt; 
-#&gt; Posterior summary of residual std. deviation:
-#&gt;          Mean     SD  2.5% 97.5%
-#&gt; sigma_y 2.229 0.1622 1.917 2.546
-#&gt; 
-#&gt; 
-#&gt; MCMC settings:
-#&gt; Iterations = 101:200
-#&gt; Sample size per chain = 100 
-#&gt; Thinning interval = 1 
-#&gt; Number of chains = 3 
-#&gt; 
-#&gt; Number of observations: 100 </div><div class='input'>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

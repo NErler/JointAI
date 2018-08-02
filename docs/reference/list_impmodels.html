@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simulate dataset — sim_data • JointAI</title>
+<title>List imputation models — list_impmodels • JointAI</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Simulate dataset — sim_data" />
+<meta property="og:title" content="List imputation models — list_impmodels" />
 
-<meta property="og:description" content="Simulate dataset" />
+<meta property="og:description" content="Print a information on all imputation models used in a JointAI object,
+including the model type, names of the parameters used and hyperparameters." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,109 +125,68 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Simulate dataset</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/simulate_data.R'><code>R/simulate_data.R</code></a></small>
-    <div class="hidden name"><code>sim_data.Rd</code></div>
+    <h1>List imputation models</h1>
+    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/print_functions.R'><code>R/print_functions.R</code></a></small>
+    <div class="hidden name"><code>list_impmodels.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Simulate dataset</p>
+    <p>Print a information on all imputation models used in a JointAI object,
+including the model type, names of the parameters used and hyperparameters.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>sim_data</span>(<span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>Jmin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>Jmax</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>tmin</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>bin</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>multi</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>ord</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>count</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>long</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>coef</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>misvar</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nmisvar</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"long"</span>)</pre>
+    <pre class="usage"><span class='fu'>list_impmodels</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>N</th>
-      <td><p>sample size (integer)</p></td>
-    </tr>
-    <tr>
-      <th>Jmin</th>
-      <td><p>minimum number of repeated measurements in longitudinal variable</p></td>
-    </tr>
-    <tr>
-      <th>Jmax</th>
-      <td><p>maximum number of repeated measurements in longitudinal variable</p></td>
-    </tr>
-    <tr>
-      <th>tmin</th>
-      <td><p>minimum of time variable</p></td>
-    </tr>
-    <tr>
-      <th>tmax</th>
-      <td><p>maximum of time variable</p></td>
-    </tr>
-    <tr>
-      <th>norm</th>
-      <td><p>integer giving the number of normally distributed variables to
-create or list of parameters to create normally distributed variables
-from. If norm is an integer, the mean and standard deviation are
-drawn from distributions.</p></td>
-    </tr>
-    <tr>
-      <th>bin</th>
-      <td><p>integer giving the number of binary variables or list</p></td>
-    </tr>
-    <tr>
-      <th>multi</th>
-      <td><p>integer giving the number of multinomial variables or list</p></td>
-    </tr>
-    <tr>
-      <th>ord</th>
-      <td><p>integer giving the number of ordinal variables or list</p></td>
-    </tr>
-    <tr>
-      <th>count</th>
-      <td><p>integer giving the number of ordinal variables or list (not yet used)</p></td>
-    </tr>
-    <tr>
-      <th>long</th>
-      <td><p>integer giving the number of longitudinal (normally distributed)
-variables or list containing parameters</p></td>
-    </tr>
-    <tr>
-      <th>coef</th>
-      <td><p>vector of parameters used to create the outcome (optional), if
-NULL, the parameters are drawn from a normal distribution</p></td>
-    </tr>
-    <tr>
-      <th>misvar</th>
-      <td><p>vector of variable names or positions (??? check this) to
-specify which variables are incomplete</p></td>
-    </tr>
-    <tr>
-      <th>nmisvar</th>
-      <td><p>integer specifying the total number of incomplete variables,
-necessary when misvar is NULL and incomplete variables are chosen
-randomly</p></td>
-    </tr>
-    <tr>
-      <th>format</th>
-      <td><p>"long" or "wide" ("wide" not yet implemented)</p></td>
+      <th>object</th>
+      <td><p>object inheriting from class <code>JointAI</code></p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The time variable has a uniform distribution between tmin and tmax.
-         At the moment only the integer option is implemented for the
-         parameters norm, bin, multi, etc.</p>
-    
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save computational time)</span>
+<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span> + <span class='no'>O2</span> + <span class='no'>B2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='output co'>#&gt; <span class='message'>Note: No MCMC sample will be created when n.iter is set to 0.</span></div><div class='input'><span class='fu'>list_impmodels</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; Cumulative logit imputation model for 'O2'
+#&gt; * Reference category: '1'
+#&gt; * Regression coefficients (without intercept): 
+#&gt;   alpha[1] (normal prior(s) with mean 0 and precision 0.001)
+#&gt; * Intercepts:
+#&gt;   - 1: gamma_O2[1] (normal prior with mean 0 and precision 0.001)
+#&gt;   - 2: gamma_O2[2] = gamma_O2[1] + exp(delta_O2[1])
+#&gt;   - 3: gamma_O2[3] = gamma_O2[2] + exp(delta_O2[2])
+#&gt; * Increments:
+#&gt;   delta_O2[1:2] (normal prior(s) with mean 0 and precision 0.001)
+#&gt; 
+#&gt; Multinomial logit imputation model for 'M2'
+#&gt; * Reference category: '1'
+#&gt; * Regression coefficients: 
+#&gt;   - 'M22': alpha[2:6] (normal prior(s) with mean 0 and precision 0.001)
+#&gt;   - 'M23': alpha[7:11] (normal prior(s) with mean 0 and precision 0.001)
+#&gt;   - 'M24': alpha[12:16] (normal prior(s) with mean 0 and precision 0.001)
+#&gt; 
+#&gt; Normal imputation model for 'C2'
+#&gt; * Regression coefficients: 
+#&gt;   alpha[17:24] (normal prior(s) with mean 0 and precision 1e-04)
+#&gt; * Pecision of 'C2':
+#&gt;   tau_C2 (Gamma prior with scale parameter 0.01 and rate parameter 0.01)
+#&gt; 
+#&gt; Logistic imputation model for 'B2'
+#&gt; * Reference category: '0'
+#&gt; * Regression coefficients: 
+#&gt;   alpha[25:33] (normal prior(s) with mean 0 and precision 0.001)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-          </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

@@ -81,7 +81,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/BasicExample.html">Minimal Example</a>
+      <a href="../articles/MinimalExample.html">Minimal Example</a>
+    </li>
+    <li>
+      <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
@@ -178,13 +181,19 @@ Prints the list of default values for the hyperparameters</p></td>
         <td>
           <p><code><a href="JointAI.html">JointAI</a></code> </p>
         </td>
-        <td><p>JointAI: Joint Analysis and Imputation of Missing Values</p></td>
+        <td><p>JointAI: Joint Analysis and Imputation of Incomplete Data</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="JointAIObject.html">JointAIObject</a></code> </p>
         </td>
         <td><p>Fitted object of class JointAI</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="list_impmodels.html">list_impmodels()</a></code> </p>
+        </td>
+        <td><p>List imputation models</p></td>
       </tr><tr>
         
         <td>
@@ -212,6 +221,15 @@ Prints the list of default values for the hyperparameters</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="parameters.html">parameters()</a></code> </p>
+        </td>
+        <td><p>Parameter names of an JointAI object
+Returns the names of the parameters/nodes of an object of class JointAI.
+If the object does not contain any MCMC samples, the parameters/nodes for
+which a monitor is set is returned</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="plot_all.html">plot_all()</a></code> </p>
         </td>
         <td><p>Visualize the distribution of all variables in the dataset</p></td>
@@ -227,6 +245,12 @@ Prints the list of default values for the hyperparameters</p></td>
           <p><code><a href="predict.JointAI.html">predict(<i>&lt;JointAI&gt;</i>)</a></code> </p>
         </td>
         <td><p>Predict values from an object of class JointAI</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sharedParams.html">sharedParams</a></code> </p>
+        </td>
+        <td><p>Parameters used by several functions in JointAI</p></td>
       </tr><tr>
         
         <td>

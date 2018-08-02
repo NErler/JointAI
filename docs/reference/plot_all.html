@@ -86,7 +86,10 @@ the name of each variable." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/BasicExample.html">Minimal Example</a>
+      <a href="../articles/MinimalExample.html">Minimal Example</a>
+    </li>
+    <li>
+      <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
@@ -147,8 +150,13 @@ the name of each variable.</p>
       <td><p>a data frame (or a matrix)</p></td>
     </tr>
     <tr>
-      <th>nrow, ncol</th>
-      <td><p>number of rows and columns in the plot layout;
+      <th>nrow</th>
+      <td><p>optional number of rows and columns in the plot layout;
+automatically chosen if unspecified</p></td>
+    </tr>
+    <tr>
+      <th>ncol</th>
+      <td><p>optional number of rows and columns in the plot layout;
 automatically chosen if unspecified</p></td>
     </tr>
     <tr>
@@ -166,8 +174,12 @@ values is only given for variables that have missing values,
 if <code>TRUE</code> it is given for all variables</p></td>
     </tr>
     <tr>
-      <th>xlab, ylab</th>
-      <td><p>labels of the x- and y-axis</p></td>
+      <th>xlab</th>
+      <td><p>labels for the x- and y-axis</p></td>
+    </tr>
+    <tr>
+      <th>ylab</th>
+      <td><p>labels for the x- and y-axis</p></td>
     </tr>
     <tr>
       <th>...</th>

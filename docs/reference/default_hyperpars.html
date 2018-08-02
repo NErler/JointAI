@@ -87,7 +87,10 @@ Prints the list of default values for the hyperparameters" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/BasicExample.html">Minimal Example</a>
+      <a href="../articles/MinimalExample.html">Minimal Example</a>
+    </li>
+    <li>
+      <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
@@ -167,37 +170,37 @@ of the list are</p>
 <p><strong>analysis_model:</strong> hyperparameters for the analysis model</p><table class='table'>
 <tr><td><code>mu_reg_main</code></td><td>mean in the priors for regression coefficients</td></tr>
 <tr><td><code>tau_reg_main</code></td><td>precision in the priors for regression coefficients</td></tr>
-<tr><td><code>a_tau_main</code></td><td>scale parameter in gamma prior for precision of outcome</td></tr>
-<tr><td><code>b_tau_main</code></td><td>rate parameter in gamma prior for precision of outcome</td></tr>
+<tr><td><code>a_tau_main</code></td><td>scale parameter in Gamma prior for precision of outcome</td></tr>
+<tr><td><code>b_tau_main</code></td><td>rate parameter in Gamma prior for precision of outcome</td></tr>
 <tr><td></td><td><code>mu_reg_main</code></td></tr>
 </table>
     <p><strong>Z:</strong> hyperparameters for the random effects in mixed models</p><table class='table'>
 <tr><td><code>RinvD</code></td><td>scale matrix in Wishart prior (*) for random effects covariance matrix</td></tr>
 <tr><td><code>KinvD</code></td><td>degrees of freedom in Wishart prior for random effects covariance matrix</td></tr>
-<tr><td><code>a_diag_RinvD</code></td><td>scale parameter in gamma prior for the diagonal elements of <code>RinvD</code></td></tr>
-<tr><td><code>b_diag_RinvD</code></td><td>rate parameter in gamma prior for the diagonal elements of <code>RinvD</code></td></tr>
+<tr><td><code>a_diag_RinvD</code></td><td>scale parameter in Gamma prior for the diagonal elements of <code>RinvD</code></td></tr>
+<tr><td><code>b_diag_RinvD</code></td><td>rate parameter in Gamma prior for the diagonal elements of <code>RinvD</code></td></tr>
 <tr><td></td><td><code>RinvD</code></td></tr>
 </table>
-<p>(*) when there is only one random effect a gamma distribution is used instead of the Wishart</p>
+<p>(*) when there is only one random effect a Gamma distribution is used instead of the Wishart</p>
 <p><strong>norm:</strong> hyperparameters for normal and lognormal imputation models</p><table class='table'>
 <tr><td><code>mu_reg_norm</code></td><td>mean in the priors for regression coefficients</td></tr>
 <tr><td><code>tau_reg_norm</code></td><td>precision in the priors for regression coefficients</td></tr>
-<tr><td><code>a_tau_norm</code></td><td>scale parameter in gamma prior for precision of imputed variable</td></tr>
-<tr><td><code>b_tau_norm</code></td><td>rate parameter in gamma prior for precision of imputed variable</td></tr>
+<tr><td><code>a_tau_norm</code></td><td>scale parameter in Gamma prior for precision of imputed variable</td></tr>
+<tr><td><code>b_tau_norm</code></td><td>rate parameter in Gamma prior for precision of imputed variable</td></tr>
 <tr><td></td><td><code>mu_reg_norm</code></td></tr>
 </table>
-    <p><strong>gamma:</strong> hyperparameters for gamma imputation models</p><table class='table'>
+    <p><strong>gamma:</strong> hyperparameters for Gamma imputation models</p><table class='table'>
 <tr><td><code>mu_reg_gamma</code></td><td>mean in the priors for regression coefficients</td></tr>
 <tr><td><code>tau_reg_gamma</code></td><td>precision in the priors for regression coefficients</td></tr>
-<tr><td><code>a_tau_gamma</code></td><td>scale parameter in gamma prior for precision of imputed variable</td></tr>
-<tr><td><code>b_tau_gamma</code></td><td>rate parameter in gamma prior for precision of imputed variable</td></tr>
+<tr><td><code>a_tau_gamma</code></td><td>scale parameter in Gamma prior for precision of imputed variable</td></tr>
+<tr><td><code>b_tau_gamma</code></td><td>rate parameter in Gamma prior for precision of imputed variable</td></tr>
 <tr><td></td><td><code>mu_reg_gamma</code></td></tr>
 </table>
     <p><strong>beta:</strong> hyperparameters for beta imputation models</p><table class='table'>
 <tr><td><code>mu_reg_beta</code></td><td>mean in the priors for regression coefficients</td></tr>
 <tr><td><code>tau_reg_beta</code></td><td>precision in the priors for regression coefficients</td></tr>
-<tr><td><code>a_tau_beta</code></td><td>scale parameter in gamma prior for precision of imputed variable</td></tr>
-<tr><td><code>b_tau_beta</code></td><td>rate parameter in gamma prior for precision of imputed variable</td></tr>
+<tr><td><code>a_tau_beta</code></td><td>scale parameter in Gamma prior for precision of imputed variable</td></tr>
+<tr><td><code>b_tau_beta</code></td><td>rate parameter in Gamma prior for precision of imputed variable</td></tr>
 <tr><td></td><td><code>mu_reg_beta</code></td></tr>
 </table>
     <p><strong>logit:</strong> hyperparameters for logistic imputation models</p><table class='table'>

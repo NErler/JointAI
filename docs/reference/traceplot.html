@@ -84,7 +84,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/BasicExample.html">Minimal Example</a>
+      <a href="../articles/MinimalExample.html">Minimal Example</a>
+    </li>
+    <li>
+      <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
@@ -136,7 +139,8 @@
 
 <span class='co'># S3 method for JointAI</span>
 <span class='fu'>traceplot</span>(<span class='no'>object</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='st'>"main"</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,28 +197,29 @@
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>subset of monitored parameters (columns in the MCMC sample).
-Can be specified as a numeric vector of columns, a vector of
-column names, as <code>subset = "main"</code> or <code>NULL</code>.
-If <code>NULL</code>, all monitored nodes will be plotted.
-<code>subset = "main"</code> (default) the main parameters of the
-analysis model will be plotted (regression coefficients/fixed
-effects, and, if available, standard deviation of the residual
-and random effects covariance matrix).</p></td>
+      <td><p>subset of parameters/variables/nodes (columns in the MCMC sample).
+Uses the same logic as the argument <code>monitor_params</code> in
+<code><a href='model_imp.html'>lm_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code> and <code><a href='model_imp.html'>lme_imp</a></code>.</p></td>
     </tr>
     <tr>
       <th>nrow</th>
-      <td><p>optional; number of rows in the plotting layout
-(determined automatically if not specified)</p></td>
+      <td><p>optional number of rows and columns in the plot layout;
+automatically chosen if unspecified</p></td>
     </tr>
     <tr>
       <th>ncol</th>
-      <td><p>optional; number of columns in the plotting layout
-(determined automatically if not specified)</p></td>
+      <td><p>optional number of rows and columns in the plot layout;
+automatically chosen if unspecified</p></td>
     </tr>
     <tr>
       <th>use_ggplot</th>
       <td><p>logical; Should ggplot be used instead of the base graphics?</p></td>
+    </tr>
+    <tr>
+      <th>warn</th>
+      <td><p>logical; should warnings be given?; default is
+<code>TRUE</code>. Note: this applies only to warnings
+given directly by <strong>JointAI</strong>.</p></td>
     </tr>
     </table>
     
@@ -226,6 +231,14 @@ and random effects covariance matrix).</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>traceplot</span>(<span class='no'>mod</span>)</div><div class='img'><img src='traceplot-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># ggplot option</span>
+<span class='fu'>traceplot</span>(<span class='no'>mod</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='traceplot-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+<span class='fu'>traceplot</span>(<span class='no'>mod</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) +
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/theme'>theme</a></span>(<span class='kw'>legend.position</span> <span class='kw'>=</span> <span class='st'>'botto'</span>) +
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>xlab</a></span>(<span class='st'>'iteration'</span>) +
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>ylab</a></span>(<span class='st'>'value'</span>) +
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue'>scale_color_discrete</a></span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'chain'</span>)</div><div class='img'><img src='traceplot-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

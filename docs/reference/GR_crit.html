@@ -84,7 +84,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/BasicExample.html">Minimal Example</a>
+      <a href="../articles/MinimalExample.html">Minimal Example</a>
+    </li>
+    <li>
+      <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
@@ -133,15 +136,15 @@
     </div>
 
     <pre class="usage"><span class='fu'>GR_crit</span>(<span class='no'>object</span>, <span class='kw'>confidence</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>transform</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>autoburnin</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>multivariate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='st'>"main"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>multivariate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>inheriting from class <code>JointAI</code></p></td>
+      <td><p>object inheriting from class <code>JointAI</code></p></td>
     </tr>
     <tr>
       <th>confidence</th>
@@ -170,14 +173,9 @@ chains</p></td>
     </tr>
     <tr>
       <th>subset</th>
-      <td><p>subset of monitored parameters (columns in the MCMC sample).
-Can be specified as a numeric vector of columns, a vector of
-column names, as <code>subset = "main"</code> or <code>NULL</code>.
-If <code>NULL</code>, all monitored nodes will be plotted.
-<code>subset = "main"</code> (default) the main parameters of the
-analysis model will be plotted (regression coefficients/fixed
-effects, and, if available, standard deviation of the residual
-and random effects covariance matrix).</p></td>
+      <td><p>subset of parameters/variables/nodes (columns in the MCMC sample).
+Uses the same logic as the argument <code>monitor_params</code> in
+<code><a href='model_imp.html'>lm_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code> and <code><a href='model_imp.html'>lme_imp</a></code>.</p></td>
     </tr>
     <tr>
       <th>start</th>
@@ -190,6 +188,12 @@ and random effects covariance matrix).</p></td>
     <tr>
       <th>thin</th>
       <td><p>thinning interval (see <code><a href='http://www.rdocumentation.org/packages/coda/topics/window.mcmc'>window.mcmc</a></code>)</p></td>
+    </tr>
+    <tr>
+      <th>warn</th>
+      <td><p>logical; should warnings be given?; default is
+<code>TRUE</code>. Note: this applies only to warnings
+given directly by <strong>JointAI</strong>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -209,17 +213,18 @@ Posterior predictive assessment of model fitness via realized discrepancies.
 <span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>GR_crit</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; Potential scale reduction factors:
 #&gt; 
 #&gt;             Point est. Upper C.I.
-#&gt; (Intercept)      0.998       1.00
-#&gt; C1               1.008       1.04
-#&gt; M22              0.997       1.00
-#&gt; M23              1.007       1.02
-#&gt; M24              1.003       1.01
-#&gt; C2               1.006       1.02
-#&gt; sigma_y          1.009       1.03
+#&gt; (Intercept)       1.00       1.02
+#&gt; C1                1.01       1.03
+#&gt; M22               1.10       1.32
+#&gt; M23               1.06       1.22
+#&gt; M24               1.08       1.25
+#&gt; C2                1.00       1.01
+#&gt; tau_y             1.00       1.02
+#&gt; sigma_y           1.00       1.02
 #&gt; 
 #&gt; Multivariate psrf
 #&gt; 
-#&gt; 1.02</div><div class='input'>
+#&gt; 1.09</div><div class='input'>
 
 </div></pre>
   </div>
