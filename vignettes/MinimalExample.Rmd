@@ -6,7 +6,7 @@ output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Basic Example & Visualization of the MCMC sample}
+  %\VignetteIndexEntry{Minimal Example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,9 +15,11 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  out.width = '100%'
+  fig.width = 7,
+  fig.align = 'center'
 )
 
+knitr::opts_knit$set(progress = FALSE)
 library(JointAI)
 ```
 
@@ -25,20 +27,25 @@ In this vignette, we use the NHANES data that are part of the **JointAI** packag
 For more info on this data, check the
 [help file](https://nerler.github.io/JointAI/reference/NHANES.html) for the NHANES data,
 go to the [web page of the National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/index.htm) and check out the vignette 
-[Visualizing Incomplete Data](https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html),
+[*Visualizing Incomplete Data*](https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html),
 in which the NHANES data is explored.
 
 ##  Fitting a linear regression model
 To fit a linear regression model with **JointAI** is straightforward with the
 function `lm_imp()`:
-```{r fit_lm1, cache = F, message = F}
-lm1 <- lm_imp(SBP ~ gender + age + race + WC + alc + educ + creat +
-                albu + uricacid + bili,
-              data = NHANES, n.iter = 500)
+```{r fit_lm1, message = F}
+lm1 <- lm_imp(SBP ~ gender + age + race + WC + alc + educ + albu + bili,
+              data = NHANES, n.iter = 500, progress.bar = 'none')
 ```
 
 The specification of `lm_imp()` is similar to the specification of a
-linear regression model for complete data using `lm()`. In this minimal example
+linear regression model for complete data using `lm()`.^[Specification for 
+generalized linear models follows the specification of
+[`glm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html),
+specification of linear mixed models follows
+[`lme()`](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html)
+from package **nlme**.]
+In this minimal example
 the only difference is that for `lm_imp()` the number of iterations `n.iter`
 has to be specified. Of course there are many more parameters that can or should
 be specified, but we will look at that later.
@@ -46,7 +53,6 @@ be specified, but we will look at that later.
 `n.iter` specifies the length of the [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain)
 does, i.e., the number of draws from the posterior distribution of the parameter
 or unobserved value.
-
 How many iterations are necessary depends on the data and complexity of the
 model and can vary from as few as 100 up to thousands or millions. 
 
@@ -58,8 +64,9 @@ This can be evaluated visually with a traceplot.
 traceplot(lm1)
 ```
 
-The function `traceplot()` produces a plot of the sampled values accross 
-iterations per parameter. By default, three Markov chains are produced for
+The function [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html)
+produces a plot of the sampled values across 
+iterations per parameter. By default, three^[The number of chains can be changed with the argument `n.chain`.] Markov chains are produced for
 each parameter and represented by different colors.
 
 When the sampler has converged the chains show a horizontal band, as in the
@@ -78,16 +85,19 @@ summary(lm1)
 
 The output gives the posterior summary, i.e., the summary of the 
 MCMC ([Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo))
-sample (which consists of all Markov chains combined.
+sample (which consists of all Markov chains combined).
 
-By default, `summary()` will only print the posterior summary for the main
-model parameters of the analysis model.
+By default, [`summary()`](https://nerler.github.io/JointAI/reference/summary.JointAI.html)
+will only print the posterior summary for the main
+model parameters of the analysis model. How to select which parameters are shown
+is described in the vignette 
+[*Selecting Parameters*](https://nerler.github.io/JointAI/articles/SelectingParameters.html)
 
-This summary consists of the posterior mean, the standard deviation and the 
+The summary consists of the posterior mean, the standard deviation and the 
 2.5% and 97.5% quantiles of the MCMC sample, and the tail probability.
 The tail probability is a measure of how likely the value 0 is under the 
 estimated posterior distribution, and is calculated as 
-\[2\times\min\left\{Pr(\theta > 0), Pr(\theta < 0)\right\}\]
+$$2\times\min\left\{Pr(\theta > 0), Pr(\theta < 0)\right\}$$
 (where $\theta$ is the parameter of interest).
 
 In the following graphics, the shaded areas represent the minimum of 
@@ -127,8 +137,10 @@ Furthermore, the number of observations (the sample size of the data) is given.
 With the arguments `start`, `end` and `thin` it is possible to
 select which iterations from the MCMC sample are included in the summary.
 
-For example: When the traceplot shows that the chains only converged after
-1500 iterations, `start = 1500` should be specified in `summary()`.
+For example:<br>
+When the traceplot shows that the chains only converged after
+1500 iterations, `start = 1500` should be specified in
+[`summary()`](https://nerler.github.io/JointAI/reference/summary.JointAI.html).
 
 ## Plot of the posterior distributions
 The posterior distributions can be visualized using the function `densplot()`:
@@ -139,8 +151,3 @@ densplot(lm1)
 By default, `densplot()` plots the empirical distribution of each of the chains
 separately. When `joined = TRUE` the distributions of the combined chains
 are plotted.
-
-```{r, fig.width = 8, fig.height = 5}
-densplot(lm1, joined = T)
-```
-
