@@ -70,8 +70,12 @@ sampling has finished.}
 \item{progress.bar}{type of progress bar. Possible values are
     \code{"text"}, \code{"gui"}, and \code{"none"}. See Details.}
 
-\item{warn}{logical; should warnings and messages be suppressed; default is
-\code{TRUE}. Note: this applies only to warnings and messages
+\item{warn}{logical; should warnings be given?; default is
+\code{TRUE}. Note: this applies only to warnings
+given directly by \strong{JointAI}.}
+
+\item{mess}{logical; should messages be given?; default is
+\code{TRUE}. Note: this applies only to messages
 given directly by \strong{JointAI}.}
 
 \item{auxvars}{optional vector of variable names that should be used as

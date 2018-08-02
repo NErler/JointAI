@@ -2,23 +2,7 @@
 #'
 #' Creates a set of traceplots from the MCMC sample of an object of class JointAI
 #'
-#' @param object object inheriting from class \code{JointAI}
-#' @param subset subset of monitored parameters (columns in the MCMC sample).
-#'               Can be specified as a numeric vector of columns, a vector of
-#'               column names, as \code{subset = "main"} or \code{NULL}.
-#'               If \code{NULL}, all monitored nodes will be plotted.
-#'               \code{subset = "main"} (default) the main parameters of the
-#'               analysis model will be plotted (regression coefficients/fixed
-#'               effects, and, if available, standard deviation of the residual
-#'               and random effects covariance matrix).
-#' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
-#' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
-#' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
-#' @param nrow optional; number of rows in the plotting layout
-#'             (determined automatically if not specified)
-#' @param ncol optional; number of columns in the plotting layout
-#'             (determined automatically if not specified)
-#' @param use_ggplot logical; Should ggplot be used instead of the base graphics?
+#' @inheritParams sharedParams
 #' @inheritDotParams graphics::matplot -x -y -type -xlab -ylab -pch -log
 #' @name traceplot
 #'
@@ -127,11 +111,12 @@ densplot <- function(object, ...) {
 #' @rdname densplot
 #' @export
 densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
-                             subset = "main", vlines = NULL, nrow = NULL,
-                             ncol = NULL, joined = FALSE, use_ggplot = FALSE, ...) {
+                             subset = c(analysis_main = TRUE), vlines = NULL, nrow = NULL,
+                             ncol = NULL, joined = FALSE, use_ggplot = FALSE,
+                             warn = TRUE, ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin,
-                    subset = subset, nrow = nrow, ncol = ncol)
+                    subset = subset, nrow = nrow, ncol = ncol, warn = warn)
 
   if (joined)
     prep$MCMC <- as.mcmc.list(as.mcmc(do.call(rbind, prep$MCMC)))

@@ -10,7 +10,10 @@ plot_all(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8),
 \arguments{
 \item{data}{a data frame (or a matrix)}
 
-\item{nrow, ncol}{number of rows and columns in the plot layout;
+\item{nrow}{optional number of rows and columns in the plot layout;
+automatically chosen if unspecified}
+
+\item{ncol}{optional number of rows and columns in the plot layout;
 automatically chosen if unspecified}
 
 \item{fill}{color the histograms and bars are filled with}
@@ -21,7 +24,9 @@ automatically chosen if unspecified}
 values is only given for variables that have missing values,
 if \code{TRUE} it is given for all variables}
 
-\item{xlab, ylab}{labels of the x- and y-axis}
+\item{xlab}{labels for the x- and y-axis}
+
+\item{ylab}{labels for the x- and y-axis}
 
 \item{...}{additional parameters passed to \code{\link[graphics]{barplot}}
 and \code{\link[graphics]{hist}}}

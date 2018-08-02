@@ -1,7 +1,7 @@
 #' Add samples to an object of class JointAI
 #'
 #' Allows to continue sampling from an existing object of class JointAI
-#' @param object object inheriting from class \code{JointAI}
+#' @inheritParams sharedParams
 #' @inheritParams model_imp
 #' @param add logical; should the new MCMC samples be added to the existing
 #'            samples or replace them? If samples are added, \code{thin} and

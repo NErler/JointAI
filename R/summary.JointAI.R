@@ -1,20 +1,8 @@
 #' Summary of an object of class JointAI
-#' @param object object inheriting from class \code{JointAI}
-#' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
-#' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
-#' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
-#' @inheritParams coda::window.mcmc
 #' @inheritParams base::print
 #' @param quantiles posterior quantiles
-#' @param subset subset of monitored parameters (columns in the MCMC sample).
-#'               Can be specified as a numeric vector of columns, a vector of
-#'               column names, as \code{subset = "main"} or \code{NULL}.
-#'               If \code{NULL}, all monitored nodes will be plotted.
-#'               \code{subset = "main"} (default) the main parameters of the
-#'               analysis model will be plotted (regression coefficients/fixed
-#'               effects, and, if available, standard deviation of the residual
-#'               and random effects covariance matrix).
-#' @param ... currently not used
+#' @inheritParams sharedParams
+#' @param \dots currently not used
 #'
 #' @examples
 #' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)

@@ -1,7 +1,7 @@
 #' Gelman-Rubin criterion for convergence
 #'
 #' Gelman-Rubin criterion for convergence (uses \code{\link[coda]{gelman.diag}})
-#' @param object inheriting from class \code{JointAI}
+#' @inheritParams sharedParams
 #' @inheritParams coda::gelman.diag
 #' @inheritParams summary.JointAI
 #' @references
@@ -60,18 +60,8 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #'
 #' Calculate and plot the Monte Carlo error of the samples from a JointAI model
 #' @param x object inheriting from class \code{JointAI}
-#' @param subset subset of monitored parameters (columns in the MCMC sample).
-#'               Can be specified as a numeric vector of columns, a vector of
-#'               column names, as \code{subset = "main"} or \code{NULL}.
-#'               If \code{NULL}, all monitored nodes will be plotted.
-#'               \code{subset = "main"} (default) the main parameters of the
-#'               analysis model will be plotted (regression coefficients/fixed
-#'               effects, and, if available, standard deviation of the residual
-#'               and random effects covariance matrix).
-#' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
-#' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
-#' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
 #' @param digits number of digits for output
+#' @inheritParams sharedParams
 #' @inheritDotParams mcmcse::mcse.mat -x
 #'
 #' @return an object of class \code{MCElist} with elements \code{unscaled},

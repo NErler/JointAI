@@ -21,16 +21,19 @@
 
 \item{quantiles}{posterior quantiles}
 
-\item{subset}{subset of monitored parameters (columns in the MCMC sample).
-Can be specified as a numeric vector of columns, a vector of
-column names, as \code{subset = "main"} or \code{NULL}.
-If \code{NULL}, all monitored nodes will be plotted.
-\code{subset = "main"} (default) the main parameters of the
-analysis model will be plotted (regression coefficients/fixed
-effects, and, if available, standard deviation of the residual
-and random effects covariance matrix).}
+\item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
+Uses the same logic as the argument \code{monitor_params} in
+Defauls to the parameters of the analysis model.}
 
-\item{...}{currently not used}
+\item{warn}{logical; should warnings be given?; default is
+\code{TRUE}. Note: this applies only to warnings
+given directly by \strong{JointAI}.}
+
+\item{mess}{logical; should messages be given?; default is
+\code{TRUE}. Note: this applies only to messages
+given directly by \strong{JointAI}.}
+
+\item{\dots}{currently not used}
 
 \item{x}{an object of class \code{summary.JointAI}}
 

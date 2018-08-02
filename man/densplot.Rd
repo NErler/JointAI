@@ -22,14 +22,9 @@ densplot(object, ...)
 
 \item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
-\item{subset}{subset of monitored parameters (columns in the MCMC sample).
-Can be specified as a numeric vector of columns, a vector of
-column names, as \code{subset = "main"} or \code{NULL}.
-If \code{NULL}, all monitored nodes will be plotted.
-\code{subset = "main"} (default) the main parameters of the
-analysis model will be plotted (regression coefficients/fixed
-effects, and, if available, standard deviation of the residual
-and random effects covariance matrix).}
+\item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
+Uses the same logic as the argument \code{monitor_params} in
+Defauls to the parameters of the analysis model.}
 
 \item{vlines}{list, where each element is a named list of parameters that
 can be passed to \code{\link[graphics]{abline}} to create
@@ -38,15 +33,19 @@ Each of the list elements needs to contain at least
 \code{v = <x location>}, where <x location> is a vector of the
 same length as the number of plots (see examples).}
 
-\item{nrow}{optional; number of rows in the plotting layout
-(determined automatically if not specified)}
+\item{nrow}{optional number of rows and columns in the plot layout;
+automatically chosen if unspecified}
 
-\item{ncol}{optional; number of columns in the plotting layout
-(determined automatically if not specified)}
+\item{ncol}{optional number of rows and columns in the plot layout;
+automatically chosen if unspecified}
 
 \item{joined}{logical; should the chains be combined before plotting?}
 
 \item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
+
+\item{warn}{logical; should warnings be given?; default is
+\code{TRUE}. Note: this applies only to warnings
+given directly by \strong{JointAI}.}
 }
 \description{
 Plots a set of densities (per MC chain and coefficient) from the MCMC sample

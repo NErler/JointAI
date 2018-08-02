@@ -16,7 +16,7 @@ add_samples(object, n.iter, add = TRUE, thin = NULL,
 samples or replace them? If samples are added, \code{thin} and
 \code{var.names} are ignored}
 
-\item{thin}{thinning interval for monitors}
+\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
 \item{monitor_params}{named vector specifying which parameters should be
 monitored, see details.}

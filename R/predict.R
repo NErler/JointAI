@@ -7,7 +7,7 @@
 #' @param formula model formula (only fixed effects)
 #' @param dat original data
 #' @param var name of variable that should be varying
-#' @param object object inheriting from class \code{JointAI}
+#' @inheritParams sharedParams
 #' @param ... optional, additional arguments (currently not used)
 #'
 #' @seealso \code{\link{predict.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},

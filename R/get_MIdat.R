@@ -4,10 +4,9 @@
 #' automatically exported to SPSS (i.e., a .txt file containing the data and a
 #' .sps file containing syntax to generate a .sav file). For the export function
 #' the \href{https://CRAN.R-project.org/package=foreign}{foreign} package needs to be installed.
-#' @param object object inheriting from class \code{JointAI}
+#' @inheritParams sharedParams
 #' @param m number of imputed datasets
 #' @param include should the original, incomplete data be included?
-#' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
 #' @param seed optional seed
 #' @param export_to_SPSS logical; should the completed data be exported to SPSS?
 #' @param resdir optional directory for results (if unspecified and

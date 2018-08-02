@@ -3,7 +3,7 @@
 #' Print a information on all imputation models used in a JointAI object,
 #' including the model type, names of the parameters used and hyperparameters.
 #'
-#' @param object object of class JointAI
+#' @inheritParams sharedParams
 #'
 #' @examples
 #' # (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save computational time)

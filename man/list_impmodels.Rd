@@ -7,7 +7,7 @@
 list_impmodels(object)
 }
 \arguments{
-\item{object}{object of class JointAI}
+\item{object}{object inheriting from class \code{JointAI}}
 }
 \description{
 Print a information on all imputation models used in a JointAI object,

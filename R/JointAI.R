@@ -46,3 +46,33 @@
 #' @docType package
 #' @name JointAI
 NULL
+
+
+.onLoad <- function(libname, pkgname) {
+  rjags::load.module("glm", quiet = TRUE)
+}
+
+
+utils::globalVariables(c("Var1", "Var2", "iteration", "value", "chain"))
+
+#' Parameters used by several functions in JointAI
+#' @param object object inheriting from class \code{JointAI}
+#' @param subset subset of parameters/variables/nodes (columns in the MCMC sample).
+#'               Uses the same logic as the argument \code{monitor_params} in
+#'               Defauls to the parameters of the analysis model.
+#' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
+#' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
+#' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
+#' @param nrow,ncol optional number of rows and columns in the plot layout;
+#'                  automatically chosen if unspecified
+#' @param use_ggplot logical; Should ggplot be used instead of the base graphics?
+#' @param warn logical; should warnings be given?; default is
+#'             \code{TRUE}. Note: this applies only to warnings
+#'             given directly by \strong{JointAI}.
+#' @param mess logical; should messages be given?; default is
+#'             \code{TRUE}. Note: this applies only to messages
+#'             given directly by \strong{JointAI}.
+#' @param xlab,ylab labels for the x- and y-axis
+#'
+#' @name sharedParams
+NULL

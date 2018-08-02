@@ -26,9 +26,7 @@
 #' @inheritParams rjags::jags.model
 #' @inheritParams rjags::coda.samples
 #' @inheritParams rjags::update.jags
-#' @param warn logical; should warnings and messages be suppressed; default is
-#'             \code{TRUE}. Note: this applies only to warnings and messages
-#'             given directly by \strong{JointAI}.
+#' @inheritParams sharedParams
 #' @param modelname optional; character string specifying the name of model file
 #'                  (including the ending, either .R or .txt).
 #'                  If unspecified a random name will be generated.
