@@ -1,4 +1,4 @@
-#' JointAI: Joint Analysis and Imputation of Missing Values
+#' JointAI: Joint Analysis and Imputation of Incomplete Data
 #'
 #' The JointAI package performs simultaneous imputation and inference for
 #' incomplete data using the Bayesian framework.
@@ -29,6 +29,26 @@
 #'
 #' Imputed data can be exported to SPSS data using \code{\link{get_MIdat}}.
 #'
+#' @section Vignettes:
+#' The following vignettes are available
+#' \itemize{
+#' \item \href{https://nerler.github.io/JointAI/articles/MinimalExample.html}{\emph{Minimal Example}}:\cr
+#' A minimal example demonstrating the use of
+#'                            \code{\link{lm_imp}}, \code{\link{summary}},
+#'                            \code{\link{traceplot}}
+#'                            and \code{\link{densplot}}.
+#' \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{\emph{Selecting Parameters}}:\cr
+#' Examples on how to select the parameters/variables/nodes
+#'                                 to follow using the argument \code{monitor_params}
+#'                                 and the parameters/variables/nodes displayed
+#'                                 in the \code{\link{summary}}, \code{\link{traceplot}},
+#'                                 \code{\link{densplot}} or when using
+#'                                 \code{\link{GR_crit}} or \code{\link{MC_error}}.
+#' \item \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{\emph{Visualizing Incomplete Data}}:\cr
+#' Demonstrations of the options in \code{\link{plot_all}} (plotting histograms
+#'      and barplots for all variables in the data)  and \code{\link{md_pattern}}
+#'      (plotting or printing the missing data pattern).
+#' }
 #'
 #' @references Erler, N. S., Rizopoulos, D., Rosmalen, J. V., Jaddoe,
 #' V. W., Franco, O. H., & Lesaffre, E. M. (2016).
