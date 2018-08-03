@@ -5,7 +5,8 @@
 \title{Visualize the distribution of all variables in the dataset}
 \usage{
 plot_all(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8),
-  border = "black", allNA = FALSE, xlab = "", ylab = "frequency", ...)
+  border = "black", allNA = FALSE, use_level = FALSE, idvar, xlab = "",
+  ylab = "frequency", ...)
 }
 \arguments{
 \item{data}{a data frame (or a matrix)}
@@ -23,6 +24,8 @@ automatically chosen if unspecified}
 \item{allNA}{logical; if \code{FALSE} (default) the proportion of missing
 values is only given for variables that have missing values,
 if \code{TRUE} it is given for all variables}
+
+\item{idvar}{name of the column that specifies the multi-level grouping structure}
 
 \item{xlab}{labels for the x- and y-axis}
 

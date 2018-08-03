@@ -270,7 +270,7 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 #' @export
 
 plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8),
-                     border = 'black', allNA = FALSE,
+                     border = 'black', allNA = FALSE, use_level = FALSE, idvar,
                      xlab = '', ylab = 'frequency', ...) {
 
   args <- as.list(match.call())
@@ -296,12 +296,23 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
       names(data)[i]
     }
 
-    if (is.factor(data[, i])) {
-      if (any(is.na(data[, i]))) {
-        x <- factor(data[, i], levels = c(levels(data[, i]), "NA"), ordered = T)
+    if (use_level) {
+      if (missing(idvar))
+        stop("'idvar' must be specified when 'use_level = TRUE'.")
+
+      istvar <- check_tvar(data[, i], data[, idvar])
+      main <- paste0(main, "\n", ifelse(istvar, "level-1", "level-2"))
+      if (!istvar)
+        x <- data[match(unique(data[, idvar]), data[, idvar]), i]
+      else x <- data[, i]
+    } else {
+      x <- data[, i]
+    }
+
+    if (is.factor(x)) {
+      if (any(is.na(x))) {
+        x <- factor(x, levels = c(levels(x), "NA"), ordered = T)
         x[is.na(x)] <- "NA"
-      } else {
-        x <- data[, i]
       }
       if (is.null(args_barplot)) {
         barplot(table(x), ylab = ylab, main = main, col = fill,
@@ -310,12 +321,16 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
         barplot(table(x), ylab = ylab, main = main, col = fill,
                 border = border, xlab = xlab, args_barplot)
       }
+    } else if (is.character(x)) {
+      plot(0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "",
+           main = main)
+      text(1, 0, paste0(names(data)[i], " \nis coded as character\nand cannot be plotted."))
     } else {
       if (is.null(args_hist)) {
-        hist(data[, i], ylab = ylab, main = main,
+        hist(x, ylab = ylab, main = main,
              col = fill, border = border, xlab = xlab)
       } else {
-        hist(data[, i], ylab = ylab, main = main,
+        hist(x, ylab = ylab, main = main,
              col = fill, border = border, xlab = xlab, args_hist)
       }
     }
