@@ -1,5 +1,5 @@
 # Create data matrices for time constant and time-varying variables
-# @param DF a dataframe
+# @param data a dataframe
 # @param fixed a formula describing the mean structure
 # @param random an optional formula describing the random effects (check this!)
 # @param auxvars vector containing the names of auxiliary variables
@@ -11,42 +11,43 @@
 # @return a list containing matrices and other objects needed for other functions
 # @export
 
-divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
+divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
                             scale_vars = NULL, refcats = NULL, meth, warn = TRUE,
                             mess = TRUE, ...) {
   id <- extract_id(random, warn = warn)
 
   groups <- if (!is.null(id)) {
-    DF[, id]
+    data[, id]
   } else {
-    1:nrow(DF)
+    1:nrow(data)
   }
 
-  y <- DF[, extract_y(fixed), drop = FALSE]
+  y <- data[, extract_y(fixed), drop = FALSE]
+
+  # preliminary design matrix
+  X <- model.matrix(fixed, model.frame(fixed, data, na.action = na.pass))
+
+  # variables that do not have a main effect in fixed are added to the auxiliary variables
+  trafosX <- extract_fcts(fixed, data)
+  add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), auxvars))]
+  if(length(add_to_aux) > 0)
+    auxvars <- c(auxvars, unique(add_to_aux))
 
   # remove grouping specification from random effects formula
   random2 <- remove_grouping(random)
 
   # random effects design matrix
   Z <- if (!is.null(random)) {
-    model.matrix(as.formula(random2), DF)
+    model.matrix(as.formula(random2), data)
   }
 
   # fixed effects design matrices
   fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed), fixed = TRUE),
                                auxvars), collapse = " + "))
 
-
-  ord <- names(which(sapply(DF[, all.vars(fixed2)], is.ordered)))
-  contr <- as.list(rep("contr.treatment", length(ord)))
-  names(contr) <- ord
-
-  covars <- all.vars(fixed2)[all.vars(fixed2) != extract_y(fixed2)]
-  factors <- covars[sapply(DF[, covars, drop = FALSE], is.factor)]
-
-  refs <- get_refs(factors, refcats, DF)
+  refs <- get_refs(fixed2, data, refcats)
   for (i in names(refs)) {
-    DF[, i] <- relevel(factor(DF[, i], ordered = FALSE), as.character(refs[[i]]))
+    data[, i] <- relevel(factor(data[, i], ordered = FALSE), as.character(refs[[i]]))
   }
 
   if (!is.null(auxvars)) {
@@ -59,13 +60,8 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   }
 
 
-  X <- model.matrix(fixed,
-                    model.frame(fixed, DF, na.action = na.pass),
-                    contrasts.arg = contr)
-
   X2 <- model.matrix(fixed2,
-                     model.frame(fixed2, DF, na.action = na.pass),
-                     contrasts.arg = contr)
+                     model.frame(fixed2, data, na.action = na.pass))
 
   X2[is.nan(X2)] <- NA
 
@@ -86,29 +82,16 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
     Xic[is.na(Xic)] <- NA # to overwrite possible NaN's
   }
 
-
-  cat_vars <- names(which(lapply(
-    lapply(DF[, colSums(is.na(DF)) > 0 & names(DF) %in% all.vars(fixed2), drop = FALSE], levels),
-    length) > 2))
-  cat_vars <- sapply(cat_vars, match_positions, DF, colnames(Xc), simplify = FALSE)
-
-  Xcat <- if (length(cat_vars) > 0) {
-    DF[match(unique(groups), groups), names(cat_vars), drop = FALSE]
-  }
-  if (!is.null(Xcat)) {
-    Xc[, unlist(sapply(cat_vars, names))] <- NA
-  }
-
   # Xtrafo ---------------------------------------------------------------------
-  trafos <- extract_fcts(fixed2, DF)
+  trafos <- extract_fcts(fixed2, data)
   Xtrafo <- if (!is.null(trafos)) {
     fmla_trafo <- as.formula(
       paste("~", paste0(unique(trafos$var), collapse = " + "))
     )
-    if (!any(sapply(DF[, all.vars(fmla_trafo), drop = FALSE], is.factor)))
+    if (!any(sapply(data[, all.vars(fmla_trafo), drop = FALSE], is.factor)))
       contr <- NULL
     model.matrix(fmla_trafo,
-                 model.frame(fmla_trafo, DF, na.action = na.pass),
+                 model.frame(fmla_trafo, data, na.action = na.pass),
                  contrasts.arg = contr
     )[match(unique(groups), groups), -1, drop = FALSE]
   }
@@ -117,22 +100,33 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   }
 
   # re-order columns in Xc
-  colnams <- colnames(Xc)
-  for(i in seq_along(trafos$var)) {
-    colnams <- gsub(trafos$Xc_var[i], trafos$var[i], colnams, fixed = T)
-  }
   Xc_seq <- c(which(colSums(is.na(Xc)) == 0),
-              unlist(lapply(names(meth), match_positions, DF, colnams))
+              unlist(lapply(names(meth), match_positions, data, colnames(Xc)))
   )
-  # for (x in unique(trafos$var)) {
-  #   Xc_seq <- append(Xc_seq,
-  #                    match(trafos$Xc_var[trafos$var == x & trafos$Xc_var != x], colnames(Xc)),
-  #                    after = match(x, names(Xc_seq)))
-  # }
 
   Xc_seq <- c(Xc_seq, which(!1:ncol(Xc) %in% Xc_seq))
 
   Xc <- Xc[, Xc_seq, drop = FALSE]
+
+  # * categorical covariates -----------------------------------------------------
+  # variable relevant?
+  infmla <- names(data) %in% all.vars (fixed2)
+  # variabe incomplete?
+  misvar <- colSums(is.na(data)) > 0
+  # variabe categorical with >2 categories?
+  catvars <- sapply(data, function(i) is.factor(i) && length(levels(i)) > 2)
+
+  cat_vars <- names(data)[infmla & misvar & catvars]
+  cat_vars <- sapply(cat_vars, match_positions, data, colnames(Xc), simplify = FALSE)
+
+
+  Xcat <- if (length(cat_vars) > 0) {
+    data[match(unique(groups), groups), names(cat_vars), drop = FALSE]
+  }
+  if (!is.null(Xcat)) {
+    Xc[, unlist(sapply(cat_vars, names))] <- NA
+  }
+
 
 
   # Xlong ----------------------------------------------------------------------
@@ -173,10 +167,10 @@ divide_matrices <- function(DF, fixed, random = NULL, auxvars = NULL,
   }
 
   if (is.null(scale_vars)) {
-    scale_vars <- find_continuous_main(fixed2, DF)
-    fcts <- extract_fcts(fixed2, DF, complete = TRUE)
+    scale_vars <- find_continuous_main(fixed2, data)
+    fcts <- extract_fcts(fixed2, data, complete = TRUE)
     compl_fcts_vars <- fcts$Xc_var[fcts$type != "identity" &
-                                     colSums(is.na(DF[, fcts$var, drop = FALSE])) == 0]
+                                     colSums(is.na(data[, fcts$var, drop = FALSE])) == 0]
 
     excl <- grep("[[:alpha:]]*\\(", scale_vars, value = TRUE)
     excl <- c(excl, unique(trafos$Xc_var))
