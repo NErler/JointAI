@@ -65,7 +65,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
   out$ranefvar <- if (object$analysis_type == "lme")
     stats[grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", rownames(stats), value = TRUE), -5, drop = FALSE]
-  out$sigma <- if (attr(object$analysis_type, "family") == "gaussian")
+  out$sigma <- if (attr(object$analysis_type, "family") == "gaussian" &
+                   any(grepl(paste0("sigma_", names(object$Mlist$y)), rownames(stats))))
     stats[grep(paste0("sigma_", names(object$Mlist$y)), rownames(stats), value = TRUE), -5, drop = FALSE]
   out$stats <- stats[!rownames(stats) %in% c(rownames(out$ranefvar), rownames(out$sigma)), ]
 
@@ -103,7 +104,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3), ...) 
     cat("Posterior summary of random effects covariance matrix:\n")
     print(x$ranefvar, digits = digits)
   }
-  if (attr(x$analysis_type, "family") %in% c("gaussian", "Gamma")) {
+  if (!is.null(x$sigma)) {
     cat("\n")
     cat("Posterior summary of residual std. deviation:\n")
     print(x$sigma, digits = digits)
@@ -115,8 +116,6 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3), ...) 
         1, "\n")
   cat("Thinning interval =", x$thin, "\n")
   cat("Number of chains =", x$nchain, "\n")
-  # cat("\n1. Empirical mean and standard deviation for each variable,")
-  # cat("\n   plus standard error of the mean:\n\n")
   cat("\n")
   cat("Number of observations:", x$size, "\n")
   if (x$analysis_type == "lme")
