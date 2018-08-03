@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.width = 8,
+  fig.align = 'center',
   out.width = '100%'
 )
 library(JointAI)
@@ -31,9 +32,11 @@ investigate the pattern of missing values.
 Currently, the package **JointAI** has two function that help this fist
 exploration of an unknown dataset.
 
-In this vignette, we use the NHANES data that are part of the **JointAI** package.
-For more info on this data, check the
-[help file](https://nerler.github.io/JointAI/reference/NHANES.html) for the NHANES data or
+In this vignette, we use the NHANES data and the simLong data, that are part of
+the **JointAI** package.
+For more info on these datasets, check the help files
+[for the NHANES](https://nerler.github.io/JointAI/reference/NHANES.html) and
+[for the simLong](https://nerler.github.io/JointAI/reference/simLong.html) data or
 go to the [web page of the National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/index.htm).
 
 
@@ -77,6 +80,23 @@ plot_all(NHANES, allNA = TRUE, fill = '#18bc9c', border = '#2C3E50',
          ncol = 3, nclass = 30)
 ```
 
+
+### Multi-level data
+When the data has a multi-level structure, e.g., subjects are nested within
+hospitals, or subjects have been measured repeatedly, as in the simLong data,
+the level of each variable can be taken into account by specifying
+`use_levels = TRUE` and providing the name of the id variable in the argument
+`idvar`.
+
+```{r, fig.width = 8, fig.height = 10}
+par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
+plot_all(simLong, allNA = TRUE, fill = '#18bc9c', border = '#2C3E50',
+         ncol = 3, nclass = 30, use_level = TRUE, idvar = "ID")
+```
+The information whether a variable is level-1 (i.e., varies within the groups
+specified by `idvar`) or level-2 (i.e., constant within the groups) is added to
+the title of each plot, and level-2 variables are plotted on he group-level
+instead of the observation level.
 
 ## Missing Data Pattern
 The pattern of the missing data can be visualized with the function `md_pattern()`:
@@ -127,4 +147,11 @@ missing data pattern.
 md_pattern(NHANES, color = c('#2C3E50', '#E74C3C'), border = 'white',
            legend.position = 'none', print_xaxis = FALSE, 
            ylab = 'Alternative axis title')
+```
+
+<br>
+
+For the simLong data, the missing data pattern is:
+```{r, fig.height = 8}
+md_pattern(simLong, color = c('#2C3E50', '#E74C3C'))
 ```
