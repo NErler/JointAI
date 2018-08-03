@@ -14,6 +14,9 @@
 #' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #' GR_crit(mod1)
 #'
+#' @seealso
+#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
+#'
 #'
 #' @export
 GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = TRUE,
@@ -39,13 +42,6 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
   MCMC <- get_subset(object, subset, call_orig = as.list(match.call()), warn = warn)
   MCMC <- window(MCMC, start = start, end = end, thin = thin)
 
-  # coefs <- get_coef_names(object$Mlist, object$K)
-  # nams <- colnames(MCMC[[1]])
-  # nams[match(coefs[, 1], nams)] <- coefs[, 2]
-  #
-  # for (i in 1:length(MCMC)) {
-  #   colnames(MCMC[[i]]) <- nams
-  # }
 
   gelman.diag(x = MCMC, confidence = confidence, transform = transform,
               autoburnin = autoburnin, multivariate = multivariate)
@@ -81,6 +77,8 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #' MC_error(mod)
 #'
+#' #' @seealso
+#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
 #'
 #' @export
 MC_error <- function(x, subset = NULL,

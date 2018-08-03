@@ -167,6 +167,8 @@ Implemented imputation models that can be chosen in the argument \code{meth} are
 }}
 
 \subsection{Parameters to follow (\code{monitor_params})}{
+See also the vignette: \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters}
+
 Named vector specifying which parameters should be monitored. This can be done
 either directly by specifying the name of the parameter or indirectly by one
 of the key words summarizing a number of parameters. Except for \code{other},
@@ -215,6 +217,7 @@ mod3 <- lme_imp(y ~ C1 + B2 + L1 + time, random = ~ time|id,
 
 }
 \seealso{
+\code{\link{set_refcat}},
 \code{\link{traceplot}}, \code{\link{densplot}},
          \code{\link{summary.JointAI}}, \code{\link{MC_error}},
          \code{\link{GR_crit}}, \code{\link[rjags]{jags.model}},

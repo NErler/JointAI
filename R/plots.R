@@ -22,6 +22,9 @@
 #' ylab('value') +
 #' scale_color_discrete(name = 'chain')
 #'
+#' @seealso
+#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
+#'
 #' @export
 traceplot <- function(object, ...) {
   UseMethod("traceplot")
@@ -104,6 +107,9 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' theme(legend.position = 'bottom') +
 #' scale_color_brewer(palette = 'Dark2', name = 'chain')
 #'
+#' @seealso
+#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
+
 #' @export
 densplot <- function(object, ...) {
   UseMethod("densplot")

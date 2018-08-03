@@ -90,4 +90,6 @@ scale_color_discrete(name = 'chain')
 \seealso{
 \code{\link{summary.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
           \code{\link{lm_imp}}
+
+The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
 }

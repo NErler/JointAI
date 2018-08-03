@@ -78,3 +78,6 @@ theme(legend.position = 'bottom') +
 scale_color_brewer(palette = 'Dark2', name = 'chain')
 
 }
+\seealso{
+The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
+}

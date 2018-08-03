@@ -52,10 +52,12 @@ Gelman-Rubin criterion for convergence (uses \code{\link[coda]{gelman.diag}})
 mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 GR_crit(mod1)
 
-
 }
 \references{
 Gelman, A., Meng, X. L., & Stern, H. (1996).
 Posterior predictive assessment of model fitness via realized discrepancies.
 \emph{Statistica Sinica}, 733-760.
+}
+\seealso{
+The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
 }
