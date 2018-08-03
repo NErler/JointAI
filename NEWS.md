@@ -23,6 +23,7 @@
 * example datasets `NHANES`, `simLong` and `simWide` added
 * `list_impmodels` to print information on the imputation models and hyperparameters
 * `parameters()` added to display the parameters to be/that were monitored
+* `set_refcat()` added to guide specification of reference categories
 * added vignettes *Minimal Example*, *Visualizing Incomplete Data* and *Parameter Selection*
 
 
