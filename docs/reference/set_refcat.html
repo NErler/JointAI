@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Visualize the distribution of all variables in the dataset — plot_all • JointAI</title>
+<title>Set the reference categories for all categorical covariates in the model — set_refcat • JointAI</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,11 +30,11 @@
 
 
 
-<meta property="og:title" content="Visualize the distribution of all variables in the dataset — plot_all" />
+<meta property="og:title" content="Set the reference categories for all categorical covariates in the model — set_refcat" />
 
-<meta property="og:description" content="Plots a grid of histograms (for continuous variables) and barplots (for
-categorical variables) together with the proportion of missing values and
-the name of each variable." />
+<meta property="og:description" content="The function asks questions and, depending on the answers given by the user,
+returns the input for the argument refcats in the functions
+lm_imp, glm_imp and lme_imp." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -126,95 +126,73 @@ the name of each variable." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Visualize the distribution of all variables in the dataset</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/plots.R'><code>R/plots.R</code></a></small>
-    <div class="hidden name"><code>plot_all.Rd</code></div>
+    <h1>Set the reference categories for all categorical covariates in the model</h1>
+    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/get_refs.R'><code>R/get_refs.R</code></a></small>
+    <div class="hidden name"><code>set_refcat.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Plots a grid of histograms (for continuous variables) and barplots (for
-categorical variables) together with the proportion of missing values and
-the name of each variable.</p>
+    <p>The function asks questions and, depending on the answers given by the user,
+returns the input for the argument <code>refcats</code> in the functions
+<code><a href='model_imp.html'>lm_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code> and <code><a href='model_imp.html'>lme_imp</a></code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>plot_all</span>(<span class='no'>data</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw pkg'>grDevices</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/grDevices/topics/gray'>grey</a></span>(<span class='fl'>0.8</span>),
-  <span class='kw'>border</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>allNA</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>use_level</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>idvar</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"frequency"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>set_refcat</span>(<span class='no'>data</span>, <span class='no'>formula</span>, <span class='no'>covars</span>, <span class='no'>auxvars</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a data frame (or a matrix)</p></td>
+      <td><p>a <code>data.frame</code></p></td>
     </tr>
     <tr>
-      <th>nrow</th>
-      <td><p>optional number of rows and columns in the plot layout;
-automatically chosen if unspecified</p></td>
+      <th>formula</th>
+      <td><p>optional; model formula (used to select subset of relevant columns of <code>data</code>)</p></td>
     </tr>
     <tr>
-      <th>ncol</th>
-      <td><p>optional number of rows and columns in the plot layout;
-automatically chosen if unspecified</p></td>
+      <th>covars</th>
+      <td><p>optional; vector containing the names of relevant columns of <code>data</code></p></td>
     </tr>
     <tr>
-      <th>fill</th>
-      <td><p>color the histograms and bars are filled with</p></td>
-    </tr>
-    <tr>
-      <th>border</th>
-      <td><p>color of the borders of the histograms and bars</p></td>
-    </tr>
-    <tr>
-      <th>allNA</th>
-      <td><p>logical; if <code>FALSE</code> (default) the proportion of missing
-values is only given for variables that have missing values,
-if <code>TRUE</code> it is given for all variables</p></td>
-    </tr>
-    <tr>
-      <th>use_level</th>
-      <td><p>logical; should the multi-level structure be taken into account?
-requires specification of the argument <code>idvar</code></p></td>
-    </tr>
-    <tr>
-      <th>idvar</th>
-      <td><p>name of the column that specifies the multi-level grouping structure</p></td>
-    </tr>
-    <tr>
-      <th>xlab</th>
-      <td><p>labels for the x- and y-axis</p></td>
-    </tr>
-    <tr>
-      <th>ylab</th>
-      <td><p>labels for the x- and y-axis</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>additional parameters passed to <code><a href='http://www.rdocumentation.org/packages/graphics/topics/barplot'>barplot</a></code>
-and <code><a href='http://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a></code></p></td>
+      <th>auxvars</th>
+      <td><p>optional; vector containing the names of relevant columns of
+<code>data</code> that should be considered additionally to the columns
+occurring in the <code>formula</code></p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Vignette: <a href='https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html'>Visualizing Incomplete Data</a></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>par</span>(<span class='kw'>mar</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>1</span>), <span class='kw'>mgp</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>0.6</span>, <span class='fl'>0</span>))
-<span class='fu'>plot_all</span>(<span class='no'>wideDF</span>)</div><div class='img'><img src='plot_all-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>set_refcat</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>)
+<span class='fl'>3</span>
+<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>SBP</span> ~ <span class='no'>age</span> + <span class='no'>race</span> + <span class='no'>creat</span> + <span class='no'>educ</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='st'>'largest'</span>)
+
+
+<span class='co'># specify a model formula</span>
+<span class='no'>fmla</span> <span class='kw'>&lt;-</span> <span class='no'>SBP</span> ~ <span class='no'>age</span> + <span class='no'>gender</span> + <span class='no'>race</span> + <span class='no'>bili</span> + <span class='no'>smoke</span> + <span class='no'>alc</span>
+
+<span class='co'># write the output of set_refcat to an object</span>
+<span class='no'>ref_mod2</span> <span class='kw'>&lt;-</span> <span class='fu'>set_refcat</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>, <span class='kw'>formula</span> <span class='kw'>=</span> <span class='no'>fmla</span>)
+<span class='fl'>4</span>
+<span class='fl'>2</span>
+<span class='fl'>5</span>
+<span class='fl'>1</span>
+<span class='fl'>1</span>
+
+<span class='co'># enter the output in the model specification</span>
+<span class='no'>mod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='kw'>formula</span> <span class='kw'>=</span> <span class='no'>fmla</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='no'>ref_mod2</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+<span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#see-also">See also</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

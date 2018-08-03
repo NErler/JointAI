@@ -207,25 +207,28 @@ given directly by <strong>JointAI</strong>.</p></td>
 Posterior predictive assessment of model fitness via realized discrepancies.
 <em>Statistica Sinica</em>, 733-760.</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>The vignette <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Selecting Parameters</a> contains some examples how to specify <code>subset</code>.</p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>GR_crit</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; Potential scale reduction factors:
 #&gt; 
 #&gt;             Point est. Upper C.I.
-#&gt; (Intercept)       1.00       1.02
-#&gt; C1                1.01       1.03
-#&gt; M22               1.10       1.32
-#&gt; M23               1.06       1.22
-#&gt; M24               1.08       1.25
-#&gt; C2                1.00       1.01
-#&gt; tau_y             1.00       1.02
-#&gt; sigma_y           1.00       1.02
+#&gt; (Intercept)       1.01       1.01
+#&gt; C1                1.01       1.01
+#&gt; M22               1.04       1.12
+#&gt; M23               1.06       1.16
+#&gt; M24               1.03       1.07
+#&gt; C2                1.01       1.03
+#&gt; tau_y             1.00       1.01
+#&gt; sigma_y           1.00       1.00
 #&gt; 
 #&gt; Multivariate psrf
 #&gt; 
-#&gt; 1.09</div><div class='input'>
-
+#&gt; 1.04</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -234,6 +237,8 @@ Posterior predictive assessment of model fitness via realized discrepancies.
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#references">References</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

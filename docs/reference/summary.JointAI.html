@@ -202,7 +202,8 @@ given directly by <strong>JointAI</strong>.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>The model fitting functions <code><a href='model_imp.html'>lm_imp</a></code>,
-         <code><a href='model_imp.html'>glm_imp</a></code>, <code><a href='model_imp.html'>lme_imp</a></code></p></div>
+         <code><a href='model_imp.html'>glm_imp</a></code>, <code><a href='model_imp.html'>lme_imp</a></code> and the
+         vignette <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Selecting Parameters</a> for examples how to specify <code>subset</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -213,18 +214,18 @@ given directly by <strong>JointAI</strong>.</p></td>
 #&gt; lm_imp(formula = y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #&gt; 
 #&gt; Posterior summary:
-#&gt;                  Mean       SD     2.5%   97.5% tail-prob.
-#&gt; (Intercept)  33.67597 24.94764 -12.1905 84.1335    0.15333
-#&gt; C1          -25.49293 17.42928 -60.4167  6.7491    0.12667
-#&gt; M22          -0.38739  0.70016  -1.6843  1.1463    0.51333
-#&gt; M23           0.06714  0.68821  -1.3252  1.4954    0.95333
-#&gt; M24          -1.12611  0.65308  -2.3733  0.1782    0.09333
-#&gt; C2            0.93750  0.72790  -0.5055  2.3846    0.17333
-#&gt; tau_y         0.20444  0.03033   0.1543  0.2722    0.00000
+#&gt;                 Mean       SD     2.5%    97.5% tail-prob.
+#&gt; (Intercept)  36.4864 26.56510 -14.1133 81.25267     0.1800
+#&gt; C1          -27.5027 18.54570 -58.5676  7.95732     0.1600
+#&gt; M22          -0.3234  0.60906  -1.7655  0.71371     0.6267
+#&gt; M23           0.1684  0.60861  -1.1813  1.34885     0.7333
+#&gt; M24          -1.0950  0.61904  -2.4304  0.02661     0.0600
+#&gt; C2            0.9887  0.69982  -0.4219  2.29011     0.1467
+#&gt; tau_y         0.2030  0.02891   0.1510  0.26233     0.0000
 #&gt; 
 #&gt; Posterior summary of residual std. deviation:
-#&gt;          Mean     SD  2.5% 97.5%
-#&gt; sigma_y 2.229 0.1622 1.917 2.546
+#&gt;          Mean    SD  2.5% 97.5%
+#&gt; sigma_y 2.237 0.162 1.952 2.573
 #&gt; 
 #&gt; 
 #&gt; MCMC settings:

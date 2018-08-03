@@ -331,7 +331,6 @@ automatically. If <code>FALSE</code>, no scaling will be done.</p></dd>
 <tr><td><code>binomial</code></td><td>with links: <code>logit</code>, <code>probit</code>, <code>log</code>, <code>cloglog</code></td></tr>
 <tr><td><code>Gamma</code></td><td>with links: <code>identity</code>, <code>log</code></td></tr>
 <tr><td><code>poisson</code></td><td>with links: <code>log</code>, <code>identity</code></td></tr>
-<tr><td></td><td><code>gaussian</code></td></tr>
 </table>
     <h3>Imputation methods</h3>
     Implemented imputation models that can be chosen in the argument <code>meth</code> are:
@@ -343,9 +342,9 @@ automatically. If <code>FALSE</code>, no scaling will be done.</p></dd>
 <tr><td><code>logit</code></td><td>logistic model for binary data</td></tr>
 <tr><td><code>multilogit</code></td><td>multinomial logit model for unordered categorical variables</td></tr>
 <tr><td><code>cumlogit</code></td><td>cumulative logit model for ordered categorical variables</td></tr>
-<tr><td></td><td><code>norm</code></td></tr>
 </table>
     <h3>Parameters to follow (<code>monitor_params</code>)</h3>
+    See also the vignette: <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Selecting Parameters</a>
     Named vector specifying which parameters should be monitored. This can be done
 either directly by specifying the name of the parameter or indirectly by one
 of the key words summarizing a number of parameters. Except for <code>other</code>,
@@ -370,7 +369,6 @@ If left unspecified, <code>monitor_params = c("analysis_main" = TRUE)</code> wil
 <tr><td><code>gamma_imp</code></td><td>intercepts in ordinal imputation models</td></tr>
 <tr><td><code>delta_imp</code></td><td>increments of ordinal intercepts</td></tr>
 <tr><td><code>other</code></td><td>additional parameters</td></tr>
-<tr><td></td><td><strong>name/key word</strong></td></tr>
 </table>
     For example:
     <code>monitor_params = c("analysis_main" = TRUE, "tau_y" = FALSE)</code>
@@ -382,7 +380,8 @@ the imputed values.
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='traceplot.html'>traceplot</a></code>, <code><a href='densplot.html'>densplot</a></code>,
+    <div class='dont-index'><p><code><a href='set_refcat.html'>set_refcat</a></code>,
+<code><a href='traceplot.html'>traceplot</a></code>, <code><a href='densplot.html'>densplot</a></code>,
          <code><a href='summary.JointAI.html'>summary.JointAI</a></code>, <code><a href='MC_error.html'>MC_error</a></code>,
          <code><a href='GR_crit.html'>GR_crit</a></code>, <code><a href='http://www.rdocumentation.org/packages/rjags/topics/jags.model'>jags.model</a></code>,
          <code><a href='http://www.rdocumentation.org/packages/rjags/topics/coda.samples'>coda.samples</a></code>, <code>predict.JointAI</code></p></div>
