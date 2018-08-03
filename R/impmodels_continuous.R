@@ -29,9 +29,10 @@ impmodel_normal <- function(varname, dest_col, dest_mat, trafo_cols, trafos,
     message(gettextf("Note: The imputation model for %s", dQuote(varname)),
             " will be restricted to be larger than 0 to prevent problems ",
             gettextf("in calculating %s.",
-                     dQuote(trafos$Xc_var[trafos$var == varname &
-                                            trafos$type %in% c("log", "sqrt")]))
-    )
+                     paste(dQuote(trafos$Xc_var[trafos$var == varname &
+                                                  trafos$type %in% c("log", "sqrt")]),
+                           collapse = " and ")
+            ))
   }
 
 

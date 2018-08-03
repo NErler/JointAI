@@ -63,7 +63,7 @@ get_subset <- function(object, subset, call_orig, warn = TRUE) {
     } else if(!r %in% colnames(object$MCMC[[1]]) & any(grepl(r, colnames(object$MCMC[[1]])))) {
       grep(paste0(r, "\\[[[:digit:]]+\\]"), colnames(object$MCMC[[1]]), value = TRUE)
     }
-  })
+  }, simplify = FALSE)
 
   for (i in seq_along(repl)) {
     if(!is.null(repl[[i]])) {
