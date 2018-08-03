@@ -82,7 +82,7 @@
 #' \code{gaussian} \tab with links: \code{identity}, \code{log}\cr
 #' \code{binomial} \tab with links: \code{logit}, \code{probit}, \code{log}, \code{cloglog}\cr
 #' \code{Gamma}    \tab with links: \code{identity}, \code{log}\cr
-#' \code{poisson}  \tab with links: \code{log}, \code{identity}\cr
+#' \code{poisson}  \tab with links: \code{log}, \code{identity}
 #' }}
 #'
 #'
@@ -96,7 +96,7 @@
 #' \code{beta} \tab beta model (with logit-link) for skewed continuous data in (0, 1)\cr
 #' \code{logit} \tab logistic model for binary data\cr
 #' \code{multilogit} \tab multinomial logit model for unordered categorical variables\cr
-#' \code{cumlogit} \tab cumulative logit model for ordered categorical variables\cr
+#' \code{cumlogit} \tab cumulative logit model for ordered categorical variables
 #' }}
 #'
 #' \subsection{Parameters to follow (\code{monitor_params})}{
@@ -123,7 +123,7 @@
 #' \code{tau_imp} \tab precision parameters of the residuals from imputation models\cr
 #' \code{gamma_imp} \tab intercepts in ordinal imputation models\cr
 #' \code{delta_imp} \tab increments of ordinal intercepts\cr
-#' \code{other} \tab additional parameters\cr
+#' \code{other} \tab additional parameters
 #' }
 #' For example:
 #'

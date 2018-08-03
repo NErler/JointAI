@@ -2,31 +2,28 @@
 % Please edit documentation in R/get_refs.R
 \name{set_refcat}
 \alias{set_refcat}
-\title{Set the reference categories for all categorical covariates in the model
-The function asks questions and, depending on the answers given by the user,
-returns the input for the argument 'refcats' in the functions
-\code{\link{lm_imp}}, \code{\link{glm_imp}} and \code{link{lme_imp}}.}
+\title{Set the reference categories for all categorical covariates in the model}
 \usage{
 set_refcat(data, formula, covars, auxvars)
 }
 \arguments{
 \item{data}{a \code{data.frame}}
 
-\item{formula}{optional; model formula (used to select subset of relevant colums of \code{data})}
+\item{formula}{optional; model formula (used to select subset of relevant columns of \code{data})}
 
 \item{covars}{optional; vector containing the names of relevant columns of \code{data}}
 
 \item{auxvars}{optional; vector containing the names of relevant columns of
-\code{data} that shoud be considred additionally to the columns
-occuring in the \code{formula}}
+\code{data} that should be considered additionally to the columns
+occurring in the \code{formula}}
 }
 \description{
-Set the reference categories for all categorical covariates in the model
 The function asks questions and, depending on the answers given by the user,
-returns the input for the argument 'refcats' in the functions
-\code{\link{lm_imp}}, \code{\link{glm_imp}} and \code{link{lme_imp}}.
+returns the input for the argument \code{refcats} in the functions
+\code{\link{lm_imp}}, \code{\link{glm_imp}} and \code{\link{lme_imp}}.
 }
 \examples{
+\dontrun{
 set_refcat(data = NHANES)
 3
 mod1 <- lm_imp(SBP ~ age + race + creat + educ, data = NHANES, refcats = 'largest')
@@ -45,5 +42,6 @@ ref_mod2 <- set_refcat(data = NHANES, formula = fmla)
 
 # enter the output in the model specification
 mod2 <- lm_imp(formula = fmla, data = NHANES, refcats = ref_mod2, n.adapt = 0)
+}
 
 }

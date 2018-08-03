@@ -93,7 +93,7 @@ utils::globalVariables(c("Var1", "Var2", "iteration", "value", "chain"))
 #'             \code{TRUE}. Note: this applies only to messages
 #'             given directly by \strong{JointAI}.
 #' @param xlab,ylab labels for the x- and y-axis
-#' @param use_levels logical; should the multi-level structure be taken into account?
+#' @param use_level logical; should the multi-level structure be taken into account?
 #'        requires specification of the argument \code{idvar}
 #' @param idvar name of the column that specifies the multi-level grouping structure
 #'

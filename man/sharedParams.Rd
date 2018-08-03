@@ -31,7 +31,7 @@ given directly by \strong{JointAI}.}
 
 \item{xlab, ylab}{labels for the x- and y-axis}
 
-\item{use_levels}{logical; should the multi-level structure be taken into account?
+\item{use_level}{logical; should the multi-level structure be taken into account?
 requires specification of the argument \code{idvar}}
 
 \item{idvar}{name of the column that specifies the multi-level grouping structure}

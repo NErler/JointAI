@@ -149,7 +149,7 @@ automatically. If \code{FALSE}, no scaling will be done.}
 \code{gaussian} \tab with links: \code{identity}, \code{log}\cr
 \code{binomial} \tab with links: \code{logit}, \code{probit}, \code{log}, \code{cloglog}\cr
 \code{Gamma}    \tab with links: \code{identity}, \code{log}\cr
-\code{poisson}  \tab with links: \code{log}, \code{identity}\cr
+\code{poisson}  \tab with links: \code{log}, \code{identity}
 }}
 
 
@@ -163,7 +163,7 @@ Implemented imputation models that can be chosen in the argument \code{meth} are
 \code{beta} \tab beta model (with logit-link) for skewed continuous data in (0, 1)\cr
 \code{logit} \tab logistic model for binary data\cr
 \code{multilogit} \tab multinomial logit model for unordered categorical variables\cr
-\code{cumlogit} \tab cumulative logit model for ordered categorical variables\cr
+\code{cumlogit} \tab cumulative logit model for ordered categorical variables
 }}
 
 \subsection{Parameters to follow (\code{monitor_params})}{
@@ -190,7 +190,7 @@ If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)} will be u
 \code{tau_imp} \tab precision parameters of the residuals from imputation models\cr
 \code{gamma_imp} \tab intercepts in ordinal imputation models\cr
 \code{delta_imp} \tab increments of ordinal intercepts\cr
-\code{other} \tab additional parameters\cr
+\code{other} \tab additional parameters
 }
 For example:
 
