@@ -138,6 +138,7 @@ print_seq <- function(min, max) {
 
 
 #' Parameter names of an JointAI object
+#'
 #' Returns the names of the parameters/nodes of an object of class JointAI.
 #' If the object does not contain any MCMC samples, the parameters/nodes for
 #' which a monitor is set is returned

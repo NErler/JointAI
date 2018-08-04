@@ -80,12 +80,12 @@ Lesaffre & Lawson (2012) [p. 195] suggest the Monte Carlo error of a
 mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 MC_error(mod)
 
-#' @seealso
-The vignette \\href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \\code{subset}.
-
 }
 \references{
 Lesaffre, E., & Lawson, A. B. (2012).
 \emph{Bayesian Biostatistics}.
 John Wiley & Sons.
+}
+\seealso{
+The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
 }
