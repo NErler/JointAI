@@ -6,10 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameter names of an JointAI object
-Returns the names of the parameters/nodes of an object of class JointAI.
-If the object does not contain any MCMC samples, the parameters/nodes for
-which a monitor is set is returned — parameters • JointAI</title>
+<title>Parameter names of an JointAI object — parameters • JointAI</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -33,13 +30,9 @@ which a monitor is set is returned — parameters • JointAI</title>
 
 
 
-<meta property="og:title" content="Parameter names of an JointAI object
-Returns the names of the parameters/nodes of an object of class JointAI.
-If the object does not contain any MCMC samples, the parameters/nodes for
-which a monitor is set is returned — parameters" />
+<meta property="og:title" content="Parameter names of an JointAI object — parameters" />
 
-<meta property="og:description" content="Parameter names of an JointAI object
-Returns the names of the parameters/nodes of an object of class JointAI.
+<meta property="og:description" content="Returns the names of the parameters/nodes of an object of class JointAI.
 If the object does not contain any MCMC samples, the parameters/nodes for
 which a monitor is set is returned" />
 <meta name="twitter:card" content="summary" />
@@ -96,6 +89,9 @@ which a monitor is set is returned" />
       <a href="../articles/MinimalExample.html">Minimal Example</a>
     </li>
     <li>
+      <a href="../articles/ModelSpecification.html">Model Specification</a>
+    </li>
+    <li>
       <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
@@ -133,18 +129,14 @@ which a monitor is set is returned" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameter names of an JointAI object
-Returns the names of the parameters/nodes of an object of class JointAI.
-If the object does not contain any MCMC samples, the parameters/nodes for
-which a monitor is set is returned</h1>
+    <h1>Parameter names of an JointAI object</h1>
     <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/print_functions.R'><code>R/print_functions.R</code></a></small>
     <div class="hidden name"><code>parameters.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Parameter names of an JointAI object
-Returns the names of the parameters/nodes of an object of class JointAI.
+    <p>Returns the names of the parameters/nodes of an object of class JointAI.
 If the object does not contain any MCMC samples, the parameters/nodes for
 which a monitor is set is returned</p>
     
@@ -181,7 +173,9 @@ given directly by <strong>JointAI</strong>.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># (does not need MCMC samples to work, so we will set n.adapt = 0 and</span>
 <span class='co'># n.iter = 0 to save computational time)</span>
-<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span> + <span class='no'>O2</span> + <span class='no'>B2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='output co'>#&gt; <span class='message'>Note: No MCMC sample will be created when n.iter is set to 0.</span></div><div class='input'><span class='fu'>variable.names</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; NULL</div><div class='input'>
+<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span> + <span class='no'>O2</span> + <span class='no'>B2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='output co'>#&gt; <span class='message'>Note: No MCMC sample will be created when n.iter is set to 0.</span></div><div class='input'><span class='fu'>parameters</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; <span class='message'>'mod1' does not contain MCMC samples.</span></div><div class='output co'>#&gt;  [1] "(Intercept)" "C1"          "O22"         "O23"         "O24"        
+#&gt;  [6] "M22"         "M23"         "M24"         "C2"          "B21"        
+#&gt; [11] "tau_y"       "sigma_y"    </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

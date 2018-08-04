@@ -87,6 +87,9 @@
       <a href="../articles/MinimalExample.html">Minimal Example</a>
     </li>
     <li>
+      <a href="../articles/ModelSpecification.html">Model Specification</a>
+    </li>
+    <li>
       <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
@@ -238,18 +241,22 @@ given directly by <strong>JointAI</strong>.</p></td>
 <em>Bayesian Biostatistics</em>.
 John Wiley &amp; Sons.</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>The vignette <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Selecting Parameters</a> contains some examples how to specify <code>subset</code>.</p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
-MC_error(mod)
-
-#' @seealso
-The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
-
-</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:5:5: unexpected symbol</span>
-#&gt; <span class='error'>4: #' @seealso</span>
-#&gt; <span class='error'>5: The vignette</span>
-#&gt; <span class='error'>       ^</span></div></pre>
+    <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='output co'>#&gt;   |                                                          |                                                  |   0%  |                                                          |*                                                 |   2%  |                                                          |**                                                |   4%  |                                                          |***                                               |   6%  |                                                          |****                                              |   8%  |                                                          |*****                                             |  10%  |                                                          |******                                            |  12%  |                                                          |*******                                           |  14%  |                                                          |********                                          |  16%  |                                                          |*********                                         |  18%  |                                                          |**********                                        |  20%  |                                                          |***********                                       |  22%  |                                                          |************                                      |  24%  |                                                          |*************                                     |  26%  |                                                          |**************                                    |  28%  |                                                          |***************                                   |  30%  |                                                          |****************                                  |  32%  |                                                          |*****************                                 |  34%  |                                                          |******************                                |  36%  |                                                          |*******************                               |  38%  |                                                          |********************                              |  40%  |                                                          |*********************                             |  42%  |                                                          |**********************                            |  44%  |                                                          |***********************                           |  46%  |                                                          |************************                          |  48%  |                                                          |*************************                         |  50%  |                                                          |**************************                        |  52%  |                                                          |***************************                       |  54%  |                                                          |****************************                      |  56%  |                                                          |*****************************                     |  58%  |                                                          |******************************                    |  60%  |                                                          |*******************************                   |  62%  |                                                          |********************************                  |  64%  |                                                          |*********************************                 |  66%  |                                                          |**********************************                |  68%  |                                                          |***********************************               |  70%  |                                                          |************************************              |  72%  |                                                          |*************************************             |  74%  |                                                          |**************************************            |  76%  |                                                          |***************************************           |  78%  |                                                          |****************************************          |  80%  |                                                          |*****************************************         |  82%  |                                                          |******************************************        |  84%  |                                                          |*******************************************       |  86%  |                                                          |********************************************      |  88%  |                                                          |*********************************************     |  90%  |                                                          |**********************************************    |  92%  |                                                          |***********************************************   |  94%  |                                                          |************************************************  |  96%  |                                                          |************************************************* |  98%  |                                                          |**************************************************| 100%</div><div class='input'><span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                 est  MCSE     SD MCSE/SD
+#&gt; (Intercept)  36.033 1.444 26.663   0.054
+#&gt; C1          -27.138 1.011 18.606   0.054
+#&gt; M22          -0.415 0.076  0.635   0.119
+#&gt; M23           0.068 0.078  0.617   0.126
+#&gt; M24          -1.188 0.079  0.630   0.126
+#&gt; C2            0.916 0.042  0.646   0.065
+#&gt; sigma_y       2.220 0.011  0.167   0.066
+#&gt; tau_y         0.206 0.002  0.031   0.066</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -263,6 +270,8 @@ The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters
       <li><a href="#note">Note</a></li>
 
       <li><a href="#references">References</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
