@@ -9,13 +9,14 @@
 #' Posterior predictive assessment of model fitness via realized discrepancies.
 #' \emph{Statistica Sinica}, 733-760.
 #'
-#' @examples
+#' @seealso
+#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
 #'
+#'
+#' @examples
 #' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #' GR_crit(mod1)
 #'
-#' @seealso
-#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
 #'
 #'
 #' @export
@@ -73,12 +74,12 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #' \emph{Bayesian Biostatistics}.
 #' John Wiley & Sons.
 #'
+#' @seealso
+#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
+#'
 #' @examples
 #' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #' MC_error(mod)
-#'
-#' #' @seealso
-#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
 #'
 #' @export
 MC_error <- function(x, subset = NULL,
