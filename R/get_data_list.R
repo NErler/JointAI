@@ -48,11 +48,18 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
   }
 
   # hyperparameters imputation models
-  if (any(meth %in% c("norm", "lognorm"))) {
+  if (any(meth %in% c("norm"))) {
     l$mu_reg_norm <- defs$norm["mu_reg_norm"]
     l$tau_reg_norm <- defs$norm["tau_reg_norm"]
     l$a_tau_norm <- defs$norm["a_tau_norm"]
     l$b_tau_norm <- defs$norm["b_tau_norm"]
+  }
+
+  if (any(meth %in% c("lognorm"))) {
+    l$mu_reg_lognorm <- defs$norm["mu_reg_norm"]
+    l$tau_reg_lognorm <- defs$norm["tau_reg_norm"]
+    l$a_tau_lognorm <- defs$norm["a_tau_norm"]
+    l$b_tau_lognorm <- defs$norm["b_tau_norm"]
   }
 
   if (any(meth %in% c("gamma"))) {

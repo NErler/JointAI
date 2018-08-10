@@ -255,15 +255,22 @@ paste_trafos <- function(dest_col, trafo_cols, trafos,...) {
 # @param imp_par_list list of parameters
 paste_imp_model <- function(imp_par_list) {
 
+  # imp_model <- switch(imp_par_list$impmeth,
+  #                     norm = impmodel_normal,
+  #                     lognorm = impmodel_lognorm,
+  #                     gamma = impmodel_gamma,
+  #                     beta = impmodel_beta,
+  #                     logit = impmodel_logit,
+  #                     multilogit = impmodel_multilogit,
+  #                     cumlogit = impmodel_cumlogit)
   imp_model <- switch(imp_par_list$impmeth,
-                      norm = impmodel_normal,
-                      lognorm = impmodel_lognorm,
-                      gamma = impmodel_gamma,
-                      beta = impmodel_beta,
+                      norm = impmodel_continuous,
+                      lognorm = impmodel_continuous,
+                      gamma = impmodel_continuous,
+                      beta = impmodel_continuous,
                       logit = impmodel_logit,
                       multilogit = impmodel_multilogit,
                       cumlogit = impmodel_cumlogit)
-
   do.call(imp_model, imp_par_list)
 }
 
@@ -271,15 +278,22 @@ paste_imp_model <- function(imp_par_list) {
 # @param imp_par_list list of parameters
 paste_imp_priors <- function(imp_par_list) {
 
+  # imp_prior <- switch(imp_par_list$impmeth,
+  #                     norm = impprior_normal,
+  #                     lognorm = impprior_lognorm,
+  #                     gamma = impprior_gamma,
+  #                     beta = impprior_beta,
+  #                     logit = impprior_logit,
+  #                     multilogit = impprior_multilogit,
+  #                     cumlogit = impprior_cumlogit)
   imp_prior <- switch(imp_par_list$impmeth,
-                      norm = impprior_normal,
-                      lognorm = impprior_lognorm,
-                      gamma = impprior_gamma,
-                      beta = impprior_beta,
+                      norm = impprior_continuous,
+                      lognorm = impprior_continuous,
+                      gamma = impprior_continuous,
+                      beta = impprior_continuous,
                       logit = impprior_logit,
                       multilogit = impprior_multilogit,
                       cumlogit = impprior_cumlogit)
-
   do.call(imp_prior, imp_par_list)
 }
 

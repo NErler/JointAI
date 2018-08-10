@@ -53,6 +53,9 @@
 #'                Options are the category label, the category number,
 #'                'first" (the first category) or "largest" (chooses the
 #'                category with the most observations). Default is "first".
+#' @param trunc optional named list specifying the limits of truncation for the
+#'              distribution of the named incomplete variables
+#'              of each
 #' @param scale_vars optional; named vector of (continuous) variables that will
 #'                   be scaled (such that mean = 0 and sd = 1) to improve
 #'                   convergence of the MCMC sampling. Default is that all
@@ -168,7 +171,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       overwrite = NULL, keep_model = FALSE,
                       quiet = TRUE, progress.bar = "text", warn = TRUE,
                       mess = TRUE,
-                      auxvars = NULL, meth = NULL, refcats = NULL,
+                      auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                       scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                       MCMCpackage = "JAGS", analysis_type,
                       Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
@@ -219,7 +222,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
 
-  # default imputation methods, if not specified
+  # imputation method ----------------------------------------------------------
   if (is.null(meth)) {
     meth <- get_imp_meth(fixed = fixed, random = random, data = data,
                          auxvars = auxvars)
@@ -254,7 +257,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   if (is.null(imp_par_list)) {
     imp_par_list <- mapply(get_imp_par_list, meth, names(meth),
                            MoreArgs = list(Mlist$Xc, Mlist$Xcat, K_imp, dest_cols,
-                                           Mlist$refs, Mlist$trafos),
+                                           Mlist$refs, Mlist$trafos, trunc),
                            SIMPLIFY = FALSE)
   }
 
@@ -414,7 +417,7 @@ lm_imp <- function(formula, data,
                    overwrite = NULL, keep_model = FALSE,
                    quiet = TRUE, progress.bar = "text", warn = TRUE,
                    mess = TRUE,
-                   auxvars = NULL, meth = NULL, refcats = NULL,
+                   auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                    scale_vars = NULL, hyperpars = NULL, ...){
 
   if (missing(formula))
@@ -456,7 +459,7 @@ glm_imp <- function(formula, family, data,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, meth = NULL, refcats = NULL,
+                    auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, hyperpars = NULL, ...){
 
   if (missing(formula))
@@ -523,7 +526,7 @@ lme_imp <- function(fixed, data, random,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, meth = NULL, refcats = NULL,
+                    auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, hyperpars = NULL, ...){
 
   if (missing(fixed))
