@@ -28,7 +28,7 @@ divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
   X <- model.matrix(fixed, model.frame(fixed, data, na.action = na.pass))
 
   # variables that do not have a main effect in fixed are added to the auxiliary variables
-  trafosX <- extract_fcts(fixed, data)
+  trafosX <- extract_fcts(fixed, data, complete = TRUE)
   add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), auxvars))]
   if(length(add_to_aux) > 0)
     auxvars <- c(auxvars, unique(add_to_aux))
@@ -84,6 +84,9 @@ divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
 
   # Xtrafo ---------------------------------------------------------------------
   trafos <- extract_fcts(fixed2, data)
+  if (any(trafos$type %in% c('ns', 'bs')))
+    stop("Splines are currently not implemented for incomplete variables.")
+  fcts <- extract_fcts(fixed2, data, complete = TRUE)
   Xtrafo <- if (!is.null(trafos)) {
     fmla_trafo <- as.formula(
       paste("~", paste0(unique(trafos$var), collapse = " + "))
@@ -96,12 +99,25 @@ divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
     )[match(unique(groups), groups), -1, drop = FALSE]
   }
   if (!is.null(Xtrafo)) {
+    if (any(!trafos$Xc_var %in% colnames(Xc)))
+      stop(gettextf("%s is not a column of the design matrix Xc.",
+                    paste(dQuote(trafos$Xc_var[!trafos$Xc_var %in% colnames(Xc)]),
+                          collapse = ", ")),
+                    "\nAre you using a transformation that results in multiple columns, e.g., splines?")
     Xc[, as.character(trafos$Xc_var)] <- NA
   }
 
   # re-order columns in Xc
-  Xc_seq <- c(which(colSums(is.na(Xc)) == 0),
-              unlist(lapply(names(meth), match_positions, data, colnames(Xc)))
+  colnams = colnames(Xc)
+  # names that need replacement
+  repl <- meth[!names(meth) %in% colnams & names(meth) %in% trafos$var]
+  colnams[colnams == trafos$Xc_var[trafos$var == names(repl)]] <-
+    trafos$var[trafos$var == names(repl)]
+
+  Xc_seq <- c(which(colSums(is.na(Xc)) == 0 &
+                      (!gsub("[[:digit:]]*$", "", colnames(Xc)) %in% fcts$Xc_var |
+                         colnames(Xc) %in% auxvars)),
+              unlist(lapply(names(meth), match_positions, data, colnams))
   )
 
   Xc_seq <- c(Xc_seq, which(!1:ncol(Xc) %in% Xc_seq))
@@ -168,7 +184,7 @@ divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
 
   if (is.null(scale_vars)) {
     scale_vars <- find_continuous_main(fixed2, data)
-    fcts <- extract_fcts(fixed2, data, complete = TRUE)
+    # fcts <- extract_fcts(fixed2, data, complete = TRUE)
     compl_fcts_vars <- fcts$Xc_var[fcts$type != "identity" &
                                      colSums(is.na(data[, fcts$var, drop = FALSE])) == 0]
 
