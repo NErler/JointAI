@@ -45,6 +45,7 @@
 # }
 
 get_subset <- function(object, subset, call_orig, warn = TRUE) {
+  subset <- as.list(subset)
 
   if (is.null(subset) & !as.list(object$monitor_params)$analysis_main)
     return(object$MCMC)

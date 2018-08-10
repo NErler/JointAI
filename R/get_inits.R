@@ -25,7 +25,7 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family){
       }
     })
 
-    l[["beta"]][nams] <- NA
+    l[["beta"]][unlist(nams)] <- NA
   }
 
   if (family %in% c('gaussian', 'Gamma'))

@@ -30,7 +30,13 @@ get_imp_meth <- function(fixed, random = NULL, data,
     1:nrow(data)
   }
 
-  allvars <- unique(c(all.vars(fixed[[3]]), all.vars(random2[2]), auxvars))
+  allvars <- unique(c(all.vars(fixed[[3]]),
+                      all.vars(random2[2]),
+                      if(!is.null(auxvars))
+                        all.vars(as.formula(paste('~',
+                                                  paste(auxvars, collapse = "+")))
+                        )
+  ))
 
   if (any(!allvars %in% names(data))) {
     stop(gettextf("Variable(s) %s were not found in the data." ,
