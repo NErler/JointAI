@@ -4,6 +4,9 @@ pkgdown_sha: ~
 template:
   params:
     bootswatch: flatly
+    docsearch:
+      api_key: 0d21d69e7c3eb00e029f5b8d9424cd56
+      index_name: jointal
 navbar:
   structure:
     left:
@@ -32,3 +35,4 @@ navbar:
     twitter:
       icon: fa-twitter fa-lg
       href: https://twitter.com/N_Erler
+url: https://nerler.github.io/JointAI/
