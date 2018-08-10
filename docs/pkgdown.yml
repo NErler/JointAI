@@ -3,6 +3,10 @@ pkgdown: 1.1.0
 pkgdown_sha: ~
 articles:
   MinimalExample: MinimalExample.html
+  ModelSpecification: ModelSpecification.html
   SelectingParameters: SelectingParameters.html
   VisualizingIncompleteData: VisualizingIncompleteData.html
+urls:
+  reference: https://nerler.github.io/JointAI//reference
+  article: https://nerler.github.io/JointAI//articles
 

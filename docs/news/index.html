@@ -29,6 +29,12 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="Changelog" />
 
@@ -84,6 +90,9 @@
       <a href="../articles/MinimalExample.html">Minimal Example</a>
     </li>
     <li>
+      <a href="../articles/ModelSpecification.html">Model Specification</a>
+    </li>
+    <li>
       <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
@@ -110,6 +119,12 @@
   </a>
 </li>
       </ul>
+      
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
       
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -139,7 +154,9 @@
 <li>initial value generation for logistic analysis model fixed</li>
 <li>
 <code><a href="../reference/model_imp.html">lm_imp()</a></code>, <code><a href="../reference/model_imp.html">glm_imp()</a></code> and <code><a href="../reference/model_imp.html">lme_imp()</a></code> return family and link that was used (needed in for <code>add_sample</code>)</li>
-<li>bug in re-ordering columns when a function is part of the linear predictor fixed</li>
+<li>bugfix in re-ordering columns when a function is part of the linear predictor</li>
+<li>bugfix in intial values for categorical covariates</li>
+<li>bugfix in finding imputation method when function of variable is specified as auxiliary variable</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level2">
@@ -157,6 +174,12 @@
 <li>
 <code>subset</code> argument uses same logit as <code>monitor_params</code> argument</li>
 <li>added switch to hide messages; distinction between messages and warnings</li>
+<li>
+<code><a href="../reference/model_imp.html">lm_imp()</a></code>, <code><a href="../reference/model_imp.html">glm_imp()</a></code> and <code><a href="../reference/model_imp.html">lme_imp()</a></code> now take argument <code>trunc</code> in order to truncate the distribution of incomplete variables</li>
+<li>
+<code>summary()</code> now omits auxiliary variables from the output</li>
+<li>
+<code>imp_par_list</code> is now returned from JointAI models</li>
 </ul>
 </div>
 <div id="extensions" class="section level2">
@@ -176,7 +199,8 @@
 <code><a href="../reference/parameters.html">parameters()</a></code> added to display the parameters to be/that were monitored</li>
 <li>
 <code><a href="../reference/set_refcat.html">set_refcat()</a></code> added to guide specification of reference categories</li>
-<li>added vignettes <em>Minimal Example</em>, <em>Visualizing Incomplete Data</em> and <em>Parameter Selection</em>
+<li>extension of possible functions of variables in model formula to (almost all) functions that are available in JAGS</li>
+<li>added vignettes <em>Minimal Example</em>, <em>Visualizing Incomplete Data</em>, <em>Parameter Selection</em> and <em>Model Specification</em>
 </li>
 </ul>
 <hr>
@@ -253,6 +277,23 @@
    </div>
 
   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '0d21d69e7c3eb00e029f5b8d9424cd56',
+    indexName: 'jointal',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>

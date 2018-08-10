@@ -29,6 +29,12 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="Plot posterior density from JointAI model — densplot" />
 
@@ -88,6 +94,9 @@ of an object of class JointAI" />
       <a href="../articles/MinimalExample.html">Minimal Example</a>
     </li>
     <li>
+      <a href="../articles/ModelSpecification.html">Model Specification</a>
+    </li>
+    <li>
       <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
@@ -115,6 +124,12 @@ of an object of class JointAI" />
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -140,9 +155,10 @@ of an object of class JointAI</p>
     <pre class="usage"><span class='fu'>densplot</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for JointAI</span>
-<span class='fu'>densplot</span>(<span class='no'>object</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>vlines</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>joined</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>densplot</span>(<span class='no'>object</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>vlines</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>joined</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -261,6 +277,23 @@ given directly by <strong>JointAI</strong>.</p></td>
    </div>
 
   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '0d21d69e7c3eb00e029f5b8d9424cd56',
+    indexName: 'jointal',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>

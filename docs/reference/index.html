@@ -29,6 +29,12 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="Function reference" />
 
@@ -113,6 +119,12 @@
   </a>
 </li>
       </ul>
+      
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
       
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -224,6 +236,12 @@ Prints the list of default values for the hyperparameters</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="NHANES.html">NHANES</a></code> </p>
+        </td>
+        <td><p>National Health and Nutrition Examination Survey (NHANES) Data</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="parameters.html">parameters()</a></code> </p>
         </td>
         <td><p>Parameter names of an JointAI object</p></td>
@@ -257,6 +275,12 @@ Prints the list of default values for the hyperparameters</p></td>
           <p><code><a href="sharedParams.html">sharedParams</a></code> </p>
         </td>
         <td><p>Parameters used by several functions in JointAI</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="simLong.html">simLong</a></code> <code><a href="simLong.html">simWide</a></code> </p>
+        </td>
+        <td><p>Simulated Longitudinal Data in Long and Wide Format</p></td>
       </tr><tr>
         
         <td>
@@ -301,6 +325,23 @@ Prints the list of default values for the hyperparameters</p></td>
    </div>
 
   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '0d21d69e7c3eb00e029f5b8d9424cd56',
+    indexName: 'jointal',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>

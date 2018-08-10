@@ -29,6 +29,12 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="Simulate dataset — sim_data" />
 
@@ -87,6 +93,9 @@
       <a href="../articles/MinimalExample.html">Minimal Example</a>
     </li>
     <li>
+      <a href="../articles/ModelSpecification.html">Model Specification</a>
+    </li>
+    <li>
       <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
@@ -114,6 +123,12 @@
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -135,9 +150,10 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>sim_data</span>(<span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>Jmin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>Jmax</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>tmin</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>bin</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>multi</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>ord</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>count</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>long</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>coef</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>misvar</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nmisvar</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"long"</span>)</pre>
+    <pre class="usage"><span class='fu'>sim_data</span>(<span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>Jmin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>Jmax</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>tmin</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>norm</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>bin</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>multi</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>ord</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>count</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>long</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>coef</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>misvar</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nmisvar</span> <span class='kw'>=</span> <span class='fl'>7</span>,
+  <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"long"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -244,6 +260,23 @@ randomly</p></td>
    </div>
 
   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '0d21d69e7c3eb00e029f5b8d9424cd56',
+    indexName: 'jointal',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>

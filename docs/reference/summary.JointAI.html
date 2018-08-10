@@ -29,6 +29,12 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="Summary of an object of class JointAI — summary.JointAI" />
 
@@ -87,6 +93,9 @@
       <a href="../articles/MinimalExample.html">Minimal Example</a>
     </li>
     <li>
+      <a href="../articles/ModelSpecification.html">Model Specification</a>
+    </li>
+    <li>
       <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
@@ -114,6 +123,12 @@
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -136,12 +151,13 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for JointAI</span>
-<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>), <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>)
+<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>), <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for summary.JointAI</span>
-<span class='fu'>print</span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'>max</span>(<span class='fl'>3</span>, <span class='no'>.Options</span>$<span class='no'>digits</span> - <span class='fl'>3</span>), <span class='no'>...</span>)</pre>
+<span class='fu'>print</span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'>max</span>(<span class='fl'>3</span>, <span class='no'>.Options</span>$<span class='no'>digits</span> - <span class='fl'>3</span>),
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -214,18 +230,17 @@ given directly by <strong>JointAI</strong>.</p></td>
 #&gt; lm_imp(formula = y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #&gt; 
 #&gt; Posterior summary:
-#&gt;                 Mean       SD     2.5%    97.5% tail-prob.
-#&gt; (Intercept)  36.4864 26.56510 -14.1133 81.25267     0.1800
-#&gt; C1          -27.5027 18.54570 -58.5676  7.95732     0.1600
-#&gt; M22          -0.3234  0.60906  -1.7655  0.71371     0.6267
-#&gt; M23           0.1684  0.60861  -1.1813  1.34885     0.7333
-#&gt; M24          -1.0950  0.61904  -2.4304  0.02661     0.0600
-#&gt; C2            0.9887  0.69982  -0.4219  2.29011     0.1467
-#&gt; tau_y         0.2030  0.02891   0.1510  0.26233     0.0000
+#&gt;                  Mean      SD    2.5%   97.5% tail-prob.
+#&gt; (Intercept)  37.01377 27.6660 -11.913 88.1475    0.20667
+#&gt; C1          -27.76175 19.3583 -63.825  6.4679    0.15333
+#&gt; M22          -0.51664  0.6551  -1.736  0.6956    0.45333
+#&gt; M23          -0.01522  0.7235  -1.302  1.3304    0.96667
+#&gt; M24          -1.23666  0.6701  -2.639 -0.1201    0.04667
+#&gt; C2            0.90289  0.6997  -0.507  2.2264    0.16000
 #&gt; 
 #&gt; Posterior summary of residual std. deviation:
-#&gt;          Mean    SD  2.5% 97.5%
-#&gt; sigma_y 2.237 0.162 1.952 2.573
+#&gt;          Mean     SD  2.5% 97.5%
+#&gt; sigma_y 2.232 0.1683 1.911 2.581
 #&gt; 
 #&gt; 
 #&gt; MCMC settings:
@@ -264,6 +279,23 @@ given directly by <strong>JointAI</strong>.</p></td>
    </div>
 
   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '0d21d69e7c3eb00e029f5b8d9424cd56',
+    indexName: 'jointal',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>

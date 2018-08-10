@@ -29,6 +29,12 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="Joint analysis and imputation of incomplete data — model_imp" />
 
@@ -88,6 +94,9 @@ linear and linear mixed models, respectively, using MCMC sampling." />
       <a href="../articles/MinimalExample.html">Minimal Example</a>
     </li>
     <li>
+      <a href="../articles/ModelSpecification.html">Model Specification</a>
+    </li>
+    <li>
       <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
@@ -115,6 +124,12 @@ linear and linear mixed models, respectively, using MCMC sampling." />
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -137,23 +152,27 @@ linear and linear mixed models, respectively, using MCMC sampling.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>lm_imp</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>meth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
-
-<span class='fu'>glm_imp</span>(<span class='no'>formula</span>, <span class='no'>family</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+    <pre class="usage"><span class='fu'>lm_imp</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>meth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>meth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='fu'>glm_imp</span>(<span class='no'>formula</span>, <span class='no'>family</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>,
+  <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>meth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='fu'>lme_imp</span>(<span class='no'>fixed</span>, <span class='no'>data</span>, <span class='no'>random</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>meth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>meth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -264,6 +283,12 @@ used as reference category for each of the categorical variables.
 Options are the category label, the category number,
 'first" (the first category) or "largest" (chooses the
 category with the most observations). Default is "first".</p></td>
+    </tr>
+    <tr>
+      <th>trunc</th>
+      <td><p>optional named list specifying the limits of truncation for the
+distribution of the named incomplete variables
+of each</p></td>
     </tr>
     <tr>
       <th>scale_vars</th>
@@ -427,6 +452,23 @@ the imputed values.
    </div>
 
   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '0d21d69e7c3eb00e029f5b8d9424cd56',
+    indexName: 'jointal',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>

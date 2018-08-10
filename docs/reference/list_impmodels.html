@@ -29,6 +29,12 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="List imputation models — list_impmodels" />
 
@@ -88,6 +94,9 @@ including the model type, names of the parameters used and hyperparameters." />
       <a href="../articles/MinimalExample.html">Minimal Example</a>
     </li>
     <li>
+      <a href="../articles/ModelSpecification.html">Model Specification</a>
+    </li>
+    <li>
       <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
@@ -115,6 +124,12 @@ including the model type, names of the parameters used and hyperparameters." />
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -137,7 +152,8 @@ including the model type, names of the parameters used and hyperparameters.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>list_impmodels</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='fu'>list_impmodels</span>(<span class='no'>object</span>, <span class='kw'>predvars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>regcoef</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>otherpars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>refcat</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,6 +162,26 @@ including the model type, names of the parameters used and hyperparameters.</p>
       <th>object</th>
       <td><p>object inheriting from class <code>JointAI</code></p></td>
     </tr>
+    <tr>
+      <th>predvars</th>
+      <td><p>logical; should information on the predictor variables be printed?</p></td>
+    </tr>
+    <tr>
+      <th>regcoef</th>
+      <td><p>logical; should information on the regression coefficients be printed?</p></td>
+    </tr>
+    <tr>
+      <th>otherpars</th>
+      <td><p>logical; should information on other parameters be printed?</p></td>
+    </tr>
+    <tr>
+      <th>priors</th>
+      <td><p>logical; should information on the priors be printed?</p></td>
+    </tr>
+    <tr>
+      <th>refcat</th>
+      <td><p>logical; should information on the reference category be printed?</p></td>
+    </tr>
     </table>
     
 
@@ -153,6 +189,8 @@ including the model type, names of the parameters used and hyperparameters.</p>
     <pre class="examples"><div class='input'><span class='co'># (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save computational time)</span>
 <span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span> + <span class='no'>O2</span> + <span class='no'>B2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='output co'>#&gt; <span class='message'>Note: No MCMC sample will be created when n.iter is set to 0.</span></div><div class='input'><span class='fu'>list_impmodels</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; Cumulative logit imputation model for 'O2'
 #&gt; * Reference category: '1'
+#&gt; * Predictor variables: 
+#&gt;   C1
 #&gt; * Regression coefficients (without intercept): 
 #&gt;   alpha[1] (normal prior(s) with mean 0 and precision 0.001)
 #&gt; * Intercepts:
@@ -164,12 +202,16 @@ including the model type, names of the parameters used and hyperparameters.</p>
 #&gt; 
 #&gt; Multinomial logit imputation model for 'M2'
 #&gt; * Reference category: '1'
+#&gt; * Predictor variables: 
+#&gt;   (Intercept), C1, O22, O23, O24
 #&gt; * Regression coefficients: 
 #&gt;   - 'M22': alpha[2:6] (normal prior(s) with mean 0 and precision 0.001)
 #&gt;   - 'M23': alpha[7:11] (normal prior(s) with mean 0 and precision 0.001)
 #&gt;   - 'M24': alpha[12:16] (normal prior(s) with mean 0 and precision 0.001)
 #&gt; 
 #&gt; Normal imputation model for 'C2'
+#&gt; * Predictor variables: 
+#&gt;   (Intercept), C1, O22, O23, O24, M22, M23, M24
 #&gt; * Regression coefficients: 
 #&gt;   alpha[17:24] (normal prior(s) with mean 0 and precision 1e-04)
 #&gt; * Pecision of 'C2':
@@ -177,6 +219,8 @@ including the model type, names of the parameters used and hyperparameters.</p>
 #&gt; 
 #&gt; Logistic imputation model for 'B2'
 #&gt; * Reference category: '0'
+#&gt; * Predictor variables: 
+#&gt;   (Intercept), C1, O22, O23, O24, M22, M23, M24, C2
 #&gt; * Regression coefficients: 
 #&gt;   alpha[25:33] (normal prior(s) with mean 0 and precision 0.001)</div></pre>
   </div>
@@ -204,6 +248,23 @@ including the model type, names of the parameters used and hyperparameters.</p>
    </div>
 
   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '0d21d69e7c3eb00e029f5b8d9424cd56',
+    indexName: 'jointal',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>

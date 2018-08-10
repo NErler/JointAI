@@ -9,7 +9,9 @@
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Parameter Selection">
+<script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Parameter Selection">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -55,6 +57,9 @@
       <a href="../articles/MinimalExample.html">Minimal Example</a>
     </li>
     <li>
+      <a href="../articles/ModelSpecification.html">Model Specification</a>
+    </li>
+    <li>
       <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
@@ -80,7 +85,13 @@
   </a>
 </li>
       </ul>
+<form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
+      </form>
+      
+    </div>
 <!--/.nav-collapse -->
   </div>
 <!--/.container -->
@@ -92,9 +103,10 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Parameter Selection</h1>
+            <h3 class="subtitle">How to specify which parameters to monitor and display in the results.</h3>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2018-08-03</h4>
+            <h4 class="date">2018-08-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/SelectingParameters.Rmd"><code>vignettes/SelectingParameters.Rmd</code></a></small>
       <div class="hidden name"><code>SelectingParameters.Rmd</code></div>
@@ -190,14 +202,14 @@
 </tbody>
 </table>
 <p>Each of the key words works as a switch.</p>
-<p>In the following, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a> data (for examples in cross-sectional data) and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a> for examples in longitudinal data.</p>
-<p>In many of the examples we use <code>n.adapt = 0</code> (and <code>n.iter = 0</code>, which is the default) in order to prevent the MCMC sampling to save some time. <code>mess = FALSE</code> is used to suppress messages that are not of interest in this vignette. <code>progress.bar = 'none'</code> prevents printing of the progress of the MCMC sampling, which results in lengthy output in the vignette, but is useful in practice.</p>
+<p>In the following, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a> data (for examples in cross-sectional data) and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a> for examples in longitudinal data. For more info on these datasets, check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the distribution of variables and missing values in both sets is explored.</p>
+<p><strong>Noe:</strong><br> In many of the examples we use <code>n.adapt = 0</code> (and <code>n.iter = 0</code>, which is the default) in order to prevent the MCMC sampling to save some time. <code>mess = FALSE</code> is used to suppress messages that are not of interest in this vignette. <code>progress.bar = 'none'</code> prevents printing of the progress of the MCMC sampling, which results in lengthy output in the vignette, but is useful in practice.</p>
 <div id="parameters-of-the-analysis-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#parameters-of-the-analysis-model" class="anchor"></a>Parameters of the analysis model</h3>
 <p>The default setting is <code>monitor_params = c(analysis_main = TRUE)</code>, i.e., only the main parameters of the analysis model are monitored and monitoring is switched off for all other parameters.</p>
 <p>The main parameters are the regression coefficients of the analysis model (<code>beta</code>) and the residual standard deviation (<code>sigma_y</code>, and precision <code>tau_y</code>).</p>
-<p>The function <code><a href="../reference/parameters.html">parameters()</a></code> returns the parameters that are specified to be followed (even for models where no MCMC sampling was performed, i.e. when <code>n.iter = 0</code> and <code>n.adapt = 0</code>).</p>
+<p>The function <a href="https://nerler.github.io/JointAI/reference/parameters.html"><code><a href="../reference/parameters.html">parameters()</a></code></a> returns the parameters that are specified to be followed (even for models where no MCMC sampling was performed, i.e. when <code>n.iter = 0</code> and <code>n.adapt = 0</code>).</p>
 <p>For example:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">lm1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat,</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">              <span class="dt">data =</span> NHANES, <span class="dt">n.adpat =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
@@ -243,31 +255,39 @@
 <p>An overview of the imputation models used, including the names of the parameters and the hyperparameters can be obtained with</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/list_impmodels.html">list_impmodels</a></span>(lm2)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; Normal imputation model for 'WC'</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; * Regression coefficients: </span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;   alpha[1:2] (normal prior(s) with mean 0 and precision 1e-04)</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; * Pecision of 'WC':</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;   tau_WC (Gamma prior with scale parameter 0.01 and rate parameter 0.01)</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; Cumulative logit imputation model for 'smoke'</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; * Reference category: 'never'</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; * Regression coefficients (without intercept): </span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;   alpha[3:4] (normal prior(s) with mean 0 and precision 0.001)</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; * Intercepts:</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;   - never: gamma_smoke[1] (normal prior with mean 0 and precision 0.001)</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt;   - former: gamma_smoke[2] = gamma_smoke[1] + exp(delta_smoke[1])</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; * Increments:</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt;   delta_smoke[1] (normal prior(s) with mean 0 and precision 0.001)</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; Multinomial logit imputation model for 'occup'</span></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; * Reference category: 'working'</span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; * Regression coefficients: </span></a>
-<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt;   - 'occuplooking for work': alpha[5:9] (normal prior(s) with mean 0 and precision 0.001)</span></a>
-<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt;   - 'occupnot working': alpha[10:14] (normal prior(s) with mean 0 and precision 0.001)</span></a>
-<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt; Logistic imputation model for 'alc'</span></a>
-<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt; * Reference category: '&lt;1'</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;   (Intercept), age</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; * Regression coefficients: </span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;   alpha[1:2] (normal prior(s) with mean 0 and precision 1e-04)</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; * Pecision of 'WC':</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt;   tau_WC (Gamma prior with scale parameter 0.01 and rate parameter 0.01)</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; Cumulative logit imputation model for 'smoke'</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; * Reference category: 'never'</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;   age, WC</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; * Regression coefficients (without intercept): </span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt;   alpha[3:4] (normal prior(s) with mean 0 and precision 0.001)</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; * Intercepts:</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt;   - never: gamma_smoke[1] (normal prior with mean 0 and precision 0.001)</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt;   - former: gamma_smoke[2] = gamma_smoke[1] + exp(delta_smoke[1])</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; * Increments:</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt;   delta_smoke[1] (normal prior(s) with mean 0 and precision 0.001)</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; Multinomial logit imputation model for 'occup'</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; * Reference category: 'working'</span></a>
+<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt;   (Intercept), age, WC, smokeformer, smokecurrent</span></a>
 <a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt; * Regression coefficients: </span></a>
-<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt;   alpha[15:21] (normal prior(s) with mean 0 and precision 0.001)</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt;   - 'occuplooking for work': alpha[5:9] (normal prior(s) with mean 0 and precision 0.001)</span></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt;   - 'occupnot working': alpha[10:14] (normal prior(s) with mean 0 and precision 0.001)</span></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-30" data-line-number="30"><span class="co">#&gt; Logistic imputation model for 'alc'</span></a>
+<a class="sourceLine" id="cb4-31" data-line-number="31"><span class="co">#&gt; * Reference category: '&lt;1'</span></a>
+<a class="sourceLine" id="cb4-32" data-line-number="32"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb4-33" data-line-number="33"><span class="co">#&gt;   (Intercept), age, WC, smokeformer, smokecurrent, occuplooking for work, occupnot working</span></a>
+<a class="sourceLine" id="cb4-34" data-line-number="34"><span class="co">#&gt; * Regression coefficients: </span></a>
+<a class="sourceLine" id="cb4-35" data-line-number="35"><span class="co">#&gt;   alpha[15:21] (normal prior(s) with mean 0 and precision 0.001)</span></a></code></pre></div>
 </div>
 <div id="side-note-how-to-extract-imputed-datasets" class="section level4">
 <h4 class="hasAnchor">
@@ -395,29 +415,39 @@
 <a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">#&gt;     mess = FALSE)</span></a>
 <a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb10-16" data-line-number="16"><span class="co">#&gt; Posterior summary:</span></a>
-<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="co">#&gt;                   Mean       SD      2.5%     97.5% tail-prob.</span></a>
-<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="co">#&gt; (Intercept)  81.012525 9.185630 64.277046 1.008e+02   0.000000</span></a>
-<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="co">#&gt; genderfemale  0.187412 2.492879 -4.779843 5.367e+00   0.900000</span></a>
-<a class="sourceLine" id="cb10-20" data-line-number="20"><span class="co">#&gt; WC            0.312480 0.070783  0.176960 4.382e-01   0.000000</span></a>
-<a class="sourceLine" id="cb10-21" data-line-number="21"><span class="co">#&gt; creat         7.196589 7.424546 -8.037769 1.979e+01   0.326667</span></a>
-<a class="sourceLine" id="cb10-22" data-line-number="22"><span class="co">#&gt; alc&gt;=1        6.116966 2.568194  1.001559 1.093e+01   0.006667</span></a>
-<a class="sourceLine" id="cb10-23" data-line-number="23"><span class="co">#&gt; tau_SBP       0.004933 0.000539  0.003967 6.021e-03   0.000000</span></a>
-<a class="sourceLine" id="cb10-24" data-line-number="24"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb10-25" data-line-number="25"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
-<a class="sourceLine" id="cb10-26" data-line-number="26"><span class="co">#&gt;           Mean     SD  2.5% 97.5%</span></a>
-<a class="sourceLine" id="cb10-27" data-line-number="27"><span class="co">#&gt; sigma_SBP 14.3 0.7859 12.89 15.88</span></a>
-<a class="sourceLine" id="cb10-28" data-line-number="28"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb10-29" data-line-number="29"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb10-30" data-line-number="30"><span class="co">#&gt; MCMC settings:</span></a>
-<a class="sourceLine" id="cb10-31" data-line-number="31"><span class="co">#&gt; Iterations = 101:200</span></a>
-<a class="sourceLine" id="cb10-32" data-line-number="32"><span class="co">#&gt; Sample size per chain = 100 </span></a>
-<a class="sourceLine" id="cb10-33" data-line-number="33"><span class="co">#&gt; Thinning interval = 1 </span></a>
-<a class="sourceLine" id="cb10-34" data-line-number="34"><span class="co">#&gt; Number of chains = 3 </span></a>
-<a class="sourceLine" id="cb10-35" data-line-number="35"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb10-36" data-line-number="36"><span class="co">#&gt; Number of observations: 186</span></a>
-<a class="sourceLine" id="cb10-37" data-line-number="37"></a>
-<a class="sourceLine" id="cb10-38" data-line-number="38"><span class="co"># traceplot of the MCMC sample</span></a>
-<a class="sourceLine" id="cb10-39" data-line-number="39"><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(lm5)</a></code></pre></div>
+<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="co">#&gt;                  Mean      SD      2.5%    97.5% tail-prob.</span></a>
+<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="co">#&gt; alpha[1]      0.17473 0.09370 -0.002137  0.35159   0.053333</span></a>
+<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="co">#&gt; alpha[2]     -0.35502 0.14493 -0.644548 -0.08192   0.020000</span></a>
+<a class="sourceLine" id="cb10-20" data-line-number="20"><span class="co">#&gt; alpha[3]      0.49592 0.08611  0.336607  0.66748   0.000000</span></a>
+<a class="sourceLine" id="cb10-21" data-line-number="21"><span class="co">#&gt; alpha[4]     -1.04298 0.13415 -1.306395 -0.78058   0.000000</span></a>
+<a class="sourceLine" id="cb10-22" data-line-number="22"><span class="co">#&gt; alpha[5]      0.08245 0.06065 -0.044915  0.19582   0.173333</span></a>
+<a class="sourceLine" id="cb10-23" data-line-number="23"><span class="co">#&gt; alpha[6]     -0.10687 0.24103 -0.567280  0.37494   0.640000</span></a>
+<a class="sourceLine" id="cb10-24" data-line-number="24"><span class="co">#&gt; alpha[7]     -0.94012 0.42613 -1.933220 -0.26750   0.013333</span></a>
+<a class="sourceLine" id="cb10-25" data-line-number="25"><span class="co">#&gt; alpha[8]      0.07907 0.17897 -0.238498  0.42789   0.653333</span></a>
+<a class="sourceLine" id="cb10-26" data-line-number="26"><span class="co">#&gt; alpha[9]     -0.27316 0.20461 -0.704580  0.08078   0.160000</span></a>
+<a class="sourceLine" id="cb10-27" data-line-number="27"><span class="co">#&gt; (Intercept)  81.70432 9.38237 62.838662 98.12236   0.000000</span></a>
+<a class="sourceLine" id="cb10-28" data-line-number="28"><span class="co">#&gt; genderfemale  0.29357 2.34285 -3.976502  4.78802   0.926667</span></a>
+<a class="sourceLine" id="cb10-29" data-line-number="29"><span class="co">#&gt; WC            0.30162 0.07653  0.159907  0.44743   0.000000</span></a>
+<a class="sourceLine" id="cb10-30" data-line-number="30"><span class="co">#&gt; creat         7.50734 7.43051 -6.375222 21.45762   0.320000</span></a>
+<a class="sourceLine" id="cb10-31" data-line-number="31"><span class="co">#&gt; alc&gt;=1        6.14721 2.46825  1.151092 10.53036   0.006667</span></a>
+<a class="sourceLine" id="cb10-32" data-line-number="32"><span class="co">#&gt; tau_WC        1.01941 0.10505  0.819447  1.21980   0.000000</span></a>
+<a class="sourceLine" id="cb10-33" data-line-number="33"><span class="co">#&gt; tau_creat     1.38892 0.16091  1.105130  1.68503   0.000000</span></a>
+<a class="sourceLine" id="cb10-34" data-line-number="34"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-35" data-line-number="35"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
+<a class="sourceLine" id="cb10-36" data-line-number="36"><span class="co">#&gt;            Mean    SD  2.5% 97.5%</span></a>
+<a class="sourceLine" id="cb10-37" data-line-number="37"><span class="co">#&gt; sigma_SBP 14.38 0.781 12.97 16.09</span></a>
+<a class="sourceLine" id="cb10-38" data-line-number="38"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-39" data-line-number="39"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-40" data-line-number="40"><span class="co">#&gt; MCMC settings:</span></a>
+<a class="sourceLine" id="cb10-41" data-line-number="41"><span class="co">#&gt; Iterations = 101:200</span></a>
+<a class="sourceLine" id="cb10-42" data-line-number="42"><span class="co">#&gt; Sample size per chain = 100 </span></a>
+<a class="sourceLine" id="cb10-43" data-line-number="43"><span class="co">#&gt; Thinning interval = 1 </span></a>
+<a class="sourceLine" id="cb10-44" data-line-number="44"><span class="co">#&gt; Number of chains = 3 </span></a>
+<a class="sourceLine" id="cb10-45" data-line-number="45"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-46" data-line-number="46"><span class="co">#&gt; Number of observations: 186</span></a>
+<a class="sourceLine" id="cb10-47" data-line-number="47"></a>
+<a class="sourceLine" id="cb10-48" data-line-number="48"><span class="co"># traceplot of the MCMC sample</span></a>
+<a class="sourceLine" id="cb10-49" data-line-number="49"><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(lm5)</a></code></pre></div>
 <p><img src="SelectingParameters_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co"># density plot of the MCMC sample</span></a>
@@ -429,39 +459,50 @@
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; Potential scale reduction factors:</span></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt;              Point est. Upper C.I.</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; (Intercept)       1.000       1.01</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; genderfemale      1.009       1.01</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; WC                1.003       1.02</span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt; creat             1.003       1.01</span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt; alc&gt;=1            1.021       1.07</span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt; tau_SBP           0.998       1.00</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt; sigma_SBP         0.999       1.00</span></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; Multivariate psrf</span></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt; 1.02</span></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co"># Monte Carlo Error of the MCMC sample</span></a>
-<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="kw"><a href="../reference/MC_error.html">MC_error</a></span>(lm5)</a>
-<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="co">#&gt;                  est    MCSE      SD MCSE/SD</span></a>
-<a class="sourceLine" id="cb12-22" data-line-number="22"><span class="co">#&gt; alpha[1]      0.1677 8.0e-03 0.10308   0.077</span></a>
-<a class="sourceLine" id="cb12-23" data-line-number="23"><span class="co">#&gt; alpha[2]     -0.3582 1.2e-02 0.14537   0.086</span></a>
-<a class="sourceLine" id="cb12-24" data-line-number="24"><span class="co">#&gt; alpha[3]      0.4903 4.7e-03 0.08464   0.056</span></a>
-<a class="sourceLine" id="cb12-25" data-line-number="25"><span class="co">#&gt; alpha[4]     -1.0434 7.5e-03 0.13039   0.057</span></a>
-<a class="sourceLine" id="cb12-26" data-line-number="26"><span class="co">#&gt; alpha[5]      0.0791 3.2e-03 0.06671   0.048</span></a>
-<a class="sourceLine" id="cb12-27" data-line-number="27"><span class="co">#&gt; alpha[6]     -0.1591 3.7e-02 0.25224   0.147</span></a>
-<a class="sourceLine" id="cb12-28" data-line-number="28"><span class="co">#&gt; alpha[7]     -0.8665 7.4e-02 0.46538   0.158</span></a>
-<a class="sourceLine" id="cb12-29" data-line-number="29"><span class="co">#&gt; alpha[8]      0.0967 1.5e-02 0.17678   0.083</span></a>
-<a class="sourceLine" id="cb12-30" data-line-number="30"><span class="co">#&gt; alpha[9]     -0.2359 3.4e-02 0.22794   0.150</span></a>
-<a class="sourceLine" id="cb12-31" data-line-number="31"><span class="co">#&gt; (Intercept)  81.0125 4.5e-01 9.18563   0.049</span></a>
-<a class="sourceLine" id="cb12-32" data-line-number="32"><span class="co">#&gt; genderfemale  0.1874 1.4e-01 2.49288   0.055</span></a>
-<a class="sourceLine" id="cb12-33" data-line-number="33"><span class="co">#&gt; WC            0.3125 3.2e-03 0.07078   0.045</span></a>
-<a class="sourceLine" id="cb12-34" data-line-number="34"><span class="co">#&gt; creat         7.1966 4.5e-01 7.42455   0.060</span></a>
-<a class="sourceLine" id="cb12-35" data-line-number="35"><span class="co">#&gt; alc&gt;=1        6.1170 1.7e-01 2.56819   0.068</span></a>
-<a class="sourceLine" id="cb12-36" data-line-number="36"><span class="co">#&gt; sigma_SBP    14.3025 5.2e-02 0.78592   0.066</span></a>
-<a class="sourceLine" id="cb12-37" data-line-number="37"><span class="co">#&gt; tau_SBP       0.0049 3.5e-05 0.00054   0.065</span></a>
-<a class="sourceLine" id="cb12-38" data-line-number="38"><span class="co">#&gt; tau_WC        1.0243 6.3e-03 0.11003   0.057</span></a>
-<a class="sourceLine" id="cb12-39" data-line-number="39"><span class="co">#&gt; tau_creat     1.3974 1.2e-02 0.15905   0.078</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; alpha[1]          1.015      1.051</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; alpha[2]          1.003      1.012</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; alpha[3]          1.006      1.032</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt; alpha[4]          0.995      0.997</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt; alpha[5]          1.004      1.027</span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt; alpha[6]          1.034      1.128</span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt; alpha[7]          1.164      1.481</span></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt; alpha[8]          1.028      1.104</span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; alpha[9]          1.098      1.310</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt; (Intercept)       1.004      1.022</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt; genderfemale      1.017      1.066</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt; WC                1.003      1.006</span></a>
+<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt; creat             1.007      1.031</span></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">#&gt; alc&gt;=1            1.004      1.022</span></a>
+<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="co">#&gt; sigma_SBP         1.021      1.070</span></a>
+<a class="sourceLine" id="cb12-22" data-line-number="22"><span class="co">#&gt; tau_SBP           1.015      1.056</span></a>
+<a class="sourceLine" id="cb12-23" data-line-number="23"><span class="co">#&gt; tau_WC            1.004      1.011</span></a>
+<a class="sourceLine" id="cb12-24" data-line-number="24"><span class="co">#&gt; tau_creat         1.000      1.009</span></a>
+<a class="sourceLine" id="cb12-25" data-line-number="25"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-26" data-line-number="26"><span class="co">#&gt; Multivariate psrf</span></a>
+<a class="sourceLine" id="cb12-27" data-line-number="27"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-28" data-line-number="28"><span class="co">#&gt; 1.18</span></a>
+<a class="sourceLine" id="cb12-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb12-30" data-line-number="30"><span class="co"># Monte Carlo Error of the MCMC sample</span></a>
+<a class="sourceLine" id="cb12-31" data-line-number="31"><span class="kw"><a href="../reference/MC_error.html">MC_error</a></span>(lm5)</a>
+<a class="sourceLine" id="cb12-32" data-line-number="32"><span class="co">#&gt;                  est    MCSE      SD MCSE/SD</span></a>
+<a class="sourceLine" id="cb12-33" data-line-number="33"><span class="co">#&gt; alpha[1]      0.1747 8.0e-03 0.09370   0.086</span></a>
+<a class="sourceLine" id="cb12-34" data-line-number="34"><span class="co">#&gt; alpha[2]     -0.3550 7.7e-03 0.14493   0.053</span></a>
+<a class="sourceLine" id="cb12-35" data-line-number="35"><span class="co">#&gt; alpha[3]      0.4959 4.8e-03 0.08611   0.056</span></a>
+<a class="sourceLine" id="cb12-36" data-line-number="36"><span class="co">#&gt; alpha[4]     -1.0430 8.1e-03 0.13415   0.060</span></a>
+<a class="sourceLine" id="cb12-37" data-line-number="37"><span class="co">#&gt; alpha[5]      0.0825 4.0e-03 0.06065   0.065</span></a>
+<a class="sourceLine" id="cb12-38" data-line-number="38"><span class="co">#&gt; alpha[6]     -0.1069 3.0e-02 0.24103   0.126</span></a>
+<a class="sourceLine" id="cb12-39" data-line-number="39"><span class="co">#&gt; alpha[7]     -0.9401 6.8e-02 0.42613   0.161</span></a>
+<a class="sourceLine" id="cb12-40" data-line-number="40"><span class="co">#&gt; alpha[8]      0.0791 1.3e-02 0.17897   0.072</span></a>
+<a class="sourceLine" id="cb12-41" data-line-number="41"><span class="co">#&gt; alpha[9]     -0.2732 2.9e-02 0.20461   0.144</span></a>
+<a class="sourceLine" id="cb12-42" data-line-number="42"><span class="co">#&gt; (Intercept)  81.7043 5.0e-01 9.38237   0.053</span></a>
+<a class="sourceLine" id="cb12-43" data-line-number="43"><span class="co">#&gt; genderfemale  0.2936 1.1e-01 2.34285   0.048</span></a>
+<a class="sourceLine" id="cb12-44" data-line-number="44"><span class="co">#&gt; WC            0.3016 3.7e-03 0.07653   0.048</span></a>
+<a class="sourceLine" id="cb12-45" data-line-number="45"><span class="co">#&gt; creat         7.5073 4.5e-01 7.43051   0.061</span></a>
+<a class="sourceLine" id="cb12-46" data-line-number="46"><span class="co">#&gt; alc&gt;=1        6.1472 2.0e-01 2.46825   0.081</span></a>
+<a class="sourceLine" id="cb12-47" data-line-number="47"><span class="co">#&gt; sigma_SBP    14.3798 6.0e-02 0.78098   0.077</span></a>
+<a class="sourceLine" id="cb12-48" data-line-number="48"><span class="co">#&gt; tau_SBP       0.0049 3.8e-05 0.00052   0.073</span></a>
+<a class="sourceLine" id="cb12-49" data-line-number="49"><span class="co">#&gt; tau_WC        1.0194 6.7e-03 0.10505   0.064</span></a>
+<a class="sourceLine" id="cb12-50" data-line-number="50"><span class="co">#&gt; tau_creat     1.3889 1.0e-02 0.16091   0.063</span></a></code></pre></div>
 <p>When <code>analysis_main</code> was not switched on, all parameters are displayed by default:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Re-run the model from above, now creating MCMC samples</span></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2">lm4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat,</a>
@@ -480,21 +521,21 @@
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt; Potential scale reduction factors:</span></a>
 <a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt;           Point est. Upper C.I.</span></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt; alpha[1]        1.02       1.08</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt; alpha[2]        1.01       1.06</span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; alpha[3]        1.00       1.02</span></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; alpha[4]        1.00       1.01</span></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; alpha[5]        1.00       1.02</span></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; alpha[6]        1.04       1.07</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; alpha[7]        1.01       1.03</span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; alpha[8]        1.03       1.09</span></a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt; alpha[9]        1.05       1.11</span></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt; tau_WC          1.00       1.02</span></a>
-<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt; tau_creat       1.00       1.01</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt; alpha[1]       1.015      1.051</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt; alpha[2]       1.003      1.012</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; alpha[3]       1.006      1.032</span></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; alpha[4]       0.995      0.997</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; alpha[5]       1.004      1.027</span></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; alpha[6]       1.034      1.128</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; alpha[7]       1.164      1.481</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; alpha[8]       1.028      1.104</span></a>
+<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt; alpha[9]       1.098      1.310</span></a>
+<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt; tau_WC         1.004      1.011</span></a>
+<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt; tau_creat      1.000      1.009</span></a>
 <a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">#&gt; Multivariate psrf</span></a>
 <a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">#&gt; 1.07</span></a></code></pre></div>
+<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">#&gt; 1.17</span></a></code></pre></div>
 <p>To select only some of the parameters, they can be specified directly by name via the <code>other</code> element of <code>subset</code>:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">summary</span>(lm5, <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">other =</span> <span class="kw">c</span>(<span class="st">'creat'</span>, <span class="st">'alc&gt;=1'</span>)))</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; </span></a>
@@ -507,8 +548,8 @@
 <a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">#&gt; Posterior summary:</span></a>
 <a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt;         Mean    SD   2.5% 97.5% tail-prob.</span></a>
-<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; creat  7.197 7.425 -8.038 19.79   0.326667</span></a>
-<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; alc&gt;=1 6.117 2.568  1.002 10.93   0.006667</span></a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; creat  7.507 7.431 -6.375 21.46   0.320000</span></a>
+<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; alc&gt;=1 6.147 2.468  1.151 10.53   0.006667</span></a>
 <a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb15-15" data-line-number="15"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co">#&gt; MCMC settings:</span></a>
@@ -584,6 +625,20 @@
 </div>
 
   
-
-  </body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script>
+  docsearch({
+    
+    
+    apiKey: '0d21d69e7c3eb00e029f5b8d9424cd56',
+    indexName: 'jointal',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+</body>
 </html>

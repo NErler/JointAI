@@ -9,7 +9,9 @@
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Minimal Example">
+<script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Minimal Example">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -55,6 +57,9 @@
       <a href="../articles/MinimalExample.html">Minimal Example</a>
     </li>
     <li>
+      <a href="../articles/ModelSpecification.html">Model Specification</a>
+    </li>
+    <li>
       <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
@@ -80,7 +85,13 @@
   </a>
 </li>
       </ul>
+<form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
+      </form>
+      
+    </div>
 <!--/.nav-collapse -->
   </div>
 <!--/.container -->
@@ -94,7 +105,7 @@
       <h1>Minimal Example</h1>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2018-08-03</h4>
+            <h4 class="date">2018-08-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/MinimalExample.Rmd"><code>vignettes/MinimalExample.Rmd</code></a></small>
       <div class="hidden name"><code>MinimalExample.Rmd</code></div>
@@ -136,33 +147,32 @@
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt;     albu + bili, data = NHANES, n.iter = 500, progress.bar = "none")</span></a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; Posterior summary:</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt;                             Mean        SD       2.5%     97.5% tail-prob.</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; (Intercept)            59.524859 2.349e+01  14.043724 1.072e+02   0.005333</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; genderfemale           -3.047588 2.233e+00  -7.297141 1.558e+00   0.182667</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; age                     0.364407 7.251e-02   0.224811 5.013e-01   0.000000</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; raceOther Hispanic      1.076448 4.950e+00  -8.395536 1.104e+01   0.846667</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; raceNon-Hispanic White -1.406953 2.966e+00  -7.106286 4.278e+00   0.630667</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; raceNon-Hispanic Black  8.977903 3.584e+00   1.544438 1.596e+01   0.012000</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; raceother               3.853322 3.434e+00  -3.049844 1.062e+01   0.240000</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; educhigh               -3.359710 2.135e+00  -7.552375 1.158e+00   0.117333</span></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; WC                      0.244311 8.057e-02   0.083822 4.034e-01   0.004000</span></a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; albu                    5.428151 4.281e+00  -3.266240 1.378e+01   0.214667</span></a>
-<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; bili                   -5.564955 4.934e+00 -15.350356 3.908e+00   0.261333</span></a>
-<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; alc&gt;=1                  7.191221 2.293e+00   2.815023 1.165e+01   0.005333</span></a>
-<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt; tau_SBP                 0.005777 6.567e-04   0.004572 7.142e-03   0.000000</span></a>
-<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
-<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt;            Mean     SD  2.5% 97.5%</span></a>
-<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt; sigma_SBP 13.22 0.7549 11.83 14.79</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt;                           Mean       SD      2.5%    97.5% tail-prob.</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; (Intercept)            61.1791 21.97996  19.32237 104.1695   0.002667</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; genderfemale           -3.0764  2.21334  -7.34842   1.0931   0.166667</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; age                     0.3637  0.07419   0.21977   0.5043   0.000000</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; raceOther Hispanic      0.8731  5.04956  -9.01705  11.6412   0.856000</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; raceNon-Hispanic White -1.4892  3.15355  -7.80613   4.6155   0.644000</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; raceNon-Hispanic Black  8.8774  3.53771   1.86999  15.8064   0.008000</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; raceother               3.6368  3.53737  -3.13288  10.4822   0.292000</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; educhigh               -3.4294  2.16865  -7.59355   0.9054   0.133333</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; WC                      0.2380  0.08183   0.08195   0.3980   0.005333</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; albu                    5.2445  3.95884  -2.24815  12.9240   0.189333</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; bili                   -5.6591  4.97020 -15.12604   4.1979   0.256000</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; alc&gt;=1                  7.2707  2.23174   2.64638  11.4751   0.001333</span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
+<a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt;            Mean     SD  2.5% 97.5%</span></a>
+<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt; sigma_SBP 13.18 0.7259 11.88 14.62</span></a>
+<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-30" data-line-number="30"><span class="co">#&gt; MCMC settings:</span></a>
-<a class="sourceLine" id="cb3-31" data-line-number="31"><span class="co">#&gt; Iterations = 101:600</span></a>
-<a class="sourceLine" id="cb3-32" data-line-number="32"><span class="co">#&gt; Sample size per chain = 500 </span></a>
-<a class="sourceLine" id="cb3-33" data-line-number="33"><span class="co">#&gt; Thinning interval = 1 </span></a>
-<a class="sourceLine" id="cb3-34" data-line-number="34"><span class="co">#&gt; Number of chains = 3 </span></a>
-<a class="sourceLine" id="cb3-35" data-line-number="35"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-36" data-line-number="36"><span class="co">#&gt; Number of observations: 186</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">#&gt; MCMC settings:</span></a>
+<a class="sourceLine" id="cb3-30" data-line-number="30"><span class="co">#&gt; Iterations = 101:600</span></a>
+<a class="sourceLine" id="cb3-31" data-line-number="31"><span class="co">#&gt; Sample size per chain = 500 </span></a>
+<a class="sourceLine" id="cb3-32" data-line-number="32"><span class="co">#&gt; Thinning interval = 1 </span></a>
+<a class="sourceLine" id="cb3-33" data-line-number="33"><span class="co">#&gt; Number of chains = 3 </span></a>
+<a class="sourceLine" id="cb3-34" data-line-number="34"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-35" data-line-number="35"><span class="co">#&gt; Number of observations: 186</span></a></code></pre></div>
 <p>The output gives the posterior summary, i.e., the summary of the MCMC (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Markov Chain Monte Carlo</a>) sample (which consists of all Markov chains combined).</p>
 <p>By default, <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html"><code>summary()</code></a> will only print the posterior summary for the main model parameters of the analysis model. How to select which parameters are shown is described in the vignette <a href="https://nerler.github.io/JointAI/articles/SelectingParameters.html"><em>Selecting Parameters</em></a></p>
 <p>The summary consists of the posterior mean, the standard deviation and the 2.5% and 97.5% quantiles of the MCMC sample, and the tail probability. The tail probability is a measure of how likely the value 0 is under the estimated posterior distribution, and is calculated as <span class="math display">\[2\times\min\left\{Pr(\theta &gt; 0), Pr(\theta &lt; 0)\right\}\]</span> (where <span class="math inline">\(\theta\)</span> is the parameter of interest).</p>
@@ -217,6 +227,20 @@
 </div>
 
   
-
-  </body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script>
+  docsearch({
+    
+    
+    apiKey: '0d21d69e7c3eb00e029f5b8d9424cd56',
+    indexName: 'jointal',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+</body>
 </html>
