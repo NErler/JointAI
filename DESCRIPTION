@@ -1,8 +1,9 @@
 Package: JointAI
 Version: 0.2.1
 Title: Joint Analysis and Imputation of Incomplete Data
-Authors@R: person("Nicole S.", "Erler", email = "n.erler@erasmusmc.nl",
-                  role = c("aut", "cre"))
+Authors@R: c(person("Nicole S.", "Erler", email = "n.erler@erasmusmc.nl",
+                  role = c("aut", "cre"),
+                  comment = c(ORCID = "0000-0002-9370-6832")))
 Description: Provides joint analysis and imputation of linear regression models,
     generalized linear regression models or linear mixed models with incomplete
     (covariate) data in the Bayesian framework.
@@ -13,12 +14,14 @@ Description: Provides joint analysis and imputation of linear regression models,
     It also provides summary and plotting functions for the output.
 URL: https://github.com/nerler/JointAI
 License: GPL (>= 2)
-Date: 2018-07-05
+Date: 2018-08-10
 BugReports: https://github.com/nerler/JointAI
 LazyData: TRUE
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Depends: rjags (>= 4-6)
-Imports: MASS, mcmcse, coda, rlang
+Imports: MASS, mcmcse, coda
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
 Suggests: knitr, rmarkdown, foreign, ggplot2, reshape2
 VignetteBuilder: knitr
+Encoding: UTF-8
+Language: en-US
