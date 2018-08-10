@@ -5,7 +5,10 @@
 * categorical imputation models now use min-max trick to prevent probabilities outside [0, 1]
 * initial value generation for logistic analysis model fixed
 * `lm_imp()`, `glm_imp()` and `lme_imp()` return family and link that was used (needed in for `add_sample`)
-* bug in re-ordering columns when a function is part of the linear predictor fixed
+* bugfix in re-ordering columns when a function is part of the linear predictor
+* bugfix in intial values for categorical covariates
+* bugfix in finding imputation method when function of variable is specified as
+  auxiliary variable
 
 ## Minor changes
 * `md.pattern()` now uses ggplot, which scales better than the previous version
@@ -15,6 +18,10 @@
   and id variable `.id` is added to the dataset
 * `subset` argument uses same logit as `monitor_params` argument
 * added switch to hide messages; distinction between messages and warnings
+* `lm_imp()`, `glm_imp()` and `lme_imp()` now take argument `trunc` in order
+  to truncate the distribution of incomplete variables
+* `summary()` now omits auxiliary variables from the output
+* `imp_par_list` is now returned from JointAI models
 
 ## Extensions
 * `plot_all()` function added
@@ -24,7 +31,10 @@
 * `list_impmodels` to print information on the imputation models and hyperparameters
 * `parameters()` added to display the parameters to be/that were monitored
 * `set_refcat()` added to guide specification of reference categories
-* added vignettes *Minimal Example*, *Visualizing Incomplete Data* and *Parameter Selection*
+* extension of possible functions of variables in model formula to (almost all)
+  functions that are available in JAGS
+* added vignettes *Minimal Example*, *Visualizing Incomplete Data*,
+  *Parameter Selection* and *Model Specification*
 
 
 --------------------------------------------------------------------------------
