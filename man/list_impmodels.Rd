@@ -4,10 +4,21 @@
 \alias{list_impmodels}
 \title{List imputation models}
 \usage{
-list_impmodels(object)
+list_impmodels(object, predvars = TRUE, regcoef = TRUE,
+  otherpars = TRUE, priors = TRUE, refcat = TRUE)
 }
 \arguments{
 \item{object}{object inheriting from class \code{JointAI}}
+
+\item{predvars}{logical; should information on the predictor variables be printed?}
+
+\item{regcoef}{logical; should information on the regression coefficients be printed?}
+
+\item{otherpars}{logical; should information on other parameters be printed?}
+
+\item{priors}{logical; should information on the priors be printed?}
+
+\item{refcat}{logical; should information on the reference category be printed?}
 }
 \description{
 Print a information on all imputation models used in a JointAI object,

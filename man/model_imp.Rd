@@ -7,23 +7,27 @@
 \alias{lme_imp}
 \title{Joint analysis and imputation of incomplete data}
 \usage{
-lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-  monitor_params = NULL, inits = TRUE, modelname = NULL,
-  modeldir = NULL, overwrite = NULL, keep_model = FALSE, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE, auxvars = NULL,
-  meth = NULL, refcats = NULL, scale_vars = NULL, hyperpars = NULL, ...)
-
-glm_imp(formula, family, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
-  modeldir = NULL, overwrite = NULL, keep_model = FALSE, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE, auxvars = NULL,
-  meth = NULL, refcats = NULL, scale_vars = NULL, hyperpars = NULL, ...)
+  modeldir = NULL, overwrite = NULL, keep_model = FALSE,
+  quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
+  auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+  scale_vars = NULL, hyperpars = NULL, ...)
+
+glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
+  modelname = NULL, modeldir = NULL, overwrite = NULL,
+  keep_model = FALSE, quiet = TRUE, progress.bar = "text",
+  warn = TRUE, mess = TRUE, auxvars = NULL, meth = NULL,
+  refcats = NULL, trunc = NULL, scale_vars = NULL,
+  hyperpars = NULL, ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
-  modeldir = NULL, overwrite = NULL, keep_model = FALSE, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE, auxvars = NULL,
-  meth = NULL, refcats = NULL, scale_vars = NULL, hyperpars = NULL, ...)
+  modeldir = NULL, overwrite = NULL, keep_model = FALSE,
+  quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
+  auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+  scale_vars = NULL, hyperpars = NULL, ...)
 }
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
@@ -94,6 +98,10 @@ used as reference category for each of the categorical variables.
 Options are the category label, the category number,
 'first" (the first category) or "largest" (chooses the
 category with the most observations). Default is "first".}
+
+\item{trunc}{optional named list specifying the limits of truncation for the
+distribution of the named incomplete variables
+of each}
 
 \item{scale_vars}{optional; named vector of (continuous) variables that will
 be scaled (such that mean = 0 and sd = 1) to improve

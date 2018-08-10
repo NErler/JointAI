@@ -5,8 +5,8 @@
 \title{Visualize the distribution of all variables in the dataset}
 \usage{
 plot_all(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8),
-  border = "black", allNA = FALSE, use_level = FALSE, idvar, xlab = "",
-  ylab = "frequency", ...)
+  border = "black", allNA = FALSE, use_level = FALSE, idvar,
+  xlab = "", ylab = "frequency", ...)
 }
 \arguments{
 \item{data}{a data frame (or a matrix)}

@@ -3,7 +3,6 @@
 \docType{data}
 \name{simLong}
 \alias{simLong}
-\alias{simLong}
 \alias{simWide}
 \title{Simulated Longitudinal Data in Long and Wide Format}
 \format{\code{simLong}: A data frame in long format with 3908 rows and 13 variables

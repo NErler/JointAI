@@ -4,8 +4,9 @@
 \alias{get_MIdat}
 \title{Extract multiple imputed datasets (and export to SPSS)}
 \usage{
-get_MIdat(object, m = 10, include = TRUE, start = NULL, seed = NULL,
-  export_to_SPSS = FALSE, resdir = NULL, filename = NULL)
+get_MIdat(object, m = 10, include = TRUE, start = NULL,
+  seed = NULL, export_to_SPSS = FALSE, resdir = NULL,
+  filename = NULL)
 }
 \arguments{
 \item{object}{object inheriting from class \code{JointAI}}

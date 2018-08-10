@@ -5,7 +5,8 @@
 \title{Get default values for hyperparameters
 Prints the list of default values for the hyperparameters}
 \usage{
-default_hyperpars(family = "gaussian", link = "identity", nranef = NULL)
+default_hyperpars(family = "gaussian", link = "identity",
+  nranef = NULL)
 }
 \arguments{
 \item{family}{distribution family of the analysis model

@@ -7,9 +7,10 @@
 \usage{
 densplot(object, ...)
 
-\method{densplot}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
-  subset = c(analysis_main = TRUE), vlines = NULL, nrow = NULL,
-  ncol = NULL, joined = FALSE, use_ggplot = FALSE, warn = TRUE, ...)
+\method{densplot}{JointAI}(object, start = NULL, end = NULL,
+  thin = NULL, subset = c(analysis_main = TRUE), vlines = NULL,
+  nrow = NULL, ncol = NULL, joined = FALSE, use_ggplot = FALSE,
+  warn = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class \code{JointAI}}
