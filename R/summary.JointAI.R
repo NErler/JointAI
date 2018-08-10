@@ -69,7 +69,10 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$sigma <- if (attr(object$analysis_type, "family") == "gaussian" &
                    any(grepl(paste0("sigma_", names(object$Mlist$y)), rownames(stats))))
     stats[grep(paste0("sigma_", names(object$Mlist$y)), rownames(stats), value = TRUE), -5, drop = FALSE]
-  out$stats <- stats[!rownames(stats) %in% c(rownames(out$ranefvar), rownames(out$sigma)), ]
+  out$stats <- stats[!rownames(stats) %in% c(rownames(out$ranefvar),
+                                             get_aux(object),
+                                             rownames(out$sigma),
+                                             paste0("tau_", names(object$Mlist$y))), ]
 
   out$analysis_type <- object$analysis_type
   out$size <- nrow(object$data)
@@ -79,6 +82,14 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   return(out)
 }
 
+get_aux <- function(object) {
+  aux <- object$Mlist$auxvars
+  unlist(sapply(aux, function(x)
+    if (x %in% names(object$refcats))
+      attr(object$refcats[[x]], 'dummies')
+    else x
+  ))
+}
 
 print_type <- function(x) {
   a <- switch(x,
