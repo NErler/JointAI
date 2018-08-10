@@ -56,11 +56,11 @@
 #'
 #'
 #' @keywords datasets
+#' @docType data
 #' @examples
 #'  summary(simLong)
 #'  summary(simWide)
 #'
-#' @keywords internal
 #' @name simLong
 NULL
 

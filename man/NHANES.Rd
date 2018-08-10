@@ -45,4 +45,3 @@ and no clinical conclusions should be derived from it.
 summary(NHANES)
 }
 \keyword{datasets}
-\keyword{internal}

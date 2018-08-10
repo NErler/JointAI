@@ -33,6 +33,7 @@
 #'         National Health and Nutrition Examination Survey Data.
 #'         URL \href{https://www.cdc.gov/nchs/nhanes/}{https://www.cdc.gov/nchs/nhanes/}.
 #' @keywords datasets
+#' @docType data
+#'
 #' @examples summary(NHANES)
-#' @keywords internal
 "NHANES"
