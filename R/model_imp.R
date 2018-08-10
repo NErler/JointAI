@@ -334,10 +334,11 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                                           y_name = colnames(Mlist$y),
                                           Zcols = ncol(Mlist$Z),
                                           Xc = Mlist$Xc, Xtrafo = Mlist$Xtrafo,
-                                          Xcat = Mlist$Xcat),
+                                          Xcat = Mlist$Xcat,
+                                          imp_par_list = imp_par_list),
                                      monitor_params))
 
-  mcmc <- if (n.iter > 0) {
+  mcmc <- if (n.iter > 0 & !inherits(adapt, 'try-error')) {
     try(rjags::coda.samples(adapt, n.iter = n.iter, thin = thin,
                             variable.names = var.names,
                             na.rm = FALSE, progress.bar = progress.bar))
@@ -345,8 +346,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   t1 <- Sys.time()
 
 
-  if (n.iter > 0) {
-    # MCMC <- do.call(rbind, mcmc)
+  if (n.iter > 0 & !is.null(mcmc)) {
     coefs <- get_coef_names(Mlist, K)
 
 
@@ -391,7 +391,9 @@ model_imp <- function(fixed, data, random = NULL, link, family,
          link = link,
          data = data, meth = meth, fixed = fixed, random = random,
          Mlist = Mlist,
-         refcats = Mlist$refs, K = K, K_imp = K_imp,
+         refcats = Mlist$refs,
+         K = K,
+         K_imp = K_imp,
          mcmc_settings = mcmc_settings,
          monitor_params = c(monitor_params,
                             if(!'analysis_main' %in% names(monitor_params))
@@ -399,9 +401,10 @@ model_imp <- function(fixed, data, random = NULL, link, family,
          data_list = data_list,
          scale_pars = scale_pars,
          hyperpars = hyperpars,
+         imp_par_list = imp_par_list,
          model = if (n.adapt > 0) adapt,
-         sample = if (n.iter > 0) mcmc,
-         MCMC = if (n.iter > 0) as.mcmc.list(MCMC),
+         sample = if (n.iter > 0 & !is.null(mcmc)) mcmc,
+         MCMC = if (n.iter > 0 & !is.null(mcmc)) as.mcmc.list(MCMC),
          time = t1 - t0
          ), class = "JointAI")
   )
