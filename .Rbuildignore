@@ -10,3 +10,5 @@
 ^_pkgdown.yml$
 ^vignettes/SelectingParameters_cache$
 ^vignettes/SelectingParameters_files$
+^vignettes/ModelSpecification_cache$
+^vignettes/ModelSpecification_files$

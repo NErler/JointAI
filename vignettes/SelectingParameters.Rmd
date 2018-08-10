@@ -1,5 +1,6 @@
 ---
 title: "Parameter Selection"
+subtitle: "How to specify which parameters to monitor and display in the results."
 author: "Nicole Erler"
 date: "`r Sys.Date()`"
 output: 
@@ -67,7 +68,12 @@ In the following, we use the [NHANES](https://nerler.github.io/JointAI/reference
 data (for examples in cross-sectional data) and the 
 dataset [simLong](https://nerler.github.io/JointAI/reference/simLong.html) for
 examples in longitudinal data.
+For more info on these datasets, check out the vignette 
+[*Visualizing Incomplete Data*](https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html),
+in which the distribution of variables and missing values in both sets is
+explored.
 
+**Noe:**<br>
 In many of the examples we use `n.adapt = 0`
 (and `n.iter = 0`, which is the default) in order to prevent the MCMC sampling 
 to save some time.
@@ -84,7 +90,7 @@ monitoring is switched off for all other parameters.
 The main parameters are the regression coefficients of the analysis model
 (`beta`) and the residual standard deviation (`sigma_y`,  and precision `tau_y`).
 
-The function `parameters()` returns the parameters that are specified to be followed
+The function [`parameters()`](https://nerler.github.io/JointAI/reference/parameters.html) returns the parameters that are specified to be followed
 (even for models where no MCMC sampling was performed, i.e. when `n.iter = 0` and
 `n.adapt = 0`).
 
