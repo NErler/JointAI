@@ -35,7 +35,7 @@ paste_predictor <- function(varname, par_elmts, Xc_cols, par_name, indent) {
 # @param trafos matrix of transformations
 # @export
 get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
-                             refs, trafos) {
+                             refs, trafos, trunc) {
 
   # intercept = ifelse(impmeth %in% c("cumlogit"),
   #                    ifelse(K_imp[varname, "end"] == 1, T, F), T)
@@ -81,73 +81,123 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
          dest_cols[[varname]]$Xc
        },
        trfo_fct = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
-         apply(trafos[trafos[, "var"] == varname, ], 1, get_trafo,
-               dest_col = dest_cols[[varname]]$Xtrafo)
+         sapply(which(trafos$var == varname & !trafos$dupl), get_trafo, trafos, dest_cols)
+         # apply(trafos[trafos[, "var"] == varname, ], 1, get_trafo,
+         #       dest_col = dest_cols[[varname]]$Xtrafo)
        },
+       trunc = trunc[[varname]],
        trafos = trafos,
        par_name = "alpha")
 }
 
 
-get_trafo <- function(trafo_vec, dest_col) {
-  if (trafo_vec["type"] == "identity") {
-    ret <- paste0("Xtrafo[i, ", dest_col, "]")
-  }
-  if (trafo_vec["type"] == "log") {
-    ret <- paste0("log(Xtrafo[i, ", dest_col, "])")
-  }
-  if (trafo_vec["type"] == "sqrt") {
-    ret <- paste0("sqrt(Xtrafo[i, ", dest_col, "])")
-  }
-  if (trafo_vec["type"] == "exp") {
-    ret <- paste0("exp(Xtrafo[i, ", dest_col, "])")
-  }
-  if (trafo_vec["type"] == "I") {
-    is_power <- regexpr(paste0(trafo_vec["var"], "\\^[[:digit:]]+"),
-                        trafo_vec["fct"]) > 0
+# get_trafo_old <- function(trafo_vec, dest_col) {
+#   if (trafo_vec["type"] == "identity") {
+#     ret <- paste0("Xtrafo[i, ", dest_col, "]")
+#   }
+#   if (trafo_vec["type"] == "log") {
+#     ret <- paste0("log(Xtrafo[i, ", dest_col, "])")
+#   }
+#   if (trafo_vec["type"] == "sqrt") {
+#     ret <- paste0("sqrt(Xtrafo[i, ", dest_col, "])")
+#   }
+#   if (trafo_vec["type"] == "exp") {
+#     ret <- paste0("exp(Xtrafo[i, ", dest_col, "])")
+#   }
+#   if (trafo_vec["type"] == "I") {
+#     is_power <- regexpr(paste0(trafo_vec["var"], "\\^[[:digit:]]+"),
+#                         trafo_vec["fct"]) > 0
+#     if (is_power) {
+#       pow <- gsub(paste0(trafo_vec["var"], "\\^"), "", trafo_vec["fct"])
+#       ret <- paste0("pow(Xtrafo[i, ", dest_col, "], ", pow, ")")
+#     }
+#   }
+#   ret
+# }
+#
+get_trafo <- function(i, trafos, dest_cols) {
+  if (trafos[i, "type"] == "identity") {
+    ret <- paste0("Xtrafo[i, ", dest_cols[[trafos[i, "var"]]]$Xtrafo, "]")
+  } else if (trafos[i, "type"] == "I") {
+    is_power <- regexpr(paste0(trafos[i, "var"], "\\^[[:digit:]]+"),
+                        trafos[i, "fct"]) > 0
     if (is_power) {
-      pow <- gsub(paste0(trafo_vec["var"], "\\^"), "", trafo_vec["fct"])
-      ret <- paste0("pow(Xtrafo[i, ", dest_col, "], ", pow, ")")
+      pow <- gsub(paste0("I\\(", trafos[i, "var"], "\\^|\\)"), "", trafos[i, "fct"])
+      ret <- paste0("pow(Xtrafo[i, ", dest_cols[[trafos[i, "var"]]]$Xtrafo, "], ", pow, ")")
+    } else {
+      ret <- gsub(trafos[i, "var"], paste0("Xtrafo[i, ",
+                                           dest_cols[[trafos[i, "var"]]]$Xtrafo,
+                                           "]"), trafos[i, "fct"])
+      ret <- gsub("\\)$", "", gsub("^I\\(", "", ret))
+    }
+  } else {
+    ret <- gsub(trafos[i, "var"], paste0("Xtrafo[i, ",
+                                         dest_cols[[trafos[i, "var"]]]$Xtrafo,
+                                         "]"), trafos[i, "fct"])
+  }
+  if(!is.na(trafos[i, 'dupl_rows'])) {
+    other_vars <- trafos[unlist(trafos[i, 'dupl_rows']), 'var']
+    for(k in seq_along(other_vars)) {
+      ret <- gsub(other_vars[k],
+                  paste0('Xtrafo[i, ', dest_cols[[other_vars[k]]]$Xtrafo, ']'), ret)
     }
   }
   ret
 }
 
-# Specify the reference category for a categorical variable
-# @param varname name of the variable
-# @param Xcat matrix of categorical covariates
-# @param refcats character string or named vector of reference categories for
-#                each categorical variable
-get_refcat <- function(varname, Xcat, refcats, mess = TRUE) {
-  if (refcats %in% c("first", "largest")) {
-    useval <- refcats
-  } else if (refcats[varname] %in% c("first", "largest")) {
-    useval <- refcats[varname]
-  } else if (is.numeric(refcats[varname])) {
-    if (refcats[varname] <= length(levels(Xcat[, varname]))) {
-      useval <- refcats[varname]
-    } else {
-      useval <- "largest"
-      if (mess)
-        message(gettextf("Wrong specification of the reference category for %s. Default used instead.",
-                         dQuote(varname)))
+# get_trafo2 <- function(trafo_vec, dest_col) {
+#   if (trafo_vec["type"] == "identity") {
+#     ret <- paste0("Xtrafo[i, ", dest_col, "]")
+#   } else if (trafo_vec["type"] == "I") {
+#     is_power <- regexpr(paste0(trafo_vec["var"], "\\^[[:digit:]]+"),
+#                         trafo_vec["fct"]) > 0
+#     if (is_power) {
+#       pow <- gsub(paste0("I\\(", trafo_vec["var"], "\\^|\\)"), "", trafo_vec["fct"])
+#       ret <- paste0("pow(Xtrafo[i, ", dest_col, "], ", pow, ")")
+#     } else {
+#       ret <- gsub(trafo_vec["var"], paste0("Xtrafo[i, ", dest_col, "]"), trafo_vec["fct"])
+#     }
+#   } else {
+#     ret <- gsub(trafo_vec["var"], paste0("Xtrafo[i, ", dest_col, "]"), trafo_vec["fct"])
+#   }
+#   ret
+# }
 
-    }
-  } else if (is.character(refcats[varname])) {
-    useval <- match(refcats[varname], names(Xcat))
-    if (is.na(useval)) {
-      useval <- "largest"
-      if (mess)
-        message(gettextf("Wrong specification of the reference category for %s. Default used instead.",
-                         dQuote(varname)))
-    }
-  }
-
-  if (useval == "first") 1
-  else if (useval == "largest") which.max(table(Xcat[, varname]))
-  else useval
-}
-
+# # Specify the reference category for a categorical variable
+# # @param varname name of the variable
+# # @param Xcat matrix of categorical covariates
+# # @param refcats character string or named vector of reference categories for
+# #                each categorical variable
+# get_refcat <- function(varname, Xcat, refcats, mess = TRUE) {
+#   if (refcats %in% c("first", "largest")) {
+#     useval <- refcats
+#   } else if (refcats[varname] %in% c("first", "largest")) {
+#     useval <- refcats[varname]
+#   } else if (is.numeric(refcats[varname])) {
+#     if (refcats[varname] <= length(levels(Xcat[, varname]))) {
+#       useval <- refcats[varname]
+#     } else {
+#       useval <- "largest"
+#       if (mess)
+#         message(gettextf("Wrong specification of the reference category for %s. Default used instead.",
+#                          dQuote(varname)))
+#
+#     }
+#   } else if (is.character(refcats[varname])) {
+#     useval <- match(refcats[varname], names(Xcat))
+#     if (is.na(useval)) {
+#       useval <- "largest"
+#       if (mess)
+#         message(gettextf("Wrong specification of the reference category for %s. Default used instead.",
+#                          dQuote(varname)))
+#     }
+#   }
+#
+#   if (useval == "first") 1
+#   else if (useval == "largest") which.max(table(Xcat[, varname]))
+#   else useval
+# }
+#
 
 
 # Find which column in either Xc or Xcat contains the variable to be imputed
@@ -163,7 +213,7 @@ get_dest_column <- function(varname, refs, Xc_names, Xcat_names, Xtrafo_names,
     #              levels(refs[[varname]])[levels(refs[[varname]]) !=
     #                                        refs[[varname]]])
   } else if (varname %in% trafos$var) {
-    trafos$Xc_var[trafos$var == varname]
+    trafos$Xc_var[trafos$var == varname & !trafos$dupl]
   } else {
     varname
   }
