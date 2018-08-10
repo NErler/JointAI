@@ -38,7 +38,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                             Zcols = ncol(object$Mlist$Z),
                                             Xc = object$Mlist$Xc,
                                             Xcat = object$Mlist$Xcat,
-                                            Xtrafo = object$Mlist$Xtrafo),
+                                            Xtrafo = object$Mlist$Xtrafo,
+                                            imp_par_list = object$imp_par_list),
                                        monitor_params))
   }
 
