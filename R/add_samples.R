@@ -33,7 +33,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   } else {
     var.names <- do.call(get_params, c(list(meth = object$meth,
                                             analysis_type = object$analysis_type,
-                                            family = object$family,
+                                            family = attr(object$analysis_type, "family"),
                                             y_name = colnames(object$Mlist$y),
                                             Zcols = ncol(object$Mlist$Z),
                                             Xc = object$Mlist$Xc,

@@ -387,8 +387,6 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   return(structure(
     list(analysis_type = analysis_type,
-         family = family,
-         link = link,
          data = data, meth = meth, fixed = fixed, random = random,
          Mlist = Mlist,
          refcats = Mlist$refs,
@@ -396,7 +394,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
          K_imp = K_imp,
          mcmc_settings = mcmc_settings,
          monitor_params = c(monitor_params,
-                            if(!'analysis_main' %in% names(monitor_params))
+                            if (!'analysis_main' %in% names(monitor_params))
                               setNames(TRUE, 'analysis_main')),
          data_list = data_list,
          scale_pars = scale_pars,

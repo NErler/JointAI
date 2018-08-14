@@ -36,9 +36,11 @@ get_params <- function(meth, analysis_type, family,
                        delta_imp = NULL, other = NULL, ...){
 
 
-  if(is.null(y_name)) {
+  if (is.null(y_name)) {
     y_name <- names(y)
   }
+  if (missing(family))
+    family <- attr(analysis_type, "family")
 
 
   if (analysis_main) {
