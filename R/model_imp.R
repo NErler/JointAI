@@ -435,7 +435,7 @@ lm_imp <- function(formula, data,
                    quiet = TRUE, progress.bar = "text", warn = TRUE,
                    mess = TRUE,
                    auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-                   scale_vars = NULL, hyperpars = NULL, ...){
+                   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
 
   if (missing(formula))
     stop("No model formula specified.")
@@ -477,7 +477,7 @@ glm_imp <- function(formula, family, data,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
                     auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-                    scale_vars = NULL, hyperpars = NULL, ...){
+                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
 
   if (missing(formula))
     stop("No model formula specified.")
@@ -544,7 +544,7 @@ lme_imp <- function(fixed, data, random,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
                     auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-                    scale_vars = NULL, hyperpars = NULL, ...){
+                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
 
   if (missing(fixed))
     stop("No fixed effects structure specified.")

@@ -12,7 +12,7 @@ lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
   auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-  scale_vars = NULL, hyperpars = NULL, ...)
+  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...)
 
 glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
@@ -20,14 +20,14 @@ glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
   warn = TRUE, mess = TRUE, auxvars = NULL, meth = NULL,
   refcats = NULL, trunc = NULL, scale_vars = NULL,
-  hyperpars = NULL, ...)
+  scale_pars = NULL, hyperpars = NULL, ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
   auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-  scale_vars = NULL, hyperpars = NULL, ...)
+  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...)
 }
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
@@ -114,6 +114,11 @@ for which \code{"lognorm"} is set as imputation model are
 only scaled with regards to the standard deviation, but not
 centered. If set to \code{FALSE} no scaling will be done.}
 
+\item{scale_pars}{optional matrix of parameters used for centering and
+scaling continuous covariates. If not specified, this will
+be calculated automatically. If \code{FALSE}, no scaling
+will be done.}
+
 \item{hyperpars}{list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
 only needs to be supplied if hyperparameters other than the
 default should be used}
@@ -134,11 +139,6 @@ model (see \code{\link[stats]{formula}})}
 a one-sided formula of the form \code{~x1 + ... + xn | g},
 where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}
-
-\item{scale_pars}{optional matrix of parameters used for centering and
-scaling continuous covariates. If not specified, this will
-be calculated automatically. If \code{FALSE}, no scaling
-will be done.}
 }
 \value{
 An object of class "JointAI".
