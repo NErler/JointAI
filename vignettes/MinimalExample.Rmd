@@ -31,7 +31,7 @@ go to the [web page of the National Health and Nutrition Examination Survey (NHA
 in which the NHANES data is explored.
 
 ##  Fitting a linear regression model
-To fit a linear regression model with **JointAI** is straightforward with the
+Fitting a linear regression model with **JointAI** is straightforward with the
 function `lm_imp()`:
 ```{r fit_lm1, message = F}
 lm1 <- lm_imp(SBP ~ gender + age + race + WC + alc + educ + albu + bili,
@@ -48,10 +48,12 @@ from package **nlme**.]
 In this minimal example
 the only difference is that for `lm_imp()` the number of iterations `n.iter`
 has to be specified. Of course there are many more parameters that can or should
-be specified, but we will look at that later.
+be specified.
+In the vignette [*Model Specification*](https://nerler.github.io/JointAI/articles/ModelSpecification.html) 
+many of these parameters are explained in detail.
 
-`n.iter` specifies the length of the [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain)
-does, i.e., the number of draws from the posterior distribution of the parameter
+`n.iter` specifies the length of the [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain),
+i.e., the number of draws from the posterior distribution of the parameter
 or unobserved value.
 How many iterations are necessary depends on the data and complexity of the
 model and can vary from as few as 100 up to thousands or millions. 
@@ -91,7 +93,7 @@ By default, [`summary()`](https://nerler.github.io/JointAI/reference/summary.Joi
 will only print the posterior summary for the main
 model parameters of the analysis model. How to select which parameters are shown
 is described in the vignette 
-[*Selecting Parameters*](https://nerler.github.io/JointAI/articles/SelectingParameters.html)
+[*Selecting Parameters*](https://nerler.github.io/JointAI/articles/SelectingParameters.html).
 
 The summary consists of the posterior mean, the standard deviation and the 
 2.5% and 97.5% quantiles of the MCMC sample, and the tail probability.

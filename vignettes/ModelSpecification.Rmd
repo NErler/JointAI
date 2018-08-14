@@ -36,7 +36,7 @@ explored.
 **Note:**<br>
 In many of the examples we use `n.adapt = 0`
 (and `n.iter = 0`, which is the default) in order to prevent the MCMC sampling 
-and, hence, save some computational time.
+and, hence, reduce computational time.
 `mess = FALSE` is used to suppress messages that are not of interest in this
 vignette.
 
