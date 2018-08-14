@@ -113,9 +113,7 @@ MC_error <- function(x, subset = NULL,
   MCMC <- get_subset(object = x, subset = subset,
                      call_orig = as.list(match.call()), warn = warn)
 
-  MCMC <- do.call(rbind, window(x$sample, start = start, end = end, thin = thin))
-  coefs <- get_coef_names(x$Mlist, x$K)
-  colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
+  MCMC <- do.call(rbind, window(MCMC, start = start, end = end, thin = thin))
 
   res1 <- mcmcse::mcse.mat(x = MCMC, ...)
   colnames(res1) <- gsub("se", "MCSE", colnames(res1))
