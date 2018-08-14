@@ -142,7 +142,7 @@
     <div class="page-header">
     <h1>Gelman-Rubin criterion for convergence</h1>
     <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/convergence_criteria.R'><code>R/convergence_criteria.R</code></a></small>
-    <div class="hidden name"><code>gr_crit.Rd</code></div>
+    <div class="hidden name"><code>GR_crit.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -234,18 +234,18 @@ contains some examples how to specify the argument <code>subset</code>.</p></div
     <pre class="examples"><div class='input'><span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>GR_crit</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; Potential scale reduction factors:
 #&gt; 
 #&gt;             Point est. Upper C.I.
-#&gt; (Intercept)      0.999       1.01
-#&gt; C1               0.999       1.00
-#&gt; M22              1.033       1.12
-#&gt; M23              1.006       1.03
-#&gt; M24              1.017       1.07
-#&gt; C2               1.013       1.06
-#&gt; tau_y            1.005       1.03
-#&gt; sigma_y          1.009       1.03
+#&gt; (Intercept)       1.01       1.04
+#&gt; C1                1.01       1.04
+#&gt; M22               1.07       1.24
+#&gt; M23               1.07       1.22
+#&gt; M24               1.12       1.37
+#&gt; C2                1.01       1.06
+#&gt; tau_y             1.00       1.02
+#&gt; sigma_y           1.01       1.02
 #&gt; 
 #&gt; Multivariate psrf
 #&gt; 
-#&gt; 1.04</div><div class='input'>
+#&gt; 1.11</div><div class='input'>
 
 
 </div></pre>
