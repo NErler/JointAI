@@ -205,8 +205,8 @@ divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
 
 
   return(list(y = y, Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat,
-              Xtrafo = Xtrafo, trafos = trafos,
-              Z = Z, hc_list = hc_list, cat_vars = cat_vars, refs = refs,
+              Xtrafo = Xtrafo, Z = Z,
+              trafos = trafos, hc_list = hc_list, refs = refs,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars,
               fixed2 = fixed2, X2_names = colnames(X2)))
 }
