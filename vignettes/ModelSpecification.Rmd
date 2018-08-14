@@ -24,19 +24,19 @@ options(width = 100)
 ```
 
 
-In the following, we use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
-data (for examples in cross-sectional data) and the 
+In this vignette we use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
+data for examples in cross-sectional data and the 
 dataset [simLong](https://nerler.github.io/JointAI/reference/simLong.html) for
 examples in longitudinal data.
 For more info on these datasets, check out the vignette 
 [*Visualizing Incomplete Data*](https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html),
-in which the distribution of variables and missing values in both sets is
+in which the distributions of variables and missing values in both sets is
 explored.
 
 **Note:**<br>
 In many of the examples we use `n.adapt = 0`
 (and `n.iter = 0`, which is the default) in order to prevent the MCMC sampling 
-to save some time.
+and, hence, save some computational time.
 `mess = FALSE` is used to suppress messages that are not of interest in this
 vignette.
 
@@ -57,6 +57,9 @@ and [`lme()`](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html)
 
 `lm_imp()` and `glm_imp()` take arguments `formula` and `data`, whereas `lme_imp()`
 requires the specification of a `fixed` effects and a `random` effects formula.
+Specification of the fixed effects formula is discussed in section [Model formula](#ModelFormula),
+specification of the random effects is discussed in section
+[Multi level structure & longitudinal covariates](#MultiLevelStructure)
 
 Additionally, `glm_imp()` requires the specification of the model 
 [`family`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html)
@@ -72,16 +75,18 @@ tab <- rbind(gaussian = "with links: `identity`, `log`",
 )
 
 tab <- cbind(paste0("`", rownames(tab), "`"), tab)
-colnames(tab) <- c(' ', ' ')
+colnames(tab) <- c('family', ' ')
 
 knitr::kable(tab, row.names = FALSE)
 ```
 
 The argument `family` can be given as character string or as function.
 If the link function is omitted, the
-[default](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html)
+[default link](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html)
 is used.
-The following three specifications are equal,
+
+**Example:**<br>
+The following three specifications are equal:
 ```{r}
 mod1a <- glm_imp(educ ~ age + gender + creat, data = NHANES,
                family = "binomial", n.adapt = 0, mess = FALSE)
@@ -105,11 +110,11 @@ mod1d$link
 ```
 
 
-## Model formula
+## Model formula{#ModelFormula}
 The arguments `formula` (in `lm_imp()` and `glm_imp()`) and `fixed` 
 (in `lme_imp()`) take a two-sided
 [`formula`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html)
-object, where `~` separates the response (outcome, dependent variable) from the
+object, where `~` separates the response (outcome / dependent variable) from the
 linear predictor, in which covariates (independent variables) are separated by
 `+`.
 An intercept is added automatically.
@@ -126,17 +131,16 @@ SBP ~ age + gender + smoke + creat + smoke:creat
 ```
 
 #### Interaction with multiple variables
-Interactions between multiple variables can be specified using brackets:
+Interactions between multiple variables can be specified using parentheses:
 ```{r}
 mod2a <- glm_imp(educ ~ gender * (age + smoke + creat),
                  data = NHANES, family = 'binomial', mess = FALSE, n.adapt = 0)
 
 parameters(mod2a, mess = FALSE)
 ```
-The function
-[`parameters()`](https://nerler.github.io/JointAI/reference/parameters.html)
+The function [`parameters()`](https://nerler.github.io/JointAI/reference/parameters.html)
 returns the parameters that are specified to be followed
-(even for models where no MCMC sampling was performed, i.e. when `n.iter = 0` and
+(even for models where no MCMC sampling was performed, i.e., when `n.iter = 0` and
 `n.adapt = 0`).
 
 #### Higher level interactions
@@ -171,12 +175,13 @@ Non-linear associations can be specified in the model formula using either
 functions such as
 [`log()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html)
 (the natural logarithm),
-[`sqrt()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/MathFun.html) (the square root) or [`exp()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html) (the exponential function) or by specifying a function of a variable using
+[`sqrt()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/MathFun.html) (the square root) or [`exp()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html) (the exponential function),
+or by specifying a function of a variable using
 [`I()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/AsIs.html),
-for example a quadratic term of a variable `x`: `I(x^2)`.
+for example, `I(x^2)` would be the quadratic term of a variable `x`.
 
 For *completely observed covariates*, **JointAI** can handle any common type of 
-function implemented in R, including splines, e.g. using 
+function implemented in R, including splines, e.g., using 
 [`ns()`](https://stat.ethz.ch/R-manual/R-devel/library/splines/html/ns.html) or
 [`bs()`](https://stat.ethz.ch/R-manual/R-devel/library/splines/html/bs.html)
 from the package **splines** (which is automatically installed with R).
@@ -212,6 +217,8 @@ mod3b <- lm_imp(SBP ~ ns(age, df = 2) + gender + I(bili^2) + I(bili^3),
 # A function of creat and albu
 mod3c <- lm_imp(SBP ~ age + gender + I(creat/albu^2),
                 data = NHANES, mess = FALSE)
+# This function may make more sense to calculate BMI as weight/height^2, but
+# we do not have those variables in the NHANES data...
 
 # Using the sinus and cosinus
 mod3d <- lm_imp(SBP ~ bili + sin(creat) + cos(albu),
@@ -227,9 +234,16 @@ and only the main effects are used as predictors in the imputation models.
 In `mod3b`, for example, the spline of age is used as predictor for `SBP`,
 but in the imputation model for `bili`, `age` enters with a linear effect.
 ```{r}
-list_impmodels(mod3b, priors = F, regcoef = F, otherpars = F)
+list_impmodels(mod3b, priors = FALSE, regcoef = FALSE, otherpars = FALSE)
 ```
 
+The function [`list_impmodels`](https://nerler.github.io/JointAI/reference/list_impmodels.html)
+prints a list of the imputation models used in a JointAI object.
+Since, at the moment, we are only interested in the predictor variables, we
+suppress printing of information on prior distributions, regression coefficients
+and other parameters by setting `priors`, `regcoev` and `otherpars` to `FALSE`.
+
+<br>
 
 When a function of a variable is specified as auxiliary variable,
 this function is used in the imputation models.
@@ -244,9 +258,11 @@ mod3e <- lm_imp(SBP ~ age + gender + bili, auxvars = "I(WC^2)",
 list_impmodels(mod3e, priors = F, regcoef = F, otherpars = F)
 ```
 
-Incomplete variables are always imputed on their original scale, i.e., 
-in `mod3b` the variable `bili` is imputed and the quadratic and cubic versions
-calculated from the imputed values. Likewise, `creat` and `albu` in `mod3c` 
+Incomplete variables are always imputed on their original scale, i.e.,
+
+* in `mod3b` the variable `bili` is imputed and the quadratic and cubic versions
+calculated from the imputed values. 
+* Likewise, `creat` and `albu` in `mod3c` 
 are imputed separately, and `I(creat/albu^2)` calculated from the imputed (and
 observed) values.
 
@@ -257,6 +273,7 @@ When a function has restricted support, e.g., `log(x)` is only defined for
 with these restrictions.
 This can  either be achieved by truncating the distribution, using the
 argument `trunc`, or by selecting an imputation method that meets the restrictions.
+For more information on imputation methods, see the section [Imputation model types](#meth).
 
 **Example**:<br>
 When using a `log()` transformation for the covariate `bili`, we can either
@@ -285,6 +302,9 @@ mod4c <- lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
                 data = NHANES, mess = FALSE, keep_model = T)
 
 ```
+Truncation always requires to specify both limits. Since `-Inf` and `Inf` are not
+accepted, a value outside the range of the variable (here: 1e10) can be selected
+for the second boundary of the truncation interval.
 
 
 #### Functions that are not available in R
@@ -294,11 +314,11 @@ the name of the function in JAGS.
 
 **Example**:<br>
 In JAGS the inverse logit transformation is defined in the function 
-`ilogit`. In R, this function does not exist, but the inverse logit is
+`ilogit`. In R, there is no function `ilogit`, but the inverse logit is
 available as the distribution function of the logistic distribution `plogis`.
 
 ```{r}
-# Define a function ilogit
+# Define the function ilogit
 ilogit <- plogis
 
 # Use ilogit in the model formula
@@ -325,7 +345,7 @@ but since this function does not exist in (base) R, we first need to define it:
 # define the complementary log log transformation
 cloglog <- function(x) log(-log(1 - x))
 
-# define the inverse logit (in case you haven't done it in the previous example)
+# define the inverse logit (in case you have not done it in the previous example)
 ilogit <- plogis
 
 # nest ilogit inside cloglog
@@ -334,7 +354,7 @@ mod6a = lm_imp(SBP ~ age + gender + cloglog(ilogit(creat)),
 ```
 
 
-## Multi level structure & longitudinal covariates
+## Multi level structure & longitudinal covariates{#MultiLevelStructure}
 In multi-level models, additional to the fixed effects structure specified by
 the argument `fixed` a random effects structure needs to be provided via the
 argument `random`. 
@@ -349,7 +369,7 @@ A few examples:
 
 * `random = ~1|id`: random intercept only, with `id` as grouping variable
 * `random = ~time|id`: random intercept and slope for variable `time`
-* `random = ~time + I(time^2)`: random intercept, slope and quadratic effect for `time`
+* `random = ~time + I(time^2)`: random intercept, slope and quadratic random effect for `time`
 * `random = ~time + x | id` random intercept, random slope for `time` and random
   effect for variable `x`
 
@@ -406,19 +426,19 @@ knitr::kable(tab, row.names = FALSE)
 but the variable enters the linear predictor of the analysis model (and possibly
 other imputation models) on its original scale.
 
-### Specification of imputation mode types
+### Specification of imputation model types
 In models [`mod4b` and `mod4c`](#mod4) we have already seen two examples in which
 the imputation model type was changed using the argument `meth`.
 When the model has many incomplete predictor variables, but not all need to be
 changed, it can be useful to perform a set-up run of the model without any 
 iterations, extract the vector of imputation models that were automatically 
-selected and apply changes to that vector:
+selected, and apply changes to that vector:
 ```{r, cache = TRUE}
 # run the model without iterations
 mod8a_setup <- lm_imp(SBP ~ age + gender + WC + alc + bili + occup + smoke,
                 data = NHANES, n.iter = 0, n.adapt = 0, mess = FALSE)
 
-# extract the chosen imputation methods
+# extract the automatically chosen imputation methods
 newmeth <- mod8a_setup$meth
 newmeth
 
@@ -433,41 +453,60 @@ mod8a <- lm_imp(SBP ~ age + gender + WC + alc + bili + occup + smoke,
 mod8a$meth
 ```
 
+Alternatively, the function [`get_imp_meth()`](https://nerler.github.io/JointAI/reference/get_imp_meth.html)
+can be called directly.
+`get_imp_meth` has arguments 
+
+* `fixed`: the fixed effects formula
+* `random`: the random effects formula (if necessary)
+* `data`: the dataset
+* `auxvars`: an optional vector of auxiliary variables.
+
+```{r}
+mod8a_meth <- get_imp_meth(SBP ~ age + gender + WC + alc + bili + occup + smoke,
+                           data = NHANES)
+mod8a_meth
+```
+
 
 ### Order of the sequence of imputation models
 By default, the imputation models are ordered by number of missing values
-(decreasing), and each model has the complete covariates and all incomplete
-variables that appear earlier in the sequence in its linear predictor:
+(decreasing), and each model has the (cross-sectional) complete covariates and
+all incomplete variables that appear earlier in the sequence in its linear predictor:
 ```{r}
 # number of missing values in the covariates in mod8a
 colSums(is.na(NHANES[, names(newmeth)]))
 
-# print information on the imputation models
-# (and omit everything but the predictor variables)
+# print information on the imputation models (and omit everything but the predictor variables)
 list_impmodels(mod8a, priors = F, regcoef = F, otherpars = F, refcat = F)
 ```
 
 By re-ordering the elements in `meth`, the order of the sequence of imputation
-models can be changed.
+models will be changed.
 
 ## Auxiliary variables {#auxvars}
 Auxiliary variables are variables that are not part of the analysis model, but
 should be considered as predictor variables in the imputation models because they
-contain information on unobserved values.
-Good auxiliary variables are associated with an incomplete variable of interest
-or the missingness of that variable and do not have too many missing values
-themselves. Importantly, they should be observed for a large proportion of the
+can inform the imputation of on unobserved values.
+
+Good auxiliary variables are 
+
+* associated with an incomplete variable of interest, or are
+* associated with the missingness of that variable and 
+* do not have too many missing values themselves.
+Importantly, they should be observed for a large proportion of the
 cases that have a missing value in the variable to be imputed.
 
 In `lm_imp()`, `glm_imp()` and `lme_imp()`, auxiliary variables can be 
 specified with the argument `auxvars`, which is a vector containing the names
 of the auxiliary variables.
 
-For example, we might consider the variables `educ` and `smoke` as predictors
+**Example:**<br>
+We might consider the variables `educ` and `smoke` as predictors
 for the imputation of `occup`:
 ```{r, cache = TRUE}
 mod9a <- lm_imp(SBP ~ gender + age + occup, auxvars = c('educ', 'smoke'),
-                data = NHANES, n.iter = 100, progress.bar = 'none')
+                data = NHANES, n.iter = 100, progress.bar = 'none', mess = FALSE)
 ```
 The regression coefficients for `educ` and `smoke` in the analysis model are
 fixed to zero so that these two variables do not contribute to the model, and
@@ -479,18 +518,18 @@ summary(mod9a)
 They are, however, used as predictors in the imputation for `occup` and
 imputed themselves (if they have missing values):
 ```{r}
-list_impmodels(mod9a, priors = FALSE, regcoef = FALSE, otherpars = FALSE,
-               refcat = FALSE)
+list_impmodels(mod9a, priors = FALSE, regcoef = FALSE, otherpars = FALSE, refcat = FALSE)
 ```
 
+
+### Functions of variables as auxiliary variables
 As shown above in [`mod3e`](#mod3e), it is possible to specify functions of 
 auxiliary variables. In that case, the auxiliary variable is not considered as
 linear effect but as specified by the function:
 ```{r}
 mod9b <- lm_imp(SBP ~ gender + age + occup, data = NHANES,
                 auxvars = c('educ', 'smoke', 'log(WC)'),
-                trunc = list(WC = c(1e-10, 1e10)),
-                n.adapt = 0, mess = FALSE)
+                trunc = list(WC = c(1e-10, 1e10)), n.adapt = 0, mess = FALSE)
 ```
 
 ```{r}
@@ -502,9 +541,7 @@ list_impmodels(mod9b, priors = FALSE, regcoef = FALSE, otherpars = FALSE,
 In **JointAI** dummy coding is used when categorical variables enter a linear
 predictor, i.e., a binary variables is created for each category, except the 
 reference category. These binary variables have value one when that category
-was observed and zero otherwise. The regression coefficients of the dummy
-variables are interpreted as the effect of being in the given category
-compared to being in the reference category.
+was observed and zero otherwise.
 
 By default, the first category of a categorical variable (ordered or unordered)
 is used as reference, however, this may not always allow the desired interpretation
@@ -514,19 +551,22 @@ the largest group as reference may result in better mixing of the MCMC chains.
 Therefore, **JointAI** allows specification of the reference category separately
 for each variable, via the argument `refcats`.
 
+### Setting reference categories for all variables
 To specify the choice of reference category globally for all variables in the
 model, `refcats` can be set as
 
-* `refcats = "first"`"
+* `refcats = "first"`
 * `refcats = "last"`
 * `refcats = "largest"`
 
+For example:
 ```{r}
 mod10a <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
                  refcats = "largest",
                  data = NHANES, n.adapt = 0, mess = FALSE)
 ```
 
+### Setting reference categories for individual variables
 Alternatively, `refcats` takes a named vector, in which the reference category
 for each variable can be specified either by its number or its name, or one of 
 the three global types: "first", "last" or "largest". 
@@ -535,12 +575,24 @@ default is used.
 
 ```{r}
 mod10b <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
-                 refcats = list(occup = "not working", race = 3),
+                 refcats = list(occup = "not working", race = 3, educ = 'largest'),
                  data = NHANES, n.adapt = 0, mess = FALSE)
 ```
 
-To help to specify the reference category, the function `set_refcat()` can be
-used.
+
+To help to specify the reference category, the function
+[`set_refcat()`](https://nerler.github.io/JointAI/reference/set_refcat.html)
+can be used. 
+It prints the names of the categorical variables that are selected by
+
+* a specified model formula and/or
+* a vector of auxiliary variables, or
+* a vector of naming covariates
+
+or all categorical variabels in the data if only `data` is provided,
+and asks a number of questions which the user needs to reply to by input of 
+a number.
+
 ```{r, echo = FALSE}
 set_refcat <- function(data, formula, covars, auxvars) {
   if (missing(formula) & missing(covars) & missing(auxvars)) {
@@ -563,15 +615,12 @@ set_refcat <- function(data, formula, covars, auxvars) {
              '4: Specify the reference categories individually.')
   )
 }
-  
-refs_mod10 <-  c(gender = 'female', race = 'Non-Hispanic White', educ = 'low', occup = 'not working', smoke = 'never')
 ```
 
 ```{r}
-set_refcat(NHANES, formula(mod10b))
+refs_mod10 <- set_refcat(NHANES, formula = formula(mod10b))
 ```
-It lists the categorical variables in the model and the options for specifying
-the reference categories. 
+
 
 When option 4 is chosen, a question for each categorical variable is asked,
 for example:
@@ -585,7 +634,8 @@ for example:
 #> 5: other
 ```
 
-The determined specification for the argument `refcats` is printed
+After specification of the reference categories for all categorical variables,
+the determined specification for the argument `refcats` is printed:
 ```{r}
 #> In the JointAI model specify:
 #>  refcats = c(gender = 'female', race = 'Non-Hispanic White', educ = 'low',
@@ -596,6 +646,10 @@ The determined specification for the argument `refcats` is printed
 
 `set_refcat()` also returns a named vector that can be passed to the argument
 `refcats`:
+```{r, echo = FALSE}
+refs_mod10 <-  c(gender = 'female', race = 'Non-Hispanic White', educ = 'low', occup = 'not working', smoke = 'never')
+```
+
 ```{r}
 mod10c <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
                  refcats = refs_mod10,
