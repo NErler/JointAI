@@ -38,7 +38,7 @@
 
 <meta property="og:title" content="List imputation models — list_impmodels" />
 
-<meta property="og:description" content="Print a information on all imputation models used in a JointAI object,
+<meta property="og:description" content="Print information on all imputation models used in a JointAI object,
 including the model type, names of the parameters used and hyperparameters." />
 <meta name="twitter:card" content="summary" />
 
@@ -68,7 +68,7 @@ including the model type, names of the parameters used and hyperparameters." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -147,7 +147,7 @@ including the model type, names of the parameters used and hyperparameters." />
 
     <div class="ref-description">
     
-    <p>Print a information on all imputation models used in a JointAI object,
+    <p>Print information on all imputation models used in a JointAI object,
 including the model type, names of the parameters used and hyperparameters.</p>
     
     </div>
@@ -160,7 +160,7 @@ including the model type, names of the parameters used and hyperparameters.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>object inheriting from class <code>JointAI</code></p></td>
+      <td><p>object inheriting from class "JointAI"</p></td>
     </tr>
     <tr>
       <th>predvars</th>
@@ -187,7 +187,8 @@ including the model type, names of the parameters used and hyperparameters.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save computational time)</span>
-<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span> + <span class='no'>O2</span> + <span class='no'>B2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='output co'>#&gt; <span class='message'>Note: No MCMC sample will be created when n.iter is set to 0.</span></div><div class='input'><span class='fu'>list_impmodels</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; Cumulative logit imputation model for 'O2'
+<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span> + <span class='no'>O2</span> + <span class='no'>B2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='output co'>#&gt; <span class='message'>Note: No MCMC sample will be created when n.iter is set to 0.</span></div><div class='input'>
+<span class='fu'>list_impmodels</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; Cumulative logit imputation model for 'O2'
 #&gt; * Reference category: '1'
 #&gt; * Predictor variables: 
 #&gt;   C1
@@ -222,7 +223,9 @@ including the model type, names of the parameters used and hyperparameters.</p>
 #&gt; * Predictor variables: 
 #&gt;   (Intercept), C1, O22, O23, O24, M22, M23, M24, C2
 #&gt; * Regression coefficients: 
-#&gt;   alpha[25:33] (normal prior(s) with mean 0 and precision 0.001)</div></pre>
+#&gt;   alpha[25:33] (normal prior(s) with mean 0 and precision 0.001)</div><div class='input'>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

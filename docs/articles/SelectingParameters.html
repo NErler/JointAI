@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -106,7 +106,7 @@
             <h3 class="subtitle">How to specify which parameters to monitor and display in the results.</h3>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2018-08-10</h4>
+            <h4 class="date">2018-08-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/SelectingParameters.Rmd"><code>vignettes/SelectingParameters.Rmd</code></a></small>
       <div class="hidden name"><code>SelectingParameters.Rmd</code></div>
@@ -115,6 +115,8 @@
 
     
     
+<p>In this vignette, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a> data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a> for examples in longitudinal data. For more info on these datasets, check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the distribution of variables and missing values in both sets is explored.</p>
+<p><strong>Note:</strong><br> In many of the examples we use <code>n.adapt = 0</code> (and <code>n.iter = 0</code>, which is the default) in order to prevent the MCMC sampling to reduce computational some time. <code>mess = FALSE</code> is used to suppress messages that are not of interest in this vignette. <code>progress.bar = 'none'</code> prevents printing of the progress of the MCMC sampling, which results in lengthy output in the vignette, but is useful in practice.</p>
 <div id="monitoring-parameters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#monitoring-parameters" class="anchor"></a>Monitoring parameters</h2>
@@ -202,8 +204,6 @@
 </tbody>
 </table>
 <p>Each of the key words works as a switch.</p>
-<p>In the following, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a> data (for examples in cross-sectional data) and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a> for examples in longitudinal data. For more info on these datasets, check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the distribution of variables and missing values in both sets is explored.</p>
-<p><strong>Noe:</strong><br> In many of the examples we use <code>n.adapt = 0</code> (and <code>n.iter = 0</code>, which is the default) in order to prevent the MCMC sampling to save some time. <code>mess = FALSE</code> is used to suppress messages that are not of interest in this vignette. <code>progress.bar = 'none'</code> prevents printing of the progress of the MCMC sampling, which results in lengthy output in the vignette, but is useful in practice.</p>
 <div id="parameters-of-the-analysis-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#parameters-of-the-analysis-model" class="anchor"></a>Parameters of the analysis model</h3>
@@ -211,11 +211,12 @@
 <p>The main parameters are the regression coefficients of the analysis model (<code>beta</code>) and the residual standard deviation (<code>sigma_y</code>, and precision <code>tau_y</code>).</p>
 <p>The function <a href="https://nerler.github.io/JointAI/reference/parameters.html"><code><a href="../reference/parameters.html">parameters()</a></code></a> returns the parameters that are specified to be followed (even for models where no MCMC sampling was performed, i.e. when <code>n.iter = 0</code> and <code>n.adapt = 0</code>).</p>
 <p>For example:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">lm1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat,</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">              <span class="dt">data =</span> NHANES, <span class="dt">n.adpat =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm1, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; [1] "(Intercept)"  "genderfemale" "WC"           "creat"       </span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; [5] "alc&gt;=1"       "tau_SBP"      "sigma_SBP"</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">lm1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat, <span class="dt">data =</span> NHANES, </a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">              <span class="dt">n.adpat =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm1, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; [1] "(Intercept)"  "genderfemale" "WC"           "creat"       </span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt; [5] "alc&gt;=1"       "tau_SBP"      "sigma_SBP"</span></a></code></pre></div>
 </div>
 <div id="imputed-values-parameters-of-the-imputation-models" class="section level3">
 <h3 class="hasAnchor">
@@ -223,32 +224,34 @@
 <p>To generate (multiple) imputed datasets that can be used for further analyses, the imputed values need to be monitored. This can be done by setting <code>monitor_params = c(imps = TRUE)</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">lm2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>smoke <span class="op">+</span><span class="st"> </span>occup,</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">              <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">              <span class="dt">monitor_params =</span> <span class="kw">c</span>(<span class="dt">imps =</span> <span class="ot">TRUE</span>, <span class="dt">analysis_main =</span> <span class="ot">FALSE</span>),</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">              <span class="dt">monitor_params =</span> <span class="kw">c</span>(<span class="dt">imps =</span> <span class="ot">TRUE</span>, <span class="dt">analysis_main =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm2, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt;  [1] "Xc[33,3]"    "Xc[150,3]"   "Xc[1,8]"     "Xc[7,8]"     "Xc[8,8]"    </span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt;  [6] "Xc[12,8]"    "Xc[13,8]"    "Xc[21,8]"    "Xc[22,8]"    "Xc[31,8]"   </span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; [11] "Xc[33,8]"    "Xc[34,8]"    "Xc[39,8]"    "Xc[49,8]"    "Xc[66,8]"   </span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; [16] "Xc[67,8]"    "Xc[80,8]"    "Xc[86,8]"    "Xc[91,8]"    "Xc[92,8]"   </span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; [21] "Xc[105,8]"   "Xc[111,8]"   "Xc[115,8]"   "Xc[118,8]"   "Xc[120,8]"  </span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; [26] "Xc[127,8]"   "Xc[132,8]"   "Xc[139,8]"   "Xc[146,8]"   "Xc[149,8]"  </span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; [31] "Xc[152,8]"   "Xc[163,8]"   "Xc[165,8]"   "Xc[169,8]"   "Xc[180,8]"  </span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; [36] "Xc[185,8]"   "Xcat[6,1]"   "Xcat[16,1]"  "Xcat[24,1]"  "Xcat[27,1]" </span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; [41] "Xcat[45,1]"  "Xcat[57,1]"  "Xcat[58,1]"  "Xcat[60,1]"  "Xcat[61,1]" </span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; [46] "Xcat[65,1]"  "Xcat[66,1]"  "Xcat[70,1]"  "Xcat[80,1]"  "Xcat[81,1]" </span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; [51] "Xcat[85,1]"  "Xcat[88,1]"  "Xcat[89,1]"  "Xcat[90,1]"  "Xcat[101,1]"</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; [56] "Xcat[104,1]" "Xcat[116,1]" "Xcat[133,1]" "Xcat[137,1]" "Xcat[143,1]"</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; [61] "Xcat[168,1]" "Xcat[170,1]" "Xcat[180,1]" "Xcat[186,1]" "Xcat[16,2]" </span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; [66] "Xcat[99,2]"  "Xcat[123,2]" "Xcat[156,2]" "Xcat[158,2]" "Xcat[166,2]"</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; [71] "Xcat[172,2]"</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm2, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt;  [1] "Xc[33,3]"    "Xc[150,3]"   "Xc[1,8]"     "Xc[7,8]"     "Xc[8,8]"    </span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt;  [6] "Xc[12,8]"    "Xc[13,8]"    "Xc[21,8]"    "Xc[22,8]"    "Xc[31,8]"   </span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; [11] "Xc[33,8]"    "Xc[34,8]"    "Xc[39,8]"    "Xc[49,8]"    "Xc[66,8]"   </span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; [16] "Xc[67,8]"    "Xc[80,8]"    "Xc[86,8]"    "Xc[91,8]"    "Xc[92,8]"   </span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; [21] "Xc[105,8]"   "Xc[111,8]"   "Xc[115,8]"   "Xc[118,8]"   "Xc[120,8]"  </span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; [26] "Xc[127,8]"   "Xc[132,8]"   "Xc[139,8]"   "Xc[146,8]"   "Xc[149,8]"  </span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; [31] "Xc[152,8]"   "Xc[163,8]"   "Xc[165,8]"   "Xc[169,8]"   "Xc[180,8]"  </span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; [36] "Xc[185,8]"   "Xcat[6,1]"   "Xcat[16,1]"  "Xcat[24,1]"  "Xcat[27,1]" </span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; [41] "Xcat[45,1]"  "Xcat[57,1]"  "Xcat[58,1]"  "Xcat[60,1]"  "Xcat[61,1]" </span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; [46] "Xcat[65,1]"  "Xcat[66,1]"  "Xcat[70,1]"  "Xcat[80,1]"  "Xcat[81,1]" </span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; [51] "Xcat[85,1]"  "Xcat[88,1]"  "Xcat[89,1]"  "Xcat[90,1]"  "Xcat[101,1]"</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; [56] "Xcat[104,1]" "Xcat[116,1]" "Xcat[133,1]" "Xcat[137,1]" "Xcat[143,1]"</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; [61] "Xcat[168,1]" "Xcat[170,1]" "Xcat[180,1]" "Xcat[186,1]" "Xcat[16,2]" </span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; [66] "Xcat[99,2]"  "Xcat[123,2]" "Xcat[156,2]" "Xcat[158,2]" "Xcat[166,2]"</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; [71] "Xcat[172,2]"</span></a></code></pre></div>
 <p><strong>JointAI</strong> uses a number of different design matrices to store different types of variables. The matrix <code>Xc</code> is the design matrix of cross-sectional covariates. For categorical incomplete variables (with more than 2 categories) the original variable is stored in the matrix <code>Xcat</code> and <code>Xc</code> contains the corresponding dummy coded variables. Hence, the imputed values of continuous and binary variables are elements of <code>Xc</code> and imputed values of categorical variables are elements of <code>Xcat</code>.</p>
 <p>The parameters of the models for the incomplete variables can be selected with <code>monitor_params = c(imp_pars = TRUE)</code>. This will set monitors for the regression coefficients (<code>alpha</code>) and other parameters, such as precision (<code>tau_*</code>) and intercepts &amp; increments (<code>gamma_*</code> and <code>delta_*</code>) in cumulative logit models.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">lm3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>smoke <span class="op">+</span><span class="st"> </span>occup,</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">              <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">              <span class="dt">monitor_params =</span> <span class="kw">c</span>(<span class="dt">imp_pars =</span> <span class="ot">TRUE</span>, <span class="dt">analysis_main =</span> <span class="ot">FALSE</span>),</a>
 <a class="sourceLine" id="cb3-4" data-line-number="4">)</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm3, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; [1] "alpha"       "tau_WC"      "gamma_smoke" "delta_smoke"</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm3, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; [1] "alpha"       "tau_WC"      "gamma_smoke" "delta_smoke"</span></a></code></pre></div>
 <div id="side-note-getting-information-about-of-the-imputation-models" class="section level4">
 <h4 class="hasAnchor">
 <a href="#side-note-getting-information-about-of-the-imputation-models" class="anchor"></a>Side note: Getting information about of the imputation models</h4>
@@ -348,25 +351,28 @@
 <p>For mixed models, <code>analysis_main</code> also includes the random effects covariance matrix <code>D</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">lme1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age<span class="op">|</span>ID, </a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">                <span class="dt">data =</span> simLong, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme1, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "tau_bmi"    </span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; [6] "sigma_bmi"   "D[1,1]"      "D[1,2]"      "D[2,2]"</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme1, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "tau_bmi"    </span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; [6] "sigma_bmi"   "D[1,1]"      "D[1,2]"      "D[2,2]"</span></a></code></pre></div>
 <p>Setting <code>analysis_random = TRUE</code> will switch on monitoring for the random effects (<code>ranef</code>), random effects covariance matrix (<code>D</code>), inverse of the random effects covariance matrix (<code>invD</code>) and the diagonal of the scale matrix of the Wishart-prior of <code>invD</code> (<code>RinvD</code>).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">lme2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age<span class="op">|</span>ID,</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">                <span class="dt">data =</span> simLong, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">                <span class="dt">monitor_params =</span> <span class="kw">c</span>(<span class="dt">analysis_random =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme2, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;  [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "tau_bmi"    </span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt;  [6] "sigma_bmi"   "b"           "invD[1,1]"   "invD[1,2]"   "invD[2,2]"  </span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; [11] "D[1,1]"      "D[1,2]"      "D[2,2]"      "RinvD[1,1]"  "RinvD[2,2]"</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme2, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt;  [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "tau_bmi"    </span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;  [6] "sigma_bmi"   "b"           "invD[1,1]"   "invD[1,2]"   "invD[2,2]"  </span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; [11] "D[1,1]"      "D[1,2]"      "D[2,2]"      "RinvD[1,1]"  "RinvD[2,2]"</span></a></code></pre></div>
 <p>It is possible to select only a subset of the random effects parameters by specifying them directly, e.g.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">lme3a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age<span class="op">|</span>ID,</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">                <span class="dt">data =</span> simLong, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">                <span class="dt">monitor_params =</span> <span class="kw">c</span>(<span class="dt">analysis_main =</span> <span class="ot">TRUE</span>, <span class="dt">RinvD =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme3a, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;  [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "tau_bmi"    </span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt;  [6] "sigma_bmi"   "D[1,1]"      "D[1,2]"      "D[2,2]"      "RinvD[1,1]" </span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt; [11] "RinvD[2,2]"</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme3a, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt;  [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "tau_bmi"    </span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt;  [6] "sigma_bmi"   "D[1,1]"      "D[1,2]"      "D[2,2]"      "RinvD[1,1]" </span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt; [11] "RinvD[2,2]"</span></a></code></pre></div>
 <p>or by switching unwanted parts of <code>analysis_random</code> off, e.g.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">lme3b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age<span class="op">|</span>ID,</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">                <span class="dt">data =</span> simLong, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>,</a>
@@ -374,10 +380,11 @@
 <a class="sourceLine" id="cb8-4" data-line-number="4">                                   <span class="dt">analysis_random =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5">                                   <span class="dt">RinvD =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb8-6" data-line-number="6">                                   <span class="dt">ranef =</span> <span class="ot">FALSE</span>))</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme3b, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;  [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "tau_bmi"    </span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;  [6] "sigma_bmi"   "invD[1,1]"   "invD[1,2]"   "invD[2,2]"   "D[1,1]"     </span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; [11] "D[1,2]"      "D[2,2]"</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme3b, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;  [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "tau_bmi"    </span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;  [6] "sigma_bmi"   "invD[1,1]"   "invD[1,2]"   "invD[2,2]"   "D[1,1]"     </span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; [11] "D[1,2]"      "D[2,2]"</span></a></code></pre></div>
 </div>
 <div id="other-parameters" class="section level3">
 <h3 class="hasAnchor">
@@ -388,15 +395,16 @@
 <a class="sourceLine" id="cb9-2" data-line-number="2">              <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3">              <span class="dt">monitor_params =</span> <span class="kw">list</span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">                                    <span class="dt">other =</span> <span class="kw">c</span>(<span class="st">'p_alc[1:3]'</span>, <span class="st">"mu_creat[1]"</span>)))</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm4)</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt; 'lm4' does not contain MCMC samples.</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt; [1] "p_alc[1:3]"  "mu_creat[1]"</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm4)</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt; 'lm4' does not contain MCMC samples.</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt; [1] "p_alc[1:3]"  "mu_creat[1]"</span></a></code></pre></div>
 </div>
 </div>
 <div id="subsets-of-parameters-for-plots-summaries-etc-" class="section level2">
 <h2 class="hasAnchor">
 <a href="#subsets-of-parameters-for-plots-summaries-etc-" class="anchor"></a>Subsets of Parameters for Plots, Summaries, etc.</h2>
-<p>The functions <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html"><code>summary()</code></a>, <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code><a href="../reference/traceplot.html">traceplot()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/densplot.html"><code><a href="../reference/densplot.html">densplot()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code><a href="../reference/GR_crit.html">GR_crit()</a></code></a> and <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code><a href="../reference/MC_error.html">MC_error()</a></code></a> all have an argument <code>subset</code>. This argument allows to select a subset of parameters to be shown in the output. Especially when not only the parameters of the main analysis model are followed, but also, for example, imputed values, looking at a subset may be desirable.</p>
+<p>The functions <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html"><code>summary()</code></a>, <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code><a href="../reference/traceplot.html">traceplot()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/densplot.html"><code><a href="../reference/densplot.html">densplot()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code><a href="../reference/gr_crit.html">GR_crit()</a></code></a> and <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code><a href="../reference/MC_error.html">MC_error()</a></code></a> all have an argument <code>subset</code>. This argument allows to select a subset of parameters to be shown in the output. Especially when not only the parameters of the main analysis model are followed, but also, for example, imputed values, looking at a subset may be desirable.</p>
 <p><code>subset</code> follows the same logic as <code>monitor_params</code> described above.</p>
 <p>By default, only the parameters of the main analysis model are displayed if they were monitored:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Run a model monitoring analysis parameters and imputation parameters</span></a>
@@ -455,7 +463,7 @@
 <p><img src="SelectingParameters_files/figure-html/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co"># Gelman-Rubin criterion</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw"><a href="../reference/GR_crit.html">GR_crit</a></span>(lm5)</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw"><a href="../reference/gr_crit.html">GR_crit</a></span>(lm5)</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; Potential scale reduction factors:</span></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt;              Point est. Upper C.I.</span></a>
@@ -517,7 +525,7 @@
 <a href="#select-a-subset-of-the-variables-to-display" class="anchor"></a>Select a subset of the variables to display</h3>
 <p>To display other parts of the MCMC sample, <code>subset</code> needs to be specified:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># we use lm5 from above</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw"><a href="../reference/GR_crit.html">GR_crit</a></span>(lm5, <span class="dt">subset =</span> <span class="kw">c</span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>, <span class="dt">imp_pars =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw"><a href="../reference/gr_crit.html">GR_crit</a></span>(lm5, <span class="dt">subset =</span> <span class="kw">c</span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>, <span class="dt">imp_pars =</span> <span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt; Potential scale reduction factors:</span></a>
 <a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt;           Point est. Upper C.I.</span></a>
@@ -559,7 +567,7 @@
 <a class="sourceLine" id="cb15-20" data-line-number="20"><span class="co">#&gt; Number of chains = 3 </span></a>
 <a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb15-22" data-line-number="22"><span class="co">#&gt; Number of observations: 186</span></a></code></pre></div>
-<p>To display a subset of the imputed values, the <code>other</code> can be specified.</p>
+<p>This also works when a subset of the imputed values should be displayed:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># Re-run the model from above, now creating MCMC samples</span></a>
 <a class="sourceLine" id="cb16-2" data-line-number="2">lm2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>smoke <span class="op">+</span><span class="st"> </span>occup,</a>
 <a class="sourceLine" id="cb16-3" data-line-number="3">              <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">100</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>,  <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>

@@ -68,7 +68,7 @@ glm_imp() or lme_imp()." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -163,18 +163,28 @@ glm_imp() or lme_imp()." />
 <dt><code>meth</code></dt><dd><p>named vector specifying imputation methods and sequence</p></dd>
 <dt><code>fixed</code></dt><dd><p>supplied fixed effects structure</p></dd>
 <dt><code>random</code></dt><dd><p>supplied random effects structure</p></dd>
-<dt><code>Mlist</code></dt><dd><p>a list of matrices that contain the data split up into
-       outcome (y), cross-sectional main effects (Xc), cross-sectional interactions (Xic),
-       longitudinal main effects (Xl), longitudinal interactions (Xil),
-       categorical incomplete variables (Xcat), transformed cross-sectional
-       variables (Xtrafo), random effects design matrix (Z),
-       the vector of variables to be scaled (scale_vars), reference values
-       and dummies for categorical variables (refs), specification for
-       transformations (trafos), specification for hierarchical centering (hc_list),
-       vector of auxiliary variables (auxvars), grouping specification (groups),
-       updated fixed effects structure (fixed2), names of updated design matrix
-       (X2_names)</p></dd>
-<dt><code>refcats</code></dt><dd><p>A list naming the reference categories for all categorical covariates.</p></dd>
+<dt><code>Mlist</code></dt><dd><p>a list: containing the data, split up into
+      <ul>
+<li><p>outcome (<code>y</code>)</p></li>
+<li><p>cross-sectional main effects (<code>Xc</code>)</p></li>
+<li><p>cross-sectional interactions (<code>Xic</code>)</p></li>
+<li><p>longitudinal main effects (<code>Xl</code>)</p></li>
+<li><p>longitudinal interactions (<code>Xil</code>)</p></li>
+<li><p>categorical incomplete variables (<code>Xcat</code>)</p></li>
+<li><p>transformed cross-sectional variables (<code>Xtrafo</code>)</p></li>
+<li><p>random effects design matrix (<code>Z</code>)</p></li>
+</ul>
+      and other important specifications:
+      <ul>
+<li><p>specification for transformations (<code>trafos</code>)</p></li>
+<li><p>specification for hierarchical centering (<code>hc_list</code>)</p></li>
+<li><p>reference values and dummies for categorical variables (<code>refs</code>)</p></li>
+<li><p>vector of auxiliary variables (<code>auxvars</code>)</p></li>
+<li><p>grouping specification (<code>groups</code>)</p></li>
+<li><p>the vector of variables to be scaled (<code>scale_vars</code>)</p></li>
+<li><p>updated fixed effects structure (<code>fixed2</code>)</p></li>
+<li><p>names of updated design matrix (<code>X2_names</code>)</p></li>
+</ul></p></dd>
 <dt><code>K</code></dt><dd><p>matrix specifying the indices of the regression coefficients
 that are related to different parts of the model</p></dd>
 <dt><code>K_imp</code></dt><dd><p>matrix specifying the indices of regression coefficients
@@ -190,9 +200,11 @@ for the imputation models relating to different covariates</p></dd>
      <dt><code>thin</code></dt><dd><p>thinning of the MCMC sample</p></dd>
      <dt><code>inits</code></dt><dd><p>a list containing the initial values that were used</p></dd>
      </dl></p></dd>
+<dt><code>monitor_params</code></dt><dd><p>the list of parameter groups to be monitored</p></dd>
 <dt><code>data_list</code></dt><dd><p>list with data that was passed to JAGS</p></dd>
 <dt><code>scale_pars</code></dt><dd><p>matrix with parameters used to center and scale the continuous variables</p></dd>
 <dt><code>hyperpars</code></dt><dd><p>a list containing the values of the hyperparameters used</p></dd>
+<dt><code>imp_par_list</code></dt><dd><p>a list with parameters used to write the imputation model syntax</p></dd>
 <dt><code>model</code></dt><dd><p>JAGS model</p></dd>
 <dt><code>sample</code></dt><dd><p>MCMC sample (Note: if continuous variables have been scaled
 during the sampling, the posterior sample here is on the scaled scale, not on

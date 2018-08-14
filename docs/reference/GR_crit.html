@@ -38,7 +38,8 @@
 
 <meta property="og:title" content="Gelman-Rubin criterion for convergence — GR_crit" />
 
-<meta property="og:description" content="Gelman-Rubin criterion for convergence (uses gelman.diag)" />
+<meta property="og:description" content="Calculates the Gelman-Rubin criterion for convergence
+(uses gelman.diag from package coda)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -67,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -141,12 +142,13 @@
     <div class="page-header">
     <h1>Gelman-Rubin criterion for convergence</h1>
     <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/convergence_criteria.R'><code>R/convergence_criteria.R</code></a></small>
-    <div class="hidden name"><code>GR_crit.Rd</code></div>
+    <div class="hidden name"><code>gr_crit.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Gelman-Rubin criterion for convergence (uses <code><a href='http://www.rdocumentation.org/packages/coda/topics/gelman.diag'>gelman.diag</a></code>)</p>
+    <p>Calculates the Gelman-Rubin criterion for convergence
+(uses <code><a href='http://www.rdocumentation.org/packages/coda/topics/gelman.diag'>gelman.diag</a></code> from package <strong>coda</strong>).</p>
     
     </div>
 
@@ -159,7 +161,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>object inheriting from class <code>JointAI</code></p></td>
+      <td><p>object inheriting from class "JointAI"</p></td>
     </tr>
     <tr>
       <th>confidence</th>
@@ -206,7 +208,7 @@ Uses the same logic as the argument <code>monitor_params</code> in
     </tr>
     <tr>
       <th>warn</th>
-      <td><p>logical; should warnings be given?; default is
+      <td><p>logical; should warnings be given? Default is
 <code>TRUE</code>. Note: this applies only to warnings
 given directly by <strong>JointAI</strong>.</p></td>
     </tr>
@@ -224,25 +226,26 @@ Posterior predictive assessment of model fitness via realized discrepancies.
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The vignette <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Selecting Parameters</a> contains some examples how to specify <code>subset</code>.</p></div>
+    <div class='dont-index'><p>The vignette <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Parameter Selection</a>
+contains some examples how to specify the argument <code>subset</code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>GR_crit</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; Potential scale reduction factors:
 #&gt; 
 #&gt;             Point est. Upper C.I.
-#&gt; (Intercept)       1.00       1.01
-#&gt; C1                1.00       1.01
-#&gt; M22               1.10       1.31
-#&gt; M23               1.11       1.35
-#&gt; M24               1.13       1.41
-#&gt; C2                1.01       1.04
-#&gt; sigma_y           1.01       1.03
-#&gt; tau_y             1.00       1.02
+#&gt; (Intercept)      0.999       1.01
+#&gt; C1               0.999       1.00
+#&gt; M22              1.033       1.12
+#&gt; M23              1.006       1.03
+#&gt; M24              1.017       1.07
+#&gt; C2               1.013       1.06
+#&gt; tau_y            1.005       1.03
+#&gt; sigma_y          1.009       1.03
 #&gt; 
 #&gt; Multivariate psrf
 #&gt; 
-#&gt; 1.12</div><div class='input'>
+#&gt; 1.04</div><div class='input'>
 
 
 </div></pre>

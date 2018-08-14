@@ -39,7 +39,7 @@
 <meta property="og:title" content="Plot posterior density from JointAI model — densplot" />
 
 <meta property="og:description" content="Plots a set of densities (per MC chain and coefficient) from the MCMC sample
-of an object of class JointAI" />
+of an object of class &quot;JointAI&quot;." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -68,7 +68,7 @@ of an object of class JointAI" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -148,7 +148,7 @@ of an object of class JointAI" />
     <div class="ref-description">
     
     <p>Plots a set of densities (per MC chain and coefficient) from the MCMC sample
-of an object of class JointAI</p>
+of an object of class "JointAI".</p>
     
     </div>
 
@@ -165,7 +165,7 @@ of an object of class JointAI</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>object inheriting from class <code>JointAI</code></p></td>
+      <td><p>object inheriting from class "JointAI"</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -218,7 +218,7 @@ automatically chosen if unspecified</p></td>
     </tr>
     <tr>
       <th>warn</th>
-      <td><p>logical; should warnings be given?; default is
+      <td><p>logical; should warnings be given? Default is
 <code>TRUE</code>. Note: this applies only to warnings
 given directly by <strong>JointAI</strong>.</p></td>
     </tr>
@@ -226,29 +226,38 @@ given directly by <strong>JointAI</strong>.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The vignette <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Selecting Parameters</a> contains some examples how to specify <code>subset</code>.</p></div>
+    <div class='dont-index'><p>The vignette <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Parameter Selection</a>
+contains some examples how to specify the argument <code>subset</code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
+<span class='co'># fit a JointAI object:</span>
 <span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'>
-<span class='co'># densplot without vertical lines</span>
+<span class='co'># Example 1: basic densityplot</span>
 <span class='fu'>densplot</span>(<span class='no'>mod</span>)</div><div class='img'><img src='densplot-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># use vlines to mark zero</span>
+
+<span class='co'># Example 2: use vlines to mark zero</span>
 <span class='fu'>densplot</span>(<span class='no'>mod</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"darkred"</span>, <span class='st'>"darkblue"</span>, <span class='st'>"darkgreen"</span>),
          <span class='kw'>vlines</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='fu'>list</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fl'>0</span>, <span class='fu'>nrow</span>(<span class='fu'>summary</span>(<span class='no'>mod</span>)$<span class='no'>stats</span>)),
                             <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'>grey</span>(<span class='fl'>0.8</span>))))</div><div class='img'><img src='densplot-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># use vlines to visualize the posterior mean and 2.5% and 97.5% quantiles</span>
+
+<span class='co'># Example 3: use vlines to visualize the posterior mean and 2.5% and 97.5% quantiles</span>
 <span class='fu'>densplot</span>(<span class='no'>mod</span>, <span class='kw'>vlines</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='fu'>list</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='fu'>summary</span>(<span class='no'>mod</span>)$<span class='no'>stats</span>[, <span class='st'>"Mean"</span>], <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>),
                             <span class='fu'>list</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='fu'>summary</span>(<span class='no'>mod</span>)$<span class='no'>stats</span>[, <span class='st'>"2.5%"</span>], <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>2</span>),
                             <span class='fu'>list</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='fu'>summary</span>(<span class='no'>mod</span>)$<span class='no'>stats</span>[, <span class='st'>"97.5%"</span>], <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>2</span>)))</div><div class='img'><img src='densplot-3.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># ggplot version</span>
+
+<span class='co'># Example 4: ggplot version</span>
 <span class='fu'>densplot</span>(<span class='no'>mod</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='densplot-4.png' alt='' width='700' height='433' /></div><div class='input'>
+
+<span class='co'># Example 5: changing how the ggplot version looks (using standard ggplot syntax)</span>
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
+
 <span class='fu'>densplot</span>(<span class='no'>mod</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) +
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>xlab</a></span>(<span class='st'>"value"</span>) +
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/theme'>theme</a></span>(<span class='kw'>legend.position</span> <span class='kw'>=</span> <span class='st'>'bottom'</span>) +
-<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer'>scale_color_brewer</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>'Dark2'</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'chain'</span>)</div><div class='img'><img src='densplot-5.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/labs'>xlab</a></span>(<span class='st'>"value"</span>) +
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/theme'>theme</a></span>(<span class='kw'>legend.position</span> <span class='kw'>=</span> <span class='st'>'bottom'</span>) +
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer'>scale_color_brewer</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>'Dark2'</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'chain'</span>)</div><div class='img'><img src='densplot-5.png' alt='' width='700' height='433' /></div><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -70,7 +70,7 @@ jointly with the analysis model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -149,7 +149,7 @@ jointly with the analysis model." />
 
     <div class="ref-description">
     
-    <p>The JointAI package performs simultaneous imputation and inference for
+    <p>The <strong>JointAI</strong> package performs simultaneous imputation and inference for
 incomplete data using the Bayesian framework.
 Distributions for incomplete variables are specified automatically and modeled
 jointly with the analysis model.</p>
@@ -165,19 +165,22 @@ jointly with the analysis model.</p>
 that allow analysis using linear regression, generalized linear regression
 and linear mixed effects models. As far as possible, the specification of
 the functions is the same as the specification of their complete data
-versions (<code><a href='http://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></code> and
-<code><a href='http://www.rdocumentation.org/packages/nlme/topics/lme'>lme</a></code>).</p>
+versions <code><a href='http://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></code>, <code><a href='http://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></code> and
+<code><a href='http://www.rdocumentation.org/packages/nlme/topics/lme'>lme</a></code> (from the package
+<a href='https://CRAN.R-project.org/package=nlme'><strong>nlme</strong></a>).</p>
     <p>Results can be summarized and printed with <code><a href='summary.JointAI.html'>summary.JointAI</a></code>,
 and visualized using
-<code><a href='traceplot.html'>traceplot</a></code> or <code><a href='densplot.html'>densplot</a></code>.</p>
+<code><a href='traceplot.html'>traceplot</a></code> or <code><a href='densplot.html'>densplot</a></code>.
+The function <code><a href='predict.JointAI.html'>predict.JointAI</a></code> allows prediction (including credible intervals)
+from <code>JointAI</code> models.</p>
     
     <h2 class="hasAnchor" id="evaluation-and-export"><a class="anchor" href="#evaluation-and-export"></a>Evaluation and export</h2>
 
     
     <p>Two criteria for evaluation of convergence and precision of the posterior
 estimate are available:
-<code><a href='GR_crit.html'>GR_crit</a></code> and <code><a href='MC_error.html'>MC_error</a></code></p>
-<p>Imputed data can be exported to SPSS data using <code><a href='get_MIdat.html'>get_MIdat</a></code>.</p>
+<code><a href='gr_crit.html'>GR_crit</a></code> and <code><a href='MC_error.html'>MC_error</a></code>.</p>
+<p>Imputed data can be extracted and exported to SPSS data using <code><a href='get_MIdat.html'>get_MIdat</a></code>.</p>
     
     <h2 class="hasAnchor" id="vignettes"><a class="anchor" href="#vignettes"></a>Vignettes</h2>
 
@@ -185,20 +188,27 @@ estimate are available:
     <p>The following vignettes are available</p><ul>
 <li><p><a href='https://nerler.github.io/JointAI/articles/MinimalExample.html'><em>Minimal Example</em></a>:<br />
 A minimal example demonstrating the use of
-                           <code><a href='model_imp.html'>lm_imp</a></code>, <code>summary</code>,
+                           <code><a href='model_imp.html'>lm_imp</a></code>,
+                           <code><a href='summary.JointAI.html'>summary.JointAI</a></code>,
                            <code><a href='traceplot.html'>traceplot</a></code>
                            and <code><a href='densplot.html'>densplot</a></code>.</p></li>
-<li><p><a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'><em>Selecting Parameters</em></a>:<br />
+<li><p><a href='https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html'><em>Visualizing Incomplete Data</em></a>:<br />
+Demonstrations of the options in <code><a href='plot_all.html'>plot_all</a></code> (plotting histograms
+     and barplots for all variables in the data)  and <code><a href='md_pattern.html'>md_pattern</a></code>
+     (plotting or printing the missing data pattern).</p></li>
+<li><p><a href='https://nerler.github.io/JointAI/articles/ModelSpecification.html'><em>Model Specification</em></a>:<br />
+Explanation and demonstration of all parameters that are required or optional
+to specify the model structure in <code><a href='model_imp.html'>lm_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code>
+and <code><a href='model_imp.html'>lme_imp</a></code>.
+Among others, the functions <code><a href='parameters.html'>parameters</a></code>, <code><a href='list_impmodels.html'>list_impmodels</a></code>,
+<code><a href='get_imp_meth.html'>get_imp_meth</a></code> and <code><a href='set_refcat.html'>set_refcat</a></code> are used.</p></li>
+<li><p><a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'><em>Parameter Selection</em></a>:<br />
 Examples on how to select the parameters/variables/nodes
                                 to follow using the argument <code>monitor_params</code>
                                 and the parameters/variables/nodes displayed
                                 in the <code>summary</code>, <code><a href='traceplot.html'>traceplot</a></code>,
                                 <code><a href='densplot.html'>densplot</a></code> or when using
-                                <code><a href='GR_crit.html'>GR_crit</a></code> or <code><a href='MC_error.html'>MC_error</a></code>.</p></li>
-<li><p><a href='https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html'><em>Visualizing Incomplete Data</em></a>:<br />
-Demonstrations of the options in <code><a href='plot_all.html'>plot_all</a></code> (plotting histograms
-     and barplots for all variables in the data)  and <code><a href='md_pattern.html'>md_pattern</a></code>
-     (plotting or printing the missing data pattern).</p></li>
+                                <code><a href='gr_crit.html'>GR_crit</a></code> or <code><a href='MC_error.html'>MC_error</a></code>.</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

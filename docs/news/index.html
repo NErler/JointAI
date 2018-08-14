@@ -64,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -140,9 +140,9 @@
       <small>Source: <a href='https://github.com/nerler/JointAI/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="jointai-0-2-1" class="section level1">
+    <div id="jointai-0-3-0" class="section level1">
 <h1 class="page-header">
-<a href="#jointai-0-2-1" class="anchor"></a>JointAI 0.2.1<small> Unreleased </small>
+<a href="#jointai-0-3-0" class="anchor"></a>JointAI 0.3.0<small> Unreleased </small>
 </h1>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
@@ -152,8 +152,6 @@
 <code>monitor_params</code> is now checked to avoid problems when only part of the main parameters is selected</li>
 <li>categorical imputation models now use min-max trick to prevent probabilities outside [0, 1]</li>
 <li>initial value generation for logistic analysis model fixed</li>
-<li>
-<code><a href="../reference/model_imp.html">lm_imp()</a></code>, <code><a href="../reference/model_imp.html">glm_imp()</a></code> and <code><a href="../reference/model_imp.html">lme_imp()</a></code> return family and link that was used (needed in for <code>add_sample</code>)</li>
 <li>bugfix in re-ordering columns when a function is part of the linear predictor</li>
 <li>bugfix in intial values for categorical covariates</li>
 <li>bugfix in finding imputation method when function of variable is specified as auxiliary variable</li>
@@ -180,6 +178,9 @@
 <code>summary()</code> now omits auxiliary variables from the output</li>
 <li>
 <code>imp_par_list</code> is now returned from JointAI models</li>
+<li>
+<code>cat_vars</code> is no longer returned from <code><a href="../reference/model_imp.html">lm_imp()</a></code>, <code><a href="../reference/model_imp.html">glm_imp()</a></code> and <code><a href="../reference/model_imp.html">lme_imp()</a></code>, because it is contained in <code>Mlist$refs</code>
+</li>
 </ul>
 </div>
 <div id="extensions" class="section level2">
@@ -256,7 +257,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#jointai-0-2-1">0.2.1</a></li>
+        <li><a href="#jointai-0-3-0">0.3.0</a></li>
         <li><a href="#jointai-0-2-0">0.2.0</a></li>
       </ul>
     </div>

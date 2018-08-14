@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
       <h1>Model Specification</h1>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2018-08-10</h4>
+            <h4 class="date">2018-08-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/ModelSpecification.Rmd"><code>vignettes/ModelSpecification.Rmd</code></a></small>
       <div class="hidden name"><code>ModelSpecification.Rmd</code></div>
@@ -114,8 +114,8 @@
 
     
     
-<p>In the following, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a> data (for examples in cross-sectional data) and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a> for examples in longitudinal data. For more info on these datasets, check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the distribution of variables and missing values in both sets is explored.</p>
-<p><strong>Note:</strong><br> In many of the examples we use <code>n.adapt = 0</code> (and <code>n.iter = 0</code>, which is the default) in order to prevent the MCMC sampling to save some time. <code>mess = FALSE</code> is used to suppress messages that are not of interest in this vignette.</p>
+<p>In this vignette we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a> data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a> for examples in longitudinal data. For more info on these datasets, check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the distributions of variables and missing values in both sets is explored.</p>
+<p><strong>Note:</strong><br> In many of the examples we use <code>n.adapt = 0</code> (and <code>n.iter = 0</code>, which is the default) in order to prevent the MCMC sampling and, hence, reduce computational time. <code>mess = FALSE</code> is used to suppress messages that are not of interest in this vignette.</p>
 <div id="analysis-model-type" class="section level2">
 <h2 class="hasAnchor">
 <a href="#analysis-model-type" class="anchor"></a>Analysis model type</h2>
@@ -129,35 +129,42 @@
 <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code><a href="../reference/model_imp.html">lme_imp()</a></code></a>: linear mixed effects regression</li>
 </ul>
 <p>Specification of these functions is similar to the specification of the complete data versions <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html"><code>lm()</code></a>, <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html"><code>glm()</code></a> and <a href="https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html"><code>lme()</code></a> (from package <strong>nlme</strong>).</p>
-<p><code><a href="../reference/model_imp.html">lm_imp()</a></code> and <code><a href="../reference/model_imp.html">glm_imp()</a></code> take arguments <code>formula</code> and <code>data</code>, whereas <code><a href="../reference/model_imp.html">lme_imp()</a></code> requires the specification of a <code>fixed</code> effects and a <code>random</code> effects formula.</p>
+<p><code><a href="../reference/model_imp.html">lm_imp()</a></code> and <code><a href="../reference/model_imp.html">glm_imp()</a></code> take arguments <code>formula</code> and <code>data</code>, whereas <code><a href="../reference/model_imp.html">lme_imp()</a></code> requires the specification of a <code>fixed</code> effects and a <code>random</code> effects formula. Specification of the fixed effects formula is discussed in section <a href="#ModelFormula">Model formula</a>, specification of the random effects is discussed in section <a href="#MultiLevelStructure">Multi level structure &amp; longitudinal covariates</a></p>
 <p>Additionally, <code><a href="../reference/model_imp.html">glm_imp()</a></code> requires the specification of the model <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html"><code>family</code></a> and <code>link</code> function.</p>
 <div id="model-family-and-link-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#model-family-and-link-functions" class="anchor"></a>Model family and link functions</h3>
 <p>Implemented families and links are</p>
-<table class="table"><tbody>
+<table class="table">
+<thead><tr class="header">
+<th align="left">family</th>
+<th></th>
+</tr></thead>
+<tbody>
 <tr class="odd">
 <td align="left"><code>gaussian</code></td>
-<td align="left">with links: <code>identity</code>, <code>log</code>
+<td>with links: <code>identity</code>, <code>log</code>
 </td>
 </tr>
 <tr class="even">
 <td align="left"><code>binomial</code></td>
-<td align="left">with links: <code>logit</code>, <code>probit</code>, <code>log</code>, <code>cloglog</code>
+<td>with links: <code>logit</code>, <code>probit</code>, <code>log</code>, <code>cloglog</code>
 </td>
 </tr>
 <tr class="odd">
 <td align="left"><code>Gamma</code></td>
-<td align="left">with links: <code>identity</code>, <code>log</code>
+<td>with links: <code>identity</code>, <code>log</code>
 </td>
 </tr>
 <tr class="even">
 <td align="left"><code>poisson</code></td>
-<td align="left">with links: <code>log</code>, <code>identity</code>
+<td>with links: <code>log</code>, <code>identity</code>
 </td>
 </tr>
-</tbody></table>
-<p>The argument <code>family</code> can be given as character string or as function. If the link function is omitted, the <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html">default</a> is used. The following three specifications are equal,</p>
+</tbody>
+</table>
+<p>The argument <code>family</code> can be given as character string or as function. If the link function is omitted, the <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html">default link</a> is used.</p>
+<p><strong>Example:</strong><br> The following three specifications are equal:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">mod1a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">glm_imp</a></span>(educ <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>creat, <span class="dt">data =</span> NHANES,</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">               <span class="dt">family =</span> <span class="st">"binomial"</span>, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"></a>
@@ -168,23 +175,23 @@
 <a class="sourceLine" id="cb1-8" data-line-number="8">               <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">'logit'</span>), <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb1-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10">mod1a<span class="op">$</span>family</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; [1] "binomial"</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; NULL</span></a>
 <a class="sourceLine" id="cb1-12" data-line-number="12">mod1a<span class="op">$</span>link</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; [1] "logit"</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; NULL</span></a></code></pre></div>
 <p>To use a probit link instead, this needs to be specified explicitly:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">mod1d &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">glm_imp</a></span>(educ <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>creat, <span class="dt">data =</span> NHANES,</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">               <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">'probit'</span>), <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">mod1d<span class="op">$</span>family</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; [1] "binomial"</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; NULL</span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">mod1d<span class="op">$</span>link</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; [1] "probit"</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; NULL</span></a></code></pre></div>
 </div>
 </div>
-<div id="model-formula" class="section level2">
+<div id="ModelFormula" class="section level2">
 <h2 class="hasAnchor">
-<a href="#model-formula" class="anchor"></a>Model formula</h2>
-<p>The arguments <code>formula</code> (in <code><a href="../reference/model_imp.html">lm_imp()</a></code> and <code><a href="../reference/model_imp.html">glm_imp()</a></code>) and <code>fixed</code> (in <code><a href="../reference/model_imp.html">lme_imp()</a></code>) take a two-sided <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html"><code>formula</code></a> object, where <code>~</code> separates the response (outcome, dependent variable) from the linear predictor, in which covariates (independent variables) are separated by <code>+</code>. An intercept is added automatically.</p>
+<a href="#ModelFormula" class="anchor"></a>Model formula</h2>
+<p>The arguments <code>formula</code> (in <code><a href="../reference/model_imp.html">lm_imp()</a></code> and <code><a href="../reference/model_imp.html">glm_imp()</a></code>) and <code>fixed</code> (in <code><a href="../reference/model_imp.html">lme_imp()</a></code>) take a two-sided <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html"><code>formula</code></a> object, where <code>~</code> separates the response (outcome / dependent variable) from the linear predictor, in which covariates (independent variables) are separated by <code>+</code>. An intercept is added automatically.</p>
 <div id="interactions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#interactions" class="anchor"></a>Interactions</h3>
@@ -195,7 +202,7 @@
 <div id="interaction-with-multiple-variables" class="section level4">
 <h4 class="hasAnchor">
 <a href="#interaction-with-multiple-variables" class="anchor"></a>Interaction with multiple variables</h4>
-<p>Interactions between multiple variables can be specified using brackets:</p>
+<p>Interactions between multiple variables can be specified using parentheses:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">mod2a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">glm_imp</a></span>(educ <span class="op">~</span><span class="st"> </span>gender <span class="op">*</span><span class="st"> </span>(age <span class="op">+</span><span class="st"> </span>smoke <span class="op">+</span><span class="st"> </span>creat),</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">                 <span class="dt">data =</span> NHANES, <span class="dt">family =</span> <span class="st">'binomial'</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>, <span class="dt">n.adapt =</span> <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"></a>
@@ -204,7 +211,7 @@
 <a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt;  [4] "smokeformer"               "smokecurrent"              "creat"                    </span></a>
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt;  [7] "genderfemale:age"          "genderfemale:smokeformer"  "genderfemale:smokecurrent"</span></a>
 <a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; [10] "genderfemale:creat"</span></a></code></pre></div>
-<p>The function <a href="https://nerler.github.io/JointAI/reference/parameters.html"><code><a href="../reference/parameters.html">parameters()</a></code></a> returns the parameters that are specified to be followed (even for models where no MCMC sampling was performed, i.e. when <code>n.iter = 0</code> and <code>n.adapt = 0</code>).</p>
+<p>The function <a href="https://nerler.github.io/JointAI/reference/parameters.html"><code><a href="../reference/parameters.html">parameters()</a></code></a> returns the parameters that are specified to be followed (even for models where no MCMC sampling was performed, i.e., when <code>n.iter = 0</code> and <code>n.adapt = 0</code>).</p>
 </div>
 <div id="higher-level-interactions" class="section level4">
 <h4 class="hasAnchor">
@@ -236,8 +243,8 @@
 <h3 class="hasAnchor">
 <a href="#non-linear-functional-forms" class="anchor"></a>Non-linear functional forms</h3>
 <p>In practice, associations between outcome and covariates do not always meet the standard assumption that all covariate effects are linear. Often, assuming a logarithmic, quadratic or other non-linear effect is more appropriate.</p>
-<p>Non-linear associations can be specified in the model formula using either functions such as <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html"><code>log()</code></a> (the natural logarithm), <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/MathFun.html"><code>sqrt()</code></a> (the square root) or <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html"><code>exp()</code></a> (the exponential function) or by specifying a function of a variable using <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/AsIs.html"><code>I()</code></a>, for example a quadratic term of a variable <code>x</code>: <code>I(x^2)</code>.</p>
-<p>For <em>completely observed covariates</em>, <strong>JointAI</strong> can handle any common type of function implemented in R, including splines, e.g. using <a href="https://stat.ethz.ch/R-manual/R-devel/library/splines/html/ns.html"><code>ns()</code></a> or <a href="https://stat.ethz.ch/R-manual/R-devel/library/splines/html/bs.html"><code>bs()</code></a> from the package <strong>splines</strong> (which is automatically installed with R).</p>
+<p>Non-linear associations can be specified in the model formula using either functions such as <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html"><code>log()</code></a> (the natural logarithm), <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/MathFun.html"><code>sqrt()</code></a> (the square root) or <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html"><code>exp()</code></a> (the exponential function), or by specifying a function of a variable using <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/AsIs.html"><code>I()</code></a>, for example, <code>I(x^2)</code> would be the quadratic term of a variable <code>x</code>.</p>
+<p>For <em>completely observed covariates</em>, <strong>JointAI</strong> can handle any common type of function implemented in R, including splines, e.g., using <a href="https://stat.ethz.ch/R-manual/R-devel/library/splines/html/ns.html"><code>ns()</code></a> or <a href="https://stat.ethz.ch/R-manual/R-devel/library/splines/html/bs.html"><code>bs()</code></a> from the package <strong>splines</strong> (which is automatically installed with R).</p>
 <p>Since functions involving <em>variables that have missing values</em> need to be re-calculated in each iteration of the MCMC sampling, currently, only functions that are available in JAGS can be used for incomplete variables. Those functions include:</p>
 <ul>
 <li>
@@ -266,19 +273,23 @@
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co"># A function of creat and albu</span></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">mod3c &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(creat<span class="op">/</span>albu<span class="op">^</span><span class="dv">2</span>),</a>
 <a class="sourceLine" id="cb7-13" data-line-number="13">                <span class="dt">data =</span> NHANES, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co"># Using the sinus and cosinus</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">mod3d &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>bili <span class="op">+</span><span class="st"> </span><span class="kw">sin</span>(creat) <span class="op">+</span><span class="st"> </span><span class="kw">cos</span>(albu),</a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">                <span class="dt">data =</span> NHANES, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co"># This function may make more sense to calculate BMI as weight/height^2, but</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co"># we do not have those variables in the NHANES data...</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co"># Using the sinus and cosinus</span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18">mod3d &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>bili <span class="op">+</span><span class="st"> </span><span class="kw">sin</span>(creat) <span class="op">+</span><span class="st"> </span><span class="kw">cos</span>(albu),</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19">                <span class="dt">data =</span> NHANES, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <div id="what-happens-inside-jointai" class="section level4">
 <h4 class="hasAnchor">
 <a href="#what-happens-inside-jointai" class="anchor"></a>What happens inside <strong>JointAI</strong>?</h4>
 <p>When a function of a complete or incomplete variable is used in the model formula, the main effect of that variable is automatically added as auxiliary variable (more on auxiliary variables in section <a href="#auxvars">Auxiliary variables</a>), and only the main effects are used as predictors in the imputation models.</p>
 <p>In <code>mod3b</code>, for example, the spline of age is used as predictor for <code>SBP</code>, but in the imputation model for <code>bili</code>, <code>age</code> enters with a linear effect.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/list_impmodels.html">list_impmodels</a></span>(mod3b, <span class="dt">priors =</span> F, <span class="dt">regcoef =</span> F, <span class="dt">otherpars =</span> F)</a>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/list_impmodels.html">list_impmodels</a></span>(mod3b, <span class="dt">priors =</span> <span class="ot">FALSE</span>, <span class="dt">regcoef =</span> <span class="ot">FALSE</span>, <span class="dt">otherpars =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; Normal imputation model for 'bili'</span></a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; * Predictor variables: </span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;   (Intercept), genderfemale, age</span></a></code></pre></div>
+<p>The function <a href="https://nerler.github.io/JointAI/reference/list_impmodels.html"><code>list_impmodels</code></a> prints a list of the imputation models used in a JointAI object. Since, at the moment, we are only interested in the predictor variables, we suppress printing of information on prior distributions, regression coefficients and other parameters by setting <code>priors</code>, <code>regcoev</code> and <code>otherpars</code> to <code>FALSE</code>.</p>
+<p><br></p>
 <p>When a function of a variable is specified as auxiliary variable, this function is used in the imputation models. For example, in <code>mod3e</code>, waist circumference (<code>WC</code>) is not part of the model for <code>SBP</code>, and <code>I(WC^2)</code> is used in the linear predictor of the imputation model for <code>bili</code>: <a id="mod3e"></a></p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">mod3e &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>bili, <span class="dt">auxvars =</span> <span class="st">"I(WC^2)"</span>,</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">                <span class="dt">data =</span> NHANES, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
@@ -291,12 +302,16 @@
 <a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt; Normal imputation model for 'bili'</span></a>
 <a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt; * Predictor variables: </span></a>
 <a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt;   (Intercept), age, genderfemale, I(WC^2)</span></a></code></pre></div>
-<p>Incomplete variables are always imputed on their original scale, i.e., in <code>mod3b</code> the variable <code>bili</code> is imputed and the quadratic and cubic versions calculated from the imputed values. Likewise, <code>creat</code> and <code>albu</code> in <code>mod3c</code> are imputed separately, and <code>I(creat/albu^2)</code> calculated from the imputed (and observed) values.</p>
+<p>Incomplete variables are always imputed on their original scale, i.e.,</p>
+<ul>
+<li>in <code>mod3b</code> the variable <code>bili</code> is imputed and the quadratic and cubic versions calculated from the imputed values.</li>
+<li>Likewise, <code>creat</code> and <code>albu</code> in <code>mod3c</code> are imputed separately, and <code>I(creat/albu^2)</code> calculated from the imputed (and observed) values.</li>
+</ul>
 </div>
 <div id="functions-with-restricted-support" class="section level4">
 <h4 class="hasAnchor">
 <a href="#functions-with-restricted-support" class="anchor"></a>Functions with restricted support</h4>
-<p>When a function has restricted support, e.g., <code>log(x)</code> is only defined for <code>x &gt; 0</code>, the distribution used to impute that variable needs to comply with these restrictions. This can either be achieved by truncating the distribution, using the argument <code>trunc</code>, or by selecting an imputation method that meets the restrictions.</p>
+<p>When a function has restricted support, e.g., <code>log(x)</code> is only defined for <code>x &gt; 0</code>, the distribution used to impute that variable needs to comply with these restrictions. This can either be achieved by truncating the distribution, using the argument <code>trunc</code>, or by selecting an imputation method that meets the restrictions. For more information on imputation methods, see the section <a href="#meth">Imputation model types</a>.</p>
 <p><strong>Example</strong>:<br> When using a <code>log()</code> transformation for the covariate <code>bili</code>, we can either use the default imputation method <code>norm</code> (a normal distribution) and truncate it by specifying <code>trunc = list(bili = c(lower, upper))</code> (where the lower and upper limits are the smallest and largest allowed values) or choose an imputation method (using the argument <code>meth</code>; more details see the section on <a href="#meth">Imputation model types</a>) that only imputes positive values such as a log-normal distribution (<code>lognorm</code>) or a Gamma distribution (<code>gamma</code>): <a id="mod4"></a></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># truncation of the distribution of  bili</span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">mod4a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(bili) <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(creat),</a>
@@ -312,13 +327,14 @@
 <a class="sourceLine" id="cb10-12" data-line-number="12">mod4c &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(bili) <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(creat),</a>
 <a class="sourceLine" id="cb10-13" data-line-number="13">                <span class="dt">meth =</span> <span class="kw">c</span>(<span class="dt">bili =</span> <span class="st">'gamma'</span>, <span class="dt">creat =</span> <span class="st">'norm'</span>),</a>
 <a class="sourceLine" id="cb10-14" data-line-number="14">                <span class="dt">data =</span> NHANES, <span class="dt">mess =</span> <span class="ot">FALSE</span>, <span class="dt">keep_model =</span> T)</a></code></pre></div>
+<p>Truncation always requires to specify both limits. Since <code>-Inf</code> and <code>Inf</code> are not accepted, a value outside the range of the variable (here: 1e10) can be selected for the second boundary of the truncation interval.</p>
 </div>
 <div id="functions-that-are-not-available-in-r" class="section level4">
 <h4 class="hasAnchor">
 <a href="#functions-that-are-not-available-in-r" class="anchor"></a>Functions that are not available in R</h4>
 <p>It is possible to use functions that have different names in R and JAGS, or that do exist in JAGS, but not in R, by defining a new function in R that has the name of the function in JAGS.</p>
-<p><strong>Example</strong>:<br> In JAGS the inverse logit transformation is defined in the function <code>ilogit</code>. In R, this function does not exist, but the inverse logit is available as the distribution function of the logistic distribution <code>plogis</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># Define a function ilogit</span></a>
+<p><strong>Example</strong>:<br> In JAGS the inverse logit transformation is defined in the function <code>ilogit</code>. In R, there is no function <code>ilogit</code>, but the inverse logit is available as the distribution function of the logistic distribution <code>plogis</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># Define the function ilogit</span></a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">ilogit &lt;-<span class="st"> </span>plogis</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co"># Use ilogit in the model formula</span></a>
@@ -335,7 +351,7 @@
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># define the complementary log log transformation</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">cloglog &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw">log</span>(<span class="op">-</span><span class="kw">log</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>x))</a>
 <a class="sourceLine" id="cb12-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co"># define the inverse logit (in case you haven't done it in the previous example)</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co"># define the inverse logit (in case you have not done it in the previous example)</span></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5">ilogit &lt;-<span class="st"> </span>plogis</a>
 <a class="sourceLine" id="cb12-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co"># nest ilogit inside cloglog</span></a>
@@ -344,9 +360,9 @@
 </div>
 </div>
 </div>
-<div id="multi-level-structure-longitudinal-covariates" class="section level2">
+<div id="MultiLevelStructure" class="section level2">
 <h2 class="hasAnchor">
-<a href="#multi-level-structure-longitudinal-covariates" class="anchor"></a>Multi level structure &amp; longitudinal covariates</h2>
+<a href="#MultiLevelStructure" class="anchor"></a>Multi level structure &amp; longitudinal covariates</h2>
 <p>In multi-level models, additional to the fixed effects structure specified by the argument <code>fixed</code> a random effects structure needs to be provided via the argument <code>random</code>.</p>
 <div id="random-effects" class="section level3">
 <h3 class="hasAnchor">
@@ -360,7 +376,7 @@
 <code>random = ~time|id</code>: random intercept and slope for variable <code>time</code>
 </li>
 <li>
-<code>random = ~time + I(time^2)</code>: random intercept, slope and quadratic effect for <code>time</code>
+<code>random = ~time + I(time^2)</code>: random intercept, slope and quadratic random effect for <code>time</code>
 </li>
 <li>
 <code>random = ~time + x | id</code> random intercept, random slope for <code>time</code> and random effect for variable <code>x</code>
@@ -438,15 +454,15 @@
 </tbody>
 </table>
 <p><code>lognorm</code> assumes a normal distribution for the natural logarithm of the variable, but the variable enters the linear predictor of the analysis model (and possibly other imputation models) on its original scale.</p>
-<div id="specification-of-imputation-mode-types" class="section level3">
+<div id="specification-of-imputation-model-types" class="section level3">
 <h3 class="hasAnchor">
-<a href="#specification-of-imputation-mode-types" class="anchor"></a>Specification of imputation mode types</h3>
-<p>In models <a href="#mod4"><code>mod4b</code> and <code>mod4c</code></a> we have already seen two examples in which the imputation model type was changed using the argument <code>meth</code>. When the model has many incomplete predictor variables, but not all need to be changed, it can be useful to perform a set-up run of the model without any iterations, extract the vector of imputation models that were automatically selected and apply changes to that vector:</p>
+<a href="#specification-of-imputation-model-types" class="anchor"></a>Specification of imputation model types</h3>
+<p>In models <a href="#mod4"><code>mod4b</code> and <code>mod4c</code></a> we have already seen two examples in which the imputation model type was changed using the argument <code>meth</code>. When the model has many incomplete predictor variables, but not all need to be changed, it can be useful to perform a set-up run of the model without any iterations, extract the vector of imputation models that were automatically selected, and apply changes to that vector:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># run the model without iterations</span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">mod8a_setup &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>bili <span class="op">+</span><span class="st"> </span>occup <span class="op">+</span><span class="st"> </span>smoke,</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3">                <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">0</span>, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb14-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co"># extract the chosen imputation methods</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co"># extract the automatically chosen imputation methods</span></a>
 <a class="sourceLine" id="cb14-6" data-line-number="6">newmeth &lt;-<span class="st"> </span>mod8a_setup<span class="op">$</span>meth</a>
 <a class="sourceLine" id="cb14-7" data-line-number="7">newmeth</a>
 <a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt;           WC        smoke         bili        occup          alc </span></a>
@@ -463,163 +479,199 @@
 <a class="sourceLine" id="cb14-19" data-line-number="19">mod8a<span class="op">$</span>meth</a>
 <a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">#&gt;           WC        smoke         bili        occup          alc </span></a>
 <a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co">#&gt;       "norm"   "cumlogit"    "lognorm" "multilogit"      "logit"</span></a></code></pre></div>
+<p>Alternatively, the function <a href="https://nerler.github.io/JointAI/reference/get_imp_meth.html"><code><a href="../reference/get_imp_meth.html">get_imp_meth()</a></code></a> can be called directly. <code>get_imp_meth</code> has arguments</p>
+<ul>
+<li>
+<code>fixed</code>: the fixed effects formula</li>
+<li>
+<code>random</code>: the random effects formula (if necessary)</li>
+<li>
+<code>data</code>: the dataset</li>
+<li>
+<code>auxvars</code>: an optional vector of auxiliary variables.</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">mod8a_meth &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_imp_meth.html">get_imp_meth</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>bili <span class="op">+</span><span class="st"> </span>occup <span class="op">+</span><span class="st"> </span>smoke,</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">                           <span class="dt">data =</span> NHANES)</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">mod8a_meth</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt;           WC        smoke         bili        occup          alc </span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt;       "norm"   "cumlogit"       "norm" "multilogit"      "logit"</span></a></code></pre></div>
 </div>
 <div id="order-of-the-sequence-of-imputation-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#order-of-the-sequence-of-imputation-models" class="anchor"></a>Order of the sequence of imputation models</h3>
-<p>By default, the imputation models are ordered by number of missing values (decreasing), and each model has the complete covariates and all incomplete variables that appear earlier in the sequence in its linear predictor:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># number of missing values in the covariates in mod8a</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="kw">colSums</span>(<span class="kw">is.na</span>(NHANES[, <span class="kw">names</span>(newmeth)]))</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt;    WC smoke  bili occup   alc </span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt;     2     7     8    28    34</span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co"># print information on the imputation models</span></a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co"># (and omit everything but the predictor variables)</span></a>
-<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="kw"><a href="../reference/list_impmodels.html">list_impmodels</a></span>(mod8a, <span class="dt">priors =</span> F, <span class="dt">regcoef =</span> F, <span class="dt">otherpars =</span> F, <span class="dt">refcat =</span> F)</a>
-<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt; Normal imputation model for 'WC'</span></a>
-<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt;   (Intercept), age, genderfemale</span></a>
-<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; Cumulative logit imputation model for 'smoke'</span></a>
-<a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb15-15" data-line-number="15"><span class="co">#&gt;   age, genderfemale, WC</span></a>
-<a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb15-17" data-line-number="17"><span class="co">#&gt; Log-normal imputation model for 'bili'</span></a>
-<a class="sourceLine" id="cb15-18" data-line-number="18"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb15-19" data-line-number="19"><span class="co">#&gt;   (Intercept), age, genderfemale, WC, smokeformer, smokecurrent</span></a>
-<a class="sourceLine" id="cb15-20" data-line-number="20"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co">#&gt; Multinomial logit imputation model for 'occup'</span></a>
-<a class="sourceLine" id="cb15-22" data-line-number="22"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb15-23" data-line-number="23"><span class="co">#&gt;   (Intercept), age, genderfemale, WC, smokeformer, smokecurrent, bili</span></a>
-<a class="sourceLine" id="cb15-24" data-line-number="24"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb15-25" data-line-number="25"><span class="co">#&gt; Logistic imputation model for 'alc'</span></a>
-<a class="sourceLine" id="cb15-26" data-line-number="26"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb15-27" data-line-number="27"><span class="co">#&gt;   (Intercept), age, genderfemale, WC, smokeformer, smokecurrent, bili, occuplooking for work, occupnot working</span></a></code></pre></div>
-<p>By re-ordering the elements in <code>meth</code>, the order of the sequence of imputation models can be changed.</p>
+<p>By default, the imputation models are ordered by number of missing values (decreasing), and each model has the (cross-sectional) complete covariates and all incomplete variables that appear earlier in the sequence in its linear predictor:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># number of missing values in the covariates in mod8a</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="kw">colSums</span>(<span class="kw">is.na</span>(NHANES[, <span class="kw">names</span>(newmeth)]))</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co">#&gt;    WC smoke  bili occup   alc </span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co">#&gt;     2     7     8    28    34</span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co"># print information on the imputation models (and omit everything but the predictor variables)</span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="kw"><a href="../reference/list_impmodels.html">list_impmodels</a></span>(mod8a, <span class="dt">priors =</span> F, <span class="dt">regcoef =</span> F, <span class="dt">otherpars =</span> F, <span class="dt">refcat =</span> F)</a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">#&gt; Normal imputation model for 'WC'</span></a>
+<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">#&gt;   (Intercept), age, genderfemale</span></a>
+<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">#&gt; Cumulative logit imputation model for 'smoke'</span></a>
+<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co">#&gt;   age, genderfemale, WC</span></a>
+<a class="sourceLine" id="cb16-15" data-line-number="15"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb16-16" data-line-number="16"><span class="co">#&gt; Log-normal imputation model for 'bili'</span></a>
+<a class="sourceLine" id="cb16-17" data-line-number="17"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb16-18" data-line-number="18"><span class="co">#&gt;   (Intercept), age, genderfemale, WC, smokeformer, smokecurrent</span></a>
+<a class="sourceLine" id="cb16-19" data-line-number="19"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb16-20" data-line-number="20"><span class="co">#&gt; Multinomial logit imputation model for 'occup'</span></a>
+<a class="sourceLine" id="cb16-21" data-line-number="21"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb16-22" data-line-number="22"><span class="co">#&gt;   (Intercept), age, genderfemale, WC, smokeformer, smokecurrent, bili</span></a>
+<a class="sourceLine" id="cb16-23" data-line-number="23"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb16-24" data-line-number="24"><span class="co">#&gt; Logistic imputation model for 'alc'</span></a>
+<a class="sourceLine" id="cb16-25" data-line-number="25"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb16-26" data-line-number="26"><span class="co">#&gt;   (Intercept), age, genderfemale, WC, smokeformer, smokecurrent, bili, occuplooking for work, occupnot working</span></a></code></pre></div>
+<p>By re-ordering the elements in <code>meth</code>, the order of the sequence of imputation models will be changed.</p>
 </div>
 </div>
 <div id="auxvars" class="section level2">
 <h2 class="hasAnchor">
 <a href="#auxvars" class="anchor"></a>Auxiliary variables</h2>
-<p>Auxiliary variables are variables that are not part of the analysis model, but should be considered as predictor variables in the imputation models because they contain information on unobserved values. Good auxiliary variables are associated with an incomplete variable of interest or the missingness of that variable and do not have too many missing values themselves. Importantly, they should be observed for a large proportion of the cases that have a missing value in the variable to be imputed.</p>
+<p>Auxiliary variables are variables that are not part of the analysis model, but should be considered as predictor variables in the imputation models because they can inform the imputation of on unobserved values.</p>
+<p>Good auxiliary variables are</p>
+<ul>
+<li>associated with an incomplete variable of interest, or are</li>
+<li>associated with the missingness of that variable and</li>
+<li>do not have too many missing values themselves. Importantly, they should be observed for a large proportion of the cases that have a missing value in the variable to be imputed.</li>
+</ul>
 <p>In <code><a href="../reference/model_imp.html">lm_imp()</a></code>, <code><a href="../reference/model_imp.html">glm_imp()</a></code> and <code><a href="../reference/model_imp.html">lme_imp()</a></code>, auxiliary variables can be specified with the argument <code>auxvars</code>, which is a vector containing the names of the auxiliary variables.</p>
-<p>For example, we might consider the variables <code>educ</code> and <code>smoke</code> as predictors for the imputation of <code>occup</code>:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">mod9a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>occup, <span class="dt">auxvars =</span> <span class="kw">c</span>(<span class="st">'educ'</span>, <span class="st">'smoke'</span>),</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">                <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">100</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>)</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co">#&gt; This is new software. Please report any bug to the package maintainer.</span></a></code></pre></div>
+<p><strong>Example:</strong><br> We might consider the variables <code>educ</code> and <code>smoke</code> as predictors for the imputation of <code>occup</code>:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">mod9a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>occup, <span class="dt">auxvars =</span> <span class="kw">c</span>(<span class="st">'educ'</span>, <span class="st">'smoke'</span>),</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">                <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">100</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>The regression coefficients for <code>educ</code> and <code>smoke</code> in the analysis model are fixed to zero so that these two variables do not contribute to the model, and are omitted from the model summary:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">summary</span>(mod9a)</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="co">#&gt;  Linear model fitted with JointAI </span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co">#&gt; Call:</span></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt; lm_imp(formula = SBP ~ gender + age + occup, data = NHANES, n.iter = 100, </span></a>
-<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co">#&gt;     progress.bar = "none", auxvars = c("educ", "smoke"))</span></a>
-<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">#&gt; Posterior summary:</span></a>
-<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co">#&gt;                           Mean      SD    2.5%   97.5% tail-prob.</span></a>
-<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co">#&gt; (Intercept)           105.3409 3.44216  98.377 111.668   0.000000</span></a>
-<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co">#&gt; genderfemale           -5.4141 2.28226 -10.081  -1.264   0.006667</span></a>
-<a class="sourceLine" id="cb17-13" data-line-number="13"><span class="co">#&gt; age                     0.3788 0.07411   0.246   0.524   0.000000</span></a>
-<a class="sourceLine" id="cb17-14" data-line-number="14"><span class="co">#&gt; occuplooking for work   4.2190 6.38064  -7.760  15.780   0.480000</span></a>
-<a class="sourceLine" id="cb17-15" data-line-number="15"><span class="co">#&gt; occupnot working       -0.7495 2.65760  -5.926   4.656   0.780000</span></a>
-<a class="sourceLine" id="cb17-16" data-line-number="16"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb17-17" data-line-number="17"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
-<a class="sourceLine" id="cb17-18" data-line-number="18"><span class="co">#&gt;            Mean    SD  2.5% 97.5%</span></a>
-<a class="sourceLine" id="cb17-19" data-line-number="19"><span class="co">#&gt; sigma_SBP 14.45 0.807 12.93 16.31</span></a>
-<a class="sourceLine" id="cb17-20" data-line-number="20"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb17-21" data-line-number="21"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb17-22" data-line-number="22"><span class="co">#&gt; MCMC settings:</span></a>
-<a class="sourceLine" id="cb17-23" data-line-number="23"><span class="co">#&gt; Iterations = 101:200</span></a>
-<a class="sourceLine" id="cb17-24" data-line-number="24"><span class="co">#&gt; Sample size per chain = 100 </span></a>
-<a class="sourceLine" id="cb17-25" data-line-number="25"><span class="co">#&gt; Thinning interval = 1 </span></a>
-<a class="sourceLine" id="cb17-26" data-line-number="26"><span class="co">#&gt; Number of chains = 3 </span></a>
-<a class="sourceLine" id="cb17-27" data-line-number="27"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb17-28" data-line-number="28"><span class="co">#&gt; Number of observations: 186</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">summary</span>(mod9a)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co">#&gt;  Linear model fitted with JointAI </span></a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="co">#&gt; Call:</span></a>
+<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="co">#&gt; lm_imp(formula = SBP ~ gender + age + occup, data = NHANES, n.iter = 100, </span></a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="co">#&gt;     progress.bar = "none", mess = FALSE, auxvars = c("educ", </span></a>
+<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co">#&gt;         "smoke"))</span></a>
+<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb18-10" data-line-number="10"><span class="co">#&gt; Posterior summary:</span></a>
+<a class="sourceLine" id="cb18-11" data-line-number="11"><span class="co">#&gt;                           Mean     SD    2.5%    97.5% tail-prob.</span></a>
+<a class="sourceLine" id="cb18-12" data-line-number="12"><span class="co">#&gt; (Intercept)           105.6377 3.3600 99.2854 112.0364     0.0000</span></a>
+<a class="sourceLine" id="cb18-13" data-line-number="13"><span class="co">#&gt; genderfemale           -5.6249 2.1375 -9.8841  -1.3050     0.0200</span></a>
+<a class="sourceLine" id="cb18-14" data-line-number="14"><span class="co">#&gt; age                     0.3763 0.0755  0.2194   0.5172     0.0000</span></a>
+<a class="sourceLine" id="cb18-15" data-line-number="15"><span class="co">#&gt; occuplooking for work   3.6607 7.1381 -8.5661  17.7785     0.6867</span></a>
+<a class="sourceLine" id="cb18-16" data-line-number="16"><span class="co">#&gt; occupnot working       -0.5144 2.4921 -5.5458   4.0752     0.8400</span></a>
+<a class="sourceLine" id="cb18-17" data-line-number="17"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb18-18" data-line-number="18"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
+<a class="sourceLine" id="cb18-19" data-line-number="19"><span class="co">#&gt;            Mean     SD  2.5% 97.5%</span></a>
+<a class="sourceLine" id="cb18-20" data-line-number="20"><span class="co">#&gt; sigma_SBP 14.44 0.7824 13.11  16.2</span></a>
+<a class="sourceLine" id="cb18-21" data-line-number="21"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb18-22" data-line-number="22"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb18-23" data-line-number="23"><span class="co">#&gt; MCMC settings:</span></a>
+<a class="sourceLine" id="cb18-24" data-line-number="24"><span class="co">#&gt; Iterations = 101:200</span></a>
+<a class="sourceLine" id="cb18-25" data-line-number="25"><span class="co">#&gt; Sample size per chain = 100 </span></a>
+<a class="sourceLine" id="cb18-26" data-line-number="26"><span class="co">#&gt; Thinning interval = 1 </span></a>
+<a class="sourceLine" id="cb18-27" data-line-number="27"><span class="co">#&gt; Number of chains = 3 </span></a>
+<a class="sourceLine" id="cb18-28" data-line-number="28"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb18-29" data-line-number="29"><span class="co">#&gt; Number of observations: 186</span></a></code></pre></div>
 <p>They are, however, used as predictors in the imputation for <code>occup</code> and imputed themselves (if they have missing values):</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw"><a href="../reference/list_impmodels.html">list_impmodels</a></span>(mod9a, <span class="dt">priors =</span> <span class="ot">FALSE</span>, <span class="dt">regcoef =</span> <span class="ot">FALSE</span>, <span class="dt">otherpars =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">               <span class="dt">refcat =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co">#&gt; Cumulative logit imputation model for 'smoke'</span></a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="co">#&gt;   genderfemale, age, educhigh</span></a>
-<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="co">#&gt; Multinomial logit imputation model for 'occup'</span></a>
-<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="co">#&gt;   (Intercept), genderfemale, age, educhigh, smokeformer, smokecurrent</span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="../reference/list_impmodels.html">list_impmodels</a></span>(mod9a, <span class="dt">priors =</span> <span class="ot">FALSE</span>, <span class="dt">regcoef =</span> <span class="ot">FALSE</span>, <span class="dt">otherpars =</span> <span class="ot">FALSE</span>, <span class="dt">refcat =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="co">#&gt; Cumulative logit imputation model for 'smoke'</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="co">#&gt;   genderfemale, age, educhigh</span></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="co">#&gt; Multinomial logit imputation model for 'occup'</span></a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="co">#&gt;   (Intercept), genderfemale, age, educhigh, smokeformer, smokecurrent</span></a></code></pre></div>
+<div id="functions-of-variables-as-auxiliary-variables" class="section level3">
+<h3 class="hasAnchor">
+<a href="#functions-of-variables-as-auxiliary-variables" class="anchor"></a>Functions of variables as auxiliary variables</h3>
 <p>As shown above in <a href="#mod3e"><code>mod3e</code></a>, it is possible to specify functions of auxiliary variables. In that case, the auxiliary variable is not considered as linear effect but as specified by the function:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">mod9b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>occup, <span class="dt">data =</span> NHANES,</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">                <span class="dt">auxvars =</span> <span class="kw">c</span>(<span class="st">'educ'</span>, <span class="st">'smoke'</span>, <span class="st">'log(WC)'</span>),</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">                <span class="dt">trunc =</span> <span class="kw">list</span>(<span class="dt">WC =</span> <span class="kw">c</span>(<span class="fl">1e-10</span>, <span class="fl">1e10</span>)),</a>
-<a class="sourceLine" id="cb19-4" data-line-number="4">                <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw"><a href="../reference/list_impmodels.html">list_impmodels</a></span>(mod9b, <span class="dt">priors =</span> <span class="ot">FALSE</span>, <span class="dt">regcoef =</span> <span class="ot">FALSE</span>, <span class="dt">otherpars =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">               <span class="dt">refcat =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co">#&gt; Normal imputation model for 'WC'</span></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="co">#&gt;   (Intercept), genderfemale, age, educhigh</span></a>
-<a class="sourceLine" id="cb20-6" data-line-number="6"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="co">#&gt; Cumulative logit imputation model for 'smoke'</span></a>
-<a class="sourceLine" id="cb20-8" data-line-number="8"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb20-9" data-line-number="9"><span class="co">#&gt;   genderfemale, age, educhigh, log(WC)</span></a>
-<a class="sourceLine" id="cb20-10" data-line-number="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb20-11" data-line-number="11"><span class="co">#&gt; Multinomial logit imputation model for 'occup'</span></a>
-<a class="sourceLine" id="cb20-12" data-line-number="12"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb20-13" data-line-number="13"><span class="co">#&gt;   (Intercept), genderfemale, age, educhigh, log(WC), smokeformer, smokecurrent</span></a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">mod9b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>occup, <span class="dt">data =</span> NHANES,</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">                <span class="dt">auxvars =</span> <span class="kw">c</span>(<span class="st">'educ'</span>, <span class="st">'smoke'</span>, <span class="st">'log(WC)'</span>),</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">                <span class="dt">trunc =</span> <span class="kw">list</span>(<span class="dt">WC =</span> <span class="kw">c</span>(<span class="fl">1e-10</span>, <span class="fl">1e10</span>)), <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="../reference/list_impmodels.html">list_impmodels</a></span>(mod9b, <span class="dt">priors =</span> <span class="ot">FALSE</span>, <span class="dt">regcoef =</span> <span class="ot">FALSE</span>, <span class="dt">otherpars =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">               <span class="dt">refcat =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#&gt; Normal imputation model for 'WC'</span></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co">#&gt;   (Intercept), genderfemale, age, educhigh</span></a>
+<a class="sourceLine" id="cb21-6" data-line-number="6"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="co">#&gt; Cumulative logit imputation model for 'smoke'</span></a>
+<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb21-9" data-line-number="9"><span class="co">#&gt;   genderfemale, age, educhigh, log(WC)</span></a>
+<a class="sourceLine" id="cb21-10" data-line-number="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb21-11" data-line-number="11"><span class="co">#&gt; Multinomial logit imputation model for 'occup'</span></a>
+<a class="sourceLine" id="cb21-12" data-line-number="12"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb21-13" data-line-number="13"><span class="co">#&gt;   (Intercept), genderfemale, age, educhigh, log(WC), smokeformer, smokecurrent</span></a></code></pre></div>
+</div>
 </div>
 <div id="reference-values-for-categorical-covariates" class="section level2">
 <h2 class="hasAnchor">
 <a href="#reference-values-for-categorical-covariates" class="anchor"></a>Reference values for categorical covariates</h2>
-<p>In <strong>JointAI</strong> dummy coding is used when categorical variables enter a linear predictor, i.e., a binary variables is created for each category, except the reference category. These binary variables have value one when that category was observed and zero otherwise. The regression coefficients of the dummy variables are interpreted as the effect of being in the given category compared to being in the reference category.</p>
+<p>In <strong>JointAI</strong> dummy coding is used when categorical variables enter a linear predictor, i.e., a binary variables is created for each category, except the reference category. These binary variables have value one when that category was observed and zero otherwise.</p>
 <p>By default, the first category of a categorical variable (ordered or unordered) is used as reference, however, this may not always allow the desired interpretation of the regression coefficients. Moreover, when categories are unbalanced, setting the largest group as reference may result in better mixing of the MCMC chains.</p>
 <p>Therefore, <strong>JointAI</strong> allows specification of the reference category separately for each variable, via the argument <code>refcats</code>.</p>
+<div id="setting-reference-categories-for-all-variables" class="section level3">
+<h3 class="hasAnchor">
+<a href="#setting-reference-categories-for-all-variables" class="anchor"></a>Setting reference categories for all variables</h3>
 <p>To specify the choice of reference category globally for all variables in the model, <code>refcats</code> can be set as</p>
 <ul>
-<li>
-<code>refcats = "first"</code>"</li>
+<li><code>refcats = "first"</code></li>
 <li><code>refcats = "last"</code></li>
 <li><code>refcats = "largest"</code></li>
 </ul>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">mod10a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>occup <span class="op">+</span><span class="st"> </span>smoke,</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">                 <span class="dt">refcats =</span> <span class="st">"largest"</span>,</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3">                 <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p>Alternatively, <code>refcats</code> takes a named vector, in which the reference category for each variable can be specified either by its number or its name, or one of the three global types: “first”, “last” or “largest”. For variables for which no reference category is specified in the list the default is used.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">mod10b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>occup <span class="op">+</span><span class="st"> </span>smoke,</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">                 <span class="dt">refcats =</span> <span class="kw">list</span>(<span class="dt">occup =</span> <span class="st">"not working"</span>, <span class="dt">race =</span> <span class="dv">3</span>),</a>
+<p>For example:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">mod10a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>occup <span class="op">+</span><span class="st"> </span>smoke,</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">                 <span class="dt">refcats =</span> <span class="st">"largest"</span>,</a>
 <a class="sourceLine" id="cb22-3" data-line-number="3">                 <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p>To help to specify the reference category, the function <code><a href="../reference/set_refcat.html">set_refcat()</a></code> can be used.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="../reference/set_refcat.html">set_refcat</a></span>(NHANES, <span class="kw">formula</span>(mod10b))</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co">#&gt; The categorical variables are:</span></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co">#&gt; - "gender"</span></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="co">#&gt; - "race"</span></a>
-<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="co">#&gt; - "educ"</span></a>
-<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="co">#&gt; - "occup"</span></a>
-<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="co">#&gt; - "smoke"</span></a>
-<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="co">#&gt; How do you want to specify the reference categories?</span></a>
-<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt; 1: Use the first category for each variable.</span></a>
-<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co">#&gt; 2: Use the last category for each variabe.</span></a>
-<a class="sourceLine" id="cb23-13" data-line-number="13"><span class="co">#&gt; 3: Use the largest category for each variable.</span></a>
-<a class="sourceLine" id="cb23-14" data-line-number="14"><span class="co">#&gt; 4: Specify the reference categories individually.</span></a></code></pre></div>
-<p>It lists the categorical variables in the model and the options for specifying the reference categories.</p>
+</div>
+<div id="setting-reference-categories-for-individual-variables" class="section level3">
+<h3 class="hasAnchor">
+<a href="#setting-reference-categories-for-individual-variables" class="anchor"></a>Setting reference categories for individual variables</h3>
+<p>Alternatively, <code>refcats</code> takes a named vector, in which the reference category for each variable can be specified either by its number or its name, or one of the three global types: “first”, “last” or “largest”. For variables for which no reference category is specified in the list the default is used.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">mod10b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>occup <span class="op">+</span><span class="st"> </span>smoke,</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">                 <span class="dt">refcats =</span> <span class="kw">list</span>(<span class="dt">occup =</span> <span class="st">"not working"</span>, <span class="dt">race =</span> <span class="dv">3</span>, <span class="dt">educ =</span> <span class="st">'largest'</span>),</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">                 <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p>To help to specify the reference category, the function <a href="https://nerler.github.io/JointAI/reference/set_refcat.html"><code><a href="../reference/set_refcat.html">set_refcat()</a></code></a> can be used. It prints the names of the categorical variables that are selected by</p>
+<ul>
+<li>a specified model formula and/or</li>
+<li>a vector of auxiliary variables, or</li>
+<li>a vector of naming covariates</li>
+</ul>
+<p>or all categorical variabels in the data if only <code>data</code> is provided, and asks a number of questions which the user needs to reply to by input of a number.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">refs_mod10 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/set_refcat.html">set_refcat</a></span>(NHANES, <span class="dt">formula =</span> <span class="kw">formula</span>(mod10b))</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co">#&gt; The categorical variables are:</span></a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="co">#&gt; - "gender"</span></a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="co">#&gt; - "race"</span></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="co">#&gt; - "educ"</span></a>
+<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="co">#&gt; - "occup"</span></a>
+<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="co">#&gt; - "smoke"</span></a>
+<a class="sourceLine" id="cb24-8" data-line-number="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb24-9" data-line-number="9"><span class="co">#&gt; How do you want to specify the reference categories?</span></a>
+<a class="sourceLine" id="cb24-10" data-line-number="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb24-11" data-line-number="11"><span class="co">#&gt; 1: Use the first category for each variable.</span></a>
+<a class="sourceLine" id="cb24-12" data-line-number="12"><span class="co">#&gt; 2: Use the last category for each variabe.</span></a>
+<a class="sourceLine" id="cb24-13" data-line-number="13"><span class="co">#&gt; 3: Use the largest category for each variable.</span></a>
+<a class="sourceLine" id="cb24-14" data-line-number="14"><span class="co">#&gt; 4: Specify the reference categories individually.</span></a></code></pre></div>
 <p>When option 4 is chosen, a question for each categorical variable is asked, for example:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co">#&gt; The reference category for “race” should be </span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="co">#&gt; 1: Mexican American</span></a>
-<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="co">#&gt; 2: Other Hispanic</span></a>
-<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="co">#&gt; 3: Non-Hispanic White</span></a>
-<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="co">#&gt; 4: Non-Hispanic Black</span></a>
-<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="co">#&gt; 5: other</span></a></code></pre></div>
-<p>The determined specification for the argument <code>refcats</code> is printed</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co">#&gt; In the JointAI model specify:</span></a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">#&gt;  refcats = c(gender = 'female', race = 'Non-Hispanic White', educ = 'low',</span></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="co">#&gt;              occup = 'not working', smoke = 'never')</span></a>
-<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="co">#&gt; or use the output of this function.</span></a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co">#&gt; The reference category for “race” should be </span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="co">#&gt; 1: Mexican American</span></a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co">#&gt; 2: Other Hispanic</span></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="co">#&gt; 3: Non-Hispanic White</span></a>
+<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="co">#&gt; 4: Non-Hispanic Black</span></a>
+<a class="sourceLine" id="cb25-7" data-line-number="7"><span class="co">#&gt; 5: other</span></a></code></pre></div>
+<p>After specification of the reference categories for all categorical variables, the determined specification for the argument <code>refcats</code> is printed:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co">#&gt; In the JointAI model specify:</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="co">#&gt;  refcats = c(gender = 'female', race = 'Non-Hispanic White', educ = 'low',</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="co">#&gt;              occup = 'not working', smoke = 'never')</span></a>
+<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co">#&gt; or use the output of this function.</span></a></code></pre></div>
 <p><code><a href="../reference/set_refcat.html">set_refcat()</a></code> also returns a named vector that can be passed to the argument <code>refcats</code>:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">mod10c &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>occup <span class="op">+</span><span class="st"> </span>smoke,</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">                 <span class="dt">refcats =</span> refs_mod10,</a>
-<a class="sourceLine" id="cb26-3" data-line-number="3">                 <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">mod10c &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>occup <span class="op">+</span><span class="st"> </span>smoke,</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">                 <span class="dt">refcats =</span> refs_mod10,</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">                 <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">0</span>, <span class="dt">mess =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <!-- ## Scaling -->
+</div>
 </div>
 <div class="footnotes">
 <hr>
@@ -636,8 +688,8 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#analysis-model-type">Analysis model type</a></li>
-      <li><a href="#model-formula">Model formula</a></li>
-      <li><a href="#multi-level-structure-longitudinal-covariates">Multi level structure &amp; longitudinal covariates</a></li>
+      <li><a href="#ModelFormula">Model formula</a></li>
+      <li><a href="#MultiLevelStructure">Multi level structure &amp; longitudinal covariates</a></li>
       <li><a href="#meth">Imputation model types</a></li>
       <li><a href="#auxvars">Auxiliary variables</a></li>
       <li><a href="#reference-values-for-categorical-covariates">Reference values for categorical covariates</a></li>

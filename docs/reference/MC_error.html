@@ -38,7 +38,7 @@
 
 <meta property="og:title" content="Monte Carlo error — MC_error" />
 
-<meta property="og:description" content="Calculate and plot the Monte Carlo error of the samples from a JointAI model" />
+<meta property="og:description" content="Calculate and plot the Monte Carlo error of the samples from a JointAI model." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -146,7 +146,7 @@
 
     <div class="ref-description">
     
-    <p>Calculate and plot the Monte Carlo error of the samples from a JointAI model</p>
+    <p>Calculate and plot the Monte Carlo error of the samples from a JointAI model.</p>
     
     </div>
 
@@ -162,7 +162,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>object inheriting from class <code>JointAI</code></p></td>
+      <td><p>object inheriting from class "JointAI"</p></td>
     </tr>
     <tr>
       <th>subset</th>
@@ -188,7 +188,7 @@ Uses the same logic as the argument <code>monitor_params</code> in
     </tr>
     <tr>
       <th>warn</th>
-      <td><p>logical; should warnings be given?; default is
+      <td><p>logical; should warnings be given? Default is
 <code>TRUE</code>. Note: this applies only to warnings
 given directly by <strong>JointAI</strong>.</p></td>
     </tr>
@@ -229,7 +229,7 @@ given directly by <strong>JointAI</strong>.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of class <code>MCElist</code> with elements <code>unscaled</code>,
+    <p>An object of class <code>MCElist</code> with elements <code>unscaled</code>,
         <code>scaled</code> and <code>digits</code>. The first two are matrices with
         columns <code>est</code> (posterior mean), <code>MCSE</code> (Monte Carlo error),
         <code>SD</code> (posterior standard deviation) and <code>MCSE/SD</code>
@@ -255,19 +255,22 @@ John Wiley &amp; Sons.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The vignette <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Selecting Parameters</a> contains some examples how to specify <code>subset</code>.</p></div>
+    <div class='dont-index'><p>The vignette <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Parameter Selection</a>
+contains some examples how to specify the argument <code>subset</code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                 est   MCSE     SD MCSE/SD
-#&gt; (Intercept)  35.067 1.0225 26.539   0.039
-#&gt; C1          -26.360 0.7160 18.506   0.039
-#&gt; M22          -0.551 0.0855  0.647   0.132
-#&gt; M23          -0.083 0.0855  0.684   0.125
-#&gt; M24          -1.295 0.0709  0.615   0.115
-#&gt; C2            0.887 0.0400  0.643   0.062
-#&gt; sigma_y       2.234 0.0085  0.159   0.053
-#&gt; tau_y         0.203 0.0016  0.028   0.056</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'>
+<span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                  est   MCSE      SD MCSE/SD
+#&gt; (Intercept)  3024.27 92.100 1.9e+03   0.048
+#&gt; C1          -2083.72 63.422 1.3e+03   0.048
+#&gt; M22            -0.23  0.121 7.3e-01   0.166
+#&gt; M23             0.25  0.120 7.4e-01   0.162
+#&gt; M24            -1.07  0.122 7.6e-01   0.161
+#&gt; C2              2.79  0.141 2.0e+00   0.072
+#&gt; tau_y           0.20  0.002 3.1e-02   0.064
+#&gt; sigma_y         2.23  0.010 1.7e-01   0.061</div><div class='input'>
+<span class='fu'>plot</span>(<span class='fu'>MC_error</span>(<span class='no'>mod</span>), <span class='kw'>ablinepars</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='img'><img src='MC_error-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

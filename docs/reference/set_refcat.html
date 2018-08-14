@@ -69,7 +69,7 @@ lm_imp, glm_imp and lme_imp." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -182,11 +182,14 @@ occurring in the <code>formula</code></p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Example 1: set reference categories for the whole dataset and choose answer option 3:</span>
 <span class='fu'>set_refcat</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>)
 <span class='fl'>3</span>
+
+<span class='co'># insert the returned string as argument refcats</span>
 <span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>SBP</span> ~ <span class='no'>age</span> + <span class='no'>race</span> + <span class='no'>creat</span> + <span class='no'>educ</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='st'>'largest'</span>)
 
-
+<span class='co'># Example 2:</span>
 <span class='co'># specify a model formula</span>
 <span class='no'>fmla</span> <span class='kw'>&lt;-</span> <span class='no'>SBP</span> ~ <span class='no'>age</span> + <span class='no'>gender</span> + <span class='no'>race</span> + <span class='no'>bili</span> + <span class='no'>smoke</span> + <span class='no'>alc</span>
 

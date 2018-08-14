@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -157,7 +157,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>fixed</th>
-      <td><p>a two sided (fixed effects) model formula (see <code><a href='http://www.rdocumentation.org/packages/stats/topics/formula'>formula</a></code>).</p></td>
+      <td><p>a two sided formula describing the fixed-effects part of the
+model (see <code><a href='http://www.rdocumentation.org/packages/stats/topics/formula'>formula</a></code>)</p></td>
     </tr>
     <tr>
       <th>random</th>
@@ -168,7 +169,7 @@ effects and <code>g</code> the grouping variable</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>a data frame</p></td>
+      <td><p>a <code>data.frame</code></p></td>
     </tr>
     <tr>
       <th>auxvars</th>
@@ -180,14 +181,16 @@ if necessary) but are not part of the analysis model</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a named vector containing those variables in <code>data</code>
+    <p>A named vector containing those variables in <code>data</code>
         that have missing values and their assigned default imputation methods,
-        sorted by proportion of missing values</p>
+        sorted by proportion of missing values.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>get_imp_meth</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>B2</span> + <span class='no'>O2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>)</div><div class='output co'>#&gt;           O2           M2           C2           B2 
-#&gt;   "cumlogit" "multilogit"       "norm"      "logit" </div></pre>
+#&gt;   "cumlogit" "multilogit"       "norm"      "logit" </div><div class='input'>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

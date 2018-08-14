@@ -38,8 +38,8 @@
 
 <meta property="og:title" content="Joint analysis and imputation of incomplete data — model_imp" />
 
-<meta property="og:description" content="lm_imp, glm_imp and lme_imp estimate linear, generalized
-linear and linear mixed models, respectively, using MCMC sampling." />
+<meta property="og:description" content="Functions to estimate linear, generalized
+linear and linear mixed models using MCMC sampling." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -68,7 +68,7 @@ linear and linear mixed models, respectively, using MCMC sampling." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -147,8 +147,8 @@ linear and linear mixed models, respectively, using MCMC sampling." />
 
     <div class="ref-description">
     
-    <p><code>lm_imp</code>, <code>glm_imp</code> and <code>lme_imp</code> estimate linear, generalized
-linear and linear mixed models, respectively, using MCMC sampling.</p>
+    <p>Functions to estimate linear, generalized
+linear and linear mixed models using MCMC sampling.</p>
     
     </div>
 
@@ -157,7 +157,7 @@ linear and linear mixed models, respectively, using MCMC sampling.</p>
   <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>meth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_pars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='fu'>glm_imp</span>(<span class='no'>formula</span>, <span class='no'>family</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -165,14 +165,14 @@ linear and linear mixed models, respectively, using MCMC sampling.</p>
   <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>,
   <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>meth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+  <span class='kw'>scale_pars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='fu'>lme_imp</span>(<span class='no'>fixed</span>, <span class='no'>data</span>, <span class='no'>random</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>meth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_pars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,7 +183,7 @@ linear and linear mixed models, respectively, using MCMC sampling.</p>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>a data frame</p></td>
+      <td><p>a <code>data.frame</code></p></td>
     </tr>
     <tr>
       <th>n.chains</th>
@@ -206,12 +206,12 @@ linear and linear mixed models, respectively, using MCMC sampling.</p>
     <tr>
       <th>monitor_params</th>
       <td><p>named vector specifying which parameters should be
-monitored, see details.</p></td>
+monitored.</p></td>
     </tr>
     <tr>
       <th>inits</th>
       <td><p>optional specification of initial values in the form of a list
-or a function (see <code><a href='http://www.rdocumentation.org/packages/rjags/topics/jags.model'>jags.model</a></code>.
+or a function (see <code><a href='http://www.rdocumentation.org/packages/rjags/topics/jags.model'>jags.model</a></code>).
 If omitted, initial values will be generated automatically.
 It is an error to supply an initial value for an observed node.</p></td>
     </tr>
@@ -246,18 +246,19 @@ sampling has finished.</p></td>
     </tr>
     <tr>
       <th>progress.bar</th>
-      <td><p>type of progress bar. Possible values are
-    <code>"text"</code>, <code>"gui"</code>, and <code>"none"</code>. See Details.</p></td>
+      <td><p>Character string specifying the type of progress bar.
+Possible values are "text", "gui", and "none".
+See <code>update</code>.</p></td>
     </tr>
     <tr>
       <th>warn</th>
-      <td><p>logical; should warnings be given?; default is
+      <td><p>logical; should warnings be given? Default is
 <code>TRUE</code>. Note: this applies only to warnings
 given directly by <strong>JointAI</strong>.</p></td>
     </tr>
     <tr>
       <th>mess</th>
-      <td><p>logical; should messages be given?; default is
+      <td><p>logical; should messages be given? Default is
 <code>TRUE</code>. Note: this applies only to messages
 given directly by <strong>JointAI</strong>.</p></td>
     </tr>
@@ -281,8 +282,9 @@ values (increasing).</p></td>
       <td><p>optional; a named list specifying which category should be
 used as reference category for each of the categorical variables.
 Options are the category label, the category number,
-'first" (the first category) or "largest" (chooses the
-category with the most observations). Default is "first".</p></td>
+"first" (the first category), "last" (the last category)
+or "largest" (chooses the category with the most observations).
+Default is "first".</p></td>
     </tr>
     <tr>
       <th>trunc</th>
@@ -302,6 +304,13 @@ only scaled with regards to the standard deviation, but not
 centered. If set to <code>FALSE</code> no scaling will be done.</p></td>
     </tr>
     <tr>
+      <th>scale_pars</th>
+      <td><p>optional matrix of parameters used for centering and
+scaling continuous covariates. If not specified, this will
+be calculated automatically. If <code>FALSE</code>, no scaling
+will be done.</p></td>
+    </tr>
+    <tr>
       <th>hyperpars</th>
       <td><p>list of hyperparameters, as obtained by <code><a href='default_hyperpars.html'>default_hyperpars</a>()</code>;
 only needs to be supplied if hyperparameters other than the
@@ -309,7 +318,7 @@ default should be used</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional, optional arguments, see below</p></td>
+      <td><p>additional, optional arguments</p></td>
     </tr>
     <tr>
       <th>family</th>
@@ -336,21 +345,12 @@ effects and <code>g</code> the grouping variable</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>JointAI</code></p>
-    
-    <h2 class="hasAnchor" id="optional-arguments"><a class="anchor" href="#optional-arguments"></a>Optional arguments</h2>
-
-    
-    <p>There are some optional parameters that can be passed to <code>&#8230;</code></p><dl class='dl-horizontal'>
-<dt><code>scale_pars</code></dt><dd><p>optional matrix of parameters used for centering and
-scaling continuous covariates. If not specified, this will be calculated
-automatically. If <code>FALSE</code>, no scaling will be done.</p></dd>
-</dl>
+    <p>An object of class "JointAI".</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-    <h3>Implemented distribution families and link functions for <code>glm_imp()</code></h3>
+    <p>See also the vignette: <a href='https://nerler.github.io/JointAI/articles/ModelSpecification.html'>Model Specification</a></p><h3>Implemented distribution families and link functions for <code>glm_imp()</code></h3>
     <table class='table'>
 <tr><td><code>gaussian</code></td><td>with links: <code>identity</code>, <code>log</code></td></tr>
 <tr><td><code>binomial</code></td><td>with links: <code>logit</code>, <code>probit</code>, <code>log</code>, <code>cloglog</code></td></tr>
@@ -369,7 +369,7 @@ automatically. If <code>FALSE</code>, no scaling will be done.</p></dd>
 <tr><td><code>cumlogit</code></td><td>cumulative logit model for ordered categorical variables</td></tr>
 </table>
     <h3>Parameters to follow (<code>monitor_params</code>)</h3>
-    See also the vignette: <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Selecting Parameters</a>
+    See also the vignette: <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Parameter Selection</a><br />
     Named vector specifying which parameters should be monitored. This can be done
 either directly by specifying the name of the parameter or indirectly by one
 of the key words summarizing a number of parameters. Except for <code>other</code>,
@@ -405,17 +405,31 @@ the imputed values.
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='set_refcat.html'>set_refcat</a></code>,
-<code><a href='traceplot.html'>traceplot</a></code>, <code><a href='densplot.html'>densplot</a></code>,
+    <div class='dont-index'><p><code><a href='set_refcat.html'>set_refcat</a></code>, <code><a href='get_imp_meth.html'>get_imp_meth</a></code>,
+         <code><a href='traceplot.html'>traceplot</a></code>, <code><a href='densplot.html'>densplot</a></code>,
          <code><a href='summary.JointAI.html'>summary.JointAI</a></code>, <code><a href='MC_error.html'>MC_error</a></code>,
-         <code><a href='GR_crit.html'>GR_crit</a></code>, <code><a href='http://www.rdocumentation.org/packages/rjags/topics/jags.model'>jags.model</a></code>,
-         <code><a href='http://www.rdocumentation.org/packages/rjags/topics/coda.samples'>coda.samples</a></code>, <code>predict.JointAI</code></p></div>
+         <code><a href='gr_crit.html'>GR_crit</a></code>, <code><a href='http://www.rdocumentation.org/packages/rjags/topics/jags.model'>jags.model</a></code>,
+         <code><a href='http://www.rdocumentation.org/packages/rjags/topics/coda.samples'>coda.samples</a></code>, <code><a href='predict.JointAI.html'>predict.JointAI</a></code>,
+         <code><a href='JointAIObject.html'>JointAIObject</a></code>, <code><a href='add_samples.html'>add_samples</a></code>,
+         <code><a href='parameters.html'>parameters</a></code>, <code><a href='list_impmodels.html'>list_impmodels</a></code></p>
+<p>Vignettes</p><ul>
+<li><p><a href='https://nerler.github.io/JointAI/articles/MinimalExample.html'>Minimal Example</a></p></li>
+<li><p><a href='https://nerler.github.io/JointAI/articles/ModelSpecification.html'>Model Specification</a></p></li>
+<li><p><a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Parameter Selection</a></p></li>
+</ul></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'>lm_imp</span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='no'>mod2</span> <span class='kw'>&lt;-</span> <span class='fu'>glm_imp</span>(<span class='no'>B1</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>,
-                <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'>binomial</span>(<span class='kw'>link</span> <span class='kw'>=</span> <span class='st'>"logit"</span>), <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='no'>mod3</span> <span class='kw'>&lt;-</span> <span class='fu'>lme_imp</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>B2</span> + <span class='no'>L1</span> + <span class='no'>time</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>time</span><span class='kw'>|</span><span class='no'>id</span>,
+<span class='co'># Example 1: Linear regression with incomplete covariates</span>
+<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'>lm_imp</span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'>
+
+<span class='co'># Example 2: Logistic regression with incomplete covariats</span>
+<span class='no'>mod2</span> <span class='kw'>&lt;-</span> <span class='fu'>glm_imp</span>(<span class='no'>B1</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>,
+                <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'>binomial</span>(<span class='kw'>link</span> <span class='kw'>=</span> <span class='st'>"logit"</span>), <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'>
+
+<span class='co'># Example 3: Linear mixed model with incomplete covariates</span>
+<span class='no'>mod3</span> <span class='kw'>&lt;-</span> <span class='fu'>lme_imp</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>B2</span> + <span class='no'>L1</span> + <span class='no'>time</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>time</span><span class='kw'>|</span><span class='no'>id</span>,
                 <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>longDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>500</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'>
 
 </div></pre>
@@ -426,8 +440,6 @@ the imputed values.
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#optional-arguments">Optional arguments</a></li>
 
       <li><a href="#details">Details</a></li>
 
