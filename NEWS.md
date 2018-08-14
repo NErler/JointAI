@@ -1,10 +1,9 @@
-# JointAI 0.2.1
+# JointAI 0.3.0
 
 ## Bug fixes
 * `monitor_params` is now checked to avoid problems when only part of the main parameters is selected
 * categorical imputation models now use min-max trick to prevent probabilities outside [0, 1]
 * initial value generation for logistic analysis model fixed
-* `lm_imp()`, `glm_imp()` and `lme_imp()` return family and link that was used (needed in for `add_sample`)
 * bugfix in re-ordering columns when a function is part of the linear predictor
 * bugfix in intial values for categorical covariates
 * bugfix in finding imputation method when function of variable is specified as
@@ -22,6 +21,8 @@
   to truncate the distribution of incomplete variables
 * `summary()` now omits auxiliary variables from the output
 * `imp_par_list` is now returned from JointAI models
+* `cat_vars` is no longer returned from `lm_imp()`, `glm_imp()` and `lme_imp()`,
+  because it is contained in `Mlist$refs`
 
 ## Extensions
 * `plot_all()` function added
