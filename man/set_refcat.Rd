@@ -24,11 +24,14 @@ returns the input for the argument \code{refcats} in the functions
 }
 \examples{
 \dontrun{
+# Example 1: set reference categories for the whole dataset and choose answer option 3:
 set_refcat(data = NHANES)
 3
+
+# insert the returned string as argument refcats
 mod1 <- lm_imp(SBP ~ age + race + creat + educ, data = NHANES, refcats = 'largest')
 
-
+# Example 2:
 # specify a model formula
 fmla <- SBP ~ age + gender + race + bili + smoke + alc
 

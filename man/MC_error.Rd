@@ -12,7 +12,7 @@ MC_error(x, subset = NULL, start = NULL, end = NULL, thin = NULL,
   ablinepars = list(v = 0.05), ...)
 }
 \arguments{
-\item{x}{object inheriting from class \code{JointAI}}
+\item{x}{object inheriting from class "JointAI"}
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
@@ -26,7 +26,7 @@ Uses the same logic as the argument \code{monitor_params} in
 
 \item{digits}{number of digits for output}
 
-\item{warn}{logical; should warnings be given?; default is
+\item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. Note: this applies only to warnings
 given directly by \strong{JointAI}.}
 
@@ -57,14 +57,14 @@ given directly by \strong{JointAI}.}
 \item{ablinepars}{optional; list of parameters passed to \code{\link[graphics]{abline}()}}
 }
 \value{
-an object of class \code{MCElist} with elements \code{unscaled},
+An object of class \code{MCElist} with elements \code{unscaled},
         \code{scaled} and \code{digits}. The first two are matrices with
         columns \code{est} (posterior mean), \code{MCSE} (Monte Carlo error),
         \code{SD} (posterior standard deviation) and \code{MCSE/SD}
         (Monte Carlo error divided by post. standard deviation.)
 }
 \description{
-Calculate and plot the Monte Carlo error of the samples from a JointAI model
+Calculate and plot the Monte Carlo error of the samples from a JointAI model.
 }
 \section{Methods (by generic)}{
 \itemize{
@@ -78,7 +78,10 @@ Lesaffre & Lawson (2012) [p. 195] suggest the Monte Carlo error of a
 }
 \examples{
 mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+
 MC_error(mod)
+
+plot(MC_error(mod), ablinepars = list(lty = 2))
 
 }
 \references{
@@ -87,5 +90,6 @@ Lesaffre, E., & Lawson, A. B. (2012).
 John Wiley & Sons.
 }
 \seealso{
-The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
+The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+contains some examples how to specify the argument \code{subset}.
 }

@@ -1,26 +1,38 @@
 #' Add samples to an object of class JointAI
 #'
-#' Allows to continue sampling from an existing object of class JointAI
+#' Allows to continue sampling from an existing object of class "JointAI".
 #' @inheritParams sharedParams
 #' @inheritParams model_imp
 #' @param add logical; should the new MCMC samples be added to the existing
 #'            samples or replace them? If samples are added, \code{thin} and
-#'            \code{var.names} are ignored
+#'            \code{var.names} are ignored.
+#'
+#' @seealso
+#' \code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{lme_imp}}
+#'
+#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#' contains some examples how to specify the argument \code{monitor_params}.
+#'
 #' @export
 #'
 #' @examples
+#' # Example 1:
+#' # run an initial JointAI model:
 #' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#'
+#' # continue sampling
 #' mod_add <- add_samples(mod, n.iter = 200, add = TRUE)
 #'
-#' # or to additionally sample imputed values
+#'
+#' # Example 2:
+#' # continue sampling, but additionally sample imputed values
 #' imps <- add_samples(mod, n.iter = 200, monitor_params = c("imps" = TRUE),
 #'                     add = FALSE)
 #'
 #'
 
 add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
-                        monitor_params = NULL,
-                        progress.bar = "text") {
+                        monitor_params = NULL, progress.bar = "text") {
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 

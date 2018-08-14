@@ -4,7 +4,7 @@
 \name{longDF}
 \alias{longDF}
 \title{Longitudinal example dataset}
-\format{A simulated data frame with 318 rows and 13 variables:
+\format{A simulated data frame with 318 rows and 13 variables with data from 100 subjects:
 \describe{
   \item{C1}{continuous, complete baseline variable}
   \item{C2}{continuous, incomplete baseline variable}
@@ -24,6 +24,6 @@
 data(longDF)
 }
 \description{
-Longitudinal example dataset
+A simulated longitudinal dataset.
 }
 \keyword{datasets}

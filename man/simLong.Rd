@@ -48,7 +48,6 @@ with information on the mothers' demographics and socioeconomic status.
   \item{age}{child age at measurement time in months}
   \item{bmi}{child BMI}
   \item{hc}{child head circumference in cm}
-  \item{ID}{subject identifier}
 }
 }
 

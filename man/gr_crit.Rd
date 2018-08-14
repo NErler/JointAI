@@ -9,7 +9,7 @@ GR_crit(object, confidence = 0.95, transform = FALSE,
   start = NULL, end = NULL, thin = NULL, warn = TRUE, ...)
 }
 \arguments{
-\item{object}{object inheriting from class \code{JointAI}}
+\item{object}{object inheriting from class "JointAI"}
 
 \item{confidence}{the coverage probability of the confidence interval for the
 potential scale reduction factor}
@@ -38,14 +38,15 @@ Uses the same logic as the argument \code{monitor_params} in
 
 \item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
-\item{warn}{logical; should warnings be given?; default is
+\item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. Note: this applies only to warnings
 given directly by \strong{JointAI}.}
 
 \item{...}{currently not used}
 }
 \description{
-Gelman-Rubin criterion for convergence (uses \code{\link[coda]{gelman.diag}})
+Calculates the Gelman-Rubin criterion for convergence
+(uses \code{\link[coda]{gelman.diag}} from package \strong{coda}).
 }
 \examples{
 mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
@@ -60,5 +61,6 @@ Posterior predictive assessment of model fitness via realized discrepancies.
 \emph{Statistica Sinica}, 733-760.
 }
 \seealso{
-The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
+The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+contains some examples how to specify the argument \code{subset}.
 }

@@ -1,4 +1,6 @@
 #' Summary of an object of class JointAI
+#'
+#' \code{summary} method for class "JointAI".
 #' @inheritParams base::print
 #' @param quantiles posterior quantiles
 #' @inheritParams sharedParams
@@ -6,12 +8,14 @@
 #'
 #' @examples
 #' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#'
 #' summary(mod1)
 #'
 #'
 #' @seealso The model fitting functions \code{\link{lm_imp}},
 #'          \code{\link{glm_imp}}, \code{\link{lme_imp}} and the
-#'          vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} for examples how to specify \code{subset}
+#'          vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#'           for examples how to specify the parameter \code{subset}.
 #'
 #' @export
 summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,

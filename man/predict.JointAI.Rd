@@ -8,7 +8,7 @@
   start = NULL, end = NULL, thin = NULL, ...)
 }
 \arguments{
-\item{object}{object inheriting from class \code{JointAI}}
+\item{object}{object inheriting from class "JointAI"}
 
 \item{newdata}{new dataset for prediction}
 
@@ -25,16 +25,16 @@
 \value{
 A list with entries "fit" and "quantiles", where
         "fit" contains the column means of \eqn{X\beta} (see details)
-        and "quantiles" contain the specified quantiles (by default 2.5%
-        and 97.5%) of each column of \eqn{X\beta}.
+        and "quantiles" contain the specified quantiles (by default 2.5\%
+        and 97.5\%) of each column of \eqn{X\beta}.
 }
 \description{
 Calculates the expected outcome value for a given set of covariate values
-and an object of class JointAI, and corresponding 2.5\% and 97.5\% (or other
+and an object of class "JointAI", and corresponding 2.5\% and 97.5\% (or other
 quantiles) credible intervals.
 }
 \details{
-A \code{model.matrix} $X$ is created from the model formula (fixed
+A \code{model.matrix} \eqn{X} is created from the model formula (fixed
          effects only) and \code{newdata}. \eqn{X\beta} is then calculated for
          each iteration of the MCMC sample in \code{object}, i.e., \eqn{X\beta}
          has \code{n.iter} rows and \code{nrow(newdata)} columns.

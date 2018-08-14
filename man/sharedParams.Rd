@@ -2,9 +2,9 @@
 % Please edit documentation in R/JointAI.R
 \name{sharedParams}
 \alias{sharedParams}
-\title{Parameters used by several functions in JointAI}
+\title{Parameters used by several functions in JointAI.}
 \arguments{
-\item{object}{object inheriting from class \code{JointAI}}
+\item{object}{object inheriting from class "JointAI"}
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
@@ -21,21 +21,21 @@ automatically chosen if unspecified}
 
 \item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
 
-\item{warn}{logical; should warnings be given?; default is
+\item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. Note: this applies only to warnings
 given directly by \strong{JointAI}.}
 
-\item{mess}{logical; should messages be given?; default is
+\item{mess}{logical; should messages be given? Default is
 \code{TRUE}. Note: this applies only to messages
 given directly by \strong{JointAI}.}
 
 \item{xlab, ylab}{labels for the x- and y-axis}
 
 \item{use_level}{logical; should the multi-level structure be taken into account?
-requires specification of the argument \code{idvar}}
+This requires specification of the argument \code{idvar}.}
 
 \item{idvar}{name of the column that specifies the multi-level grouping structure}
 }
 \description{
-Parameters used by several functions in JointAI
+Parameters used by several functions in JointAI.
 }

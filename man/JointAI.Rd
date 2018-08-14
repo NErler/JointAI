@@ -6,7 +6,7 @@
 \alias{JointAI-package}
 \title{JointAI: Joint Analysis and Imputation of Incomplete Data}
 \description{
-The JointAI package performs simultaneous imputation and inference for
+The \strong{JointAI} package performs simultaneous imputation and inference for
 incomplete data using the Bayesian framework.
 Distributions for incomplete variables are specified automatically and modeled
 jointly with the analysis model.
@@ -18,22 +18,25 @@ The package has three main functions, \code{\link{lm_imp}},
 that allow analysis using linear regression, generalized linear regression
 and linear mixed effects models. As far as possible, the specification of
 the functions is the same as the specification of their complete data
-versions (\code{\link[stats]{lm}}, \code{\link[stats]{glm}} and
-\code{\link[nlme]{lme}}).
+versions \code{\link[stats]{lm}}, \code{\link[stats]{glm}} and
+\code{\link[nlme]{lme}} (from the package
+\href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}}).
 
 
 Results can be summarized and printed with \code{\link{summary.JointAI}},
 and visualized using
 \code{\link{traceplot}} or \code{\link{densplot}}.
+The function \code{\link{predict.JointAI}} allows prediction (including credible intervals)
+from \code{JointAI} models.
 }
 
 \section{Evaluation and export}{
 
 Two criteria for evaluation of convergence and precision of the posterior
 estimate are available:
-\code{\link{GR_crit}} and \code{\link{MC_error}}
+\code{\link{GR_crit}} and \code{\link{MC_error}}.
 
-Imputed data can be exported to SPSS data using \code{\link{get_MIdat}}.
+Imputed data can be extracted and exported to SPSS data using \code{\link{get_MIdat}}.
 }
 
 \section{Vignettes}{
@@ -42,20 +45,29 @@ The following vignettes are available
 \itemize{
 \item \href{https://nerler.github.io/JointAI/articles/MinimalExample.html}{\emph{Minimal Example}}:\cr
 A minimal example demonstrating the use of
-                           \code{\link{lm_imp}}, \code{\link{summary}},
+                           \code{\link{lm_imp}},
+                           \code{\link{summary.JointAI}},
                            \code{\link{traceplot}}
                            and \code{\link{densplot}}.
-\item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{\emph{Selecting Parameters}}:\cr
+\item \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{\emph{Visualizing Incomplete Data}}:\cr
+Demonstrations of the options in \code{\link{plot_all}} (plotting histograms
+     and barplots for all variables in the data)  and \code{\link{md_pattern}}
+     (plotting or printing the missing data pattern).
+
+\item \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{\emph{Model Specification}}:\cr
+Explanation and demonstration of all parameters that are required or optional
+to specify the model structure in \code{\link{lm_imp}}, \code{\link{glm_imp}}
+and \code{\link{lme_imp}}.
+Among others, the functions \code{\link{parameters}}, \code{\link{list_impmodels}},
+\code{\link{get_imp_meth}} and \code{\link{set_refcat}} are used.
+
+\item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{\emph{Parameter Selection}}:\cr
 Examples on how to select the parameters/variables/nodes
                                 to follow using the argument \code{monitor_params}
                                 and the parameters/variables/nodes displayed
                                 in the \code{\link{summary}}, \code{\link{traceplot}},
                                 \code{\link{densplot}} or when using
                                 \code{\link{GR_crit}} or \code{\link{MC_error}}.
-\item \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{\emph{Visualizing Incomplete Data}}:\cr
-Demonstrations of the options in \code{\link{plot_all}} (plotting histograms
-     and barplots for all variables in the data)  and \code{\link{md_pattern}}
-     (plotting or printing the missing data pattern).
 }
 }
 

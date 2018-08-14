@@ -12,7 +12,7 @@ traceplot(object, ...)
   ncol = NULL, use_ggplot = FALSE, warn = TRUE, ...)
 }
 \arguments{
-\item{object}{object inheriting from class \code{JointAI}}
+\item{object}{object inheriting from class "JointAI"}
 
 \item{...}{Arguments passed on to \code{graphics::matplot}
 \describe{
@@ -65,31 +65,40 @@ automatically chosen if unspecified}
 
 \item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
 
-\item{warn}{logical; should warnings be given?; default is
+\item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. Note: this applies only to warnings
 given directly by \strong{JointAI}.}
 }
 \description{
-Creates a set of traceplots from the MCMC sample of an object of class JointAI
+Creates a set of traceplots from the MCMC sample of an object of class "JointAI".
 }
 \examples{
+# fit a JointAI model
 mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+
+
+# Example 1: simple traceplot
 traceplot(mod)
 
-# ggplot option
+
+# Example 2: ggplot version of traceplot
 traceplot(mod, use_ggplot = TRUE)
 
+
+# Example 5: changing how the ggplot version looks (using standard ggplot syntax)
 library(ggplot2)
+
 traceplot(mod, use_ggplot = TRUE) +
-theme(legend.position = 'botto') +
-xlab('iteration') +
-ylab('value') +
-scale_color_discrete(name = 'chain')
+  theme(legend.position = 'botto') +
+  xlab('iteration') +
+  ylab('value') +
+  scale_color_discrete(name = 'chain')
+
 
 }
 \seealso{
 \code{\link{summary.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
-          \code{\link{lm_imp}}
-
-The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
+         \code{\link{lm_imp}}, \code{\link{densplot}}
+         The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+         contains some examples how to specify the parameter \code{subset}.
 }

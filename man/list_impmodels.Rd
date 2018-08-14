@@ -8,7 +8,7 @@ list_impmodels(object, predvars = TRUE, regcoef = TRUE,
   otherpars = TRUE, priors = TRUE, refcat = TRUE)
 }
 \arguments{
-\item{object}{object inheriting from class \code{JointAI}}
+\item{object}{object inheriting from class "JointAI"}
 
 \item{predvars}{logical; should information on the predictor variables be printed?}
 
@@ -21,11 +21,14 @@ list_impmodels(object, predvars = TRUE, regcoef = TRUE,
 \item{refcat}{logical; should information on the reference category be printed?}
 }
 \description{
-Print a information on all imputation models used in a JointAI object,
+Print information on all imputation models used in a JointAI object,
 including the model type, names of the parameters used and hyperparameters.
 }
 \examples{
 # (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save computational time)
 mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0)
+
 list_impmodels(mod1)
+
+
 }

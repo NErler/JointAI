@@ -1,6 +1,6 @@
 #' National Health and Nutrition Examination Survey (NHANES) Data
 #'
-#' This data is a small subset of the data collected within the 2011--2012 wave
+#' This data is a small subset of the data collected within the 2011-2012 wave
 #' of the NHANES study, a study designed to assess the health and nutritional
 #' status of adults and children in the United States, conduced by the
 #' \href{https://www.cdc.gov/nchs/}{National Center for Health Statistics}.

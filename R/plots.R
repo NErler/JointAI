@@ -1,29 +1,38 @@
 #' Traceplot of a JointAI model
 #'
-#' Creates a set of traceplots from the MCMC sample of an object of class JointAI
+#' Creates a set of traceplots from the MCMC sample of an object of class "JointAI".
 #'
 #' @inheritParams sharedParams
 #' @inheritDotParams graphics::matplot -x -y -type -xlab -ylab -pch -log
 #' @name traceplot
 #'
 #' @seealso \code{\link{summary.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
-#'           \code{\link{lm_imp}}
+#'          \code{\link{lm_imp}}, \code{\link{densplot}}
+#'          The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#'          contains some examples how to specify the parameter \code{subset}.
+#'
 #' @examples
+#' # fit a JointAI model
 #' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#'
+#'
+#' # Example 1: simple traceplot
 #' traceplot(mod)
 #'
-#' # ggplot option
+#'
+#' # Example 2: ggplot version of traceplot
 #' traceplot(mod, use_ggplot = TRUE)
 #'
-#' library(ggplot2)
-#' traceplot(mod, use_ggplot = TRUE) +
-#' theme(legend.position = 'botto') +
-#' xlab('iteration') +
-#' ylab('value') +
-#' scale_color_discrete(name = 'chain')
 #'
-#' @seealso
-#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
+#' # Example 5: changing how the ggplot version looks (using standard ggplot syntax)
+#' library(ggplot2)
+#'
+#' traceplot(mod, use_ggplot = TRUE) +
+#'   theme(legend.position = 'botto') +
+#'   xlab('iteration') +
+#'   ylab('value') +
+#'   scale_color_discrete(name = 'chain')
+#'
 #'
 #' @export
 traceplot <- function(object, ...) {
@@ -71,7 +80,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' Plot posterior density from JointAI model
 #'
 #' Plots a set of densities (per MC chain and coefficient) from the MCMC sample
-#' of an object of class JointAI
+#' of an object of class "JointAI".
 #' @inheritParams traceplot
 #' @param vlines list, where each element is a named list of parameters that
 #'               can be passed to \code{\link[graphics]{abline}} to create
@@ -83,33 +92,43 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' @param ... additional parameters passed to \code{\link[graphics]{plot}}
 #' @examples
 #'
+#' # fit a JointAI object:
 #' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
-#' # densplot without vertical lines
+#' # Example 1: basic densityplot
 #' densplot(mod)
 #'
-#' # use vlines to mark zero
+#'
+#' # Example 2: use vlines to mark zero
 #' densplot(mod, col = c("darkred", "darkblue", "darkgreen"),
 #'          vlines = list(list(v = rep(0, nrow(summary(mod)$stats)),
 #'                             col = grey(0.8))))
 #'
-#' # use vlines to visualize the posterior mean and 2.5% and 97.5% quantiles
+#'
+#' # Example 3: use vlines to visualize the posterior mean and 2.5% and 97.5% quantiles
 #' densplot(mod, vlines = list(list(v = summary(mod)$stats[, "Mean"], lty = 1, lwd = 2),
 #'                             list(v = summary(mod)$stats[, "2.5%"], lty = 2),
 #'                             list(v = summary(mod)$stats[, "97.5%"], lty = 2)))
 #'
-#' # ggplot version
+#'
+#' # Example 4: ggplot version
 #' densplot(mod, use_ggplot = TRUE)
 #'
+#'
+#' # Example 5: changing how the ggplot version looks (using standard ggplot syntax)
 #' library(ggplot2)
+#'
 #' densplot(mod, use_ggplot = TRUE) +
-#' xlab("value") +
-#' theme(legend.position = 'bottom') +
-#' scale_color_brewer(palette = 'Dark2', name = 'chain')
+#'   xlab("value") +
+#'   theme(legend.position = 'bottom') +
+#'   scale_color_brewer(palette = 'Dark2', name = 'chain')
+#'
 #'
 #' @seealso
-#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
-
+#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#' contains some examples how to specify the argument \code{subset}.
+#'
+#'
 #' @export
 densplot <- function(object, ...) {
   UseMethod("densplot")
@@ -258,7 +277,7 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 #' Plots a grid of histograms (for continuous variables) and barplots (for
 #' categorical variables) together with the proportion of missing values and
 #' the name of each variable.
-#' @param data a data frame (or a matrix)
+#' @param data a \code{data.frame} (or a \code{matrix})
 #' @param fill color the histograms and bars are filled with
 #' @param border color of the borders of the histograms and bars
 #' @param allNA logical; if \code{FALSE} (default) the proportion of missing

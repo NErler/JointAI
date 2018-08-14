@@ -13,7 +13,7 @@ densplot(object, ...)
   warn = TRUE, ...)
 }
 \arguments{
-\item{object}{object inheriting from class \code{JointAI}}
+\item{object}{object inheriting from class "JointAI"}
 
 \item{...}{additional parameters passed to \code{\link[graphics]{plot}}}
 
@@ -44,41 +44,50 @@ automatically chosen if unspecified}
 
 \item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
 
-\item{warn}{logical; should warnings be given?; default is
+\item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. Note: this applies only to warnings
 given directly by \strong{JointAI}.}
 }
 \description{
 Plots a set of densities (per MC chain and coefficient) from the MCMC sample
-of an object of class JointAI
+of an object of class "JointAI".
 }
 \examples{
 
+# fit a JointAI object:
 mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 
-# densplot without vertical lines
+# Example 1: basic densityplot
 densplot(mod)
 
-# use vlines to mark zero
+
+# Example 2: use vlines to mark zero
 densplot(mod, col = c("darkred", "darkblue", "darkgreen"),
          vlines = list(list(v = rep(0, nrow(summary(mod)$stats)),
                             col = grey(0.8))))
 
-# use vlines to visualize the posterior mean and 2.5\% and 97.5\% quantiles
+
+# Example 3: use vlines to visualize the posterior mean and 2.5\% and 97.5\% quantiles
 densplot(mod, vlines = list(list(v = summary(mod)$stats[, "Mean"], lty = 1, lwd = 2),
                             list(v = summary(mod)$stats[, "2.5\%"], lty = 2),
                             list(v = summary(mod)$stats[, "97.5\%"], lty = 2)))
 
-# ggplot version
+
+# Example 4: ggplot version
 densplot(mod, use_ggplot = TRUE)
 
+
+# Example 5: changing how the ggplot version looks (using standard ggplot syntax)
 library(ggplot2)
+
 densplot(mod, use_ggplot = TRUE) +
-xlab("value") +
-theme(legend.position = 'bottom') +
-scale_color_brewer(palette = 'Dark2', name = 'chain')
+  xlab("value") +
+  theme(legend.position = 'bottom') +
+  scale_color_brewer(palette = 'Dark2', name = 'chain')
+
 
 }
 \seealso{
-The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
+The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+contains some examples how to specify the argument \code{subset}.
 }

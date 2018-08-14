@@ -24,6 +24,6 @@
 data(wideDF)
 }
 \description{
-Cross-sectional example dataset
+A simulated cross-sectional dataset.
 }
 \keyword{datasets}

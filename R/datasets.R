@@ -1,10 +1,12 @@
 #' Longitudinal example dataset
 #'
+#' A simulated longitudinal dataset.
+#'
 #' @docType data
 #'
 #' @usage data(longDF)
 #'
-#' @format A simulated data frame with 318 rows and 13 variables:
+#' @format A simulated data frame with 318 rows and 13 variables with data from 100 subjects:
 #' \describe{
 #'   \item{C1}{continuous, complete baseline variable}
 #'   \item{C2}{continuous, incomplete baseline variable}
@@ -29,6 +31,8 @@
 
 
 #' Cross-sectional example dataset
+#'
+#' A simulated cross-sectional dataset.
 #'
 #' @docType data
 #'

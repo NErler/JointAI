@@ -12,18 +12,28 @@
 #' \item{\code{meth}}{named vector specifying imputation methods and sequence}
 #' \item{\code{fixed}}{supplied fixed effects structure}
 #' \item{\code{random}}{supplied random effects structure}
-#' \item{\code{Mlist}}{a list of matrices that contain the data split up into
-#'        outcome (y), cross-sectional main effects (Xc), cross-sectional interactions (Xic),
-#'        longitudinal main effects (Xl), longitudinal interactions (Xil),
-#'        categorical incomplete variables (Xcat), transformed cross-sectional
-#'        variables (Xtrafo), random effects design matrix (Z),
-#'        the vector of variables to be scaled (scale_vars), reference values
-#'        and dummies for categorical variables (refs), specification for
-#'        transformations (trafos), specification for hierarchical centering (hc_list),
-#'        vector of auxiliary variables (auxvars), grouping specification (groups),
-#'        updated fixed effects structure (fixed2), names of updated design matrix
-#'        (X2_names)}
-#' \item{\code{refcats}}{A list naming the reference categories for all categorical covariates.}
+#' \item{\code{Mlist}}{a list: containing the data, split up into
+#'       \itemize{
+#'         \item outcome (\code{y})
+#'         \item cross-sectional main effects (\code{Xc})
+#'         \item cross-sectional interactions (\code{Xic})
+#'         \item longitudinal main effects (\code{Xl})
+#'         \item longitudinal interactions (\code{Xil})
+#'         \item categorical incomplete variables (\code{Xcat})
+#'         \item transformed cross-sectional variables (\code{Xtrafo})
+#'         \item random effects design matrix (\code{Z})
+#'       }
+#'       and other important specifications:
+#'       \itemize{
+#'         \item specification for transformations (\code{trafos})
+#'         \item specification for hierarchical centering (\code{hc_list})
+#'         \item reference values and dummies for categorical variables (\code{refs})
+#'         \item vector of auxiliary variables (\code{auxvars})
+#'         \item grouping specification (\code{groups})
+#'         \item the vector of variables to be scaled (\code{scale_vars})
+#'         \item updated fixed effects structure (\code{fixed2})
+#'         \item names of updated design matrix (\code{X2_names})
+#'       }}
 #' \item{\code{K}}{matrix specifying the indices of the regression coefficients
 #' that are related to different parts of the model}
 #' \item{\code{K_imp}}{matrix specifying the indices of regression coefficients
@@ -39,9 +49,11 @@
 #'      \item{\code{thin}}{thinning of the MCMC sample}
 #'      \item{\code{inits}}{a list containing the initial values that were used}
 #'      }}
+#' \item{\code{monitor_params}}{the list of parameter groups to be monitored}
 #' \item{\code{data_list}}{list with data that was passed to JAGS}
 #' \item{\code{scale_pars}}{matrix with parameters used to center and scale the continuous variables}
 #' \item{\code{hyperpars}}{a list containing the values of the hyperparameters used}
+#' \item{\code{imp_par_list}}{a list with parameters used to write the imputation model syntax}
 #' \item{\code{model}}{JAGS model}
 #' \item{\code{sample}}{MCMC sample (Note: if continuous variables have been scaled
 #' during the sampling, the posterior sample here is on the scaled scale, not on

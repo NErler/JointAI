@@ -1,6 +1,7 @@
 #' Gelman-Rubin criterion for convergence
 #'
-#' Gelman-Rubin criterion for convergence (uses \code{\link[coda]{gelman.diag}})
+#' Calculates the Gelman-Rubin criterion for convergence
+#' (uses \code{\link[coda]{gelman.diag}} from package \strong{coda}).
 #' @inheritParams sharedParams
 #' @inheritParams coda::gelman.diag
 #' @inheritParams summary.JointAI
@@ -10,7 +11,8 @@
 #' \emph{Statistica Sinica}, 733-760.
 #'
 #' @seealso
-#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
+#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#' contains some examples how to specify the argument \code{subset}.
 #'
 #'
 #' @examples
@@ -25,7 +27,7 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
                     start = NULL, end = NULL, thin = NULL, warn = TRUE, ...) {
 
   if (!inherits(object, "JointAI"))
-    stop("Object must be of class JointAI.")
+    stop('Object must be of class "JointAI".')
 
   if (is.null(object$sample))
     stop("No mcmc sample.")
@@ -52,13 +54,13 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 
 #' Monte Carlo error
 #'
-#' Calculate and plot the Monte Carlo error of the samples from a JointAI model
-#' @param x object inheriting from class \code{JointAI}
+#' Calculate and plot the Monte Carlo error of the samples from a JointAI model.
+#' @param x object inheriting from class "JointAI"
 #' @param digits number of digits for output
 #' @inheritParams sharedParams
 #' @inheritDotParams mcmcse::mcse.mat -x
 #'
-#' @return an object of class \code{MCElist} with elements \code{unscaled},
+#' @return An object of class \code{MCElist} with elements \code{unscaled},
 #'         \code{scaled} and \code{digits}. The first two are matrices with
 #'         columns \code{est} (posterior mean), \code{MCSE} (Monte Carlo error),
 #'         \code{SD} (posterior standard deviation) and \code{MCSE/SD}
@@ -75,11 +77,15 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #' John Wiley & Sons.
 #'
 #' @seealso
-#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters} contains some examples how to specify \code{subset}.
+#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#' contains some examples how to specify the argument \code{subset}.
 #'
 #' @examples
 #' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#'
 #' MC_error(mod)
+#'
+#' plot(MC_error(mod), ablinepars = list(lty = 2))
 #'
 #' @export
 MC_error <- function(x, subset = NULL,
@@ -87,7 +93,7 @@ MC_error <- function(x, subset = NULL,
                      digits = 2, warn = TRUE, ...) {
 
   if (!inherits(x, "JointAI"))
-    stop("x must be of class JointAI.")
+    stop('x must be of class "JointAI".')
 
   if (is.null(x$sample))
     stop("No mcmc sample.")

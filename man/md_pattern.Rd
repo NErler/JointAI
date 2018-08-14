@@ -12,7 +12,7 @@ md_pattern(data, color = c(grDevices::grey(0.1), grDevices::grey(0.7)),
 \arguments{
 \item{data}{data frame}
 
-\item{color}{vector of length 2, that specifies the color used to indicate
+\item{color}{vector of length two, that specifies the color used to indicate
 observed and missing  (in that order)}
 
 \item{border}{color of the grid}
@@ -34,6 +34,9 @@ y-axis (on the right) be printed?}
 \description{
 Plot the pattern of missing data.
 }
+\note{
+This function requires the \href{https://CRAN.R-project.org/package=ggplot2}{\strong{ggplot2}} package to be installed.
+}
 \examples{
 par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
 md_pattern(wideDF)
@@ -41,5 +44,6 @@ md_pattern(wideDF)
 
 }
 \seealso{
-Vignette: \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
+See the vignette \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
+for more examples.
 }

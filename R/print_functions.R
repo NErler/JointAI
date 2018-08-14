@@ -1,6 +1,6 @@
 #' List imputation models
 #'
-#' Print a information on all imputation models used in a JointAI object,
+#' Print information on all imputation models used in a JointAI object,
 #' including the model type, names of the parameters used and hyperparameters.
 #'
 #' @inheritParams sharedParams
@@ -13,7 +13,10 @@
 #' @examples
 #' # (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save computational time)
 #' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0)
+#'
 #' list_impmodels(mod1)
+#'
+#'
 #' @export
 
 list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
@@ -227,17 +230,17 @@ print_seq <- function(min, max) {
 
 #' Parameter names of an JointAI object
 #'
-#' Returns the names of the parameters/nodes of an object of class JointAI.
-#' If the object does not contain any MCMC samples, the parameters/nodes for
-#' which a monitor is set is returned
+#' Returns the names of the parameters/nodes of an object of class "JointAI" for
+#' which a monitor is set.
 #'
 #' @inheritParams sharedParams
 #' @param ... currently not used
 #'
 #' @examples
 #' # (does not need MCMC samples to work, so we will set n.adapt = 0 and
-#' # n.iter = 0 to save computational time)
+#' # n.iter = 0 to reduce computational time)
 #' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0)
+#'
 #' parameters(mod1)
 #'
 #' @export

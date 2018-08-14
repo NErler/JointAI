@@ -9,7 +9,7 @@ plot_all(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8),
   xlab = "", ylab = "frequency", ...)
 }
 \arguments{
-\item{data}{a data frame (or a matrix)}
+\item{data}{a \code{data.frame} (or a \code{matrix})}
 
 \item{nrow}{optional number of rows and columns in the plot layout;
 automatically chosen if unspecified}
@@ -26,7 +26,7 @@ values is only given for variables that have missing values,
 if \code{TRUE} it is given for all variables}
 
 \item{use_level}{logical; should the multi-level structure be taken into account?
-requires specification of the argument \code{idvar}}
+This requires specification of the argument \code{idvar}.}
 
 \item{idvar}{name of the column that specifies the multi-level grouping structure}
 

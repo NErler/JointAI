@@ -1,9 +1,10 @@
-#' Extract multiple imputed datasets (and export to SPSS)
+#' Extract multiple imputed datasets
 #'
-#' Extracts a dataset containing multiple imputed datasets. These data can be
-#' automatically exported to SPSS (i.e., a .txt file containing the data and a
+#' Creates a dataset containing multiple imputed datasets stacked onto each other
+#' (i.e., long format).
+#' These data can be automatically exported to SPSS (i.e., a .txt file containing the data and a
 #' .sps file containing syntax to generate a .sav file). For the export function
-#' the \href{https://CRAN.R-project.org/package=foreign}{foreign} package needs to be installed.
+#' the \href{https://CRAN.R-project.org/package=foreign}{\strong{foreign}} package needs to be installed.
 #' @inheritParams sharedParams
 #' @param m number of imputed datasets
 #' @param include should the original, incomplete data be included?
@@ -16,13 +17,17 @@
 #'
 #' @return A dataframe containing the imputed values (and original data) stacked.
 #'        The variable \code{Imputation_} identifies the imputations.
+#'        In cross-sectional datasets the
+#'        variable \code{.imp} is added as subject identifier.
 #' @examples
+#' # fit a model and monitor the imputed values with monitor_params = c(imps = TRUE)#'
+#' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, monitor_params = c(imps = TRUE), n.iter = 100)
 #'
-#' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' # Example 1: without export to SPSS
 #' MIs <- get_MIdat(mod, m = 3, seed = 123)
 #'
 #' \dontrun{
-#' # or with export for SPSS (here: to the temporary directory "temp_dir")
+#' # Example 2: with export for SPSS (here: to the temporary directory "temp_dir")
 #' temp_dir <- tempdir()
 #' MIs <- get_MIdat(mod, m = 3, seed = 123, resdir = temp_dir,
 #'                  filename = "example_imputation",

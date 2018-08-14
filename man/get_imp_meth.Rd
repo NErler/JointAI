@@ -7,27 +7,30 @@
 get_imp_meth(fixed, random = NULL, data, auxvars = NULL)
 }
 \arguments{
-\item{fixed}{a two sided (fixed effects) model formula (see \code{\link[stats]{formula}}).}
+\item{fixed}{a two sided formula describing the fixed-effects part of the
+model (see \code{\link[stats]{formula}})}
 
 \item{random}{only for \code{lme_imp}:
 a one-sided formula of the form \code{~x1 + ... + xn | g},
 where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}
 
-\item{data}{a data frame}
+\item{data}{a \code{data.frame}}
 
 \item{auxvars}{optional vector of variable names that should be used as
 predictors in the imputation procedure (and will be imputed
 if necessary) but are not part of the analysis model}
 }
 \value{
-a named vector containing those variables in \code{data}
+A named vector containing those variables in \code{data}
         that have missing values and their assigned default imputation methods,
-        sorted by proportion of missing values
+        sorted by proportion of missing values.
 }
 \description{
 Find default imputation methods and order
 }
 \examples{
 get_imp_meth(y ~ C1 + C2 + B2 + O2 + M2, data = wideDF)
+
+
 }

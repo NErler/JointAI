@@ -1,7 +1,7 @@
 #' Joint analysis and imputation of incomplete data
 #'
-#' \code{lm_imp}, \code{glm_imp} and \code{lme_imp} estimate linear, generalized
-#' linear and linear mixed models, respectively, using MCMC sampling.
+#' Functions to estimate linear, generalized
+#' linear and linear mixed models using MCMC sampling.
 #'
 #' @param formula a two sided model formula (see \code{\link[stats]{formula}})
 #' @param fixed a two sided formula describing the fixed-effects part of the
@@ -10,7 +10,7 @@
 #'               a one-sided formula of the form \code{~x1 + ... + xn | g},
 #'               where \code{x1 + ... + xn} specifies the model for the random
 #'               effects and \code{g} the grouping variable
-#' @param data a data frame
+#' @param data a \code{data.frame}
 #' @param family only for \code{glm_imp}:
 #'               a description of the distribution and link function to
 #'               be used in the model. This can be a character string naming a
@@ -18,14 +18,16 @@
 #'               a family function. (See \code{\link[stats]{family}} and the
 #'               `Details` section below.)
 #' @param monitor_params named vector specifying which parameters should be
-#'                       monitored, see details.
+#'                       monitored.
 #' @param inits optional specification of initial values in the form of a list
-#'              or a function (see \code{\link[rjags]{jags.model}}.
+#'              or a function (see \code{\link[rjags]{jags.model}}).
 #'              If omitted, initial values will be generated automatically.
 #'              It is an error to supply an initial value for an observed node.
+#' @param progress.bar Character string specifying the type of progress bar.
+#'                     Possible values are "text", "gui", and "none".
+#'                     See \code{\link[rjags]{update}}.
 #' @inheritParams rjags::jags.model
 #' @inheritParams rjags::coda.samples
-#' @inheritParams rjags::update.jags
 #' @inheritParams sharedParams
 #' @param modelname optional; character string specifying the name of model file
 #'                  (including the ending, either .R or .txt).
@@ -51,8 +53,9 @@
 #' @param refcats optional; a named list specifying which category should be
 #'                used as reference category for each of the categorical variables.
 #'                Options are the category label, the category number,
-#'                'first" (the first category) or "largest" (chooses the
-#'                category with the most observations). Default is "first".
+#'                "first" (the first category), "last" (the last category)
+#'                or "largest" (chooses the category with the most observations).
+#'                Default is "first".
 #' @param trunc optional named list specifying the limits of truncation for the
 #'              distribution of the named incomplete variables
 #'              of each
@@ -67,18 +70,16 @@
 #' @param hyperpars list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
 #'                  only needs to be supplied if hyperparameters other than the
 #'                  default should be used
-#' @param ... additional, optional arguments, see below
+#' @param scale_pars optional matrix of parameters used for centering and
+#'                   scaling continuous covariates. If not specified, this will
+#'                   be calculated automatically. If \code{FALSE}, no scaling
+#'                   will be done.
+#' @param ... additional, optional arguments
 #'
 #'
-#' @section Optional arguments:
-#' There are some optional parameters that can be passed to \code{\dots}
-#' \describe{
-#' \item{\code{scale_pars}}{optional matrix of parameters used for centering and
-#' scaling continuous covariates. If not specified, this will be calculated
-#' automatically. If \code{FALSE}, no scaling will be done.}
-#'}
 #'
 #' @section Details:
+#' See also the vignette: \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification}
 #' \subsection{Implemented distribution families and link functions for \code{glm_imp()}}{
 #' \tabular{ll}{
 # \emph{family} \tab \emph{link}\cr
@@ -103,7 +104,7 @@
 #' }}
 #'
 #' \subsection{Parameters to follow (\code{monitor_params})}{
-#' See also the vignette: \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Selecting Parameters}
+#' See also the vignette: \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}\cr
 #'
 #' Named vector specifying which parameters should be monitored. This can be done
 #' either directly by specifying the name of the parameter or indirectly by one
@@ -142,21 +143,37 @@
 #'}
 #'
 #'
-#' @return An object of class \code{JointAI}
+#' @return An object of class "JointAI".
 #'
 #'
 #'
-#' @seealso \code{\link{set_refcat}},
-#' \code{\link{traceplot}}, \code{\link{densplot}},
+#' @seealso \code{\link{set_refcat}}, \code{\link{get_imp_meth}},
+#'          \code{\link{traceplot}}, \code{\link{densplot}},
 #'          \code{\link{summary.JointAI}}, \code{\link{MC_error}},
 #'          \code{\link{GR_crit}}, \code{\link[rjags]{jags.model}},
-#'          \code{\link[rjags]{coda.samples}}, \code{predict.JointAI}
+#'          \code{\link[rjags]{coda.samples}}, \code{\link{predict.JointAI}},
+#'          \code{\link{JointAIObject}}, \code{\link{add_samples}},
+#'          \code{\link{parameters}}, \code{\link{list_impmodels}}
+#'
+#' Vignettes
+#' \itemize{
+#'   \item \href{https://nerler.github.io/JointAI/articles/MinimalExample.html}{Minimal Example}
+#'   \item \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification}
+#'   \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#'}
 #'
 #' @examples
 #'
+#' # Example 1: Linear regression with incomplete covariates
 #' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#'
+#'
+#' # Example 2: Logistic regression with incomplete covariats
 #' mod2 <- glm_imp(B1 ~ C1 + C2 + M2, data = wideDF,
 #'                 family = binomial(link = "logit"), n.iter = 100)
+#'
+#'
+#' # Example 3: Linear mixed model with incomplete covariates
 #' mod3 <- lme_imp(y ~ C1 + B2 + L1 + time, random = ~ time|id,
 #'                 data = longDF, n.iter = 500)
 #'

@@ -1,14 +1,17 @@
 #' Find default imputation methods and order
-#' @param fixed a two sided (fixed effects) model formula (see \code{\link[stats]{formula}}).
 #' @inheritParams model_imp
 # @param auxvars vector of variable names that should be used as predictors in
 #                the imputation procedure (and will be imputed if necessary)
 #                but are not part of the analysis model
-#' @return a named vector containing those variables in \code{data}
+#' @return A named vector containing those variables in \code{data}
 #'         that have missing values and their assigned default imputation methods,
-#'         sorted by proportion of missing values
+#'         sorted by proportion of missing values.
+#'
+#'
 #' @examples
 #' get_imp_meth(y ~ C1 + C2 + B2 + O2 + M2, data = wideDF)
+#'
+#'
 #' @export
 get_imp_meth <- function(fixed, random = NULL, data,
                          auxvars = NULL){
@@ -32,7 +35,7 @@ get_imp_meth <- function(fixed, random = NULL, data,
 
   allvars <- unique(c(all.vars(fixed[[3]]),
                       all.vars(random2[2]),
-                      if(!is.null(auxvars))
+                      if (!is.null(auxvars))
                         all.vars(as.formula(paste('~',
                                                   paste(auxvars, collapse = "+")))
                         )

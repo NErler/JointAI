@@ -2,7 +2,7 @@
 #'
 #' Plot the pattern of missing data.
 #' @param data data frame
-#' @param color vector of length 2, that specifies the color used to indicate
+#' @param color vector of length two, that specifies the color used to indicate
 #'              observed and missing  (in that order)
 #' @param border color of the grid
 #' @param plot logical; should the missing data pattern be plotted?
@@ -13,7 +13,10 @@
 #' @inheritParams ggplot2::theme
 #' @param ... optional additional parameters, currently not used
 #'
-#' @seealso Vignette: \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
+#' @seealso See the vignette \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
+#' for more examples.
+#'
+#' @note This function requires the \href{https://CRAN.R-project.org/package=ggplot2}{\strong{ggplot2}} package to be installed.
 #' @export
 #'
 #' @examples
