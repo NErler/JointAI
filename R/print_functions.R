@@ -127,7 +127,7 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
     if (object$meth[i] == "logit") {
       cat(paste0("Logistic imputation model for '", names(object$meth)[i], "'\n"))
       if (refcat)
-        cat(paste0("* Reference category: '", object$refcats[[names(object$meth)[i]]], "'\n"))
+        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$meth)[i]]], "'\n"))
       if (predvars)
         cat(paste0("* Predictor variables: \n",
                  tab(), paste(colnames(object$data_list$Xc)[
@@ -147,7 +147,7 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
     if (object$meth[i] == "multilogit") {
       cat(paste0("Multinomial logit imputation model for '", names(object$meth)[i], "'\n"))
       if (refcat)
-        cat(paste0("* Reference category: '", object$refcats[[names(object$meth)[i]]], "'\n"))
+        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$meth)[i]]], "'\n"))
       if (predvars)
         cat(paste0("* Predictor variables: \n",
                  tab(), paste(colnames(object$data_list$Xc)[
@@ -155,13 +155,13 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
                    collapse = ", "), "\n"))
       if (regcoef) {
         cat(paste0("* Regression coefficients: \n"))
-        for (j in seq_along(attr(object$refcats[[names(object$meth)[i]]], "dummies"))) {
+        for (j in seq_along(attr(object$Mlist$refs[[names(object$meth)[i]]], "dummies"))) {
           cat(paste0(tab(), "- '",
-                     attr(object$refcats[[names(object$meth)[i]]], "dummies")[j],
+                     attr(object$Mlist$refs[[names(object$meth)[i]]], "dummies")[j],
                      "': alpha[",
-                     print_seq(object$K_imp[attr(object$refcats[[names(object$meth)[i]]],
+                     print_seq(object$K_imp[attr(object$Mlist$refs[[names(object$meth)[i]]],
                                                  "dummies")[j], "start"],
-                               object$K_imp[attr(object$refcats[[names(object$meth)[i]]],
+                               object$K_imp[attr(object$Mlist$refs[[names(object$meth)[i]]],
                                                  "dummies")[j],  "end"]),
                      "] ",
                      if (priors) {
@@ -174,7 +174,7 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
     if (object$meth[i] == "cumlogit") {
       cat(paste0("Cumulative logit imputation model for '", names(object$meth)[i], "'\n"))
       if (refcat)
-        cat(paste0("* Reference category: '", object$refcats[[names(object$meth)[i]]], "'\n"))
+        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$meth)[i]]], "'\n"))
       if (predvars)
         cat(paste0("* Predictor variables: \n",
                    tab(), paste(colnames(object$data_list$Xc)[
@@ -194,22 +194,22 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
                    }, "\n"))
       if (otherpars) {
         cat(paste0("* Intercepts:\n",
-                   tab(), "- ", levels(object$refcats[[names(object$meth)[i]]])[1],
+                   tab(), "- ", levels(object$Mlist$refs[[names(object$meth)[i]]])[1],
                    ": gamma_", names(object$meth)[i],
                    "[1] ",
                    if (priors) {
                      paste0("(normal prior with mean ",  object$data_list$mu_delta_ordinal,
                             " and precision ", object$data_list$tau_delta_ordinal, ")")
                    }, "\n"))
-        for (j in 2:length(attr(object$refcats[[names(object$meth)[i]]], "dummies"))) {
-          cat(paste0(tab(), "- ", levels(object$refcats[[names(object$meth)[i]]])[j],
+        for (j in 2:length(attr(object$Mlist$refs[[names(object$meth)[i]]], "dummies"))) {
+          cat(paste0(tab(), "- ", levels(object$Mlist$refs[[names(object$meth)[i]]])[j],
                      ": gamma_", names(object$meth)[i], "[", j, "] = gamma_",
-                     names(object$meth)[i], "[", j-1, "] + exp(delta_",
-                     names(object$meth)[i], "[", j-1, "])\n"))
+                     names(object$meth)[i], "[", j - 1, "] + exp(delta_",
+                     names(object$meth)[i], "[", j - 1, "])\n"))
         }
         cat(paste0("* Increments:\n",
                    tab(), "delta_", names(object$meth)[i],
-                   "[",print_seq(1, length(levels(object$refcats[[names(object$meth)[i]]])) - 2),
+                   "[",print_seq(1, length(levels(object$Mlist$refs[[names(object$meth)[i]]])) - 2),
                    "] ",
                    if (priors) {
                      paste0("(normal prior(s) with mean ",  object$data_list$mu_delta_ordinal,

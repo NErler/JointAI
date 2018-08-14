@@ -89,8 +89,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 get_aux <- function(object) {
   aux <- object$Mlist$auxvars
   unlist(sapply(aux, function(x)
-    if (x %in% names(object$refcats))
-      attr(object$refcats[[x]], 'dummies')
+    if (x %in% names(object$Mlist$refs))
+      attr(object$Mlist$refs[[x]], 'dummies')
     else x
   ))
 }
