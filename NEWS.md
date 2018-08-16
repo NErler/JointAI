@@ -6,7 +6,9 @@
 
 ## Minor changes
 * `plot_all()` uses `xpd = TRUE` when printing text for character variables
-  
+* `list_impmodels()` uses linebreak when output of predictor variables exceeds
+  `getOption("width")`
+
   
 --------------------------------------------------------------------------------
 # JointAI 0.3.0

@@ -24,7 +24,14 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
+
   for (i in seq_along(object$meth)) {
+    pv <- if (predvars)
+      paste0("* Predictor variables: \n",
+             tab(), add_breaks(paste(colnames(object$data_list$Xc)[
+               object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+               collapse = ", ")), "\n")
+
     if (i > 1) cat("\n")
     if (object$meth[i] %in% c("norm", "lognorm")) {
       type <- switch(object$meth[i],
@@ -33,10 +40,11 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
 
       cat(paste0(type$name, " imputation model for '", names(object$meth)[i], "'\n"))
       if (predvars)
-        cat(paste0("* Predictor variables: \n",
-                   tab(), paste(colnames(object$data_list$Xc)[
-                     object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
-                     collapse = ", "), "\n"))
+        cat(pv)
+        # cat(paste0("* Predictor variables: \n",
+        #            tab(), paste(colnames(object$data_list$Xc)[
+        #              object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+        #              collapse = ", "), "\n"))
       if (regcoef)
         cat(paste0("* Regression coefficients: \n",
                    tab(), "alpha[",
@@ -68,10 +76,11 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
                  tab(), "- rate: rate_", names(object$meth)[i],
                  " = mu_", names(object$meth)[i], " * tau_", names(object$meth)[i], "\n"))
       if (predvars)
-        cat(paste0("* Predictor variables: \n",
-                 tab(), paste(colnames(object$data_list$Xc)[
-                   object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
-                   collapse = ", "), "\n"))
+        cat(pv)
+        # cat(paste0("* Predictor variables: \n",
+        #          tab(), paste(colnames(object$data_list$Xc)[
+        #            object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+        #            collapse = ", "), "\n"))
       if (regcoef)
         cat(paste0("* Regression coefficients: \n",
                    tab(), "alpha[",
@@ -101,10 +110,11 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
                  tab(), "- shape 2: shape2_", names(object$meth)[i],
                  " = (1 - mu_", names(object$meth)[i], ") * tau_", names(object$meth)[i], "\n"))
       if (predvars)
-        cat(paste0("* Predictor variables: \n",
-                 tab(), paste(colnames(object$data_list$Xc)[
-                   object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
-                   collapse = ", "), "\n"))
+        cat(pv)
+        # cat(paste0("* Predictor variables: \n",
+        #          tab(), paste(colnames(object$data_list$Xc)[
+        #            object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+        #            collapse = ", "), "\n"))
       if (regcoef)
         cat(paste0("* Regression coefficients: \n",
                    tab(), "alpha[",
@@ -129,10 +139,11 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
       if (refcat)
         cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$meth)[i]]], "'\n"))
       if (predvars)
-        cat(paste0("* Predictor variables: \n",
-                 tab(), paste(colnames(object$data_list$Xc)[
-                   object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
-                   collapse = ", "), "\n"))
+        cat(pv)
+        # cat(paste0("* Predictor variables: \n",
+        #          tab(), add_breaks(paste(colnames(object$data_list$Xc)[
+        #            object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+        #            collapse = ", ")), "\n"))
       if (regcoef)
         cat(paste0("* Regression coefficients: \n",
                    tab(), "alpha[",
@@ -149,10 +160,11 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
       if (refcat)
         cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$meth)[i]]], "'\n"))
       if (predvars)
-        cat(paste0("* Predictor variables: \n",
-                 tab(), paste(colnames(object$data_list$Xc)[
-                   object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
-                   collapse = ", "), "\n"))
+        cat(pv)
+        # cat(paste0("* Predictor variables: \n",
+        #            tab(), paste(colnames(object$data_list$Xc)[
+        #              object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+        #              collapse = ", "), "\n"))
       if (regcoef) {
         cat(paste0("* Regression coefficients: \n"))
         for (j in seq_along(attr(object$Mlist$refs[[names(object$meth)[i]]], "dummies"))) {
@@ -176,10 +188,11 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
       if (refcat)
         cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$meth)[i]]], "'\n"))
       if (predvars)
-        cat(paste0("* Predictor variables: \n",
-                   tab(), paste(colnames(object$data_list$Xc)[
-                     object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
-                     collapse = ", "), "\n"))
+        cat(pv)
+        # cat(paste0("* Predictor variables: \n",
+        #            tab(), add_breaks(paste(colnames(object$data_list$Xc)[
+        #              object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+        #              collapse = ", ")), "\n"))
       if (regcoef)
         cat(paste0("* Regression coefficients (with",
                    if (!object$imp_par_list[[names(object$meth[i])]]$intercept) "out",
@@ -225,6 +238,12 @@ print_seq <- function(min, max) {
     max
   else
     paste0(min, ":", max)
+}
+
+add_breaks <- function(string) {
+  m <- gregexpr(", ", string)[[1]]
+  br <- ifelse(c(0, diff(as.numeric(m) %/% getOption('width'))) > 0, "\n", "")
+  gsub("\n, ", ",\n  ", paste0(strsplit(string, ", ")[[1]], br, collapse = ", "))
 }
 
 
