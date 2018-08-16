@@ -3,16 +3,16 @@
 #' This data was simulated to mimic data from a longitudinal cohort study
 #' following mothers and their child from birth until approximately 4 years of
 #' age.
-#' It contains 3903 observations of 500 mother-child pairs. Children's BMI and
+#' It contains 3903 observations of 499 mother-child pairs. Children's BMI and
 #' head circumference was measured repeatedly and their age in months was recorded
 #' at each measurement. Furthermore, the data contain several baseline variables
 #' with information on the mothers' demographics and socioeconomic status.
 #'
 #'
 #' @format
-#' \code{simLong}: A data frame in long format with 3908 rows and 13 variables
+#' \code{simLong}: A data frame in long format with 3894 rows and 13 variables
 #'
-#' \code{simWide}: A data frame in wide format with 500 rows and 45 variables
+#' \code{simWide}: A data frame in wide format with 499 rows and 45 variables
 #'
 #' @section Baseline covariates: (in \code{simLong} and \code{simWide})
 #' \describe{

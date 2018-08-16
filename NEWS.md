@@ -1,3 +1,4 @@
+* `simWide`: case with no observed bmi values removed
 # JointAI 0.3.0
 
 ## Bug fixes
