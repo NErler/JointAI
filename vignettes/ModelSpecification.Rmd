@@ -589,7 +589,7 @@ It prints the names of the categorical variables that are selected by
 * a vector of auxiliary variables, or
 * a vector of naming covariates
 
-or all categorical variabels in the data if only `data` is provided,
+or all categorical variables in the data if only `data` is provided,
 and asks a number of questions which the user needs to reply to by input of 
 a number.
 
