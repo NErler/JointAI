@@ -1,4 +1,14 @@
+# JointAI 0.3.1
+
+## Bug fixes
+* `plot_all()` uses correct level-2 %NA in title
 * `simWide`: case with no observed bmi values removed
+
+## Minor changes
+* `plot_all()` uses `xpd = TRUE` when printing text for character variables
+  
+  
+--------------------------------------------------------------------------------
 # JointAI 0.3.0
 
 ## Bug fixes

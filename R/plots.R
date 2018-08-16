@@ -315,24 +315,30 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
   op <- par(mfrow = dims)
   for (i in 1:ncol(data)) {
     # specify plot title, including % missing values for incomplete variables
-    main <- if (any(is.na(data[, i])) | allNA) {
-      paste0(names(data)[i], " (", round(mean(is.na(data[, i]))*100, 1), "% NA)")
-    } else {
-      names(data)[i]
-    }
 
     if (use_level) {
       if (missing(idvar))
         stop("'idvar' must be specified when 'use_level = TRUE'.")
 
       istvar <- check_tvar(data[, i], data[, idvar])
-      main <- paste0(main, "\n", ifelse(istvar, "level-1", "level-2"))
       if (!istvar)
         x <- data[match(unique(data[, idvar]), data[, idvar]), i]
       else x <- data[, i]
     } else {
       x <- data[, i]
     }
+
+    pNA <- round(mean(is.na(x))*100, 1)
+
+    main <- if (any(is.na(data[, i])) | allNA) {
+      paste0(names(data)[i], " (", pNA, "% NA)")
+    } else {
+      names(data)[i]
+    }
+
+    if (use_level)
+      main <- paste0(main, "\n", ifelse(istvar, "level-1", "level-2"))
+
 
     if (is.factor(x)) {
       if (any(is.na(x))) {
@@ -348,8 +354,8 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
       }
     } else if (is.character(x)) {
       plot(0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "",
-           main = main)
-      text(1, 0, paste0(names(data)[i], " \nis coded as character\nand cannot be plotted."))
+           main = main, bty = 'n')
+      text(1, 0, paste0(names(data)[i], " \nis coded as character\nand cannot be plotted."), xpd = TRUE)
     } else {
       if (is.null(args_hist)) {
         hist(x, ylab = ylab, main = main,
