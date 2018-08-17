@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.1</span>
       </span>
     </div>
 
@@ -106,7 +106,7 @@
             <h3 class="subtitle">How to specify which parameters to monitor and display in the results.</h3>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2018-08-14</h4>
+            <h4 class="date">2018-08-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/SelectingParameters.Rmd"><code>vignettes/SelectingParameters.Rmd</code></a></small>
       <div class="hidden name"><code>SelectingParameters.Rmd</code></div>
@@ -423,16 +423,16 @@
 <a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">#&gt;     mess = FALSE)</span></a>
 <a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb10-16" data-line-number="16"><span class="co">#&gt; Posterior summary:</span></a>
-<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="co">#&gt;                 Mean      SD    2.5%   97.5% tail-prob.</span></a>
-<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="co">#&gt; (Intercept)  80.8790 9.57138 61.9367 98.9493       0.00</span></a>
-<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="co">#&gt; genderfemale  0.2536 2.64457 -4.6581  5.3322       0.92</span></a>
-<a class="sourceLine" id="cb10-20" data-line-number="20"><span class="co">#&gt; WC            0.3065 0.07283  0.1723  0.4509       0.00</span></a>
-<a class="sourceLine" id="cb10-21" data-line-number="21"><span class="co">#&gt; creat         8.1163 8.14408 -5.6821 24.5996       0.32</span></a>
-<a class="sourceLine" id="cb10-22" data-line-number="22"><span class="co">#&gt; alc&gt;=1        6.2865 2.36339  1.6310 10.9703       0.00</span></a>
+<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="co">#&gt;                 Mean      SD     2.5%    97.5% tail-prob.</span></a>
+<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="co">#&gt; (Intercept)  80.3247 9.90306  63.9270 101.0691     0.0000</span></a>
+<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="co">#&gt; genderfemale  0.4093 2.59864  -4.6925   5.5790     0.8667</span></a>
+<a class="sourceLine" id="cb10-20" data-line-number="20"><span class="co">#&gt; WC            0.3083 0.07712   0.1667   0.4481     0.0000</span></a>
+<a class="sourceLine" id="cb10-21" data-line-number="21"><span class="co">#&gt; creat         8.1528 8.24789 -10.4008  23.9831     0.2933</span></a>
+<a class="sourceLine" id="cb10-22" data-line-number="22"><span class="co">#&gt; alc&gt;=1        6.7247 2.17851   2.6969  11.0105     0.0000</span></a>
 <a class="sourceLine" id="cb10-23" data-line-number="23"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb10-24" data-line-number="24"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
-<a class="sourceLine" id="cb10-25" data-line-number="25"><span class="co">#&gt;           Mean     SD  2.5% 97.5%</span></a>
-<a class="sourceLine" id="cb10-26" data-line-number="26"><span class="co">#&gt; sigma_SBP 14.4 0.7624 12.92 15.96</span></a>
+<a class="sourceLine" id="cb10-25" data-line-number="25"><span class="co">#&gt;            Mean     SD  2.5% 97.5%</span></a>
+<a class="sourceLine" id="cb10-26" data-line-number="26"><span class="co">#&gt; sigma_SBP 14.43 0.8102 13.03 16.19</span></a>
 <a class="sourceLine" id="cb10-27" data-line-number="27"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb10-28" data-line-number="28"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb10-29" data-line-number="29"><span class="co">#&gt; MCMC settings:</span></a>
@@ -456,13 +456,13 @@
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; Potential scale reduction factors:</span></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt;              Point est. Upper C.I.</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; (Intercept)       0.999      1.001</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; genderfemale      1.000      1.004</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; WC                1.009      1.027</span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt; creat             1.007      1.037</span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt; alc&gt;=1            1.008      1.037</span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt; tau_SBP           0.999      0.999</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt; sigma_SBP         0.999      1.000</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; (Intercept)       1.008       1.04</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; genderfemale      0.998       1.00</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; WC                1.013       1.06</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt; creat             1.004       1.01</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt; alc&gt;=1            1.005       1.01</span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt; tau_SBP           1.013       1.04</span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt; sigma_SBP         1.017       1.05</span></a>
 <a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; Multivariate psrf</span></a>
 <a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt; </span></a>
@@ -471,13 +471,13 @@
 <a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co"># Monte Carlo Error of the MCMC sample</span></a>
 <a class="sourceLine" id="cb12-20" data-line-number="20"><span class="kw"><a href="../reference/MC_error.html">MC_error</a></span>(lm5)</a>
 <a class="sourceLine" id="cb12-21" data-line-number="21"><span class="co">#&gt;                  est    MCSE      SD MCSE/SD</span></a>
-<a class="sourceLine" id="cb12-22" data-line-number="22"><span class="co">#&gt; (Intercept)  38.8860 2.6e+00 4.7e+01   0.056</span></a>
-<a class="sourceLine" id="cb12-23" data-line-number="23"><span class="co">#&gt; genderfemale  0.2536 1.5e-01 2.6e+00   0.056</span></a>
-<a class="sourceLine" id="cb12-24" data-line-number="24"><span class="co">#&gt; WC            0.0210 2.0e-04 5.0e-03   0.041</span></a>
-<a class="sourceLine" id="cb12-25" data-line-number="25"><span class="co">#&gt; creat        47.4095 2.6e+00 4.8e+01   0.055</span></a>
-<a class="sourceLine" id="cb12-26" data-line-number="26"><span class="co">#&gt; alc&gt;=1        6.2865 1.6e-01 2.4e+00   0.067</span></a>
-<a class="sourceLine" id="cb12-27" data-line-number="27"><span class="co">#&gt; tau_SBP       0.0049 2.3e-05 5.1e-04   0.045</span></a>
-<a class="sourceLine" id="cb12-28" data-line-number="28"><span class="co">#&gt; sigma_SBP    14.3972 3.4e-02 7.6e-01   0.045</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-22" data-line-number="22"><span class="co">#&gt; (Intercept)  38.1398 4.2e+00 4.8e+01   0.088</span></a>
+<a class="sourceLine" id="cb12-23" data-line-number="23"><span class="co">#&gt; genderfemale  0.4093 1.7e-01 2.6e+00   0.066</span></a>
+<a class="sourceLine" id="cb12-24" data-line-number="24"><span class="co">#&gt; WC            0.0211 3.2e-04 5.3e-03   0.061</span></a>
+<a class="sourceLine" id="cb12-25" data-line-number="25"><span class="co">#&gt; creat        47.6226 4.2e+00 4.8e+01   0.087</span></a>
+<a class="sourceLine" id="cb12-26" data-line-number="26"><span class="co">#&gt; alc&gt;=1        6.7247 1.1e-01 2.2e+00   0.051</span></a>
+<a class="sourceLine" id="cb12-27" data-line-number="27"><span class="co">#&gt; tau_SBP       0.0048 3.2e-05 5.4e-04   0.060</span></a>
+<a class="sourceLine" id="cb12-28" data-line-number="28"><span class="co">#&gt; sigma_SBP    14.4324 4.9e-02 8.1e-01   0.060</span></a></code></pre></div>
 <p>When <code>analysis_main</code> was not switched on, all parameters are displayed by default:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Re-run the model from above, now creating MCMC samples</span></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2">lm4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat,</a>
@@ -496,21 +496,21 @@
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt; Potential scale reduction factors:</span></a>
 <a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt;           Point est. Upper C.I.</span></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt; alpha[1]       0.997      0.997</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt; alpha[2]       1.001      1.009</span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; alpha[3]       1.001      1.014</span></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; alpha[4]       1.001      1.008</span></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; alpha[5]       1.001      1.001</span></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; alpha[6]       1.022      1.042</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; alpha[7]       1.039      1.087</span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; alpha[8]       1.040      1.144</span></a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt; alpha[9]       1.062      1.169</span></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt; tau_WC         1.020      1.080</span></a>
-<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt; tau_creat      0.999      1.004</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt; alpha[1]       1.005       1.01</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt; alpha[2]       0.998       1.00</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; alpha[3]       1.003       1.01</span></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; alpha[4]       1.001       1.00</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; alpha[5]       1.023       1.06</span></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; alpha[6]       1.074       1.25</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; alpha[7]       1.057       1.20</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; alpha[8]       1.012       1.04</span></a>
+<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt; alpha[9]       1.064       1.22</span></a>
+<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt; tau_WC         1.007       1.02</span></a>
+<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt; tau_creat      1.008       1.04</span></a>
 <a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">#&gt; Multivariate psrf</span></a>
 <a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">#&gt; 1.06</span></a></code></pre></div>
+<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">#&gt; 1.09</span></a></code></pre></div>
 <p>To select only some of the parameters, they can be specified directly by name via the <code>other</code> element of <code>subset</code>:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">summary</span>(lm5, <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">other =</span> <span class="kw">c</span>(<span class="st">'creat'</span>, <span class="st">'alc&gt;=1'</span>)))</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; </span></a>
@@ -522,9 +522,9 @@
 <a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt;     mess = FALSE)</span></a>
 <a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">#&gt; Posterior summary:</span></a>
-<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt;         Mean    SD   2.5% 97.5% tail-prob.</span></a>
-<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; creat  8.116 8.144 -5.682 24.60       0.32</span></a>
-<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; alc&gt;=1 6.286 2.363  1.631 10.97       0.00</span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt;         Mean    SD    2.5% 97.5% tail-prob.</span></a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; creat  8.153 8.248 -10.401 23.98     0.2933</span></a>
+<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; alc&gt;=1 6.725 2.179   2.697 11.01     0.0000</span></a>
 <a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb15-15" data-line-number="15"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co">#&gt; MCMC settings:</span></a>

@@ -64,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.1</span>
       </span>
     </div>
 
@@ -140,13 +140,40 @@
       <small>Source: <a href='https://github.com/nerler/JointAI/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="jointai-0-3-0" class="section level1">
+    <div id="jointai-0-3-1" class="section level1">
 <h1 class="page-header">
-<a href="#jointai-0-3-0" class="anchor"></a>JointAI 0.3.0<small> Unreleased </small>
+<a href="#jointai-0-3-1" class="anchor"></a>JointAI 0.3.1<small> Unreleased </small>
 </h1>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>
+<code><a href="../reference/plot_all.html">plot_all()</a></code> uses correct level-2 %NA in title</li>
+<li>
+<code>simWide</code>: case with no observed bmi values removed</li>
+</ul>
+</div>
+<div id="minor-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
+<li>
+<code><a href="../reference/plot_all.html">plot_all()</a></code> uses <code>xpd = TRUE</code> when printing text for character variables</li>
+<li>
+<code><a href="../reference/list_impmodels.html">list_impmodels()</a></code> uses linebreak when output of predictor variables exceeds <code>getOption("width")</code>
+</li>
+</ul>
+<hr>
+</div>
+</div>
+    <div id="jointai-0-3-0" class="section level1">
+<h1 class="page-header">
+<a href="#jointai-0-3-0" class="anchor"></a>JointAI 0.3.0<small> 2018-08-14 </small>
+</h1>
+<div id="bug-fixes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code>monitor_params</code> is now checked to avoid problems when only part of the main parameters is selected</li>
@@ -157,9 +184,9 @@
 <li>bugfix in finding imputation method when function of variable is specified as auxiliary variable</li>
 </ul>
 </div>
-<div id="minor-changes" class="section level2">
+<div id="minor-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>
 <code>md.pattern()</code> now uses ggplot, which scales better than the previous version</li>
@@ -211,9 +238,9 @@
 <h1 class="page-header">
 <a href="#jointai-0-2-0" class="anchor"></a>JointAI 0.2.0<small> 2018-07-05 </small>
 </h1>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/md_pattern.html">md_pattern()</a></code>: does not generate duplicate plot any more</li>
@@ -230,9 +257,9 @@
 <li>data matrix is now ordered according to order in user-specified <code>meth</code> argument</li>
 </ul>
 </div>
-<div id="minor-changes-1" class="section level2">
+<div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>
 <code>md.pattern()</code>: adaptation to new version of <code>md.pattern()</code> from the <strong>mice</strong> package</li>
@@ -257,6 +284,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#jointai-0-3-1">0.3.1</a></li>
         <li><a href="#jointai-0-3-0">0.3.0</a></li>
         <li><a href="#jointai-0-2-0">0.2.0</a></li>
       </ul>

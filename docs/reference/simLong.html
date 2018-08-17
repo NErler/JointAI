@@ -41,7 +41,7 @@
 <meta property="og:description" content="This data was simulated to mimic data from a longitudinal cohort study
 following mothers and their child from birth until approximately 4 years of
 age.
-It contains 3903 observations of 500 mother-child pairs. Children's BMI and
+It contains 3903 observations of 499 mother-child pairs. Children's BMI and
 head circumference was measured repeatedly and their age in months was recorded
 at each measurement. Furthermore, the data contain several baseline variables
 with information on the mothers' demographics and socioeconomic status." />
@@ -73,7 +73,7 @@ with information on the mothers' demographics and socioeconomic status." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.1</span>
       </span>
     </div>
 
@@ -155,7 +155,7 @@ with information on the mothers' demographics and socioeconomic status." />
     <p>This data was simulated to mimic data from a longitudinal cohort study
 following mothers and their child from birth until approximately 4 years of
 age.
-It contains 3903 observations of 500 mother-child pairs. Children's BMI and
+It contains 3903 observations of 499 mother-child pairs. Children's BMI and
 head circumference was measured repeatedly and their age in months was recorded
 at each measurement. Furthermore, the data contain several baseline variables
 with information on the mothers' demographics and socioeconomic status.</p>
@@ -168,8 +168,8 @@ with information on the mothers' demographics and socioeconomic status.</p>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p><code>simLong</code>: A data frame in long format with 3908 rows and 13 variables</p>
-<p><code>simWide</code>: A data frame in wide format with 500 rows and 45 variables</p>
+    <p><code>simLong</code>: A data frame in long format with 3894 rows and 13 variables</p>
+<p><code>simWide</code>: A data frame in wide format with 499 rows and 45 variables</p>
     
     <h2 class="hasAnchor" id="baseline-covariates"><a class="anchor" href="#baseline-covariates"></a>Baseline covariates</h2>
 
@@ -212,130 +212,130 @@ with information on the mothers' demographics and socioeconomic status.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'> <span class='fu'>summary</span>(<span class='no'>simLong</span>)</div><div class='output co'>#&gt;     GESTBIR            ETHN          AGE_M          HEIGHT_M      PARITY    
-#&gt;  Min.   :36.29   European:2503   Min.   :17.06   Min.   :146.1   0   :2364  
-#&gt;  1st Qu.:39.37   other   :1308   1st Qu.:27.03   1st Qu.:163.0   &gt;= 1:1451  
-#&gt;  Median :40.33   NA's    :  97   Median :30.42   Median :168.1   NA's:  93  
-#&gt;  Mean   :40.24                   Mean   :30.50   Mean   :168.0              
-#&gt;  3rd Qu.:41.13                   3rd Qu.:34.11   3rd Qu.:173.1              
-#&gt;  Max.   :43.62                   Max.   :46.73   Max.   :192.5              
-#&gt;                                                  NA's   :75                 
+#&gt;  Min.   :36.29   European:2448   Min.   :17.06   Min.   :147.0   0   :2332  
+#&gt;  1st Qu.:39.37   other   :1355   1st Qu.:26.92   1st Qu.:162.9   &gt;= 1:1469  
+#&gt;  Median :40.34   NA's    :  91   Median :30.34   Median :168.0   NA's:  93  
+#&gt;  Mean   :40.24                   Mean   :30.52   Mean   :167.9              
+#&gt;  3rd Qu.:41.13                   3rd Qu.:34.17   3rd Qu.:172.9              
+#&gt;  Max.   :43.79                   Max.   :46.73   Max.   :192.5              
+#&gt;                                                  NA's   :76                 
 #&gt;                               SMOKE        EDUC                 MARITAL    
-#&gt;  never smoked during pregnancy   :2620   high:1748   married        :1792  
-#&gt;  smoked until pregnancy was known: 278   mid :1564   living together:1456  
-#&gt;  continued smoking in pregnancy  : 539   low : 328   no partner     : 431  
-#&gt;  NA's                            : 471   NA's: 268   NA's           : 229  
+#&gt;  never smoked during pregnancy   :2595   high:1740   married        :1782  
+#&gt;  smoked until pregnancy was known: 276   mid :1544   living together:1421  
+#&gt;  continued smoking in pregnancy  : 565   low : 346   no partner     : 453  
+#&gt;  NA's                            : 458   NA's: 264   NA's           : 238  
 #&gt;                                                                            
 #&gt;                                                                            
 #&gt;                                                                            
 #&gt;       time            age               bmi              hc       
 #&gt;  Min.   : 1.00   Min.   : 0.3119   Min.   :10.66   Min.   :32.58  
-#&gt;  1st Qu.: 4.00   1st Qu.: 4.3882   1st Qu.:15.51   1st Qu.:42.39  
-#&gt;  Median :15.00   Median :13.1977   Median :16.61   Median :46.05  
-#&gt;  Mean   :17.26   Mean   :16.4707   Mean   :16.58   Mean   :45.56  
-#&gt;  3rd Qu.:26.00   3rd Qu.:25.5121   3rd Qu.:17.64   3rd Qu.:48.95  
+#&gt;  1st Qu.: 4.00   1st Qu.: 4.3629   1st Qu.:15.52   1st Qu.:42.38  
+#&gt;  Median :13.00   Median :12.8593   Median :16.61   Median :46.03  
+#&gt;  Mean   :17.23   Mean   :16.4314   Mean   :16.58   Mean   :45.55  
+#&gt;  3rd Qu.:26.00   3rd Qu.:25.4791   3rd Qu.:17.65   3rd Qu.:48.93  
 #&gt;  Max.   :50.00   Max.   :49.2852   Max.   :22.38   Max.   :56.37  
 #&gt;                                                                   
 #&gt;       ID           
-#&gt;  Length:3908       
+#&gt;  Length:3894       
 #&gt;  Class :character  
 #&gt;  Mode  :character  
 #&gt;                    
 #&gt;                    
 #&gt;                    
 #&gt;                    </div><div class='input'> <span class='fu'>summary</span>(<span class='no'>simWide</span>)</div><div class='output co'>#&gt;     GESTBIR            ETHN         AGE_M          HEIGHT_M      PARITY   
-#&gt;  Min.   :36.29   European:313   Min.   :17.06   Min.   :146.1   0   :307  
-#&gt;  1st Qu.:39.31   other   :173   1st Qu.:26.79   1st Qu.:162.7   &gt;= 1:181  
-#&gt;  Median :40.30   NA's    : 14   Median :30.06   Median :168.1   NA's: 12  
-#&gt;  Mean   :40.19                  Mean   :30.28   Mean   :167.8             
-#&gt;  3rd Qu.:41.09                  3rd Qu.:33.83   3rd Qu.:172.8             
-#&gt;  Max.   :43.62                  Max.   :46.73   Max.   :192.5             
+#&gt;  Min.   :36.29   European:304   Min.   :17.06   Min.   :147.0   0   :305  
+#&gt;  1st Qu.:39.32   other   :181   1st Qu.:26.53   1st Qu.:162.6   &gt;= 1:182  
+#&gt;  Median :40.30   NA's    : 14   Median :30.04   Median :167.9   NA's: 12  
+#&gt;  Mean   :40.19                  Mean   :30.24   Mean   :167.7             
+#&gt;  3rd Qu.:41.10                  3rd Qu.:33.86   3rd Qu.:172.6             
+#&gt;  Max.   :43.79                  Max.   :46.73   Max.   :192.5             
 #&gt;                                                 NA's   :10                
 #&gt;                               SMOKE       EDUC                MARITAL   
-#&gt;  never smoked during pregnancy   :333   high:220   married        :226  
-#&gt;  smoked until pregnancy was known: 36   mid :197   living together:184  
-#&gt;  continued smoking in pregnancy  : 70   low : 44   no partner     : 55  
-#&gt;  NA's                            : 61   NA's: 39   NA's           : 35  
+#&gt;  never smoked during pregnancy   :332   high:218   married        :224  
+#&gt;  smoked until pregnancy was known: 34   mid :196   living together:180  
+#&gt;  continued smoking in pregnancy  : 73   low : 46   no partner     : 58  
+#&gt;  NA's                            : 60   NA's: 39   NA's           : 37  
 #&gt;                                                                         
 #&gt;                                                                         
 #&gt;                                                                         
 #&gt;       ID                 age1             bmi1         hc_CB0t2m    
-#&gt;  Length:500         Min.   :0.3119   Min.   :11.32   Min.   :32.35  
-#&gt;  Class :character   1st Qu.:0.9588   1st Qu.:14.11   1st Qu.:36.12  
-#&gt;  Mode  :character   Median :1.1197   Median :15.15   Median :37.14  
-#&gt;                     Mean   :1.1239   Mean   :15.12   Mean   :37.21  
-#&gt;                     3rd Qu.:1.3019   3rd Qu.:16.08   3rd Qu.:38.22  
+#&gt;  Length:499         Min.   :0.3119   Min.   :11.32   Min.   :32.35  
+#&gt;  Class :character   1st Qu.:0.9581   1st Qu.:14.11   1st Qu.:36.12  
+#&gt;  Mode  :character   Median :1.1191   Median :15.16   Median :37.16  
+#&gt;                     Mean   :1.1238   Mean   :15.12   Mean   :37.21  
+#&gt;                     3rd Qu.:1.3020   3rd Qu.:16.09   3rd Qu.:38.23  
 #&gt;                     Max.   :1.7615   Max.   :19.43   Max.   :41.53  
 #&gt;                                      NA's   :175                    
 #&gt;       age2            bmi2          hc_CB02m          age3      
 #&gt;  Min.   :2.002   Min.   :11.72   Min.   :35.93   Min.   :3.001  
-#&gt;  1st Qu.:2.216   1st Qu.:15.29   1st Qu.:39.24   1st Qu.:3.248  
-#&gt;  Median :2.378   Median :16.06   Median :40.11   Median :3.395  
-#&gt;  Mean   :2.399   Mean   :16.05   Mean   :40.10   Mean   :3.407  
-#&gt;  3rd Qu.:2.557   3rd Qu.:16.90   3rd Qu.:41.01   3rd Qu.:3.563  
+#&gt;  1st Qu.:2.215   1st Qu.:15.31   1st Qu.:39.25   1st Qu.:3.248  
+#&gt;  Median :2.378   Median :16.09   Median :40.11   Median :3.397  
+#&gt;  Mean   :2.399   Mean   :16.07   Mean   :40.10   Mean   :3.408  
+#&gt;  3rd Qu.:2.556   3rd Qu.:16.90   3rd Qu.:41.02   3rd Qu.:3.563  
 #&gt;  Max.   :2.968   Max.   :20.54   Max.   :43.92   Max.   :3.945  
 #&gt;                  NA's   :258                                    
 #&gt;       bmi3          hc_CB03m          age4            bmi4      
-#&gt;  Min.   :13.52   Min.   :36.94   Min.   :4.008   Min.   :13.65  
-#&gt;  1st Qu.:15.62   1st Qu.:40.40   1st Qu.:4.251   1st Qu.:16.22  
-#&gt;  Median :16.73   Median :41.42   Median :4.414   Median :17.03  
-#&gt;  Mean   :16.67   Mean   :41.43   Mean   :4.429   Mean   :17.01  
-#&gt;  3rd Qu.:17.49   3rd Qu.:42.43   3rd Qu.:4.595   3rd Qu.:17.93  
-#&gt;  Max.   :20.25   Max.   :45.47   Max.   :4.988   Max.   :21.53  
-#&gt;  NA's   :191                                     NA's   :253    
+#&gt;  Min.   :13.52   Min.   :36.94   Min.   :4.008   Min.   :13.59  
+#&gt;  1st Qu.:15.62   1st Qu.:40.41   1st Qu.:4.251   1st Qu.:16.23  
+#&gt;  Median :16.73   Median :41.43   Median :4.414   Median :17.04  
+#&gt;  Mean   :16.67   Mean   :41.43   Mean   :4.429   Mean   :17.02  
+#&gt;  3rd Qu.:17.50   3rd Qu.:42.43   3rd Qu.:4.595   3rd Qu.:17.95  
+#&gt;  Max.   :20.25   Max.   :45.48   Max.   :4.988   Max.   :21.53  
+#&gt;  NA's   :191                                     NA's   :249    
 #&gt;     hc_CB04m          age7            bmi7        hc_CB05t10m   
 #&gt;  Min.   :37.92   Min.   :5.037   Min.   :13.29   Min.   :39.43  
-#&gt;  1st Qu.:41.49   1st Qu.:5.973   1st Qu.:16.30   1st Qu.:42.76  
-#&gt;  Median :42.28   Median :6.343   Median :17.37   Median :43.66  
-#&gt;  Mean   :42.39   Mean   :6.360   Mean   :17.31   Mean   :43.72  
-#&gt;  3rd Qu.:43.27   3rd Qu.:6.757   3rd Qu.:18.28   3rd Qu.:44.64  
+#&gt;  1st Qu.:41.49   1st Qu.:5.973   1st Qu.:16.30   1st Qu.:42.75  
+#&gt;  Median :42.29   Median :6.341   Median :17.37   Median :43.65  
+#&gt;  Mean   :42.39   Mean   :6.358   Mean   :17.31   Mean   :43.72  
+#&gt;  3rd Qu.:43.27   3rd Qu.:6.755   3rd Qu.:18.28   3rd Qu.:44.64  
 #&gt;  Max.   :46.29   Max.   :8.151   Max.   :22.38   Max.   :48.54  
-#&gt;                                  NA's   :81                     
+#&gt;                                  NA's   :80                     
 #&gt;      age11           bmi11        hc_CB10t13m        age15      
 #&gt;  Min.   :10.01   Min.   :13.27   Min.   :41.30   Min.   :13.08  
-#&gt;  1st Qu.:10.71   1st Qu.:16.33   1st Qu.:44.93   1st Qu.:14.03  
-#&gt;  Median :11.12   Median :17.34   Median :45.84   Median :14.45  
-#&gt;  Mean   :11.13   Mean   :17.35   Mean   :45.90   Mean   :14.47  
-#&gt;  3rd Qu.:11.51   3rd Qu.:18.32   3rd Qu.:46.90   3rd Qu.:14.90  
+#&gt;  1st Qu.:10.72   1st Qu.:16.35   1st Qu.:44.94   1st Qu.:14.04  
+#&gt;  Median :11.13   Median :17.34   Median :45.85   Median :14.45  
+#&gt;  Mean   :11.14   Mean   :17.36   Mean   :45.90   Mean   :14.47  
+#&gt;  3rd Qu.:11.51   3rd Qu.:18.33   3rd Qu.:46.90   3rd Qu.:14.90  
 #&gt;  Max.   :12.86   Max.   :22.07   Max.   :50.09   Max.   :16.43  
 #&gt;                  NA's   :94                                     
 #&gt;      bmi15        hc_CB13t17m        age20           bmi20      
 #&gt;  Min.   :12.96   Min.   :41.83   Min.   :17.01   Min.   :12.87  
-#&gt;  1st Qu.:16.21   1st Qu.:45.78   1st Qu.:18.06   1st Qu.:15.91  
-#&gt;  Median :17.20   Median :46.80   Median :18.65   Median :16.90  
+#&gt;  1st Qu.:16.20   1st Qu.:45.78   1st Qu.:18.07   1st Qu.:15.92  
+#&gt;  Median :17.20   Median :46.78   Median :18.65   Median :16.90  
 #&gt;  Mean   :17.22   Mean   :46.84   Mean   :18.71   Mean   :16.87  
-#&gt;  3rd Qu.:18.12   3rd Qu.:47.86   3rd Qu.:19.33   3rd Qu.:17.76  
+#&gt;  3rd Qu.:18.13   3rd Qu.:47.85   3rd Qu.:19.33   3rd Qu.:17.77  
 #&gt;  Max.   :21.88   Max.   :51.46   Max.   :22.02   Max.   :21.25  
-#&gt;  NA's   :86                                      NA's   :145    
+#&gt;  NA's   :84                                      NA's   :149    
 #&gt;   hc_CB17t23m        age26           bmi26        hc_CB23t29m   
 #&gt;  Min.   :42.45   Min.   :23.03   Min.   :12.72   Min.   :44.11  
-#&gt;  1st Qu.:46.69   1st Qu.:24.38   1st Qu.:15.62   1st Qu.:47.76  
-#&gt;  Median :47.71   Median :25.17   Median :16.46   Median :48.92  
-#&gt;  Mean   :47.78   Mean   :25.25   Mean   :16.52   Mean   :48.91  
-#&gt;  3rd Qu.:48.88   3rd Qu.:26.06   3rd Qu.:17.38   3rd Qu.:50.09  
+#&gt;  1st Qu.:46.68   1st Qu.:24.38   1st Qu.:15.62   1st Qu.:47.77  
+#&gt;  Median :47.74   Median :25.16   Median :16.47   Median :48.93  
+#&gt;  Mean   :47.78   Mean   :25.25   Mean   :16.51   Mean   :48.91  
+#&gt;  3rd Qu.:48.87   3rd Qu.:26.06   3rd Qu.:17.38   3rd Qu.:50.09  
 #&gt;  Max.   :53.25   Max.   :28.61   Max.   :21.12   Max.   :53.60  
-#&gt;                                  NA's   :148                    
+#&gt;                                  NA's   :150                    
 #&gt;      age32           bmi32        hc_CB29t35m        age40      
 #&gt;  Min.   :29.00   Min.   :12.18   Min.   :44.73   Min.   :35.00  
-#&gt;  1st Qu.:30.22   1st Qu.:15.28   1st Qu.:48.49   1st Qu.:36.21  
-#&gt;  Median :30.97   Median :16.26   Median :49.62   Median :37.04  
-#&gt;  Mean   :31.03   Mean   :16.29   Mean   :49.63   Mean   :37.18  
-#&gt;  3rd Qu.:31.73   3rd Qu.:17.17   3rd Qu.:50.77   3rd Qu.:38.02  
+#&gt;  1st Qu.:30.22   1st Qu.:15.26   1st Qu.:48.49   1st Qu.:36.20  
+#&gt;  Median :30.97   Median :16.22   Median :49.61   Median :37.03  
+#&gt;  Mean   :31.03   Mean   :16.28   Mean   :49.63   Mean   :37.18  
+#&gt;  3rd Qu.:31.74   3rd Qu.:17.19   3rd Qu.:50.77   3rd Qu.:38.01  
 #&gt;  Max.   :34.51   Max.   :20.30   Max.   :54.30   Max.   :41.15  
-#&gt;                  NA's   :297                                    
+#&gt;                  NA's   :300                                    
 #&gt;      bmi40        hc_CB35t44m        age50           bmi50      
 #&gt;  Min.   :10.66   Min.   :45.49   Min.   :44.03   Min.   :10.76  
-#&gt;  1st Qu.:15.13   1st Qu.:49.11   1st Qu.:45.44   1st Qu.:14.81  
-#&gt;  Median :16.05   Median :50.31   Median :46.22   Median :15.71  
-#&gt;  Mean   :16.00   Mean   :50.33   Mean   :46.18   Mean   :15.76  
-#&gt;  3rd Qu.:16.88   3rd Qu.:51.45   3rd Qu.:46.84   3rd Qu.:16.76  
-#&gt;  Max.   :20.41   Max.   :56.37   Max.   :49.29   Max.   :19.62  
-#&gt;  NA's   :159                                     NA's   :205    
+#&gt;  1st Qu.:15.13   1st Qu.:49.11   1st Qu.:45.43   1st Qu.:14.81  
+#&gt;  Median :16.03   Median :50.31   Median :46.22   Median :15.71  
+#&gt;  Mean   :15.99   Mean   :50.33   Mean   :46.18   Mean   :15.76  
+#&gt;  3rd Qu.:16.87   3rd Qu.:51.46   3rd Qu.:46.84   3rd Qu.:16.77  
+#&gt;  Max.   :20.11   Max.   :56.37   Max.   :49.29   Max.   :19.62  
+#&gt;  NA's   :158                                     NA's   :206    
 #&gt;   hc_CB44t56m   
 #&gt;  Min.   :45.16  
-#&gt;  1st Qu.:49.89  
+#&gt;  1st Qu.:49.90  
 #&gt;  Median :51.23  
 #&gt;  Mean   :51.14  
-#&gt;  3rd Qu.:52.32  
+#&gt;  3rd Qu.:52.33  
 #&gt;  Max.   :56.28  
 #&gt;                 </div><div class='input'>
 </div></pre>
