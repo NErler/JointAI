@@ -87,7 +87,7 @@ get_subset <- function(object, subset, call_orig, warn = TRUE) {
   #                        sep = "", collapse = ", "), "."), immediate. = TRUE)
   # }
 
-  return(object$MCMC[, sub])
+  return(object$MCMC[, sub, drop = FALSE])
 }
 
 computeP <- function(x) {

@@ -76,7 +76,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$stats <- stats[!rownames(stats) %in% c(rownames(out$ranefvar),
                                              get_aux(object),
                                              rownames(out$sigma),
-                                             paste0("tau_", names(object$Mlist$y))), ]
+                                             paste0("tau_", names(object$Mlist$y))), , drop = FALSE]
 
   out$analysis_type <- object$analysis_type
   out$size <- nrow(object$data)
