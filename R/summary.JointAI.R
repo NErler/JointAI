@@ -68,11 +68,20 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$thin <- thin
   out$nchain <- nchain(object$sample)
 
-  out$ranefvar <- if (object$analysis_type == "lme")
-    stats[grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", rownames(stats), value = TRUE), -5, drop = FALSE]
+  out$ranefvar <- if (object$analysis_type == "lme") {
+    Ds <- stats[grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]",
+                     rownames(stats), value = TRUE), , drop = FALSE]
+    Ddiag <- sapply(regmatches(rownames(Ds), gregexpr('[[:digit:]]*', rownames(Ds))),
+                    function(k) {
+                      length(unique(grep('[[:digit:]]+', k, value = T))) == 1
+                    })
+    Ds[Ddiag, 'tail-prob.'] <- NA
+    Ds
+  }
   out$sigma <- if (attr(object$analysis_type, "family") == "gaussian" &
                    any(grepl(paste0("sigma_", names(object$Mlist$y)), rownames(stats))))
-    stats[grep(paste0("sigma_", names(object$Mlist$y)), rownames(stats), value = TRUE), -5, drop = FALSE]
+    stats[grep(paste0("sigma_", names(object$Mlist$y)), rownames(stats), value = TRUE),
+          -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
   out$stats <- stats[!rownames(stats) %in% c(rownames(out$ranefvar),
                                              get_aux(object),
                                              rownames(out$sigma),
@@ -118,6 +127,8 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3), ...) 
   if (x$analysis_type == "lme") {
     cat("\n")
     cat("Posterior summary of random effects covariance matrix:\n")
+    x$ranefvar <- as.data.frame(x$ranefvar)
+    x$ranefvar[is.na(x$ranefvar[, 'tail-prob.']), 'tail-prob.'] <- ''
     print(x$ranefvar, digits = digits)
   }
   if (!is.null(x$sigma)) {

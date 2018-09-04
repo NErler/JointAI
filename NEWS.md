@@ -11,6 +11,7 @@
 * `plot_all()` uses `xpd = TRUE` when printing text for character variables
 * `list_impmodels()` uses linebreak when output of predictor variables exceeds
   `getOption("width")`
+* `summary()` now displays tail-probabilities for off-diagonal elements of `D`
 
   
 --------------------------------------------------------------------------------
