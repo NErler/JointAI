@@ -4,6 +4,7 @@
 * `plot_all()` uses correct level-2 %NA in title
 * `simWide`: case with no observed bmi values removed
 * `traceplot()`, `densplot()`: `ncol` and `nrow` now work with `use_ggplot = TRUE`
+* functions with argument `subset` now return random effects covariance matrix correctly
 
 ## Minor changes
 * `plot_all()` uses `xpd = TRUE` when printing text for character variables
