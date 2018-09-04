@@ -61,7 +61,8 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     ggplot2::ggplot(meltMCMC,
                     ggplot2::aes(iteration, value, color = chain)) +
       ggplot2::geom_line() +
-      ggplot2::facet_wrap('variable', scales = 'free')
+      ggplot2::facet_wrap('variable', scales = 'free',
+                          ncol = prep$ncol, nrow = prep$nrow)
   } else {
     op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(3.2, 2.5, 2, 1),
               mgp = c(2, 0.6, 0))
@@ -158,7 +159,8 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
     ggplot2::ggplot(meltMCMC, ggplot2::aes(value, color = chain)) +
       ggplot2::geom_density() +
-      ggplot2::facet_wrap('variable', scales = 'free')
+      ggplot2::facet_wrap('variable', scales = 'free', ncol = prep$ncol,
+                          nrow = prep$nrow)
   } else {
     op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(3, 3, 2, 1),
               mgp = c(2, 0.6, 0))
