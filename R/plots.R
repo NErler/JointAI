@@ -157,12 +157,22 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                                             'variable'))
     meltMCMC$chain <- factor(meltMCMC$L1)
 
+    if (joined)
+      p <- ggplot2::ggplot(meltMCMC, ggplot2::aes(value))
+    else
+      p <- ggplot2::ggplot(meltMCMC, ggplot2::aes(value, color = chain))
 
-    ggplot2::ggplot(meltMCMC, ggplot2::aes(value, color = chain)) +
-      ggplot2::geom_density() +
+    p + ggplot2::geom_density() +
       ggplot2::facet_wrap('variable', scales = 'free', ncol = prep$ncol,
                           nrow = prep$nrow)
   } else {
+    args <- as.list(match.call())
+    if (!is.null(args$col)) {
+      col <- eval(args$col)
+    } else {
+      col <- 1:length(prep$MCMC)
+    }
+
     op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(3, 3, 2, 1),
               mgp = c(2, 0.6, 0))
     for (i in 1:ncol(prep$MCMC[[1]])) {
