@@ -44,7 +44,7 @@
 #   return(MCMC[, subset, drop = FALSE])
 # }
 
-get_subset <- function(object, subset, call_orig, warn = TRUE) {
+get_subset <- function(object, subset, call_orig, keep_aux = FALSE, warn = TRUE) {
   subset <- as.list(subset)
 
   if (length(subset) == 0 & !as.list(object$monitor_params)$analysis_main)
@@ -74,6 +74,8 @@ get_subset <- function(object, subset, call_orig, warn = TRUE) {
   }
 
   sub <- unique(s[s %in% colnames(object$MCMC[[1]])])
+  if (!keep_aux)
+    sub <- sub[!sub %in% get_aux(object)]
 
   if (length(sub) == 0)
     sub <- colnames(object$MCMC[[1]])

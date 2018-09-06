@@ -107,6 +107,7 @@ utils::globalVariables(c("Var1", "Var2", "iteration", "value", "chain"))
 #' @param use_level logical; should the multi-level structure be taken into account?
 #'        This requires specification of the argument \code{idvar}.
 #' @param idvar name of the column that specifies the multi-level grouping structure
+#' @param keep_aux logical; Should constant effects of auxiliary variables be kept in the output?
 #'
 #' @name sharedParams
 NULL

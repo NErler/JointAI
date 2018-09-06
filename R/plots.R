@@ -43,12 +43,12 @@ traceplot <- function(object, ...) {
 #' @export
 traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                               subset = c(analysis_main = TRUE),
-                              nrow = NULL, ncol = NULL,
+                              nrow = NULL, ncol = NULL, keep_aux = FALSE,
                               use_ggplot = FALSE, warn = TRUE,
                               ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin, subset = subset,
-                    nrow = nrow, ncol = ncol, warn = warn)
+                    nrow = nrow, ncol = ncol, warn = warn, keep_aux = keep_aux)
 
 
   if (use_ggplot) {
@@ -141,10 +141,11 @@ densplot <- function(object, ...) {
 densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                              subset = c(analysis_main = TRUE), vlines = NULL, nrow = NULL,
                              ncol = NULL, joined = FALSE, use_ggplot = FALSE,
-                             warn = TRUE, ...) {
+                             keep_aux = FALSE, warn = TRUE, ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin,
-                    subset = subset, nrow = nrow, ncol = ncol, warn = warn)
+                    subset = subset, nrow = nrow, ncol = ncol, warn = warn,
+                    keep_aux = keep_aux)
 
   if (joined)
     prep$MCMC <- as.mcmc.list(as.mcmc(do.call(rbind, prep$MCMC)))
@@ -209,38 +210,16 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
   if (is.null(thin))
     thin <- thin(object$sample)
 
-  MCMC <- get_subset(object, subset, as.list(match.call()), warn = warn)
+  MCMC <- get_subset(object, subset, as.list(match.call()), keep_aux = keep_aux,
+                     warn = warn)
   MCMC <- window(MCMC,
                  start = start,
                  end = end,
                  thin = thin)
 
+
   # MCMC <- window(object$sample, start = start, end = end, thin = thin)
   time <- time(MCMC)
-
-  # coefs <- get_coef_names(object$Mlist, object$K)
-  # nams <- colnames(MCMC[[1]])
-  # nams[match(coefs[, 1], nams)] <- coefs[, 2]
-  #
-  # for (i in 1:length(MCMC)) {
-  #   colnames(MCMC[[i]]) <- nams
-  # }
-
-  # scale_pars <- object$scale_pars
-  # if (!is.null(scale_pars)) {
-  #   # re-scale parameters
-  #   MCMC <- as.mcmc.list(lapply(MCMC, function(i) {
-  #     as.mcmc(sapply(colnames(i), rescale, fixed2 = object$Mlist$fixed2, scale_pars = scale_pars,
-  #                    MCMC = i, refs = object$Mlist$refs, object$Mlist$X2_names,
-  #                    object$Mlist$trafos))
-  #   }))
-  # }
-
-  # if (!is.null(subset)) {
-  #   MCMC <- get_subset(subset, MCMC, object)
-  # }
-  #
-  #
 
   # get number of rows and columns of plots
   if (is.null(nrow) & is.null(ncol)) {
@@ -248,26 +227,8 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
   } else if (is.null(nrow) & !is.null(ncol)) {
     dims <- c(ceiling(ncol(MCMC[[1]])/ncol), ncol)
   } else if (is.null(ncol) & !is.null(nrow)) {
-    dims <- c(ncol, ceiling(ncol(MCMC[[1]])/nrow))
+    dims <- c(nrow, ceiling(ncol(MCMC[[1]])/nrow))
   }
-
-  # ask <- ncol(MCMC[[1]]) > 30
-  #
-  # if (is.null(nrow)) {
-  #   if (is.null(ncol)) {
-  #     nrow <- floor(sqrt(ncol(MCMC[[1]])))
-  #   } else {
-  #     nrow <- ceiling(ncol(MCMC[[1]])/ncol)
-  #   }
-  # }
-  #
-  # if (is.null(ncol))
-  #   ncol <- ceiling(ncol(MCMC[[1]])/nrow)
-  #
-  # if (ask) {
-  #   nrow = 5
-  #   ncol = 6
-  # }
 
   return(list(MCMC = MCMC, nrow = dims[1], ncol = dims[2],
               thin = thin, time = time, subset = subset))

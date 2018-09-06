@@ -9,7 +9,8 @@ traceplot(object, ...)
 
 \method{traceplot}{JointAI}(object, start = NULL, end = NULL,
   thin = NULL, subset = c(analysis_main = TRUE), nrow = NULL,
-  ncol = NULL, use_ggplot = FALSE, warn = TRUE, ...)
+  ncol = NULL, keep_aux = FALSE, use_ggplot = FALSE, warn = TRUE,
+  ...)
 }
 \arguments{
 \item{object}{object inheriting from class "JointAI"}
@@ -62,6 +63,8 @@ automatically chosen if unspecified}
 
 \item{ncol}{optional number of rows and columns in the plot layout;
 automatically chosen if unspecified}
+
+\item{keep_aux}{logical; Should constant effects of auxiliary variables be kept in the output?}
 
 \item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
 

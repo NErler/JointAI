@@ -12,6 +12,7 @@
 * `list_impmodels()` uses linebreak when output of predictor variables exceeds
   `getOption("width")`
 * `summary()` now displays tail-probabilities for off-diagonal elements of `D`
+* added option to show/hide constant effects of auxiliary variables in plots
 
   
 --------------------------------------------------------------------------------

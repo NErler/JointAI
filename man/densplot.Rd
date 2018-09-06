@@ -10,7 +10,7 @@ densplot(object, ...)
 \method{densplot}{JointAI}(object, start = NULL, end = NULL,
   thin = NULL, subset = c(analysis_main = TRUE), vlines = NULL,
   nrow = NULL, ncol = NULL, joined = FALSE, use_ggplot = FALSE,
-  warn = TRUE, ...)
+  keep_aux = FALSE, warn = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class "JointAI"}
@@ -43,6 +43,8 @@ automatically chosen if unspecified}
 \item{joined}{logical; should the chains be combined before plotting?}
 
 \item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
+
+\item{keep_aux}{logical; Should constant effects of auxiliary variables be kept in the output?}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. Note: this applies only to warnings
