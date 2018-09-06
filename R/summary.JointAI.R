@@ -67,22 +67,25 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$end <- end
   out$thin <- thin
   out$nchain <- nchain(object$sample)
+  out$stats <- stats
 
   out$ranefvar <- if (object$analysis_type == "lme") {
     Ds <- stats[grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]",
                      rownames(stats), value = TRUE), , drop = FALSE]
-    Ddiag <- sapply(regmatches(rownames(Ds), gregexpr('[[:digit:]]*', rownames(Ds))),
-                    function(k) {
-                      length(unique(grep('[[:digit:]]+', k, value = T))) == 1
-                    })
-    Ds[Ddiag, 'tail-prob.'] <- NA
+    if (nrow(Ds) > 0) {
+      Ddiag <- sapply(regmatches(rownames(Ds), gregexpr('[[:digit:]]*', rownames(Ds))),
+                      function(k) {
+                        length(unique(grep('[[:digit:]]+', k, value = T))) == 1
+                      })
+      Ds[Ddiag, 'tail-prob.'] <- NA
     Ds
+    }
   }
   out$sigma <- if (attr(object$analysis_type, "family") == "gaussian" &
                    any(grepl(paste0("sigma_", names(object$Mlist$y)), rownames(stats))))
     stats[grep(paste0("sigma_", names(object$Mlist$y)), rownames(stats), value = TRUE),
           -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
-  out$stats <- stats[!rownames(stats) %in% c(rownames(out$ranefvar),
+  out$main <- stats[!rownames(stats) %in% c(rownames(out$ranefvar),
                                              get_aux(object),
                                              rownames(out$sigma),
                                              paste0("tau_", names(object$Mlist$y))), , drop = FALSE]
@@ -122,9 +125,11 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3), ...) 
   cat("\n", print_type(x$analysis_type), "\n")
   cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
       "\n\n", sep = "")
-  cat("Posterior summary:\n")
-  print(x$stats, digits = digits)
-  if (x$analysis_type == "lme") {
+  if (nrow(x$main > 0)) {
+    cat("Posterior summary:\n")
+    print(x$main, digits = digits)
+  }
+  if (x$analysis_type == "lme" & !is.null(x$ranefvar)) {
     cat("\n")
     cat("Posterior summary of random effects covariance matrix:\n")
     x$ranefvar <- as.data.frame(x$ranefvar)

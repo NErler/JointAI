@@ -41,19 +41,19 @@ get_params <- function(meth, analysis_type, family,
   if (missing(family))
     family <- attr(analysis_type, "family")
 
-
   if (analysis_main) {
     if (is.null(betas)) betas <- TRUE
     if (!family %in% c("binomial", "poisson")) {
       if (is.null(tau_y)) tau_y <- TRUE
       if (is.null(sigma_y)) sigma_y <- TRUE
     }
-    if (analysis_type == "lme") {
-      if (is.null(Zcols))
-        Zcols <- ncol(Z)
-      if (is.null(D)) D <- TRUE
-    }
   }
+  if (analysis_type == "lme") {
+    if (is.null(Zcols))
+      Zcols <- ncol(Z)
+    if (analysis_main & is.null(D)) D <- TRUE
+  }
+
 
   if (analysis_random) {
     if (is.null(ranef)) ranef <- TRUE
@@ -90,7 +90,6 @@ get_params <- function(meth, analysis_type, family,
               },
               other
   )
-
 
   if (analysis_type == "lme") {
     params <- c(params,

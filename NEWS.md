@@ -4,9 +4,10 @@
 * `plot_all()` uses correct level-2 %NA in title
 * `simWide`: case with no observed bmi values removed
 * `traceplot()`, `densplot()`: `ncol` and `nrow` now work with `use_ggplot = TRUE`
+* `traceplot()`, `densplot()`: error in specification of `nrow` fixed
 * `densplot()`: use of color fixed
 * functions with argument `subset` now return random effects covariance matrix correctly
-* `summary()` displayes output with rowname when only one node is returned
+* `summary()` displayes output with rowname when only one node is returned and fixed display of `D` matrix
 * `GR_crit()`: Literature reference corrected
 
 ## Minor changes
