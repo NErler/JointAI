@@ -6,6 +6,7 @@
 * `traceplot()`, `densplot()`: `ncol` and `nrow` now work with `use_ggplot = TRUE`
 * functions with argument `subset` now return random effects covariance matrix correctly
 * `summary()` displayes output with rowname when only one node is returned
+* `GR_crit()`: Literature reference corrected
 
 ## Minor changes
 * `plot_all()` uses `xpd = TRUE` when printing text for character variables

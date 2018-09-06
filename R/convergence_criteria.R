@@ -6,9 +6,11 @@
 #' @inheritParams coda::gelman.diag
 #' @inheritParams summary.JointAI
 #' @references
-#' Gelman, A., Meng, X. L., & Stern, H. (1996).
-#' Posterior predictive assessment of model fitness via realized discrepancies.
-#' \emph{Statistica Sinica}, 733-760.
+#' Gelman, A and Rubin, DB (1992) Inference from iterative simulation using
+#' multiple sequences, \emph{Statistical Science}, \strong{7}, 457-511.
+#' Brooks, SP. and Gelman, A. (1998) General methods for monitoring convergence
+#' of iterative simulations.
+#' \emph{Journal of Computational and Graphical Statistics}, \strong{7}, 434-455.
 #'
 #' @seealso
 #' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
