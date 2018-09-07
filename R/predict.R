@@ -36,8 +36,12 @@ predDF.formula <- function(formula, dat, var, ...) {
 
   vals <- sapply(allvars, function(k) {
     if (k == var) {
-      seq(min(dat[, k], na.rm = TRUE),
-          max(dat[, k], na.rm = TRUE), length = 100)
+      if (is.factor(dat[, k])) {
+        unique(dat[, k])
+      } else {
+        seq(min(dat[, k], na.rm = TRUE),
+            max(dat[, k], na.rm = TRUE), length = 100)
+      }
     } else {
       if (is.factor(dat[, k])) {
         factor(levels(dat[, k])[1], levels = levels(dat[, k]))
@@ -126,6 +130,9 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
   if (is.null(thin))
     thin <- thin(object$sample)
 
+  if (missing(newdata))
+    newdata <- object$data
+
   MCMC <- do.call(rbind,
                   window(object$MCMC,
                          start = start,
@@ -147,5 +154,6 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
   fit <- colMeans(pred)
   quantiles <- apply(pred, 2, quantile, quantiles)
 
-  return(list(fit = fit, quantiles = quantiles))
+  return(list(dat = as.data.frame(cbind(newdata, fit, t(quantiles))),
+              fit = fit, quantiles = quantiles))
 }

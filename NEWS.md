@@ -9,6 +9,7 @@
 * functions with argument `subset` now return random effects covariance matrix correctly
 * `summary()` displayes output with rowname when only one node is returned and fixed display of `D` matrix
 * `GR_crit()`: Literature reference corrected
+* `predict()`: prediction with varying factor fixed
 
 ## Minor changes
 * `plot_all()` uses `xpd = TRUE` when printing text for character variables
@@ -16,6 +17,7 @@
   `getOption("width")`
 * `summary()` now displays tail-probabilities for off-diagonal elements of `D`
 * added option to show/hide constant effects of auxiliary variables in plots
+* `predict()`: now also returns `newdata` extended with prediction
 
   
 --------------------------------------------------------------------------------
