@@ -192,12 +192,12 @@ divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
     excl <- c(excl, unique(trafos$Xc_var))
     excl <- excl[!excl %in% compl_fcts_vars]
 
-    if (!is.null(trafos)) {
-      qdrtrafos <- unlist(sapply(split(trafos, trafos$var), function(x) {
-        if (all(x$Xc_var %in% c(x$var, paste0("I(", x$var, "^2)")))) x$Xc_var
-      }))
-      excl <- excl[!excl %in% qdrtrafos]
-    }
+    # if (!is.null(trafos)) {
+    #   qdrtrafos <- unlist(sapply(split(trafos, trafos$var), function(x) {
+    #     if (all(x$Xc_var %in% c(x$var, paste0("I(", x$var, "^2)")))) x$Xc_var
+    #   }))
+    #   excl <- excl[!excl %in% qdrtrafos]
+    # }
 
     scale_vars <- scale_vars[which(!scale_vars %in% excl)]
     if (length(scale_vars) == 0) scale_vars <- NULL

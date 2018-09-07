@@ -10,6 +10,7 @@
 * `summary()` displayes output with rowname when only one node is returned and fixed display of `D` matrix
 * `GR_crit()`: Literature reference corrected
 * `predict()`: prediction with varying factor fixed
+* no scaling for variables involved in a function to avoid problems with re-scaling
 
 ## Minor changes
 * `plot_all()` uses `xpd = TRUE` when printing text for character variables
