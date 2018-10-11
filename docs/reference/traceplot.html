@@ -155,7 +155,8 @@
 <span class='co'># S3 method for JointAI</span>
 <span class='fu'>traceplot</span>(<span class='no'>object</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_aux</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -225,6 +226,10 @@ automatically chosen if unspecified</p></td>
       <th>ncol</th>
       <td><p>optional number of rows and columns in the plot layout;
 automatically chosen if unspecified</p></td>
+    </tr>
+    <tr>
+      <th>keep_aux</th>
+      <td><p>logical; Should constant effects of auxiliary variables be kept in the output?</p></td>
     </tr>
     <tr>
       <th>use_ggplot</th>

@@ -220,9 +220,11 @@ given directly by <strong>JointAI</strong>.</p></td>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Gelman, A., Meng, X. L., &amp; Stern, H. (1996).
-Posterior predictive assessment of model fitness via realized discrepancies.
-<em>Statistica Sinica</em>, 733-760.</p>
+    <p>Gelman, A and Rubin, DB (1992) Inference from iterative simulation using
+multiple sequences, <em>Statistical Science</em>, <strong>7</strong>, 457-511.
+Brooks, SP. and Gelman, A. (1998) General methods for monitoring convergence
+of iterative simulations.
+<em>Journal of Computational and Graphical Statistics</em>, <strong>7</strong>, 434-455.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -234,18 +236,18 @@ contains some examples how to specify the argument <code>subset</code>.</p></div
     <pre class="examples"><div class='input'><span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'><span class='fu'>GR_crit</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; Potential scale reduction factors:
 #&gt; 
 #&gt;             Point est. Upper C.I.
-#&gt; (Intercept)       1.02       1.04
-#&gt; C1                1.02       1.05
-#&gt; M22               1.05       1.17
-#&gt; M23               1.14       1.43
-#&gt; M24               1.13       1.39
-#&gt; C2                1.02       1.05
-#&gt; tau_y             1.00       1.01
-#&gt; sigma_y           1.00       1.01
+#&gt; (Intercept)      1.010       1.05
+#&gt; C1               1.010       1.05
+#&gt; M22              1.009       1.04
+#&gt; M23              1.002       1.01
+#&gt; M24              1.002       1.02
+#&gt; C2               1.001       1.00
+#&gt; tau_y            0.998       1.00
+#&gt; sigma_y          1.000       1.00
 #&gt; 
 #&gt; Multivariate psrf
 #&gt; 
-#&gt; 1.15</div><div class='input'>
+#&gt; 1.02</div><div class='input'>
 
 
 </div></pre>

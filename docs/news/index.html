@@ -152,6 +152,21 @@
 <code><a href="../reference/plot_all.html">plot_all()</a></code> uses correct level-2 %NA in title</li>
 <li>
 <code>simWide</code>: case with no observed bmi values removed</li>
+<li>
+<code><a href="../reference/traceplot.html">traceplot()</a></code>, <code><a href="../reference/densplot.html">densplot()</a></code>: <code>ncol</code> and <code>nrow</code> now work with <code>use_ggplot = TRUE</code>
+</li>
+<li>
+<code><a href="../reference/traceplot.html">traceplot()</a></code>, <code><a href="../reference/densplot.html">densplot()</a></code>: error in specification of <code>nrow</code> fixed</li>
+<li>
+<code><a href="../reference/densplot.html">densplot()</a></code>: use of color fixed</li>
+<li>functions with argument <code>subset</code> now return random effects covariance matrix correctly</li>
+<li>
+<code>summary()</code> displayes output with rowname when only one node is returned and fixed display of <code>D</code> matrix</li>
+<li>
+<code><a href="../reference/GR_crit.html">GR_crit()</a></code>: Literature reference corrected</li>
+<li>
+<code>predict()</code>: prediction with varying factor fixed</li>
+<li>no scaling for variables involved in a function to avoid problems with re-scaling</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level2">
@@ -163,6 +178,12 @@
 <li>
 <code><a href="../reference/list_impmodels.html">list_impmodels()</a></code> uses linebreak when output of predictor variables exceeds <code>getOption("width")</code>
 </li>
+<li>
+<code>summary()</code> now displays tail-probabilities for off-diagonal elements of <code>D</code>
+</li>
+<li>added option to show/hide constant effects of auxiliary variables in plots</li>
+<li>
+<code>predict()</code>: now also returns <code>newdata</code> extended with prediction</li>
 </ul>
 <hr>
 </div>
