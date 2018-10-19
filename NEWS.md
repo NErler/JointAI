@@ -1,3 +1,8 @@
+# JointAI 0.3.2
+
+## Bug fixes
+* `lme_imp()`: fixed error in JAGS model when interaction between random slope variable and longiudinal variable 
+
 # JointAI 0.3.1
 
 ## Bug fixes
