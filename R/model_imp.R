@@ -238,6 +238,19 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     inits <- TRUE
   }
 
+  # drop empty categories
+  data_orig <- data
+  data <- droplevels(data)
+  if (mess) {
+    lvl1 <- sapply(data_orig, function(x) length(levels(x)))
+    lvl2 <- sapply(data, function(x) length(levels(x)))
+    if (any(lvl1 != lvl2)) {
+      message(gettextf('Empty levels were dropped from %s.',
+                       dQuote(names(lvl1)[which(lvl1 != lvl2)])))
+    }
+  }
+
+
 
   # imputation method ----------------------------------------------------------
   if (is.null(meth)) {
