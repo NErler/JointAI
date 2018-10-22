@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.3</span>
       </span>
     </div>
 
@@ -262,14 +262,14 @@ contains some examples how to specify the argument <code>subset</code>.</p></div
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bug to the package maintainer.</span></div><div class='input'>
 <span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                  est    MCSE      SD MCSE/SD
-#&gt; (Intercept)  2834.18 1.4e+02 2046.02   0.066
-#&gt; C1          -1952.86 9.3e+01 1408.41   0.066
-#&gt; M22            -0.26 8.8e-02    0.67   0.132
-#&gt; M23             0.22 8.8e-02    0.68   0.129
-#&gt; M24            -1.11 7.9e-02    0.63   0.125
-#&gt; C2              2.51 1.4e-01    2.20   0.063
-#&gt; tau_y           0.20 1.6e-03    0.03   0.054
-#&gt; sigma_y         2.26 8.8e-03    0.17   0.052</div><div class='input'>
+#&gt; (Intercept)  2931.46 1.1e+02 2069.93   0.053
+#&gt; C1          -2019.76 7.6e+01 1424.89   0.053
+#&gt; M22            -0.36 1.0e-01    0.72   0.140
+#&gt; M23             0.12 1.1e-01    0.73   0.146
+#&gt; M24            -1.16 1.0e-01    0.71   0.142
+#&gt; C2              2.70 1.2e-01    2.10   0.055
+#&gt; tau_y           0.20 1.4e-03    0.03   0.046
+#&gt; sigma_y         2.24 7.4e-03    0.17   0.043</div><div class='input'>
 <span class='fu'>plot</span>(<span class='fu'>MC_error</span>(<span class='no'>mod</span>), <span class='kw'>ablinepars</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='img'><img src='MC_error-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
