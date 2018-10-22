@@ -1,3 +1,10 @@
+# JointAI 0.3.3
+
+## Bug fixes
+* remove deprecated code specifying `contrast.arg` that now in some cases cause error
+
+
+--------------------------------------------------------------------------------
 # JointAI 0.3.2
 
 ## Bug fixes

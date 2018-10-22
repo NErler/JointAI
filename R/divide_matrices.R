@@ -91,11 +91,8 @@ divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
     fmla_trafo <- as.formula(
       paste("~", paste0(unique(trafos$var), collapse = " + "))
     )
-    if (!any(sapply(data[, all.vars(fmla_trafo), drop = FALSE], is.factor)))
-      contr <- NULL
     model.matrix(fmla_trafo,
-                 model.frame(fmla_trafo, data, na.action = na.pass),
-                 contrasts.arg = contr
+                 model.frame(fmla_trafo, data, na.action = na.pass)
     )[match(unique(groups), groups), -1, drop = FALSE]
   }
   if (!is.null(Xtrafo)) {
