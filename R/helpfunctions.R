@@ -349,7 +349,11 @@ extract_fcts <- function(formula, data, complete = FALSE, ...) {
   funs <- isfun[!names(isfun) %in% c("~", "+", "-", ":", "*", "(", "^", "/", "time") & isfun]
 
   if(length(funs) > 0) {
-    funlist <- sapply(names(funs), grep, x = termlabs, value = TRUE)
+    funlist <- sapply(names(funs), function(f)
+      c(grep(paste0("\\(", f, "\\("), x = termlabs, value = TRUE),
+        grep(paste0("^", f, "\\("), x = termlabs, value = TRUE))
+    )
+
     varlist <- lapply(funlist, function(x1) {
       sapply(x1, function(x2) all.vars(as.formula(paste("~", x2))))
     })

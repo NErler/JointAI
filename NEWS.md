@@ -2,7 +2,7 @@
 
 ## Bug fixes
 * remove deprecated code specifying `contrast.arg` that now in some cases cause error
-
+* fixed problem identifying non-linear functions in formula when the name of another variable contains the function name
 
 --------------------------------------------------------------------------------
 # JointAI 0.3.2
