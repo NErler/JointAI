@@ -238,6 +238,8 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
     dims <- c(ceiling(ncol(MCMC[[1]])/ncol), ncol)
   } else if (is.null(ncol) & !is.null(nrow)) {
     dims <- c(nrow, ceiling(ncol(MCMC[[1]])/nrow))
+  } else {
+    dims <- c(nrow, ncol)
   }
 
   return(list(MCMC = MCMC, nrow = dims[1], ncol = dims[2],

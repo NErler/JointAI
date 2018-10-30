@@ -1,3 +1,8 @@
+# JointAI 0.3.4
+
+## Bug fixes
+* `traceplot()`, `densplot()`: specification of `nrow` AND `ncol` possible
+
 # JointAI 0.3.3
 
 ## Bug fixes
