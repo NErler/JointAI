@@ -284,8 +284,11 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
   } else if (is.null(nrow) & !is.null(ncol)) {
     dims <- c(ceiling(ncol(data)/ncol), ncol)
   } else if (is.null(ncol) & !is.null(nrow)) {
-    dims <- c(ncol, ceiling(ncol(data)/nrow))
+    dims <- c(nrow, ceiling(ncol(data)/nrow))
+  } else {
+    dims <- c(nrow, ncol)
   }
+
 
   op <- par(mfrow = dims)
   for (i in 1:ncol(data)) {
