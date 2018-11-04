@@ -196,7 +196,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   # Checks & warnings -------------------------------------------------------
   if (mess)
-    message("This is new software. Please report any bug to the package maintainer.")
+    message("This is new software. Please report any bugs to the package maintainer.")
 
   if (missing(fixed)) {
     stop("No fixed effects structure specified.")
@@ -253,9 +253,31 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   # imputation method ----------------------------------------------------------
+  meth_default <- get_imp_meth(fixed = fixed, random = random, data = data,
+                               auxvars = auxvars)
+
   if (is.null(meth)) {
-    meth <- get_imp_meth(fixed = fixed, random = random, data = data,
-                         auxvars = auxvars)
+    meth <- meth_default
+    meth_user <- NULL
+  } else {
+    meth_user <- meth
+    if (!setequal(names(meth_user), names(meth_default))) {
+      meth <- meth_default
+      meth[names(meth_user)] <- meth_user
+      meth
+    }
+  }
+
+  # warning if JointAI set imputation method for a continuous variable with only
+  # two different values to "logit"
+  for (k in names(meth)[meth == 'logit']) {
+    if (is.numeric(data[, k]) & !k %in% names(meth_user) & warn) {
+      data[, k] <- factor(data[, k])
+      warning(
+        gettextf("\nThe variable %s is coded as continuous but has only two different values. I will consider it binary.\nTo overwrite this behaviour, specify a different imputation method for %s using the argument %s.",
+                 dQuote(k), dQuote(k), dQuote("meth")),
+        call. = FALSE, immediate. = TRUE)
+    }
   }
 
 
