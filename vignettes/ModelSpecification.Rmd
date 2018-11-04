@@ -97,8 +97,7 @@ mod1b <- glm_imp(educ ~ age + gender + creat, data = NHANES,
 mod1c <- glm_imp(educ ~ age + gender + creat, data = NHANES,
                family = binomial(link = 'logit'), n.adapt = 0, mess = FALSE)
 
-mod1a$family
-mod1a$link
+mod1a$analysis_type
 ```
 To use a probit link instead, this needs to be specified explicitly:
 ```{r}
