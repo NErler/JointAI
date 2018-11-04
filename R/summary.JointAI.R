@@ -23,43 +23,47 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                             warn = TRUE, mess = TRUE, ...) {
 
   if (is.null(object$sample))
-    stop("There is no mcmc sample.")
+    stop("There is no MCMC sample.")
 
 
-  if (is.null(start)) {
-    start <- start(object$sample)
-  } else {
-    start <- max(start, start(object$sample))
-  }
+  # if (is.null(start)) {
+  #   start <- start(object$sample)
+  # } else {
+  #   start <- max(start, start(object$sample))
+  # }
+  #
+  # if (is.null(end)) {
+  #   end <- end(object$sample)
+  # } else {
+  #   end <- min(end, end(object$sample))
+  # }
+  #
+  # if (is.null(thin))
+  #   thin <- thin(object$sample)
+  #
+  # MCMC <- get_subset(object, subset, as.list(match.call()), warn = warn)
+  #
+  # MCMC <- do.call(rbind,
+  #                 window(MCMC,
+  #                        start = start,
+  #                        end = end,
+  #                        thin = thin))
 
-  if (is.null(end)) {
-    end <- end(object$sample)
-  } else {
-    end <- min(end, end(object$sample))
-  }
 
-  if (is.null(thin))
-    thin <- thin(object$sample)
-
-  MCMC <- get_subset(object, subset, as.list(match.call()), warn = warn)
-
-  MCMC <- do.call(rbind,
-                  window(MCMC,
-                         start = start,
-                         end = end,
-                         thin = thin))
-
+  MCMC <- prep_MCMC(object, start = start, end = end, thin = thin, subset = subset, warn = warn, ...)
 
   # create results matrix
-  statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.")
+  statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.", "GR-crit")
   stats <- matrix(nrow = length(colnames(MCMC)),
                   ncol = length(statnames),
                   dimnames = list(colnames(MCMC), statnames))
 
   stats[, "Mean"] <- apply(MCMC, 2, mean)
   stats[,  "SD"] <- apply(MCMC, 2, sd)
-  stats[, -c(1,2, ncol(stats))] <- t(apply(MCMC, 2, quantile, quantiles))
-  stats[, ncol(stats)] <- apply(MCMC, 2, computeP)
+  stats[, paste0(quantiles * 100, "%")] <- t(apply(MCMC, 2, quantile, quantiles))
+  stats[, "tail-prob."] <- apply(MCMC, 2, computeP)
+  stats[, "GR-crit"] <- GR_crit(object = object, start = start, end = end, thin = thin,
+                                warn = warn, subset = subset, ...)[[1]][, "Upper C.I."]
 
   out <- list()
   out$call <- object$call
@@ -154,3 +158,112 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3), ...) 
     cat("Number of groups:", x$groups)
   invisible(x)
 }
+
+
+
+#' @export
+coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
+                         subset = NULL, warn = TRUE, mess = TRUE, ...) {
+  if (!inherits(object, "JointAI"))
+    stop("Use only with 'JointAI' objects.\n")
+
+  if (is.null(object$sample)) {
+    stop("There is no MCMC sample.\n")
+  }
+
+  MCMC <- prep_MCMC(object, start, end, thin, subset)
+
+  coefs <- colMeans(MCMC)[intersect(colnames(MCMC),
+                                    get_coef_names(object$Mlist, object$K)[, 2])]
+
+  return(coefs)
+}
+
+
+
+#' @export
+print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
+  if (!inherits(x, "JointAI"))
+    stop("Use only with 'JointAI' objects.\n")
+
+
+  MCMC <- if (!is.null(x$sample))
+    prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL)
+
+
+  cat("\nCall:\n")
+  print(x$call)
+
+  if (!is.null(MCMC)) {
+    if (x$analysis_type != "lme")
+      cat("\n\nCoefficients:\n")
+    else
+      cat("\n\nFixed effects:\n")
+    print(coef(x), digits = digits)
+
+    if (x$analysis_type == 'lme') {
+      cat("\n\nRandom effects covariance matrix:\n")
+      print(get_Dmat(x), digits = digits)
+    }
+
+    if (paste0("sigma_", names(x$Mlist$y)) %in% colnames(MCMC)) {
+      cat("\n\nResidual standard deviation:\n")
+      print(colMeans(MCMC[, paste0("sigma_", names(x$Mlist$y)), drop = FALSE]),
+            digits = digits)
+    }
+  } else {
+    cat("\n(The object does not contain an MCMC sample.)")
+  }
+
+  invisible(x)
+}
+
+
+
+prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL, warn = warn, ...) {
+
+  if (is.null(start)) {
+    start <- start(object$sample)
+  } else {
+    start <- max(start, start(object$sample))
+  }
+
+  if (is.null(end)) {
+    end <- end(object$sample)
+  } else {
+    end <- min(end, end(object$sample))
+  }
+
+  if (is.null(thin))
+    thin <- thin(object$sample)
+
+  MCMC <- get_subset(object, subset, as.list(match.call()), warn = warn)
+
+  MCMC <- do.call(rbind,
+                  window(MCMC,
+                         start = start,
+                         end = end,
+                         thin = thin))
+
+  return(MCMC)
+}
+
+
+get_Dmat <- function(x) {
+  MCMC <- prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL)
+
+  Ds <- grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", colnames(MCMC), value = TRUE)
+  Dpos <- t(sapply(strsplit(gsub('D|\\[|\\]', '', Ds), ","), as.numeric))
+
+  term <- terms(remove_grouping(x$random))
+
+  dimnam <- c(if (attr(term, 'intercept') == 1) "(Intercept)",
+              attr(term, 'term.labels'))
+
+  Dmat <- matrix(nrow = length(dimnam), ncol = length(dimnam),
+                 dimnames = list(dimnam, dimnam))
+  for (k in seq_along(Ds)) {
+    Dmat[Dpos[k, 1], Dpos[k, 2]] <- mean(MCMC[, Ds[k]])
+  }
+
+  Dmat
