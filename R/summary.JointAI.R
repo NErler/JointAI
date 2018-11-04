@@ -267,3 +267,4 @@ get_Dmat <- function(x) {
   }
 
   Dmat
+}
