@@ -67,7 +67,16 @@ get_imp_meth <- function(fixed, random = NULL, data,
   meth <- rep("", length(misvar))
   names(meth) <- misvar
 
-  nlevel <- sapply(sapply(data[, misvar, drop = FALSE], levels, simplify = FALSE), length)
+  nlevel <- sapply(misvar, function(k) {
+      if (!is.factor(data[, k])) {
+        if (length(unique(na.omit(data[, k]))) == 2) {
+          2
+        } else {
+          0
+        }} else {
+          length(levels(data[, k]))
+        }
+  })
 
   if (length(nlevel) > 0) {
     meth[nlevel == 0 & !tvar[names(nlevel)]] <- "norm"
