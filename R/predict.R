@@ -57,6 +57,7 @@ predDF.formula <- function(formula, dat, var, ...) {
 }
 
 
+
 #' @rdname predDF
 #' @export
 predDF.JointAI <- function(object, var, ...) {
@@ -115,30 +116,7 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
-  if (is.null(start)) {
-    start <- start(object$sample)
-  } else {
-    start <- max(start, start(object$sample))
-  }
-
-  if (is.null(end)) {
-    end <- end(object$sample)
-  } else {
-    end <- min(end, end(object$sample))
-  }
-
-  if (is.null(thin))
-    thin <- thin(object$sample)
-
-  if (missing(newdata))
-    newdata <- object$data
-
-  MCMC <- do.call(rbind,
-                  window(object$MCMC,
-                         start = start,
-                         end = end,
-                         thin = thin)
-  )
+  MCMC <- prep_MCMC(object, start = start, end = end, thin = thin, subset = NULL, ...)
 
 
   mf <- model.frame(object$fixed, object$data)
