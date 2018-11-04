@@ -30,7 +30,7 @@ divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
   # variables that do not have a main effect in fixed are added to the auxiliary variables
   trafosX <- extract_fcts(fixed, data, complete = TRUE)
   add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), auxvars))]
-  if(length(add_to_aux) > 0)
+  if (length(add_to_aux) > 0)
     auxvars <- c(auxvars, unique(add_to_aux))
 
   # remove grouping specification from random effects formula
@@ -45,7 +45,11 @@ divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
   fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed), fixed = TRUE),
                                auxvars), collapse = " + "))
 
+  if (any(unlist(sapply(data[, all.vars(fixed2)], class)) == 'ordered') & mess)
+    message("Note: ordered factors are included as dummy variables into the linear predictor (not as orthogonal polynomials).")
+
   refs <- get_refs(fixed2, data, refcats)
+
   for (i in names(refs)) {
     data[, i] <- relevel(factor(data[, i], ordered = FALSE), as.character(refs[[i]]))
   }
