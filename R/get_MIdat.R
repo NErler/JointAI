@@ -51,7 +51,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
     set.seed(seed)
 
   DF <- object$data
-  if (object$analysis_type == "lme") {
+  if (object$analysis_type %in% c("lme", "glme")) {
     DFlong <- DF
 
     id <- extract_id(object$random)
@@ -173,7 +173,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
     DF_list <- DF_list[-1]
 
 # build dataset --------------------------------------------------------------------------
-  if (object$analysis_type == "lme") {
+  if (object$analysis_type %in% c("lme", "glme")) {
     DF_list_long <- lapply(DF_list, function(x) {
       DFlong[, colnames(x)] <- x[groups, ]
       DFlong

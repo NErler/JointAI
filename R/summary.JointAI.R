@@ -73,7 +73,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$nchain <- nchain(object$sample)
   out$stats <- stats
 
-  out$ranefvar <- if (object$analysis_type == "lme") {
+  out$ranefvar <- if (object$analysis_type %in% c("lme", "glme")) {
     Ds <- stats[grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]",
                      rownames(stats), value = TRUE), , drop = FALSE]
     if (nrow(Ds) > 0) {
@@ -133,7 +133,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3), ...) 
     cat("Posterior summary:\n")
     print(x$main, digits = digits)
   }
-  if (x$analysis_type == "lme" & !is.null(x$ranefvar)) {
+  if (x$analysis_type %in% c("lme", "glme") & !is.null(x$ranefvar)) {
     cat("\n")
     cat("Posterior summary of random effects covariance matrix:\n")
     x$ranefvar <- as.data.frame(x$ranefvar)
@@ -154,7 +154,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3), ...) 
   cat("Number of chains =", x$nchain, "\n")
   cat("\n")
   cat("Number of observations:", x$size, "\n")
-  if (x$analysis_type == "lme")
+  if (x$analysis_type %in% c("lme", "glme"))
     cat("Number of groups:", x$groups)
   invisible(x)
 }

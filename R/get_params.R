@@ -43,12 +43,14 @@ get_params <- function(meth, analysis_type, family,
 
   if (analysis_main) {
     if (is.null(betas)) betas <- TRUE
-    if (!family %in% c("binomial", "poisson")) {
-      if (is.null(tau_y)) tau_y <- TRUE
+    if (family %in% c("gaussian", "gamma")) {
       if (is.null(sigma_y)) sigma_y <- TRUE
+      if(analysis_type != 'surv') {
+        if (is.null(tau_y)) tau_y <- TRUE
+      }
     }
   }
-  if (analysis_type == "lme") {
+  if (analysis_type %in% c("lme", "glme")) {
     if (is.null(Zcols))
       Zcols <- ncol(Z)
     if (analysis_main & is.null(D)) D <- TRUE
@@ -91,7 +93,7 @@ get_params <- function(meth, analysis_type, family,
               other
   )
 
-  if (analysis_type == "lme") {
+  if (analysis_type %in% c("lme", "glme")) {
     params <- c(params,
                 if (ranef) "b",
                 if (invD) unlist(sapply(1:Zcols, function(x)

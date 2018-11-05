@@ -37,7 +37,7 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
   }
 
 
-  if (analysis_type == "lme") {
+  if (analysis_type %in% c("lme", "glme")) {
     l$groups <- match(Mlist$groups, unique(Mlist$groups))
     if (ncol(Mlist$Z) > 1) {
       l$RinvD <- defs$Z$RinvD
@@ -45,6 +45,13 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
     }
     l$a_diag_RinvD <- defs$Z$a_diag_RinvD
     l$b_diag_RinvD <- defs$Z$b_diag_RinvD
+  }
+
+  if (analysis_type == "surv") {
+    l$cens <- as.numeric(unlist(Mlist$cens == 0))
+    l$ctime <- unlist(Mlist$y)
+    # l$ctime[Mlist$cens == 0] <- Mlist$y[Mlist$cens == 0]
+    l[[names(Mlist$y)]][Mlist$cens == 0] <- NA
   }
 
   # hyperparameters imputation models

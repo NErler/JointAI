@@ -202,7 +202,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     stop("No fixed effects structure specified.")
   }
 
-  if (analysis_type != "lme" & !is.null(random)) {
+  if (!analysis_type %in% c("lme", "glme") & !is.null(random)) {
     if (warn)
       warning(gettextf("Random effects structure not used in a model of type %s.",
                        sQuote(analysis_type)), immediate. = TRUE, call. = FALSE)
@@ -282,7 +282,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   if (is.null(Mlist)) {
-    Mlist <- divide_matrices(data, fixed, random = random, auxvars = auxvars,
+    Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
+                             random = random, auxvars = auxvars,
                              scale_vars = scale_vars, refcats = refcats,
                              meth = meth, warn = warn, mess = mess)
   }
@@ -610,3 +611,106 @@ lme_imp <- function(fixed, data, random,
   return(res)
 }
 
+
+#' @rdname model_imp
+#' @export
+glme_imp <- function(fixed, data, random, family,
+                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                    monitor_params = NULL, inits = TRUE,
+                    modelname = NULL, modeldir = NULL,
+                    overwrite = NULL, keep_model = FALSE,
+                    quiet = TRUE, progress.bar = "text", warn = TRUE,
+                    mess = TRUE,
+                    auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+
+  if (missing(fixed))
+    stop("No fixed effects structure specified.")
+  if (missing(random))
+    stop("No random effects structure specified.")
+  if (missing(data))
+    stop("No dataset given.")
+
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$analysis_type <- "glme"
+
+  if (is.character(family)) {
+    family <- get(family, mode = "function", envir = parent.frame())
+    arglist$family <- family()$family
+    arglist$link <- family()$link
+  }
+
+  if (is.function(family)) {
+    arglist$family <- family()$family
+    arglist$link <- family()$link
+  }
+
+  if (inherits(family, "family")) {
+    arglist$family <- family$family
+    arglist$link <- family$link
+  }
+
+  if (!arglist$link %in% c("identity", "log", "logit", "probit", "log",
+                           "cloglog"))
+    stop(gettextf("%s is not an allowed link function.",
+                  dQuote(arglist$link)))
+
+
+
+  thiscall <- as.list(match.call())[-1L]
+  thiscall <- lapply(thiscall, function(x) {
+    if (is.language(x)) eval(x) else x
+  })
+
+  arglist <- c(thecall = match.call(),
+               arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+
+  return(res)
+}
+
+
+
+#' @rdname model_imp
+#' @export
+surv_imp <- function(formula, data,
+                   n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                   monitor_params = NULL, inits = TRUE,
+                   modelname = NULL, modeldir = NULL,
+                   overwrite = NULL, keep_model = FALSE,
+                   quiet = TRUE, progress.bar = "text", warn = TRUE,
+                   mess = TRUE,
+                   auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+
+  if (missing(formula))
+    stop("No model formula specified.")
+
+  if (missing(data))
+    stop("No dataset given.")
+
+
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$fixed <- arglist$formula
+  arglist$analysis_type <- "surv"
+  arglist$family <- "gaussian"
+  arglist$link <- "identity"
+  arglist$fixed <- formula
+
+  thiscall <- as.list(match.call())[-1L]
+  thiscall <- lapply(thiscall, function(x) {
+    if (is.language(x)) eval(x) else x
+  })
+
+  arglist <- c(thecall = match.call(),
+               arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+  return(res)
+}

@@ -33,7 +33,7 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family){
 
 
   # random effects and random effects covariance
-  if (analysis_type == "lme") {
+  if (analysis_type %in% c("lme", "glme")) {
     l[["b"]] = matrix(nrow = nrow(Mlist$Xc),
                       ncol = ncol(Mlist$Z),
                       data = rnorm(nrow(Mlist$Xc  * ncol(Mlist$Z))))
@@ -41,7 +41,7 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family){
 
 
     l[["invD"]] = if (ncol(Mlist$Z) == 1) {
-      matrix(nrow = 1, ncol = 1, data = rgamma(1, var(Mlist$y)*10, 10))
+      matrix(nrow = 1, ncol = 1, data = rgamma(1, var(data.matrix(Mlist$y))*10, 10))
     } else {
       RinvD <- matrix(ncol = ncol(Mlist$Z),
                       nrow = ncol(Mlist$Z), data = 0)

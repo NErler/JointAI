@@ -11,7 +11,7 @@
 # @return a list containing matrices and other objects needed for other functions
 # @export
 
-divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
+divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars = NULL,
                             scale_vars = NULL, refcats = NULL, meth, warn = TRUE,
                             mess = TRUE, ...) {
   id <- extract_id(random, warn = warn)
@@ -22,13 +22,20 @@ divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
     1:nrow(data)
   }
 
-  y <- data[, extract_y(fixed), drop = FALSE]
+  if(analysis_type == 'surv') {
+    s <- with(data, extract_y(fixed))
+    outnam <- all.vars(as.formula(paste0(s, "~1")))
+    y <- data[, outnam[1], drop = FALSE]
+    cens <- data[, outnam[2], drop = FALSE]
+  } else {
+    y <- data[, extract_y(fixed), drop = FALSE]
+  }
 
   # preliminary design matrix
   X <- model.matrix(fixed, model.frame(fixed, data, na.action = na.pass))
 
   # variables that do not have a main effect in fixed are added to the auxiliary variables
-  trafosX <- extract_fcts(fixed, data, complete = TRUE)
+  trafosX <- extract_fcts(fixed[c(1,3)], data, complete = TRUE)
   add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), auxvars))]
   if (length(add_to_aux) > 0)
     auxvars <- c(auxvars, unique(add_to_aux))
@@ -87,10 +94,10 @@ divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
   }
 
   # Xtrafo ---------------------------------------------------------------------
-  trafos <- extract_fcts(fixed2, data)
+  trafos <- extract_fcts(fixed2[c(1,3)], data)
   if (any(trafos$type %in% c('ns', 'bs')))
     stop("Splines are currently not implemented for incomplete variables.")
-  fcts <- extract_fcts(fixed2, data, complete = TRUE)
+  fcts <- extract_fcts(fixed2[c(1,3)], data, complete = TRUE)
   Xtrafo <- if (!is.null(trafos)) {
     fmla_trafo <- as.formula(
       paste("~", paste0(unique(trafos$var), collapse = " + "))
@@ -206,7 +213,7 @@ divide_matrices <- function(data, fixed, random = NULL, auxvars = NULL,
 
 
   return(list(y = y, Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat,
-              Xtrafo = Xtrafo, Z = Z,
+              Xtrafo = Xtrafo, Z = Z, cens = cens,
               trafos = trafos, hc_list = hc_list, refs = refs,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars,
               fixed2 = fixed2, X2_names = colnames(X2)))
