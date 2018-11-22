@@ -59,7 +59,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                   dimnames = list(colnames(MCMC), statnames))
 
   stats[, "Mean"] <- apply(MCMC, 2, mean)
-  stats[,  "SD"] <- apply(MCMC, 2, sd)
+  stats[, "SD"] <- apply(MCMC, 2, sd)
   stats[, paste0(quantiles * 100, "%")] <- t(apply(MCMC, 2, quantile, quantiles))
   stats[, "tail-prob."] <- apply(MCMC, 2, computeP)
   stats[, "GR-crit"] <- GR_crit(object = object, start = start, end = end, thin = thin,
@@ -67,9 +67,9 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
   out <- list()
   out$call <- object$call
-  out$start <- start
-  out$end <- end
-  out$thin <- thin
+  out$start <- ifelse(is.null(start), start(object$sample), max(start, start(object$sample)))
+  out$end <- ifelse(is.null(end), end(object$sample), max(end, end(object$sample)))
+  out$thin <- thin(object$sample)
   out$nchain <- nchain(object$sample)
   out$stats <- stats
 
