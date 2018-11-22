@@ -22,13 +22,14 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     1:nrow(data)
   }
 
-  if(analysis_type == 'surv') {
+  if (analysis_type %in% c('survreg', 'coxph')) {
     s <- with(data, extract_y(fixed))
     outnam <- all.vars(as.formula(paste0(s, "~1")))
-    y <- data[, outnam[1], drop = FALSE]
-    cens <- data[, outnam[2], drop = FALSE]
+      y <- data[, outnam[1], drop = FALSE]
+      cens <- data[, outnam[2], drop = FALSE]
   } else {
     y <- data[, extract_y(fixed), drop = FALSE]
+    cens <- NULL
   }
 
   # preliminary design matrix

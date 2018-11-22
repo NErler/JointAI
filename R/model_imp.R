@@ -289,7 +289,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
   if (is.null(K)) {
-    K <- get_model_dim(sapply(Mlist, ncol), Mlist$hc_list)
+    K <- get_model_dim(sapply(Mlist, ncol), Mlist$hc_list, analysis_type)
   }
 
   if (is.null(imp_pos)) {
@@ -312,6 +312,15 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                            MoreArgs = list(Mlist$Xc, Mlist$Xcat, K_imp, dest_cols,
                                            Mlist$refs, Mlist$trafos, trunc),
                            SIMPLIFY = FALSE)
+  }
+
+  if (is.null(data_list)) {
+    data_list <- try(get_data_list(analysis_type, family, link, meth, Mlist, K, auxvars,
+                                   scale_pars = scale_pars, hyperpars = hyperpars,
+                                   data = data))
+    scale_pars <- data_list$scale_pars
+    hyperpars <- data_list$hyperpars
+    data_list <- data_list$data_list
   }
 
   # write model ----------------------------------------------------------------
@@ -337,28 +346,26 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
   if (!file.exists(modelfile) || (file.exists(modelfile) & overwrite == TRUE)) {
+
+    Ntot <- ifelse(analysis_type == 'coxph',
+           sum(data_list$RiskSet != 0),
+           length(data_list[[names(Mlist$y)]]))
+
     write_model(analysis_type = analysis_type, family = family,
-                link = link, meth = meth, Ntot = nrow(Mlist$y),
+                link = link, meth = meth,
+                Ntot = Ntot,
                 N = nrow(Mlist$Xc),
                 y_name = names(Mlist$y), Mlist = Mlist, K = K,
                 imp_par_list = imp_par_list,
                 file = modelfile)
   }
 
-  if (is.null(data_list)) {
-    data_list <- try(get_data_list(analysis_type, family, link, meth, Mlist, K, auxvars,
-                                 scale_pars = scale_pars, hyperpars = hyperpars,
-                                 data = data))
-    scale_pars <- data_list$scale_pars
-    hyperpars <- data_list$hyperpars
-    data_list <- data_list$data_list
-  }
 
   if (is.logical(inits)) {
     inits <- if (inits)
       replicate(n.chains,
                 get_inits.default(meth = meth, Mlist = Mlist, K = K, K_imp = K_imp,
-                       analysis_type = analysis_type, family = family), simplify = FALSE
+                       analysis_type = analysis_type, family = family, link = link), simplify = FALSE
       )
   }
 
@@ -613,6 +620,7 @@ lme_imp <- function(fixed, data, random,
 
 
 #' @rdname model_imp
+#' @aliases glmer_imp
 #' @export
 glme_imp <- function(fixed, data, random, family,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
@@ -677,7 +685,7 @@ glme_imp <- function(fixed, data, random, family,
 
 #' @rdname model_imp
 #' @export
-surv_imp <- function(formula, data,
+survreg_imp <- function(formula, data,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                    monitor_params = NULL, inits = TRUE,
                    modelname = NULL, modeldir = NULL,
@@ -696,9 +704,53 @@ surv_imp <- function(formula, data,
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$fixed <- arglist$formula
-  arglist$analysis_type <- "surv"
-  arglist$family <- "gaussian"
-  arglist$link <- "identity"
+  arglist$analysis_type <- "survreg"
+  arglist$family <- 'weibull'
+  arglist$link <- "log"
+  arglist$fixed <- formula
+
+  thiscall <- as.list(match.call())[-1L]
+  thiscall <- lapply(thiscall, function(x) {
+    if (is.language(x)) eval(x) else x
+  })
+
+  arglist <- c(thecall = match.call(),
+               arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+  return(res)
+}
+
+
+
+
+
+#' @rdname model_imp
+#' @export
+coxph_imp <- function(formula, data,
+                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                     monitor_params = NULL, inits = TRUE,
+                     modelname = NULL, modeldir = NULL,
+                     overwrite = NULL, keep_model = FALSE,
+                     quiet = TRUE, progress.bar = "text", warn = TRUE,
+                     mess = TRUE,
+                     auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+
+  if (missing(formula))
+    stop("No model formula specified.")
+
+  if (missing(data))
+    stop("No dataset given.")
+
+
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$fixed <- arglist$formula
+  arglist$analysis_type <- "coxph"
+  arglist$family <- 'prophaz'
+  arglist$link <- "log"
   arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]

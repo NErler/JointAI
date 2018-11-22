@@ -115,7 +115,10 @@ print_type <- function(x) {
   a <- switch(x,
               lm = "Linear model",
               glm = "Generalized linear model",
-              lme = "Linear mixed model")
+              lme = "Linear mixed model",
+              glme = 'Generalized linear mixed model',
+              coxph = 'Cox proportional hazards model',
+              survreg = 'Weibul survival model')
   paste0(a, " fitted with JointAI")
 }
 

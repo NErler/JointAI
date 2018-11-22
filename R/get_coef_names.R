@@ -7,7 +7,7 @@ get_coef_names <- function(Mlist, K) {
   coefs <- rbind(
     if (!is.null(Mlist$Xc))
       cbind(paste0("beta[", K["Xc", 1]:K["Xc", 2], "]"),
-            colnames(Mlist$Xc)),
+            colnames(Mlist$Xc)[K["Xc", 1]:K["Xc", 2]]),
     if (!is.null(Mlist$Xic))
       cbind(paste0("beta[", K["Xic", 1]:K["Xic", 2], "]"),
             colnames(Mlist$Xic)),

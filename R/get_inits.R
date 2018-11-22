@@ -3,13 +3,21 @@ get_inits <- function(object, ...) {
 }
 
 
-get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family){
+get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family, link = link, ...){
   l <- list()
 
   # analysis model ---------------------------------------------------------------
   # fixed parameters: beta and precision parameter
-  mean.betas <- c(colMeans(sapply(Mlist$y, as.numeric) - 1, na.rm = TRUE),
-                  rep(0, max(K[, "end"], na.rm = TRUE) - 1))
+  if (analysis_type %in% c('lm', 'glm')) {
+    mu0 <- coef(glm(unlist(Mlist$y) ~ 1,
+                     family = get(family)(link = link)))
+  } else if (analysis_type == 'survreg') {
+    log(colMeans(Mlist$y))
+  } else {
+    mu0 <- 0
+  }
+
+  mean.betas <- c(mu0, rep(0, max(K[, "end"], na.rm = TRUE) - 1))
 
   l[["beta"]] <- setNames(rnorm(length(mean.betas), mean.betas, 1),
                           get_coef_names(Mlist, K)[, 2])

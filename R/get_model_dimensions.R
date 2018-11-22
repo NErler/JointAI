@@ -8,13 +8,17 @@
 # @note Auxiliary variables are treated the same way as variables that are
 #       actually in the model.
 # @export
-get_model_dim <- function(ncols, hc_list){
+get_model_dim <- function(ncols, hc_list, analysis_type){
 
   K <- matrix(NA, nrow = 4 + length(hc_list), ncol = 2,
               dimnames = list(c("Xc", "Xic", names(hc_list), "Xl", "Xil"),
                               c("start", "end")))
 
   K["Xc", ] <- cumsum(c(1, ncols$Xc - 1))
+  if (analysis_type == 'coxph') {
+    K["Xc", 1] <- 2
+  }
+
   if (!is.null(ncols$Xic)) K["Xic", ] <- c(1, ncols$Xic) + max(K, na.rm = TRUE)
   if (!is.null(hc_list)) {
     for (i in 1:length(hc_list)) {

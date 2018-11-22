@@ -406,3 +406,22 @@ extract_fcts <- function(formula, data, complete = FALSE, ...) {
   }
 }
 
+
+
+# define family weibull
+#' @export
+weibull <- function(link = 'log') {
+  structure(list(family = "weibull", link = 'log'),
+            class = "family")
+}
+# define family coxph
+#' @export
+prophaz <- function(link = 'log') {
+  structure(list(family = "prophaz", link = 'log'),
+            class = "family")
+}
+
+#' @export
+logit <- function(x) {
+  log(x/(1-x))
+}

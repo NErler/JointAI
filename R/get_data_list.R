@@ -31,7 +31,7 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
   # hyperparameters analysis model
   l$mu_reg_main <- defs$analysis_model["mu_reg_main"]
   l$tau_reg_main <- defs$analysis_model["tau_reg_main"]
-  if (!family %in% c("binomial", "poisson")) {
+  if (family %in% c('gaussian', 'Gamma')) {
     l$a_tau_main <- defs$analysis_model["a_tau_main"]
     l$b_tau_main <- defs$analysis_model["b_tau_main"]
   }
@@ -47,11 +47,46 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
     l$b_diag_RinvD <- defs$Z$b_diag_RinvD
   }
 
-  if (analysis_type == "surv") {
+  if (analysis_type == "survreg") {
     l$cens <- as.numeric(unlist(Mlist$cens == 0))
-    l$ctime <- unlist(Mlist$y)
+    l$ctime <- as.numeric(unlist(Mlist$y))
     # l$ctime[Mlist$cens == 0] <- Mlist$y[Mlist$cens == 0]
     l[[names(Mlist$y)]][Mlist$cens == 0] <- NA
+  }
+
+  if (analysis_type == 'coxph') {
+    l[[names(Mlist$y)]] <- NULL
+    l$c <- defs$analysis_model[['c']]
+
+    y <- unlist(Mlist$y)
+    ts <- sort(unique(y))
+    Y <- dN <- matrix(nrow = length(y), ncol = length(ts) - 1,
+                      dimnames = list(subj = c(), time = c()))
+
+    for (i in seq_along(y)) {
+      for (j in 1:(length(ts) - 1)) {
+        Y[i, j] <- ifelse(y[i] - ts[j] + defs$analysis_model[['eps']] > 0, 1, 0)
+        dN[i, j] <- Y[i, j] * ifelse(ts[j + 1] - y[i] - defs$analysis_model[['eps']] > 0, 1, 0) * unlist(Mlist$cens)[i]
+      }
+    }
+
+    dL0.star <- priorhaz <- numeric(length(ts) - 1)
+    for (j in 1:(length(ts) - 1)) {
+      dL0.star[j] <- defs$analysis_model[['r']] * (ts[j + 1] - ts[j])
+      priorhaz[j] <- dL0.star[j] * l$c
+    }
+    Ylong <- reshape2::melt(Y)
+    Ylong$dN <- reshape2::melt(dN)$value
+
+    Ylong <- Ylong[order(Ylong$value, decreasing = T), ]
+
+    l$priorhaz <- priorhaz
+    l$subj <- Ylong$subj
+    l$time <- Ylong$time
+    l$RiskSet <- Ylong$value
+    l$dN <- Ylong$dN
+    l$nt <- length(ts)
+    l$Idt <- ifelse(l$RiskSet == 0, 0, NA)
   }
 
   # hyperparameters imputation models
@@ -101,7 +136,9 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
   }
 
   if (!is.null(Mlist$auxvars)) {
-    l$beta <- setNames(rep(NA, max(K, na.rm = TRUE)), get_coef_names(Mlist, K)[, 2])
+    # l$beta <- setNames(rep(NA, max(K, na.rm = TRUE)), get_coef_names(Mlist, K)[, 2])
+    l$beta <- rep(NA, max(K, na.rm = T))
+    names(l$beta)[min(K, na.rm = T) : max(K, na.rm = T)] <- get_coef_names(Mlist, K)[, 2]
     nams <- sapply(Mlist$auxvars, function(x) {
       if (x %in% names(Mlist$refs)) {
         paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) !=
@@ -230,11 +267,22 @@ default_hyperpars <- function(family = 'gaussian', link = "identity", nranef = N
     tau_reg_main <- 0.0001
   }
 
+  if (thefamily == 'prophaz') {
+    c <- 0.001
+    r <- 0.1
+    eps <- 1e-10
+  } else {
+    c <- r <- eps <- NULL
+  }
+
   analysis_model <- c(
     mu_reg_main = 0,
     tau_reg_main = tau_reg_main,
     a_tau_main = 0.01,
-    b_tau_main = 0.001
+    b_tau_main = 0.001,
+    c = c,
+    r = r,
+    eps = eps
   )
 
 
