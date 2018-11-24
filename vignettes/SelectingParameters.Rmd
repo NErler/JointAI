@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
   fig.width = 7,
   fig.align = 'center'
 )
-library(JointAI)
+library("JointAI")
 ```
 
 In this vignette, we use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
@@ -46,12 +46,15 @@ practice.
 ## Monitoring parameters
 **JointAI** uses [JAGS](http://mcmc-jags.sourceforge.net/)
 for performing the MCMC ([Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo)) sampling.
-Since JAGS only saves the values of MC chains for those parameters/variables for
+Since JAGS only saves the values of MCMC chains for those parameters/variables for
 which the user has specified that they should be monitored, this is also the
 case in **JointAI**.
 
-For this purpose, [`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html), [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) and
-[`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) have an argument
+For this purpose, 
+[`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html), [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html),
+[`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html), 
+[`glme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) and
+[`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) have an argument
 `monitor_params`.
 
 `monitor_params` takes a named list (often a named vector also works) with
@@ -171,6 +174,7 @@ tab <- rbind(object = 'a JointAI object',
              include = "logical; should the original data be included?",
              start = paste0("the first iteration that may be randomly chosen",
                             " (i.e., all previous iterations are discarded as burn-in)"),
+             minspace = 'minimum number of iterations between iterations chosen as imputed values',
              seed = "optional seed value in order to make the random selection
                      of iterations reproducible",
              export_to_SPSS = paste0("logical; should the datasets be exported", 
@@ -190,7 +194,7 @@ knitr::kable(tab, row.names = FALSE)
 For mixed models, `analysis_main` also includes the random effects covariance
 matrix `D`:
 ```{r}
-lme1 <- lme_imp(bmi ~ age + EDUC, random = ~age|ID, 
+lme1 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, 
                 data = simLong, n.adapt = 0, mess = FALSE)
 
 parameters(lme1, mess = FALSE)
@@ -202,7 +206,7 @@ inverse of the random effects covariance matrix (`invD`) and the diagonal of the
 scale matrix of the Wishart-prior of `invD` (`RinvD`). 
 
 ```{r}
-lme2 <- lme_imp(bmi ~ age + EDUC, random = ~age|ID,
+lme2 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID,
                 data = simLong, n.adapt = 0, mess = FALSE,
                 monitor_params = c(analysis_random = TRUE))
 
@@ -213,7 +217,7 @@ parameters(lme2, mess = FALSE)
 It is possible to select only a subset of the random effects parameters by 
 specifying them directly, e.g.
 ```{r}
-lme3a <- lme_imp(bmi ~ age + EDUC, random = ~age|ID,
+lme3a <- lme_imp(bmi ~ age + EDUC, random = ~age | ID,
                 data = simLong, n.adapt = 0, mess = FALSE,
                 monitor_params = c(analysis_main = TRUE, RinvD = TRUE))
 
@@ -223,7 +227,7 @@ parameters(lme3a, mess = FALSE)
 or by switching unwanted parts of `analysis_random` off, e.g.
 
 ```{r}
-lme3b <- lme_imp(bmi ~ age + EDUC, random = ~age|ID,
+lme3b <- lme_imp(bmi ~ age + EDUC, random = ~age | ID,
                 data = simLong, n.adapt = 0, mess = FALSE,
                 monitor_params = c(analysis_main = TRUE,
                                    analysis_random = TRUE,

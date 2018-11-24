@@ -23,7 +23,13 @@ knitr::opts_knit$set(progress = FALSE)
 library(JointAI)
 ```
 
-In this vignette, we use the NHANES data that are part of the **JointAI** package.
+
+This vignette gives a first and very brief overview of how the package **JointAI**
+can be used. The different settings and options are explained in more depth in
+the [help pages](https://nerler.github.io/JointAI/reference/index.html) and 
+other [vignettes](https://nerler.github.io/JointAI/articles/index.html).
+
+Here, we use the NHANES data that are part of the **JointAI** package.
 For more info on this data, check the
 [help file](https://nerler.github.io/JointAI/reference/NHANES.html) for the NHANES data,
 go to the [web page of the National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/index.htm) and check out the vignette 
@@ -39,12 +45,7 @@ lm1 <- lm_imp(SBP ~ gender + age + race + WC + alc + educ + albu + bili,
 ```
 
 The specification of `lm_imp()` is similar to the specification of a
-linear regression model for complete data using `lm()`.^[Specification for 
-generalized linear models follows the specification of
-[`glm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html),
-specification of linear mixed models follows
-[`lme()`](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html)
-from package **nlme**.]
+linear regression model for complete data using `lm()`
 In this minimal example
 the only difference is that for `lm_imp()` the number of iterations `n.iter`
 has to be specified. Of course there are many more parameters that can or should
@@ -80,14 +81,18 @@ When convergence has been achieved, we can obtain the result of the model
 from the model summary.
 
 ## Model Summary
-Results from a JointAI model can be printed using
+Results from a `JointAI` model can be printed using
+```{r, echo = FALSE}
+options(width = 80)
+```
+
 ```{r}
 summary(lm1)
 ```
 
 The output gives the posterior summary, i.e., the summary of the 
 MCMC ([Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo))
-sample (which consists of all Markov chains combined).
+sample (which consists of all chains combined).
 
 By default, [`summary()`](https://nerler.github.io/JointAI/reference/summary.JointAI.html)
 will only print the posterior summary for the main
@@ -96,7 +101,8 @@ is described in the vignette
 [*Selecting Parameters*](https://nerler.github.io/JointAI/articles/SelectingParameters.html).
 
 The summary consists of the posterior mean, the standard deviation and the 
-2.5% and 97.5% quantiles of the MCMC sample, and the tail probability.
+2.5% and 97.5% quantiles of the MCMC sample, the tail probability and the 
+Gelman-Rubin criterion for convergence.
 The tail probability is a measure of how likely the value 0 is under the 
 estimated posterior distribution, and is calculated as 
 $$2\times\min\left\{Pr(\theta > 0), Pr(\theta < 0)\right\}$$
@@ -129,6 +135,12 @@ for (i in seq_along(mus)) {
 }
 ```
 
+The Gelman-Rubin^[Gelman, A and Rubin, DB (1992) Inference from iterative simulation using multiple sequences, Statistical Science, 7, 457-511.<br>
+Brooks, SP. and Gelman, A. (1998) General methods for monitoring convergence of iterative simulations. Journal of Computational and Graphical Statistics, 7, 434-455.] criterion,
+also available via the function [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.html),
+compares the within and between chain variation. When it is close enough to
+1^[for example < 1.1; but this is not a generally accepted cut-off], the chains
+can be assumed to have converged.
 
 Additionally, some important characteristics of the MCMC samples on which the
 summary is based, is given. This includes the range and number of iterations
@@ -153,3 +165,17 @@ densplot(lm1)
 By default, `densplot()` plots the empirical distribution of each of the chains
 separately. When `joined = TRUE` the distributions of the combined chains
 are plotted.
+
+
+## Other types of models
+Besides linear regression models, it is also possible to use
+
+* **generalized linear models**: `glm_imp()` (follows the specification of
+[`glm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html))
+* **linear mixed models**: `lme_imp()` (follows the specification of [`lme()`](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html)
+from package [**nlme**](https://CRAN.R-project.org/package=nlme))
+* **generalized linear mixed models**: `glme_imp()` (analogue the specification used
+in `lme_imp()` and `glm_imp()`)
+* **parametric (Weibull) survival models**: `survreg_imp()` (follows the specification
+of [`survreg()`](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/survreg.html)
+from package [**survival**](https://CRAN.R-project.org/package=survival))
