@@ -5,8 +5,8 @@
 \title{Extract multiple imputed datasets}
 \usage{
 get_MIdat(object, m = 10, include = TRUE, start = NULL,
-  seed = NULL, export_to_SPSS = FALSE, resdir = NULL,
-  filename = NULL)
+  minspace = 50, seed = NULL, export_to_SPSS = FALSE,
+  resdir = NULL, filename = NULL)
 }
 \arguments{
 \item{object}{object inheriting from class "JointAI"}
@@ -16,6 +16,8 @@ get_MIdat(object, m = 10, include = TRUE, start = NULL,
 \item{include}{should the original, incomplete data be included?}
 
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
+
+\item{minspace}{minimum number of iterations between iterations chosen as imputed values.}
 
 \item{seed}{optional seed}
 
