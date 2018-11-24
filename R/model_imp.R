@@ -833,42 +833,39 @@ survreg_imp <- function(formula, data,
 
 
 
-#' @rdname model_imp
-#' @export
-coxph_imp <- function(formula, data,
-                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                     monitor_params = NULL, inits = TRUE,
-                     modelname = NULL, modeldir = NULL,
-                     overwrite = NULL, keep_model = FALSE,
-                     quiet = TRUE, progress.bar = "text", warn = TRUE,
-                     mess = TRUE,
-                     auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
-
-  if (missing(formula))
-    stop("No model formula specified.")
-
-  if (missing(data))
-    stop("No dataset given.")
-
-
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$fixed <- arglist$formula
-  arglist$analysis_type <- "coxph"
-  arglist$family <- 'prophaz'
-  arglist$link <- "log"
-  arglist$fixed <- formula
-
-  thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
-
-  arglist <- c(thecall = match.call(),
-               arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
-}
+# coxph_imp <- function(formula, data,
+#                      n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+#                      monitor_params = NULL, inits = TRUE,
+#                      modelname = NULL, modeldir = NULL,
+#                      overwrite = NULL, keep_model = FALSE,
+#                      quiet = TRUE, progress.bar = "text", warn = TRUE,
+#                      mess = TRUE,
+#                      auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+#                      scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+#
+#   if (missing(formula))
+#     stop("No model formula specified.")
+#
+#   if (missing(data))
+#     stop("No dataset given.")
+#
+#
+#   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+#   arglist$fixed <- arglist$formula
+#   arglist$analysis_type <- "coxph"
+#   arglist$family <- 'prophaz'
+#   arglist$link <- "log"
+#   arglist$fixed <- formula
+#
+#   thiscall <- as.list(match.call())[-1L]
+#   thiscall <- lapply(thiscall, function(x) {
+#     if (is.language(x)) eval(x) else x
+#   })
+#
+#   arglist <- c(thecall = match.call(),
+#                arglist,
+#                thiscall[!names(thiscall) %in% names(arglist)])
+#
+#   res <- do.call(model_imp, arglist)
+#   res$call <- match.call()
+#   return(res)
