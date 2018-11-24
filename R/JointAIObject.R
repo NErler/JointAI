@@ -6,7 +6,8 @@
 #' @name JointAIObject
 #'
 #' @return
-#' \item{\code{analysis_type}}{\code{lm}, \code{glm} or \code{lme}, with attributes
+#' \item{\code{analysis_type}}{\code{lm}, \code{glm}, \code{lme}, \code{glme} or
+#'                             \code{survreg} with attributes
 #'                             \code{family} and \code{link}}
 #' \item{\code{data}}{the original dataset}
 #' \item{\code{meth}}{named vector specifying imputation methods and sequence}

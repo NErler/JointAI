@@ -54,7 +54,8 @@ summary(mod1)
 }
 \seealso{
 The model fitting functions \code{\link{lm_imp}},
-         \code{\link{glm_imp}}, \code{\link{lme_imp}} and the
+         \code{\link{glm_imp}}, \code{\link{lme_imp}}, \code{\link{glme_imp}},
+         \code{\link{survreg_imp}} and the
          vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
           for examples how to specify the parameter \code{subset}.
 }

@@ -13,14 +13,17 @@ jointly with the analysis model.
 }
 \section{Main functions}{
 
-The package has three main functions, \code{\link{lm_imp}},
-\code{\link{glm_imp}} and \code{\link{lme_imp}},
-that allow analysis using linear regression, generalized linear regression
-and linear mixed effects models. As far as possible, the specification of
+The package has five main functions, \code{\link{lm_imp}},
+\code{\link{glm_imp}}, \code{\link{lme_imp}}, \code{\link{glme_imp}} and \code{\link{survreg_imp}}
+that allow analysis using linear regression, generalized linear regression,
+linear mixed effects models, generalized linear mixed effects models and parametric
+survival models. As far as possible, the specification of
 the functions is the same as the specification of their complete data
-versions \code{\link[stats]{lm}}, \code{\link[stats]{glm}} and
+versions \code{\link[stats]{lm}}, \code{\link[stats]{glm}},
 \code{\link[nlme]{lme}} (from the package
-\href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}}).
+\href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}}) and
+\code{\link[survival]{survreg}} (from the package
+\href{https://CRAN.R-project.org/package=survival}{\strong{survival}}).
 
 
 Results can be summarized and printed with \code{\link{summary.JointAI}},
@@ -37,6 +40,16 @@ estimate are available:
 \code{\link{GR_crit}} and \code{\link{MC_error}}.
 
 Imputed data can be extracted and exported to SPSS data using \code{\link{get_MIdat}}.
+}
+
+\section{Other useful functions}{
+
+\itemize{
+\item \code{\link{parameters}} and \code{\link{list_impmodels}} to gain
+      insight in the specified model
+\item \code{\link{plot_all}} and \code{md_pattern} to visualize the
+      distribution of the data and the missing data pattern
+}
 }
 
 \section{Vignettes}{
