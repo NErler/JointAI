@@ -8,7 +8,6 @@
 \alias{glme_imp}
 \alias{glmer_imp}
 \alias{survreg_imp}
-\alias{coxph_imp}
 \title{Joint analysis and imputation of incomplete data}
 \usage{
 lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
@@ -42,13 +41,6 @@ glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
   scale_pars = NULL, hyperpars = NULL, ...)
 
 survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
-  modeldir = NULL, overwrite = NULL, keep_model = FALSE,
-  quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...)
-
-coxph_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
@@ -170,8 +162,8 @@ effects and \code{g} the grouping variable}
 An object of class "JointAI".
 }
 \description{
-Functions to estimate linear, generalized
-linear and linear mixed models using MCMC sampling.
+Functions to estimate (generalized) linear, (generalized) linear mixed and
+parametric (Weibull) survival models using MCMC sampling.
 }
 \section{Details}{
 
@@ -182,7 +174,8 @@ See also the vignette: \href{https://nerler.github.io/JointAI/articles/ModelSpec
 \code{binomial} \tab with links: \code{logit}, \code{probit}, \code{log}, \code{cloglog}\cr
 \code{Gamma}    \tab with links: \code{identity}, \code{log}\cr
 \code{poisson}  \tab with links: \code{log}, \code{identity}
-}}
+}
+}
 
 
 
@@ -196,7 +189,16 @@ Implemented imputation models that can be chosen in the argument \code{meth} are
 \code{logit} \tab logistic model for binary data\cr
 \code{multilogit} \tab multinomial logit model for unordered categorical variables\cr
 \code{cumlogit} \tab cumulative logit model for ordered categorical variables
-}}
+}
+When imputation methods are specified for only a subset of the incomplete
+covariates involved in a model, the default choices are used for all unspecified
+variables.
+
+The argument \code{meth} also controls the order of the sequence of imputation
+models. By default, models are ordered according to the proportion of missing
+values. To change this order, a vector with imputation methods for all
+incomplete variables (in the desired order) needs to be supplied.
+}
 
 \subsection{Parameters to follow (\code{monitor_params})}{
 See also the vignette: \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}\cr
@@ -238,8 +240,73 @@ the imputed values.
 }
 }
 
-\examples{
+\section{Note}{
 
+\subsection{Coding of variables:}{
+The default imputation methods are chosen based on the \code{class} of each
+of the incomplete variables, distinguishing between \code{numeric},
+\code{factor} with two levels, unordered \code{factor} with >2 levels and
+ordered \code{factor} with >2 levels.
+
+When a continuous incomplete variable has only two different values it is
+assumed to be binary and its coding and default imputation model will be
+changed accordingly. This behavior can be overwritten when the imputation
+method for that variable is specified directly by the user.
+
+Variables of type `logical` are automatically be converted to unordered factors.
+
+Contrary to base R behavior, dummy coding (i.e., \code{contr.treatment} contrasts)
+are used for ordered factors in any linear predictor.
+Since the order of levels in an ordered factor contains information relevant
+to the imputation of missing values, it is important that incomplete ordinal
+variables are coded as such.
+}
+
+\subsection{Non-linear effects and transformation of variables:}{
+\strong{JointAI} handles non-linear effects, transformation of covariates and
+interactions the following way:
+When, for instance, the model formula contains the function \code{log(x)} and
+\code{x} has missing values, \code{x} will be imputed and used in the linear
+predictor of models for other incomplete variables, i.e., it is assumed that
+the other variables have a linear association with \code{x} but not with
+\code{log(x)}. The \code{log()} of the observed and imputed values of
+\code{x} is calculated and used in the linear predictor of the analysis model.
+
+If, instead of using \code{log(x)} in the model formula a pre-calculated
+variable \code{logx} would be used instead, this variable is imputed directly
+and used in the linear predictors of all models, implying that other incomplete
+variables that have \code{logx} in their linear predictors have a linear
+association with \code{logx} but not with \code{x}.
+
+When different transformations of the same incomplete variable are used in
+one model it is strongly discouraged to calculate these transformations beforehand
+and supply them as different variables.
+If, for example, a model formula contains both \code{x} and \code{x2} (where
+\code{x2} = \code{x^2}), they are treated as separate variables and imputed
+with separate models. Imputed values of \code{x2} are thus not equal to the
+square of imputed values of \code{x}.
+Instead, \code{x + I(x^2)} should be used in the model formula. Then, only
+\code{x} is imputed and used in the linear predictor of models for other
+incomplete variables, and \code{x^2} is calculated from the imputed values
+of \code{x} internally.
+
+The same applies to interactions involving incomplete variables.
+}
+\subsection{Not (yet) possible:}{
+\itemize{
+\item imputation of time-varying (level-1) covariates
+\item multiple nesting levels of random effects (nested or crossed)
+\item prediction (using \code{predict()}) on the subject level
+\item the use of splines for incomplete variables
+\item the use of \code{\link[survival]{pspline()}},
+      \code{\link[survival]{frailty()}}, \code{\link[survival]{cluster()}}
+      or \code{\link[survival]{strata()}} in survival models
+\item left censored or interval censored data
+}
+}
+}
+
+\examples{
 # Example 1: Linear regression with incomplete covariates
 mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 
