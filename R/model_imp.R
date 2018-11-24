@@ -87,7 +87,8 @@
 #' \code{binomial} \tab with links: \code{logit}, \code{probit}, \code{log}, \code{cloglog}\cr
 #' \code{Gamma}    \tab with links: \code{identity}, \code{log}\cr
 #' \code{poisson}  \tab with links: \code{log}, \code{identity}
-#' }}
+#' }
+#' }
 #'
 #'
 #'
@@ -234,8 +235,8 @@
 #'   \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 #'}
 #'
-#' @examples
 #'
+#' @examples
 #' # Example 1: Linear regression with incomplete covariates
 #' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
@@ -380,7 +381,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     if (is.numeric(data[, k]) & !k %in% names(meth_user) & warn) {
       data[, k] <- factor(data[, k])
       warning(
-        gettextf("\nThe variable %s is coded as continuous but has only two different values. I will consider it binary.\nTo overwrite this behaviour, specify a different imputation method for %s using the argument %s.",
+        gettextf("\nThe variable %s is coded as continuous but has only two different values. I will consider it binary.\nTo overwrite this behavior, specify a different imputation method for %s using the argument %s.",
                  dQuote(k), dQuote(k), dQuote("meth")),
         call. = FALSE, immediate. = TRUE)
     }
@@ -869,3 +870,4 @@ survreg_imp <- function(formula, data,
 #   res <- do.call(model_imp, arglist)
 #   res$call <- match.call()
 #   return(res)
+# }
