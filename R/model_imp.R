@@ -1,7 +1,7 @@
 #' Joint analysis and imputation of incomplete data
 #'
-#' Functions to estimate linear, generalized
-#' linear and linear mixed models using MCMC sampling.
+#' Functions to estimate (generalized) linear, (generalized) linear mixed and
+#' parametric (Weibull) survival models using MCMC sampling.
 #'
 #' @param formula a two sided model formula (see \code{\link[stats]{formula}})
 #' @param fixed a two sided formula describing the fixed-effects part of the
