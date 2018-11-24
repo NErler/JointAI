@@ -21,9 +21,31 @@ list_impmodels(object, predvars = TRUE, regcoef = TRUE,
 \item{refcat}{logical; should information on the reference category be printed?}
 }
 \description{
-Print information on all imputation models used in a JointAI object,
+Print information on all models for incomplete covariates used in a JointAI object,
 including the model type, names of the parameters used and hyperparameters.
 }
+\section{Note}{
+
+The models listed by this function are not the actual imputation models,
+but the conditional models that are part of the specification of the joint
+distribution of the data.
+Briefly, the joint distribution is specified as a sequence of conditional
+models
+\deqn{p(y | x_1, x_2, x_3, ..., \theta) p(x_1|x_2, x_3, ..., \theta) p(x_2|x_3, ..., \theta) ...}
+The actual imputation models are the full conditional distributions derived
+from this joint distribution \eqn{p(x_1 | \cdot)}.
+Even though the conditional distributions do not contain the outcome and all
+other covariates in their linear predictor, since imputations are sampled
+from the full conditional distributions, outcome and other covariates are
+taken into account implicitly. For more details, see Erler et al. (2016).
+
+The function \code{list_impmodels} prints information on the conditional
+distributions of the incomplete covariates (since they are what is specified;
+the full-conditionals are automatically derived within JAGS). The outcome
+is, thus, not part of the printed linear predictor, but is still included
+during imputation.
+}
+
 \examples{
 # (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save computational time)
 mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0)
@@ -31,4 +53,11 @@ mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 
 list_impmodels(mod1)
 
 
+}
+\references{
+Erler, N. S., Rizopoulos, D., Rosmalen, J. V., Jaddoe,
+V. W., Franco, O. H., & Lesaffre, E. M. (2016).
+Dealing with missing covariates in epidemiologic studies: A comparison
+between multiple imputation and a full Bayesian approach.
+\emph{Statistics in Medicine}, 35(17), 2955-2974.
 }
