@@ -247,15 +247,49 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     inits <- TRUE
   }
 
+
+  covars <- unique(c(all.vars(fixed),
+                     all.vars(remove_grouping(random)),
+                     if (!is.null(auxvars))
+                       all.vars(as.formula(paste('~',
+                                                 paste(auxvars, collapse = " + "))))
+  ))
+  classes <- unique(unlist(sapply(data[covars], class)))
+
+  if (any(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))) {
+    w <- which(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))
+    stop(gettextf("Variables of type %s can not be handled.",
+                  paste(dQuote(classes[w]), collapse = ', ')))
+  }
+
+
   # drop empty categories
+  allvars <- unique(c(all.vars(fixed),
+                      all.vars(random),
+                      if (!is.null(auxvars))
+                        all.vars(as.formula(paste('~',
+                                                  paste(auxvars, collapse = " + "))))
+  ))
+
   data_orig <- data
-  data <- droplevels(data)
+  data[allvars] <- droplevels(data[allvars])
   if (mess) {
-    lvl1 <- sapply(data_orig, function(x) length(levels(x)))
-    lvl2 <- sapply(data, function(x) length(levels(x)))
+    lvl1 <- sapply(data_orig[allvars], function(x) length(levels(x)))
+    lvl2 <- sapply(data[allvars], function(x) length(levels(x)))
     if (any(lvl1 != lvl2)) {
       message(gettextf('Empty levels were dropped from %s.',
                        dQuote(names(lvl1)[which(lvl1 != lvl2)])))
+    }
+  }
+
+  # convert logicals to factors
+  if (any(unlist(sapply(data[allvars], class)) == 'logical')) {
+    for (x in allvars) {
+      if ('logical' %in% class(data[, x])) {
+        data[, x] <- factor(data[, x])
+        if (mess)
+          message(gettextf('%s was converted to a factor.', dQuote(x)))
+      }
     }
   }
 
