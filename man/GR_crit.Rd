@@ -58,6 +58,7 @@ GR_crit(mod1)
 \references{
 Gelman, A and Rubin, DB (1992) Inference from iterative simulation using
 multiple sequences, \emph{Statistical Science}, \strong{7}, 457-511.
+
 Brooks, SP. and Gelman, A. (1998) General methods for monitoring convergence
 of iterative simulations.
 \emph{Journal of Computational and Graphical Statistics}, \strong{7}, 434-455.
