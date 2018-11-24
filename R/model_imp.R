@@ -101,7 +101,16 @@
 #' \code{logit} \tab logistic model for binary data\cr
 #' \code{multilogit} \tab multinomial logit model for unordered categorical variables\cr
 #' \code{cumlogit} \tab cumulative logit model for ordered categorical variables
-#' }}
+#' }
+#' When imputation methods are specified for only a subset of the incomplete
+#' covariates involved in a model, the default choices are used for all unspecified
+#' variables.
+#'
+#' The argument \code{meth} also controls the order of the sequence of imputation
+#' models. By default, models are ordered according to the proportion of missing
+#' values. To change this order, a vector with imputation methods for all
+#' incomplete variables (in the desired order) needs to be supplied.
+#' }
 #'
 #' \subsection{Parameters to follow (\code{monitor_params})}{
 #' See also the vignette: \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}\cr
