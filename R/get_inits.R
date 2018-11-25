@@ -12,7 +12,7 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family, link 
     mu0 <- coef(glm(unlist(Mlist$y) ~ 1,
                      family = get(family)(link = link)))
   } else if (analysis_type == 'survreg') {
-    log(colMeans(Mlist$y))
+    mu0 <- log(colMeans(Mlist$y))
   } else {
     mu0 <- 0
   }
