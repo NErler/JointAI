@@ -35,7 +35,7 @@ predDF.formula <- function(formula, dat, var, ...) {
   allvars <- all.vars(formula)
 
   vals <- sapply(allvars, function(k) {
-    if (k == var) {
+    if (k %in% var) {
       if (is.factor(dat[, k])) {
         unique(dat[, k])
       } else {
@@ -127,7 +127,7 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
   X <- model.matrix(mt, data = newdata)
   options(contrasts = oldop)
 
-  pred <- sapply(1:nrow(X), function(i) MCMC[, colnames(X)] %*% X[i, ])
+  pred <- sapply(1:nrow(X), function(i) MCMC[, colnames(X), drop = FALSE] %*% X[i, ])
 
   fit <- colMeans(pred)
   quantiles <- apply(pred, 2, quantile, quantiles)
