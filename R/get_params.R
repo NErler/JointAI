@@ -43,11 +43,8 @@ get_params <- function(meth, analysis_type, family,
 
   if (analysis_main) {
     if (is.null(betas)) betas <- TRUE
-    if (family %in% c("gaussian", "gamma")) {
+    if (family %in% c("gaussian", "gamma", 'weibull')) {
       if (is.null(sigma_y)) sigma_y <- TRUE
-      if(analysis_type != 'surv') {
-        if (is.null(tau_y)) tau_y <- TRUE
-      }
     }
   }
   if (analysis_type %in% c("lme", "glme")) {
