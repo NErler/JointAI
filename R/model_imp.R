@@ -210,11 +210,11 @@
 #' \itemize{
 #' \item imputation of time-varying (level-1) covariates
 #' \item multiple nesting levels of random effects (nested or crossed)
-#' \item prediction (using \code{predict()}) on the subject level
+#' \item prediction (using \code{predict}) conditional on random effects
 #' \item the use of splines for incomplete variables
-#' \item the use of \code{\link[survival]{pspline()}},
-#'       \code{\link[survival]{frailty()}}, \code{\link[survival]{cluster()}}
-#'       or \code{\link[survival]{strata()}} in survival models
+#' \item the use of \code{\link[survival]{pspline}},
+#'       \code{\link[survival]{frailty}}, \code{\link[survival]{cluster}}
+#'       or \code{\link[survival]{strata}} in survival models
 #' \item left censored or interval censored data
 #' }
 #' }
