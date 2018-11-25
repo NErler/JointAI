@@ -43,31 +43,33 @@ get_imp_meth <- function(fixed, random = NULL, data,
 
   if (any(!allvars %in% names(data))) {
     stop(gettextf("Variable(s) %s were not found in the data." ,
-        paste(dQuote(allvars[!allvars %in% names(data)]), collapse = ", "))
+                  paste(dQuote(allvars[!allvars %in% names(data)]), collapse = ", "))
     )
   }
 
-  tvar <- sapply(data[, allvars, drop = FALSE], check_tvar, idvar)
-
-  # find predictor variables with missing values
-  misvar <- names(data[, allvars, drop = FALSE])[colSums(is.na(data[, allvars, drop = FALSE])) > 0]
-  # crossectional incomplete variables:
-  misvar_c <- misvar[misvar %in% names(tvar)[!tvar]]
-
-  # time-varying incomplete variables (not yet used)
-  misvar_l <- misvar[misvar %in% names(tvar)[tvar]]
-
-  # sort by number of missing values
-  misvar <- c(misvar_c[order(colSums(is.na(data[, misvar_c, drop = FALSE])))],
-              misvar_l[order(colSums(is.na(data[, misvar_l, drop = FALSE])))]
-  )
+  if (length(allvars) > 0) {
+    tvar <- sapply(data[, allvars, drop = FALSE], check_tvar, idvar)
 
 
-  # named vector to assign imputation model types
-  meth <- rep("", length(misvar))
-  names(meth) <- misvar
+    # find predictor variables with missing values
+    misvar <- names(data[, allvars, drop = FALSE])[colSums(is.na(data[, allvars, drop = FALSE])) > 0]
+    # crossectional incomplete variables:
+    misvar_c <- misvar[misvar %in% names(tvar)[!tvar]]
 
-  nlevel <- sapply(misvar, function(k) {
+    # time-varying incomplete variables (not yet used)
+    misvar_l <- misvar[misvar %in% names(tvar)[tvar]]
+
+    # sort by number of missing values
+    misvar <- c(misvar_c[order(colSums(is.na(data[, misvar_c, drop = FALSE])))],
+                misvar_l[order(colSums(is.na(data[, misvar_l, drop = FALSE])))]
+    )
+
+
+    # named vector to assign imputation model types
+    meth <- rep("", length(misvar))
+    names(meth) <- misvar
+
+    nlevel <- sapply(misvar, function(k) {
       if (!is.factor(data[, k])) {
         if (length(unique(na.omit(data[, k]))) == 2) {
           2
@@ -76,18 +78,20 @@ get_imp_meth <- function(fixed, random = NULL, data,
         }} else {
           length(levels(data[, k]))
         }
-  })
+    })
 
-  if (length(nlevel) > 0) {
-    meth[nlevel == 0 & !tvar[names(nlevel)]] <- "norm"
-    # meth[nlevel == 0 &  tvar[names(nlevel)]] <- "lmm"
-    meth[nlevel == 2] <- "logit"
-    meth[nlevel  > 2] <- "multilogit"
-    meth[sapply(data[, names(nlevel), drop = FALSE], is.ordered)] <- "cumlogit"
-  }
+    if (length(nlevel) > 0) {
+      meth[nlevel == 0 & !tvar[names(nlevel)]] <- "norm"
+      # meth[nlevel == 0 &  tvar[names(nlevel)]] <- "lmm"
+      meth[nlevel == 2] <- "logit"
+      meth[nlevel  > 2] <- "multilogit"
+      meth[sapply(data[, names(nlevel), drop = FALSE], is.ordered)] <- "cumlogit"
+    }
 
-  if (length(meth) == 0)
+    if (length(meth) == 0)
+      meth <- NULL
+  } else {
     meth <- NULL
-
+  }
   return(meth = meth)
 }

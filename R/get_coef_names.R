@@ -30,6 +30,9 @@ get_coef_names <- function(Mlist, K) {
       cbind(paste0("beta[", K["Xil", 1]:K["Xil", 2], "]"),
             colnames(Mlist$Xil))
   )
+  if (max(K, na.rm = TRUE) == 1) { # case with only intercept
+    coefs[, 1] <- gsub('beta\\[1\\]', 'beta', coefs[, 1])
+  }
 
   return(coefs)
 }
