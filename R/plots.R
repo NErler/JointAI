@@ -68,7 +68,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
               mgp = c(2, 0.6, 0))
 
     for (i in 1:nvar(prep$MCMC)) {
-      matplot(x = prep$time, as.array(prep$MCMC)[, i, ], type = "l",
+      matplot(x = prep$time, as.array(prep$MCMC, drop = FALSE)[, i, ], type = "l",
               xlab = "Iterations", ylab = "",
               main = colnames(prep$MCMC[[1]])[i], ...)
     }
