@@ -240,6 +240,72 @@ the imputed values.
 }
 }
 
+\section{Note}{
+
+\subsection{Coding of variables:}{
+The default imputation methods are chosen based on the \code{class} of each
+of the incomplete variables, distinguishing between \code{numeric},
+\code{factor} with two levels, unordered \code{factor} with >2 levels and
+ordered \code{factor} with >2 levels.
+
+When a continuous incomplete variable has only two different values it is
+assumed to be binary and its coding and default imputation model will be
+changed accordingly. This behavior can be overwritten when the imputation
+method for that variable is specified directly by the user.
+
+Variables of type `logical` are automatically be converted to unordered factors.
+
+Contrary to base R behavior, dummy coding (i.e., \code{contr.treatment} contrasts)
+are used for ordered factors in any linear predictor.
+Since the order of levels in an ordered factor contains information relevant
+to the imputation of missing values, it is important that incomplete ordinal
+variables are coded as such.
+}
+
+\subsection{Non-linear effects and transformation of variables:}{
+\strong{JointAI} handles non-linear effects, transformation of covariates and
+interactions the following way:
+When, for instance, the model formula contains the function \code{log(x)} and
+\code{x} has missing values, \code{x} will be imputed and used in the linear
+predictor of models for other incomplete variables, i.e., it is assumed that
+the other variables have a linear association with \code{x} but not with
+\code{log(x)}. The \code{log()} of the observed and imputed values of
+\code{x} is calculated and used in the linear predictor of the analysis model.
+
+If, instead of using \code{log(x)} in the model formula a pre-calculated
+variable \code{logx} would be used instead, this variable is imputed directly
+and used in the linear predictors of all models, implying that other incomplete
+variables that have \code{logx} in their linear predictors have a linear
+association with \code{logx} but not with \code{x}.
+
+When different transformations of the same incomplete variable are used in
+one model it is strongly discouraged to calculate these transformations beforehand
+and supply them as different variables.
+If, for example, a model formula contains both \code{x} and \code{x2} (where
+\code{x2} = \code{x^2}), they are treated as separate variables and imputed
+with separate models. Imputed values of \code{x2} are thus not equal to the
+square of imputed values of \code{x}.
+Instead, \code{x + I(x^2)} should be used in the model formula. Then, only
+\code{x} is imputed and used in the linear predictor of models for other
+incomplete variables, and \code{x^2} is calculated from the imputed values
+of \code{x} internally.
+
+The same applies to interactions involving incomplete variables.
+}
+\subsection{Not (yet) possible:}{
+\itemize{
+\item imputation of time-varying (level-1) covariates
+\item multiple nesting levels of random effects (nested or crossed)
+\item prediction (using \code{predict}) conditional on random effects
+\item the use of splines for incomplete variables
+\item the use of \code{\link[survival]{pspline}},
+      \code{\link[survival]{frailty}}, \code{\link[survival]{cluster}}
+      or \code{\link[survival]{strata}} in survival models
+\item left censored or interval censored data
+}
+}
+}
+
 \examples{
 # Example 1: Linear regression with incomplete covariates
 mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
