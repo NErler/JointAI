@@ -337,6 +337,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   data_orig <- data
   data[allvars] <- droplevels(data[allvars])
+
   if (mess) {
     lvl1 <- sapply(data_orig[allvars], function(x) length(levels(x)))
     lvl2 <- sapply(data[allvars], function(x) length(levels(x)))
@@ -345,6 +346,17 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                        dQuote(names(lvl1)[which(lvl1 != lvl2)])))
     }
   }
+
+  # convert continuous variable with 2 different values to factor
+  for (k in allvars) {
+    if (all(class(data[, k]) != 'factor') & length(unique(data[, k])) == 2) {
+      data[, k] <- factor(data[, k])
+      if (mess)
+        message(gettextf('The variable %s was converted to a factor.',
+                         dQuote(k)))
+    }
+  }
+
 
   # convert logicals to factors
   if (any(unlist(sapply(data[allvars], class)) == 'logical')) {
