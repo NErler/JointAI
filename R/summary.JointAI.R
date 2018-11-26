@@ -140,9 +140,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3), ...) 
   if (x$analysis_type %in% c("lme", "glme") & !is.null(x$ranefvar)) {
     cat("\n")
     cat("Posterior summary of random effects covariance matrix:\n")
-    x$ranefvar <- as.data.frame(x$ranefvar)
-    x$ranefvar[is.na(x$ranefvar[, 'tail-prob.']), 'tail-prob.'] <- ''
-    print(x$ranefvar, digits = digits)
+    print(x$ranefvar, digits = digits, na.print = "")
   }
   if (!is.null(x$sigma)) {
     cat("\n")
