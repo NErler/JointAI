@@ -58,7 +58,7 @@ get_params <- function(meth, analysis_type, family,
     if (is.null(ranef)) ranef <- TRUE
     if (is.null(invD)) invD <- TRUE
     if (is.null(D)) D <- TRUE
-    if (is.null(RinvD)) RinvD <- TRUE
+    if (is.null(RinvD) & Zcols > 1) RinvD <- TRUE
   }
 
   if (imp_pars) {
