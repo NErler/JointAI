@@ -183,6 +183,34 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   return(coefs)
 }
 
+#' @export
+coef.summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
+                         subset = NULL, warn = TRUE, mess = TRUE, ...) {
+  if (!inherits(object, "summary.JointAI"))
+    stop("Use only with 'summary.JointAI' objects.\n")
+
+  return(object$stats)
+}
+
+
+
+#' @export
+confint.JointAI <- function(object, quantiles = c(0.025, 0.975),
+                            start = NULL, end = NULL, thin = NULL,
+                         subset = NULL, warn = TRUE, mess = TRUE, ...) {
+  if (!inherits(object, "JointAI"))
+    stop("Use only with 'JointAI' objects.\n")
+
+  if (is.null(object$sample)) {
+    stop("There is no MCMC sample.\n")
+  }
+
+  MCMC <- prep_MCMC(object, start, end, thin, subset)
+
+  cis <- t(apply(MCMC, 2, quantile, quantiles))
+
+  return(cis)
+}
 
 
 #' @export
