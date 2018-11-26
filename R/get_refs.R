@@ -2,46 +2,52 @@
 get_refs <- function(fmla, data, refcats = NULL) {
 
   covars <- all.vars(fmla)[all.vars(fmla) != extract_y(fmla)]
-  factors <- covars[sapply(data[, covars, drop = FALSE], is.factor)]
+  if (length(covars) > 0) {
 
-  default <- "first"
+    factors <- covars[sapply(data[, covars, drop = FALSE], is.factor)]
 
-  if (is.null(refcats)) {
-    refcats <- rep(default, length(factors))
-    names(refcats) <- factors
-  } else {
-    if (!is.list(refcats)) refcats <- as.list(refcats)
-    if (length(refcats) == 1 & is.null(attr(refcats, "names"))) {
-      refcats <- setNames(rep(refcats, length(factors)), factors)
-    } else if (any(!factors %in% names(refcats))) {
-      add <- factors[!factors %in% names(refcats)]
-      refcats <- c(refcats,  setNames(rep(default, length(add)), add))
-    }
-  }
+    default <- "first"
 
-  out <- sapply(factors, function(x){
-    if (is.character(refcats[[x]]) & !refcats[[x]] %in% c("first", "last", "largest")) {
-      newrefcats <- match(refcats[[x]], levels(data[, x]))
-      if (is.na(newrefcats) & regexpr("^[[:digit:]]*$", refcats[[x]]) > 0) {
-        refcats[[x]] <- as.numeric(refcats[[x]])
-      } else {
-        refcats[[x]] <- match(refcats[[x]], levels(data[, x]))
+    if (is.null(refcats)) {
+      refcats <- rep(default, length(factors))
+      names(refcats) <- factors
+    } else {
+      if (!is.list(refcats)) refcats <- as.list(refcats)
+      if (length(refcats) == 1 & is.null(attr(refcats, "names"))) {
+        refcats <- setNames(rep(refcats, length(factors)), factors)
+      } else if (any(!factors %in% names(refcats))) {
+        add <- factors[!factors %in% names(refcats)]
+        refcats <- c(refcats,  setNames(rep(default, length(add)), add))
       }
-    } else if (refcats[[x]] == 'first') {
-      refcats[[x]] <- 1
-    } else if (refcats[[x]] == 'last') {
-      refcats[[x]] <- length(levels(data[, x]))
-    } else if (refcats[[x]] == 'largest') {
-      refcats[[x]] <- which.max(table(data[, x]))
     }
-    res <- factor(levels(data[, x])[as.numeric(refcats[x])], levels(data[, x]))
-    attr(res, "dummies") <- paste0(x, levels(res)[levels(res) != res])
-    res
-  }, simplify = FALSE)
 
-  if (any(is.na(out))) {
-    stop(gettextf("\nThe reference category for %s could not be set.",
-             dQuote(names(out)[is.na(out)])))
+    out <- sapply(factors, function(x){
+      if (is.character(refcats[[x]]) & !refcats[[x]] %in% c("first", "last", "largest")) {
+        newrefcats <- match(refcats[[x]], levels(data[, x]))
+        if (is.na(newrefcats) & regexpr("^[[:digit:]]*$", refcats[[x]]) > 0) {
+          refcats[[x]] <- as.numeric(refcats[[x]])
+        } else {
+          refcats[[x]] <- match(refcats[[x]], levels(data[, x]))
+        }
+      } else if (refcats[[x]] == 'first') {
+        refcats[[x]] <- 1
+      } else if (refcats[[x]] == 'last') {
+        refcats[[x]] <- length(levels(data[, x]))
+      } else if (refcats[[x]] == 'largest') {
+        refcats[[x]] <- which.max(table(data[, x]))
+      }
+      res <- factor(levels(data[, x])[as.numeric(refcats[x])], levels(data[, x]))
+      attr(res, "dummies") <- paste0(x, levels(res)[levels(res) != res])
+      res
+    }, simplify = FALSE)
+
+    if (any(is.na(out))) {
+      stop(gettextf("\nThe reference category for %s could not be set.",
+                    dQuote(names(out)[is.na(out)])))
+    }
+
+  } else {
+    out <- NULL
   }
   return(out)
 }
