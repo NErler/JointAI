@@ -126,7 +126,7 @@ print_type <- function(x) {
 #' @rdname summary.JointAI
 #' @param x an object of class \code{summary.JointAI}
 #' @export
-print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 3), ...) {
+print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) {
   if (!inherits(x, "summary.JointAI"))
     stop("Use only with 'summary.JointAI' objects.\n")
 
