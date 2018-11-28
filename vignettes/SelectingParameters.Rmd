@@ -88,7 +88,7 @@ Each of the key words works as a switch.
 
 ### Parameters of the analysis model
 The default setting is `monitor_params = c(analysis_main = TRUE)`, i.e., 
-only the main parameters of the analysis model are monitored and 
+only the main parameters of the analysis model are monitored, and 
 monitoring is switched off for all other parameters.
 
 The main parameters are the regression coefficients of the analysis model

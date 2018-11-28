@@ -761,13 +761,13 @@ are scaled.
 ## Scaling
 When variables are measured on very different scales this can result in slow convergence
 and bad mixing. Therefore, **JointAI** automatically scales continuous
-variables are to have mean zero and standard deviation one. Results (parameters
+variables to have mean zero and standard deviation one. Results (parameters
 and imputed values) are transformed back to the original scale when the results
-are printed or imputed values exported.
+are printed or imputed values are exported.
 
 In some settings, however, it is not possible to scale continuous variables. This
-is the case for incomplete variables that enter the linear predictor of the analysis
-model in a function and variables that are imputed with models that are defined
+is the case for incomplete variables that enter a linear predictor in a 
+function and variables that are imputed with models that are defined
 on a subset of the real line (i.e., with a Gamma or a Beta distribution). Variables
 that are imputed with a log-normal distribution are scaled, but not centered.
 To prevent scaling, the argument `scale_vars` can be set to `FALSE`.
