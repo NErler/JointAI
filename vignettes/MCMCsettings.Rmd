@@ -1,0 +1,385 @@
+---
+title: "MCMC Settings"
+author: "Nicole Erler"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
+vignette: >
+  %\VignetteIndexEntry{MCMC settings}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.align = 'center'
+)
+library(JointAI)
+options(width = 100)
+```
+
+In **JointAI**, models are estimated in the Bayesian framework, using MCMC
+([Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo))
+sampling.
+The sampling is done by the software [JAGS](http://mcmc-jags.sourceforge.net/) 
+("Just Another Gibbs Sampler"),
+which performs [Gibbs](https://en.wikipedia.org/wiki/Gibbs_sampling) sampling.
+**JointAI** pre-processes the data to get it into a form that can be
+passed to JAGS and writes the JAGS model. The R package 
+[**rjags**](https://CRAN.R-project.org/package=rjags) is used as interface
+to JAGS.
+
+Here, we describe how to specify the arguments in the main functions that
+control MCMC related settings.
+To learn more about how to specify the other arguments in **JointAI** models,
+check out the vignette on [*Model Specification*](https://nerler.github.io/JointAI/articles/ModelSpecification.html).
+
+In this vignette we use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
+data for examples in cross-sectional data and the 
+dataset [simLong](https://nerler.github.io/JointAI/reference/simLong.html) for
+examples in longitudinal data.
+For more info on these datasets, check out the vignette 
+[*Visualizing Incomplete Data*](https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html),
+in which the distributions of variables and missing values in both sets is
+explored.
+
+**Note:**<br>
+In many of the examples we use `progress.bar = 'none'` which prevents printing 
+of the progress of the MCMC sampling, since this would result in lengthy output
+in the vignette.
+
+
+## MCMC related parameters in **JointAI**
+The main functions [`*_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+have a number of arguments that specify settings for the MCMC sampling:
+
+* `n.chains`: number of MCMC chains
+* `n.adapt`: number of iterations in the adaptive phase
+* `n.iter`: number of iterations in the sampling phase
+* `thin`: thinning degree
+* `monitor_params`: parameters/nodes to be monitored
+* `inits`: initial values
+
+And some other parameters passed to functions from **rjags**:
+
+* `quiet`: should printing of information be suppressed?
+* `progress.bar`: type of progress bar
+
+
+## Chains and Iterations
+In MCMC sampling, values are drawn from a probability distribution.
+The distribution the current value is drawn from depends on the previously
+drawn value (but not on values before that).
+Values, thus, form a chain. Once the chain has converged, its elements can be seen
+as a sample from the target posterior distribution.
+
+### Number of chains
+To evaluate convergence of MCMC chains it is helpful to create multiple
+chains, that have different starting values.
+The argument `n.chains` selects the number of chains (by default, `n.chains = 3`).
+
+For calculating the model summary, multiple chains are merged.
+
+
+### Adaptive phase 
+JAGS has an adaptive mode, in which samplers are optimized (for example the
+step size is adjusted).
+Samples obtained during the adaptive mode do not form a Markov chain and are 
+discarded.
+The argument `n.adapt` controls the length of this adaptive phase.
+
+The default value for `n.adapt` is 100, which works well in many of the examples
+considered here. Complex models may require longer adaptive phases. If the adaptive
+phase is not sufficient for JAGS to optimize the samplers, a warning message will be
+printed (see example below).
+
+### Sampling iterations
+`n.iter` specifies the number of iterations in the sampling phase, i.e., the length
+of the MCMC chain. How many samples are required to reach convergence and to
+have sufficient precision depends on the complexity of data and model, and may
+range from as few as 100 to several million.
+
+#### Side note: How to evaluate convergence?
+Convergence can for instance be evaluated visually using a 
+[`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html) 
+or using the Gelman-Rubin diagnostic criterion^[
+Gelman, A., Meng, X. L., & Stern, H. (1996). Posterior predictive assessment 
+of model fitness via realized discrepancies. Statistica Sinica, 733-760.]
+(implemented in [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.html)).
+The latter compares within and between chain variability and requires the 
+JointAI object to have at least two chains.
+
+#### Side note: How to check precision?
+Precision of the MCMC sample can be checked with the function 
+[`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html).
+It calculates the Monte Carlo error (the error that is made since the sample
+is finite) and compares is to the standard deviation of the posterior sample.
+A rule of thumb is that the Monte Carlo error should not be more than 5% of the
+standard deviation.^[See p. 195 of Lesaffre, E., & Lawson, A. B. (2012).
+Bayesian Biostatistics. John Wiley & Sons.]
+
+
+### Thinning
+In settings with high autocorrelation i.e., there are no large jumps in
+the chain but sampled values are always close to the previous value,
+it may take many iterations before a sample is created that sufficiently
+represents the whole range of the posterior distribution.
+
+Processing of such long chains can be slow and take a lot of memory.
+The parameter `thin` allows to specify if and how much the MCMC chains should
+be thinned out before storing them. By default `thin = 1` is used,
+which corresponds to keeping all values. A value `thin = 10` would result in
+keeping every 10th value and discarding all other values.
+
+
+### Examples 
+#### Default settings
+`n.adapt = 100` and `thin = 1` with 100 sampling iterations
+```{r, message = FALSE}
+mod1 <- lm_imp(SBP ~ alc, data = NHANES, n.iter = 100, progress.bar = 'none')
+```
+
+The relevant part of the model summary (obtained with [`summary()`](https://nerler.github.io/JointAI/reference/summary.JointAI.html))
+shows that the first 100 iterations
+(adaptive phase) were discarded, and the 100 iterations that follow form the
+posterior sample. Thinning was set to 1 and there are 3 chains.
+```{r, echo = FALSE}
+a1 <- capture.output(print(summary(mod1)))
+cat(paste0('[...]', '\n',
+    paste(a1[17:21], collapse = "\n")))
+```
+
+#### Insufficient adaptation phase
+```{r, message = FALSE}
+mod2 <- lm_imp(SBP ~ alc, data = NHANES, n.adapt = 10, n.iter = 100, progress.bar = 'none')
+```
+Specifying `n.adapt = 10` results in a warning message. The relevant part of the
+model summary from the resulting model is:
+```{r, echo = FALSE}
+a2 <- capture.output(print(summary(mod2)))
+cat(paste0('[...]', '\n',
+    paste(a2[18:22], collapse = "\n")))
+```
+
+
+#### Thinning
+```{r, message = FALSE}
+mod3 <- lm_imp(SBP ~ alc, data = NHANES, n.iter = 500, thin = 10, progress.bar = 'none')
+```
+
+Here, iterations 110 until 600 are used in the output, but due to thinning
+interval of ten, the resulting MCMC
+chains contain only 50 samples instead of 500, that is, the samples from iteration
+110, 120, 130, ...
+
+```{r, echo = FALSE}
+a3 <- capture.output(print(summary(mod3)))
+cat(paste0('[...]', '\n',
+    paste(a3[18:22], collapse = "\n")))
+```
+
+## Parameters to follow
+JAGS only saves the values of MCMC chains for those nodes for
+which the user has specified that they should be monitored. This is also the
+case in **JointAI**.
+
+### What are nodes?
+Nodes are variables in the Bayesian framework, i.e., everything that is observed
+or unobserved.
+This includes the data and parameters that are estimated, but also missing values in the
+data or parts of the data that are generally unobserved, such as random effects
+or latent class indicators.
+
+### Specifying which nodes should be monitored
+For this purpose, [`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html), [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) and
+[`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) have an argument
+`monitor_params`.
+
+For details, explanation and examples see the vignette [*Parameter Selection*](https://nerler.github.io/JointAI/articles/SelectingParameters.html).
+
+
+## Initial values
+Initial values are the starting point for the MCMC sampler. Setting good
+initial values, i.e., initial values that are likely under the posterior 
+distribution, can speed up convergence. By default,
+the argument `inits = TRUE`, which means that initial values are generated
+automatically by **JointAI**. When `inits = FALSE`, initial values are generated
+by JAGS.
+
+
+### User specified initial values
+It is also possible to supply initial values directly as
+
+* a list or
+* a function.
+
+Initial values can be specified for every unobserved node, that is, parameters
+and missing values, but it is possible to only specify initial values for a 
+subset of nodes.
+
+
+#### Initial values in a list of lists
+A list containing initial values should have the same length as the number of 
+chains, where each element is a named list of initial values. Initial values
+should differ between the chains.
+
+For example, to create initial values for the parameter vector `beta` and 
+the precision parameter `tau_SBP` for three chains:
+```{r, message = FALSE}
+init_list <- lapply(1:3, function(i) {
+  list(beta = rnorm(4), 
+       tau_SBP = rgamma(1, 1, 1))
+})
+
+init_list
+```
+
+The list is then passed to the argument `inits`. User provided lists of initial
+values are stored in the JointAI object:
+```{r, message = FALSE}
+mod4a <- lm_imp(SBP ~ gender + age + WC, data = NHANES, progress.bar = 'none',
+                inits = init_list)
+
+mod4a$mcmc_settings$inits
+```
+
+#### Initial values as a function
+Initial values can be specified by a function. The function should either take no
+arguments or a single argument called `chain`, and return a named list that 
+supplies values for one chain.
+
+For example, to create inital values for the parameter vectors `beta` and `alpha`:
+```{r, message = FALSE}
+inits_fun <- function() {
+  list(beta = rnorm(4),
+       alpha = rnorm(3))
+}
+
+inits_fun()
+
+
+mod4b <- lm_imp(SBP ~ gender + age + WC, data = NHANES, progress.bar = 'none',
+                inits = inits_fun)
+
+mod4b$mcmc_settings$inits
+```
+When a function is supplied, the function, but not the actual values is 
+stored in the JointAI object.
+
+
+### For which nodes can initial values be specified?
+Initial values can be specified for all unobserved stochastic nodes, i.e.,
+parameters or unobserved data for which a distribution is specified in the
+JAGS model.
+
+Inital values have to be supplied in the format the parameter or unobserved
+value is used in the JAGS model. 
+
+
+To find out which nodes there are in a model, the function `coef()` from 
+package **rjags** can be used. It returns a list with the current values of the
+MCMC chains,  by default the first chain. Elements of the inital values should 
+have the same structure as the elements in this list.
+
+#### Example:
+We are using a longitudinal model and the `simLong` data in this example. 
+The output is abbreviated to show the relevant characteristics.
+
+```{r, eval = FALSE}
+mod4c <- lme_imp(bmi ~ time + HEIGHT_M + hc + SMOKE, random = ~ time | ID,
+                 data = simLong, progress.bar = 'none')
+
+coef(mod4c$model)
+```
+
+```{r echo = FALSE, message = FALSE}
+mod4c <- lme_imp(bmi ~ time + HEIGHT_M + hc + SMOKE, random = ~ time | ID,
+                 data = simLong, progress.bar = 'none')
+
+a4 <- capture.output(coef(mod4c$model))
+cat(
+  paste0(paste(a4[1:10], collapse = "\n"), # start
+         '\n\n[...]\n\n',
+         paste(a4[16:19], collapse = "\n"), # values in Xc
+         '\n\n[...]\n\n',
+         paste(a4[505:512], collapse = "\n"), # end Xc
+         '\n\n[...]\n\n',
+         paste(a4[544:550], collapse = "\n"), # values Xcat
+         '\n\n[...]\n\n',
+         paste(a4[1007:1020], collapse = "\n"), # end Xcat
+         '\n\n[...]\n\n',
+         paste(a4[1510:1533], collapse = "\n"), # start b
+         '\n\n[...]\n\n',
+         paste(a4[2027:2036], collapse = "\n")
+  )
+)
+
+a4mod <- capture.output(mod4c$model)
+```
+
+`RinvD` is the scale matrix in the Wishart prior for the inverse of the
+random effects design matrix `D`.
+In the data that is passed JAGS (which is stored in the element `data_list` 
+in a JointAI object), this matrix is specified as diagonal matrix,
+with unknown diagonal elements:
+```{r}
+mod4c$data_list['RinvD']
+```
+
+These diagonal elements are estimated in the model and have a Gamma prior.
+The corresponding part of the JAGS model is:
+```{r, echo = FALSE}
+cat(paste0('[...]\n', paste(a4mod[26:31], collapse = '\n'), '\n[...]\n'))
+```
+
+The element `RinvD` in the initial values has to be a 2 $\times$ 2 matrix,
+with positive values on the diagonal and `NA` as off-diagonal elements, 
+since these are fixed in the data.
+
+
+The following element in the output of `coef(mod4c$model)` is `Xc`, 
+the fixed effects design matrix containing baseline covariates.
+The corresponding matrix in the data is
+```{r}
+head(mod4c$data_list$Xc, 15)
+```
+
+Again, the matrix `Xc` in the inital values has the same dimension as `Xc` in the
+data, and values where there are missing values in `Xc`, e.g., `Xc[11, 2]` and
+`NA` elsewhere.
+There are no inital values specified for the third and fourth column, since
+these columns contain the dummy variables corresponding to the categorical 
+variable `SMOKE` and are calculated from a column in the matrix `Xcat`, 
+which contains the original version of `SMOKE`:
+```{r}
+head(mod4c$data_list$Xcat)
+```
+
+The relevant part of the JAGS model is:
+```{r, echo = FALSE}
+cat(paste0('[...]\n\n',
+           paste(a4mod[54:55], collapse = '\n'),
+           '\n\n[...]\n\n',
+           paste(a4mod[65:66], collapse = '\n'),
+           '\n[...]\n'))
+```
+
+Where `Xcat` in the data has missing values (e.g., rows 37 and 39), inital
+values need to be specified.
+
+Elements that are completely unobserved, like the parameter vectors `alpha`
+and `beta`, the random effects `b` or scalar parameters `delta_SMOKE` and 
+`gamma_SMOKE` are entirely specified in the initial values.
+
+## Other arguments
+There are two more arguments in `*_imp()` that
+are passed directly to the **rjags** functions `jags.model()` or `coda.samples()`:
+
+* `quiet`: should messages generated during compilation be suppressed?
+* `progress.bar`: allows to select the type of progress bar. Possible values
+are `"text"`, `"gui"` and `"none"`.
