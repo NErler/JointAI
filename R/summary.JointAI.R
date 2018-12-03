@@ -193,7 +193,8 @@ coef.summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
 #' @export
-confint.JointAI <- function(object, quantiles = c(0.025, 0.975),
+confint.JointAI <- function(object, parm = NULL, level = 0.95,
+                            quantiles = NULL,
                             start = NULL, end = NULL, thin = NULL,
                          subset = NULL, warn = TRUE, mess = TRUE, ...) {
   if (!inherits(object, "JointAI"))
@@ -202,6 +203,15 @@ confint.JointAI <- function(object, quantiles = c(0.025, 0.975),
   if (is.null(object$sample)) {
     stop("There is no MCMC sample.\n")
   }
+
+  if (is.null(subset) & !is.null(parm))
+    subset <- parm
+
+  if (!is.null(subset) & !is.null(parm))
+    stop('At least one of "parm" and "subset" should be NULL.')
+
+  if (is.null(quantiles) & !is.null(level))
+    quantiles <- c((1 - level)/2, 1 - (1 - level)/2)
 
   MCMC <- prep_MCMC(object, start, end, thin, subset)
 
