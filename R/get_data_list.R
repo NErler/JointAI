@@ -242,7 +242,8 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
 default_hyperpars <- function(family = 'gaussian', link = "identity", nranef = NULL) {
 
   if (is.character(family)) {
-    family <- get(family, mode = "function", envir = parent.frame())
+    # family <- get(family, mode = "function", envir = parent.frame())
+    family <- get(family, mode = "function", envir = .getNamespace("JointAI"))
     thefamily <- family()$family
     thelink <- family()$link
   }
