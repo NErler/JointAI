@@ -1,3 +1,27 @@
+# JointAI 0.4.0
+
+## Bug fixes
+* `RinvD` is no longer selected to be monitored in random intercept model (`RinvD` is not used in such a model)
+* fixed various bugs for models in which only the intercept is used (no covariates)
+
+## Minor changes
+* `summary()`: reduced default number of digits
+* continuous variables with two distinct values are converted to factor
+* argument `meth` now uses default values if only specified for subst of incomplete variables
+* `get_MIdat()`: argument `minspace` added to ensure spacing of iterations selected as imputations
+
+
+##  Extensions
+* `coef()` method added for `JointAI` object and `summary.JointAI` object
+* `confint()` method added for `JointAI` object
+* `print()` method added for `JointAI` object
+* `survreg_imp()` added to perform analysis of parametric (Weibull) survival models
+* `glme_imp()` added to perform generalized linear mixed modeling
+* extended documentation; two new vignettes on MCMC parameters and functions for after the model is estimated;
+  added messages about coding of ordinal variables
+
+
+--------------------------------------------------------------------------------
 # JointAI 0.3.4
 
 ## Bug fixes
