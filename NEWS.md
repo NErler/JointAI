@@ -9,6 +9,7 @@
 * continuous variables with two distinct values are converted to factor
 * argument `meth` now uses default values if only specified for subst of incomplete variables
 * `get_MIdat()`: argument `minspace` added to ensure spacing of iterations selected as imputations
+* `densplot()`: accepts additional options, e.g., `lwd`, `col`, ...
 
 
 ##  Extensions

@@ -169,6 +169,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     args <- as.list(match.call())
     if (!is.null(args$col)) {
       col <- eval(args$col)
+      args <- args[-which(names(args) == "col")]
     } else {
       col <- 1:length(prep$MCMC)
     }
@@ -190,7 +191,13 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       )
 
       for (j in 1:length(prep$MCMC)) {
-        lines(dens[[j]], col = j)
+        args_lines <- c(list(x = dens[[j]]$x,
+                             y = dens[[j]]$y,
+                             type = 'l',
+                             col = col[j]),
+                        args[names(args) %in% names(formals(plot.xy))]
+        )
+        do.call(lines, args_lines)
       }
       if (!is.null(vlines)) {
         for (l in 1:length(vlines)) {
