@@ -9,7 +9,12 @@
 
 ### R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
+
+#### Note in win-builder R-oldrelease:
+Author field differs from that derived from Authors@R
+  Author:    'Nicole S. Erler [aut, cre] (<https://orcid.org/0000-0002-9370-6832>)'
+  Authors@R: 'Nicole S. Erler [aut, cre] (0000-0002-9370-6832)'
 
 
 ### Reverse dependencies
