@@ -201,9 +201,8 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       }
       if (!is.null(vlines)) {
         for (l in 1:length(vlines)) {
-          args <- if (is.list(vlines[[l]])) vlines[[l]] else vlines
-          args$v <- args$v[i]
-          do.call(abline, args)
+          args_vline <- if (is.list(vlines[[l]])) vlines[[l]] else vlines
+          do.call(abline, args_vline)
         }
       }
     }
