@@ -25,19 +25,6 @@ options(width = 100)
 ```
 
 
-
-
-
-<!-- **Note:**<br> -->
-<!-- In many of the examples we use `n.adapt = 0` -->
-<!-- (and `n.iter = 0`, which is the default) in order to prevent the MCMC sampling  -->
-<!-- to reduce computational some time. -->
-<!-- `mess = FALSE` is used to suppress messages that are not of interest in this -->
-<!-- vignette. `progress.bar = 'none'` prevents printing of the progress of the MCMC -->
-<!-- sampling, which results in lengthy output in the vignette, but is useful in  -->
-<!-- practice. -->
-
-
 In this vignette we describe how the results from a `JointAI` model can be visualized,
 summarized and evaluated.
 We use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
