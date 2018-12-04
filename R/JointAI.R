@@ -71,6 +71,16 @@
 #'                                 in the \code{\link{summary}}, \code{\link{traceplot}},
 #'                                 \code{\link{densplot}} or when using
 #'                                 \code{\link{GR_crit}} or \code{\link{MC_error}}.
+#'
+#' \item \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{\emph{MCMC Settings}}:\cr
+#' Examples demonstrating how to set the arguments controlling settings of the MCMC sampling,
+#' i.e., \code{n.adapt}, \code{n.iter}, \code{n.chains}, \code{thin}, \code{inits}.
+#'
+#' \item \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{\emph{After Fitting}}:\cr
+#' Examples on the use of functions to be applied after the model has been fitted,
+#' including \code{\link{traceplot}}, \code{\link{densplot}}, \code{\link{summary}},
+#' \code{\link{GR_crit}}, \code{\link{MC_error}}, \code{\link{predict}},
+#' \code{\link{predDF}} and \code{\link{get_MIdat}}.
 #'}
 #' @references Erler, N. S., Rizopoulos, D., Rosmalen, J. V., Jaddoe,
 #' V. W., Franco, O. H., & Lesaffre, E. M. (2016).
