@@ -119,7 +119,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#jointai-joint-analysis-and-imputation-of-incomplete-data" class="anchor"></a>JointAI: Joint Analysis and Imputation of Incomplete Data</h1></div>
 
-<p>The package <strong>JointAI</strong> provides joint analysis and imputation of linear regression models, generalized linear regression models or linear mixed models with incomplete (covariate) data in the Bayesian framework.</p>
+<p>The package <strong>JointAI</strong> provides joint analysis and imputation of (generalized) linear regression models, (generalized) linear mixed models and parametric (Weibull) survival models with incomplete (covariate) data in the Bayesian framework.</p>
 <p>The package performs some preprocessing of the data and creates a <a href="http://mcmc-jags.sourceforge.net">JAGS</a> model, which will then automatically be passed to <a href="http://mcmc-jags.sourceforge.net">JAGS</a> with the help of the R package <a href="https://CRAN.R-project.org/package=rjags"><strong>rjags</strong></a>.</p>
 <p><strong>JointAI</strong> also provides summary and plotting functions for the output.</p>
 <div id="installation" class="section level2">
@@ -135,10 +135,91 @@
 <p>Currently, there are three main functions that perform linear, generalized linear or linear mixed regression:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="reference/model_imp.html">lm_imp</a></span>()</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="reference/model_imp.html">glm_imp</a></span>()</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="reference/model_imp.html">lme_imp</a></span>()</a></code></pre></div>
-<p><code><a href="reference/model_imp.html">lm_imp()</a></code> and <code><a href="reference/model_imp.html">glm_imp()</a></code> use specification similar to their complete data counterparts <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code> and <code><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm()</a></code>, whereas <code><a href="reference/model_imp.html">lme_imp()</a></code> uses similar specification as <code>lme()</code> from the package <a href="https://CRAN.R-project.org/package=nlme"><strong>nlme</strong></a>.</p>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="reference/model_imp.html">lme_imp</a></span>()</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="reference/model_imp.html">glme_imp</a></span>()</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="reference/model_imp.html">survreg_imp</a></span>()</a></code></pre></div>
+<p><code><a href="reference/model_imp.html">lm_imp()</a></code> and <code><a href="reference/model_imp.html">glm_imp()</a></code> use specification similar to their complete data counterparts <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code> and <code><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm()</a></code>, whereas <code><a href="reference/model_imp.html">lme_imp()</a></code> uses similar specification as <code>lme()</code> from the package <a href="https://CRAN.R-project.org/package=nlme"><strong>nlme</strong></a>. <code><a href="reference/model_imp.html">glme_imp()</a></code> uses a combination of the specifications from <code><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm()</a></code> (with regards to the family) and <code>lme</code> (with regards to the random effects structure). <code><a href="reference/model_imp.html">survreg_imp()</a></code> is a missing data version of <code>survreg</code> from the package <a href="https://CRAN.R-project.org/package=survival"><strong>survival</strong></a>.</p>
 <p>Functions <code><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary()</a></code>, <code><a href="reference/traceplot.html">traceplot()</a></code>, <code>densityplot()</code> provide a summary of the posterior distribution and its visualization.</p>
-<p><code>gr_crit()</code> and <code>mc_error()</code> provide the Gelman-Rubin diagnostic for convergence and the Monte Carlo error of the MCMC sample, respectively.</p>
+<p><code><a href="reference/GR_crit.html">GR_crit()</a></code> and <code><a href="reference/MC_error.html">MC_error()</a></code> provide the Gelman-Rubin diagnostic for convergence and the Monte Carlo error of the MCMC sample, respectively.</p>
+</div>
+<div id="minimal-example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minimal-example" class="anchor"></a>Minimal Example</h2>
+<div id="visualize-the-observed-data-and-missing-data-pattern" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualize-the-observed-data-and-missing-data-pattern" class="anchor"></a>Visualize the observed data and missing data pattern</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(JointAI)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/par">par</a></span>(<span class="dt">mar =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">2.5</span>, <span class="dv">3</span>, <span class="fl">2.5</span>, <span class="dv">1</span>), <span class="dt">mgp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="fl">0.8</span>, <span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw"><a href="reference/plot_all.html">plot_all</a></span>(NHANES[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">5</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">8</span><span class="op">:</span><span class="dv">12</span>)], <span class="dt">fill =</span> <span class="st">'#18bc9c'</span>, <span class="dt">border =</span> <span class="st">'#2C3E50'</span>, <span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">nclass =</span> <span class="dv">30</span>)</a></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="768" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/md_pattern.html">md_pattern</a></span>(NHANES, <span class="dt">color =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'#2C3E50'</span>, <span class="st">'#18bc9c'</span>))</a></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="700" style="display: block; margin: auto;"></p>
+</div>
+<div id="fit-a-linear-regression-model-with-incomplete-covariates" class="section level3">
+<h3 class="hasAnchor">
+<a href="#fit-a-linear-regression-model-with-incomplete-covariates" class="anchor"></a>Fit a linear regression model with incomplete covariates</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">lm1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>bili,</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">              <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">500</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>)</a></code></pre></div>
+</div>
+<div id="visualize-the-mcmc-sample" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualize-the-mcmc-sample" class="anchor"></a>Visualize the MCMC sample</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="reference/traceplot.html">traceplot</a></span>(lm1, <span class="dt">col =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'#E74C3C'</span>, <span class="st">'#2C3E50'</span>, <span class="st">'#18bc9c'</span>), <span class="dt">ncol =</span> <span class="dv">4</span>)</a></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/densplot.html">densplot</a></span>(lm1, <span class="dt">col =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'#E74C3C'</span>, <span class="st">'#2C3E50'</span>, <span class="st">'#18bc9c'</span>), <span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;"></p>
+</div>
+<div id="summarize-the-result" class="section level3">
+<h3 class="hasAnchor">
+<a href="#summarize-the-result" class="anchor"></a>Summarize the Result</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(lm1)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;  Linear model fitted with JointAI </span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; Call:</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; lm_imp(formula = SBP ~ gender + age + WC + alc + educ + bili, </span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt;     data = NHANES, n.iter = 500, progress.bar = "none")</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; Posterior summary:</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;                Mean     SD    2.5%   97.5% tail-prob. GR-crit</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; (Intercept)  88.197 8.9287  71.058 105.269    0.00000    1.00</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; genderfemale -3.422 2.2266  -7.716   0.863    0.11600    1.02</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; age           0.331 0.0691   0.194   0.462    0.00000    1.00</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; educhigh     -2.881 2.1457  -7.058   1.362    0.16667    1.01</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; WC            0.227 0.0727   0.079   0.364    0.00267    1.00</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; bili         -5.391 4.9445 -15.254   4.136    0.28533    1.00</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; alc&gt;=1        6.477 2.3002   1.929  11.026    0.00133    1.00</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; sigma_SBP 13.5 0.739 12.2  15.1    1.01</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt; MCMC settings:</span></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; Iterations = 101:600</span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt; Sample size per chain = 500 </span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt; Thinning interval = 1 </span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt; Number of chains = 3 </span></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt; Number of observations: 186</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/coef">coef</a></span>(lm1)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt;  (Intercept) genderfemale          age     educhigh           WC </span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt;   88.1970965   -3.4224466    0.3310304   -2.8808784    0.2268133 </span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt;         bili       alc&gt;=1 </span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt;   -5.3907204    6.4768014</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/confint">confint</a></span>(lm1)</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;                     2.5%       97.5%</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt; (Intercept)   71.0583199 105.2689911</span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt; genderfemale  -7.7160317   0.8628426</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; age            0.1937613   0.4620035</span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt; educhigh      -7.0583071   1.3615271</span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt; WC             0.0789884   0.3640839</span></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt; bili         -15.2540369   4.1359303</span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt; alc&gt;=1         1.9289591  11.0258094</span></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt; sigma_SBP     12.2203365  15.0740201</span></a></code></pre></div>
+</div>
 </div>
 </div>
   </div>
@@ -151,7 +232,7 @@
 </li>
 <li>Browse source code at <br><a href="https://github.com/nerler/JointAI">https://​github.com/​nerler/​JointAI</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/nerler/JointAI">https://​github.com/​nerler/​JointAI</a>
+<li>Report a bug at <br><a href="https://github.com/nerler/JointAI/issues">https://​github.com/​nerler/​JointAI/​issues</a>
 </li>
 </ul>
 </div>
@@ -171,9 +252,11 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=JointAI"><img src="http://www.r-pkg.org/badges/version/JointAI" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://travis-ci.org/NErler/JointAI"><img src="https://travis-ci.org/NErler/JointAI.svg?branch=master" alt="Travis-CI Build Status"></a></li>
+<li><a href="https://CRAN.R-project.org/package=JointAI"><img src="https://www.r-pkg.org/badges/version-last-release/JointAI" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://CRAN.R-project.org/package=JointAI"><img src="https://cranlogs.r-pkg.org/badges/grand-total/JointAI"></a></li>
+<li><a href="https://cran.r-project.org/package=JointAI"><img src="http://cranlogs.r-pkg.org/badges/JointAI" alt="Download counter"></a></li>
+<li><a href="http://www.rdocumentation.org/packages/JointAI"><img src="http://www.rdocumentation.org/badges/version/JointAI" alt="Rdoc"></a></li>
 </ul>
 </div>
 </div>

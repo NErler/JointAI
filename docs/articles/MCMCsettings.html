@@ -111,7 +111,7 @@
       <h1>MCMC Settings</h1>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2018-12-03</h4>
+            <h4 class="date">2018-12-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/MCMCsettings.Rmd"><code>vignettes/MCMCsettings.Rmd</code></a></small>
       <div class="hidden name"><code>MCMCsettings.Rmd</code></div>
@@ -275,26 +275,26 @@
 <a class="sourceLine" id="cb7-6" data-line-number="6">init_list</a>
 <a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt; [[1]]</span></a>
 <a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt; [[1]]$beta</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt; [1]  1.5485867  0.8714526 -0.6382957  1.2030348</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt; [1] -0.07618885 -0.75913053  0.78433211 -1.20649026</span></a>
 <a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt; [[1]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt; [1] 2.040121</span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt; [1] 1.033385</span></a>
 <a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; [[2]]</span></a>
 <a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt; [[2]]$beta</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; [1]  1.583515  1.628305 -2.122199  0.105292</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; [1] -0.8757149 -1.7231205 -1.3412073  0.9192593</span></a>
 <a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt; [[2]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt; [1] 0.6540282</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt; [1] 0.05479658</span></a>
 <a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">#&gt; [[3]]</span></a>
 <a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">#&gt; [[3]]$beta</span></a>
-<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co">#&gt; [1]  0.2476188 -0.3922122  0.9408571 -0.8753809</span></a>
+<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co">#&gt; [1] -0.7380494  0.1159486 -1.5229626  0.3437690</span></a>
 <a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">#&gt; [[3]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">#&gt; [1] 2.568776</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">#&gt; [1] 0.4434871</span></a></code></pre></div>
 <p>The list is then passed to the argument <code>inits</code>. User provided lists of initial values are stored in the JointAI object:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">mod4a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC, <span class="dt">data =</span> NHANES, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">                <span class="dt">inits =</span> init_list)</a>
@@ -302,26 +302,26 @@
 <a class="sourceLine" id="cb8-4" data-line-number="4">mod4a<span class="op">$</span>mcmc_settings<span class="op">$</span>inits</a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; [[1]]</span></a>
 <a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; [[1]]$beta</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; [1]  1.5485867  0.8714526 -0.6382957  1.2030348</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; [1] -0.07618885 -0.75913053  0.78433211 -1.20649026</span></a>
 <a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; [[1]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; [1] 2.040121</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; [1] 1.033385</span></a>
 <a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; [[2]]</span></a>
 <a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; [[2]]$beta</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; [1]  1.583515  1.628305 -2.122199  0.105292</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; [1] -0.8757149 -1.7231205 -1.3412073  0.9192593</span></a>
 <a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; [[2]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; [1] 0.6540282</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; [1] 0.05479658</span></a>
 <a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; [[3]]</span></a>
 <a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; [[3]]$beta</span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt; [1]  0.2476188 -0.3922122  0.9408571 -0.8753809</span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt; [1] -0.7380494  0.1159486 -1.5229626  0.3437690</span></a>
 <a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; [[3]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt; [1] 2.568776</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt; [1] 0.4434871</span></a></code></pre></div>
 </div>
 <div id="initial-values-as-a-function" class="section level4">
 <h4 class="hasAnchor">
@@ -335,10 +335,10 @@
 <a class="sourceLine" id="cb9-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb9-6" data-line-number="6"><span class="kw">inits_fun</span>()</a>
 <a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt; $beta</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt; [1] 2.3146266 2.3418141 0.1523001 0.7384891</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt; [1] 1.728566 1.370787 2.211921 0.632733</span></a>
 <a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt; $alpha</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; [1] -0.3384162 -0.1782016 -0.1137135</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; [1]  1.9544011 -1.5715199  0.1294274</span></a>
 <a class="sourceLine" id="cb9-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb9-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb9-14" data-line-number="14">mod4b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC, <span class="dt">data =</span> NHANES, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
@@ -349,7 +349,7 @@
 <a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt;   list(beta = rnorm(4),</span></a>
 <a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co">#&gt;        alpha = rnorm(3))</span></a>
 <a class="sourceLine" id="cb9-21" data-line-number="21"><span class="co">#&gt; }</span></a>
-<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="co">#&gt; &lt;bytecode: 0x00000000077a18f0&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="co">#&gt; &lt;bytecode: 0x0000000007b19908&gt;</span></a></code></pre></div>
 <p>When a function is supplied, the function, but not the actual values is stored in the JointAI object.</p>
 </div>
 </div>
@@ -369,26 +369,26 @@
 <a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/coef">coef</a></span>(mod4c<span class="op">$</span>model)</a></code></pre></div>
 <pre><code>#&gt; $RinvD
 #&gt;          [,1]      [,2]
-#&gt; [1,] 1.141544        NA
-#&gt; [2,]       NA 0.0484425
+#&gt; [1,] 3.559084        NA
+#&gt; [2,]       NA 0.3966013
 #&gt; 
 #&gt; $Xc
-#&gt;        [,1]       [,2] [,3] [,4]
-#&gt;   [1,]   NA         NA   NA   NA
-#&gt;   [2,]   NA         NA   NA   NA
-#&gt;   [3,]   NA         NA   NA   NA
+#&gt;        [,1]        [,2] [,3] [,4]
+#&gt;   [1,]   NA          NA   NA   NA
+#&gt;   [2,]   NA          NA   NA   NA
+#&gt;   [3,]   NA          NA   NA   NA
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt;   [9,]   NA         NA   NA   NA
-#&gt;  [10,]   NA         NA   NA   NA
-#&gt;  [11,]   NA  1.2129546   NA   NA
-#&gt;  [12,]   NA         NA   NA   NA
+#&gt;   [9,]   NA          NA   NA   NA
+#&gt;  [10,]   NA          NA   NA   NA
+#&gt;  [11,]   NA -0.53973579   NA   NA
+#&gt;  [12,]   NA          NA   NA   NA
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [498,]   NA         NA   NA   NA
-#&gt; [499,]   NA         NA   NA   NA
+#&gt; [498,]   NA          NA   NA   NA
+#&gt; [499,]   NA          NA   NA   NA
 #&gt; 
 #&gt; $Xcat
 #&gt;        [,1]
@@ -412,55 +412,55 @@
 #&gt; [499,]   NA
 #&gt; 
 #&gt; $alpha
-#&gt; [1] -0.042720959 -0.009007578
+#&gt; [1] 0.062962298 0.002156431
 #&gt; 
 #&gt; $b
-#&gt;            [,1]        [,2]
-#&gt;   [1,] 16.06327 -1.32843072
-#&gt;   [2,] 18.85892 -1.23535380
-#&gt;   [3,] 17.27290 -1.43780970
-#&gt;   [4,] 18.35145 -0.42165966
-#&gt;   [5,] 14.69734 -0.62449410
-#&gt;   [6,] 18.13656 -1.18312585
+#&gt;            [,1]       [,2]
+#&gt;   [1,] 16.90371 -1.4112699
+#&gt;   [2,] 18.89886 -1.0532192
+#&gt;   [3,] 15.73020 -1.0756337
+#&gt;   [4,] 17.49037 -1.0337668
+#&gt;   [5,] 14.07441 -1.2456246
+#&gt;   [6,] 17.70252 -0.8171967
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [496,] 14.87637 -1.48693728
-#&gt; [497,] 15.91968 -1.24610474
-#&gt; [498,] 14.68689 -0.88021567
-#&gt; [499,] 15.07348 -0.73019147
+#&gt; [496,] 14.10529 -0.5476640
+#&gt; [497,] 15.63017 -1.1804142
+#&gt; [498,] 14.27004 -1.2953011
+#&gt; [499,] 14.72557 -0.6190661
 #&gt; 
 #&gt; $beta
-#&gt; [1] 16.55560308  0.02240883  0.21487959  0.07007516 -1.16738837  1.19083167
+#&gt; [1] 16.63242128 -0.00721396  0.25550009 -0.07370986 -1.16186745  1.20022404
 #&gt; 
 #&gt; $delta_SMOKE
-#&gt; [1] -0.8148175
+#&gt; [1] -0.5604313
 #&gt; 
 #&gt; $gamma_SMOKE
-#&gt; [1] 1.050382       NA
+#&gt; [1] 0.8768622        NA
 #&gt; 
 #&gt; $invD
 #&gt;            [,1]       [,2]
-#&gt; [1,]  0.7746905 -0.1187687
-#&gt; [2,] -0.1187687  5.9113598
+#&gt; [1,]  0.6931798 -0.2833044
+#&gt; [2,] -0.2833044  6.3330059
 #&gt; 
 #&gt; $mu_b
 #&gt;        [,1]      [,2]
-#&gt;   [1,]   NA -1.167388
-#&gt;   [2,]   NA -1.167388
-#&gt;   [3,]   NA -1.167388
+#&gt;   [1,]   NA -1.161867
+#&gt;   [2,]   NA -1.161867
+#&gt;   [3,]   NA -1.161867
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [497,]   NA -1.167388
-#&gt; [498,]   NA -1.167388
-#&gt; [499,]   NA -1.167388
+#&gt; [497,]   NA -1.161867
+#&gt; [498,]   NA -1.161867
+#&gt; [499,]   NA -1.161867
 #&gt; 
 #&gt; $tau_HEIGHT_M
-#&gt; [1] 0.9575903
+#&gt; [1] 0.9956297
 #&gt; 
 #&gt; $tau_bmi
-#&gt; [1] 1.352146</code></pre>
+#&gt; [1] 1.318895</code></pre>
 <p><code>RinvD</code> is the scale matrix in the Wishart prior for the inverse of the random effects design matrix <code>D</code>. In the data that is passed JAGS (which is stored in the element <code>data_list</code> in a JointAI object), this matrix is specified as diagonal matrix, with unknown diagonal elements:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">mod4c<span class="op">$</span>data_list[<span class="st">'RinvD'</span>]</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; $RinvD</span></a>
