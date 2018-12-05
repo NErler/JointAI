@@ -135,7 +135,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
   # * categorical covariates -----------------------------------------------------
   # variable relevant?
-  infmla <- names(data) %in% all.vars (fixed2)
+  infmla <- names(data) %in% all.vars(fixed2)
   # variabe incomplete?
   misvar <- colSums(is.na(data)) > 0
   # variabe categorical with >2 categories?
@@ -212,10 +212,13 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     if (length(scale_vars) == 0) scale_vars <- NULL
   }
 
+  ncat <- if (analysis_type %in% c('clmm', 'clm'))
+    length(unique(unlist(y)))
+
 
   return(list(y = y, Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat,
               Xtrafo = Xtrafo, Z = Z, cens = cens,
               trafos = trafos, hc_list = hc_list, refs = refs,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars,
-              fixed2 = fixed2, X2_names = colnames(X2)))
+              fixed2 = fixed2, X2_names = colnames(X2), ncat = ncat))
 }

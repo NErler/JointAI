@@ -413,6 +413,12 @@ weibull <- function(link = 'log') {
   structure(list(family = "weibull", link = 'log'),
             class = "family")
 }
+
+ordinal <- function(link = 'identity') {
+  structure(list(family = "ordinal", link = 'identity'),
+            class = "family")
+}
+
 # # define family coxph
 # #' @export
 # prophaz <- function(link = 'log') {

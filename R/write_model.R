@@ -16,7 +16,7 @@
 # @param package currently only JAGS is implemented
 # @export
 write_model <- function(analysis_type, family = NULL, link = NULL,
-                        meth = NULL, Ntot, N, y_name,  Mlist = NULL,
+                        meth = NULL, Ntot, N, ncat = NULL, y_name,  Mlist = NULL,
                         Z = NULL, Xic = NULL, Xl = NULL, Xil = NULL,
                         hc_list = NULL, K, imp_par_list, file = NULL,
                         package = "JAGS") {

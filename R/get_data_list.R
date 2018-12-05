@@ -15,7 +15,11 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
 
   l <- list()
   l[[names(Mlist$y)]] <- if (any(sapply(Mlist$y, is.factor))) {
-    c(sapply(Mlist$y, as.numeric) - 1)
+    if (analysis_type %in% c('clmm', 'clm')) {
+      c(sapply(Mlist$y, as.numeric))
+    } else {
+      c(sapply(Mlist$y, as.numeric) - 1)
+    }
   } else {
     unname(unlist(Mlist$y))
   }
@@ -35,9 +39,13 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
     l$a_tau_main <- defs$analysis_model["a_tau_main"]
     l$b_tau_main <- defs$analysis_model["b_tau_main"]
   }
+  if (family == 'ordinal') {
+    l$mu_delta_main <- defs$analysis_model["mu_delta_main"]
+    l$tau_delta_main <- defs$analysis_model["tau_delta_main"]
+  }
 
 
-  if (analysis_type %in% c("lme", "glme")) {
+  if (analysis_type %in% c("lme", "glme", "clmm")) {
     l$groups <- match(Mlist$groups, unique(Mlist$groups))
     if (ncol(Mlist$Z) > 1) {
       l$RinvD <- defs$Z$RinvD
@@ -281,6 +289,8 @@ default_hyperpars <- function(family = 'gaussian', link = "identity", nranef = N
     tau_reg_main = tau_reg_main,
     a_tau_main = 0.01,
     b_tau_main = 0.001,
+    mu_delta_main = 0,
+    tau_delta_main = 0.001,
     c = c,
     r = r,
     eps = eps
