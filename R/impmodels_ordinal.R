@@ -11,26 +11,29 @@ impmodel_cumlogit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, d
     stop("The size of the design matrix and length of parameter vector do not match!")
   }
 
-  indent <- nchar(varname) + 13
-  predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
+  indent <- nchar(varname) + 15
+
+  predictor <-  paste_predictor(parnam = par_name, parindex = 'i', matnam = 'Xc',
+                  parelmts = par_elmts,
+                  cols = Xc_cols, indent = indent)
 
   probs <- sapply(2:(ncat - 1), function(k){
-    paste0(tab(), "p_", varname, "[i, ", k, "] <- max(1e-7, min(1-1e-10, psum_",
+    paste0(tab(4), "p_", varname, "[i, ", k, "] <- max(1e-7, min(1-1e-10, psum_",
            varname, "[i, ", k,"] - psum_", varname, "[i, ", k - 1, "]))")})
 
   logits <- sapply(1:(ncat - 1), function(k) {
-    paste0(tab(), "logit(psum_", varname, "[i, ", k, "])  <- gamma_", varname,
+    paste0(tab(4), "logit(psum_", varname, "[i, ", k, "])  <- gamma_", varname,
            "[", k, "]", " + eta_", varname,"[i]")
   })
 
   dummies <- paste_dummies(c(1:ncat)[-refcat], dest_col, dummy_cols)
 
-  paste0(tab(), "# ordinal model for ", varname, "\n",
-         tab(), "Xcat[i, ", dest_col, "] ~ dcat(p_", varname, "[i, 1:", ncat, "])", "\n",
-         tab(), "eta_", varname,"[i] <- ", predictor, "\n\n",
-         tab(), "p_", varname, "[i, 1] <- max(1e-10, min(1-1e-7, psum_", varname, "[i, 1]))", "\n",
+  paste0(tab(4), "# ordinal model for ", varname, "\n",
+         tab(4), "Xcat[i, ", dest_col, "] ~ dcat(p_", varname, "[i, 1:", ncat, "])", "\n",
+         tab(4), "eta_", varname,"[i] <- ", predictor, "\n\n",
+         tab(4), "p_", varname, "[i, 1] <- max(1e-10, min(1-1e-7, psum_", varname, "[i, 1]))", "\n",
          paste(probs, collapse = "\n"), "\n",
-         tab(), "p_", varname, "[i, ", ncat, "] <- 1 - max(1e-10, min(1-1e-7, sum(p_",
+         tab(4), "p_", varname, "[i, ", ncat, "] <- 1 - max(1e-10, min(1-1e-7, sum(p_",
          varname, "[i, 1:", ncat - 1,"])))", "\n\n",
          paste0(logits, collapse = "\n"), "\n\n",
          paste0(dummies, collapse = "\n"), "\n\n")
@@ -57,10 +60,11 @@ impprior_cumlogit <- function(varname, par_elmts, par_name, ncat, ...){
     }
   })
 
-  paste0(tab(), "# Priors for ", varname, "\n",
+  paste0('\n',
+         tab(), "# Priors for ", varname, "\n",
          tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
          tab(4), par_name, "[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal)", "\n",
          tab(), "}", "\n\n",
          paste(deltas, collapse = "\n"), "\n\n",
-         paste(gammas, collapse = "\n"), "\n\n")
+         paste(gammas, collapse = "\n"), "\n")
 }
