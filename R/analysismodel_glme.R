@@ -8,8 +8,8 @@
 # @param K matrix specifying the number of parameters for each component of the
 #        fixed effects
 # @export
-glme_model <- function(family, link, N, y_name, Z = NULL, Xic = NULL, Xl = NULL,
-                      Xil = NULL, hc_list = NULL, Mlist = NULL, K, ...){
+glme_model <- function(family, link, Mlist, K, ...){
+  y_name <- colnames(Mlist$y)
 
   distr <- switch(family,
                   "gaussian" = function(y_name) {
@@ -54,21 +54,29 @@ glme_model <- function(family, link, N, y_name, Z = NULL, Xic = NULL, Xl = NULL,
     }
   }
 
-  norm.distr  <- if (ncol(Z) < 2) {"dnorm"} else {"dmnorm"}
+  norm.distr  <- if (ncol(Mlist$Z) < 2) {"dnorm"} else {"dmnorm"}
 
-  paste_Xic <- if (!is.null(Xic)) {
+  paste_Xic <- if (length(Mlist$cols_main$Xic) > 0) {
     paste0(" + \n", tab(nchar(y_name) + 17),
-           "inprod(Xic[i, ], beta[", K["Xic", 1],":", K["Xic", 2],"])", sep = "")
+           paste_predictor(parnam = 'beta', parindex = 'i', matnam = 'Xic',
+                           parelmts = K["Xic", 1]:K["Xic", 2],
+                           cols = Mlist$cols_main$Xic, indent = 0))
   }
 
-  paste_Xl <- if (!is.null(Xl)) {
-    paste0(" + \n", tab(nchar(y_name) + 12),
-           "inprod(Xl[j, ], beta[", K["Xl", 1], ":", K["Xl", 2], "])")
+  paste_Xl <- if (length(Mlist$cols_main$Xl) > 0) {
+    paste0(" + \n", tab(nchar(y_name) + 14),
+           paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xl',
+                           parelmts = K["Xl", 1]:K["Xl", 2],
+                           cols = Mlist$cols_main$Xl, indent = 0)
+    )
   }
 
-  paste_Xil <- if (!is.null(Xil)) {
-    paste0(" + \n", tab(nchar(y_name) + 12),
-           "inprod(Xil[j, ], beta[", K["Xil", 1], ":", K["Xil", 2], "])")
+  paste_Xil <- if (length(Mlist$cols_main$Xil) > 0) {
+    paste0(" + \n", tab(nchar(y_name) + 14),
+           paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xil',
+                           parelmts = K["Xil", 1]:K["Xil", 2],
+                           cols = Mlist$cols_main$Xil, indent = 0)
+    )
   }
 
 
@@ -82,43 +90,16 @@ glme_model <- function(family, link, N, y_name, Z = NULL, Xic = NULL, Xl = NULL,
          tab(), "}", "\n\n",
          tab(), "for (i in 1:", N, ") {", "\n",
          tab(4), "b[i, 1:", ncol(Z), "] ~ ", norm.distr, "(mu_b[i, ], invD[ , ])", "\n",
-         tab(4), "mu_b[i, 1] <- inprod(beta[", K["Xc", 1], ":", K["Xc", 2], "], Xc[i, ])",
+         tab(4), "mu_b[i, 1] <- ",
+         paste_predictor(parnam = 'beta', parindex = 'i', matnam = 'Xc',
+                         parelmts = K["Xc", 1]:K["Xc", 2],
+                         cols = Mlist$cols_main$Xc, indent = 18),
          paste_Xic, "\n",
-         paste_rdslopes(Z, hc_list, K)
+         paste_rdslopes(Mlist$Z, Mlist$hc_list, K)
   )
 }
 
 
-paste_rdslopes <- function(Z, hc_list, K){
-  if (ncol(Z) > 1) {
-    rd_slopes <- list()
-    for (k in 2:ncol(Z)) {
-      beta_start <- K[colnames(Z)[k], 1]
-      beta_end <- K[colnames(Z)[k], 2]
-      Xc_pos <- if (any(attr(hc_list[[k - 1]], "matrix") == "Xc")) {
-        hc_list[[k - 1]][which(attr(hc_list[[k - 1]], "matrix") %in% c("Z", "Xc"))]
-      }
-
-      hc_interact <- if (!is.null(hc_list[[colnames(Z)[k]]])) {
-        paste0("beta[", beta_start:beta_end, "]",
-               sapply(Xc_pos, function(x) {
-                 if (!is.na(x)) {
-                   paste0(" * Xc[i, ", x, "]")
-                 } else {
-                   ""
-                 }
-               })
-        )
-      } else {
-        "0"
-      }
-
-      rd_slopes[[k - 1]] <- paste0(tab(4), "mu_b[i, ", k,"] <- ",
-                                   paste0(hc_interact, sep = "", collapse = " + "))
-    }
-    paste(rd_slopes, collapse = "\n")
-  }
-}
 
 
 # Write priors for a linear mixed model
@@ -126,7 +107,8 @@ paste_rdslopes <- function(Z, hc_list, K){
 # @param y_name name of the outcome
 # @param Z random effects design matrix
 # @export
-glme_priors <- function(family, K, y_name, Z = NULL, Mlist = NULL, ...){
+glme_priors <- function(family, K, Mlist, ...){
+  y_name <- colnames(Mlist$y)
 
   secndpar <- switch(family,
                      "gaussian" = paste0("\n",
@@ -139,17 +121,13 @@ glme_priors <- function(family, K, y_name, Z = NULL, Mlist = NULL, ...){
                      "Poisson" = NULL)
 
 
-
-  if (is.null(Z) & !is.null(Mlist)) {
-    Z <- Mlist$Z
-  }
-  paste0(c(ranef_priors(Z),
+  paste0(c(ranef_priors(Mlist$Z),
            secndpar,
-           glmereg_priors(K, y_name)), collapse = "\n\n")
+           glmereg_priors(K)), collapse = "\n\n")
 }
 
 
-glmereg_priors <- function(K, y_name){
+glmereg_priors <- function(K){
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
     tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",

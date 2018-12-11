@@ -8,25 +8,23 @@
 # @param K matrix specifying the number of parameters for each component of the
 #        fixed effects
 # @export
-lm_model <- function(N, y_name, Z = NULL, Xic = NULL, Xl = NULL,
-                      Xil = NULL, hc_list = NULL, Mlist = NULL, K, ...){
+lm_model <- function(Mlist, K, ...){
 
-  if (!is.null(Mlist)) {
-    for (i in 1:length(Mlist)) {
-      assign(names(Mlist)[i], Mlist[[i]])
-    }
+  y_name <- colnames(Mlist$y)
+
+  paste_Xic <- if (!is.null(Mlist$Xic)) {
+    paste0(" + \n", tab(nchar(y_name) + 17),
+           paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xic',
+                           parelmts = K["Xic", 1]:K["Xic", 2],
+                           cols = Mlist$cols_main$Xic, indent = 0))
   }
-
-  paste_Xic <- if (!is.null(Xic)) {
-    paste0(" + \n", tab(12 + nchar(y_name)),
-           "inprod(Xic[j, ], beta[", K["Xic", 1],":", K["Xic", 2],"])", sep = "")
-  }
-
-
 
   paste0(tab(), "# Linear model for ", y_name, "\n",
          tab(), y_name, "[j] ~ dnorm(mu_", y_name, "[j], tau_", y_name, ")", "\n",
-         tab(), "mu_", y_name, "[j] <- inprod(Xc[j, ], beta[", K['Xc', 1], ":", K['Xc', 2], "])",
+         tab(), "mu_", y_name, "[j] <- ",
+         paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xc',
+                         parelmts = K["Xc", 1]:K["Xc", 2],
+                         cols = Mlist$cols_main$Xc, indent = 18),
          paste_Xic
   )
 }
@@ -37,7 +35,9 @@ lm_model <- function(N, y_name, Z = NULL, Xic = NULL, Xl = NULL,
 # @param K K
 # @param y_name character string, name of outcome
 # @export
-lm_priors <- function(K, y_name, ...){
+lm_priors <- function(K, Mlist, ...){
+  y_name <- colnames(Mlist$y)
+
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
     tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",

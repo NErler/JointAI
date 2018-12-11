@@ -9,8 +9,9 @@
 #        fixed effects
 #
 # @export
-glm_model <- function(family, link, N, y_name, Xic = NULL,
-                      K, ...){
+glm_model <- function(family, link, Mlist, K, ...){
+
+  y_name <- colnames(Mlist$y)
 
   distr <- switch(family,
                   "gaussian" = function(y_name) {
@@ -49,7 +50,7 @@ glm_model <- function(family, link, N, y_name, Xic = NULL,
   )
 
 
-  paste_Xic <- if (!is.null(Xic)) {
+  paste_Xic <- if (length(Mlist$cols_main$Xic) > 0) {
     paste0(" + \n", tab(12 + nchar(y_name)),
            "inprod(Xic[j, ], beta[", K["Xic", 1],":", K["Xic", 2],"])", sep = "")
   }
@@ -71,7 +72,8 @@ glm_model <- function(family, link, N, y_name, Xic = NULL,
 # @param K K
 # @param y_name character string, name of outcome
 # @export
-glm_priors <- function(family, K, y_name, ...){
+glm_priors <- function(family, K, Mlist, ...){
+  y_name <- colnames(Mlist$y)
 
   secndpar <- switch(family,
                      "gaussian" = paste0("\n",
