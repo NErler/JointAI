@@ -1,25 +1,7 @@
 
-rescale <- function(x, fixed2, scale_pars, MCMC, refs, X2_names, trafos) {
-  # if (!x %in% c("(Intercept)", colnames(scale_pars))) {
-  #   MCMC[, x]
-  # } else {
-  coef_lvl <- X2_names
+rescale <- function(x, fixed2, scale_pars, MCMC, refs, coef_lvl, trafos) {
 
-  coefs <- colnames(attr(terms(fixed2), "factors")) # colnames(MCMC)
-
-  # for (i in coefs[coefs %in% names(refs)]) {
-  #    lvls <- levels(refs[[i]])[levels(refs[[i]]) != refs[[i]]]
-  #    orig <- unname(unlist(sapply(gen_pat(i), grep, coefs, value = TRUE)))
-  #    for (j in lvls) {
-  #      coef_lvl <- append(coef_lvl, gsub(i, paste0(i, j), orig))
-  #    }
-  #    coef_lvl <- coef_lvl[which(!coef_lvl %in% orig)]
-  # }
-
-  # for (i in seq_along(refs)) {
-  #   coef_lvl <- append(coef_lvl, attr(refs[[i]], "dummies"))
-  #   coef_lvl <- coef_lvl[-which(coef_lvl == names(refs)[i])]
-  # }
+  coefs <- colnames(attr(terms(fixed2), "factors"))
 
   x_split <- unlist(strsplit(x, ":"))
 
@@ -52,7 +34,7 @@ rescale <- function(x, fixed2, scale_pars, MCMC, refs, X2_names, trafos) {
   }
 
   # square <- if (x %in% trafos$var & any(trafos$fct == paste0(x, "^2"))) {
-  #   qdr_var <- trafos$Xc_var[which(trafos$var == x &
+  #   qdr_var <- trafos$X_var[which(trafos$var == x &
   #                                          trafos$fct == paste0(x, "^2"))]
   #   2 * as.numeric(MCMC[ , qdr_var])/scale_pars["scale", x]^2 * scale_pars["center", x]
   # } else {

@@ -267,6 +267,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
                       dest_cols = NULL, imp_par_list = NULL,  data_list = NULL, ...) {
 
+
   # Checks & warnings -------------------------------------------------------
   if (mess)
     message("This is new software. Please report any bugs to the package maintainer.")
@@ -275,7 +276,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     stop("No fixed effects structure specified.")
   }
 
-  if (!analysis_type %in% c("lme", "glme") & !is.null(random)) {
+  if (!analysis_type %in% c("lme", "glme", "clmm") & !is.null(random)) {
     if (warn)
       warning(gettextf("Random effects structure not used in a model of type %s.",
                        sQuote(analysis_type)), immediate. = TRUE, call. = FALSE)
@@ -407,8 +408,9 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                              meth = meth, warn = warn, mess = mess)
   }
 
+
   if (is.null(K)) {
-    K <- get_model_dim(sapply(Mlist, ncol), Mlist$hc_list, analysis_type)
+    K <- get_model_dim(Mlist$cols_main, Mlist$hc_list)
   }
 
   if (is.null(imp_pos)) {
@@ -421,7 +423,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
   if (is.null(dest_cols)) {
-    dest_cols <- sapply(names(meth), get_dest_column, Mlist$refs,
+    dest_cols <- sapply(unique(c(names(meth), colnames(Mlist$Xtrafo))),
+                        get_dest_column, Mlist$refs,
                         colnames(Mlist$Xc), colnames(Mlist$Xcat),
                         colnames(Mlist$Xtrafo), Mlist$trafos, simplify = FALSE)
   }
@@ -434,13 +437,14 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
   if (is.null(data_list)) {
-    data_list <- try(get_data_list(analysis_type, family, link, meth, Mlist, K, auxvars,
+    data_list <- try(get_data_list(analysis_type, family, link, meth, Mlist, auxvars,
                                    scale_pars = scale_pars, hyperpars = hyperpars,
                                    data = data))
     scale_pars <- data_list$scale_pars
     hyperpars <- data_list$hyperpars
     data_list <- data_list$data_list
   }
+
 
   # write model ----------------------------------------------------------------
   if (file.exists(modelfile) & is.null(overwrite)) {
@@ -465,16 +469,13 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
   if (!file.exists(modelfile) || (file.exists(modelfile) & overwrite == TRUE)) {
-
     Ntot <- ifelse(analysis_type == 'coxph',
            sum(data_list$RiskSet != 0),
            length(data_list[[names(Mlist$y)]]))
 
     write_model(analysis_type = analysis_type, family = family,
                 link = link, meth = meth,
-                Ntot = Ntot,
-                N = nrow(Mlist$Xc),
-                y_name = names(Mlist$y), Mlist = Mlist, K = K,
+                Ntot = Ntot, Mlist = Mlist, K = K,
                 imp_par_list = imp_par_list,
                 file = modelfile)
   }
@@ -538,7 +539,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
       if (!is.null(scale_pars)) {
         # re-scale parameters
         MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
-                            scale_pars, MCMC[[k]], Mlist$refs, Mlist$X2_names,
+                            scale_pars, MCMC[[k]], Mlist$refs, unlist(Mlist$names_main),
                             Mlist$trafos))
         attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
       }
@@ -782,6 +783,49 @@ glme_imp <- function(fixed, data, random, family,
     stop(gettextf("%s is not an allowed link function.",
                   dQuote(arglist$link)))
 
+
+
+  thiscall <- as.list(match.call())[-1L]
+  thiscall <- lapply(thiscall, function(x) {
+    if (is.language(x)) eval(x) else x
+  })
+
+  arglist <- c(thecall = match.call(),
+               arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+
+  return(res)
+}
+
+
+#' @rdname model_imp
+#' @aliases glmer_imp
+#' @export
+clmm_imp <- function(fixed, data, random,
+                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                     monitor_params = NULL, inits = TRUE,
+                     modelname = NULL, modeldir = NULL,
+                     overwrite = NULL, keep_model = FALSE,
+                     quiet = TRUE, progress.bar = "text", warn = TRUE,
+                     mess = TRUE,
+                     auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+
+  if (missing(fixed))
+    stop("No fixed effects structure specified.")
+  if (missing(random))
+    stop("No random effects structure specified.")
+  if (missing(data))
+    stop("No dataset given.")
+
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$analysis_type <- "clmm"
+  arglist$family <- "ordinal"
+  arglist$link <- "logit"
 
 
   thiscall <- as.list(match.call())[-1L]

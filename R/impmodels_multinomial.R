@@ -7,26 +7,32 @@
 # @export
 impmodel_multilogit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, dummy_cols, ncat, refcat, ...){
 
-  indent <- nchar(varname) + 21
-  predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
-
-  spltpred <- split(predictor, c(1:ncat)[-refcat] >= refcat)
-  predictor2 <- c(spltpred[["FALSE"]], "0", spltpred[["TRUE"]])
+  indent <- nchar(varname) + 23
+  # predictor <-  paste_predictor(parnam = par_name, parindex = 'i', matnam = 'Xc',
+  #                               parelmts = par_elmts,
+  #                               cols = Xc_cols, indent = indent)
+  #
+  # spltpred <- split(predictor, c(1:ncat)[-refcat] >= refcat)
+  # predictor2 <- c(spltpred[["FALSE"]], "0", spltpred[["TRUE"]])
 
   probs <- sapply(1:ncat, function(k){
-    paste0(tab(), "p_", varname, "[i, ", k, "] <- min(1-1e-7, max(1e-7, phi_", varname, "[i, ", k,
+    paste0(tab(4), "p_", varname, "[i, ", k, "] <- min(1-1e-7, max(1e-7, phi_", varname, "[i, ", k,
            "] / sum(phi_", varname, "[i, ])))")
     })
 
-  logs <- mapply(function(k, predictor){
-    paste0(tab(), "log(phi_", varname, "[i, ", k, "]) <- ", predictor)
-  }, 1:ncat, predictor2)
+  logs <- c(paste0(tab(4), "log(phi_", varname, "[i, 1]) <- 0"),
+            mapply(function(k, par_elmts){
+              paste0(tab(4), "log(phi_", varname, "[i, ", k, "]) <- ",
+                     paste_predictor(parnam = par_name, parindex = 'i', matnam = 'Xc',
+                                     parelmts = par_elmts,
+                                     cols = Xc_cols, indent = indent))
+            }, k = 2:ncat, par_elmts))
 
 
   dummies <- paste_dummies(c(1:ncat)[-refcat], dest_col, dummy_cols)
 
-  paste0(tab(), "# multinomial model for ", varname, "\n",
-         tab(), "Xcat[i, ", dest_col, "] ~ dcat(p_", varname, "[i, 1:", ncat, "])", "\n\n",
+  paste0(tab(4), "# multinomial model for ", varname, "\n",
+         tab(4), "Xcat[i, ", dest_col, "] ~ dcat(p_", varname, "[i, 1:", ncat, "])", "\n\n",
          paste(probs, collapse = "\n"), "\n\n",
          paste0(logs, collapse = "\n"), "\n\n",
          paste0(dummies, collapse = "\n"), "\n\n")
@@ -40,9 +46,10 @@ impmodel_multilogit <- function(varname, dest_col, Xc_cols, par_elmts, par_name,
 # @param par_name name of the parameter
 # @export
 impprior_multilogit <- function(varname, par_elmts, par_name, ...){
-  paste0(tab(), "# Priors for ", varname,"\n",
+  paste0('\n',
+         tab(), "# Priors for ", varname,"\n",
          tab(), "for (k in ", min(unlist(par_elmts)), ":", max(unlist(par_elmts)), ") {", "\n",
          tab(4), par_name, "[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)", "\n",
-         tab(), "}", "\n\n"
+         tab(), "}", "\n"
   )
 }

@@ -6,276 +6,66 @@ impmodel_continuous <- function(impmeth, varname, dest_col, dest_mat, trafo_cols
     stop("The size of the design matrix and length of parameter vector do not match!")
   }
 
-  indent <- nchar(varname) + 12
-  predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
+  indent <- nchar(varname) + 14
+  predictor <-  paste_predictor(parnam = par_name, parindex = 'i', matnam = 'Xc',
+                                parelmts = par_elmts,
+                                cols = Xc_cols, indent = indent)
+
 
   trfs <- if (dest_mat != "Xc") {
-    paste_trafos(dest_col, trafo_cols, trafos = trfo_fct)
+    c(paste_trafos(dest_col, trafo_cols, trafos = trfo_fct), "\n")
   }
 
-  trunc <- if(!is.null(trunc)) paste0("T(", paste(trunc, collapse = ", "), ")")
+  trunc <- if (!is.null(trunc)) paste0("T(", paste(trunc, collapse = ", "), ")")
 
 
   if (impmeth == 'norm') {
     type_spec <- c(title = "Normal",
                    model = paste0("dnorm(mu_", varname, "[i], tau_", varname,")", trunc, "\n",
-                                  tab(), "mu_", varname,"[i] <- ", predictor)
+                                  tab(4), "mu_", varname,"[i] <- ", predictor)
     )
   } else if (impmeth == 'lognorm') {
     type_spec = c(title = "Log-normal",
                   model = paste0("dlnorm(mu_", varname, "[i], tau_", varname,")", "\n",
-                                 tab(), "mu_", varname,"[i] <- ", predictor)
+                                 tab(4), "mu_", varname,"[i] <- ", predictor)
     )
   } else if (impmeth == 'beta') {
     type_spec = c(title = "Beta",
                   model = paste0("dbeta(shape1_", varname, "[i], shape2_",
                                  varname, "[i])T(1e-15, 1 - 1e-15)", "\n",
-                                 tab(), "logit(mu_", varname,"[i]) <- ", predictor, "\n",
-                                 tab(), "shape1_", varname,"[i] <- mu_",
+                                 tab(4), "logit(mu_", varname,"[i]) <- ", predictor, "\n",
+                                 tab(4), "shape1_", varname,"[i] <- mu_",
                                  varname, "[i] * tau_", varname, "\n",
-                                 tab(), "shape2_", varname, "[i] <- (1 - mu_",
+                                 tab(4), "shape2_", varname, "[i] <- (1 - mu_",
                                  varname, "[i]) * tau_", varname)
     )
   } else if (impmeth == 'gamma') {
     type_spec = c(title = 'Gamma',
                   model = paste0("dgamma(shape_", varname, "[i], rate_", varname, "[i])", "\n",
-                                 tab(), "log(mu_", varname,"[i]) <- ", predictor, "\n",
-                                 tab(), "shape_", varname,"[i] <- pow(mu_",
+                                 tab(4), "log(mu_", varname,"[i]) <- ", predictor, "\n",
+                                 tab(4), "shape_", varname,"[i] <- pow(mu_",
                                  varname, "[i], 2) / pow(sigma_", varname, ", 2)", "\n",
-                                 tab(), "rate_", varname, "[i] <- mu_",
+                                 tab(4), "rate_", varname, "[i] <- mu_",
                                  varname, "[i] / pow(sigma_", varname, ", 2)"
 
                   )
     )
   }
 
-  paste0(tab(), "# ", type_spec['title'], " model for ", varname, "\n",
-         tab(), dest_mat, "[i, ", dest_col, "] ~ ", type_spec['model'], "\n\n",
-         paste0(trfs, collapse = "\n"), "\n\n")
+  paste0(tab(4), "# ", type_spec['title'], " model for ", varname, "\n",
+         tab(4), dest_mat, "[i, ", dest_col, "] ~ ", type_spec['model'], "\n\n",
+         paste0(trfs, collapse = "\n"))
 }
 
 
 # Priors for continuous imputation model
 impprior_continuous <- function(impmeth, varname, par_elmts, par_name, ...){
-  paste0(tab(), "# Priors for ", varname, "\n",
+  paste0('\n',
+         tab(), "# Priors for ", varname, "\n",
          tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
          tab(4), par_name, "[k] ~ dnorm(mu_reg_", impmeth, ", tau_reg_", impmeth, ")", "\n",
          tab(), "}", "\n",
          tab(), "tau_", varname,  " ~ dgamma(a_tau_", impmeth, ", b_tau_", impmeth, ")", "\n",
-         tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")", "\n\n"
+         tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")", "\n"
   )
 }
-
-
-# # Imputation by Bayesian linear regression
-# # @param varname name of the variable to be imputed
-# # @param dest_col column of Xc containing the variable to be imputed
-# # @param Xc_cols columns of the design matrix to used in linear predictor
-# # @param par_elmts elements of the parameter vector to be used
-# # @param par_name name of the parameter
-# # @export
-# impmodel_normal <- function(varname, dest_col, dest_mat, trafo_cols, trafos,
-#                             trfo_fct, Xc_cols, par_elmts, par_name, mess = TRUE,
-#                             ...){
-#
-#   if (length(Xc_cols) != length(par_elmts)) {
-#     stop("The size of the design matrix and length of parameter vector do not match!")
-#   }
-#
-#   indent <- nchar(varname) + 12
-#   predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
-#
-#   trfs <- if (dest_mat != "Xc") {
-#     paste_trafos(dest_col, trafo_cols, trafos = trfo_fct)
-#   }
-#
-#   trunc <- if (varname %in% trafos$var &
-#                any(trafos$type[trafos$var == varname] %in% c("log"))) {
-#     "T(1e-10, 1e10)"
-#   } else if (varname %in% trafos$var &
-#               any(trafos$type[trafos$var == varname] %in% c("sqrt"))) {
-#     "T(0, 1e10)"
-#   }
-#   if (!is.null(trunc)) {
-#     if (mess)
-#     message(gettextf("Note: The imputation model for %s", dQuote(varname)),
-#             " will be restricted to be larger than 0 to prevent problems ",
-#             gettextf("in calculating %s.",
-#                      paste(dQuote(trafos$Xc_var[trafos$var == varname &
-#                                                   trafos$type %in% c("log", "sqrt")]),
-#                            collapse = " and ")
-#             ))
-#   }
-#
-#
-#   paste0(tab(), "# normal model for ", varname, "\n",
-#          tab(), dest_mat, "[i, ", dest_col, "] ~ dnorm(mu_", varname,
-#          "[i], tau_", varname,")", trunc, "\n",
-#          tab(), "mu_", varname,"[i] <- ", predictor, "\n\n",
-#          paste0(trfs, collapse = "\n"), "\n\n")
-# }
-#
-#
-# # Priors for linear imputation model
-# impprior_normal <- function(varname, par_elmts, par_name, ...){
-#   paste0(tab(), "# Priors for ", varname, "\n",
-#          tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
-#          tab(4), par_name, "[k] ~ dnorm(mu_reg_norm, tau_reg_norm)", "\n",
-#          tab(), "}", "\n",
-#          tab(), "tau_", varname,  " ~ dgamma(a_tau_norm, b_tau_norm)", "\n\n"
-#   )
-# }
-#
-#
-#
-#
-#
-# # Imputation by Bayesian log-normal regression
-# # @param varname name of the variable to be imputed
-# # @param dest_col column of Xc containing the variable to be imputed
-# # @param Xc_cols columns of the design matrix to used in linear predictor
-# # @param par_elmts elements of the parameter vector to be used
-# # @param par_name name of the parameter
-# # @export
-# impmodel_lognorm <- function(varname, dest_col, dest_mat, trafo_cols, trafos,
-#                              trfo_fct, Xc_cols, par_elmts, par_name, mess = TRUE,
-#                              ...){
-#
-#   if (length(Xc_cols) != length(par_elmts)) {
-#     stop("The size of the design matrix and length of parameter vector do not match!")
-#   }
-#
-#   indent <- nchar(varname) + 12
-#   predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
-#
-#   trfs <- if (dest_mat != "Xc") {
-#     paste_trafos(dest_col, trafo_cols, trafos = trfo_fct)
-#   }
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#   paste0(tab(), "# Log-normal model for ", varname, "\n",
-#          tab(), dest_mat, "[i, ", dest_col, "] ~ dlnorm(mu_", varname, "[i], tau_", varname,")", "\n",
-#          tab(), "mu_", varname,"[i] <- ", predictor, "\n\n",
-#          paste0(trfs, collapse = "\n"), "\n\n"
-#   )
-# }
-#
-#
-# # Priors for log-normal imputation model
-# impprior_lognorm <- function(varname, par_elmts, par_name, ...){
-#   paste0(tab(), "# Priors for ", varname, "\n",
-#          tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
-#          tab(4), par_name, "[k] ~ dnorm(mu_reg_norm, tau_reg_norm)", "\n",
-#          tab(), "}", "\n",
-#          tab(), "tau_", varname,  " ~ dgamma(a_tau_norm, b_tau_norm)", "\n\n"
-#   )
-# }
-#
-#
-#
-#
-# # Imputation by gamma regression
-# # @param varname name of the variable to be imputed
-# # @param dest_col column of Xc containing the variable to be imputed
-# # @param Xc_cols columns of the design matrix to used in linear predictor
-# # @param par_elmts elements of the parameter vector to be used
-# # @param par_name name of the parameter
-# # @export
-# impmodel_gamma <- function(varname, dest_col, dest_mat, trafo_cols, trafos,
-#                            trfo_fct, Xc_cols, par_elmts, par_name, ...){
-#
-#   if (length(Xc_cols) != length(par_elmts)) {
-#     stop("The size of the design matrix and length of parameter vector do not match!")
-#   }
-#
-#   indent <- nchar(varname) + 12
-#   predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
-#
-#   trfs <- if (dest_mat != "Xc") {
-#     paste_trafos(dest_col, trafo_cols, trafos = trfo_fct)
-#   }
-#
-#   paste0(tab(), "# Gamma model for ", varname, "\n",
-#          tab(), dest_mat, "[i, ", dest_col, "] ~ dgamma(shape_", varname, "[i], rate_", varname, "[i])", "\n",
-#          tab(), "log(mu_", varname,"[i]) <- ", predictor, "\n",
-#          tab(), "shape_", varname,"[i] <- pow(mu_", varname, "[i], 2) / pow(sigma_", varname, ", 2)", "\n",
-#          tab(), "rate_", varname, "[i] <- mu_", varname, "[i] / pow(sigma_", varname, ", 2)", "\n\n",
-#          paste0(trfs, collapse = "\n"), "\n\n"
-#   )
-# }
-#
-#
-# # Priors for gamma imputation model
-# impprior_gamma <- function(varname, par_elmts, par_name, ...){
-#   paste0(tab(), "# Priors for ", varname, "\n",
-#          tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
-#          tab(4), par_name, "[k] ~ dnorm(mu_reg_gamma, tau_reg_gamma)", "\n",
-#          tab(), "}", "\n",
-#          tab(), "tau_", varname,  " ~ dgamma(a_tau_gamma, b_tau_gamma)", "\n",
-#          tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")", "\n\n"
-#   )
-# }
-#
-#
-#
-#
-#
-# # Imputation by beta regression
-# # @param varname name of the variable to be imputed
-# # @param dest_col column of Xc containing the variable to be imputed
-# # @param Xc_cols columns of the design matrix to used in linear predictor
-# # @param par_elmts elements of the parameter vector to be used
-# # @param par_name name of the parameter
-# # @export
-# impmodel_beta <- function(varname, dest_col, dest_mat, trafo_cols, trafos,
-#                           trfo_fct, Xc_cols, par_elmts, par_name, ...){
-#
-#   if (length(Xc_cols) != length(par_elmts)) {
-#     stop("The size of the design matrix and length of parameter vector do not match!")
-#   }
-#
-#   indent <- nchar(varname) + 12
-#   predictor <- paste_predictor(varname, par_elmts, Xc_cols, par_name, indent)
-#
-#   trfs <- if (dest_mat != "Xc") {
-#     paste_trafos(dest_col, trafo_cols, trafos = trfo_fct)
-#   }
-#
-#   paste0(tab(), "# beta model for ", varname, "\n",
-#          tab(), dest_mat, "[i, ", dest_col, "] ~ dbeta(shape1_", varname, "[i], shape2_", varname, "[i])T(1e-15, 1 - 1e-15)", "\n",
-#          tab(), "logit(mu_", varname,"[i]) <- ", predictor, "\n",
-#          tab(), "shape1_", varname,"[i] <- mu_", varname, "[i] * tau_", varname, "\n",
-#          tab(), "shape2_", varname, "[i] <- (1 - mu_", varname, "[i]) * tau_", varname, "\n\n",
-#          paste0(trfs, collapse = "\n"), "\n\n"
-#   )
-# }
-#
-# # Priors for beta imputation model
-# impprior_beta <- function(varname, par_elmts, par_name, ...){
-#   paste0(tab(), "# Priors for ", varname, "\n",
-#          tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
-#          tab(4), par_name, "[k] ~ dnorm(mu_reg_beta, tau_reg_beta)", "\n",
-#          tab(), "}", "\n",
-#          tab(), "tau_", varname,  " ~ dgamma(a_tau_beta, b_tau_beta)", "\n"
-#   )
-# }

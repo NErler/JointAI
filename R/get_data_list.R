@@ -3,7 +3,7 @@
 # @param meth vector of imputation methods
 # @param Mlist list of data matrices etc.
 # @export
-get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
+get_data_list <- function(analysis_type, family, link, meth, Mlist, auxvars,
                           scale_pars = NULL, hyperpars = NULL, data) {
 
   scaled <- get_scaling(Mlist, scale_pars, meth, data)
@@ -15,7 +15,11 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
 
   l <- list()
   l[[names(Mlist$y)]] <- if (any(sapply(Mlist$y, is.factor))) {
-    c(sapply(Mlist$y, as.numeric) - 1)
+    if (analysis_type %in% c('clmm', 'clm')) {
+      c(sapply(Mlist$y, as.numeric))
+    } else {
+      c(sapply(Mlist$y, as.numeric) - 1)
+    }
   } else {
     unname(unlist(Mlist$y))
   }
@@ -35,9 +39,13 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
     l$a_tau_main <- defs$analysis_model["a_tau_main"]
     l$b_tau_main <- defs$analysis_model["b_tau_main"]
   }
+  if (family == 'ordinal') {
+    l$mu_delta_main <- defs$analysis_model["mu_delta_main"]
+    l$tau_delta_main <- defs$analysis_model["tau_delta_main"]
+  }
 
 
-  if (analysis_type %in% c("lme", "glme")) {
+  if (analysis_type %in% c("lme", "glme", "clmm")) {
     l$groups <- match(Mlist$groups, unique(Mlist$groups))
     if (ncol(Mlist$Z) > 1) {
       l$RinvD <- defs$Z$RinvD
@@ -135,20 +143,20 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
     l$tau_delta_ordinal <- defs$ordinal["tau_delta_ordinal"]
   }
 
-  if (!is.null(Mlist$auxvars)) {
-    # l$beta <- setNames(rep(NA, max(K, na.rm = TRUE)), get_coef_names(Mlist, K)[, 2])
-    l$beta <- rep(NA, max(K, na.rm = T))
-    names(l$beta)[min(K, na.rm = T) : max(K, na.rm = T)] <- get_coef_names(Mlist, K)[, 2]
-    nams <- sapply(Mlist$auxvars, function(x) {
-      if (x %in% names(Mlist$refs)) {
-        paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) !=
-                                            Mlist$refs[[x]]])
-      } else {
-        x
-      }
-    })
-    l$beta[unlist(nams)] <- 0
-  }
+  # if (!is.null(Mlist$auxvars)) {
+  #   # l$beta <- setNames(rep(NA, max(K, na.rm = TRUE)), get_coef_names(Mlist, K)[, 2])
+  #   l$beta <- rep(NA, max(K, na.rm = T))
+  #   names(l$beta)[min(K, na.rm = T) : max(K, na.rm = T)] <- get_coef_names(Mlist, K)[, 2]
+  #   nams <- sapply(Mlist$auxvars, function(x) {
+  #     if (x %in% names(Mlist$refs)) {
+  #       paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) !=
+  #                                           Mlist$refs[[x]]])
+  #     } else {
+  #       x
+  #     }
+  #   })
+  #   l$beta[unlist(nams)] <- 0
+  # }
 
   return(list(data_list = l,
               scale_pars = scaled$scale_pars,
@@ -281,6 +289,8 @@ default_hyperpars <- function(family = 'gaussian', link = "identity", nranef = N
     tau_reg_main = tau_reg_main,
     a_tau_main = 0.01,
     b_tau_main = 0.001,
+    mu_delta_main = 0,
+    tau_delta_main = 0.001,
     c = c,
     r = r,
     eps = eps

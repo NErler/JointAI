@@ -17,17 +17,13 @@
 # @param imp_par_list output from get_imp_par_list
 # @export
 build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
-                       Ntot, N, y_name,  Mlist = NULL,
-                        Z = NULL, Xic = NULL, Xl = NULL, Xil = NULL,
-                        hc_list = NULL, K, imp_par_list, ...) {
+                       Ntot, Mlist = NULL, K, imp_par_list, ...) {
   arglist <- as.list(match.call())[-1]
-  if (is.null(arglist$Xic)) {
-    arglist$Xic <- Mlist$Xic
-  }
 
   analysis_model <- switch(analysis_type,
                            "lme" = lme_model,
                            "glme" = glme_model,
+                           "clmm" = clmm_model,
                            "lm" = lm_model,
                            "glm" = glm_model,
                            "survreg" = survreg_model,
@@ -35,6 +31,7 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
   analysis_priors <- switch(analysis_type,
                             "lme" = lme_priors,
                             "glme" = glme_priors,
+                            "clmm" = clmm_priors,
                             "glm" = glm_priors,
                             "lm" = lm_priors,
                             "survreg" = survreg_priors,
@@ -52,11 +49,11 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
       Xic_pos <- match(colnames(Xic)[apply(is.na(Xic), 2, any)], colnames(Xic))
       #  the above line may be too complicated (left over from previous version)
 
-      paste0(
+      paste0('\n\n',
         tab(), "# ------------------------------------------------------ #", "\n",
         tab(), "# Interactions involving only cross-sectional covariates #", "\n",
         tab(), "# ------------------------------------------------------ #", "\n\n",
-        tab(), "for (i in 1:", N, ") {", "\n",
+        tab(), "for (i in 1:", Mlist$N, ") {", "\n",
         paste0(paste_interactions(index = "i", mat0 = "Xic", mat1 = "Xc",
                                   mat0_col = Xic_pos, mat1_col = Xc_pos),
                collapse = "\n"), "\n",
@@ -90,7 +87,7 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
       a
     }, simplify = FALSE)
 
-    paste0(
+    paste0('\n\n',
       tab(), "# ---------------------------------------------- #", "\n",
       tab(), "# Interactions involving longitudinal covariates #", "\n",
       tab(), "# ---------------------------------------------- #", "\n\n",
@@ -105,16 +102,16 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
   # imputation section of the model
 
   imputation_part <- if (!is.null(meth)) {
-    paste0(
+    paste0('\n\n',
       tab(), "# ----------------- #", "\n",
       tab(), "# Imputation models #", "\n",
       tab(), "# ----------------- #", "\n\n",
-      tab(), "for (i in 1:", N, ") {", "\n",
+      tab(), "for (i in 1:", Mlist$N, ") {", "\n",
       paste0(sapply(imp_par_list, paste_imp_model), collapse = "\n"),
       tab(), "}", "\n\n",
       tab(), "# -------------------------------- #", "\n",
       tab(), "# Priors for the imputation models #", "\n",
-      tab(), "# -------------------------------- #", "\n\n",
+      tab(), "# -------------------------------- #", "\n",
       paste0(sapply(imp_par_list, paste_imp_priors), collapse = "\n")
     )
   }
@@ -134,10 +131,9 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
     tab(), "# Priors for the analysis model #", "\n",
     tab(), "# ----------------------------- #", "\n\n",
     paste0(do.call(analysis_priors, arglist), collapse = "\n"),
-    "\n\n",
-    imputation_part, "\n\n",
-    interactions, "\n",
-    interactions_long, "\n",
+    imputation_part, "\n",
+    interactions,
+    interactions_long,
     "}"
   )
 }

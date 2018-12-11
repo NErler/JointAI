@@ -7,6 +7,7 @@
 \alias{lme_imp}
 \alias{glme_imp}
 \alias{glmer_imp}
+\alias{clmm_imp}
 \alias{survreg_imp}
 \title{Joint analysis and imputation of incomplete data}
 \usage{
@@ -33,6 +34,14 @@ lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...)
 
 glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
+  modelname = NULL, modeldir = NULL, overwrite = NULL,
+  keep_model = FALSE, quiet = TRUE, progress.bar = "text",
+  warn = TRUE, mess = TRUE, auxvars = NULL, meth = NULL,
+  refcats = NULL, trunc = NULL, scale_vars = NULL,
+  scale_pars = NULL, hyperpars = NULL, ...)
+
+clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
   modelname = NULL, modeldir = NULL, overwrite = NULL,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",

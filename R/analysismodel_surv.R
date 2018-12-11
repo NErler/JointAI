@@ -1,14 +1,9 @@
 
-survreg_model <- function(N, y_name, Z = NULL, Xic = NULL, Xl = NULL,
-                     Xil = NULL, hc_list = NULL, Mlist = NULL, K, ...){
+survreg_model <- function(Mlist, K, ...){
 
-  if (!is.null(Mlist)) {
-    for (i in 1:length(Mlist)) {
-      assign(names(Mlist)[i], Mlist[[i]])
-    }
-  }
+  y_name <- colnames(Mlist$y)
 
-  paste_Xic <- if (!is.null(Xic)) {
+  paste_Xic <- if (length(Mlist$cols_main$Xic) > 0) {
     paste0(tab(), " + ", tab(12 + nchar(y_name)),
            "inprod(Xic[j, ], beta[", K["Xic", 1],":", K["Xic", 2],"])", sep = "")
   }
@@ -23,7 +18,9 @@ survreg_model <- function(N, y_name, Z = NULL, Xic = NULL, Xl = NULL,
   )
 }
 
-survreg_priors <- function(K, y_name, ...){
+survreg_priors <- function(K, Mlist, ...){
+  y_name <- colnames(Mlist$y)
+
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
     tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
@@ -40,16 +37,11 @@ survreg_priors <- function(K, y_name, ...){
 
 
 
-coxph_model <- function(N, y_name, Z = NULL, Xic = NULL, Xl = NULL,
-                          Xil = NULL, hc_list = NULL, Mlist = NULL, K, ...){
+coxph_model <- function(Mlist, K, ...){
 
-  if (!is.null(Mlist)) {
-    for (i in 1:length(Mlist)) {
-      assign(names(Mlist)[i], Mlist[[i]])
-    }
-  }
+  y_name <- colnames(Mlist$y)
 
-  paste_Xic <- if (!is.null(Xic)) {
+  paste_Xic <- if (length(Mlist$cols_main$Xic) > 0) {
     paste0(" + \n", tab(12 + nchar(y_name)),
            "inprod(Xic[subj[j], ], beta[", K["Xic", 1],":", K["Xic", 2],"])", sep = "")
   }
@@ -65,7 +57,9 @@ coxph_model <- function(N, y_name, Z = NULL, Xic = NULL, Xl = NULL,
   )
 }
 
-coxph_priors <- function(K, y_name, ...){
+coxph_priors <- function(K, Mlist, ...){
+  y_name <- colnames(Mlist$y)
+
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
     tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",

@@ -33,7 +33,7 @@
 #'         \item grouping specification (\code{groups})
 #'         \item the vector of variables to be scaled (\code{scale_vars})
 #'         \item updated fixed effects structure (\code{fixed2})
-#'         \item names of updated design matrix (\code{X2_names})
+#'         \item list of names of covariates in the main analysis (\code{names_main})
 #'       }}
 #' \item{\code{K}}{matrix specifying the indices of the regression coefficients
 #' that are related to different parts of the model}

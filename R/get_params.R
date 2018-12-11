@@ -31,6 +31,7 @@ get_params <- function(meth, analysis_type, family,
                        imp_pars = FALSE,
                        imps = NULL,
                        betas = NULL, tau_y = NULL, sigma_y = NULL,
+                       gamma_y = NULL, delta_y = NULL,
                        ranef = NULL, invD = NULL, D = NULL, RinvD = NULL,
                        alphas = NULL, tau_imp = NULL, gamma_imp = NULL,
                        delta_imp = NULL, other = NULL, ...){
@@ -46,8 +47,11 @@ get_params <- function(meth, analysis_type, family,
     if (family %in% c("gaussian", "gamma", 'weibull')) {
       if (is.null(sigma_y)) sigma_y <- TRUE
     }
+    if (family %in% c('ordinal')) {
+      gamma_y <- TRUE
+    }
   }
-  if (analysis_type %in% c("lme", "glme")) {
+  if (analysis_type %in% c("lme", "glme", "clmm")) {
     if (is.null(Zcols))
       Zcols <- ncol(Z)
     if (analysis_main & is.null(D)) D <- TRUE
@@ -75,6 +79,8 @@ get_params <- function(meth, analysis_type, family,
   }
 
   params <- c(if (betas) "beta",
+              if (gamma_y) paste0("gamma_", y_name),
+              if (delta_y) paste0("delta_", y_name),
               if (tau_y) paste0("tau_", y_name),
               if (sigma_y) paste0("sigma_", y_name),
               if (alphas) "alpha",
@@ -90,7 +96,7 @@ get_params <- function(meth, analysis_type, family,
               other
   )
 
-  if (analysis_type %in% c("lme", "glme")) {
+  if (analysis_type %in% c("lme", "glme", "clmm")) {
     params <- c(params,
                 if (ranef) "b",
                 if (invD) unlist(sapply(1:Zcols, function(x)

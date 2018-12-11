@@ -93,11 +93,52 @@ get_scaling <- function(Mlist, scale_pars, meth, data) {
   if (any(Mlist$trafos$fct == paste0(Mlist$trafos$var, "^2"))) {
     sqrs <- which(Mlist$trafos$fct == paste0(Mlist$trafos$var, "^2"))
     xvars <- Mlist$trafos$var[sqrs]
-    xsqr <- Mlist$trafos$Xc_var[sqrs]
+    xsqr <- Mlist$trafos$X_var[sqrs]
     scale_pars_new[, xsqr] <- scale_pars_new[, xvars]^2
     scale_pars_new["center", xsqr] <- -scale_pars_new["center", xsqr]
   }
 
   return(list(scaled_matrices = sapply(scaled_dat, "[[", 1, simplify = FALSE),
               scale_pars = scale_pars_new))
+}
+
+
+
+# Function to find the names of columns in the model matrix that involve
+# continuous covariates (and hence may need to be scaled)
+# for now not used
+find_continuous <- function(fixed, DF, contr = NULL) {
+  # remove left side of formula
+  fmla <- as.formula(sub("[[:print:]]*\\~", "~",
+                         deparse(fixed, width.cutoff = 500)))
+
+  # check which variables involved are continuous
+  is_continuous <- !sapply(DF[, all.vars(fmla)], is.factor)
+
+  elmts <- attr(terms(fmla), "term.labels")
+
+  fixed_c <- as.formula(
+    paste("~",
+          paste(elmts[unique(unlist(sapply(names(is_continuous)[is_continuous],
+                                           grep, elmts)))],
+                collapse = " + ")
+    )
+  )
+
+  colnames(model.matrix(fixed_c, DF, contrasts.arg = contr)[, -1L , drop = FALSE])
+}
+
+
+# Function to find the names of columns in the model matrix that involve
+# continuous covariates (and hence may need to be scaled) - only main effects
+find_continuous_main <- function(fixed, DF) {
+  # remove left side of formula
+  fmla <- as.formula(sub("[[:print:]]*\\~", "~",
+                         deparse(fixed, width.cutoff = 500)))
+
+  # check which variables involved are continuous
+  is_continuous <- !sapply(model.frame(fmla, DF), is.factor)
+  # Note: does this have to be so complicated? can't I just take the columns of DF???
+
+  names(is_continuous)[is_continuous]
 }
