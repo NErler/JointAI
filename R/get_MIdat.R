@@ -200,7 +200,8 @@ get_MIdat <- function(object, m = 10, include = TRUE,
   if (export_to_SPSS == TRUE) {
     foreign::write.foreign(impDF,
                file.path(resdir, paste0(filename, ".txt")),
-               file.path(resdir, paste0(filename, ".sps"))
+               file.path(resdir, paste0(filename, ".sps")),
+               package = 'SPSS'
     )
   }
 
