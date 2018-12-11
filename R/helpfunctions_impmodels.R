@@ -5,22 +5,22 @@
 # @param Xc_cols numeric vector specifying the columns in the design matrix Xc
 # @param par_name character string, specifying the name of the regression
 # parameters (e.g. "alpha")
-paste_predictor <- function(varname, par_elmts, Xc_cols, par_name, indent) {
-  if (!is.list(par_elmts)) {
-    par_elmts <- list(par_elmts)
-  }
-
-  lb <- c(rep("", 3),
-          rep(c(paste0(c("\n", rep(" ", indent)), collapse = ""), rep("", 2)),
-              ceiling((length(par_elmts[[1]]) - 3)/3))
-  )[1:length(par_elmts[[1]])]
-
-  lapply(1:length(par_elmts), function(k) {
-    paste0(lb,
-           "Xc[i, ", Xc_cols, "] * ", par_name, "[", par_elmts[[k]], "]",
-           collapse = " + ")
-  })
-}
+# paste_predictor <- function(varname, par_elmts, Xc_cols, par_name, indent) {
+#   if (!is.list(par_elmts)) {
+#     par_elmts <- list(par_elmts)
+#   }
+#
+#   lb <- c(rep("", 3),
+#           rep(c(paste0(c("\n", rep(" ", indent)), collapse = ""), rep("", 2)),
+#               ceiling((length(par_elmts[[1]]) - 3)/3))
+#   )[1:length(par_elmts[[1]])]
+#
+#   lapply(1:length(par_elmts), function(k) {
+#     paste0(lb,
+#            "Xc[i, ", Xc_cols, "] * ", par_name, "[", par_elmts[[k]], "]",
+#            collapse = " + ")
+#   })
+# }
 
 
 # Creates a list of parameters that will be passed to the functions generating the imputation models
@@ -37,13 +37,10 @@ paste_predictor <- function(varname, par_elmts, Xc_cols, par_name, indent) {
 get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
                              refs, trafos, trunc) {
 
-  # intercept = ifelse(impmeth %in% c("cumlogit"),
-  #                    ifelse(K_imp[varname, "end"] == 1, T, F), T)
-  #
   intercept = ifelse(impmeth %in% c("cumlogit"),
                      ifelse(min(dest_cols[[varname]]$Xc) > 2, F, T), T)
 
-  dest_cols[[varname]]$Xc
+  # dest_cols[[varname]]$Xc
 
   list(varname = varname,
        impmeth = impmeth,
@@ -135,9 +132,9 @@ get_trafo <- function(i, trafos, dest_cols) {
                                          dest_cols[[trafos[i, "var"]]]$Xtrafo,
                                          "]"), trafos[i, "fct"])
   }
-  if(!is.na(trafos[i, 'dupl_rows'])) {
+  if (!is.na(trafos[i, 'dupl_rows'])) {
     other_vars <- trafos[unlist(trafos[i, 'dupl_rows']), 'var']
-    for(k in seq_along(other_vars)) {
+    for (k in seq_along(other_vars)) {
       ret <- gsub(other_vars[k],
                   paste0('Xtrafo[i, ', dest_cols[[other_vars[k]]]$Xtrafo, ']'), ret)
     }
@@ -213,7 +210,7 @@ get_dest_column <- function(varname, refs, Xc_names, Xcat_names, Xtrafo_names,
     #              levels(refs[[varname]])[levels(refs[[varname]]) !=
     #                                        refs[[varname]]])
   } else if (varname %in% trafos$var) {
-    trafos$Xc_var[trafos$var == varname & !trafos$dupl]
+    trafos$X_var[trafos$var == varname & !trafos$dupl]
   } else {
     varname
   }
@@ -231,78 +228,60 @@ get_dest_column <- function(varname, refs, Xc_names, Xcat_names, Xtrafo_names,
 # @param dest_col integer specifying the column in Xcat that contains the categorical variable
 # @param dummy_cols numeric vector specifying the columns in Xc that contain
 # the dummy variables corresponding to the categorical variable
-paste_dummies <- function(categories, dest_col, dummy_cols, ...){
-  sapply(dummy_cols, function(k) {
-    paste0(tab(), "Xc[i, ", k, "] <- ifelse(Xcat[i, ", dest_col, "] == ",
-           match(k, dummy_cols), ", 1, 0)")
-  })
-  mapply(function(dummy_cols, categories) {
-    paste0(tab(), "Xc[i, ", dummy_cols, "] <- ifelse(Xcat[i, ",
-           dest_col, "] == ", categories, ", 1, 0)")
-  }, dummy_cols, categories)
-}
+# paste_dummies <- function(categories, dest_col, dummy_cols, ...){
+#   sapply(dummy_cols, function(k) {
+#     paste0(tab(), "Xc[i, ", k, "] <- ifelse(Xcat[i, ", dest_col, "] == ",
+#            match(k, dummy_cols), ", 1, 0)")
+#   })
+#   mapply(function(dummy_cols, categories) {
+#     paste0(tab(), "Xc[i, ", dummy_cols, "] <- ifelse(Xcat[i, ",
+#            dest_col, "] == ", categories, ", 1, 0)")
+#   }, dummy_cols, categories)
+# }
 
 
-# paste trafo
-paste_trafos <- function(dest_col, trafo_cols, trafos,...) {
-  mapply(function(trafo_cols, trafo) {
-    paste0(tab(), "Xc[i, ", trafo_cols, "] <- ", trafo)
-  }, trafo_cols = trafo_cols, trafo = trafos)
-}
+# # paste trafo
+# paste_trafos <- function(dest_col, trafo_cols, trafos,...) {
+#   mapply(function(trafo_cols, trafo) {
+#     paste0(tab(), "Xc[i, ", trafo_cols, "] <- ", trafo)
+#   }, trafo_cols = trafo_cols, trafo = trafos)
+# }
 
 
 # Call and paste imputation models
 # @param imp_par_list list of parameters
-paste_imp_model <- function(imp_par_list) {
-
-  # imp_model <- switch(imp_par_list$impmeth,
-  #                     norm = impmodel_normal,
-  #                     lognorm = impmodel_lognorm,
-  #                     gamma = impmodel_gamma,
-  #                     beta = impmodel_beta,
-  #                     logit = impmodel_logit,
-  #                     multilogit = impmodel_multilogit,
-  #                     cumlogit = impmodel_cumlogit)
-  imp_model <- switch(imp_par_list$impmeth,
-                      norm = impmodel_continuous,
-                      lognorm = impmodel_continuous,
-                      gamma = impmodel_continuous,
-                      beta = impmodel_continuous,
-                      logit = impmodel_logit,
-                      multilogit = impmodel_multilogit,
-                      cumlogit = impmodel_cumlogit)
-  do.call(imp_model, imp_par_list)
-}
+# paste_imp_model <- function(imp_par_list) {
+#   imp_model <- switch(imp_par_list$impmeth,
+#                       norm = impmodel_continuous,
+#                       lognorm = impmodel_continuous,
+#                       gamma = impmodel_continuous,
+#                       beta = impmodel_continuous,
+#                       logit = impmodel_logit,
+#                       multilogit = impmodel_multilogit,
+#                       cumlogit = impmodel_cumlogit)
+#   do.call(imp_model, imp_par_list)
+# }
 
 # Call and paste imputation priors
 # @param imp_par_list list of parameters
-paste_imp_priors <- function(imp_par_list) {
-
-  # imp_prior <- switch(imp_par_list$impmeth,
-  #                     norm = impprior_normal,
-  #                     lognorm = impprior_lognorm,
-  #                     gamma = impprior_gamma,
-  #                     beta = impprior_beta,
-  #                     logit = impprior_logit,
-  #                     multilogit = impprior_multilogit,
-  #                     cumlogit = impprior_cumlogit)
-  imp_prior <- switch(imp_par_list$impmeth,
-                      norm = impprior_continuous,
-                      lognorm = impprior_continuous,
-                      gamma = impprior_continuous,
-                      beta = impprior_continuous,
-                      logit = impprior_logit,
-                      multilogit = impprior_multilogit,
-                      cumlogit = impprior_cumlogit)
-  do.call(imp_prior, imp_par_list)
-}
+# paste_imp_priors <- function(imp_par_list) {
+#   imp_prior <- switch(imp_par_list$impmeth,
+#                       norm = impprior_continuous,
+#                       lognorm = impprior_continuous,
+#                       gamma = impprior_continuous,
+#                       beta = impprior_continuous,
+#                       logit = impprior_logit,
+#                       multilogit = impprior_multilogit,
+#                       cumlogit = impprior_cumlogit)
+#   do.call(imp_prior, imp_par_list)
+# }
 
 
-# Help function for indenting lines in model files
-tab <- function(times = 2) {
-  tb <- " "
-  paste(rep(tb, times), collapse = "")
-}
+# # Help function for indenting lines in model files
+# tab <- function(times = 2) {
+#   tb <- " "
+#   paste(rep(tb, times), collapse = "")
+# }
 
 
 # Paste interaction terms for JAGS model
