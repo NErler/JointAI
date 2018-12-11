@@ -21,20 +21,19 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family, link 
 
   l[["beta"]] <- setNames(rnorm(length(mean.betas), mean.betas, 1),
                           get_coef_names(Mlist, K)[, 2])
-  # l[["beta"]] = rnorm(length(mean.betas), mean.betas, 1)
 
-  if (!is.null(Mlist$auxvars)) {
-    nams <- sapply(Mlist$auxvars, function(x) {
-      if (x %in% names(Mlist$refs)) {
-        paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) !=
-                                            Mlist$refs[[x]]])
-      } else {
-        x
-      }
-    })
-
-    l[["beta"]][unlist(nams)] <- NA
-  }
+  # if (!is.null(Mlist$auxvars)) {
+  #   nams <- sapply(Mlist$auxvars, function(x) {
+  #     if (x %in% names(Mlist$refs)) {
+  #       paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) !=
+  #                                           Mlist$refs[[x]]])
+  #     } else {
+  #       x
+  #     }
+  #   })
+  #
+  #   l[["beta"]][unlist(nams)] <- NA
+  # }
 
   if (family %in% c('gaussian', 'Gamma'))
     l[[paste0("tau_", colnames(Mlist$y))]] = rgamma(1, 1, 1)
@@ -42,7 +41,7 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family, link 
 
   # random effects and random effects covariance
   if (analysis_type %in% c("lme", "glme")) {
-    l[["b"]] = matrix(nrow = nrow(Mlist$Xc),
+    l[["b"]] = matrix(nrow = Mlist$N,
                       ncol = ncol(Mlist$Z),
                       data = rnorm(nrow(Mlist$Xc  * ncol(Mlist$Z))))
 
