@@ -315,17 +315,17 @@ log-normal distribution (`lognorm`) or a Gamma distribution (`gamma`):
 # truncation of the distribution of  bili
 mod4a <- lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
                 trunc = list(bili = c(1e-5, 1e10)),
-                data = NHANES, mess = FALSE, keep_model = T)
+                data = NHANES, mess = FALSE)
 
 # log-normal model for bili
 mod4b <- lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
                 meth = c(bili = 'lognorm', creat = 'norm'),
-                data = NHANES, mess = FALSE, keep_model = T)
+                data = NHANES, mess = FALSE)
 
 # gamma model for bili
 mod4c <- lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
                 meth = c(bili = 'gamma', creat = 'norm'),
-                data = NHANES, mess = FALSE, keep_model = T)
+                data = NHANES, mess = FALSE)
 
 ```
 Truncation always requires to specify both limits. Since `-Inf` and `Inf` are not
