@@ -410,7 +410,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   if (is.null(K)) {
-    K <- get_model_dim(sapply(Mlist, ncol), Mlist$hc_list, analysis_type)
+    K <- get_model_dim(Mlist$cols_main, Mlist$hc_list)
   }
 
   if (is.null(imp_pos)) {
@@ -423,7 +423,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
   if (is.null(dest_cols)) {
-    dest_cols <- sapply(names(meth), get_dest_column, Mlist$refs,
+    dest_cols <- sapply(unique(c(names(meth), colnames(Mlist$Xtrafo))),
+                        get_dest_column, Mlist$refs,
                         colnames(Mlist$Xc), colnames(Mlist$Xcat),
                         colnames(Mlist$Xtrafo), Mlist$trafos, simplify = FALSE)
   }
@@ -436,7 +437,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
   if (is.null(data_list)) {
-    data_list <- try(get_data_list(analysis_type, family, link, meth, Mlist, K, auxvars,
+    data_list <- try(get_data_list(analysis_type, family, link, meth, Mlist, auxvars,
                                    scale_pars = scale_pars, hyperpars = hyperpars,
                                    data = data))
     scale_pars <- data_list$scale_pars
@@ -474,8 +475,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
     write_model(analysis_type = analysis_type, family = family,
                 link = link, meth = meth,
-                Ntot = Ntot, N = nrow(Mlist$Xc),  ncat = Mlist$ncat,
-                y_name = names(Mlist$y), Mlist = Mlist, K = K,
+                Ntot = Ntot, Mlist = Mlist, K = K,
                 imp_par_list = imp_par_list,
                 file = modelfile)
   }
@@ -539,7 +539,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
       if (!is.null(scale_pars)) {
         # re-scale parameters
         MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
-                            scale_pars, MCMC[[k]], Mlist$refs, Mlist$X2_names,
+                            scale_pars, MCMC[[k]], Mlist$refs, unlist(Mlist$names_main),
                             Mlist$trafos))
         attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
       }
@@ -825,7 +825,7 @@ clmm_imp <- function(fixed, data, random,
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$analysis_type <- "clmm"
   arglist$family <- "ordinal"
-  arglist$link <- "identity"
+  arglist$link <- "logit"
 
 
   thiscall <- as.list(match.call())[-1L]
