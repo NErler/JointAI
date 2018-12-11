@@ -52,7 +52,7 @@ rescale <- function(x, fixed2, scale_pars, MCMC, refs, X2_names, trafos) {
   }
 
   # square <- if (x %in% trafos$var & any(trafos$fct == paste0(x, "^2"))) {
-  #   qdr_var <- trafos$Xc_var[which(trafos$var == x &
+  #   qdr_var <- trafos$X_var[which(trafos$var == x &
   #                                          trafos$fct == paste0(x, "^2"))]
   #   2 * as.numeric(MCMC[ , qdr_var])/scale_pars["scale", x]^2 * scale_pars["center", x]
   # } else {

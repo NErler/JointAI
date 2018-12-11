@@ -191,34 +191,48 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     Xl <- Xil <- NULL
   }
 
+  # scaling --------------------------------------------------------------------
   if (is.null(scale_vars)) {
     scale_vars <- find_continuous_main(fixed2, data)
-    # fcts <- extract_fcts(fixed2, data, complete = TRUE)
-    compl_fcts_vars <- fcts$Xc_var[fcts$type != "identity" &
+
+    compl_fcts_vars <- fcts$X_var[fcts$type != "identity" &
                                      colSums(is.na(data[, fcts$var, drop = FALSE])) == 0]
 
     excl <- grep("[[:alpha:]]*\\(", scale_vars, value = TRUE)
-    excl <- c(excl, unique(trafos$Xc_var))
+    excl <- c(excl, unique(trafos$X_var))
     excl <- excl[!excl %in% compl_fcts_vars]
-
-    # if (!is.null(trafos)) {
-    #   qdrtrafos <- unlist(sapply(split(trafos, trafos$var), function(x) {
-    #     if (all(x$Xc_var %in% c(x$var, paste0("I(", x$var, "^2)")))) x$Xc_var
-    #   }))
-    #   excl <- excl[!excl %in% qdrtrafos]
-    # }
 
     scale_vars <- scale_vars[which(!scale_vars %in% excl)]
     if (length(scale_vars) == 0) scale_vars <- NULL
   }
 
+
   ncat <- if (analysis_type %in% c('clmm', 'clm'))
     length(unique(unlist(y)))
 
+  N <- length(unique(groups))
+
+
+  XXnam <- colnames(model.matrix(fixed, data))
+  if (analysis_type %in% c('clmm', 'coxph'))
+    XXnam <- XXnam[-1]
+
+  cols_main <- list(Xc = c(na.omit(match(XXnam, colnames(Xc)))),
+                    Xl = if (!is.null(Xl)) c(na.omit(match(XXnam, colnames(Xl)))),
+                    Xic = if (!is.null(Xic)) c(na.omit(match(XXnam, colnames(Xic)))),
+                    Xil = if (!is.null(Xil)) c(na.omit(match(XXnam, colnames(Xil)))),
+                    Z = if (!is.null(Z)) c(na.omit(match(XXnam, colnames(Z))))
+  )
+
+  names_main <- mapply(function(cols, mat) {
+    colnames(mat)[cols]
+  }, cols = cols_main,
+  mat = list(Xc, Xl, Xic, Xil, Z))
 
   return(list(y = y, Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat,
-              Xtrafo = Xtrafo, Z = Z, cens = cens,
+              Xtrafo = Xtrafo, Z = Z, cens = cens, cols_main = cols_main,
               trafos = trafos, hc_list = hc_list, refs = refs,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars,
-              fixed2 = fixed2, X2_names = colnames(X2), ncat = ncat))
+              fixed2 = fixed2, names_main = names_main, ncat = ncat,
+              N = N))
 }
