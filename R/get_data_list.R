@@ -3,7 +3,7 @@
 # @param meth vector of imputation methods
 # @param Mlist list of data matrices etc.
 # @export
-get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
+get_data_list <- function(analysis_type, family, link, meth, Mlist, auxvars,
                           scale_pars = NULL, hyperpars = NULL, data) {
 
   scaled <- get_scaling(Mlist, scale_pars, meth, data)
@@ -143,20 +143,20 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, K, auxvars,
     l$tau_delta_ordinal <- defs$ordinal["tau_delta_ordinal"]
   }
 
-  if (!is.null(Mlist$auxvars)) {
-    # l$beta <- setNames(rep(NA, max(K, na.rm = TRUE)), get_coef_names(Mlist, K)[, 2])
-    l$beta <- rep(NA, max(K, na.rm = T))
-    names(l$beta)[min(K, na.rm = T) : max(K, na.rm = T)] <- get_coef_names(Mlist, K)[, 2]
-    nams <- sapply(Mlist$auxvars, function(x) {
-      if (x %in% names(Mlist$refs)) {
-        paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) !=
-                                            Mlist$refs[[x]]])
-      } else {
-        x
-      }
-    })
-    l$beta[unlist(nams)] <- 0
-  }
+  # if (!is.null(Mlist$auxvars)) {
+  #   # l$beta <- setNames(rep(NA, max(K, na.rm = TRUE)), get_coef_names(Mlist, K)[, 2])
+  #   l$beta <- rep(NA, max(K, na.rm = T))
+  #   names(l$beta)[min(K, na.rm = T) : max(K, na.rm = T)] <- get_coef_names(Mlist, K)[, 2]
+  #   nams <- sapply(Mlist$auxvars, function(x) {
+  #     if (x %in% names(Mlist$refs)) {
+  #       paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) !=
+  #                                           Mlist$refs[[x]]])
+  #     } else {
+  #       x
+  #     }
+  #   })
+  #   l$beta[unlist(nams)] <- 0
+  # }
 
   return(list(data_list = l,
               scale_pars = scaled$scale_pars,
