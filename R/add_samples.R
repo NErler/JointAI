@@ -76,7 +76,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                   object$Mlist$fixed2,
                                   object$scale_pars,
                                   MCMC[[k]], object$Mlist$refs,
-                                  object$Mlist$X2_names, object$Mlist$trafos)
+                                  unlist(object$Mlist$names_main), object$Mlist$trafos)
       )
       attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
     }
