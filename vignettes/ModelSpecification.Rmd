@@ -631,7 +631,7 @@ set_refcat <- function(data, formula, covars, auxvars) {
   if (missing(formula) & missing(covars) & missing(auxvars)) {
     covars <- colnames(data)
   } else  if (missing(covars) & !missing(formula)) {
-    covars <- all.vars(formula)[all.vars(formula) != JointAI:::extract_y(formula)]
+    covars <- all.vars(formula)[all.vars(formula) != JointAI:::extract_outcome(formula)]
   }
   if (!missing(auxvars))
     covars <- unique(c(covars, auxvars))
