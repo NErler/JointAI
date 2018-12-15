@@ -4,6 +4,7 @@
 \alias{model_imp}
 \alias{lm_imp}
 \alias{glm_imp}
+\alias{clm_imp}
 \alias{lme_imp}
 \alias{glme_imp}
 \alias{glmer_imp}
@@ -25,6 +26,13 @@ glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
   warn = TRUE, mess = TRUE, auxvars = NULL, meth = NULL,
   refcats = NULL, trunc = NULL, scale_vars = NULL,
   scale_pars = NULL, hyperpars = NULL, ...)
+
+clm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
+  modeldir = NULL, overwrite = NULL, keep_model = FALSE,
+  quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
+  auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,

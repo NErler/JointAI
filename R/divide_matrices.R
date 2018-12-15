@@ -250,7 +250,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
 
   XXnam <- colnames(model.matrix(fixed, data))
-  if (analysis_type %in% c('clmm', 'coxph'))
+  if (analysis_type %in% c('clm', 'clmm', 'coxph'))
     XXnam <- XXnam[-1]
 
   cols_main <- list(Xc = c(na.omit(match(XXnam, colnames(Xc)))),

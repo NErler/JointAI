@@ -696,6 +696,45 @@ glm_imp <- function(formula, family, data,
 }
 
 
+#' @rdname model_imp
+#' @export
+clm_imp <- function(fixed, data, random,
+                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                     monitor_params = NULL, inits = TRUE,
+                     modelname = NULL, modeldir = NULL,
+                     overwrite = NULL, keep_model = FALSE,
+                     quiet = TRUE, progress.bar = "text", warn = TRUE,
+                     mess = TRUE,
+                     auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+
+  if (missing(fixed))
+    stop("No fixed effects structure specified.")
+  if (missing(data))
+    stop("No dataset given.")
+
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$analysis_type <- "clm"
+  arglist$family <- "ordinal"
+  arglist$link <- "logit"
+
+
+  thiscall <- as.list(match.call())[-1L]
+  thiscall <- lapply(thiscall, function(x) {
+    if (is.language(x)) eval(x) else x
+  })
+
+  arglist <- c(thecall = match.call(),
+               arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+
+  return(res)
+}
+
 
 #' @rdname model_imp
 #' @export
