@@ -34,58 +34,59 @@
 # @param refs list of reference values
 # @param trafos matrix of transformations
 # @export
-get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
-                             refs, trafos, trunc) {
-
-  intercept = ifelse(impmeth %in% c("cumlogit"),
-                     ifelse(min(dest_cols[[varname]]$Xc) > 2, F, T), T)
-
-  # dest_cols[[varname]]$Xc
-
-  list(varname = varname,
-       impmeth = impmeth,
-       intercept = intercept,
-       dest_mat = if (impmeth %in% c("multilogit", "cumlogit")) {
-         "Xcat"
-       } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
-         "Xtrafo"
-       } else {"Xc"},
-       dest_col = if (impmeth %in% c("multilogit", "cumlogit")) {
-         dest_cols[[varname]]$Xcat
-       } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
-         dest_cols[[varname]]$Xtrafo
-       } else {
-         dest_cols[[varname]]$Xc
-       },
-       par_elmts = if (impmeth == "multilogit") {
-         sapply(names(dest_cols[[varname]]$Xc), function(i) {
-           K_imp[i, 1]:K_imp[i, 2]
-         }, simplify = FALSE)
-       } else {
-         K_imp[varname, 1]:K_imp[varname, 2]
-       },
-       Xc_cols = (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1),
-       dummy_cols = if (impmeth %in% c("cumlogit", "multilogit")) {
-         dest_cols[[varname]]$Xc
-       },
-       ncat = if (impmeth %in% c("cumlogit", "multilogit")) {
-         length(dest_cols[[varname]]$Xc) + 1
-       },
-       refcat = if (impmeth %in% c("logit", "cumlogit", "multilogit")) {
-         which(refs[[varname]] == levels(refs[[varname]]))
-       },
-       trafo_cols = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
-         dest_cols[[varname]]$Xc
-       },
-       trfo_fct = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
-         sapply(which(trafos$var == varname & !trafos$dupl), get_trafo, trafos, dest_cols)
-         # apply(trafos[trafos[, "var"] == varname, ], 1, get_trafo,
-         #       dest_col = dest_cols[[varname]]$Xtrafo)
-       },
-       trunc = trunc[[varname]],
-       trafos = trafos,
-       par_name = "alpha")
-}
+# get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
+#                              refs, trafos, trunc, ppc, ...) {
+#
+#   intercept = ifelse(impmeth %in% c("cumlogit"),
+#                      ifelse(min(dest_cols[[varname]]$Xc) > 2, F, T), T)
+#
+#   # dest_cols[[varname]]$Xc
+#
+#   list(varname = varname,
+#        impmeth = impmeth,
+#        intercept = intercept,
+#        dest_mat = if (impmeth %in% c("multilogit", "cumlogit")) {
+#          "Xcat"
+#        } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
+#          "Xtrafo"
+#        } else {"Xc"},
+#        dest_col = if (impmeth %in% c("multilogit", "cumlogit")) {
+#          dest_cols[[varname]]$Xcat
+#        } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
+#          dest_cols[[varname]]$Xtrafo
+#        } else {
+#          dest_cols[[varname]]$Xc
+#        },
+#        par_elmts = if (impmeth == "multilogit") {
+#          sapply(names(dest_cols[[varname]]$Xc), function(i) {
+#            K_imp[i, 1]:K_imp[i, 2]
+#          }, simplify = FALSE)
+#        } else {
+#          K_imp[varname, 1]:K_imp[varname, 2]
+#        },
+#        Xc_cols = (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1),
+#        dummy_cols = if (impmeth %in% c("cumlogit", "multilogit")) {
+#          dest_cols[[varname]]$Xc
+#        },
+#        ncat = if (impmeth %in% c("cumlogit", "multilogit")) {
+#          length(dest_cols[[varname]]$Xc) + 1
+#        },
+#        refcat = if (impmeth %in% c("logit", "cumlogit", "multilogit")) {
+#          which(refs[[varname]] == levels(refs[[varname]]))
+#        },
+#        trafo_cols = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
+#          dest_cols[[varname]]$Xc
+#        },
+#        trfo_fct = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
+#          sapply(which(trafos$var == varname & !trafos$dupl), get_trafo, trafos, dest_cols)
+#          # apply(trafos[trafos[, "var"] == varname, ], 1, get_trafo,
+#          #       dest_col = dest_cols[[varname]]$Xtrafo)
+#        },
+#        trunc = trunc[[varname]],
+#        trafos = trafos,
+#        par_name = "alpha",
+#        ppc = ppc)
+# }
 
 
 # get_trafo_old <- function(trafo_vec, dest_col) {
