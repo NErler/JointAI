@@ -30,6 +30,7 @@ get_params <- function(meth, analysis_type, family,
                        analysis_random = FALSE,
                        imp_pars = FALSE,
                        imps = NULL,
+                       ppc = NULL,
                        betas = NULL, tau_y = NULL, sigma_y = NULL,
                        gamma_y = NULL, delta_y = NULL,
                        ranef = NULL, invD = NULL, D = NULL, RinvD = NULL,
@@ -82,7 +83,12 @@ get_params <- function(meth, analysis_type, family,
               if (gamma_y) paste0("gamma_", y_name),
               if (delta_y) paste0("delta_", y_name),
               if (tau_y) paste0("tau_", y_name),
-              if (sigma_y) paste0("sigma_", y_name),
+              if (sigma_y) {
+                if (family == 'weibull')
+                  paste0("shape_", y_name)
+                else
+                  paste0("sigma_", y_name)
+              },
               if (alphas) "alpha",
               if (tau_imp & any(meth %in% c("norm", "lognorm", "gamma", "beta"))) {
                 paste0("tau_", names(meth)[meth %in% c("norm", "lognorm", "gamma", "beta")])
@@ -93,6 +99,7 @@ get_params <- function(meth, analysis_type, family,
               if (delta_imp & any(meth == "cumlogit")) {
                 paste0("delta_", names(meth)[meth == "cumlogit"])
               },
+              if (ppc) paste0('ppc_', c(y_name, names(meth))),
               other
   )
 

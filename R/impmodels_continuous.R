@@ -1,5 +1,5 @@
 impmodel_continuous <- function(impmeth, varname, dest_col, dest_mat, trafo_cols, trafos,
-                                trfo_fct, Xc_cols, par_elmts, par_name, trunc,
+                                trfo_fct, Xc_cols, par_elmts, par_name, trunc, ppc,
                                 mess = TRUE, ...){
 
   if (length(Xc_cols) != length(par_elmts)) {
@@ -52,20 +52,54 @@ impmodel_continuous <- function(impmeth, varname, dest_col, dest_mat, trafo_cols
     )
   }
 
+  paste_ppc <- if (ppc) {
+    if (impmeth == 'norm') {
+      paste0(
+        tab(4), varname, "_ppc[i] ~ dnorm(mu_", varname, "[i], tau_", varname,")", trunc, "\n"
+      )
+    } else if (impmeth == 'lognorm') {
+      paste0(
+        tab(4), varname, "_ppc[i] ~ dlnorm(mu_", varname, "[i], tau_", varname,")", "\n"
+      )
+    } else if (impmeth == 'beta') {
+      paste0(
+        tab(4),  varname, "_ppc[i]] ~ dbeta(shape1_", varname, "[i], shape2_",
+        varname, "[i])T(1e-15, 1 - 1e-15)", "\n"
+      )
+    } else if (impmeth == 'gamma') {
+      paste0(
+        tab(4), varname, "_ppc[i] ~ dgamma(shape_", varname, "[i], rate_", varname, "[i])", "\n"
+      )
+    }
+  }
+
   paste0(tab(4), "# ", type_spec['title'], " model for ", varname, "\n",
          tab(4), dest_mat, "[i, ", dest_col, "] ~ ", type_spec['model'], "\n\n",
+         paste_ppc,
          paste0(trfs, collapse = "\n"))
 }
 
 
 # Priors for continuous imputation model
-impprior_continuous <- function(impmeth, varname, par_elmts, par_name, ...){
+impprior_continuous <- function(impmeth, varname, par_elmts, par_name, ppc, dest_mat, dest_col, ...){
+
+  paste_ppc <- if (ppc) {
+    paste0('\n',
+           tab(), '# Posterior predictive check for the model for ', varname, '\n',
+           tab(), 'ppc_', varname, "_o <- pow(", dest_mat, "[,", dest_col, "] - mu_", varname, "[], 2)", "\n",
+           tab(), 'ppc_', varname, "_e <- pow(", varname, "_ppc[] - mu_", varname, "[], 2)", "\n",
+           tab(), 'ppc_', varname, " <- mean(step(ppc_", varname, "_o - ppc_", varname, "_e))", "\n"
+    )
+  }
+
+
   paste0('\n',
          tab(), "# Priors for ", varname, "\n",
          tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
          tab(4), par_name, "[k] ~ dnorm(mu_reg_", impmeth, ", tau_reg_", impmeth, ")", "\n",
          tab(), "}", "\n",
          tab(), "tau_", varname,  " ~ dgamma(a_tau_", impmeth, ", b_tau_", impmeth, ")", "\n",
-         tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")", "\n"
+         tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")", "\n",
+         paste_ppc
   )
 }

@@ -260,7 +260,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       modelname = NULL, modeldir = NULL,
                       overwrite = NULL, keep_model = FALSE,
                       quiet = TRUE, progress.bar = "text", warn = TRUE,
-                      mess = TRUE,
+                      mess = TRUE, ppc = TRUE,
                       auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                       scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                       MCMCpackage = "JAGS", analysis_type,
@@ -405,7 +405,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
                              random = random, auxvars = auxvars,
                              scale_vars = scale_vars, refcats = refcats,
-                             meth = meth, warn = warn, mess = mess)
+                             meth = meth, warn = warn, mess = mess, ppc = ppc)
   }
 
 
@@ -432,7 +432,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   if (is.null(imp_par_list)) {
     imp_par_list <- mapply(get_imp_par_list, meth, names(meth),
                            MoreArgs = list(Mlist$Xc, Mlist$Xcat, K_imp, dest_cols,
-                                           Mlist$refs, Mlist$trafos, trunc),
+                                           Mlist$refs, Mlist$trafos, trunc, Mlist$ppc),
                            SIMPLIFY = FALSE)
   }
 
@@ -515,7 +515,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                                           Zcols = ncol(Mlist$Z),
                                           Xc = Mlist$Xc, Xtrafo = Mlist$Xtrafo,
                                           Xcat = Mlist$Xcat,
-                                          imp_par_list = imp_par_list),
+                                          imp_par_list = imp_par_list,
+                                          ppc = ppc),
                                      monitor_params))
 
   mcmc <- if (n.iter > 0 & !inherits(adapt, 'try-error')) {
