@@ -843,7 +843,6 @@ glme_imp <- function(fixed, data, random, family,
 
 
 #' @rdname model_imp
-#' @aliases glmer_imp
 #' @export
 clmm_imp <- function(fixed, data, random,
                      n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
