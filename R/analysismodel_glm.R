@@ -51,7 +51,7 @@ glm_model <- function(family, link, Mlist, K, ...){
 
 
   paste_Xic <- if (length(Mlist$cols_main$Xic) > 0) {
-    paste0(" + \n", tab(12 + nchar(y_name)),
+    paste0(" + \n", tab(14 + nchar(y_name)),
            "inprod(Xic[j, ], beta[", K["Xic", 1],":", K["Xic", 2],"])", sep = "")
   }
 
@@ -63,11 +63,11 @@ glm_model <- function(family, link, Mlist, K, ...){
   }
 
 
-  paste0(tab(), "# ", capitalize(family), " model for ", y_name, "\n",
-         tab(), y_name, "[j] ~ ", distr(y_name), "\n",
+  paste0(tab(4), "# ", capitalize(family), " model for ", y_name, "\n",
+         tab(4), y_name, "[j] ~ ", distr(y_name), "\n",
          paste_ppc,
          repar,
-         tab(), linkfun(paste0("mu_", y_name, "[j]")),
+         tab(4), linkfun(paste0("mu_", y_name, "[j]")),
          " <- inprod(Xc[j, ], beta[", K['Xc', 1], ":", K['Xc', 2], "])",
          paste_Xic
   )
@@ -93,12 +93,12 @@ glm_priors <- function(family, K, Mlist, ...){
                      "Poisson" = NULL)
 
   paste_ppc <- if (Mlist$ppc) {
-    paste0('\n',
+    paste0('\n\n',
            tab(), '# Posterior predictive check for the model for ', y_name, '\n',
            tab(), 'ppc_', y_name, "_o <- pow(", y_name, "[] - mu_", y_name, "[], 2)", "\n",
            tab(), 'ppc_', y_name, "_e <- pow(", y_name, "_ppc[] - mu_", y_name, "[], 2)", "\n",
            tab(), 'ppc_', y_name, " <- mean(ifelse(ppc_", y_name, "_o > ppc_", y_name, "_e, 1, 0) + ",
-                                           "ifelse(ppc_", y_name, "_o == ppc_", y_name, "_e, 0.5, 0)) - 0.5", "\n"
+                                           "ifelse(ppc_", y_name, "_o == ppc_", y_name, "_e, 0.5, 0)) - 0.5"
     )
   }
 
