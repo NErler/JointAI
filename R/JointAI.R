@@ -129,6 +129,8 @@ utils::globalVariables(c("Var1", "Var2", "iteration", "value", "chain"))
 #'        This requires specification of the argument \code{idvar}.
 #' @param idvar name of the column that specifies the multi-level grouping structure
 #' @param keep_aux logical; Should constant effects of auxiliary variables be kept in the output?
+#' @param variable character string specifying the name of the variable to be plotted
+#' @param seed optional seed (integer)
 #'
 #' @name sharedParams
 NULL

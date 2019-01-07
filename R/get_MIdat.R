@@ -9,7 +9,6 @@
 #' @param m number of imputed datasets
 #' @param include should the original, incomplete data be included?
 #' @param minspace minimum number of iterations between iterations chosen as imputed values.
-#' @param seed optional seed
 #' @param export_to_SPSS logical; should the completed data be exported to SPSS?
 #' @param resdir optional directory for results (if unspecified and
 #'               \code{export_to_SPSS = TRUE} the current working directory is used)
