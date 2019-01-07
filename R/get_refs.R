@@ -1,7 +1,7 @@
 
 get_refs <- function(fmla, data, refcats = NULL) {
 
-  covars <- all.vars(fmla)[all.vars(fmla) != extract_outcome(fmla)]
+  covars <- all.vars(fmla)[!all.vars(fmla) %in% extract_outcome(fmla)]
   if (length(covars) > 0) {
 
     factors <- covars[sapply(data[, covars, drop = FALSE], is.factor)]
