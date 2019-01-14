@@ -55,10 +55,19 @@ lm_priors <- function(K, Mlist, ...){
     )
   }
 
+
+  if (Mlist$ridge) {
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main[k])", "\n",
+                    tab(4), "tau_reg_main[k] ~ dgamma(0.01, 0.01)", "\n")
+  } else {
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main)", "\n")
+  }
+
+
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
     tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
-    tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main)", "\n",
+    distr,
     tab(), "}", "\n",
     tab(), "tau_", y_name ," ~ dgamma(a_tau_main, b_tau_main)", "\n",
     tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")", "\n",

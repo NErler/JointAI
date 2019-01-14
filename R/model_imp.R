@@ -260,7 +260,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       modelname = NULL, modeldir = NULL,
                       overwrite = NULL, keep_model = FALSE,
                       quiet = TRUE, progress.bar = "text", warn = TRUE,
-                      mess = TRUE, ppc = TRUE,
+                      mess = TRUE, ppc = TRUE, ridge = FALSE,
                       auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                       scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                       MCMCpackage = "JAGS", analysis_type,
@@ -405,7 +405,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
                              random = random, auxvars = auxvars,
                              scale_vars = scale_vars, refcats = refcats,
-                             meth = meth, warn = warn, mess = mess, ppc = ppc)
+                             meth = meth, warn = warn, mess = mess, ppc = ppc,
+                             ridge = ridge)
   }
 
 
@@ -599,7 +600,8 @@ lm_imp <- function(formula, data,
                    quiet = TRUE, progress.bar = "text", warn = TRUE,
                    mess = TRUE,
                    auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-                   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+                   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                   ridge = FALSE, ...){
 
   if (missing(formula))
     stop("No model formula specified.")
@@ -641,7 +643,8 @@ glm_imp <- function(formula, family, data,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
                     auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                    ridge = FALSE, ...){
 
   if (missing(formula))
     stop("No model formula specified.")
@@ -700,14 +703,15 @@ glm_imp <- function(formula, family, data,
 #' @rdname model_imp
 #' @export
 clm_imp <- function(fixed, data, random,
-                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                     monitor_params = NULL, inits = TRUE,
-                     modelname = NULL, modeldir = NULL,
-                     overwrite = NULL, keep_model = FALSE,
-                     quiet = TRUE, progress.bar = "text", warn = TRUE,
-                     mess = TRUE,
-                     auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                    monitor_params = NULL, inits = TRUE,
+                    modelname = NULL, modeldir = NULL,
+                    overwrite = NULL, keep_model = FALSE,
+                    quiet = TRUE, progress.bar = "text", warn = TRUE,
+                    mess = TRUE,
+                    auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                    ridge = FALSE, ...){
 
   if (missing(fixed))
     stop("No fixed effects structure specified.")
@@ -747,7 +751,8 @@ lme_imp <- function(fixed, data, random,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
                     auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                    ridge = FALSE, ...){
 
   if (missing(fixed))
     stop("No fixed effects structure specified.")
@@ -790,7 +795,8 @@ glme_imp <- function(fixed, data, random, family,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
                     auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                    ridge = FALSE, ...){
 
   if (missing(fixed))
     stop("No fixed effects structure specified.")
@@ -852,7 +858,8 @@ clmm_imp <- function(fixed, data, random,
                      quiet = TRUE, progress.bar = "text", warn = TRUE,
                      mess = TRUE,
                      auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                     ridge = FALSE, ...){
 
   if (missing(fixed))
     stop("No fixed effects structure specified.")
@@ -895,7 +902,8 @@ survreg_imp <- function(formula, data,
                    quiet = TRUE, progress.bar = "text", warn = TRUE,
                    mess = TRUE,
                    auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-                   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+                   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                   ridge = FALSE, ...){
 
   if (missing(formula))
     stop("No model formula specified.")

@@ -34,7 +34,7 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, auxvars,
 
   # hyperparameters analysis model
   l$mu_reg_main <- defs$analysis_model["mu_reg_main"]
-  l$tau_reg_main <- defs$analysis_model["tau_reg_main"]
+  l$tau_reg_main <- if (!Mlist$ridge) defs$analysis_model["tau_reg_main"]
   if (family %in% c('gaussian', 'Gamma')) {
     l$a_tau_main <- defs$analysis_model["a_tau_main"]
     l$b_tau_main <- defs$analysis_model["b_tau_main"]

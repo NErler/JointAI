@@ -129,7 +129,7 @@ utils::globalVariables(c("Var1", "Var2", "iteration", "value", "chain"))
 #'        This requires specification of the argument \code{idvar}.
 #' @param idvar name of the column that specifies the multi-level grouping structure
 #' @param keep_aux logical; Should constant effects of auxiliary variables be kept in the output?
-#'
+#' @param ridge logical; should the parameters (of the main model) be penalized using ridge regression? Default is \code{FALSE}.
 #' @name sharedParams
 NULL
 

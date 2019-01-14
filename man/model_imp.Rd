@@ -17,7 +17,8 @@ lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
   auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...)
+  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+  ridge = FALSE, ...)
 
 glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
@@ -25,21 +26,23 @@ glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
   warn = TRUE, mess = TRUE, auxvars = NULL, meth = NULL,
   refcats = NULL, trunc = NULL, scale_vars = NULL,
-  scale_pars = NULL, hyperpars = NULL, ...)
+  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
 
 clm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
   auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...)
+  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+  ridge = FALSE, ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
   auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...)
+  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+  ridge = FALSE, ...)
 
 glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
@@ -47,7 +50,7 @@ glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
   warn = TRUE, mess = TRUE, auxvars = NULL, meth = NULL,
   refcats = NULL, trunc = NULL, scale_vars = NULL,
-  scale_pars = NULL, hyperpars = NULL, ...)
+  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
 
 clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
@@ -55,14 +58,15 @@ clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
   warn = TRUE, mess = TRUE, auxvars = NULL, meth = NULL,
   refcats = NULL, trunc = NULL, scale_vars = NULL,
-  scale_pars = NULL, hyperpars = NULL, ...)
+  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
 
 survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
   auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...)
+  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+  ridge = FALSE, ...)
 }
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
@@ -157,6 +161,8 @@ will be done.}
 \item{hyperpars}{list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
 only needs to be supplied if hyperparameters other than the
 default should be used}
+
+\item{ridge}{logical; should the parameters (of the main model) be penalized using ridge regression? Default is \code{FALSE}.}
 
 \item{...}{additional, optional arguments}
 

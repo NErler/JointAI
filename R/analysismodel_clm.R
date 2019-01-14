@@ -84,11 +84,19 @@ clm_priors <- function(Mlist, K, ...){
     )
   }
 
+  if (Mlist$ridge) {
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main[k])", "\n",
+                    tab(4), "tau_reg_main[k] ~ dgamma(0.01, 0.01)", "\n")
+  } else {
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main)", "\n")
+  }
+
+
   paste0(tab(), "# Priors for the coefficients in the analysis model", "\n",
          if (any(!is.na(K))) {
          paste0(
            tab(), "for (k in 1:", max(K, na.rm = T), ") {", "\n",
-           tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main)", "\n",
+           distr,
            tab(), "}", "\n\n")
          },
          paste(deltas, collapse = "\n"), "\n\n",
