@@ -11,7 +11,7 @@
 # @param trafos matrix of transformations
 # @export
 get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
-                             refs, trafos, trunc) {
+                             refs, trafos, trunc, ppc) {
 
   intercept = ifelse(impmeth %in% c("cumlogit"),
                      ifelse(min(dest_cols[[varname]]$Xc) > 2, F, T), T)
@@ -56,7 +56,8 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
        },
        trunc = trunc[[varname]],
        trafos = trafos,
-       par_name = "alpha")
+       par_name = "alpha",
+       ppc = ppc)
 }
 
 

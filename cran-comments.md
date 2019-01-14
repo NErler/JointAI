@@ -4,7 +4,7 @@
 
 ### Test environments
 * local Windows 7, R 3.5.1
-* ubuntu 14.04 (on travis-ci), R 3.4.4, R 3.5.1, devel
+* ubuntu 14.04.5 LTS (on travis-ci), R 3.4.4, R 3.5.1, devel
 * win-builder (devel and release)
 
 ### R CMD check results
@@ -12,8 +12,8 @@
 0 errors | 0 warnings | 1 note
 
 #### Note in win-builder R-oldrelease:
-Author field differs from that derived from Authors@R
-  Author:    'Nicole S. Erler [aut, cre] (<https://orcid.org/0000-0002-9370-6832>)'
+Author field differs from that derived from Authors@R\
+  Author:    'Nicole S. Erler [aut, cre] (<https://orcid.org/0000-0002-9370-6832>)'\
   Authors@R: 'Nicole S. Erler [aut, cre] (0000-0002-9370-6832)'
 
 

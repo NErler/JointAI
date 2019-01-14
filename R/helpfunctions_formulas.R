@@ -73,6 +73,8 @@ extract_fcts <- function(formula, data, complete = FALSE, ...) {
     })
 
     funlist <- funlist[!sapply(funlist, is.null)]
+    if (length(funlist) == 0)
+      return(NULL)
 
     # for each function, get all variables used in the expression
     varlist <- lapply(funlist, function(x1) {

@@ -79,10 +79,15 @@ glme_model <- function(family, link, Mlist, K, ...){
     )
   }
 
-
+  paste_ppc <- if (Mlist$ppc) {
+    paste0(
+      tab(4), y_name, "_ppc[j] ~ ", distr(y_name), "\n"
+    )
+  }
 
   paste0(tab(), "# Generalized linear mixed effects model for ", y_name, "\n",
          tab(), y_name, "[j] ~ ", distr(y_name), "\n",
+         paste_ppc,
          repar,
          tab(), linkfun(paste0("mu_", y_name, "[j]")), " <- inprod(Z[j, ], b[groups[j], ])",
          paste_Xl,
@@ -121,9 +126,20 @@ glme_priors <- function(family, K, Mlist, ...){
                      "Poisson" = NULL)
 
 
+  paste_ppc <- if (Mlist$ppc) {
+    paste0('\n',
+           tab(), '# Posterior predictive check for the model for ', y_name, '\n',
+           tab(), 'ppc_', y_name, "_o <- pow(", y_name, "[] - mu_", y_name, "[], 2)", "\n",
+           tab(), 'ppc_', y_name, "_e <- pow(", y_name, "_ppc[] - mu_", y_name, "[], 2)", "\n",
+           tab(), 'ppc_', y_name, " <- mean(ifelse(ppc_", y_name, "_o > ppc_", y_name, "_e, 1, 0) + ",
+           "ifelse(ppc_", y_name, "_o == ppc_", y_name, "_e, 0.5, 0)) - 0.5", "\n"
+    )
+  }
+
   paste0(c(ranef_priors(Mlist$Z),
            secndpar,
-           glmereg_priors(K)), collapse = "\n\n")
+           glmereg_priors(K),
+           paste_ppc), collapse = "\n\n")
 }
 
 

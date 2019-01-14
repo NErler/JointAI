@@ -13,7 +13,7 @@
 
 divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars = NULL,
                             scale_vars = NULL, refcats = NULL, meth, warn = TRUE,
-                            mess = TRUE, ...) {
+                            mess = TRUE, ppc = TRUE, ...) {
 
   # general design matrix ------------------------------------------------------
 
@@ -250,7 +250,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
 
   XXnam <- colnames(model.matrix(fixed, data))
-  if (analysis_type %in% c('clmm', 'coxph'))
+  if (analysis_type %in% c('clm', 'clmm', 'coxph'))
     XXnam <- XXnam[-1]
 
   cols_main <- list(Xc = c(na.omit(match(XXnam, colnames(Xc)))),
@@ -270,5 +270,5 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
               trafos = trafos, hc_list = hc_list, refs = refs,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars,
               fixed2 = fixed2, names_main = names_main, ncat = ncat,
-              N = N))
+              N = N, ppc = ppc))
 }

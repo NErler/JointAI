@@ -260,7 +260,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       modelname = NULL, modeldir = NULL,
                       overwrite = NULL, keep_model = FALSE,
                       quiet = TRUE, progress.bar = "text", warn = TRUE,
-                      mess = TRUE,
+                      mess = TRUE, ppc = TRUE,
                       auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                       scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                       MCMCpackage = "JAGS", analysis_type,
@@ -405,7 +405,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
                              random = random, auxvars = auxvars,
                              scale_vars = scale_vars, refcats = refcats,
-                             meth = meth, warn = warn, mess = mess)
+                             meth = meth, warn = warn, mess = mess, ppc = ppc)
   }
 
 
@@ -432,7 +432,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   if (is.null(imp_par_list)) {
     imp_par_list <- mapply(get_imp_par_list, meth, names(meth),
                            MoreArgs = list(Mlist$Xc, Mlist$Xcat, K_imp, dest_cols,
-                                           Mlist$refs, Mlist$trafos, trunc),
+                                           Mlist$refs, Mlist$trafos, trunc, Mlist$ppc),
                            SIMPLIFY = FALSE)
   }
 
@@ -515,7 +515,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                                           Zcols = ncol(Mlist$Z),
                                           Xc = Mlist$Xc, Xtrafo = Mlist$Xtrafo,
                                           Xcat = Mlist$Xcat,
-                                          imp_par_list = imp_par_list),
+                                          imp_par_list = imp_par_list,
+                                          ppc = ppc),
                                      monitor_params))
 
   mcmc <- if (n.iter > 0 & !inherits(adapt, 'try-error')) {
@@ -696,6 +697,45 @@ glm_imp <- function(formula, family, data,
 }
 
 
+#' @rdname model_imp
+#' @export
+clm_imp <- function(fixed, data, random,
+                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                     monitor_params = NULL, inits = TRUE,
+                     modelname = NULL, modeldir = NULL,
+                     overwrite = NULL, keep_model = FALSE,
+                     quiet = TRUE, progress.bar = "text", warn = TRUE,
+                     mess = TRUE,
+                     auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
+
+  if (missing(fixed))
+    stop("No fixed effects structure specified.")
+  if (missing(data))
+    stop("No dataset given.")
+
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$analysis_type <- "clm"
+  arglist$family <- "ordinal"
+  arglist$link <- "logit"
+
+
+  thiscall <- as.list(match.call())[-1L]
+  thiscall <- lapply(thiscall, function(x) {
+    if (is.language(x)) eval(x) else x
+  })
+
+  arglist <- c(thecall = match.call(),
+               arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+
+  return(res)
+}
+
 
 #' @rdname model_imp
 #' @export
@@ -803,7 +843,6 @@ glme_imp <- function(fixed, data, random, family,
 
 
 #' @rdname model_imp
-#' @aliases glmer_imp
 #' @export
 clmm_imp <- function(fixed, data, random,
                      n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
