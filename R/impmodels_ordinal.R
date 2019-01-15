@@ -5,17 +5,13 @@
 # @param par_elmts elements of the parameter vector to be used
 # @param par_name name of the parameter
 # @export
-impmodel_cumlogit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, dummy_cols, ncat, refcat, ...){
-
-  if (length(Xc_cols) != length(par_elmts)) {
-    stop("The size of the design matrix and length of parameter vector do not match!")
-  }
+impmodel_cumlogit <- function(varname, dest_col, Xc_cols, par_elmts, dummy_cols, ncat, refcat, ...){
 
   indent <- nchar(varname) + 15
 
-  predictor <-  paste_predictor(parnam = par_name, parindex = 'i', matnam = 'Xc',
-                  parelmts = par_elmts,
-                  cols = Xc_cols, indent = indent)
+  predictor <-  paste_predictor(parnam = 'alpha', parindex = 'i', matnam = 'Xc',
+                                parelmts = par_elmts["Xc", 1]:par_elmts["Xc", 2],
+                                cols = Xc_cols, indent = indent)
 
   probs <- sapply(2:(ncat - 1), function(k){
     paste0(tab(4), "p_", varname, "[i, ", k, "] <- max(1e-7, min(1-1e-10, psum_",

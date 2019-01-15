@@ -5,7 +5,7 @@
 # @param par_elmts elements of the parameter vector to be used
 # @param par_name name of the parameter
 # @export
-impmodel_logit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, ppc, ...){
+impmodel_logit <- function(varname, dest_col, Xc_cols, par_elmts, ppc, ...){
 
   indent <- nchar(varname) + 21
   predictor <-  paste_predictor(parnam = 'alpha', parindex = 'i', matnam = 'Xc',
