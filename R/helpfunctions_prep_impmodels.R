@@ -10,11 +10,34 @@
 # @param refs list of reference values
 # @param trafos matrix of transformations
 # @export
-get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
-                             refs, trafos, trunc, ppc) {
+get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc) {
 
-  intercept = ifelse(impmeth %in% c("cumlogit"),
+  intercept = ifelse(impmeth %in% c("cumlogit", "clmm"),
                      ifelse(min(dest_cols[[varname]]$Xc) > 2, F, T), T)
+
+  Xc_cols = if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
+    (1 + (!intercept)):ncol(Mlist$Xc)
+  } else {
+    (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1)
+  }
+  Xl_cols = if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
+    if (min(dest_cols[[varname]]$Xl, na.rm = TRUE) > 1)
+      1:(min(dest_cols[[varname]]$Xl, na.rm = TRUE) - 1)
+  }
+
+  par_elmts <- if (impmeth == "multilogit") {
+    sapply(names(dest_cols[[varname]]$Xc), function(i) {
+      matrix(nrow = 1, ncol = 2, data = c(K_imp[i, 1], K_imp[i, 2]),
+             byrow = T, dimnames = list('Xc', c('start', 'end')))
+    }, simplify = FALSE)
+  } else {
+    K_imp_x <- matrix(nrow = 2, ncol = 2,
+                      dimnames = list(c('Xc', 'Xl'), c('start', 'end')))
+    K_imp_x['Xc', ] <- K_imp[varname, 1] + c(1, length(Xc_cols)) - 1
+    if (K_imp_x['Xc', 2] < K_imp[varname, 2])
+      K_imp_x['Xl', ] <- K_imp_x['Xc', 2] + c(1, length(Xl_cols))
+    K_imp_x
+  }
 
   list(varname = varname,
        impmeth = impmeth,
@@ -23,22 +46,23 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
          "Xcat"
        } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          "Xtrafo"
-       } else {"Xc"},
+       } else if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson')) {
+         "Xl"
+       } else if (impmeth %in% c('clmm')) {
+         "Xlcat"
+       } else{"Xc"},
        dest_col = if (impmeth %in% c("multilogit", "cumlogit")) {
          dest_cols[[varname]]$Xcat
        } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          dest_cols[[varname]]$Xtrafo
+       } else if (impmeth %in% c("lmm", "glmm_logit", "glmm_gamma", "glmm_poisson", "clmm")) {
+         dest_cols[[varname]]$Xl
        } else {
          dest_cols[[varname]]$Xc
        },
-       par_elmts = if (impmeth == "multilogit") {
-         sapply(names(dest_cols[[varname]]$Xc), function(i) {
-           K_imp[i, 1]:K_imp[i, 2]
-         }, simplify = FALSE)
-       } else {
-         K_imp[varname, 1]:K_imp[varname, 2]
-       },
-       Xc_cols = (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1),
+       par_elmts = par_elmts,
+       Xc_cols = Xc_cols,
+       Xl_cols = Xl_cols,
        dummy_cols = if (impmeth %in% c("cumlogit", "multilogit")) {
          dest_cols[[varname]]$Xc
        },
@@ -46,7 +70,7 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
          length(dest_cols[[varname]]$Xc) + 1
        },
        refcat = if (impmeth %in% c("logit", "cumlogit", "multilogit")) {
-         which(refs[[varname]] == levels(refs[[varname]]))
+         which(Mlist$refs[[varname]] == levels(Mlist$refs[[varname]]))
        },
        trafo_cols = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          dest_cols[[varname]]$Xc
@@ -55,9 +79,13 @@ get_imp_par_list <- function(impmeth, varname, Xc, Xcat, K_imp, dest_cols,
          sapply(which(trafos$var == varname & !trafos$dupl), get_trafo, trafos, dest_cols)
        },
        trunc = trunc[[varname]],
-       trafos = trafos,
-       par_name = "alpha",
-       ppc = ppc)
+       trafos = Mlist$trafos,
+       # par_name = "alpha",
+       ppc = Mlist$ppc,
+       nranef = ncol(Mlist$Z),
+       N = Mlist$N,
+       Ntot = nrow(Mlist$Xl)
+  )
 }
 
 
