@@ -61,23 +61,23 @@ get_imp_pos <- function(models, Mlist){
   }
 
   # positions of the interaction variables in the longitudinal matrix Xil
-  if (!is.null(Xil)) {
-    spl.names.Xil <- strsplit(colnames(Xil), split = "[:|*]")
+  if (!is.null(Mlist$Xil)) {
+    spl.names.Xil <- strsplit(colnames(Mlist$Xil), split = "[:|*]")
 
     pos_Xil <- lapply(spl.names.Xil, sapply, function(i) {
-      na.omit(sapply(list(colnames(Xc),
-                          colnames(Xl),
-                          colnames(Z)), match, x = i))
+      na.omit(sapply(list(colnames(Mlist$Xc),
+                          colnames(Mlist$Xl),
+                          colnames(Mlist$Z)), match, x = i))
     })
-    names(pos_Xil) <- colnames(Xil)
+    names(pos_Xil) <- colnames(Mlist$Xil)
   } else {
     pos_Xil <- NULL
   }
 
     return(list(pos_Xc = pos_Xc,
+                pos_Xl = pos_Xl,
                 pos_Xic = pos_Xic,
-                pos_Xil = pos_Xil,
-                cat_pos = NULL))
+                pos_Xil = pos_Xil))
 }
 
 
