@@ -47,15 +47,15 @@ get_imp_pos <- function(models, Mlist){
     } else {
       x
     }
-    setNames(match(make.names(nams), make.names(colnames(Xc))), nams)
+    setNames(match(make.names(nams), make.names(colnames(Mlist$Xc))), nams)
   }, simplify = FALSE)
   # pos_Xc <- sapply(names(meth), match_positions, DF, colnames(Xc), simplify = FALSE)
 
   # positions of the interaction variables in the cross-sectional matrix Xic
-  if (!is.null(Xic)) {
-    spl.names.Xic <- strsplit(colnames(Xic), split = "[:|*]")
-    pos_Xic <- lapply(spl.names.Xic, sapply, match, colnames(Xc))
-    names(pos_Xic) <- colnames(Xic)
+  if (!is.null(Mlist$Xic)) {
+    spl.names.Xic <- strsplit(colnames(Mlist$Xic), split = "[:|*]")
+    pos_Xic <- lapply(spl.names.Xic, sapply, match, colnames(Mlist$Xc))
+    names(pos_Xic) <- colnames(Mlist$Xic)
   } else {
     pos_Xic <- NULL
   }
