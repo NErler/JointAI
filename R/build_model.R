@@ -16,7 +16,7 @@
 # component of the analysis model
 # @param imp_par_list output from get_imp_par_list
 # @export
-build_JAGS <- function(analysis_type, family = NULL, link = NULL, meth = NULL,
+build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
                        Ntot, Mlist = NULL, K, imp_par_list, ...) {
   arglist <- as.list(match.call())[-1]
 

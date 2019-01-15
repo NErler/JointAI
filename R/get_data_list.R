@@ -1,12 +1,12 @@
 # Create list of data passed to JAGS
 # @param analysis_type analysis model type
-# @param meth vector of imputation methods
+# @param models vector of imputation modelsods
 # @param Mlist list of data matrices etc.
 # @export
-get_data_list <- function(analysis_type, family, link, meth, Mlist, auxvars,
+get_data_list <- function(analysis_type, family, link, models, Mlist, auxvars,
                           scale_pars = NULL, hyperpars = NULL, data) {
 
-  scaled <- get_scaling(Mlist, scale_pars, meth, data)
+  scaled <- get_scaling(Mlist, scale_pars, models, data)
   if (is.null(hyperpars)) {
     defs <- default_hyperpars(family, link, ncol(Mlist$Z))
   } else {
@@ -98,45 +98,45 @@ get_data_list <- function(analysis_type, family, link, meth, Mlist, auxvars,
   }
 
   # hyperparameters imputation models
-  if (any(meth %in% c("norm"))) {
+  if (any(models %in% c("norm"))) {
     l$mu_reg_norm <- defs$norm["mu_reg_norm"]
     l$tau_reg_norm <- defs$norm["tau_reg_norm"]
     l$a_tau_norm <- defs$norm["a_tau_norm"]
     l$b_tau_norm <- defs$norm["b_tau_norm"]
   }
 
-  if (any(meth %in% c("lognorm"))) {
+  if (any(models %in% c("lognorm"))) {
     l$mu_reg_lognorm <- defs$norm["mu_reg_norm"]
     l$tau_reg_lognorm <- defs$norm["tau_reg_norm"]
     l$a_tau_lognorm <- defs$norm["a_tau_norm"]
     l$b_tau_lognorm <- defs$norm["b_tau_norm"]
   }
 
-  if (any(meth %in% c("gamma"))) {
+  if (any(models %in% c("gamma"))) {
     l$mu_reg_gamma <- defs$gamma["mu_reg_gamma"]
     l$tau_reg_gamma <- defs$gamma["tau_reg_gamma"]
     l$a_tau_gamma <- defs$gamma["a_tau_gamma"]
     l$b_tau_gamma <- defs$gamma["b_tau_gamma"]
   }
 
-  if (any(meth %in% c("beta"))) {
+  if (any(models %in% c("beta"))) {
     l$mu_reg_beta <- defs$beta["mu_reg_beta"]
     l$tau_reg_beta <- defs$beta["tau_reg_beta"]
     l$a_tau_beta <- defs$beta["a_tau_beta"]
     l$b_tau_beta <- defs$beta["b_tau_beta"]
   }
 
-  if (any(meth == "logit")) {
+  if (any(models == "logit")) {
     l$mu_reg_logit <- defs$logit["mu_reg_logit"]
     l$tau_reg_logit <- defs$logit["tau_reg_logit"]
   }
 
-  if (any(meth == "multilogit")) {
+  if (any(models == "multilogit")) {
     l$mu_reg_multinomial <- defs$multinomial["mu_reg_multinomial"]
     l$tau_reg_multinomial <- defs$multinomial["tau_reg_multinomial"]
   }
 
-  if (any(meth == "cumlogit")) {
+  if (any(models == "cumlogit")) {
     l$mu_reg_ordinal <- defs$ordinal["mu_reg_ordinal"]
     l$tau_reg_ordinal <- defs$ordinal["tau_reg_ordinal"]
     l$mu_delta_ordinal <- defs$ordinal["mu_delta_ordinal"]

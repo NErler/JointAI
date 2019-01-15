@@ -44,12 +44,16 @@
 #' @param auxvars optional vector of variable names that should be used as
 #'                predictors in the imputation procedure (and will be imputed
 #'                if necessary) but are not part of the analysis model
-#' @param meth optional named vector specifying imputation model types and order.
-#'             If \code{NULL} (default) imputation models will be determined
-#'             automatically based on the class of the columns of \code{data}
-#'             that contain missing values (see Details).
-#'             The default order is according to the proportion of missing
-#'             values (increasing).
+#' @param models optional named vector specifying the order and types of the
+#'               models for incomplete covariates and longitudinal covariates.
+#'               If \code{NULL} (default) models will be determined
+#'             automatically based on the class of the respective columns of \code{data}
+#'             (see Details).
+#'             The default order is incomplete baseline covariates, complete
+#'             longitudinal covariates, incomplete longitudinal covariates,
+#'             and within each group variables are ordered according to the
+#'             proportion of missing values (increasing).
+#' @param meth no longer used; use \code{model} instead.
 #' @param refcats optional; a named list specifying which category should be
 #'                used as reference category for each of the categorical variables.
 #'                Options are the category label, the category number,
@@ -373,29 +377,32 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   # imputation method ----------------------------------------------------------
-  meth_default <- get_imp_meth(fixed = fixed, random = random, data = data,
-                               auxvars = auxvars)
+  models_default <- get_models(fixed = fixed, random = random, data = data,
+                               auxvars = auxvars)$models
 
-  if (is.null(meth)) {
-    meth <- meth_default
-    meth_user <- NULL
+  if (is.null(models) & !is.null(meth))
+    models <- meth
+
+  if (is.null(models)) {
+    models <- models_default
+    models_user <- NULL
   } else {
-    meth_user <- meth
-    if (!setequal(names(meth_user), names(meth_default))) {
-      meth <- meth_default
-      meth[names(meth_user)] <- meth_user
-      meth
+    models_user <- models
+    if (!setequal(names(models_user), names(models_default))) {
+      models <- models_default
+      models[names(models_user)] <- models_user
+      models
     }
   }
 
   # warning if JointAI set imputation method for a continuous variable with only
   # two different values to "logit"
-  for (k in names(meth)[meth == 'logit']) {
-    if (is.numeric(data[, k]) & !k %in% names(meth_user) & warn) {
+  for (k in names(models)[models == 'logit']) {
+    if (is.numeric(data[, k]) & !k %in% names(models_user) & warn) {
       data[, k] <- factor(data[, k])
       warning(
-        gettextf("\nThe variable %s is coded as continuous but has only two different values. I will consider it binary.\nTo overwrite this behavior, specify a different imputation method for %s using the argument %s.",
-                 dQuote(k), dQuote(k), dQuote("meth")),
+        gettextf("\nThe variable %s is coded as continuous but has only two different values. I will consider it binary.\nTo overwrite this behavior, specify a different imputation modelsod for %s using the argument %s.",
+                 dQuote(k), dQuote(k), dQuote("models")),
         call. = FALSE, immediate. = TRUE)
     }
   }
@@ -405,7 +412,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
                              random = random, auxvars = auxvars,
                              scale_vars = scale_vars, refcats = refcats,
-                             meth = meth, warn = warn, mess = mess, ppc = ppc,
+                             models = models, warn = warn, mess = mess, ppc = ppc,
                              ridge = ridge)
   }
 
@@ -416,29 +423,26 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   if (is.null(imp_pos)) {
     # position of the variables to be imputed in Xc, Xic, Xl, Xil, Xcat
-    imp_pos <- get_imp_pos(meth, Mlist)
+    imp_pos <- get_imp_pos(models, Mlist)
   }
 
   if (is.null(K_imp)) {
-    K_imp <- get_imp_dim(meth, imp_pos$pos_Xc)
+    K_imp <- get_imp_dim(models, imp_pos, Mlist)
   }
 
   if (is.null(dest_cols)) {
-    dest_cols <- sapply(unique(c(names(meth), colnames(Mlist$Xtrafo))),
-                        get_dest_column, Mlist$refs,
-                        colnames(Mlist$Xc), colnames(Mlist$Xcat),
-                        colnames(Mlist$Xtrafo), Mlist$trafos, simplify = FALSE)
+    dest_cols <- sapply(unique(c(names(models), colnames(Mlist$Xtrafo))),
+                        get_dest_column, Mlist = Mlist, simplify = FALSE)
   }
 
   if (is.null(imp_par_list)) {
-    imp_par_list <- mapply(get_imp_par_list, meth, names(meth),
-                           MoreArgs = list(Mlist$Xc, Mlist$Xcat, K_imp, dest_cols,
-                                           Mlist$refs, Mlist$trafos, trunc, Mlist$ppc),
+    imp_par_list <- mapply(get_imp_par_list, models, names(models),
+                           MoreArgs = list(Mlist, K_imp, dest_cols, trunc),
                            SIMPLIFY = FALSE)
   }
 
   if (is.null(data_list)) {
-    data_list <- try(get_data_list(analysis_type, family, link, meth, Mlist, auxvars,
+    data_list <- try(get_data_list(analysis_type, family, link, models, Mlist, auxvars,
                                    scale_pars = scale_pars, hyperpars = hyperpars,
                                    data = data))
     scale_pars <- data_list$scale_pars
@@ -475,7 +479,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
            length(data_list[[names(Mlist$y)]]))
 
     write_model(analysis_type = analysis_type, family = family,
-                link = link, meth = meth,
+                link = link, models = models,
                 Ntot = Ntot, Mlist = Mlist, K = K,
                 imp_par_list = imp_par_list,
                 file = modelfile)
@@ -485,7 +489,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   if (is.logical(inits)) {
     inits <- if (inits)
       replicate(n.chains,
-                get_inits.default(meth = meth, Mlist = Mlist, K = K, K_imp = K_imp,
+                get_inits.default(models = models, Mlist = Mlist, K = K, K_imp = K_imp,
                        analysis_type = analysis_type, family = family, link = link), simplify = FALSE
       )
   }
@@ -510,7 +514,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
       if (mess)
         message('Note: Main model parameter were added to the list of parameters to follow.')
     }}
-  var.names <- do.call(get_params, c(list(meth = meth, analysis_type = analysis_type,
+  var.names <- do.call(get_params, c(list(models = models, analysis_type = analysis_type,
                                           family = family,
                                           y_name = colnames(Mlist$y),
                                           Zcols = ncol(Mlist$Z),
@@ -569,7 +573,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   return(structure(
     list(analysis_type = analysis_type,
-         data = data, meth = meth, fixed = fixed, random = random,
+         data = data, models = models, fixed = fixed, random = random,
          Mlist = Mlist,
          K = K,
          K_imp = K_imp,
@@ -599,7 +603,7 @@ lm_imp <- function(formula, data,
                    overwrite = NULL, keep_model = FALSE,
                    quiet = TRUE, progress.bar = "text", warn = TRUE,
                    mess = TRUE,
-                   auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                   auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                    ridge = FALSE, ...){
 
@@ -642,7 +646,7 @@ glm_imp <- function(formula, family, data,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                    auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     ridge = FALSE, ...){
 
@@ -709,7 +713,7 @@ clm_imp <- function(fixed, data, random,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                    auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     ridge = FALSE, ...){
 
@@ -750,7 +754,7 @@ lme_imp <- function(fixed, data, random,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                    auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     ridge = FALSE, ...){
 
@@ -794,7 +798,7 @@ glme_imp <- function(fixed, data, random, family,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                    auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     ridge = FALSE, ...){
 
@@ -857,7 +861,7 @@ clmm_imp <- function(fixed, data, random,
                      overwrite = NULL, keep_model = FALSE,
                      quiet = TRUE, progress.bar = "text", warn = TRUE,
                      mess = TRUE,
-                     auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                     auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
                      scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                      ridge = FALSE, ...){
 
@@ -901,7 +905,7 @@ survreg_imp <- function(formula, data,
                    overwrite = NULL, keep_model = FALSE,
                    quiet = TRUE, progress.bar = "text", warn = TRUE,
                    mess = TRUE,
-                   auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                   auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                    ridge = FALSE, ...){
 
@@ -944,7 +948,7 @@ survreg_imp <- function(formula, data,
 #                      overwrite = NULL, keep_model = FALSE,
 #                      quiet = TRUE, progress.bar = "text", warn = TRUE,
 #                      mess = TRUE,
-#                      auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+#                      auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
 #                      scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
 #
 #   if (missing(formula))

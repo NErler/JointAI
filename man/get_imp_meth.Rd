@@ -2,9 +2,12 @@
 % Please edit documentation in R/get_imp_method.R
 \name{get_imp_meth}
 \alias{get_imp_meth}
+\alias{get_models}
 \title{Find default imputation methods and order}
 \usage{
 get_imp_meth(fixed, random = NULL, data, auxvars = NULL)
+
+get_models(fixed, random = NULL, data, auxvars = NULL)
 }
 \arguments{
 \item{fixed}{a two sided formula describing the fixed-effects part of the

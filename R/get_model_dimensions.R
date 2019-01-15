@@ -29,28 +29,21 @@ get_model_dim <- function(cols_main, hc_list){
 
 
 # Determine positions of incomplete variables in the data matrices
-# @param meth named vector specifying the imputation methods and ordering of
+# @param models named vector specifying the imputation modelsods and ordering of
 #        the imputation models
 # @param Mlist a named list with the entries "Xc", "Xic", "Xl", "Xil", "Z"
 # @return a list?
 # @export
-get_imp_pos <- function(meth, Mlist){
-  if (is.null(meth)) return(NULL)
+get_imp_pos <- function(models, Mlist){
 
-  refs <- Mlist$refs
-  trafos <- Mlist$trafos
-  Xc <- Mlist$Xc
-  Xic <- Mlist$Xic
-  Xl <- Mlist$Xl
-  Xil <- Mlist$Xil
-  Z <- Mlist$Z
+  if (is.null(models)) return(NULL)
 
   # positions of the variables in the cross-sectional data matrix Xc
-  pos_Xc <- sapply(names(meth), function(x) {
-    nams <- if (x %in% names(refs)) {
-      paste0(x, levels(refs[[x]])[levels(refs[[x]]) != refs[[x]]])
-    } else if (x %in% trafos$var) {
-      trafos$X_var[trafos$var == x]
+  pos_Xc <- sapply(names(models), function(x) {
+    nams <- if (x %in% names(Mlist$refs)) {
+      paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) != Mlist$refs[[x]]])
+    } else if (x %in% Mlist$trafos$var) {
+      Mlist$trafos$X_var[Mlist$trafos$var == x]
     } else {
       x
     }
@@ -89,29 +82,43 @@ get_imp_pos <- function(meth, Mlist){
 
 
 # Determine number of parameters in the imputation models
-# @param meth named vector specifying the imputation methods and ordering of
+# @param models named vector specifying the imputation modelsods and ordering of
 #        the imputation models
 # @param pos_Xc a list containing the positions of the incomplete variables in Xc
 # @return a matrix specifying the range of regression coefficients per
 #         imputation model
 # @export
-get_imp_dim <- function(meth, pos_Xc){
-  if (is.null(meth)) return(NULL)
+get_imp_dim <- function(models, imp_pos, Mlist){
+  if (is.null(models)) return(NULL)
 
   # number of regression coefficients in the imputation models
-  n_imp_coef <- numeric(length(meth))
-  names(n_imp_coef) <- names(meth)
+  n_imp_coef <- numeric(length(models))
+  names(n_imp_coef) <- names(models)
 
-  for (i in 1:length(meth)) {
-    n_imp_coef[names(meth)[i]] <-
-      max(1, min(pos_Xc[[names(meth)[i]]]) - 1 - as.numeric(meth[i] == "cumlogit"))
-    if (meth[i] == "multilogit") {
+  for (i in 1:length(models)) {
+    if (models[i] %in% c('norm', 'lognorm', 'logit', 'gamma', 'beta', 'multilogit')) {
+      n_imp_coef[names(models)[i]] <- max(1, min(imp_pos$pos_Xc[[names(models)[i]]]) - 1)
+    }
+
+    if (models[i] == 'cumlogit') {
+      n_imp_coef[names(models)[i]] <- max(1, min(imp_pos$pos_Xc[[names(models)[i]]]) - 2)
+    }
+
+    if (models[i] == "multilogit") {
       n_imp_coef <- append(x = n_imp_coef,
-                           values = rep(n_imp_coef[names(meth)[i]],
-                                        length(pos_Xc[[names(meth)[i]]]) - 1),
-                           after = which(names(n_imp_coef) == names(meth)[i]))
-      names(n_imp_coef)[which(names(n_imp_coef) == names(meth[i]))] <-
-        names(pos_Xc[[i]])
+                           values = rep(n_imp_coef[names(models)[i]],
+                                        length(imp_pos$pos_Xc[[names(models)[i]]]) - 1),
+                           after = which(names(n_imp_coef) == names(models)[i]))
+      names(n_imp_coef)[which(names(n_imp_coef) == names(models[i]))] <-
+        names(imp_pos$pos_Xc[[i]])
+    }
+
+    if (models[i] %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson')) {
+      n_imp_coef[names(models)[i]] <- max(1, ncol(Mlist$Xc) + min(imp_pos$pos_Xl[[names(models)[i]]]) - 1)
+    }
+
+    if (models[i] %in% c('clmm')) {
+      n_imp_coef[names(models)[i]] <- max(1, ncol(Mlist$Xc) + min(imp_pos$pos_Xl[[names(models)[i]]]) - 2)
     }
   }
 

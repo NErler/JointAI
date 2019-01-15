@@ -12,7 +12,7 @@
 # @export
 
 divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars = NULL,
-                            scale_vars = NULL, refcats = NULL, meth, warn = TRUE,
+                            scale_vars = NULL, refcats = NULL, models, warn = TRUE,
                             mess = TRUE, ppc = TRUE, ridge = FALSE, ...) {
 
   # general design matrix ------------------------------------------------------
@@ -150,14 +150,14 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   # re-order columns in Xc -----------------------------------------------------
   colnams = colnames(Xc)
   # names that need replacement
-  repl <- meth[!names(meth) %in% colnams & names(meth) %in% trafos$var]
+  repl <- models[!names(models) %in% colnams & names(models) %in% trafos$var]
   colnams[colnams == trafos$X_var[trafos$var == names(repl)]] <-
     trafos$var[trafos$var == names(repl)]
 
   Xc_seq <- c(which(colSums(is.na(Xc)) == 0 &
                       (!gsub("[[:digit:]]*$", "", colnames(Xc)) %in% fcts$X_var |
                          colnames(Xc) %in% auxvars)),
-              unlist(lapply(names(meth), match_positions, data, colnams))
+              unlist(lapply(names(models), match_positions, data, colnams))
   )
 
   Xc_seq <- c(Xc_seq, which(!1:ncol(Xc) %in% Xc_seq))

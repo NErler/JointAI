@@ -53,31 +53,31 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
     stop("Use only with 'JointAI' objects.\n")
 
 
-  for (i in seq_along(object$meth)) {
+  for (i in seq_along(object$models)) {
     pv <- if (predvars)
       paste0("* Predictor variables: \n",
              tab(), add_breaks(paste(colnames(object$data_list$Xc)[
-               object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+               object$imp_par_list[[names(object$models[i])]]$Xc_cols],
                collapse = ", ")), "\n")
 
     if (i > 1) cat("\n")
-    if (object$meth[i] %in% c("norm", "lognorm")) {
-      type <- switch(object$meth[i],
+    if (object$models[i] %in% c("norm", "lognorm")) {
+      type <- switch(object$models[i],
                      norm = list(lab = 'norm', name = "Normal"),
                      lognorm = list(lab = 'lognorm', name = "Log-normal"))
 
-      cat(paste0(type$name, " imputation model for '", names(object$meth)[i], "'\n"))
+      cat(paste0(type$name, " imputation model for '", names(object$models)[i], "'\n"))
       if (predvars)
         cat(pv)
         # cat(paste0("* Predictor variables: \n",
         #            tab(), paste(colnames(object$data_list$Xc)[
-        #              object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+        #              object$imp_par_list[[names(object$models[i])]]$Xc_cols],
         #              collapse = ", "), "\n"))
       if (regcoef)
         cat(paste0("* Regression coefficients: \n",
                    tab(), "alpha[",
-                   print_seq(object$K_imp[names(object$meth)[i], "start"],
-                             object$K_imp[names(object$meth)[i], "end"]),
+                   print_seq(object$K_imp[names(object$models)[i], "start"],
+                             object$K_imp[names(object$models)[i], "end"]),
                    "] ",
                    if (priors) {
                      paste0("(normal prior(s) with mean ",
@@ -86,8 +86,8 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
                             object$data_list[[paste0("tau_reg_", type$lab)]], ")")
                    }, "\n"))
       if (otherpars)
-        cat(paste0("* Pecision of '", names(object$meth)[i], "':\n",
-                   tab(), "tau_", names(object$meth)[i], " ",
+        cat(paste0("* Pecision of '", names(object$models)[i], "':\n",
+                   tab(), "tau_", names(object$models)[i], " ",
                    if (priors) {
                      paste0("(Gamma prior with scale parameter ",
                             object$data_list[[paste0("a_tau_", type$lab)]], " and rate parameter ",
@@ -96,32 +96,32 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
     }
 
     # Gamma imputation model ----------------------------------------------------
-    if (object$meth[i] %in% c("gamma")) {
-      cat(paste0("Gamma imputation model for '", names(object$meth)[i], "'\n"))
+    if (object$models[i] %in% c("gamma")) {
+      cat(paste0("Gamma imputation model for '", names(object$models)[i], "'\n"))
       cat(paste0("* Parametrization:\n",
-                 tab(), "- shape: shape_", names(object$meth)[i],
-                 " = mu_", names(object$meth)[i], "^2 * tau_", names(object$meth)[i], "\n",
-                 tab(), "- rate: rate_", names(object$meth)[i],
-                 " = mu_", names(object$meth)[i], " * tau_", names(object$meth)[i], "\n"))
+                 tab(), "- shape: shape_", names(object$models)[i],
+                 " = mu_", names(object$models)[i], "^2 * tau_", names(object$models)[i], "\n",
+                 tab(), "- rate: rate_", names(object$models)[i],
+                 " = mu_", names(object$models)[i], " * tau_", names(object$models)[i], "\n"))
       if (predvars)
         cat(pv)
         # cat(paste0("* Predictor variables: \n",
         #          tab(), paste(colnames(object$data_list$Xc)[
-        #            object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+        #            object$imp_par_list[[names(object$models[i])]]$Xc_cols],
         #            collapse = ", "), "\n"))
       if (regcoef)
         cat(paste0("* Regression coefficients: \n",
                    tab(), "alpha[",
-                   print_seq(object$K_imp[names(object$meth)[i], "start"],
-                             object$K_imp[names(object$meth)[i], "end"]),
+                   print_seq(object$K_imp[names(object$models)[i], "start"],
+                             object$K_imp[names(object$models)[i], "end"]),
                    "] ",
                    if (priors) {
                      paste0("(normal prior(s) with mean ", object$data_list$mu_reg_gamma,
                    " and precision ", object$data_list$tau_reg_gamma, ")")
                    }, "\n"))
       if (otherpars)
-        cat(paste0("* Pecision of '", names(object$meth)[i], "':\n",
-                   tab(), "tau_", names(object$meth)[i], " ",
+        cat(paste0("* Pecision of '", names(object$models)[i], "':\n",
+                   tab(), "tau_", names(object$models)[i], " ",
                    if (priors) {
                      paste0("(Gamma prior with scale parameter ",
                          object$data_list$a_tau_gamma, " and rate parameter ",
@@ -130,31 +130,31 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
     }
 
     # beta imputation model ----------------------------------------------------
-    if (object$meth[i] %in% c("beta")) {
-      cat(paste0("Beta imputation model for '", names(object$meth)[i], "'\n"))
+    if (object$models[i] %in% c("beta")) {
+      cat(paste0("Beta imputation model for '", names(object$models)[i], "'\n"))
       cat(paste0("* Parametrization:\n",
-                 tab(), "- shape 1: shape1_", names(object$meth)[i],
-                 " = mu_", names(object$meth)[i], " * tau_", names(object$meth)[i], "\n",
-                 tab(), "- shape 2: shape2_", names(object$meth)[i],
-                 " = (1 - mu_", names(object$meth)[i], ") * tau_", names(object$meth)[i], "\n"))
+                 tab(), "- shape 1: shape1_", names(object$models)[i],
+                 " = mu_", names(object$models)[i], " * tau_", names(object$models)[i], "\n",
+                 tab(), "- shape 2: shape2_", names(object$models)[i],
+                 " = (1 - mu_", names(object$models)[i], ") * tau_", names(object$models)[i], "\n"))
       if (predvars)
         cat(pv)
         # cat(paste0("* Predictor variables: \n",
         #          tab(), paste(colnames(object$data_list$Xc)[
-        #            object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+        #            object$imp_par_list[[names(object$models[i])]]$Xc_cols],
         #            collapse = ", "), "\n"))
       if (regcoef)
         cat(paste0("* Regression coefficients: \n",
                    tab(), "alpha[",
-                   print_seq(object$K_imp[names(object$meth)[i], "start"],
-                             object$K_imp[names(object$meth)[i], "end"]),
+                   print_seq(object$K_imp[names(object$models)[i], "start"],
+                             object$K_imp[names(object$models)[i], "end"]),
                    "] ",
                    if (priors) {
                      paste0("(normal prior(s) with mean ", object$data_list$mu_reg_beta,
                             " and precision ", object$data_list$tau_reg_beta, ")")
                    }, "\n"))
       if (otherpars)
-        cat(paste0("* tau_", names(object$meth)[i], " ",
+        cat(paste0("* tau_", names(object$models)[i], " ",
                    if (priors) {
                      paste0("(Gamma prior with scale parameter ",
                             object$data_list$a_tau_beta, " and rate parameter ",
@@ -162,46 +162,46 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
                    }, "\n"))
     }
 
-    if (object$meth[i] == "logit") {
-      cat(paste0("Logistic imputation model for '", names(object$meth)[i], "'\n"))
+    if (object$models[i] == "logit") {
+      cat(paste0("Logistic imputation model for '", names(object$models)[i], "'\n"))
       if (refcat)
-        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$meth)[i]]], "'\n"))
+        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$models)[i]]], "'\n"))
       if (predvars)
         cat(pv)
         # cat(paste0("* Predictor variables: \n",
         #          tab(), add_breaks(paste(colnames(object$data_list$Xc)[
-        #            object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+        #            object$imp_par_list[[names(object$models[i])]]$Xc_cols],
         #            collapse = ", ")), "\n"))
       if (regcoef)
         cat(paste0("* Regression coefficients: \n",
                    tab(), "alpha[",
-                   print_seq(object$K_imp[names(object$meth)[i], "start"],
-                             object$K_imp[names(object$meth)[i], "end"]),
+                   print_seq(object$K_imp[names(object$models)[i], "start"],
+                             object$K_imp[names(object$models)[i], "end"]),
                    "] ",
                    if (priors) {
                      paste0("(normal prior(s) with mean ", object$data_list$mu_reg_logit,
                             " and precision ", object$data_list$tau_reg_logit, ")")
                    }, "\n"))
     }
-    if (object$meth[i] == "multilogit") {
-      cat(paste0("Multinomial logit imputation model for '", names(object$meth)[i], "'\n"))
+    if (object$models[i] == "multilogit") {
+      cat(paste0("Multinomial logit imputation model for '", names(object$models)[i], "'\n"))
       if (refcat)
-        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$meth)[i]]], "'\n"))
+        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$models)[i]]], "'\n"))
       if (predvars)
         cat(pv)
         # cat(paste0("* Predictor variables: \n",
         #            tab(), paste(colnames(object$data_list$Xc)[
-        #              object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+        #              object$imp_par_list[[names(object$models[i])]]$Xc_cols],
         #              collapse = ", "), "\n"))
       if (regcoef) {
         cat(paste0("* Regression coefficients: \n"))
-        for (j in seq_along(attr(object$Mlist$refs[[names(object$meth)[i]]], "dummies"))) {
+        for (j in seq_along(attr(object$Mlist$refs[[names(object$models)[i]]], "dummies"))) {
           cat(paste0(tab(), "- '",
-                     attr(object$Mlist$refs[[names(object$meth)[i]]], "dummies")[j],
+                     attr(object$Mlist$refs[[names(object$models)[i]]], "dummies")[j],
                      "': alpha[",
-                     print_seq(object$K_imp[attr(object$Mlist$refs[[names(object$meth)[i]]],
+                     print_seq(object$K_imp[attr(object$Mlist$refs[[names(object$models)[i]]],
                                                  "dummies")[j], "start"],
-                               object$K_imp[attr(object$Mlist$refs[[names(object$meth)[i]]],
+                               object$K_imp[attr(object$Mlist$refs[[names(object$models)[i]]],
                                                  "dummies")[j],  "end"]),
                      "] ",
                      if (priors) {
@@ -211,23 +211,23 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
         }
       }
     }
-    if (object$meth[i] == "cumlogit") {
-      cat(paste0("Cumulative logit imputation model for '", names(object$meth)[i], "'\n"))
+    if (object$models[i] == "cumlogit") {
+      cat(paste0("Cumulative logit imputation model for '", names(object$models)[i], "'\n"))
       if (refcat)
-        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$meth)[i]]], "'\n"))
+        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$models)[i]]], "'\n"))
       if (predvars)
         cat(pv)
         # cat(paste0("* Predictor variables: \n",
         #            tab(), add_breaks(paste(colnames(object$data_list$Xc)[
-        #              object$imp_par_list[[names(object$meth[i])]]$Xc_cols],
+        #              object$imp_par_list[[names(object$models[i])]]$Xc_cols],
         #              collapse = ", ")), "\n"))
       if (regcoef)
         cat(paste0("* Regression coefficients (with",
-                   if (!object$imp_par_list[[names(object$meth[i])]]$intercept) "out",
+                   if (!object$imp_par_list[[names(object$models[i])]]$intercept) "out",
                    " intercept): \n",
                    tab(), "alpha[",
-                   print_seq(object$K_imp[names(object$meth)[i], "start"],
-                             object$K_imp[names(object$meth)[i], "end"]),
+                   print_seq(object$K_imp[names(object$models)[i], "start"],
+                             object$K_imp[names(object$models)[i], "end"]),
                    "] ",
                    if (priors) {
                      paste0("(normal prior(s) with mean ", object$data_list$mu_reg_ordinal,
@@ -235,22 +235,22 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
                    }, "\n"))
       if (otherpars) {
         cat(paste0("* Intercepts:\n",
-                   tab(), "- ", levels(object$Mlist$refs[[names(object$meth)[i]]])[1],
-                   ": gamma_", names(object$meth)[i],
+                   tab(), "- ", levels(object$Mlist$refs[[names(object$models)[i]]])[1],
+                   ": gamma_", names(object$models)[i],
                    "[1] ",
                    if (priors) {
                      paste0("(normal prior with mean ",  object$data_list$mu_delta_ordinal,
                             " and precision ", object$data_list$tau_delta_ordinal, ")")
                    }, "\n"))
-        for (j in 2:length(attr(object$Mlist$refs[[names(object$meth)[i]]], "dummies"))) {
-          cat(paste0(tab(), "- ", levels(object$Mlist$refs[[names(object$meth)[i]]])[j],
-                     ": gamma_", names(object$meth)[i], "[", j, "] = gamma_",
-                     names(object$meth)[i], "[", j - 1, "] + exp(delta_",
-                     names(object$meth)[i], "[", j - 1, "])\n"))
+        for (j in 2:length(attr(object$Mlist$refs[[names(object$models)[i]]], "dummies"))) {
+          cat(paste0(tab(), "- ", levels(object$Mlist$refs[[names(object$models)[i]]])[j],
+                     ": gamma_", names(object$models)[i], "[", j, "] = gamma_",
+                     names(object$models)[i], "[", j - 1, "] + exp(delta_",
+                     names(object$models)[i], "[", j - 1, "])\n"))
         }
         cat(paste0("* Increments:\n",
-                   tab(), "delta_", names(object$meth)[i],
-                   "[",print_seq(1, length(levels(object$Mlist$refs[[names(object$meth)[i]]])) - 2),
+                   tab(), "delta_", names(object$models)[i],
+                   "[",print_seq(1, length(levels(object$Mlist$refs[[names(object$models)[i]]])) - 2),
                    "] ",
                    if (priors) {
                      paste0("(normal prior(s) with mean ",  object$data_list$mu_delta_ordinal,

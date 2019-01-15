@@ -16,7 +16,7 @@ lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+  auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
   ridge = FALSE, ...)
 
@@ -24,7 +24,7 @@ glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
   modelname = NULL, modeldir = NULL, overwrite = NULL,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
-  warn = TRUE, mess = TRUE, auxvars = NULL, meth = NULL,
+  warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
   refcats = NULL, trunc = NULL, scale_vars = NULL,
   scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
 
@@ -32,7 +32,7 @@ clm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+  auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
   ridge = FALSE, ...)
 
@@ -40,7 +40,7 @@ lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+  auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
   ridge = FALSE, ...)
 
@@ -48,7 +48,7 @@ glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
   modelname = NULL, modeldir = NULL, overwrite = NULL,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
-  warn = TRUE, mess = TRUE, auxvars = NULL, meth = NULL,
+  warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
   refcats = NULL, trunc = NULL, scale_vars = NULL,
   scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
 
@@ -56,7 +56,7 @@ clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
   modelname = NULL, modeldir = NULL, overwrite = NULL,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
-  warn = TRUE, mess = TRUE, auxvars = NULL, meth = NULL,
+  warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
   refcats = NULL, trunc = NULL, scale_vars = NULL,
   scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
 
@@ -64,7 +64,7 @@ survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+  auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
   ridge = FALSE, ...)
 }
@@ -126,12 +126,15 @@ given directly by \strong{JointAI}.}
 predictors in the imputation procedure (and will be imputed
 if necessary) but are not part of the analysis model}
 
-\item{meth}{optional named vector specifying imputation model types and order.
-If \code{NULL} (default) imputation models will be determined
-automatically based on the class of the columns of \code{data}
-that contain missing values (see Details).
-The default order is according to the proportion of missing
-values (increasing).}
+\item{models}{optional named vector specifying the order and types of the
+  models for incomplete covariates and longitudinal covariates.
+  If \code{NULL} (default) models will be determined
+automatically based on the class of the respective columns of \code{data}
+(see Details).
+The default order is incomplete baseline covariates, complete
+longitudinal covariates, incomplete longitudinal covariates,
+and within each group variables are ordered according to the
+proportion of missing values (increasing).}
 
 \item{refcats}{optional; a named list specifying which category should be
 used as reference category for each of the categorical variables.
@@ -180,6 +183,8 @@ model (see \code{\link[stats]{formula}})}
 a one-sided formula of the form \code{~x1 + ... + xn | g},
 where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}
+
+\item{meth}{no longer used; use \code{model} instead.}
 }
 \value{
 An object of class "JointAI".

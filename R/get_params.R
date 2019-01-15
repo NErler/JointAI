@@ -23,7 +23,7 @@
 # @param shaperate_imp logical
 # @param imps logical
 # @export
-get_params <- function(meth, analysis_type, family,
+get_params <- function(models, analysis_type, family,
                        Xc, Xcat, Xtrafo, y_name = NULL, y = NULL, Zcols = NULL, Z = NULL,
                        imp_par_list = NULL,
                        analysis_main = TRUE,
@@ -90,16 +90,16 @@ get_params <- function(meth, analysis_type, family,
                   paste0("sigma_", y_name)
               },
               if (alphas) "alpha",
-              if (tau_imp & any(meth %in% c("norm", "lognorm", "gamma", "beta"))) {
-                paste0("tau_", names(meth)[meth %in% c("norm", "lognorm", "gamma", "beta")])
+              if (tau_imp & any(models %in% c("norm", "lognorm", "gamma", "beta"))) {
+                paste0("tau_", names(models)[models %in% c("norm", "lognorm", "gamma", "beta")])
               },
-              if (gamma_imp & any(meth == "cumlogit")) {
-                paste0("gamma_", names(meth)[meth == "cumlogit"])
+              if (gamma_imp & any(models == "cumlogit")) {
+                paste0("gamma_", names(models)[models == "cumlogit"])
               },
-              if (delta_imp & any(meth == "cumlogit")) {
-                paste0("delta_", names(meth)[meth == "cumlogit"])
+              if (delta_imp & any(models == "cumlogit")) {
+                paste0("delta_", names(models)[models == "cumlogit"])
               },
-              if (ppc) paste0('ppc_', c(y_name, names(meth))),
+              if (ppc) paste0('ppc_', c(y_name, names(models))),
               other
   )
 
