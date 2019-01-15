@@ -2,13 +2,9 @@ impmodel_continuous <- function(impmeth, varname, dest_col, dest_mat, trafo_cols
                                 trfo_fct, Xc_cols, par_elmts, trunc, ppc,
                                 mess = TRUE, ...){
 
-  if (length(Xc_cols) != length(par_elmts)) {
-    stop("The size of the design matrix and length of parameter vector do not match!")
-  }
-
   indent <- nchar(varname) + 14
-  predictor <-  paste_predictor(parnam = par_name, parindex = 'i', matnam = 'Xc',
-                                parelmts = par_elmts,
+  predictor <-  paste_predictor(parnam = 'alpha', parindex = 'i', matnam = 'Xc',
+                                parelmts = par_elmts["Xc", 1]:par_elmts["Xc", 2],
                                 cols = Xc_cols, indent = indent)
 
 

@@ -62,8 +62,8 @@ impprior_cumlogit <- function(varname, par_elmts, ncat, ...){
 
   paste0('\n',
          tab(), "# Priors for ", varname, "\n",
-         tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
-         tab(4), par_name, "[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal)", "\n",
+         tab(), "for (k in ", par_elmts['Xc', 1], ":", par_elmts['Xc', 2], ") {", "\n",
+         tab(4), "alpha[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal)", "\n",
          tab(), "}", "\n\n",
          paste(deltas, collapse = "\n"), "\n\n",
          paste(gammas, collapse = "\n"), "\n")

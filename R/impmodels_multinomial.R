@@ -23,8 +23,8 @@ impmodel_multilogit <- function(varname, dest_col, Xc_cols, par_elmts, dummy_col
   logs <- c(paste0(tab(4), "log(phi_", varname, "[i, 1]) <- 0"),
             mapply(function(k, par_elmts){
               paste0(tab(4), "log(phi_", varname, "[i, ", k, "]) <- ",
-                     paste_predictor(parnam = par_name, parindex = 'i', matnam = 'Xc',
-                                     parelmts = par_elmts,
+                     paste_predictor(parnam = 'alpha', parindex = 'i', matnam = 'Xc',
+                                     parelmts = par_elmts["Xc", 1]:par_elmts["Xc", 2],
                                      cols = Xc_cols, indent = indent))
             }, k = 2:ncat, par_elmts))
 

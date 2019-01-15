@@ -1,6 +1,10 @@
 # build a linear predictor -----------------------------------------------------
 paste_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent) {
 
+  if (length(cols) != length(parelmts)) {
+    stop("The size of the design matrix and length of parameter vector do not match!")
+  }
+
   lb <- c(rep("", 3),
           rep(c(paste0(c("\n", tab(indent)), collapse = ""), rep("", 2)),
               ceiling((length(parelmts) - 3)/3))
