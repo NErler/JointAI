@@ -38,11 +38,11 @@ impmodel_logit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, ppc,
 # @param par_elmts elements of the parameter vector to be used
 # @param par_name name of the parameter
 # @export
-impprior_logit <- function(varname, par_elmts, par_name, ...){
+impprior_logit <- function(varname, par_elmts, ...){
   paste0('\n',
          tab(), "# Priors for ", varname,"\n",
-         tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
-         tab(4), par_name, "[k] ~ dnorm(mu_reg_logit, tau_reg_logit)", "\n",
+         tab(), "for (k in ", par_elmts['Xc', 1], ":", par_elmts['Xc', 2], ") {", "\n",
+         tab(4), "alpha[k] ~ dnorm(mu_reg_logit, tau_reg_logit)", "\n",
          tab(), "}", "\n"
   )
 }

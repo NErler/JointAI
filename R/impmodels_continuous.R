@@ -1,5 +1,5 @@
 impmodel_continuous <- function(impmeth, varname, dest_col, dest_mat, trafo_cols, trafos,
-                                trfo_fct, Xc_cols, par_elmts, par_name, trunc, ppc,
+                                trfo_fct, Xc_cols, par_elmts, trunc, ppc,
                                 mess = TRUE, ...){
 
   if (length(Xc_cols) != length(par_elmts)) {
@@ -82,7 +82,7 @@ impmodel_continuous <- function(impmeth, varname, dest_col, dest_mat, trafo_cols
 
 
 # Priors for continuous imputation model
-impprior_continuous <- function(impmeth, varname, par_elmts, par_name, ppc, dest_mat, dest_col, ...){
+impprior_continuous <- function(impmeth, varname, par_elmts, ppc, dest_mat, dest_col, ...){
 
   paste_ppc <- if (ppc) {
     paste0('\n',
@@ -96,8 +96,8 @@ impprior_continuous <- function(impmeth, varname, par_elmts, par_name, ppc, dest
 
   paste0('\n',
          tab(), "# Priors for ", varname, "\n",
-         tab(), "for (k in ", min(par_elmts), ":", max(par_elmts), ") {", "\n",
-         tab(4), par_name, "[k] ~ dnorm(mu_reg_", impmeth, ", tau_reg_", impmeth, ")", "\n",
+         tab(), "for (k in ", par_elmts['Xc', 1], ":", par_elmts['Xc', 2], ") {", "\n",
+         tab(4), "alpha[k] ~ dnorm(mu_reg_", impmeth, ", tau_reg_", impmeth, ")", "\n",
          tab(), "}", "\n",
          tab(), "tau_", varname,  " ~ dgamma(a_tau_", impmeth, ", b_tau_", impmeth, ")", "\n",
          tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")", "\n",

@@ -46,7 +46,7 @@ impmodel_cumlogit <- function(varname, dest_col, Xc_cols, par_elmts, par_name, d
 # @param par_elmts elements of the parameter vector to be used
 # @param par_name name of the parameter
 # @export
-impprior_cumlogit <- function(varname, par_elmts, par_name, ncat, ...){
+impprior_cumlogit <- function(varname, par_elmts, ncat, ...){
   deltas <- sapply(1:(ncat - 2), function(k) {
     paste0(tab(), "delta_", varname, "[", k, "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
   })
