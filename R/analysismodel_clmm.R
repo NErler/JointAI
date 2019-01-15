@@ -101,5 +101,5 @@ clmm_priors <- function(Mlist, K, ...){
          },
          paste(deltas, collapse = "\n"), "\n\n",
          paste(gammas, collapse = "\n"), "\n\n",
-         ranef_priors(Mlist$Z))
+         ranef_priors(ncol(Mlist$Z)))
 }

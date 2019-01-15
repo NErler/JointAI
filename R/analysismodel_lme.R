@@ -111,7 +111,7 @@ lme_priors <- function(K, Mlist, ...){
     )
   }
 
-  paste0(c(ranef_priors(Mlist$Z),
+  paste0(c(ranef_priors(ncol(Mlist$Z)),
            lmereg_priors(K, y_name, Mlist),
            paste_ppc), collapse = "\n\n")
 }

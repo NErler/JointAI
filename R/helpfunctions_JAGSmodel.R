@@ -70,23 +70,30 @@ paste_trafos <- function(dest_col, trafo_cols, trafos, ...) {
 
 
 # random effects specifications ------------------------------------------------
-ranef_priors <- function(Z){
-  paste0(
-    tab(), "# Priors for the covariance of the random effects", "\n",
-    if (ncol(Z) > 1) {
+ranef_priors <- function(Zcols, varnam = NULL){
+  modnam <- if (!is.null(varnam))
+    paste0(" for ", varnam)
+
+  if (!is.null(varnam))
+    varnam <- paste0("_", varnam)
+
+
+  paste0("\n",
+    tab(), "# Priors for the covariance of the random effects", modnam, "\n",
+    if (Zcols > 1) {
       paste0(
-        tab(), "for (k in 1:", ncol(Z), "){", "\n",
-        tab(4), "RinvD[k, k] ~ dgamma(a_diag_RinvD, b_diag_RinvD)", "\n",
+        tab(), "for (k in 1:", Zcols, "){", "\n",
+        tab(4), "RinvD", varnam, "[k, k] ~ dgamma(a_diag_RinvD, b_diag_RinvD)", "\n",
         tab(), "}", "\n")
     },
-    tab(), "invD[1:", ncol(Z), ", 1:", ncol(Z),"] ~ ", invD_distr(Z), "\n",
-    tab(), "D[1:", ncol(Z),", 1:", ncol(Z),"] <- inverse(invD[ , ])"
+    tab(), "invD", varnam, "[1:", Zcols, ", 1:", Zcols,"] ~ ", invD_distr(Zcols), "\n",
+    tab(), "D", varnam, "[1:", Zcols,", 1:", Zcols, "] <- inverse(invD", varnam, "[ , ])"
   )
 }
 
 
-invD_distr <- function(Z){
-  if (ncol(Z) == 1) {
+invD_distr <- function(Zcols){
+  if (Zcols == 1) {
     "dgamma(a_diag_RinvD, b_diag_RinvD)"
   } else {
     "dwish(RinvD[ , ], KinvD)"
