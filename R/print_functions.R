@@ -258,6 +258,23 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
                    }, "\n"))
       }
     }
+
+    # longitudinal models
+    if (object$models[i] == 'lmm') {
+      cat(paste0("Linear mixed model for '", names(object$models)[i], "'\n"))
+    }
+    if (object$models[i] == 'glmm_logit') {
+      cat(paste0("Logistic mixed model for '", names(object$models)[i], "'\n"))
+    }
+    if (object$models[i] == 'glmm_gamma') {
+      cat(paste0("Gamma mixed model for '", names(object$models)[i], "'\n"))
+    }
+    if (object$models[i] == 'glmm_poisson') {
+      cat(paste0("Poisson mixed model for '", names(object$models)[i], "'\n"))
+    }
+    if (object$models[i] == 'clmm') {
+      cat(paste0("Ordinal mixed model for '", names(object$models)[i], "'\n"))
+    }
   }
 }
 

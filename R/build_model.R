@@ -102,22 +102,44 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
   }
 
   # imputation section of the model
+  imp_par_list_baseline <- imp_par_list[sapply(imp_par_list, '[[', 'impmeth') %in%
+                                          c('norm', 'logit', 'cumlogit',
+                                            'multilogit', 'gamma', 'beta',
+                                            'lognorm')]
 
-  imputation_part <- if (!is.null(meth)) {
+  imp_par_list_long <- imp_par_list[sapply(imp_par_list, '[[', 'impmeth') %in%
+                                      c('lmm', 'glmm_gamma', 'glmm_logit',
+                                        'glmm_poisson', 'clmm')]
+
+
+  imputation_part_baseline <- if (length(imp_par_list_baseline) > 0) {
     paste0('\n\n',
-      tab(), "# ----------------- #", "\n",
-      tab(), "# Imputation models #", "\n",
-      tab(), "# ----------------- #", "\n\n",
+      tab(), "# ----------------------------------------- #", "\n",
+      tab(), "# Imputation models for baseline covariates #", "\n",
+      tab(), "# ----------------------------------------- #", "\n\n",
       tab(), "for (i in 1:", Mlist$N, ") {", "\n",
-      paste0(sapply(imp_par_list, paste_imp_model), collapse = "\n"),
+      paste0(sapply(imp_par_list_baseline, paste_imp_model), collapse = "\n"),
       tab(), "}", "\n\n",
       tab(), "# -------------------------------- #", "\n",
       tab(), "# Priors for the imputation models #", "\n",
       tab(), "# -------------------------------- #", "\n",
-      paste0(sapply(imp_par_list, paste_imp_priors), collapse = "\n")
+      paste0(sapply(imp_par_list_baseline, paste_imp_priors), collapse = "\n")
     )
   }
 
+  imputation_part_long <- if (length(imp_par_list_long) > 0) {
+    paste0('\n\n',
+           tab(), "# ---------------------------------- #", "\n",
+           tab(), "# Models for longitudinal covariates #", "\n",
+           tab(), "# ---------------------------------- #", "\n\n",
+           paste0(sapply(imp_par_list_long, paste_imp_model), collapse = "\n"),
+           "\n\n",
+           tab(), "# --------------------------------------------- #", "\n",
+           tab(), "# Priors for models for longitudinal covariates #", "\n",
+           tab(), "# --------------------------------------------- #", "\n",
+           paste0(sapply(imp_par_list_long, paste_imp_priors), collapse = "\n")
+    )
+  }
 
 
   # Analysis part and insert the rest
@@ -133,7 +155,8 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
     tab(), "# Priors for the analysis model #", "\n",
     tab(), "# ----------------------------- #", "\n\n",
     paste0(do.call(analysis_priors, arglist), collapse = "\n"),
-    imputation_part, "\n",
+    imputation_part_baseline, "\n",
+    imputation_part_long, "\n",
     interactions,
     interactions_long,
     "}"

@@ -204,7 +204,8 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     }
 
     Xl <- if (any(!colnames(Xlong) %in% linteract)) {
-      Xlong[, !colnames(Xlong) %in% linteract, drop = FALSE]
+      Xl <- Xlong[, !colnames(Xlong) %in% linteract, drop = FALSE]
+      Xl[, order(colSums(is.na(Xl))), drop = FALSE]
     }
 
     hc_interact <- unlist(sapply(hc_list, function(x) {
@@ -218,11 +219,11 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
       Xil <- Xil * NA
     }
 
-    if (!is.null(Xl)) {
-      if (sum(is.na(Xl)) > 0) {
-        stop("Missing values in the longitudinal variables are not allowed.")
-      }
-    }
+    # if (!is.null(Xl)) {
+    #   if (sum(is.na(Xl)) > 0) {
+    #     stop("Missing values in the longitudinal variables are not allowed.")
+    #   }
+    # }
   } else {
     Xl <- Xil <- NULL
   }
