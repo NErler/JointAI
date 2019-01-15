@@ -49,7 +49,21 @@ get_imp_pos <- function(models, Mlist){
     }
     setNames(match(make.names(nams), make.names(colnames(Mlist$Xc))), nams)
   }, simplify = FALSE)
-  # pos_Xc <- sapply(names(meth), match_positions, DF, colnames(Xc), simplify = FALSE)
+
+
+
+  # positions of the longitudinal variables in the matrix Xl
+  pos_Xl <- sapply(names(models), function(x) {
+    nams <- if (x %in% names(Mlist$refs)) {
+      paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) != Mlist$refs[[x]]])
+    } else if (x %in% Mlist$trafos$var) {
+      Mlist$trafos$X_var[Mlist$trafos$var == x]
+    } else {
+      x
+    }
+    setNames(match(make.names(nams), make.names(colnames(Mlist$Xl))), nams)
+  }, simplify = FALSE)
+
 
   # positions of the interaction variables in the cross-sectional matrix Xic
   if (!is.null(Mlist$Xic)) {
