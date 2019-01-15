@@ -100,22 +100,23 @@ get_trafo <- function(i, trafos, dest_cols) {
 # @param varname variable name
 # @param Xc_names column names of the design matrix of baseline effects
 # @param Xcat_names column names of the matrix of categorical variables
-get_dest_column <- function(varname, refs, Xc_names, Xcat_names, Xtrafo_names,
-                            trafos) {
-  nams <- if (varname %in% names(refs)) {
-    attr(refs[[varname]], "dummies")
-    # paste0(varname,
-    #              levels(refs[[varname]])[levels(refs[[varname]]) !=
-    #                                        refs[[varname]]])
-  } else if (varname %in% trafos$var) {
-    trafos$X_var[trafos$var == varname & !trafos$dupl]
+get_dest_column <- function(varname, Mlist) {
+  nams <- if (varname %in% names(Mlist$refs)) {
+    attr(Mlist$refs[[varname]], "dummies")
+  } else if (varname %in% Mlist$trafos$var) {
+    Mlist$trafos$X_var[Mlist$trafos$var == varname & !Mlist$trafos$dupl]
   } else {
     varname
   }
 
-  list("Xc" = setNames(match(make.names(nams), make.names(Xc_names)), nams),
-       "Xcat" = setNames(match(make.names(varname), make.names(Xcat_names)), varname),
-       "Xtrafo" = setNames(match(make.names(varname), make.names(Xtrafo_names)), varname))
+  list("Xc" = setNames(match(make.names(nams),
+                             make.names(colnames(Mlist$Xc))), nams),
+       "Xcat" = setNames(match(make.names(varname),
+                               make.names(colnames(Mlist$Xcat))), varname),
+       "Xtrafo" = setNames(match(make.names(varname),
+                                 make.names(colnames(Mlist$Xtrafo))), varname),
+       "Xl" = setNames(match(make.names(nams),
+                             make.names(colnames(Mlist$Xl))), nams))
 }
 
 
