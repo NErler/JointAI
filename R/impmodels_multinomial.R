@@ -8,12 +8,6 @@
 impmodel_multilogit <- function(varname, dest_col, Xc_cols, par_elmts, dummy_cols, ncat, refcat, ...){
 
   indent <- nchar(varname) + 23
-  # predictor <-  paste_predictor(parnam = par_name, parindex = 'i', matnam = 'Xc',
-  #                               parelmts = par_elmts,
-  #                               cols = Xc_cols, indent = indent)
-  #
-  # spltpred <- split(predictor, c(1:ncat)[-refcat] >= refcat)
-  # predictor2 <- c(spltpred[["FALSE"]], "0", spltpred[["TRUE"]])
 
   probs <- sapply(1:ncat, function(k){
     paste0(tab(4), "p_", varname, "[i, ", k, "] <- min(1-1e-7, max(1e-7, phi_", varname, "[i, ", k,
