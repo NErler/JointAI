@@ -2,10 +2,10 @@
 # @param X a matrix
 # @param scale_vars a vector of variable names or FALSE
 # @param scale_pars a matrix of scaling parameters or FALSE or NULL
-# @param meth
+# @param models
 # @export
 
-scale_matrix <- function(X, scale_vars, scale_pars, meth) {
+scale_matrix <- function(X, scale_vars, scale_pars, models) {
   Xsc <- X
   if (!is.null(X)) {
     Xsub <- X[, apply(X, 2, function(x)(any(!is.na(x)))), drop = FALSE]
@@ -18,16 +18,16 @@ scale_matrix <- function(X, scale_vars, scale_pars, meth) {
                              dimnames = list(c("scale", "center"),
                                              scale_vars[scale_vars %in% colnames(Xsub)]))
         for (k in scale_vars[scale_vars %in% colnames(Xsub)]) {
-          usecenter <- if (!k %in% names(meth)) {
+          usecenter <- if (!k %in% names(models)) {
             TRUE
           } else {
-            !meth[k] %in% c("lognorm", "gamma", "beta")
+            !models[k] %in% c("lognorm", "gamma", "beta")
           }
 
-          usescale <- if (!k %in% names(meth)) {
+          usescale <- if (!k %in% names(models)) {
             TRUE
           } else {
-            !meth[k] %in% c("gamma", "beta")
+            !models[k] %in% c("gamma", "beta")
           }
 
           xsc <- scale(X[, k], center = usecenter, scale = usescale)
@@ -53,7 +53,7 @@ scale_matrix <- function(X, scale_vars, scale_pars, meth) {
 
 # function for scaling
 # @export
-get_scaling <- function(Mlist, scale_pars, meth, data) {
+get_scaling <- function(Mlist, scale_pars, models, data) {
   varnams <- unique(unlist(strsplit(colnames(model.matrix(Mlist$fixed2, data)),
                                     "[:|*]")))
   scale_pars_new <- if (!is.null(Mlist$scale_vars))
@@ -66,7 +66,7 @@ get_scaling <- function(Mlist, scale_pars, meth, data) {
   scaled_dat <- sapply(Mlist[c("Xc", "Xtrafo", "Xl", "Z")], scale_matrix,
                        scale_vars = Mlist$scale_vars,
                        scale_pars = scale_pars,
-                       meth = meth, simplify = FALSE)
+                       models = models, simplify = FALSE)
 
 
   scale_pars <- do.call(cbind, lapply(scaled_dat, "[[", 2))

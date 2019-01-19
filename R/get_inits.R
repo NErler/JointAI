@@ -3,7 +3,7 @@ get_inits <- function(object, ...) {
 }
 
 
-get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family, link = link, ...){
+get_inits.default = function(models, Mlist, K, K_imp, analysis_type, family, link = link, ...){
   l <- list()
 
   # analysis model ---------------------------------------------------------------
@@ -65,25 +65,25 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family, link 
   if (!is.null(K_imp))
     l[["alpha"]] = rnorm(max(K_imp), 0, 1)
 
-  if (any(meth == "beta")) {
-    whichalpha <- K_imp[names(meth[meth == "beta"]), "start"]:K_imp[names(meth[meth == "beta"]), "end"]
+  if (any(models == "beta")) {
+    whichalpha <- K_imp[names(models[models == "beta"]), "start"]:K_imp[names(models[models == "beta"]), "end"]
     l[["alpha"]][whichalpha] <- rnorm(length(whichalpha), 0, 0.1)
 
-    for (k in names(meth)[meth %in% c("beta")]) {
+    for (k in names(models)[models %in% c("beta")]) {
       l[[paste0("tau_", k)]] <- rgamma(1, 15, 0.1)
     }
   }
 
   # precision parameters for normal imputation models
-  if  (any(meth %in% c("norm", "lognorm"))) {
-    for (k in names(meth)[meth %in% c("norm", "lognorm")]) {
+  if  (any(models %in% c("norm", "lognorm"))) {
+    for (k in names(models)[models %in% c("norm", "lognorm")]) {
       l[[paste0("tau_", k)]] <- rgamma(1, 1, 1)
     }
   }
 
   # group specific intercepts of ordinal covariates
-  if (any(meth == "cumlogit")) {
-    for (k in names(meth)[meth ==  "cumlogit"]) {
+  if (any(models == "cumlogit")) {
+    for (k in names(models)[models ==  "cumlogit"]) {
       l[[paste0("delta_", k)]] = rnorm(length(levels(Mlist$refs[[k]])) - 2, 0, 0.5)
       l[[paste0("gamma_", k)]] = c(rnorm(1, 0, 0.5),
                                    rep(NA, length(levels(Mlist$refs[[k]])) - 2))
@@ -95,7 +95,7 @@ get_inits.default = function(meth, Mlist, K, K_imp, analysis_type, family, link 
 
 
 # get_inits.JointAI = function(object) {
-#   get_inits.default(meth = object$meth, Mlist = object$Mlist, K = object$K,
+#   get_inits.default(models = object$models, Mlist = object$Mlist, K = object$K,
 #                     K_imp = object$K_imp, analysis_type = object$analysis_type,
 #                     family = attr(object$analysis_type, "family"))
 # }
