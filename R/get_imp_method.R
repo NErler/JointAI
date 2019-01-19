@@ -145,8 +145,10 @@ get_models <- function(fixed, random = NULL, data,
 
 
     nmis <- c(colSums(is.na(data[, names(tvar[tvar]), drop = FALSE])),
-              colSums(is.na(data[match(unique(idvar), idvar), names(tvar[!tvar])]))
+              colSums(is.na(data[match(unique(idvar), idvar), names(tvar[!tvar]), drop = FALSE]))
     )
+
+    tvar <- tvar[names(nmis)]
 
     types <- lapply(split(nmis, list(ifelse(nmis > 0, 'incomplete', 'complete'),
                                      ifelse(tvar, 'tvar', 'baseline'))),
@@ -155,7 +157,8 @@ get_models <- function(fixed, random = NULL, data,
 
     models <- c(types$incomplete.baseline, types$complete.tvar, types$incomplete.tvar)
 
-    nlevel <- sapply(data[, names(models)], function(x) length(levels(x)))
+    nlevel <- sapply(data[, names(models), drop = FALSE],
+                     function(x) length(levels(x)))
 
     if (length(nlevel) > 0) {
       models[nlevel == 0 & !tvar[names(nlevel)]] <- "norm"
