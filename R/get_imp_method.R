@@ -148,6 +148,9 @@ get_models <- function(fixed, random = NULL, data,
               colSums(is.na(data[match(unique(idvar), idvar), names(tvar[!tvar]), drop = FALSE]))
     )
 
+    if (all(nmis == 0))
+      return(list(models = NULL, meth = NULL))
+
     tvar <- tvar[names(nmis)]
 
     types <- lapply(split(nmis, list(ifelse(nmis > 0, 'incomplete', 'complete'),
