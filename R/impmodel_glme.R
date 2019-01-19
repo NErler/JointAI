@@ -1,7 +1,7 @@
 
 
 impmodel_glmm <- function(family, link, varname, dest_col, Xc_cols, Xl_cols,
-                          par_elmts, ppc, nranef, N, Ntot, ...) {
+                          par_elmts, ppc, nranef, N, Ntot, hc_list, ...) {
   distr <- switch(family,
                   "gaussian" = function(varname) {
                     paste0("dnorm(mu_", varname, "[j], tau_", varname, ")")
@@ -57,6 +57,39 @@ impmodel_glmm <- function(family, link, varname, dest_col, Xc_cols, Xl_cols,
     )
   }
 
+
+  rdslopes <- if (nranef > 1) {
+    rd_slopes <- list()
+    for (k in 2:nranef) {
+      Xc_pos <- if (any(attr(hc_list[[k - 1]], "matrix") == "Xc")) {
+        hc_list[[k - 1]][which(attr(hc_list[[k - 1]], "matrix") %in% c("Z", "Xc"))]
+      }
+
+      Znam <- names(hc_list)[sapply(hc_list, attr, 'matrix') == 'Z']
+
+      hc_interact <- if (!is.null(hc_list[[Znam[k - 1]]])) {
+        paste0("alpha[", par_elmts['Z', 1]:par_elmts['Z', 2], "]",
+               sapply(Xc_pos, function(x) {
+                 if (!is.na(x)) {
+                   paste0(" * Xc[i, ", x, "]")
+                 } else {
+                   ""
+                 }
+               })
+        )
+      } else {
+        "0"
+      }
+
+      rd_slopes[[k - 1]] <- paste0(tab(4), "mu_b_", varname, "[i, ", k,"] <- ",
+                                   paste0(hc_interact, sep = "", collapse = " + "))
+    }
+    paste(rd_slopes, collapse = "\n")
+  }
+
+
+
+
   paste_ppc <- if (ppc) {
     paste0("\n",
            tab(4), "# For posterior predictive check:", "\n",
@@ -80,10 +113,10 @@ impmodel_glmm <- function(family, link, varname, dest_col, Xc_cols, Xl_cols,
          paste_predictor(parnam = 'alpha', parindex = 'i', matnam = 'Xc',
                          parelmts = par_elmts["Xc", 1]:par_elmts["Xc", 2],
                          cols = Xc_cols, indent = 19 + nchar(varname)), "\n",
+         rdslopes, "\n",
          tab(), "}\n"
          # paste_Xic,
          # "\n",
-         # paste_rdslopes(Mlist$Z, Mlist$hc_list, K)
   )
 }
 
@@ -128,22 +161,22 @@ impprior_glmm <- function(family, varname, par_elmts, dest_mat, dest_col, ppc, n
 
 impmodel_lmm <- function(varname, dest_col, Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, ...) {
   impmodel_glmm(family = 'gaussian', link = 'identity', varname, dest_col,
-                Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, ...)
+                Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...)
 }
 
 impmodel_glmm_logit <- function(varname, dest_col, Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, ...) {
   impmodel_glmm(family = 'binomial', link = 'logit', varname, dest_col,
-                Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, ...)
+                Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...)
 }
 
 impmodel_glmm_gamma <- function(varname, dest_col, Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, ...) {
   impmodel_glmm(family = 'Gamma', link = 'log', varname, dest_col,
-                Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, ...)
+                Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...)
 }
 
 impmodel_glmm_poisson <- function(varname, dest_col, Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, ...) {
   impmodel_glmm(family = 'poisson', link = 'log', varname, dest_col,
-                Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, ...)
+                Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...)
 }
 
 impprior_lmm <- function(varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...) {
