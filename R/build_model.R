@@ -1,21 +1,5 @@
 # Function to build JAGS model
-# @param analysis_type analysis model type (character string)
-# @param family model family
-# @param link link function
-# @param meth named vector specifying imputation methods and ordering
-# @param Ntot number of observations
-# @param N number of individuals
-# @param y_name name of outcome variable
-# @param Mlist list of design matrices
-# @param Z random effects design matrix
-# @param Xic design matrix of time-constant interactions
-# @param Xl design matrix of time-varying covariates
-# @param Xil design matrix of interactions involving time-varying covariates
-# @param hc_list list specifying hierarchical centring structure
-# @param K matrix specifying range of regression coefficients used for each
-# component of the analysis model
-# @param imp_par_list output from get_imp_par_list
-# @export
+
 build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
                        Ntot, Mlist = NULL, K, imp_par_list, ...) {
   arglist <- as.list(match.call())[-1]
@@ -44,12 +28,10 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
   Xic <- Mlist$Xic
 
   interactions <- if (!is.null(Xic)) {
-    #if (any(is.na(Xic))) {
       splitnam <- sapply(colnames(Xic)[apply(is.na(Xic), 2, any)],
                          strsplit, split = ":")
       Xc_pos <- lapply(splitnam, match, colnames(Mlist$Xc))
       Xic_pos <- match(colnames(Xic)[apply(is.na(Xic), 2, any)], colnames(Xic))
-      #  the above line may be too complicated (left over from previous version)
 
       paste0('\n\n',
         tab(), "# ------------------------------------------------------ #", "\n",
@@ -60,7 +42,6 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
                                   mat0_col = Xic_pos, mat1_col = Xc_pos),
                collapse = "\n"), "\n",
         tab(), "}", "\n")
-    # }
   }
 
   # Interactions within longitudinal variables
@@ -98,7 +79,6 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
                                 mat0_col = Xil_pos, mat1_col = mat1_col),
              collapse = "\n"), "\n",
       tab(), "}", "\n")
-    # }
   }
 
   # imputation section of the model
