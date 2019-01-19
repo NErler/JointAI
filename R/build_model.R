@@ -167,5 +167,16 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
 
 
 
+write_model <- function(analysis_type, family = NULL, link = NULL,
+                        models = NULL, Ntot, Mlist, K, imp_par_list, file = NULL,
+                        package = "JAGS") {
+
+  arglist <- as.list(match.call())[-1]
+
+  build_model <- switch(package,
+                        "JAGS" = build_JAGS)
+
+  cat(do.call(build_model, arglist), file = file)
+}
 
 
