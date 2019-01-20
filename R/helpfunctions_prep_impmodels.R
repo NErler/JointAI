@@ -86,7 +86,8 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc) {
          dest_cols[[varname]]$Xc
        },
        trfo_fct = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
-         sapply(which(trafos$var == varname & !trafos$dupl), get_trafo, trafos, dest_cols)
+         sapply(which(Mlist$trafos$var == varname & !Mlist$trafos$dupl),
+                get_trafo, Mlist$trafos, dest_cols)
        },
        trunc = trunc[[varname]],
        trafos = Mlist$trafos,
