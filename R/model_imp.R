@@ -603,7 +603,7 @@ lm_imp <- function(formula, data,
                    overwrite = NULL, keep_model = FALSE,
                    quiet = TRUE, progress.bar = "text", warn = TRUE,
                    mess = TRUE,
-                   auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
+                   auxvars = NULL, models = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                    ridge = FALSE, ...){
 
@@ -646,7 +646,7 @@ glm_imp <- function(formula, family, data,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
+                    auxvars = NULL, models = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     ridge = FALSE, ...){
 
@@ -713,7 +713,7 @@ clm_imp <- function(fixed, data, random,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
+                    auxvars = NULL, models = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     ridge = FALSE, ...){
 
@@ -754,7 +754,7 @@ lme_imp <- function(fixed, data, random,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
+                    auxvars = NULL, models = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     ridge = FALSE, ...){
 
@@ -798,7 +798,7 @@ glme_imp <- function(fixed, data, random, family,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
+                    auxvars = NULL, models = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     ridge = FALSE, ...){
 
@@ -861,7 +861,7 @@ clmm_imp <- function(fixed, data, random,
                      overwrite = NULL, keep_model = FALSE,
                      quiet = TRUE, progress.bar = "text", warn = TRUE,
                      mess = TRUE,
-                     auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
+                     auxvars = NULL, models = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                      scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                      ridge = FALSE, ...){
 
@@ -905,7 +905,7 @@ survreg_imp <- function(formula, data,
                    overwrite = NULL, keep_model = FALSE,
                    quiet = TRUE, progress.bar = "text", warn = TRUE,
                    mess = TRUE,
-                   auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
+                   auxvars = NULL, models = NULL, meth = NULL, refcats = NULL, trunc = NULL,
                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                    ridge = FALSE, ...){
 
@@ -948,7 +948,7 @@ survreg_imp <- function(formula, data,
 #                      overwrite = NULL, keep_model = FALSE,
 #                      quiet = TRUE, progress.bar = "text", warn = TRUE,
 #                      mess = TRUE,
-#                      auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
+#                      auxvars = NULL, models = NULL, meth = NULL, refcats = NULL, trunc = NULL,
 #                      scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
 #
 #   if (missing(formula))

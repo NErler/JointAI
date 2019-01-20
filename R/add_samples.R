@@ -43,7 +43,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   if (is.null(monitor_params)) {
     var.names <- object$mcmc_settings$variable.names
   } else {
-    var.names <- do.call(get_params, c(list(meth = object$meth,
+    var.names <- do.call(get_params, c(list(models = object$models,
                                             analysis_type = object$analysis_type,
                                             family = attr(object$analysis_type, "family"),
                                             y_name = colnames(object$Mlist$y),
