@@ -96,7 +96,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
   # random effects design matrix
   Z <- if (!is.null(random)) {
-    model.matrix(as.formula(random2), data)
+    model.matrix(as.formula(random2), model.frame(as.formula(random2), data, na.action = na.pass))
   }
 
 
