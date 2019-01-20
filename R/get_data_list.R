@@ -8,7 +8,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist, auxvars,
 
   scaled <- get_scaling(Mlist, scale_pars, models, data)
   if (is.null(hyperpars)) {
-    defs <- default_hyperpars(family, link, ncol(Mlist$Z))
+    defs <- default_hyperpars(family, link, Mlist$nranef)
   } else {
     defs <- hyperpars
   }
@@ -47,7 +47,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist, auxvars,
 
   if (analysis_type %in% c("lme", "glme", "clmm")) {
     l$groups <- match(Mlist$groups, unique(Mlist$groups))
-    if (ncol(Mlist$Z) > 1) {
+    if (Mlist$nranef > 1) {
       l$RinvD <- defs$Z$RinvD
       l$KinvD <- defs$Z$KinvD
     }

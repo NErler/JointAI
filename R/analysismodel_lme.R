@@ -51,13 +51,13 @@ lme_model <- function(Mlist, K, ...){
          paste_Xil, "\n",
          tab(2), "}", "\n\n",
          tab(2), "for (i in 1:", Mlist$N, ") {", "\n",
-         tab(4), "b[i, 1:", ncol(Mlist$Z), "] ~ ", norm.distr, "(mu_b[i, ], invD[ , ])", "\n",
+         tab(4), "b[i, 1:", Mlist$nranef, "] ~ ", norm.distr, "(mu_b[i, ], invD[ , ])", "\n",
          tab(4), "mu_b[i, 1] <- ",
          paste_predictor(parnam = 'beta', parindex = 'i', matnam = 'Xc',
                          parelmts = K["Xc", 1]:K["Xc", 2],
                          cols = Mlist$cols_main$Xc, indent = 18),
          paste_Xic, "\n",
-         paste_rdslopes(Mlist$Z, Mlist$hc_list, K)
+         paste_rdslopes(Mlist$nranef, Mlist$hc_list, K)
   )
 }
 
@@ -111,7 +111,7 @@ lme_priors <- function(K, Mlist, ...){
     )
   }
 
-  paste0(c(ranef_priors(ncol(Mlist$Z)),
+  paste0(c(ranef_priors(Mlist$nranef),
            lmereg_priors(K, y_name, Mlist),
            paste_ppc), collapse = "\n\n")
 }

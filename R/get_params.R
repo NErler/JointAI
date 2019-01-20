@@ -2,7 +2,7 @@
 # @param meth imputation method
 # @param analysis_type analysis model type
 # @param y_name name of the outcome variable
-# @param Zcols number of columns in random effects design matrix
+# @param nranef number of columns in random effects design matrix
 # @param Xc matrix
 # @param Xtrafo matrix
 # @param Xcat matrix
@@ -24,7 +24,7 @@
 # @param imps logical
 # @export
 get_params <- function(models, analysis_type, family,
-                       Xc, Xcat, Xtrafo, y_name = NULL, y = NULL, Zcols = NULL, Z = NULL,
+                       Xc, Xcat, Xtrafo, y_name = NULL, y = NULL, nranef = NULL,
                        imp_par_list = NULL,
                        analysis_main = TRUE,
                        analysis_random = FALSE,
@@ -53,8 +53,6 @@ get_params <- function(models, analysis_type, family,
     }
   }
   if (analysis_type %in% c("lme", "glme", "clmm")) {
-    if (is.null(Zcols))
-      Zcols <- ncol(Z)
     if (analysis_main & is.null(D)) D <- TRUE
   }
 
@@ -63,7 +61,7 @@ get_params <- function(models, analysis_type, family,
     if (is.null(ranef)) ranef <- TRUE
     if (is.null(invD)) invD <- TRUE
     if (is.null(D)) D <- TRUE
-    if (is.null(RinvD) & Zcols > 1) RinvD <- TRUE
+    if (is.null(RinvD) & nranef > 1) RinvD <- TRUE
   }
 
   if (imp_pars) {
@@ -106,11 +104,11 @@ get_params <- function(models, analysis_type, family,
   if (analysis_type %in% c("lme", "glme", "clmm")) {
     params <- c(params,
                 if (ranef) "b",
-                if (invD) unlist(sapply(1:Zcols, function(x)
+                if (invD) unlist(sapply(1:nranef, function(x)
                   paste0("invD[", 1:x, ",", x,"]"))),
-                if (D) unlist(sapply(1:Zcols, function(x)
+                if (D) unlist(sapply(1:nranef, function(x)
                   paste0("D[", 1:x, ",", x,"]"))),
-                if (RinvD) paste0("RinvD[", 1:Zcols, ",", 1:Zcols,"]")
+                if (RinvD) paste0("RinvD[", 1:nranef, ",", 1:nranef,"]")
     )
   }
 
