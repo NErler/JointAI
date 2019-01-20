@@ -70,14 +70,19 @@ paste_rdslopes <- function(nranef, hc_list, K){
       beta_start <- K[names(hc_list)[k - 1], 1]
       beta_end <- K[names(hc_list)[k - 1], 2]
 
-      if (any(sapply(hc_list[[k - 1]], attr, "matrix") == "Xc")) {
-        vec <- sapply(hc_list[[k - 1]], attr, "matrix") == "Xc"
-        Xc_pos <- sapply(seq_along(vec), function (i) {
-          ifelse(vec[i], attr(hc_list[[k - 1]][[i]], 'column'), NA)
+      if (any(sapply(hc_list[[k - 1]], attr, "matrix") %in% c("Xc", 'Z'))) {
+        vec <- sapply(hc_list[[k - 1]], attr, "matrix")# == "Xc"
+
+        Xc_pos <- lapply(seq_along(vec), function (i) {
+          switch(vec[i], 'Xc' = attr(hc_list[[k - 1]][[i]], 'column'),
+                 'Z' = NA,
+                 'Xlong' = NULL)
+
+          # ifelse(vec[i], attr(hc_list[[k - 1]][[i]], 'column'), NA)
         })
 
         hc_interact <- paste0("beta[", beta_start:beta_end, "]",
-                              sapply(Xc_pos, function(x) {
+                              sapply(unlist(Xc_pos), function(x) {
                                 if (!is.na(x)) {
                                   paste0(" * Xc[i, ", x, "]")
                                 } else {

@@ -25,7 +25,8 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc) {
       1:(min(dest_cols[[varname]]$Xl, na.rm = TRUE) - 1)
   }
   Z_cols = if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
-      2:ncol(Mlist$Z)
+    if (Mlist$nranef > 1)
+      2:Mlist$nranef
   }
 
   par_elmts <- if (impmeth == "multilogit") {

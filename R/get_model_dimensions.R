@@ -13,7 +13,8 @@ get_model_dim <- function(cols_main, hc_list){
     for (i in 1:length(hc_list)) {
       K[names(hc_list)[i], ] <-
         if (length(hc_list[[i]]) > 0) {
-          c(1, max(1, length(hc_list[[i]]))) +
+          c(1, max(1, sum(sapply(hc_list[[i]], attr, 'matrix') %in% c('Xc', 'Z')))) +
+          # c(1, max(1, length(hc_list[[i]]))) +
             max(c(K, 0), na.rm = TRUE)
         } else {
           c(NA, NA)
@@ -128,9 +129,16 @@ get_imp_dim <- function(models, imp_pos, Mlist){
     }
 
     if (models[i] %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson')) {
+
+      nrf <- sum(unlist(lapply(hc_list[names(hc_list != names(models[i]))],
+                               function(x) sapply(x, attr, 'matrix'))) %in% c('Z', 'Xc'))
+
+
+
       n_imp_coef[names(models)[i]] <- max(1, ncol(Mlist$Xc) +
                                             min(imp_pos$pos_Xl[[names(models)[i]]]) - 1 +
-                                            ncol(Mlist$Z) - 1)
+                                            nrf)
+                                            # ncol(Mlist$Z) - 1)
     }
 
     if (models[i] %in% c('clmm')) {

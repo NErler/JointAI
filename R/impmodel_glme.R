@@ -56,36 +56,38 @@ impmodel_glmm <- function(family, link, varname, dest_col, Xc_cols, Xl_cols,
                            cols = Xl_cols, indent = 14)
     )
   }
+  # rdslopes <- if (nranef > 1) {
+  #   rd_slopes <- list()
+  #   for (k in 2:nranef) {
+  #
+  #
+  #     Xc_pos <- if (any(sapply(hc_list[[k - 1]], attr, "matrix") %in% c("Xc", 'Z'))) {
+  #       hc_list[[k - 1]][which(sapply(hc_list[[k - 1]], attr, "matrix") %in% c("Z", "Xc"))]
+  #     }
+  #
+  #     Znam <- names(hc_list)[sapply(hc_list, attr, 'matrix') == 'Z']
+  #
+  #     hc_interact <- if (!is.null(hc_list[[Znam[k - 1]]])) {
+  #       paste0("alpha[", par_elmts['Z', 1]:par_elmts['Z', 2], "]",
+  #              sapply(Xc_pos, function(x) {
+  #                if (!is.na(x)) {
+  #                  paste0(" * Xc[i, ", x, "]")
+  #                } else {
+  #                  ""
+  #                }
+  #              })
+  #       )
+  #     } else {
+  #       "0"
+  #     }
+  #
+  #     rd_slopes[[k - 1]] <- paste0(tab(4), "mu_b_", varname, "[i, ", k,"] <- ",
+  #                                  paste0(hc_interact, sep = "", collapse = " + "))
+  #   }
+  #   paste(rd_slopes, collapse = "\n")
+  # }
 
 
-  rdslopes <- if (nranef > 1) {
-    rd_slopes <- list()
-    for (k in 2:nranef) {
-      Xc_pos <- if (any(attr(hc_list[[k - 1]], "matrix") == "Xc")) {
-        hc_list[[k - 1]][which(attr(hc_list[[k - 1]], "matrix") %in% c("Z", "Xc"))]
-      }
-
-      Znam <- names(hc_list)[sapply(hc_list, attr, 'matrix') == 'Z']
-
-      hc_interact <- if (!is.null(hc_list[[Znam[k - 1]]])) {
-        paste0("alpha[", par_elmts['Z', 1]:par_elmts['Z', 2], "]",
-               sapply(Xc_pos, function(x) {
-                 if (!is.na(x)) {
-                   paste0(" * Xc[i, ", x, "]")
-                 } else {
-                   ""
-                 }
-               })
-        )
-      } else {
-        "0"
-      }
-
-      rd_slopes[[k - 1]] <- paste0(tab(4), "mu_b_", varname, "[i, ", k,"] <- ",
-                                   paste0(hc_interact, sep = "", collapse = " + "))
-    }
-    paste(rd_slopes, collapse = "\n")
-  }
 
 
 
@@ -113,13 +115,44 @@ impmodel_glmm <- function(family, link, varname, dest_col, Xc_cols, Xl_cols,
          paste_predictor(parnam = 'alpha', parindex = 'i', matnam = 'Xc',
                          parelmts = par_elmts["Xc", 1]:par_elmts["Xc", 2],
                          cols = Xc_cols, indent = 19 + nchar(varname)), "\n",
-         rdslopes, "\n",
+         paste_rdslopes_covmod(nranef, hc_list, par_elmts, varname), "\n",
          tab(), "}\n"
          # paste_Xic,
          # "\n",
   )
 }
 
+paste_rdslopes_covmod <- function(nranef, hc_list, par_elmts, varname){
+  if (nranef > 1) {
+    rd_slopes <- list()
+    for (k in 2:nranef) {
+      if (any(sapply(hc_list[[k - 1]], attr, "matrix") %in% c("Xc", 'Z'))) {
+        vec <- sapply(hc_list[[k - 1]], attr, "matrix")# == "Xc"
+
+        Xc_pos <- lapply(seq_along(vec), function (i) {
+          switch(vec[i], 'Xc' = attr(hc_list[[k - 1]][[i]], 'column'),
+                 'Z' = NA,
+                 'Xlong' = NULL)
+        })
+
+        hc_interact <- paste0("alpha[", par_elmts['Z', 1]:par_elmts['Z', 2], "]",
+                              sapply(unlist(Xc_pos), function(x) {
+                                if (!is.na(x)) {
+                                  paste0(" * Xc[i, ", x, "]")
+                                } else {
+                                  ""
+                                }
+                              })
+        )
+      } else {
+        hc_interact <- "0"
+      }
+      rd_slopes[[k - 1]] <- paste0(tab(4), "mu_b_", varname, "[i, ", k,"] <- ",
+                                   paste0(hc_interact, sep = "", collapse = " + "))
+    }
+    paste(rd_slopes, collapse = "\n")
+  }
+}
 
 
 impprior_glmm <- function(family, varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...){

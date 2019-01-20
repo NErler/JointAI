@@ -20,7 +20,7 @@ get_coef_names <- function(Mlist, K) {
                  })
         ),
         unlist(lapply(Mlist$hc_list, function(x) {
-          names(x)
+          names(x)[sapply(x, attr, 'matrix') %in% c('Xc', 'Z')]
         }))
       ),
     if (length(Mlist$cols_main$Xl) > 0)
