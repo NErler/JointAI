@@ -6,8 +6,8 @@
 \usage{
 sim_data(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   norm = 2, bin = 2, multi = 2, ord = 2, count = NULL,
-  long = 2, coef = NULL, misvar = NULL, nmisvar = 7,
-  format = "long")
+  longnorm = 2, longbin = 2, longord = 2, coef = NULL,
+  misvar = NULL, nmisvar = 7, format = "long", seed = NULL)
 }
 \arguments{
 \item{N}{sample size (integer)}
@@ -33,13 +33,19 @@ drawn from distributions.}
 
 \item{count}{integer giving the number of ordinal variables or list (not yet used)}
 
-\item{long}{integer giving the number of longitudinal (normally distributed)
+\item{longnorm}{integer giving the number of longitudinal (normally distributed)
 variables or list containing parameters}
+
+\item{longbin}{integer giving the number of longitudinal binary
+variables or list containing parameters}
+
+\item{longord}{integer giving the number of longitudinal ordinal factors
+or list containing parameters}
 
 \item{coef}{vector of parameters used to create the outcome (optional), if
 NULL, the parameters are drawn from a normal distribution}
 
-\item{misvar}{vector of variable names or positions (??? check this) to
+\item{misvar}{vector of variable names or positions to
 specify which variables are incomplete}
 
 \item{nmisvar}{integer specifying the total number of incomplete variables,
@@ -47,6 +53,8 @@ necessary when misvar is NULL and incomplete variables are chosen
 randomly}
 
 \item{format}{"long" or "wide" ("wide" not yet implemented)}
+
+\item{seed}{optional seed value}
 }
 \description{
 Simulate dataset

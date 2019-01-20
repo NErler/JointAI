@@ -4,7 +4,7 @@
 \name{longDF}
 \alias{longDF}
 \title{Longitudinal example dataset}
-\format{A simulated data frame with 318 rows and 13 variables with data from 100 subjects:
+\format{A simulated data frame with 341 rows and 17 variables with data from 100 subjects:
 \describe{
   \item{C1}{continuous, complete baseline variable}
   \item{C2}{continuous, incomplete baseline variable}
@@ -14,8 +14,12 @@
   \item{M2}{unordered factor; incomplete baseline variable}
   \item{O1}{ordered factor; complete baseline variable}
   \item{O2}{ordered factor; incomplete baseline variable}
-  \item{L1}{continuous, complete longitudinal variable}
-  \item{L2}{continuous incomplete longitudinal variable}
+  \item{c1}{continuous, complete longitudinal variable}
+  \item{c2}{continuous incomplete longitudinal variable}
+  \item{b1}{binary, complete longitudinal variable}
+  \item{b2}{binary incomplete longitudinal variable}
+  \item{c1}{ordered factor; complete longitudinal variable}
+  \item{c2}{ordered factor; incomplete longitudinal variable}
   \item{id}{id (grouping) variable}
   \item{time}{continuous complete longitudinal variable}
   \item{y}{continuous, longitudinal (outcome) variable}
