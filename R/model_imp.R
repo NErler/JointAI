@@ -376,7 +376,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
 
-  # imputation method ----------------------------------------------------------
+  # * imputation method ----------------------------------------------------------
   models_default <- get_models(fixed = fixed, random = random, data = data,
                                auxvars = auxvars)$models
 
@@ -408,6 +408,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
 
+  # * divide matrices -------------------------------------------------------
   if (is.null(Mlist)) {
     Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
                              random = random, auxvars = auxvars,
@@ -415,7 +416,6 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                              models = models, warn = warn, mess = mess, ppc = ppc,
                              ridge = ridge)
   }
-
 
   if (is.null(K)) {
     K <- get_model_dim(Mlist$cols_main, Mlist$hc_list)
