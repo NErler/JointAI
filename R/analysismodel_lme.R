@@ -62,29 +62,45 @@ lme_model <- function(Mlist, K, ...){
 }
 
 
-paste_rdslopes <- function(Z, hc_list, K){
-  if (ncol(Z) > 1) {
+paste_rdslopes <- function(nranef, hc_list, K){
+  if (nranef > 1) {
     rd_slopes <- list()
-    for (k in 2:ncol(Z)) {
-      beta_start <- K[colnames(Z)[k], 1]
-      beta_end <- K[colnames(Z)[k], 2]
-      Xc_pos <- if (any(attr(hc_list[[k - 1]], "matrix") == "Xc")) {
-        hc_list[[k - 1]][which(attr(hc_list[[k - 1]], "matrix") %in% c("Z", "Xc"))]
-      }
+    for (k in 2:nranef) {
+      beta_start <- K[names(hc_list)[k - 1], 1]
+      beta_end <- K[names(hc_list)[k - 1], 2]
 
-      hc_interact <- if (!is.null(hc_list[[colnames(Z)[k]]])) {
-        paste0("beta[", beta_start:beta_end, "]",
-               sapply(Xc_pos, function(x) {
-                 if (!is.na(x)) {
-                   paste0(" * Xc[i, ", x, "]")
-                 } else {
-                   ""
-                 }
-               })
+      if (any(sapply(hc_list[[k - 1]], attr, "matrix") == "Xc")) {
+        vec <- sapply(hc_list[[k - 1]], attr, "matrix") == "Xc"
+        Xc_pos <- sapply(seq_along(vec), function (i) {
+          ifelse(vec[i], attr(hc_list[[k - 1]][[i]], 'column'), NA)
+        })
+
+        hc_interact <- paste0("beta[", beta_start:beta_end, "]",
+                              sapply(Xc_pos, function(x) {
+                                if (!is.na(x)) {
+                                  paste0(" * Xc[i, ", x, "]")
+                                } else {
+                                  ""
+                                }
+                              })
         )
       } else {
-        "0"
+        hc_interact <- "0"
       }
+
+      # hc_interact <- if (!is.null(hc_list[[colnames(Z)[k]]])) {
+      #   paste0("beta[", beta_start:beta_end, "]",
+      #          sapply(Xc_pos, function(x) {
+      #            if (!is.na(x)) {
+      #              paste0(" * Xc[i, ", x, "]")
+      #            } else {
+      #              ""
+      #            }
+      #          })
+      #   )
+      # } else {
+      #   "0"
+      # }
 
       rd_slopes[[k - 1]] <- paste0(tab(4), "mu_b[i, ", k,"] <- ",
                                    paste0(hc_interact, sep = "", collapse = " + "))
