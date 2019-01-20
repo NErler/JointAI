@@ -533,10 +533,11 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   if (n.iter > 0 & !is.null(mcmc)) {
-    coefs <- get_coef_names(Mlist, K)
-
-
     MCMC <- mcmc
+
+    coefs <- try(get_coef_names(Mlist, K))
+
+    if (!inherits(coefs, "try-error")) {
     for (k in 1:length(MCMC)) {
       # change names of MCMC to variable names where possible
       colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <-
@@ -550,7 +551,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
         attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
       }
     }
-    # colnames(MCMC)[match(coefs[, 1], colnames(MCMC))] <- coefs[, 2]
+    }
   }
 
 
