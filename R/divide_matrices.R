@@ -163,10 +163,12 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   Xc_seq <- c(Xc_seq, which(!1:ncol(Xc) %in% Xc_seq))
 
   Xc <- Xc[, Xc_seq, drop = FALSE]
+  # * update Z -------------------------------------------------
   Z2 <- Z
-  Z[, na.omit(match(colnames(Xc)[-1], colnames(Z)))] <- 1
-  colnames(Z)[na.omit(match(colnames(Xc)[-1], colnames(Z)))] <- 'placeholder'
-
+  if(!is.null(Z)) {
+    Z[, na.omit(match(colnames(Xc)[-1], colnames(Z)))] <- 1
+    colnames(Z)[na.omit(match(colnames(Xc)[-1], colnames(Z)))] <- 'placeholder'
+  }
 
   # Xcat -----------------------------------------------------------------------
   # make filter variables:
