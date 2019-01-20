@@ -141,7 +141,7 @@ get_models <- function(fixed, random = NULL, data,
 
   if (length(allvars) > 0) {
     tvar <- sapply(data[, allvars, drop = FALSE], check_tvar, idvar)
-    tvar <- tvar[!names(tvar) %in% all.vars(random2)]
+    # tvar <- tvar[!names(tvar) %in% all.vars(random2)]
 
 
     nmis <- c(colSums(is.na(data[, names(tvar[tvar]), drop = FALSE])),
@@ -151,6 +151,7 @@ get_models <- function(fixed, random = NULL, data,
     if (all(nmis == 0))
       return(list(models = NULL, meth = NULL))
 
+    nmis <- nmis[!(names(nmis) %in% all.vars(random2) & nmis == 0)]
     tvar <- tvar[names(nmis)]
 
     types <- lapply(split(nmis, list(ifelse(nmis > 0, 'incomplete', 'complete'),
