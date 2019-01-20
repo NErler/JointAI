@@ -13,7 +13,7 @@ get_model_dim <- function(cols_main, hc_list){
     for (i in 1:length(hc_list)) {
       K[names(hc_list)[i], ] <-
         if (length(hc_list[[i]]) > 0) {
-          c(1, max(1, sum(attr(hc_list[[i]], "matrix") %in% c("Xc", "Z"), na.rm = TRUE))) +
+          c(1, max(1, length(hc_list[[i]]))) +
             max(c(K, 0), na.rm = TRUE)
         } else {
           c(NA, NA)

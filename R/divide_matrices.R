@@ -209,7 +209,8 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     }
 
     hc_interact <- unlist(sapply(hc_list, function(x) {
-      names(which(attr(x, "matrix") == "Xc"))
+      names(x)[[which(sapply(x, attr, 'matrix') == 'Xc')]]
+      # names(which(attr(x, "matrix") == "Xc"))
     }))
     Xil <- if (!is.null(linteract) & any(!linteract %in% hc_interact)) {
       Xlong[, linteract[!linteract %in% hc_interact], drop = FALSE]
