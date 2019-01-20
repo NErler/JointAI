@@ -42,7 +42,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
                       export_to_SPSS = FALSE,
                       resdir = NULL, filename = NULL){
 
-  if (is.null(object$meth))
+  if (is.null(object$models) | sum(is.na(object$data[, names(object$models)])) == 0)
     stop("This JointAI object did not impute any values.")
 
   if (!"foreign" %in% rownames(installed.packages()))

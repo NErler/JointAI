@@ -98,7 +98,7 @@
 
 get_imp_meth <- function(fixed, random = NULL, data,
                          auxvars = NULL){
-  get_models$meth
+  get_models(fixed = fixed, random = random, data = data, auxvars = auxvars)$meth
 }
 
 #' @rdname get_imp_meth
