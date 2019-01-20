@@ -12,6 +12,8 @@
 glm_model <- function(family, link, Mlist, K, ...){
 
   y_name <- colnames(Mlist$y)
+  indent <- 4 + nchar(link) + 12 + nchar(y_name)
+
 
   distr <- switch(family,
                   "gaussian" = function(y_name) {
@@ -31,10 +33,10 @@ glm_model <- function(family, link, Mlist, K, ...){
   repar <- switch(family,
                   "gaussian" = NULL,
                   "binomial" = NULL,
-                  "Gamma" = paste0(tab(), "shape_", y_name, "[j] <- pow(mu_", y_name,
+                  "Gamma" = paste0(tab(4), "shape_", y_name, "[j] <- pow(mu_", y_name,
                                    "[j], 2) / pow(sigma_", y_name, ", 2)",
                                    "\n",
-                                   tab(), "rate_", y_name, "[j]  <- mu_", y_name,
+                                   tab(4), "rate_", y_name, "[j]  <- mu_", y_name,
                                    "[j] / pow(sigma_", y_name, ", 2)", "\n"),
                   "Poisson" = NULL)
 
@@ -49,12 +51,12 @@ glm_model <- function(family, link, Mlist, K, ...){
                     "inverse"  = function(x) paste0("1/", x)
   )
 
-
-  paste_Xic <- if (length(Mlist$cols_main$Xic) > 0) {
-    paste0(" + \n", tab(14 + nchar(y_name)),
-           "inprod(Xic[j, ], beta[", K["Xic", 1],":", K["Xic", 2],"])", sep = "")
+  paste_Xic <- if (!is.null(Mlist$Xic)) {
+    paste0(" + \n", tab(indent),
+           paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xic',
+                           parelmts = K["Xic", 1]:K["Xic", 2],
+                           cols = Mlist$cols_main$Xic, indent = indent))
   }
-
 
   paste_ppc <- NULL #if (Mlist$ppc) {
   #   paste0(
@@ -67,8 +69,11 @@ glm_model <- function(family, link, Mlist, K, ...){
          tab(4), y_name, "[j] ~ ", distr(y_name), "\n",
          paste_ppc,
          repar,
-         tab(4), linkfun(paste0("mu_", y_name, "[j]")),
-         " <- inprod(Xc[j, ], beta[", K['Xc', 1], ":", K['Xc', 2], "])",
+         tab(4), linkfun(paste0("mu_", y_name, "[j]")), " <- ",
+         paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xc',
+                         parelmts = K["Xc", 1]:K["Xc", 2],
+                         cols = Mlist$cols_main$Xc, indent = indent),
+         # " <- inprod(Xc[j, ], beta[", K['Xc', 1], ":", K['Xc', 2], "])",
          paste_Xic
   )
 }
