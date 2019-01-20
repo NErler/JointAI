@@ -10,29 +10,30 @@
 # @export
 lme_model <- function(Mlist, K, ...){
   y_name <- colnames(Mlist$y)
+  indent <- nchar(y_name) + 4 + 10
 
   norm.distr  <- if (ncol(Mlist$Z) < 2) {"dnorm"} else {"dmnorm"}
 
   paste_Xic <- if (length(Mlist$cols_main$Xic) > 0) {
-    paste0(" + \n", tab(nchar(y_name) + 17),
+    paste0(" + \n", tab(18),
            paste_predictor(parnam = 'beta', parindex = 'i', matnam = 'Xic',
                            parelmts = K["Xic", 1]:K["Xic", 2],
-                           cols = Mlist$cols_main$Xic, indent = 0))
+                           cols = Mlist$cols_main$Xic, indent = 18))
   }
 
   paste_Xl <- if (length(Mlist$cols_main$Xl) > 0) {
-    paste0(" + \n", tab(nchar(y_name) + 14),
+    paste0(" + \n", tab(indent),
            paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xl',
                            parelmts = K["Xl", 1]:K["Xl", 2],
-                           cols = Mlist$cols_main$Xl, indent = 0)
+                           cols = Mlist$cols_main$Xl, indent = indent)
     )
   }
 
   paste_Xil <- if (length(Mlist$cols_main$Xil) > 0) {
-    paste0(" + \n", tab(nchar(y_name) + 14),
+    paste0(" + \n", tab(indent),
            paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xil',
                            parelmts = K["Xil", 1]:K["Xil", 2],
-                           cols = Mlist$cols_main$Xil, indent = 0)
+                           cols = Mlist$cols_main$Xil, indent = indent)
     )
   }
 
