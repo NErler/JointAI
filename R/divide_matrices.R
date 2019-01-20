@@ -163,6 +163,9 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   Xc_seq <- c(Xc_seq, which(!1:ncol(Xc) %in% Xc_seq))
 
   Xc <- Xc[, Xc_seq, drop = FALSE]
+  Z2 <- Z
+  Z[, na.omit(match(colnames(Xc)[-1], colnames(Z)))] <- 1
+  colnames(Z)[na.omit(match(colnames(Xc)[-1], colnames(Z)))] <- 'placeholder'
 
 
   # Xcat -----------------------------------------------------------------------
@@ -195,9 +198,11 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     X2[, which(tvar & !names(tvar) %in% colnames(Z)), drop = FALSE]
   }
 
-  hc_list <- if (!is.null(random)) get_hc_list(X2, Xc, Xic, Z, Xlong)
+  # * hc_list -------------------------------------------------------
+  hc_list <- if (!is.null(random))
+    get_hc_list(X2, Xc, Xic, Z, Z2, Xlong)
 
-
+  # * Xlong --------------------
   if (!is.null(Xlong)) {
     linteract <- if (any(grepl(":", colnames(Xlong), fixed = TRUE))) {
       grep(":", colnames(Xlong), fixed = TRUE, value = TRUE)
@@ -255,7 +260,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   if (analysis_type %in% c('clm', 'clmm', 'coxph'))
     XXnam <- XXnam[-1]
 
-  cols_main <- list(Xc = c(na.omit(match(XXnam, colnames(Xc)))),
+  cols_main <- list(Xc = c(na.omit(match(XXnam[!XXnam %in% names(hc_list)], colnames(Xc)))),
                     Xl = if (!is.null(Xl)) c(na.omit(match(XXnam, colnames(Xl)))),
                     Xic = if (!is.null(Xic)) c(na.omit(match(XXnam, colnames(Xic)))),
                     Xil = if (!is.null(Xil)) c(na.omit(match(XXnam, colnames(Xil)))),
