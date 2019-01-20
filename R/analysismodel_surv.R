@@ -8,12 +8,12 @@ survreg_model <- function(Mlist, K, ...){
            "inprod(Xic[j, ], beta[", K["Xic", 1],":", K["Xic", 2],"])", sep = "")
   }
 
-  paste_ppc <- if (Mlist$ppc) {
-    paste0(
-      tab(4), y_name, "_ppc[j] ~ dgen.gamma(1, rate_", y_name, "[j], shape_", y_name, ")", "\n",
-      tab(4), 'mu_', y_name, '[j] <- 1/rate_', y_name, '[j] * exp(loggam(1 + 1/shape_', y_name, '))', "\n"
-    )
-  }
+  paste_ppc <- NULL # if (Mlist$ppc) {
+  #   paste0(
+  #     tab(4), y_name, "_ppc[j] ~ dgen.gamma(1, rate_", y_name, "[j], shape_", y_name, ")", "\n",
+  #     tab(4), 'mu_', y_name, '[j] <- 1/rate_', y_name, '[j] * exp(loggam(1 + 1/shape_', y_name, '))', "\n"
+  #   )
+  # }
 
 
   paste0(tab(4), "# Weibull survival model for ", y_name, "\n",
@@ -28,14 +28,14 @@ survreg_model <- function(Mlist, K, ...){
 survreg_priors <- function(K, Mlist, ...){
   y_name <- colnames(Mlist$y)
 
-  paste_ppc <- if (Mlist$ppc) {
-    paste0('\n',
-           tab(), '# Posterior predictive check for the model for ', y_name, '\n',
-           tab(), 'ppc_', y_name, "_o <- pow(", y_name, "[] - mu_", y_name, "[], 2)", "\n",
-           tab(), 'ppc_', y_name, "_e <- pow(", y_name, "_ppc[] - mu_", y_name, "[], 2)", "\n",
-           tab(), 'ppc_', y_name, " <- mean(step(ppc_", y_name, "_o - ppc_", y_name, "_e)) - 0.5", "\n"
-    )
-  }
+  paste_ppc <- NULL # if (Mlist$ppc) {
+  #   paste0('\n',
+  #          tab(), '# Posterior predictive check for the model for ', y_name, '\n',
+  #          tab(), 'ppc_', y_name, "_o <- pow(", y_name, "[] - mu_", y_name, "[], 2)", "\n",
+  #          tab(), 'ppc_', y_name, "_e <- pow(", y_name, "_ppc[] - mu_", y_name, "[], 2)", "\n",
+  #          tab(), 'ppc_', y_name, " <- mean(step(ppc_", y_name, "_o - ppc_", y_name, "_e)) - 0.5", "\n"
+  #   )
+  # }
 
   if (Mlist$ridge) {
     distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main[k])", "\n",

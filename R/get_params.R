@@ -97,7 +97,7 @@ get_params <- function(models, analysis_type, family,
               if (delta_imp & any(models == "cumlogit")) {
                 paste0("delta_", names(models)[models == "cumlogit"])
               },
-              if (ppc) paste0('ppc_', c(y_name, names(models))),
+              # if (ppc) paste0('ppc_', c(y_name, names(models))),
               other
   )
 

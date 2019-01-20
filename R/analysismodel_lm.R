@@ -20,11 +20,11 @@ lm_model <- function(Mlist, K, ...){
                            cols = Mlist$cols_main$Xic, indent = indent))
   }
 
-  paste_ppc <- if (Mlist$ppc) {
-    paste0(
-      tab(4), y_name, "_ppc[j] ~ dnorm(mu_", y_name, "[j], tau_", y_name, ")", "\n"
-    )
-  }
+  paste_ppc <- NULL #if (Mlist$ppc) {
+  #   paste0(
+  #     tab(4), y_name, "_ppc[j] ~ dnorm(mu_", y_name, "[j], tau_", y_name, ")", "\n"
+  #   )
+  # }
 
   paste0(tab(4), "# Linear model for ", y_name, "\n",
          tab(4), y_name, "[j] ~ dnorm(mu_", y_name, "[j], tau_", y_name, ")", "\n",
@@ -46,14 +46,14 @@ lm_model <- function(Mlist, K, ...){
 lm_priors <- function(K, Mlist, ...){
   y_name <- colnames(Mlist$y)
 
-  paste_ppc <- if (Mlist$ppc) {
-    paste0('\n',
-      tab(), '# Posterior predictive check for the model for ', y_name, '\n',
-      tab(), 'ppc_', y_name, "_o <- pow(", y_name, "[] - mu_", y_name, "[], 2)", "\n",
-      tab(), 'ppc_', y_name, "_e <- pow(", y_name, "_ppc[] - mu_", y_name, "[], 2)", "\n",
-      tab(), 'ppc_', y_name, " <- mean(step(ppc_", y_name, "_o - ppc_", y_name, "_e)) - 0.5", "\n"
-    )
-  }
+  paste_ppc <- NULL # if (Mlist$ppc) {
+  #   paste0('\n',
+  #     tab(), '# Posterior predictive check for the model for ', y_name, '\n',
+  #     tab(), 'ppc_', y_name, "_o <- pow(", y_name, "[] - mu_", y_name, "[], 2)", "\n",
+  #     tab(), 'ppc_', y_name, "_e <- pow(", y_name, "_ppc[] - mu_", y_name, "[], 2)", "\n",
+  #     tab(), 'ppc_', y_name, " <- mean(step(ppc_", y_name, "_o - ppc_", y_name, "_e)) - 0.5", "\n"
+  #   )
+  # }
 
 
   if (Mlist$ridge) {

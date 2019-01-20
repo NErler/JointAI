@@ -23,11 +23,11 @@ clm_model <- function(Mlist = NULL, K, ...){
   })
 
 
-  paste_ppc <- if (Mlist$ppc) {
-    paste0(
-      tab(4), y_name, "_ppc[j] ~ dcat(p_", y_name, "[j, 1:", Mlist$ncat, "])", "\n"
-    )
-  }
+  paste_ppc <- NULL #if (Mlist$ppc) {
+  #   paste0(
+  #     tab(4), y_name, "_ppc[j] ~ dcat(p_", y_name, "[j, 1:", Mlist$ncat, "])", "\n"
+  #   )
+  # }
 
 
   paste0(tab(4), "# Cumulative logit mixed effects model for ", y_name, "\n",
@@ -68,21 +68,21 @@ clm_priors <- function(Mlist, K, ...){
     }
   })
 
-  paste_ppc <- if (Mlist$ppc) {
-    paste0('\n\n',
-           tab(), '# Posterior predictive check for the model for ', y_name, '\n',
-           tab(), 'for (j in 1:', Mlist$N, ') {', '\n',
-           tab(4), 'for (k in 1:', Mlist$ncat, ') {', '\n',
-           tab(6), y_name, '_dummies[j, k] <- ifelse(', y_name, '[j] == k, 1, 0)', '\n',
-           tab(6), y_name, '_ppc_dummies[j, k] <- ifelse(', y_name, '_ppc[j] == k, 1, 0)', '\n',
-           tab(4), "}", "\n",
-           tab(4), 'ppc_', y_name, "_o[j] <- sum(pow(", y_name, "_dummies[j, ] - p_", y_name, "[j, ], 2))", "\n",
-           tab(4), 'ppc_', y_name, "_e[j] <- sum(pow(", y_name, "_ppc_dummies[j, ] - p_", y_name, "[j, ], 2))", "\n",
-           tab(), "}", "\n",
-           tab(), 'ppc_', y_name, " <- mean(ifelse(ppc_", y_name, "_o > ppc_", y_name, "_e, 1, 0) + ",
-           "ifelse(ppc_", y_name, "_o == ppc_", y_name, "_e, 0.5, 0)) - 0.5", "\n"
-    )
-  }
+  paste_ppc <- NULL #if (Mlist$ppc) {
+    # paste0('\n\n',
+    #        tab(), '# Posterior predictive check for the model for ', y_name, '\n',
+    #        tab(), 'for (j in 1:', Mlist$N, ') {', '\n',
+    #        tab(4), 'for (k in 1:', Mlist$ncat, ') {', '\n',
+    #        tab(6), y_name, '_dummies[j, k] <- ifelse(', y_name, '[j] == k, 1, 0)', '\n',
+    #        tab(6), y_name, '_ppc_dummies[j, k] <- ifelse(', y_name, '_ppc[j] == k, 1, 0)', '\n',
+    #        tab(4), "}", "\n",
+    #        tab(4), 'ppc_', y_name, "_o[j] <- sum(pow(", y_name, "_dummies[j, ] - p_", y_name, "[j, ], 2))", "\n",
+    #        tab(4), 'ppc_', y_name, "_e[j] <- sum(pow(", y_name, "_ppc_dummies[j, ] - p_", y_name, "[j, ], 2))", "\n",
+    #        tab(), "}", "\n",
+    #        tab(), 'ppc_', y_name, " <- mean(ifelse(ppc_", y_name, "_o > ppc_", y_name, "_e, 1, 0) + ",
+    #        "ifelse(ppc_", y_name, "_o == ppc_", y_name, "_e, 0.5, 0)) - 0.5", "\n"
+    # )
+  # }
 
   if (Mlist$ridge) {
     distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main[k])", "\n",

@@ -56,11 +56,11 @@ glm_model <- function(family, link, Mlist, K, ...){
   }
 
 
-  paste_ppc <- if (Mlist$ppc) {
-    paste0(
-      tab(4), y_name, "_ppc[j] ~ ", distr(y_name), "\n"
-    )
-  }
+  paste_ppc <- NULL #if (Mlist$ppc) {
+  #   paste0(
+  #     tab(4), y_name, "_ppc[j] ~ ", distr(y_name), "\n"
+  #   )
+  # }
 
 
   paste0(tab(4), "# ", capitalize(family), " model for ", y_name, "\n",
@@ -92,15 +92,15 @@ glm_priors <- function(family, K, Mlist, ...){
                                       tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")"),
                      "Poisson" = NULL)
 
-  paste_ppc <- if (Mlist$ppc) {
-    paste0('\n\n',
-           tab(), '# Posterior predictive check for the model for ', y_name, '\n',
-           tab(), 'ppc_', y_name, "_o <- pow(", y_name, "[] - mu_", y_name, "[], 2)", "\n",
-           tab(), 'ppc_', y_name, "_e <- pow(", y_name, "_ppc[] - mu_", y_name, "[], 2)", "\n",
-           tab(), 'ppc_', y_name, " <- mean(ifelse(ppc_", y_name, "_o > ppc_", y_name, "_e, 1, 0) + ",
-                                           "ifelse(ppc_", y_name, "_o == ppc_", y_name, "_e, 0.5, 0)) - 0.5"
-    )
-  }
+  paste_ppc <- NULL #if (Mlist$ppc) {
+  #   paste0('\n\n',
+  #          tab(), '# Posterior predictive check for the model for ', y_name, '\n',
+  #          tab(), 'ppc_', y_name, "_o <- pow(", y_name, "[] - mu_", y_name, "[], 2)", "\n",
+  #          tab(), 'ppc_', y_name, "_e <- pow(", y_name, "_ppc[] - mu_", y_name, "[], 2)", "\n",
+  #          tab(), 'ppc_', y_name, " <- mean(ifelse(ppc_", y_name, "_o > ppc_", y_name, "_e, 1, 0) + ",
+  #                                          "ifelse(ppc_", y_name, "_o == ppc_", y_name, "_e, 0.5, 0)) - 0.5"
+  #   )
+  # }
 
   if (Mlist$ridge) {
     distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main[k])", "\n",
