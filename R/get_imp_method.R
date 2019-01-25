@@ -13,6 +13,115 @@
 #'
 #'
 #' @export
+
+get_imp_meth <- function(fixed, random = NULL, data,
+                         auxvars = NULL, no_model = NULL){
+  get_models(fixed = fixed, random = random, data = data, auxvars = auxvars,
+             no_model = no_model)$meth
+}
+
+
+
+#' @rdname get_imp_meth
+#' @export
+
+get_models <- function(fixed, random = NULL, data,
+                         auxvars = NULL, no_model = NULL){
+
+  if (missing(fixed))
+    stop("No formula specified.")
+
+  if (missing(data))
+    stop("No dataset given.")
+
+
+
+  random2 <- remove_grouping(random)
+
+  # try to extract id variable from random
+  id <- extract_id(random)
+  idvar <- if (!is.null(id)) {
+    data[, id]
+  } else {
+    1:nrow(data)
+  }
+
+  allvars <- unique(c(all.vars(fixed[[3]]),
+                      all.vars(random2),
+                      if (!is.null(auxvars))
+                        all.vars(as.formula(paste('~',
+                                                  paste(auxvars, collapse = "+")))
+                        )
+  ))
+
+  # check that all variables are found in the data
+  if (any(!allvars %in% names(data))) {
+    stop(gettextf("Variable(s) %s were not found in the data." ,
+                  paste(dQuote(allvars[!allvars %in% names(data)]), collapse = ", "),
+                  call. = FALSE)
+    )
+  }
+
+
+  if (!is.null(no_model) && any(colSums(is.na(data[, no_model, drop = FALSE])) > 0)) {
+    stop(gettextf("Variable(s) %s have missing values and imputation models are needed for these variables." ,
+                  paste(dQuote(no_model[colSums(is.na(data[, no_model, drop = FALSE])) > 0]), collapse = ", "),
+                  call. = FALSE)
+    )
+  }
+
+
+
+  if (length(allvars) > 0) {
+    tvar <- sapply(data[, allvars, drop = FALSE], check_tvar, idvar)
+
+    nmis <- c(colSums(is.na(data[, names(tvar[tvar]), drop = FALSE])),
+              colSums(is.na(data[match(unique(idvar), idvar), names(tvar[!tvar]), drop = FALSE]))
+    )
+
+    if (all(nmis == 0))
+      return(list(models = NULL, meth = NULL))
+
+    nmis <- nmis[!names(nmis) %in% no_model]
+    tvar <- tvar[names(nmis)]
+
+    types <- lapply(split(nmis, list(ifelse(nmis > 0, 'incomplete', 'complete'),
+                                     ifelse(tvar, 'tvar', 'baseline'))),
+                    function(x) if (length(x) > 0) sort(x)
+    )
+
+    models <- c(types$incomplete.baseline,
+                if (!is.null(types$incomplete.baseline)) types$complete.tvar,
+                types$incomplete.tvar)
+
+    nlevel <- sapply(data[, names(models), drop = FALSE],
+                     function(x) length(levels(x)))
+
+    if (length(nlevel) > 0) {
+      models[nlevel == 0 & !tvar[names(nlevel)]] <- "norm"
+      models[nlevel == 0 &  tvar[names(nlevel)]] <- "lmm"
+      models[nlevel == 2 & !tvar[names(nlevel)]] <- "logit"
+      models[nlevel == 2 &  tvar[names(nlevel)]] <- "glmm_logit"
+      models[nlevel  > 2 & !tvar[names(nlevel)]] <- "multilogit"
+      models[nlevel  > 2 &  tvar[names(nlevel)]] <- "not yet implemented"
+      models[sapply(data[, names(nlevel), drop = FALSE], is.ordered) & !tvar[names(nlevel)]] <- "cumlogit"
+      models[sapply(data[, names(nlevel), drop = FALSE], is.ordered) & tvar[names(nlevel)]] <- "clmm"
+    }
+
+    meth <- models[nmis[names(models)] > 0]
+
+  } else {
+    models <- NULL
+    meth <- NULL
+  }
+  return(list(models = models, meth = meth))
+}
+
+
+
+
+
+
 # get_imp_meth <- function(fixed, random = NULL, data,
 #                          auxvars = NULL){
 #
@@ -95,90 +204,3 @@
 #   }
 #   return(meth = meth)
 # }
-
-get_imp_meth <- function(fixed, random = NULL, data,
-                         auxvars = NULL){
-  get_models(fixed = fixed, random = random, data = data, auxvars = auxvars)$meth
-}
-
-#' @rdname get_imp_meth
-#' @export
-get_models <- function(fixed, random = NULL, data,
-                         auxvars = NULL){
-
-  if (missing(fixed))
-    stop("No formula specified.")
-
-  if (missing(data))
-    stop("No dataset given.")
-
-
-  random2 <- remove_grouping(random)
-
-  # try to extract id variable from random
-  id <- extract_id(random)
-  idvar <- if (!is.null(id)) {
-    data[, id]
-  } else {
-    1:nrow(data)
-  }
-
-  allvars <- unique(c(all.vars(fixed[[3]]),
-                      all.vars(random2[2]),
-                      if (!is.null(auxvars))
-                        all.vars(as.formula(paste('~',
-                                                  paste(auxvars, collapse = "+")))
-                        )
-  ))
-
-  # check that all variables are found in the data
-  if (any(!allvars %in% names(data))) {
-    stop(gettextf("Variable(s) %s were not found in the data." ,
-                  paste(dQuote(allvars[!allvars %in% names(data)]), collapse = ", "))
-    )
-  }
-
-
-  if (length(allvars) > 0) {
-    tvar <- sapply(data[, allvars, drop = FALSE], check_tvar, idvar)
-    # tvar <- tvar[!names(tvar) %in% all.vars(random2)]
-
-
-    nmis <- c(colSums(is.na(data[, names(tvar[tvar]), drop = FALSE])),
-              colSums(is.na(data[match(unique(idvar), idvar), names(tvar[!tvar]), drop = FALSE]))
-    )
-
-    if (all(nmis == 0))
-      return(list(models = NULL, meth = NULL))
-
-    nmis <- nmis[!(names(nmis) %in% all.vars(random2) & nmis == 0)]
-    tvar <- tvar[names(nmis)]
-
-    types <- lapply(split(nmis, list(ifelse(nmis > 0, 'incomplete', 'complete'),
-                                     ifelse(tvar, 'tvar', 'baseline'))),
-                    function(x) sort(x)
-    )
-
-    models <- c(types$incomplete.baseline, types$complete.tvar, types$incomplete.tvar)
-
-    nlevel <- sapply(data[, names(models), drop = FALSE],
-                     function(x) length(levels(x)))
-
-    if (length(nlevel) > 0) {
-      models[nlevel == 0 & !tvar[names(nlevel)]] <- "norm"
-      models[nlevel == 0 &  tvar[names(nlevel)]] <- "lmm"
-      models[nlevel == 2 & !tvar[names(nlevel)]] <- "logit"
-      models[nlevel == 2 &  tvar[names(nlevel)]] <- "glmm_logit"
-      models[nlevel  > 2 & !tvar[names(nlevel)]] <- "multilogit"
-      models[nlevel  > 2 &  tvar[names(nlevel)]] <- "not yet implemented"
-      models[sapply(data[, names(nlevel), drop = FALSE], is.ordered) & !tvar[names(nlevel)]] <- "cumlogit"
-      models[sapply(data[, names(nlevel), drop = FALSE], is.ordered) & tvar[names(nlevel)]] <- "clmm"
-    }
-
-    meth <- models[nmis[names(models)] > 0]
-
-  } else {
-    meth <- NULL
-  }
-  return(list(meth = meth, models = models))
-}
