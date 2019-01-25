@@ -17,23 +17,12 @@ get_inits.default = function(models, Mlist, K, K_imp, analysis_type, family, lin
     mu0 <- 0
   }
 
-  mean.betas <- c(mu0, rep(0, max(K[, "end"], na.rm = TRUE) - 1))
+  if (any(!is.na(K))) {
+    mean.betas <- c(mu0, rep(0, max(K[, "end"], na.rm = TRUE) - 1))
 
-  l[["beta"]] <- setNames(rnorm(length(mean.betas), mean.betas, 1),
-                          get_coef_names(Mlist, K)[, 2])
-
-  # if (!is.null(Mlist$auxvars)) {
-  #   nams <- sapply(Mlist$auxvars, function(x) {
-  #     if (x %in% names(Mlist$refs)) {
-  #       paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) !=
-  #                                           Mlist$refs[[x]]])
-  #     } else {
-  #       x
-  #     }
-  #   })
-  #
-  #   l[["beta"]][unlist(nams)] <- NA
-  # }
+    l[["beta"]] <- setNames(rnorm(length(mean.betas), mean.betas, 1),
+                            get_coef_names(Mlist, K)[, 2])
+  }
 
   if (family %in% c('gaussian', 'Gamma'))
     l[[paste0("tau_", colnames(Mlist$y))]] = rgamma(1, 1, 1)

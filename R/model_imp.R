@@ -438,14 +438,14 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   if (is.null(imp_par_list)) {
     imp_par_list <- mapply(get_imp_par_list, models, names(models),
-                           MoreArgs = list(Mlist, K_imp, dest_cols, trunc),
+                           MoreArgs = list(Mlist, K_imp, dest_cols, trunc, models),
                            SIMPLIFY = FALSE)
   }
 
   if (is.null(data_list)) {
     data_list <- try(get_data_list(analysis_type, family, link, models, Mlist, auxvars,
                                    scale_pars = scale_pars, hyperpars = hyperpars,
-                                   data = data))
+                                   data = data, imp_par_list = imp_par_list))
     scale_pars <- data_list$scale_pars
     hyperpars <- data_list$hyperpars
     data_list <- data_list$data_list
@@ -493,6 +493,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                 get_inits.default(models = models, Mlist = Mlist, K = K, K_imp = K_imp,
                        analysis_type = analysis_type, family = family, link = link), simplify = FALSE
       )
+    if (any(sapply(inits, is.null)))
+      inits <- NULL
   }
 
   # run JAGS -----------------------------------------------------------------
