@@ -5,9 +5,11 @@
 \alias{get_models}
 \title{Find default imputation methods and order}
 \usage{
-get_imp_meth(fixed, random = NULL, data, auxvars = NULL)
+get_imp_meth(fixed, random = NULL, data, auxvars = NULL,
+  no_model = NULL)
 
-get_models(fixed, random = NULL, data, auxvars = NULL)
+get_models(fixed, random = NULL, data, auxvars = NULL,
+  no_model = NULL)
 }
 \arguments{
 \item{fixed}{a two sided formula describing the fixed-effects part of the

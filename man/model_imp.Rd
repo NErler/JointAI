@@ -16,57 +16,60 @@ lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, models = NULL, meth = NULL, refcats = NULL,
-  trunc = NULL, scale_vars = NULL, scale_pars = NULL,
-  hyperpars = NULL, ridge = FALSE, ...)
+  auxvars = NULL, models = NULL, no_model = NULL, meth = NULL,
+  refcats = NULL, trunc = NULL, scale_vars = NULL,
+  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
 
 glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
   modelname = NULL, modeldir = NULL, overwrite = NULL,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
   warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
-  meth = NULL, refcats = NULL, trunc = NULL, scale_vars = NULL,
-  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
+  no_model = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+  ridge = FALSE, ...)
 
 clm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, models = NULL, meth = NULL, refcats = NULL,
-  trunc = NULL, scale_vars = NULL, scale_pars = NULL,
-  hyperpars = NULL, ridge = FALSE, ...)
+  auxvars = NULL, models = NULL, no_model = NULL, meth = NULL,
+  refcats = NULL, trunc = NULL, scale_vars = NULL,
+  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, models = NULL, meth = NULL, refcats = NULL,
-  trunc = NULL, scale_vars = NULL, scale_pars = NULL,
-  hyperpars = NULL, ridge = FALSE, ...)
+  auxvars = NULL, models = NULL, no_model = NULL, meth = NULL,
+  refcats = NULL, trunc = NULL, scale_vars = NULL,
+  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
 
 glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
   modelname = NULL, modeldir = NULL, overwrite = NULL,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
   warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
-  meth = NULL, refcats = NULL, trunc = NULL, scale_vars = NULL,
-  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
+  no_model = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+  ridge = FALSE, ...)
 
 clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
   modelname = NULL, modeldir = NULL, overwrite = NULL,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
   warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
-  meth = NULL, refcats = NULL, trunc = NULL, scale_vars = NULL,
-  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
+  no_model = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+  ridge = FALSE, ...)
 
 survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, models = NULL, meth = NULL, refcats = NULL,
-  trunc = NULL, scale_vars = NULL, scale_pars = NULL,
-  hyperpars = NULL, ridge = FALSE, ...)
+  auxvars = NULL, models = NULL, no_model = NULL, meth = NULL,
+  refcats = NULL, trunc = NULL, scale_vars = NULL,
+  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
 }
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
