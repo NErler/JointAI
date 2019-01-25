@@ -100,7 +100,7 @@ glme_model <- function(family, link, Mlist, K, ...){
                          parelmts = K["Xc", 1]:K["Xc", 2],
                          cols = Mlist$cols_main$Xc, indent = 18),
          paste_Xic, "\n",
-         paste_rdslopes(Mlist$Z, Mlist$hc_list, K)
+         paste_rdslopes(Mlist$nranef, Mlist$hc_list, K)
   )
 }
 

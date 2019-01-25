@@ -96,20 +96,54 @@ ranef_priors <- function(Zcols, varnam = NULL){
         tab(4), "RinvD", varnam, "[k, k] ~ dgamma(a_diag_RinvD, b_diag_RinvD)", "\n",
         tab(), "}", "\n")
     },
-    tab(), "invD", varnam, "[1:", Zcols, ", 1:", Zcols,"] ~ ", invD_distr(Zcols), "\n",
+    tab(), "invD", varnam, "[1:", Zcols, ", 1:", Zcols,"] ~ ", invD_distr(Zcols, varnam), "\n",
     tab(), "D", varnam, "[1:", Zcols,", 1:", Zcols, "] <- inverse(invD", varnam, "[ , ])"
   )
 }
 
 
-invD_distr <- function(Zcols){
+invD_distr <- function(Zcols, varnam = NULL){
   if (Zcols == 1) {
     "dgamma(a_diag_RinvD, b_diag_RinvD)"
   } else {
-    "dwish(RinvD[ , ], KinvD)"
+    paste0("dwish(RinvD", varnam, "[ , ], KinvD", varnam, ")")
   }
 }
 
+paste_rdslopes <- function(nranef, hc_list, K){
+  if (nranef > 1) {
+    rd_slopes <- list()
+    for (k in 2:nranef) {
+      beta_start <- K[names(hc_list)[k - 1], 1]
+      beta_end <- K[names(hc_list)[k - 1], 2]
+
+      if (any(sapply(hc_list[[k - 1]], attr, "matrix") %in% c("Xc", 'Z'))) {
+        vec <- sapply(hc_list[[k - 1]], attr, "matrix")
+
+        Xc_pos <- lapply(seq_along(vec), function(i) {
+          switch(vec[i], 'Xc' = attr(hc_list[[k - 1]][[i]], 'column'),
+                 'Z' = NA,
+                 'Xlong' = NULL)
+        })
+
+        hc_interact <- paste0("beta[", beta_start:beta_end, "]",
+                              sapply(unlist(Xc_pos), function(x) {
+                                if (!is.na(x)) {
+                                  paste0(" * Xc[i, ", x, "]")
+                                } else {
+                                  ""
+                                }
+                              })
+        )
+      } else {
+        hc_interact <- "0"
+      }
+      rd_slopes[[k - 1]] <- paste0(tab(4), "mu_b[i, ", k,"] <- ",
+                                   paste0(hc_interact, sep = "", collapse = " + "))
+    }
+    paste(rd_slopes, collapse = "\n")
+  }
+}
 
 
 # ------------------------------------------------------------------------------
