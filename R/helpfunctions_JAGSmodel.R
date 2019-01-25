@@ -172,7 +172,7 @@ capitalize <- function(string) {
 
 
 
-# Paste interaction terms for JAGS model
+# interaction terms ------------------------------------------------------------
 paste_interactions <- function(index, mat0, mat1, mat0_col, mat1_col) {
   mat0_skip <- sapply(max(nchar(mat0_col)) - nchar(mat0_col), tab)
 
