@@ -167,15 +167,15 @@ impprior_glmm <- function(family, varname, par_elmts, dest_mat, dest_col, ppc, n
                      "Poisson" = NULL)
 
 
-  paste_ppc <- if (ppc) {
-    paste0('\n',
-           tab(), '# Posterior predictive check for the model for ', varname, '\n',
-           tab(), 'ppc_', varname, "_o <- pow(", dest_mat, "[,", dest_col, "] - mu_", varname, "[], 2)", "\n",
-           tab(), 'ppc_', varname, "_e <- pow(", varname, "_ppc[] - mu_", varname, "[], 2)", "\n",
-           tab(), 'ppc_', varname, " <- mean(ifelse(ppc_", varname, "_o > ppc_", varname, "_e, 1, 0) + ",
-           "ifelse(ppc_", varname, "_o == ppc_", varname, "_e, 0.5, 0)) - 0.5", "\n"
-    )
-  }
+  paste_ppc <- NULL # if (ppc) {
+  #   paste0('\n',
+  #          tab(), '# Posterior predictive check for the model for ', varname, '\n',
+  #          tab(), 'ppc_', varname, "_o <- pow(", dest_mat, "[,", dest_col, "] - mu_", varname, "[], 2)", "\n",
+  #          tab(), 'ppc_', varname, "_e <- pow(", varname, "_ppc[] - mu_", varname, "[], 2)", "\n",
+  #          tab(), 'ppc_', varname, " <- mean(ifelse(ppc_", varname, "_o > ppc_", varname, "_e, 1, 0) + ",
+  #          "ifelse(ppc_", varname, "_o == ppc_", varname, "_e, 0.5, 0)) - 0.5", "\n"
+  #   )
+  # }
 
   priors <- paste0(
     "\n",
