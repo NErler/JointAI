@@ -56,61 +56,34 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
                            cols = Xl_cols, indent = 14)
     )
   }
-  # rdslopes <- if (nranef > 1) {
-  #   rd_slopes <- list()
-  #   for (k in 2:nranef) {
-  #
-  #
-  #     Xc_pos <- if (any(sapply(hc_list[[k - 1]], attr, "matrix") %in% c("Xc", 'Z'))) {
-  #       hc_list[[k - 1]][which(sapply(hc_list[[k - 1]], attr, "matrix") %in% c("Z", "Xc"))]
-  #     }
-  #
-  #     Znam <- names(hc_list)[sapply(hc_list, attr, 'matrix') == 'Z']
-  #
-  #     hc_interact <- if (!is.null(hc_list[[Znam[k - 1]]])) {
-  #       paste0("alpha[", par_elmts['Z', 1]:par_elmts['Z', 2], "]",
-  #              sapply(Xc_pos, function(x) {
-  #                if (!is.na(x)) {
-  #                  paste0(" * Xc[i, ", x, "]")
-  #                } else {
-  #                  ""
-  #                }
-  #              })
-  #       )
-  #     } else {
-  #       "0"
-  #     }
-  #
-  #     rd_slopes[[k - 1]] <- paste0(tab(4), "mu_b_", varname, "[i, ", k,"] <- ",
-  #                                  paste0(hc_interact, sep = "", collapse = " + "))
-  #   }
-  #   paste(rd_slopes, collapse = "\n")
+
+
+
+
+
+  paste_ppc <- NULL #if (ppc) {
+    # paste0("\n",
+           # tab(4), "# For posterior predictive check:", "\n",
+           # tab(4), varname, "_ppc[j] ~ ", distr(varname), "\n"
+    # )
   # }
-
-
-
-
-
-
-  paste_ppc <- if (ppc) {
-    paste0("\n",
-           tab(4), "# For posterior predictive check:", "\n",
-           tab(4), varname, "_ppc[j] ~ ", distr(varname), "\n"
-    )
-  }
 
   paste0(tab(), "# Generalized linear mixed effects model for ", varname, "\n",
          tab(), "for (j in 1:", Ntot, ") {", "\n",
-         tab(4), "Xl[j, ", dest_col, "] ~ ", distr(varname), "\n",
+         tab(4), dest_mat, "[j, ", dest_col, "] ~ ", distr(varname), "\n",
          repar,
-         tab(4), linkfun(paste0("mu_", varname, "[j]")), " <- inprod(Z[j, ], b_", varname, "[groups[j], ])",
+         tab(4), linkfun(paste0("mu_", varname, "[j]")), " <- ",
+         paste_ranef_predictor(parnam = paste0("b_", varname), parindex = 'j',
+                               matnam = 'Z',
+                               parelmts = 1:nranef,
+                               cols = Z_cols, indent = 4 + 3 + nchar(varname) + 7),
          paste_Xl,
          # paste_Xil,
          "\n",
          paste_ppc,
          tab(), "}", "\n\n",
          tab(), "for (i in 1:", N, ") {", "\n",
-         tab(4), "b_", varname, "[i, 1:", nranef, "] ~ ", norm.distr, "(mu_b_", varname, "[i, ], invD[ , ])", "\n",
+         tab(4), "b_", varname, "[i, 1:", nranef, "] ~ ", norm.distr, "(mu_b_", varname, "[i, ], invD_", varname, "[ , ])", "\n",
          tab(4), "mu_b_", varname, "[i, 1] <- ",
          paste_predictor(parnam = 'alpha', parindex = 'i', matnam = 'Xc',
                          parelmts = par_elmts["Xc", 1]:par_elmts["Xc", 2],
@@ -127,15 +100,16 @@ paste_rdslopes_covmod <- function(nranef, hc_list, par_elmts, varname){
     rd_slopes <- list()
     for (k in 2:nranef) {
       if (any(sapply(hc_list[[k - 1]], attr, "matrix") %in% c("Xc", 'Z'))) {
-        vec <- sapply(hc_list[[k - 1]], attr, "matrix")# == "Xc"
+        vec <- sapply(hc_list[[k - 1]], attr, "matrix")
 
-        Xc_pos <- lapply(seq_along(vec), function (i) {
+        Xc_pos <- lapply(seq_along(vec), function(i) {
           switch(vec[i], 'Xc' = attr(hc_list[[k - 1]][[i]], 'column'),
                  'Z' = NA,
                  'Xlong' = NULL)
         })
 
-        hc_interact <- paste0("alpha[", par_elmts['Z', 1]:par_elmts['Z', 2], "]",
+        hc_interact <- paste0("alpha[",
+                              par_elmts[names(hc_list)[k - 1], 1]:par_elmts[names(hc_list)[k - 1], 2], "]",
                               sapply(unlist(Xc_pos), function(x) {
                                 if (!is.na(x)) {
                                   paste0(" * Xc[i, ", x, "]")
