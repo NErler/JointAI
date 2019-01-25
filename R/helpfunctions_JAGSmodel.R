@@ -16,6 +16,22 @@ paste_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent) {
 }
 
 
+paste_ranef_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent) {
+  if (length(cols) != length(parelmts)) {
+    stop("The size of the design matrix and length of parameter vector do not match!")
+  }
+
+  lb <- c(rep("", 3),
+          rep(c(paste0(c("\n", tab(indent)), collapse = ""), rep("", 2)),
+              ceiling((length(parelmts) - 3)/3))
+  )[1:length(parelmts)]
+
+  paste0(lb,
+         matnam, "[", parindex, ", ", cols, "] * ", parnam, "[groups[", parindex, "], ", parelmts, "]",
+         collapse = " + ")
+}
+
+
 # Help function for indenting lines in model files -----------------------------
 tab <- function(times = 2) {
   tb <- " "
