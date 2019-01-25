@@ -14,7 +14,7 @@ lm_model <- function(Mlist, K, ...){
   indent <- 4 + 10 + nchar(y_name)
 
   paste_Xic <- if (!is.null(Mlist$Xic)) {
-    paste0(" + \n", tab(nchar(y_name) + 17),
+    paste0(" + \n", tab(indent),
            paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xic',
                            parelmts = K["Xic", 1]:K["Xic", 2],
                            cols = Mlist$cols_main$Xic, indent = indent))

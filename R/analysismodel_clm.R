@@ -3,12 +3,13 @@
 clm_model <- function(Mlist = NULL, K, ...){
 
   y_name <- colnames(Mlist$y)
+  indent <- 4 + 4 + nchar(y_name) + 7
 
   paste_Xic <- if (!is.null(Mlist$Xic)) {
-    paste0(" + \n", tab(nchar(y_name) + 17),
+    paste0(" + \n", tab(indent),
            paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xic',
                            parelmts = K["Xic", 1]:K["Xic", 2],
-                           cols = Mlist$cols_main$Xic, indent = 0))
+                           cols = Mlist$cols_main$Xic, indent = indent))
   }
 
 
@@ -37,7 +38,7 @@ clm_model <- function(Mlist = NULL, K, ...){
          if (length(Mlist$cols_main$Xc) > 0) {
            paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xc',
                            parelmts = K["Xc", 1]:K["Xc", 2],
-                           cols = Mlist$cols_main$Xc, indent = 18)
+                           cols = Mlist$cols_main$Xc, indent = indent)
          } else {'0'},
          paste_Xic,
          "\n\n",
