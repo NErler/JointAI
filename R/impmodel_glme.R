@@ -1,7 +1,7 @@
 
 
-impmodel_glmm <- function(family, link, varname, dest_col, Xc_cols, Xl_cols,
-                          par_elmts, ppc, nranef, N, Ntot, hc_list, ...) {
+impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl_cols,
+                          Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...) {
   distr <- switch(family,
                   "gaussian" = function(varname) {
                     paste0("dnorm(mu_", varname, "[j], tau_", varname, ")")
@@ -192,28 +192,28 @@ impprior_glmm <- function(family, varname, par_elmts, dest_mat, dest_col, ppc, n
 
 
 
-impmodel_lmm <- function(varname, dest_col, Xc_cols, Xl_cols, par_elmts,
-                         ppc, nranef, N, Ntot, hc_list, ...) {
-  impmodel_glmm(family = 'gaussian', link = 'identity', varname, dest_col,
-                Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...)
+impmodel_lmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl_cols,
+                         Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...) {
+  impmodel_glmm(family = 'gaussian', link = 'identity', varname, dest_mat, dest_col, Xc_cols, Xl_cols,
+                Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...)
 }
 
-impmodel_glmm_logit <- function(varname, dest_col, Xc_cols, Xl_cols, par_elmts,
-                                ppc, nranef, N, Ntot, hc_list, ...) {
-  impmodel_glmm(family = 'binomial', link = 'logit', varname, dest_col,
-                Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...)
+impmodel_glmm_logit <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl_cols,
+                                Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...) {
+  impmodel_glmm(family = 'binomial', link = 'logit', varname, dest_mat, dest_col, Xc_cols, Xl_cols,
+                Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...)
 }
 
-impmodel_glmm_gamma <- function(varname, dest_col, Xc_cols, Xl_cols, par_elmts,
-                                ppc, nranef, N, Ntot, hc_list, ...) {
-  impmodel_glmm(family = 'Gamma', link = 'log', varname, dest_col,
-                Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...)
+impmodel_glmm_gamma <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl_cols,
+                                Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...) {
+  impmodel_glmm(family = 'Gamma', link = 'log', varname, dest_mat, dest_col, Xc_cols, Xl_cols,
+                Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...)
 }
 
-impmodel_glmm_poisson <- function(varname, dest_col, Xc_cols, Xl_cols, par_elmts,
-                                  ppc, nranef, N, Ntot, hc_list, ...) {
-  impmodel_glmm(family = 'poisson', link = 'log', varname, dest_col,
-                Xc_cols, Xl_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...)
+impmodel_glmm_poisson <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl_cols,
+                                  Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...) {
+  impmodel_glmm(family = 'poisson', link = 'log', varname, dest_mat, dest_col, Xc_cols, Xl_cols,
+                Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...)
 }
 
 impprior_lmm <- function(varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...) {

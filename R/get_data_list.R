@@ -4,7 +4,7 @@
 # @param Mlist list of data matrices etc.
 # @export
 get_data_list <- function(analysis_type, family, link, models, Mlist, auxvars,
-                          scale_pars = NULL, hyperpars = NULL, data) {
+                          scale_pars = NULL, hyperpars = NULL, data, imp_par_list) {
 
   scaled <- get_scaling(Mlist, scale_pars, models, data)
   if (is.null(hyperpars)) {
@@ -141,6 +141,18 @@ get_data_list <- function(analysis_type, family, link, models, Mlist, auxvars,
     l$tau_reg_ordinal <- defs$ordinal["tau_reg_ordinal"]
     l$mu_delta_ordinal <- defs$ordinal["mu_delta_ordinal"]
     l$tau_delta_ordinal <- defs$ordinal["tau_delta_ordinal"]
+  }
+
+  if (any(models %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm'))) {
+    nam <- names(models)[models %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')]
+    for (k in nam) {
+      l[[paste0('RinvD_', k)]] <- if (imp_par_list[[k]]$nranef > 1) {
+        diag(as.numeric(rep(NA, imp_par_list[[k]]$nranef)))
+      } else {
+        NULL#matrix(ncol = 1, nrow = 1, NA)
+      }
+      l[[paste0('KinvD_', k)]] <- if (imp_par_list[[k]]$nranef > 1) imp_par_list[[k]]$nranef
+    }
   }
 
   # if (!is.null(Mlist$auxvars)) {

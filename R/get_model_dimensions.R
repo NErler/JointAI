@@ -89,10 +89,26 @@ get_imp_pos <- function(models, Mlist){
     pos_Xil <- NULL
   }
 
+  if (!is.null(Mlist$Z)) {
+    pos_Z <- sapply(names(models), function(x) {
+      nams <- if (x %in% names(Mlist$refs)) {
+        paste0(x, levels(Mlist$refs[[x]])[levels(Mlist$refs[[x]]) != Mlist$refs[[x]]])
+      } else if (x %in% Mlist$trafos$var) {
+        Mlist$trafos$X_var[Mlist$trafos$var == x]
+      } else {
+        x
+      }
+      setNames(match(make.names(nams), make.names(colnames(Mlist$Z))), nams)
+    }, simplify = FALSE)
+  } else {
+    pos_Z <- NULL
+  }
+
     return(list(pos_Xc = pos_Xc,
                 pos_Xl = pos_Xl,
                 pos_Xic = pos_Xic,
-                pos_Xil = pos_Xil))
+                pos_Xil = pos_Xil,
+                pos_Z = pos_Z))
 }
 
 
@@ -130,15 +146,18 @@ get_imp_dim <- function(models, imp_pos, Mlist){
 
     if (models[i] %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson')) {
 
-      nrf <- sum(unlist(lapply(hc_list[names(hc_list != names(models[i]))],
+      nrf <- sum(unlist(lapply(Mlist$hc_list[!names(Mlist$hc_list) %in% names(models[i:length(models)])],
                                function(x) sapply(x, attr, 'matrix'))) %in% c('Z', 'Xc'))
 
-
+      Xlpos <- if (any(is.na(imp_pos$pos_Xl[[names(models)[i]]]))) {
+        max(c(match(names(models)[1:i], colnames(Mlist$Xl)) + 1, 1), na.rm = T)
+      } else {
+        min(imp_pos$pos_Xl[[names(models)[i]]], na.rm = TRUE)
+      }
 
       n_imp_coef[names(models)[i]] <- max(1, ncol(Mlist$Xc) +
-                                            min(imp_pos$pos_Xl[[names(models)[i]]]) - 1 +
+                                            Xlpos - 1 +
                                             nrf)
-                                            # ncol(Mlist$Z) - 1)
     }
 
     if (models[i] %in% c('clmm')) {

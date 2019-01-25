@@ -48,13 +48,13 @@ get_inits.default = function(models, Mlist, K, K_imp, analysis_type, family, lin
 
 
     l[["invD"]] = if (ncol(Mlist$Z) == 1) {
-      matrix(nrow = 1, ncol = 1, data = rgamma(1, var(data.matrix(Mlist$y))*10, 10))
+      matrix(nrow = 1, ncol = 1, data = rgamma(1, var(data.matrix(Mlist$y), na.rm = TRUE)*10, 10))
     } else {
       RinvD <- matrix(ncol = ncol(Mlist$Z),
                       nrow = ncol(Mlist$Z), data = 0)
       diag(RinvD) <- c(rgamma(ncol(Mlist$Z),
                               shape = apply(cbind(Mlist$y,
-                                                  Mlist$Z[, -1]), 2, var) * 10,
+                                                  Mlist$Z[, -1]), 2, var, na.rm = TRUE) * 10,
                               rate = 10))
       rWishart(1, ncol(Mlist$Z), RinvD)[, , 1]
     }
@@ -89,6 +89,9 @@ get_inits.default = function(models, Mlist, K, K_imp, analysis_type, family, lin
                                    rep(NA, length(levels(Mlist$refs[[k]])) - 2))
     }
   }
+
+  if (length(l) == 0)
+    l <- NULL
 
   return(l)
 }
