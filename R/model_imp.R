@@ -381,8 +381,9 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   models_default <- get_models(fixed = fixed, random = random, data = data,
                                auxvars = auxvars, no_model = no_model)$models
 
-  if (is.null(models) & !is.null(meth))
-    models <- meth
+  if (!is.null(meth))
+    warning('The argument "meth" has been changed to "models". Please use "models".',
+            call. = FALSE, immediate. = TRUE)
 
   if (is.null(models)) {
     models <- models_default
