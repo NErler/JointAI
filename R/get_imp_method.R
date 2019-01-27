@@ -89,6 +89,29 @@ get_models <- function(fixed, random = NULL, data,
                 if (!is.null(types$incomplete.baseline)) types$complete.tvar,
                 types$incomplete.tvar)
 
+
+
+    if (!is.null(random2)) {
+      if (!is.null(extract_fcts(random2, data, complete = TRUE))) {
+
+        fcts <- extract_fcts(random2, data, complete = TRUE)
+        if (any(fcts$type[fcts$var %in% names(models)] %in% c('ns', 'bs')))
+
+          stop(paste0('\nIt is currently not possible to use splines in the random',
+                      ' effects for a variable for which a (imputation) model is',
+                      ' specified.\nIf that variable does not have any missing values,',
+                      ' specification of a model for it may be prevented using the',
+                      ' argument "no_model".\n',
+                      'Note that this implies that all incomplete baseline variables',
+                      ' are assumed to be independent of this variable.\n',
+                      'If this assumption is not realistic, or if the variable used',
+                      ' in the random effects has missing values, consider the use',
+                      ' of polynomials instead of the spline.'), call. = FALSE)
+      }
+    }
+
+
+
     nlevel <- sapply(data[, names(models), drop = FALSE],
                      function(x) length(levels(x)))
 
@@ -98,12 +121,17 @@ get_models <- function(fixed, random = NULL, data,
       models[nlevel == 2 & !tvar[names(nlevel)]] <- "logit"
       models[nlevel == 2 &  tvar[names(nlevel)]] <- "glmm_logit"
       models[nlevel  > 2 & !tvar[names(nlevel)]] <- "multilogit"
-      models[nlevel  > 2 &  tvar[names(nlevel)]] <- "not yet implemented"
+      models[nlevel  > 2 &  tvar[names(nlevel)]] <- "mlmm"
       models[sapply(data[, names(nlevel), drop = FALSE], is.ordered) & !tvar[names(nlevel)]] <- "cumlogit"
       models[sapply(data[, names(nlevel), drop = FALSE], is.ordered) & tvar[names(nlevel)]] <- "clmm"
     }
 
     meth <- models[nmis[names(models)] > 0]
+
+    if (any(models %in% c('clmm', 'mlmm'))) {
+      stop(paste0("JointAI can't yet handle longitudinal categorical covariates (>2 levels).\n",
+                  "This feature is planned for the future."), call. = FALSE)
+    }
 
   } else {
     models <- NULL
