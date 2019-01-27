@@ -443,7 +443,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
   if (is.null(data_list)) {
-    data_list <- try(get_data_list(analysis_type, family, link, models, Mlist, auxvars,
+    data_list <- try(get_data_list(analysis_type, family, link, models, Mlist,# auxvars,
                                    scale_pars = scale_pars, hyperpars = hyperpars,
                                    data = data, imp_par_list = imp_par_list))
     scale_pars <- data_list$scale_pars
