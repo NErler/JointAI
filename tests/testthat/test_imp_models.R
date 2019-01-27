@@ -42,6 +42,11 @@ test_that("models for compl. long. variables are included ONLY when a baseline v
                           random = ~ time | id, data = longDF),
                list(models = c(c2 = 'lmm'), meth = c(c2 = 'lmm')))
 
+  expect_equal(get_models(fixed = y ~ c1 + time + C2,
+                          random = ~ time | id, data = longDF),
+               list(models = c(C2 = 'norm', c1 = 'lmm', time = 'lmm'),
+                    meth = c(C2 = 'norm')))
+
   expect_equal(get_models(fixed = y ~ c1 + time + c2 + C2,
                           random = ~ time | id, data = longDF),
                list(models = c(C2 = 'norm', c1 = 'lmm', time = 'lmm', c2 = 'lmm'),
@@ -63,11 +68,48 @@ test_that("no_model excludes the model, unless incomplete", {
 
 
 test_that("correct imputation methods are chosen", {
-  expect_equal(get_models(fixed = y ~ c1 + C1 + o1 + o2 + M2 + O2 + C2 + c2,
+  expect_equal(get_models(fixed = y ~ c1 + C1 + M2 + O2 + C2 + c2,
                           random = ~ b1 + B2 + time | id, data = longDF, no_model = 'time'),
                list(models = c(C2 = 'norm', B2 = 'logit', M2 = 'multilogit', O2 = 'cumlogit',
-                               c1 = 'lmm', o1 = 'clmm', b1 = 'glmm_logit',
-                               o2 = 'clmm', c2 = 'lmm'),
+                               c1 = 'lmm', b1 = 'glmm_logit',
+                               c2 = 'lmm'),
                     meth = c(C2 = 'norm', B2 = 'logit', M2 = 'multilogit', O2 = 'cumlogit',
-                             o2 = 'clmm', c2 = 'lmm')))
+                             c2 = 'lmm')))
+
+  expect_error(get_models(fixed = y ~ c1 + C1 + o1 + o2 + M2 + O2 + C2 + c2,
+                          random = ~ b1 + B2 + time | id, data = longDF, no_model = 'time'))
+})
+
+test_that("auxvars are included", {
+  expect_equal(get_models(fixed = y ~ c1 + C2, auxvars = c("C1", "B2", "b1"),
+                          random = ~ time | id, data = longDF,
+                          no_model = 'time'),
+               list(models = c(C2= 'norm', B2 = 'logit', c1 = 'lmm', b1 = 'glmm_logit'),
+                    meth = c(C2 = 'norm', B2 = 'logit'))
+  )
+})
+
+
+test_that("splines in random effects give an error when a model is needed for that variable", {
+  library(splines)
+  expect_equal(get_models(fixed = y ~ c1 + C1 + ns(time, df = 2),
+                          random = ~ ns(time, df = 2) | id, data = longDF),
+               list(models = NULL, meth = NULL)
+  )
+
+  expect_equal(get_models(fixed = y ~ c1 + C1 + C2 + ns(time, df = 2),
+                          random = ~ ns(time, df = 2) | id, data = longDF,
+                          no_model = 'time'),
+               list(models = c(C2 = 'norm', c1 = 'lmm'), meth = c(C2 = 'norm'))
+  )
+
+  expect_error(get_models(fixed = y ~ c1 + C1 + C2 + ns(time, df = 2),
+                          random = ~ ns(time, df = 2) | id, data = longDF))
+
+
+  expect_equal(get_models(fixed = y ~ c1 + C1 + C2 + ns(time, df = 2),
+                          random = ~ time + I(time^2) | id, data = longDF,
+                          no_model = 'time'),
+               list(models = c(C2 = 'norm', c1 = 'lmm'), meth = c(C2 = 'norm'))
+  )
 })
