@@ -323,11 +323,11 @@ parameters <- function(object, mess = TRUE, warn = TRUE) {
   vnam <- object$mcmc_settings$variable.names
   if ('beta' %in% vnam) {
     pos <- grep('beta', vnam)
-    vnam <- append(vnam, unique(c(colnames(object$data_list$Xc),
-                                  colnames(object$data_list$Xl),
-                                  colnames(object$data_list$Xic),
-                                  colnames(object$data_list$Xil),
-                                  colnames(object$data_list$Z))),
+    vnam <- append(vnam, unique(c(colnames(object$data_list$Xc)[object$Mlist$cols_main$Xc],
+                                  colnames(object$data_list$Xl)[object$Mlist$cols_main$Xl],
+                                  colnames(object$data_list$Xic)[object$Mlist$cols_main$Xic],
+                                  colnames(object$data_list$Xil)[object$Mlist$cols_main$Xil],
+                                  colnames(object$data_list$Z)[object$Mlist$cols_main$Z])),
                    after = pos)[-pos]
   }
 
