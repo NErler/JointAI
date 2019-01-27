@@ -402,7 +402,7 @@ A few examples:
 It is possible to use splines in the random effects structure, e.g.:
 ```{r}
 mod7a <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 2),
-                 random = ~ns(age, df = 2)|ID, 
+                 random = ~ns(age, df = 2)|ID, no_model = 'age',
                  data = simLong, mess = FALSE)
 ```
 Currently, multiple levels of nesting (nested or crossed random effects) are not yet available.
@@ -720,7 +720,7 @@ parameters used in a `JointAI` model. Arguments `family`, `link` and `nranef`
 allow to specify a model family and link, as well as the number of random effects.
 
 ```{r}
-default_hyperpars(nranef = 2)
+default_hyperpars()
 ```
 
 To change the hyperparameters in a **JointAI** model, the list obtained from 

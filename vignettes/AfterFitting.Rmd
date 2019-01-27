@@ -182,7 +182,7 @@ random effects covariance matrix `D` and the number of groups:
 library(splines)
 mod13b <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 3),
                   random = ~ ns(age, df = 3) | ID, data = simLong,
-                  n.iter = 250)
+                  n.iter = 250, no_model = 'age')
 
 summary(mod13b)
 ```
