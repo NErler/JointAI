@@ -353,7 +353,7 @@ mod2 <- glm_imp(B1 ~ C1 + C2 + M2, data = wideDF,
 
 
 # Example 3: Linear mixed model with incomplete covariates
-mod3 <- lme_imp(y ~ C1 + B2 + L1 + time, random = ~ time|id,
+mod3 <- lme_imp(y ~ C1 + B2 + c1 + time, random = ~ time|id,
                 data = longDF, n.iter = 500)
 
 
