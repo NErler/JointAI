@@ -25,6 +25,11 @@ effects and \code{g} the grouping variable}
 \item{auxvars}{optional vector of variable names that should be used as
 predictors in the imputation procedure (and will be imputed
 if necessary) but are not part of the analysis model}
+
+\item{no_model}{names of variables for which no model should be specified.
+Note that this is only possible for completely observed
+variables and may imply assumptions of independence between
+the excluded variable and incomplete variables.}
 }
 \value{
 A named vector containing those variables in \code{data}

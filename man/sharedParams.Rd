@@ -6,6 +6,11 @@
 \arguments{
 \item{object}{object inheriting from class "JointAI"}
 
+\item{no_model}{names of variables for which no model should be specified.
+Note that this is only possible for completely observed
+variables and may imply assumptions of independence between
+the excluded variable and incomplete variables.}
+
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
 \code{\link{lm_imp}}, \code{\link{glm_imp}} and \code{\link{lme_imp}}.}

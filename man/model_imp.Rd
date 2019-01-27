@@ -139,6 +139,11 @@ longitudinal covariates, incomplete longitudinal covariates,
 and within each group variables are ordered according to the
 proportion of missing values (increasing).}
 
+\item{no_model}{names of variables for which no model should be specified.
+Note that this is only possible for completely observed
+variables and may imply assumptions of independence between
+the excluded variable and incomplete variables.}
+
 \item{meth}{no longer used; use \code{model} instead.}
 
 \item{refcats}{optional; a named list specifying which category should be
