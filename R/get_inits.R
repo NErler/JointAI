@@ -41,11 +41,16 @@ get_inits.default = function(models, Mlist, K, K_imp, analysis_type, family, lin
     } else {
       RinvD <- matrix(ncol = ncol(Mlist$Z),
                       nrow = ncol(Mlist$Z), data = 0)
-      diag(RinvD) <- c(rgamma(ncol(Mlist$Z),
-                              shape = apply(cbind(Mlist$y,
-                                                  Mlist$Z[, -1]), 2, var, na.rm = TRUE) * 10,
-                              rate = 10))
-      rWishart(1, ncol(Mlist$Z), RinvD)[, , 1]
+      diag(RinvD) <- pmax(1e-200,
+                          c(rgamma(ncol(Mlist$Z),
+                                   shape = apply(cbind(Mlist$y,
+                                                       Mlist$Z[, -1]), 2, var, na.rm = TRUE) * 10,
+                                   rate = 10)))
+      invD <- try(rWishart(1, ncol(Mlist$Z), RinvD)[, , 1])
+      if (inherits(invD, 'try-error'))
+        stop('Numerical problem generating initial values for "invD". Try again.')
+      else
+        invD
     }
   }
 
