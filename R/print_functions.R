@@ -90,8 +90,8 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
                    tab(), "tau_", names(object$models)[i], " ",
                    if (priors) {
                      paste0("(Gamma prior with scale parameter ",
-                            object$data_list[[paste0("a_tau_", type$lab)]], " and rate parameter ",
-                            object$data_list[[paste0("b_tau_", type$lab)]], ")")
+                            object$data_list[[paste0("shape_tau_", type$lab)]], " and rate parameter ",
+                            object$data_list[[paste0("rate_tau_", type$lab)]], ")")
                    }, "\n"))
     }
 
@@ -124,8 +124,8 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
                    tab(), "tau_", names(object$models)[i], " ",
                    if (priors) {
                      paste0("(Gamma prior with scale parameter ",
-                         object$data_list$a_tau_gamma, " and rate parameter ",
-                         object$data_list$b_tau_gamma, ")")
+                         object$data_list$shape_tau_gamma, " and rate parameter ",
+                         object$data_list$rate_tau_gamma, ")")
                  }, "\n"))
     }
 
@@ -157,8 +157,8 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
         cat(paste0("* tau_", names(object$models)[i], " ",
                    if (priors) {
                      paste0("(Gamma prior with scale parameter ",
-                            object$data_list$a_tau_beta, " and rate parameter ",
-                            object$data_list$b_tau_beta, ")")
+                            object$data_list$shape_tau_beta, " and rate parameter ",
+                            object$data_list$rate_tau_beta, ")")
                    }, "\n"))
     }
 

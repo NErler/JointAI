@@ -112,16 +112,16 @@ glme_model <- function(family, link, Mlist, K, ...){
 # @param y_name name of the outcome
 # @param Z random effects design matrix
 # @export
-glme_priors <- function(family, K, Mlist, ...){
+glme_priors <- function(family, link, K, Mlist, ...){
   y_name <- colnames(Mlist$y)
 
   secndpar <- switch(family,
                      "gaussian" = paste0("\n",
-                                         tab(), "tau_", y_name ," ~ dgamma(a_tau_main, b_tau_main)", "\n",
+                                         tab(), "tau_", y_name ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
                                          tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")"),
                      "binomial" = NULL,
                      "Gamma" = paste0("\n",
-                                      tab(), "tau_", y_name ," ~ dgamma(a_tau_main, b_tau_main)", "\n",
+                                      tab(), "tau_", y_name ," ~ dgamma(shape_tau_gamma, rate_tau_gamma)", "\n",
                                       tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")"),
                      "Poisson" = NULL)
 
@@ -136,20 +136,27 @@ glme_priors <- function(family, K, Mlist, ...){
   #   )
   # }
 
-  paste0(c(ranef_priors(ncol(Mlist$Z)),
+  paste0(c(ranef_priors(Mlist$nranef),
            secndpar,
-           glmereg_priors(K, Mlist),
+           glmereg_priors(K, Mlist, family, link),
            paste_ppc), collapse = "\n\n")
 }
 
 
 
-glmereg_priors <- function(K, Mlist){
+glmereg_priors <- function(K, Mlist, family, link){
+  type <- switch(family,
+                 gaussian = 'norm',
+                 binomial = link,
+                 Gamma = 'gamma',
+                 Poisson = 'poisson'
+  )
+
   if (Mlist$ridge) {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main[k])", "\n",
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_", type, ", tau_reg_", type, "[k])", "\n",
                     tab(4), "tau_reg_main[k] ~ dgamma(0.01, 0.01)", "\n")
   } else {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main)", "\n")
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_", type, ", tau_reg_", type, ")", "\n")
   }
 
 

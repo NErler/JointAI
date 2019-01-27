@@ -4,27 +4,12 @@
 \alias{default_hyperpars}
 \title{Get default values for hyperparameters}
 \usage{
-default_hyperpars(family = "gaussian", link = "identity",
-  nranef = NULL)
-}
-\arguments{
-\item{family}{distribution family of the analysis model
-(\code{gaussian}, \code{binomial}, \code{poisson} or \code{Gamma})}
-
-\item{link}{link function (if the link is already given in the family,
-e.g. \code{family = binomial("logit"))} this argument does not
-need to be specified}
-
-\item{nranef}{number of random effects}
+default_hyperpars()
 }
 \description{
 Prints the list of default values for the hyperparameters.
 }
-\section{Value}{
-
-A list containing the default hyperparameters for JointAI models. The elements
-of the list are
-
+\details{
 \strong{analysis_model:} hyperparameters for the analysis model
 \tabular{ll}{
 \code{mu_reg_main} \tab mean in the priors for regression coefficients\cr
@@ -86,7 +71,6 @@ of the list are
 \code{tau_delta_ordinal} \tab precision in the priors for the intercepts
 }
 }
-
 \examples{
 default_hyperpars()
 

@@ -57,12 +57,12 @@ clm_priors <- function(Mlist, K, ...){
   y_name <- colnames(Mlist$y)
 
   deltas <- sapply(1:(Mlist$ncat - 2), function(k) {
-    paste0(tab(), "delta_", y_name, "[", k, "] ~ dnorm(mu_delta_main, tau_delta_main)")
+    paste0(tab(), "delta_", y_name, "[", k, "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
   })
 
   gammas <- sapply(1:(Mlist$ncat - 1), function(k) {
     if (k == 1) {
-      paste0(tab(), "gamma_", y_name, "[", k, "] ~ dnorm(mu_delta_main, tau_delta_main)")
+      paste0(tab(), "gamma_", y_name, "[", k, "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
     } else {
       paste0(tab(), "gamma_", y_name, "[", k, "] <- gamma_", y_name, "[", k - 1,
              "] + exp(delta_", y_name, "[", k - 1, "])")
@@ -86,10 +86,10 @@ clm_priors <- function(Mlist, K, ...){
   # }
 
   if (Mlist$ridge) {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main[k])", "\n",
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal[k])", "\n",
                     tab(4), "tau_reg_main[k] ~ dgamma(0.01, 0.01)", "\n")
   } else {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main)", "\n")
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal)", "\n")
   }
 
 

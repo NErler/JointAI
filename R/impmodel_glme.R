@@ -129,16 +129,17 @@ paste_rdslopes_covmod <- function(nranef, hc_list, par_elmts, varname){
 }
 
 
-impprior_glmm <- function(family, varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...){
+impprior_glmm <- function(family, link, varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...){
+
   secndpar <- switch(family,
                      "gaussian" = paste0("\n",
-                                         tab(), "tau_", varname ," ~ dgamma(a_tau_main, b_tau_main)", "\n",
+                                         tab(), "tau_", varname ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
                                          tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")"),
                      "binomial" = NULL,
                      "Gamma" = paste0("\n",
-                                      tab(), "tau_", varname ," ~ dgamma(a_tau_main, b_tau_main)", "\n",
+                                      tab(), "tau_", varname ," ~ dgamma(shape_tau_gamma, rate_tau_gamma)", "\n",
                                       tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")"),
-                     "Poisson" = NULL)
+                     "poisson" = NULL)
 
 
   paste_ppc <- NULL # if (ppc) {
@@ -150,12 +151,17 @@ impprior_glmm <- function(family, varname, par_elmts, dest_mat, dest_col, ppc, n
   #          "ifelse(ppc_", varname, "_o == ppc_", varname, "_e, 0.5, 0)) - 0.5", "\n"
   #   )
   # }
+  type <- switch(family,
+                 gaussian = 'norm',
+                 binomial = link,
+                 Gamma = 'gamma',
+                 poisson = 'poisson')
 
   priors <- paste0(
     "\n",
     tab(), "# Priors for the model for ", varname, "\n",
     tab(), "for (k in ", min(par_elmts, na.rm = T), ":", max(par_elmts, na.rm = TRUE), ") {", "\n",
-    tab(4), "alpha[k] ~ dnorm(mu_reg_main, tau_reg_main)", "\n",
+    tab(4), "alpha[k] ~ dnorm(mu_reg_", type, ", tau_reg_", type, ")", "\n",
     tab(), "}")
 
   paste0(c(priors,
@@ -191,17 +197,17 @@ impmodel_glmm_poisson <- function(family, link, varname, dest_mat, dest_col, Xc_
 }
 
 impprior_lmm <- function(varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...) {
-  impprior_glmm(family = 'gaussian', varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...)
+  impprior_glmm(family = 'gaussian', link = NULL, varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...)
 }
 
 impprior_glmm_logit <- function(varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...) {
-  impprior_glmm(family = 'binomial', varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...)
+  impprior_glmm(family = 'binomial', link = 'logit', varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...)
 }
 
 impprior_glmm_gamma <- function(varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...) {
-  impprior_glmm(family = 'Gamma', varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...)
+  impprior_glmm(family = 'Gamma', link = NULL, varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...)
 }
 
 impprior_glmm_poisson <- function(varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...) {
-  impprior_glmm(family = 'poisson', varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...)
+  impprior_glmm(family = 'poisson', link = NULL, varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...)
 }

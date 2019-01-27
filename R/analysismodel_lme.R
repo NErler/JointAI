@@ -86,10 +86,10 @@ lme_priors <- function(K, Mlist, ...){
 lmereg_priors <- function(K, y_name, Mlist){
 
   if (Mlist$ridge) {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main[k])", "\n",
-                    tab(4), "tau_reg_main[k] ~ dgamma(0.01, 0.01)", "\n")
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm[k])", "\n",
+                    tab(4), "tau_reg_norm[k] ~ dgamma(0.01, 0.01)", "\n")
   } else {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main)", "\n")
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)", "\n")
   }
 
   paste0(
@@ -97,7 +97,7 @@ lmereg_priors <- function(K, y_name, Mlist){
     tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
     distr,
     tab(), "}", "\n",
-    tab(), "tau_", y_name ," ~ dgamma(a_tau_main, b_tau_main)", "\n",
+    tab(), "tau_", y_name ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
     tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")", "\n")
 }
 

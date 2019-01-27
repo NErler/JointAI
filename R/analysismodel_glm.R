@@ -84,18 +84,18 @@ glm_model <- function(family, link, Mlist, K, ...){
 # @param K K
 # @param y_name character string, name of outcome
 # @export
-glm_priors <- function(family, K, Mlist, ...){
+glm_priors <- function(family, link, K, Mlist, ...){
   y_name <- colnames(Mlist$y)
 
   secndpar <- switch(family,
                      "gaussian" = paste0("\n",
-                                         tab(), "tau_", y_name ," ~ dgamma(a_tau_main, b_tau_main)", "\n",
+                                         tab(), "tau_", y_name ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
                                          tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")"),
                      "binomial" = NULL,
                      "Gamma" = paste0("\n",
-                                      tab(), "tau_", y_name ," ~ dgamma(a_tau_main, b_tau_main)", "\n",
+                                      tab(), "tau_", y_name ," ~ dgamma(shape_tau_gamma, rate_tau_gamma)", "\n",
                                       tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")"),
-                     "Poisson" = NULL)
+                     "poisson" = NULL)
 
   paste_ppc <- NULL #if (Mlist$ppc) {
   #   paste0('\n\n',
@@ -107,11 +107,19 @@ glm_priors <- function(family, K, Mlist, ...){
   #   )
   # }
 
+  type <- switch(family,
+                 gaussian = 'norm',
+                 binomial = link,
+                 Gamma = 'gamma',
+                 Poisson = 'poisson'
+  )
+
+
   if (Mlist$ridge) {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main[k])", "\n",
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_", type, ", tau_reg_", type , "[k])", "\n",
                     tab(4), "tau_reg_main[k] ~ dgamma(0.01, 0.01)", "\n")
   } else {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main)", "\n")
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_", type, ", tau_reg_", type, ")", "\n")
   }
 
 

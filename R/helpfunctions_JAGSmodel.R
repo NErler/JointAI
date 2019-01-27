@@ -109,7 +109,7 @@ ranef_priors <- function(Zcols, varnam = NULL){
     if (Zcols > 1) {
       paste0(
         tab(), "for (k in 1:", Zcols, "){", "\n",
-        tab(4), "RinvD", varnam, "[k, k] ~ dgamma(a_diag_RinvD, b_diag_RinvD)", "\n",
+        tab(4), "RinvD", varnam, "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)", "\n",
         tab(), "}", "\n")
     },
     tab(), "invD", varnam, "[1:", Zcols, ", 1:", Zcols,"] ~ ", invD_distr(Zcols, varnam), "\n",
@@ -120,7 +120,7 @@ ranef_priors <- function(Zcols, varnam = NULL){
 
 invD_distr <- function(Zcols, varnam = NULL){
   if (Zcols == 1) {
-    "dgamma(a_diag_RinvD, b_diag_RinvD)"
+    "dgamma(shape_diag_RinvD, rate_diag_RinvD)"
   } else {
     paste0("dwish(RinvD", varnam, "[ , ], KinvD", varnam, ")")
   }

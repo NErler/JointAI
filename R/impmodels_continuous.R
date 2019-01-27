@@ -89,13 +89,19 @@ impprior_continuous <- function(impmeth, varname, par_elmts, ppc, dest_mat, dest
     )
   }
 
+  type <- switch(impmeth,
+                 norm = 'norm',
+                 lognorm = 'norm',
+                 beta = 'beta',
+                 gamma = 'gamma')
+
 
   paste0('\n',
          tab(), "# Priors for ", varname, "\n",
          tab(), "for (k in ", par_elmts['Xc', 1], ":", par_elmts['Xc', 2], ") {", "\n",
-         tab(4), "alpha[k] ~ dnorm(mu_reg_", impmeth, ", tau_reg_", impmeth, ")", "\n",
+         tab(4), "alpha[k] ~ dnorm(mu_reg_", type, ", tau_reg_", type, ")", "\n",
          tab(), "}", "\n",
-         tab(), "tau_", varname,  " ~ dgamma(a_tau_", impmeth, ", b_tau_", impmeth, ")", "\n",
+         tab(), "tau_", varname,  " ~ dgamma(shape_tau_", type, ", rate_tau_", type, ")", "\n",
          tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")", "\n",
          paste_ppc
   )
