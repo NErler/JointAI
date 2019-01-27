@@ -74,7 +74,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$nchain <- nchain(object$sample)
   out$stats <- stats
 
-  out$ranefvar <- if (object$analysis_type %in% c("lme", "glme")) {
+  out$ranefvar <- if (object$analysis_type %in% c("lme", "glme", "clmm")) {
     Ds <- stats[grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]",
                      rownames(stats), value = TRUE), , drop = FALSE]
     if (nrow(Ds) > 0) {
@@ -137,7 +137,14 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
     cat("Posterior summary:\n")
     print(x$main, digits = digits)
   }
-  if (x$analysis_type %in% c("lme", "glme") & !is.null(x$ranefvar)) {
+
+  if (!is.null(x$intercepts)) {
+    cat("\n")
+    cat("Posterior summary of the intercepts:\n")
+    print(print_intercepts(x$intercepts, x$ynam, x$ylvl), digits = digits)
+  }
+
+  if (x$analysis_type %in% c("lme", "glme", "clmm") & !is.null(x$ranefvar)) {
     cat("\n")
     cat("Posterior summary of random effects covariance matrix:\n")
     print(x$ranefvar, digits = digits, na.print = "")
@@ -177,6 +184,17 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
   coefs <- colMeans(MCMC)[intersect(colnames(MCMC),
                                     get_coef_names(object$Mlist, object$K)[, 2])]
+
+  if (object$analysis_type %in% c('clm', 'clmm')) {
+    interc <- colMeans(MCMC)[grep(paste0('gamma_', colnames(object$Mlist$y), "\\["),
+                                  colnames(MCMC))]
+
+    lvl <- levels(object$data[, colnames(object$Mlist$y)])
+    names(interc) <- paste(colnames(object$Mlist$y), "\u2264",
+                                    lvl[-length(lvl)])
+
+    coefs <- c(interc, coefs)
+  }
 
   return(coefs)
 }
