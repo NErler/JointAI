@@ -268,6 +268,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
                     Xil = if (!is.null(Xil)) c(na.omit(match(XXnam, colnames(Xil)))),
                     Z = if (!is.null(Z)) c(na.omit(match(XXnam, colnames(Z))))
   )
+  cols_main <- sapply(cols_main, function(x) if (length(x) > 0) x)
 
   names_main <- mapply(function(cols, mat) {
     colnames(mat)[cols]
