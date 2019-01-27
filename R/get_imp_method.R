@@ -1,8 +1,5 @@
 #' Find default imputation methods and order
 #' @inheritParams model_imp
-# @param auxvars vector of variable names that should be used as predictors in
-#                the imputation procedure (and will be imputed if necessary)
-#                but are not part of the analysis model
 #' @return A named vector containing those variables in \code{data}
 #'         that have missing values and their assigned default imputation methods,
 #'         sorted by proportion of missing values.
@@ -33,8 +30,6 @@ get_models <- function(fixed, random = NULL, data,
 
   if (missing(data))
     stop("No dataset given.")
-
-
 
   random2 <- remove_grouping(random)
 
