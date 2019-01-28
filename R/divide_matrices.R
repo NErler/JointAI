@@ -53,7 +53,8 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     auxvars <- c(auxvars, unique(add_to_aux))
 
   # fixed effects design matrices
-  fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed), fixed = TRUE),
+  fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed, width.cutoff = 500),
+                                   fixed = TRUE),
                                auxvars), collapse = " + "))
 
   # Give a message about coding of ordinal factors if there are any in the predictor
