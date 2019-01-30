@@ -265,7 +265,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
   if (!is.null(Mlist$Xil)) l$Xil <- data.matrix(Mlist$Xil)
 
 
-  if (any(models %in% c('norm', 'lognorm', 'lme')) | (family == 'gaussian' & !Mlist$ridge))
+  if (any(models %in% c('norm', 'lognorm', 'lme', 'lmm')) | (family == 'gaussian' & !Mlist$ridge))
     l <- c(l, defs$norm)
   else if(family == 'gaussian' & Mlist$ridge)
     l <- c(l, defs$norm["mu_reg_norm", "shape_tau_norm", "rate_tau_norm"])
