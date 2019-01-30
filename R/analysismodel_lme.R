@@ -86,8 +86,8 @@ lme_priors <- function(K, Mlist, ...){
 lmereg_priors <- function(K, y_name, Mlist){
 
   if (Mlist$ridge) {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm[k])", "\n",
-                    tab(4), "tau_reg_norm[k] ~ dgamma(0.01, 0.01)", "\n")
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm_ridge[k])", "\n",
+                    tab(4), "tau_reg_norm_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
   } else {
     distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)", "\n")
   }
