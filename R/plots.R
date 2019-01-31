@@ -290,10 +290,10 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
 
   # get number of rows and columns of plots
   if (is.null(nrow) & is.null(ncol)) {
-    dims <- if (ncol(MCMC[[1]]) > 64) {
+    dims <- if (ncol(data) > 64) {
       grDevices::n2mfrow(49)
     } else {
-      grDevices::n2mfrow(ncol(MCMC[[1]]))
+      grDevices::n2mfrow(ncol(data))
     }
   } else if (is.null(nrow) & !is.null(ncol)) {
     dims <- c(ceiling(ncol(data)/ncol), ncol)
