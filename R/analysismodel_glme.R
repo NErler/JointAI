@@ -54,28 +54,30 @@ glme_model <- function(family, link, Mlist, K, ...){
     }
   }
 
+  indent <- 13 + nchar(y_name) + 8
+
   norm.distr  <- if (ncol(Mlist$Z) < 2) {"dnorm"} else {"dmnorm"}
 
   paste_Xic <- if (length(Mlist$cols_main$Xic) > 0) {
-    paste0(" + \n", tab(nchar(y_name) + 17),
+    paste0(" + \n", tab(indent),
            paste_predictor(parnam = 'beta', parindex = 'i', matnam = 'Xic',
                            parelmts = K["Xic", 1]:K["Xic", 2],
-                           cols = Mlist$cols_main$Xic, indent = 0))
+                           cols = Mlist$cols_main$Xic, indent = indent))
   }
 
   paste_Xl <- if (length(Mlist$cols_main$Xl) > 0) {
-    paste0(" + \n", tab(nchar(y_name) + 14),
+    paste0(" + \n", tab(indent),
            paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xl',
                            parelmts = K["Xl", 1]:K["Xl", 2],
-                           cols = Mlist$cols_main$Xl, indent = 0)
+                           cols = Mlist$cols_main$Xl, indent = indent)
     )
   }
 
   paste_Xil <- if (length(Mlist$cols_main$Xil) > 0) {
-    paste0(" + \n", tab(nchar(y_name) + 14),
+    paste0(" + \n", tab(indent),
            paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xil',
                            parelmts = K["Xil", 1]:K["Xil", 2],
-                           cols = Mlist$cols_main$Xil, indent = 0)
+                           cols = Mlist$cols_main$Xil, indent = indent)
     )
   }
 
@@ -85,14 +87,14 @@ glme_model <- function(family, link, Mlist, K, ...){
   #   )
   # }
 
-  paste0(tab(), "# Generalized linear mixed effects model for ", y_name, "\n",
-         tab(), y_name, "[j] ~ ", distr(y_name), "\n",
+  paste0(tab(4), "# Generalized linear mixed effects model for ", y_name, "\n",
+         tab(4), y_name, "[j] ~ ", distr(y_name), "\n",
          paste_ppc,
          repar,
-         tab(), linkfun(paste0("mu_", y_name, "[j]")), " <- inprod(Z[j, ], b[groups[j], ])",
+         tab(4), linkfun(paste0("mu_", y_name, "[j]")), " <- inprod(Z[j, ], b[groups[j], ])",
          paste_Xl,
          paste_Xil, "\n",
-         tab(), "}", "\n\n",
+         tab(2), "}", "\n\n",
          tab(), "for (i in 1:", Mlist$N, ") {", "\n",
          tab(4), "b[i, 1:", ncol(Mlist$Z), "] ~ ", norm.distr, "(mu_b[i, ], invD[ , ])", "\n",
          tab(4), "mu_b[i, 1] <- ",

@@ -53,7 +53,7 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
     paste0(" + \n", tab(nchar(varname) + 14),
            paste_predictor(parnam = 'alpha', parindex = 'j', matnam = 'Xl',
                            parelmts = par_elmts["Xl", 1]:par_elmts["Xl", 2],
-                           cols = Xl_cols, indent = 14)
+                           cols = Xl_cols, indent = nchar(varname) + 14)
     )
   }
 
@@ -83,7 +83,8 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
          paste_ppc,
          tab(), "}", "\n\n",
          tab(), "for (i in 1:", N, ") {", "\n",
-         tab(4), "b_", varname, "[i, 1:", nranef, "] ~ ", norm.distr, "(mu_b_", varname, "[i, ], invD_", varname, "[ , ])", "\n",
+         tab(4), "b_", varname, "[i, 1:", nranef, "] ~ ", norm.distr,
+         "(mu_b_", varname, "[i, ], invD_", varname, "[ , ])", "\n",
          tab(4), "mu_b_", varname, "[i, 1] <- ",
          paste_predictor(parnam = 'alpha', parindex = 'i', matnam = 'Xc',
                          parelmts = par_elmts["Xc", 1]:par_elmts["Xc", 2],

@@ -2,7 +2,14 @@ impmodel_continuous <- function(impmeth, varname, dest_col, dest_mat, trafo_cols
                                 trfo_fct, Xc_cols, par_elmts, trunc, ppc,
                                 mess = TRUE, ...){
 
-  indent <- nchar(varname) + 14
+
+  indent <- switch(impmeth,
+                   norm = nchar(varname) + 14,
+                   lognorm = nchar(varname) + 14,
+                   gamma = 11 + nchar(varname) + 8,
+                   beta = nchar(varname) + 14
+  )
+
   predictor <-  paste_predictor(parnam = 'alpha', parindex = 'i', matnam = 'Xc',
                                 parelmts = par_elmts["Xc", 1]:par_elmts["Xc", 2],
                                 cols = Xc_cols, indent = indent)
