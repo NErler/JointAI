@@ -239,7 +239,11 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 
   # get number of rows and columns of plots
   if (is.null(nrow) & is.null(ncol)) {
-    dims <- grDevices::n2mfrow(ncol(MCMC[[1]]))
+    dims <- if (ncol(MCMC[[1]]) > 64) {
+      grDevices::n2mfrow(49)
+    } else {
+      grDevices::n2mfrow(ncol(MCMC[[1]]))
+    }
   } else if (is.null(nrow) & !is.null(ncol)) {
     dims <- c(ceiling(ncol(MCMC[[1]])/ncol), ncol)
   } else if (is.null(ncol) & !is.null(nrow)) {
@@ -286,7 +290,11 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
 
   # get number of rows and columns of plots
   if (is.null(nrow) & is.null(ncol)) {
-    dims <- grDevices::n2mfrow(ncol(data))
+    dims <- if (ncol(MCMC[[1]]) > 64) {
+      grDevices::n2mfrow(49)
+    } else {
+      grDevices::n2mfrow(ncol(MCMC[[1]]))
+    }
   } else if (is.null(nrow) & !is.null(ncol)) {
     dims <- c(ceiling(ncol(data)/ncol), ncol)
   } else if (is.null(ncol) & !is.null(nrow)) {
