@@ -14,7 +14,7 @@ Description: Provides joint analysis and imputation of (generalized)
     It also provides summary and plotting functions for the output.
 URL: https://github.com/nerler/JointAI
 License: GPL (>= 2)
-Date: 2018-12-04
+Date: 2019-02-01
 BugReports: https://github.com/nerler/JointAI/issues
 LazyData: TRUE
 RoxygenNote: 6.1.1
@@ -27,6 +27,8 @@ Suggests:
     foreign,
     ggplot2,
     reshape2,
+    parallel,
+    pbapply,
     testthat
 VignetteBuilder: knitr
 Encoding: UTF-8
