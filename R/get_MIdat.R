@@ -52,20 +52,16 @@ get_MIdat <- function(object, m = 10, include = TRUE,
     set.seed(seed)
 
   DF <- object$data
-  if (object$analysis_type %in% c("lme", "glme")) {
-    DFlong <- DF
 
-    id <- extract_id(object$random)
-    groups <- if (!is.null(id)) {
-      DFlong[, id]
-    }
-    tvar <- apply(DFlong, 2, check_tvar, groups)
-    DF <- DFlong[match(unique(DFlong[, id]), DFlong[, id]), names(tvar)[!tvar]]
-  } else {
+  if (!object$analysis_type %in% c("lme", "glme", 'clmm')) {
+  #   id <- extract_id(object$random)
+  # } else {
     DF$.id <- 1:nrow(DF)
   }
 
-  meth <- object$meth
+  groups <- match(object$Mlist$groups, unique(object$Mlist$groups))
+
+  meth <- object$models[colSums(is.na(DF[, names(object$models)])) > 0]
 
   if (is.null(start)) {
     start <- start(object$sample)
@@ -111,7 +107,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
                       "\\]")
       }
 
-      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE)]
+      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
       if (!is.null(object$scale_pars)) {
         impval <- impval * object$scale_pars["scale", names(meth)[i]]  +
           object$scale_pars["center", names(meth)[i]]
@@ -123,7 +119,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
         for (j in (1:m) + 1) {
           DF_list[[j]][is.na(DF_list[[j]][, names(meth)[i]]), names(meth)[i]] <-
-            impval[j - 1, order(as.numeric(rownrs))]
+            impval[j - 1, na.omit(match(groups, as.numeric(rownrs)))]
         }
       }
     }
@@ -141,7 +137,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
         for (j in (1:m) + 1) {
           vec <- as.numeric(DF_list[[j]][, names(meth)[i]]) - 1
-          vec[is.na(vec)] <- impval[j - 1, order(as.numeric(rownrs))]
+          vec[is.na(vec)] <- impval[j - 1, na.omit(match(groups, as.numeric(rownrs)))]
           vec <- as.factor(vec)
           levels(vec) <- levels(DF_list[[j]][, names(meth)[i]])
           DF_list[[j]][, names(meth)[i]] <- vec
@@ -154,7 +150,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
       pat <- paste0("Xcat\\[[[:digit:]]*,",
                     match(names(meth)[i], colnames(object$data_list$Xcat)),
                     "\\]")
-      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE)]
+      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
 
       if (length(impval) > 0) {
         rownrs <- gsub(",[[:digit:]]*\\]", "",
@@ -162,7 +158,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
         for (j in (1:m) + 1) {
           vec <- as.numeric(DF_list[[j]][, names(meth)[i]])
-          vec[is.na(vec)] <- impval[j - 1, order(as.numeric(rownrs))]
+          vec[is.na(vec)] <- impval[j - 1, na.omit(match(groups, as.numeric(rownrs)))]
           if (meth[i] == "cumlogit") {
             vec <- as.ordered(vec)
           }else{
@@ -173,23 +169,41 @@ get_MIdat <- function(object, m = 10, include = TRUE,
         }
       }
     }
-  }
 
+    if (meth[i] %in% 'lmm') {
+      if (names(meth[i]) %in% colnames(object$data_list$Xl)) {
+        pat <- paste0("Xl\\[[[:digit:]]*,",
+                      match(names(meth)[i], colnames(object$data_list$Xl)),
+                      "\\]")
+      } else if (names(meth[i]) %in% colnames(object$data_list$Z)) {
+        pat <- paste0("Xl\\[[[:digit:]]*,",
+                      match(names(meth)[i], colnames(object$data_list$Xl)),
+                      "\\]")
+      }
+
+      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
+      if (!is.null(object$scale_pars)) {
+        impval <- impval * object$scale_pars["scale", names(meth)[i]]  +
+          object$scale_pars["center", names(meth)[i]]
+      }
+
+      if (length(impval) > 0) {
+        rownrs <- gsub(",[[:digit:]]*\\]", "",
+                       gsub("[[:alpha:]]*\\[", "", colnames(impval)))
+
+        for (j in (1:m) + 1) {
+          DF_list[[j]][is.na(DF_list[[j]][, names(meth)[i]]), names(meth)[i]] <-
+            impval[j - 1, order(as.numeric(rownrs))]
+        }
+      }
+    }
+  }
 
   if (!include)
     DF_list <- DF_list[-1]
 
 # build dataset --------------------------------------------------------------------------
-  if (object$analysis_type %in% c("lme", "glme")) {
-    DF_list_long <- lapply(DF_list, function(x) {
-      DFlong[, colnames(x)] <- x[groups, ]
-      DFlong
-    })
-    impDF <- do.call(rbind, DF_list_long)
-  } else {
-    impDF <- do.call(rbind, DF_list)
-  }
-
+  impDF <- do.call(rbind, DF_list)
 
   if (is.null(resdir))
     resdir <- getwd()
@@ -207,3 +221,179 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
   return(impDF)
 }
+
+
+
+
+
+#
+# get_MIdat_old <- function(object, m = 10, include = TRUE,
+#                       start = NULL, minspace = 50, seed = NULL,
+#                       export_to_SPSS = FALSE,
+#                       resdir = NULL, filename = NULL){
+#
+#   if (is.null(object$models) | sum(is.na(object$data[, names(object$models)])) == 0)
+#     stop("This JointAI object did not impute any values.")
+#
+#   if (!"foreign" %in% rownames(installed.packages()))
+#     stop("This function requires the 'foreign' package to be installed.")
+#
+#   if (!is.null(seed))
+#     set.seed(seed)
+#
+#   DF <- object$data
+#   if (object$analysis_type %in% c("lme", "glme", 'clmm')) {
+#     DFlong <- DF
+#
+#     id <- extract_id(object$random)
+#     groups <- if (!is.null(id)) {
+#       DFlong[, id]
+#     }
+#     tvar <- apply(DFlong, 2, check_tvar, groups)
+#     DF <- DFlong[match(unique(DFlong[, id]), DFlong[, id]), names(tvar)[!tvar]]
+#   } else {
+#     DF$.id <- 1:nrow(DF)
+#   }
+#
+#   meth <- object$meth
+#
+#   if (is.null(start)) {
+#     start <- start(object$sample)
+#   } else {
+#     start <- max(start, start(object$sample))
+#   }
+#
+#   MCMC <- do.call(rbind, window(object$sample, start = start))
+#   if (nrow(MCMC) < m)
+#     stop("The number of imputations must be chosen to be less than or",
+#          gettextf("equal to the number of MCMC samples (= %s).",
+#                   nrow(MCMC)))
+#
+#
+#   # randomly draw which iterations should be used as imputation
+#   if (nrow(MCMC)/minspace < m)
+#     stop(gettextf('The total number of iterations (%s) is too small to select %s iterations with spacing of >= %s.',
+#                   nrow(MCMC), m, minspace))
+#
+#   cand_iters <- seq(from = sample.int(minspace, size = 1), to = nrow(MCMC), by = minspace)
+#   imp_iters <- sort(sample(cand_iters, size = m))
+#
+#
+#   # reduce MCMC to relevant rows
+#   MCMC <- MCMC[imp_iters, , drop = FALSE]
+#
+#   DF_list <- list()
+#   for (i in 1:(m + 1)) {
+#     DF_list[[i]] <- cbind("Imputation_" = i - 1, DF)
+#   }
+#
+#   for (i in seq_along(meth)) {
+#     impval <- NULL
+#     # imputation by linear regression --------------------------------------------------------
+#     if (meth[i] %in% c("norm", "lognorm", "gamma", "beta")) {
+#       if (names(meth[i]) %in% colnames(object$data_list$Xtrafo)) {
+#         pat <- paste0("Xtrafo\\[[[:digit:]]*,",
+#                       match(names(meth)[i], colnames(object$data_list$Xtrafo)),
+#                       "\\]")
+#       } else {
+#         pat <- paste0("Xc\\[[[:digit:]]*,",
+#                       match(names(meth)[i], colnames(object$data_list$Xc)),
+#                       "\\]")
+#       }
+#
+#       impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE)]
+#       if (!is.null(object$scale_pars)) {
+#         impval <- impval * object$scale_pars["scale", names(meth)[i]]  +
+#           object$scale_pars["center", names(meth)[i]]
+#       }
+#
+#       if (length(impval) > 0) {
+#         rownrs <- gsub(",[[:digit:]]*\\]", "",
+#                        gsub("[[:alpha:]]*\\[", "", colnames(impval)))
+#
+#         for (j in (1:m) + 1) {
+#           DF_list[[j]][is.na(DF_list[[j]][, names(meth)[i]]), names(meth)[i]] <-
+#             impval[j - 1, order(as.numeric(rownrs))]
+#         }
+#       }
+#     }
+#     # imputation by binary regression --------------------------------------------------------
+#     if (meth[i] %in% c("logit")) {
+#       pat <- paste0("Xc\\[[[:digit:]]*,",
+#                     match(attr(object$Mlist$refs[[names(meth)[i]]], "dummies"),
+#                           colnames(object$data_list$Xc)),
+#                     "\\]")
+#       impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
+#
+#       if (length(impval) > 0) {
+#         rownrs <- gsub(",[[:digit:]]*\\]", "",
+#                        gsub("[[:alpha:]]*\\[", "", colnames(impval)))
+#
+#         for (j in (1:m) + 1) {
+#           vec <- as.numeric(DF_list[[j]][, names(meth)[i]]) - 1
+#           vec[is.na(vec)] <- impval[j - 1, order(as.numeric(rownrs))]
+#           vec <- as.factor(vec)
+#           levels(vec) <- levels(DF_list[[j]][, names(meth)[i]])
+#           DF_list[[j]][, names(meth)[i]] <- vec
+#         }
+#       }
+#     }
+#
+#     # imputation of categorical variables ----------------------------------------------------
+#     if (meth[i] %in% c("cumlogit", "multilogit")) {
+#       pat <- paste0("Xcat\\[[[:digit:]]*,",
+#                     match(names(meth)[i], colnames(object$data_list$Xcat)),
+#                     "\\]")
+#       impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE)]
+#
+#       if (length(impval) > 0) {
+#         rownrs <- gsub(",[[:digit:]]*\\]", "",
+#                        gsub("[[:alpha:]]*\\[", "", colnames(impval)))
+#
+#         for (j in (1:m) + 1) {
+#           vec <- as.numeric(DF_list[[j]][, names(meth)[i]])
+#           vec[is.na(vec)] <- impval[j - 1, order(as.numeric(rownrs))]
+#           if (meth[i] == "cumlogit") {
+#             vec <- as.ordered(vec)
+#           }else{
+#             vec <- as.factor(vec)
+#           }
+#           levels(vec) <- levels(DF_list[[j]][, names(meth)[i]])
+#           DF_list[[j]][, names(meth)[i]] <- vec
+#         }
+#       }
+#     }
+#   }
+#
+#
+#   if (!include)
+#     DF_list <- DF_list[-1]
+#
+#   # build dataset --------------------------------------------------------------------------
+#   if (object$analysis_type %in% c("lme", "glme", 'clmm')) {
+#     DF_list_long <- lapply(DF_list, function(x) {
+#       DFlong[, colnames(x)] <- x[groups, ]
+#       DFlong
+#     })
+#     impDF <- do.call(rbind, DF_list_long)
+#   } else {
+#     impDF <- do.call(rbind, DF_list)
+#   }
+#
+#
+#   if (is.null(resdir))
+#     resdir <- getwd()
+#
+#   if (is.null(filename))
+#     filename <- paste0("JointAI-imputation_", Sys.Date())
+#
+#   if (export_to_SPSS == TRUE) {
+#     foreign::write.foreign(impDF,
+#                            file.path(resdir, paste0(filename, ".txt")),
+#                            file.path(resdir, paste0(filename, ".sps")),
+#                            package = 'SPSS'
+#     )
+#   }
+#
+#   return(impDF)
+# }
