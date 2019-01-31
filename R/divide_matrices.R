@@ -166,35 +166,10 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   Xc <- Xc[, Xc_seq, drop = FALSE]
   # * update Z -------------------------------------------------
   Z2 <- Z
-  if(!is.null(Z)) {
+  if (!is.null(Z)) {
     Z[, na.omit(match(colnames(Xc)[-1], colnames(Z)))] <- 1
     colnames(Z)[na.omit(match(colnames(Xc)[-1], colnames(Z)))] <- 'placeholder'
   }
-
-  # Xcat -----------------------------------------------------------------------
-  # make filter variables:
-  # - variable relevant?
-  infmla <- names(data) %in% all.vars(fixed2)
-  # - variabe incomplete?
-  misvar <- colSums(is.na(data)) > 0
-  # - variabe categorical with >2 categories?
-  catvars <- sapply(data, function(i) is.factor(i) && length(levels(i)) > 2)
-
-  # select names of relevant variables
-  cat_vars <- names(data)[infmla & misvar & catvars]
-
-  # match them to the position in Xc
-  cat_vars <- sapply(cat_vars, match_positions,
-                     data, colnames(Xc), simplify = FALSE)
-
-  Xcat <- if (length(cat_vars) > 0) {
-    data[match(unique(groups), groups), names(cat_vars), drop = FALSE]
-  }
-
-  if (!is.null(Xcat)) {
-    Xc[, unlist(sapply(cat_vars, names))] <- NA
-  }
-
 
   # Xl and Xil -----------------------------------------------------------------
   Xlong <- if (sum(!names(tvar)[tvar] %in% colnames(Z)) > 0) {
@@ -237,6 +212,47 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     Xl <- Xil <- NULL
   }
 
+
+
+  # Xcat & Xlcat ---------------------------------------------------------------
+  # make filter variables:
+  # - variable relevant?
+  infmla <- names(data) %in% all.vars(fixed2)
+  # - variabe incomplete?
+  misvar <- colSums(is.na(data)) > 0
+  # - variabe categorical with >2 categories?
+  catvars <- sapply(colnames(data), function(i) i %in% names(refs) && length(levels(refs[[i]])) > 2)
+
+
+  # select names of relevant variables
+  cat_vars_base <- names(data)[infmla & misvar & catvars & !sapply(data, check_tvar, groups)]
+  cat_vars_long <- names(data)[infmla & catvars & sapply(data, check_tvar, groups)]
+
+  # match them to the position in Xc
+  cat_vars_base <- sapply(cat_vars_base, match_positions,
+                          data, colnames(Xc), simplify = FALSE)
+
+  cat_vars_long <- sapply(cat_vars_long, match_positions,
+                          data, colnames(Xl), simplify = FALSE)
+
+
+  Xcat <- if (length(cat_vars_base) > 0) {
+    data[match(unique(groups), groups), names(cat_vars_base), drop = FALSE]
+  }
+
+  if (!is.null(Xcat)) {
+    Xc[, unlist(sapply(cat_vars, names))] <- NA
+  }
+
+  Xlcat <- if (length(cat_vars_long) > 0) {
+    data[, names(cat_vars_long), drop = FALSE]
+  }
+
+  if (!is.null(Xlcat)) {
+    Xl[, unlist(sapply(cat_vars_long[names(cat_vars_long) %in% names(models)], names))] <- NA
+  }
+
+
   # scaling --------------------------------------------------------------------
   if (is.null(scale_vars)) {
     scale_vars <- find_continuous_main(fixed2, data)
@@ -277,6 +293,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   mat = list(Xc, Xl, Xic, Xil, Z))
 
   return(list(y = y, Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat,
+              Xlcat = Xlcat,
               Xtrafo = Xtrafo, Z = Z, cens = cens, cols_main = cols_main,
               trafos = trafos, hc_list = hc_list, refs = refs,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars,

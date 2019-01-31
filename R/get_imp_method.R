@@ -128,8 +128,8 @@ get_models <- function(fixed, random = NULL, data,
 
     meth <- models[nmis[names(models)] > 0]
 
-    if (any(models %in% c('clmm', 'mlmm'))) {
-      stop(paste0("JointAI can't yet handle longitudinal categorical covariates (>2 levels).\n",
+    if (any(models %in% c('mlmm'))) {
+      stop(paste0("JointAI can't yet handle unordered longitudinal categorical covariates (>2 levels).\n",
                   "This feature is planned for the future."), call. = FALSE)
     }
 

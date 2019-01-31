@@ -50,7 +50,7 @@ paste_imp_model <- function(imp_par_list) {
                       logit = impmodel_logit,
                       multilogit = impmodel_multilogit,
                       cumlogit = impmodel_cumlogit,
-                      # clmm = impmodel_clmm,
+                      clmm = impmodel_clmm,
                       lmm = impmodel_lmm,
                       glmm_logit = impmodel_glmm_logit,
                       glmm_gamma = impmodel_glmm_gamma,
@@ -69,7 +69,7 @@ paste_imp_priors <- function(imp_par_list) {
                       logit = impprior_logit,
                       multilogit = impprior_multilogit,
                       cumlogit = impprior_cumlogit,
-                      # clmm = impprior_clmm,
+                      clmm = impprior_clmm,
                       lmm = impprior_lmm,
                       glmm_logit = impprior_glmm_logit,
                       glmm_gamma = impprior_glmm_gamma,
@@ -79,9 +79,10 @@ paste_imp_priors <- function(imp_par_list) {
 
 
 # paste dummy variables --------------------------------------------------------
-paste_dummies <- function(categories, dest_col, dummy_cols, ...){
+paste_dummies <- function(categories, dest_mat, dest_col, dummy_mat, dummy_cols, index, ...){
   mapply(function(dummy_cols, categories) {
-    paste0(tab(4), "Xc[i, ", dummy_cols, "] <- ifelse(Xcat[i, ",
+    paste0(tab(4), dummy_mat, "[", index, ", ", dummy_cols, "] <- ifelse(", dest_mat,
+           "[", index, ", ",
            dest_col, "] == ", categories, ", 1, 0)")
   }, dummy_cols, categories)
 }

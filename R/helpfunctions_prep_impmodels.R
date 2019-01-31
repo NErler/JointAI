@@ -12,8 +12,13 @@
 # @export
 get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, models) {
 
-  intercept = ifelse(impmeth %in% c("cumlogit", "clmm"),
-                     ifelse(min(dest_cols[[varname]]$Xc) > 2, F, T), T)
+  intercept <- if (impmeth == "cumlogit") {
+    ifelse(min(dest_cols[[varname]]$Xc) > 2, FALSE, TRUE)
+  } else if (impmeth == "clmm") {
+    ifelse(ncol(Mlist$Xc) > 1 | min(dest_cols[[varname]]$Xl) > 2, FALSE, TRUE)
+  } else {
+    TRUE
+  }
 
   i <- which(names(models) == varname)
   nam <- names(Mlist$hc_list)[which(!names(Mlist$hc_list) %in% names(models[i:length(models)]))]
@@ -25,7 +30,7 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
     (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1)
   }
   Xl_cols = if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
-    if (is.na(dest_cols[[varname]]$Xl)) {
+    if (all(is.na(dest_cols[[varname]]$Xl))) {
       wouldbe <- max(0, which(colnames(Mlist$Xl) %in% names(models)[seq_along(models) < i])) + 1
       if (wouldbe > 1) 1:(wouldbe - 1)
     } else  if (min(dest_cols[[varname]]$Xl, na.rm = TRUE) > 1) {
@@ -85,9 +90,11 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        } else{"Xc"},
        dest_col = if (impmeth %in% c("multilogit", "cumlogit")) {
          dest_cols[[varname]]$Xcat
+       } else if (impmeth %in% c('clmm', "mlmm")) {
+         dest_cols[[varname]]$Xlcat
        } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          dest_cols[[varname]]$Xtrafo
-       } else if (impmeth %in% c("lmm", "glmm_logit", "glmm_gamma", "glmm_poisson", "clmm")) {
+       } else if (impmeth %in% c("lmm", "glmm_logit", "glmm_gamma", "glmm_poisson")) {
          dest_cols[[varname]][[which(!is.na(dest_cols[[varname]]))]]
        } else {
          dest_cols[[varname]]$Xc
@@ -99,11 +106,16 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        # Zcols = Zcols,
        dummy_cols = if (impmeth %in% c("cumlogit", "multilogit")) {
          dest_cols[[varname]]$Xc
+       } else if (impmeth %in% c('clmm', 'mlmm')) {
+         dest_cols[[varname]]$Xl
        },
        ncat = if (impmeth %in% c("cumlogit", "multilogit")) {
          length(dest_cols[[varname]]$Xc) + 1
+       } else if (impmeth %in% c('clmm', "mlmm")) {
+         length(dest_cols[[varname]]$Xl) + 1
        },
-       refcat = if (impmeth %in% c("logit", "cumlogit", "multilogit")) {
+       refcat = if (impmeth %in% c("logit", "cumlogit", "multilogit",
+                                   'glmm_logit',  'glmm_probit', 'clmm', 'mlmm')) {
          which(Mlist$refs[[varname]] == levels(Mlist$refs[[varname]]))
        },
        trafo_cols = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
@@ -181,6 +193,8 @@ get_dest_column <- function(varname, Mlist) {
                                  make.names(colnames(Mlist$Xtrafo))), varname),
        "Xl" = setNames(match(make.names(nams),
                              make.names(colnames(Mlist$Xl))), nams),
+       "Xlcat" = setNames(match(make.names(varname),
+                               make.names(colnames(Mlist$Xlcat))), varname),
        "Z" = setNames(match(make.names(nams),
                              make.names(colnames(Mlist$Z))), nams)
   )
