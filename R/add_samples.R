@@ -46,12 +46,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
     var.names <- do.call(get_params, c(list(models = object$models,
                                             analysis_type = object$analysis_type,
                                             family = attr(object$analysis_type, "family"),
-                                            y_name = colnames(object$Mlist$y),
-                                            Zcols = ncol(object$Mlist$Z),
-                                            Xc = object$Mlist$Xc,
-                                            Xcat = object$Mlist$Xcat,
-                                            Xtrafo = object$Mlist$Xtrafo,
-                                            imp_par_list = object$imp_par_list),
+                                            imp_par_list = object$imp_par_list,
+                                            ppc = object$Mlist$ppc),
                                        monitor_params))
   }
 
@@ -92,11 +88,11 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
     ))
 
     newMCMC <- as.mcmc.list(lapply(1:length(MCMC),
-                                   function(x) mcmc(rbind(object$MCMC[[k]],
+                                   function(k) mcmc(rbind(object$MCMC[[k]],
                                                           MCMC[[k]]),
                                                     start = start(object$MCMC),
                                                     end = end(object$MCMC) +
-                                                      niter(mcmc[[x]]))
+                                                      niter(mcmc[[k]]))
     ))
 
   } else {
