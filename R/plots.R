@@ -348,6 +348,24 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
       plot(0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "",
            main = main, bty = 'n')
       text(1, 0, paste0(names(data)[i], " \nis coded as character\nand cannot be plotted."), xpd = TRUE)
+    } else if (class(x) %in% c('Date', 'POSIXt')) {
+      if (is.null(args_hist)) {
+        breaks <-  seq(min(x, na.rm  = TRUE), max(x, na.rm = TRUE), length.out = 10 + 1)
+        hist(as.numeric(x), ylab = ylab, main = main, xaxt = 'n',
+             col = fill, border = border, xlab = xlab,
+             breaks = as.numeric(breaks))
+        axis(side = 1, at = as.numeric(breaks), labels = breaks)
+      } else {
+        nclass <- ifelse(is.na(args_hist['nclass']), 10, args_hist['nclass'])
+        breaks <- seq(min(x, na.rm  = TRUE),
+                      max(x, na.rm = TRUE),
+                      length.out = nclass + 1)
+
+        hist(as.numeric(x), ylab = ylab, main = main, xaxt = 'n',
+             col = fill, border = border, xlab = xlab, args_hist,
+             breaks = as.numeric(breaks))
+        axis(side = 1, at = as.numeric(breaks), labels = breaks, args_hist)
+      }
     } else {
       if (is.null(args_hist)) {
         hist(x, ylab = ylab, main = main,
