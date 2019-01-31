@@ -267,13 +267,13 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 
   if (any(models %in% c('norm', 'lognorm', 'lme', 'lmm')) | (family == 'gaussian' & !Mlist$ridge))
     l <- c(l, defs$norm)
-  else if(family == 'gaussian' & Mlist$ridge)
+  else if (family == 'gaussian' & Mlist$ridge)
     l <- c(l, defs$norm["mu_reg_norm", "shape_tau_norm", "rate_tau_norm"])
 
 
   if ((family == 'binomial' & link == 'logit' & !Mlist$ridge) | any(models %in% c('logit', 'glmm_logit')))
     l <- c(l, defs$logit)
-  else if(family == 'binomial' & link == 'logit' & Mlist$ridge)
+  else if (family == 'binomial' & link == 'logit' & Mlist$ridge)
     l <- c(l, defs$logit['mu_reg_logit'])
 
 
