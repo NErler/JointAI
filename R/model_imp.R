@@ -270,7 +270,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                       MCMCpackage = "JAGS", analysis_type,
                       Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
-                      dest_cols = NULL, imp_par_list = NULL,  data_list = NULL, ...) {
+                      dest_cols = NULL, imp_par_list = NULL,  data_list = NULL,
+                      parallel = FALSE, ...) {
 
 
   # Checks & warnings -------------------------------------------------------
@@ -497,15 +498,14 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     if (any(sapply(inits, is.null)))
       inits <- NULL
   }
+  if (parallel & !is.null(inits))
+    inits <- mapply(function(inits, rng) c(inits, rng), inits = inits,
+                    rng = rjags::parallel.seeds("base::BaseRNG", n.chains),
+                    SIMPLIFY = FALSE)
+  if (parallel & is.null(inits))
+    inits <- rjags::parallel.seeds("base::BaseRNG", n.chains)
 
-  # run JAGS -----------------------------------------------------------------
-  t0 <- Sys.time()
-  if (any(n.adapt > 0, n.iter > 0)) {
 
-    adapt <- try(rjags::jags.model(file = modelfile, data = data_list,
-                                   inits = inits, quiet = quiet,
-                                   n.chains = n.chains, n.adapt = n.adapt))
-  }
   if (is.null(monitor_params)) {
     monitor_params <- c("analysis_main" = TRUE)
   } else {
@@ -519,19 +519,45 @@ model_imp <- function(fixed, data, random = NULL, link, family,
         message('Note: Main model parameter were added to the list of parameters to follow.')
     }}
   var.names <- do.call(get_params, c(list(models = models, analysis_type = analysis_type,
-                                          family = family,
-                                          y_name = colnames(Mlist$y),
-                                          nranef = Mlist$nranef,
-                                          Xc = Mlist$Xc, Xtrafo = Mlist$Xtrafo,
-                                          Xcat = Mlist$Xcat,
+                                          family = family, Mlist,
+                                          # y_name = colnames(Mlist$y),
+                                          # nranef = Mlist$nranef,
+                                          # Xc = Mlist$Xc, Xtrafo = Mlist$Xtrafo,
+                                          # Xcat = Mlist$Xcat,
                                           imp_par_list = imp_par_list,
                                           ppc = ppc),
                                      monitor_params))
 
-  mcmc <- if (n.iter > 0 & !inherits(adapt, 'try-error')) {
-    try(rjags::coda.samples(adapt, n.iter = n.iter, thin = thin,
-                            variable.names = var.names,
-                            na.rm = FALSE, progress.bar = progress.bar))
+  # run JAGS -----------------------------------------------------------------
+  t0 <- Sys.time()
+  if (parallel == TRUE) {
+    if (any(n.adapt > 0, n.iter > 0)) {
+      cl <- parallel::makeCluster(n.chains,
+                                  type = ifelse(grepl('linux', R.Version()$platform),
+                                                'FORK', 'PSOCK'))
+
+
+      parallel::clusterExport(cl, c('inits', 'data_list', 'modelfile', 'n.adapt', 'n.iter',
+                          'var.names'), envir = environment())
+
+      res <- pbapply::pblapply(inits, run_jags, data_list = data_list,
+                               modelfile = modelfile, n.adapt = n.adapt, n.iter = n.iter,
+                               var.names = var.names, cl = cl)
+      parallel::stopCluster(cl)
+      mcmc <- as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
+      adapt <- res[[1]]$adapt
+    }
+  } else {
+    if (any(n.adapt > 0, n.iter > 0)) {
+      adapt <- try(rjags::jags.model(file = modelfile, data = data_list,
+                                     inits = inits, quiet = quiet,
+                                     n.chains = n.chains, n.adapt = n.adapt))
+    }
+    mcmc <- if (n.iter > 0 & !inherits(adapt, 'try-error')) {
+      try(rjags::coda.samples(adapt, n.iter = n.iter, thin = thin,
+                              variable.names = var.names,
+                              na.rm = FALSE, progress.bar = progress.bar))
+    }
   }
   t1 <- Sys.time()
 

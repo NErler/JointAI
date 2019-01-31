@@ -113,3 +113,17 @@ grep_names <- function(nams1, nams2){
   res <- unique(unlist(sapply(nams1, grep, nams2, value = TRUE, simplify = FALSE)))
   if (length(res) > 0) res
 }
+
+
+
+run_jags <- function(inits, data_list, modelfile, n.adapt, n.iter, var.names) {
+
+  adapt <- rjags::jags.model(file = modelfile, n.adapt = n.adapt,
+                      n.chains = 1, inits = inits, data = data_list,
+                      quiet = TRUE)
+
+  mcmc <- rjags::coda.samples(adapt, n.iter = n.iter, variable.names = var.names,
+                       progress.bar = 'none')
+
+  return(list(adapt = adapt, mcmc = mcmc))
+}
