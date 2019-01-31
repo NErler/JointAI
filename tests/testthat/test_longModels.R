@@ -34,7 +34,7 @@ test_that("models with standard random effects structure work", {
                "JointAI")
 
   expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 -C2) + log(C1) + time,
-                random = ~ time + I(time^2)|id, data = longDF, no_model= 'time')),
+                random = ~ time + I(time^2)|id, data = longDF, no_model = 'time')),
                "JointAI")
 
   expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 -C2) + log(C1) + time,
@@ -169,7 +169,10 @@ test_that('glme_imp', {
   expect_equal(class(glme_imp(b1 ~ C2 + B1 + time + c2 + c1 + b2, random = ~time | id, data = longDF,
                               family = 'binomial')), 'JointAI')
 
-  expect_error(glme_imp(b1 ~ C2 + B1 + time + c2 + c1 + o2, random = ~time | id, data = longDF,
-                              family = 'binomial'))
+  expect_equal(class(glme_imp(b1 ~ C2 + B1 + time + c2 + c1 + o2, random = ~time | id, data = longDF,
+                              family = 'binomial')), 'JointAI')
+
+  expect_error(glme_imp(b1 ~ C2 + B1 + time + c2 + c1 + m2, random = ~time | id, data = longDF,
+                        family = 'binomial'))
 
 })

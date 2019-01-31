@@ -241,7 +241,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   }
 
   if (!is.null(Xcat)) {
-    Xc[, unlist(sapply(cat_vars, names))] <- NA
+    Xc[, unlist(sapply(cat_vars_base, names))] <- NA
   }
 
   Xlcat <- if (length(cat_vars_long) > 0) {

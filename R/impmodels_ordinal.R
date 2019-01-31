@@ -122,7 +122,6 @@ impmodel_clmm <- function(varname, dest_mat, dest_col, Xc_cols, Xl_cols, ncat, r
 }
 
 
-# family, link, varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...
 impprior_clmm <- function(varname, par_elmts, ncat, ppc, nranef, ...){
   deltas <- sapply(1:(ncat - 2), function(k) {
     paste0(tab(), "delta_", varname, "[", k, "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")

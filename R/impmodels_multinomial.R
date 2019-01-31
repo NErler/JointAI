@@ -5,7 +5,7 @@
 # @param par_elmts elements of the parameter vector to be used
 # @param par_name name of the parameter
 # @export
-impmodel_multilogit <- function(varname, dest_col, Xc_cols, par_elmts, dummy_cols, ncat, refcat, ...){
+impmodel_multilogit <- function(varname, dest_col, Xc_cols, par_elmts, dummy_cols, ncat, dest_mat, refcat, ...){
 
   indent <- nchar(varname) + 23
 

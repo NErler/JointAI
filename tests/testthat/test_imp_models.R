@@ -76,7 +76,16 @@ test_that("correct imputation methods are chosen", {
                     meth = c(C2 = 'norm', B2 = 'logit', M2 = 'multilogit', O2 = 'cumlogit',
                              c2 = 'lmm')))
 
-  expect_error(get_models(fixed = y ~ c1 + C1 + o1 + o2 + M2 + O2 + C2 + c2,
+  expect_equal(get_models(fixed = y ~ c1 + C1 + M2 + O2 + C2 + c2 + o2,
+                          random = ~ b1 + B2 + time | id, data = longDF, no_model = 'time'),
+               list(models = c(C2 = 'norm', B2 = 'logit', M2 = 'multilogit', O2 = 'cumlogit',
+                               c1 = 'lmm', b1 = 'glmm_logit', o2 = 'clmm',
+                               c2 = 'lmm'),
+                    meth = c(C2 = 'norm', B2 = 'logit', M2 = 'multilogit', O2 = 'cumlogit',
+                             o2 = 'clmm', c2 = 'lmm')))
+
+
+  expect_error(get_models(fixed = y ~ c1 + C1 + o1 + m2 + M2 + O2 + C2 + c2,
                           random = ~ b1 + B2 + time | id, data = longDF, no_model = 'time'))
 })
 
@@ -84,7 +93,7 @@ test_that("auxvars are included", {
   expect_equal(get_models(fixed = y ~ c1 + C2, auxvars = c("C1", "B2", "b1"),
                           random = ~ time | id, data = longDF,
                           no_model = 'time'),
-               list(models = c(C2= 'norm', B2 = 'logit', c1 = 'lmm', b1 = 'glmm_logit'),
+               list(models = c(C2 = 'norm', B2 = 'logit', c1 = 'lmm', b1 = 'glmm_logit'),
                     meth = c(C2 = 'norm', B2 = 'logit'))
   )
 })
