@@ -557,6 +557,9 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
   t1 <- Sys.time()
 
+  if (n.iter > 0 & class(mcmc) != 'mcmc.list')
+    warning('There is no mcmc sample. Something went wrong.',
+            call. = FALSE, immediate. = TRUE)
 
   if (n.iter > 0 & !is.null(mcmc)) {
     MCMC <- mcmc
