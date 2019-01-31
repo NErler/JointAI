@@ -520,10 +520,6 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     }}
   var.names <- do.call(get_params, c(list(models = models, analysis_type = analysis_type,
                                           family = family, Mlist,
-                                          # y_name = colnames(Mlist$y),
-                                          # nranef = Mlist$nranef,
-                                          # Xc = Mlist$Xc, Xtrafo = Mlist$Xtrafo,
-                                          # Xcat = Mlist$Xcat,
                                           imp_par_list = imp_par_list,
                                           ppc = ppc),
                                      monitor_params))
