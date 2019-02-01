@@ -301,7 +301,7 @@ When `analysis_main` was not switched on, all parameters are displayed by defaul
 lm4 <- lm_imp(SBP ~ gender + WC + alc + creat,
               data = NHANES, n.iter = 100, mess = FALSE,  progress.bar = 'none',
               monitor_params = list(analysis_main = FALSE,
-                                    other = c('p_alc[1:3]', "mu_creat[1]")))
+                                    other = c('mu_alc[1:3]', "mu_creat[1]")))
 
 traceplot(lm4, ncol = 4)
 ```

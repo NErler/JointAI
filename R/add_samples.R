@@ -46,6 +46,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
     var.names <- do.call(get_params, c(list(models = object$models,
                                             analysis_type = object$analysis_type,
                                             family = attr(object$analysis_type, "family"),
+                                            Mlist = object$Mlist,
                                             imp_par_list = object$imp_par_list,
                                             ppc = object$Mlist$ppc),
                                        monitor_params))
