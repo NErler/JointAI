@@ -1,5 +1,8 @@
 # JointAI 0.5.0
  
+## Important
+* the argument `meth` has changed to `models`
+
 ## Bug fixes
 * `add_samples()`: bug that copied the last chain to all other chains fixed
 

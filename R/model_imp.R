@@ -46,6 +46,7 @@
 #'                if necessary) but are not part of the analysis model
 #' @param models optional named vector specifying the order and types of the
 #'               models for incomplete covariates and longitudinal covariates.
+#'               This arguments replaces the argument \code{meth} used in earlier versions.
 #'               If \code{NULL} (default) models will be determined
 #'             automatically based on the class of the respective columns of \code{data}
 #'             (see Details).
@@ -53,7 +54,6 @@
 #'             longitudinal covariates, incomplete longitudinal covariates,
 #'             and within each group variables are ordered according to the
 #'             proportion of missing values (increasing).
-#' @param meth no longer used; use \code{model} instead.
 #' @param refcats optional; a named list specifying which category should be
 #'                used as reference category for each of the categorical variables.
 #'                Options are the category label, the category number,
@@ -266,7 +266,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       quiet = TRUE, progress.bar = "text", warn = TRUE,
                       mess = TRUE, ppc = TRUE, ridge = FALSE,
                       auxvars = NULL, models = NULL, no_model = NULL,
-                      meth = NULL, refcats = NULL, trunc = NULL,
+                      refcats = NULL, trunc = NULL,
                       scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                       MCMCpackage = "JAGS", analysis_type,
                       Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
@@ -279,7 +279,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     message("This is new software. Please report any bugs to the package maintainer.")
 
   if (missing(fixed)) {
-    stop("No fixed effects structure specified.")
+    stop("A fixed effects structure needs to be specified.")
   }
 
   if (!analysis_type %in% c("lme", "glme", "clmm") & !is.null(random)) {
@@ -289,36 +289,31 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     random <- NULL
   }
 
+  if (analysis_type %in% c("lme", "glme", "clmm") & is.null(random)) {
+    stop(gettextf("A random effects structure needs to be specified when using a model of type %s.",
+                  sQuote(analysis_type)))
+    random <- NULL
+  }
+
   if (n.iter == 0) {
     if (mess)
       message("Note: No MCMC sample will be created when n.iter is set to 0.")
   }
 
-  # set contrasts to dummies
+  # check if the argument meth is provided (no longer used)
+  args <- as.list(match.call())
+  if (!is.null(args$meth))
+      warning('The argument "meth" has been changed to "models". Please use "models".',
+              call. = FALSE, immediate. = TRUE)
+
+
+
+  # data pre-processing --------------------------------------------------------
+  # * set contrasts to dummies -------------------------------------------------
   opt <- getOption("contrasts")
   options(contrasts = rep("contr.treatment", 2))
 
-
-  # generate default name for model file if not specified
-  if (is.null(modeldir)) modeldir <- tempdir()
-  if (is.null(modelname)) {
-    modelname <- paste0("JointAI_JAGSmodel_",
-                        format(Sys.time(), "%Y-%m-%d"),
-                        "_", sample.int(1e6, 1), ".R")
-  } else {
-    keep_model <- TRUE
-  }
-  modelfile <- file.path(modeldir, modelname)
-
-  # check if initial values are supplied or should be generated
-  if (!(is.null(inits) | inherits(inits, c("logical", "function", "list")))) {
-    if (warn)
-      warning("The object supplied to 'inits' could not be recognized.
-            Default function to create initial values is used.")
-    inits <- TRUE
-  }
-
-
+  # * check classes of covariates ----------------------------------------------
   covars <- unique(c(all.vars(fixed),
                      all.vars(remove_grouping(random)),
                      if (!is.null(auxvars))
@@ -334,7 +329,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
 
-  # drop empty categories
+  # * drop empty categories ----------------------------------------------------
   allvars <- unique(c(all.vars(fixed),
                       all.vars(random),
                       if (!is.null(auxvars))
@@ -354,7 +349,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     }
   }
 
-  # convert continuous variable with 2 different values to factor
+
+  # * convert continuous variable with 2 different values to factor ------------
   for (k in allvars) {
     if (all(class(data[, k]) != 'factor') & length(unique(data[, k])) == 2) {
       data[, k] <- factor(data[, k])
@@ -365,7 +361,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
 
-  # convert logicals to factors
+  # * convert logicals to factors ----------------------------------------------
   if (any(unlist(sapply(data[allvars], class)) == 'logical')) {
     for (x in allvars) {
       if ('logical' %in% class(data[, x])) {
@@ -378,13 +374,9 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
 
-  # * imputation method ----------------------------------------------------------
+  # imputation method ----------------------------------------------------------
   models_default <- get_models(fixed = fixed, random = random, data = data,
                                auxvars = auxvars, no_model = no_model)$models
-
-  if (!is.null(meth))
-    warning('The argument "meth" has been changed to "models". Please use "models".',
-            call. = FALSE, immediate. = TRUE)
 
   if (is.null(models)) {
     models <- models_default
@@ -411,7 +403,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
 
-  # * divide matrices -------------------------------------------------------
+  # divide matrices ------------------------------------------------------------
   if (is.null(Mlist)) {
     Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
                              random = random, auxvars = auxvars,
@@ -419,6 +411,9 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                              models = models, warn = warn, mess = mess, ppc = ppc,
                              ridge = ridge)
   }
+
+
+  # model dimensions -----------------------------------------------------------
 
   if (is.null(K)) {
     K <- get_model_dim(Mlist$cols_main, Mlist$hc_list)
@@ -433,6 +428,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     K_imp <- get_imp_dim(models, imp_pos, Mlist)
   }
 
+  # imputation parameters/specifications ---------------------------------------
   if (is.null(dest_cols)) {
     dest_cols <- sapply(unique(c(names(models), colnames(Mlist$Xtrafo))),
                         get_dest_column, Mlist = Mlist, simplify = FALSE)
@@ -444,6 +440,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                            SIMPLIFY = FALSE)
   }
 
+
+  # data list ------------------------------------------------------------------
   if (is.null(data_list)) {
     data_list <- try(get_data_list(analysis_type, family, link, models, Mlist,# auxvars,
                                    scale_pars = scale_pars, hyperpars = hyperpars,
@@ -455,6 +453,18 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   # write model ----------------------------------------------------------------
+  # generate default name for model file if not specified
+  if (is.null(modeldir)) modeldir <- tempdir()
+  if (is.null(modelname)) {
+    modelname <- paste0("JointAI_JAGSmodel_",
+                        format(Sys.time(), "%Y-%m-%d"),
+                        "_", sample.int(1e6, 1), ".R")
+  } else {
+    keep_model <- TRUE
+  }
+  modelfile <- file.path(modeldir, modelname)
+
+
   if (file.exists(modelfile) & is.null(overwrite)) {
     question_asked <- TRUE
     # This warning can not be switched off by warn = FALSE, because an input is required.
@@ -489,6 +499,16 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
 
+  # initial values -------------------------------------------------------------
+  # * check if initial values are supplied or should be generated
+  if (!(is.null(inits) | inherits(inits, c("logical", "function", "list")))) {
+    if (warn)
+      warning("The object supplied to 'inits' could not be recognized.
+            Default function to create initial values is used.")
+    inits <- TRUE
+  }
+
+  # * generate initial values
   if (is.logical(inits)) {
     inits <- if (inits)
       replicate(n.chains,
@@ -561,6 +581,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     warning('There is no mcmc sample. Something went wrong.',
             call. = FALSE, immediate. = TRUE)
 
+
+  # post processing ------------------------------------------------------------
   if (n.iter > 0 & !is.null(mcmc)) {
     MCMC <- mcmc
 
@@ -584,6 +606,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
 
+  # prepare output -------------------------------------------------------------
   if (!keep_model) {file.remove(modelfile)}
 
   mcmc_settings <- list(MCMCpackage = MCMCpackage,
@@ -633,7 +656,7 @@ lm_imp <- function(formula, data,
                    overwrite = NULL, keep_model = FALSE,
                    quiet = TRUE, progress.bar = "text", warn = TRUE,
                    mess = TRUE,
-                   auxvars = NULL, models = NULL, no_model = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                   auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL, trunc = NULL,
                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                    ridge = FALSE, ...){
 
@@ -676,7 +699,7 @@ glm_imp <- function(formula, family, data,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, models = NULL, no_model = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                    auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     ridge = FALSE, ...){
 
@@ -743,7 +766,7 @@ clm_imp <- function(fixed, data, random,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, models = NULL, no_model = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                    auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     ridge = FALSE, ...){
 
@@ -784,7 +807,7 @@ lme_imp <- function(fixed, data, random,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, models = NULL, no_model = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                    auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     ridge = FALSE, ...){
 
@@ -828,7 +851,7 @@ glme_imp <- function(fixed, data, random, family,
                     overwrite = NULL, keep_model = FALSE,
                     quiet = TRUE, progress.bar = "text", warn = TRUE,
                     mess = TRUE,
-                    auxvars = NULL, models = NULL, no_model = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                    auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL, trunc = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     ridge = FALSE, ...){
 
@@ -891,7 +914,7 @@ clmm_imp <- function(fixed, data, random,
                      overwrite = NULL, keep_model = FALSE,
                      quiet = TRUE, progress.bar = "text", warn = TRUE,
                      mess = TRUE,
-                     auxvars = NULL, models = NULL,no_model = NULL,  meth = NULL, refcats = NULL, trunc = NULL,
+                     auxvars = NULL, models = NULL,no_model = NULL,  refcats = NULL, trunc = NULL,
                      scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                      ridge = FALSE, ...){
 
@@ -935,7 +958,7 @@ survreg_imp <- function(formula, data,
                    overwrite = NULL, keep_model = FALSE,
                    quiet = TRUE, progress.bar = "text", warn = TRUE,
                    mess = TRUE,
-                   auxvars = NULL, models = NULL, no_model = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+                   auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL, trunc = NULL,
                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                    ridge = FALSE, ...){
 
@@ -978,7 +1001,7 @@ survreg_imp <- function(formula, data,
 #                      overwrite = NULL, keep_model = FALSE,
 #                      quiet = TRUE, progress.bar = "text", warn = TRUE,
 #                      mess = TRUE,
-#                      auxvars = NULL, models = NULL, meth = NULL, refcats = NULL, trunc = NULL,
+#                      auxvars = NULL, models = NULL, refcats = NULL, trunc = NULL,
 #                      scale_vars = NULL, scale_pars = NULL, hyperpars = NULL, ...){
 #
 #   if (missing(formula))

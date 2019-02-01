@@ -306,7 +306,7 @@ When using a `log()` transformation for the covariate `bili`, we can either
 use the default imputation method `norm` (a normal distribution) and truncate
 it by specifying `trunc = list(bili = c(lower, upper))` (where the lower and
 upper limits are the smallest and largest allowed values) or choose an imputation
-method (using the argument `meth`; more details see the section on 
+method (using the argument `models`; more details see the section on 
 [Imputation model types](#meth))
 that only imputes positive values such as a 
 log-normal distribution (`lognorm`) or a Gamma distribution (`gamma`):
@@ -319,12 +319,12 @@ mod4a <- lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
 
 # log-normal model for bili
 mod4b <- lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
-                meth = c(bili = 'lognorm', creat = 'norm'),
+                models = c(bili = 'lognorm', creat = 'norm'),
                 data = NHANES, mess = FALSE)
 
 # gamma model for bili
 mod4c <- lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
-                meth = c(bili = 'gamma', creat = 'norm'),
+                models = c(bili = 'gamma', creat = 'norm'),
                 data = NHANES, mess = FALSE)
 
 ```
@@ -454,24 +454,24 @@ other imputation models) on its original scale.
 
 ### Specification of imputation model types
 In models [`mod4b` and `mod4c`](#mod4) we have already seen two examples in which
-the imputation model type was changed using the argument `meth`.
+the imputation model type was changed using the argument `models`.
 
-`meth` takes a named vector of imputation model types, where the names are the names
-of the incomplete variables. When the vector supplied to meth only contains
+`models` takes a named vector of imputation model types, where the names are the names
+of the incomplete variables. When the vector supplied to `models` only contains
 specifications for a subset of the incomplete variables, default models are used for
 the remaining incomplete variables.
 
-```{r, cache = TRUE}
+```{r}
 mod8a <- lm_imp(SBP ~ age + gender + WC + alc + bili + occup + smoke,
-                meth = c(bili = 'gamma', WC = 'lognorm'),
+                models = c(bili = 'gamma', WC = 'lognorm'),
                 data = NHANES, n.iter = 100, mess = FALSE, progress.bar = 'none')
 
-mod8a$meth
+mod8a$models
 ```
 
-The function [`get_imp_meth()`](https://nerler.github.io/JointAI/reference/get_imp_meth.html),
+The function [`get_models()`](https://nerler.github.io/JointAI/reference/get_imp_meth.html),
 which finds and assigns the default imputation methods, can be called directly.
-`get_imp_meth` has arguments 
+`get_models()` has arguments 
 
 * `fixed`: the fixed effects formula
 * `random`: the random effects formula (if necessary)
@@ -479,9 +479,9 @@ which finds and assigns the default imputation methods, can be called directly.
 * `auxvars`: an optional vector of auxiliary variables.
 
 ```{r}
-mod8a_meth <- get_imp_meth(SBP ~ age + gender + WC + alc + bili + occup + smoke,
-                           data = NHANES)
-mod8a_meth
+mod8a_models <- get_models(SBP ~ age + gender + WC + alc + bili + occup + smoke,
+                         data = NHANES)
+mod8a_models
 ```
 
 When a continuous incomplete variable has only two different values it is
@@ -498,13 +498,13 @@ By default, the imputation models are ordered by number of missing values
 all incomplete variables that appear earlier in the sequence in its linear predictor:
 ```{r}
 # number of missing values in the covariates in mod8a
-colSums(is.na(NHANES[, names(mod8a_meth)]))
+colSums(is.na(NHANES[, names(mod8a_models$models)]))
 
 # print information on the imputation models (and omit everything but the predictor variables)
 list_impmodels(mod8a, priors = F, regcoef = F, otherpars = F, refcat = F)
 ```
 
-By re-ordering the elements in `meth`, the order of the sequence of imputation
+By re-ordering the elements in `models`, the order of the sequence of imputation
 models will be changed. Note that this requires the user to specify imputation
 methods for all incomplete variables; when only a subset is specified the default
 order will be retained.

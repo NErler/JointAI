@@ -16,60 +16,57 @@ lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, models = NULL, no_model = NULL, meth = NULL,
-  refcats = NULL, trunc = NULL, scale_vars = NULL,
-  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
+  auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
+  trunc = NULL, scale_vars = NULL, scale_pars = NULL,
+  hyperpars = NULL, ridge = FALSE, ...)
 
 glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
   modelname = NULL, modeldir = NULL, overwrite = NULL,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
   warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
-  no_model = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
-  ridge = FALSE, ...)
+  no_model = NULL, refcats = NULL, trunc = NULL, scale_vars = NULL,
+  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
 
 clm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, models = NULL, no_model = NULL, meth = NULL,
-  refcats = NULL, trunc = NULL, scale_vars = NULL,
-  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
+  auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
+  trunc = NULL, scale_vars = NULL, scale_pars = NULL,
+  hyperpars = NULL, ridge = FALSE, ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, models = NULL, no_model = NULL, meth = NULL,
-  refcats = NULL, trunc = NULL, scale_vars = NULL,
-  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
+  auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
+  trunc = NULL, scale_vars = NULL, scale_pars = NULL,
+  hyperpars = NULL, ridge = FALSE, ...)
 
 glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
   modelname = NULL, modeldir = NULL, overwrite = NULL,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
   warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
-  no_model = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
-  ridge = FALSE, ...)
+  no_model = NULL, refcats = NULL, trunc = NULL, scale_vars = NULL,
+  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
 
 clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
   modelname = NULL, modeldir = NULL, overwrite = NULL,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
   warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
-  no_model = NULL, meth = NULL, refcats = NULL, trunc = NULL,
-  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
-  ridge = FALSE, ...)
+  no_model = NULL, refcats = NULL, trunc = NULL, scale_vars = NULL,
+  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
 
 survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, models = NULL, no_model = NULL, meth = NULL,
-  refcats = NULL, trunc = NULL, scale_vars = NULL,
-  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, ...)
+  auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
+  trunc = NULL, scale_vars = NULL, scale_pars = NULL,
+  hyperpars = NULL, ridge = FALSE, ...)
 }
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
@@ -131,6 +128,7 @@ if necessary) but are not part of the analysis model}
 
 \item{models}{optional named vector specifying the order and types of the
   models for incomplete covariates and longitudinal covariates.
+  This arguments replaces the argument \code{meth} used in earlier versions.
   If \code{NULL} (default) models will be determined
 automatically based on the class of the respective columns of \code{data}
 (see Details).
@@ -143,8 +141,6 @@ proportion of missing values (increasing).}
 Note that this is only possible for completely observed
 variables and may imply assumptions of independence between
 the excluded variable and incomplete variables.}
-
-\item{meth}{no longer used; use \code{model} instead.}
 
 \item{refcats}{optional; a named list specifying which category should be
 used as reference category for each of the categorical variables.
