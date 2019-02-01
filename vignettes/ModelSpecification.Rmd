@@ -529,7 +529,7 @@ vector containing the names of the auxiliary variables.
 **Example:**<br>
 We might consider the variables `educ` and `smoke` as predictors
 for the imputation of `occup`:
-```{r, cache = TRUE}
+```{r}
 mod9a <- lm_imp(SBP ~ gender + age + occup, auxvars = c('educ', 'smoke'),
                 data = NHANES, n.iter = 100, progress.bar = 'none', mess = FALSE)
 ```

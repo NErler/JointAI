@@ -273,7 +273,7 @@ a subset may be desirable.
 
 By default, only the parameters of the main analysis model are displayed if they
 were monitored:
-```{r, fig.width = 7, fig.height = 6, cache = TRUE}
+```{r, fig.width = 7, fig.height = 6}
 # Run a model monitoring analysis parameters and imputation parameters
 lm5 <- lm_imp(SBP ~ gender + WC + alc + creat,
               data = NHANES, n.iter = 100, mess = FALSE, progress.bar = 'none',
@@ -296,7 +296,7 @@ MC_error(lm5)
 ```
 
 When `analysis_main` was not switched on, all parameters are displayed by default:
-```{r, cache = TRUE, fig.height = 1.5}
+```{r, fig.height = 1.5}
 # Re-run the model from above, now creating MCMC samples
 lm4 <- lm_imp(SBP ~ gender + WC + alc + creat,
               data = NHANES, n.iter = 100, mess = FALSE,  progress.bar = 'none',
@@ -321,7 +321,7 @@ summary(lm5, subset = list(other = c('creat', 'alc>=1')))
 
 
 This also works when a subset of the imputed values should be displayed:
-```{r lm2_2, cache = TRUE, fig.height = 2, fig.width = 5, out.width = "60%"}
+```{r lm2_2, fig.height = 2, fig.width = 5, out.width = "60%"}
 # Re-run the model from above, now creating MCMC samples
 lm2 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
               data = NHANES, n.iter = 100, mess = FALSE,  progress.bar = 'none',
