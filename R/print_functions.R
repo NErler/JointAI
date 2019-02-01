@@ -317,7 +317,7 @@ parameters <- function(object, mess = TRUE, warn = TRUE) {
 
   if (is.null(object$MCMC)) {
     if (mess)
-    message(paste0("'", args$object, "' does not contain MCMC samples."))
+    message(paste0("Note: '", args$object, "' does not contain MCMC samples."))
   }
 
   vnam <- object$mcmc_settings$variable.names
@@ -330,9 +330,6 @@ parameters <- function(object, mess = TRUE, warn = TRUE) {
                                   colnames(object$data_list$Z)[object$Mlist$cols_main$Z])),
                    after = pos)[-pos]
   }
-
-  # if (!is.null(object$MCMC) & !setequal(vnam, colnames(object$MCMC[[1]])))
-  #   stop('Difference beetween MCMC and vnam.')
 
   return(vnam)
 }
