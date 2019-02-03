@@ -152,9 +152,8 @@ ordinal <- function(link = 'identity') {
             class = "family")
 }
 
-# # define family coxph
-# #' @export
-# prophaz <- function(link = 'log') {
-#   structure(list(family = "prophaz", link = 'log'),
-#             class = "family")
-# }
+# define family coxph
+prophaz <- function(link = 'log') {
+  structure(list(family = "prophaz", link = 'log'),
+            class = "family")
+}
