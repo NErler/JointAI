@@ -213,32 +213,32 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     l$cens <- as.numeric(unlist(Mlist$cens == 0))
     l$ctime <- as.numeric(unlist(Mlist$y))
     l[[names(Mlist$y)]][Mlist$cens == 0] <- NA
+    l <- c(l, defs$surv)
+
+    if (Mlist$ridge)
+      tau_reg_surv <- NULL
   }
 
   # outcome specification for Cox PH models
   if (analysis_type == 'coxph') {
     l[[names(Mlist$y)]] <- NULL
-    l$c <- defs$coxph['c']
 
     y <- unlist(Mlist$y)
-    ts <- sort(unique(y))
-    Y <- dN <- matrix(nrow = length(y), ncol = length(ts) - 1,
+    etimes <- sort(unique(y))
+    Y <- dN <- matrix(nrow = length(y), ncol = length(etimes) - 1,
                       dimnames = list(subj = c(), time = c()))
-
-    for (i in seq_along(y)) {
-      for (j in 1:(length(ts) - 1)) {
-        Y[i, j] <- ifelse(y[i] - ts[j] + defs$coxph['eps'] > 0, 1, 0)
-        dN[i, j] <- Y[i, j] * ifelse(ts[j + 1] - y[i] - defs$coxph['eps'] > 0, 1, 0) * unlist(Mlist$cens)[i]
-      }
+    for (j in 1:(length(etimes) - 1)) {
+      Y[, j] <- ifelse(y - etimes[j] + defs$coxph['eps'] > 0, 1, 0)
+      dN[, j] <- Y[, j] * ifelse(etimes[j + 1] - y - defs$coxph['eps'] > 0, 1, 0) * (as.numeric(unlist(Mlist$cens)) - 1)
     }
 
-    dL0.star <- priorhaz <- numeric(length(ts) - 1)
-    for (j in 1:(length(ts) - 1)) {
-      dL0.star[j] <- defs$coxph['r'] * (ts[j + 1] - ts[j])
-      priorhaz[j] <- dL0.star[j] * l$c
+    priorhaz <- numeric(length(etimes) - 1)
+    for (j in 1:(length(etimes) - 1)) {
+      priorhaz[j] <- defs$coxph['r'] * (etimes[j + 1] - etimes[j]) * defs$coxph['c']
     }
-    Ylong <- reshape2::melt(Y)
-    Ylong$dN <- reshape2::melt(dN)$value
+
+    Ylong <- melt_matrix(Y)
+    Ylong$dN <- melt_matrix(dN)$value
 
     Ylong <- Ylong[order(Ylong$value, decreasing = T), ]
 
@@ -247,8 +247,13 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     l$time <- Ylong$time
     l$RiskSet <- Ylong$value
     l$dN <- Ylong$dN
-    l$nt <- length(ts)
+    l$nt <- length(etimes)
     l$Idt <- ifelse(l$RiskSet == 0, 0, NA)
+    l$c <- defs$coxph["c"]
+    l <- c(l, defs$surv)
+
+    if (Mlist$ridge)
+      tau_reg_surv <- NULL
   }
 
 
@@ -320,6 +325,8 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
       l <- c(l, pars)
     }
   }
+
+
   return(list(data_list = Filter(Negate(is.null), l),
               scale_pars = scaled$scale_pars,
               hyperpars = defs)
@@ -473,9 +480,13 @@ default_hyperpars <- function() {
       )
     },
 
+    surv = c(mu_reg_surv = 0,
+             tau_reg_surv = 0.001),
+
     coxph = c(c = 0.001,
               r = 0.1,
-              eps = 1e-10)
+              eps = 1e-10
+              )
   )
 }
 
