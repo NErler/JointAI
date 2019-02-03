@@ -38,8 +38,8 @@ survreg_priors <- function(K, Mlist, ...){
   # }
 
   if (Mlist$ridge) {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv[k])", "\n",
-                    tab(4), "tau_reg_surv[k] ~ dgamma(0.01, 0.01)", "\n")
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv_ridge[k])", "\n",
+                    tab(4), "tau_reg_surv_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
   } else {
     distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n")
   }
@@ -70,7 +70,8 @@ coxph_model <- function(Mlist, K, ...){
 
   paste0(tab(), "# Cox PH model for ", y_name, "\n",
          tab(), "dN[j] ~ dpois(Idt[j])", "\n",
-         tab(), "Idt[j] <- RiskSet[j] * exp(inprod(Xc[subj[j],", K['Xc', 1], ":", K['Xc', 2],"], beta[", K['Xc', 1], ":", K['Xc', 2], "])",
+         tab(), "Idt[j] <- RiskSet[j] * exp(inprod(Xc[subj[j],", K['Xc', 1], ":",
+         K['Xc', 2],"], beta[", K['Xc', 1], ":", K['Xc', 2], "])",
          paste_Xic, ") * dL0[time[j]]", "\n",
          tab(), "}", "\n",
          tab(), "for (j in 1:(nt-1)) {", "\n",
@@ -82,10 +83,10 @@ coxph_priors <- function(K, Mlist, ...){
   y_name <- colnames(Mlist$y)
 
   if (Mlist$ridge) {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main[k])", "\n",
-                    tab(4), "tau_reg_main[k] ~ dgamma(0.01, 0.01)", "\n")
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv_ridge[k])", "\n",
+                    tab(4), "tau_reg_surv_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
   } else {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_main, tau_reg_main)", "\n")
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n")
   }
 
 
