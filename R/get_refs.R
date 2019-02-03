@@ -1,7 +1,7 @@
 
 get_refs <- function(fmla, data, refcats = NULL) {
 
-  covars <- all.vars(fmla)[all.vars(fmla) != extract_outcome(fmla)]
+  covars <- all.vars(fmla)[!all.vars(fmla) %in% c(extract_outcome(fmla))]
   if (length(covars) > 0) {
 
     factors <- covars[sapply(data[, covars, drop = FALSE], is.factor)]
@@ -97,7 +97,7 @@ set_refcat <- function(data, formula, covars, auxvars) {
   if (missing(formula) & missing(covars) & missing(auxvars)) {
     covars <- colnames(data)
   } else  if (missing(covars) & !missing(formula)) {
-    covars <- all.vars(formula)[all.vars(formula) != extract_outcome(formula)]
+    covars <- all.vars(formula)[!all.vars(formula) %in% c(extract_outcome(formula))]
   }
   if (!missing(auxvars))
     covars <- unique(c(covars, auxvars))
