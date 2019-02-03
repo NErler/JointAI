@@ -7,16 +7,26 @@
 * `add_samples()`: bug that copied the last chain to all other chains fixed
 
 ## Minor changes
-* `plot_all()` can now handle variables from classes `Date` and `POSIXt`
 * `plot_all()`, `densplot()`, and `traceplot()` limit the number of plots on one
   page to 64 when rows and columns of the layout are not user specified (to 
   avoid the 'figure margins too large' error)
+* change in `longDF` example data: new version containing complete and incomplete
+  categorical longitudinal variables (and variable names L1 and L2 changed to c1 and c2)
+* Some minor changes in notes, warnings and error messages
 
-## Extensions
-* `clm_imp()` and `clmm_imp()`: new functions for analysis of ordinal (mixed) models
-* It is now possible to impute incomplete longitudinal covariates (continuous, binary and ordered factors)
-* argument `ridge = TRUE` allows to use shrinkage priors on the regression coefficients
-  of the analysis model
+
+## New Features / Extensions
+* `clm_imp()` and `clmm_imp()`: new functions for analysis of **ordinal (mixed) models**
+* It is now possible to impute **incomplete longitudinal covariates**
+  (continuous, binary and ordered factors).
+* Argument `no_model` allows to specify names of completely observed variables
+  for which no model should be specified (e.g., "time" in a mixed model)
+* **Shrinkage:** argument `ridge = TRUE` allows to use shrinkage priors on the 
+  precision of the regression coefficients in the analysis model
+* `plot_all()` can now handle variables from classes `Date` and `POSIXt`
+* argument `parallel` allows different MCMC chains to be sampled in parallel
+
+--------------------------------------------------------------------------------
 
 
 # JointAI 0.4.0
@@ -44,6 +54,7 @@
 
 
 --------------------------------------------------------------------------------
+
 # JointAI 0.3.4
 
 ## Bug fixes
