@@ -127,3 +127,26 @@ run_jags <- function(inits, data_list, modelfile, n.adapt, n.iter, var.names) {
 
   return(list(adapt = adapt, mcmc = mcmc))
 }
+
+
+melt_matrix <- function(X) {
+  if (!inherits(X, 'matrix'))
+    stop("This function may not work for objects that are not matrices.")
+
+  dimnam <- if (is.null(names(dimnames(X)))) {
+    paste0('V', 1:length(dim(X)))
+  } else {
+    names(dimnames(X))
+  }
+
+  g <- lapply(seq_along(dimnam), function(k) {
+    if (is.null(dimnames(X)[[k]])) seq_len(dim(X)[k])
+  })
+  names(g) <- dimnam
+
+  out <- expand.grid(g)
+  out$value <- c(X)
+
+  attr(out, 'out.attrs') <- NULL
+  return(out)
+}
