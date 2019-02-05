@@ -2,11 +2,15 @@
 survreg_model <- function(Mlist, K, ...){
 
   y_name <- colnames(Mlist$y)
+  indent <- 4 + 9 + nchar(y_name) + 8
 
-  paste_Xic <- if (length(Mlist$cols_main$Xic) > 0) {
-    paste0('\n', tab(), " + ", tab(12 + nchar(y_name)),
-           "inprod(Xic[j, ], beta[", K["Xic", 1],":", K["Xic", 2],"])", sep = "")
+  paste_Xic <- if (!is.null(Mlist$Xic)) {
+    paste0(" + \n", tab(indent),
+           paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xic',
+                           parelmts = K["Xic", 1]:K["Xic", 2],
+                           cols = Mlist$cols_main$Xic, indent = indent))
   }
+
 
   paste_ppc <- NULL # if (Mlist$ppc) {
   #   paste0(
@@ -20,7 +24,10 @@ survreg_model <- function(Mlist, K, ...){
          tab(4), y_name, "[j] ~ dgen.gamma(1, rate_", y_name, "[j], shape_", y_name, ")", "\n",
          paste_ppc,
          tab(4), "cens[j] ~ dinterval(", y_name, "[j], ctime[j])", "\n",
-         tab(4), "log(rate_", y_name, "[j]) <- -inprod(Xc[j, ], beta[", K['Xc', 1], ":", K['Xc', 2], "])",
+         tab(4), "log(rate_", y_name, "[j]) <- -",
+         paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xc',
+                         parelmts = K["Xc", 1]:K["Xc", 2],
+                         cols = Mlist$cols_main$Xc, indent = indent),
          paste_Xic
   )
 }
@@ -61,21 +68,26 @@ survreg_priors <- function(K, Mlist, ...){
 coxph_model <- function(Mlist, K, ...){
 
   y_name <- colnames(Mlist$y)
+  indent <- 4 + 10 + 4
 
-  paste_Xic <- if (length(Mlist$cols_main$Xic) > 0) {
-    paste0(" + \n", tab(12 + nchar(y_name)),
-           "inprod(Xic[subj[j], ], beta[", K["Xic", 1],":", K["Xic", 2],"])", sep = "")
+  paste_Xic <- if (!is.null(Mlist$Xic)) {
+    paste0(" + \n", tab(indent),
+           paste_predictor(parnam = 'beta', parindex = 'subj[j]', matnam = 'Xic',
+                           parelmts = K["Xic", 1]:K["Xic", 2],
+                           cols = Mlist$cols_main$Xic, indent = indent))
   }
 
 
-  paste0(tab(), "# Cox PH model for ", y_name, "\n",
-         tab(), "dN[j] ~ dpois(Idt[j])", "\n",
-         tab(), "Idt[j] <- RiskSet[j] * exp(inprod(Xc[subj[j],", K['Xc', 1], ":",
-         K['Xc', 2],"], beta[", K['Xc', 1], ":", K['Xc', 2], "])",
-         paste_Xic, ") * dL0[time[j]]", "\n",
+  paste0(tab(4), "# Cox PH model for ", y_name, "\n",
+         tab(4), "dN[j] ~ dpois(Idt[j])", "\n",
+         tab(4), "Idt[j] <- exp(",
+         paste_predictor(parnam = 'beta', parindex = 'subj[j]', matnam = 'Xc',
+                         parelmts = K["Xc", 1]:K["Xc", 2],
+                         cols = Mlist$cols_main$Xc, indent = indent),
+         paste_Xic, ") * dL0[time[j]] * RiskSet[j]", "\n",
          tab(), "}", "\n",
-         tab(), "for (j in 1:(nt-1)) {", "\n",
-         tab(4), "dL0[j] ~ dgamma(priorhaz[j], c)"
+         tab(4), "for (j in 1:(nt-1)) {", "\n",
+         tab(6), "dL0[j] ~ dgamma(priorhaz[j], c)"
   )
 }
 
