@@ -19,6 +19,8 @@
 * `clm_imp()` and `clmm_imp()`: new functions for analysis of **ordinal (mixed) models**
 * It is now possible to impute **incomplete longitudinal covariates**
   (continuous, binary and ordered factors).
+* `coxph_imp()`: new function to fit Cox proportional hazards models with 
+  incomplete (baseline) covariates
 * Argument `no_model` allows to specify names of completely observed variables
   for which no model should be specified (e.g., "time" in a mixed model)
 * **Shrinkage:** argument `ridge = TRUE` allows to use shrinkage priors on the 
