@@ -224,7 +224,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     l[[names(Mlist$y)]] <- NULL
 
     y <- unlist(Mlist$y)
-    etimes <- sort(unique(y))
+    etimes <- c(sort(unique(y[Mlist$cens == 1])), max(y))
     Y <- dN <- matrix(nrow = length(y), ncol = length(etimes) - 1,
                       dimnames = list(subj = c(), time = c()))
     for (j in 1:(length(etimes) - 1)) {
@@ -234,7 +234,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 
     priorhaz <- numeric(length(etimes) - 1)
     for (j in 1:(length(etimes) - 1)) {
-      priorhaz[j] <- defs$coxph['r'] * (etimes[j + 1] - etimes[j]) * defs$coxph['c']
+      priorhaz[j] <- defs$coxph['r'] * max(1e-10, etimes[j + 1] - etimes[j]) * defs$coxph['c']
     }
 
     Ylong <- melt_matrix(Y)
