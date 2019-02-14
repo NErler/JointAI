@@ -52,9 +52,8 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
   if (use_ggplot) {
-    meltMCMC <- reshape2::melt(lapply(prep$MCMC, as.matrix),
-                               varnames = c('iteration',
-                                            'variable'))
+    meltMCMC <- melt_matrix_list(lapply(prep$MCMC, as.matrix),
+                                 varnames = c('iteration', 'variable'))
     meltMCMC$chain <- factor(meltMCMC$L1)
 
 
@@ -152,9 +151,8 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
   if (use_ggplot) {
-    meltMCMC <- reshape2::melt(lapply(prep$MCMC, as.matrix),
-                               varnames = c('iteration',
-                                            'variable'))
+    meltMCMC <- melt_matrix_list(lapply(prep$MCMC, as.matrix),
+                                 varnames = c('iteration', 'variable'))
     meltMCMC$chain <- factor(meltMCMC$L1)
 
     if (joined)

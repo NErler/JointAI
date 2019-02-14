@@ -129,23 +129,43 @@ run_jags <- function(inits, data_list, modelfile, n.adapt, n.iter, var.names) {
 }
 
 
-melt_matrix <- function(X) {
+melt_matrix <- function(X, varnames = NULL) {
   if (!inherits(X, 'matrix'))
     stop("This function may not work for objects that are not matrices.")
 
-  dimnam <- if (is.null(names(dimnames(X)))) {
-    paste0('V', 1:length(dim(X)))
-  } else {
-    names(dimnames(X))
-  }
+  dimnam <- if (is.null(varnames)) {
+    if (is.null(names(dimnames(X)))) {
+      paste0('V', 1:length(dim(X)))
+    } else {
+      names(dimnames(X))
+    }
+  } else {varnames}
 
   g <- lapply(seq_along(dimnam), function(k) {
-    if (is.null(dimnames(X)[[k]])) seq_len(dim(X)[k])
+    if (is.null(dimnames(X)[[k]]))
+      seq_len(dim(X)[k])
+    else dimnames(X)[[k]]
   })
   names(g) <- dimnam
 
   out <- expand.grid(g)
   out$value <- c(X)
+
+  attr(out, 'out.attrs') <- NULL
+  return(out)
+}
+
+melt_matrix_list <- function(X, varnames = NULL) {
+  if (!inherits(X, 'list') || !all(sapply(X, inherits, 'matrix')))
+    stop("This function may not work for objects that are not a list of matrices.")
+
+
+  Xnew <- lapply(X, melt_matrix, varnames = varnames)
+  Xnew <- lapply(seq_along(Xnew), function(k) {
+    cbind(Xnew[[k]], L1 = k)
+  })
+
+  out <- do.call(rbind, Xnew)
 
   attr(out, 'out.attrs') <- NULL
   return(out)
