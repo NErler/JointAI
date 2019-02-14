@@ -52,22 +52,15 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
   Nmis <- sort(Nmis)
 
   if (plot) {
-    if (all(!c("ggplot2", "reshape2") %in% rownames(installed.packages())))
-      stop("This function requires the packages 'ggplot2' and 'reshape2' to be installed.")
-
     if (!"ggplot2" %in% rownames(installed.packages()))
       stop("This function requires the 'ggplot2' package to be installed.")
-
-    if (!"reshape2" %in% rownames(installed.packages()))
-      stop("This function requires the 'ggplot2' package to be installed.")
-
 
     if (print_yaxis == FALSE) {
       ylab <- ''
     }
 
-    p <- ggplot2::ggplot(reshape2::melt(unaX),
-                         ggplot2::aes(Var2, Var1,
+    p <- ggplot2::ggplot(melt_matrix(unaX),
+                         ggplot2::aes(V2, V1,
                                       fill = as.character(value))) +
       ggplot2::geom_tile(color = border) +
       ggplot2::scale_y_continuous(position = 'right',
