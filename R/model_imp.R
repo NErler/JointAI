@@ -457,7 +457,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   if (is.null(modeldir)) modeldir <- tempdir()
   if (is.null(modelname)) {
     modelname <- paste0("JointAI_JAGSmodel_",
-                        format(Sys.time(), "%Y-%m-%d"),
+                        format(Sys.time(), "%Y-%m-%d_%H-%M"),
                         "_", sample.int(1e6, 1), ".R")
   } else {
     keep_model <- TRUE
