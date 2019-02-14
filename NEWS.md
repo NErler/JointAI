@@ -27,6 +27,8 @@
   precision of the regression coefficients in the analysis model
 * `plot_all()` can now handle variables from classes `Date` and `POSIXt`
 * argument `parallel` allows different MCMC chains to be sampled in parallel
+* argument `ncores` allows to specify the maximum number of cores to be used
+* argument `seed` added for reproducible results
 
 --------------------------------------------------------------------------------
 

@@ -150,3 +150,20 @@ melt_matrix <- function(X) {
   attr(out, 'out.attrs') <- NULL
   return(out)
 }
+
+
+get_RNG <- function(seed, n.chains) {
+  if (!is.null(seed)) set.seed(seed)
+  seeds <- sample.int(1e10, size = n.chains)
+
+  rng <- c("base::Mersenne-Twister",
+           "base::Super-Duper",
+           "base::Wichmann-Hill",
+           "base::Marsaglia-Multicarry")
+  RNGs <- sample(rng, size = n.chains, replace = TRUE)
+  lapply(seq_along(RNGs), function(k) {
+    list(.RNG.name = RNGs[k],
+         .RNG.seed = seeds[k]
+    )
+  })
+}
