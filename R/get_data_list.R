@@ -288,7 +288,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     l <- c(l, defs$probit["mu_reg_probit"])
 
 
-  if ((family == 'Gamma' & !Mlist$ridge) | any(models %in% c('gamma')))
+  if ((family == 'Gamma' & !Mlist$ridge) | any(models %in% c('gamma', 'glmm_gamma')))
     l <- c(l, defs$gamma)
   else if (family == 'Gamma' & Mlist$ridge)
     l <- c(l, defs$gamma["mu_reg_gamma", "shape_tau_gamma", "rate_tau_gamma"])
