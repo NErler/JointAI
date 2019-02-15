@@ -82,8 +82,12 @@ list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
       paste0("* Regression coefficients: \n")
     },
     tab(), "alpha[",
-    print_seq(object$K_imp[names(object$models)[i], "start"],
-              object$K_imp[names(object$models)[i], "end"]),
+    if (object$models[i] == 'multilogit') {
+      NULL
+    } else {
+      print_seq(object$K_imp[names(object$models)[i], "start"],
+                object$K_imp[names(object$models)[i], "end"])
+    },
     "] ",
     if (priors) {
       paste0("(normal prior(s) with mean ",
