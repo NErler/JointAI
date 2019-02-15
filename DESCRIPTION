@@ -12,23 +12,23 @@ Description: Provides joint analysis and imputation of (generalized)
     <http://mcmc-jags.sourceforge.net> with the help of 
     the package 'rjags'.
     It also provides summary and plotting functions for the output.
-URL: https://github.com/nerler/JointAI
+URL: https://nerler.github.io/JointAI
 License: GPL (>= 2)
-Date: 2019-02-01
+Date: 2019-02-15
 BugReports: https://github.com/nerler/JointAI/issues
 LazyData: TRUE
 RoxygenNote: 6.1.1
 Depends: rjags (>= 4-6)
-Imports: MASS, mcmcse, coda
+Imports: MASS, mcmcse, coda, rlang
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
 Suggests: 
     knitr,
     rmarkdown,
     foreign,
-    ggplot2,
+    doParallel,
+    foreach,
     reshape2,
-    parallel,
-    pbapply,
+    ggplot2,
     testthat
 VignetteBuilder: knitr
 Encoding: UTF-8
