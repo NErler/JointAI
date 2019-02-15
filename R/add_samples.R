@@ -63,7 +63,6 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                               'FORK', 'PSOCK'))
     doParallel::registerDoParallel(cl)
 
-    # parallel::clusterExport(cl, c('n.iter', 'var.names'), envir = environment())
     if (mess)
       message(paste0("Parallel sampling on ", ncores, " cores started."))
     res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(object$model)),
