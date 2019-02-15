@@ -507,7 +507,6 @@ model_imp <- function(fixed, data, random = NULL, link, family,
             Initial values are set by JAGS.")
     inits <- NULL
   }
-
   # * generate initial values
   # if (is.logical(inits)) {
   #   inits <- if (inits)
@@ -539,14 +538,21 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   #     inits <- NULL
   # }
 
-  if (!is.null(inits)) {
+if (!is.null(inits)) {
+  if (inherits(inits, 'function')) {
+    if (!is.null(seed) | parallel) {
+      if (!is.null(seed)) set.seed(seed)
+      inits <- replicate(n.chains, inits(), simplify = FALSE)
+    }
+  }
+  if (inherits(inits, "list")) {
     inits <- mapply(function(inits, rng) c(inits, rng), inits = inits,
                     rng = get_RNG(seed, n.chains),
                     SIMPLIFY = FALSE)
-  } else {
-    inits <- get_RNG(seed, n.chains)
   }
-
+} else {
+  inits <- get_RNG(seed, n.chains)
+}
   # parameters to monitor ------------------------------------------------------
   if (is.null(monitor_params)) {
     monitor_params <- c("analysis_main" = TRUE)
