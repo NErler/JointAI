@@ -569,21 +569,31 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   # run JAGS -----------------------------------------------------------------
   t0 <- Sys.time()
   if (parallel == TRUE) {
+    if (!requireNamespace('foreach', quietly = TRUE))
+      stop("Parallel sampling requires the 'foreach' package to be installed.")
+
+    if (!requireNamespace('doParallel', quietly = TRUE))
+      stop("Parallel sampling requires the 'doParallel' package to be installed.")
+
     if (any(n.adapt > 0, n.iter > 0)) {
       if (is.null(ncores)) ncores <- min(parallel::detectCores() - 2, n.chains)
       cl <- parallel::makeCluster(ncores,
                                   type = ifelse(grepl('linux', R.Version()$platform),
                                                 'FORK', 'PSOCK'))
-
-
-      parallel::clusterExport(cl, c('inits', 'data_list', 'modelfile', 'n.adapt', 'n.iter',
-                          'var.names'), envir = environment())
+      doParallel::registerDoParallel(cl)
       if (mess)
         message(paste0("Parallel sampling on ", ncores, " cores started."))
 
-      res <- pbapply::pblapply(inits, run_jags, data_list = data_list,
-                               modelfile = modelfile, n.adapt = n.adapt, n.iter = n.iter,
-                               var.names = var.names, cl = cl)
+      res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(inits)),
+                                run_jags(inits[[i]], data_list = data_list,
+                                         modelfile = modelfile,
+                                         n.adapt = n.adapt, n.iter = n.iter,
+                                         var.names = var.names)
+      )
+
+      # res <- pbapply::pblapply(inits, run_jags, data_list = data_list,
+      #                          modelfile = modelfile, n.adapt = n.adapt, n.iter = n.iter,
+      #                          var.names = var.names, cl = cl)
       parallel::stopCluster(cl)
       mcmc <- as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
       adapt <- lapply(res, function(x) x$adapt)
