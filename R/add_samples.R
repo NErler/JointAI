@@ -32,7 +32,7 @@
 #'
 
 add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
-                        monitor_params = NULL, progress.bar = "text") {
+                        monitor_params = NULL, progress.bar = "text", mess = TRUE) {
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
@@ -56,11 +56,29 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
     stop("The provided parameters to monitor do not match the monitored parameters in the original JointAI object.")
 
   t0 <- Sys.time()
-  mcmc <- rjags::coda.samples(object$model, variable.names = var.names,
-                              n.iter = n.iter, thin = thin,
-                              na.rm = FALSE, progress.bar = progress.bar)
-  t1 <- Sys.time()
+  if (object$mcmc_settings$parallel) {
+    ncores <- object$mcmc_settings$ncores
+    cl <- parallel::makeCluster(ncores,
+                                type = ifelse(grepl('linux', R.Version()$platform),
+                                              'FORK', 'PSOCK'))
+    doParallel::registerDoParallel(cl)
 
+    # parallel::clusterExport(cl, c('n.iter', 'var.names'), envir = environment())
+    if (mess)
+      message(paste0("Parallel sampling on ", ncores, " cores started."))
+    res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(object$model)),
+                              run_samples(object$model[[i]], n.iter = n.iter, var.names = var.names)
+    )
+
+    parallel::stopCluster(cl)
+    mcmc <- as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
+    adapt <- lapply(res, function(x) x$adapt)
+  } else {
+    mcmc <- rjags::coda.samples(object$model, variable.names = var.names,
+                                n.iter = n.iter, thin = thin,
+                                na.rm = FALSE, progress.bar = progress.bar)
+  }
+  t1 <- Sys.time()
 
   coefs <- get_coef_names(object$Mlist, object$K)
 
@@ -104,11 +122,12 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   newobject <- object
   newobject$sample <- new
   newobject$MCMC <- newMCMC
-  newobject$call <- c(object$call, match.call())
-  newobject$mcmc_settings$n.iter <- niter(new)
+  newobject$call <- list(object$call, match.call())
+  newobject$mcmc_settings$n.iter <- ifelse(add, c(object$mcmc_settings$n.iter, niter(new)), niter(new))
   newobject$mcmc_settings$variable.names <- var.names
-  newobject$mcmc_settings$thin <- thin(new)
-  newobject$time <- object$time + difftime(t1, t0)
+  newobject$mcmc_settings$thin <- ifelse(add, c(object$mcmc_settings$thin, thin(new)), thin(new))
+  newobject$time <- ifelse(add, object$time + difftime(t1, t0), difftime(t1, t0))
+  newobject$model <- if (object$mcmc_settings$parallel) {adapt} else {object$model}
 
   return(newobject)
 }

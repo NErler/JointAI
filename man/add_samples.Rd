@@ -5,7 +5,7 @@
 \title{Add samples to an object of class JointAI}
 \usage{
 add_samples(object, n.iter, add = TRUE, thin = NULL,
-  monitor_params = NULL, progress.bar = "text")
+  monitor_params = NULL, progress.bar = "text", mess = TRUE)
 }
 \arguments{
 \item{object}{object inheriting from class "JointAI"}
@@ -24,6 +24,10 @@ monitored.}
 \item{progress.bar}{Character string specifying the type of progress bar.
 Possible values are "text", "gui", and "none".
 See \code{\link[rjags]{update}}.}
+
+\item{mess}{logical; should messages be given? Default is
+\code{TRUE}. Note: this applies only to messages
+given directly by \strong{JointAI}.}
 }
 \description{
 Allows to continue sampling from an existing object of class "JointAI".

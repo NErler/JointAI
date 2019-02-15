@@ -586,7 +586,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                                var.names = var.names, cl = cl)
       parallel::stopCluster(cl)
       mcmc <- as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
-      adapt <- res[[1]]$adapt
+      adapt <- lapply(res, function(x) x$adapt)
     }
   } else {
     if (any(n.adapt > 0, n.iter > 0)) {
@@ -641,7 +641,9 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                         n.iter = n.iter,
                         variable.names = if (exists("var.names")) var.names,
                         thin = thin,
-                        inits = inits)
+                        inits = inits,
+                        parallel = parallel,
+                        ncores = if(parallel) ncores)
 
   attr(analysis_type, "family") <- family
   attr(analysis_type, "link") <- link

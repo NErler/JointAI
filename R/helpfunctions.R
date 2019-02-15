@@ -128,6 +128,13 @@ run_jags <- function(inits, data_list, modelfile, n.adapt, n.iter, var.names) {
   return(list(adapt = adapt, mcmc = mcmc))
 }
 
+run_samples <- function(adapt, n.iter, var.names) {
+  adapt$recompile()
+  mcmc <- rjags::coda.samples(adapt, n.iter = n.iter, variable.names = var.names,
+                              progress.bar = 'none')
+  return(list(adapt = adapt, mcmc = mcmc))
+}
+
 
 melt_matrix <- function(X, varnames = NULL) {
   if (!inherits(X, 'matrix'))
