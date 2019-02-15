@@ -84,24 +84,24 @@ extract_fcts <- function(formula, data, complete = FALSE, ...) {
     # make a list of data.frames, one for each function, containing the
     # expression and involved variables
     fctList <- sapply(varlist, function(x) {
-      df <- reshape2::melt(x,
-                           value.name = 'var',
-                           varnames = c('rownames', 'L1'))
-      if (is.null(df$L1))
-        df$L1 <- rownames(df)
+      if (inherits(x, 'character'))
+        x <- t(as.matrix(x))
+      df <- melt_matrix(x,
+                        valname = 'var',
+                        varnames = c('rownames', 'X_var'))
+      if (is.null(df$X_var))
+        df$X_var <- rownames(df)
 
-      df[, c("L1", "var")]
+      df[, c("X_var", "var")]
     }, simplify = FALSE)
 
     # convert to data.frame
-    fctDF <- reshape2::melt(fctList, id.vars = "var", value.name = 'X_var')
+    fctDF <- do.call(rbind, fctList)
+    fctDF$type <- rep(names(fctList), sapply(fctList, nrow))
     fctDF$fct <- fctDF$X_var
-    names(fctDF) <- gsub("L1", "type", names(fctDF))
-    fctDF$var <- as.character(fctDF$var)
 
     # remove duplicates
     fctDF <- fctDF[!duplicated(fctDF[, -which(names(fctDF) == 'type')]), ]
-
 
     # find variables that are included without transofrmation and assign 'identity' function
     if (any(fctDF$var %in% termlabs)) {
@@ -139,7 +139,6 @@ extract_fcts <- function(formula, data, complete = FALSE, ...) {
         fctDF$dupl[ord] <- duplicated(p[ord])
       }
 
-
       # fctDF$dupl <- duplicated(fctDF[, -which(names(fctDF) == 'var')])
 
       p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'dupl'))], 1, paste, collapse = "")
@@ -149,7 +148,7 @@ extract_fcts <- function(formula, data, complete = FALSE, ...) {
         m[m != i]
       })
 
-      fctDF[, -which(names(fctDF) == 'variable')]
+      fctDF
     }
   }
 }
