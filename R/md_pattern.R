@@ -62,7 +62,7 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
 
     p <- ggplot2::ggplot(melt_matrix(unaX),
                          ggplot2::aes(as.numeric(.data$V2), as.numeric(.data$V1),
-                                      fill = as.character(value))) +
+                                      fill = as.character(.data$value))) +
       ggplot2::geom_tile(color = border) +
       ggplot2::scale_y_continuous(position = 'right',
                          breaks = length(Npat):1,

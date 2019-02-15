@@ -105,7 +105,8 @@ NULL
 }
 
 
-utils::globalVariables(c("Var1", "Var2", "iteration", "value", "chain"))
+utils::globalVariables(c("i"))
+
 
 #' Parameters used by several functions in JointAI.
 #' @param object object inheriting from class "JointAI"
