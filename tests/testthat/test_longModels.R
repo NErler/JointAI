@@ -13,6 +13,7 @@ test_that("model with no covariates work", {
 
 
 test_that("models with standard random effects structure work", {
+  testthat::skip_on_cran()
   expect_equal(class(lme_imp(y ~ c1 + c2 + C1 + C2 + O2 + M2,
                              random = ~1|id, data = longDF)), "JointAI")
 
@@ -43,6 +44,7 @@ test_that("models with standard random effects structure work", {
 })
 
 test_that('models with spline random effects work', {
+  testthat::skip_on_cran()
   library(splines)
   expect_equal(class(lme_imp(y ~ ns(time, df = 2),
                              random = ~ ns(time, df = 2)|id,
@@ -112,6 +114,7 @@ test_that('models with spline random effects work', {
 })
 
 test_that("models with complex random effects structure work", {
+  testthat::skip_on_cran()
   expect_equal(class(lme_imp(y ~ c1 + c2 + time, random = ~ time + c2|id,
                              no_model = 'time', data = longDF)), "JointAI")
 
@@ -151,6 +154,7 @@ test_that("models with complex random effects structure work", {
 
 
 test_that('glme_imp', {
+  testthat::skip_on_cran()
   expect_equal(class(glme_imp(b1 ~ C1 + B1, random = ~1 | id, data = longDF,
                               family = 'binomial')), 'JointAI')
 
