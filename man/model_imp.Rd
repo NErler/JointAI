@@ -14,7 +14,7 @@
 \title{Joint analysis and imputation of incomplete data}
 \usage{
 lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
+  thin = 1, monitor_params = NULL, inits = NULL, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
   auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
@@ -22,7 +22,7 @@ lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   hyperpars = NULL, ridge = FALSE, seed = NULL, ncores = NULL, ...)
 
 glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
+  n.iter = 0, thin = 1, monitor_params = NULL, inits = NULL,
   modelname = NULL, modeldir = NULL, overwrite = NULL,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
   warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
@@ -31,7 +31,7 @@ glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
   ncores = NULL, ...)
 
 clm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
+  thin = 1, monitor_params = NULL, inits = NULL, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
   auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
@@ -39,7 +39,7 @@ clm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   hyperpars = NULL, ridge = FALSE, seed = NULL, ncores = NULL, ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
+  thin = 1, monitor_params = NULL, inits = NULL, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
   auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
@@ -47,7 +47,7 @@ lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   hyperpars = NULL, ridge = FALSE, seed = NULL, ncores = NULL, ...)
 
 glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
+  n.iter = 0, thin = 1, monitor_params = NULL, inits = NULL,
   modelname = NULL, modeldir = NULL, overwrite = NULL,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
   warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
@@ -56,7 +56,7 @@ glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
   ncores = NULL, ...)
 
 clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = NULL, inits = TRUE,
+  n.iter = 0, thin = 1, monitor_params = NULL, inits = NULL,
   modelname = NULL, modeldir = NULL, overwrite = NULL,
   keep_model = FALSE, quiet = TRUE, progress.bar = "text",
   warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
@@ -65,7 +65,7 @@ clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
   ncores = NULL, ...)
 
 survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
+  thin = 1, monitor_params = NULL, inits = NULL, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
   auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
@@ -73,7 +73,7 @@ survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   hyperpars = NULL, ridge = FALSE, seed = NULL, ncores = NULL, ...)
 
 coxph_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = TRUE, modelname = NULL,
+  thin = 1, monitor_params = NULL, inits = NULL, modelname = NULL,
   modeldir = NULL, overwrite = NULL, keep_model = FALSE,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
   auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
@@ -100,7 +100,7 @@ monitored.}
 
 \item{inits}{optional specification of initial values in the form of a list
 or a function (see \code{\link[rjags]{jags.model}}).
-If omitted, initial values will be generated automatically.
+If omitted, initial values will be generated automatically by JAGS.
 It is an error to supply an initial value for an observed node.}
 
 \item{modelname}{optional; character string specifying the name of model file
