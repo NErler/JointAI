@@ -136,7 +136,7 @@ run_samples <- function(adapt, n.iter, var.names) {
 }
 
 
-melt_matrix <- function(X, varnames = NULL) {
+melt_matrix <- function(X, varnames = NULL, valname = 'value') {
   if (!inherits(X, 'matrix'))
     stop("This function may not work for objects that are not matrices.")
 
@@ -155,8 +155,8 @@ melt_matrix <- function(X, varnames = NULL) {
   })
   names(g) <- dimnam
 
-  out <- expand.grid(g)
-  out$value <- c(X)
+  out <- expand.grid(g, stringsAsFactors = FALSE)
+  out[, valname] <- c(X)
 
   attr(out, 'out.attrs') <- NULL
   return(out)
@@ -165,7 +165,6 @@ melt_matrix <- function(X, varnames = NULL) {
 melt_matrix_list <- function(X, varnames = NULL) {
   if (!inherits(X, 'list') || !all(sapply(X, inherits, 'matrix')))
     stop("This function may not work for objects that are not a list of matrices.")
-
 
   Xnew <- lapply(X, melt_matrix, varnames = varnames)
   Xnew <- lapply(seq_along(Xnew), function(k) {
@@ -177,7 +176,6 @@ melt_matrix_list <- function(X, varnames = NULL) {
   attr(out, 'out.attrs') <- NULL
   return(out)
 }
-
 
 get_RNG <- function(seed, n.chains) {
   if (!is.null(seed)) set.seed(seed)
