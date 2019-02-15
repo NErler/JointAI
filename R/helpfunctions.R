@@ -181,7 +181,7 @@ melt_matrix_list <- function(X, varnames = NULL) {
 
 get_RNG <- function(seed, n.chains) {
   if (!is.null(seed)) set.seed(seed)
-  seeds <- sample.int(1e10, size = n.chains)
+  seeds <- sample.int(1e5, size = n.chains)
 
   rng <- c("base::Mersenne-Twister",
            "base::Super-Duper",
