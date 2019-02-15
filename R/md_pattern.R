@@ -11,6 +11,7 @@
 #'                              y-axis (on the right) be printed?
 #' @param ylab y-axis label
 #' @inheritParams ggplot2::theme
+#' @importFrom rlang .data
 #' @param ... optional additional parameters, currently not used
 #'
 #' @seealso See the vignette \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
@@ -52,7 +53,7 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
   Nmis <- sort(Nmis)
 
   if (plot) {
-    if (!"ggplot2" %in% rownames(installed.packages()))
+    if (!requireNamespace('ggplot2', quietly = TRUE))
       stop("This function requires the 'ggplot2' package to be installed.")
 
     if (print_yaxis == FALSE) {
@@ -60,7 +61,7 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
     }
 
     p <- ggplot2::ggplot(melt_matrix(unaX),
-                         ggplot2::aes(V2, V1,
+                         ggplot2::aes(as.numeric(.data$V2), as.numeric(.data$V1),
                                       fill = as.character(value))) +
       ggplot2::geom_tile(color = border) +
       ggplot2::scale_y_continuous(position = 'right',
