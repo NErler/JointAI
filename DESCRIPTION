@@ -19,14 +19,12 @@ BugReports: https://github.com/nerler/JointAI/issues
 LazyData: TRUE
 RoxygenNote: 6.1.1
 Depends: rjags (>= 4-6)
-Imports: MASS, mcmcse, coda, rlang
+Imports: MASS, mcmcse, coda, rlang, foreach, doParallel
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
 Suggests: 
     knitr,
     rmarkdown,
     foreign,
-    doParallel,
-    foreach,
     reshape2,
     ggplot2,
     testthat

@@ -79,6 +79,7 @@
 #'                   be calculated automatically. If \code{FALSE}, no scaling
 #'                   will be done.
 #' @param ... additional, optional arguments
+#' @importFrom foreach foreach %dopar%
 #'
 #'
 #'
@@ -668,7 +669,8 @@ if (!is.null(inits)) {
   options(contrasts = opt)
 
   return(structure(
-    list(analysis_type = analysis_type,
+    list(#call = thecall,
+         analysis_type = analysis_type,
          data = data, models = models, fixed = fixed, random = random,
          Mlist = Mlist,
          K = K,
@@ -715,16 +717,15 @@ lm_imp <- function(formula, data,
   arglist$analysis_type <- "lm"
   arglist$family <- "gaussian"
   arglist$link <- "identity"
-  arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]
   thiscall <- lapply(thiscall, function(x) {
     if (is.language(x)) eval(x) else x
   })
 
-  arglist <- c(thecall = match.call(),
-               arglist,
+  arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
+
 
   res <- do.call(model_imp, arglist)
   res$call <- match.call()
@@ -783,8 +784,7 @@ glm_imp <- function(formula, family, data,
     if (is.language(x)) eval(x) else x
   })
 
-  arglist <- c(thecall = match.call(),
-               arglist,
+  arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
 
@@ -829,8 +829,7 @@ clm_imp <- function(fixed, data, random,
     if (is.language(x)) eval(x) else x
   })
 
-  arglist <- c(thecall = match.call(),
-               arglist,
+  arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
 
@@ -872,8 +871,7 @@ lme_imp <- function(fixed, data, random,
     if (is.language(x)) eval(x) else x
   })
 
-  arglist <- c(thecall = match.call(),
-               arglist,
+  arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
 
@@ -936,8 +934,7 @@ glme_imp <- function(fixed, data, random, family,
     if (is.language(x)) eval(x) else x
   })
 
-  arglist <- c(thecall = match.call(),
-               arglist,
+  arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
 
@@ -979,8 +976,7 @@ clmm_imp <- function(fixed, data, random,
     if (is.language(x)) eval(x) else x
   })
 
-  arglist <- c(thecall = match.call(),
-               arglist,
+  arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
 
@@ -1024,8 +1020,7 @@ survreg_imp <- function(formula, data,
     if (is.language(x)) eval(x) else x
   })
 
-  arglist <- c(thecall = match.call(),
-               arglist,
+  arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
   res <- do.call(model_imp, arglist)
@@ -1068,8 +1063,7 @@ coxph_imp <- function(formula, data,
     if (is.language(x)) eval(x) else x
   })
 
-  arglist <- c(thecall = match.call(),
-               arglist,
+  arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
   res <- do.call(model_imp, arglist)
