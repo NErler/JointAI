@@ -584,24 +584,16 @@ if (!is.null(inits)) {
 
     if (any(n.adapt > 0, n.iter > 0)) {
       if (is.null(ncores)) ncores <- min(parallel::detectCores() - 2, n.chains)
-      cl <- parallel::makeCluster(ncores,
-                                  type = ifelse(grepl('linux', R.Version()$platform),
-                                                'FORK', 'PSOCK'))
-      doParallel::registerDoParallel(cl)
+
+      doParallel::registerDoParallel(cores = ncores)
       if (mess)
         message(paste0("Parallel sampling on ", ncores, " cores started."))
 
-      res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(inits)),
-                                run_jags(inits[[i]], data_list = data_list,
-                                         modelfile = modelfile,
-                                         n.adapt = n.adapt, n.iter = n.iter,
-                                         var.names = var.names)
-      )
-
-      # res <- pbapply::pblapply(inits, run_jags, data_list = data_list,
-      #                          modelfile = modelfile, n.adapt = n.adapt, n.iter = n.iter,
-      #                          var.names = var.names, cl = cl)
-      parallel::stopCluster(cl)
+      res <- foreach(i = seq_along(inits)) %dopar% {run_jags(inits[[i]], data_list = data_list,
+                          modelfile = modelfile,
+                          n.adapt = n.adapt, n.iter = n.iter,
+                          var.names = var.names)}
+      doParallel::stopImplicitCluster()
       mcmc <- as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
       adapt <- lapply(res, function(x) x$adapt)
     }
