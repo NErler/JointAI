@@ -14,71 +14,44 @@
 \title{Joint analysis and imputation of incomplete data}
 \usage{
 lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = NULL, modelname = NULL,
-  modeldir = NULL, overwrite = NULL, keep_model = FALSE,
-  quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
-  trunc = NULL, scale_vars = NULL, scale_pars = NULL,
-  hyperpars = NULL, ridge = FALSE, seed = NULL, ncores = NULL, ...)
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
+  seed = NULL, ...)
 
 glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = NULL, inits = NULL,
-  modelname = NULL, modeldir = NULL, overwrite = NULL,
-  keep_model = FALSE, quiet = TRUE, progress.bar = "text",
-  warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
-  no_model = NULL, refcats = NULL, trunc = NULL, scale_vars = NULL,
-  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, seed = NULL,
-  ncores = NULL, ...)
+  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  ridge = FALSE, seed = NULL, ...)
 
-clm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = NULL, modelname = NULL,
-  modeldir = NULL, overwrite = NULL, keep_model = FALSE,
-  quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
-  trunc = NULL, scale_vars = NULL, scale_pars = NULL,
-  hyperpars = NULL, ridge = FALSE, seed = NULL, ncores = NULL, ...)
+clm_imp(fixed, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
+  seed = NULL, ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = NULL, modelname = NULL,
-  modeldir = NULL, overwrite = NULL, keep_model = FALSE,
-  quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
-  trunc = NULL, scale_vars = NULL, scale_pars = NULL,
-  hyperpars = NULL, ridge = FALSE, seed = NULL, ncores = NULL, ...)
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
+  seed = NULL, ...)
 
 glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = NULL, inits = NULL,
-  modelname = NULL, modeldir = NULL, overwrite = NULL,
-  keep_model = FALSE, quiet = TRUE, progress.bar = "text",
-  warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
-  no_model = NULL, refcats = NULL, trunc = NULL, scale_vars = NULL,
-  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, seed = NULL,
-  ncores = NULL, ...)
+  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  ridge = FALSE, seed = NULL, ...)
 
 clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = NULL, inits = NULL,
-  modelname = NULL, modeldir = NULL, overwrite = NULL,
-  keep_model = FALSE, quiet = TRUE, progress.bar = "text",
-  warn = TRUE, mess = TRUE, auxvars = NULL, models = NULL,
-  no_model = NULL, refcats = NULL, trunc = NULL, scale_vars = NULL,
-  scale_pars = NULL, hyperpars = NULL, ridge = FALSE, seed = NULL,
-  ncores = NULL, ...)
+  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  ridge = FALSE, seed = NULL, ...)
 
 survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = NULL, modelname = NULL,
-  modeldir = NULL, overwrite = NULL, keep_model = FALSE,
-  quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
-  trunc = NULL, scale_vars = NULL, scale_pars = NULL,
-  hyperpars = NULL, ridge = FALSE, seed = NULL, ncores = NULL, ...)
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
+  seed = NULL, ...)
 
 coxph_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, inits = NULL, modelname = NULL,
-  modeldir = NULL, overwrite = NULL, keep_model = FALSE,
-  quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
-  auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL,
-  trunc = NULL, scale_vars = NULL, scale_pars = NULL,
-  hyperpars = NULL, ridge = FALSE, seed = NULL, ncores = NULL, ...)
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
+  seed = NULL, ...)
 }
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
@@ -98,45 +71,16 @@ coxph_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
 \item{monitor_params}{named vector specifying which parameters should be
 monitored.}
 
-\item{inits}{optional specification of initial values in the form of a list
-or a function (see \code{\link[rjags]{jags.model}}).
-If omitted, initial values will be generated automatically by JAGS.
-It is an error to supply an initial value for an observed node.}
-
-\item{modelname}{optional; character string specifying the name of model file
-(including the ending, either .R or .txt).
-If unspecified a random name will be generated.}
-
-\item{modeldir}{optional; directory containing model file. If unspecified a
-temporary directory will be created.}
-
-\item{overwrite}{logical; whether an existing model file with the specified
-\code{modeldir/modelname} should be overwritten. If set to
-\code{FALSE} (default) and a model already exists, that
-model will be used.}
-
-\item{keep_model}{logical; whether the created JAGS model should be saved
-or removed from the disk (\code{FALSE}; default) when the
-sampling has finished.}
-
-\item{quiet}{if \code{TRUE} then messages generated during compilation
-    will be suppressed, as well as the progress bar during adaptation.}
-
-\item{progress.bar}{Character string specifying the type of progress bar.
-Possible values are "text", "gui", and "none".
-See \code{\link[rjags]{update}}.}
-
-\item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. Note: this applies only to warnings
-given directly by \strong{JointAI}.}
-
-\item{mess}{logical; should messages be given? Default is
-\code{TRUE}. Note: this applies only to messages
-given directly by \strong{JointAI}.}
-
 \item{auxvars}{optional vector of variable names that should be used as
 predictors in the imputation procedure (and will be imputed
 if necessary) but are not part of the analysis model}
+
+\item{refcats}{optional; a named list specifying which category should be
+used as reference category for each of the categorical variables.
+Options are the category label, the category number,
+"first" (the first category), "last" (the last category)
+or "largest" (chooses the category with the most observations).
+Default is "first".}
 
 \item{models}{optional named vector specifying the order and types of the
   models for incomplete covariates and longitudinal covariates.
@@ -154,40 +98,13 @@ Note that this is only possible for completely observed
 variables and may imply assumptions of independence between
 the excluded variable and incomplete variables.}
 
-\item{refcats}{optional; a named list specifying which category should be
-used as reference category for each of the categorical variables.
-Options are the category label, the category number,
-"first" (the first category), "last" (the last category)
-or "largest" (chooses the category with the most observations).
-Default is "first".}
-
 \item{trunc}{optional named list specifying the limits of truncation for the
 distribution of the named incomplete variables
 of each}
 
-\item{scale_vars}{optional; named vector of (continuous) variables that will
-be scaled (such that mean = 0 and sd = 1) to improve
-convergence of the MCMC sampling. Default is that all
-continuous variables that are not transformed by a function
-(e.g. \code{log(), ns()}) will be scaled. Variables
-for which \code{"lognorm"} is set as imputation model are
-only scaled with regards to the standard deviation, but not
-centered. If set to \code{FALSE} no scaling will be done.}
-
-\item{scale_pars}{optional matrix of parameters used for centering and
-scaling continuous covariates. If not specified, this will
-be calculated automatically. If \code{FALSE}, no scaling
-will be done.}
-
-\item{hyperpars}{list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
-only needs to be supplied if hyperparameters other than the
-default should be used}
-
 \item{ridge}{logical; should the parameters (of the main model) be penalized using ridge regression? Default is \code{FALSE}.}
 
 \item{seed}{optional seed value}
-
-\item{ncores}{number of cores to use for parallel computation; if left empty all except two cores will be used}
 
 \item{...}{additional, optional arguments}
 
@@ -205,6 +122,49 @@ model (see \code{\link[stats]{formula}})}
 a one-sided formula of the form \code{~x1 + ... + xn | g},
 where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}
+
+\item{inits}{optional specification of initial values in the form of a list
+or a function (see \code{\link[rjags]{jags.model}}).
+If omitted, initial values will be generated automatically by JAGS.
+It is an error to supply an initial value for an observed node.}
+
+\item{progress.bar}{Character string specifying the type of progress bar.
+Possible values are "text", "gui", and "none".
+See \code{\link[rjags]{update}}.}
+
+\item{modelname}{optional; character string specifying the name of model file
+(including the ending, either .R or .txt).
+If unspecified a random name will be generated.}
+
+\item{modeldir}{optional; directory containing model file. If unspecified a
+temporary directory will be created.}
+
+\item{overwrite}{logical; whether an existing model file with the specified
+\code{modeldir/modelname} should be overwritten. If set to
+\code{FALSE} (default) and a model already exists, that
+model will be used.}
+
+\item{keep_model}{logical; whether the created JAGS model should be saved
+or removed from the disk (\code{FALSE}; default) when the
+sampling has finished.}
+
+\item{scale_vars}{optional; named vector of (continuous) variables that will
+be scaled (such that mean = 0 and sd = 1) to improve
+convergence of the MCMC sampling. Default is that all
+continuous variables that are not transformed by a function
+(e.g. \code{log(), ns()}) will be scaled. Variables
+for which \code{"lognorm"} is set as imputation model are
+only scaled with regards to the standard deviation, but not
+centered. If set to \code{FALSE} no scaling will be done.}
+
+\item{hyperpars}{list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
+only needs to be supplied if hyperparameters other than the
+default should be used}
+
+\item{scale_pars}{optional matrix of parameters used for centering and
+scaling continuous covariates. If not specified, this will
+be calculated automatically. If \code{FALSE}, no scaling
+will be done.}
 }
 \value{
 An object of class "JointAI".

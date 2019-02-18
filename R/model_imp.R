@@ -543,6 +543,7 @@ if (!is.null(inits)) {
                                           ppc = ppc),
                                      monitor_params))
 
+
   # run JAGS -----------------------------------------------------------------
   t0 <- Sys.time()
   if (parallel == TRUE) {
@@ -585,7 +586,6 @@ if (!is.null(inits)) {
     warning('There is no mcmc sample. Something went wrong.',
             call. = FALSE, immediate. = TRUE)
 
-
   # post processing ------------------------------------------------------------
   if (n.iter > 0 & !is.null(mcmc)) {
     MCMC <- mcmc
@@ -622,7 +622,7 @@ if (!is.null(inits)) {
                         thin = thin,
                         inits = inits,
                         parallel = parallel,
-                        ncores = if(parallel) ncores)
+                        ncores = if (parallel) ncores)
 
   attr(analysis_type, "family") <- family
   attr(analysis_type, "link") <- link
@@ -658,14 +658,10 @@ if (!is.null(inits)) {
 #' @export
 lm_imp <- function(formula, data,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                   monitor_params = NULL, inits = NULL,
-                   modelname = NULL, modeldir = NULL,
-                   overwrite = NULL, keep_model = FALSE,
-                   quiet = TRUE, progress.bar = "text", warn = TRUE,
-                   mess = TRUE,
-                   auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL, trunc = NULL,
-                   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
-                   ridge = FALSE, seed = NULL, ncores = NULL, ...){
+                   monitor_params = NULL, auxvars = NULL, refcats = NULL,
+                   models = NULL,  no_model = NULL, trunc = NULL,
+                   ridge = FALSE, seed = NULL,
+                   ...){
 
   if (missing(formula))
     stop("No model formula specified.")
@@ -700,14 +696,10 @@ lm_imp <- function(formula, data,
 #' @export
 glm_imp <- function(formula, family, data,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = NULL, inits = NULL,
-                    modelname = NULL, modeldir = NULL,
-                    overwrite = NULL, keep_model = FALSE,
-                    quiet = TRUE, progress.bar = "text", warn = TRUE,
-                    mess = TRUE,
-                    auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL, trunc = NULL,
-                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
-                    ridge = FALSE, seed = NULL, ncores = NULL, ...){
+                    monitor_params = NULL, auxvars = NULL, refcats = NULL,
+                    models = NULL,  no_model = NULL, trunc = NULL,
+                    ridge = FALSE, seed = NULL,
+                    ...){
 
   if (missing(formula))
     stop("No model formula specified.")
@@ -764,16 +756,12 @@ glm_imp <- function(formula, family, data,
 
 #' @rdname model_imp
 #' @export
-clm_imp <- function(fixed, data, random,
+clm_imp <- function(fixed, data,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = NULL, inits = NULL,
-                    modelname = NULL, modeldir = NULL,
-                    overwrite = NULL, keep_model = FALSE,
-                    quiet = TRUE, progress.bar = "text", warn = TRUE,
-                    mess = TRUE,
-                    auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL, trunc = NULL,
-                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
-                    ridge = FALSE, seed = NULL, ncores = NULL, ...){
+                    monitor_params = NULL, auxvars = NULL, refcats = NULL,
+                    models = NULL,  no_model = NULL, trunc = NULL,
+                    ridge = FALSE, seed = NULL,
+                    ...){
 
   if (missing(fixed))
     stop("No fixed effects structure specified.")
@@ -806,14 +794,10 @@ clm_imp <- function(fixed, data, random,
 #' @export
 lme_imp <- function(fixed, data, random,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = NULL, inits = NULL,
-                    modelname = NULL, modeldir = NULL,
-                    overwrite = NULL, keep_model = FALSE,
-                    quiet = TRUE, progress.bar = "text", warn = TRUE,
-                    mess = TRUE,
-                    auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL, trunc = NULL,
-                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
-                    ridge = FALSE, seed = NULL, ncores = NULL, ...){
+                    monitor_params = NULL, auxvars = NULL, refcats = NULL,
+                    models = NULL,  no_model = NULL, trunc = NULL,
+                    ridge = FALSE, seed = NULL,
+                    ...){
 
   if (missing(fixed))
     stop("No fixed effects structure specified.")
@@ -848,15 +832,11 @@ lme_imp <- function(fixed, data, random,
 #' @aliases glmer_imp
 #' @export
 glme_imp <- function(fixed, data, random, family,
-                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = NULL, inits = NULL,
-                    modelname = NULL, modeldir = NULL,
-                    overwrite = NULL, keep_model = FALSE,
-                    quiet = TRUE, progress.bar = "text", warn = TRUE,
-                    mess = TRUE,
-                    auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL, trunc = NULL,
-                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
-                    ridge = FALSE, seed = NULL, ncores = NULL, ...){
+                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                     monitor_params = NULL, auxvars = NULL, refcats = NULL,
+                     models = NULL,  no_model = NULL, trunc = NULL,
+                     ridge = FALSE, seed = NULL,
+                     ...){
 
   if (missing(fixed))
     stop("No fixed effects structure specified.")
@@ -911,14 +891,10 @@ glme_imp <- function(fixed, data, random, family,
 #' @export
 clmm_imp <- function(fixed, data, random,
                      n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                     monitor_params = NULL, inits = NULL,
-                     modelname = NULL, modeldir = NULL,
-                     overwrite = NULL, keep_model = FALSE,
-                     quiet = TRUE, progress.bar = "text", warn = TRUE,
-                     mess = TRUE,
-                     auxvars = NULL, models = NULL, no_model = NULL,  refcats = NULL, trunc = NULL,
-                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
-                     ridge = FALSE, seed = NULL, ncores = NULL, ...){
+                     monitor_params = NULL, auxvars = NULL, refcats = NULL,
+                     models = NULL,  no_model = NULL, trunc = NULL,
+                     ridge = FALSE, seed = NULL,
+                     ...){
 
   if (missing(fixed))
     stop("No fixed effects structure specified.")
@@ -953,15 +929,11 @@ clmm_imp <- function(fixed, data, random,
 #' @rdname model_imp
 #' @export
 survreg_imp <- function(formula, data,
-                   n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                   monitor_params = NULL, inits = NULL,
-                   modelname = NULL, modeldir = NULL,
-                   overwrite = NULL, keep_model = FALSE,
-                   quiet = TRUE, progress.bar = "text", warn = TRUE,
-                   mess = TRUE,
-                   auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL, trunc = NULL,
-                   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
-                   ridge = FALSE, seed = NULL, ncores = NULL, ...){
+                        n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                        monitor_params = NULL, auxvars = NULL, refcats = NULL,
+                        models = NULL,  no_model = NULL, trunc = NULL,
+                        ridge = FALSE, seed = NULL,
+                        ...){
 
   if (missing(formula))
     stop("No model formula specified.")
@@ -997,14 +969,10 @@ survreg_imp <- function(formula, data,
 #' @export
 coxph_imp <- function(formula, data,
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                      monitor_params = NULL, inits = NULL,
-                      modelname = NULL, modeldir = NULL,
-                      overwrite = NULL, keep_model = FALSE,
-                      quiet = TRUE, progress.bar = "text", warn = TRUE,
-                      mess = TRUE,
-                      auxvars = NULL, models = NULL, no_model = NULL, refcats = NULL, trunc = NULL,
-                      scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
-                      ridge = FALSE, seed = NULL, ncores = NULL, ...){
+                      monitor_params = NULL, auxvars = NULL, refcats = NULL,
+                      models = NULL,  no_model = NULL, trunc = NULL,
+                      ridge = FALSE, seed = NULL,
+                      ...){
 
   if (missing(formula))
     stop("No model formula specified.")
