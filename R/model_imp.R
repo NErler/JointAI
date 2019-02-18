@@ -508,36 +508,6 @@ model_imp <- function(fixed, data, random = NULL, link, family,
             Initial values are set by JAGS.")
     inits <- NULL
   }
-  # * generate initial values
-  # if (is.logical(inits)) {
-  #   inits <- if (inits)
-  #     replicate(n.chains,
-  #               get_inits.default(models = models, Mlist = Mlist, K = K, K_imp = K_imp,
-  #                      analysis_type = analysis_type, family = family, link = link), simplify = FALSE
-  #     )
-  #   if (any(sapply(inits, is.null)))
-  #     inits <- NULL
-  # }
-  # if (parallel & !is.null(inits))
-  #   inits <- mapply(function(inits, rng) c(inits, rng), inits = inits,
-  #                   rng = rjags::parallel.seeds("base::BaseRNG", n.chains),
-  #                   SIMPLIFY = FALSE)
-  # if (parallel & is.null(inits))
-  #   inits <- rjags::parallel.seeds("base::BaseRNG", n.chains)
-  #
-
-  # if (is.logical(inits)) {
-  #   inits <- if (inits) {
-  #     if (!is.null(seed)) set.seed(seed)
-  #     replicate(n.chains,
-  #               get_inits.default(models = models, Mlist = Mlist, K = K, K_imp = K_imp,
-  #                                 analysis_type = analysis_type, family = family,
-  #                                 link = link), simplify = FALSE
-  #     )
-  #   }
-  #   if (any(sapply(inits, is.null)))
-  #     inits <- NULL
-  # }
 
 if (!is.null(inits)) {
   if (inherits(inits, 'function')) {
