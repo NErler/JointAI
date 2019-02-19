@@ -177,6 +177,34 @@ melt_matrix_list <- function(X, varnames = NULL) {
   return(out)
 }
 
+
+melt_data.frame <- function(data, id.vars = NULL, varnames = NULL, valname = 'value') {
+  if (!inherits(data, 'data.frame'))
+    stop("This function may not work for objects that are not data.frames.")
+
+  data$rowID <- paste0('rowID', 1:nrow(data))
+  X <- data[, !names(data) %in% c('rowID', id.vars)]
+
+  g <- list(rowID = data$rowID,
+            variable = names(X)
+  )
+
+  out <- expand.grid(g, stringsAsFactors = FALSE)
+
+  if (length(unique(sapply(X, class))) > 1) {
+    out[, valname] <- unlist(lapply(X, as.character))
+  } else {
+    out[, valname] <- unlist(X)
+  }
+
+  mout <- merge(data[, c("rowID", id.vars)], out)
+
+  attr(mout, 'out.attrs') <- NULL
+  return(mout[order(mout$variable), -1])
+}
+
+
+
 get_RNG <- function(seed, n.chains) {
   if (!is.null(seed)) set.seed(seed)
   seeds <- sample.int(1e5, size = n.chains)
