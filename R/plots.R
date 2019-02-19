@@ -212,17 +212,17 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 # Helpfunction for densityplot and traceplot
 plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL,
                       nrow = NULL, ncol = NULL, warn = TRUE, keep_aux = FALSE, ...) {
-  if (is.null(object$sample))
+  if (is.null(object$MCMC))
     stop("There is no MCMC sample.")
 
   if (is.null(start))
-    start <- start(object$sample)
+    start <- start(object$MCMC)
 
   if (is.null(end))
-    end <- end(object$sample)
+    end <- end(object$MCMC)
 
   if (is.null(thin))
-    thin <- thin(object$sample)
+    thin <- thin(object$MCMC)
 
   MCMC <- get_subset(object, subset, as.list(match.call()), keep_aux = keep_aux,
                      warn = warn)
@@ -232,7 +232,7 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
                  thin = thin)
 
 
-  # MCMC <- window(object$sample, start = start, end = end, thin = thin)
+  # MCMC <- window(object$MCMC, start = start, end = end, thin = thin)
   time <- time(MCMC)
 
   # get number of rows and columns of plots
