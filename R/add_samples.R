@@ -105,13 +105,14 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   }
 
   if (add == TRUE) {
-    new <- as.mcmc.list(lapply(1:length(mcmc),
-                               function(x) mcmc(rbind(object$sample[[x]],
-                                                      mcmc[[x]]),
-                                                start = start(object$sample),
-                                                end = end(object$sample) + niter(mcmc[[x]])
-                               )
-    ))
+    if (!is.na(object$sample))
+      new <- as.mcmc.list(lapply(1:length(mcmc),
+                                 function(x) mcmc(rbind(object$sample[[x]],
+                                                        mcmc[[x]]),
+                                                  start = start(object$sample),
+                                                  end = end(object$sample) + niter(mcmc[[x]])
+                                 )
+      ))
 
     newMCMC <- as.mcmc.list(lapply(1:length(MCMC),
                                    function(k) mcmc(rbind(object$MCMC[[k]],
