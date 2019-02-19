@@ -71,7 +71,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
     doParallel::registerDoParallel(cl)
 
     if (mess)
-      message(paste0("Parallel sampling on ", ncores, " cores started."))
+      message(paste0("Parallel sampling on ", ncores, " cores started (",
+                     Sys.time(), ")."))
     res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(object$model)),
                               run_samples(object$model[[i]], n.iter = n.iter, var.names = var.names)
     )

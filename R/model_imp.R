@@ -576,7 +576,8 @@ if (!is.null(inits)) {
 
       doParallel::registerDoParallel(cores = ncores)
       if (mess)
-        message(paste0("Parallel sampling on ", ncores, " cores started."))
+        message(paste0("Parallel sampling on ", ncores, " cores started (",
+                       Sys.time(), ")."))
 
       res <- foreach(i = seq_along(inits)) %dopar% {run_jags(inits[[i]], data_list = data_list,
                           modelfile = modelfile,
