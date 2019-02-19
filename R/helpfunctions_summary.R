@@ -2,19 +2,19 @@
 prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL, warn = warn, ...) {
 
   if (is.null(start)) {
-    start <- start(object$sample)
+    start <- start(object$MCMC)
   } else {
-    start <- max(start, start(object$sample))
+    start <- max(start, start(object$MCMC))
   }
 
   if (is.null(end)) {
-    end <- end(object$sample)
+    end <- end(object$MCMC)
   } else {
-    end <- min(end, end(object$sample))
+    end <- min(end, end(object$MCMC))
   }
 
   if (is.null(thin))
-    thin <- thin(object$sample)
+    thin <- thin(object$MCMC)
 
   MCMC <- get_subset(object, subset, as.list(match.call()), warn = warn)
 

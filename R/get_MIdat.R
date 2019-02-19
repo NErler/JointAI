@@ -64,12 +64,12 @@ get_MIdat <- function(object, m = 10, include = TRUE,
   meth <- object$models[colSums(is.na(DF[, names(object$models)])) > 0]
 
   if (is.null(start)) {
-    start <- start(object$sample)
+    start <- start(object$MCMC)
   } else {
-    start <- max(start, start(object$sample))
+    start <- max(start, start(object$MCMC))
   }
 
-  MCMC <- do.call(rbind, window(object$sample, start = start))
+  MCMC <- do.call(rbind, window(object$MCMC, start = start))
   if (nrow(MCMC) < m)
     stop("The number of imputations must be chosen to be less than or",
          gettextf("equal to the number of MCMC samples (= %s).",

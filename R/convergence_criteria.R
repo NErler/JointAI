@@ -32,18 +32,18 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
   if (!inherits(object, "JointAI"))
     stop('Object must be of class "JointAI".')
 
-  if (is.null(object$sample))
-    stop("No mcmc sample.")
+  if (is.null(object$MCMC))
+    stop("No MCMC sample.")
 
 
   if (is.null(start))
-    start <- start(object$sample)
+    start <- start(object$MCMC)
 
   if (is.null(end))
-    end <- end(object$sample)
+    end <- end(object$MCMC)
 
   if (is.null(thin))
-    thin <- thin(object$sample)
+    thin <- thin(object$MCMC)
 
   MCMC <- get_subset(object, subset, call_orig = as.list(match.call()), warn = warn)
   MCMC <- window(MCMC, start = start, end = end, thin = thin)
@@ -98,20 +98,20 @@ MC_error <- function(x, subset = NULL,
   if (!inherits(x, "JointAI"))
     stop('x must be of class "JointAI".')
 
-  if (is.null(x$sample))
-    stop("No mcmc sample.")
+  if (is.null(x$MCMC))
+    stop("No MCMC sample.")
 
   if (!"mcmcse" %in% installed.packages()[, "Package"])
     stop("The package 'mcmcse' needs to be installed for 'MC_error' to work.")
 
   if (is.null(start))
-    start <- start(x$sample)
+    start <- start(x$MCMC)
 
   if (is.null(end))
-    end <- end(x$sample)
+    end <- end(x$MCMC)
 
   if (is.null(thin))
-    thin <- thin(x$sample)
+    thin <- thin(x$MCMC)
 
   MCMC <- get_subset(object = x, subset = subset,
                      call_orig = as.list(match.call()), warn = warn)

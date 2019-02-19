@@ -288,7 +288,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       MCMCpackage = "JAGS", analysis_type,
                       Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
                       dest_cols = NULL, imp_par_list = NULL,  data_list = NULL,
-                      parallel = FALSE, seed = NULL, ncores = NULL, ...) {
+                      parallel = FALSE, seed = NULL, ncores = NULL,
+                      keep_scaled_mcmc = FALSE, ...) {
 
 
   # Checks & warnings -------------------------------------------------------
@@ -662,7 +663,7 @@ if (!is.null(inits)) {
          hyperpars = hyperpars,
          imp_par_list = imp_par_list,
          model = if (n.adapt > 0) adapt,
-         sample = if (n.iter > 0 & !is.null(mcmc)) mcmc,
+         sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
          MCMC = if (n.iter > 0 & !is.null(mcmc)) as.mcmc.list(MCMC),
          time = t1 - t0
          ), class = "JointAI")
