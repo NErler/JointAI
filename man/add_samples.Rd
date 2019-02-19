@@ -8,7 +8,7 @@ add_samples(object, n.iter, add = TRUE, thin = NULL,
   monitor_params = NULL, progress.bar = "text", mess = TRUE)
 }
 \arguments{
-\item{object}{object inheriting from class "JointAI"}
+\item{object}{object inheriting from class 'JointAI'}
 
 \item{n.iter}{number of iterations to monitor}
 
@@ -19,9 +19,9 @@ samples or replace them? If samples are added, \code{thin} and
 \item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
 \item{monitor_params}{named vector specifying which parameters should be
-monitored.}
+monitored}
 
-\item{progress.bar}{Character string specifying the type of progress bar.
+\item{progress.bar}{character string specifying the type of progress bar.
 Possible values are "text", "gui", and "none".
 See \code{\link[rjags]{update}}.}
 
@@ -30,26 +30,32 @@ See \code{\link[rjags]{update}}.}
 given directly by \strong{JointAI}.}
 }
 \description{
-Allows to continue sampling from an existing object of class "JointAI".
+Allows to continue sampling from an existing object of class 'JointAI'.
+When the original sample was created using parallel computation, the
+separate 'jags' objects will be recompiled and sampling will again be
+performed in parallel.
 }
 \examples{
 # Example 1:
-# run an initial JointAI model:
+# Run an initial JointAI model:
 mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 
-# continue sampling
+# Continue sampling:P
 mod_add <- add_samples(mod, n.iter = 200, add = TRUE)
 
 
 # Example 2:
-# continue sampling, but additionally sample imputed values
+# Continue sampling, but additionally sample imputed values.
+# Note: Setting different parameters to monitor than in the original model
+# requires add = FALSE.
 imps <- add_samples(mod, n.iter = 200, monitor_params = c("imps" = TRUE),
                     add = FALSE)
 
-
 }
 \seealso{
-\code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{lme_imp}}
+\code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{lme_imp}}, \code{\link{clm_imp}}
+\code{\link{glme_imp}}, \code{\link{clmm_imp}}, \code{\link{survreg_imp}},
+\code{\link{coxph_imp}}
 
 The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 contains some examples how to specify the argument \code{monitor_params}.

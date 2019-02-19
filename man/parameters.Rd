@@ -7,7 +7,7 @@
 parameters(object, mess = TRUE, warn = TRUE)
 }
 \arguments{
-\item{object}{object inheriting from class "JointAI"}
+\item{object}{object inheriting from class 'JointAI'}
 
 \item{mess}{logical; should messages be given? Default is
 \code{TRUE}. Note: this applies only to messages

@@ -3,6 +3,9 @@
 \name{summary.JointAI}
 \alias{summary.JointAI}
 \alias{print.summary.JointAI}
+\alias{coef.JointAI}
+\alias{confint.JointAI}
+\alias{print.JointAI}
 \title{Summary of an object of class JointAI}
 \usage{
 \method{summary}{JointAI}(object, start = NULL, end = NULL,
@@ -11,9 +14,18 @@
 
 \method{print}{summary.JointAI}(x, digits = max(3, .Options$digits - 4),
   ...)
+
+\method{coef}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
+  subset = NULL, warn = TRUE, mess = TRUE, ...)
+
+\method{confint}{JointAI}(object, parm = NULL, level = 0.95,
+  quantiles = NULL, start = NULL, end = NULL, thin = NULL,
+  subset = NULL, warn = TRUE, mess = TRUE, ...)
+
+\method{print}{JointAI}(x, digits = max(4, getOption("digits") - 4), ...)
 }
 \arguments{
-\item{object}{object inheriting from class "JointAI"}
+\item{object}{object inheriting from class 'JointAI'}
 
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
@@ -25,7 +37,9 @@
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
-\code{\link{lm_imp}}, \code{\link{glm_imp}} and \code{\link{lme_imp}}.}
+\code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
+\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{survreg_imp}}
+and \code{\link{coxph_imp}}.}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. Note: this applies only to warnings
@@ -37,25 +51,29 @@ given directly by \strong{JointAI}.}
 
 \item{\dots}{currently not used}
 
-\item{x}{an object of class \code{summary.JointAI}}
+\item{x}{an object of class \code{summary.JointAI} or \code{JointAI}}
 
 \item{digits}{minimal number of \emph{significant} digits, see
     \code{\link{print.default}}.}
 }
 \description{
-\code{summary} method for class "JointAI".
+Obtain and print the \code{summary}, (fixed effects) \code{coef}ficients and
+credible interval (\code{confint}) for an object of class 'JointAI'.
 }
 \examples{
 mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 
 summary(mod1)
+coef(mod1)
+confint(mod1)
 
 
 }
 \seealso{
 The model fitting functions \code{\link{lm_imp}},
-         \code{\link{glm_imp}}, \code{\link{lme_imp}}, \code{\link{glme_imp}},
-         \code{\link{survreg_imp}} and the
-         vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
-          for examples how to specify the parameter \code{subset}.
+         \code{\link{glm_imp}}, \code{\link{clm_imp}}, \code{\link{lme_imp}},
+         \code{\link{glme_imp}}, \code{\link{survreg_imp}} and \code{\link{coxph_imp}},
+         and the vignette
+         \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+         for examples how to specify the parameter \code{subset}.
 }

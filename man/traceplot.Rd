@@ -13,7 +13,7 @@ traceplot(object, ...)
   ...)
 }
 \arguments{
-\item{object}{object inheriting from class "JointAI"}
+\item{object}{object inheriting from class 'JointAI'}
 
 \item{...}{Arguments passed on to \code{graphics::matplot}
 \describe{
@@ -56,7 +56,9 @@ traceplot(object, ...)
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
-\code{\link{lm_imp}}, \code{\link{glm_imp}} and \code{\link{lme_imp}}.}
+\code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
+\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{survreg_imp}}
+and \code{\link{coxph_imp}}.}
 
 \item{nrow}{optional number of rows and columns in the plot layout;
 automatically chosen if unspecified}

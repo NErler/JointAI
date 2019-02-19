@@ -1,6 +1,10 @@
 #' Add samples to an object of class JointAI
 #'
-#' Allows to continue sampling from an existing object of class "JointAI".
+#' Allows to continue sampling from an existing object of class 'JointAI'.
+#' When the original sample was created using parallel computation, the
+#' separate 'jags' objects will be recompiled and sampling will again be
+#' performed in parallel.
+#'
 #' @inheritParams sharedParams
 #' @inheritParams model_imp
 #' @param add logical; should the new MCMC samples be added to the existing
@@ -8,7 +12,9 @@
 #'            \code{var.names} are ignored.
 #'
 #' @seealso
-#' \code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{lme_imp}}
+#' \code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{lme_imp}}, \code{\link{clm_imp}}
+#' \code{\link{glme_imp}}, \code{\link{clmm_imp}}, \code{\link{survreg_imp}},
+#' \code{\link{coxph_imp}}
 #'
 #' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 #' contains some examples how to specify the argument \code{monitor_params}.
@@ -17,18 +23,19 @@
 #'
 #' @examples
 #' # Example 1:
-#' # run an initial JointAI model:
+#' # Run an initial JointAI model:
 #' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
-#' # continue sampling
+#' # Continue sampling:P
 #' mod_add <- add_samples(mod, n.iter = 200, add = TRUE)
 #'
 #'
 #' # Example 2:
-#' # continue sampling, but additionally sample imputed values
+#' # Continue sampling, but additionally sample imputed values.
+#' # Note: Setting different parameters to monitor than in the original model
+#' # requires add = FALSE.
 #' imps <- add_samples(mod, n.iter = 200, monitor_params = c("imps" = TRUE),
 #'                     add = FALSE)
-#'
 #'
 
 add_samples <- function(object, n.iter, add = TRUE, thin = NULL,

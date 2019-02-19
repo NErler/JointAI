@@ -15,7 +15,7 @@ get_models(fixed, random = NULL, data, auxvars = NULL,
 \item{fixed}{a two sided formula describing the fixed-effects part of the
 model (see \code{\link[stats]{formula}})}
 
-\item{random}{only for \code{lme_imp}:
+\item{random}{only for \code{lme_imp}, \code{glme_imp} and \code{clmm_imp}:
 a one-sided formula of the form \code{~x1 + ... + xn | g},
 where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}

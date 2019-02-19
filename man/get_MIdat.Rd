@@ -9,7 +9,7 @@ get_MIdat(object, m = 10, include = TRUE, start = NULL,
   resdir = NULL, filename = NULL)
 }
 \arguments{
-\item{object}{object inheriting from class "JointAI"}
+\item{object}{object inheriting from class 'JointAI'}
 
 \item{m}{number of imputed datasets}
 

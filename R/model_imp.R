@@ -1,43 +1,47 @@
 #' Joint analysis and imputation of incomplete data
 #'
-#' Functions to estimate (generalized) linear, (generalized) linear mixed and
-#' parametric (Weibull) survival models using MCMC sampling.
+#' Functions to estimate (generalized) linear and (generalized) linear mixed models,
+#' ordinal and ordinal mixed models,
+#' and parametric (Weibull) as well as Cox proportional hazards
+#' survival models using MCMC sampling, while imputing missing values.
 #'
 #' @param formula a two sided model formula (see \code{\link[stats]{formula}})
 #' @param fixed a two sided formula describing the fixed-effects part of the
 #'              model (see \code{\link[stats]{formula}})
-#' @param random only for \code{lme_imp}:
+#' @param random only for \code{lme_imp}, \code{glme_imp} and \code{clmm_imp}:
 #'               a one-sided formula of the form \code{~x1 + ... + xn | g},
 #'               where \code{x1 + ... + xn} specifies the model for the random
 #'               effects and \code{g} the grouping variable
 #' @param data a \code{data.frame}
-#' @param family only for \code{glm_imp}:
+#' @param family only for \code{glm_imp} and \code{glmm_imp}:
 #'               a description of the distribution and link function to
 #'               be used in the model. This can be a character string naming a
 #'               family function, a family function or the result of a call to
 #'               a family function. (See \code{\link[stats]{family}} and the
 #'               `Details` section below.)
 #' @param monitor_params named vector specifying which parameters should be
-#'                       monitored.
+#'                       monitored
 #' @param inits optional specification of initial values in the form of a list
 #'              or a function (see \code{\link[rjags]{jags.model}}).
 #'              If omitted, initial values will be generated automatically by JAGS.
 #'              It is an error to supply an initial value for an observed node.
-#' @param progress.bar Character string specifying the type of progress bar.
+#' @param progress.bar character string specifying the type of progress bar.
 #'                     Possible values are "text", "gui", and "none".
 #'                     See \code{\link[rjags]{update}}.
 #' @inheritParams rjags::jags.model
 #' @inheritParams rjags::coda.samples
 #' @inheritParams sharedParams
-#' @param modelname optional; character string specifying the name of model file
+#' @param modelname optional; character string specifying the name of the model file
 #'                  (including the ending, either .R or .txt).
 #'                  If unspecified a random name will be generated.
-#' @param modeldir optional; directory containing model file. If unspecified a
+#' @param modeldir optional; directory containing model file or directory in which
+#'                 the model file will be written. If unspecified a
 #'                 temporary directory will be created.
 #' @param overwrite logical; whether an existing model file with the specified
-#'                  \code{modeldir/modelname} should be overwritten. If set to
-#'                  \code{FALSE} (default) and a model already exists, that
-#'                  model will be used.
+#'                  \code{<modeldir>/<modelname>} should be overwritten. If set to
+#'                  \code{FALSE} and a model already exists, that model will be used.
+#'                  If unspecified (\code{NULL}) and a file exists, the user is
+#'                  asked for input on how to procede.
 #' @param keep_model logical; whether the created JAGS model should be saved
 #'                   or removed from the disk (\code{FALSE}; default) when the
 #'                   sampling has finished.
@@ -59,10 +63,12 @@
 #'                Options are the category label, the category number,
 #'                "first" (the first category), "last" (the last category)
 #'                or "largest" (chooses the category with the most observations).
-#'                Default is "first".
+#'                Default is "first". (See also \code{\link{set_refcat}})
 #' @param trunc optional named list specifying the limits of truncation for the
 #'              distribution of the named incomplete variables
-#'              of each
+#' @param hyperpars list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
+#'                  only needs to be supplied if hyperparameters other than the
+#'                  default should be used
 #' @param scale_vars optional; named vector of (continuous) variables that will
 #'                   be scaled (such that mean = 0 and sd = 1) to improve
 #'                   convergence of the MCMC sampling. Default is that all
@@ -70,14 +76,17 @@
 #'                   (e.g. \code{log(), ns()}) will be scaled. Variables
 #'                   for which \code{"lognorm"} is set as imputation model are
 #'                   only scaled with regards to the standard deviation, but not
-#'                   centered. If set to \code{FALSE} no scaling will be done.
-#' @param hyperpars list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
-#'                  only needs to be supplied if hyperparameters other than the
-#'                  default should be used
+#'                   centered. Variables to be imputed with \code{"gamma"}, \code{"beta"}
+#'                   or \code{"glmm_gamma"} are not scaled.
+#'                   If set to \code{FALSE} no scaling will be done.
 #' @param scale_pars optional matrix of parameters used for centering and
 #'                   scaling continuous covariates. If not specified, this will
 #'                   be calculated automatically. If \code{FALSE}, no scaling
 #'                   will be done.
+#' @param keep_scaled_mcmc should the "original" MCMC sample
+#'                         (i.e., the scaled version returned by \code{coda.samples()}) be kept?
+#'                         (The MCMC sample that is re-scaled to the scale of the
+#'                         data is always kept.)
 #' @param ... additional, optional arguments
 #' @importFrom foreach foreach %dopar%
 #'
@@ -85,7 +94,8 @@
 #'
 #' @section Details:
 #' See also the vignette: \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification}
-#' \subsection{Implemented distribution families and link functions for \code{glm_imp()}}{
+#' \subsection{Implemented distribution families and link functions for \code{glm_imp()}
+#' and \code{glme_imp()}}{
 #' \tabular{ll}{
 # \emph{family} \tab \emph{link}\cr
 #' \code{gaussian} \tab with links: \code{identity}, \code{log}\cr
@@ -98,7 +108,7 @@
 #'
 #'
 #' \subsection{Imputation methods}{
-#' Implemented imputation models that can be chosen in the argument \code{meth} are:
+#' Implemented imputation models that can be chosen in the argument \code{models} are:
 #' \tabular{ll}{
 #' \code{norm} \tab linear model\cr
 #' \code{lognorm} \tab log-linear model for skewed continuous data\cr
@@ -106,16 +116,23 @@
 #' \code{beta} \tab beta model (with logit-link) for skewed continuous data in (0, 1)\cr
 #' \code{logit} \tab logistic model for binary data\cr
 #' \code{multilogit} \tab multinomial logit model for unordered categorical variables\cr
-#' \code{cumlogit} \tab cumulative logit model for ordered categorical variables
+#' \code{cumlogit} \tab cumulative logit model for ordered categorical variables\cr
+#' \code{lmm} \tab linear mixed model for continuous longitudinal covariates\cr
+#' \code{glmm_gamma} \tab Gamma mixed model for skewed longitudinal covariates\cr
+#' \code{glmm_logit} \tab logit mixed model for binary longitudinal covariates\cr
+#' \code{glmm_poisson} \tab Poisson mixed model for longitudinal count covariates\cr
+#' \code{clmm} \tab cumulative logit mixed model for longitudinal ordered factors
 #' }
-#' When imputation methods are specified for only a subset of the incomplete
+#' When models are specified for only a subset of the incomplete or longitudinal
 #' covariates involved in a model, the default choices are used for all unspecified
 #' variables.
 #'
-#' The argument \code{meth} also controls the order of the sequence of imputation
+#' The argument \code{models} also controls the order of the sequence of imputation
 #' models. By default, models are ordered according to the proportion of missing
 #' values. To change this order, a vector with imputation methods for all
 #' incomplete variables (in the desired order) needs to be supplied.
+#' Incomplete baseline covariates (level-2 variables) must be earlier in the
+#' sequence than longitudinal (level-1).
 #' }
 #'
 #' \subsection{Parameters to follow (\code{monitor_params})}{
@@ -123,23 +140,23 @@
 #'
 #' Named vector specifying which parameters should be monitored. This can be done
 #' either directly by specifying the name of the parameter or indirectly by one
-#' of the key words summarizing a number of parameters. Except for \code{other},
+#' of the key words selecting a set of parameters. Except for \code{other},
 #' in which parameter names are specified directly, parameter (groups) are just
 #' set as \code{TRUE} or \code{FALSE}.
 #' If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)} will be used.
 #' \tabular{ll}{
 #' \strong{name/key word} \tab \strong{what is monitored}\cr
-#' \code{analysis_main} \tab \code{betas}, \code{tau_y} and \code{sigma_y}\cr
+#' \code{analysis_main} \tab \code{betas}, \code{tau_y} and \code{sigma_y} (and \code{D} in mixed models)\cr
 #' \code{analysis_random} \tab \code{ranef}, \code{D}, \code{invD}, \code{RinvD}\cr
 #' \code{imp_pars} \tab \code{alphas}, \code{tau_imp}, \code{gamma_imp}, \code{delta_imp}\cr
 #' \code{imps} \tab imputed values\cr
 #' \code{betas} \tab regression coefficients of the analysis model\cr
 #' \code{tau_y} \tab precision of the residuals from the analysis model\cr
 #' \code{sigma_y} \tab standard deviation of the residuals from the analysis model\cr
-#' \code{ranef} \tab random effects\cr
+#' \code{ranef} \tab random effects \code{b}\cr
 #' \code{D} \tab covariance matrix of the random effects\cr
 #' \code{invD} \tab inverse of \code{D}\cr
-#' \code{RinvD} \tab matrix in prior for \code{invD}\cr
+#' \code{RinvD} \tab matrix in the prior for \code{invD}\cr
 #' \code{alphas} \tab regression coefficients in the imputation models\cr
 #' \code{tau_imp} \tab precision parameters of the residuals from imputation models\cr
 #' \code{gamma_imp} \tab intercepts in ordinal imputation models\cr
@@ -158,7 +175,7 @@
 #'}
 #'
 #'
-#' @return An object of class "JointAI".
+#' @return An object of class \link[=JointAIObject]{JointAI}.
 #'
 #' @section Note:
 #' \subsection{Coding of variables:}{
@@ -176,7 +193,7 @@
 #'
 #' Contrary to base R behavior, dummy coding (i.e., \code{contr.treatment} contrasts)
 #' are used for ordered factors in any linear predictor.
-#' Since the order of levels in an ordered factor contains information relevant
+#' However, since the order of levels in an ordered factor contains information relevant
 #' to the imputation of missing values, it is important that incomplete ordinal
 #' variables are coded as such.
 #' }
@@ -213,7 +230,6 @@
 #' }
 #' \subsection{Not (yet) possible:}{
 #' \itemize{
-#' \item imputation of time-varying (level-1) covariates
 #' \item multiple nesting levels of random effects (nested or crossed)
 #' \item prediction (using \code{predict}) conditional on random effects
 #' \item the use of splines for incomplete variables
@@ -225,7 +241,7 @@
 #' }
 #'
 #'
-#' @seealso \code{\link{set_refcat}}, \code{\link{get_imp_meth}},
+#' @seealso \code{\link{set_refcat}}, \code{\link{get_models}},
 #'          \code{\link{traceplot}}, \code{\link{densplot}},
 #'          \code{\link{summary.JointAI}}, \code{\link{MC_error}},
 #'          \code{\link{GR_crit}}, \code{\link[rjags]{jags.model}},

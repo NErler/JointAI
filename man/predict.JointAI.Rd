@@ -8,7 +8,7 @@
   start = NULL, end = NULL, thin = NULL, ...)
 }
 \arguments{
-\item{object}{object inheriting from class "JointAI"}
+\item{object}{object inheriting from class 'JointAI'}
 
 \item{newdata}{new dataset for prediction}
 

@@ -2,26 +2,38 @@
 #'
 #' The \strong{JointAI} package performs simultaneous imputation and inference for
 #' incomplete data using the Bayesian framework.
-#' Distributions for incomplete variables are specified automatically and modeled
-#' jointly with the analysis model.
-#'
+#' Distributions of incomplete variables, conditional on other covariates,
+#' are specified automatically and modeled jointly with the analysis model.
+#' MCMC sampling is performed in \href{http://mcmc-jags.sourceforge.net}{'JAGS'}
+#' via the R package \href{https://CRAN.R-project.org/package=rjags}{\strong{rjags}}.
 #'
 #'
 #' @section Main functions:
-#' The package has five main functions, \code{\link{lm_imp}},
-#' \code{\link{glm_imp}}, \code{\link{lme_imp}}, \code{\link{glme_imp}} and \code{\link{survreg_imp}}
-#' that allow analysis using linear regression, generalized linear regression,
-#' linear mixed effects models, generalized linear mixed effects models and parametric
-#' survival models. As far as possible, the specification of
-#' the functions is the same as the specification of their complete data
-#' versions \code{\link[stats]{lm}}, \code{\link[stats]{glm}},
-#' \code{\link[nlme]{lme}} (from the package
-#' \href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}}) and
-#' \code{\link[survival]{survreg}} (from the package
-#' \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}).
+#' The package has the following main functions that allow analysis in different
+#' settings:
+#' \itemize{
+#' \item \code{\link{lm_imp}} for linear regression
+#' \item \code{\link{glm_imp}} for generalized linear regression
+#' \item \code{\link{clm_imp}} for cumulative logit models
+#' \item \code{\link{lme_imp}} for linear mixed models
+#' \item \code{\link{glme_imp}} for generalized linear mixed models
+#' \item \code{\link{clmm_imp}} for cumulative logit mixed models
+#' \item \code{\link{survreg_imp}} for parametric (Weibull) survival models
+#' \item \code{\link{coxph_imp}} for Cox proportional hazard models
+#' }
+#'
+#' As far as possible, the specification of these functions is analogue to the
+#' specification of their complete data versions
+#' \code{\link[stats]{lm}}, \code{\link[stats]{glm}},
+#' \code{\link[ordinal]{clm}} (from the package \href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
+#' \code{\link[nlme]{lme}} (from the package \href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}}),
+#' \code{\link[ordinal:clmmOld]{clmm2}} (from the package \href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
+#' \code{\link[survival]{survreg}} (from the package \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}) and
+#' \code{\link[survival]{coxph}} (from the package \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}).
 #'
 #'
 #' Results can be summarized and printed with \code{\link{summary.JointAI}},
+#' \code{\link{coef.JointAI}} and \code{\link{confint.JointAI}},
 #' and visualized using
 #' \code{\link{traceplot}} or \code{\link{densplot}}.
 #' The function \code{\link{predict.JointAI}} allows prediction (including credible intervals)
@@ -31,15 +43,20 @@
 #' @section Evaluation and export:
 #' Two criteria for evaluation of convergence and precision of the posterior
 #' estimate are available:
-#' \code{\link{GR_crit}} and \code{\link{MC_error}}.
+#' \itemize{
+#' \item \code{\link{GR_crit}} implements the Gelman-Rubin criterion ('potential scale reduction factor') for convergence
+#' \item \code{\link{MC_error}} calculates the Monte Carlor error to evaluate the precision of the MCMC sample
+#' }
 #'
-#' Imputed data can be extracted and exported to SPSS data using \code{\link{get_MIdat}}.
+#' Imputed data can be extracted (and exported to SPSS) using \code{\link{get_MIdat}}.
+#' The function \code{\link{plot_imp_distr}} allows visual comparison of the
+#' distribution of observed and imputed values.
 #'
 #' @section Other useful functions:
 #' \itemize{
 #' \item \code{\link{parameters}} and \code{\link{list_impmodels}} to gain
 #'       insight in the specified model
-#' \item \code{\link{plot_all}} and \code{md_pattern} to visualize the
+#' \item \code{\link{plot_all}} and \code{\link{md_pattern}} to visualize the
 #'       distribution of the data and the missing data pattern
 #' }
 #'
@@ -82,11 +99,17 @@
 #' \code{\link{GR_crit}}, \code{\link{MC_error}}, \code{\link{predict}},
 #' \code{\link{predDF}} and \code{\link{get_MIdat}}.
 #'}
-#' @references Erler, N. S., Rizopoulos, D., Rosmalen, J. V., Jaddoe,
-#' V. W., Franco, O. H., & Lesaffre, E. M. (2016).
+#' @references Erler, N.S., Rizopoulos, D., Rosmalen, J., Jaddoe, V.W.V.,
+#' Franco, O. H., & Lesaffre, E.M.E.H. (2016).
 #' Dealing with missing covariates in epidemiologic studies: A comparison
 #' between multiple imputation and a full Bayesian approach.
 #' \emph{Statistics in Medicine}, 35(17), 2955-2974.
+#' doi: \href{https://doi.org/10.1002/sim.6944}{10.1002/sim.6944}
+#'
+#' Erler, N.S., Rizopoulos D., Jaddoe, V.W.V., Franco, O.H. & Lesaffre, E.M.E.H. (2019).
+#' Bayesian imputation of time-varying covariates in linear mixed models.
+#' \emph{Statistical Methods in Medical Research}, 28(2), 555–568.
+#' doi: \href{https://doi.org/10.1177/0962280217730851}{10.1177/0962280217730851}
 #'
 #' @import graphics
 #' @import coda
@@ -109,14 +132,16 @@ utils::globalVariables(c("i"))
 
 
 #' Parameters used by several functions in JointAI.
-#' @param object object inheriting from class "JointAI"
+#' @param object object inheriting from class 'JointAI'
 #' @param no_model names of variables for which no model should be specified.
 #'                 Note that this is only possible for completely observed
 #'                 variables and may imply assumptions of independence between
 #'                 the excluded variable and incomplete variables.
 #' @param subset subset of parameters/variables/nodes (columns in the MCMC sample).
 #'               Uses the same logic as the argument \code{monitor_params} in
-#'               \code{\link{lm_imp}}, \code{\link{glm_imp}} and \code{\link{lme_imp}}.
+#'               \code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
+#'               \code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{survreg_imp}}
+#'               and \code{\link{coxph_imp}}.
 #' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
 #' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
 #' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
@@ -134,9 +159,9 @@ utils::globalVariables(c("i"))
 #'        This requires specification of the argument \code{idvar}.
 #' @param idvar name of the column that specifies the multi-level grouping structure
 #' @param keep_aux logical; Should constant effects of auxiliary variables be kept in the output?
-#' @param ridge logical; should the parameters (of the main model) be penalized using ridge regression? Default is \code{FALSE}.
+#' @param ridge logical; should the parameters of the main model be penalized using ridge regression? Default is \code{FALSE}.
 #' @param ncores number of cores to use for parallel computation; if left empty all except two cores will be used
-#' @param seed optional seed value
+#' @param seed optional seed value for reproducibility
 #' @name sharedParams
 NULL
 

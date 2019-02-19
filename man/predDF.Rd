@@ -21,7 +21,7 @@ predDF(...)
 
 \item{var}{name of variable that should be varying}
 
-\item{object}{object inheriting from class "JointAI"}
+\item{object}{object inheriting from class 'JointAI'}
 }
 \description{
 Build a \code{data.frame} for prediction, where one variable
