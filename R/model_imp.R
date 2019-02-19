@@ -254,6 +254,7 @@
 #'   \item \href{https://nerler.github.io/JointAI/articles/MinimalExample.html}{Minimal Example}
 #'   \item \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification}
 #'   \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#'   \item \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{After Fitting}
 #'}
 #'
 #'
