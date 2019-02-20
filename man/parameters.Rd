@@ -20,7 +20,7 @@ given directly by \strong{JointAI}.}
 \item{...}{currently not used}
 }
 \description{
-Returns the names of the parameters/nodes of an object of class "JointAI" for
+Returns the names of the parameters/nodes of an object of class 'JointAI' for
 which a monitor is set.
 }
 \examples{

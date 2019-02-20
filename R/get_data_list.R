@@ -349,60 +349,49 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 # A list containing the default hyperparameters for JointAI models. The elements
 # of the list are
 #'
-#' \strong{analysis_model:} hyperparameters for the analysis model
-#' \tabular{ll}{
-#' \code{mu_reg_main} \tab mean in the priors for regression coefficients\cr
-#' \code{tau_reg_main} \tab precision in the priors for regression coefficients\cr
-#' \code{a_tau_main} \tab scale parameter in Gamma prior for precision of outcome\cr
-#' \code{b_tau_main} \tab rate parameter in Gamma prior for precision of outcome
-#' }
-#'
-#' \strong{Z:} hyperparameters for the random effects in mixed models
-#' \tabular{ll}{
-#' \code{RinvD} \tab scale matrix in Wishart prior (*) for random effects covariance matrix\cr
-#' \code{KinvD} \tab degrees of freedom in Wishart prior for random effects covariance matrix\cr
-#' \code{a_diag_RinvD} \tab scale parameter in Gamma prior for the diagonal elements of \code{RinvD}\cr
-#' \code{b_diag_RinvD} \tab rate parameter in Gamma prior for the diagonal elements of \code{RinvD}
-#' }
-#' (*) when there is only one random effect a Gamma distribution is used instead of the Wishart
-#'
-#' \strong{norm:} hyperparameters for normal and lognormal imputation models
+#' \strong{norm:} hyperparameters for normal and lognormal models
 #' \tabular{ll}{
 #' \code{mu_reg_norm} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_norm} \tab precision in the priors for regression coefficients\cr
-#' \code{a_tau_norm} \tab scale parameter in Gamma prior for precision of imputed variable\cr
-#' \code{b_tau_norm} \tab rate parameter in Gamma prior for precision of imputed variable
+#' \code{shape_tau_norm} \tab shape parameter in Gamma prior for precision of imputed variable\cr
+#' \code{rate_tau_norm} \tab rate parameter in Gamma prior for precision of imputed variable
 #' }
 #'
-#' \strong{gamma:} hyperparameters for Gamma imputation models
+#' \strong{gamma:} hyperparameters for Gamma models
 #' \tabular{ll}{
 #' \code{mu_reg_gamma} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_gamma} \tab precision in the priors for regression coefficients\cr
-#' \code{a_tau_gamma} \tab scale parameter in Gamma prior for precision of imputed variable\cr
-#' \code{b_tau_gamma} \tab rate parameter in Gamma prior for precision of imputed variable
+#' \code{shape_tau_gamma} \tab shape parameter in Gamma prior for precision of imputed variable\cr
+#' \code{rate_tau_gamma} \tab rate parameter in Gamma prior for precision of imputed variable
 #' }
 #'
-#' \strong{beta:} hyperparameters for beta imputation models
+#' \strong{beta:} hyperparameters for beta models
 #' \tabular{ll}{
 #' \code{mu_reg_beta} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_beta} \tab precision in the priors for regression coefficients\cr
-#' \code{a_tau_beta} \tab scale parameter in Gamma prior for precision of imputed variable\cr
-#' \code{b_tau_beta} \tab rate parameter in Gamma prior for precision of imputed variable
+#' \code{shape_tau_beta} \tab shape parameter in Gamma prior for precision of imputed variable\cr
+#' \code{rate_tau_beta} \tab rate parameter in Gamma prior for precision of imputed variable
 #' }
 #'
-#' \strong{logit:} hyperparameters for logistic imputation models
+#' \strong{logit:} hyperparameters for logistic models
 #' \tabular{ll}{
 #' \code{mu_reg_logit} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_logit} \tab precision in the priors for regression coefficients
 #' }
 #'
-#' \strong{multinomial:} hyperparameters for multinomial imputation models
+#' \strong{probit:} hyperparameters for probit models
+#' \tabular{ll}{
+#' \code{mu_reg_logit} \tab mean in the priors for regression coefficients\cr
+#' \code{tau_reg_logit} \tab precision in the priors for regression coefficients
+#' }
+#'
+#' \strong{multinomial:} hyperparameters for multinomial models
 #' \tabular{ll}{
 #' \code{mu_reg_multinomial} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_multinomial} \tab precision in the priors for regression coefficients
 #' }
 #'
-#' \strong{ordinal:} hyperparameters for ordinal imputation models
+#' \strong{ordinal:} hyperparameters for ordinal models
 #' \tabular{ll}{
 #' \code{mu_reg_ordinal} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_ordinal} \tab precision in the priors for regression coefficients\cr
@@ -410,6 +399,29 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 #' \code{tau_delta_ordinal} \tab precision in the priors for the intercepts
 #' }
 #'
+#' \strong{Z:} function creating hyperparameters for the random effects in mixed models,
+#' with output elements
+#' \tabular{ll}{
+#' \code{RinvD} \tab scale matrix in Wishart prior (*) for random effects covariance matrix\cr
+#' \code{KinvD} \tab degrees of freedom in Wishart prior for random effects covariance matrix\cr
+#' \code{shape_diag_RinvD} \tab shape parameter in Gamma prior for the diagonal elements of \code{RinvD}\cr
+#' \code{rate_diag_RinvD} \tab rate parameter in Gamma prior for the diagonal elements of \code{RinvD}
+#' }
+#' (*) when there is only one random effect a Gamma distribution is used instead
+#'     of the Wishart and \code{RinvD} and \code{KinvD} are \code{NULL}
+#'
+#' \strong{surv:} parameters for survival models (parametric and proportional hazard)
+#' \tabular{ll}{
+#' \code{mu_reg_surv} \tab mean in the priors for regression coefficients\cr
+#' \code{tau_reg_surv} \tab precision in the priors for regression coefficients
+#' }
+#'
+#' \strong{coxph:} parameters for Cox proportional hazards models
+#' \tabular{ll}{
+#' \code{c} \tab \cr
+#' \code{r} \tab \cr
+#' \code{eps} \tab
+#' }
 #'
 #' @examples
 #' default_hyperpars()

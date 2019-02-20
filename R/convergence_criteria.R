@@ -58,7 +58,7 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #' Monte Carlo error
 #'
 #' Calculate and plot the Monte Carlo error of the samples from a JointAI model.
-#' @param x object inheriting from class "JointAI"
+#' @param x object inheriting from class 'JointAI'
 #' @param digits number of digits for output
 #' @inheritParams sharedParams
 #' @inheritDotParams mcmcse::mcse.mat -x

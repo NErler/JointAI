@@ -4,26 +4,34 @@
 \alias{JointAIObject}
 \title{Fitted object of class JointAI}
 \value{
-\item{\code{analysis_type}}{\code{lm}, \code{glm}, \code{lme}, \code{glme} or
-                            \code{survreg} with attributes
+\item{\code{analysis_type}}{\code{lm}, \code{glm}, \code{clm}, \code{lme},
+                            \code{glme}, \code{clmm}, \code{survreg} or
+                            \code{coxph} with attributes
                             \code{family} and \code{link}}
-\item{\code{data}}{the original dataset}
-\item{\code{meth}}{named vector specifying imputation methods and sequence}
-\item{\code{fixed}}{supplied fixed effects structure}
-\item{\code{random}}{supplied random effects structure}
+\item{\code{data}}{the original (incomplete) dataset}
+\item{\code{models}}{named vector specifying the models used for longitudinal
+                     and incomplete covariates}
+\item{\code{fixed}}{supplied fixed effects formula}
+\item{\code{random}}{supplied random effects formula}
 \item{\code{Mlist}}{a list: containing the data, split up into
       \itemize{
         \item outcome (\code{y})
+        \item censoring indicator for survival outcomes (\code{cens})
         \item cross-sectional main effects (\code{Xc})
         \item cross-sectional interactions (\code{Xic})
         \item longitudinal main effects (\code{Xl})
         \item longitudinal interactions (\code{Xil})
-        \item categorical incomplete variables (\code{Xcat})
+        \item categorical cross-sectional incomplete variables (\code{Xcat})
+        \item categorical longitudinal variables (\code{Xlcat})
         \item transformed cross-sectional variables (\code{Xtrafo})
         \item random effects design matrix (\code{Z})
       }
       and other important specifications:
       \itemize{
+        \item a list naming which columns of the above matrices are
+              covariates in the analysis model (\code{cols_main})
+        \item a list giving the names of the covariates in the analysis
+              model per matrix (\code{names_main})
         \item specification for transformations (\code{trafos})
         \item specification for hierarchical centering (\code{hc_list})
         \item reference values and dummies for categorical variables (\code{refs})
@@ -31,7 +39,13 @@
         \item grouping specification (\code{groups})
         \item the vector of variables to be scaled (\code{scale_vars})
         \item updated fixed effects structure (\code{fixed2})
-        \item list of names of covariates in the main analysis (\code{names_main})
+        \item the number of categoris if the outcome of the analysis model
+              is categorical (\code{ncat})
+        \item the number of subjects (\code{N})
+        \item whether posterior predictive checks are be enabled \code{ppc} (not yet used)
+        \item whether ridge shrinkage priors should are used for the
+              regression coefficients of the analysis model (\code{ridge})
+        \item the number of random effects (\code{nranef})
       }}
 \item{\code{K}}{matrix specifying the indices of the regression coefficients
 that are related to different parts of the model}
@@ -46,22 +60,24 @@ for the imputation models relating to different covariates}
      \item{\code{n.iter}}{number of iterations in the MCMC sample}
      \item{\code{variable.names}}{monitored nodes}
      \item{\code{thin}}{thinning of the MCMC sample}
-     \item{\code{inits}}{a list containing the initial values that were used}
+     \item{\code{inits}}{a list containing the initial values that were passed to \strong{rjags}}
+     \item{\code{parallel}}{whether parallel sampling was used}
+     \item{\code{ncores}}{how many cores were used in parallel sampling}
      }}
 \item{\code{monitor_params}}{the list of parameter groups to be monitored}
-\item{\code{data_list}}{list with data that was passed to JAGS}
+\item{\code{data_list}}{list with data that was passed to \strong{rjags}}
 \item{\code{scale_pars}}{matrix with parameters used to center and scale the continuous variables}
 \item{\code{hyperpars}}{a list containing the values of the hyperparameters used}
 \item{\code{imp_par_list}}{a list with parameters used to write the imputation model syntax}
 \item{\code{model}}{JAGS model}
-\item{\code{sample}}{MCMC sample (Note: if continuous variables have been scaled
-during the sampling, the posterior sample here is on the scaled scale, not on
-the original scale.)}
-\item{\code{MCMC}}{if scaling was done: MCMC sample, scaled back to original scale}
+\item{\code{sample}}{MCMC sample on the sampling scale (included only if \code{keep_scaled_sample = TRUE})}
+\item{\code{MCMC}}{MCMC sample, scaled back to the scale of the data}
 \item{\code{time}}{the computational time used for the sampling (adaptive phase + sampling)}
 \item{\code{call}}{the original call}
 }
 \description{
 An object returned by one of the functions \code{\link{lm_imp}()},
-\code{\link{glm_imp}()} or \code{\link{lme_imp}()}.
+\code{\link{glm_imp}()}, \code{\link{clm_imp}()}, \code{\link{lme_imp}()},
+\code{\link{glme_imp}()}, \code{\link{clmm_imp}()}, \code{\link{survreg_imp}()}
+or \code{\link{coxph_imp}()}.
 }

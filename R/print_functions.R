@@ -17,12 +17,13 @@
 #' Briefly, the joint distribution is specified as a sequence of conditional
 #' models
 #' \deqn{p(y | x_1, x_2, x_3, ..., \theta) p(x_1|x_2, x_3, ..., \theta) p(x_2|x_3, ..., \theta) ...}
-#' The actual imputation models are the full conditional distributions derived
-#' from this joint distribution \eqn{p(x_1 | \cdot)}.
+#' The actual imputation models are the full conditional distributions
+#' \eqn{p(x_1 | \cdot)} derived from this joint distribution.
 #' Even though the conditional distributions do not contain the outcome and all
-#' other covariates in their linear predictor, since imputations are sampled
-#' from the full conditional distributions, outcome and other covariates are
-#' taken into account implicitly. For more details, see Erler et al. (2016).
+#' other covariates in their linear predictor, outcome and other covariates are
+#' taken into account implicitly, since imputations are sampled
+#' from the full conditional distributions.
+#' For more details, see Erler et al. (2016).
 #'
 #' The function \code{list_impmodels} prints information on the conditional
 #' distributions of the incomplete covariates (since they are what is specified;
@@ -39,7 +40,7 @@
 #' \emph{Statistics in Medicine}, 35(17), 2955-2974.
 #'
 #' @examples
-#' # (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save computational time)
+#' # (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save time)
 #' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0)
 #'
 #' list_impmodels(mod1)
@@ -279,13 +280,9 @@ add_breaks <- function(string) {
 
 
 
-
-
-
-
 #' Parameter names of an JointAI object
 #'
-#' Returns the names of the parameters/nodes of an object of class "JointAI" for
+#' Returns the names of the parameters/nodes of an object of class 'JointAI' for
 #' which a monitor is set.
 #'
 #' @inheritParams sharedParams

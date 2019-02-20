@@ -19,9 +19,12 @@
 #' @return A dataframe containing the imputed values (and original data) stacked.
 #'        The variable \code{Imputation_} identifies the imputations.
 #'        In cross-sectional datasets the
-#'        variable \code{.imp} is added as subject identifier.
+#'        variable \code{.id} is added as subject identifier.
+#'
+#' @seealso \code{\link{plot_imp_distr}}
+#'
 #' @examples
-#' # fit a model and monitor the imputed values with monitor_params = c(imps = TRUE)#'
+#' # fit a model and monitor the imputed values with monitor_params = c(imps = TRUE)
 #' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, monitor_params = c(imps = TRUE), n.iter = 100)
 #'
 #' # Example 1: without export to SPSS

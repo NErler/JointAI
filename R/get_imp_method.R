@@ -1,25 +1,25 @@
-#' Find default imputation methods and order
+#' Set default (imputation) models and order
 #' @inheritParams model_imp
-#' @return A named vector containing those variables in \code{data}
-#'         that have missing values and their assigned default imputation methods,
-#'         sorted by proportion of missing values.
+#'
+#' @return \code{get_models()} returns a list of two vectors named \code{models}
+#'         and \code{meth}.
+#'         \code{models} is a named vector containing the names of covariates
+#'         that either have missing values and/or are longitudinal (level-1)
+#'         covariates and the corresponding default (imputation) models.
+#'         \code{meth} is a subset of \code{models} containing only the variables
+#'         that have missing values.
 #'
 #'
 #' @examples
+#' get_models(y ~ C1 + C2 + B2 + O2 + M2, data = wideDF)
 #' get_imp_meth(y ~ C1 + C2 + B2 + O2 + M2, data = wideDF)
 #'
+#' get_models(y ~ C1 + O2 + c2 + b1 + o2 + time, random = ~ 1 | id, data = longDF)
+#' get_imp_meth(y ~ C1 + O2 + c2 + b1 + o2 + time, random = ~ 1 | id, data = longDF)
 #'
-#' @export
-
-get_imp_meth <- function(fixed, random = NULL, data,
-                         auxvars = NULL, no_model = NULL){
-  get_models(fixed = fixed, random = random, data = data, auxvars = auxvars,
-             no_model = no_model)$meth
-}
-
-
-
-#' @rdname get_imp_meth
+#' get_models(y ~ C1 + O2 + c2 + b1 + o2 + time, random = ~ 1 | id,
+#'            no_model = 'time', data = longDF)
+#'
 #' @export
 
 get_models <- function(fixed, random = NULL, data,
@@ -142,6 +142,13 @@ get_models <- function(fixed, random = NULL, data,
 
 
 
+#' @rdname get_models
+#' @export
+get_imp_meth <- function(fixed, random = NULL, data,
+                         auxvars = NULL, no_model = NULL){
+  get_models(fixed = fixed, random = random, data = data, auxvars = auxvars,
+             no_model = no_model)$meth
+}
 
 
 

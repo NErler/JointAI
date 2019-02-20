@@ -292,11 +292,11 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   }, cols = cols_main,
   mat = list(Xc, Xl, Xic, Xil, Z))
 
-  return(list(y = y, Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat,
-              Xlcat = Xlcat,
-              Xtrafo = Xtrafo, Z = Z, cens = cens, cols_main = cols_main,
+  return(list(y = y, cens = cens,
+              Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat, Xlcat = Xlcat,
+              Xtrafo = Xtrafo, Z = Z, cols_main = cols_main, names_main = names_main,
               trafos = trafos, hc_list = hc_list, refs = refs,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars,
-              fixed2 = fixed2, names_main = names_main, ncat = ncat,
+              fixed2 = fixed2, ncat = ncat,
               N = N, ppc = ppc, ridge = ridge, nranef = ncol(Z2)))
 }
