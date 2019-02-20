@@ -113,36 +113,49 @@ MC_error <- function(x, subset = NULL,
   if (is.null(thin))
     thin <- thin(x$MCMC)
 
+  # MC error for MCMC sample scaled back to data scale
   MCMC <- get_subset(object = x, subset = subset,
                      call_orig = as.list(match.call()), warn = warn)
 
   MCMC <- do.call(rbind, window(MCMC, start = start, end = end, thin = thin))
 
-  res1 <- mcmcse::mcse.mat(x = MCMC, ...)
-  colnames(res1) <- gsub("se", "MCSE", colnames(res1))
+  MCE1 <- mcmcse::mcse.mat(x = MCMC, ...)
+  colnames(MCE1) <- gsub("se", "MCSE", colnames(MCE1))
 
-  scale_pars <- x$scale_pars
-  if (!is.null(scale_pars)) {
-    # re-scale parameters
-    MCMC <- sapply(colnames(MCMC), rescale, x$Mlist$fixed2, scale_pars,
-                   MCMC, x$Mlist$refs, unlist(x$Mlist$names_main), x$Mlist$trafos)
+  MCE1 <- cbind(MCE1,
+                SD = apply(MCMC, 2, sd)[match(colnames(MCMC), row.names(MCE1))]
+  )
+  MCE1 <- cbind(MCE1,
+                'MCSE/SD' = MCE1[, "MCSE"]/MCE1[, "SD"])
+
+
+  # scale_pars <- x$scale_pars
+  # if (!is.null(scale_pars)) {
+  #   # re-scale parameters
+  #   MCMC <- sapply(colnames(MCMC), rescale, x$Mlist$fixed2, scale_pars,
+  #                  MCMC, x$Mlist$refs, unlist(x$Mlist$names_main), x$Mlist$trafos)
+  # }
+
+  # MC error for scaled MCMC sample
+  if (!is.null(x$sample)) {
+  mcmc <- do.call(rbind, window(x$sample, start = start, end = end, thin = thin))
+  mcmc <- mcmc[match(colnames(MCMC), colnames(x$MCMC[[1]])), ]
+
+  MCE2 <- mcmcse::mcse.mat(x = do.call(rbind,
+                                       window(x$sample, start = start,
+                                              end = end,  thin = thin)), ...)
+  colnames(MCE2) <- gsub("se", "MCSE", colnames(MCE2))
+
+  MCE2 <- cbind(MCE2,
+                SD = apply(mcmc, 2, sd)
+  )
+  MCE2 <- cbind(MCE2,
+                'MCSE/SD' = MCE2[, "MCSE"]/MCE2[, "SD"])
+  } else {
+    MCE2 <- NULL
   }
 
-  res2 <- mcmcse::mcse.mat(x = MCMC, ...)
-  colnames(res2) <- gsub("se", "MCSE", colnames(res2))
-
-  res1 <- cbind(res1,
-                SD = apply(MCMC, 2, sd)[match(colnames(MCMC), row.names(res1))]
-  )
-  res1 <- cbind(res1,
-                'MCSE/SD' = res1[, "MCSE"]/res1[, "SD"])
-  res2 <- cbind(res2,
-                SD = apply(MCMC, 2, sd)[match(colnames(MCMC), row.names(res2))]
-  )
-  res2 <- cbind(res2,
-                'MCSE/SD' = res2[, "MCSE"]/res2[, "SD"])
-
-  out <- list(unscaled = res1, scaled = res2, digits = digits)
+  out <- list(data_scale = MCE1, sampling_scale = MCE2, digits = digits)
   class(out) <- "MCElist"
   return(out)
 }
@@ -150,26 +163,32 @@ MC_error <- function(x, subset = NULL,
 
 #' @export
 print.MCElist <- function(x, ...) {
-  print(x$scaled, digits = x$digits)
+  print(x$data_scale, digits = x$digits)
 }
 
 
-# plot Monte Carlo error
-#' @param scaled use the scaled or unscaled version, default is \code{TRUE}
+# Plot Monte Carlo error
+#' @param data_scale show the Monte Carlo error of the sample transformed back to the scale of the data (\code{TRUE}) or on the sampling scale (this requires the argument \code{keep_scaled_mcmc = TRUE} in the JointAI model)
 #' @param plotpars optional; list of parameters passed to \code{\link[graphics]{plot}()}
 #' @param ablinepars optional; list of parameters passed to \code{\link[graphics]{abline}()}
 #' @describeIn MC_error plot Monte Carlo error
 #' @export
 
-plot.MCElist <- function(x, scaled = TRUE, plotpars = NULL,
+plot.MCElist <- function(x, data_scale = TRUE, plotpars = NULL,
                          ablinepars = list(v = 0.05), ...) {
 
+  mce <- if (data_scale == TRUE) {
+    x$data_scale
+  } else {
+    x$sampling_scale
+  }
+
   theaxis <- NULL
-  names <- rownames(x$scaled)
+  names <- rownames(x$data_scale)
   names <- abbreviate(names, minlength = 12)
 
-  plotpars$x <- x$scaled[, 4]
-  plotpars$y <- nrow(x$scaled):1
+  plotpars$x <- mce[, 4]
+  plotpars$y <- nrow(mce):1
 
   if (is.null(plotpars$xlim))
     plotpars$xlim <- range(0, plotpars$x)
@@ -179,7 +198,7 @@ plot.MCElist <- function(x, scaled = TRUE, plotpars = NULL,
     plotpars$ylab <- ""
   if (is.null(plotpars$yaxt)) {
     plotpars$yaxt <- "n"
-    theaxis <- expression(axis(side = 2, at = nrow(x$scaled):1, labels = names,
+    theaxis <- expression(axis(side = 2, at = nrow(mce):1, labels = names,
                                las = 2, cex.axis = 0.8))
   }
   if (is.null(ablinepars$v))
@@ -188,5 +207,4 @@ plot.MCElist <- function(x, scaled = TRUE, plotpars = NULL,
   do.call(plot, plotpars)
   eval(theaxis)
   do.call(abline, ablinepars)
-
 }
