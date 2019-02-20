@@ -39,6 +39,24 @@ traceplot <- function(object, ...) {
   UseMethod("traceplot")
 }
 
+
+#' @rdname traceplot
+#' @export
+traceplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, ...) {
+
+  if (is.null(start))
+    start <- start(object)
+
+  if (is.null(end))
+    end <- end(object)
+
+  if (is.null(thin))
+    thin <- thin(object)
+
+  coda::traceplot(window(object, start = start, end = end, thin = thin), ...)
+}
+
+
 #' @rdname traceplot
 #' @export
 traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
@@ -132,6 +150,23 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' @export
 densplot <- function(object, ...) {
   UseMethod("densplot")
+}
+
+
+#' @rdname densplot
+#' @export
+densplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, ...) {
+
+  if (is.null(start))
+    start <- start(object)
+
+  if (is.null(end))
+    end <- end(object)
+
+  if (is.null(thin))
+    thin <- thin(object)
+
+  coda::densplot(window(object, start = start, end = end, thin = thin), ...)
 }
 
 

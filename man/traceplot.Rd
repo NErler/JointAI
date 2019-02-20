@@ -2,10 +2,14 @@
 % Please edit documentation in R/plots.R
 \name{traceplot}
 \alias{traceplot}
+\alias{traceplot.mcmc.list}
 \alias{traceplot.JointAI}
 \title{Traceplot of a JointAI model}
 \usage{
 traceplot(object, ...)
+
+\method{traceplot}{mcmc.list}(object, start = NULL, end = NULL,
+  thin = NULL, ...)
 
 \method{traceplot}{JointAI}(object, start = NULL, end = NULL,
   thin = NULL, subset = c(analysis_main = TRUE), nrow = NULL,

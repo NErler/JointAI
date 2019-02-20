@@ -2,10 +2,14 @@
 % Please edit documentation in R/plots.R
 \name{densplot}
 \alias{densplot}
+\alias{densplot.mcmc.list}
 \alias{densplot.JointAI}
 \title{Plot posterior density from JointAI model}
 \usage{
 densplot(object, ...)
+
+\method{densplot}{mcmc.list}(object, start = NULL, end = NULL,
+  thin = NULL, ...)
 
 \method{densplot}{JointAI}(object, start = NULL, end = NULL,
   thin = NULL, subset = c(analysis_main = TRUE), vlines = NULL,
