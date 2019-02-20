@@ -81,3 +81,10 @@ print_intercepts <- function(interc, yname, lvl) {
   rownames(interc) <- paste(yname, "\u2264", lvl[-length(lvl)])
   interc
 }
+
+
+computeP <- function(x) {
+  above <- mean(x > 0)
+  below <- mean(x < 0)
+  2 * min(above, below)
+}

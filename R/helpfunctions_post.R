@@ -38,8 +38,3 @@ get_subset <- function(object, subset, call_orig, keep_aux = FALSE, warn = TRUE)
   return(object$MCMC[, sub, drop = FALSE])
 }
 
-computeP <- function(x) {
-    above <- mean(x > 0)
-    below <- mean(x < 0)
-    2 * min(above, below)
-}
