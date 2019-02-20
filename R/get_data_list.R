@@ -502,125 +502,126 @@ default_hyperpars <- function() {
   )
 }
 
-default_hyperpars_old <- function(family = 'gaussian', link = "identity", nranef = NULL) {
 
-  if (is.character(family)) {
-    # family <- get(family, mode = "function", envir = parent.frame())
-    family <- get(family, mode = "function", envir = .getNamespace("JointAI"))
-    thefamily <- family()$family
-    thelink <- family()$link
-  }
-
-  if (is.function(family)) {
-    thefamily <- family()$family
-    thelink <- family()$link
-  }
-
-  if (inherits(family, "family")) {
-    thefamily <- family$family
-    thelink <- family$link
-  }
-
-
-  # hyperparameters analysis model
-  if (thefamily == "binomial" & thelink == "logit") {
-    tau_reg_main <- 0.001
-  } else if (thefamily == "binomial" & thelink == "probit") {
-    tau_reg_main <- 1
-  } else {
-    tau_reg_main <- 0.0001
-  }
-
-  if (thefamily == 'prophaz') {
-    c <- 0.001
-    r <- 0.1
-    eps <- 1e-10
-  } else {
-    c <- r <- eps <- NULL
-  }
-
-  analysis_model <- c(
-    mu_reg_main = 0,
-    tau_reg_main = tau_reg_main,
-    a_tau_main = 0.01,
-    b_tau_main = 0.001,
-    mu_delta_main = 0,
-    tau_delta_main = 0.001,
-    c = c,
-    r = r,
-    eps = eps
-  )
-
-
-  # hyperparameters for random effects
-  Z <- if (!is.null(nranef)) {
-    if (nranef > 1) {
-      RinvD <- diag(as.numeric(rep(NA, nranef)))
-      KinvD <- nranef
-    } else {
-      RinvD <- matrix(ncol = 1, nrow = 1, NA)
-      KinvD <- NULL
-    }
-
-    list(
-      RinvD = RinvD,
-      KinvD = KinvD,
-      a_diag_RinvD = 0.1,
-      b_diag_RinvD = 0.01
-    )
-  }
-
-  # hyperparameters imputation models
-  norm <- c(
-    mu_reg_norm = 0,
-    tau_reg_norm = 0.0001,
-    a_tau_norm = 0.01,
-    b_tau_norm = 0.01
-  )
-
-  gamma <- c(
-    mu_reg_gamma = 0,
-    tau_reg_gamma = 0.0001,
-    a_tau_gamma = 0.01,
-    b_tau_gamma = 0.01
-  )
-
-  beta <- c(
-    mu_reg_beta = 0,
-    tau_reg_beta = 0.0001,
-    a_tau_beta = 0.01,
-    b_tau_beta = 0.01
-  )
-
-
-  logit <- c(
-    mu_reg_logit = 0,
-    tau_reg_logit = 0.001
-  )
-
-  multinomial <- c(
-    mu_reg_multinomial = 0,
-    tau_reg_multinomial = 0.001
-  )
-
-  ordinal <- c(
-    mu_reg_ordinal = 0,
-    tau_reg_ordinal = 0.001,
-    mu_delta_ordinal = 0,
-    tau_delta_ordinal = 0.001
-  )
-
-
-  hyperpars <- list(
-    analysis_model = analysis_model,
-    Z = Z,
-    norm = norm,
-    gamma = gamma,
-    beta = beta,
-    logit = logit,
-    multinomial = multinomial,
-    ordinal = ordinal
-  )
-
-  hyperpars
-}
+# default_hyperpars_old <- function(family = 'gaussian', link = "identity", nranef = NULL) {
+#
+#   if (is.character(family)) {
+#     # family <- get(family, mode = "function", envir = parent.frame())
+#     family <- get(family, mode = "function", envir = .getNamespace("JointAI"))
+#     thefamily <- family()$family
+#     thelink <- family()$link
+#   }
+#
+#   if (is.function(family)) {
+#     thefamily <- family()$family
+#     thelink <- family()$link
+#   }
+#
+#   if (inherits(family, "family")) {
+#     thefamily <- family$family
+#     thelink <- family$link
+#   }
+#
+#
+#   # hyperparameters analysis model
+#   if (thefamily == "binomial" & thelink == "logit") {
+#     tau_reg_main <- 0.001
+#   } else if (thefamily == "binomial" & thelink == "probit") {
+#     tau_reg_main <- 1
+#   } else {
+#     tau_reg_main <- 0.0001
+#   }
+#
+#   if (thefamily == 'prophaz') {
+#     c <- 0.001
+#     r <- 0.1
+#     eps <- 1e-10
+#   } else {
+#     c <- r <- eps <- NULL
+#   }
+#
+#   analysis_model <- c(
+#     mu_reg_main = 0,
+#     tau_reg_main = tau_reg_main,
+#     a_tau_main = 0.01,
+#     b_tau_main = 0.001,
+#     mu_delta_main = 0,
+#     tau_delta_main = 0.001,
+#     c = c,
+#     r = r,
+#     eps = eps
+#   )
+#
+#
+#   # hyperparameters for random effects
+#   Z <- if (!is.null(nranef)) {
+#     if (nranef > 1) {
+#       RinvD <- diag(as.numeric(rep(NA, nranef)))
+#       KinvD <- nranef
+#     } else {
+#       RinvD <- matrix(ncol = 1, nrow = 1, NA)
+#       KinvD <- NULL
+#     }
+#
+#     list(
+#       RinvD = RinvD,
+#       KinvD = KinvD,
+#       a_diag_RinvD = 0.1,
+#       b_diag_RinvD = 0.01
+#     )
+#   }
+#
+#   # hyperparameters imputation models
+#   norm <- c(
+#     mu_reg_norm = 0,
+#     tau_reg_norm = 0.0001,
+#     a_tau_norm = 0.01,
+#     b_tau_norm = 0.01
+#   )
+#
+#   gamma <- c(
+#     mu_reg_gamma = 0,
+#     tau_reg_gamma = 0.0001,
+#     a_tau_gamma = 0.01,
+#     b_tau_gamma = 0.01
+#   )
+#
+#   beta <- c(
+#     mu_reg_beta = 0,
+#     tau_reg_beta = 0.0001,
+#     a_tau_beta = 0.01,
+#     b_tau_beta = 0.01
+#   )
+#
+#
+#   logit <- c(
+#     mu_reg_logit = 0,
+#     tau_reg_logit = 0.001
+#   )
+#
+#   multinomial <- c(
+#     mu_reg_multinomial = 0,
+#     tau_reg_multinomial = 0.001
+#   )
+#
+#   ordinal <- c(
+#     mu_reg_ordinal = 0,
+#     tau_reg_ordinal = 0.001,
+#     mu_delta_ordinal = 0,
+#     tau_delta_ordinal = 0.001
+#   )
+#
+#
+#   hyperpars <- list(
+#     analysis_model = analysis_model,
+#     Z = Z,
+#     norm = norm,
+#     gamma = gamma,
+#     beta = beta,
+#     logit = logit,
+#     multinomial = multinomial,
+#     ordinal = ordinal
+#   )
+#
+#   hyperpars
+# }
