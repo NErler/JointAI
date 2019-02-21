@@ -1,12 +1,19 @@
 #' Plot the distribution of observed and imputed values
 #'
-#' @param data a data.frame containing multiple imputations
+#' Plots densities and barplots of the observed and imputed values in a
+#' long-format dataset (multiple imputed datasets stacked onto each other).#'
+#'
+#' @param data a data.frame containing multiple imputations (and the original incomplete data)
 #' @param imp the name of the variable specifying the imputation indicator
 #' @param id the name of the variable specifying the subject indicator
 #' @inheritParams sharedParams
-#' @import ggplot2
 #' @export
 #'
+#' @examples
+#' mod <- lme_imp(y ~ C1 + c2 + O2 + b2, random = ~ 1 | id, data = longDF,
+#'                n.iter = 500, monitor_params = c(imps = TRUE))
+#' impDF <- get_MIdat(mod, m = 10)
+#' plot_imp_distr(impDF)
 #'
 
 plot_imp_distr <- function(data, imp = 'Imputation_', id = 'id', ncol = NULL, nrow = NULL) {
@@ -17,8 +24,8 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = 'id', ncol = NULL, nr
   if (!requireNamespace('ggpubr', quietly = TRUE))
     stop("This function requires the package ggpubr to be installed.")
 
-  subDF <- data[, (colSums(is.na(data[data[, imp] == 0, ]) > 0) &
-                   colSums(is.na(data[data[, imp] != 0, ]) == 0)) |
+  subDF <- data[, (colSums(is.na(data[data[, imp] == 0, ])) > 0 &
+                   colSums(is.na(data[data[, imp] != 0, ])) == 0) |
                 names(data) %in% c(imp, id)]
 
   DForig <- subDF[subDF[, imp] == 0, ]
@@ -43,42 +50,47 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = 'id', ncol = NULL, nr
 
   p <- lapply(split(plotDF, plotDF$variable), function(dat) {
     if (unique(dat$type) == 'factor') {
+      dat$value <- factor(dat$value)
       prop <- sapply(split(dat, dat[, imp]),
                      function(x) prop.table(table(x$value)))
-      plong <- JointAI:::melt_matrix(prop, valname = 'proportion',
-                                     varnames = c('value', imp))
-      dat <- merge(dat, plong)
+      plong <- melt_matrix(prop, valname = 'proportion',
+                           varnames = c('value', imp))
+      dat <- merge(dat, plong, all = TRUE)
+      dat$variable <- unique(na.omit(dat$variable))
     }
 
-    ggplot(dat) +
-      facet_wrap('variable', scales = 'free') +
-      scale_color_manual(name = '',
+    ggplot2::ggplot(dat) +
+      ggplot2::facet_wrap('variable', scales = 'free') +
+      ggplot2::scale_color_manual(name = '',
                          limits = c(FALSE, TRUE),
                          values = c('dodgerblue3', 'midnightblue'),
                          labels = c('imputed', 'observed')) +
-      scale_fill_manual(name = '', limits = c(FALSE, TRUE),
+      ggplot2::scale_fill_manual(name = '', limits = c(FALSE, TRUE),
                         values = c('dodgerblue3', 'midnightblue'),
                         labels = c('imputed', 'observed')) +
-      scale_size_manual(name = '',
+      ggplot2::scale_size_manual(name = '',
                         limits = c(FALSE, TRUE),
                         values = c(0.5, 1.3),
                         labels = c('imputed', 'observed')) +
-      xlab('') +
-      if (unique(dat$type == 'numeric')) {
+      ggplot2::xlab('') +
+      if (unique(na.omit(dat$type) == 'numeric')) {
         if (min(table(dat[, imp])) == 1) {
-          stat_density(aes(x = as.numeric(value), color = get(imp) == 0,
-                           size = get(imp) == 0), geom = 'line', position = 'identity')
+          ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
+                                             color = get(imp) == 0,
+                                             size = get(imp) == 0), geom = 'line',
+                                position = 'identity')
         } else {
-          stat_density(aes(x = as.numeric(value),
-                           size = get(imp) == 0,
-                           color = get(imp) == 0,
-                           group = get(imp)), geom = 'line', position = 'identity')
+          ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
+                                             size = get(imp) == 0,
+                                             color = get(imp) == 0,
+                                             group = get(imp)), geom = 'line',
+                                position = 'identity')
         }
       } else {
-        geom_bar(aes(x = value, y = proportion, group = get(imp),
-                     fill = get(imp) == 0),
-                 position = "dodge", stat = 'identity',
-                 color = 'midnightblue')
+        ggplot2::geom_bar(ggplot2::aes(x = .data$value, y = .data$proportion,
+                                       group = get(imp), fill = get(imp) == 0),
+                          position = "dodge", stat = 'identity',
+                          color = 'midnightblue')
       }
   })
 
