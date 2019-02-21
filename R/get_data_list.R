@@ -295,6 +295,12 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     l <- c(l, defs$gamma["mu_reg_gamma", "shape_tau_gamma", "rate_tau_gamma"])
 
 
+  if ((family == 'poisson' & !Mlist$ridge) | any(models %in% c('glmm_poisson')))
+    l <- c(l, defs$poisson)
+  else if (family == 'poisson' & !Mlist$ridge)
+    l <- c(l, defs$probit["mu_reg_poisson"])
+
+
   if (family == 'ordinal' & !Mlist$ridge | any(models %in% c('clmm', "cumlogit")))
     l <- c(l, defs$ordinal)
   else if (family == 'ordinal' & Mlist$ridge)
@@ -459,6 +465,11 @@ default_hyperpars <- function() {
       tau_reg_logit = 0.0001
     ),
 
+    poisson = c(
+      mu_reg_poisson = 0,
+      tau_reg_poisson = 0.0001
+    ),
+
     probit = c(
       mu_reg_probit = 0,
       tau_reg_probit = 0.0001
@@ -475,6 +486,7 @@ default_hyperpars <- function() {
       mu_delta_ordinal = 0,
       tau_delta_ordinal = 0.0001
     ),
+
 
 
     Z = function(nranef) {
