@@ -27,6 +27,7 @@ Suggests:
     foreign,
     reshape2,
     ggplot2,
+    ggpubr,
     testthat
 VignetteBuilder: knitr
 Encoding: UTF-8
