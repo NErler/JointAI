@@ -96,6 +96,7 @@ get_params <- function(models, analysis_type, family, Mlist,
       Xc_NA <- Xc_NA[Xc_NA[, 2] %in% which(colSums(!is.na(Mlist$Xc)) > 0), , drop = FALSE]
 
     Xcat_NA <- if (any(is.na(Mlist$Xcat))) which(is.na(Mlist$Xcat), arr.ind = TRUE)
+    Xlcat_NA <- if (any(is.na(Mlist$Xlcat))) which(is.na(Mlist$Xlcat), arr.ind = TRUE)
     Xtrafo_NA <- if (any(is.na(Mlist$Xtrafo))) which(is.na(Mlist$Xtrafo), arr.ind = TRUE)
 
     Xl_NA <- if (any(is.na(Mlist$Xl))) which(is.na(Mlist$Xl), arr.ind = TRUE)
@@ -119,17 +120,19 @@ get_params <- function(models, analysis_type, family, Mlist,
     }
 
     params <- c(params,
-                if (!is.null(Xc_NA))
+                if (!is.null(Xc_NA) && nrow(Xc_NA) > 0)
                   paste0("Xc[", apply(Xc_NA, 1, paste, collapse = ","), "]"),
-                if (!is.null(Xl_NA))
+                if (!is.null(Xl_NA) && nrow(Xl_NA) > 0)
                   paste0("Xl[", apply(Xl_NA, 1, paste, collapse = ","), "]"),
-                if (!is.null(Z_NA))
+                if (!is.null(Z_NA) && nrow(Z_NA) > 0)
                   paste0("Z[", apply(Z_NA, 1, paste, collapse = ","), "]"),
-                if (!is.null(Xtrafo_NA))
+                if (!is.null(Xtrafo_NA) && nrow(Xtrafo_NA) > 0)
                   c(paste0("Xtrafo[", apply(Xtrafo_NA, 1, paste, collapse = ","), "]"),
                     paste0("Xc[", apply(Xtrafo_NA_Xc, 1, paste, collapse = ","), "]")),
-                if (!is.null(Xcat_NA))
-                  paste0("Xcat[", apply(Xcat_NA, 1, paste, collapse = ","), "]")
+                if (!is.null(Xcat_NA) && nrow(Xcat_NA) > 0)
+                  paste0("Xcat[", apply(Xcat_NA, 1, paste, collapse = ","), "]"),
+                if (!is.null(Xlcat_NA) && nrow(Xlcat_NA) > 0)
+                  paste0("Xlcat[", apply(Xlcat_NA, 1, paste, collapse = ","), "]")
     )
   }
 
