@@ -173,14 +173,16 @@ get_MIdat <- function(object, m = 10, include = TRUE,
       }
     }
 
-    if (meth[i] %in% 'lmm') {
+
+    # imputation with lmm ------------------------------------------------------
+    if (meth[i] %in% c('lmm', 'glmm_gamma', 'glmm_poisson')) {
       if (names(meth[i]) %in% colnames(object$data_list$Xl)) {
         pat <- paste0("Xl\\[[[:digit:]]*,",
                       match(names(meth)[i], colnames(object$data_list$Xl)),
                       "\\]")
       } else if (names(meth[i]) %in% colnames(object$data_list$Z)) {
-        pat <- paste0("Xl\\[[[:digit:]]*,",
-                      match(names(meth)[i], colnames(object$data_list$Xl)),
+        pat <- paste0("Z\\[[[:digit:]]*,",
+                      match(names(meth)[i], colnames(object$data_list$Z)),
                       "\\]")
       }
 
@@ -189,6 +191,57 @@ get_MIdat <- function(object, m = 10, include = TRUE,
         impval <- impval * object$scale_pars["scale", names(meth)[i]]  +
           object$scale_pars["center", names(meth)[i]]
       }
+
+      if (length(impval) > 0) {
+        rownrs <- gsub(",[[:digit:]]*\\]", "",
+                       gsub("[[:alpha:]]*\\[", "", colnames(impval)))
+
+        for (j in (1:m) + 1) {
+          DF_list[[j]][is.na(DF_list[[j]][, names(meth)[i]]), names(meth)[i]] <-
+            impval[j - 1, order(as.numeric(rownrs))]
+        }
+      }
+    }
+
+    # imputation with glmm_logit -----------------------------------------------
+    if (meth[i] %in% c('glmm_logit')) {
+      if (attr(object$Mlist$refs[[names(meth)[i]]], "dummies") %in% colnames(object$data_list$Xl)) {
+        pat <- paste0("Xl\\[[[:digit:]]*,",
+                      match(attr(object$Mlist$refs[[names(meth)[i]]], "dummies"),
+                            colnames(object$data_list$Xl)),
+                      "\\]")
+      } else if (attr(object$Mlist$refs[[names(meth)[i]]], "dummies") %in% colnames(object$data_list$Z)) {
+        pat <- paste0("Z\\[[[:digit:]]*,",
+                      match(attr(object$Mlist$refs[[names(meth)[i]]], "dummies"),
+                            colnames(object$data_list$Z)),
+                      "\\]")
+      }
+
+      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
+
+      if (length(impval) > 0) {
+        rownrs <- gsub(",[[:digit:]]*\\]", "",
+                       gsub("[[:alpha:]]*\\[", "", colnames(impval)))
+
+        for (j in (1:m) + 1) {
+          DF_list[[j]][is.na(DF_list[[j]][, names(meth)[i]]), names(meth)[i]] <-
+            impval[j - 1, order(as.numeric(rownrs))]
+        }
+      }
+    }
+
+    # imputation with clmm ------------------------------------------------------
+    if (meth[i] %in% 'clmm') {
+      if (names(meth[i]) %in% colnames(object$data_list$Xlcat)) {
+        pat <- paste0("Xlcat\\[[[:digit:]]*,",
+                      match(names(meth)[i], colnames(object$data_list$Xlcat)),
+                      "\\]")
+      } else if (names(meth[i]) %in% colnames(object$data_list$Z)) {
+        pat <- paste0("Z\\[[[:digit:]]*,",
+                      match(names(meth)[i], colnames(object$data_list$Z)),
+                      "\\]")
+      }
+      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
 
       if (length(impval) > 0) {
         rownrs <- gsub(",[[:digit:]]*\\]", "",
