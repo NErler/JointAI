@@ -57,7 +57,6 @@
 #' for the imputation models relating to different covariates}
 #' \item{\code{mcmc_settings}}{a list with elements
 #'      \describe{
-#'      \item{\code{MCMCpackage}}{which package has been used (at the moment only JAGS is implemented)}
 #'      \item{\code{modelfile}}{name and path of JAGS model file}
 #'      \item{\code{n.chains}}{number of MCMC chains}
 #'      \item{\code{n.adapt}}{number of iterations in the adaptive phase}

@@ -159,9 +159,11 @@ utils::globalVariables(c("i"))
 #'        This requires specification of the argument \code{idvar}.
 #' @param idvar name of the column that specifies the multi-level grouping structure
 #' @param keep_aux logical; Should constant effects of auxiliary variables be kept in the output?
-#' @param ridge logical; should the parameters of the main model be penalized using ridge regression? Default is \code{FALSE}.
+#' @param ridge logical; should the parameters of the main model be penalized using ridge regression? Default is \code{FALSE}
+#' @param parallel logical; should the chains be sampled using parallel computation? Default is \code{FALSE}
 #' @param ncores number of cores to use for parallel computation; if left empty all except two cores will be used
 #' @param seed optional seed value for reproducibility
+#' @param ppc logical: should monitors for posterior predictive checks be set? (not yet used)
 #' @name sharedParams
 NULL
 

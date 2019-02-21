@@ -293,8 +293,8 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 #' Visualize the distribution of all variables in the dataset
 #'
 #' Plots a grid of histograms (for continuous variables) and barplots (for
-#' categorical variables) together with the proportion of missing values and
-#' the name of each variable.
+#' categorical variables) together with the proportion of missing values in
+#' each variable.
 #' @param data a \code{data.frame} (or a \code{matrix})
 #' @param fill color the histograms and bars are filled with
 #' @param border color of the borders of the histograms and bars

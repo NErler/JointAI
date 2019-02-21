@@ -5,9 +5,9 @@
 #' continuous variables).
 #'
 #' @inheritParams model_imp
+#' @inheritParams sharedParams
 #' @param dat original data
 #' @param var name of variable that should be varying
-#' @inheritParams sharedParams
 #' @param ... optional, additional arguments (currently not used)
 #'
 #' @seealso \code{\link{predict.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
@@ -25,6 +25,17 @@
 
 predDF <- function(...) {
   UseMethod("predDF")
+}
+
+
+#' @rdname predDF
+#' @export
+predDF.JointAI <- function(object, var, ...) {
+
+  if (!inherits(object, "JointAI"))
+    stop("Use only with 'JointAI' objects.\n")
+
+  predDF(formula = object$fixed, dat = object$data, var = var, ...)
 }
 
 
@@ -58,23 +69,13 @@ predDF.formula <- function(formula, dat, var, ...) {
 
 
 
-#' @rdname predDF
-#' @export
-predDF.JointAI <- function(object, var, ...) {
-
-  if (!inherits(object, "JointAI"))
-    stop("Use only with 'JointAI' objects.\n")
-
-  predDF(formula = object$fixed, dat = object$data, var = var, ...)
-}
-
 
 
 
 #' Predict values from an object of class JointAI
 #'
 #' Calculates the expected outcome value for a given set of covariate values
-#' and an object of class "JointAI", and corresponding 2.5\% and 97.5\% (or other
+#' and an object of class 'JointAI', and corresponding 2.5\% and 97.5\% (or other
 #' quantiles) credible intervals.
 #' @inheritParams summary.JointAI
 #' @param newdata new dataset for prediction
@@ -93,6 +94,13 @@ predDF.JointAI <- function(object, var, ...) {
 #'         and 97.5\%) of each column of \eqn{X\beta}.
 #' @seealso \code{\link{predDF.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
 #'           \code{\link{lm_imp}}
+#'
+#' @section Note:
+#' \itemize{
+#' \item For repeated measures models prediction is performed on fixed effects only.
+#' \item Prediction is performed on the scale of the linear predictor.
+#' }
+#' Functionality will be extended in the future.
 #'
 #' @examples
 #' # fit model

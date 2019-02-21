@@ -39,8 +39,8 @@ and \code{\link[graphics]{hist}}}
 }
 \description{
 Plots a grid of histograms (for continuous variables) and barplots (for
-categorical variables) together with the proportion of missing values and
-the name of each variable.
+categorical variables) together with the proportion of missing values in
+each variable.
 }
 \examples{
 par(mar = c(1,2,3,1), mgp = c(2, 0.6, 0))

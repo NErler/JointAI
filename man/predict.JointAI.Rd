@@ -30,7 +30,7 @@ A list with entries "fit" and "quantiles", where
 }
 \description{
 Calculates the expected outcome value for a given set of covariate values
-and an object of class "JointAI", and corresponding 2.5\% and 97.5\% (or other
+and an object of class 'JointAI', and corresponding 2.5\% and 97.5\% (or other
 quantiles) credible intervals.
 }
 \details{
@@ -41,6 +41,15 @@ A \code{model.matrix} \eqn{X} is created from the model formula (fixed
          A subset of the MCMC sample can be selected using \code{start},
          \code{end} and  \code{thin}.
 }
+\section{Note}{
+
+\itemize{
+\item For repeated measures models prediction is performed on fixed effects only.
+\item Prediction is performed on the scale of the linear predictor.
+}
+Functionality will be extended in the future.
+}
+
 \examples{
 # fit model
 mod <- lm_imp(y ~ C1 + C2 + I(C2^2), data = wideDF, n.iter = 100)

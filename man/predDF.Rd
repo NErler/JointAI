@@ -2,26 +2,26 @@
 % Please edit documentation in R/predict.R
 \name{predDF}
 \alias{predDF}
-\alias{predDF.formula}
 \alias{predDF.JointAI}
+\alias{predDF.formula}
 \title{Create a new dataframe for prediction}
 \usage{
 predDF(...)
 
-\method{predDF}{formula}(formula, dat, var, ...)
-
 \method{predDF}{JointAI}(object, var, ...)
+
+\method{predDF}{formula}(formula, dat, var, ...)
 }
 \arguments{
 \item{...}{optional, additional arguments (currently not used)}
 
-\item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
-
-\item{dat}{original data}
+\item{object}{object inheriting from class 'JointAI'}
 
 \item{var}{name of variable that should be varying}
 
-\item{object}{object inheriting from class 'JointAI'}
+\item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
+
+\item{dat}{original data}
 }
 \description{
 Build a \code{data.frame} for prediction, where one variable

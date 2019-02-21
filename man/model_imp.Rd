@@ -16,42 +16,82 @@
 lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
   models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
-  seed = NULL, ...)
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  ncores = NULL, scale_vars = NULL, scale_pars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 
 glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
   refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  ridge = FALSE, seed = NULL, ...)
+  ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, ncores = NULL, scale_vars = NULL,
+  scale_pars = NULL, hyperpars = NULL, modelname = NULL,
+  modeldir = NULL, keep_model = FALSE, overwrite = NULL,
+  quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 
 clm_imp(fixed, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
   models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
-  seed = NULL, ...)
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  ncores = NULL, scale_vars = NULL, scale_pars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
   models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
-  seed = NULL, ...)
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  ncores = NULL, scale_vars = NULL, scale_pars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 
 glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
   refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  ridge = FALSE, seed = NULL, ...)
+  ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, ncores = NULL, scale_vars = NULL,
+  scale_pars = NULL, hyperpars = NULL, modelname = NULL,
+  modeldir = NULL, keep_model = FALSE, overwrite = NULL,
+  quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 
 clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
   refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  ridge = FALSE, seed = NULL, ...)
+  ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, ncores = NULL, scale_vars = NULL,
+  scale_pars = NULL, hyperpars = NULL, modelname = NULL,
+  modeldir = NULL, keep_model = FALSE, overwrite = NULL,
+  quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 
 survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
   models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
-  seed = NULL, ...)
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  ncores = NULL, scale_vars = NULL, scale_pars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 
 coxph_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
   models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
-  seed = NULL, ...)
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  ncores = NULL, scale_vars = NULL, scale_pars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 }
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
@@ -101,57 +141,20 @@ the excluded variable and incomplete variables.}
 \item{trunc}{optional named list specifying the limits of truncation for the
 distribution of the named incomplete variables}
 
-\item{ridge}{logical; should the parameters of the main model be penalized using ridge regression? Default is \code{FALSE}.}
+\item{ridge}{logical; should the parameters of the main model be penalized using ridge regression? Default is \code{FALSE}}
+
+\item{ppc}{logical: should monitors for posterior predictive checks be set? (not yet used)}
 
 \item{seed}{optional seed value for reproducibility}
-
-\item{...}{additional, optional arguments}
-
-\item{family}{only for \code{glm_imp} and \code{glmm_imp}:
-a description of the distribution and link function to
-be used in the model. This can be a character string naming a
-family function, a family function or the result of a call to
-a family function. (See \code{\link[stats]{family}} and the
-`Details` section below.)}
-
-\item{fixed}{a two sided formula describing the fixed-effects part of the
-model (see \code{\link[stats]{formula}})}
-
-\item{random}{only for \code{lme_imp}, \code{glme_imp} and \code{clmm_imp}:
-a one-sided formula of the form \code{~x1 + ... + xn | g},
-where \code{x1 + ... + xn} specifies the model for the random
-effects and \code{g} the grouping variable}
 
 \item{inits}{optional specification of initial values in the form of a list
 or a function (see \code{\link[rjags]{jags.model}}).
 If omitted, initial values will be generated automatically by JAGS.
 It is an error to supply an initial value for an observed node.}
 
-\item{progress.bar}{character string specifying the type of progress bar.
-Possible values are "text", "gui", and "none".
-See \code{\link[rjags]{update}}.}
+\item{parallel}{logical; should the chains be sampled using parallel computation? Default is \code{FALSE}}
 
-\item{modelname}{optional; character string specifying the name of the model file
-(including the ending, either .R or .txt).
-If unspecified a random name will be generated.}
-
-\item{modeldir}{optional; directory containing model file or directory in which
-the model file will be written. If unspecified a
-temporary directory will be created.}
-
-\item{overwrite}{logical; whether an existing model file with the specified
-\code{<modeldir>/<modelname>} should be overwritten. If set to
-\code{FALSE} and a model already exists, that model will be used.
-If unspecified (\code{NULL}) and a file exists, the user is
-asked for input on how to procede.}
-
-\item{keep_model}{logical; whether the created JAGS model should be saved
-or removed from the disk (\code{FALSE}; default) when the
-sampling has finished.}
-
-\item{hyperpars}{list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
-only needs to be supplied if hyperparameters other than the
-default should be used}
+\item{ncores}{number of cores to use for parallel computation; if left empty all except two cores will be used}
 
 \item{scale_vars}{optional; named vector of (continuous) variables that will
 be scaled (such that mean = 0 and sd = 1) to improve
@@ -169,10 +172,64 @@ scaling continuous covariates. If not specified, this will
 be calculated automatically. If \code{FALSE}, no scaling
 will be done.}
 
+\item{hyperpars}{list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
+only needs to be supplied if hyperparameters other than the
+default should be used}
+
+\item{modelname}{optional; character string specifying the name of the model file
+(including the ending, either .R or .txt).
+If unspecified a random name will be generated.}
+
+\item{modeldir}{optional; directory containing model file or directory in which
+the model file will be written. If unspecified a
+temporary directory will be created.}
+
+\item{keep_model}{logical; whether the created JAGS model should be saved
+or removed from the disk (\code{FALSE}; default) when the
+sampling has finished.}
+
+\item{overwrite}{logical; whether an existing model file with the specified
+\code{<modeldir>/<modelname>} should be overwritten. If set to
+\code{FALSE} and a model already exists, that model will be used.
+If unspecified (\code{NULL}) and a file exists, the user is
+asked for input on how to procede.}
+
+\item{quiet}{if \code{TRUE} then messages generated during compilation
+    will be suppressed, as well as the progress bar during adaptation.}
+
+\item{progress.bar}{character string specifying the type of progress bar.
+Possible values are "text", "gui", and "none".
+See \code{\link[rjags]{update}}.}
+
+\item{warn}{logical; should warnings be given? Default is
+\code{TRUE}. Note: this applies only to warnings
+given directly by \strong{JointAI}.}
+
+\item{mess}{logical; should messages be given? Default is
+\code{TRUE}. Note: this applies only to messages
+given directly by \strong{JointAI}.}
+
 \item{keep_scaled_mcmc}{should the "original" MCMC sample
 (i.e., the scaled version returned by \code{coda.samples()}) be kept?
 (The MCMC sample that is re-scaled to the scale of the
 data is always kept.)}
+
+\item{...}{additional, optional arguments}
+
+\item{family}{only for \code{glm_imp} and \code{glmm_imp}:
+a description of the distribution and link function to
+be used in the model. This can be a character string naming a
+family function, a family function or the result of a call to
+a family function. (See \code{\link[stats]{family}} and the
+`Details` section below.)}
+
+\item{fixed}{a two sided formula describing the fixed-effects part of the
+model (see \code{\link[stats]{formula}})}
+
+\item{random}{only for \code{lme_imp}, \code{glme_imp} and \code{clmm_imp}:
+a one-sided formula of the form \code{~x1 + ... + xn | g},
+where \code{x1 + ... + xn} specifies the model for the random
+effects and \code{g} the grouping variable}
 }
 \value{
 An object of class \link[=JointAIObject]{JointAI}.

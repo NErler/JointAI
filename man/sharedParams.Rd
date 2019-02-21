@@ -45,11 +45,15 @@ This requires specification of the argument \code{idvar}.}
 
 \item{keep_aux}{logical; Should constant effects of auxiliary variables be kept in the output?}
 
-\item{ridge}{logical; should the parameters of the main model be penalized using ridge regression? Default is \code{FALSE}.}
+\item{ridge}{logical; should the parameters of the main model be penalized using ridge regression? Default is \code{FALSE}}
+
+\item{parallel}{logical; should the chains be sampled using parallel computation? Default is \code{FALSE}}
 
 \item{ncores}{number of cores to use for parallel computation; if left empty all except two cores will be used}
 
 \item{seed}{optional seed value for reproducibility}
+
+\item{ppc}{logical: should monitors for posterior predictive checks be set? (not yet used)}
 }
 \description{
 Parameters used by several functions in JointAI.

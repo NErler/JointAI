@@ -55,10 +55,14 @@ given directly by \strong{JointAI}.}
 
 \item{digits}{minimal number of \emph{significant} digits, see
     \code{\link{print.default}}.}
+
+\item{parm}{same as \code{subset}}
+
+\item{level}{confidence level (default is 0.95)}
 }
 \description{
-Obtain and print the \code{summary}, (fixed effects) \code{coef}ficients and
-credible interval (\code{confint}) for an object of class 'JointAI'.
+Obtain and print the \code{summary}, (fixed effects) coefficients (\code{coef})
+and credible interval (\code{confint}) for an object of class 'JointAI'.
 }
 \examples{
 mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)

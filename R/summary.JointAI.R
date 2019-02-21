@@ -1,7 +1,7 @@
 #' Summary of an object of class JointAI
 #'
-#' Obtain and print the \code{summary}, (fixed effects) \code{coef}ficients and
-#' credible interval (\code{confint}) for an object of class 'JointAI'.
+#' Obtain and print the \code{summary}, (fixed effects) coefficients (\code{coef})
+#' and credible interval (\code{confint}) for an object of class 'JointAI'.
 #'
 #' @inheritParams base::print
 #' @param quantiles posterior quantiles
@@ -208,6 +208,8 @@ coef.summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
 #' @rdname summary.JointAI
+#' @param parm same as \code{subset}
+#' @param level confidence level (default is 0.95)
 #' @export
 confint.JointAI <- function(object, parm = NULL, level = 0.95,
                             quantiles = NULL,

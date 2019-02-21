@@ -20,7 +20,9 @@ occurring in the \code{formula}}
 \description{
 The function asks questions and, depending on the answers given by the user,
 returns the input for the argument \code{refcats} in the functions
-\code{\link{lm_imp}}, \code{\link{glm_imp}} and \code{\link{lme_imp}}.
+\code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
+\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{clmm_imp}},
+\code{\link{survreg_imp}} and \code{\link{coxph_imp}}.
 }
 \examples{
 \dontrun{
