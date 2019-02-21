@@ -21,13 +21,13 @@ scale_matrix <- function(X, scale_vars, scale_pars, models) {
           usecenter <- if (!k %in% names(models)) {
             TRUE
           } else {
-            !models[k] %in% c("lognorm", "gamma", "beta", 'glmm_gamma')
+            !models[k] %in% c("lognorm", "gamma", "beta", 'glmm_gamma', 'glmm_poisson')
           }
 
           usescale <- if (!k %in% names(models)) {
             TRUE
           } else {
-            !models[k] %in% c("gamma", "beta", 'glmm_gamma')
+            !models[k] %in% c("gamma", "beta", 'glmm_gamma', 'glmm_poisson')
           }
 
           xsc <- scale(X[, k], center = usecenter, scale = usescale)
