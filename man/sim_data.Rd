@@ -5,9 +5,9 @@
 \title{Simulate dataset}
 \usage{
 sim_data(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
-  norm = 2, bin = 2, multi = 2, ord = 2, count = NULL,
-  longnorm = 2, longbin = 2, longord = 2, coef = NULL,
-  misvar = NULL, nmisvar = 7, format = "long", seed = NULL)
+  norm = 2, bin = 2, multi = 2, ord = 2, count = 2,
+  longnorm = 2, longbin = 2, longord = 2, longcount = 2,
+  coef = NULL, misvar = NULL, nmisvar = 7, seed = NULL)
 }
 \arguments{
 \item{N}{sample size (integer)}
@@ -25,22 +25,25 @@ create or list of parameters to create normally distributed variables
 from. If norm is an integer, the mean and standard deviation are
 drawn from distributions.}
 
-\item{bin}{integer giving the number of binary variables or list}
+\item{bin}{integer giving the number of binary variables or a character vector containing their names}
 
-\item{multi}{integer giving the number of multinomial variables or list}
+\item{multi}{integer giving the number of multinomial variables or a character vector containing their names}
 
-\item{ord}{integer giving the number of ordinal variables or list}
+\item{ord}{integer giving the number of ordinal variables or a character vector containing their names}
 
-\item{count}{integer giving the number of ordinal variables or list (not yet used)}
+\item{count}{integer giving the number of count variables or a character vector containing their names}
 
 \item{longnorm}{integer giving the number of longitudinal (normally distributed)
-variables or list containing parameters}
+variables or a character vector containing their names}
 
 \item{longbin}{integer giving the number of longitudinal binary
-variables or list containing parameters}
+variables or a character vector containing their names}
 
-\item{longord}{integer giving the number of longitudinal ordinal factors
-or list containing parameters}
+\item{longord}{integer giving the number of longitudinal ordered factors
+or a character vector containing their names}
+
+\item{longcount}{integer giving the number of longitudinal count variables
+or a character vector containing their names}
 
 \item{coef}{vector of parameters used to create the outcome (optional), if
 NULL, the parameters are drawn from a normal distribution}
@@ -51,8 +54,6 @@ specify which variables are incomplete}
 \item{nmisvar}{integer specifying the total number of incomplete variables,
 necessary when misvar is NULL and incomplete variables are chosen
 randomly}
-
-\item{format}{"long" or "wide" ("wide" not yet implemented)}
 
 \item{seed}{optional seed value}
 }
