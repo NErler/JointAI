@@ -266,6 +266,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     l$Xc <- NULL
 
   if (!is.null(Mlist$Xcat)) l$Xcat <- data.matrix(Mlist$Xcat)
+  if (!is.null(Mlist$Xlcat)) l$Xlcat <- data.matrix(Mlist$Xlcat)
   if (!is.null(Mlist$Xic)) l$Xic <- data.matrix(Mlist$Xic)
   if (!is.null(Mlist$Xil)) l$Xil <- data.matrix(Mlist$Xil)
 
