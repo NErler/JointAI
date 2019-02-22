@@ -88,7 +88,11 @@ get_params <- function(models, analysis_type, family, Mlist,
 
   if (imps) {
     repl_list <- lapply(imp_par_list, function(x)
-      if (x$dest_mat == 'Xtrafo') x[c('dest_col', 'trafo_cols')]
+      if (x$dest_mat %in% c('Xtrafo')) x[c('dest_col', 'trafo_cols')]
+    )
+
+    repl_list_long <- lapply(imp_par_list, function(x)
+      if (x$dest_mat %in% c('Xltrafo')) x[c('dest_col', 'trafo_cols')]
     )
 
     Xc_NA <- if (any(is.na(Mlist$Xc))) which(is.na(Mlist$Xc), arr.ind = TRUE)
@@ -98,6 +102,7 @@ get_params <- function(models, analysis_type, family, Mlist,
     Xcat_NA <- if (any(is.na(Mlist$Xcat))) which(is.na(Mlist$Xcat), arr.ind = TRUE)
     Xlcat_NA <- if (any(is.na(Mlist$Xlcat))) which(is.na(Mlist$Xlcat), arr.ind = TRUE)
     Xtrafo_NA <- if (any(is.na(Mlist$Xtrafo))) which(is.na(Mlist$Xtrafo), arr.ind = TRUE)
+    Xltrafo_NA <- if (any(is.na(Mlist$Xltrafo))) which(is.na(Mlist$Xltrafo), arr.ind = TRUE)
 
     Xl_NA <- if (any(is.na(Mlist$Xl))) which(is.na(Mlist$Xl), arr.ind = TRUE)
 
@@ -119,6 +124,20 @@ get_params <- function(models, analysis_type, family, Mlist,
       }
     }
 
+    if (any(is.na(Mlist$Xltrafo))) {
+      Xltrafo_NA_Xl <- matrix(nrow = 0, ncol = 2)
+      for (i in seq_along(repl_list_long)) {
+        for (j in seq_along(repl_list_long[[i]]$trafo_cols)) {
+          Xltrafo_NA_Xl_add <- Xltrafo_NA[Xltrafo_NA[, 'col'] == repl_list_long[[i]]$dest_col, ]
+          Xltrafo_NA_Xl_add[, 'col'] <- gsub(repl_list_long[[i]]$dest_col,
+                                            repl_list_long[[i]]$trafo_cols[j],
+                                            Xltrafo_NA_Xl_add[, 'col'])
+          Xltrafo_NA_Xl <- rbind(Xltrafo_NA_Xl, Xltrafo_NA_Xl_add)
+        }
+      }
+    }
+
+
     params <- c(params,
                 if (!is.null(Xc_NA) && nrow(Xc_NA) > 0)
                   paste0("Xc[", apply(Xc_NA, 1, paste, collapse = ","), "]"),
@@ -129,6 +148,9 @@ get_params <- function(models, analysis_type, family, Mlist,
                 if (!is.null(Xtrafo_NA) && nrow(Xtrafo_NA) > 0)
                   c(paste0("Xtrafo[", apply(Xtrafo_NA, 1, paste, collapse = ","), "]"),
                     paste0("Xc[", apply(Xtrafo_NA_Xc, 1, paste, collapse = ","), "]")),
+                if (!is.null(Xltrafo_NA) && nrow(Xltrafo_NA) > 0)
+                  c(paste0("Xltrafo[", apply(Xltrafo_NA, 1, paste, collapse = ","), "]"),
+                    paste0("Xl[", apply(Xltrafo_NA_Xl, 1, paste, collapse = ","), "]")),
                 if (!is.null(Xcat_NA) && nrow(Xcat_NA) > 0)
                   paste0("Xcat[", apply(Xcat_NA, 1, paste, collapse = ","), "]"),
                 if (!is.null(Xlcat_NA) && nrow(Xlcat_NA) > 0)
