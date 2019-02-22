@@ -42,7 +42,7 @@
 ## Minor changes
 * `summary()`: reduced default number of digits
 * continuous variables with two distinct values are converted to factor
-* argument `meth` now uses default values if only specified for subst of incomplete variables
+* argument `meth` now uses default values if only specified for subset of incomplete variables
 * `get_MIdat()`: argument `minspace` added to ensure spacing of iterations selected as imputations
 * `densplot()`: accepts additional options, e.g., `lwd`, `col`, ...
 
@@ -74,10 +74,10 @@
 # JointAI 0.3.2
 
 ## Bug fixes
-* `lme_imp()`: fixed error in JAGS model when interaction between random slope variable and longiudinal variable 
+* `lme_imp()`: fixed error in JAGS model when interaction between random slope variable and longitudinal variable 
 
 ## Minor changes
-* unused levels of factores are dropped 
+* unused levels of factors are dropped 
  
 --------------------------------------------------------------------------------
 # JointAI 0.3.1
@@ -89,7 +89,7 @@
 * `traceplot()`, `densplot()`: error in specification of `nrow` fixed
 * `densplot()`: use of color fixed
 * functions with argument `subset` now return random effects covariance matrix correctly
-* `summary()` displayes output with rowname when only one node is returned and fixed display of `D` matrix
+* `summary()` displays output with rowname when only one node is returned and fixed display of `D` matrix
 * `GR_crit()`: Literature reference corrected
 * `predict()`: prediction with varying factor fixed
 * no scaling for variables involved in a function to avoid problems with re-scaling
@@ -111,7 +111,7 @@
 * categorical imputation models now use min-max trick to prevent probabilities outside [0, 1]
 * initial value generation for logistic analysis model fixed
 * bugfix in re-ordering columns when a function is part of the linear predictor
-* bugfix in intial values for categorical covariates
+* bugfix in initial values for categorical covariates
 * bugfix in finding imputation method when function of variable is specified as
   auxiliary variable
 

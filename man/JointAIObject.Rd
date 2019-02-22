@@ -39,7 +39,7 @@
         \item grouping specification (\code{groups})
         \item the vector of variables to be scaled (\code{scale_vars})
         \item updated fixed effects structure (\code{fixed2})
-        \item the number of categoris if the outcome of the analysis model
+        \item the number of categories if the outcome of the analysis model
               is categorical (\code{ncat})
         \item the number of subjects (\code{N})
         \item whether posterior predictive checks are be enabled \code{ppc} (not yet used)

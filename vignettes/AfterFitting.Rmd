@@ -82,7 +82,7 @@ traceplot(mod13a, ncol = 3, use_ggplot = TRUE) +
 ```
 
 
-### Densityplot
+### Density plot
 The posterior distributions can also be visualized using the function `densplot()`,
 which plots the empirical density per node per chain, or combining chains
 (when `joined = TRUE`).

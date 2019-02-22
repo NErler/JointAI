@@ -41,7 +41,7 @@
 #'                  \code{<modeldir>/<modelname>} should be overwritten. If set to
 #'                  \code{FALSE} and a model already exists, that model will be used.
 #'                  If unspecified (\code{NULL}) and a file exists, the user is
-#'                  asked for input on how to procede.
+#'                  asked for input on how to proceed
 #' @param keep_model logical; whether the created JAGS model should be saved
 #'                   or removed from the disk (\code{FALSE}; default) when the
 #'                   sampling has finished.

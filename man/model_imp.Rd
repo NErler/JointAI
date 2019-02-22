@@ -192,7 +192,7 @@ sampling has finished.}
 \code{<modeldir>/<modelname>} should be overwritten. If set to
 \code{FALSE} and a model already exists, that model will be used.
 If unspecified (\code{NULL}) and a file exists, the user is
-asked for input on how to procede.}
+asked for input on how to proceed}
 
 \item{quiet}{if \code{TRUE} then messages generated during compilation
     will be suppressed, as well as the progress bar during adaptation.}

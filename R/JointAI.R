@@ -45,7 +45,7 @@
 #' estimate are available:
 #' \itemize{
 #' \item \code{\link{GR_crit}} implements the Gelman-Rubin criterion ('potential scale reduction factor') for convergence
-#' \item \code{\link{MC_error}} calculates the Monte Carlor error to evaluate the precision of the MCMC sample
+#' \item \code{\link{MC_error}} calculates the Monte Carlo error to evaluate the precision of the MCMC sample
 #' }
 #'
 #' Imputed data can be extracted (and exported to SPSS) using \code{\link{get_MIdat}}.
