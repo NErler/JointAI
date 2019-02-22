@@ -45,7 +45,6 @@
 #'
 #' list_models(mod1)
 #'
-#' @aliases list_impmodels
 #' @export
 
 list_models <- function(object, predvars = TRUE, regcoef = TRUE,
@@ -260,6 +259,10 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
     }
   }
 }
+
+#' @name list_models
+#' @export
+list_impmodels <- list_models
 
 
 print_seq <- function(min, max) {
