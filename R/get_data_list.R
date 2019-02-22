@@ -425,9 +425,9 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 #'
 #' \strong{coxph:} parameters for Cox proportional hazards models
 #' \tabular{ll}{
-#' \code{c} \tab \cr
-#' \code{r} \tab \cr
-#' \code{eps} \tab
+#' \code{c} confidence in prior guess for the hazard function\tab \cr
+#' \code{r} failure rate per unit time\tab \cr
+#' \code{eps} time increment\tab
 #' }
 #'
 #' @examples
