@@ -70,9 +70,10 @@ extract_fcts <- function(formula, data, complete = FALSE, ...) {
               grep(paste0("^", f, "\\("), x = termlabs, value = TRUE))
       if (length(fl) > 0)
         fl
-    })
+    }, simplify = FALSE)
 
     funlist <- funlist[!sapply(funlist, is.null)]
+
     if (length(funlist) == 0)
       return(NULL)
 
