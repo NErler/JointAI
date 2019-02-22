@@ -126,6 +126,15 @@ get_imp_dim <- function(models, imp_pos, Mlist){
   n_imp_coef <- numeric(length(models))
   names(n_imp_coef) <- names(models)
 
+  mod_dum <- sapply(names(models), function(k) {
+    if (k %in% names(Mlist$refs)) {
+      attr(Mlist$refs[[k]], 'dummies')
+    } else {
+      k
+    }
+  })
+
+
   for (i in 1:length(models)) {
     if (models[i] %in% c('norm', 'lognorm', 'logit', 'gamma', 'beta', 'multilogit')) {
       n_imp_coef[names(models)[i]] <- max(1, min(imp_pos$pos_Xc[[names(models)[i]]]) - 1)
@@ -146,11 +155,11 @@ get_imp_dim <- function(models, imp_pos, Mlist){
 
     if (models[i] %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
 
-      nrf <- sum(unlist(lapply(Mlist$hc_list[!names(Mlist$hc_list) %in% names(models[i:length(models)])],
+      nrf <- sum(unlist(lapply(Mlist$hc_list[!names(Mlist$hc_list) %in% unlist(mod_dum[i:length(mod_dum)])],
                                function(x) sapply(x, attr, 'matrix'))) %in% c('Z', 'Xc'))
 
       Xlpos <- if (any(is.na(imp_pos$pos_Xl[[names(models)[i]]]))) {
-        max(c(match(names(models)[1:i], colnames(Mlist$Xl)) + 1, 1), na.rm = T)
+        max(c(match(unlist(mod_dum[1:i]), colnames(Mlist$Xl)) + 1, 1), na.rm = T)
       } else {
         min(imp_pos$pos_Xl[[names(models)[i]]], na.rm = TRUE)
       }

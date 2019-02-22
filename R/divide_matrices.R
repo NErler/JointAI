@@ -232,9 +232,8 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   cat_vars_base <- sapply(cat_vars_base, match_positions,
                           data, colnames(Xc), simplify = FALSE)
 
-  cat_vars_long <- sapply(cat_vars_long, match_positions,
-                          data, colnames(Xl), simplify = FALSE)
-
+  # cat_vars_long <- sapply(cat_vars_long, match_positions,
+  #                         data, colnames(Xl), simplify = FALSE)
 
   Xcat <- if (length(cat_vars_base) > 0) {
     data[match(unique(groups), groups), names(cat_vars_base), drop = FALSE]
@@ -245,11 +244,13 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   }
 
   Xlcat <- if (length(cat_vars_long) > 0) {
-    data[, names(cat_vars_long), drop = FALSE]
+    data[, cat_vars_long, drop = FALSE]
   }
 
   if (!is.null(Xlcat)) {
-    Xl[, unlist(sapply(cat_vars_long[names(cat_vars_long) %in% names(models)], names))] <- NA
+    # Xl[, unlist(sapply(cat_vars_long[names(cat_vars_long) %in% names(models)], names))] <- NA
+    Xl[, match(unlist(lapply(refs[cat_vars_long], attr, 'dummies')), colnames(Xl))] <- NA
+    Z[, match(unlist(lapply(refs[cat_vars_long], attr, 'dummies')), colnames(Z))] <- NA
   }
 
 

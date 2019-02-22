@@ -58,8 +58,7 @@ impprior_cumlogit <- function(varname, par_elmts, ncat, ...){
 
 
 impmodel_clmm <- function(varname, dest_mat, dest_col, Xc_cols, Xl_cols, ncat, refcat,
-                          Z_cols, dummy_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...) {
-
+                          Z_cols, dummy_mat, dummy_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, ...) {
 
   norm.distr  <- if (nranef < 2) {"dnorm"} else {"dmnorm"}
 
@@ -72,15 +71,15 @@ impmodel_clmm <- function(varname, dest_mat, dest_col, Xc_cols, Xl_cols, ncat, r
   }
 
   probs <- sapply(2:(ncat - 1), function(k){
-    paste0(tab(4), "p_", varname, "[j, ", k, "] <- max(1e-7, min(1-1e-10, psum_",
+    paste0(tab(4), "p_", varname, "[j, ", k, "] <- max(1e-7, min(1 - 1e-10, psum_",
            varname, "[j, ", k,"] - psum_", varname, "[j, ", k - 1, "]))")})
 
   logits <- sapply(1:(ncat - 1), function(k) {
-    paste0(tab(4), "logit(psum_", varname, "[j, ", k, "])  <- gamma_", varname,
+    paste0(tab(4), "logit(psum_", varname, "[j, ", k, "]) <- gamma_", varname,
            "[", k, "]", " + eta_", varname,"[j]")
   })
 
-  dummies <- paste_dummies(c(1:ncat)[-refcat], dest_mat, dest_col, 'Xl', dummy_cols, index = 'j')
+  dummies <- paste_dummies(c(1:ncat)[-refcat], dest_mat, dest_col, dummy_mat, dummy_cols, index = 'j')
 
 
   paste_ppc <- NULL #if (ppc) {

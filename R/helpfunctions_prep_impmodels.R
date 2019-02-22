@@ -21,7 +21,14 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
   }
 
   i <- which(names(models) == varname)
-  nam <- names(Mlist$hc_list)[which(!names(Mlist$hc_list) %in% names(models[i:length(models)]))]
+  mod_dum <- sapply(names(models), function(k) {
+    if (k %in% names(Mlist$refs)) {
+      attr(Mlist$refs[[k]], 'dummies')
+    } else {
+      k
+    }
+  })
+  nam <- names(Mlist$hc_list)[which(!names(Mlist$hc_list) %in% unlist(mod_dum[i:length(mod_dum)]))]
 
 
   Xc_cols = if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
@@ -31,7 +38,7 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
   }
   Xl_cols = if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
     if (all(is.na(dest_cols[[varname]]$Xl))) {
-      wouldbe <- max(0, which(colnames(Mlist$Xl) %in% names(models)[seq_along(models) < i])) + 1
+      wouldbe <- max(0, which(colnames(Mlist$Xl) %in% unlist(mod_dum[seq_along(models) < i]))) + 1
       if (wouldbe > 1) 1:(wouldbe - 1)
     } else  if (min(dest_cols[[varname]]$Xl, na.rm = TRUE) > 1) {
       1:(min(dest_cols[[varname]]$Xl, na.rm = TRUE) - 1)
@@ -42,7 +49,7 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
     if (Mlist$nranef > 1) {
       # nrf <- length(Mlist$hc_list[names(Mlist$hc_list) != names(models[i:length(models)])])
       # 1:nrf
-      which(!colnames(Mlist$Z) %in% names(models[i:length(models)]))
+      which(!colnames(Mlist$Z) %in% unlist(mod_dum[i:length(mod_dum)]))
     } else if (Mlist$nranef == 1) {
       1
     }
@@ -104,10 +111,16 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        Xl_cols = Xl_cols,
        Z_cols = Z_cols,
        # Zcols = Zcols,
+       dummy_mat = if (impmeth %in% c('clmm', 'mlmm')) {
+         dm <- sapply(dest_cols[[varname]],
+                      function(k) all(!is.na(k[attr(Mlist$refs[[varname]], 'dummies')])))
+
+         names(dm[dm])
+       },
        dummy_cols = if (impmeth %in% c("cumlogit", "multilogit")) {
          dest_cols[[varname]]$Xc
        } else if (impmeth %in% c('clmm', 'mlmm')) {
-         dest_cols[[varname]]$Xl
+         dest_cols[[varname]][[names(dm[dm])]]
        },
        ncat = if (impmeth %in% c("cumlogit", "multilogit")) {
          length(dest_cols[[varname]]$Xc) + 1
@@ -129,7 +142,7 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        trafos = Mlist$trafos,
        # par_name = "alpha",
        ppc = Mlist$ppc,
-       nranef = sum(!colnames(Mlist$Z) %in% names(models[i:length(models)])),
+       nranef = sum(!colnames(Mlist$Z) %in% unlist(mod_dum[i:length(mod_dum)])),
        N = Mlist$N,
        Ntot = nrow(Mlist$Z),
        hc_list = Mlist$hc_list[nam]
