@@ -105,14 +105,15 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   }
 
   if (add == TRUE) {
-    if (!is.null(object$sample))
-      new <- as.mcmc.list(lapply(1:length(mcmc),
-                                 function(x) mcmc(rbind(object$sample[[x]],
-                                                        mcmc[[x]]),
-                                                  start = start(object$sample),
-                                                  end = end(object$sample) + niter(mcmc[[x]])
-                                 )
+    newmcmc <- if (!is.null(object$sample)) {
+      as.mcmc.list(lapply(1:length(mcmc),
+                          function(x) mcmc(rbind(object$sample[[x]],
+                                                 mcmc[[x]]),
+                                           start = start(object$sample),
+                                           end = end(object$sample) + niter(mcmc[[x]])
+                          )
       ))
+    }
 
     newMCMC <- as.mcmc.list(lapply(1:length(MCMC),
                                    function(k) mcmc(rbind(object$MCMC[[k]],
@@ -121,19 +122,20 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                                     end = end(object$MCMC) +
                                                       niter(mcmc[[k]]))
     ))
-
   } else {
-    new <- mcmc
+    newmcmc <- mcmc
     newMCMC <- MCMC
   }
 
   newobject <- object
-  newobject$sample <- new
+  newobject$sample <- newmcmc
   newobject$MCMC <- newMCMC
   newobject$call <- list(object$call, match.call())
-  newobject$mcmc_settings$n.iter <- ifelse(add, c(object$mcmc_settings$n.iter, niter(new)), niter(new))
+  newobject$mcmc_settings$n.iter <- ifelse(add, c(object$mcmc_settings$n.iter,
+                                                  niter(newMCMC)), niter(newMCMC))
   newobject$mcmc_settings$variable.names <- var.names
-  newobject$mcmc_settings$thin <- ifelse(add, c(object$mcmc_settings$thin, thin(new)), thin(new))
+  newobject$mcmc_settings$thin <- ifelse(add, c(object$mcmc_settings$thin,
+                                                coda::thin(newMCMC)), coda::thin(newMCMC))
   newobject$time <- ifelse(add, object$time + difftime(t1, t0), difftime(t1, t0))
   newobject$model <- if (object$mcmc_settings$parallel) {adapt} else {object$model}
 
