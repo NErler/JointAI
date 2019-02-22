@@ -78,11 +78,16 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   } else {
     out$intercepts <- NULL
   }
+  out$weibull <- if (object$analysis_type == 'survreg') {
+    stats[c(paste0("shape_", names(object$Mlist$y))),
+          -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
+  }
 
   out$main <- stats[!rownames(stats) %in% c(rownames(out$ranefvar),
                                             rownames(out$intercepts),
                                             get_aux(object),
                                             rownames(out$sigma),
+                                            rownames(out$weibull),
                                             paste0("tau_", names(object$Mlist$y))), , drop = FALSE]
 
   out$analysis_type <- object$analysis_type
@@ -124,6 +129,14 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
     cat("\n")
     cat("Posterior summary of residual std. deviation:\n")
     print(x$sigma, digits = digits)
+  }
+  if (!is.null(x$weibull)) {
+    cat("\n")
+    cat("Posterior summary of the shape of the Weibull distribution:\n")
+    wb <- x$weibull
+    rownames(wb) <- c('shape')
+    wb
+    print(wb, digits = digits)
   }
   cat("\n\n")
   cat("MCMC settings:\n")
