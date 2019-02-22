@@ -31,31 +31,6 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   if (is.null(object$MCMC))
     stop("There is no MCMC sample.")
 
-
-  # if (is.null(start)) {
-  #   start <- start(object$sample)
-  # } else {
-  #   start <- max(start, start(object$sample))
-  # }
-  #
-  # if (is.null(end)) {
-  #   end <- end(object$sample)
-  # } else {
-  #   end <- min(end, end(object$sample))
-  # }
-  #
-  # if (is.null(thin))
-  #   thin <- thin(object$sample)
-  #
-  # MCMC <- get_subset(object, subset, as.list(match.call()), warn = warn)
-  #
-  # MCMC <- do.call(rbind,
-  #                 window(MCMC,
-  #                        start = start,
-  #                        end = end,
-  #                        thin = thin))
-
-
   MCMC <- prep_MCMC(object, start = start, end = end, thin = thin, subset = subset, warn = warn, ...)
 
   # create results matrix
