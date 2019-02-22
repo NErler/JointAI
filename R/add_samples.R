@@ -26,7 +26,7 @@
 #' # Run an initial JointAI model:
 #' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
-#' # Continue sampling:P
+#' # Continue sampling:
 #' mod_add <- add_samples(mod, n.iter = 200, add = TRUE)
 #'
 #'
@@ -105,7 +105,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   }
 
   if (add == TRUE) {
-    if (!is.na(object$sample))
+    if (!is.null(object$sample))
       new <- as.mcmc.list(lapply(1:length(mcmc),
                                  function(x) mcmc(rbind(object$sample[[x]],
                                                         mcmc[[x]]),
