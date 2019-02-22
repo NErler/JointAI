@@ -45,6 +45,7 @@
 * argument `meth` now uses default values if only specified for subset of incomplete variables
 * `get_MIdat()`: argument `minspace` added to ensure spacing of iterations selected as imputations
 * `densplot()`: accepts additional options, e.g., `lwd`, `col`, ...
+* `list_models()` replaces the function `list_impmodels()` (which is now an alias)
 
 
 ## Extensions

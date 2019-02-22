@@ -25,7 +25,7 @@
 #' from the full conditional distributions.
 #' For more details, see Erler et al. (2016).
 #'
-#' The function \code{list_impmodels} prints information on the conditional
+#' The function \code{list_models} prints information on the conditional
 #' distributions of the incomplete covariates (since they are what is specified;
 #' the full-conditionals are automatically derived within JAGS). The outcome
 #' is, thus, not part of the printed linear predictor, but is still included
@@ -43,19 +43,19 @@
 #' # (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save time)
 #' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0)
 #'
-#' list_impmodels(mod1)
+#' list_models(mod1)
 #'
-#'
+#' @aliases list_impmodels
 #' @export
 
-list_impmodels <- function(object, predvars = TRUE, regcoef = TRUE,
+list_models <- function(object, predvars = TRUE, regcoef = TRUE,
                            otherpars = TRUE, priors = TRUE, refcat = TRUE) {
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
   for (i in seq_along(object$models)) {
     pars <- switch(object$models[i],
-                   lm = list(name = 'Linear regression', pars = 'norm'),
+                   norm = list(name = 'Linear regression', pars = 'norm'),
                    logit = list(name = 'Logistic regression', pars = 'logit'),
                    gamma = list(name = 'Gamma regression', pars = 'gamma'),
                    lognorm = list(name = "Log-normal regression", pars = 'norm'),
