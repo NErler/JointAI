@@ -138,7 +138,7 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        trafo_cols = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          dest_cols[[varname]]$Xc
        } else if (!is.na(dest_cols[[varname]]$Xltrafo)) {
-         tc <- !sapply(dest_cols[[varname]], is.na)
+         tc <- sapply(dest_cols[[varname]], function(k)all(!is.na(k)))
          dest_cols[[varname]][[which(names(dest_cols[[varname]]) != "Xltrafo" & tc)]]
        },
        trfo_fct = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
