@@ -184,6 +184,10 @@ get_MIdat <- function(object, m = 10, include = TRUE,
         pat <- paste0("Z\\[[[:digit:]]*,",
                       match(names(meth)[i], colnames(object$data_list$Z)),
                       "\\]")
+      } else if (names(meth[i]) %in% colnames(object$data_list$Xltrafo)) {
+        pat <- paste0("Xltrafo\\[[[:digit:]]*,",
+                      match(names(meth)[i], colnames(object$data_list$Xltrafo)),
+                      "\\]")
       }
 
       impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
