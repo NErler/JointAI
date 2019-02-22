@@ -113,35 +113,35 @@
 #   ret
 # }
 #
-get_trafo <- function(i, trafos, dest_cols) {
-  if (trafos[i, "type"] == "identity") {
-    ret <- paste0("Xtrafo[i, ", dest_cols[[trafos[i, "var"]]]$Xtrafo, "]")
-  } else if (trafos[i, "type"] == "I") {
-    is_power <- regexpr(paste0(trafos[i, "var"], "\\^[[:digit:]]+"),
-                        trafos[i, "fct"]) > 0
-    if (is_power) {
-      pow <- gsub(paste0("I\\(", trafos[i, "var"], "\\^|\\)"), "", trafos[i, "fct"])
-      ret <- paste0("pow(Xtrafo[i, ", dest_cols[[trafos[i, "var"]]]$Xtrafo, "], ", pow, ")")
-    } else {
-      ret <- gsub(trafos[i, "var"], paste0("Xtrafo[i, ",
-                                           dest_cols[[trafos[i, "var"]]]$Xtrafo,
-                                           "]"), trafos[i, "fct"])
-      ret <- gsub("\\)$", "", gsub("^I\\(", "", ret))
-    }
-  } else {
-    ret <- gsub(trafos[i, "var"], paste0("Xtrafo[i, ",
-                                         dest_cols[[trafos[i, "var"]]]$Xtrafo,
-                                         "]"), trafos[i, "fct"])
-  }
-  if (!is.na(trafos[i, 'dupl_rows'])) {
-    other_vars <- trafos[unlist(trafos[i, 'dupl_rows']), 'var']
-    for (k in seq_along(other_vars)) {
-      ret <- gsub(other_vars[k],
-                  paste0('Xtrafo[i, ', dest_cols[[other_vars[k]]]$Xtrafo, ']'), ret)
-    }
-  }
-  ret
-}
+# get_trafo <- function(i, trafos, dest_cols) {
+#   if (trafos[i, "type"] == "identity") {
+#     ret <- paste0("Xtrafo[i, ", dest_cols[[trafos[i, "var"]]]$Xtrafo, "]")
+#   } else if (trafos[i, "type"] == "I") {
+#     is_power <- regexpr(paste0(trafos[i, "var"], "\\^[[:digit:]]+"),
+#                         trafos[i, "fct"]) > 0
+#     if (is_power) {
+#       pow <- gsub(paste0("I\\(", trafos[i, "var"], "\\^|\\)"), "", trafos[i, "fct"])
+#       ret <- paste0("pow(Xtrafo[i, ", dest_cols[[trafos[i, "var"]]]$Xtrafo, "], ", pow, ")")
+#     } else {
+#       ret <- gsub(trafos[i, "var"], paste0("Xtrafo[i, ",
+#                                            dest_cols[[trafos[i, "var"]]]$Xtrafo,
+#                                            "]"), trafos[i, "fct"])
+#       ret <- gsub("\\)$", "", gsub("^I\\(", "", ret))
+#     }
+#   } else {
+#     ret <- gsub(trafos[i, "var"], paste0("Xtrafo[i, ",
+#                                          dest_cols[[trafos[i, "var"]]]$Xtrafo,
+#                                          "]"), trafos[i, "fct"])
+#   }
+#   if (!is.na(trafos[i, 'dupl_rows'])) {
+#     other_vars <- trafos[unlist(trafos[i, 'dupl_rows']), 'var']
+#     for (k in seq_along(other_vars)) {
+#       ret <- gsub(other_vars[k],
+#                   paste0('Xtrafo[i, ', dest_cols[[other_vars[k]]]$Xtrafo, ']'), ret)
+#     }
+#   }
+#   ret
+# }
 
 # get_trafo2 <- function(trafo_vec, dest_col) {
 #   if (trafo_vec["type"] == "identity") {

@@ -90,6 +90,8 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
          "Xcat"
        } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          "Xtrafo"
+       } else if (!is.na(dest_cols[[varname]]$Xltrafo)) {
+         "Xltrafo"
        } else if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson')) {
          names(which(!is.na(dest_cols[[varname]])))
        } else if (impmeth %in% c('clmm')) {
@@ -101,6 +103,8 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
          dest_cols[[varname]]$Xlcat
        } else if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          dest_cols[[varname]]$Xtrafo
+       } else if (!is.na(dest_cols[[varname]]$Xltrafo)) {
+         dest_cols[[varname]]$Xltrafo
        } else if (impmeth %in% c("lmm", "glmm_logit", "glmm_gamma", "glmm_poisson")) {
          dest_cols[[varname]][[which(!is.na(dest_cols[[varname]]))]]
        } else {
@@ -133,10 +137,16 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        },
        trafo_cols = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          dest_cols[[varname]]$Xc
+       } else if (!is.na(dest_cols[[varname]]$Xltrafo)) {
+         tc <- !sapply(dest_cols[[varname]], is.na)
+         dest_cols[[varname]][[which(names(dest_cols[[varname]]) != "Xltrafo" & tc)]]
        },
        trfo_fct = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          sapply(which(Mlist$trafos$var == varname & !Mlist$trafos$dupl),
                 get_trafo, Mlist$trafos, dest_cols)
+       } else if (!is.na(dest_cols[[varname]]$Xltrafo)) {
+         sapply(which(Mlist$trafos$var == varname & !Mlist$trafos$dupl),
+                get_trafol, Mlist$trafos, dest_cols)
        },
        trunc = trunc[[varname]],
        trafos = Mlist$trafos,
@@ -183,6 +193,37 @@ get_trafo <- function(i, trafos, dest_cols) {
 }
 
 
+get_trafol <- function(i, trafos, dest_cols) {
+  if (trafos[i, "type"] == "identity") {
+    ret <- paste0("Xltrafo[j, ", dest_cols[[trafos[i, "var"]]]$Xltrafo, "]")
+  } else if (trafos[i, "type"] == "I") {
+    is_power <- regexpr(paste0(trafos[i, "var"], "\\^[[:digit:]]+"),
+                        trafos[i, "fct"]) > 0
+    if (is_power) {
+      pow <- gsub(paste0("I\\(", trafos[i, "var"], "\\^|\\)"), "", trafos[i, "fct"])
+      ret <- paste0("pow(Xltrafo[j, ", dest_cols[[trafos[i, "var"]]]$Xltrafo, "], ", pow, ")")
+    } else {
+      ret <- gsub(trafos[i, "var"], paste0("Xltrafo[j, ",
+                                           dest_cols[[trafos[i, "var"]]]$Xltrafo,
+                                           "]"), trafos[i, "fct"])
+      ret <- gsub("\\)$", "", gsub("^I\\(", "", ret))
+    }
+  } else {
+    ret <- gsub(trafos[i, "var"], paste0("Xltrafo[j, ",
+                                         dest_cols[[trafos[i, "var"]]]$Xltrafo,
+                                         "]"), trafos[i, "fct"])
+  }
+  if (!is.na(trafos[i, 'dupl_rows'])) {
+    other_vars <- trafos[unlist(trafos[i, 'dupl_rows']), 'var']
+    for (k in seq_along(other_vars)) {
+      ret <- gsub(other_vars[k],
+                  paste0('Xltrafo[j, ', dest_cols[[other_vars[k]]]$Xltrafo, ']'), ret)
+    }
+  }
+  ret
+}
+
+
 
 # Find which column in either Xc or Xcat contains the variable to be imputed
 # @param impmeth imputation method
@@ -204,6 +245,8 @@ get_dest_column <- function(varname, Mlist) {
                                make.names(colnames(Mlist$Xcat))), varname),
        "Xtrafo" = setNames(match(make.names(varname),
                                  make.names(colnames(Mlist$Xtrafo))), varname),
+       "Xltrafo" = setNames(match(make.names(varname),
+                                 make.names(colnames(Mlist$Xltrafo))), varname),
        "Xl" = setNames(match(make.names(nams),
                              make.names(colnames(Mlist$Xl))), nams),
        "Xlcat" = setNames(match(make.names(varname),

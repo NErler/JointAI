@@ -89,9 +89,9 @@ paste_dummies <- function(categories, dest_mat, dest_col, dummy_mat, dummy_cols,
 
 
 # paste transformations of continuous imputed variables ------------------------
-paste_trafos <- function(dest_col, trafo_cols, trafos, ...) {
+paste_trafos <- function(dest_col, trafo_cols, trafos, Xmat, index, ...) {
   mapply(function(trafo_cols, trafo) {
-    paste0(tab(4), "Xc[i, ", trafo_cols, "] <- ", trafo)
+    paste0(tab(4), Xmat, "[", index, ", ", trafo_cols, "] <- ", trafo)
   }, trafo_cols = trafo_cols, trafo = trafos)
 }
 

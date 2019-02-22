@@ -16,7 +16,7 @@ impmodel_continuous <- function(impmeth, varname, dest_col, dest_mat, trafo_cols
 
 
   trfs <- if (dest_mat != "Xc") {
-    c(paste_trafos(dest_col, trafo_cols, trafos = trfo_fct), "\n")
+    c(paste_trafos(dest_col, trafo_cols, trafos = trfo_fct, Xmat = 'Xc', index = 'i'), "\n")
   }
 
   trunc <- if (!is.null(trunc)) paste0("T(", paste(trunc, collapse = ", "), ")")

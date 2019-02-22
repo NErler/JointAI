@@ -63,7 +63,7 @@ get_scaling <- function(Mlist, scale_pars, models, data) {
                            varnams))
 
 
-  scaled_dat <- sapply(Mlist[c("Xc", "Xtrafo", "Xl", "Z")], scale_matrix,
+  scaled_dat <- sapply(Mlist[c("Xc", "Xtrafo", "Xl", "Z", "Xltrafo")], scale_matrix,
                        scale_vars = Mlist$scale_vars,
                        scale_pars = scale_pars,
                        models = models, simplify = FALSE)

@@ -56,6 +56,8 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed, width.cutoff = 500),
                                    fixed = TRUE),
                                auxvars), collapse = " + "))
+  fcts_all <- extract_fcts(fixed2, data, complete = TRUE)
+
 
   # Give a message about coding of ordinal factors if there are any in the predictor
   if (any(unlist(sapply(data[, all.vars(fixed2[c(1,3)])],
@@ -92,12 +94,11 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
 
   # Z --------------------------------------------------------------------------
-  # remove grouping specification from random effects formula
-  random2 <- remove_grouping(random)
-
   # random effects design matrix
   Z <- if (!is.null(random)) {
-    model.matrix(as.formula(random2), model.frame(as.formula(random2), data, na.action = na.pass))
+    model.matrix(as.formula(remove_grouping(random)),
+                 model.frame(as.formula(remove_grouping(random)),
+                             data, na.action = na.pass))
   }
 
 
@@ -121,49 +122,27 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   }
 
 
-  # Xtrafo ---------------------------------------------------------------------
-  trafos <- extract_fcts(fixed2, data)
-
-  if (any(trafos$type %in% c('ns', 'bs')))
-    stop("Splines are currently not implemented for incomplete variables.")
-
-  fcts <- extract_fcts(fixed2, data, complete = TRUE)
-
-  Xtrafo <- if (!is.null(trafos)) {
-    fmla_trafo <- as.formula(
-      paste("~", paste0(unique(trafos$var), collapse = " + "))
-    )
-    model.matrix(fmla_trafo,
-                 model.frame(fmla_trafo, data, na.action = na.pass)
-    )[match(unique(groups), groups), -1, drop = FALSE]
-  }
-
-  if (!is.null(Xtrafo)) {
-    if (any(!trafos$X_var %in% colnames(Xc)))
-      stop(gettextf("%s is not a column of the design matrix Xc.",
-                    paste(dQuote(trafos$X_var[!trafos$X_var %in% colnames(Xc)]),
-                          collapse = ", ")),
-                    "\nAre you using a transformation that results in multiple columns, e.g., splines?")
-    Xc[, as.character(trafos$X_var)] <- NA
-  }
 
 
   # re-order columns in Xc -----------------------------------------------------
-  colnams = colnames(Xc)
-  # names that need replacement
-  repl <- models[!names(models) %in% colnams & names(models) %in% trafos$var]
-  colnams[colnams == trafos$X_var[trafos$var == names(repl)]] <-
-    trafos$var[trafos$var == names(repl)]
+  # complete covariates first, then incomplete main effects, then fcts_mis/fcts
+  # colnams <- colnames(Xc)
+  # # names that need replacement
+  # repl <- models[!names(models) %in% colnams & names(models) %in% fcts_mis$var]
+  # colnams[colnams == fcts_mis$X_var[fcts_mis$var == names(repl)]] <-
+  #   fcts_mis$var[fcts_mis$var == names(repl)]
+  #
+  # Xc_seq <- c(which(colSums(is.na(Xc)) == 0 &
+  #                     (!gsub("[[:digit:]]*$", "", colnames(Xc)) %in% fcts_all$X_var |
+  #                        colnames(Xc) %in% auxvars)),
+  #             unlist(lapply(names(models), match_positions, data, colnams))
+  # )
+  #
+  # Xc_seq <- c(Xc_seq, which(!1:ncol(Xc) %in% Xc_seq))
 
-  Xc_seq <- c(which(colSums(is.na(Xc)) == 0 &
-                      (!gsub("[[:digit:]]*$", "", colnames(Xc)) %in% fcts$X_var |
-                         colnames(Xc) %in% auxvars)),
-              unlist(lapply(names(models), match_positions, data, colnams))
-  )
+  # Xc <- Xc[, Xc_seq, drop = FALSE]
+  Xc <- Xc[, sort_cols(Xc, fcts_all), drop = FALSE]
 
-  Xc_seq <- c(Xc_seq, which(!1:ncol(Xc) %in% Xc_seq))
-
-  Xc <- Xc[, Xc_seq, drop = FALSE]
   # * update Z -------------------------------------------------
   Z2 <- Z
   if (!is.null(Z)) {
@@ -188,7 +167,9 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
     Xl <- if (any(!colnames(Xlong) %in% linteract)) {
       Xl <- Xlong[, !colnames(Xlong) %in% linteract, drop = FALSE]
-      Xl[, order(colSums(is.na(Xl))), drop = FALSE]
+      Xl <- Xl[, sort_cols(Xl, fcts_all), drop = FALSE]
+      #
+      # Xl[, order(colSums(is.na(Xl))), drop = FALSE]
     }
 
     hc_interact <- unlist(sapply(hc_list, function(x) {
@@ -210,6 +191,49 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     # }
   } else {
     Xl <- Xil <- NULL
+  }
+
+
+  # Xtrafo ---------------------------------------------------------------------
+  fcts_mis <- extract_fcts(fixed2, data, complete = FALSE)
+
+  if (any(fcts_mis$type %in% c('ns', 'bs')))
+    stop("Splines are currently not implemented for incomplete variables.")
+
+
+  if (!is.null(fcts_mis)) {
+    fmla_trafo <- as.formula(
+      paste("~", paste0(unique(fcts_mis$var), collapse = " + "))
+    )
+
+    Xt <- model.matrix(fmla_trafo,
+                       model.frame(fmla_trafo, data, na.action = na.pass)
+    )[, -1, drop = FALSE]
+
+    Xtrafo_tvar <- apply(Xt, 2, check_tvar, groups)
+
+    Xtrafo <- if (any(!Xtrafo_tvar)) Xt[match(unique(groups), groups), !Xtrafo_tvar, drop = FALSE]
+    Xltrafo <- if (any(Xtrafo_tvar)) Xt[, Xtrafo_tvar, drop = FALSE]
+  } else {
+    Xtrafo <- Xltrafo <- NULL
+  }
+
+  if (!is.null(Xtrafo)) {
+    #   if (any(!fcts_mis$X_var %in% c(colnames(Xc), colnames(Xl), colnames(Z))))
+    #     stop(gettextf("%s is not a column of the design matrix Xc.",
+    #                   paste(dQuote(fcts_mis$X_var[!fcts_mis$X_var %in% colnames(Xc)]),
+    #                         collapse = ", ")),
+    #                   "\nAre you using a transformation that results in multiple columns, e.g., splines?")
+    Xc[, match(as.character(fcts_mis$X_var), colnames(Xc))] <- NA
+  }
+
+  if (!is.null(Xltrafo)) {
+    #   if (any(!fcts_mis$X_var %in% c(colnames(Xc), colnames(Xl), colnames(Z))))
+    #     stop(gettextf("%s is not a column of the design matrix Xc.",
+    #                   paste(dQuote(fcts_mis$X_var[!fcts_mis$X_var %in% colnames(Xc)]),
+    #                         collapse = ", ")),
+    #                   "\nAre you using a transformation that results in multiple columns, e.g., splines?")
+    Xl[, match(as.character(fcts_mis$X_var), colnames(Xl))] <- NA
   }
 
 
@@ -258,11 +282,11 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   if (is.null(scale_vars)) {
     scale_vars <- find_continuous_main(fixed2, data)
 
-    compl_fcts_vars <- fcts$X_var[fcts$type != "identity" &
-                                     colSums(is.na(data[, fcts$var, drop = FALSE])) == 0]
+    compl_fcts_vars <- fcts_all$X_var[fcts_all$type != "identity" &
+                                     colSums(is.na(data[, fcts_all$var, drop = FALSE])) == 0]
 
     excl <- grep("[[:alpha:]]*\\(", scale_vars, value = TRUE)
-    excl <- c(excl, unique(trafos$X_var))
+    excl <- c(excl, unique(fcts_mis$X_var))
     excl <- excl[!excl %in% compl_fcts_vars]
 
     scale_vars <- scale_vars[which(!scale_vars %in% excl)]
@@ -295,8 +319,9 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
   return(list(y = y, cens = cens,
               Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat, Xlcat = Xlcat,
-              Xtrafo = Xtrafo, Z = Z, cols_main = cols_main, names_main = names_main,
-              trafos = trafos, hc_list = hc_list, refs = refs,
+              Xtrafo = Xtrafo, Xltrafo = Xltrafo,
+              Z = Z, cols_main = cols_main, names_main = names_main,
+              trafos = fcts_mis, hc_list = hc_list, refs = refs,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars,
               fixed2 = fixed2, ncat = ncat,
               N = N, ppc = ppc, ridge = ridge, nranef = ncol(Z2)))
