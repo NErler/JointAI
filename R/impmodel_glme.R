@@ -17,6 +17,7 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
                   }
   )
 
+
   repar <- switch(family,
                   "gaussian" = NULL,
                   "binomial" = NULL,
@@ -38,6 +39,14 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
                     "inverse"  = function(x) paste0("1/", x)
   )
 
+  indent <- switch(link,
+                   'identity' = 4 + 0 + 3 + nchar(varname) + 7,
+                   'logit'    = 4 + 7 + 3 + nchar(varname) + 7,
+                   'probit'   = 4 + 8 + 3 + nchar(varname) + 7,
+                   'log'      = 4 + 5 + 3 + nchar(varname) + 7,
+                   'cloglog'  = 4 + 9 + 3 + nchar(varname) + 7,
+                   'inverse'  = 4 + 9 + 3 + nchar(varname) + 7)
+
 
 
   norm.distr  <- if (nranef < 2) {"dnorm"} else {"dmnorm"}
@@ -50,10 +59,10 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
   # }
 
   paste_Xl <- if (!is.null(Xl_cols)) {
-    paste0(" + \n", tab(nchar(varname) + 14),
+    paste0(" + \n", tab(indent),
            paste_predictor(parnam = 'alpha', parindex = 'j', matnam = 'Xl',
                            parelmts = par_elmts["Xl", 1]:par_elmts["Xl", 2],
-                           cols = Xl_cols, indent = nchar(varname) + 14)
+                           cols = Xl_cols, indent = indent)
     )
   }
 
@@ -67,7 +76,6 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
            # tab(4), varname, "_ppc[j] ~ ", distr(varname), "\n"
     # )
   # }
-
   paste0(tab(), "# Generalized linear mixed effects model for ", varname, "\n",
          tab(), "for (j in 1:", Ntot, ") {", "\n",
          tab(4), dest_mat, "[j, ", dest_col, "] ~ ", distr(varname), "\n",
@@ -76,7 +84,7 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
          paste_ranef_predictor(parnam = paste0("b_", varname), parindex = 'j',
                                matnam = 'Z',
                                parelmts = 1:nranef,
-                               cols = Z_cols, indent = 4 + 3 + nchar(varname) + 7),
+                               cols = Z_cols, indent = indent),
          paste_Xl,
          # paste_Xil,
          "\n",

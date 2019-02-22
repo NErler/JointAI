@@ -96,7 +96,7 @@ impmodel_clmm <- function(varname, dest_mat, dest_col, Xc_cols, Xl_cols, ncat, r
          paste_ranef_predictor(parnam = paste0("b_", varname), parindex = 'j',
                                matnam = 'Z',
                                parelmts = 1:nranef,
-                               cols = Z_cols, indent = 4 + 3 + nchar(varname) + 7),
+                               cols = Z_cols, indent = 4 + 4 + nchar(varname) + 7),
          paste_Xl, '\n\n',
          tab(4), "p_", varname, "[j, 1] <- max(1e-10, min(1-1e-7, psum_", varname, "[j, 1]))", "\n",
          paste(probs, collapse = "\n"), "\n",
