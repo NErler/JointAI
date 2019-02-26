@@ -46,9 +46,9 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   X <- model.matrix(fixed, model.frame(fixed, data, na.action = na.pass))
 
   # variables that do not have a main effect in fixed are added to the auxiliary variables
-  trafosX <- extract_fcts(fixed, data, complete = TRUE)
+  trafosX <- extract_fcts(fixed, data, random = random, complete = TRUE)
   add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), auxvars))]
-  add_to_aux <- add_to_aux[!sapply(data[add_to_aux], check_tvar, groups)]
+  # add_to_aux <- add_to_aux[!sapply(data[add_to_aux], check_tvar, groups)] ######## was this in here
   if (length(add_to_aux) > 0)
     auxvars <- c(auxvars, unique(add_to_aux))
 
@@ -56,7 +56,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed, width.cutoff = 500),
                                    fixed = TRUE),
                                auxvars), collapse = " + "))
-  fcts_all <- extract_fcts(fixed2, data, complete = TRUE)
+  fcts_all <- extract_fcts(fixed2, data, random = random, complete = TRUE)
 
 
   # Give a message about coding of ordinal factors if there are any in the predictor
@@ -195,7 +195,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
 
   # Xtrafo ---------------------------------------------------------------------
-  fcts_mis <- extract_fcts(fixed2, data, complete = FALSE)
+  fcts_mis <- extract_fcts(fixed2, data, random = random, complete = FALSE)
 
   if (any(fcts_mis$type %in% c('ns', 'bs')))
     stop("Splines are currently not implemented for incomplete variables.")
@@ -234,6 +234,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     #                         collapse = ", ")),
     #                   "\nAre you using a transformation that results in multiple columns, e.g., splines?")
     Xl[, match(as.character(fcts_mis$X_var), colnames(Xl))] <- NA
+    Z[, match(as.character(fcts_mis$X_var), colnames(Z))] <- NA
   }
 
 

@@ -45,13 +45,16 @@ extract_outcome <- function(fixed) {
 
 
 # Extract functions from a formula ---------------------------------------------
-extract_fcts <- function(formula, data, complete = FALSE, ...) {
+extract_fcts <- function(formula, data, random = NULL, complete = FALSE, ...) {
   # get the term.labels from the formula and split by :
-  termlabs <- attr(terms(formula), "term.labels")
+  termlabs <- c(attr(terms(formula), "term.labels"),
+                if (!is.null(random))
+                  attr(terms(remove_grouping(random)), "term.labels"))
   termlabs <- unique(unlist(strsplit(termlabs, ":")))
 
   # check for each element of the formula if it is a function
-  isfun <- sapply(all.names(formula, unique = TRUE), function(x) {
+  isfun <- sapply(c(all.names(formula, unique = TRUE),
+                    all.names(remove_grouping(random), unique = TRUE)), function(x) {
     g <- try(get(x, envir = .GlobalEnv), silent = TRUE)
     if (!inherits(g, 'try-error'))
       is.function(g)

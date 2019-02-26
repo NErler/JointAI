@@ -28,7 +28,12 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
       k
     }
   })
-  nam <- names(Mlist$hc_list)[which(!names(Mlist$hc_list) %in% unlist(mod_dum[i:length(mod_dum)]))]
+
+  hcvar <- ifelse(names(Mlist$hc_list) %in% Mlist$trafos$X_var,
+           Mlist$trafos$var[match(names(Mlist$hc_list), Mlist$trafos$X_var)],
+           names(Mlist$hc_list))
+
+  nam <- names(Mlist$hc_list)[which(!hcvar %in% unlist(mod_dum[i:length(mod_dum)]))]
 
 
   Xc_cols = if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
@@ -49,7 +54,9 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
     if (Mlist$nranef > 1) {
       # nrf <- length(Mlist$hc_list[names(Mlist$hc_list) != names(models[i:length(models)])])
       # 1:nrf
-      which(!colnames(Mlist$Z) %in% unlist(mod_dum[i:length(mod_dum)]))
+      which(!ifelse(colnames(Mlist$Z) %in% Mlist$trafos$X_var,
+                    Mlist$trafos$var[match(colnames(Mlist$Z), Mlist$trafos$X_var)],
+                    colnames(Mlist$Z)) %in% unlist(mod_dum[i:length(mod_dum)]))
     } else if (Mlist$nranef == 1) {
       1
     }
@@ -138,8 +145,13 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        trafo_cols = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          dest_cols[[varname]]$Xc
        } else if (!is.na(dest_cols[[varname]]$Xltrafo)) {
-         tc <- sapply(dest_cols[[varname]], function(k)all(!is.na(k)))
-         dest_cols[[varname]][[which(names(dest_cols[[varname]]) != "Xltrafo" & tc)]]
+         lapply(Mlist$trafos$X_var[which(Mlist$trafos$var == varname)], function(k) {
+           Filter(Negate(is.null),
+                  lapply(dest_cols[[varname]][names(dest_cols[[varname]]) != 'Xltrafo'], function(x) {
+                    if (!is.na(x[match(k, names(x))]))
+                      x[match(k, names(x))]
+                  }))
+         })
        },
        trfo_fct = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          sapply(which(Mlist$trafos$var == varname & !Mlist$trafos$dupl),
@@ -152,7 +164,10 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        trafos = Mlist$trafos,
        # par_name = "alpha",
        ppc = Mlist$ppc,
-       nranef = sum(!colnames(Mlist$Z) %in% unlist(mod_dum[i:length(mod_dum)])),
+       nranef = sum(!ifelse(colnames(Mlist$Z) %in% Mlist$trafos$X_var,
+                            Mlist$trafos$var[match(colnames(Mlist$Z), Mlist$trafos$X_var)],
+                            colnames(Mlist$Z))
+                    %in% unlist(mod_dum[i:length(mod_dum)])),
        N = Mlist$N,
        Ntot = nrow(Mlist$Z),
        hc_list = Mlist$hc_list[nam]

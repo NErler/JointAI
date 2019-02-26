@@ -70,9 +70,12 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
 
   trfs <- if (dest_mat == "Xltrafo") {
     c("\n",
-      paste_trafos(dest_col, trafo_cols, trafos = trfo_fct, Xmat = 'Xl', index = 'j'))
+        mapply(paste_trafos, trafo_cols = trafo_cols, trafos = trfo_fct,
+               Xmat = lapply(trafo_cols, names),
+               MoreArgs = list(dest_col = dest_col, index = 'j')), "\n"
+    )
+      # paste_trafos(dest_col, trafo_cols, trafos = trfo_fct, Xmat = trafo_mat, index = 'j'))
   }
-
 
   paste_ppc <- NULL #if (ppc) {
     # paste0("\n",

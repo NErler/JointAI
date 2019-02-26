@@ -105,11 +105,12 @@ get_params <- function(models, analysis_type, family, Mlist,
     Xltrafo_NA <- if (any(is.na(Mlist$Xltrafo))) which(is.na(Mlist$Xltrafo), arr.ind = TRUE)
 
     Xl_NA <- if (any(is.na(Mlist$Xl))) which(is.na(Mlist$Xl), arr.ind = TRUE)
-
     if (!is.null(Xl_NA))
       Xl_NA <- Xl_NA[Xl_NA[, 2] %in% which(colSums(!is.na(Mlist$Xl)) > 0), , drop = FALSE]
 
     Z_NA <- if (any(is.na(Mlist$Z))) which(is.na(Mlist$Z), arr.ind = TRUE)
+    if (!is.null(Z_NA))
+      Z_NA <- Z_NA[Z_NA[, 2] %in% which(colSums(!is.na(Mlist$Z)) > 0), , drop = FALSE]
 
     if (any(is.na(Mlist$Xtrafo))) {
       Xtrafo_NA_Xc <- matrix(nrow = 0, ncol = 2)
@@ -125,14 +126,23 @@ get_params <- function(models, analysis_type, family, Mlist,
     }
 
     if (any(is.na(Mlist$Xltrafo))) {
-      Xltrafo_NA_Xl <- matrix(nrow = 0, ncol = 2)
+      Xltrafo_NA_Z <- Xltrafo_NA_Xl <- matrix(nrow = 0, ncol = 2)
       for (i in seq_along(repl_list_long)) {
-        for (j in seq_along(repl_list_long[[i]]$trafo_cols)) {
+        for (j in seq_along(unlist(sapply(repl_list_long[[i]]$trafo_cols, '[[', 'Xl')))) {
           Xltrafo_NA_Xl_add <- Xltrafo_NA[Xltrafo_NA[, 'col'] == repl_list_long[[i]]$dest_col, ]
+
           Xltrafo_NA_Xl_add[, 'col'] <- gsub(repl_list_long[[i]]$dest_col,
-                                            repl_list_long[[i]]$trafo_cols[j],
+                                             unlist(sapply(repl_list_long[[i]]$trafo_cols, '[[', 'Xl'))[j],
                                             Xltrafo_NA_Xl_add[, 'col'])
           Xltrafo_NA_Xl <- rbind(Xltrafo_NA_Xl, Xltrafo_NA_Xl_add)
+        }
+        for (j in seq_along(unlist(sapply(repl_list_long[[i]]$trafo_cols, '[[', 'Z')))) {
+          Xltrafo_NA_Z_add <- Xltrafo_NA[Xltrafo_NA[, 'col'] == repl_list_long[[i]]$dest_col, ]
+
+          Xltrafo_NA_Z_add[, 'col'] <- gsub(repl_list_long[[i]]$dest_col,
+                                             unlist(sapply(repl_list_long[[i]]$trafo_cols, '[[', 'Z'))[j],
+                                             Xltrafo_NA_Z_add[, 'col'])
+          Xltrafo_NA_Z <- rbind(Xltrafo_NA_Z, Xltrafo_NA_Z_add)
         }
       }
     }
@@ -150,7 +160,8 @@ get_params <- function(models, analysis_type, family, Mlist,
                     paste0("Xc[", apply(Xtrafo_NA_Xc, 1, paste, collapse = ","), "]")),
                 if (!is.null(Xltrafo_NA) && nrow(Xltrafo_NA) > 0)
                   c(paste0("Xltrafo[", apply(Xltrafo_NA, 1, paste, collapse = ","), "]"),
-                    paste0("Xl[", apply(Xltrafo_NA_Xl, 1, paste, collapse = ","), "]")),
+                    paste0("Xl[", apply(Xltrafo_NA_Xl, 1, paste, collapse = ","), "]"),
+                    paste0("Z[", apply(Xltrafo_NA_Z, 1, paste, collapse = ","), "]")),
                 if (!is.null(Xcat_NA) && nrow(Xcat_NA) > 0)
                   paste0("Xcat[", apply(Xcat_NA, 1, paste, collapse = ","), "]"),
                 if (!is.null(Xlcat_NA) && nrow(Xlcat_NA) > 0)
