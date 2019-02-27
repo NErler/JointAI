@@ -1,5 +1,5 @@
 
-get_subset <- function(object, subset, call_orig, keep_aux = FALSE, warn = TRUE) {
+get_subset <- function(object, subset, keep_aux = FALSE, warn = TRUE) {
   subset <- as.list(subset)
 
   if (length(subset) == 0 & !as.list(object$monitor_params)$analysis_main)

@@ -16,7 +16,7 @@ prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
   if (is.null(thin))
     thin <- thin(object$MCMC)
 
-  MCMC <- get_subset(object, subset, as.list(match.call()), warn = warn)
+  MCMC <- get_subset(object, subset, warn = warn)
 
   MCMC <- do.call(rbind,
                   window(MCMC,

@@ -259,7 +259,7 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
   if (is.null(thin))
     thin <- thin(object$MCMC)
 
-  MCMC <- get_subset(object, subset, as.list(match.call()), keep_aux = keep_aux,
+  MCMC <- get_subset(object, subset, keep_aux = keep_aux,
                      warn = warn)
   MCMC <- window(MCMC,
                  start = start,
