@@ -280,3 +280,30 @@ get_dest_column <- function(varname, Mlist) {
 }
 
 
+# Hierarchical centering structure ---------------------------------------------
+get_hc_list <- function(X2, Xc, Xic, Z, Z2, Xlong) {
+  # find all occurences of the random effects variables in the the fixed effects
+  rd_effect <- hc_names <- if (ncol(Z2) > 1) {
+    lapply(sapply(colnames(Z2)[-1], gen_pat, simplify = FALSE),
+           grep_names, colnames(X2))
+  }
+
+  for (i in 1:length(hc_names)) {
+    if (length(hc_names[[i]]) > 0) {
+      # identify which are interactions
+      rd_effect[[i]] <- as.list(gsub(paste(gen_pat(names(hc_names)[i]), collapse = "|"),
+                                     '', hc_names[[i]]))
+      rd_effect[[i]][rd_effect[[i]] == ''] <- names(rd_effect)[i]
+
+      for (k in seq_along(rd_effect[[i]])) {
+        mat <- sapply(list(Xc = Xc, Xic = Xic, Z = Z, Xlong = Xlong), function(x){
+          rd_effect[[i]][[k]] %in% colnames(x)
+        })
+        attr(rd_effect[[i]][[k]], 'matrix') <- names(mat[mat])
+        attr(rd_effect[[i]][[k]], 'column') <- match(rd_effect[[i]][[k]],
+                                                     colnames(get(names(mat)[mat])))
+      }
+      names(rd_effect[[i]]) <- hc_names[[i]]
+    }
+  }
+  return(rd_effect)

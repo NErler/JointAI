@@ -265,23 +265,6 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 list_impmodels <- list_models
 
 
-print_seq <- function(min, max) {
-  if (min == max)
-    max
-  else
-    paste0(min, ":", max)
-}
-
-
-
-add_breaks <- function(string) {
-  m <- gregexpr(", ", string)[[1]]
-  br <- ifelse(c(0, diff(as.numeric(m) %/% getOption('width'))) > 0, "\n", "")
-  gsub("\n, ", ",\n  ", paste0(strsplit(string, ", ")[[1]], br, collapse = ", "))
-}
-
-
-
 
 #' Parameter names of an JointAI object
 #'

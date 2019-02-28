@@ -200,3 +200,32 @@ paste_long_interactions <- function(index, mat0, mat1, mat0_col, mat1_col) {
               out, fixed = TRUE)
   out
 }
+
+
+# Paste interaction terms for JAGS model
+paste_interactions <- function(index, mat0, mat1, mat0_col, mat1_col) {
+  mat0_skip <- sapply(max(nchar(mat0_col)) - nchar(mat0_col), tab)
+
+  paste0(tab(4),
+         paste0(mat0, "[", index, ", ", mat0_skip, mat0_col, "] <- "),
+         lapply(mat1_col, function(x){
+           paste0(mat1, "[", index, ", ", x, "]", collapse = " * ")
+         })
+  )
+}
+
+
+paste_long_interactions <- function(index, mat0, mat1, mat0_col, mat1_col) {
+  mat0_skip <- sapply(max(nchar(mat0_col)) - nchar(mat0_col), tab)
+
+  out <- paste0(tab(4),
+                paste0(mat0, "[", index, ", ", mat0_skip, mat0_col, "] <- "),
+                lapply(seq_along(mat1_col), function(i){
+                  paste0(mat1[[i]], "[", index, ", ", mat1_col[[i]], "]", collapse = " * ")
+                })
+  )
+  out <- gsub(paste0("Xc[", index, ","),
+              paste0("Xc[groups[", index, "],"),
+              out, fixed = TRUE)
+  out
+}
