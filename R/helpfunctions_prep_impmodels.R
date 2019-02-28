@@ -152,8 +152,8 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        },
        trafo_cols = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          dest_cols[[varname]]$Xc
-       } else if (!is.na(dest_cols[[varname]]$Xltrafo)) {
-         lapply(Mlist$trafos$X_var[which(Mlist$trafos$var == varname)], function(k) {
+       } else if (!is.na(dest_cols[[varname]]$Xltrafo) & !all(Mlist$trafos$compl[Mlist$trafos$var == varname])) {
+         lapply(Mlist$trafos$X_var[which(Mlist$trafos$var == varname & !Mlist$trafos$dupl)], function(k) {
            Filter(Negate(is.null),
                   lapply(dest_cols[[varname]][names(dest_cols[[varname]]) != 'Xltrafo'], function(x) {
                     if (!is.na(x[match(k, names(x))]))
@@ -164,8 +164,8 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        trfo_fct = if (!is.na(dest_cols[[varname]]$Xtrafo)) {
          sapply(which(Mlist$trafos$var == varname & !Mlist$trafos$dupl),
                 get_trafo, Mlist$trafos, dest_cols)
-       } else if (!is.na(dest_cols[[varname]]$Xltrafo)) {
-         sapply(which(Mlist$trafos$var == varname & !Mlist$trafos$dupl),
+       } else if (!is.na(dest_cols[[varname]]$Xltrafo) & !all(Mlist$trafos$compl[Mlist$trafos$var == varname])) {
+                sapply(which(Mlist$trafos$var == varname & !Mlist$trafos$dupl),
                 get_trafol, Mlist$trafos, dest_cols)
        },
        trunc = trunc[[varname]],
