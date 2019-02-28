@@ -42,7 +42,7 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
     (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1)
   }
   Xl_cols = if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
-    if (all(is.na(dest_cols[[varname]]$Xl))) {
+    if (all(is.na(dest_cols[[varname]]$Xl[varname]))) {
       wouldbe <- max(0, which(colnames(Mlist$Xl) %in% unlist(mod_dum[seq_along(models) < i]))) + 1
       if (wouldbe > 1) 1:(wouldbe - 1)
     } else  if (min(dest_cols[[varname]]$Xl, na.rm = TRUE) > 1) {
