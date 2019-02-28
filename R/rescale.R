@@ -79,7 +79,6 @@ splitstring2 <- function(input, x, x_split) {
       input <- paste0(c(split_input[splitmatch], split_input[!splitmatch]), collapse = ":")
     }
   }
-  # pat <- paste0(c(":", "^"), pattern)
   splitres <- strsplit(input, x, fixed = TRUE)[[1]]
 
 

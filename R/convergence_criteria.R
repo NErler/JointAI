@@ -128,13 +128,6 @@ MC_error <- function(x, subset = NULL,
                 'MCSE/SD' = MCE1[, "MCSE"]/MCE1[, "SD"])
 
 
-  # scale_pars <- x$scale_pars
-  # if (!is.null(scale_pars)) {
-  #   # re-scale parameters
-  #   MCMC <- sapply(colnames(MCMC), rescale, x$Mlist$fixed2, scale_pars,
-  #                  MCMC, x$Mlist$refs, unlist(x$Mlist$names_main), x$Mlist$trafos)
-  # }
-
   # MC error for scaled MCMC sample
   if (!is.null(x$sample)) {
   mcmc <- do.call(rbind, window(x$sample, start = start, end = end, thin = thin))
