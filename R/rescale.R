@@ -1,7 +1,7 @@
 
-rescale <- function(x, fixed2, scale_pars, MCMC, refs, coef_lvl, trafos) {
+rescale <- function(x, fixed2, scale_pars, MCMC, refs, coef_lvl) {
 
-  coefs <- colnames(attr(terms(fixed2), "factors"))
+  # coefs <- colnames(attr(terms(fixed2), "factors"))
 
   x_split <- unlist(strsplit(x, ":"))
 
@@ -33,25 +33,13 @@ rescale <- function(x, fixed2, scale_pars, MCMC, refs, coef_lvl, trafos) {
     0
   }
 
-  # square <- if (x %in% trafos$var & any(trafos$fct == paste0(x, "^2"))) {
-  #   qdr_var <- trafos$X_var[which(trafos$var == x &
-  #                                          trafos$fct == paste0(x, "^2"))]
-  #   2 * as.numeric(MCMC[ , qdr_var])/scale_pars["scale", x]^2 * scale_pars["center", x]
-  # } else {
-  #   0
-  # }
-
-  new_vec <- vec / prod(scale_pars["scale", unlist(strsplit(x, ":"))]) - inter_sum# - square
-
+  new_vec <- vec / prod(scale_pars["scale", unlist(strsplit(x, ":"))]) - inter_sum
   new_vec
-  # }
 }
 
 
-splitstring = function(input, pattern){
-  # pat <- paste0(c(":", "^"), pattern)
+splitstring = function(input, pattern) {
   splitres = strsplit(input, pattern)[[1]]
-
 
   T1 <- splitres[1] == "" | substr(splitres[1],
                                    start = nchar(splitres[1]),
