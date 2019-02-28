@@ -105,6 +105,13 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   # Xc and Xic -----------------------------------------------------------------
   tvar <- apply(X2, 2, check_tvar, groups)
 
+  inter <- grep(":", names(tvar), fixed = TRUE, value = TRUE)
+
+  # make sure that interactions where at least one partner is time-varying
+  # are also recognized as time-varying
+  tvar[inter[sapply(strsplit(inter, ':'), function(k) any(tvar[k]))]] <- TRUE
+
+
   # time-constant part of X
   Xcross <- X2[match(unique(groups), groups), !tvar, drop = FALSE]
   interact <- grep(":", colnames(Xcross), fixed = TRUE, value = TRUE)
