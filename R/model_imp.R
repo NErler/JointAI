@@ -623,8 +623,8 @@ if (!is.null(inits)) {
       if (!is.null(scale_pars)) {
         # re-scale parameters
         MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
-                            scale_pars, MCMC[[k]], Mlist$refs, unlist(Mlist$names_main),
-                            Mlist$trafos))
+                                    scale_pars, MCMC[[k]], Mlist$refs,
+                                    unlist(Mlist$names_main)))
         attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
       }
     }
