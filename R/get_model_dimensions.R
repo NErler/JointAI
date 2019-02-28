@@ -24,9 +24,6 @@ get_model_dim <- function(cols_main, hc_list){
           } else {
             c(NA, NA)
           }
-
-          # c(1, max(1, sum(sapply(hc_list[[i]], attr, 'matrix') %in% c('Xc', 'Z')))) +
-          #   max(c(K, 0), na.rm = TRUE)
         } else {
           c(NA, NA)
         }
@@ -41,11 +38,6 @@ get_model_dim <- function(cols_main, hc_list){
 
 
 # Determine positions of incomplete variables in the data matrices
-# @param models named vector specifying the imputation modelsods and ordering of
-#        the imputation models
-# @param Mlist a named list with the entries "Xc", "Xic", "Xl", "Xil", "Z"
-# @return a list?
-# @export
 get_imp_pos <- function(models, Mlist){
 
   if (is.null(models)) return(NULL)
@@ -124,12 +116,6 @@ get_imp_pos <- function(models, Mlist){
 
 
 # Determine number of parameters in the imputation models
-# @param models named vector specifying the imputation modelsods and ordering of
-#        the imputation models
-# @param pos_Xc a list containing the positions of the incomplete variables in Xc
-# @return a matrix specifying the range of regression coefficients per
-#         imputation model
-# @export
 get_imp_dim <- function(models, imp_pos, Mlist){
   if (is.null(models)) return(NULL)
 

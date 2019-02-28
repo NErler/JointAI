@@ -1,15 +1,5 @@
 
 # Creates a list of parameters that will be passed to the functions generating the imputation models
-# @param impmeth character string specifying the imputation method
-# @param varname name of the variable to be imputed
-# @param Xc design matrix of time-constant covariates
-# @param Xcat matrix of incomplete categorical covariates with more than 2 categories
-# @param K_imp matrix specifying the range of elements of the vector of regression
-# coefficients to be used in each imputation model
-# @param dest_cols column numbers in Xc matrix
-# @param refs list of reference values
-# @param trafos matrix of transformations
-# @export
 get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, models) {
 
   intercept <- if (impmeth == "cumlogit") {
@@ -52,8 +42,6 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
   # columns of Z to be used
   Z_cols = if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
     if (Mlist$nranef > 1) {
-      # nrf <- length(Mlist$hc_list[names(Mlist$hc_list) != names(models[i:length(models)])])
-      # 1:nrf
       which(!ifelse(colnames(Mlist$Z) %in% Mlist$trafos$X_var,
                     Mlist$trafos$var[match(colnames(Mlist$Z), Mlist$trafos$X_var)],
                     colnames(Mlist$Z)) %in% unlist(mod_dum[i:length(mod_dum)]))
@@ -61,10 +49,6 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
       1
     }
   }
-  # Zcols = if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
-  #
-  #   which(!colnames(Mlist$Z) %in% names(models[i:length(models)]))
-  # }
 
   par_elmts <- if (impmeth == "multilogit") {
     sapply(names(dest_cols[[varname]]$Xc), function(i) {
@@ -116,7 +100,6 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        } else if (!is.na(dest_cols[[varname]]$Xltrafo)) {
          dest_cols[[varname]]$Xltrafo
        } else if (impmeth %in% c("lmm", "glmm_logit", "glmm_gamma", "glmm_poisson")) {
-         # dest_cols[[varname]][[which(!is.na(dest_cols[[varname]]))]]
          varname_dum <- attr(Mlist$refs[[varname]], 'dummies')
          dc <- dest_cols[[varname]][[which(sapply(dest_cols[[varname]],
                                             function(k) any(!is.na(k[c(varname, varname_dum)]))
@@ -129,7 +112,6 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        Xc_cols = Xc_cols,
        Xl_cols = Xl_cols,
        Z_cols = Z_cols,
-       # Zcols = Zcols,
        dummy_mat = if (impmeth %in% c('clmm', 'mlmm')) {
          dm <- sapply(dest_cols[[varname]],
                       function(k) all(!is.na(k[attr(Mlist$refs[[varname]], 'dummies')])))
@@ -170,7 +152,6 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        },
        trunc = trunc[[varname]],
        trafos = Mlist$trafos,
-       # par_name = "alpha",
        ppc = Mlist$ppc,
        nranef = sum(!ifelse(colnames(Mlist$Z) %in% Mlist$trafos$X_var,
                             Mlist$trafos$var[match(colnames(Mlist$Z), Mlist$trafos$X_var)],
@@ -249,10 +230,6 @@ get_trafol <- function(i, trafos, dest_cols) {
 
 
 # Find which column in either Xc or Xcat contains the variable to be imputed
-# @param impmeth imputation method
-# @param varname variable name
-# @param Xc_names column names of the design matrix of baseline effects
-# @param Xcat_names column names of the matrix of categorical variables
 get_dest_column <- function(varname, Mlist) {
   nams <- if (varname %in% names(Mlist$refs)) {
     attr(Mlist$refs[[varname]], "dummies")
@@ -307,3 +284,4 @@ get_hc_list <- function(X2, Xc, Xic, Z, Z2, Xlong) {
     }
   }
   return(rd_effect)
+}

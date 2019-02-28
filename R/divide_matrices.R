@@ -1,15 +1,4 @@
-# Create data matrices for time constant and time-varying variables
-# @param data a dataframe
-# @param fixed a formula describing the mean structure
-# @param random an optional formula describing the random effects (check this!)
-# @param auxvars vector containing the names of auxiliary variables
-# @param scale_vars vector naming which variables should be scaled.
-#      If \code{NULL} (default) all continuous variables will be scaled during
-#        the MCMC sampling, except when a transformed version of them is used.
-#        If \code{FALSE} no scaling will be done.
-# @param refcats specification of reference categories. If \code{NULL}, defaults will be used.
-# @return a list containing matrices and other objects needed for other functions
-# @export
+# split the data into matrices and obtain other relevant info for the further steps
 
 divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars = NULL,
                             scale_vars = NULL, refcats = NULL, models, warn = TRUE,
@@ -48,7 +37,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   # variables that do not have a main effect in fixed are added to the auxiliary variables
   trafosX <- extract_fcts(fixed, data, random = random, complete = TRUE)
   add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), auxvars))]
-  # add_to_aux <- add_to_aux[!sapply(data[add_to_aux], check_tvar, groups)] ######## was this in here
+
   if (length(add_to_aux) > 0 & !is.null(models))
     auxvars <- c(auxvars, unique(add_to_aux))
 
@@ -74,17 +63,6 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
                          as.character(refs[[i]]))
   }
 
-  # this can probably be deleted
-  #
-  # if (!is.null(auxvars)) {
-  #   for (x in auxvars) {
-  #     if (x %in% names(refs)) {
-  #       dummies <- paste0(x, levels(refs[[x]])[levels(refs[[x]]) != refs[[x]]])
-  #       attr(refs[[x]], "dummies") <- dummies
-  #     }
-  #   }
-  # }
-
 
   # * final design matrix ------------------------------------------------------
   X2 <- model.matrix(fixed2,
@@ -109,7 +87,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
   # make sure that interactions where at least one partner is time-varying
   # are also recognized as time-varying
-  tvar[inter[sapply(strsplit(inter, ':'), function(k) any(tvar[k]))]] <- TRUE
+    tvar[inter[sapply(strsplit(inter, ':'), function(k) any(tvar[k]))]] <- TRUE
 
 
   # time-constant part of X
@@ -122,32 +100,9 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     Xcross[, interact, drop = FALSE]
   }
 
-  if (!is.null(Xic)) {
-    Xic <- Xic * NA
-    # can probably deleted, since X2 should not include NAN's any more
-    # Xic[is.na(Xic)] <- NA # to overwrite possible NaN's
-  }
-
-
-
+  if (!is.null(Xic)) Xic <- Xic * NA
 
   # re-order columns in Xc -----------------------------------------------------
-  # complete covariates first, then incomplete main effects, then fcts_mis/fcts
-  # colnams <- colnames(Xc)
-  # # names that need replacement
-  # repl <- models[!names(models) %in% colnams & names(models) %in% fcts_mis$var]
-  # colnams[colnams == fcts_mis$X_var[fcts_mis$var == names(repl)]] <-
-  #   fcts_mis$var[fcts_mis$var == names(repl)]
-  #
-  # Xc_seq <- c(which(colSums(is.na(Xc)) == 0 &
-  #                     (!gsub("[[:digit:]]*$", "", colnames(Xc)) %in% fcts_all$X_var |
-  #                        colnames(Xc) %in% auxvars)),
-  #             unlist(lapply(names(models), match_positions, data, colnams))
-  # )
-  #
-  # Xc_seq <- c(Xc_seq, which(!1:ncol(Xc) %in% Xc_seq))
-
-  # Xc <- Xc[, Xc_seq, drop = FALSE]
   Xc <- Xc[, sort_cols(Xc, fcts_all), drop = FALSE]
 
   # * update Z -------------------------------------------------
@@ -166,7 +121,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   hc_list <- if (!is.null(random))
     get_hc_list(X2, Xc, Xic, Z, Z2, Xlong)
 
-  # * Xlong --------------------
+  # * Xlong --------------------------------------------------------------------
   if (!is.null(Xlong)) {
     linteract <- if (any(grepl(":", colnames(Xlong), fixed = TRUE))) {
       grep(":", colnames(Xlong), fixed = TRUE, value = TRUE)
@@ -175,27 +130,18 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     Xl <- if (any(!colnames(Xlong) %in% linteract)) {
       Xl <- Xlong[, !colnames(Xlong) %in% linteract, drop = FALSE]
       Xl <- Xl[, sort_cols(Xl, fcts_all), drop = FALSE]
-      #
-      # Xl[, order(colSums(is.na(Xl))), drop = FALSE]
     }
 
     hc_interact <- unlist(sapply(hc_list, function(x) {
       names(x)[sapply(x, attr, 'matrix') == 'Xc']
-      # names(which(attr(x, "matrix") == "Xc"))
     }))
+
     Xil <- if (!is.null(linteract) & any(!linteract %in% hc_interact)) {
       Xlong[, linteract[!linteract %in% hc_interact], drop = FALSE]
     }
 
-    if (!is.null(Xil)) {
-      Xil <- Xil * NA
-    }
+    if (!is.null(Xil)) Xil <- Xil * NA
 
-    # if (!is.null(Xl)) {
-    #   if (sum(is.na(Xl)) > 0) {
-    #     stop("Missing values in the longitudinal variables are not allowed.")
-    #   }
-    # }
   } else {
     Xl <- Xil <- NULL
   }
@@ -227,20 +173,10 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   }
 
   if (!is.null(Xtrafo)) {
-    #   if (any(!fcts_mis$X_var %in% c(colnames(Xc), colnames(Xl), colnames(Z))))
-    #     stop(gettextf("%s is not a column of the design matrix Xc.",
-    #                   paste(dQuote(fcts_mis$X_var[!fcts_mis$X_var %in% colnames(Xc)]),
-    #                         collapse = ", ")),
-    #                   "\nAre you using a transformation that results in multiple columns, e.g., splines?")
     Xc[, match(as.character(fcts_mis$X_var), colnames(Xc))] <- NA
   }
 
   if (!is.null(Xltrafo)) {
-    #   if (any(!fcts_mis$X_var %in% c(colnames(Xc), colnames(Xl), colnames(Z))))
-    #     stop(gettextf("%s is not a column of the design matrix Xc.",
-    #                   paste(dQuote(fcts_mis$X_var[!fcts_mis$X_var %in% colnames(Xc)]),
-    #                         collapse = ", ")),
-    #                   "\nAre you using a transformation that results in multiple columns, e.g., splines?")
     Xl[, match(as.character(fcts_mis$X_var), colnames(Xl))] <- NA
     Z[, match(as.character(fcts_mis$X_var), colnames(Z))] <- NA
   }
@@ -265,8 +201,6 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   cat_vars_base <- sapply(cat_vars_base, match_positions,
                           data, colnames(Xc), simplify = FALSE)
 
-  # cat_vars_long <- sapply(cat_vars_long, match_positions,
-  #                         data, colnames(Xl), simplify = FALSE)
 
   Xcat <- if (length(cat_vars_base) > 0) {
     data[match(unique(groups), groups), names(cat_vars_base), drop = FALSE]
@@ -281,7 +215,6 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   }
 
   if (!is.null(Xlcat)) {
-    # Xl[, unlist(sapply(cat_vars_long[names(cat_vars_long) %in% names(models)], names))] <- NA
     Xl[, match(unlist(lapply(refs[cat_vars_long], attr, 'dummies')), colnames(Xl))] <- NA
     Z[, match(unlist(lapply(refs[cat_vars_long], attr, 'dummies')), colnames(Z))] <- NA
   }

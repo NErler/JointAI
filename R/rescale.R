@@ -1,8 +1,5 @@
 
 rescale <- function(x, fixed2, scale_pars, MCMC, refs, coef_lvl) {
-
-  # coefs <- colnames(attr(terms(fixed2), "factors"))
-
   x_split <- unlist(strsplit(x, ":"))
 
   coef_split <- sapply(coef_lvl, splitstring2, x = x, x_split = x_split, simplify = FALSE)

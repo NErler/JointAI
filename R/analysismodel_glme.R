@@ -1,13 +1,4 @@
-# Function to write linear mixed model as analysis model
-# @param N number of subjects / random intercepts
-# @param y y
-# @param Z random effects design matrix
-# @param Xic design matrix of cross-sectional interaction effects
-# @param Xl design matrix of longitudinal covariates
-# @param hc_list hierarchical centering specification
-# @param K matrix specifying the number of parameters for each component of the
-#        fixed effects
-# @export
+# Generalized linear mixed model -----------------------------------------------
 glme_model <- function(family, link, Mlist, K, ...){
   y_name <- colnames(Mlist$y)
 
@@ -43,7 +34,7 @@ glme_model <- function(family, link, Mlist, K, ...){
                     "probit"   = function(x) paste0("probit(", x, ")"),
                     "log"      = function(x) paste0("log(", x, ")"),
                     "cloglog"  = function(x) paste0("cloglog(", x, ")"),
-                    # "sqrt"     = function(x) paste0("sqrt(", x, ")"),
+                    # "sqrt": JAGS does not have sqrt has link function
                     "inverse"  = function(x) paste0("1/", x)
   )
 
@@ -109,11 +100,7 @@ glme_model <- function(family, link, Mlist, K, ...){
 
 
 
-# Write priors for a linear mixed model
-# @param K K
-# @param y_name name of the outcome
-# @param Z random effects design matrix
-# @export
+# priors for generalized lineasr mixed model -----------------------------------
 glme_priors <- function(family, link, K, Mlist, ...){
   y_name <- colnames(Mlist$y)
 
@@ -168,6 +155,3 @@ glmereg_priors <- function(K, Mlist, family, link){
     distr,
     tab(), "}",  "\n\n")
 }
-
-
-

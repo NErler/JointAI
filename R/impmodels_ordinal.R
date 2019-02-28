@@ -115,8 +115,6 @@ impmodel_clmm <- function(varname, dest_mat, dest_col, Xc_cols, Xl_cols, ncat, r
                          cols = Xc_cols, indent = 19 + nchar(varname)), "\n",
          paste_rdslopes_covmod(nranef, hc_list, par_elmts, varname), "\n",
          tab(), "}\n"
-         # paste_Xic,
-         # "\n",
   )
 }
 

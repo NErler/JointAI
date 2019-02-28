@@ -1,14 +1,4 @@
-# Function to write generalized linear regression model as analysis model
-# @param N number of subjects / random intercepts
-# @param y y
-# @param Z random effects design matrix
-# @param Xic design matrix of cross-sectional interaction effects
-# @param Xl design matrix of longitudinal covariates
-# @param hc_list hierarchical centering specification
-# @param K matrix specifying the number of parameters for each component of the
-#        fixed effects
-#
-# @export
+# Generalized linear model
 glm_model <- function(family, link, Mlist, K, ...){
 
   y_name <- colnames(Mlist$y)
@@ -41,13 +31,14 @@ glm_model <- function(family, link, Mlist, K, ...){
                   "Poisson" = NULL)
 
 
+
   linkfun <- switch(link,
                     "identity" = function(x) x,
                     "logit"    = function(x) paste0("logit(", x, ")"),
                     "probit"   = function(x) paste0("probit(", x, ")"),
                     "log"      = function(x) paste0("log(", x, ")"),
                     "cloglog"  = function(x) paste0("cloglog(", x, ")"),
-                    # "sqrt"     = function(x) paste0("sqrt(", x, ")"),
+                    # "sqrt": JAGS does not have this link function
                     "inverse"  = function(x) paste0("1/", x)
   )
 
@@ -73,17 +64,13 @@ glm_model <- function(family, link, Mlist, K, ...){
          paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xc',
                          parelmts = K["Xc", 1]:K["Xc", 2],
                          cols = Mlist$cols_main$Xc, indent = indent),
-         # " <- inprod(Xc[j, ], beta[", K['Xc', 1], ":", K['Xc', 2], "])",
          paste_Xic
   )
 }
 
 
 
-# Write priors for the regression coefficients of the linear model
-# @param K K
-# @param y_name character string, name of outcome
-# @export
+# priors for GLM analysis model
 glm_priors <- function(family, link, K, Mlist, ...){
   y_name <- colnames(Mlist$y)
 

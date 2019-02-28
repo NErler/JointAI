@@ -1,7 +1,4 @@
-# extract names of regression coefficients
-# @param Mlist Mlist
-# @param K K
-# @export
+
 get_coef_names <- function(Mlist, K) {
 
   coefs <- rbind(

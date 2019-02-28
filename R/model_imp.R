@@ -659,8 +659,7 @@ if (!is.null(inits)) {
   options(contrasts = opt)
 
   return(structure(
-    list(#call = thecall,
-         analysis_type = analysis_type,
+    list(analysis_type = analysis_type,
          data = data, models = models, fixed = fixed, random = random,
          Mlist = Mlist,
          K = K,

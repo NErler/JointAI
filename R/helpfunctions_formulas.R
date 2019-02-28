@@ -104,16 +104,12 @@ extract_fcts <- function(formula, data, random = NULL, complete = FALSE, ...) {
 
       df$X_var <- unlist(X_vars)
 
-      # if (is.null(df$X_var))
-      #   df$X_var <- rownames(df)
-
       df[, c("X_var", "var", 'fct')]
     }, simplify = FALSE)
 
     # convert to data.frame
     fctDF <- do.call(rbind, fctList)
     fctDF$type <- rep(names(fctList), sapply(fctList, nrow))
-    # fctDF$fct <- fctDF$X_var
 
     # remove duplicates
     fctDF <- fctDF[!duplicated(fctDF[, -which(names(fctDF) == 'type')]), ]

@@ -1,13 +1,4 @@
-# Function to write linear regression model as analysis model
-# @param N number of subjects / random intercepts
-# @param y y
-# @param Z random effects design matrix
-# @param Xic design matrix of cross-sectional interaction effects
-# @param Xl design matrix of longitudinal covariates
-# @param hc_list hierarchical centering specification
-# @param K matrix specifying the number of parameters for each component of the
-#        fixed effects
-# @export
+# Linear regression model ------------------------------------------------------
 lm_model <- function(Mlist, K, ...){
 
   y_name <- colnames(Mlist$y)
@@ -39,10 +30,7 @@ lm_model <- function(Mlist, K, ...){
 
 
 
-# Write priors for the regression coefficients of the linear model
-# @param K K
-# @param y_name character string, name of outcome
-# @export
+# priors for linear regression model -------------------------------------------
 lm_priors <- function(K, Mlist, ...){
   y_name <- colnames(Mlist$y)
 

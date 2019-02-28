@@ -1,4 +1,4 @@
-
+# parametric survival model ---------------------------------------------------
 survreg_model <- function(Mlist, K, ...){
 
   y_name <- colnames(Mlist$y)
@@ -32,6 +32,7 @@ survreg_model <- function(Mlist, K, ...){
   )
 }
 
+# priors for parametric survival model -----------------------------------------
 survreg_priors <- function(K, Mlist, ...){
   y_name <- colnames(Mlist$y)
 
@@ -64,7 +65,7 @@ survreg_priors <- function(K, Mlist, ...){
 
 
 
-
+# Cox PH model -----------------------------------------------------------------
 coxph_model <- function(Mlist, K, ...){
 
   y_name <- colnames(Mlist$y)
@@ -91,6 +92,8 @@ coxph_model <- function(Mlist, K, ...){
   )
 }
 
+
+# priors for Cox PH model ------------------------------------------------------
 coxph_priors <- function(K, Mlist, ...){
   y_name <- colnames(Mlist$y)
 

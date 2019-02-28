@@ -1,3 +1,10 @@
+
+#################################################################################
+#################################################################################
+### CURRENTLY NOT USED
+#################################################################################
+#################################################################################
+
 get_inits <- function(object, ...) {
   UseMethod("get_inits")
 }
@@ -89,10 +96,3 @@ get_inits.default = function(models, Mlist, K, K_imp, analysis_type, family, lin
 
   return(l)
 }
-
-
-# get_inits.JointAI = function(object) {
-#   get_inits.default(models = object$models, Mlist = object$Mlist, K = object$K,
-#                     K_imp = object$K_imp, analysis_type = object$analysis_type,
-#                     family = attr(object$analysis_type, "family"))
-# }

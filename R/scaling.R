@@ -1,9 +1,3 @@
-# calculate scaled data matrix
-# @param X a matrix
-# @param scale_vars a vector of variable names or FALSE
-# @param scale_pars a matrix of scaling parameters or FALSE or NULL
-# @param models
-# @export
 
 scale_matrix <- function(X, scale_vars, scale_pars, models) {
   Xsc <- X
@@ -51,8 +45,10 @@ scale_matrix <- function(X, scale_vars, scale_pars, models) {
 }
 
 
-# function for scaling
-# @export
+
+
+
+
 get_scaling <- function(Mlist, scale_pars, models, data) {
   varnams <- unique(unlist(strsplit(colnames(model.matrix(Mlist$fixed2, data)),
                                     "[:|*]")))
@@ -103,30 +99,6 @@ get_scaling <- function(Mlist, scale_pars, models, data) {
 }
 
 
-
-# Function to find the names of columns in the model matrix that involve
-# continuous covariates (and hence may need to be scaled)
-# for now not used
-find_continuous <- function(fixed, DF, contr = NULL) {
-  # remove left side of formula
-  fmla <- as.formula(sub("[[:print:]]*\\~", "~",
-                         deparse(fixed, width.cutoff = 500)))
-
-  # check which variables involved are continuous
-  is_continuous <- !sapply(DF[, all.vars(fmla)], is.factor)
-
-  elmts <- attr(terms(fmla), "term.labels")
-
-  fixed_c <- as.formula(
-    paste("~",
-          paste(elmts[unique(unlist(sapply(names(is_continuous)[is_continuous],
-                                           grep, elmts)))],
-                collapse = " + ")
-    )
-  )
-
-  colnames(model.matrix(fixed_c, DF, contrasts.arg = contr)[, -1L , drop = FALSE])
-}
 
 
 # Function to find the names of columns in the model matrix that involve

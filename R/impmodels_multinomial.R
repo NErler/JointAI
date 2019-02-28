@@ -1,10 +1,4 @@
 # Imputation by cumulative logistic regression
-# @param varname name of the variable to be imputed
-# @param dest_col column of Xc containing the variable to be imputed
-# @param Xc_cols columns of the design matrix to used in linear predictor
-# @param par_elmts elements of the parameter vector to be used
-# @param par_name name of the parameter
-# @export
 impmodel_multilogit <- function(varname, dest_col, Xc_cols, par_elmts, dummy_cols, ncat, dest_mat, refcat, ...){
 
   indent <- nchar(varname) + 23
@@ -35,10 +29,6 @@ impmodel_multilogit <- function(varname, dest_col, Xc_cols, par_elmts, dummy_col
 
 
 # Priors for multinomial imputation model
-# @param varname name of the variable to be imputed
-# @param par_elmts elements of the parameter vector to be used
-# @param par_name name of the parameter
-# @export
 impprior_multilogit <- function(varname, par_elmts, par_name, ...){
   paste0('\n',
          tab(), "# Priors for ", varname,"\n",

@@ -266,8 +266,6 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
                  end = end,
                  thin = thin)
 
-
-  # MCMC <- window(object$MCMC, start = start, end = end, thin = thin)
   time <- time(MCMC)
 
   # get number of rows and columns of plots

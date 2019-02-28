@@ -1,13 +1,4 @@
-# Function to write linear mixed model as analysis model
-# @param N number of subjects / random intercepts
-# @param y y
-# @param Z random effects design matrix
-# @param Xic design matrix of cross-sectional interaction effects
-# @param Xl design matrix of longitudinal covariates
-# @param hc_list hierarchical centering specification
-# @param K matrix specifying the number of parameters for each component of the
-#        fixed effects
-# @export
+# Linear mixed model -----------------------------------------------------------
 lme_model <- function(Mlist, K, ...){
   y_name <- colnames(Mlist$y)
   indent <- nchar(y_name) + 4 + 10
@@ -64,7 +55,7 @@ lme_model <- function(Mlist, K, ...){
 
 
 
-# Write priors for a linear mixed model
+# priors for linear mixed model
 lme_priors <- function(K, Mlist, ...){
   y_name <- colnames(Mlist$y)
 

@@ -52,13 +52,6 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
 
   norm.distr  <- if (nranef < 2) {"dnorm"} else {"dmnorm"}
 
-  # paste_Xic <- if (length(Mlist$cols_main$Xic) > 0) {
-  #   paste0(" + \n", tab(nchar(varname) + 17),
-  #          paste_predictor(parnam = 'alpha', parindex = 'i', matnam = 'Xic',
-  #                          parelmts = K["Xic", 1]:K["Xic", 2],
-  #                          cols = Mlist$cols_main$Xic, indent = 0))
-  # }
-
   paste_Xl <- if (!is.null(Xl_cols)) {
     paste0(" + \n", tab(indent),
            paste_predictor(parnam = 'alpha', parindex = 'j', matnam = 'Xl',
@@ -74,7 +67,6 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
                Xmat = lapply(trafo_cols, names),
                MoreArgs = list(dest_col = dest_col, index = 'j')), "\n"
     )
-      # paste_trafos(dest_col, trafo_cols, trafos = trfo_fct, Xmat = trafo_mat, index = 'j'))
   }
 
   paste_ppc <- NULL #if (ppc) {
@@ -93,7 +85,6 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
                                parelmts = 1:nranef,
                                cols = Z_cols, indent = indent),
          paste_Xl,
-         # paste_Xil,
          "\n",
          paste_ppc,
          paste0(trfs, collapse = "\n"),
@@ -107,8 +98,6 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
                          cols = Xc_cols, indent = 19 + nchar(varname)), "\n",
          paste_rdslopes_covmod(nranef, hc_list, par_elmts, varname), "\n",
          tab(), "}\n"
-         # paste_Xic,
-         # "\n",
   )
 }
 
