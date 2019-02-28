@@ -49,7 +49,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   trafosX <- extract_fcts(fixed, data, random = random, complete = TRUE)
   add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), auxvars))]
   # add_to_aux <- add_to_aux[!sapply(data[add_to_aux], check_tvar, groups)] ######## was this in here
-  if (length(add_to_aux) > 0)
+  if (length(add_to_aux) > 0 & !is.null(models))
     auxvars <- c(auxvars, unique(add_to_aux))
 
   # fixed effects design matrices
