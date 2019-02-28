@@ -451,7 +451,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   # imputation parameters/specifications ---------------------------------------
   if (is.null(dest_cols)) {
-    dest_cols <- sapply(unique(c(names(models), colnames(Mlist$Xtrafo))),
+    dest_cols <- sapply(unique(c(names(models), colnames(Mlist$Xtrafo), colnames(Mlist$Xltrafo))),
                         get_dest_column, Mlist = Mlist, simplify = FALSE)
   }
 
