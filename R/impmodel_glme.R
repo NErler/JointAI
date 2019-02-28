@@ -68,7 +68,7 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
   }
 
 
-  trfs <- if (dest_mat == "Xltrafo") {
+  trfs <- if (dest_mat == "Xltrafo" & length(trfo_fct) > 0) {
     c("\n",
         mapply(paste_trafos, trafo_cols = trafo_cols, trafos = trfo_fct,
                Xmat = lapply(trafo_cols, names),
