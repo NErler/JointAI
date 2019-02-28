@@ -151,7 +151,7 @@ glmereg_priors <- function(K, Mlist, family, link){
                  gaussian = 'norm',
                  binomial = link,
                  Gamma = 'gamma',
-                 Poisson = 'poisson'
+                 poisson = 'poisson'
   )
 
   if (Mlist$ridge) {

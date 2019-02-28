@@ -111,7 +111,7 @@ glm_priors <- function(family, link, K, Mlist, ...){
                  gaussian = 'norm',
                  binomial = link,
                  Gamma = 'gamma',
-                 Poisson = 'poisson'
+                 poisson = 'poisson'
   )
 
 
