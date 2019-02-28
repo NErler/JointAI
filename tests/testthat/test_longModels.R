@@ -6,8 +6,8 @@ test_that("model with no covariates work", {
   expect_equal(class(lme_imp(y ~ 1, random = ~1|id, data = longDF)), "JointAI")
   expect_equal(class(glme_imp(b1 ~ 1, random = ~1|id, data = longDF,
                               family = 'binomial')), "JointAI")
-  # expect_equal(class(glme_imp(c2 ~ 1, random = ~1|id, data = longDF,
-  #                             family = Gamma(link = 'log'))), "JointAI")
+  # expect_equal(class(glme_imp(p1 ~ 1, random = ~1|id, data = longDF,
+  #                             family = poisson())), "JointAI")
   expect_equal(class(clmm_imp(o1 ~ 1, random = ~1|id, data = longDF)), "JointAI")
 })
 

@@ -112,8 +112,11 @@ test_that("splines in random effects give an error when a model is needed for th
                list(models = c(C2 = 'norm', c1 = 'lmm'), meth = c(C2 = 'norm'))
   )
 
-  expect_error(get_models(fixed = y ~ c1 + C1 + C2 + ns(time, df = 2),
-                          random = ~ ns(time, df = 2) | id, data = longDF))
+  expect_equal(get_models(fixed = y ~ c1 + C1 + C2 + ns(time, df = 2),
+                          random = ~ ns(time, df = 2) | id, data = longDF),
+               list(models = c(C2 = 'norm', c1 = 'lmm', time = 'lmm'),
+                    meth = c(C2 = 'norm'))
+  )
 
 
   expect_equal(get_models(fixed = y ~ c1 + C1 + C2 + ns(time, df = 2),
