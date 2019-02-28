@@ -6,8 +6,8 @@ test_that("model with no covariates work", {
   expect_equal(class(lme_imp(y ~ 1, random = ~1|id, data = longDF)), "JointAI")
   expect_equal(class(glme_imp(b1 ~ 1, random = ~1|id, data = longDF,
                               family = 'binomial')), "JointAI")
-  # expect_equal(class(glme_imp(p1 ~ 1, random = ~1|id, data = longDF,
-  #                             family = poisson())), "JointAI")
+  expect_equal(class(glme_imp(p1 ~ 1, random = ~1|id, data = longDF,
+                              family = poisson())), "JointAI")
   expect_equal(class(clmm_imp(o1 ~ 1, random = ~1|id, data = longDF)), "JointAI")
 })
 
@@ -179,4 +179,13 @@ test_that('glme_imp', {
   expect_error(glme_imp(b1 ~ C2 + B1 + time + c2 + c1 + m2, random = ~time | id, data = longDF,
                         family = 'binomial'))
 
+})
+
+
+
+test_that('poisson imputation', {
+  testthat::skip_on_cran()
+  expect_equal(class(lme_imp(y ~ C1 + C2 + p2 + time, random = ~time|id, data = longDF,
+                             models = c(p2 = "glmm_poisson"), n.iter = 100)),
+               "JointAI")
 })
