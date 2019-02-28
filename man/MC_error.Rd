@@ -52,7 +52,9 @@ given directly by \strong{JointAI}.}
   (spectral variance method with a Bartlett window).}
 }}
 
-\item{data_scale}{show the Monte Carlo error of the sample transformed back to the scale of the data (\code{TRUE}) or on the sampling scale (this requires the argument \code{keep_scaled_mcmc = TRUE} in the JointAI model)}
+\item{data_scale}{show the Monte Carlo error of the sample transformed back
+to the scale of the data (\code{TRUE}) or on the sampling scale (this
+requires the argument \code{keep_scaled_mcmc = TRUE} in the JointAI model)}
 
 \item{plotpars}{optional; list of parameters passed to \code{\link[graphics]{plot}()}}
 
