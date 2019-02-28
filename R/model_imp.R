@@ -334,6 +334,20 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   opt <- getOption("contrasts")
   options(contrasts = rep("contr.treatment", 2))
 
+  allvars <- unique(c(all.vars(fixed),
+                      all.vars(random),
+                      if (!is.null(auxvars))
+                        all.vars(as.formula(paste('~',
+                                                  paste(auxvars, collapse = " + "))))
+  ))
+
+  if (any(!allvars %in% names(data))) {
+    stop(gettextf("Variable(s) %s were not found in the data." ,
+                  paste(dQuote(allvars[!allvars %in% names(data)]), collapse = ", ")),
+         call. = FALSE)
+  }
+
+
   # * check classes of covariates ----------------------------------------------
   covars <- unique(c(all.vars(fixed),
                      all.vars(remove_grouping(random)),
@@ -351,13 +365,6 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   # * drop empty categories ----------------------------------------------------
-  allvars <- unique(c(all.vars(fixed),
-                      all.vars(random),
-                      if (!is.null(auxvars))
-                        all.vars(as.formula(paste('~',
-                                                  paste(auxvars, collapse = " + "))))
-  ))
-
   data_orig <- data
   data[allvars] <- droplevels(data[allvars])
 

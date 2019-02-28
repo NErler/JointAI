@@ -31,30 +31,19 @@ get_models <- function(fixed, random = NULL, data,
   if (missing(data))
     stop("No dataset given.")
 
-  random2 <- remove_grouping(random)
-
-  # try to extract id variable from random
-  id <- extract_id(random)
-  idvar <- if (!is.null(id)) {
-    data[, id]
-  } else {
-    1:nrow(data)
-  }
-
+  # check that all variables are found in the data
   allvars <- unique(c(all.vars(fixed[[3]]),
-                      all.vars(random2),
+                      all.vars(random),
                       if (!is.null(auxvars))
                         all.vars(as.formula(paste('~',
                                                   paste(auxvars, collapse = "+")))
                         )
   ))
 
-  # check that all variables are found in the data
   if (any(!allvars %in% names(data))) {
     stop(gettextf("Variable(s) %s were not found in the data." ,
-                  paste(dQuote(allvars[!allvars %in% names(data)]), collapse = ", "),
+                  paste(dQuote(allvars[!allvars %in% names(data)]), collapse = ", ")),
                   call. = FALSE)
-    )
   }
 
 
@@ -65,6 +54,24 @@ get_models <- function(fixed, random = NULL, data,
     )
   }
 
+
+  # try to extract id variable from random
+  id <- extract_id(random)
+  idvar <- if (!is.null(id)) {
+    data[, id]
+  } else {
+    1:nrow(data)
+  }
+  random2 <- remove_grouping(random)
+
+
+  allvars <- unique(c(all.vars(fixed[[3]]),
+                      all.vars(random2),
+                      if (!is.null(auxvars))
+                        all.vars(as.formula(paste('~',
+                                                  paste(auxvars, collapse = "+")))
+                        )
+  ))
 
 
   if (length(allvars) > 0) {
