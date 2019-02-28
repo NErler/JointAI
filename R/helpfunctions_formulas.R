@@ -90,19 +90,30 @@ extract_fcts <- function(formula, data, random = NULL, complete = FALSE, ...) {
     fctList <- sapply(varlist, function(x) {
       if (inherits(x, 'character'))
         x <- t(as.matrix(x))
+
+      X_vars <- sapply(colnames(x), function(k)
+        colnames(model.matrix(as.formula(paste("~", k)), data))[-1],
+        simplify = FALSE)
+
       df <- melt_matrix(x,
                         valname = 'var',
-                        varnames = c('rownames', 'X_var'))
-      if (is.null(df$X_var))
-        df$X_var <- rownames(df)
+                        varnames = c('rownames', 'fct'))
 
-      df[, c("X_var", "var")]
+      if (any(sapply(X_vars, length) > 1))
+        df <- df[match(rep(names(X_vars), sapply(X_vars, length)), df$fct), ]
+
+      df$X_var <- unlist(X_vars)
+
+      # if (is.null(df$X_var))
+      #   df$X_var <- rownames(df)
+
+      df[, c("X_var", "var", 'fct')]
     }, simplify = FALSE)
 
     # convert to data.frame
     fctDF <- do.call(rbind, fctList)
     fctDF$type <- rep(names(fctList), sapply(fctList, nrow))
-    fctDF$fct <- fctDF$X_var
+    # fctDF$fct <- fctDF$X_var
 
     # remove duplicates
     fctDF <- fctDF[!duplicated(fctDF[, -which(names(fctDF) == 'type')]), ]
