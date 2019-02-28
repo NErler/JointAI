@@ -134,7 +134,7 @@ paste_rdslopes <- function(nranef, hc_list, K){
       beta_start <- K[names(hc_list)[k - 1], 1]
       beta_end <- K[names(hc_list)[k - 1], 2]
 
-      if (any(sapply(hc_list[[k - 1]], attr, "matrix") %in% c("Xc", 'Z'))) {
+      if (any(sapply(hc_list[[k - 1]], attr, "matrix") %in% c("Xc", 'Z')) & !is.na(beta_start)) {
         vec <- sapply(hc_list[[k - 1]], attr, "matrix")
 
         Xc_pos <- lapply(seq_along(vec), function(i) {

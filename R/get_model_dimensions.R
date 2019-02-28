@@ -13,9 +13,20 @@ get_model_dim <- function(cols_main, hc_list){
     for (i in 1:length(hc_list)) {
       K[names(hc_list)[i], ] <-
         if (length(hc_list[[i]]) > 0) {
-          c(1, max(1, sum(sapply(hc_list[[i]], attr, 'matrix') %in% c('Xc', 'Z')))) +
-          # c(1, max(1, length(hc_list[[i]]))) +
-            max(c(K, 0), na.rm = TRUE)
+          nef <- sapply(hc_list[[i]], function(x) {
+            mat <- attr(x, 'matrix')
+            col <- attr(x, 'column')
+            sum(col %in% cols_main[[mat]])
+          })
+
+          if (sum(nef) > 0) {
+            c(1, sum(nef)) + max(c(K, 0), na.rm = TRUE)
+          } else {
+            c(NA, NA)
+          }
+
+          # c(1, max(1, sum(sapply(hc_list[[i]], attr, 'matrix') %in% c('Xc', 'Z')))) +
+          #   max(c(K, 0), na.rm = TRUE)
         } else {
           c(NA, NA)
         }
