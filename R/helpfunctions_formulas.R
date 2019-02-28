@@ -136,7 +136,7 @@ extract_fcts <- function(formula, data, random = NULL, complete = FALSE, ...) {
         fctDF[anymis, , drop = FALSE]
       }
     } else {
-      fctDF$compl <- colSums(is.na(data[, fctDF$var])) == 0
+      fctDF$compl <- colSums(is.na(data[, fctDF$var, drop = FALSE])) == 0
     }
 
     if (!is.null(fctDF)) {
