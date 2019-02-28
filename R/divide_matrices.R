@@ -198,7 +198,8 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   fcts_mis <- extract_fcts(fixed2, data, random = random, complete = FALSE)
 
   if (any(fcts_mis$type %in% c('ns', 'bs')))
-    stop("Splines are currently not implemented for incomplete variables.")
+    stop("Splines are currently not implemented for incomplete variables.",
+         call. = FALSE)
 
 
   if (!is.null(fcts_mis)) {
