@@ -124,28 +124,30 @@ extract_fcts <- function(formula, data, random = NULL, complete = FALSE, ...) {
       fctDF <- if (any(anymis)) {
         fctDF[anymis, , drop = FALSE]
       }
+    } else {
+      fctDF$compl <- colSums(is.na(data[, fctDF$var])) == 0
     }
 
     if (!is.null(fctDF)) {
       # look for functions that involve several variables and occur multiple times in fctDF
-      dupl <- duplicated(fctDF[, -which(names(fctDF) == 'var')]) |
-              duplicated(fctDF[, -which(names(fctDF) == 'var')], fromLast = TRUE)
+      dupl <- duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl'))]) |
+              duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl'))], fromLast = TRUE)
 
       fctDF$dupl <- FALSE
 
       # identify which rows relate to the same expression in the formula
-      p <- apply(fctDF[, -which(names(fctDF) == 'var')], 1, paste, collapse = "")
+      p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'compl'))], 1, paste, collapse = "")
 
       for (k in which(dupl)) {
         eq <- which(p == p[k])
         ord <- order(sapply(data[fctDF$var[eq]], function(x)any(is.na(x))), decreasing = T)
 
-        fctDF$dupl[ord] <- duplicated(p[ord])
+        fctDF$dupl[eq[ord]] <- duplicated(p[eq[ord]])
       }
 
       # fctDF$dupl <- duplicated(fctDF[, -which(names(fctDF) == 'var')])
 
-      p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'dupl'))], 1, paste, collapse = "")
+      p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'dupl', 'compl'))], 1, paste, collapse = "")
       fctDF$dupl_rows <- NA
       fctDF$dupl_rows[which(dupl)] <- lapply(which(dupl), function(i) {
         m <- unname(which(p == p[i]))
