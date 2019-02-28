@@ -1,4 +1,4 @@
-impmodel_continuous <- function(impmeth, varname, dest_col, dest_mat, trafo_cols, trafos,
+impmodel_continuous <- function(impmeth, varname, dest_col, dest_mat, trafo_cols,
                                 trfo_fct, Xc_cols, par_elmts, trunc, ppc,
                                 mess = TRUE, ...){
 
