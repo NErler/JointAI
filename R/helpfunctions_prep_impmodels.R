@@ -100,7 +100,10 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        } else if (!is.na(dest_cols[[varname]]$Xltrafo)) {
          "Xltrafo"
        } else if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson')) {
-         names(which(!is.na(dest_cols[[varname]])))
+         varname_dum <- attr(Mlist$refs[[varname]], 'dummies')
+         names(dest_cols[[varname]][which(sapply(dest_cols[[varname]],
+                                                  function(k) any(!is.na(k[c(varname, varname_dum)]))
+         ))])
        } else if (impmeth %in% c('clmm')) {
          "Xlcat"
        } else{"Xc"},
@@ -113,7 +116,12 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
        } else if (!is.na(dest_cols[[varname]]$Xltrafo)) {
          dest_cols[[varname]]$Xltrafo
        } else if (impmeth %in% c("lmm", "glmm_logit", "glmm_gamma", "glmm_poisson")) {
-         dest_cols[[varname]][[which(!is.na(dest_cols[[varname]]))]]
+         # dest_cols[[varname]][[which(!is.na(dest_cols[[varname]]))]]
+         varname_dum <- attr(Mlist$refs[[varname]], 'dummies')
+         dc <- dest_cols[[varname]][[which(sapply(dest_cols[[varname]],
+                                            function(k) any(!is.na(k[c(varname, varname_dum)]))
+                                            ))]]
+         dc[names(dc) %in% c(varname, varname_dum)]
        } else {
          dest_cols[[varname]]$Xc
        },
