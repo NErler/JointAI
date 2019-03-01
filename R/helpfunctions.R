@@ -116,8 +116,18 @@ melt_data.frame <- function(data, id.vars = NULL, varnames = NULL, valname = 'va
 sort_cols <- function(mat, fct_all) {
   iscompl <- ifelse(colSums(is.na(mat)) == 0, 'compl', 'mis')
   istrafo <- ifelse(colnames(mat) %in% fct_all$X_var[fct_all$type != 'identity'], 'fct', 'main')
+  names(istrafo) <- colnames(mat)
+
+  no_main <- sapply(colnames(mat)[istrafo == 'fct'], function(x) {
+    !x %in% fct_all$X_var[fct_all$var == x]
+  })
+  istrafo[names(no_main)] <- 'main'
 
   l <- split(colnames(mat), list(iscompl, istrafo))
+  l <- lapply(l, function(x)
+    x[order(colSums(is.na(mat[, x, drop = FALSE])))]
+  )
+
   out <- unlist(l[c('compl.main', 'mis.main', 'compl.fct', 'mis.fct')])
 
   if (length(setdiff(out, colnames(mat))) > 0) {
