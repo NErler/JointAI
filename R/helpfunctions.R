@@ -118,10 +118,12 @@ sort_cols <- function(mat, fct_all) {
   istrafo <- ifelse(colnames(mat) %in% fct_all$X_var[fct_all$type != 'identity'], 'fct', 'main')
   names(istrafo) <- colnames(mat)
 
-  no_main <- sapply(colnames(mat)[istrafo == 'fct'], function(x) {
-    !x %in% fct_all$X_var[fct_all$var == x]
-  })
-  istrafo[names(no_main)] <- 'main'
+  if (any(istrafo == 'fct')) {
+    no_main <- sapply(colnames(mat)[istrafo == 'fct'], function(x) {
+      !any(fct_all$X_var %in% fct_all$var[fct_all$X_var == x])
+    })
+    istrafo[names(no_main)[no_main]] <- 'main'
+  }
 
   l <- split(colnames(mat), list(iscompl, istrafo))
   l <- lapply(l, function(x)
