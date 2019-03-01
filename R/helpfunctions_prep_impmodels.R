@@ -165,22 +165,45 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
 
 
 
+# replace_power <- function(a) {
+#   # test if a power is involved
+#   is_power <- regexpr("\\^[[:digit:]]+", a) > 0
+#   while (is_power) {
+#     # extract the power
+#     pow <- gsub("\\^", '', regmatches(a, regexpr("\\^[[:digit:]]+", a), invert = FALSE)[[1]])
+#
+#     sep <- regmatches(a, regexpr("\\^[[:digit:]]+", a), invert = TRUE)[[1]]
+#
+#     front <- gsub("^I\\(", '', sep[1])
+#     back <- gsub("\\)$", '', sep[2])
+#
+#     a <- if (substr(front, start = nchar(front), stop = nchar(front)) == ")") {
+#       opening <- gregexpr("\\(", front)[[1]]
+#       paste0(substr(front, start = 1, stop = opening[length(opening)] - 1),
+#              "pow(",
+#              substr(front, start = opening[length(opening)], stop = nchar(front)),
+#              ", ", pow, ")", back)
+#     } else {
+#       vars <- strsplit(front, split = "[[:space:]]*[^_.[:^punct:]][[:space:]]*", perl = TRUE)[[1]]
+#       paste0(gsub(vars[length(vars)], paste0('pow(', vars[length(vars)],
+#                                              ", ", pow, ")"), front),
+#              back)
+#     }
+#     is_power <- regexpr("\\^[[:digit:]]+", a) > 0
+#   }
+#   return(a)
+# }
+
+
 
 get_trafo <- function(i, trafos, dest_cols) {
   if (trafos[i, "type"] == "identity") {
     ret <- paste0("Xtrafo[i, ", dest_cols[[trafos[i, "var"]]]$Xtrafo, "]")
   } else if (trafos[i, "type"] == "I") {
-    is_power <- regexpr(paste0(trafos[i, "var"], "\\^[[:digit:]]+"),
-                        trafos[i, "fct"]) > 0
-    if (is_power) {
-      pow <- gsub(paste0("I\\(", trafos[i, "var"], "\\^|\\)"), "", trafos[i, "fct"])
-      ret <- paste0("pow(Xtrafo[i, ", dest_cols[[trafos[i, "var"]]]$Xtrafo, "], ", pow, ")")
-    } else {
       ret <- gsub(trafos[i, "var"], paste0("Xtrafo[i, ",
                                            dest_cols[[trafos[i, "var"]]]$Xtrafo,
                                            "]"), trafos[i, "fct"])
       ret <- gsub("\\)$", "", gsub("^I\\(", "", ret))
-    }
   } else {
     ret <- gsub(trafos[i, "var"], paste0("Xtrafo[i, ",
                                          dest_cols[[trafos[i, "var"]]]$Xtrafo,
@@ -201,17 +224,10 @@ get_trafol <- function(i, trafos, dest_cols) {
   if (trafos[i, "type"] == "identity") {
     ret <- paste0("Xltrafo[j, ", dest_cols[[trafos[i, "var"]]]$Xltrafo, "]")
   } else if (trafos[i, "type"] == "I") {
-    is_power <- regexpr(paste0(trafos[i, "var"], "\\^[[:digit:]]+"),
-                        trafos[i, "fct"]) > 0
-    if (is_power) {
-      pow <- gsub(paste0("I\\(", trafos[i, "var"], "\\^|\\)"), "", trafos[i, "fct"])
-      ret <- paste0("pow(Xltrafo[j, ", dest_cols[[trafos[i, "var"]]]$Xltrafo, "], ", pow, ")")
-    } else {
-      ret <- gsub(trafos[i, "var"], paste0("Xltrafo[j, ",
-                                           dest_cols[[trafos[i, "var"]]]$Xltrafo,
-                                           "]"), trafos[i, "fct"])
-      ret <- gsub("\\)$", "", gsub("^I\\(", "", ret))
-    }
+    ret <- gsub(trafos[i, "var"], paste0("Xltrafo[j, ",
+                                         dest_cols[[trafos[i, "var"]]]$Xltrafo,
+                                         "]"), trafos[i, "fct"])
+    ret <- gsub("\\)$", "", gsub("^I\\(", "", ret))
   } else {
     ret <- gsub(trafos[i, "var"], paste0("Xltrafo[j, ",
                                          dest_cols[[trafos[i, "var"]]]$Xltrafo,
