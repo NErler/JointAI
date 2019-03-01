@@ -36,47 +36,56 @@ explored.
 **Note:**<br>
 In many of the examples we use `n.adapt = 0`
 (and `n.iter = 0`, which is the default) in order to prevent the MCMC sampling 
-and, hence, reduce computational time.
+to reduce computational time when compiling this vignette.
 `mess = FALSE` is used to suppress messages that are not of interest in this
 vignette.
 
 ## Analysis model type
-**JointAI** has five main functions:
+**JointAI** has several main functions:
 
 * [`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
   linear regression
 * [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
   generalized linear regression
+* [`clm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
+  cumulative logit models
 * [`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
   linear mixed effects regression
 * [`glme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
   generalized linear mixed effects regression
+* [`clmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
+  cumulative logit mixed models
 * [`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
-  linear mixed effects regression
+  parametric (Weibull) survival models
+* [`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
+  Cox proportional hazards survival models
   
 Specification of these functions is similar to the specification of the complete
 data versions [`lm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html), [`glm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html),
 [`lme()`](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html)
 (from package **nlme**) and
+`clm()` and `clmm2()` (from package **ordinal**),
 [`survreg()`](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/survreg.html)
+and [`coxph()`](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/coxph.html)
 (from package **survival**).
 `glme_imp()` uses a combination of the specification used for `lme()` and `glm()`. 
 
 
-`lm_imp()`, `glm_imp()` and `survreg_imp()` take arguments `formula` and `data`,
-whereas `lme_imp()` and `glme_imp()` require the specification of a `fixed`
-effects and a `random` effects formula.
+`lm_imp()`, `glm_imp()`, `clm_imp()`, `survreg_imp()` and `coxph_imp()` 
+take arguments `formula` and `data`,
+whereas `lme_imp()` and `glme_imp()`, `clmm_imp()` require the specification of
+a `fixed` effects and a `random` effects formula.
 Specification of the fixed effects formula is demonstrated in section 
 [Model formula](#ModelFormula),
 specification of the random effects in section
-[Multi level structure & longitudinal covariates](#MultiLevelStructure)
+[Multi-level structure & longitudinal covariates](#MultiLevelStructure).
 
 Additionally, `glm_imp()` and `glme_imp()` require the specification of the model 
 [`family`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html)
-and `link` function. 
+(and `link` function). 
 
 ### Model family and link functions
-Implemented families and links are
+Implemented families and links for `glm_imp()` and `glme_imp()` are
 ```{r, echo = FALSE}
 tab <- rbind(gaussian = "with links: `identity`, `log`",
              binomial = "with links: `logit`, `probit`, `log`, `cloglog`",
@@ -119,15 +128,16 @@ mod1d$analysis_type
 
 
 ## Model formula{#ModelFormula}
-The arguments `formula` (in `lm_imp()`, `glm_imp()` and `survreg_imp()`) 
-and `fixed` (in `lme_imp()` and `glme_imp()`) take a two-sided
+The arguments `formula` (in `lm_imp()`, `glm_imp()`, `clm_imp()`, `survreg_imp()`
+and `coxph_imp()`) 
+and `fixed` (in `lme_imp()`, `glme_imp()` and `clmm_imp()`) take a two-sided
 [`formula`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html)
 object, where `~` separates the response (outcome / dependent variable) from the
 linear predictor, in which covariates (independent variables) are separated by
 `+`.
 An intercept is added automatically.
 
-`survreg_imp()` expects a [survival object (`Surv()`)](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/Surv.html)
+`survreg_imp()` and `coxph_imp()` expect a [survival object (`Surv()`)](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/Surv.html)
 on the left hand side of the model formula. Currently, only right censored data
 can be handled.
 
@@ -176,6 +186,12 @@ When an incomplete variable is involved, the interaction term is re-calculated
 within each iteration of the MCMC sampling, using the imputed values from the
 current iteration.
 
+It is important not to pre-calculate interactions with incomplete
+variables as extra variables in the dataset, but to them in the model formula.
+Otherwise imputed values of the main effect and interaction term will not
+match and results may be incorrect.
+
+
 ### Non-linear functional forms
 In practice, associations between outcome and covariates do not always meet
 the standard assumption that all covariate effects are linear. 
@@ -214,26 +230,23 @@ The list of functions implemented in JAGS can be found in the
 
 **Some examples:**^[Note: these examples are chosen to demonstrate functionality
 and may not fit the data.]
-```{r}
+```{r, message = FALSE}
 # Absolute difference between bili and creat
-mod3a <- lm_imp(SBP ~ age + gender + abs(bili - creat),
-                data = NHANES, mess = FALSE)
+mod3a <- lm_imp(SBP ~ age + gender + abs(bili - creat), data = NHANES)
 
 # Using a natural cubic spline for age (completely observed) and a quadratic
 # and a cubic effect for bili
 library(splines)
-mod3b <- lm_imp(SBP ~ ns(age, df = 2) + gender + I(bili^2) + I(bili^3),
-                data = NHANES, mess = FALSE, keep_model = TRUE)
+mod3b <- lm_imp(SBP ~ ns(age, df = 2) + gender + I(bili^2) + I(bili^3), data = NHANES)
 
 # A function of creat and albu
-mod3c <- lm_imp(SBP ~ age + gender + I(creat/albu^2),
-                data = NHANES, mess = FALSE)
+mod3c <- lm_imp(SBP ~ age + gender + I(creat/albu^2), data = NHANES,
+                models = c(creat = 'lognorm', albu = 'lognorm'))
 # This function may make more sense to calculate BMI as weight/height^2, but
 # we do not have those variables in the NHANES data...
 
 # Using the sinus and cosinus
-mod3d <- lm_imp(SBP ~ bili + sin(creat) + cos(albu),
-                data = NHANES, mess = FALSE)
+mod3d <- lm_imp(SBP ~ bili + sin(creat) + cos(albu), data = NHANES)
 ```
 
 #### What happens inside **JointAI**?
@@ -252,7 +265,7 @@ The function [`list_impmodels`](https://nerler.github.io/JointAI/reference/list_
 prints a list of the imputation models used in a JointAI object.
 Since, at the moment, we are only interested in the predictor variables, we
 suppress printing of information on prior distributions, regression coefficients
-and other parameters by setting `priors`, `regcoev` and `otherpars` to `FALSE`.
+and other parameters by setting `priors`, `regcoef` and `otherpars` to `FALSE`.
 
 <br>
 
@@ -380,7 +393,7 @@ mod6a = lm_imp(SBP ~ age + gender + cloglog(ilogit(creat)),
 ```
 
 
-## Multi level structure & longitudinal covariates{#MultiLevelStructure}
+## Multi-level structure & longitudinal covariates{#MultiLevelStructure}
 In multi-level models, additional to the fixed effects structure specified by
 the argument `fixed` a random effects structure needs to be provided via the
 argument `random`. 
@@ -737,25 +750,6 @@ distribution. `a_diag_RinvD` and `b_diag_RinvD` are the scale and rate parameter
 of the Gamma prior of the diagonal elements of `RinvD`.
 In random effects models with only one random effect, instead of the Wishart
 distribution a Gamma prior is used for the inverse of `D`.
-
-### Scaling
-When variables are measured on very different scales this can result in 
-slow convergence and bad mixing.
-Therefore, **JointAI** automatically scales continuous variables are to have
-mean zero and  standard deviation one.
-Results (parameters and imputed values) are transformed back to the original 
-scale when the results are printed or imputed values exported.
-
-In some settings, however, it is not possible to scale continuous variables.
-This is the case for incomplete variables that enter the linear predictor of 
-the analysis model in a function and variables that are imputed with models 
-that are defined on a subset of the real line (i.e., with a Gamma or a Beta
-distribution). Variables that are imputed with a log-normal distribution are
-scaled, but not centered.
-
-To prevent scaling, the argument `scale_vars` can be set to `FALSE`. When
-a vector of variable names is supplied to `scale_vars`, only those variables
-are scaled.
 
 
 ## Scaling

@@ -45,10 +45,10 @@ lm1 <- lm_imp(SBP ~ gender + age + race + WC + alc + educ + albu + bili,
 ```
 
 The specification of `lm_imp()` is similar to the specification of a
-linear regression model for complete data using `lm()`
-In this minimal example
-the only difference is that for `lm_imp()` the number of iterations `n.iter`
-has to be specified. Of course there are many more parameters that can or should
+linear regression model for complete data using `lm()`.
+In this minimal example the only difference is that for `lm_imp()` the number
+of iterations `n.iter` has to be specified.
+Of course there are many more parameters that can or should
 be specified.
 In the vignette [*Model Specification*](https://nerler.github.io/JointAI/articles/ModelSpecification.html) 
 many of these parameters are explained in detail.
@@ -74,14 +74,14 @@ each parameter and represented by different colors.
 
 When the sampler has converged the chains show a horizontal band, as in the
 above figure. Consequently, when traces show a trend, convergence has not been
-reached  and more iterations are necessary (e.g., using
+reached  and more iterations are necessary (e.g., using the function
 [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.html)).
 
 When convergence has been achieved, we can obtain the result of the model
 from the model summary.
 
 ## Model Summary
-Results from a `JointAI` model can be printed using
+Results from a model fitted with **JointAI** can be printed using `summary()`:
 ```{r, echo = FALSE}
 options(width = 80)
 ```
@@ -103,6 +103,8 @@ is described in the vignette
 The summary consists of the posterior mean, the standard deviation and the 
 2.5% and 97.5% quantiles of the MCMC sample, the tail probability and the 
 Gelman-Rubin criterion for convergence.
+
+
 The tail probability is a measure of how likely the value 0 is under the 
 estimated posterior distribution, and is calculated as 
 $$2\times\min\left\{Pr(\theta > 0), Pr(\theta < 0)\right\}$$
@@ -142,8 +144,9 @@ compares the within and between chain variation. When it is close enough to
 1^[for example < 1.1; but this is not a generally accepted cut-off], the chains
 can be assumed to have converged.
 
-Additionally, some important characteristics of the MCMC samples on which the
-summary is based, is given. This includes the range and number of iterations
+In the model summary, additionally, some important characteristics of the MCMC
+samples on which the summary is based, are given.
+This includes the range and number of iterations
 (= `Sample size per chain`), thinning interval and number of chains.
 
 Furthermore, the number of observations (the sample size of the data) is given.
@@ -168,14 +171,21 @@ are plotted.
 
 
 ## Other types of models
-Besides linear regression models, it is also possible to use
+Besides linear regression models, it is also possible to fit
 
 * **generalized linear models**: `glm_imp()` (follows the specification of
 [`glm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html))
+* **cumulative logit models** for ordinal outcomes: `clm_imp()` (follows the
+specification of `clm()` from package [**ordinal**](https://CRAN.R-project.org/package=ordinal))
 * **linear mixed models**: `lme_imp()` (follows the specification of [`lme()`](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html)
 from package [**nlme**](https://CRAN.R-project.org/package=nlme))
 * **generalized linear mixed models**: `glme_imp()` (analogue the specification used
 in `lme_imp()` and `glm_imp()`)
+* **cumulative logit mixed models** for longitudinal ordinal outcomes: `clmm_imp()` (follows the
+specification of `clmm2()` from package [**ordinal**](https://CRAN.R-project.org/package=ordinal))
 * **parametric (Weibull) survival models**: `survreg_imp()` (follows the specification
 of [`survreg()`](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/survreg.html)
+from package [**survival**](https://CRAN.R-project.org/package=survival))
+* **Cox proportional hazards survival models**: `coxph_imp()` (follows the specification
+of [`coxph()`](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/coxph.html)
 from package [**survival**](https://CRAN.R-project.org/package=survival))

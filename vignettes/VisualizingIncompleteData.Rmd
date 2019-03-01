@@ -26,13 +26,13 @@ options(width = 80)
 
 When analyzing data with missing values it is important to be familiar
 with the variables of interest, i.e., to know their measurement level and
-distribution as well as the amount of missing values per variable, and to
+distribution, as well as the amount of missing values per variable, and to
 investigate the pattern of missing values.
 
 Currently, the package **JointAI** has two function that help this fist
 exploration of an unknown dataset.
 
-In this vignette, we use the NHANES data and the simLong data, that are part of
+In this vignette, we use the `NHANES` data and the `simLong` data, that are part of
 the **JointAI** package.
 For more info on these datasets, check the help files
 [for the NHANES](https://nerler.github.io/JointAI/reference/NHANES.html) and
@@ -41,8 +41,8 @@ go to the [web page of the National Health and Nutrition Examination Survey (NHA
 
 
 ## Visualize the distribution of each variable
-Using `plot_all()`, an array of histograms (for continuous variables) and
-barplots (for categorical variables) can be obtained.
+Using `plot_all()`, an array of histograms (for continuous variables and dates)
+and barplots (for categorical variables) can be obtained.
 
 ```{r, fig.height = 8}
 par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
@@ -76,17 +76,17 @@ or [`barplot()`](https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/bar
 For example:
 ```{r, fig.width = 8, fig.height = 10}
 par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
-plot_all(NHANES, allNA = TRUE, fill = '#18bc9c', border = '#2C3E50',
-         ncol = 3, nclass = 30)
+plot_all(NHANES, allNA = TRUE, fill = '#18bc9c', border = '#2C3E50', ncol = 3, nclass = 30)
 ```
 
 
 ### Multi-level data
 When the data has a multi-level structure, e.g., subjects are nested within
-hospitals, or subjects have been measured repeatedly, as in the simLong data,
+hospitals, or subjects have been measured repeatedly as in the `simLong` data,
 the level of each variable can be taken into account by specifying
 `use_levels = TRUE` and providing the name of the id variable in the argument
 `idvar`.
+
 
 ```{r, fig.width = 8, fig.height = 10}
 par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
@@ -95,7 +95,7 @@ plot_all(simLong, allNA = TRUE, fill = '#18bc9c', border = '#2C3E50',
 ```
 The information whether a variable is level-1 (i.e., varies within the groups
 specified by `idvar`) or level-2 (i.e., constant within the groups) is added to
-the title of each plot, and level-2 variables are plotted on he group-level
+the title of each plot, and level-2 variables are plotted on the group-level
 instead of the observation level.
 
 ## Missing Data Pattern
@@ -107,19 +107,19 @@ md_pattern(NHANES)
 In the resulting plot, variables are given in the columns and each row corresponds
 to one pattern of missingness across the variables.
 The numbers on the right margin give the number of cases per pattern. Underneath
-the plot, the number of missing values per variable are given.
+the plot, the number of missing values per variable is given.
 Columns are automatically sorted by number of missing values, rows by number of
 cases per pattern.
 
 The plot is generated with the help of [`ggplot()`](https://ggplot2.tidyverse.org/),
 and, hence,  the package [**ggplot2**](https://CRAN.R-project.org/package=ggplot2)
-needs to be installed. By setting `plot = FALSE`, no plot will be generated, 
-but you can still obtain the missing data pattern in matrix form:
+needs to be installed. By setting `plot = FALSE`, no plot will be generated (and
+then **ggplot2** is not required).
 
 #### Missing data pattern as a matrix
 When the argument `pattern = TRUE` is set, the missing data pattern is returned 
-as a matrix, where observed values are represented by a `1` and missing values
-by a `0`:
+as a matrix, where observed values are represented by `1` and missing values
+by `0`:
 ```{r}
 md_pattern(NHANES, pattern = T, plot = F)
 ```
