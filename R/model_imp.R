@@ -282,8 +282,6 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       quiet = TRUE, progress.bar = "text",
                       warn = TRUE, mess = TRUE,
                       keep_scaled_mcmc = FALSE,
-
-
                       analysis_type,
                       Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
                       dest_cols = NULL, imp_par_list = NULL,  data_list = NULL, ...) {
@@ -538,9 +536,10 @@ if (!is.null(inits)) {
     }
   }
   if (inherits(inits, "list")) {
-    inits <- mapply(function(inits, rng) c(inits, rng), inits = inits,
-                    rng = get_RNG(seed, n.chains),
-                    SIMPLIFY = FALSE)
+    if (!any(c('.RNG.name', '.RNG.seed') %in% unlist(lapply(inits, names))))
+      inits <- mapply(function(inits, rng) c(inits, rng), inits = inits,
+                      rng = get_RNG(seed, n.chains),
+                      SIMPLIFY = FALSE)
   }
 } else {
   inits <- get_RNG(seed, n.chains)
