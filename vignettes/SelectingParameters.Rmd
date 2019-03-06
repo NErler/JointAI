@@ -37,8 +37,7 @@ explored.
 In many of the examples we use `n.adapt = 0`
 (and `n.iter = 0`, which is the default) in order to prevent the MCMC sampling 
 to reduce computational some time.
-`mess = FALSE` is used to suppress messages that are not of interest in this
-vignette. `progress.bar = 'none'` prevents printing of the progress of the MCMC
+`progress.bar = 'none'` prevents printing of the progress of the MCMC
 sampling, which results in lengthy output in the vignette, but is useful in 
 practice.
 
@@ -50,11 +49,15 @@ Since JAGS only saves the values of MCMC chains for those parameters/variables f
 which the user has specified that they should be monitored, this is also the
 case in **JointAI**.
 
-For this purpose, 
+For this purpose, the main functions
 [`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html), [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html),
+[`clm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html),
 [`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html), 
-[`glme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) and
-[`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) have an argument
+[`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html),
+[`glme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html),
+[`clmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html),
+[`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) and
+[`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) have an argument
 `monitor_params`.
 
 `monitor_params` takes a named list (often a named vector also works) with
@@ -62,7 +65,7 @@ the following possible entries:
 
 ```{r, echo = F}
 tab <- rbind(
-c("`analysis_main`", "`betas`, `tau_y` and `sigma_y`"),
+c("`analysis_main`", "`betas` and `sigma_y` (and `D` in mixed models)"),
 c("`analysis_random`", "`ranef`, `D`, `invD`, `RinvD`"),
 c('`imp_pars`', '`alphas`, `tau_imp`, `gamma_imp`, `delta_imp`'),
 c('`imps`', 'imputed values'),
@@ -92,18 +95,17 @@ only the main parameters of the analysis model are monitored, and
 monitoring is switched off for all other parameters.
 
 The main parameters are the regression coefficients of the analysis model
-(`beta`) and the residual standard deviation (`sigma_y`,  and precision `tau_y`).
+(`beta`) and the residual standard deviation (`sigma_y`).
 
 The function [`parameters()`](https://nerler.github.io/JointAI/reference/parameters.html) returns the parameters that are specified to be followed
 (even for models where no MCMC sampling was performed, i.e. when `n.iter = 0` and
 `n.adapt = 0`).
 
 For example: 
-```{r lm1_1}
-lm1 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, 
-              n.adpat = 0, mess = FALSE)
+```{r lm1_1, message = FALSE}
+lm1 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES,  n.adpat = 0)
 
-parameters(lm1, mess = FALSE)
+parameters(lm1)
 ```
 
 
@@ -113,13 +115,13 @@ To generate (multiple) imputed datasets that can be used for further analyses,
 the imputed values need to be monitored. This can be done by setting
 `monitor_params = c(imps = TRUE)`.
 
-```{r lm2_1}
+```{r lm2_1, message = FALSE}
 lm2 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
-              data = NHANES, n.adapt = 0, mess = FALSE,
+              data = NHANES, n.adapt = 0,
               monitor_params = c(imps = TRUE, analysis_main = FALSE)
 )
 
-parameters(lm2, mess = FALSE)
+parameters(lm2)
 ```
 
 **JointAI** uses a number of different design matrices to store different
@@ -137,13 +139,12 @@ regression coefficients (`alpha`) and other parameters, such as precision
 (`tau_*`) and intercepts & increments (`gamma_*` and `delta_*`) in cumulative
 logit models.
 
-```{r lm3_1}
-lm3 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
-              data = NHANES, n.adapt = 0, mess = FALSE,
-              monitor_params = c(imp_pars = TRUE, analysis_main = FALSE),
+```{r lm3_1, message = FALSE}
+lm3 <- lm_imp(SBP ~ age + WC + alc + smoke + occup, data = NHANES, n.adapt = 0,
+              monitor_params = c(imp_pars = TRUE, analysis_main = FALSE)
 )
 
-parameters(lm3, mess = FALSE)
+parameters(lm3)
 ```
 
 #### Side note: Getting information about of the imputation models
@@ -169,14 +170,13 @@ already contain an id variable).
 
 `get_MIdat()` takes the arguments:
 ```{r, echo = FALSE}
-tab <- rbind(object = 'a JointAI object',
+tab <- rbind(object = "'an object of class 'JointAI'",
              m = "number of datasets to be created",
              include = "logical; should the original data be included?",
              start = paste0("the first iteration that may be randomly chosen",
                             " (i.e., all previous iterations are discarded as burn-in)"),
              minspace = 'minimum number of iterations between iterations chosen as imputed values',
-             seed = "optional seed value in order to make the random selection
-                     of iterations reproducible",
+             seed = "optional seed value in order to make the random selection of iterations reproducible",
              export_to_SPSS = paste0("logical; should the datasets be exported", 
                                      " to SPSS, i.e., written as .txt and .sps file? ",
                                      "If `export_to_SPSS = FALSE` (default) the",
@@ -193,11 +193,10 @@ knitr::kable(tab, row.names = FALSE)
 ### Random effects
 For mixed models, `analysis_main` also includes the random effects covariance
 matrix `D`:
-```{r}
-lme1 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, 
-                data = simLong, n.adapt = 0, mess = FALSE)
+```{r, message = FALSE}
+lme1 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0)
 
-parameters(lme1, mess = FALSE)
+parameters(lme1)
 ```
 
 Setting `analysis_random = TRUE` will switch on monitoring
@@ -205,50 +204,46 @@ for the random effects (`ranef`), random effects covariance matrix (`D`),
 inverse of the random effects covariance matrix (`invD`) and the diagonal of the
 scale matrix of the Wishart-prior of `invD` (`RinvD`). 
 
-```{r}
-lme2 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID,
-                data = simLong, n.adapt = 0, mess = FALSE,
+```{r, message = FALSE}
+lme2 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
                 monitor_params = c(analysis_random = TRUE))
 
-parameters(lme2, mess = FALSE)
+parameters(lme2)
 ```
 
 
 It is possible to select only a subset of the random effects parameters by 
 specifying them directly, e.g.
-```{r}
-lme3a <- lme_imp(bmi ~ age + EDUC, random = ~age | ID,
-                data = simLong, n.adapt = 0, mess = FALSE,
+```{r, message = FALSE}
+lme3a <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
                 monitor_params = c(analysis_main = TRUE, RinvD = TRUE))
 
-parameters(lme3a, mess = FALSE)
+parameters(lme3a)
 ```
 
 or by switching unwanted parts of `analysis_random` off, e.g.
 
-```{r}
-lme3b <- lme_imp(bmi ~ age + EDUC, random = ~age | ID,
-                data = simLong, n.adapt = 0, mess = FALSE,
+```{r, message = FALSE}
+lme3b <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
                 monitor_params = c(analysis_main = TRUE,
                                    analysis_random = TRUE,
                                    RinvD = FALSE,
                                    ranef = FALSE))
 
-parameters(lme3b, mess = FALSE)
+parameters(lme3b)
 ```
 
 
 ### Other parameters
-The element `other` in `monitor_params` allows to specify one or multiple parameters
+The element `other` in `monitor_params` allows to specify one or multiple
 additional parameters to be monitored. When `other` is used with more than one
 element, `monitor_params` has to be a list.
 
 Here, we monitor the probability to be in the `alc>=1` group for subjects 1
 through 3 and the expected value of the distribution of `creat` for the first
 subject.
-```{r}
-lm4 <- lm_imp(SBP ~ gender + WC + alc + creat,
-              data = NHANES, n.adapt = 0, mess = FALSE, progress.bar = 'none',
+```{r, message = FALSE}
+lm4 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES,
               monitor_params = list(analysis_main = FALSE,
                                     other = c('p_alc[1:3]', "mu_creat[1]")))
 
@@ -273,11 +268,10 @@ a subset may be desirable.
 
 By default, only the parameters of the main analysis model are displayed if they
 were monitored:
-```{r, fig.width = 7, fig.height = 6}
+```{r, fig.width = 7, fig.height = 6, warning = FALSE}
 # Run a model monitoring analysis parameters and imputation parameters
-lm5 <- lm_imp(SBP ~ gender + WC + alc + creat,
-              data = NHANES, n.iter = 100, mess = FALSE, progress.bar = 'none',
-              monitor_params = c(imp_pars = TRUE))
+lm5 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
+              progress.bar = 'none', monitor_params = c(imp_pars = TRUE))
 
 # model summary
 summary(lm5)
@@ -295,11 +289,12 @@ GR_crit(lm5)
 MC_error(lm5)
 ```
 
-When `analysis_main` was not switched on, all parameters are displayed by default:
-```{r, fig.height = 1.5}
+When `analysis_main` was not switched on the default behaviour is that all
+parameters are displayed:
+```{r, fig.height = 1.5, message = FALSE}
 # Re-run the model from above, now creating MCMC samples
 lm4 <- lm_imp(SBP ~ gender + WC + alc + creat,
-              data = NHANES, n.iter = 100, mess = FALSE,  progress.bar = 'none',
+              data = NHANES, n.iter = 100, progress.bar = 'none',
               monitor_params = list(analysis_main = FALSE,
                                     other = c('mu_alc[1:3]', "mu_creat[1]")))
 
@@ -321,11 +316,11 @@ summary(lm5, subset = list(other = c('creat', 'alc>=1')))
 
 
 This also works when a subset of the imputed values should be displayed:
-```{r lm2_2, fig.height = 2, fig.width = 5, out.width = "60%"}
+```{r lm2_2, fig.height = 2, fig.width = 5, out.width = "60%", message = FALSE}
 # Re-run the model from above, now creating MCMC samples
 lm2 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
-              data = NHANES, n.iter = 100, mess = FALSE,  progress.bar = 'none',
-              monitor_params = c(imps = TRUE, analysis_main = FALSE),
+              data = NHANES, n.iter = 100, progress.bar = 'none',
+              monitor_params = c(imps = TRUE, analysis_main = FALSE)
 )
 
 # select only imputed values for 'WC' (3rd column of Xc)
@@ -340,9 +335,9 @@ traceplot(lm2, subset = list(other = sub3), ncol = 2)
 When the number of imputed values is larger, or in order to check convergence
 of random effects, it may not be feasible to plot all traceplots. 
 In that case, a random subset of, for instance the random effects, can be selected:
-```{r, fig.height = 4}
-lme4 <- lme_imp(bmi ~ age + EDUC, random = ~age|ID,
-                data = simLong, n.iter = 100, mess = FALSE, progress.bar = 'none',
+```{r, fig.height = 4, message = FALSE}
+lme4 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID,
+                data = simLong, n.iter = 100, progress.bar = 'none',
                 monitor_params = c(analysis_main = FALSE, ranef = TRUE))
 
 # exract random intercepts

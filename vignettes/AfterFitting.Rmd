@@ -25,7 +25,7 @@ options(width = 100)
 ```
 
 
-In this vignette we describe how the results from a `JointAI` model can be visualized,
+This vignette describes how the results from a `JointAI` model can be visualized,
 summarized and evaluated.
 We use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
 data for examples in cross-sectional data and the 
@@ -94,7 +94,7 @@ The argument `vlines` takes a list of lists, containing specifications passed
 to `abline`, and allows to add (vertical) lines to the plot, e.g., marking zero:
 ```{r, fig.width = 7, fig.height = 3.5, out.width = '100%'}
 densplot(mod13a, ncol = 3, col = c("darkred", "darkblue", "darkgreen"),
-         vlines = list(list(v = rep(0, nrow(summary(mod13a)$stats)),
+         vlines = list(list(v = c(rep(0, nrow(summary(mod13a)$stats) - 1), NA),
                             col = grey(0.8))))
 
 ```
@@ -114,22 +114,33 @@ Like with `traceplot()` it is possible to use the **ggplot2** version of `denspl
 when setting `use_ggplot = TRUE`. Here, vertical lines can be added as additional
 layers:
 ```{r ggdens15a, fig.width = 7, fig.height = 3.5, out.width = '100%'}
-# make a dataset containing the quantiles of the posterior sample:
-library("reshape2")
-quantDF <- melt(summary(mod13a)$stat[, c('2.5%', '97.5%')],
-                varnames = c('variable', 'quantile'))
-
 # fit the complete-case version of the model
 mod13a_cc <- lm(SBP ~ gender + WC + alc +  creat, data = NHANES)
 
-# make a dataset with coefficients and confidence intervals from the
-# complete case analysis
-ccDF <- data.frame(variable = c(names(coef(mod13a_cc)), 'sigma_SBP'),
-                   coef = c(coef(mod13a_cc), summary(mod13a_cc)$sigma),
-                   rbind(confint(mod13a_cc), c(NA, NA)),
-                   stringsAsFactors = FALSE
-)
 
+# make a dataset containing the quantiles of the posterior sample and confidence
+# intervals from the complete case analysis:
+quantDF <- rbind(data.frame(variable = rownames(summary(mod13a)$stat),
+                            type = '2.5%',
+                            model = 'JointAI',
+                            value = summary(mod13a)$stat[, c('2.5%')]
+                            ),
+                 data.frame(variable = rownames(summary(mod13a)$stat),
+                            type = '97.5%',
+                            model = 'JointAI',
+                            value = summary(mod13a)$stat[, c('97.5%')]
+                 ),
+                 data.frame(variable = names(coef(mod13a_cc)),
+                            type = '2.5%',
+                            model = 'cc',
+                            value = confint(mod13a_cc)[, '2.5 %']
+                 ),
+                 data.frame(variable = names(coef(mod13a_cc)),
+                            type = '97.5%',
+                            model = 'cc',
+                            value = confint(mod13a_cc)[, '97.5 %']
+                 )
+)
 
 
 # ggplot version, excluding tau_SBP from the plot:
@@ -139,18 +150,11 @@ p13a <- densplot(mod13a, ncol = 3, use_ggplot = TRUE, joined = TRUE,
 
 
 # add vertical lines for the:
-# - coefficient from the compl. case analysis
 # - confidence intervals from the compl. case analysis
 # - quantiles of the posterior distribution
 
 p13a +
-  geom_vline(data = ccDF, aes(xintercept = coef, color = 'cc')) +
-  geom_vline(data = ccDF, aes(xintercept = X2.5.., color = 'cc'),
-             lty = 2, na.rm = T) +
-  geom_vline(data = ccDF, aes(xintercept = X97.5.., color = 'cc'),
-             lty = 2, na.rm = T) +
-  geom_vline(data = subset(quantDF, variable != 'tau_SBP'),
-                  aes(xintercept = value, color = 'JointAI'), lty = 2) +
+  geom_vline(data = quantDF, aes(xintercept = value, color = model), lty = 2) +
   scale_color_manual(name = 'CI from model: ', 
                      limits = c('JointAI', 'cc'),
                      values = c('blue', 'red'),
@@ -270,7 +274,7 @@ It uses the function `mcmcse.mat()` from the package [**mcmcse**](https://CRAN.R
 to calculate the Monte Carlo error (the error that is made since the sample
 is finite) and compares is to the standard deviation of the posterior sample.
 A rule of thumb is that the Monte Carlo error should not be more than 5% of the
-standard deviation.^[Lesaffre, E. M. and A. B. Lawson (2012).
+standard deviation^[Lesaffre, E. M. and A. B. Lawson (2012).
 *Bayesian Biostatistics*. John Wiley & Sons. doi: 10.1002/9781119942412.].
 Besides the arguments explained [below](#sec:subset), `MC_error()`
 takes the arguments of `mcmcse.mat()`.
@@ -281,7 +285,8 @@ MC_error(mod13a)
 `MC_error()` returns an object of class `MCElist`, which is a list containing 
 matrices with the posterior mean,
 estimated Monte Carlo error, posterior standard deviation and the ratio of the
-Monte Carlo error and posterior standard deviation, for the scaled and unscaled
+Monte Carlo error to the posterior standard deviation, for the scaled (if they
+are part of the `JointAI` object) and unscaled
 (transformed back to the scale of the data) posterior samples.
 The associated print method prints only the latter.
 
@@ -291,8 +296,8 @@ this ratio for each (selected) node and automatically adds a vertical line at
 the desired cut-off (by default 5%).
 ```{r MCE15a, fig.width = 8, fig.height = 3, out.width = '100%'}
 par(mar = c(3, 5, 0.5, 0.5), mgp = c(2, 0.6, 0), mfrow = c(1, 2))
-plot(MC_error(mod13a))  # left panel
-plot(MC_error(mod13a, end = 250))  # right panel
+plot(MC_error(mod13a))  # left panel: all iterations 101:600
+plot(MC_error(mod13a, end = 250))  # right panel: iterations 101:250
 ```
 
 
@@ -305,9 +310,8 @@ set of iterations and parameters to display can be changed using the
 arguments `subset`, `start`, `end` and `thin`.
 
 ### Subset of parameters
-As long as the main parameters have been monitored in a `JointAI` object, i.e.,
-when `monitor_params` was set to `TRUE`, only these parameters are returned
-in the model summary, plots and criteria shown above.
+As long as the main parameters have been monitored in a `JointAI` object, 
+only these parameters are returned in the model summary, plots and criteria shown above.
 When the main parameters of the analysis model were not monitored, i.e.,
 `monitor_params = c(analysis_main = FALSE)`, and the argument `subset` is not
 specified, all parameters that were monitored are displayed.
@@ -351,7 +355,7 @@ In that case a random subset of, for instance the random effects, can be selecte
 # re-fit the model monitoring the random effects
 mod13e <- update(mod13b, monitor_params = c(ranef = TRUE))
 
-# exract random intercepts and random slopes
+# extract random intercepts and random slopes
 ri <- grep('^b\\[[[:digit:]]+,1\\]$', colnames(mod13e$MCMC[[1]]), value = T)
 rs <- grep('^b\\[[[:digit:]]+,2\\]$', colnames(mod13e$MCMC[[1]]), value = T)
 
@@ -378,6 +382,7 @@ allows to obtain predicted values and corresponding
 prediction intervals from `JointAI` objects. Note that for mixed
 models, currently, only marginal prediction but not prediction conditional on
 the random effects is implemented.
+
 A dataset containing data which the prediction should be performed is specified
 via the argument `newdata`. The argument `quantiles` allows to specify the 
 quantiles of the posterior sample that are used to obtain the prediction interval
@@ -407,7 +412,7 @@ covariate specified by the argument `var`, and the median or reference value for
 all other continuous and categorical variables.
 
 
-```{r, fig.width = 6, fig.height = 4, out.width = '90%'}
+```{r, fig.width = 7, fig.height = 4.5, out.width = '90%'}
 # create dataset for prediction
 newDF <- predDF(mod13b, var = "age")
 
@@ -424,9 +429,9 @@ matplot(pred$dat$age, pred$dat[, c('fit', '2.5%', '97.5%')],
 
 ## Export of imputed values
 Imputed datasets can be extracted from a `JointAI` object (in which a monitor for
-the imputed values has been set, i.e., `monitor_params = c(imps = TRUE)`)
-and exported to SPSS (IBM SPSS Statistics, IBM Corp.)
+the imputed values has been set, i.e., `monitor_params = c(imps = TRUE)`),
 with the function [`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.html).
+
 A completed dataset is created by taking the imputed values from a randomly
 chosen iteration of the MCMC sample, transforming them back to the original scale
 if scaling had been performed before the MCMC sampling, 
@@ -440,6 +445,7 @@ the minimum number of iterations between iterations eligible to be selected.
 
 To make the selection of iterations to form the imputed data reproducible, a
 seed value can be specified via the argument `seed`.
+
 When `export_to_SPSS = TRUE` the imputed data is exported to SPSS, i.e., 
 a `.txt` file containing the data and a `.sps` file containing SPSS syntax to 
 convert the data into an SPSS data file (with ending `.sav`) are written.
