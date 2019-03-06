@@ -126,13 +126,6 @@
 #' When models are specified for only a subset of the incomplete or longitudinal
 #' covariates involved in a model, the default choices are used for all unspecified
 #' variables.
-#'
-#' The argument \code{models} also controls the order of the sequence of imputation
-#' models. By default, models are ordered according to the proportion of missing
-#' values. To change this order, a vector with imputation methods for all
-#' incomplete variables (in the desired order) needs to be supplied.
-#' Incomplete baseline covariates (level-2 variables) must be earlier in the
-#' sequence than longitudinal (level-1).
 #' }
 #'
 #' \subsection{Parameters to follow (\code{monitor_params})}{
@@ -146,7 +139,7 @@
 #' If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)} will be used.
 #' \tabular{ll}{
 #' \strong{name/key word} \tab \strong{what is monitored}\cr
-#' \code{analysis_main} \tab \code{betas}, \code{tau_y} and \code{sigma_y} (and \code{D} in mixed models)\cr
+#' \code{analysis_main} \tab \code{betas} and \code{sigma_y} (and \code{D} in mixed models)\cr
 #' \code{analysis_random} \tab \code{ranef}, \code{D}, \code{invD}, \code{RinvD}\cr
 #' \code{imp_pars} \tab \code{alphas}, \code{tau_imp}, \code{gamma_imp}, \code{delta_imp}\cr
 #' \code{imps} \tab imputed values\cr
@@ -165,9 +158,10 @@
 #' }
 #' For example:
 #'
-#' \code{monitor_params = c("analysis_main" = TRUE, "tau_y" = FALSE)}
-#' would monitor the regression parameters \code{betas} and residual standard
-#' deviation \code{sigma_y}, but not the residual precision.
+#' \code{monitor_params = c(analysis_main = TRUE, tau_y = TRUE, sigma_y = FALSE)}
+#' would monitor the regression parameters \code{betas} and the
+#' residual precision \code{tau_y} instead of the residual standard
+#' deviation \code{sigma_y}.
 #'
 #' \code{monitor_params = c(imps = TRUE)} would monitor \code{betas}, \code{tau_y},
 #' and \code{sigma_y} (because \code{analysis_main = TRUE} by default) as well as
