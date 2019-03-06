@@ -1,5 +1,5 @@
 Package: JointAI
-Version: 0.4.0.9000
+Version: 0.5.0
 Title: Joint Analysis and Imputation of Incomplete Data
 Authors@R: c(person("Nicole S.", "Erler", email = "n.erler@erasmusmc.nl",
                   role = c("aut", "cre"),
@@ -14,7 +14,7 @@ Description: Provides joint analysis and imputation of (generalized)
     It also provides summary and plotting functions for the output.
 URL: https://nerler.github.io/JointAI
 License: GPL (>= 2)
-Date: 2019-02-15
+Date: 2019-03-07
 BugReports: https://github.com/nerler/JointAI/issues
 LazyData: TRUE
 RoxygenNote: 6.1.1
