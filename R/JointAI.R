@@ -128,7 +128,7 @@ NULL
 }
 
 
-utils::globalVariables(c("i"))
+utils::globalVariables(c("i", "value", "chain", "iteration"))
 
 
 #' Parameters used by several functions in JointAI.

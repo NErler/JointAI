@@ -76,7 +76,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
     ggplot2::ggplot(meltMCMC,
-                    ggplot2::aes(.data$iteration, .data$value, color = .data$chain)) +
+                    ggplot2::aes(iteration, value, color = chain)) +
       ggplot2::geom_line() +
       ggplot2::facet_wrap('variable', scales = 'free',
                           ncol = prep$ncol, nrow = prep$nrow)
@@ -191,9 +191,9 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     meltMCMC$chain <- factor(meltMCMC$L1)
 
     if (joined)
-      p <- ggplot2::ggplot(meltMCMC, ggplot2::aes(.data$value))
+      p <- ggplot2::ggplot(meltMCMC, ggplot2::aes(value))
     else
-      p <- ggplot2::ggplot(meltMCMC, ggplot2::aes(.data$value, color = .data$chain))
+      p <- ggplot2::ggplot(meltMCMC, ggplot2::aes(value, color = chain))
 
     p + ggplot2::geom_density() +
       ggplot2::facet_wrap('variable', scales = 'free', ncol = prep$ncol,
@@ -232,9 +232,13 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
         )
         do.call(lines, args_lines)
       }
+
       if (!is.null(vlines)) {
         for (l in 1:length(vlines)) {
           args_vline <- if (is.list(vlines[[l]])) vlines[[l]] else vlines
+          if (length(args_vline$v) > 1) {
+            args_vline$v <- args_vline$v[i]
+          }
           do.call(abline, args_vline)
         }
       }
