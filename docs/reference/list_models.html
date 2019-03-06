@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Predict values from an object of class JointAI — predict.JointAI • JointAI</title>
+<title>List imputation models — list_models • JointAI</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -36,11 +36,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Predict values from an object of class JointAI — predict.JointAI" />
+<meta property="og:title" content="List imputation models — list_models" />
 
-<meta property="og:description" content="Calculates the expected outcome value for a given set of covariate values
-and an object of class 'JointAI', and corresponding 2.5% and 97.5% (or other
-quantiles) credible intervals." />
+<meta property="og:description" content="Print information on all models for incomplete covariates used in a JointAI object,
+including the model type, names of the parameters used and hyperparameters." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -149,22 +148,23 @@ quantiles) credible intervals." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Predict values from an object of class JointAI</h1>
+    <h1>List imputation models</h1>
     
-    <div class="hidden name"><code>predict.JointAI.Rd</code></div>
+    <div class="hidden name"><code>list_models.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Calculates the expected outcome value for a given set of covariate values
-and an object of class 'JointAI', and corresponding 2.5% and 97.5% (or other
-quantiles) credible intervals.</p>
+    <p>Print information on all models for incomplete covariates used in a JointAI object,
+including the model type, names of the parameters used and hyperparameters.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for JointAI</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>),
-  <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>list_models</span>(<span class='no'>object</span>, <span class='kw'>predvars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>regcoef</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>otherpars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>refcat</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'>list_impmodels</span>(<span class='no'>object</span>, <span class='kw'>predvars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>regcoef</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>otherpars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>refcat</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,73 +174,97 @@ quantiles) credible intervals.</p>
       <td><p>object inheriting from class 'JointAI'</p></td>
     </tr>
     <tr>
-      <th>newdata</th>
-      <td><p>new dataset for prediction</p></td>
+      <th>predvars</th>
+      <td><p>logical; should information on the predictor variables be printed?</p></td>
     </tr>
     <tr>
-      <th>quantiles</th>
-      <td><p>quantiles of the predicted distribution of the outcome</p></td>
+      <th>regcoef</th>
+      <td><p>logical; should information on the regression coefficients be printed?</p></td>
     </tr>
     <tr>
-      <th>start</th>
-      <td><p>the first iteration of interest (see <code><a href='https://www.rdocumentation.org/packages/coda/topics/window.mcmc'>window.mcmc</a></code>)</p></td>
+      <th>otherpars</th>
+      <td><p>logical; should information on other parameters be printed?</p></td>
     </tr>
     <tr>
-      <th>end</th>
-      <td><p>the last iteration of interest (see <code><a href='https://www.rdocumentation.org/packages/coda/topics/window.mcmc'>window.mcmc</a></code>)</p></td>
+      <th>priors</th>
+      <td><p>logical; should information on the priors be printed?</p></td>
     </tr>
     <tr>
-      <th>thin</th>
-      <td><p>thinning interval (see <code><a href='https://www.rdocumentation.org/packages/coda/topics/window.mcmc'>window.mcmc</a></code>)</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>currently not used</p></td>
+      <th>refcat</th>
+      <td><p>logical; should information on the reference category be printed?</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A list with entries "fit" and "quantiles", where
-        "fit" contains the column means of \(X\beta\) (see details)
-        and "quantiles" contain the specified quantiles (by default 2.5%
-        and 97.5%) of each column of \(X\beta\).</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>A <code>model.matrix</code> \(X\) is created from the model formula (fixed
-         effects only) and <code>newdata</code>. \(X\beta\) is then calculated for
-         each iteration of the MCMC sample in <code>object</code>, i.e., \(X\beta\)
-         has <code>n.iter</code> rows and <code><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow(newdata)</a></code> columns.
-         A subset of the MCMC sample can be selected using <code>start</code>,
-         <code>end</code> and  <code>thin</code>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     
-    <ul>
-<li><p>For repeated measures models prediction is performed on fixed effects only.</p></li>
-<li><p>Prediction is performed on the scale of the linear predictor.</p></li>
-</ul><p>Functionality will be extended in the future.</p>
+    <p>The models listed by this function are not the actual imputation models,
+but the conditional models that are part of the specification of the joint
+distribution of the data.
+Briefly, the joint distribution is specified as a sequence of conditional
+models
+$$p(y | x_1, x_2, x_3, ..., \theta) p(x_1|x_2, x_3, ..., \theta) p(x_2|x_3, ..., \theta) ...$$
+The actual imputation models are the full conditional distributions
+\(p(x_1 | \cdot)\) derived from this joint distribution.
+Even though the conditional distributions do not contain the outcome and all
+other covariates in their linear predictor, outcome and other covariates are
+taken into account implicitly, since imputations are sampled
+from the full conditional distributions.
+For more details, see Erler et al. (2016).</p>
+<p>The function <code>list_models</code> prints information on the conditional
+distributions of the incomplete covariates (since they are what is specified;
+the full-conditionals are automatically derived within JAGS). The outcome
+is, thus, not part of the printed linear predictor, but is still included
+during imputation.</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <div class='dont-index'><p><code><a href='predDF.html'>predDF.JointAI</a></code>, <code><a href='model_imp.html'>lme_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code>,
-          <code><a href='model_imp.html'>lm_imp</a></code></p></div>
+    <p>Erler, N. S., Rizopoulos, D., Rosmalen, J. V., Jaddoe,
+V. W., Franco, O. H., &amp; Lesaffre, E. M. (2016).
+Dealing with missing covariates in epidemiologic studies: A comparison
+between multiple imputation and a full Bayesian approach.
+<em>Statistics in Medicine</em>, 35(17), 2955-2974.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># fit model</span>
-<span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/AsIs'>I</a></span>(<span class='no'>C2</span>^<span class='fl'>2</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bugs to the package maintainer.</span></div><div class='input'>
-<span class='co'># create dataset for prediction</span>
-<span class='no'>newDF</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='predDF.html'>predDF</a></span>(<span class='no'>mod</span>, <span class='kw'>var</span> <span class='kw'>=</span> <span class='st'>"C2"</span>)
-
-<span class='co'># obtain predicted values</span>
-<span class='no'>pred</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>newDF</span>)
-
-<span class='co'># plot predicted values and 95% confidence band</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>newDF</span>$<span class='no'>C2</span>, <span class='no'>pred</span>$<span class='no'>fit</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/range'>range</a></span>(<span class='no'>pred</span>$<span class='no'>quantiles</span>),
-     <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"C2"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"predicted values"</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/matplot'>matplot</a></span>(<span class='no'>newDF</span>$<span class='no'>C2</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/t'>t</a></span>(<span class='no'>pred</span>$<span class='no'>quantiles</span>), <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='predict.JointAI-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'># (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save time)</span>
+<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span> + <span class='no'>O2</span> + <span class='no'>B2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bugs to the package maintainer.</span></div><div class='output co'>#&gt; <span class='message'>Note: No MCMC sample will be created when n.iter is set to 0.</span></div><div class='output co'>#&gt; <span class='message'>Note: ordered factors are included as dummy variables into the linear predictor (not as orthogonal polynomials).</span></div><div class='input'>
+<span class='fu'>list_models</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; Cumulative logit imputation model for 'O2'
+#&gt; * Reference category: '1'
+#&gt; * Predictor variables: 
+#&gt;   C1
+#&gt; * Regression coefficients: 
+#&gt;   alpha[1] (normal prior(s) with mean 0 and precision 1e-04)
+#&gt; * Intercepts:
+#&gt;   - 1: gamma_O2[1] (normal prior with mean 0 and precision 1e-04)
+#&gt;   - 2: gamma_O2[2] = gamma_O2[1] + exp(delta_O2[1])
+#&gt;   - 3: gamma_O2[3] = gamma_O2[2] + exp(delta_O2[2])
+#&gt; * Increments:
+#&gt;   delta_O2[1:2] (normal prior(s) with mean 0 and precision 1e-04)
+#&gt; 
+#&gt; Multinomial logit imputation model for 'M2'
+#&gt; * Reference category: '1'
+#&gt; * Predictor variables: 
+#&gt;   (Intercept), C1, O22, O23, O24
+#&gt; * Regression coefficients: 
+#&gt;   - 'M22': alpha[2:6] (normal prior(s) with mean 0 and precision 1e-04)
+#&gt;   - 'M23': alpha[7:11] (normal prior(s) with mean 0 and precision 1e-04)
+#&gt;   - 'M24': alpha[12:16] (normal prior(s) with mean 0 and precision 1e-04)
+#&gt; 
+#&gt; Normal imputation model for 'C2'
+#&gt; * Predictor variables: 
+#&gt;   (Intercept), C1, O22, O23, O24, M22, M23, M24
+#&gt; * Regression coefficients: 
+#&gt;   alpha[17:24] (normal prior(s) with mean 0 and precision 1e-04)
+#&gt; * Precision of 'C2':
+#&gt;   tau_C2 (Gamma prior with shape parameter 0.01 and rate parameter 0.01)
+#&gt; 
+#&gt; Logistic imputation model for 'B2'
+#&gt; * Reference category: '0'
+#&gt; * Predictor variables: 
+#&gt;   (Intercept), C1, O22, O23, O24, M22, M23, M24, C2
+#&gt; * Regression coefficients: 
+#&gt;   alpha[25:33] (normal prior(s) with mean 0 and precision 1e-04)</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -248,13 +272,9 @@ quantiles) credible intervals.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
       <li><a href="#note">Note</a></li>
 
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

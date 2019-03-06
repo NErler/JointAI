@@ -32,12 +32,14 @@
 <!-- docsearch -->
 <script src="../docsearch.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
 <meta property="og:title" content="Summary of an object of class JointAI — summary.JointAI" />
 
-<meta property="og:description" content="summary method for class &quot;JointAI&quot;." />
+<meta property="og:description" content="Obtain and print the summary, (fixed effects) coefficients (coef)
+and credible interval (confint) for an object of class 'JointAI'." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -68,7 +70,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -147,13 +149,14 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Summary of an object of class JointAI</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/summary.JointAI.R'><code>R/summary.JointAI.R</code></a></small>
+    
     <div class="hidden name"><code>summary.JointAI.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>summary</code> method for class "JointAI".</p>
+    <p>Obtain and print the <code>summary</code>, (fixed effects) coefficients (<code>coef</code>)
+and credible interval (<code>confint</code>) for an object of class 'JointAI'.</p>
     
     </div>
 
@@ -164,14 +167,26 @@
 
 <span class='co'># S3 method for summary.JointAI</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='fl'>3</span>, <span class='no'>.Options</span>$<span class='no'>digits</span> - <span class='fl'>4</span>),
-  <span class='no'>...</span>)</pre>
+  <span class='no'>...</span>)
+
+<span class='co'># S3 method for JointAI</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/coef'>coef</a></span>(<span class='no'>object</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for JointAI</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/confint'>confint</a></span>(<span class='no'>object</span>, <span class='kw'>parm</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for JointAI</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"digits"</span>) - <span class='fl'>4</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>object inheriting from class "JointAI"</p></td>
+      <td><p>object inheriting from class 'JointAI'</p></td>
     </tr>
     <tr>
       <th>start</th>
@@ -193,7 +208,9 @@
       <th>subset</th>
       <td><p>subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument <code>monitor_params</code> in
-<code><a href='model_imp.html'>lm_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code> and <code><a href='model_imp.html'>lme_imp</a></code>.</p></td>
+<code><a href='model_imp.html'>lm_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code>, <code><a href='model_imp.html'>clm_imp</a></code>,
+<code><a href='model_imp.html'>lme_imp</a></code>, <code><a href='model_imp.html'>glme_imp</a></code>, <code><a href='model_imp.html'>survreg_imp</a></code>
+and <code><a href='model_imp.html'>coxph_imp</a></code>.</p></td>
     </tr>
     <tr>
       <th>warn</th>
@@ -213,22 +230,31 @@ given directly by <strong>JointAI</strong>.</p></td>
     </tr>
     <tr>
       <th>x</th>
-      <td><p>an object of class <code>summary.JointAI</code></p></td>
+      <td><p>an object of class <code>summary.JointAI</code> or <code>JointAI</code></p></td>
     </tr>
     <tr>
       <th>digits</th>
       <td><p>minimal number of <em>significant</em> digits, see
     <code><a href='https://www.rdocumentation.org/packages/base/topics/print.default'>print.default</a></code>.</p></td>
     </tr>
+    <tr>
+      <th>parm</th>
+      <td><p>same as <code>subset</code></p></td>
+    </tr>
+    <tr>
+      <th>level</th>
+      <td><p>confidence level (default is 0.95)</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>The model fitting functions <code><a href='model_imp.html'>lm_imp</a></code>,
-         <code><a href='model_imp.html'>glm_imp</a></code>, <code><a href='model_imp.html'>lme_imp</a></code>, <code><a href='model_imp.html'>glme_imp</a></code>,
-         <code><a href='model_imp.html'>survreg_imp</a></code> and the
-         vignette <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Parameter Selection</a>
-          for examples how to specify the parameter <code>subset</code>.</p></div>
+         <code><a href='model_imp.html'>glm_imp</a></code>, <code><a href='model_imp.html'>clm_imp</a></code>, <code><a href='model_imp.html'>lme_imp</a></code>,
+         <code><a href='model_imp.html'>glme_imp</a></code>, <code><a href='model_imp.html'>survreg_imp</a></code> and <code><a href='model_imp.html'>coxph_imp</a></code>,
+         and the vignette
+         <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Parameter Selection</a>
+         for examples how to specify the parameter <code>subset</code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -241,16 +267,16 @@ given directly by <strong>JointAI</strong>.</p></td>
 #&gt; 
 #&gt; Posterior summary:
 #&gt;                 Mean     SD    2.5%   97.5% tail-prob. GR-crit
-#&gt; (Intercept)  35.2507 25.627 -13.940 82.5436      0.160   1.061
-#&gt; C1          -26.5668 17.919 -59.133  8.2944      0.140   1.062
-#&gt; M22          -0.4277  0.682  -1.977  0.7717      0.540   0.997
-#&gt; M23           0.0437  0.694  -1.486  1.3226      0.947   1.007
-#&gt; M24          -1.1717  0.667  -2.496 -0.0272      0.040   1.000
-#&gt; C2            0.9698  0.767  -0.496  2.5162      0.180   1.003
+#&gt; (Intercept)  36.9528 27.121 -14.832 89.0594      0.133    1.07
+#&gt; C1          -27.7576 18.955 -64.335  8.5757      0.120    1.07
+#&gt; C2            0.9360  0.659  -0.308  2.4278      0.153    1.15
+#&gt; M22          -0.4103  0.666  -1.576  0.8818      0.567    1.05
+#&gt; M23           0.0534  0.668  -1.163  1.4321      0.953    1.12
+#&gt; M24          -1.2385  0.715  -2.726  0.0326      0.060    1.08
 #&gt; 
 #&gt; Posterior summary of residual std. deviation:
 #&gt;         Mean    SD 2.5% 97.5% GR-crit
-#&gt; sigma_y 2.24 0.147 1.98  2.53       1
+#&gt; sigma_y 2.24 0.152 1.96  2.54    1.04
 #&gt; 
 #&gt; 
 #&gt; MCMC settings:
@@ -259,7 +285,15 @@ given directly by <strong>JointAI</strong>.</p></td>
 #&gt; Thinning interval = 1 
 #&gt; Number of chains = 3 
 #&gt; 
-#&gt; Number of observations: 100 </div><div class='input'>
+#&gt; Number of observations: 100 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/coef'>coef</a></span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt;  (Intercept)           C1           C2          M22          M23          M24 
+#&gt;  36.95281911 -27.75759305   0.93598698  -0.41030930   0.05335004  -1.23848651 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/confint'>confint</a></span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt;                   2.5%       97.5%
+#&gt; (Intercept) -14.832463 89.05937124
+#&gt; C1          -64.335350  8.57565537
+#&gt; C2           -0.308486  2.42784144
+#&gt; M22          -1.575542  0.88181126
+#&gt; M23          -1.163366  1.43212237
+#&gt; M24          -2.725961  0.03255014
+#&gt; sigma_y       1.963617  2.54175689</div><div class='input'>
 
 </div></pre>
   </div>
@@ -282,7 +316,7 @@ given directly by <strong>JointAI</strong>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

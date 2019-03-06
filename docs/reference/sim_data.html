@@ -32,6 +32,7 @@
 <!-- docsearch -->
 <script src="../docsearch.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
@@ -68,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -147,7 +148,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Simulate dataset</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/simulate_data.R'><code>R/simulate_data.R</code></a></small>
+    
     <div class="hidden name"><code>sim_data.Rd</code></div>
     </div>
 
@@ -158,9 +159,9 @@
     </div>
 
     <pre class="usage"><span class='fu'>sim_data</span>(<span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>Jmin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>Jmax</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>tmin</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>tmax</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>norm</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>bin</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>multi</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>ord</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>count</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>long</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>coef</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>misvar</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nmisvar</span> <span class='kw'>=</span> <span class='fl'>7</span>,
-  <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"long"</span>)</pre>
+  <span class='kw'>norm</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>bin</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>multi</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>ord</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>count</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>longnorm</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>longbin</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>longord</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>longcount</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>coef</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>misvar</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nmisvar</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,24 +195,39 @@ drawn from distributions.</p></td>
     </tr>
     <tr>
       <th>bin</th>
-      <td><p>integer giving the number of binary variables or list</p></td>
+      <td><p>integer giving the number of binary variables or a character vector containing their names</p></td>
     </tr>
     <tr>
       <th>multi</th>
-      <td><p>integer giving the number of multinomial variables or list</p></td>
+      <td><p>integer giving the number of multinomial variables or a character vector containing their names</p></td>
     </tr>
     <tr>
       <th>ord</th>
-      <td><p>integer giving the number of ordinal variables or list</p></td>
+      <td><p>integer giving the number of ordinal variables or a character vector containing their names</p></td>
     </tr>
     <tr>
       <th>count</th>
-      <td><p>integer giving the number of ordinal variables or list (not yet used)</p></td>
+      <td><p>integer giving the number of count variables or a character vector containing their names</p></td>
     </tr>
     <tr>
-      <th>long</th>
+      <th>longnorm</th>
       <td><p>integer giving the number of longitudinal (normally distributed)
-variables or list containing parameters</p></td>
+variables or a character vector containing their names</p></td>
+    </tr>
+    <tr>
+      <th>longbin</th>
+      <td><p>integer giving the number of longitudinal binary
+variables or a character vector containing their names</p></td>
+    </tr>
+    <tr>
+      <th>longord</th>
+      <td><p>integer giving the number of longitudinal ordered factors
+or a character vector containing their names</p></td>
+    </tr>
+    <tr>
+      <th>longcount</th>
+      <td><p>integer giving the number of longitudinal count variables
+or a character vector containing their names</p></td>
     </tr>
     <tr>
       <th>coef</th>
@@ -220,7 +236,7 @@ NULL, the parameters are drawn from a normal distribution</p></td>
     </tr>
     <tr>
       <th>misvar</th>
-      <td><p>vector of variable names or positions (??? check this) to
+      <td><p>vector of variable names or positions to
 specify which variables are incomplete</p></td>
     </tr>
     <tr>
@@ -230,8 +246,8 @@ necessary when misvar is NULL and incomplete variables are chosen
 randomly</p></td>
     </tr>
     <tr>
-      <th>format</th>
-      <td><p>"long" or "wide" ("wide" not yet implemented)</p></td>
+      <th>seed</th>
+      <td><p>optional seed value</p></td>
     </tr>
     </table>
     
@@ -260,7 +276,7 @@ randomly</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

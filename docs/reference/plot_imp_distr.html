@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameter names of an JointAI object — parameters • JointAI</title>
+<title>Plot the distribution of observed and imputed values — plot_imp_distr • JointAI</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -36,10 +36,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Parameter names of an JointAI object — parameters" />
+<meta property="og:title" content="Plot the distribution of observed and imputed values — plot_imp_distr" />
 
-<meta property="og:description" content="Returns the names of the parameters/nodes of an object of class 'JointAI' for
-which a monitor is set." />
+<meta property="og:description" content="Plots densities and barplots of the observed and imputed values in a
+long-format dataset (multiple imputed datasets stacked onto each other).#'" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -148,53 +148,53 @@ which a monitor is set." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameter names of an JointAI object</h1>
+    <h1>Plot the distribution of observed and imputed values</h1>
     
-    <div class="hidden name"><code>parameters.Rd</code></div>
+    <div class="hidden name"><code>plot_imp_distr.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Returns the names of the parameters/nodes of an object of class 'JointAI' for
-which a monitor is set.</p>
+    <p>Plots densities and barplots of the observed and imputed values in a
+long-format dataset (multiple imputed datasets stacked onto each other).#'</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>parameters</span>(<span class='no'>object</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_imp_distr</span>(<span class='no'>data</span>, <span class='kw'>imp</span> <span class='kw'>=</span> <span class='st'>"Imputation_"</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"id"</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>object inheriting from class 'JointAI'</p></td>
+      <th>data</th>
+      <td><p>a data.frame containing multiple imputations (and the original incomplete data)</p></td>
     </tr>
     <tr>
-      <th>mess</th>
-      <td><p>logical; should messages be given? Default is
-<code>TRUE</code>. Note: this applies only to messages
-given directly by <strong>JointAI</strong>.</p></td>
+      <th>imp</th>
+      <td><p>the name of the variable specifying the imputation indicator</p></td>
     </tr>
     <tr>
-      <th>warn</th>
-      <td><p>logical; should warnings be given? Default is
-<code>TRUE</code>. Note: this applies only to warnings
-given directly by <strong>JointAI</strong>.</p></td>
+      <th>id</th>
+      <td><p>the name of the variable specifying the subject indicator</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>currently not used</p></td>
+      <th>ncol</th>
+      <td><p>optional number of rows and columns in the plot layout;
+automatically chosen if unspecified</p></td>
+    </tr>
+    <tr>
+      <th>nrow</th>
+      <td><p>optional number of rows and columns in the plot layout;
+automatically chosen if unspecified</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># (does not need MCMC samples to work, so we will set n.adapt = 0 and</span>
-<span class='co'># n.iter = 0 to reduce computational time)</span>
-<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span> + <span class='no'>O2</span> + <span class='no'>B2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bugs to the package maintainer.</span></div><div class='output co'>#&gt; <span class='message'>Note: No MCMC sample will be created when n.iter is set to 0.</span></div><div class='output co'>#&gt; <span class='message'>Note: ordered factors are included as dummy variables into the linear predictor (not as orthogonal polynomials).</span></div><div class='input'>
-<span class='fu'>parameters</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; <span class='message'>Note: 'mod1' does not contain MCMC samples.</span></div><div class='output co'>#&gt;  [1] "(Intercept)" "C1"          "C2"          "M22"         "M23"        
-#&gt;  [6] "M24"         "O22"         "O23"         "O24"         "B21"        
-#&gt; [11] "sigma_y"    </div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lme_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>c2</span> + <span class='no'>O2</span> + <span class='no'>b2</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>id</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>longDF</span>,
+               <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>imps</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bugs to the package maintainer.</span></div><div class='output co'>#&gt; <span class='message'>Note: ordered factors are included as dummy variables into the linear predictor (not as orthogonal polynomials).</span></div><div class='input'><span class='no'>impDF</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_MIdat.html'>get_MIdat</a></span>(<span class='no'>mod</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='fu'>plot_imp_distr</span>(<span class='no'>impDF</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 87 rows containing missing values (geom_bar).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 87 rows containing missing values (geom_bar).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 57 rows containing non-finite values (stat_density).</span></div><div class='img'><img src='plot_imp_distr-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

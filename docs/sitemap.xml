@@ -16,10 +16,10 @@
     <loc>https://nerler.github.io/JointAI//reference/densplot.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/get_imp_meth.html</loc>
+    <loc>https://nerler.github.io/JointAI//reference/get_MIdat.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/get_MIdat.html</loc>
+    <loc>https://nerler.github.io/JointAI//reference/get_models.html</loc>
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/GR_crit.html</loc>
@@ -31,7 +31,7 @@
     <loc>https://nerler.github.io/JointAI//reference/JointAIObject.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/list_impmodels.html</loc>
+    <loc>https://nerler.github.io/JointAI//reference/list_models.html</loc>
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/longDF.html</loc>
@@ -53,6 +53,9 @@
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/plot_all.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI//reference/plot_imp_distr.html</loc>
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/predDF.html</loc>

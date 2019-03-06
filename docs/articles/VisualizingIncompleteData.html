@@ -10,6 +10,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
+<link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Visualizing Incomplete Data">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -31,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -111,22 +112,22 @@
       <h1>Visualizing Incomplete Data</h1>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2018-12-04</h4>
+            <h4 class="date">2019-03-06</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/VisualizingIncompleteData.Rmd"><code>vignettes/VisualizingIncompleteData.Rmd</code></a></small>
+      
       <div class="hidden name"><code>VisualizingIncompleteData.Rmd</code></div>
 
     </div>
 
     
     
-<p>When analyzing data with missing values it is important to be familiar with the variables of interest, i.e., to know their measurement level and distribution as well as the amount of missing values per variable, and to investigate the pattern of missing values.</p>
+<p>When analyzing data with missing values it is important to be familiar with the variables of interest, i.e., to know their measurement level and distribution, as well as the amount of missing values per variable, and to investigate the pattern of missing values.</p>
 <p>Currently, the package <strong>JointAI</strong> has two function that help this fist exploration of an unknown dataset.</p>
-<p>In this vignette, we use the NHANES data and the simLong data, that are part of the <strong>JointAI</strong> package. For more info on these datasets, check the help files <a href="https://nerler.github.io/JointAI/reference/NHANES.html">for the NHANES</a> and <a href="https://nerler.github.io/JointAI/reference/simLong.html">for the simLong</a> data or go to the <a href="https://www.cdc.gov/nchs/nhanes/index.htm">web page of the National Health and Nutrition Examination Survey (NHANES)</a>.</p>
+<p>In this vignette, we use the <code>NHANES</code> data and the <code>simLong</code> data, that are part of the <strong>JointAI</strong> package. For more info on these datasets, check the help files <a href="https://nerler.github.io/JointAI/reference/NHANES.html">for the NHANES</a> and <a href="https://nerler.github.io/JointAI/reference/simLong.html">for the simLong</a> data or go to the <a href="https://www.cdc.gov/nchs/nhanes/index.htm">web page of the National Health and Nutrition Examination Survey (NHANES)</a>.</p>
 <div id="visualize-the-distribution-of-each-variable" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualize-the-distribution-of-each-variable" class="anchor"></a>Visualize the distribution of each variable</h2>
-<p>Using <code><a href="../reference/plot_all.html">plot_all()</a></code>, an array of histograms (for continuous variables) and barplots (for categorical variables) can be obtained.</p>
+<p>Using <code><a href="../reference/plot_all.html">plot_all()</a></code>, an array of histograms (for continuous variables and dates) and barplots (for categorical variables) can be obtained.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/par">par</a></span>(<span class="dt">mar =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">2.5</span>, <span class="dv">3</span>, <span class="fl">2.5</span>, <span class="dv">1</span>), <span class="dt">mgp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="fl">0.8</span>, <span class="dv">0</span>))</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="../reference/plot_all.html">plot_all</a></span>(NHANES)</a></code></pre></div>
 <p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-1-1.png" width="100%" style="display: block; margin: auto;"></p>
@@ -152,18 +153,17 @@
 <p>It is also possible to provide some of the other arguments of <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/hist.html"><code><a href="https://www.rdocumentation.org/packages/graphics/topics/hist">hist()</a></code></a> or <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/barplot.html"><code><a href="https://www.rdocumentation.org/packages/graphics/topics/barplot">barplot()</a></code></a>.</p>
 <p>For example:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/par">par</a></span>(<span class="dt">mar =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">2.5</span>, <span class="dv">3</span>, <span class="fl">2.5</span>, <span class="dv">1</span>), <span class="dt">mgp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="fl">0.8</span>, <span class="dv">0</span>))</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/plot_all.html">plot_all</a></span>(NHANES, <span class="dt">allNA =</span> <span class="ot">TRUE</span>, <span class="dt">fill =</span> <span class="st">'#18bc9c'</span>, <span class="dt">border =</span> <span class="st">'#2C3E50'</span>,</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">         <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">nclass =</span> <span class="dv">30</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/plot_all.html">plot_all</a></span>(NHANES, <span class="dt">allNA =</span> <span class="ot">TRUE</span>, <span class="dt">fill =</span> <span class="st">'#18bc9c'</span>, <span class="dt">border =</span> <span class="st">'#2C3E50'</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">nclass =</span> <span class="dv">30</span>)</a></code></pre></div>
 <p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div id="multi-level-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#multi-level-data" class="anchor"></a>Multi-level data</h3>
-<p>When the data has a multi-level structure, e.g., subjects are nested within hospitals, or subjects have been measured repeatedly, as in the simLong data, the level of each variable can be taken into account by specifying <code>use_levels = TRUE</code> and providing the name of the id variable in the argument <code>idvar</code>.</p>
+<p>When the data has a multi-level structure, e.g., subjects are nested within hospitals, or subjects have been measured repeatedly as in the <code>simLong</code> data, the level of each variable can be taken into account by specifying <code>use_levels = TRUE</code> and providing the name of the id variable in the argument <code>idvar</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/par">par</a></span>(<span class="dt">mar =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">2.5</span>, <span class="dv">3</span>, <span class="fl">2.5</span>, <span class="dv">1</span>), <span class="dt">mgp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="fl">0.8</span>, <span class="dv">0</span>))</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="../reference/plot_all.html">plot_all</a></span>(simLong, <span class="dt">allNA =</span> <span class="ot">TRUE</span>, <span class="dt">fill =</span> <span class="st">'#18bc9c'</span>, <span class="dt">border =</span> <span class="st">'#2C3E50'</span>,</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">         <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">nclass =</span> <span class="dv">30</span>, <span class="dt">use_level =</span> <span class="ot">TRUE</span>, <span class="dt">idvar =</span> <span class="st">"ID"</span>)</a></code></pre></div>
-<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;"> The information whether a variable is level-1 (i.e., varies within the groups specified by <code>idvar</code>) or level-2 (i.e., constant within the groups) is added to the title of each plot, and level-2 variables are plotted on he group-level instead of the observation level.</p>
+<p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;"> The information whether a variable is level-1 (i.e., varies within the groups specified by <code>idvar</code>) or level-2 (i.e., constant within the groups) is added to the title of each plot, and level-2 variables are plotted on the group-level instead of the observation level.</p>
 </div>
 </div>
 <div id="missing-data-pattern" class="section level2">
@@ -172,12 +172,12 @@
 <p>The pattern of the missing data can be visualized with the function <code><a href="../reference/md_pattern.html">md_pattern()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/md_pattern.html">md_pattern</a></span>(NHANES)</a></code></pre></div>
 <p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;"></p>
-<p>In the resulting plot, variables are given in the columns and each row corresponds to one pattern of missingness across the variables. The numbers on the right margin give the number of cases per pattern. Underneath the plot, the number of missing values per variable are given. Columns are automatically sorted by number of missing values, rows by number of cases per pattern.</p>
-<p>The plot is generated with the help of <a href="https://ggplot2.tidyverse.org/"><code>ggplot()</code></a>, and, hence, the package <a href="https://CRAN.R-project.org/package=ggplot2"><strong>ggplot2</strong></a> needs to be installed. By setting <code>plot = FALSE</code>, no plot will be generated, but you can still obtain the missing data pattern in matrix form:</p>
+<p>In the resulting plot, variables are given in the columns and each row corresponds to one pattern of missingness across the variables. The numbers on the right margin give the number of cases per pattern. Underneath the plot, the number of missing values per variable is given. Columns are automatically sorted by number of missing values, rows by number of cases per pattern.</p>
+<p>The plot is generated with the help of <a href="https://ggplot2.tidyverse.org/"><code>ggplot()</code></a>, and, hence, the package <a href="https://CRAN.R-project.org/package=ggplot2"><strong>ggplot2</strong></a> needs to be installed. By setting <code>plot = FALSE</code>, no plot will be generated (and then <strong>ggplot2</strong> is not required).</p>
 <div id="missing-data-pattern-as-a-matrix" class="section level4">
 <h4 class="hasAnchor">
 <a href="#missing-data-pattern-as-a-matrix" class="anchor"></a>Missing data pattern as a matrix</h4>
-<p>When the argument <code>pattern = TRUE</code> is set, the missing data pattern is returned as a matrix, where observed values are represented by a <code>1</code> and missing values by a <code>0</code>:</p>
+<p>When the argument <code>pattern = TRUE</code> is set, the missing data pattern is returned as a matrix, where observed values are represented by <code>1</code> and missing values by <code>0</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/md_pattern.html">md_pattern</a></span>(NHANES, <span class="dt">pattern =</span> T, <span class="dt">plot =</span> F)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;      SBP gender age race educ WC smoke creat albu uricacid bili occup alc Npat</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; 1      1      1   1    1    1  1     1     1    1        1    1     1   1  116</span></a>
@@ -240,7 +240,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
 </div>

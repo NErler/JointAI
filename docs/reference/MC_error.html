@@ -32,6 +32,7 @@
 <!-- docsearch -->
 <script src="../docsearch.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
@@ -68,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -147,7 +148,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Monte Carlo error</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/convergence_criteria.R'><code>R/convergence_criteria.R</code></a></small>
+    
     <div class="hidden name"><code>MC_error.Rd</code></div>
     </div>
 
@@ -161,7 +162,7 @@
   <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for MCElist</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>scaled</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plotpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>data_scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plotpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>ablinepars</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='fl'>0.05</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -169,13 +170,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>object inheriting from class "JointAI"</p></td>
+      <td><p>object inheriting from class 'JointAI'</p></td>
     </tr>
     <tr>
       <th>subset</th>
       <td><p>subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument <code>monitor_params</code> in
-<code><a href='model_imp.html'>lm_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code> and <code><a href='model_imp.html'>lme_imp</a></code>.</p></td>
+<code><a href='model_imp.html'>lm_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code>, <code><a href='model_imp.html'>clm_imp</a></code>,
+<code><a href='model_imp.html'>lme_imp</a></code>, <code><a href='model_imp.html'>glme_imp</a></code>, <code><a href='model_imp.html'>survreg_imp</a></code>
+and <code><a href='model_imp.html'>coxph_imp</a></code>.</p></td>
     </tr>
     <tr>
       <th>start</th>
@@ -221,8 +224,10 @@ given directly by <strong>JointAI</strong>.</p></td>
 </dl></td>
     </tr>
     <tr>
-      <th>scaled</th>
-      <td><p>use the scaled or unscaled version, default is <code>TRUE</code></p></td>
+      <th>data_scale</th>
+      <td><p>show the Monte Carlo error of the sample transformed back
+to the scale of the data (<code>TRUE</code>) or on the sampling scale (this
+requires the argument <code>keep_scaled_mcmc = TRUE</code> in the JointAI model)</p></td>
     </tr>
     <tr>
       <th>plotpars</th>
@@ -268,14 +273,14 @@ contains some examples how to specify the argument <code>subset</code>.</p></div
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bugs to the package maintainer.</span></div><div class='input'>
-<span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                  est    MCSE      SD MCSE/SD
-#&gt; (Intercept)  3.1e+03 1.5e+02 1985.21   0.077
-#&gt; C1          -2.1e+03 1.0e+02 1366.55   0.077
-#&gt; M22         -4.1e-01 3.1e-02    0.67   0.047
-#&gt; M23          8.6e-02 3.4e-02    0.73   0.047
-#&gt; M24         -1.2e+00 3.5e-02    0.64   0.054
-#&gt; C2           3.1e+00 1.1e-01    1.98   0.054
-#&gt; sigma_y      2.2e+00 9.1e-03    0.17   0.052</div><div class='input'>
+<span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                 est   MCSE    SD MCSE/SD
+#&gt; (Intercept)  33.633 1.9392 26.27   0.074
+#&gt; C1          -25.475 1.3568 18.33   0.074
+#&gt; C2            0.891 0.0505  0.68   0.075
+#&gt; M22          -0.400 0.0288  0.65   0.045
+#&gt; M23           0.097 0.0406  0.65   0.062
+#&gt; M24          -1.101 0.0370  0.69   0.053
+#&gt; sigma_y       2.238 0.0096  0.16   0.059</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'>MC_error</span>(<span class='no'>mod</span>), <span class='kw'>ablinepars</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='img'><img src='MC_error-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
@@ -306,7 +311,7 @@ contains some examples how to specify the argument <code>subset</code>.</p></div
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

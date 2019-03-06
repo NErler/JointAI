@@ -32,6 +32,7 @@
 <!-- docsearch -->
 <script src="../docsearch.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
@@ -39,8 +40,10 @@
 
 <meta property="og:description" content="The JointAI package performs simultaneous imputation and inference for
 incomplete data using the Bayesian framework.
-Distributions for incomplete variables are specified automatically and modeled
-jointly with the analysis model." />
+Distributions of incomplete variables, conditional on other covariates,
+are specified automatically and modeled jointly with the analysis model.
+MCMC sampling is performed in 'JAGS'
+via the R package rjags." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -71,7 +74,7 @@ jointly with the analysis model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -150,7 +153,7 @@ jointly with the analysis model." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>JointAI: Joint Analysis and Imputation of Incomplete Data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/JointAI.R'><code>R/JointAI.R</code></a></small>
+    
     <div class="hidden name"><code>JointAI.Rd</code></div>
     </div>
 
@@ -158,8 +161,10 @@ jointly with the analysis model." />
     
     <p>The <strong>JointAI</strong> package performs simultaneous imputation and inference for
 incomplete data using the Bayesian framework.
-Distributions for incomplete variables are specified automatically and modeled
-jointly with the analysis model.</p>
+Distributions of incomplete variables, conditional on other covariates,
+are specified automatically and modeled jointly with the analysis model.
+MCMC sampling is performed in <a href='http://mcmc-jags.sourceforge.net'>'JAGS'</a>
+via the R package <a href='https://CRAN.R-project.org/package=rjags'><strong>rjags</strong></a>.</p>
     
     </div>
 
@@ -167,18 +172,27 @@ jointly with the analysis model.</p>
     <h2 class="hasAnchor" id="main-functions"><a class="anchor" href="#main-functions"></a>Main functions</h2>
 
     
-    <p>The package has five main functions, <code><a href='model_imp.html'>lm_imp</a></code>,
-<code><a href='model_imp.html'>glm_imp</a></code>, <code><a href='model_imp.html'>lme_imp</a></code>, <code><a href='model_imp.html'>glme_imp</a></code> and <code><a href='model_imp.html'>survreg_imp</a></code>
-that allow analysis using linear regression, generalized linear regression,
-linear mixed effects models, generalized linear mixed effects models and parametric
-survival models. As far as possible, the specification of
-the functions is the same as the specification of their complete data
-versions <code><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></code>, <code><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></code>,
-<code><a href='https://www.rdocumentation.org/packages/nlme/topics/lme'>lme</a></code> (from the package
-<a href='https://CRAN.R-project.org/package=nlme'><strong>nlme</strong></a>) and
-<code><a href='https://www.rdocumentation.org/packages/survival/topics/survreg'>survreg</a></code> (from the package
-<a href='https://CRAN.R-project.org/package=survival'><strong>survival</strong></a>).</p>
+    <p>The package has the following main functions that allow analysis in different
+settings:</p><ul>
+<li><p><code><a href='model_imp.html'>lm_imp</a></code> for linear regression</p></li>
+<li><p><code><a href='model_imp.html'>glm_imp</a></code> for generalized linear regression</p></li>
+<li><p><code><a href='model_imp.html'>clm_imp</a></code> for cumulative logit models</p></li>
+<li><p><code><a href='model_imp.html'>lme_imp</a></code> for linear mixed models</p></li>
+<li><p><code><a href='model_imp.html'>glme_imp</a></code> for generalized linear mixed models</p></li>
+<li><p><code><a href='model_imp.html'>clmm_imp</a></code> for cumulative logit mixed models</p></li>
+<li><p><code><a href='model_imp.html'>survreg_imp</a></code> for parametric (Weibull) survival models</p></li>
+<li><p><code><a href='model_imp.html'>coxph_imp</a></code> for Cox proportional hazard models</p></li>
+</ul>
+    <p>As far as possible, the specification of these functions is analogue to the
+specification of their complete data versions
+<code><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></code>, <code><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/ordinal/topics/clm'>clm</a></code> (from the package <a href='https://CRAN.R-project.org/package=ordinal'><strong>ordinal</strong></a>),
+<code><a href='https://www.rdocumentation.org/packages/nlme/topics/lme'>lme</a></code> (from the package <a href='https://CRAN.R-project.org/package=nlme'><strong>nlme</strong></a>),
+<code>clmm2</code> (from the package <a href='https://CRAN.R-project.org/package=ordinal'><strong>ordinal</strong></a>),
+<code><a href='https://www.rdocumentation.org/packages/survival/topics/survreg'>survreg</a></code> (from the package <a href='https://CRAN.R-project.org/package=survival'><strong>survival</strong></a>) and
+<code><a href='https://www.rdocumentation.org/packages/survival/topics/coxph'>coxph</a></code> (from the package <a href='https://CRAN.R-project.org/package=survival'><strong>survival</strong></a>).</p>
     <p>Results can be summarized and printed with <code><a href='summary.JointAI.html'>summary.JointAI</a></code>,
+<code><a href='summary.JointAI.html'>coef.JointAI</a></code> and <code><a href='summary.JointAI.html'>confint.JointAI</a></code>,
 and visualized using
 <code><a href='traceplot.html'>traceplot</a></code> or <code><a href='densplot.html'>densplot</a></code>.
 The function <code><a href='predict.JointAI.html'>predict.JointAI</a></code> allows prediction (including credible intervals)
@@ -188,17 +202,21 @@ from <code>JointAI</code> models.</p>
 
     
     <p>Two criteria for evaluation of convergence and precision of the posterior
-estimate are available:
-<code><a href='GR_crit.html'>GR_crit</a></code> and <code><a href='MC_error.html'>MC_error</a></code>.</p>
-<p>Imputed data can be extracted and exported to SPSS data using <code><a href='get_MIdat.html'>get_MIdat</a></code>.</p>
+estimate are available:</p><ul>
+<li><p><code><a href='GR_crit.html'>GR_crit</a></code> implements the Gelman-Rubin criterion ('potential scale reduction factor') for convergence</p></li>
+<li><p><code><a href='MC_error.html'>MC_error</a></code> calculates the Monte Carlo error to evaluate the precision of the MCMC sample</p></li>
+</ul>
+    <p>Imputed data can be extracted (and exported to SPSS) using <code><a href='get_MIdat.html'>get_MIdat</a></code>.
+The function <code><a href='plot_imp_distr.html'>plot_imp_distr</a></code> allows visual comparison of the
+distribution of observed and imputed values.</p>
     
     <h2 class="hasAnchor" id="other-useful-functions"><a class="anchor" href="#other-useful-functions"></a>Other useful functions</h2>
 
     
     <ul>
-<li><p><code><a href='parameters.html'>parameters</a></code> and <code><a href='list_impmodels.html'>list_impmodels</a></code> to gain
+<li><p><code><a href='parameters.html'>parameters</a></code> and <code><a href='list_models.html'>list_impmodels</a></code> to gain
       insight in the specified model</p></li>
-<li><p><code><a href='plot_all.html'>plot_all</a></code> and <code>md_pattern</code> to visualize the
+<li><p><code><a href='plot_all.html'>plot_all</a></code> and <code><a href='md_pattern.html'>md_pattern</a></code> to visualize the
       distribution of the data and the missing data pattern</p></li>
 </ul>
     
@@ -220,8 +238,8 @@ Demonstrations of the options in <code><a href='plot_all.html'>plot_all</a></cod
 Explanation and demonstration of all parameters that are required or optional
 to specify the model structure in <code><a href='model_imp.html'>lm_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code>
 and <code><a href='model_imp.html'>lme_imp</a></code>.
-Among others, the functions <code><a href='parameters.html'>parameters</a></code>, <code><a href='list_impmodels.html'>list_impmodels</a></code>,
-<code><a href='get_imp_meth.html'>get_imp_meth</a></code> and <code><a href='set_refcat.html'>set_refcat</a></code> are used.</p></li>
+Among others, the functions <code><a href='parameters.html'>parameters</a></code>, <code><a href='list_models.html'>list_impmodels</a></code>,
+<code><a href='get_models.html'>get_imp_meth</a></code> and <code><a href='set_refcat.html'>set_refcat</a></code> are used.</p></li>
 <li><p><a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'><em>Parameter Selection</em></a>:<br />
 Examples on how to select the parameters/variables/nodes
                                 to follow using the argument <code>monitor_params</code>
@@ -241,11 +259,16 @@ including <code><a href='traceplot.html'>traceplot</a></code>, <code><a href='de
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Erler, N. S., Rizopoulos, D., Rosmalen, J. V., Jaddoe,
-V. W., Franco, O. H., &amp; Lesaffre, E. M. (2016).
+    <p>Erler, N.S., Rizopoulos, D., Rosmalen, J., Jaddoe, V.W.V.,
+Franco, O. H., &amp; Lesaffre, E.M.E.H. (2016).
 Dealing with missing covariates in epidemiologic studies: A comparison
 between multiple imputation and a full Bayesian approach.
-<em>Statistics in Medicine</em>, 35(17), 2955-2974.</p>
+<em>Statistics in Medicine</em>, 35(17), 2955-2974.
+doi: <a href='https://doi.org/10.1002/sim.6944'>10.1002/sim.6944</a></p>
+<p>Erler, N.S., Rizopoulos D., Jaddoe, V.W.V., Franco, O.H. &amp; Lesaffre, E.M.E.H. (2019).
+Bayesian imputation of time-varying covariates in linear mixed models.
+<em>Statistical Methods in Medical Research</em>, 28(2), 555–568.
+doi: <a href='https://doi.org/10.1177/0962280217730851'>10.1177/0962280217730851</a></p>
     
 
   </div>
@@ -273,7 +296,7 @@ between multiple imputation and a full Bayesian approach.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

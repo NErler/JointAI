@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameter names of an JointAI object — parameters • JointAI</title>
+<title>Set default (imputation) models and order — get_models • JointAI</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -36,10 +36,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Parameter names of an JointAI object — parameters" />
+<meta property="og:title" content="Set default (imputation) models and order — get_models" />
 
-<meta property="og:description" content="Returns the names of the parameters/nodes of an object of class 'JointAI' for
-which a monitor is set." />
+<meta property="og:description" content="Set default (imputation) models and order" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -148,60 +147,105 @@ which a monitor is set." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameter names of an JointAI object</h1>
+    <h1>Set default (imputation) models and order</h1>
     
-    <div class="hidden name"><code>parameters.Rd</code></div>
+    <div class="hidden name"><code>get_models.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Returns the names of the parameters/nodes of an object of class 'JointAI' for
-which a monitor is set.</p>
+    <p>Set default (imputation) models and order</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>parameters</span>(<span class='no'>object</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>get_models</span>(<span class='no'>fixed</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>data</span>, <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>get_imp_meth</span>(<span class='no'>fixed</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>data</span>, <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>object inheriting from class 'JointAI'</p></td>
+      <th>fixed</th>
+      <td><p>a two sided formula describing the fixed-effects part of the
+model (see <code><a href='https://www.rdocumentation.org/packages/stats/topics/formula'>formula</a></code>)</p></td>
     </tr>
     <tr>
-      <th>mess</th>
-      <td><p>logical; should messages be given? Default is
-<code>TRUE</code>. Note: this applies only to messages
-given directly by <strong>JointAI</strong>.</p></td>
+      <th>random</th>
+      <td><p>only for <code>lme_imp</code>, <code>glme_imp</code> and <code>clmm_imp</code>:
+a one-sided formula of the form <code>~x1 + ... + xn | g</code>,
+where <code>x1 + ... + xn</code> specifies the model for the random
+effects and <code>g</code> the grouping variable</p></td>
     </tr>
     <tr>
-      <th>warn</th>
-      <td><p>logical; should warnings be given? Default is
-<code>TRUE</code>. Note: this applies only to warnings
-given directly by <strong>JointAI</strong>.</p></td>
+      <th>data</th>
+      <td><p>a <code>data.frame</code></p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>currently not used</p></td>
+      <th>auxvars</th>
+      <td><p>optional vector of variable names that should be used as
+predictors in the imputation procedure (and will be imputed
+if necessary) but are not part of the analysis model</p></td>
+    </tr>
+    <tr>
+      <th>no_model</th>
+      <td><p>names of variables for which no model should be specified.
+Note that this is only possible for completely observed
+variables and may imply assumptions of independence between
+the excluded variable and incomplete variables.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>get_models()</code> returns a list of two vectors named <code>models</code>
+        and <code>meth</code>.
+        <code>models</code> is a named vector containing the names of covariates
+        that either have missing values and/or are longitudinal (level-1)
+        covariates and the corresponding default (imputation) models.
+        <code>meth</code> is a subset of <code>models</code> containing only the variables
+        that have missing values.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># (does not need MCMC samples to work, so we will set n.adapt = 0 and</span>
-<span class='co'># n.iter = 0 to reduce computational time)</span>
-<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span> + <span class='no'>O2</span> + <span class='no'>B2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bugs to the package maintainer.</span></div><div class='output co'>#&gt; <span class='message'>Note: No MCMC sample will be created when n.iter is set to 0.</span></div><div class='output co'>#&gt; <span class='message'>Note: ordered factors are included as dummy variables into the linear predictor (not as orthogonal polynomials).</span></div><div class='input'>
-<span class='fu'>parameters</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; <span class='message'>Note: 'mod1' does not contain MCMC samples.</span></div><div class='output co'>#&gt;  [1] "(Intercept)" "C1"          "C2"          "M22"         "M23"        
-#&gt;  [6] "M24"         "O22"         "O23"         "O24"         "B21"        
-#&gt; [11] "sigma_y"    </div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>get_models</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>B2</span> + <span class='no'>O2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>)</div><div class='output co'>#&gt; $models
+#&gt;           O2           M2           C2           B2 
+#&gt;   "cumlogit" "multilogit"       "norm"      "logit" 
+#&gt; 
+#&gt; $meth
+#&gt;           O2           M2           C2           B2 
+#&gt;   "cumlogit" "multilogit"       "norm"      "logit" 
+#&gt; </div><div class='input'><span class='fu'>get_imp_meth</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>B2</span> + <span class='no'>O2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>)</div><div class='output co'>#&gt;           O2           M2           C2           B2 
+#&gt;   "cumlogit" "multilogit"       "norm"      "logit" </div><div class='input'>
+<span class='fu'>get_models</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>O2</span> + <span class='no'>c2</span> + <span class='no'>b1</span> + <span class='no'>o2</span> + <span class='no'>time</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>id</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>longDF</span>)</div><div class='output co'>#&gt; $models
+#&gt;           O2           b1         time           o2           c2 
+#&gt;   "cumlogit" "glmm_logit"        "lmm"       "clmm"        "lmm" 
+#&gt; 
+#&gt; $meth
+#&gt;         O2         o2         c2 
+#&gt; "cumlogit"     "clmm"      "lmm" 
+#&gt; </div><div class='input'><span class='fu'>get_imp_meth</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>O2</span> + <span class='no'>c2</span> + <span class='no'>b1</span> + <span class='no'>o2</span> + <span class='no'>time</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>id</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>longDF</span>)</div><div class='output co'>#&gt;         O2         o2         c2 
+#&gt; "cumlogit"     "clmm"      "lmm" </div><div class='input'>
+<span class='fu'>get_models</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>O2</span> + <span class='no'>c2</span> + <span class='no'>b1</span> + <span class='no'>o2</span> + <span class='no'>time</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>id</span>,
+           <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='st'>'time'</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>longDF</span>)</div><div class='output co'>#&gt; $models
+#&gt;           O2           b1           o2           c2 
+#&gt;   "cumlogit" "glmm_logit"       "clmm"        "lmm" 
+#&gt; 
+#&gt; $meth
+#&gt;         O2         o2         c2 
+#&gt; "cumlogit"     "clmm"      "lmm" 
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

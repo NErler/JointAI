@@ -32,6 +32,7 @@
 <!-- docsearch -->
 <script src="../docsearch.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
@@ -65,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -144,20 +145,27 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/nerler/JointAI/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      
     </div>
 
-    <div id="jointai-0-4-0" class="section level1">
+    <div id="jointai-0-5-0" class="section level1">
 <h1 class="page-header">
-<a href="#jointai-0-4-0" class="anchor"></a>JointAI 0.4.0<small> Unreleased </small>
+<a href="#jointai-0-5-0" class="anchor"></a>JointAI 0.5.0<small> Unreleased </small>
 </h1>
+<div id="important" class="section level2">
+<h2 class="hasAnchor">
+<a href="#important" class="anchor"></a>Important</h2>
+<ul>
+<li>the argument <code>meth</code> has changed to <code>models</code>
+</li>
+</ul>
+</div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
-<code>RinvD</code> is no longer selected to be monitored in random intercept model (<code>RinvD</code> is not used in such a model)</li>
-<li>fixed various bugs for models in which only the intercept is used (no covariates)</li>
+<code><a href="../reference/add_samples.html">add_samples()</a></code>: bug that copied the last chain to all other chains fixed</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level2">
@@ -165,13 +173,61 @@
 <a href="#minor-changes" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>
+<code><a href="../reference/plot_all.html">plot_all()</a></code>, <code><a href="../reference/densplot.html">densplot()</a></code>, and <code><a href="../reference/traceplot.html">traceplot()</a></code> limit the number of plots on one page to 64 when rows and columns of the layout are not user specified (to avoid the ‘figure margins too large’ error)</li>
+<li>change in <code>longDF</code> example data: new version containing complete and incomplete categorical longitudinal variables (and variable names L1 and L2 changed to c1 and c2)</li>
+<li>Some minor changes in notes, warnings and error messages</li>
+</ul>
+</div>
+<div id="new-features-extensions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features-extensions" class="anchor"></a>New Features / Extensions</h2>
+<ul>
+<li>
+<code><a href="../reference/model_imp.html">clm_imp()</a></code> and <code><a href="../reference/model_imp.html">clmm_imp()</a></code>: new functions for analysis of <strong>ordinal (mixed) models</strong>
+</li>
+<li>It is now possible to impute <strong>incomplete longitudinal covariates</strong> (continuous, binary and ordered factors).</li>
+<li>
+<code><a href="../reference/model_imp.html">coxph_imp()</a></code>: new function to fit Cox proportional hazards models with incomplete (baseline) covariates</li>
+<li>Argument <code>no_model</code> allows to specify names of completely observed variables for which no model should be specified (e.g., “time” in a mixed model)</li>
+<li>
+<strong>Shrinkage:</strong> argument <code>ridge = TRUE</code> allows to use shrinkage priors on the precision of the regression coefficients in the analysis model</li>
+<li>
+<code><a href="../reference/plot_all.html">plot_all()</a></code> can now handle variables from classes <code>Date</code> and <code>POSIXt</code>
+</li>
+<li>argument <code>parallel</code> allows different MCMC chains to be sampled in parallel</li>
+<li>argument <code>ncores</code> allows to specify the maximum number of cores to be used</li>
+<li>argument <code>seed</code> added for reproducible results</li>
+</ul>
+<hr>
+</div>
+</div>
+    <div id="jointai-0-4-0" class="section level1">
+<h1 class="page-header">
+<a href="#jointai-0-4-0" class="anchor"></a>JointAI 0.4.0<small> 2018-12-04 </small>
+</h1>
+<div id="bug-fixes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>
+<code>RinvD</code> is no longer selected to be monitored in random intercept model (<code>RinvD</code> is not used in such a model)</li>
+<li>fixed various bugs for models in which only the intercept is used (no covariates)</li>
+</ul>
+</div>
+<div id="minor-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
+<ul>
+<li>
 <code><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary()</a></code>: reduced default number of digits</li>
 <li>continuous variables with two distinct values are converted to factor</li>
-<li>argument <code>meth</code> now uses default values if only specified for subst of incomplete variables</li>
+<li>argument <code>meth</code> now uses default values if only specified for subset of incomplete variables</li>
 <li>
 <code><a href="../reference/get_MIdat.html">get_MIdat()</a></code>: argument <code>minspace</code> added to ensure spacing of iterations selected as imputations</li>
 <li>
 <code><a href="../reference/densplot.html">densplot()</a></code>: accepts additional options, e.g., <code>lwd</code>, <code>col</code>, …</li>
+<li>
+<code><a href="../reference/list_models.html">list_models()</a></code> replaces the function <code><a href="../reference/list_models.html">list_impmodels()</a></code> (which is now an alias)</li>
 </ul>
 </div>
 <div id="extensions" class="section level2">
@@ -197,9 +253,9 @@
 <h1 class="page-header">
 <a href="#jointai-0-3-4" class="anchor"></a>JointAI 0.3.4<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/traceplot.html">traceplot()</a></code>, <code><a href="../reference/densplot.html">densplot()</a></code>: specification of <code>nrow</code> AND <code>ncol</code> possible; fixed bug when only <code>nrow</code> specified</li>
@@ -210,9 +266,9 @@
 <h1 class="page-header">
 <a href="#jointai-0-3-3" class="anchor"></a>JointAI 0.3.3<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>remove deprecated code specifying <code>contrast.arg</code> that now in some cases cause error</li>
 <li>fixed problem identifying non-linear functions in formula when the name of another variable contains the function name</li>
@@ -224,19 +280,19 @@
 <h1 class="page-header">
 <a href="#jointai-0-3-2" class="anchor"></a>JointAI 0.3.2<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
-<code><a href="../reference/model_imp.html">lme_imp()</a></code>: fixed error in JAGS model when interaction between random slope variable and longiudinal variable</li>
+<code><a href="../reference/model_imp.html">lme_imp()</a></code>: fixed error in JAGS model when interaction between random slope variable and longitudinal variable</li>
 </ul>
 </div>
-<div id="minor-changes-1" class="section level2">
+<div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
 <ul>
-<li>unused levels of factores are dropped</li>
+<li>unused levels of factors are dropped</li>
 </ul>
 <hr>
 </div>
@@ -245,9 +301,9 @@
 <h1 class="page-header">
 <a href="#jointai-0-3-1" class="anchor"></a>JointAI 0.3.1<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/plot_all.html">plot_all()</a></code> uses correct level-2 %NA in title</li>
@@ -262,7 +318,7 @@
 <code><a href="../reference/densplot.html">densplot()</a></code>: use of color fixed</li>
 <li>functions with argument <code>subset</code> now return random effects covariance matrix correctly</li>
 <li>
-<code><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary()</a></code> displayes output with rowname when only one node is returned and fixed display of <code>D</code> matrix</li>
+<code><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary()</a></code> displays output with rowname when only one node is returned and fixed display of <code>D</code> matrix</li>
 <li>
 <code><a href="../reference/GR_crit.html">GR_crit()</a></code>: Literature reference corrected</li>
 <li>
@@ -270,14 +326,14 @@
 <li>no scaling for variables involved in a function to avoid problems with re-scaling</li>
 </ul>
 </div>
-<div id="minor-changes-2" class="section level2">
+<div id="minor-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>
 <code><a href="../reference/plot_all.html">plot_all()</a></code> uses <code>xpd = TRUE</code> when printing text for character variables</li>
 <li>
-<code><a href="../reference/list_impmodels.html">list_impmodels()</a></code> uses linebreak when output of predictor variables exceeds <code><a href="https://www.rdocumentation.org/packages/base/topics/options">getOption("width")</a></code>
+<code><a href="../reference/list_models.html">list_impmodels()</a></code> uses linebreak when output of predictor variables exceeds <code><a href="https://www.rdocumentation.org/packages/base/topics/options">getOption("width")</a></code>
 </li>
 <li>
 <code><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary()</a></code> now displays tail-probabilities for off-diagonal elements of <code>D</code>
@@ -293,22 +349,22 @@
 <h1 class="page-header">
 <a href="#jointai-0-3-0" class="anchor"></a>JointAI 0.3.0<small> 2018-08-14 </small>
 </h1>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code>monitor_params</code> is now checked to avoid problems when only part of the main parameters is selected</li>
 <li>categorical imputation models now use min-max trick to prevent probabilities outside [0, 1]</li>
 <li>initial value generation for logistic analysis model fixed</li>
 <li>bugfix in re-ordering columns when a function is part of the linear predictor</li>
-<li>bugfix in intial values for categorical covariates</li>
+<li>bugfix in initial values for categorical covariates</li>
 <li>bugfix in finding imputation method when function of variable is specified as auxiliary variable</li>
 </ul>
 </div>
-<div id="minor-changes-3" class="section level2">
+<div id="minor-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>
 <code>md.pattern()</code> now uses ggplot, which scales better than the previous version</li>
@@ -360,9 +416,9 @@
 <h1 class="page-header">
 <a href="#jointai-0-2-0" class="anchor"></a>JointAI 0.2.0<small> 2018-07-05 </small>
 </h1>
-<div id="bug-fixes-6" class="section level2">
+<div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/md_pattern.html">md_pattern()</a></code>: does not generate duplicate plot any more</li>
@@ -379,9 +435,9 @@
 <li>data matrix is now ordered according to order in user-specified <code>meth</code> argument</li>
 </ul>
 </div>
-<div id="minor-changes-4" class="section level2">
+<div id="minor-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-5" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>
 <code>md.pattern()</code>: adaptation to new version of <code>md.pattern()</code> from the <strong>mice</strong> package</li>
@@ -406,6 +462,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#jointai-0-5-0">0.5.0</a></li>
         <li><a href="#jointai-0-4-0">0.4.0</a></li>
         <li><a href="#jointai-0-3-4">0.3.4</a></li>
         <li><a href="#jointai-0-3-3">0.3.3</a></li>
@@ -425,7 +482,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

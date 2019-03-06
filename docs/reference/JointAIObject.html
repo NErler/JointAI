@@ -32,13 +32,16 @@
 <!-- docsearch -->
 <script src="../docsearch.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
 <meta property="og:title" content="Fitted object of class JointAI — JointAIObject" />
 
 <meta property="og:description" content="An object returned by one of the functions lm_imp(),
-glm_imp() or lme_imp()." />
+glm_imp(), clm_imp(), lme_imp(),
+glme_imp(), clmm_imp(), survreg_imp()
+or coxph_imp()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -69,7 +72,7 @@ glm_imp() or lme_imp()." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -148,14 +151,16 @@ glm_imp() or lme_imp()." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Fitted object of class JointAI</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/JointAIObject.R'><code>R/JointAIObject.R</code></a></small>
+    
     <div class="hidden name"><code>JointAIObject.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
     <p>An object returned by one of the functions <code><a href='model_imp.html'>lm_imp</a>()</code>,
-<code><a href='model_imp.html'>glm_imp</a>()</code> or <code><a href='model_imp.html'>lme_imp</a>()</code>.</p>
+<code><a href='model_imp.html'>glm_imp</a>()</code>, <code><a href='model_imp.html'>clm_imp</a>()</code>, <code><a href='model_imp.html'>lme_imp</a>()</code>,
+<code><a href='model_imp.html'>glme_imp</a>()</code>, <code><a href='model_imp.html'>clmm_imp</a>()</code>, <code><a href='model_imp.html'>survreg_imp</a>()</code>
+or <code><a href='model_imp.html'>coxph_imp</a>()</code>.</p>
     
     </div>
 
@@ -164,26 +169,34 @@ glm_imp() or lme_imp()." />
 
     
 
-<dt><code>analysis_type</code></dt><dd><p><code>lm</code>, <code>glm</code>, <code>lme</code>, <code>glme</code> or
-                            <code>survreg</code> with attributes
+<dt><code>analysis_type</code></dt><dd><p><code>lm</code>, <code>glm</code>, <code>clm</code>, <code>lme</code>,
+                            <code>glme</code>, <code>clmm</code>, <code>survreg</code> or
+                            <code>coxph</code> with attributes
                             <code>family</code> and <code>link</code></p></dd>
-<dt><code>data</code></dt><dd><p>the original dataset</p></dd>
-<dt><code>meth</code></dt><dd><p>named vector specifying imputation methods and sequence</p></dd>
-<dt><code>fixed</code></dt><dd><p>supplied fixed effects structure</p></dd>
-<dt><code>random</code></dt><dd><p>supplied random effects structure</p></dd>
+<dt><code>data</code></dt><dd><p>the original (incomplete) dataset</p></dd>
+<dt><code>models</code></dt><dd><p>named vector specifying the models used for longitudinal
+                     and incomplete covariates</p></dd>
+<dt><code>fixed</code></dt><dd><p>supplied fixed effects formula</p></dd>
+<dt><code>random</code></dt><dd><p>supplied random effects formula</p></dd>
 <dt><code>Mlist</code></dt><dd><p>a list: containing the data, split up into
       <ul>
 <li><p>outcome (<code>y</code>)</p></li>
+<li><p>censoring indicator for survival outcomes (<code>cens</code>)</p></li>
 <li><p>cross-sectional main effects (<code>Xc</code>)</p></li>
 <li><p>cross-sectional interactions (<code>Xic</code>)</p></li>
 <li><p>longitudinal main effects (<code>Xl</code>)</p></li>
 <li><p>longitudinal interactions (<code>Xil</code>)</p></li>
-<li><p>categorical incomplete variables (<code>Xcat</code>)</p></li>
+<li><p>categorical cross-sectional incomplete variables (<code>Xcat</code>)</p></li>
+<li><p>categorical longitudinal variables (<code>Xlcat</code>)</p></li>
 <li><p>transformed cross-sectional variables (<code>Xtrafo</code>)</p></li>
 <li><p>random effects design matrix (<code>Z</code>)</p></li>
 </ul>
       and other important specifications:
       <ul>
+<li><p>a list naming which columns of the above matrices are
+              covariates in the analysis model (<code>cols_main</code>)</p></li>
+<li><p>a list giving the names of the covariates in the analysis
+              model per matrix (<code>names_main</code>)</p></li>
 <li><p>specification for transformations (<code>trafos</code>)</p></li>
 <li><p>specification for hierarchical centering (<code>hc_list</code>)</p></li>
 <li><p>reference values and dummies for categorical variables (<code>refs</code>)</p></li>
@@ -191,7 +204,13 @@ glm_imp() or lme_imp()." />
 <li><p>grouping specification (<code>groups</code>)</p></li>
 <li><p>the vector of variables to be scaled (<code>scale_vars</code>)</p></li>
 <li><p>updated fixed effects structure (<code>fixed2</code>)</p></li>
-<li><p>names of updated design matrix (<code>X2_names</code>)</p></li>
+<li><p>the number of categories if the outcome of the analysis model
+              is categorical (<code>ncat</code>)</p></li>
+<li><p>the number of subjects (<code>N</code>)</p></li>
+<li><p>whether posterior predictive checks are be enabled <code>ppc</code> (not yet used)</p></li>
+<li><p>whether ridge shrinkage priors should are used for the
+              regression coefficients of the analysis model (<code>ridge</code>)</p></li>
+<li><p>the number of random effects (<code>nranef</code>)</p></li>
 </ul></p></dd>
 <dt><code>K</code></dt><dd><p>matrix specifying the indices of the regression coefficients
 that are related to different parts of the model</p></dd>
@@ -199,25 +218,24 @@ that are related to different parts of the model</p></dd>
 for the imputation models relating to different covariates</p></dd>
 <dt><code>mcmc_settings</code></dt><dd><p>a list with elements
      <dl class='dl-horizontal'>
-     <dt><code>MCMCpackage</code></dt><dd><p>which package has been used (at the moment only JAGS is implemented)</p></dd>
      <dt><code>modelfile</code></dt><dd><p>name and path of JAGS model file</p></dd>
      <dt><code>n.chains</code></dt><dd><p>number of MCMC chains</p></dd>
      <dt><code>n.adapt</code></dt><dd><p>number of iterations in the adaptive phase</p></dd>
      <dt><code>n.iter</code></dt><dd><p>number of iterations in the MCMC sample</p></dd>
      <dt><code>variable.names</code></dt><dd><p>monitored nodes</p></dd>
      <dt><code>thin</code></dt><dd><p>thinning of the MCMC sample</p></dd>
-     <dt><code>inits</code></dt><dd><p>a list containing the initial values that were used</p></dd>
+     <dt><code>inits</code></dt><dd><p>a list containing the initial values that were passed to <strong>rjags</strong></p></dd>
+     <dt><code>parallel</code></dt><dd><p>whether parallel sampling was used</p></dd>
+     <dt><code>ncores</code></dt><dd><p>how many cores were used in parallel sampling</p></dd>
      </dl></p></dd>
 <dt><code>monitor_params</code></dt><dd><p>the list of parameter groups to be monitored</p></dd>
-<dt><code>data_list</code></dt><dd><p>list with data that was passed to JAGS</p></dd>
+<dt><code>data_list</code></dt><dd><p>list with data that was passed to <strong>rjags</strong></p></dd>
 <dt><code>scale_pars</code></dt><dd><p>matrix with parameters used to center and scale the continuous variables</p></dd>
 <dt><code>hyperpars</code></dt><dd><p>a list containing the values of the hyperparameters used</p></dd>
 <dt><code>imp_par_list</code></dt><dd><p>a list with parameters used to write the imputation model syntax</p></dd>
 <dt><code>model</code></dt><dd><p>JAGS model</p></dd>
-<dt><code>sample</code></dt><dd><p>MCMC sample (Note: if continuous variables have been scaled
-during the sampling, the posterior sample here is on the scaled scale, not on
-the original scale.)</p></dd>
-<dt><code>MCMC</code></dt><dd><p>if scaling was done: MCMC sample, scaled back to original scale</p></dd>
+<dt><code>sample</code></dt><dd><p>MCMC sample on the sampling scale (included only if <code>keep_scaled_sample = TRUE</code>)</p></dd>
+<dt><code>MCMC</code></dt><dd><p>MCMC sample, scaled back to the scale of the data</p></dd>
 <dt><code>time</code></dt><dd><p>the computational time used for the sampling (adaptive phase + sampling)</p></dd>
 <dt><code>call</code></dt><dd><p>the original call</p></dd>
 
@@ -240,7 +258,7 @@ the original scale.)</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

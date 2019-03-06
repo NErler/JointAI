@@ -10,6 +10,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
+<link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Minimal Example">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -31,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -111,9 +112,9 @@
       <h1>Minimal Example</h1>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2018-12-04</h4>
+            <h4 class="date">2019-03-06</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/MinimalExample.Rmd"><code>vignettes/MinimalExample.Rmd</code></a></small>
+      
       <div class="hidden name"><code>MinimalExample.Rmd</code></div>
 
     </div>
@@ -128,7 +129,7 @@
 <p>Fitting a linear regression model with <strong>JointAI</strong> is straightforward with the function <code><a href="../reference/model_imp.html">lm_imp()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">lm1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>albu <span class="op">+</span><span class="st"> </span>bili,</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">              <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">500</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>)</a></code></pre></div>
-<p>The specification of <code><a href="../reference/model_imp.html">lm_imp()</a></code> is similar to the specification of a linear regression model for complete data using <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code> In this minimal example the only difference is that for <code><a href="../reference/model_imp.html">lm_imp()</a></code> the number of iterations <code>n.iter</code> has to be specified. Of course there are many more parameters that can or should be specified. In the vignette <a href="https://nerler.github.io/JointAI/articles/ModelSpecification.html"><em>Model Specification</em></a> many of these parameters are explained in detail.</p>
+<p>The specification of <code><a href="../reference/model_imp.html">lm_imp()</a></code> is similar to the specification of a linear regression model for complete data using <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code>. In this minimal example the only difference is that for <code><a href="../reference/model_imp.html">lm_imp()</a></code> the number of iterations <code>n.iter</code> has to be specified. Of course there are many more parameters that can or should be specified. In the vignette <a href="https://nerler.github.io/JointAI/articles/ModelSpecification.html"><em>Model Specification</em></a> many of these parameters are explained in detail.</p>
 <p><code>n.iter</code> specifies the length of the <a href="https://en.wikipedia.org/wiki/Markov_chain">Markov Chain</a>, i.e., the number of draws from the posterior distribution of the parameter or unobserved value. How many iterations are necessary depends on the data and complexity of the model and can vary from as few as 100 up to thousands or millions.</p>
 <p>One important criterion is that the Markov chains need to have converged. This can be evaluated visually with a traceplot.</p>
 </div>
@@ -138,13 +139,13 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(lm1)</a></code></pre></div>
 <p><img src="MinimalExample_files/figure-html/results_lm1-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The function <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code><a href="../reference/traceplot.html">traceplot()</a></code></a> produces a plot of the sampled values across iterations per parameter. By default, three<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Markov chains are produced for each parameter and represented by different colors.</p>
-<p>When the sampler has converged the chains show a horizontal band, as in the above figure. Consequently, when traces show a trend, convergence has not been reached and more iterations are necessary (e.g., using <a href="https://nerler.github.io/JointAI/reference/add_samples.html"><code><a href="../reference/add_samples.html">add_samples()</a></code></a>).</p>
+<p>When the sampler has converged the chains show a horizontal band, as in the above figure. Consequently, when traces show a trend, convergence has not been reached and more iterations are necessary (e.g., using the function <a href="https://nerler.github.io/JointAI/reference/add_samples.html"><code><a href="../reference/add_samples.html">add_samples()</a></code></a>).</p>
 <p>When convergence has been achieved, we can obtain the result of the model from the model summary.</p>
 </div>
 <div id="model-summary" class="section level2">
 <h2 class="hasAnchor">
 <a href="#model-summary" class="anchor"></a>Model Summary</h2>
-<p>Results from a <code>JointAI</code> model can be printed using</p>
+<p>Results from a model fitted with <strong>JointAI</strong> can be printed using <code><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(lm1)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt;  Linear model fitted with JointAI </span></a>
@@ -155,22 +156,22 @@
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; Posterior summary:</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt;                          Mean      SD     2.5%   97.5% tail-prob. GR-crit</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; (Intercept)            62.047 22.5988  17.7098 106.695    0.00133   1.002</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; genderfemale           -3.243  2.1519  -7.4982   1.157    0.14400   1.007</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; age                     0.363  0.0748   0.2158   0.512    0.00000   1.005</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; raceOther Hispanic      0.682  4.9327  -9.0280  10.948    0.88133   1.001</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; raceNon-Hispanic White -1.442  3.0765  -7.4252   4.900    0.62400   1.008</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; raceNon-Hispanic Black  8.960  3.5802   2.3450  16.064    0.00933   0.999</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; raceother               3.805  3.6050  -3.2822  10.965    0.29467   1.003</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; educhigh               -3.476  2.2031  -7.7675   0.730    0.12800   1.005</span></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; WC                      0.237  0.0822   0.0805   0.394    0.00267   1.002</span></a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; albu                    5.124  4.0998  -3.1685  12.975    0.22800   1.005</span></a>
-<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; bili                   -5.687  4.9405 -15.3448   4.508    0.23867   1.000</span></a>
-<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; alc&gt;=1                  7.148  2.2836   2.7323  11.519    0.00133   1.017</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; (Intercept)            61.958 22.4481  19.4775 104.578    0.00533   1.013</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; genderfemale           -3.190  2.1904  -7.3641   1.140    0.15067   1.012</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; age                     0.365  0.0738   0.2201   0.506    0.00000   0.999</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; raceOther Hispanic      0.848  5.1838  -9.0996  11.166    0.87067   1.004</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; raceNon-Hispanic White -1.460  3.1444  -7.7718   4.607    0.64400   1.012</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; raceNon-Hispanic Black  8.876  3.6190   1.9952  15.579    0.01200   1.007</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; raceother               3.880  3.6066  -3.3530  10.577    0.26800   1.020</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; WC                      0.236  0.0806   0.0695   0.387    0.00533   1.005</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; alc&gt;=1                  7.250  2.3434   2.5379  11.823    0.00133   0.999</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; educhigh               -3.420  2.2006  -7.8247   0.752    0.11600   1.004</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; albu                    5.101  4.0623  -2.7814  12.572    0.21067   1.017</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; bili                   -5.720  4.8293 -15.0796   4.146    0.23467   1.008</span></a>
 <a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
 <a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></a>
-<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt; sigma_SBP 13.2 0.745 11.8  14.7    1.01</span></a>
+<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt; sigma_SBP 13.2 0.711 11.9  14.7    1.03</span></a>
 <a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">#&gt; MCMC settings:</span></a>
@@ -182,10 +183,11 @@
 <a class="sourceLine" id="cb3-35" data-line-number="35"><span class="co">#&gt; Number of observations: 186</span></a></code></pre></div>
 <p>The output gives the posterior summary, i.e., the summary of the MCMC (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Markov Chain Monte Carlo</a>) sample (which consists of all chains combined).</p>
 <p>By default, <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html"><code><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary()</a></code></a> will only print the posterior summary for the main model parameters of the analysis model. How to select which parameters are shown is described in the vignette <a href="https://nerler.github.io/JointAI/articles/SelectingParameters.html"><em>Selecting Parameters</em></a>.</p>
-<p>The summary consists of the posterior mean, the standard deviation and the 2.5% and 97.5% quantiles of the MCMC sample, the tail probability and the Gelman-Rubin criterion for convergence. The tail probability is a measure of how likely the value 0 is under the estimated posterior distribution, and is calculated as <span class="math display">\[2\times\min\left\{Pr(\theta &gt; 0), Pr(\theta &lt; 0)\right\}\]</span> (where <span class="math inline">\(\theta\)</span> is the parameter of interest).</p>
+<p>The summary consists of the posterior mean, the standard deviation and the 2.5% and 97.5% quantiles of the MCMC sample, the tail probability and the Gelman-Rubin criterion for convergence.</p>
+<p>The tail probability is a measure of how likely the value 0 is under the estimated posterior distribution, and is calculated as <span class="math display">\[2\times\min\left\{Pr(\theta &gt; 0), Pr(\theta &lt; 0)\right\}\]</span> (where <span class="math inline">\(\theta\)</span> is the parameter of interest).</p>
 <p>In the following graphics, the shaded areas represent the minimum of <span class="math inline">\(Pr(\theta &gt; 0)\)</span> and <span class="math inline">\(Pr(\theta &lt; 0)\)</span>: <img src="MinimalExample_files/figure-html/unnamed-chunk-3-1.png" width="768" style="display: block; margin: auto;"></p>
 <p>The Gelman-Rubin<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> criterion, also available via the function <a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code><a href="../reference/GR_crit.html">GR_crit()</a></code></a>, compares the within and between chain variation. When it is close enough to 1<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>, the chains can be assumed to have converged.</p>
-<p>Additionally, some important characteristics of the MCMC samples on which the summary is based, is given. This includes the range and number of iterations (= <code>Sample size per chain</code>), thinning interval and number of chains.</p>
+<p>In the model summary, additionally, some important characteristics of the MCMC samples on which the summary is based, are given. This includes the range and number of iterations (= <code>Sample size per chain</code>), thinning interval and number of chains.</p>
 <p>Furthermore, the number of observations (the sample size of the data) is given.</p>
 <p>With the arguments <code>start</code>, <code>end</code> and <code>thin</code> it is possible to select which iterations from the MCMC sample are included in the summary.</p>
 <p>For example:<br> When the traceplot shows that the chains only converged after 1500 iterations, <code>start = 1500</code> should be specified in <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html"><code><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary()</a></code></a>.</p>
@@ -201,16 +203,22 @@
 <div id="other-types-of-models" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-types-of-models" class="anchor"></a>Other types of models</h2>
-<p>Besides linear regression models, it is also possible to use</p>
+<p>Besides linear regression models, it is also possible to fit</p>
 <ul>
 <li>
 <strong>generalized linear models</strong>: <code><a href="../reference/model_imp.html">glm_imp()</a></code> (follows the specification of <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html"><code><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm()</a></code></a>)</li>
+<li>
+<strong>cumulative logit models</strong> for ordinal outcomes: <code><a href="../reference/model_imp.html">clm_imp()</a></code> (follows the specification of <code>clm()</code> from package <a href="https://CRAN.R-project.org/package=ordinal"><strong>ordinal</strong></a>)</li>
 <li>
 <strong>linear mixed models</strong>: <code><a href="../reference/model_imp.html">lme_imp()</a></code> (follows the specification of <a href="https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html"><code>lme()</code></a> from package <a href="https://CRAN.R-project.org/package=nlme"><strong>nlme</strong></a>)</li>
 <li>
 <strong>generalized linear mixed models</strong>: <code><a href="../reference/model_imp.html">glme_imp()</a></code> (analogue the specification used in <code><a href="../reference/model_imp.html">lme_imp()</a></code> and <code><a href="../reference/model_imp.html">glm_imp()</a></code>)</li>
 <li>
+<strong>cumulative logit mixed models</strong> for longitudinal ordinal outcomes: <code><a href="../reference/model_imp.html">clmm_imp()</a></code> (follows the specification of <code>clmm2()</code> from package <a href="https://CRAN.R-project.org/package=ordinal"><strong>ordinal</strong></a>)</li>
+<li>
 <strong>parametric (Weibull) survival models</strong>: <code><a href="../reference/model_imp.html">survreg_imp()</a></code> (follows the specification of <a href="https://stat.ethz.ch/R-manual/R-devel/library/survival/html/survreg.html"><code>survreg()</code></a> from package <a href="https://CRAN.R-project.org/package=survival"><strong>survival</strong></a>)</li>
+<li>
+<strong>Cox proportional hazards survival models</strong>: <code><a href="../reference/model_imp.html">coxph_imp()</a></code> (follows the specification of <a href="https://stat.ethz.ch/R-manual/R-devel/library/survival/html/coxph.html"><code>coxph()</code></a> from package <a href="https://CRAN.R-project.org/package=survival"><strong>survival</strong></a>)</li>
 </ul>
 </div>
 <div class="footnotes">
@@ -245,7 +253,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
 </div>

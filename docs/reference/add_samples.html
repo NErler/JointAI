@@ -32,12 +32,16 @@
 <!-- docsearch -->
 <script src="../docsearch.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
 <meta property="og:title" content="Add samples to an object of class JointAI — add_samples" />
 
-<meta property="og:description" content="Allows to continue sampling from an existing object of class &quot;JointAI&quot;." />
+<meta property="og:description" content="Allows to continue sampling from an existing object of class 'JointAI'.
+When the original sample was created using parallel computation, the
+separate 'jags' objects will be recompiled and sampling will again be
+performed in parallel." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -68,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -147,25 +151,28 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Add samples to an object of class JointAI</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/add_samples.R'><code>R/add_samples.R</code></a></small>
+    
     <div class="hidden name"><code>add_samples.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Allows to continue sampling from an existing object of class "JointAI".</p>
+    <p>Allows to continue sampling from an existing object of class 'JointAI'.
+When the original sample was created using parallel computation, the
+separate 'jags' objects will be recompiled and sampling will again be
+performed in parallel.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>add_samples</span>(<span class='no'>object</span>, <span class='no'>n.iter</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>)</pre>
+  <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>object inheriting from class "JointAI"</p></td>
+      <td><p>object inheriting from class 'JointAI'</p></td>
     </tr>
     <tr>
       <th>n.iter</th>
@@ -184,33 +191,43 @@ samples or replace them? If samples are added, <code>thin</code> and
     <tr>
       <th>monitor_params</th>
       <td><p>named vector specifying which parameters should be
-monitored.</p></td>
+monitored</p></td>
     </tr>
     <tr>
       <th>progress.bar</th>
-      <td><p>Character string specifying the type of progress bar.
+      <td><p>character string specifying the type of progress bar.
 Possible values are "text", "gui", and "none".
 See <code>update</code>.</p></td>
+    </tr>
+    <tr>
+      <th>mess</th>
+      <td><p>logical; should messages be given? Default is
+<code>TRUE</code>. Note: this applies only to messages
+given directly by <strong>JointAI</strong>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='model_imp.html'>lm_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code>, <code><a href='model_imp.html'>lme_imp</a></code></p>
+    <div class='dont-index'><p><code><a href='model_imp.html'>lm_imp</a></code>, <code><a href='model_imp.html'>glm_imp</a></code>, <code><a href='model_imp.html'>lme_imp</a></code>, <code><a href='model_imp.html'>clm_imp</a></code>
+<code><a href='model_imp.html'>glme_imp</a></code>, <code><a href='model_imp.html'>clmm_imp</a></code>, <code><a href='model_imp.html'>survreg_imp</a></code>,
+<code><a href='model_imp.html'>coxph_imp</a></code></p>
 <p>The vignette <a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'>Parameter Selection</a>
 contains some examples how to specify the argument <code>monitor_params</code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Example 1:</span>
-<span class='co'># run an initial JointAI model:</span>
+<span class='co'># Run an initial JointAI model:</span>
 <span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bugs to the package maintainer.</span></div><div class='input'>
-<span class='co'># continue sampling</span>
+<span class='co'># Continue sampling:</span>
 <span class='no'>mod_add</span> <span class='kw'>&lt;-</span> <span class='fu'>add_samples</span>(<span class='no'>mod</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 
 <span class='co'># Example 2:</span>
-<span class='co'># continue sampling, but additionally sample imputed values</span>
+<span class='co'># Continue sampling, but additionally sample imputed values.</span>
+<span class='co'># Note: Setting different parameters to monitor than in the original model</span>
+<span class='co'># requires add = FALSE.</span>
 <span class='no'>imps</span> <span class='kw'>&lt;-</span> <span class='fu'>add_samples</span>(<span class='no'>mod</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"imps"</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
                     <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div></pre>
   </div>
@@ -233,7 +250,7 @@ contains some examples how to specify the argument <code>monitor_params</code>.<
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>
