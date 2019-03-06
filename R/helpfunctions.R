@@ -113,26 +113,54 @@ melt_data.frame <- function(data, id.vars = NULL, varnames = NULL, valname = 'va
 
 
 
-sort_cols <- function(mat, fct_all) {
-  iscompl <- ifelse(colSums(is.na(mat)) == 0, 'compl', 'mis')
+sort_cols <- function(mat, fct_all, auxvars) {
+  # iscompl <- ifelse(colSums(is.na(mat)) == 0, 'compl', 'mis')
   istrafo <- ifelse(colnames(mat) %in% fct_all$X_var[fct_all$type != 'identity'], 'fct', 'main')
   names(istrafo) <- colnames(mat)
+  # isaux <- ifelse(colnames(mat) %in% auxvars, 'aux', 'noaux')
 
-  if (any(istrafo == 'fct')) {
-    no_main <- sapply(colnames(mat)[istrafo == 'fct'], function(x) {
-      !any(fct_all$X_var %in% fct_all$var[fct_all$X_var == x])
-    })
-    istrafo[names(no_main)[no_main]] <- 'main'
-  }
+  hasmain <- sapply(colnames(mat), function(k) {
+    if (istrafo[k] == 'main') 'asmain'
+    else {
+      if (any(fct_all$var[fct_all$X_var == k] %in% colnames(mat))) {
+        if (k %in% auxvars) {
+          TRUE
+        } else {
+          FALSE
+        }
+      } else {
+        'asmain'
+      }
+    }
+  })
 
-  l <- split(colnames(mat), list(iscompl, istrafo))
+
+  # if (any(istrafo == 'fct')) {
+  #   no_main <- sapply(colnames(mat)[istrafo == 'fct'], function(x) {
+  #     !any(fct_all$X_var %in% fct_all$var[fct_all$X_var == x])
+  #   })
+  #   istrafo[names(no_main)[no_main]] <- 'main'
+  # }
+
+  # l <- split(colnames(mat)[hasmain != 'TRUE'],
+  #            list(iscompl[hasmain != 'TRUE'], istrafo[hasmain != 'TRUE']))
+
+
+  l <- split(colnames(mat), hasmain)
   l <- lapply(l, function(x)
     x[order(colSums(is.na(mat[, x, drop = FALSE])))]
   )
+  out <- unlist(l[c('asmain', 'FALSE')])
 
-  out <- unlist(l[c('compl.main', 'mis.main', 'compl.fct', 'mis.fct')])
+  # out <- unlist(l[c('compl.main', 'mis.main', 'compl.fct', 'mis.fct')])
 
-  if (length(setdiff(out, colnames(mat))) > 0) {
+  if (any(hasmain == TRUE)) {
+    for (k in names(hasmain[hasmain == TRUE])) {
+      out <- append(out, k, after = max(match(fct_all$var[fct_all$X_var == k], out)))
+    }
+  }
+
+  if (length(setdiff(colnames(mat), out)) > 0) {
     stop('Some columns were lost!')
   }
   out

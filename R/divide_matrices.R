@@ -103,7 +103,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   if (!is.null(Xic)) Xic <- Xic * NA
 
   # re-order columns in Xc -----------------------------------------------------
-  Xc <- Xc[, sort_cols(Xc, fcts_all), drop = FALSE]
+  Xc <- Xc[, sort_cols(Xc, fcts_all, auxvars), drop = FALSE]
 
   # * update Z -------------------------------------------------
   Z2 <- Z
@@ -129,7 +129,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
     Xl <- if (any(!colnames(Xlong) %in% linteract)) {
       Xl <- Xlong[, !colnames(Xlong) %in% linteract, drop = FALSE]
-      Xl <- Xl[, sort_cols(Xl, fcts_all), drop = FALSE]
+      Xl <- Xl[, sort_cols(Xl, fcts_all, auxvars), drop = FALSE]
     }
 
     hc_interact <- unlist(sapply(hc_list, function(x) {
