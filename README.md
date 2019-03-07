@@ -35,31 +35,41 @@ devtools::install_github("NErler/JointAI")
 
 ## Main functions
 
-Currently, there are three main functions that perform linear,
-generalized linear or linear mixed regression:
+Currently, there are the following main functions:
 
 ``` r
-lm_imp()
-glm_imp()
-lme_imp()
-glme_imp()
-survreg_imp()
+lm_imp()      # linear regression
+glm_imp()     # generalized linear regression 
+clm_imp()     # cumulative logit model
+lme_imp()     # linear mixed model
+glme_imp()    # generalized linear mixed model
+clmm_imp()    # cumulative logit mixed model
+survreg_imp() # parametric (Weibull) survival model
+coxph_imp()   # Cox proportional hazards survival model
 ```
 
-`lm_imp()` and `glm_imp()` use specification similar to their complete
-data counterparts `lm()` and `glm()`, whereas `lme_imp()` uses similar
-specification as `lme()` from the package
-[**nlme**](https://CRAN.R-project.org/package=nlme). `glme_imp()` uses a
-combination of the specifications from `glm()` (with regards to the
-family) and `lme` (with regards to the random effects structure).
-`survreg_imp()` is a missing data version of `survreg` from the package
+The functions `lm_imp()`, `glm_imp()` and `clm_imp()` use specification
+similar to their complete data counterparts `lm()` and `glm()` from base
+R and `clm()` from the package
+[**ordinal**](https://CRAN.R-project.org/package=ordinal).
+
+The functions for mixed models, `lme_imp()`, `glme_imp()` and
+`clmm_imp()` use similar specification as `lme()` from the package
+[**nlme**](https://CRAN.R-project.org/package=nlme) (and `clmm2()` from
+[**ordinal**](https://CRAN.R-project.org/package=nlme)).
+
+`survreg_imp()` and `coxph_imp()` are missing data versions of
+`survreg()` and `coxph()` from the package
 [**survival**](https://CRAN.R-project.org/package=survival).
 
-Functions `summary()`, `traceplot()`, `densityplot()` provide a summary
-of the posterior distribution and its visualization.
+Functions `summary()`, `coef()`, `traceplot()` and `densityplot()`
+provide a summary of the posterior distribution and its visualization.
 
 `GR_crit()` and `MC_error()` provide the Gelman-Rubin diagnostic for
 convergence and the Monte Carlo error of the MCMC sample, respectively.
+
+**JointAI** also provides functions for exploration of the distribution
+of the data and missing values, export of imputed values and prediction.
 
 ## Minimal Example
 
@@ -114,17 +124,17 @@ summary(lm1)
 #> 
 #> Posterior summary:
 #>                Mean     SD    2.5%   97.5% tail-prob. GR-crit
-#> (Intercept)  88.138 8.8987  70.907 105.004    0.00000   1.016
-#> genderfemale -3.493 2.2629  -7.995   0.733    0.11333   1.026
-#> age           0.333 0.0698   0.198   0.471    0.00000   0.999
-#> educhigh     -2.834 2.1179  -6.937   1.213    0.17600   1.001
-#> WC            0.226 0.0727   0.087   0.365    0.00133   1.006
-#> bili         -5.325 4.8712 -14.671   4.107    0.27867   1.034
-#> alc>=1        6.474 2.3852   1.617  10.975    0.00800   1.008
+#> (Intercept)  88.089 8.8597  69.619 105.178    0.00000    1.01
+#> genderfemale -3.566 2.2571  -7.950   0.803    0.11333    1.04
+#> age           0.335 0.0700   0.193   0.469    0.00000    1.01
+#> WC            0.226 0.0725   0.080   0.368    0.00267    1.00
+#> alc>=1        6.350 2.3114   1.783  10.889    0.01200    1.00
+#> educhigh     -2.828 2.0465  -6.797   1.157    0.17333    1.03
+#> bili         -5.356 4.9196 -14.911   4.290    0.27867    1.04
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit
-#> sigma_SBP 13.6 0.713 12.3  15.1       1
+#> sigma_SBP 13.5 0.738 12.2  15.2       1
 #> 
 #> 
 #> MCMC settings:
@@ -138,19 +148,19 @@ summary(lm1)
 
 ``` r
 coef(lm1)
-#>  (Intercept) genderfemale          age     educhigh           WC 
-#>   88.1376999   -3.4929987    0.3329173   -2.8344294    0.2261967 
-#>         bili       alc>=1 
-#>   -5.3246059    6.4737628
+#>  (Intercept) genderfemale          age           WC       alc>=1 
+#>   88.0889587   -3.5660647    0.3350489    0.2262964    6.3497173 
+#>     educhigh         bili 
+#>   -2.8283599   -5.3562879
 
 confint(lm1)
 #>                      2.5%       97.5%
-#> (Intercept)   70.90745371 105.0043681
-#> genderfemale  -7.99483709   0.7328822
-#> age            0.19811543   0.4708507
-#> educhigh      -6.93670692   1.2126142
-#> WC             0.08699786   0.3646676
-#> bili         -14.67086056   4.1073254
-#> alc>=1         1.61683002  10.9745147
-#> sigma_SBP     12.29417867  15.0952757
+#> (Intercept)   69.61859898 105.1784708
+#> genderfemale  -7.95045888   0.8034015
+#> age            0.19331277   0.4685157
+#> WC             0.07998274   0.3681013
+#> alc>=1         1.78289844  10.8888495
+#> educhigh      -6.79742752   1.1568467
+#> bili         -14.91144335   4.2900062
+#> sigma_SBP     12.17745503  15.1533245
 ```

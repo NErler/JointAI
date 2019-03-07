@@ -46,29 +46,40 @@ devtools::install_github("NErler/JointAI")
 
 
 ## Main functions
-Currently, there are three main functions that perform linear, generalized linear
-or linear mixed regression:
-```{r mainfun, eval = FALSE}
-lm_imp()
-glm_imp()
-lme_imp()
-glme_imp()
-survreg_imp()
+Currently, there are the following main functions:
+
+``` r
+lm_imp()      # linear regression
+glm_imp()     # generalized linear regression 
+clm_imp()     # cumulative logit model
+lme_imp()     # linear mixed model
+glme_imp()    # generalized linear mixed model
+clmm_imp()    # cumulative logit mixed model
+survreg_imp() # parametric (Weibull) survival model
+coxph_imp()   # Cox proportional hazards survival model
 ```
 
-`lm_imp()` and `glm_imp()` use specification similar to their complete data
-counterparts `lm()` and `glm()`, whereas `lme_imp()` uses similar specification 
-as `lme()` from the package [**nlme**](https://CRAN.R-project.org/package=nlme).
-`glme_imp()` uses a combination of the specifications from `glm()` (with regards
-to the family) and `lme` (with regards to the random effects structure).
-`survreg_imp()` is a missing data version of `survreg` from the package 
-[**survival**](https://CRAN.R-project.org/package=survival).
+The functions `lm_imp()`, `glm_imp()` and `clm_imp()` use specification similar
+to their complete data counterparts `lm()` and `glm()` from base R and `clm()`
+from the package [**ordinal**](https://CRAN.R-project.org/package=ordinal).
 
-Functions `summary()`, `traceplot()`, `densityplot()` provide a summary of the
-posterior distribution and its visualization.
+The functions for mixed models, `lme_imp()`, `glme_imp()` and `clmm_imp()` use
+similar specification as `lme()` from the package 
+[**nlme**](https://CRAN.R-project.org/package=nlme) (and `clmm2()` from
+[**ordinal**](https://CRAN.R-project.org/package=nlme)).
 
-`GR_crit()` and `MC_error()` provide the Gelman-Rubin diagnostic for convergence
-and the Monte Carlo error of the MCMC sample, respectively.
+`survreg_imp()` and `coxph_imp()` are missing data versions of `survreg()` and
+`coxph()` from the package [**survival**](https://CRAN.R-project.org/package=survival).
+
+
+Functions `summary()`, `coef()`, `traceplot()` and `densityplot()` provide a summary
+of the posterior distribution and its visualization.
+
+`GR_crit()` and `MC_error()` provide the Gelman-Rubin diagnostic for
+convergence and the Monte Carlo error of the MCMC sample, respectively.
+
+**JointAI** also provides functions for exploration of the distribution of the
+data and missing values, export of imputed values and prediction.
 
 
 ## Minimal Example
