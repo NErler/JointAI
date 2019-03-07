@@ -5,6 +5,11 @@
 
 ## Bug fixes
 * `add_samples()`: bug that copied the last chain to all other chains fixed
+* bugfix for the order of columns in the matrix `Xc`, so that specification of
+  functions of covariates in auxiliary variables works better
+* adding vertical lines to a `densplot()` issue (all plots showed all lines) fixed
+* nested functions involving powers made possible
+* typo causing issue in poisson glm and glme removed
 
 ## Minor changes
 * `plot_all()`, `densplot()`, and `traceplot()` limit the number of plots on one
@@ -13,6 +18,10 @@
 * change in `longDF` example data: new version containing complete and incomplete
   categorical longitudinal variables (and variable names L1 and L2 changed to c1 and c2)
 * Some minor changes in notes, warnings and error messages
+* The funciton `list_impmodels()` changed to `list_models()`
+  (but `list_impmodels()` is kept as an alias for now)
+* improved handling of functional forms of covariates (also in longitudinal 
+  covariates and random effects)
 
 
 ## New Features / Extensions
@@ -26,9 +35,12 @@
 * **Shrinkage:** argument `ridge = TRUE` allows to use shrinkage priors on the 
   precision of the regression coefficients in the analysis model
 * `plot_all()` can now handle variables from classes `Date` and `POSIXt`
-* argument `parallel` allows different MCMC chains to be sampled in parallel
-* argument `ncores` allows to specify the maximum number of cores to be used
-* argument `seed` added for reproducible results
+* new argument `parallel` allows different MCMC chains to be sampled in parallel
+* new argument `ncores` allows to specify the maximum number of cores to be used
+* new argument `seed` added for reproducible results; also a sampler (`.RNG.name`)
+  and seed value for the sampler (`.RNG.seed`) are set or added to user-provided
+  inital values (necessary for parallel sampling and reproducibility of results)
+* `plot_imp_distr()`: new function to plot distribution of observed and imputed values
 
 --------------------------------------------------------------------------------
 
