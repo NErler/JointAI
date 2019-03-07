@@ -56,7 +56,7 @@ A traceplot shows the sampled values per chain and node throughout
 iterations. It allows to visually evaluate convergence and mixing of the chains,
 and can be obtained with the function `traceplot()`:
 ```{r, message = FALSE, fig.width = 7, fig.height = 4, out.width = '100%'}
-mod13a <- lm_imp(SBP ~ gender + WC + alc +  creat, data = NHANES, n.iter = 500)
+mod13a <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 500)
 
 traceplot(mod13a)
 ```
@@ -459,5 +459,12 @@ id variable for each observation in cross-sectional data (multi-level data shoul
 already contain an id variable).
 
 ```{r}
-impDF <- get_MIdat(mod13d, m = 3, seed = 2018)
+impDF <- get_MIdat(mod13d, m = 10, seed = 2018)
 ```
+
+The function `plot_imp_distr()` allows to visually compare the distribution
+of the observed and imputed values.
+```{r}
+plot_imp_distr(impDF, nrow = 1)
+```
+
