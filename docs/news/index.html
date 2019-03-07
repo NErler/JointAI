@@ -166,6 +166,10 @@
 <ul>
 <li>
 <code><a href="../reference/add_samples.html">add_samples()</a></code>: bug that copied the last chain to all other chains fixed</li>
+<li>bugfix for the order of columns in the matrix <code>Xc</code>, so that specification of functions of covariates in auxiliary variables works better</li>
+<li>adding vertical lines to a <code><a href="../reference/densplot.html">densplot()</a></code> issue (all plots showed all lines) fixed</li>
+<li>nested functions involving powers made possible</li>
+<li>typo causing issue in poisson glm and glme removed</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level2">
@@ -176,6 +180,8 @@
 <code><a href="../reference/plot_all.html">plot_all()</a></code>, <code><a href="../reference/densplot.html">densplot()</a></code>, and <code><a href="../reference/traceplot.html">traceplot()</a></code> limit the number of plots on one page to 64 when rows and columns of the layout are not user specified (to avoid the ‘figure margins too large’ error)</li>
 <li>change in <code>longDF</code> example data: new version containing complete and incomplete categorical longitudinal variables (and variable names L1 and L2 changed to c1 and c2)</li>
 <li>Some minor changes in notes, warnings and error messages</li>
+<li>The funciton <code><a href="../reference/list_models.html">list_impmodels()</a></code> changed to <code><a href="../reference/list_models.html">list_models()</a></code> (but <code><a href="../reference/list_models.html">list_impmodels()</a></code> is kept as an alias for now)</li>
+<li>improved handling of functional forms of covariates (also in longitudinal covariates and random effects)</li>
 </ul>
 </div>
 <div id="new-features-extensions" class="section level2">
@@ -194,9 +200,11 @@
 <li>
 <code><a href="../reference/plot_all.html">plot_all()</a></code> can now handle variables from classes <code>Date</code> and <code>POSIXt</code>
 </li>
-<li>argument <code>parallel</code> allows different MCMC chains to be sampled in parallel</li>
-<li>argument <code>ncores</code> allows to specify the maximum number of cores to be used</li>
-<li>argument <code>seed</code> added for reproducible results</li>
+<li>new argument <code>parallel</code> allows different MCMC chains to be sampled in parallel</li>
+<li>new argument <code>ncores</code> allows to specify the maximum number of cores to be used</li>
+<li>new argument <code>seed</code> added for reproducible results; also a sampler (<code>.RNG.name</code>) and seed value for the sampler (<code>.RNG.seed</code>) are set or added to user-provided inital values (necessary for parallel sampling and reproducibility of results)</li>
+<li>
+<code><a href="../reference/plot_imp_distr.html">plot_imp_distr()</a></code>: new function to plot distribution of observed and imputed values</li>
 </ul>
 <hr>
 </div>

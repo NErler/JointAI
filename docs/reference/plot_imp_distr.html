@@ -160,8 +160,8 @@ long-format dataset (multiple imputed datasets stacked onto each other).#'</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>plot_imp_distr</span>(<span class='no'>data</span>, <span class='kw'>imp</span> <span class='kw'>=</span> <span class='st'>"Imputation_"</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"id"</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_imp_distr</span>(<span class='no'>data</span>, <span class='kw'>imp</span> <span class='kw'>=</span> <span class='st'>"Imputation_"</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>".id"</span>,
+  <span class='kw'>rownr</span> <span class='kw'>=</span> <span class='st'>".rownr"</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,6 +179,11 @@ long-format dataset (multiple imputed datasets stacked onto each other).#'</p>
       <td><p>the name of the variable specifying the subject indicator</p></td>
     </tr>
     <tr>
+      <th>rownr</th>
+      <td><p>the name of a variable identifying which rows correspond to the
+same observation in the original (unimputed) data</p></td>
+    </tr>
+    <tr>
       <th>ncol</th>
       <td><p>optional number of rows and columns in the plot layout;
 automatically chosen if unspecified</p></td>
@@ -192,9 +197,10 @@ automatically chosen if unspecified</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lme_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>c2</span> + <span class='no'>O2</span> + <span class='no'>b2</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>id</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>longDF</span>,
-               <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>imps</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bugs to the package maintainer.</span></div><div class='output co'>#&gt; <span class='message'>Note: ordered factors are included as dummy variables into the linear predictor (not as orthogonal polynomials).</span></div><div class='input'><span class='no'>impDF</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_MIdat.html'>get_MIdat</a></span>(<span class='no'>mod</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>plot_imp_distr</span>(<span class='no'>impDF</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 87 rows containing missing values (geom_bar).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 87 rows containing missing values (geom_bar).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 57 rows containing non-finite values (stat_density).</span></div><div class='img'><img src='plot_imp_distr-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lme_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>c2</span> + <span class='no'>O2</span> + <span class='no'>b2</span> + <span class='no'>C2</span> + <span class='no'>p2</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>id</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>longDF</span>,
+               <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>imps</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>impDF</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_MIdat.html'>get_MIdat</a></span>(<span class='no'>mod</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='fu'>plot_imp_distr</span>(<span class='no'>impDF</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"id"</span>)</div><div class='img'><img src='plot_imp_distr-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
