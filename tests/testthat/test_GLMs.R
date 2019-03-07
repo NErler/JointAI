@@ -12,6 +12,7 @@ test_that("intercept only GLMs", {
 
 
 test_that("models work", {
+  testthat::skip_on_cran()
   expect_equal(class(lm_imp(y ~ M2 + O2 * abs(C1 - C2) +  log(C1), data = wideDF)),
                'JointAI')
 
@@ -27,6 +28,7 @@ test_that("models work", {
 
 
 test_that('non-standard imputation models', {
+  testthat::skip_on_cran()
   expect_equal(class(lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
                             trunc = list(bili = c(1e-5, 1e10)),
                             data = NHANES, mess = FALSE)), "JointAI")
