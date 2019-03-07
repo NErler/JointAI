@@ -5,13 +5,16 @@ Authors@R: c(person("Nicole S.", "Erler", email = "n.erler@erasmusmc.nl",
                   role = c("aut", "cre"),
                   comment = c(ORCID = "0000-0002-9370-6832")))
 Description: Provides joint analysis and imputation of (generalized) 
-    linear regression models, (generalized) linear mixed models and parametric
-    survival models with incomplete (covariate) data in the Bayesian framework.
+    linear and cumulative logit regression models, (generalized) linear and 
+    cumulative logit mixed models and parametric (Weibull) as well as Cox
+    proportional hazards survival models with incomplete (covariate) data in 
+    the Bayesian framework.
     The package performs some preprocessing of the data and creates a 'JAGS'
     model, which will then automatically be passed to 'JAGS' 
     <http://mcmc-jags.sourceforge.net> with the help of 
     the package 'rjags'.
-    It also provides summary and plotting functions for the output.
+    It also provides summary and plotting functions for the output and allows 
+    to export imputed values.
 URL: https://nerler.github.io/JointAI
 License: GPL (>= 2)
 Date: 2019-03-07
@@ -25,7 +28,6 @@ Suggests:
     knitr,
     rmarkdown,
     foreign,
-    reshape2,
     ggplot2,
     ggpubr,
     testthat
