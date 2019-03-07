@@ -17,7 +17,8 @@
 #'                 \code{export_to_SPSS = TRUE} a name is generated automatically)
 #'
 #' @return A dataframe containing the imputed values (and original data) stacked.
-#'        The variable \code{Imputation_} identifies the imputations.
+#'        The variable \code{Imputation_} identifies the imputations, while
+#'        \code{.rownr} identifies rows of the rows of the original data.
 #'        In cross-sectional datasets the
 #'        variable \code{.id} is added as subject identifier.
 #'
@@ -55,6 +56,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
     set.seed(seed)
 
   DF <- object$data
+  DF$.rownr <- 1:nrow(DF)
 
   if (!object$analysis_type %in% c("lme", "glme", 'clmm')) {
     DF$.id <- 1:nrow(DF)

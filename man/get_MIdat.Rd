@@ -31,7 +31,8 @@ get_MIdat(object, m = 10, include = TRUE, start = NULL,
 }
 \value{
 A dataframe containing the imputed values (and original data) stacked.
-       The variable \code{Imputation_} identifies the imputations.
+       The variable \code{Imputation_} identifies the imputations, while
+       \code{.rownr} identifies rows of the rows of the original data.
        In cross-sectional datasets the
        variable \code{.id} is added as subject identifier.
 }

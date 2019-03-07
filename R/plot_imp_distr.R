@@ -6,17 +6,20 @@
 #' @param data a data.frame containing multiple imputations (and the original incomplete data)
 #' @param imp the name of the variable specifying the imputation indicator
 #' @param id the name of the variable specifying the subject indicator
+#' @param rownr the name of a variable identifying which rows correspond to the
+#'              same observation in the original (unimputed) data
 #' @inheritParams sharedParams
 #' @export
 #'
 #' @examples
-#' mod <- lme_imp(y ~ C1 + c2 + O2 + b2, random = ~ 1 | id, data = longDF,
-#'                n.iter = 500, monitor_params = c(imps = TRUE))
+#' mod <- lme_imp(y ~ C1 + c2 + O2 + b2 + C2 + p2, random = ~ 1 | id, data = longDF,
+#'                n.iter = 500, monitor_params = c(imps = TRUE), mess = FALSE)
 #' impDF <- get_MIdat(mod, m = 10)
-#' plot_imp_distr(impDF)
+#' plot_imp_distr(impDF, id = "id")
 #'
 
-plot_imp_distr <- function(data, imp = 'Imputation_', id = 'id', ncol = NULL, nrow = NULL) {
+plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id', rownr = '.rownr',
+                           ncol = NULL, nrow = NULL) {
 
   if (!requireNamespace('ggplot2', quietly = TRUE))
     stop("This function requires the package ggplot2 to be installed.")
@@ -26,22 +29,22 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = 'id', ncol = NULL, nr
 
   subDF <- data[, (colSums(is.na(data[data[, imp] == 0, ])) > 0 &
                    colSums(is.na(data[data[, imp] != 0, ])) == 0) |
-                names(data) %in% c(imp, id)]
+                names(data) %in% c(imp, id, rownr)]
 
   DForig <- subDF[subDF[, imp] == 0, ]
 
   w <- as.data.frame(is.na(DForig))
-  w[, c(imp, id)] <- DForig[, c(imp, id)]
+  w[, c(imp, id, rownr)] <- DForig[, c(imp, id, rownr)]
 
   type <- sapply(subDF, is.factor)
 
-  DFlong <- melt_data.frame(subDF, id.vars = c(imp, id))
+  DFlong <- melt_data.frame(subDF, id.vars = c(imp, id, rownr))
 
-  wlong <- melt_data.frame(w, id.vars = c(imp, id), valname = 'mis')
+  wlong <- melt_data.frame(w, id.vars = c(imp, id, rownr), valname = 'mis')
   wlong <- unique(wlong)
 
 
-  DFlong <- merge(DFlong, wlong, by = c('id', 'variable'),suffixes = c("",".y"))
+  DFlong <- merge(DFlong, wlong, by = c(id, 'variable', rownr), suffixes = c("",".y"))
   DFlong$type <- ifelse(type[as.character(DFlong$variable)], 'factor', 'numeric')
 
   plotDF <- DFlong[(DFlong[, imp] == 0 & !DFlong$mis) |
@@ -59,7 +62,7 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = 'id', ncol = NULL, nr
       dat$variable <- unique(na.omit(dat$variable))
     }
 
-    ggplot2::ggplot(dat) +
+    pl <- ggplot2::ggplot(dat) +
       ggplot2::facet_wrap('variable', scales = 'free') +
       ggplot2::scale_color_manual(name = '',
                          limits = c(FALSE, TRUE),
@@ -72,39 +75,40 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = 'id', ncol = NULL, nr
                         limits = c(FALSE, TRUE),
                         values = c(0.5, 1.3),
                         labels = c('imputed', 'observed')) +
-      ggplot2::xlab('') +
+      ggplot2::xlab('')
       if (unique(na.omit(dat$type) == 'numeric')) {
         if (min(table(dat[, imp])) == 1) {
-          ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
+          pl + ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
                                              color = get(imp) == 0,
                                              size = get(imp) == 0), geom = 'line',
-                                position = 'identity')
+                                position = 'identity', na.rm = TRUE)
         } else {
-          ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
+          pl + ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
                                              size = get(imp) == 0,
                                              color = get(imp) == 0,
                                              group = get(imp)), geom = 'line',
-                                position = 'identity')
+                                position = 'identity', na.rm = TRUE)
         }
       } else {
-        ggplot2::geom_bar(ggplot2::aes(x = .data$value, y = .data$proportion,
+        pl + ggplot2::geom_bar(ggplot2::aes(x = .data$value, y = .data$proportion,
                                        group = get(imp), fill = get(imp) == 0),
                           position = "dodge", stat = 'identity',
-                          color = 'midnightblue')
+                          color = 'midnightblue') +
+          ggplot2::ylab('proportion')
       }
   })
 
   # get number of rows and columns of plots
   if (is.null(nrow) & is.null(ncol)) {
-    dims <- if (ncol(subDF) > 27) {
+    dims <- if (length(p) > 25) {
       grDevices::n2mfrow(25)
     } else {
-      grDevices::n2mfrow(ncol(subDF) - 2)
+      grDevices::n2mfrow(length(p))
     }
   } else if (is.null(nrow) & !is.null(ncol)) {
-    dims <- c(ceiling((ncol(subDF) - 2)/ncol), ncol)
+    dims <- c(ceiling(length(p)/ncol), ncol)
   } else if (is.null(ncol) & !is.null(nrow)) {
-    dims <- c(nrow, ceiling((ncol(subDF) - 2)/nrow))
+    dims <- c(nrow, ceiling(length(p)/nrow))
   } else {
     dims <- c(nrow, ncol)
   }

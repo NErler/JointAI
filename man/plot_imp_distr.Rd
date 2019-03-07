@@ -4,8 +4,8 @@
 \alias{plot_imp_distr}
 \title{Plot the distribution of observed and imputed values}
 \usage{
-plot_imp_distr(data, imp = "Imputation_", id = "id", ncol = NULL,
-  nrow = NULL)
+plot_imp_distr(data, imp = "Imputation_", id = ".id",
+  rownr = ".rownr", ncol = NULL, nrow = NULL)
 }
 \arguments{
 \item{data}{a data.frame containing multiple imputations (and the original incomplete data)}
@@ -13,6 +13,9 @@ plot_imp_distr(data, imp = "Imputation_", id = "id", ncol = NULL,
 \item{imp}{the name of the variable specifying the imputation indicator}
 
 \item{id}{the name of the variable specifying the subject indicator}
+
+\item{rownr}{the name of a variable identifying which rows correspond to the
+same observation in the original (unimputed) data}
 
 \item{ncol}{optional number of rows and columns in the plot layout;
 automatically chosen if unspecified}
@@ -25,9 +28,9 @@ Plots densities and barplots of the observed and imputed values in a
 long-format dataset (multiple imputed datasets stacked onto each other).#'
 }
 \examples{
-mod <- lme_imp(y ~ C1 + c2 + O2 + b2, random = ~ 1 | id, data = longDF,
-               n.iter = 500, monitor_params = c(imps = TRUE))
+mod <- lme_imp(y ~ C1 + c2 + O2 + b2 + C2 + p2, random = ~ 1 | id, data = longDF,
+               n.iter = 500, monitor_params = c(imps = TRUE), mess = FALSE)
 impDF <- get_MIdat(mod, m = 10)
-plot_imp_distr(impDF)
+plot_imp_distr(impDF, id = "id")
 
 }
