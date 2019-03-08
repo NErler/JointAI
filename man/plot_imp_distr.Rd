@@ -28,9 +28,9 @@ Plots densities and barplots of the observed and imputed values in a
 long-format dataset (multiple imputed datasets stacked onto each other).#'
 }
 \examples{
-mod <- lme_imp(y ~ C1 + c2 + O2 + b2 + C2 + p2, random = ~ 1 | id, data = longDF,
+mod <- lme_imp(y ~ C1 + c2 + B2 + b2 + C2 + p2, random = ~ 1 | id, data = longDF,
                n.iter = 500, monitor_params = c(imps = TRUE), mess = FALSE)
-impDF <- get_MIdat(mod, m = 10)
+impDF <- get_MIdat(mod, m = 5)
 plot_imp_distr(impDF, id = "id")
 
 }
