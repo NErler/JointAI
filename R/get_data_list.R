@@ -83,7 +83,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
          scaled$scaled_matrices[!sapply(scaled$scaled_matrices, is.null)]
   )
 
-  if (is.null(models) & family == 'ordinal')
+  if (is.null(models) & all(sapply(Mlist$cols_main, is.null)))
     l$Xc <- NULL
 
   if (!is.null(Mlist$Xcat)) l$Xcat <- data.matrix(Mlist$Xcat)
@@ -126,7 +126,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     l <- c(l, defs$ordinal)
   else if (family == 'ordinal' & Mlist$ridge)
     l <- c(l, defs$ordinal["mu_reg_ordinal", "mu_delta_ordinal", "tau_delta_ordinal"])
-  if (family == 'ordinal' & is.null(models))
+  if (family == 'ordinal' & is.null(models) & all(sapply(Mlist$cols_main, is.null)))
     l$mu_reg_ordinal <- l$tau_reg_ordinal <- NULL
 
 

@@ -1,3 +1,12 @@
+
+# JointAI 0.5.1
+
+## Bug fixes
+* bug in ordinal models with only completely observed variables fixed 
+  (all necessary data is not passed to JAGS)
+
+--------------------------------------------------------------------------------
+
 # JointAI 0.5.0
  
 ## Important
