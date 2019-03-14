@@ -31,6 +31,9 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   if (is.null(object$MCMC))
     stop("There is no MCMC sample.")
 
+  cl <- as.list(match.call())[-1]
+  autoburnin <- if (is.null(cl$autoburnin)) FALSE else eval(cl$autoburnin)
+
   MCMC <- prep_MCMC(object, start = start, end = end, thin = thin, subset = subset, warn = warn, ...)
 
   # create results matrix
@@ -44,7 +47,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   stats[, paste0(quantiles * 100, "%")] <- t(apply(MCMC, 2, quantile, quantiles))
   stats[, "tail-prob."] <- apply(MCMC, 2, computeP)
   stats[, "GR-crit"] <- GR_crit(object = object, start = start, end = end, thin = thin,
-                                warn = warn, subset = subset, ...)[[1]][, "Upper C.I."]
+                                warn = warn, subset = subset, autoburnin = autoburnin)[[1]][, "Upper C.I."]
 
   out <- list()
   out$call <- object$call

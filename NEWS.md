@@ -6,6 +6,10 @@
   (all necessary data is not passed to JAGS)
 * enable thinning when using parallel sampling
 
+
+## Minor changes
+* `summary()` calls `GR_crit()` with argument `autoburnin = FALSE` unless specified otherwise via `...`
+
 --------------------------------------------------------------------------------
 
 # JointAI 0.5.0
