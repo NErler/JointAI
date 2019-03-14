@@ -4,6 +4,7 @@
 ## Bug fixes
 * bug in ordinal models with only completely observed variables fixed 
   (all necessary data is not passed to JAGS)
+* enable thinning when using parallel sampling
 
 --------------------------------------------------------------------------------
 

@@ -584,7 +584,7 @@ if (!is.null(inits)) {
 
       res <- foreach(i = seq_along(inits)) %dopar% {run_jags(inits[[i]], data_list = data_list,
                           modelfile = modelfile,
-                          n.adapt = n.adapt, n.iter = n.iter,
+                          n.adapt = n.adapt, n.iter = n.iter, thin = thin,
                           var.names = var.names)}
       doParallel::stopImplicitCluster()
       mcmc <- as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))

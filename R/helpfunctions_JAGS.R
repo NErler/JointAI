@@ -24,6 +24,7 @@ run_jags <- function(i, data_list, modelfile, n.adapt, n.iter, var.names) {
                              quiet = TRUE)
 
   mcmc <- rjags::coda.samples(adapt, n.iter = n.iter, variable.names = var.names,
+                              thin = thin,
                               progress.bar = 'none')
 
   return(list(adapt = adapt, mcmc = mcmc))
