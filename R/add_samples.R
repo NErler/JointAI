@@ -74,7 +74,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
       message(paste0("Parallel sampling on ", ncores, " cores started (",
                      Sys.time(), ")."))
     res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(object$model)),
-                              run_samples(object$model[[i]], n.iter = n.iter, var.names = var.names)
+                              run_samples(object$model[[i]], n.iter = n.iter,
+                                          thin = thin, var.names = var.names)
     )
 
     parallel::stopCluster(cl)
