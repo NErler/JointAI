@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
       </span>
     </div>
 
@@ -148,9 +148,22 @@
       
     </div>
 
+    <div id="jointai-0-5-1" class="section level1">
+<h1 class="page-header">
+<a href="#jointai-0-5-1" class="anchor"></a>JointAI 0.5.1<small> Unreleased </small>
+</h1>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>bug in ordinal models with only completely observed variables fixed (all necessary data is not passed to JAGS)</li>
+</ul>
+<hr>
+</div>
+</div>
     <div id="jointai-0-5-0" class="section level1">
 <h1 class="page-header">
-<a href="#jointai-0-5-0" class="anchor"></a>JointAI 0.5.0<small> Unreleased </small>
+<a href="#jointai-0-5-0" class="anchor"></a>JointAI 0.5.0<small> 2019-03-08 </small>
 </h1>
 <div id="important" class="section level2">
 <h2 class="hasAnchor">
@@ -160,9 +173,9 @@
 </li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/add_samples.html">add_samples()</a></code>: bug that copied the last chain to all other chains fixed</li>
@@ -213,9 +226,9 @@
 <h1 class="page-header">
 <a href="#jointai-0-4-0" class="anchor"></a>JointAI 0.4.0<small> 2018-12-04 </small>
 </h1>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code>RinvD</code> is no longer selected to be monitored in random intercept model (<code>RinvD</code> is not used in such a model)</li>
@@ -261,9 +274,9 @@
 <h1 class="page-header">
 <a href="#jointai-0-3-4" class="anchor"></a>JointAI 0.3.4<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/traceplot.html">traceplot()</a></code>, <code><a href="../reference/densplot.html">densplot()</a></code>: specification of <code>nrow</code> AND <code>ncol</code> possible; fixed bug when only <code>nrow</code> specified</li>
@@ -274,9 +287,9 @@
 <h1 class="page-header">
 <a href="#jointai-0-3-3" class="anchor"></a>JointAI 0.3.3<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>remove deprecated code specifying <code>contrast.arg</code> that now in some cases cause error</li>
 <li>fixed problem identifying non-linear functions in formula when the name of another variable contains the function name</li>
@@ -288,9 +301,9 @@
 <h1 class="page-header">
 <a href="#jointai-0-3-2" class="anchor"></a>JointAI 0.3.2<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/model_imp.html">lme_imp()</a></code>: fixed error in JAGS model when interaction between random slope variable and longitudinal variable</li>
@@ -309,9 +322,9 @@
 <h1 class="page-header">
 <a href="#jointai-0-3-1" class="anchor"></a>JointAI 0.3.1<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/plot_all.html">plot_all()</a></code> uses correct level-2 %NA in title</li>
@@ -357,9 +370,9 @@
 <h1 class="page-header">
 <a href="#jointai-0-3-0" class="anchor"></a>JointAI 0.3.0<small> 2018-08-14 </small>
 </h1>
-<div id="bug-fixes-6" class="section level2">
+<div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code>monitor_params</code> is now checked to avoid problems when only part of the main parameters is selected</li>
@@ -424,9 +437,9 @@
 <h1 class="page-header">
 <a href="#jointai-0-2-0" class="anchor"></a>JointAI 0.2.0<small> 2018-07-05 </small>
 </h1>
-<div id="bug-fixes-7" class="section level2">
+<div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/md_pattern.html">md_pattern()</a></code>: does not generate duplicate plot any more</li>
@@ -470,6 +483,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#jointai-0-5-1">0.5.1</a></li>
         <li><a href="#jointai-0-5-0">0.5.0</a></li>
         <li><a href="#jointai-0-4-0">0.4.0</a></li>
         <li><a href="#jointai-0-3-4">0.3.4</a></li>
