@@ -91,6 +91,10 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
   if (!is.null(Mlist$Xic)) l$Xic <- data.matrix(Mlist$Xic)
   if (!is.null(Mlist$Xil)) l$Xil <- data.matrix(Mlist$Xil)
 
+  if (all(is.null(Mlist$cols_main$Xl),
+          is.null(unlist(sapply(imp_par_list, '[[', 'Xl_cols'))))) {
+    l$Xl <- NULL
+  }
 
   if (any(models %in% c('norm', 'lognorm', 'lme', 'lmm')) | (family == 'gaussian' & !Mlist$ridge))
     l <- c(l, defs$norm)
