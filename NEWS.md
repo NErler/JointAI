@@ -5,10 +5,13 @@
 * bug in ordinal models with only completely observed variables fixed 
   (all necessary data is not passed to JAGS)
 * enable thinning when using parallel sampling
+* matrix `Xl` is no longer included in `data_list` when it is not used in the model
 
 
 ## Minor changes
 * `summary()` calls `GR_crit()` with argument `autoburnin = FALSE` unless specified otherwise via `...`
+* when `inits` is specified as a function, the function is evaluated and the resulting list passed to JAGS (previously the function was passed to JAGS)
+* the example data `simong` and `simWide` have changed (more variables, less subjects)
 
 --------------------------------------------------------------------------------
 

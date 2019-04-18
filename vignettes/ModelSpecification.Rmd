@@ -667,7 +667,7 @@ for the imputation of `occup`:
 mod9a <- lm_imp(SBP ~ gender + age + occup, auxvars = c('educ', 'smoke'),
                 data = NHANES, n.iter = 100, progress.bar = 'none')
 ```
-The `educ` and `smoke` are not used as predictors in the analysis model:
+The variables `educ` and `smoke` are not used as predictors in the analysis model:
 ```{r}
 summary(mod9a)
 ```
@@ -885,7 +885,7 @@ When a vector of variable names is supplied to `scale_vars`, only those
 variables are scaled.
 
 By default, only the MCMC samples that is scaled back to the scale of the data
-is returned by **JointAI**. When the argument `keep_scaled_mcmc = TRUE` also
+is stored in a `JointAI` object. When the argument `keep_scaled_mcmc = TRUE` also
 the scaled sample is kept.
 
 

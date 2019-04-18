@@ -15,3 +15,5 @@
 ^vignettes/SelectingParameters_files$
 ^vignettes/ModelSpecification_cache$
 ^vignettes/ModelSpecification_files$
+data/simLong_old.RData_
+data/simWide_old.RData_

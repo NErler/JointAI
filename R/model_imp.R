@@ -530,10 +530,10 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 if (!is.null(inits)) {
   if (inherits(inits, 'function')) {
-    if (!is.null(seed) | parallel) {
+    # if (!is.null(seed) | parallel) {
       if (!is.null(seed)) set.seed(seed)
       inits <- replicate(n.chains, inits(), simplify = FALSE)
-    }
+    # }
   }
   if (inherits(inits, "list")) {
     if (!any(c('.RNG.name', '.RNG.seed') %in% unlist(lapply(inits, names))))
