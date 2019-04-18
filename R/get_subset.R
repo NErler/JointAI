@@ -1,17 +1,17 @@
 
-get_subset <- function(object, subset, keep_aux = FALSE, warn = TRUE) {
+get_subset <- function(object, subset, keep_aux = FALSE, warn = TRUE, mess = TRUE) {
   subset <- as.list(subset)
 
-  if (length(subset) == 0 & !as.list(object$monitor_params)$analysis_main)
+  if (length(subset) == 0 & !as.logical(as.list(object$monitor_params)$analysis_main))
     return(object$MCMC)
 
-  if (length(subset) == 0 & as.list(object$monitor_params)$analysis_main)
+  if (length(subset) == 0 & as.logical(as.list(object$monitor_params)$analysis_main))
     subset <- c(analysis_main = TRUE)
 
   if (!length(subset) == 0 && is.null(as.list(subset)$analysis_main))
     subset$analysis_main <- FALSE
 
-  s <- do.call(get_params, c(object, object$Mlist, subset))
+  s <- do.call(get_params, c(object, object$Mlist, subset, mess = mess))
 
   repl <- sapply(s, function(r) {
     if (grepl("^beta$", r)) {

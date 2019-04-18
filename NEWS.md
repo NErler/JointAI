@@ -6,6 +6,7 @@
   (all necessary data is not passed to JAGS)
 * enable thinning when using parallel sampling
 * matrix `Xl` is no longer included in `data_list` when it is not used in the model
+* bugfix in `subset` when specified as vector
 
 
 ## Minor changes
