@@ -120,11 +120,12 @@ predDF.formula <- function(formula, dat, var, ...) {
 
 #' @export
 predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
-                            start = NULL, end = NULL, thin = NULL, ...) {
+                            start = NULL, end = NULL, thin = NULL, mess = TRUE, ...) {
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
-  MCMC <- prep_MCMC(object, start = start, end = end, thin = thin, subset = NULL, ...)
+  MCMC <- prep_MCMC(object, start = start, end = end, thin = thin, subset = NULL,
+                    mess = mess, ...)
 
 
   mf <- model.frame(object$fixed, object$data)
