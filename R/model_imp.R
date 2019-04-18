@@ -561,7 +561,7 @@ if (!is.null(inits)) {
   var.names <- do.call(get_params, c(list(models = models, analysis_type = analysis_type,
                                           family = family, Mlist,
                                           imp_par_list = imp_par_list,
-                                          ppc = ppc),
+                                          ppc = ppc, mess = mess),
                                      monitor_params))
 
 

@@ -55,7 +55,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                             family = attr(object$analysis_type, "family"),
                                             Mlist = object$Mlist,
                                             imp_par_list = object$imp_par_list,
-                                            ppc = object$Mlist$ppc),
+                                            ppc = object$Mlist$ppc, mess = mess),
                                        monitor_params))
   }
 

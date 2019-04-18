@@ -14,7 +14,7 @@ traceplot(object, ...)
 \method{traceplot}{JointAI}(object, start = NULL, end = NULL,
   thin = NULL, subset = c(analysis_main = TRUE), nrow = NULL,
   ncol = NULL, keep_aux = FALSE, use_ggplot = FALSE, warn = TRUE,
-  ...)
+  mess = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -76,6 +76,10 @@ automatically chosen if unspecified}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. Note: this applies only to warnings
+given directly by \strong{JointAI}.}
+
+\item{mess}{logical; should messages be given? Default is
+\code{TRUE}. Note: this applies only to messages
 given directly by \strong{JointAI}.}
 }
 \description{

@@ -1,5 +1,6 @@
 
-prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL, warn = warn, ...) {
+prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL,
+                      warn = warn, mess = mess, ...) {
 
   if (is.null(start)) {
     start <- start(object$MCMC)
@@ -16,7 +17,7 @@ prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
   if (is.null(thin))
     thin <- thin(object$MCMC)
 
-  MCMC <- get_subset(object, subset, warn = warn)
+  MCMC <- get_subset(object, subset, warn = warn, mess = mess)
 
   MCMC <- do.call(rbind,
                   window(MCMC,

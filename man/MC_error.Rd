@@ -6,7 +6,7 @@
 \title{Monte Carlo error}
 \usage{
 MC_error(x, subset = NULL, start = NULL, end = NULL, thin = NULL,
-  digits = 2, warn = TRUE, ...)
+  digits = 2, warn = TRUE, mess = TRUE, ...)
 
 \method{plot}{MCElist}(x, data_scale = TRUE, plotpars = NULL,
   ablinepars = list(v = 0.05), ...)
@@ -30,6 +30,10 @@ and \code{\link{coxph_imp}}.}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. Note: this applies only to warnings
+given directly by \strong{JointAI}.}
+
+\item{mess}{logical; should messages be given? Default is
+\code{TRUE}. Note: this applies only to messages
 given directly by \strong{JointAI}.}
 
 \item{...}{Arguments passed on to \code{mcmcse::mcse.mat}

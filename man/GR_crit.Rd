@@ -6,7 +6,8 @@
 \usage{
 GR_crit(object, confidence = 0.95, transform = FALSE,
   autoburnin = TRUE, multivariate = TRUE, subset = NULL,
-  start = NULL, end = NULL, thin = NULL, warn = TRUE, ...)
+  start = NULL, end = NULL, thin = NULL, warn = TRUE,
+  mess = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -42,6 +43,10 @@ and \code{\link{coxph_imp}}.}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. Note: this applies only to warnings
+given directly by \strong{JointAI}.}
+
+\item{mess}{logical; should messages be given? Default is
+\code{TRUE}. Note: this applies only to messages
 given directly by \strong{JointAI}.}
 
 \item{...}{currently not used}

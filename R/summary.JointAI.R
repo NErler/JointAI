@@ -34,7 +34,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   cl <- as.list(match.call())[-1]
   autoburnin <- if (is.null(cl$autoburnin)) FALSE else eval(cl$autoburnin)
 
-  MCMC <- prep_MCMC(object, start = start, end = end, thin = thin, subset = subset, warn = warn, ...)
+  MCMC <- prep_MCMC(object, start = start, end = end, thin = thin,
+                    subset = subset, warn = warn, mess = mess, ...)
 
   # create results matrix
   statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.", "GR-crit")
@@ -47,7 +48,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   stats[, paste0(quantiles * 100, "%")] <- t(apply(MCMC, 2, quantile, quantiles))
   stats[, "tail-prob."] <- apply(MCMC, 2, computeP)
   stats[, "GR-crit"] <- GR_crit(object = object, start = start, end = end, thin = thin,
-                                warn = warn, subset = subset, autoburnin = autoburnin)[[1]][, "Upper C.I."]
+                                warn = warn, mess = FALSE,
+                                subset = subset, autoburnin = autoburnin)[[1]][, "Upper C.I."]
 
   out <- list()
   out$call <- object$call
@@ -91,7 +93,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                                             get_aux(object),
                                             rownames(out$sigma),
                                             rownames(out$weibull),
-                                            paste0("tau_", names(object$Mlist$y))), , drop = FALSE]
+                                            paste0("tau_", names(object$Mlist$y))),
+                    , drop = FALSE]
 
   out$analysis_type <- object$analysis_type
   out$size <- nrow(object$data)

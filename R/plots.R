@@ -62,11 +62,12 @@ traceplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, .
 traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                               subset = c(analysis_main = TRUE),
                               nrow = NULL, ncol = NULL, keep_aux = FALSE,
-                              use_ggplot = FALSE, warn = TRUE,
+                              use_ggplot = FALSE, warn = TRUE, mess = TRUE,
                               ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin, subset = subset,
-                    nrow = nrow, ncol = ncol, warn = warn, keep_aux = keep_aux)
+                    nrow = nrow, ncol = ncol, warn = warn, mess = mess,
+                    keep_aux = keep_aux)
 
 
   if (use_ggplot) {
@@ -175,11 +176,11 @@ densplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, ..
 densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                              subset = c(analysis_main = TRUE), vlines = NULL, nrow = NULL,
                              ncol = NULL, joined = FALSE, use_ggplot = FALSE,
-                             keep_aux = FALSE, warn = TRUE, ...) {
+                             keep_aux = FALSE, warn = TRUE, mess = TRUE, ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin,
                     subset = subset, nrow = nrow, ncol = ncol, warn = warn,
-                    keep_aux = keep_aux)
+                    mess = mess, keep_aux = keep_aux)
 
   if (joined)
     prep$MCMC <- as.mcmc.list(as.mcmc(do.call(rbind, prep$MCMC)))
@@ -250,7 +251,8 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 # Helpfunction for densityplot and traceplot
 plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL,
-                      nrow = NULL, ncol = NULL, warn = TRUE, keep_aux = FALSE, ...) {
+                      nrow = NULL, ncol = NULL, warn = TRUE, mess = TRUE,
+                      keep_aux = FALSE, ...) {
   if (is.null(object$MCMC))
     stop("There is no MCMC sample.")
 
@@ -264,7 +266,7 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
     thin <- thin(object$MCMC)
 
   MCMC <- get_subset(object, subset, keep_aux = keep_aux,
-                     warn = warn)
+                     warn = warn, mess = mess)
   MCMC <- window(MCMC,
                  start = start,
                  end = end,

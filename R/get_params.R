@@ -10,7 +10,7 @@ get_params <- function(models, analysis_type, family, Mlist,
                        gamma_y = NULL, delta_y = NULL,
                        ranef = NULL, invD = NULL, D = NULL, RinvD = NULL,
                        alphas = NULL, tau_imp = NULL, gamma_imp = NULL,
-                       delta_imp = NULL, other = NULL, ...){
+                       delta_imp = NULL, other = NULL, mess = TRUE, ...){
 
   y_name <- colnames(Mlist$y)
 

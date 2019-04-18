@@ -27,7 +27,7 @@
 #' @export
 GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = TRUE,
                     multivariate = TRUE, subset = NULL,
-                    start = NULL, end = NULL, thin = NULL, warn = TRUE, ...) {
+                    start = NULL, end = NULL, thin = NULL, warn = TRUE, mess = TRUE, ...) {
 
   if (!inherits(object, "JointAI"))
     stop('Object must be of class "JointAI".')
@@ -45,7 +45,7 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
   if (is.null(thin))
     thin <- thin(object$MCMC)
 
-  MCMC <- get_subset(object, subset, warn = warn)
+  MCMC <- get_subset(object, subset, warn = warn, mess = mess)
   MCMC <- window(MCMC, start = start, end = end, thin = thin)
 
 
@@ -93,7 +93,7 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #' @export
 MC_error <- function(x, subset = NULL,
                      start = NULL, end = NULL, thin = NULL,
-                     digits = 2, warn = TRUE, ...) {
+                     digits = 2, warn = TRUE, mess = TRUE, ...) {
 
   if (!inherits(x, "JointAI"))
     stop('x must be of class "JointAI".')
@@ -114,7 +114,7 @@ MC_error <- function(x, subset = NULL,
     thin <- thin(x$MCMC)
 
   # MC error for MCMC sample scaled back to data scale
-  MCMC <- get_subset(object = x, subset = subset, warn = warn)
+  MCMC <- get_subset(object = x, subset = subset, warn = warn, mess = mess)
 
   MCMC <- do.call(rbind, window(MCMC, start = start, end = end, thin = thin))
 

@@ -14,7 +14,7 @@ densplot(object, ...)
 \method{densplot}{JointAI}(object, start = NULL, end = NULL,
   thin = NULL, subset = c(analysis_main = TRUE), vlines = NULL,
   nrow = NULL, ncol = NULL, joined = FALSE, use_ggplot = FALSE,
-  keep_aux = FALSE, warn = TRUE, ...)
+  keep_aux = FALSE, warn = TRUE, mess = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -54,6 +54,10 @@ automatically chosen if unspecified}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. Note: this applies only to warnings
+given directly by \strong{JointAI}.}
+
+\item{mess}{logical; should messages be given? Default is
+\code{TRUE}. Note: this applies only to messages
 given directly by \strong{JointAI}.}
 }
 \description{
