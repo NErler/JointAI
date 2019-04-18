@@ -171,7 +171,7 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     stop("There is no MCMC sample.\n")
   }
 
-  MCMC <- prep_MCMC(object, start, end, thin, subset)
+  MCMC <- prep_MCMC(object, start, end, thin, subset, mess = mess, warn = warn)
 
   coefs <- colMeans(MCMC)[intersect(colnames(MCMC),
                                     get_coef_names(object$Mlist, object$K)[, 2])]
@@ -225,7 +225,7 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
   if (is.null(quantiles) & !is.null(level))
     quantiles <- c((1 - level)/2, 1 - (1 - level)/2)
 
-  MCMC <- prep_MCMC(object, start, end, thin, subset)
+  MCMC <- prep_MCMC(object, start, end, thin, subset, mess = mess, warn = warn)
 
   cis <- t(apply(MCMC, 2, quantile, quantiles))
 
@@ -241,7 +241,7 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
 
 
   MCMC <- if (!is.null(x$MCMC))
-    prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL)
+    prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL, ...)
 
 
   cat("\nCall:\n")
