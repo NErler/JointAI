@@ -5,9 +5,9 @@
 \alias{simLong}
 \alias{simWide}
 \title{Simulated Longitudinal Data in Long and Wide Format}
-\format{\code{simLong}: A data frame in long format with 3894 rows and 13 variables
+\format{\code{simLong}: A data frame in long format with 2400 rows and 16 variables
 
-\code{simWide}: A data frame in wide format with 499 rows and 45 variables}
+\code{simWide}: A data frame in wide format with 200 rows and 81 variables}
 \usage{
 simLong
 
@@ -17,7 +17,7 @@ simWide
 This data was simulated to mimic data from a longitudinal cohort study
 following mothers and their child from birth until approximately 4 years of
 age.
-It contains 3903 observations of 499 mother-child pairs. Children's BMI and
+It contains 2400 observations of 200 mother-child pairs. Children's BMI and
 head circumference was measured repeatedly and their age in months was recorded
 at each measurement. Furthermore, the data contain several baseline variables
 with information on the mothers' demographics and socioeconomic status.
@@ -48,6 +48,9 @@ with information on the mothers' demographics and socioeconomic status.
   \item{age}{child age at measurement time in months}
   \item{bmi}{child BMI}
   \item{hc}{child head circumference in cm}
+  \item{hgt}{child height in cm}
+  \item{wgt}{child weight in gram}
+  \item{sleep}{sleeping behaviour of the child (3 ordered catgegories)}
 }
 }
 
@@ -58,8 +61,15 @@ with information on the mothers' demographics and socioeconomic status.
    age40, age50}{child age at the repeated measurements in months}
   \item{bmi1, bmi2, bmi3, bmi4, bmi7, bmi11, bmi15, bmi20, bmi26, bmi32,
    bmi40, bmi50}{repeated measurements of child BMI}
-  \item{age1, age2, age3, age4, age7, age11, age15, age20, age26, age32,
-   age40, age50}{repeated measurements of child head circumference in cm}
+  \item{hc1, hc2, hc3, hc4, hc7, hc11, hc15, hc20, hc26, hc32,
+   hc40, hc50}{repeated measurements of child head circumference in cm}
+  \item{hgt1, hgt2, hgt3, hgt4, hgt7, hgt11, hgt15, hgt20, hgt26, hgt32,
+   hgt40, hgt50}{repeated measurements of child height in cm}
+  \item{wgt1, wgt2, wgt3, wgt4, wgt7, wgt11, wgt15, wgt20, wgt26, wgt32,
+   wgt40, wgt50}{repeated measurements of child weight in gram}
+  \item{sleep1, sleep2, sleep3, sleep4, sleep7, sleep11, sleep15, sleep20,
+   sleep26, sleep32, sleep40, sleep50}{repeated measurements of child sleep
+   behaviour (3 ordered categories)}
 }
 }
 
