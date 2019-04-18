@@ -159,7 +159,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>MC_error</span>(<span class='no'>x</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for MCElist</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>data_scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plotpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -200,6 +200,12 @@ and <code><a href='model_imp.html'>coxph_imp</a></code>.</p></td>
       <th>warn</th>
       <td><p>logical; should warnings be given? Default is
 <code>TRUE</code>. Note: this applies only to warnings
+given directly by <strong>JointAI</strong>.</p></td>
+    </tr>
+    <tr>
+      <th>mess</th>
+      <td><p>logical; should messages be given? Default is
+<code>TRUE</code>. Note: this applies only to messages
 given directly by <strong>JointAI</strong>.</p></td>
     </tr>
     <tr>
@@ -273,14 +279,14 @@ contains some examples how to specify the argument <code>subset</code>.</p></div
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bugs to the package maintainer.</span></div><div class='input'>
-<span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                 est   MCSE    SD MCSE/SD
-#&gt; (Intercept)  33.633 1.9392 26.27   0.074
-#&gt; C1          -25.475 1.3568 18.33   0.074
-#&gt; C2            0.891 0.0505  0.68   0.075
-#&gt; M22          -0.400 0.0288  0.65   0.045
-#&gt; M23           0.097 0.0406  0.65   0.062
-#&gt; M24          -1.101 0.0370  0.69   0.053
-#&gt; sigma_y       2.238 0.0096  0.16   0.059</div><div class='input'>
+<span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                est  MCSE    SD MCSE/SD
+#&gt; (Intercept)  35.15 1.361 23.68   0.057
+#&gt; C1          -26.55 0.964 16.53   0.058
+#&gt; C2            0.91 0.028  0.65   0.043
+#&gt; M22          -0.36 0.064  0.66   0.098
+#&gt; M23           0.11 0.069  0.66   0.105
+#&gt; M24          -1.08 0.070  0.67   0.104
+#&gt; sigma_y       2.23 0.010  0.16   0.065</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'>MC_error</span>(<span class='no'>mod</span>), <span class='kw'>ablinepars</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='img'><img src='MC_error-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>

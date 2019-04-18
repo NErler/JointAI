@@ -113,7 +113,7 @@
             <h3 class="subtitle">How to specify which parameters to monitor and display in the results.</h3>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2019-03-14</h4>
+            <h4 class="date">2019-04-18</h4>
       
       
       <div class="hidden name"><code>SelectingParameters.Rmd</code></div>
@@ -217,84 +217,84 @@
 <p>The main parameters are the regression coefficients of the analysis model (<code>beta</code>) and the residual standard deviation (<code>sigma_y</code>).</p>
 <p>The function <a href="https://nerler.github.io/JointAI/reference/parameters.html"><code><a href="../reference/parameters.html">parameters()</a></code></a> returns the parameters that are specified to be followed (even for models where no MCMC sampling was performed, i.e. when <code>n.iter = 0</code> and <code>n.adapt = 0</code>).</p>
 <p>For example:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">lm1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat, <span class="dt">data =</span> NHANES,  <span class="dt">n.adpat =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm1)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; [1] "(Intercept)"  "genderfemale" "WC"           "alc&gt;=1"      </span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; [5] "creat"        "sigma_SBP"</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">lm1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat, <span class="dt">data =</span> NHANES,  <span class="dt">n.adpat =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm1)</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co">#&gt; [1] "(Intercept)"  "genderfemale" "WC"           "alc&gt;=1"      </span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="co">#&gt; [5] "creat"        "sigma_SBP"</span></a></code></pre></div>
 </div>
 <div id="imputed-values-parameters-of-the-imputation-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#imputed-values-parameters-of-the-imputation-models" class="anchor"></a>Imputed values &amp; parameters of the imputation models</h3>
 <p>To generate (multiple) imputed datasets that can be used for further analyses, the imputed values need to be monitored. This can be done by setting <code>monitor_params = c(imps = TRUE)</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">lm2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>smoke <span class="op">+</span><span class="st"> </span>occup,</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">              <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">              <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">imps =</span> <span class="ot">TRUE</span>, <span class="dt">analysis_main =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm2)</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt;  [1] "Xc[33,3]"    "Xc[150,3]"   "Xc[1,8]"     "Xc[7,8]"     "Xc[8,8]"    </span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt;  [6] "Xc[12,8]"    "Xc[13,8]"    "Xc[21,8]"    "Xc[22,8]"    "Xc[31,8]"   </span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; [11] "Xc[33,8]"    "Xc[34,8]"    "Xc[39,8]"    "Xc[49,8]"    "Xc[66,8]"   </span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; [16] "Xc[67,8]"    "Xc[80,8]"    "Xc[86,8]"    "Xc[91,8]"    "Xc[92,8]"   </span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; [21] "Xc[105,8]"   "Xc[111,8]"   "Xc[115,8]"   "Xc[118,8]"   "Xc[120,8]"  </span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; [26] "Xc[127,8]"   "Xc[132,8]"   "Xc[139,8]"   "Xc[146,8]"   "Xc[149,8]"  </span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; [31] "Xc[152,8]"   "Xc[163,8]"   "Xc[165,8]"   "Xc[169,8]"   "Xc[180,8]"  </span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; [36] "Xc[185,8]"   "Xcat[6,1]"   "Xcat[16,1]"  "Xcat[24,1]"  "Xcat[27,1]" </span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; [41] "Xcat[45,1]"  "Xcat[57,1]"  "Xcat[58,1]"  "Xcat[60,1]"  "Xcat[61,1]" </span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; [46] "Xcat[65,1]"  "Xcat[66,1]"  "Xcat[70,1]"  "Xcat[80,1]"  "Xcat[81,1]" </span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; [51] "Xcat[85,1]"  "Xcat[88,1]"  "Xcat[89,1]"  "Xcat[90,1]"  "Xcat[101,1]"</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; [56] "Xcat[104,1]" "Xcat[116,1]" "Xcat[133,1]" "Xcat[137,1]" "Xcat[143,1]"</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; [61] "Xcat[168,1]" "Xcat[170,1]" "Xcat[180,1]" "Xcat[186,1]" "Xcat[16,2]" </span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; [66] "Xcat[99,2]"  "Xcat[123,2]" "Xcat[156,2]" "Xcat[158,2]" "Xcat[166,2]"</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; [71] "Xcat[172,2]"</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">lm2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>smoke <span class="op">+</span><span class="st"> </span>occup,</a>
+<a class="sourceLine" id="cb2-2" title="2">              <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb2-3" title="3">              <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">imps =</span> <span class="ot">TRUE</span>, <span class="dt">analysis_main =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4">)</a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm2)</a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co">#&gt;  [1] "Xc[33,3]"    "Xc[150,3]"   "Xc[1,8]"     "Xc[7,8]"     "Xc[8,8]"    </span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co">#&gt;  [6] "Xc[12,8]"    "Xc[13,8]"    "Xc[21,8]"    "Xc[22,8]"    "Xc[31,8]"   </span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; [11] "Xc[33,8]"    "Xc[34,8]"    "Xc[39,8]"    "Xc[49,8]"    "Xc[66,8]"   </span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; [16] "Xc[67,8]"    "Xc[80,8]"    "Xc[86,8]"    "Xc[91,8]"    "Xc[92,8]"   </span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="co">#&gt; [21] "Xc[105,8]"   "Xc[111,8]"   "Xc[115,8]"   "Xc[118,8]"   "Xc[120,8]"  </span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="co">#&gt; [26] "Xc[127,8]"   "Xc[132,8]"   "Xc[139,8]"   "Xc[146,8]"   "Xc[149,8]"  </span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt; [31] "Xc[152,8]"   "Xc[163,8]"   "Xc[165,8]"   "Xc[169,8]"   "Xc[180,8]"  </span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; [36] "Xc[185,8]"   "Xcat[6,1]"   "Xcat[16,1]"  "Xcat[24,1]"  "Xcat[27,1]" </span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt; [41] "Xcat[45,1]"  "Xcat[57,1]"  "Xcat[58,1]"  "Xcat[60,1]"  "Xcat[61,1]" </span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt; [46] "Xcat[65,1]"  "Xcat[66,1]"  "Xcat[70,1]"  "Xcat[80,1]"  "Xcat[81,1]" </span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt; [51] "Xcat[85,1]"  "Xcat[88,1]"  "Xcat[89,1]"  "Xcat[90,1]"  "Xcat[101,1]"</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt; [56] "Xcat[104,1]" "Xcat[116,1]" "Xcat[133,1]" "Xcat[137,1]" "Xcat[143,1]"</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co">#&gt; [61] "Xcat[168,1]" "Xcat[170,1]" "Xcat[180,1]" "Xcat[186,1]" "Xcat[16,2]" </span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="co">#&gt; [66] "Xcat[99,2]"  "Xcat[123,2]" "Xcat[156,2]" "Xcat[158,2]" "Xcat[166,2]"</span></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; [71] "Xcat[172,2]"</span></a></code></pre></div>
 <p><strong>JointAI</strong> uses a number of different design matrices to store different types of variables. The matrix <code>Xc</code> is the design matrix of cross-sectional covariates. For categorical incomplete variables (with more than 2 categories) the original variable is stored in the matrix <code>Xcat</code> and <code>Xc</code> contains the corresponding dummy coded variables. Hence, the imputed values of continuous and binary variables are elements of <code>Xc</code> and imputed values of categorical variables are elements of <code>Xcat</code>.</p>
 <p>The parameters of the models for the incomplete variables can be selected with <code>monitor_params = c(imp_pars = TRUE)</code>. This will set monitors for the regression coefficients (<code>alpha</code>) and other parameters, such as precision (<code>tau_*</code>) and intercepts &amp; increments (<code>gamma_*</code> and <code>delta_*</code>) in cumulative logit models.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">lm3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>smoke <span class="op">+</span><span class="st"> </span>occup, <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">              <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">imp_pars =</span> <span class="ot">TRUE</span>, <span class="dt">analysis_main =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">)</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm3)</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; [1] "alpha"       "tau_WC"      "gamma_smoke" "delta_smoke"</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">lm3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>smoke <span class="op">+</span><span class="st"> </span>occup, <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb3-2" title="2">              <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">imp_pars =</span> <span class="ot">TRUE</span>, <span class="dt">analysis_main =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-3" title="3">)</a>
+<a class="sourceLine" id="cb3-4" title="4"></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm3)</a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; [1] "alpha"       "tau_WC"      "gamma_smoke" "delta_smoke"</span></a></code></pre></div>
 <div id="side-note-getting-information-about-of-the-imputation-models" class="section level4">
 <h4 class="hasAnchor">
 <a href="#side-note-getting-information-about-of-the-imputation-models" class="anchor"></a>Side note: Getting information about of the imputation models</h4>
 <p>An overview of the imputation models used, including the names of the parameters and the hyperparameters can be obtained with</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/list_models.html">list_impmodels</a></span>(lm2)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; Normal imputation model for 'WC'</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;   (Intercept), age</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; * Regression coefficients: </span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;   alpha[1:2] (normal prior(s) with mean 0 and precision 1e-04)</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; * Precision of 'WC':</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt;   tau_WC (Gamma prior with shape parameter 0.01 and rate parameter 0.01)</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; Cumulative logit imputation model for 'smoke'</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; * Reference category: 'never'</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;   age, WC</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; * Regression coefficients: </span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt;   alpha[3:4] (normal prior(s) with mean 0 and precision 1e-04)</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; * Intercepts:</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt;   - never: gamma_smoke[1] (normal prior with mean 0 and precision 1e-04)</span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt;   - former: gamma_smoke[2] = gamma_smoke[1] + exp(delta_smoke[1])</span></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; * Increments:</span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt;   delta_smoke[1] (normal prior(s) with mean 0 and precision 1e-04)</span></a>
-<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; Multinomial logit imputation model for 'occup'</span></a>
-<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; * Reference category: 'working'</span></a>
-<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt;   (Intercept), age, WC, smokeformer, smokecurrent</span></a>
-<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt; * Regression coefficients: </span></a>
-<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt;   - 'occuplooking for work': alpha[5:9] (normal prior(s) with mean 0 and precision 1e-04)</span></a>
-<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt;   - 'occupnot working': alpha[10:14] (normal prior(s) with mean 0 and precision 1e-04)</span></a>
-<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb4-30" data-line-number="30"><span class="co">#&gt; Logistic imputation model for 'alc'</span></a>
-<a class="sourceLine" id="cb4-31" data-line-number="31"><span class="co">#&gt; * Reference category: '&lt;1'</span></a>
-<a class="sourceLine" id="cb4-32" data-line-number="32"><span class="co">#&gt; * Predictor variables: </span></a>
-<a class="sourceLine" id="cb4-33" data-line-number="33"><span class="co">#&gt;   (Intercept), age, WC, smokeformer, smokecurrent, occuplooking for work, occupnot working</span></a>
-<a class="sourceLine" id="cb4-34" data-line-number="34"><span class="co">#&gt; * Regression coefficients: </span></a>
-<a class="sourceLine" id="cb4-35" data-line-number="35"><span class="co">#&gt;   alpha[15:21] (normal prior(s) with mean 0 and precision 1e-04)</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/list_models.html">list_impmodels</a></span>(lm2)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; Normal imputation model for 'WC'</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt;   (Intercept), age</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; * Regression coefficients: </span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt;   alpha[1:2] (normal prior(s) with mean 0 and precision 1e-04)</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; * Precision of 'WC':</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt;   tau_WC (Gamma prior with shape parameter 0.01 and rate parameter 0.01)</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; Cumulative logit imputation model for 'smoke'</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; * Reference category: 'never'</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt;   age, WC</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; * Regression coefficients: </span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt;   alpha[3:4] (normal prior(s) with mean 0 and precision 1e-04)</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; * Intercepts:</span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt;   - never: gamma_smoke[1] (normal prior with mean 0 and precision 1e-04)</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt;   - former: gamma_smoke[2] = gamma_smoke[1] + exp(delta_smoke[1])</span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; * Increments:</span></a>
+<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt;   delta_smoke[1] (normal prior(s) with mean 0 and precision 1e-04)</span></a>
+<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt; Multinomial logit imputation model for 'occup'</span></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt; * Reference category: 'working'</span></a>
+<a class="sourceLine" id="cb4-24" title="24"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb4-25" title="25"><span class="co">#&gt;   (Intercept), age, WC, smokeformer, smokecurrent</span></a>
+<a class="sourceLine" id="cb4-26" title="26"><span class="co">#&gt; * Regression coefficients: </span></a>
+<a class="sourceLine" id="cb4-27" title="27"><span class="co">#&gt;   - 'occuplooking for work': alpha[5:9] (normal prior(s) with mean 0 and precision 1e-04)</span></a>
+<a class="sourceLine" id="cb4-28" title="28"><span class="co">#&gt;   - 'occupnot working': alpha[10:14] (normal prior(s) with mean 0 and precision 1e-04)</span></a>
+<a class="sourceLine" id="cb4-29" title="29"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-30" title="30"><span class="co">#&gt; Logistic imputation model for 'alc'</span></a>
+<a class="sourceLine" id="cb4-31" title="31"><span class="co">#&gt; * Reference category: '&lt;1'</span></a>
+<a class="sourceLine" id="cb4-32" title="32"><span class="co">#&gt; * Predictor variables: </span></a>
+<a class="sourceLine" id="cb4-33" title="33"><span class="co">#&gt;   (Intercept), age, WC, smokeformer, smokecurrent, occuplooking for work, occupnot working</span></a>
+<a class="sourceLine" id="cb4-34" title="34"><span class="co">#&gt; * Regression coefficients: </span></a>
+<a class="sourceLine" id="cb4-35" title="35"><span class="co">#&gt;   alpha[15:21] (normal prior(s) with mean 0 and precision 1e-04)</span></a></code></pre></div>
 </div>
 <div id="side-note-how-to-extract-imputed-datasets" class="section level4">
 <h4 class="hasAnchor">
@@ -353,49 +353,49 @@
 <h3 class="hasAnchor">
 <a href="#random-effects" class="anchor"></a>Random effects</h3>
 <p>For mixed models, <code>analysis_main</code> also includes the random effects covariance matrix <code>D</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">lme1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age <span class="op">|</span><span class="st"> </span>ID, <span class="dt">data =</span> simLong, <span class="dt">n.adapt =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme1)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "sigma_bmi"  </span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; [6] "D[1,1]"      "D[1,2]"      "D[2,2]"</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">lme1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age <span class="op">|</span><span class="st"> </span>ID, <span class="dt">data =</span> simLong, <span class="dt">n.adapt =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme1)</a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "sigma_bmi"  </span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co">#&gt; [6] "D[1,1]"      "D[1,2]"      "D[2,2]"</span></a></code></pre></div>
 <p>Setting <code>analysis_random = TRUE</code> will switch on monitoring for the random effects (<code>ranef</code>), random effects covariance matrix (<code>D</code>), inverse of the random effects covariance matrix (<code>invD</code>) and the diagonal of the scale matrix of the Wishart-prior of <code>invD</code> (<code>RinvD</code>).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">lme2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age <span class="op">|</span><span class="st"> </span>ID, <span class="dt">data =</span> simLong, <span class="dt">n.adapt =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">                <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">analysis_random =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme2)</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;  [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "sigma_bmi"  </span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt;  [6] "b"           "invD[1,1]"   "invD[1,2]"   "invD[2,2]"   "D[1,1]"     </span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; [11] "D[1,2]"      "D[2,2]"      "RinvD[1,1]"  "RinvD[2,2]"</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">lme2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age <span class="op">|</span><span class="st"> </span>ID, <span class="dt">data =</span> simLong, <span class="dt">n.adapt =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb6-2" title="2">                <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">analysis_random =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme2)</a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="co">#&gt;  [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "sigma_bmi"  </span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="co">#&gt;  [6] "b"           "invD[1,1]"   "invD[1,2]"   "invD[2,2]"   "D[1,1]"     </span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; [11] "D[1,2]"      "D[2,2]"      "RinvD[1,1]"  "RinvD[2,2]"</span></a></code></pre></div>
 <p>It is possible to select only a subset of the random effects parameters by specifying them directly, e.g.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">lme3a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age <span class="op">|</span><span class="st"> </span>ID, <span class="dt">data =</span> simLong, <span class="dt">n.adapt =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">                <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">analysis_main =</span> <span class="ot">TRUE</span>, <span class="dt">RinvD =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme3a)</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;  [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "sigma_bmi"  </span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt;  [6] "D[1,1]"      "D[1,2]"      "D[2,2]"      "RinvD[1,1]"  "RinvD[2,2]"</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">lme3a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age <span class="op">|</span><span class="st"> </span>ID, <span class="dt">data =</span> simLong, <span class="dt">n.adapt =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb7-2" title="2">                <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">analysis_main =</span> <span class="ot">TRUE</span>, <span class="dt">RinvD =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb7-3" title="3"></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme3a)</a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt;  [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "sigma_bmi"  </span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt;  [6] "D[1,1]"      "D[1,2]"      "D[2,2]"      "RinvD[1,1]"  "RinvD[2,2]"</span></a></code></pre></div>
 <p>or by switching unwanted parts of <code>analysis_random</code> off, e.g.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">lme3b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age <span class="op">|</span><span class="st"> </span>ID, <span class="dt">data =</span> simLong, <span class="dt">n.adapt =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">                <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">analysis_main =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">                                   <span class="dt">analysis_random =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">                                   <span class="dt">RinvD =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">                                   <span class="dt">ranef =</span> <span class="ot">FALSE</span>))</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme3b)</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;  [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "sigma_bmi"  </span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;  [6] "invD[1,1]"   "invD[1,2]"   "invD[2,2]"   "D[1,1]"      "D[1,2]"     </span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; [11] "D[2,2]"</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">lme3b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age <span class="op">|</span><span class="st"> </span>ID, <span class="dt">data =</span> simLong, <span class="dt">n.adapt =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb8-2" title="2">                <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">analysis_main =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb8-3" title="3">                                   <span class="dt">analysis_random =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb8-4" title="4">                                   <span class="dt">RinvD =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb8-5" title="5">                                   <span class="dt">ranef =</span> <span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb8-6" title="6"></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme3b)</a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt;  [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "sigma_bmi"  </span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt;  [6] "invD[1,1]"   "invD[1,2]"   "invD[2,2]"   "D[1,1]"      "D[1,2]"     </span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; [11] "D[2,2]"</span></a></code></pre></div>
 </div>
 <div id="other-parameters" class="section level3">
 <h3 class="hasAnchor">
 <a href="#other-parameters" class="anchor"></a>Other parameters</h3>
 <p>The element <code>other</code> in <code>monitor_params</code> allows to specify one or multiple additional parameters to be monitored. When <code>other</code> is used with more than one element, <code>monitor_params</code> has to be a list.</p>
 <p>Here, we monitor the probability to be in the <code>alc&gt;=1</code> group for subjects 1 through 3 and the expected value of the distribution of <code>creat</code> for the first subject.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">lm4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat, <span class="dt">data =</span> NHANES,</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">              <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">                                    <span class="dt">other =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'p_alc[1:3]'</span>, <span class="st">"mu_creat[1]"</span>)))</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm4)</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt; [1] "p_alc[1:3]"  "mu_creat[1]"</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">lm4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat, <span class="dt">data =</span> NHANES,</a>
+<a class="sourceLine" id="cb9-2" title="2">              <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb9-3" title="3">                                    <span class="dt">other =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'p_alc[1:3]'</span>, <span class="st">"mu_creat[1]"</span>)))</a>
+<a class="sourceLine" id="cb9-4" title="4"></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm4)</a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="co">#&gt; [1] "p_alc[1:3]"  "mu_creat[1]"</span></a></code></pre></div>
 </div>
 </div>
 <div id="subsets-of-parameters-for-plots-summaries-etc-" class="section level2">
@@ -404,164 +404,164 @@
 <p>The functions <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html"><code><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code><a href="../reference/traceplot.html">traceplot()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/densplot.html"><code><a href="../reference/densplot.html">densplot()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code><a href="../reference/GR_crit.html">GR_crit()</a></code></a> and <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code><a href="../reference/MC_error.html">MC_error()</a></code></a> all have an argument <code>subset</code>. This argument allows to select a subset of parameters to be shown in the output. Especially when not only the parameters of the main analysis model are followed, but also, for example, imputed values, looking at a subset may be desirable.</p>
 <p><code>subset</code> follows the same logic as <code>monitor_params</code> described above.</p>
 <p>By default, only the parameters of the main analysis model are displayed if they were monitored:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Run a model monitoring analysis parameters and imputation parameters</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">lm5 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat, <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">              <span class="dt">progress.bar =</span> <span class="st">'none'</span>, <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">imp_pars =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; This is new software. Please report any bugs to the package maintainer.</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co"># model summary</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(lm5)</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt;  Linear model fitted with JointAI </span></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co">#&gt; Call:</span></a>
-<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">#&gt; lm_imp(formula = SBP ~ gender + WC + alc + creat, data = NHANES, </span></a>
-<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">#&gt;     n.iter = 100, monitor_params = c(imp_pars = TRUE), progress.bar = "none")</span></a>
-<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt; Posterior summary:</span></a>
-<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="co">#&gt;                Mean     SD   2.5%   97.5% tail-prob. GR-crit</span></a>
-<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="co">#&gt; (Intercept)  81.069 9.6615 63.632 100.605      0.000   0.999</span></a>
-<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="co">#&gt; genderfemale  0.476 2.4716 -3.979   5.326      0.827   1.014</span></a>
-<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="co">#&gt; WC            0.306 0.0786  0.164   0.463      0.000   0.998</span></a>
-<a class="sourceLine" id="cb10-20" data-line-number="20"><span class="co">#&gt; alc&gt;=1        6.289 2.4042  1.665  10.659      0.020   1.012</span></a>
-<a class="sourceLine" id="cb10-21" data-line-number="21"><span class="co">#&gt; creat         7.906 7.3343 -7.746  22.306      0.253   0.997</span></a>
-<a class="sourceLine" id="cb10-22" data-line-number="22"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb10-23" data-line-number="23"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
-<a class="sourceLine" id="cb10-24" data-line-number="24"><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></a>
-<a class="sourceLine" id="cb10-25" data-line-number="25"><span class="co">#&gt; sigma_SBP 14.3 0.757 13.1  16.2    1.05</span></a>
-<a class="sourceLine" id="cb10-26" data-line-number="26"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb10-27" data-line-number="27"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb10-28" data-line-number="28"><span class="co">#&gt; MCMC settings:</span></a>
-<a class="sourceLine" id="cb10-29" data-line-number="29"><span class="co">#&gt; Iterations = 101:200</span></a>
-<a class="sourceLine" id="cb10-30" data-line-number="30"><span class="co">#&gt; Sample size per chain = 100 </span></a>
-<a class="sourceLine" id="cb10-31" data-line-number="31"><span class="co">#&gt; Thinning interval = 1 </span></a>
-<a class="sourceLine" id="cb10-32" data-line-number="32"><span class="co">#&gt; Number of chains = 3 </span></a>
-<a class="sourceLine" id="cb10-33" data-line-number="33"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb10-34" data-line-number="34"><span class="co">#&gt; Number of observations: 186</span></a>
-<a class="sourceLine" id="cb10-35" data-line-number="35"></a>
-<a class="sourceLine" id="cb10-36" data-line-number="36"><span class="co"># traceplot of the MCMC sample</span></a>
-<a class="sourceLine" id="cb10-37" data-line-number="37"><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(lm5)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Run a model monitoring analysis parameters and imputation parameters</span></a>
+<a class="sourceLine" id="cb10-2" title="2">lm5 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat, <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb10-3" title="3">              <span class="dt">progress.bar =</span> <span class="st">'none'</span>, <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">imp_pars =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="co">#&gt; This is new software. Please report any bugs to the package maintainer.</span></a>
+<a class="sourceLine" id="cb10-5" title="5"></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="co"># model summary</span></a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(lm5)</a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="co">#&gt;  Linear model fitted with JointAI </span></a>
+<a class="sourceLine" id="cb10-10" title="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="co">#&gt; Call:</span></a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="co">#&gt; lm_imp(formula = SBP ~ gender + WC + alc + creat, data = NHANES, </span></a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="co">#&gt;     n.iter = 100, monitor_params = c(imp_pars = TRUE), progress.bar = "none")</span></a>
+<a class="sourceLine" id="cb10-14" title="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-15" title="15"><span class="co">#&gt; Posterior summary:</span></a>
+<a class="sourceLine" id="cb10-16" title="16"><span class="co">#&gt;                Mean      SD   2.5%   97.5% tail-prob. GR-crit</span></a>
+<a class="sourceLine" id="cb10-17" title="17"><span class="co">#&gt; (Intercept)  81.479 10.4355 60.614 102.246      0.000    1.01</span></a>
+<a class="sourceLine" id="cb10-18" title="18"><span class="co">#&gt; genderfemale  0.362  2.5148 -4.153   5.246      0.893    1.00</span></a>
+<a class="sourceLine" id="cb10-19" title="19"><span class="co">#&gt; WC            0.305  0.0806  0.142   0.459      0.000    1.00</span></a>
+<a class="sourceLine" id="cb10-20" title="20"><span class="co">#&gt; alc&gt;=1        6.303  2.4272  1.447  10.932      0.020    1.02</span></a>
+<a class="sourceLine" id="cb10-21" title="21"><span class="co">#&gt; creat         7.346  7.8990 -9.780  22.309      0.340    1.00</span></a>
+<a class="sourceLine" id="cb10-22" title="22"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-23" title="23"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
+<a class="sourceLine" id="cb10-24" title="24"><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></a>
+<a class="sourceLine" id="cb10-25" title="25"><span class="co">#&gt; sigma_SBP 14.3 0.753 12.9  15.9    1.01</span></a>
+<a class="sourceLine" id="cb10-26" title="26"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-27" title="27"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-28" title="28"><span class="co">#&gt; MCMC settings:</span></a>
+<a class="sourceLine" id="cb10-29" title="29"><span class="co">#&gt; Iterations = 101:200</span></a>
+<a class="sourceLine" id="cb10-30" title="30"><span class="co">#&gt; Sample size per chain = 100 </span></a>
+<a class="sourceLine" id="cb10-31" title="31"><span class="co">#&gt; Thinning interval = 1 </span></a>
+<a class="sourceLine" id="cb10-32" title="32"><span class="co">#&gt; Number of chains = 3 </span></a>
+<a class="sourceLine" id="cb10-33" title="33"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-34" title="34"><span class="co">#&gt; Number of observations: 186</span></a>
+<a class="sourceLine" id="cb10-35" title="35"></a>
+<a class="sourceLine" id="cb10-36" title="36"><span class="co"># traceplot of the MCMC sample</span></a>
+<a class="sourceLine" id="cb10-37" title="37"><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(lm5)</a></code></pre></div>
 <p><img src="SelectingParameters_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co"># density plot of the MCMC sample</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="kw"><a href="../reference/densplot.html">densplot</a></span>(lm5)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="co"># density plot of the MCMC sample</span></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="kw"><a href="../reference/densplot.html">densplot</a></span>(lm5)</a></code></pre></div>
 <p><img src="SelectingParameters_files/figure-html/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co"># Gelman-Rubin criterion</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw"><a href="../reference/GR_crit.html">GR_crit</a></span>(lm5)</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; Potential scale reduction factors:</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt;              Point est. Upper C.I.</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; (Intercept)       0.998      0.999</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; genderfemale      1.001      1.014</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; WC                0.997      0.998</span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt; alc&gt;=1            1.005      1.012</span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt; creat             0.996      0.997</span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt; sigma_SBP         1.014      1.051</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt; Multivariate psrf</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt; 1.01</span></a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co"># Monte Carlo Error of the MCMC sample</span></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="kw"><a href="../reference/MC_error.html">MC_error</a></span>(lm5)</a>
-<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">#&gt;                est   MCSE    SD MCSE/SD</span></a>
-<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="co">#&gt; (Intercept)  81.07 0.5914 9.661   0.061</span></a>
-<a class="sourceLine" id="cb12-22" data-line-number="22"><span class="co">#&gt; genderfemale  0.48 0.1858 2.472   0.075</span></a>
-<a class="sourceLine" id="cb12-23" data-line-number="23"><span class="co">#&gt; WC            0.31 0.0033 0.079   0.042</span></a>
-<a class="sourceLine" id="cb12-24" data-line-number="24"><span class="co">#&gt; alc&gt;=1        6.29 0.1808 2.404   0.075</span></a>
-<a class="sourceLine" id="cb12-25" data-line-number="25"><span class="co">#&gt; creat         7.91 0.5024 7.334   0.068</span></a>
-<a class="sourceLine" id="cb12-26" data-line-number="26"><span class="co">#&gt; sigma_SBP    14.34 0.0425 0.757   0.056</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="co"># Gelman-Rubin criterion</span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="kw"><a href="../reference/GR_crit.html">GR_crit</a></span>(lm5)</a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="co">#&gt; Potential scale reduction factors:</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="co">#&gt;              Point est. Upper C.I.</span></a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="co">#&gt; (Intercept)       1.001       1.01</span></a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="co">#&gt; genderfemale      0.998       1.00</span></a>
+<a class="sourceLine" id="cb12-9" title="9"><span class="co">#&gt; WC                0.997       1.00</span></a>
+<a class="sourceLine" id="cb12-10" title="10"><span class="co">#&gt; alc&gt;=1            1.002       1.02</span></a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="co">#&gt; creat             0.999       1.00</span></a>
+<a class="sourceLine" id="cb12-12" title="12"><span class="co">#&gt; sigma_SBP         1.002       1.01</span></a>
+<a class="sourceLine" id="cb12-13" title="13"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-14" title="14"><span class="co">#&gt; Multivariate psrf</span></a>
+<a class="sourceLine" id="cb12-15" title="15"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-16" title="16"><span class="co">#&gt; 1.02</span></a>
+<a class="sourceLine" id="cb12-17" title="17"></a>
+<a class="sourceLine" id="cb12-18" title="18"><span class="co"># Monte Carlo Error of the MCMC sample</span></a>
+<a class="sourceLine" id="cb12-19" title="19"><span class="kw"><a href="../reference/MC_error.html">MC_error</a></span>(lm5)</a>
+<a class="sourceLine" id="cb12-20" title="20"><span class="co">#&gt;                est   MCSE     SD MCSE/SD</span></a>
+<a class="sourceLine" id="cb12-21" title="21"><span class="co">#&gt; (Intercept)  81.48 0.4583 10.436   0.044</span></a>
+<a class="sourceLine" id="cb12-22" title="22"><span class="co">#&gt; genderfemale  0.36 0.1161  2.515   0.046</span></a>
+<a class="sourceLine" id="cb12-23" title="23"><span class="co">#&gt; WC            0.31 0.0042  0.081   0.052</span></a>
+<a class="sourceLine" id="cb12-24" title="24"><span class="co">#&gt; alc&gt;=1        6.30 0.1635  2.427   0.067</span></a>
+<a class="sourceLine" id="cb12-25" title="25"><span class="co">#&gt; creat         7.35 0.3283  7.899   0.042</span></a>
+<a class="sourceLine" id="cb12-26" title="26"><span class="co">#&gt; sigma_SBP    14.35 0.0541  0.753   0.072</span></a></code></pre></div>
 <p>When <code>analysis_main</code> was not switched on the default behaviour is that all parameters are displayed:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Re-run the model from above, now creating MCMC samples</span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">lm4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat,</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">              <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">100</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">              <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">                                    <span class="dt">other =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'mu_alc[1:3]'</span>, <span class="st">"mu_creat[1]"</span>)))</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(lm4, <span class="dt">ncol =</span> <span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># Re-run the model from above, now creating MCMC samples</span></a>
+<a class="sourceLine" id="cb13-2" title="2">lm4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat,</a>
+<a class="sourceLine" id="cb13-3" title="3">              <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">100</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
+<a class="sourceLine" id="cb13-4" title="4">              <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb13-5" title="5">                                    <span class="dt">other =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'mu_alc[1:3]'</span>, <span class="st">"mu_creat[1]"</span>)))</a>
+<a class="sourceLine" id="cb13-6" title="6"></a>
+<a class="sourceLine" id="cb13-7" title="7"><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(lm4, <span class="dt">ncol =</span> <span class="dv">4</span>)</a></code></pre></div>
 <p><img src="SelectingParameters_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;"></p>
 <div id="select-a-subset-of-the-variables-to-display" class="section level3">
 <h3 class="hasAnchor">
 <a href="#select-a-subset-of-the-variables-to-display" class="anchor"></a>Select a subset of the variables to display</h3>
 <p>To display other parts of the MCMC sample, <code>subset</code> needs to be specified:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># we use lm5 from above</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw"><a href="../reference/GR_crit.html">GR_crit</a></span>(lm5, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>, <span class="dt">imp_pars =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt; Potential scale reduction factors:</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt;           Point est. Upper C.I.</span></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt; alpha[1]       1.010       1.03</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt; alpha[2]       1.003       1.02</span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; alpha[3]       1.000       1.00</span></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; alpha[4]       0.999       1.00</span></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; alpha[5]       1.008       1.04</span></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; alpha[6]       1.010       1.05</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; alpha[7]       1.038       1.12</span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; alpha[8]       1.008       1.03</span></a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt; alpha[9]       1.014       1.05</span></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt; tau_WC         1.000       1.01</span></a>
-<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt; tau_creat      1.001       1.01</span></a>
-<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">#&gt; Multivariate psrf</span></a>
-<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">#&gt; 1.03</span></a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># we use lm5 from above</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="kw"><a href="../reference/GR_crit.html">GR_crit</a></span>(lm5, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>, <span class="dt">imp_pars =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="co">#&gt; Potential scale reduction factors:</span></a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="co">#&gt;           Point est. Upper C.I.</span></a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="co">#&gt; alpha[1]       0.998      1.001</span></a>
+<a class="sourceLine" id="cb14-7" title="7"><span class="co">#&gt; alpha[2]       1.004      1.013</span></a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="co">#&gt; alpha[3]       0.999      1.008</span></a>
+<a class="sourceLine" id="cb14-9" title="9"><span class="co">#&gt; alpha[4]       1.000      1.002</span></a>
+<a class="sourceLine" id="cb14-10" title="10"><span class="co">#&gt; alpha[5]       1.007      1.033</span></a>
+<a class="sourceLine" id="cb14-11" title="11"><span class="co">#&gt; alpha[6]       1.200      1.578</span></a>
+<a class="sourceLine" id="cb14-12" title="12"><span class="co">#&gt; alpha[7]       1.236      1.662</span></a>
+<a class="sourceLine" id="cb14-13" title="13"><span class="co">#&gt; alpha[8]       0.997      0.997</span></a>
+<a class="sourceLine" id="cb14-14" title="14"><span class="co">#&gt; alpha[9]       1.153      1.457</span></a>
+<a class="sourceLine" id="cb14-15" title="15"><span class="co">#&gt; tau_WC         1.018      1.065</span></a>
+<a class="sourceLine" id="cb14-16" title="16"><span class="co">#&gt; tau_creat      1.003      1.012</span></a>
+<a class="sourceLine" id="cb14-17" title="17"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb14-18" title="18"><span class="co">#&gt; Multivariate psrf</span></a>
+<a class="sourceLine" id="cb14-19" title="19"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb14-20" title="20"><span class="co">#&gt; 1.21</span></a></code></pre></div>
 <p>To select only some of the parameters, they can be specified directly by name via the <code>other</code> element of <code>subset</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(lm5, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">other =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'creat'</span>, <span class="st">'alc&gt;=1'</span>)))</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt;  Linear model fitted with JointAI </span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt; Call:</span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; lm_imp(formula = SBP ~ gender + WC + alc + creat, data = NHANES, </span></a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt;     n.iter = 100, monitor_params = c(imp_pars = TRUE), progress.bar = "none")</span></a>
-<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt; Posterior summary:</span></a>
-<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">#&gt;        Mean   SD  2.5% 97.5% tail-prob. GR-crit</span></a>
-<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt; creat  7.91 7.33 -7.75  22.3      0.253   0.997</span></a>
-<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; alc&gt;=1 6.29 2.40  1.66  10.7      0.020   1.012</span></a>
-<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb15-15" data-line-number="15"><span class="co">#&gt; MCMC settings:</span></a>
-<a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co">#&gt; Iterations = 101:200</span></a>
-<a class="sourceLine" id="cb15-17" data-line-number="17"><span class="co">#&gt; Sample size per chain = 100 </span></a>
-<a class="sourceLine" id="cb15-18" data-line-number="18"><span class="co">#&gt; Thinning interval = 1 </span></a>
-<a class="sourceLine" id="cb15-19" data-line-number="19"><span class="co">#&gt; Number of chains = 3 </span></a>
-<a class="sourceLine" id="cb15-20" data-line-number="20"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co">#&gt; Number of observations: 186</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(lm5, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">other =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'creat'</span>, <span class="st">'alc&gt;=1'</span>)))</a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="co">#&gt;  Linear model fitted with JointAI </span></a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="co">#&gt; Call:</span></a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="co">#&gt; lm_imp(formula = SBP ~ gender + WC + alc + creat, data = NHANES, </span></a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="co">#&gt;     n.iter = 100, monitor_params = c(imp_pars = TRUE), progress.bar = "none")</span></a>
+<a class="sourceLine" id="cb15-8" title="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb15-9" title="9"><span class="co">#&gt; Posterior summary:</span></a>
+<a class="sourceLine" id="cb15-10" title="10"><span class="co">#&gt;        Mean   SD  2.5% 97.5% tail-prob. GR-crit</span></a>
+<a class="sourceLine" id="cb15-11" title="11"><span class="co">#&gt; creat  7.35 7.90 -9.78  22.3       0.34    1.00</span></a>
+<a class="sourceLine" id="cb15-12" title="12"><span class="co">#&gt; alc&gt;=1 6.30 2.43  1.45  10.9       0.02    1.02</span></a>
+<a class="sourceLine" id="cb15-13" title="13"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb15-14" title="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb15-15" title="15"><span class="co">#&gt; MCMC settings:</span></a>
+<a class="sourceLine" id="cb15-16" title="16"><span class="co">#&gt; Iterations = 101:200</span></a>
+<a class="sourceLine" id="cb15-17" title="17"><span class="co">#&gt; Sample size per chain = 100 </span></a>
+<a class="sourceLine" id="cb15-18" title="18"><span class="co">#&gt; Thinning interval = 1 </span></a>
+<a class="sourceLine" id="cb15-19" title="19"><span class="co">#&gt; Number of chains = 3 </span></a>
+<a class="sourceLine" id="cb15-20" title="20"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb15-21" title="21"><span class="co">#&gt; Number of observations: 186</span></a></code></pre></div>
 <p>This also works when a subset of the imputed values should be displayed:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># Re-run the model from above, now creating MCMC samples</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">lm2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>smoke <span class="op">+</span><span class="st"> </span>occup,</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">              <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">100</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">              <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">imps =</span> <span class="ot">TRUE</span>, <span class="dt">analysis_main =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">)</a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co"># select only imputed values for 'WC' (3rd column of Xc)</span></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8">sub3 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grep</a></span>(<span class="st">'Xc</span><span class="ch">\\</span><span class="st">[[[:digit:]]+,3</span><span class="ch">\\</span><span class="st">]'</span>, <span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm2), <span class="dt">value =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb16-9" data-line-number="9">sub3</a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">#&gt; [1] "Xc[33,3]"  "Xc[150,3]"</span></a>
-<a class="sourceLine" id="cb16-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(lm2, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">other =</span> sub3), <span class="dt">ncol =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="co"># Re-run the model from above, now creating MCMC samples</span></a>
+<a class="sourceLine" id="cb16-2" title="2">lm2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>smoke <span class="op">+</span><span class="st"> </span>occup,</a>
+<a class="sourceLine" id="cb16-3" title="3">              <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">100</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
+<a class="sourceLine" id="cb16-4" title="4">              <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">imps =</span> <span class="ot">TRUE</span>, <span class="dt">analysis_main =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb16-5" title="5">)</a>
+<a class="sourceLine" id="cb16-6" title="6"></a>
+<a class="sourceLine" id="cb16-7" title="7"><span class="co"># select only imputed values for 'WC' (3rd column of Xc)</span></a>
+<a class="sourceLine" id="cb16-8" title="8">sub3 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grep</a></span>(<span class="st">'Xc</span><span class="ch">\\</span><span class="st">[[[:digit:]]+,3</span><span class="ch">\\</span><span class="st">]'</span>, <span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm2), <span class="dt">value =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb16-9" title="9">sub3</a>
+<a class="sourceLine" id="cb16-10" title="10"><span class="co">#&gt; [1] "Xc[33,3]"  "Xc[150,3]"</span></a>
+<a class="sourceLine" id="cb16-11" title="11"></a>
+<a class="sourceLine" id="cb16-12" title="12"><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(lm2, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">other =</span> sub3), <span class="dt">ncol =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="SelectingParameters_files/figure-html/lm2_2-1.png" width="60%" style="display: block; margin: auto;"></p>
 </div>
 <div id="random-subset-of-subject-specific-values" class="section level3">
 <h3 class="hasAnchor">
 <a href="#random-subset-of-subject-specific-values" class="anchor"></a>Random subset of subject-specific values</h3>
 <p>When the number of imputed values is larger, or in order to check convergence of random effects, it may not be feasible to plot all traceplots. In that case, a random subset of, for instance the random effects, can be selected:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">lme4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age <span class="op">|</span><span class="st"> </span>ID,</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">                <span class="dt">data =</span> simLong, <span class="dt">n.iter =</span> <span class="dv">100</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">                <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>, <span class="dt">ranef =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co"># exract random intercepts</span></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">ri &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grep</a></span>(<span class="st">'^b</span><span class="ch">\\</span><span class="st">[[[:digit:]]+,1</span><span class="ch">\\</span><span class="st">]$'</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(lme4<span class="op">$</span>MCMC[[<span class="dv">1</span>]]), <span class="dt">value =</span> T)</a>
-<a class="sourceLine" id="cb17-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co"># extract random slopes</span></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9">rs &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grep</a></span>(<span class="st">'^b</span><span class="ch">\\</span><span class="st">[[[:digit:]]+,2</span><span class="ch">\\</span><span class="st">]$'</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(lme4<span class="op">$</span>MCMC[[<span class="dv">1</span>]]), <span class="dt">value =</span> T)</a>
-<a class="sourceLine" id="cb17-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co"># plot the chains of 8 randomly selected random intercepts</span></a>
-<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(lme4, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">other =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(ri, <span class="dt">size =</span> <span class="dv">8</span>)), <span class="dt">ncol =</span> <span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">lme4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age <span class="op">|</span><span class="st"> </span>ID,</a>
+<a class="sourceLine" id="cb17-2" title="2">                <span class="dt">data =</span> simLong, <span class="dt">n.iter =</span> <span class="dv">100</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
+<a class="sourceLine" id="cb17-3" title="3">                <span class="dt">monitor_params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>, <span class="dt">ranef =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb17-4" title="4"></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="co"># exract random intercepts</span></a>
+<a class="sourceLine" id="cb17-6" title="6">ri &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grep</a></span>(<span class="st">'^b</span><span class="ch">\\</span><span class="st">[[[:digit:]]+,1</span><span class="ch">\\</span><span class="st">]$'</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(lme4<span class="op">$</span>MCMC[[<span class="dv">1</span>]]), <span class="dt">value =</span> T)</a>
+<a class="sourceLine" id="cb17-7" title="7"></a>
+<a class="sourceLine" id="cb17-8" title="8"><span class="co"># extract random slopes</span></a>
+<a class="sourceLine" id="cb17-9" title="9">rs &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grep</a></span>(<span class="st">'^b</span><span class="ch">\\</span><span class="st">[[[:digit:]]+,2</span><span class="ch">\\</span><span class="st">]$'</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(lme4<span class="op">$</span>MCMC[[<span class="dv">1</span>]]), <span class="dt">value =</span> T)</a>
+<a class="sourceLine" id="cb17-10" title="10"></a>
+<a class="sourceLine" id="cb17-11" title="11"><span class="co"># plot the chains of 8 randomly selected random intercepts</span></a>
+<a class="sourceLine" id="cb17-12" title="12"><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(lme4, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">other =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(ri, <span class="dt">size =</span> <span class="dv">8</span>)), <span class="dt">ncol =</span> <span class="dv">4</span>)</a></code></pre></div>
 <p><img src="SelectingParameters_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="co"># plot the chains of 8 randomly selected random slopes</span></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(lme4, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">other =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(rs, <span class="dt">size =</span> <span class="dv">8</span>)), <span class="dt">ncol =</span> <span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="co"># plot the chains of 8 randomly selected random slopes</span></a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(lme4, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">other =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sample">sample</a></span>(rs, <span class="dt">size =</span> <span class="dv">8</span>)), <span class="dt">ncol =</span> <span class="dv">4</span>)</a></code></pre></div>
 <p><img src="SelectingParameters_files/figure-html/unnamed-chunk-10-2.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>

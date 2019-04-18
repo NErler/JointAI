@@ -170,7 +170,7 @@ of an object of class "JointAI".</p>
 <span class='fu'>densplot</span>(<span class='no'>object</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>vlines</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>joined</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep_aux</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>keep_aux</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -240,6 +240,12 @@ automatically chosen if unspecified</p></td>
 <code>TRUE</code>. Note: this applies only to warnings
 given directly by <strong>JointAI</strong>.</p></td>
     </tr>
+    <tr>
+      <th>mess</th>
+      <td><p>logical; should messages be given? Default is
+<code>TRUE</code>. Note: this applies only to messages
+given directly by <strong>JointAI</strong>.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -272,9 +278,9 @@ contains some examples how to specify the argument <code>subset</code>.</p></div
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)
 
 <span class='fu'>densplot</span>(<span class='no'>mod</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span>(<span class='st'>"value"</span>) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span>(<span class='kw'>legend.position</span> <span class='kw'>=</span> <span class='st'>'bottom'</span>) +
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_brewer.html'>scale_color_brewer</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>'Dark2'</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'chain'</span>)</div><div class='img'><img src='densplot-5.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/labs'>xlab</a></span>(<span class='st'>"value"</span>) +
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/theme'>theme</a></span>(<span class='kw'>legend.position</span> <span class='kw'>=</span> <span class='st'>'bottom'</span>) +
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer'>scale_color_brewer</a></span>(<span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>'Dark2'</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>'chain'</span>)</div><div class='img'><img src='densplot-5.png' alt='' width='700' height='433' /></div><div class='input'>
 
 </div></pre>
   </div>

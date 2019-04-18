@@ -148,9 +148,9 @@
       
     </div>
 
-    <div id="jointai-0-5-1" class="section level1">
+    <div id="jointai-051" class="section level1">
 <h1 class="page-header">
-<a href="#jointai-0-5-1" class="anchor"></a>JointAI 0.5.1<small> Unreleased </small>
+<a href="#jointai-051" class="anchor"></a>JointAI 0.5.1<small> Unreleased </small>
 </h1>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
@@ -158,6 +158,8 @@
 <ul>
 <li>bug in ordinal models with only completely observed variables fixed (all necessary data is not passed to JAGS)</li>
 <li>enable thinning when using parallel sampling</li>
+<li>matrix <code>Xl</code> is no longer included in <code>data_list</code> when it is not used in the model</li>
+<li>bugfix in <code>subset</code> when specified as vector</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level2">
@@ -167,13 +169,16 @@
 <li>
 <code><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary()</a></code> calls <code><a href="../reference/GR_crit.html">GR_crit()</a></code> with argument <code>autoburnin = FALSE</code> unless specified otherwise via <code>...</code>
 </li>
+<li>when <code>inits</code> is specified as a function, the function is evaluated and the resulting list passed to JAGS (previously the function was passed to JAGS)</li>
+<li>the example data <code>simong</code> and <code>simWide</code> have changed (more variables, less subjects)</li>
+<li>added check if there are incomplete covariates before setting <code>imp_pars = TRUE</code> (when user specified via <code>monitor_params</code> or <code>subset</code>)</li>
 </ul>
 <hr>
 </div>
 </div>
-    <div id="jointai-0-5-0" class="section level1">
+    <div id="jointai-050" class="section level1">
 <h1 class="page-header">
-<a href="#jointai-0-5-0" class="anchor"></a>JointAI 0.5.0<small> 2019-03-08 </small>
+<a href="#jointai-050" class="anchor"></a>JointAI 0.5.0<small> 2019-03-08 </small>
 </h1>
 <div id="important" class="section level2">
 <h2 class="hasAnchor">
@@ -207,9 +212,9 @@
 <li>improved handling of functional forms of covariates (also in longitudinal covariates and random effects)</li>
 </ul>
 </div>
-<div id="new-features-extensions" class="section level2">
+<div id="new-features--extensions" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-extensions" class="anchor"></a>New Features / Extensions</h2>
+<a href="#new-features--extensions" class="anchor"></a>New Features / Extensions</h2>
 <ul>
 <li>
 <code><a href="../reference/model_imp.html">clm_imp()</a></code> and <code><a href="../reference/model_imp.html">clmm_imp()</a></code>: new functions for analysis of <strong>ordinal (mixed) models</strong>
@@ -232,9 +237,9 @@
 <hr>
 </div>
 </div>
-    <div id="jointai-0-4-0" class="section level1">
+    <div id="jointai-040" class="section level1">
 <h1 class="page-header">
-<a href="#jointai-0-4-0" class="anchor"></a>JointAI 0.4.0<small> 2018-12-04 </small>
+<a href="#jointai-040" class="anchor"></a>JointAI 0.4.0<small> 2018-12-04 </small>
 </h1>
 <div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
@@ -280,9 +285,9 @@
 <hr>
 </div>
 </div>
-    <div id="jointai-0-3-4" class="section level1">
+    <div id="jointai-034" class="section level1">
 <h1 class="page-header">
-<a href="#jointai-0-3-4" class="anchor"></a>JointAI 0.3.4<small> Unreleased </small>
+<a href="#jointai-034" class="anchor"></a>JointAI 0.3.4<small> Unreleased </small>
 </h1>
 <div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
@@ -293,9 +298,9 @@
 </ul>
 </div>
 </div>
-    <div id="jointai-0-3-3" class="section level1">
+    <div id="jointai-033" class="section level1">
 <h1 class="page-header">
-<a href="#jointai-0-3-3" class="anchor"></a>JointAI 0.3.3<small> Unreleased </small>
+<a href="#jointai-033" class="anchor"></a>JointAI 0.3.3<small> Unreleased </small>
 </h1>
 <div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
@@ -307,9 +312,9 @@
 <hr>
 </div>
 </div>
-    <div id="jointai-0-3-2" class="section level1">
+    <div id="jointai-032" class="section level1">
 <h1 class="page-header">
-<a href="#jointai-0-3-2" class="anchor"></a>JointAI 0.3.2<small> Unreleased </small>
+<a href="#jointai-032" class="anchor"></a>JointAI 0.3.2<small> Unreleased </small>
 </h1>
 <div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
@@ -328,9 +333,9 @@
 <hr>
 </div>
 </div>
-    <div id="jointai-0-3-1" class="section level1">
+    <div id="jointai-031" class="section level1">
 <h1 class="page-header">
-<a href="#jointai-0-3-1" class="anchor"></a>JointAI 0.3.1<small> Unreleased </small>
+<a href="#jointai-031" class="anchor"></a>JointAI 0.3.1<small> Unreleased </small>
 </h1>
 <div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
@@ -376,9 +381,9 @@
 <hr>
 </div>
 </div>
-    <div id="jointai-0-3-0" class="section level1">
+    <div id="jointai-030" class="section level1">
 <h1 class="page-header">
-<a href="#jointai-0-3-0" class="anchor"></a>JointAI 0.3.0<small> 2018-08-14 </small>
+<a href="#jointai-030" class="anchor"></a>JointAI 0.3.0<small> 2018-08-14 </small>
 </h1>
 <div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
@@ -443,9 +448,9 @@
 <hr>
 </div>
 </div>
-    <div id="jointai-0-2-0" class="section level1">
+    <div id="jointai-020" class="section level1">
 <h1 class="page-header">
-<a href="#jointai-0-2-0" class="anchor"></a>JointAI 0.2.0<small> 2018-07-05 </small>
+<a href="#jointai-020" class="anchor"></a>JointAI 0.2.0<small> 2018-07-05 </small>
 </h1>
 <div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
@@ -493,15 +498,15 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#jointai-0-5-1">0.5.1</a></li>
-        <li><a href="#jointai-0-5-0">0.5.0</a></li>
-        <li><a href="#jointai-0-4-0">0.4.0</a></li>
-        <li><a href="#jointai-0-3-4">0.3.4</a></li>
-        <li><a href="#jointai-0-3-3">0.3.3</a></li>
-        <li><a href="#jointai-0-3-2">0.3.2</a></li>
-        <li><a href="#jointai-0-3-1">0.3.1</a></li>
-        <li><a href="#jointai-0-3-0">0.3.0</a></li>
-        <li><a href="#jointai-0-2-0">0.2.0</a></li>
+        <li><a href="#jointai-051">0.5.1</a></li>
+        <li><a href="#jointai-050">0.5.0</a></li>
+        <li><a href="#jointai-040">0.4.0</a></li>
+        <li><a href="#jointai-034">0.3.4</a></li>
+        <li><a href="#jointai-033">0.3.3</a></li>
+        <li><a href="#jointai-032">0.3.2</a></li>
+        <li><a href="#jointai-031">0.3.1</a></li>
+        <li><a href="#jointai-030">0.3.0</a></li>
+        <li><a href="#jointai-020">0.2.0</a></li>
       </ul>
     </div>
   </div>

@@ -164,7 +164,7 @@ quantiles) credible intervals.</p>
 
     <pre class="usage"><span class='co'># S3 method for JointAI</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>object</span>, <span class='no'>newdata</span>, <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>),
-  <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,6 +192,12 @@ quantiles) credible intervals.</p>
     <tr>
       <th>thin</th>
       <td><p>thinning interval (see <code><a href='https://www.rdocumentation.org/packages/coda/topics/window.mcmc'>window.mcmc</a></code>)</p></td>
+    </tr>
+    <tr>
+      <th>mess</th>
+      <td><p>logical; should messages be given? Default is
+<code>TRUE</code>. Note: this applies only to messages
+given directly by <strong>JointAI</strong>.</p></td>
     </tr>
     <tr>
       <th>...</th>

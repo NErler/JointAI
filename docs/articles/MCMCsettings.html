@@ -112,7 +112,7 @@
       <h1>MCMC Settings</h1>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2019-03-14</h4>
+            <h4 class="date">2019-04-18</h4>
       
       
       <div class="hidden name"><code>MCMCsettings.Rmd</code></div>
@@ -121,10 +121,10 @@
 
     
     
-<p>In <strong>JointAI</strong>, models are estimated in the Bayesian framework, using MCMC (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Markov Chain Monte Carlo</a>) sampling. The sampling is done by the software <a href="http://mcmc-jags.sourceforge.net/">JAGS</a> (“Just Another Gibbs Sampler”), which performs <a href="https://en.wikipedia.org/wiki/Gibbs_sampling">Gibbs</a> sampling. <strong>JointAI</strong> pre-processes the data to get it into a form that can be passed to JAGS and writes the JAGS model. The R package <a href="https://CRAN.R-project.org/package=rjags"><strong>rjags</strong></a> is used as interface to JAGS.</p>
+<p>In <strong>JointAI</strong>, models are estimated in the Bayesian framework, using MCMC (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Markov Chain Monte Carlo</a>) sampling. The sampling is done by the software <a href="http://mcmc-jags.sourceforge.net/">JAGS</a> (“Just Another Gibbs Sampler”), which performs <a href="https://en.wikipedia.org/wiki/Gibbs_sampling">Gibbs</a> sampling. <strong>JointAI</strong> pre-processes the data to get it into a form that can be passed to JAGS and writes the JAGS model. The R package <a href="https://CRAN.R-project.org/package=rjags"><strong>rjags</strong></a> is used as an interface to JAGS.</p>
 <p>Here, we describe how to specify the arguments in the main functions that control MCMC related settings. To learn more about how to specify the other arguments in <strong>JointAI</strong> models, check out the vignette on <a href="https://nerler.github.io/JointAI/articles/ModelSpecification.html"><em>Model Specification</em></a>.</p>
-<p>In this vignette we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a> data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a> for examples in longitudinal data. For more info on these datasets, check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the distributions of variables and missing values in both sets is explored.</p>
-<p><strong>Note:</strong><br> In many of the examples we use <code>progress.bar = 'none'</code> which prevents printing of the progress of the MCMC sampling, since this would result in lengthy output in the vignette.</p>
+<p>In this vignette, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a> data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a> for examples in longitudinal data. For more info on these datasets, check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the distributions of variables and missing values in both sets is explored.</p>
+<p><strong>Note:</strong><br> In many of the examples, we use <code>progress.bar = 'none'</code> which prevents printing of the progress of the MCMC sampling, since this would result in lengthy output in the vignette.</p>
 <div id="mcmc-related-parameters-in-jointai" class="section level2">
 <h2 class="hasAnchor">
 <a href="#mcmc-related-parameters-in-jointai" class="anchor"></a>MCMC related parameters in <strong>JointAI</strong>
@@ -161,11 +161,11 @@
 <div id="chains-and-iterations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#chains-and-iterations" class="anchor"></a>Chains and Iterations</h2>
-<p>In MCMC sampling, values are drawn from a probability distribution. The distribution the current value is drawn from depends on the previously drawn value (but not on values before that). Values, thus, form a chain. Once the chain has converged, its elements can be seen as a sample from the target posterior distribution.</p>
+<p>In MCMC sampling, values are drawn from a probability distribution. The distribution of the current value is drawn from depends on the previously drawn value (but not on values before that). Values, thus, form a chain. Once the chain has converged, its elements can be seen as a sample from the target posterior distribution.</p>
 <div id="number-of-chains" class="section level3">
 <h3 class="hasAnchor">
 <a href="#number-of-chains" class="anchor"></a>Number of chains</h3>
-<p>To evaluate convergence of MCMC chains it is helpful to create multiple chains, that have different starting values. The argument <code>n.chains</code> selects the number of chains (by default, <code>n.chains = 3</code>).</p>
+<p>To evaluate the convergence of MCMC chains it is helpful to create multiple chains, that have different starting values. The argument <code>n.chains</code> selects the number of chains (by default, <code>n.chains = 3</code>).</p>
 <p>For calculating the model summary, multiple chains are merged.</p>
 </div>
 <div id="adaptive-phase" class="section level3">
@@ -181,19 +181,19 @@
 <div id="side-note-how-to-evaluate-convergence" class="section level4">
 <h4 class="hasAnchor">
 <a href="#side-note-how-to-evaluate-convergence" class="anchor"></a>Side note: How to evaluate convergence?</h4>
-<p>Convergence can for instance be evaluated visually using a <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code><a href="../reference/traceplot.html">traceplot()</a></code></a> or using the Gelman-Rubin diagnostic criterion<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> (implemented in <a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code><a href="../reference/GR_crit.html">GR_crit()</a></code></a>, but also returned with the model summary). The latter compares within and between chain variability and requires the JointAI object to have at least two chains.</p>
+<p>Convergence can, for instance, be evaluated visually using a <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code><a href="../reference/traceplot.html">traceplot()</a></code></a> or using the Gelman-Rubin diagnostic criterion<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> (implemented in <a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code><a href="../reference/GR_crit.html">GR_crit()</a></code></a>, but also returned with the model summary). The latter compares within and between chain variability and requires the JointAI object to have at least two chains.</p>
 </div>
 <div id="side-note-how-to-check-precision" class="section level4">
 <h4 class="hasAnchor">
 <a href="#side-note-how-to-check-precision" class="anchor"></a>Side note: How to check precision?</h4>
-<p>Precision of the MCMC sample can be checked with the function <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code><a href="../reference/MC_error.html">MC_error()</a></code></a>. It calculates the Monte Carlo error (the error that is made since the sample is finite) and compares is to the standard deviation of the posterior sample. A rule of thumb is that the Monte Carlo error should not be more than 5% of the standard deviation.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>The precision of the MCMC sample can be checked with the function <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code><a href="../reference/MC_error.html">MC_error()</a></code></a>. It calculates the Monte Carlo error (the error that is made since the sample is finite) and compares it to the standard deviation of the posterior sample. A rule of thumb is that the Monte Carlo error should not be more than 5% of the standard deviation.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 </div>
 </div>
 <div id="thinning" class="section level3">
 <h3 class="hasAnchor">
 <a href="#thinning" class="anchor"></a>Thinning</h3>
 <p>In settings with high autocorrelation i.e., there are no large jumps in the chain but sampled values are always close to the previous value, it may take many iterations before a sample is created that sufficiently represents the whole range of the posterior distribution.</p>
-<p>Processing of such long chains can be slow and take a lot of memory. The parameter <code>thin</code> allows to specify if and how much the MCMC chains should be thinned out before storing them. By default <code>thin = 1</code> is used, which corresponds to keeping all values. A value <code>thin = 10</code> would result in keeping every 10th value and discarding all other values.</p>
+<p>Processing of such long chains can be slow and take a lot of memory. The parameter <code>thin</code> allows to user to specify if and how much the MCMC chains should be thinned out before storing them. By default <code>thin = 1</code> is used, which corresponds to keeping all values. A value <code>thin = 10</code> would result in keeping every 10th value and discarding all other values.</p>
 </div>
 <div id="examples" class="section level3">
 <h3 class="hasAnchor">
@@ -202,7 +202,7 @@
 <h4 class="hasAnchor">
 <a href="#default-settings" class="anchor"></a>Default settings</h4>
 <p><code>n.adapt = 100</code> and <code>thin = 1</code> with 100 sampling iterations</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">mod1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>alc, <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">100</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">mod1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>alc, <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">100</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>)</a></code></pre></div>
 <p>The relevant part of the model summary (obtained with <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html"><code><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary()</a></code></a>) shows that the first 100 iterations (adaptive phase) were discarded, and the 100 iterations that follow form the posterior sample. Thinning was set to 1 and there are 3 chains.</p>
 <pre><code>#&gt; [...]
 #&gt; MCMC settings:
@@ -214,10 +214,10 @@
 <div id="insufficient-adaptation-phase" class="section level4">
 <h4 class="hasAnchor">
 <a href="#insufficient-adaptation-phase" class="anchor"></a>Insufficient adaptation phase</h4>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">mod2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>alc, <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">10</span>, <span class="dt">n.iter =</span> <span class="dv">100</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; Warning in rjags::jags.model(file = modelfile, data = data_list, inits = inits, : Adaptation</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; incomplete</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Stopping adaptation</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">mod2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>alc, <span class="dt">data =</span> NHANES, <span class="dt">n.adapt =</span> <span class="dv">10</span>, <span class="dt">n.iter =</span> <span class="dv">100</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt; Warning in rjags::jags.model(file = modelfile, data = data_list, inits = inits, : Adaptation</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; incomplete</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: Stopping adaptation</span></a></code></pre></div>
 <p>Specifying <code>n.adapt = 10</code> results in a warning message. The relevant part of the model summary from the resulting model is:</p>
 <pre><code>#&gt; [...]
 #&gt; MCMC settings:
@@ -229,7 +229,7 @@
 <div id="thinning-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#thinning-1" class="anchor"></a>Thinning</h4>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">mod3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>alc, <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">500</span>, <span class="dt">thin =</span> <span class="dv">10</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">mod3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>alc, <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">500</span>, <span class="dt">thin =</span> <span class="dv">10</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>)</a></code></pre></div>
 <p>Here, iterations 110 until 600 are used in the output, but due to thinning interval of ten, the resulting MCMC chains contain only 50 samples instead of 500, that is, the samples from iteration 110, 120, 130, …</p>
 <pre><code>#&gt; [...]
 #&gt; MCMC settings:
@@ -247,7 +247,7 @@
 <div id="what-are-nodes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#what-are-nodes" class="anchor"></a>What are nodes?</h3>
-<p>Nodes are variables in the Bayesian framework, i.e., everything that is observed or unobserved. This includes the data and parameters that are estimated, but also missing values in the data or parts of the data that are generally unobserved, such as random effects or latent class indicators.</p>
+<p>Nodes are variables in the Bayesian framework, i.e., everything observed or unobserved. This includes the data and parameters that are estimated, but also missing values in the data or parts of the data that are generally unobserved, such as random effects or latent class indicators.</p>
 </div>
 <div id="specifying-which-nodes-should-be-monitored" class="section level3">
 <h3 class="hasAnchor">
@@ -263,120 +263,155 @@
 <p>The argument <code>seed</code> allows the specification of a seed value with which the starting values of the random number generator can be reproduced.</p>
 <div id="user-specified-initial-values" class="section level3">
 <h3 class="hasAnchor">
-<a href="#user-specified-initial-values" class="anchor"></a>User specified initial values</h3>
+<a href="#user-specified-initial-values" class="anchor"></a>User-specified initial values</h3>
 <p>It is possible to supply initial values directly as</p>
 <ul>
 <li>a list or</li>
 <li>a function.</li>
 </ul>
 <p>Initial values can be specified for every unobserved node, that is, parameters and missing values, but it is possible to only specify initial values for a subset of nodes.</p>
-<p>Unless the user specified initial values contain initial values for the random number generator (named <code>.RNG.name</code> and <code>.RNG.seed</code>), <strong>JointAI</strong> will add these to the initial values. This is necessary for reproducibility of the results but also when the MCMC chains are sampled in parallel (i.e, when the argument <code>parallel = TRUE</code>).</p>
+<p>Unless the user-specified initial values contain initial values for the random number generator (named <code>.RNG.name</code> and <code>.RNG.seed</code>), <strong>JointAI</strong> will add these to the initial values. This is necessary for reproducibility of the results but also when the MCMC chains are sampled in parallel (i.e, when the argument <code>parallel = TRUE</code>).</p>
 <div id="initial-values-in-a-list-of-lists" class="section level4">
 <h4 class="hasAnchor">
 <a href="#initial-values-in-a-list-of-lists" class="anchor"></a>Initial values in a list of lists</h4>
 <p>A list containing initial values should have the same length as the number of chains, where each element is a named list of initial values. Initial values should differ between the chains.</p>
 <p>For example, to create initial values for the parameter vector <code>beta</code> and the precision parameter <code>tau_SBP</code> for three chains:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">init_list &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) {</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">beta =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">4</span>), </a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">       <span class="dt">tau_SBP =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/GammaDist">rgamma</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">})</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">init_list</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt; [[1]]$beta</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt; [1] -1.1832955  0.7571182 -1.9196858  1.2594396</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt; [[1]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt; [1] 0.1480863</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; [[2]]</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt; [[2]]$beta</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; [1]  0.04203868  0.44203857  0.86186380 -1.07017657</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt; [[2]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt; [1] 1.39401</span></a>
-<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">#&gt; [[3]]</span></a>
-<a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">#&gt; [[3]]$beta</span></a>
-<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co">#&gt; [1] -0.7546589 -2.1152929 -1.2487148 -0.3170657</span></a>
-<a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">#&gt; [[3]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">#&gt; [1] 3.852156</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">init_list &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) {</a>
+<a class="sourceLine" id="cb7-2" title="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">beta =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">4</span>), </a>
+<a class="sourceLine" id="cb7-3" title="3">       <span class="dt">tau_SBP =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/GammaDist">rgamma</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb7-4" title="4">})</a>
+<a class="sourceLine" id="cb7-5" title="5"></a>
+<a class="sourceLine" id="cb7-6" title="6">init_list</a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; [[1]]</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; [[1]]$beta</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; [1] -0.6003567 -0.7542098  1.1298296  0.9553725</span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt; [[1]]$tau_SBP</span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt; [1] 0.7286728</span></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt; [[2]]</span></a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; [[2]]$beta</span></a>
+<a class="sourceLine" id="cb7-17" title="17"><span class="co">#&gt; [1]  0.8756573  1.3564008 -0.9236583  1.9364563</span></a>
+<a class="sourceLine" id="cb7-18" title="18"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb7-19" title="19"><span class="co">#&gt; [[2]]$tau_SBP</span></a>
+<a class="sourceLine" id="cb7-20" title="20"><span class="co">#&gt; [1] 1.875406</span></a>
+<a class="sourceLine" id="cb7-21" title="21"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb7-22" title="22"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb7-23" title="23"><span class="co">#&gt; [[3]]</span></a>
+<a class="sourceLine" id="cb7-24" title="24"><span class="co">#&gt; [[3]]$beta</span></a>
+<a class="sourceLine" id="cb7-25" title="25"><span class="co">#&gt; [1] -0.60436140 -1.06021562  0.08931413 -0.27385990</span></a>
+<a class="sourceLine" id="cb7-26" title="26"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb7-27" title="27"><span class="co">#&gt; [[3]]$tau_SBP</span></a>
+<a class="sourceLine" id="cb7-28" title="28"><span class="co">#&gt; [1] 0.413733</span></a></code></pre></div>
 <p>The list is then passed to the argument <code>inits</code>. The amended version of the user provided lists of initial values are stored in the JointAI object:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">mod4a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC, <span class="dt">data =</span> NHANES, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">                <span class="dt">inits =</span> init_list)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">mod4a<span class="op">$</span>mcmc_settings<span class="op">$</span>inits</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; [[1]]$beta</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; [1] -1.1832955  0.7571182 -1.9196858  1.2594396</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; [[1]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; [1] 0.1480863</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; [[1]]$.RNG.name</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; [1] "base::Super-Duper"</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; [[1]]$.RNG.seed</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; [1] 24986</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; [[2]]</span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; [[2]]$beta</span></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; [1]  0.04203868  0.44203857  0.86186380 -1.07017657</span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt; [[2]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt; [1] 1.39401</span></a>
-<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt; [[2]]$.RNG.name</span></a>
-<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt; [1] "base::Super-Duper"</span></a>
-<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt; [[2]]$.RNG.seed</span></a>
-<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt; [1] 2438</span></a>
-<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">#&gt; [[3]]</span></a>
-<a class="sourceLine" id="cb8-34" data-line-number="34"><span class="co">#&gt; [[3]]$beta</span></a>
-<a class="sourceLine" id="cb8-35" data-line-number="35"><span class="co">#&gt; [1] -0.7546589 -2.1152929 -1.2487148 -0.3170657</span></a>
-<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-37" data-line-number="37"><span class="co">#&gt; [[3]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb8-38" data-line-number="38"><span class="co">#&gt; [1] 3.852156</span></a>
-<a class="sourceLine" id="cb8-39" data-line-number="39"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-40" data-line-number="40"><span class="co">#&gt; [[3]]$.RNG.name</span></a>
-<a class="sourceLine" id="cb8-41" data-line-number="41"><span class="co">#&gt; [1] "base::Super-Duper"</span></a>
-<a class="sourceLine" id="cb8-42" data-line-number="42"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-43" data-line-number="43"><span class="co">#&gt; [[3]]$.RNG.seed</span></a>
-<a class="sourceLine" id="cb8-44" data-line-number="44"><span class="co">#&gt; [1] 43623</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">mod4a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC, <span class="dt">data =</span> NHANES, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
+<a class="sourceLine" id="cb8-2" title="2">                <span class="dt">inits =</span> init_list)</a>
+<a class="sourceLine" id="cb8-3" title="3"></a>
+<a class="sourceLine" id="cb8-4" title="4">mod4a<span class="op">$</span>mcmc_settings<span class="op">$</span>inits</a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; [[1]]</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; [[1]]$beta</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; [1] -0.6003567 -0.7542098  1.1298296  0.9553725</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; [[1]]$tau_SBP</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; [1] 0.7286728</span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; [[1]]$.RNG.name</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; [1] "base::Wichmann-Hill"</span></a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; [[1]]$.RNG.seed</span></a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; [1] 35147</span></a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-18" title="18"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-19" title="19"><span class="co">#&gt; [[2]]</span></a>
+<a class="sourceLine" id="cb8-20" title="20"><span class="co">#&gt; [[2]]$beta</span></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt; [1]  0.8756573  1.3564008 -0.9236583  1.9364563</span></a>
+<a class="sourceLine" id="cb8-22" title="22"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-23" title="23"><span class="co">#&gt; [[2]]$tau_SBP</span></a>
+<a class="sourceLine" id="cb8-24" title="24"><span class="co">#&gt; [1] 1.875406</span></a>
+<a class="sourceLine" id="cb8-25" title="25"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-26" title="26"><span class="co">#&gt; [[2]]$.RNG.name</span></a>
+<a class="sourceLine" id="cb8-27" title="27"><span class="co">#&gt; [1] "base::Super-Duper"</span></a>
+<a class="sourceLine" id="cb8-28" title="28"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-29" title="29"><span class="co">#&gt; [[2]]$.RNG.seed</span></a>
+<a class="sourceLine" id="cb8-30" title="30"><span class="co">#&gt; [1] 29916</span></a>
+<a class="sourceLine" id="cb8-31" title="31"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-32" title="32"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-33" title="33"><span class="co">#&gt; [[3]]</span></a>
+<a class="sourceLine" id="cb8-34" title="34"><span class="co">#&gt; [[3]]$beta</span></a>
+<a class="sourceLine" id="cb8-35" title="35"><span class="co">#&gt; [1] -0.60436140 -1.06021562  0.08931413 -0.27385990</span></a>
+<a class="sourceLine" id="cb8-36" title="36"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-37" title="37"><span class="co">#&gt; [[3]]$tau_SBP</span></a>
+<a class="sourceLine" id="cb8-38" title="38"><span class="co">#&gt; [1] 0.413733</span></a>
+<a class="sourceLine" id="cb8-39" title="39"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-40" title="40"><span class="co">#&gt; [[3]]$.RNG.name</span></a>
+<a class="sourceLine" id="cb8-41" title="41"><span class="co">#&gt; [1] "base::Super-Duper"</span></a>
+<a class="sourceLine" id="cb8-42" title="42"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-43" title="43"><span class="co">#&gt; [[3]]$.RNG.seed</span></a>
+<a class="sourceLine" id="cb8-44" title="44"><span class="co">#&gt; [1] 2491</span></a></code></pre></div>
 </div>
 <div id="initial-values-as-a-function" class="section level4">
 <h4 class="hasAnchor">
 <a href="#initial-values-as-a-function" class="anchor"></a>Initial values as a function</h4>
 <p>Initial values can be specified by a function. The function should either take no arguments or a single argument called <code>chain</code>, and return a named list that supplies values for one chain.</p>
 <p>For example, to create initial values for the parameter vectors <code>beta</code> and <code>alpha</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">inits_fun &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">beta =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">       <span class="dt">alpha =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="kw">inits_fun</span>()</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt; $beta</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt; [1] -0.6392688 -0.2934153  0.9967149  0.0442246</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt; $alpha</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; [1]  0.4851877 -1.3369280 -2.6168623</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">mod4b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC, <span class="dt">data =</span> NHANES, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
-<a class="sourceLine" id="cb9-15" data-line-number="15">                <span class="dt">inits =</span> inits_fun)</a>
-<a class="sourceLine" id="cb9-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb9-17" data-line-number="17">mod4b<span class="op">$</span>mcmc_settings<span class="op">$</span>inits</a>
-<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; function() {</span></a>
-<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt;   list(beta = rnorm(4),</span></a>
-<a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co">#&gt;        alpha = rnorm(3))</span></a>
-<a class="sourceLine" id="cb9-21" data-line-number="21"><span class="co">#&gt; }</span></a>
-<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="co">#&gt; &lt;bytecode: 0x000000000d716d20&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">inits_fun &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
+<a class="sourceLine" id="cb9-2" title="2">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">beta =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb9-3" title="3">       <span class="dt">alpha =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb9-4" title="4">}</a>
+<a class="sourceLine" id="cb9-5" title="5"></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="kw">inits_fun</span>()</a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="co">#&gt; $beta</span></a>
+<a class="sourceLine" id="cb9-8" title="8"><span class="co">#&gt; [1] -0.1164607 -0.1708776 -0.2477906 -0.2902613</span></a>
+<a class="sourceLine" id="cb9-9" title="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="co">#&gt; $alpha</span></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="co">#&gt; [1]  0.198214  1.126990 -1.302570</span></a>
+<a class="sourceLine" id="cb9-12" title="12"></a>
+<a class="sourceLine" id="cb9-13" title="13"></a>
+<a class="sourceLine" id="cb9-14" title="14">mod4b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC, <span class="dt">data =</span> NHANES, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
+<a class="sourceLine" id="cb9-15" title="15">                <span class="dt">inits =</span> inits_fun)</a>
+<a class="sourceLine" id="cb9-16" title="16"></a>
+<a class="sourceLine" id="cb9-17" title="17">mod4b<span class="op">$</span>mcmc_settings<span class="op">$</span>inits</a>
+<a class="sourceLine" id="cb9-18" title="18"><span class="co">#&gt; [[1]]</span></a>
+<a class="sourceLine" id="cb9-19" title="19"><span class="co">#&gt; [[1]]$beta</span></a>
+<a class="sourceLine" id="cb9-20" title="20"><span class="co">#&gt; [1]  1.39117888  0.66888756 -2.66420630 -0.08339808</span></a>
+<a class="sourceLine" id="cb9-21" title="21"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-22" title="22"><span class="co">#&gt; [[1]]$alpha</span></a>
+<a class="sourceLine" id="cb9-23" title="23"><span class="co">#&gt; [1] -0.3896940 -1.3679092 -0.5432244</span></a>
+<a class="sourceLine" id="cb9-24" title="24"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-25" title="25"><span class="co">#&gt; [[1]]$.RNG.name</span></a>
+<a class="sourceLine" id="cb9-26" title="26"><span class="co">#&gt; [1] "base::Mersenne-Twister"</span></a>
+<a class="sourceLine" id="cb9-27" title="27"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-28" title="28"><span class="co">#&gt; [[1]]$.RNG.seed</span></a>
+<a class="sourceLine" id="cb9-29" title="29"><span class="co">#&gt; [1] 82668</span></a>
+<a class="sourceLine" id="cb9-30" title="30"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-31" title="31"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-32" title="32"><span class="co">#&gt; [[2]]</span></a>
+<a class="sourceLine" id="cb9-33" title="33"><span class="co">#&gt; [[2]]$beta</span></a>
+<a class="sourceLine" id="cb9-34" title="34"><span class="co">#&gt; [1]  0.7713461 -1.3174616  1.3070240  3.3672604</span></a>
+<a class="sourceLine" id="cb9-35" title="35"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-36" title="36"><span class="co">#&gt; [[2]]$alpha</span></a>
+<a class="sourceLine" id="cb9-37" title="37"><span class="co">#&gt; [1] 1.867411 1.587250 1.277581</span></a>
+<a class="sourceLine" id="cb9-38" title="38"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-39" title="39"><span class="co">#&gt; [[2]]$.RNG.name</span></a>
+<a class="sourceLine" id="cb9-40" title="40"><span class="co">#&gt; [1] "base::Wichmann-Hill"</span></a>
+<a class="sourceLine" id="cb9-41" title="41"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-42" title="42"><span class="co">#&gt; [[2]]$.RNG.seed</span></a>
+<a class="sourceLine" id="cb9-43" title="43"><span class="co">#&gt; [1] 59372</span></a>
+<a class="sourceLine" id="cb9-44" title="44"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-45" title="45"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-46" title="46"><span class="co">#&gt; [[3]]</span></a>
+<a class="sourceLine" id="cb9-47" title="47"><span class="co">#&gt; [[3]]$beta</span></a>
+<a class="sourceLine" id="cb9-48" title="48"><span class="co">#&gt; [1] -0.2669955  1.7162186 -1.6694538  0.2763518</span></a>
+<a class="sourceLine" id="cb9-49" title="49"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-50" title="50"><span class="co">#&gt; [[3]]$alpha</span></a>
+<a class="sourceLine" id="cb9-51" title="51"><span class="co">#&gt; [1] -0.6241305  0.5770427 -1.0359625</span></a>
+<a class="sourceLine" id="cb9-52" title="52"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-53" title="53"><span class="co">#&gt; [[3]]$.RNG.name</span></a>
+<a class="sourceLine" id="cb9-54" title="54"><span class="co">#&gt; [1] "base::Wichmann-Hill"</span></a>
+<a class="sourceLine" id="cb9-55" title="55"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb9-56" title="56"><span class="co">#&gt; [[3]]$.RNG.seed</span></a>
+<a class="sourceLine" id="cb9-57" title="57"><span class="co">#&gt; [1] 67146</span></a></code></pre></div>
 <p>When a function is supplied, the function will be evaluated once per chain and the resulting list is stored.</p>
 </div>
 </div>
@@ -387,36 +422,34 @@
 <p>Initial values have to be supplied in the format the parameter or unobserved value is used in the JAGS model.</p>
 <p>To find out which nodes there are in a model, the function <code><a href="https://www.rdocumentation.org/packages/stats/topics/coef">coef()</a></code> from package <strong>rjags</strong> can be used. It returns a list with the current values of the MCMC chains, by default the first chain. Elements of the initial values should have the same structure as the elements in this list.</p>
 <p><strong>Example:<br></strong> We are using a longitudinal model and the <code>simLong</code> data in this example. The output is abbreviated to show the relevant characteristics.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">mod4c &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>HEIGHT_M <span class="op">+</span><span class="st"> </span>hc <span class="op">+</span><span class="st"> </span>SMOKE, <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>time <span class="op">|</span><span class="st"> </span>ID,</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">                 <span class="dt">data =</span> simLong, <span class="dt">no_model =</span> <span class="st">'time'</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>)</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/coef">coef</a></span>(mod4c<span class="op">$</span>model)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">mod4c &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>HEIGHT_M <span class="op">+</span><span class="st"> </span>hc <span class="op">+</span><span class="st"> </span>SMOKE, <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>time <span class="op">|</span><span class="st"> </span>ID,</a>
+<a class="sourceLine" id="cb10-2" title="2">                 <span class="dt">data =</span> simLong, <span class="dt">no_model =</span> <span class="st">'time'</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>)</a>
+<a class="sourceLine" id="cb10-3" title="3"></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/coef">coef</a></span>(mod4c<span class="op">$</span>model)</a></code></pre></div>
 <pre><code>#&gt; $RinvD
-#&gt;           [,1]      [,2]
-#&gt; [1,] 0.2088876        NA
-#&gt; [2,]        NA 0.5744486
+#&gt;       [,1]       [,2]
+#&gt; [1,] 1.519         NA
+#&gt; [2,]    NA 0.02925373
 #&gt; 
 #&gt; $RinvD_hc
-#&gt;            [,1]       [,2]
-#&gt; [1,] 0.05036258         NA
-#&gt; [2,]         NA 0.02507738
+#&gt;            [,1]        [,2]
+#&gt; [1,] 0.02621075          NA
+#&gt; [2,]         NA 0.001455067
 #&gt; 
 #&gt; $Xc
 #&gt;        [,1]       [,2] [,3] [,4]
 #&gt;   [1,]   NA         NA   NA   NA
-#&gt;   [2,]   NA         NA   NA   NA
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt;   [9,]   NA         NA   NA   NA
-#&gt;  [10,]   NA         NA   NA   NA
-#&gt;  [11,]   NA -2.0469652   NA   NA
-#&gt;  [12,]   NA         NA   NA   NA
+#&gt;  [82,]   NA         NA   NA   NA
+#&gt;  [83,]   NA -0.5413491   NA   NA
+#&gt;  [84,]   NA         NA   NA   NA
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [498,]   NA         NA   NA   NA
-#&gt; [499,]   NA         NA   NA   NA
+#&gt; [199,]   NA         NA   NA   NA
+#&gt; [200,]   NA         NA   NA   NA
 #&gt; 
 #&gt; $Xcat
 #&gt;        [,1]
@@ -425,100 +458,773 @@
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt;  [36,]   NA
-#&gt;  [37,]    3
-#&gt;  [38,]   NA
-#&gt;  [39,]    1
-#&gt;  [40,]   NA
-#&gt;  [41,]   NA
+#&gt; [139,]   NA
+#&gt; [140,]    3
+#&gt; [141,]   NA
+#&gt; [142,]    3
+#&gt; [143,]   NA
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [498,]   NA
-#&gt; [499,]   NA
+#&gt; [199,]   NA
+#&gt; [200,]   NA
+#&gt; 
+#&gt; $Xl
+#&gt;                 [,1]
+#&gt;    [1,]           NA
+#&gt;    [2,]           NA
+#&gt;    [3,]  0.000000000
+#&gt;    [4,]           NA
+#&gt;    [5,]           NA
+#&gt;    [6,]           NA
+#&gt;    [7,]  0.085387647
+#&gt; 
+#&gt; [...]
+#&gt; 
+#&gt; [2399,]           NA
+#&gt; [2400,]           NA
 #&gt; 
 #&gt; $alpha
-#&gt; [1]  0.01210804  0.09183087  0.02433504  0.01117188 -0.01461535 -0.02771517  0.83056240
+#&gt; [1]  0.057935649  0.322970113  0.035587043  0.001931935 -0.103623987  0.015515272  0.834046199
 #&gt; 
 #&gt; $b
 #&gt;            [,1]       [,2]
-#&gt;   [1,] 17.11174 -1.0684434
-#&gt;   [2,] 18.50955 -1.4600337
-#&gt;   [3,] 16.71410 -0.9083355
+#&gt;   [1,] 16.35978 -1.3691965
+#&gt;   [2,] 16.77451 -1.1221661
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [496,] 15.03032 -1.0571196
-#&gt; [497,] 15.46147 -1.1170294
-#&gt; [498,] 13.97814 -0.7938201
-#&gt; [499,] 14.98592 -0.4637170
+#&gt; [200,] 16.82841 -1.2170881
 #&gt; 
 #&gt; $b_hc
 #&gt;                [,1]      [,2]
-#&gt;   [1,] -0.290608797 0.7303608
-#&gt;   [2,] -0.014841618 0.8836846
-#&gt;   [3,]  0.231182274 0.8217566
+#&gt;   [1,] -0.309011087 0.7770988
+#&gt;   [2,]  0.135205710 0.8624392
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [497,] -0.297878002 0.7391820
-#&gt; [498,]  0.031712603 0.8929248
-#&gt; [499,] -0.086331019 0.8099374
+#&gt; [199,] -0.115825725 0.8258298
+#&gt; [200,] -0.202466069 0.7967248
 #&gt; 
 #&gt; $beta
-#&gt; [1] 16.51343818 -0.01273229  0.56797513  0.23779057 -1.16754172  1.20104703
+#&gt; [1] 16.49184594 -0.01955302 -0.34488966 -0.40397366 -1.44495629  1.41918043
+#&gt; 
+#&gt; $bmi
+#&gt;    [1] NA NA  0  0 NA NA NA NA NA NA NA NA  0  0 NA  0 NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA
+#&gt; 
+#&gt; [...]
+#&gt; 
+#&gt; [2109] NA NA NA NA  0 NA  0 NA  0 NA NA NA NA NA  0  0 NA NA NA  0 NA NA NA NA NA NA NA NA NA  0  0
+#&gt; [2140]  0  0 NA NA NA NA NA NA NA NA NA  0  0 NA  0 NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA NA
+#&gt; [2171] NA NA  0  0  0 NA NA  0 NA  0 NA NA NA  0 NA  0 NA  0  0 NA NA NA NA  0 NA NA NA  0 NA  0  0
+#&gt; [2202]  0 NA  0 NA NA  0  0 NA  0 NA NA NA NA NA NA  0 NA NA NA NA  0  0  0  0 NA NA NA NA NA NA  0
+#&gt; [2233] NA NA NA NA NA NA  0 NA NA  0 NA  0 NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA  0 NA NA  0
+#&gt; [2264] NA NA NA NA NA  0  0 NA NA NA NA NA NA NA  0 NA NA NA  0 NA  0 NA NA NA NA NA NA NA NA NA  0
+#&gt; [2295] NA  0 NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA  0 NA NA NA  0 NA NA  0  0 NA NA NA
+#&gt; [2326]  0 NA NA  0 NA NA NA NA NA NA NA NA NA  0 NA  0  0 NA NA NA NA NA NA NA  0 NA NA NA NA NA NA
+#&gt; [2357] NA NA NA NA  0 NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA  0  0 NA  0 NA NA NA NA NA NA NA
+#&gt; [2388] NA NA  0 NA  0 NA NA NA NA NA NA NA NA
 #&gt; 
 #&gt; $delta_SMOKE
-#&gt; [1] -0.9588972
+#&gt; [1] -1.032831
 #&gt; 
 #&gt; $gamma_SMOKE
-#&gt; [1] 1.052447       NA
+#&gt; [1] 1.164786       NA
 #&gt; 
 #&gt; $invD
-#&gt;            [,1]       [,2]
-#&gt; [1,]  0.7057099 -0.3292211
-#&gt; [2,] -0.3292211  6.0454384
-#&gt; 
-#&gt; $invD_hc
 #&gt;           [,1]      [,2]
-#&gt; [1,]  15.07385 -20.64334
-#&gt; [2,] -20.64334 267.19088
+#&gt; [1,]  1.887208 -1.594124
+#&gt; [2,] -1.594124  8.172752
 #&gt; 
-#&gt; $mu_b
-#&gt;        [,1]      [,2]
-#&gt;   [1,]   NA -1.167542
-#&gt;   [2,]   NA -1.167542
-#&gt;   [3,]   NA -1.167542
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [498,]   NA -1.167542
-#&gt; [499,]   NA -1.167542
+#&gt; [191,]   NA -1.444956
+#&gt; [192,]   NA -1.444956
+#&gt; [193,]   NA -1.444956
+#&gt; [194,]   NA -1.444956
+#&gt; [195,]   NA -1.444956
+#&gt; [196,]   NA -1.444956
 #&gt; 
+#&gt; [...]
+#&gt; 
+#&gt; [191,]   NA 0.8340462
+#&gt; [190,]   NA 0.8340462
+#&gt; [189,]   NA 0.8340462
+#&gt; [188,]   NA 0.8340462
+#&gt; [187,]   NA 0.8340462
+#&gt; [186,]   NA 0.8340462
+#&gt; [185,]   NA 0.8340462
+#&gt; [184,]   NA 0.8340462
+#&gt; [183,]   NA 0.8340462
+#&gt; [182,]   NA 0.8340462
+#&gt; [181,]   NA 0.8340462
+#&gt; [180,]   NA 0.8340462
+#&gt; [179,]   NA 0.8340462
+#&gt; [178,]   NA 0.8340462
+#&gt; [177,]   NA 0.8340462
+#&gt; [176,]   NA 0.8340462
+#&gt; [175,]   NA 0.8340462
+#&gt; [174,]   NA 0.8340462
+#&gt; [173,]   NA 0.8340462
+#&gt; [172,]   NA 0.8340462
+#&gt; [171,]   NA 0.8340462
+#&gt; [170,]   NA 0.8340462
+#&gt; [169,]   NA 0.8340462
+#&gt; [168,]   NA 0.8340462
+#&gt; [167,]   NA 0.8340462
+#&gt; [166,]   NA 0.8340462
+#&gt; [165,]   NA 0.8340462
+#&gt; [164,]   NA 0.8340462
+#&gt; [163,]   NA 0.8340462
+#&gt; [162,]   NA 0.8340462
+#&gt; [161,]   NA 0.8340462
+#&gt; [160,]   NA 0.8340462
+#&gt; [159,]   NA 0.8340462
+#&gt; [158,]   NA 0.8340462
+#&gt; [157,]   NA 0.8340462
+#&gt; [156,]   NA 0.8340462
+#&gt; [155,]   NA 0.8340462
+#&gt; [154,]   NA 0.8340462
+#&gt; [153,]   NA 0.8340462
+#&gt; [152,]   NA 0.8340462
+#&gt; [151,]   NA 0.8340462
+#&gt; [150,]   NA 0.8340462
+#&gt; [149,]   NA 0.8340462
+#&gt; [148,]   NA 0.8340462
+#&gt; [147,]   NA 0.8340462
+#&gt; [146,]   NA 0.8340462
+#&gt; [145,]   NA 0.8340462
+#&gt; [144,]   NA 0.8340462
+#&gt; [143,]   NA 0.8340462
+#&gt; [142,]   NA 0.8340462
+#&gt; [141,]   NA 0.8340462
+#&gt; [140,]   NA 0.8340462
+#&gt; [139,]   NA 0.8340462
+#&gt; [138,]   NA 0.8340462
+#&gt; [137,]   NA 0.8340462
+#&gt; [136,]   NA 0.8340462
+#&gt; [135,]   NA 0.8340462
+#&gt; [134,]   NA 0.8340462
+#&gt; [133,]   NA 0.8340462
+#&gt; [132,]   NA 0.8340462
+#&gt; [131,]   NA 0.8340462
+#&gt; [130,]   NA 0.8340462
+#&gt; [129,]   NA 0.8340462
+#&gt; [128,]   NA 0.8340462
+#&gt; [127,]   NA 0.8340462
+#&gt; [126,]   NA 0.8340462
+#&gt; [125,]   NA 0.8340462
+#&gt; [124,]   NA 0.8340462
+#&gt; [123,]   NA 0.8340462
+#&gt; [122,]   NA 0.8340462
+#&gt; [121,]   NA 0.8340462
+#&gt; [120,]   NA 0.8340462
+#&gt; [119,]   NA 0.8340462
+#&gt; [118,]   NA 0.8340462
+#&gt; [117,]   NA 0.8340462
+#&gt; [116,]   NA 0.8340462
+#&gt; [115,]   NA 0.8340462
+#&gt; [114,]   NA 0.8340462
+#&gt; [113,]   NA 0.8340462
+#&gt; [112,]   NA 0.8340462
+#&gt; [111,]   NA 0.8340462
+#&gt; [110,]   NA 0.8340462
+#&gt; [109,]   NA 0.8340462
+#&gt; [108,]   NA 0.8340462
+#&gt; [107,]   NA 0.8340462
+#&gt; [106,]   NA 0.8340462
+#&gt; [105,]   NA 0.8340462
+#&gt; [104,]   NA 0.8340462
+#&gt; [103,]   NA 0.8340462
+#&gt; [102,]   NA 0.8340462
+#&gt; [101,]   NA 0.8340462
+#&gt; [100,]   NA 0.8340462
+#&gt;  [99,]   NA 0.8340462
+#&gt;  [98,]   NA 0.8340462
+#&gt;  [97,]   NA 0.8340462
+#&gt;  [96,]   NA 0.8340462
+#&gt;  [95,]   NA 0.8340462
+#&gt;  [94,]   NA 0.8340462
+#&gt;  [93,]   NA 0.8340462
+#&gt;  [92,]   NA 0.8340462
+#&gt;  [91,]   NA 0.8340462
+#&gt;  [90,]   NA 0.8340462
+#&gt;  [89,]   NA 0.8340462
+#&gt;  [88,]   NA 0.8340462
+#&gt;  [87,]   NA 0.8340462
+#&gt;  [86,]   NA 0.8340462
+#&gt;  [85,]   NA 0.8340462
+#&gt;  [84,]   NA 0.8340462
+#&gt;  [83,]   NA 0.8340462
+#&gt;  [82,]   NA 0.8340462
+#&gt;  [81,]   NA 0.8340462
+#&gt;  [80,]   NA 0.8340462
+#&gt;  [79,]   NA 0.8340462
+#&gt;  [78,]   NA 0.8340462
+#&gt;  [77,]   NA 0.8340462
+#&gt;  [76,]   NA 0.8340462
+#&gt;  [75,]   NA 0.8340462
+#&gt;  [74,]   NA 0.8340462
+#&gt;  [73,]   NA 0.8340462
+#&gt;  [72,]   NA 0.8340462
+#&gt;  [71,]   NA 0.8340462
+#&gt;  [70,]   NA 0.8340462
+#&gt;  [69,]   NA 0.8340462
+#&gt;  [68,]   NA 0.8340462
+#&gt;  [67,]   NA 0.8340462
+#&gt;  [66,]   NA 0.8340462
+#&gt;  [65,]   NA 0.8340462
+#&gt;  [64,]   NA 0.8340462
+#&gt;  [63,]   NA 0.8340462
+#&gt;  [62,]   NA 0.8340462
+#&gt;  [61,]   NA 0.8340462
+#&gt;  [60,]   NA 0.8340462
+#&gt;  [59,]   NA 0.8340462
+#&gt;  [58,]   NA 0.8340462
+#&gt;  [57,]   NA 0.8340462
+#&gt;  [56,]   NA 0.8340462
+#&gt;  [55,]   NA 0.8340462
+#&gt;  [54,]   NA 0.8340462
+#&gt;  [53,]   NA 0.8340462
+#&gt;  [52,]   NA 0.8340462
+#&gt;  [51,]   NA 0.8340462
+#&gt;  [50,]   NA 0.8340462
+#&gt;  [49,]   NA 0.8340462
+#&gt;  [48,]   NA 0.8340462
+#&gt;  [47,]   NA 0.8340462
+#&gt;  [46,]   NA 0.8340462
+#&gt;  [45,]   NA 0.8340462
+#&gt;  [44,]   NA 0.8340462
+#&gt;  [43,]   NA 0.8340462
+#&gt;  [42,]   NA 0.8340462
+#&gt;  [41,]   NA 0.8340462
+#&gt;  [40,]   NA 0.8340462
+#&gt;  [39,]   NA 0.8340462
+#&gt;  [38,]   NA 0.8340462
+#&gt;  [37,]   NA 0.8340462
+#&gt;  [36,]   NA 0.8340462
+#&gt;  [35,]   NA 0.8340462
+#&gt;  [34,]   NA 0.8340462
+#&gt;  [33,]   NA 0.8340462
+#&gt;  [32,]   NA 0.8340462
+#&gt;  [31,]   NA 0.8340462
+#&gt;  [30,]   NA 0.8340462
+#&gt;  [29,]   NA 0.8340462
+#&gt;  [28,]   NA 0.8340462
+#&gt;  [27,]   NA 0.8340462
+#&gt;  [26,]   NA 0.8340462
+#&gt;  [25,]   NA 0.8340462
+#&gt;  [24,]   NA 0.8340462
+#&gt;  [23,]   NA 0.8340462
+#&gt;  [22,]   NA 0.8340462
+#&gt;  [21,]   NA 0.8340462
+#&gt;  [20,]   NA 0.8340462
+#&gt;  [19,]   NA 0.8340462
+#&gt;  [18,]   NA 0.8340462
+#&gt;  [17,]   NA 0.8340462
+#&gt;  [16,]   NA 0.8340462
+#&gt;  [15,]   NA 0.8340462
+#&gt;  [14,]   NA 0.8340462
+#&gt;  [13,]   NA 0.8340462
+#&gt;  [12,]   NA 0.8340462
+#&gt;  [11,]   NA 0.8340462
+#&gt;  [10,]   NA 0.8340462
+#&gt;   [9,]   NA 0.8340462
+#&gt;   [8,]   NA 0.8340462
+#&gt;   [7,]   NA 0.8340462
+#&gt;   [6,]   NA 0.8340462
+#&gt;   [5,]   NA 0.8340462
+#&gt;   [4,]   NA 0.8340462
+#&gt;   [3,]   NA 0.8340462
+#&gt;   [2,]   NA 0.8340462
+#&gt;   [1,]   NA 0.8340462
+#&gt;        [,1]      [,2]
 #&gt; $mu_b_hc
+#&gt; 
+#&gt; [200,]   NA -1.444956
+#&gt; [199,]   NA -1.444956
+#&gt; [198,]   NA -1.444956
+#&gt; [197,]   NA -1.444956
+#&gt; [196,]   NA -1.444956
+#&gt; [195,]   NA -1.444956
+#&gt; [194,]   NA -1.444956
+#&gt; [193,]   NA -1.444956
+#&gt; [192,]   NA -1.444956
+#&gt; [191,]   NA -1.444956
+#&gt; [190,]   NA -1.444956
+#&gt; [189,]   NA -1.444956
+#&gt; [188,]   NA -1.444956
+#&gt; [187,]   NA -1.444956
+#&gt; [186,]   NA -1.444956
+#&gt; [185,]   NA -1.444956
+#&gt; [184,]   NA -1.444956
+#&gt; [183,]   NA -1.444956
+#&gt; [182,]   NA -1.444956
+#&gt; [181,]   NA -1.444956
+#&gt; [180,]   NA -1.444956
+#&gt; [179,]   NA -1.444956
+#&gt; [178,]   NA -1.444956
+#&gt; [177,]   NA -1.444956
+#&gt; [176,]   NA -1.444956
+#&gt; [175,]   NA -1.444956
+#&gt; [174,]   NA -1.444956
+#&gt; [173,]   NA -1.444956
+#&gt; [172,]   NA -1.444956
+#&gt; [171,]   NA -1.444956
+#&gt; [170,]   NA -1.444956
+#&gt; [169,]   NA -1.444956
+#&gt; [168,]   NA -1.444956
+#&gt; [167,]   NA -1.444956
+#&gt; [166,]   NA -1.444956
+#&gt; [165,]   NA -1.444956
+#&gt; [164,]   NA -1.444956
+#&gt; [163,]   NA -1.444956
+#&gt; [162,]   NA -1.444956
+#&gt; [161,]   NA -1.444956
+#&gt; [160,]   NA -1.444956
+#&gt; [159,]   NA -1.444956
+#&gt; [158,]   NA -1.444956
+#&gt; [157,]   NA -1.444956
+#&gt; [156,]   NA -1.444956
+#&gt; [155,]   NA -1.444956
+#&gt; [154,]   NA -1.444956
+#&gt; [153,]   NA -1.444956
+#&gt; [152,]   NA -1.444956
+#&gt; [151,]   NA -1.444956
+#&gt; [150,]   NA -1.444956
+#&gt; [149,]   NA -1.444956
+#&gt; [148,]   NA -1.444956
+#&gt; [147,]   NA -1.444956
+#&gt; [146,]   NA -1.444956
+#&gt; [145,]   NA -1.444956
+#&gt; [144,]   NA -1.444956
+#&gt; [143,]   NA -1.444956
+#&gt; [142,]   NA -1.444956
+#&gt; [141,]   NA -1.444956
+#&gt; [140,]   NA -1.444956
+#&gt; [139,]   NA -1.444956
+#&gt; [138,]   NA -1.444956
+#&gt; [137,]   NA -1.444956
+#&gt; [136,]   NA -1.444956
+#&gt; [135,]   NA -1.444956
+#&gt; [134,]   NA -1.444956
+#&gt; [133,]   NA -1.444956
+#&gt; [132,]   NA -1.444956
+#&gt; [131,]   NA -1.444956
+#&gt; [130,]   NA -1.444956
+#&gt; [129,]   NA -1.444956
+#&gt; [128,]   NA -1.444956
+#&gt; [127,]   NA -1.444956
+#&gt; [126,]   NA -1.444956
+#&gt; [125,]   NA -1.444956
+#&gt; [124,]   NA -1.444956
+#&gt; [123,]   NA -1.444956
+#&gt; [122,]   NA -1.444956
+#&gt; [121,]   NA -1.444956
+#&gt; [120,]   NA -1.444956
+#&gt; [119,]   NA -1.444956
+#&gt; [118,]   NA -1.444956
+#&gt; [117,]   NA -1.444956
+#&gt; [116,]   NA -1.444956
+#&gt; [115,]   NA -1.444956
+#&gt; [114,]   NA -1.444956
+#&gt; [113,]   NA -1.444956
+#&gt; [112,]   NA -1.444956
+#&gt; [111,]   NA -1.444956
+#&gt; [110,]   NA -1.444956
+#&gt; [109,]   NA -1.444956
+#&gt; [108,]   NA -1.444956
+#&gt; [107,]   NA -1.444956
+#&gt; [106,]   NA -1.444956
+#&gt; [105,]   NA -1.444956
+#&gt; [104,]   NA -1.444956
+#&gt; [103,]   NA -1.444956
+#&gt; [102,]   NA -1.444956
+#&gt; [101,]   NA -1.444956
+#&gt; [100,]   NA -1.444956
+#&gt;  [99,]   NA -1.444956
+#&gt;  [98,]   NA -1.444956
+#&gt;  [97,]   NA -1.444956
+#&gt;  [96,]   NA -1.444956
+#&gt;  [95,]   NA -1.444956
+#&gt;  [94,]   NA -1.444956
+#&gt;  [93,]   NA -1.444956
+#&gt;  [92,]   NA -1.444956
+#&gt;  [91,]   NA -1.444956
+#&gt;  [90,]   NA -1.444956
+#&gt;  [89,]   NA -1.444956
+#&gt;  [88,]   NA -1.444956
+#&gt;  [87,]   NA -1.444956
+#&gt;  [86,]   NA -1.444956
+#&gt;  [85,]   NA -1.444956
+#&gt;  [84,]   NA -1.444956
+#&gt;  [83,]   NA -1.444956
+#&gt;  [82,]   NA -1.444956
+#&gt;  [81,]   NA -1.444956
+#&gt;  [80,]   NA -1.444956
+#&gt;  [79,]   NA -1.444956
+#&gt;  [78,]   NA -1.444956
+#&gt;  [77,]   NA -1.444956
+#&gt;  [76,]   NA -1.444956
+#&gt;  [75,]   NA -1.444956
+#&gt;  [74,]   NA -1.444956
+#&gt;  [73,]   NA -1.444956
+#&gt;  [72,]   NA -1.444956
+#&gt;  [71,]   NA -1.444956
+#&gt;  [70,]   NA -1.444956
+#&gt;  [69,]   NA -1.444956
+#&gt;  [68,]   NA -1.444956
+#&gt;  [67,]   NA -1.444956
+#&gt;  [66,]   NA -1.444956
+#&gt;  [65,]   NA -1.444956
+#&gt;  [64,]   NA -1.444956
+#&gt;  [63,]   NA -1.444956
+#&gt;  [62,]   NA -1.444956
+#&gt;  [61,]   NA -1.444956
+#&gt;  [60,]   NA -1.444956
+#&gt;  [59,]   NA -1.444956
+#&gt;  [58,]   NA -1.444956
+#&gt;  [57,]   NA -1.444956
+#&gt;  [56,]   NA -1.444956
+#&gt;  [55,]   NA -1.444956
+#&gt;  [54,]   NA -1.444956
+#&gt;  [53,]   NA -1.444956
+#&gt;  [52,]   NA -1.444956
+#&gt;  [51,]   NA -1.444956
+#&gt;  [50,]   NA -1.444956
+#&gt;  [49,]   NA -1.444956
+#&gt;  [48,]   NA -1.444956
+#&gt;  [47,]   NA -1.444956
+#&gt;  [46,]   NA -1.444956
+#&gt;  [45,]   NA -1.444956
+#&gt;  [44,]   NA -1.444956
+#&gt;  [43,]   NA -1.444956
+#&gt;  [42,]   NA -1.444956
+#&gt;  [41,]   NA -1.444956
+#&gt;  [40,]   NA -1.444956
+#&gt;  [39,]   NA -1.444956
+#&gt;  [38,]   NA -1.444956
+#&gt;  [37,]   NA -1.444956
+#&gt;  [36,]   NA -1.444956
+#&gt;  [35,]   NA -1.444956
+#&gt;  [34,]   NA -1.444956
+#&gt;  [33,]   NA -1.444956
+#&gt;  [32,]   NA -1.444956
+#&gt;  [31,]   NA -1.444956
+#&gt;  [30,]   NA -1.444956
+#&gt;  [29,]   NA -1.444956
+#&gt;  [28,]   NA -1.444956
+#&gt;  [27,]   NA -1.444956
+#&gt;  [26,]   NA -1.444956
+#&gt;  [25,]   NA -1.444956
+#&gt;  [24,]   NA -1.444956
+#&gt;  [23,]   NA -1.444956
+#&gt;  [22,]   NA -1.444956
+#&gt;  [21,]   NA -1.444956
+#&gt;  [20,]   NA -1.444956
+#&gt;  [19,]   NA -1.444956
+#&gt;  [18,]   NA -1.444956
+#&gt;  [17,]   NA -1.444956
+#&gt;  [16,]   NA -1.444956
+#&gt;  [15,]   NA -1.444956
+#&gt;  [14,]   NA -1.444956
+#&gt;  [13,]   NA -1.444956
+#&gt;  [12,]   NA -1.444956
+#&gt;  [11,]   NA -1.444956
+#&gt;  [10,]   NA -1.444956
+#&gt;   [9,]   NA -1.444956
+#&gt;   [8,]   NA -1.444956
+#&gt;   [7,]   NA -1.444956
+#&gt;   [6,]   NA -1.444956
+#&gt;   [5,]   NA -1.444956
+#&gt;   [4,]   NA -1.444956
+#&gt;   [3,]   NA -1.444956
+#&gt;   [2,]   NA -1.444956
+#&gt;   [1,]   NA -1.444956
 #&gt;        [,1]      [,2]
-#&gt;   [1,]   NA 0.8305624
-#&gt;   [2,]   NA 0.8305624
+#&gt; $mu_b
 #&gt; 
-#&gt; [...]
+#&gt; [2,] -685.6804 4716.3102
+#&gt; [1,]  112.3844 -685.6804
+#&gt;           [,1]      [,2]
+#&gt; $invD_hc
 #&gt; 
-#&gt; [498,]   NA 0.8305624
-#&gt; [499,]   NA 0.8305624
+#&gt; [2,] -1.594124  8.172752
+#&gt; [1,]  1.887208 -1.594124
+#&gt;           [,1]      [,2]
+#&gt; $invD
 #&gt; 
-#&gt; $tau_HEIGHT_M
-#&gt; [1] 1.121734
+#&gt; [1] 1.164786       NA
+#&gt; $gamma_SMOKE
 #&gt; 
-#&gt; $tau_bmi
-#&gt; [1] 1.321328
+#&gt; [1] -1.032831
+#&gt; $delta_SMOKE
 #&gt; 
-#&gt; $tau_hc
-#&gt; [1] 4.488981</code></pre>
+#&gt; [2388] NA NA  0 NA  0 NA NA NA NA NA NA NA NA
+#&gt; [2357] NA NA NA NA  0 NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA  0  0 NA  0 NA NA NA NA NA NA NA
+#&gt; [2326]  0 NA NA  0 NA NA NA NA NA NA NA NA NA  0 NA  0  0 NA NA NA NA NA NA NA  0 NA NA NA NA NA NA
+#&gt; [2295] NA  0 NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA  0 NA NA NA  0 NA NA  0  0 NA NA NA
+#&gt; [2264] NA NA NA NA NA  0  0 NA NA NA NA NA NA NA  0 NA NA NA  0 NA  0 NA NA NA NA NA NA NA NA NA  0
+#&gt; [2233] NA NA NA NA NA NA  0 NA NA  0 NA  0 NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA  0 NA NA  0
+#&gt; [2202]  0 NA  0 NA NA  0  0 NA  0 NA NA NA NA NA NA  0 NA NA NA NA  0  0  0  0 NA NA NA NA NA NA  0
+#&gt; [2171] NA NA  0  0  0 NA NA  0 NA  0 NA NA NA  0 NA  0 NA  0  0 NA NA NA NA  0 NA NA NA  0 NA  0  0
+#&gt; [2140]  0  0 NA NA NA NA NA NA NA NA NA  0  0 NA  0 NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA NA
+#&gt; [2109] NA NA NA NA  0 NA  0 NA  0 NA NA NA NA NA  0  0 NA NA NA  0 NA NA NA NA NA NA NA NA NA  0  0
+#&gt; [2078] NA  0  0 NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA
+#&gt; [2047] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA  0  0 NA  0 NA NA NA NA NA NA NA  0  0
+#&gt; [2016] NA  0 NA  0 NA NA NA NA NA NA  0 NA NA  0 NA NA NA NA NA NA NA NA  0 NA NA  0 NA  0  0  0 NA
+#&gt; [1985] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA  0 NA NA  0 NA NA NA NA
+#&gt; [1954] NA NA NA NA NA NA  0 NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA NA  0  0 NA NA NA  0 NA  0
+#&gt; [1923] NA NA NA NA NA NA NA NA  0 NA  0  0 NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+#&gt; [1892] NA  0 NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA  0  0  0  0 NA  0 NA NA NA  0  0 NA NA NA
+#&gt; [1861] NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA  0 NA
+#&gt; [1830] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA  0
+#&gt; [1799] NA NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA  0 NA NA NA NA NA NA NA NA  0  0 NA
+#&gt; [1768]  0 NA NA NA NA NA NA NA NA NA  0  0  0  0 NA NA NA NA NA NA NA  0 NA NA  0 NA NA NA NA NA NA
+#&gt; [1737] NA  0 NA NA  0  0 NA  0  0 NA NA NA NA NA NA  0 NA  0 NA NA  0 NA  0 NA NA NA  0 NA NA  0 NA
+#&gt; [1706]  0 NA NA NA NA NA  0 NA NA NA  0 NA  0  0 NA NA NA NA NA NA  0 NA NA  0 NA  0  0  0 NA NA  0
+#&gt; [1675] NA  0  0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA  0 NA  0 NA  0  0 NA NA NA NA NA NA
+#&gt; [1644]  0 NA NA NA  0 NA NA NA NA NA NA NA  0 NA NA NA NA NA NA NA  0 NA NA NA NA  0  0  0  0 NA NA
+#&gt; [1613]  0 NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA NA  0 NA NA NA NA  0  0 NA NA  0  0 NA NA NA
+#&gt; [1582] NA NA NA  0 NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA  0  0  0
+#&gt; [1551] NA NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA
+#&gt; [1520] NA  0  0  0 NA NA  0  0 NA NA NA  0 NA NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+#&gt; [1489]  0  0 NA  0  0 NA NA NA NA  0 NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA
+#&gt; [1458] NA NA NA NA  0 NA NA NA NA  0  0  0  0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+#&gt; [1427]  0 NA  0 NA  0 NA NA  0 NA NA  0 NA NA NA NA NA NA  0  0 NA NA NA NA NA NA NA  0  0  0  0 NA
+#&gt; [1396]  0 NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA NA
+#&gt; [1365] NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA  0  0  0  0 NA NA NA NA NA NA NA NA NA  0 NA
+#&gt; [1334]  0 NA  0  0 NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA NA  0 NA
+#&gt; [1303] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA  0  0 NA NA NA NA NA NA NA  0
+#&gt; [1272]  0  0 NA  0 NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA  0  0 NA NA  0 NA
+#&gt; [1241] NA NA NA  0 NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA NA  0  0 NA NA NA NA NA NA  0
+#&gt; [1210] NA NA NA  0 NA  0  0 NA NA NA NA NA NA NA NA  0 NA NA  0 NA NA NA NA NA NA NA NA NA NA  0 NA
+#&gt; [1179] NA  0  0 NA  0 NA NA NA NA NA NA  0 NA  0 NA NA NA NA NA NA  0  0  0  0  0  0 NA NA NA  0 NA
+#&gt; [1148] NA NA NA NA NA NA  0  0 NA NA NA NA NA NA NA NA NA  0 NA  0 NA NA NA NA NA NA NA NA NA NA  0
+#&gt; [1117] NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA NA  0 NA NA NA  0 NA NA
+#&gt; [1086]  0 NA NA NA NA NA NA NA  0  0  0 NA NA NA NA NA NA  0 NA NA  0 NA NA NA NA  0 NA NA NA NA NA
+#&gt; [1055] NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA  0  0  0 NA NA NA NA NA NA NA NA  0 NA NA  0 NA
+#&gt; [1024]  0 NA NA NA NA  0 NA NA NA NA  0  0 NA  0 NA NA  0 NA  0 NA NA NA  0 NA NA NA NA NA NA NA NA
+#&gt;  [993] NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA  0  0  0 NA NA  0 NA NA  0 NA  0 NA NA NA NA
+#&gt;  [962]  0  0  0 NA NA NA  0 NA  0 NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA
+#&gt;  [931] NA NA NA  0 NA NA NA  0 NA NA  0 NA NA NA NA  0 NA  0 NA  0 NA NA NA NA NA NA NA NA  0 NA NA
+#&gt;  [900] NA NA  0 NA  0 NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+#&gt;  [869] NA NA NA NA NA NA NA NA NA  0 NA  0  0 NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+#&gt;  [838] NA NA NA NA  0 NA  0 NA NA  0 NA NA  0 NA NA NA NA NA NA NA NA NA  0 NA  0 NA NA NA NA  0 NA
+#&gt;  [807] NA  0  0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA  0  0 NA  0  0 NA NA NA NA NA  0
+#&gt;  [776] NA NA NA NA NA NA  0  0 NA NA NA NA NA  0 NA NA  0  0  0 NA  0 NA NA NA NA NA NA NA NA  0  0
+#&gt;  [745] NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA  0 NA NA NA NA NA NA NA NA  0  0  0 NA  0 NA  0
+#&gt;  [714] NA NA NA NA NA NA NA NA  0  0  0  0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+#&gt;  [683] NA NA  0  0  0  0 NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA NA  0 NA NA NA NA NA  0 NA NA
+#&gt;  [652] NA  0  0 NA NA NA NA NA  0  0  0  0  0 NA  0 NA NA NA NA NA NA NA  0 NA NA NA NA NA NA NA  0
+#&gt;  [621] NA NA NA NA  0  0  0  0  0 NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA NA  0 NA  0
+#&gt;  [590] NA NA NA NA NA NA NA NA NA NA NA  0  0  0 NA NA NA NA NA  0  0  0 NA NA NA  0  0 NA NA NA NA
+#&gt;  [559] NA NA NA NA NA NA  0  0  0 NA NA NA NA NA NA NA NA NA NA NA NA  0 NA NA NA  0 NA NA NA NA NA
+#&gt;  [528] NA NA NA NA NA NA NA  0  0  0 NA NA NA  0 NA NA NA NA NA NA NA NA NA NA NA  0  0  0 NA NA NA
+#&gt;  [497] NA NA NA NA NA NA NA  0 NA  0 NA  0  0 NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA NA  0 NA
+#&gt;  [466] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA  0  0  0 NA
+#&gt;  [435]  0  0 NA NA NA  0 NA  0 NA  0  0 NA  0  0 NA NA NA NA NA NA NA NA  0  0  0  0 NA NA NA NA NA
+#&gt;  [404] NA NA NA NA NA NA  0  0  0 NA  0 NA NA  0 NA NA NA NA NA NA  0  0 NA NA NA NA NA NA NA NA  0
+#&gt;  [373] NA  0 NA NA NA NA NA NA NA NA NA NA NA  0 NA  0 NA  0  0  0 NA NA NA NA NA  0 NA NA NA NA  0
+#&gt;  [342] NA  0 NA NA NA NA NA  0  0  0  0 NA NA NA NA NA NA NA  0 NA  0 NA NA NA NA NA NA NA NA NA NA
+#&gt;  [311] NA NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA  0  0  0  0
+#&gt;  [280]  0 NA NA NA NA NA NA NA NA NA  0  0  0 NA NA NA  0  0 NA NA NA  0  0  0  0  0 NA NA NA NA NA
+#&gt;  [249] NA NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA NA  0 NA NA NA NA NA NA NA NA  0 NA  0
+#&gt;  [218] NA  0 NA NA NA NA NA NA NA  0 NA NA NA NA NA  0 NA NA NA NA NA NA NA  0  0  0  0 NA NA NA NA
+#&gt;  [187] NA NA NA  0 NA NA NA NA NA  0 NA NA NA NA NA NA NA NA NA  0 NA  0  0 NA NA NA NA NA  0  0 NA
+#&gt;  [156] NA  0  0  0  0  0 NA NA NA NA NA NA NA NA NA  0 NA NA  0 NA NA NA NA NA NA NA  0 NA NA NA NA
+#&gt;  [125]  0 NA NA NA NA NA NA NA NA  0  0  0 NA NA NA NA NA NA NA NA  0  0 NA NA NA NA NA NA NA NA NA
+#&gt;   [94] NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA  0 NA NA  0  0 NA  0
+#&gt;   [63] NA NA NA NA NA NA  0  0 NA NA  0 NA NA NA NA  0 NA NA NA NA NA NA NA NA  0  0  0 NA NA NA  0
+#&gt;   [32]  0 NA  0  0  0  0  0 NA NA NA NA NA  0 NA NA NA NA  0  0  0  0 NA NA  0  0  0 NA  0 NA NA NA
+#&gt;    [1] NA NA  0  0 NA NA NA NA NA NA NA NA  0  0 NA  0 NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA
+#&gt; $bmi
+#&gt; 
+#&gt; [1] 16.49184594 -0.01955302 -0.34488966 -0.40397366 -1.44495629  1.41918043
+#&gt; $beta
+#&gt; 
+#&gt; [200,] -0.202466069 0.7967248
+#&gt; [199,] -0.115825725 0.8258298
+#&gt; [198,]  0.153067028 0.8638348
+#&gt; [197,] -0.517294574 0.7456941
+#&gt; [196,]  0.229054081 0.8571587
+#&gt; [195,]  0.610396435 0.9069119
+#&gt; [194,]  0.318644245 0.8587203
+#&gt; [193,]  0.136035670 0.8531738
+#&gt; [192,]  0.202876309 0.8825685
+#&gt; [191,] -0.049683400 0.8346072
+#&gt; [190,] -0.244624757 0.8168887
+#&gt; [189,]  0.186945433 0.8586344
+#&gt; [188,] -0.174281529 0.8094669
+#&gt; [187,]  0.048799344 0.8443347
+#&gt; [186,] -0.358783808 0.7748802
+#&gt; [185,] -0.388700888 0.7749754
+#&gt; [184,]  0.245543423 0.8294376
+#&gt; [183,] -0.149767545 0.8080071
+#&gt; [182,] -0.209830565 0.7982799
+#&gt; [181,] -0.160541235 0.8120607
+#&gt; [180,] -0.056722865 0.8248912
+#&gt; [179,]  0.332523247 0.8772606
+#&gt; [178,] -0.013120998 0.8502977
+#&gt; [177,]  0.758206039 0.9312882
+#&gt; [176,]  0.282455733 0.8660029
+#&gt; [175,] -0.411396832 0.7593785
+#&gt; [174,] -0.021855924 0.8334082
+#&gt; [173,]  0.149138647 0.8507894
+#&gt; [172,] -0.333319764 0.7627624
+#&gt; [171,] -0.217992142 0.8108515
+#&gt; [170,]  0.415023717 0.9046234
+#&gt; [169,]  0.196858006 0.8580758
+#&gt; [168,]  0.087766032 0.8423910
+#&gt; [167,]  0.158684703 0.8627678
+#&gt; [166,]  0.054594584 0.8307682
+#&gt; [165,] -0.176414340 0.7915521
+#&gt; [164,]  0.302058708 0.8903624
+#&gt; [163,] -0.183417481 0.8066007
+#&gt; [162,]  0.069788399 0.8636158
+#&gt; [161,] -0.191127304 0.7985824
+#&gt; [160,]  0.349046319 0.8908381
+#&gt; [159,] -0.041131109 0.8296497
+#&gt; [158,]  0.045411565 0.8416262
+#&gt; [157,] -0.042385912 0.8260326
+#&gt; [156,]  0.215623301 0.8984924
+#&gt; [155,] -0.392884994 0.8002160
+#&gt; [154,]  0.088046640 0.8545990
+#&gt; [153,]  0.165611680 0.8658754
+#&gt; [152,] -0.041927132 0.8228759
+#&gt; [151,] -0.156551546 0.8003485
+#&gt; [150,]  0.008322919 0.8329990
+#&gt; [149,]  0.135195707 0.8367391
+#&gt; [148,] -0.567161710 0.7548454
+#&gt; [147,] -0.558511393 0.7614290
+#&gt; [146,]  0.139622772 0.8471195
+#&gt; [145,] -0.159364383 0.8050114
+#&gt; [144,]  0.646853908 0.9024325
+#&gt; [143,] -0.040655608 0.8042996
+#&gt; [142,]  0.627192422 0.9316799
+#&gt; [141,] -0.250791916 0.7950064
+#&gt; [140,] -0.292877562 0.7740878
+#&gt; [139,]  0.292884802 0.8782054
+#&gt; [138,] -0.056374480 0.7939432
+#&gt; [137,] -0.509336441 0.7492275
+#&gt; [136,] -0.094655279 0.8421294
+#&gt; [135,] -0.456714492 0.7506083
+#&gt; [134,]  0.100454699 0.8060130
+#&gt; [133,] -0.487408110 0.7423531
+#&gt; [132,]  0.601585566 0.9559984
+#&gt; [131,]  0.001158994 0.8260528
+#&gt; [130,]  0.051548826 0.8258936
+#&gt; [129,]  0.135256019 0.8412423
+#&gt; [128,]  0.177860471 0.8726187
+#&gt; [127,]  0.251426530 0.8519108
+#&gt; [126,]  0.292967296 0.9036517
+#&gt; [125,]  0.054169841 0.8259634
+#&gt; [124,]  0.270630101 0.8500613
+#&gt; [123,] -0.440410582 0.7624336
+#&gt; [122,]  0.094343948 0.8587639
+#&gt; [121,] -0.301146419 0.7887223
+#&gt; [120,]  0.159686743 0.8433662
+#&gt; [119,]  0.318687211 0.8758249
+#&gt; [118,]  0.177303990 0.8591804
+#&gt; [117,] -0.277698054 0.7924437
+#&gt; [116,] -0.318471432 0.7637295
+#&gt; [115,]  0.021265527 0.8121712
+#&gt; [114,] -0.121118924 0.8342961
+#&gt; [113,]  0.424516415 0.8835283
+#&gt; [112,]  0.375761196 0.8826025
+#&gt; [111,] -0.190448589 0.8030143
+#&gt; [110,]  0.133312675 0.8744753
+#&gt; [109,]  0.124720324 0.8380242
+#&gt; [108,]  0.606468709 0.9243180
+#&gt; [107,] -0.091536460 0.8002658
+#&gt; [106,] -0.346763869 0.7716524
+#&gt; [105,] -0.114793076 0.8113850
+#&gt; [104,] -0.007451706 0.8245697
+#&gt; [103,]  0.354318153 0.8917805
+#&gt; [102,]  0.306498138 0.8915170
+#&gt; [101,] -0.013001261 0.8378630
+#&gt; [100,] -0.196507296 0.7613177
+#&gt;  [99,] -0.054629846 0.8202145
+#&gt;  [98,]  0.569137408 0.9230043
+#&gt;  [97,]  0.198211845 0.8666800
+#&gt;  [96,]  0.050468601 0.8551491
+#&gt;  [95,] -0.127969786 0.8085317
+#&gt;  [94,]  0.194385259 0.8414416
+#&gt;  [93,]  0.304898892 0.8638426
+#&gt;  [92,] -0.109142849 0.8189732
+#&gt;  [91,]  0.042511983 0.8126217
+#&gt;  [90,] -0.226454177 0.8053139
+#&gt;  [89,] -0.088445826 0.8264331
+#&gt;  [88,] -0.068159349 0.8267439
+#&gt;  [87,]  0.014614111 0.8191527
+#&gt;  [86,]  0.266901716 0.8613612
+#&gt;  [85,]  0.066132047 0.8367047
+#&gt;  [84,]  0.240013373 0.8611840
+#&gt;  [83,] -0.282704166 0.7588309
+#&gt;  [82,]  0.422633830 0.8728676
+#&gt;  [81,]  0.029496509 0.8372962
+#&gt;  [80,]  0.154705311 0.8374113
+#&gt;  [79,]  0.217759115 0.8379646
+#&gt;  [78,] -0.013665716 0.8330880
+#&gt;  [77,]  0.800164741 0.9355476
+#&gt;  [76,]  0.288634619 0.8507101
+#&gt;  [75,]  0.496327276 0.8978973
+#&gt;  [74,] -0.134796696 0.7965475
+#&gt;  [73,]  0.349722570 0.8556874
+#&gt;  [72,]  0.046986299 0.8666224
+#&gt;  [71,]  0.240273288 0.8680680
+#&gt;  [70,] -0.194119862 0.7891351
+#&gt;  [69,]  0.156008682 0.8203613
+#&gt;  [68,] -0.142946540 0.7806476
+#&gt;  [67,]  0.009035860 0.8319668
+#&gt;  [66,] -0.006107813 0.8397679
+#&gt;  [65,]  0.371043528 0.8752609
+#&gt;  [64,] -0.035086841 0.8175034
+#&gt;  [63,] -0.513756358 0.7441815
+#&gt;  [62,] -0.184663792 0.7869499
+#&gt;  [61,] -0.096973789 0.8038520
+#&gt;  [60,]  0.769450507 0.9381910
+#&gt;  [59,] -0.521544971 0.7431149
+#&gt;  [58,] -0.146775714 0.8154270
+#&gt;  [57,]  0.351744413 0.8804094
+#&gt;  [56,] -0.510911174 0.7622737
+#&gt;  [55,]  0.075132000 0.8484910
+#&gt;  [54,] -0.364948856 0.7915115
+#&gt;  [53,]  0.064054237 0.8718962
+#&gt;  [52,] -0.185993320 0.8018515
+#&gt;  [51,]  0.266265680 0.8713685
+#&gt;  [50,] -0.107416685 0.8040862
+#&gt;  [49,]  0.281732209 0.8790136
+#&gt;  [48,] -0.368349881 0.7791872
+#&gt;  [47,]  0.633302963 0.9311640
+#&gt;  [46,] -0.203568823 0.8100935
+#&gt;  [45,] -0.263857020 0.7649095
+#&gt;  [44,]  0.430322649 0.8819015
+#&gt;  [43,] -0.361959264 0.7590818
+#&gt;  [42,]  0.101189142 0.8454245
+#&gt;  [41,] -0.099356753 0.8439528
+#&gt;  [40,]  0.058070038 0.8435868
+#&gt;  [39,] -0.124250283 0.7922044
+#&gt;  [38,]  0.161257844 0.8295011
+#&gt;  [37,]  0.116643719 0.8329700
+#&gt;  [36,]  0.348700817 0.8726914
+#&gt;  [35,]  0.029322156 0.8529866
+#&gt;  [34,]  0.346386714 0.9025761
+#&gt;  [33,] -0.225797126 0.7797616
+#&gt;  [32,] -0.182956337 0.8006384
+#&gt;  [31,]  0.177850443 0.8587850
+#&gt;  [30,] -0.083337381 0.8183868
+#&gt;  [29,]  0.401633809 0.8654760
+#&gt;  [28,] -0.065863077 0.8113917
+#&gt;  [27,] -0.241448700 0.7943599
+#&gt;  [26,] -0.234937605 0.7971701</code></pre>
 <p><code>RinvD</code> is the scale matrix in the Wishart prior for the inverse of the random effects design matrix <code>D</code>. In the data that is passed JAGS (which is stored in the element <code>data_list</code> in a JointAI object), this matrix is specified as diagonal matrix, with unknown diagonal elements:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">mod4c<span class="op">$</span>data_list[<span class="st">'RinvD'</span>]</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; $RinvD</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt;      [,1] [,2]</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; [1,]   NA    0</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; [2,]    0   NA</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">mod4c<span class="op">$</span>data_list[<span class="st">'RinvD'</span>]</a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="co">#&gt; $RinvD</span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="co">#&gt;      [,1] [,2]</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="co">#&gt; [1,]   NA    0</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="co">#&gt; [2,]    0   NA</span></a></code></pre></div>
 <p>These diagonal elements are estimated in the model and have a Gamma prior. The corresponding part of the JAGS model is:</p>
 <pre><code>#&gt; [...]
 #&gt;   # Priors for the covariance of the random effects
@@ -530,48 +1236,22 @@
 #&gt; [...]</code></pre>
 <p>The element <code>RinvD</code> in the initial values has to be a 2 <span class="math inline">\(\times\)</span> 2 matrix, with positive values on the diagonal and <code>NA</code> as off-diagonal elements, since these are fixed in the data.</p>
 <p>The following element in the output of <code><a href="https://www.rdocumentation.org/packages/stats/topics/coef">coef(mod4c$model)</a></code> is <code>Xc</code>, the fixed effects design matrix containing baseline covariates. The corresponding matrix in the data is</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(mod4c<span class="op">$</span>data_list<span class="op">$</span>Xc, <span class="dv">15</span>)</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co">#&gt;        (Intercept)   HEIGHT_M SMOKEsmoked until pregnancy was known</span></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt; 1.1              1  1.4568523                                    NA</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; 10.1             1 -1.2863098                                    NA</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt; 100.11           1 -1.1350146                                    NA</span></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt; 101.1            1  0.2962555                                    NA</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt; 102.4            1  0.7211347                                    NA</span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; 103.15           1 -1.8893248                                    NA</span></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; 104.4            1 -0.8216534                                    NA</span></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; 105.2            1  0.5784470                                    NA</span></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; 106.1            1  0.3689238                                    NA</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; 107.1            1 -0.6264986                                    NA</span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; 108.7            1         NA                                    NA</span></a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt; 109.1            1  0.5398961                                    NA</span></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt; 11.1             1  0.2053576                                    NA</span></a>
-<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt; 110.26           1  0.6703233                                    NA</span></a>
-<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">#&gt; 111.1            1  1.6552801                                    NA</span></a>
-<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">#&gt;        SMOKEcontinued smoking in pregnancy</span></a>
-<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">#&gt; 1.1                                     NA</span></a>
-<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">#&gt; 10.1                                    NA</span></a>
-<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co">#&gt; 100.11                                  NA</span></a>
-<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="co">#&gt; 101.1                                   NA</span></a>
-<a class="sourceLine" id="cb14-23" data-line-number="23"><span class="co">#&gt; 102.4                                   NA</span></a>
-<a class="sourceLine" id="cb14-24" data-line-number="24"><span class="co">#&gt; 103.15                                  NA</span></a>
-<a class="sourceLine" id="cb14-25" data-line-number="25"><span class="co">#&gt; 104.4                                   NA</span></a>
-<a class="sourceLine" id="cb14-26" data-line-number="26"><span class="co">#&gt; 105.2                                   NA</span></a>
-<a class="sourceLine" id="cb14-27" data-line-number="27"><span class="co">#&gt; 106.1                                   NA</span></a>
-<a class="sourceLine" id="cb14-28" data-line-number="28"><span class="co">#&gt; 107.1                                   NA</span></a>
-<a class="sourceLine" id="cb14-29" data-line-number="29"><span class="co">#&gt; 108.7                                   NA</span></a>
-<a class="sourceLine" id="cb14-30" data-line-number="30"><span class="co">#&gt; 109.1                                   NA</span></a>
-<a class="sourceLine" id="cb14-31" data-line-number="31"><span class="co">#&gt; 11.1                                    NA</span></a>
-<a class="sourceLine" id="cb14-32" data-line-number="32"><span class="co">#&gt; 110.26                                  NA</span></a>
-<a class="sourceLine" id="cb14-33" data-line-number="33"><span class="co">#&gt; 111.1                                   NA</span></a></code></pre></div>
-<p>Again, the matrix <code>Xc</code> in the initial values has the same dimension as <code>Xc</code> in the data, and values where there are missing values in <code>Xc</code>, e.g., <code>Xc[11, 2]</code> and <code>NA</code> elsewhere. There are no initial values specified for the third and fourth column, since these columns contain the dummy variables corresponding to the categorical variable <code>SMOKE</code> and are calculated from a column in the matrix <code>Xcat</code>, which contains the original version of <code>SMOKE</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(mod4c<span class="op">$</span>data_list<span class="op">$</span>Xcat)</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt;        SMOKE</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; 1.1        3</span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt; 10.1       1</span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt; 100.11     1</span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; 101.1      3</span></a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt; 102.4      3</span></a>
-<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt; 103.15     1</span></a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">mod4c<span class="op">$</span>data_list<span class="op">$</span>Xc[<span class="dv">81</span><span class="op">:</span><span class="dv">85</span>, ]</a></code></pre></div>
+<pre><code>#&gt;       (Intercept)  HEIGHT_M SMOKEsmoked until[...] SMOKEcontin[...]
+#&gt; 171.1           1 0.2736946                     NA               NA
+#&gt; 172.1           1 0.1148171                     NA               NA
+#&gt; 173.1           1        NA                     NA               NA
+#&gt; 174.1           1 0.5045126                     NA               NA
+#&gt; 175.1           1 1.8822249                     NA               NA</code></pre>
+<p>Again, the matrix <code>Xc</code> in the initial values has the same dimension as <code>Xc</code> in the data, and values where there are missing values in <code>Xc</code>, e.g., <code>Xc[83, 2]</code> and <code>NA</code> elsewhere. There are no initial values specified for the third and fourth column, since these columns contain the dummy variables corresponding to the categorical variable <code>SMOKE</code> and are calculated from a column in the matrix <code>Xcat</code>, which contains the original version of <code>SMOKE</code>:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(mod4c<span class="op">$</span>data_list<span class="op">$</span>Xcat)</a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="co">#&gt;       SMOKE</span></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="co">#&gt; 1.1       1</span></a>
+<a class="sourceLine" id="cb16-4" title="4"><span class="co">#&gt; 10.1      1</span></a>
+<a class="sourceLine" id="cb16-5" title="5"><span class="co">#&gt; 100.1     3</span></a>
+<a class="sourceLine" id="cb16-6" title="6"><span class="co">#&gt; 101.1     1</span></a>
+<a class="sourceLine" id="cb16-7" title="7"><span class="co">#&gt; 102.1     1</span></a>
+<a class="sourceLine" id="cb16-8" title="8"><span class="co">#&gt; 103.1    NA</span></a></code></pre></div>
 <p>The relevant part of the JAGS model is:</p>
 <pre><code>#&gt; [...]
 #&gt;     # ordinal model for SMOKE
