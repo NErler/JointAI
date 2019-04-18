@@ -12,6 +12,8 @@
 * `summary()` calls `GR_crit()` with argument `autoburnin = FALSE` unless specified otherwise via `...`
 * when `inits` is specified as a function, the function is evaluated and the resulting list passed to JAGS (previously the function was passed to JAGS)
 * the example data `simong` and `simWide` have changed (more variables, less subjects)
+* added check if there are incomplete covariates before setting `imp_pars = TRUE`
+  (when user specified via `monitor_params` or `subset`)
 
 --------------------------------------------------------------------------------
 

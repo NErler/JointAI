@@ -38,7 +38,11 @@ get_params <- function(models, analysis_type, family, Mlist,
     if (is.null(RinvD) & Mlist$nranef > 1) RinvD <- TRUE
   }
 
-  if (imp_pars) {
+  if (imp_pars & is.null(models) & mess) {
+    message(paste0('There are no missing values in covariates, ',
+    'so I set "imp_pars = FALSE".'))
+  }
+  if (imp_pars & !is.null(models)) {
     if (is.null(alphas)) alphas <- TRUE
     if (is.null(tau_imp)) tau_imp <- TRUE
     if (is.null(gamma_imp)) gamma_imp <- TRUE
