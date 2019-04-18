@@ -10,6 +10,7 @@
 
 ## Minor changes
 * `summary()` calls `GR_crit()` with argument `autoburnin = FALSE` unless specified otherwise via `...`
+* when `inits` is specified as a function, the function is evaluated and the resulting list passed to JAGS (previously the function was passed to JAGS)
 
 --------------------------------------------------------------------------------
 
