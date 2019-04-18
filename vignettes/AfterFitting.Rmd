@@ -40,7 +40,7 @@ explored.
 The functions described in this section use, by default, the full MCMC sample
 and show only the parameters of the analysis model.
 Arguments `start`, `end` and `thin` are available to select a subset of the MCMC
-samples that is used to calculate the summary. The argument `subset` allows to control
+samples that is used to calculate the summary. The argument `subset` allows controlling
 which part of the MCMC sample is returned and follows the same logic as
 the argument `monitor_params` in `*_imp()`.
 The use of these arguments is further explained [below](#sec:subset).
@@ -68,7 +68,7 @@ reached and more iterations are necessary (e.g., using `add_samples()`).
 
 Graphical aspects of the traceplot can be controlled by specifying 
 standard graphical arguments via the dots argument `"..."`, which are passed to `matplot()`.
-This allows to change color, linetype and -width, limits, etc.
+This allows changing colour, linetype and -width, limits, etc.
 Arguments `nrow` and/or `ncol` can be supplied to set specific numbers of 
 rows and columns for the layout of the grid of plots.
 
@@ -115,11 +115,11 @@ when setting `use_ggplot = TRUE`. Here, vertical lines can be added as additiona
 layers:
 ```{r ggdens15a, fig.width = 7, fig.height = 3.5, out.width = '100%'}
 # fit the complete-case version of the model
-mod13a_cc <- lm(SBP ~ gender + WC + alc +  creat, data = NHANES)
+mod13a_cc <- lm(formula(mod13a), data = NHANES)
 
 
-# make a dataset containing the quantiles of the posterior sample and confidence
-# intervals from the complete case analysis:
+# make a dataset containing the quantiles of the posterior sample and
+# confidence intervals from the complete case analysis:
 quantDF <- rbind(data.frame(variable = rownames(summary(mod13a)$stat),
                             type = '2.5%',
                             model = 'JointAI',
@@ -143,18 +143,17 @@ quantDF <- rbind(data.frame(variable = rownames(summary(mod13a)$stat),
 )
 
 
-# ggplot version, excluding tau_SBP from the plot:
-p13a <- densplot(mod13a, ncol = 3, use_ggplot = TRUE, joined = TRUE,
-                 subset = c(analysis_main = TRUE, tau_y = FALSE)) +
+# ggplot version:
+p13a <- densplot(mod13a, ncol = 3, use_ggplot = TRUE, joined = TRUE) +
   theme(legend.position = 'bottom')
 
 
 # add vertical lines for the:
-# - confidence intervals from the compl. case analysis
+# - confidence intervals from the complete case analysis
 # - quantiles of the posterior distribution
-
 p13a +
-  geom_vline(data = quantDF, aes(xintercept = value, color = model), lty = 2) +
+  geom_vline(data = quantDF, aes(xintercept = value, color = model),
+             lty = 2) +
   scale_color_manual(name = 'CI from model: ', 
                      limits = c('JointAI', 'cc'),
                      values = c('blue', 'red'),
@@ -172,7 +171,7 @@ chains combined, as well as the tail probability (see below) and Gelman-Rubin
 criterion (see [section below](#sec:grcrit)).
 
 Additionally, some important characteristics of the MCMC samples on which the
-summary is based, is given. This includes the range and number of iterations
+summary is based is given. This includes the range and number of iterations
 ("Sample size per chain"), thinning interval and number of chains.
 Furthermore, the number of observations (number of rows in the data) is given.
 
@@ -238,8 +237,8 @@ The use of these arguments is further explained [below](#sec:subset)).
 
 
 ## Evaluation criteria
-Convergence of the MCMC chains and precision of the posterior sample can also
-be evaluated in a more formal manner. Implemented in **JointAI** are 
+The convergence of the MCMC chains and precision of the posterior sample can also
+be evaluated more formally. Implemented in **JointAI** are 
 the Gelman-Rubin criterion for convergence^[Gelman, A. and Rubin, D.B. (1992).
 Inference from Iterative Simulation Using Multiple Sequences.
 *Statistical Science* **7**(4), 457-472. doi: 10.1214/ss/1177011136.
@@ -268,11 +267,11 @@ Besides the arguments `start`, `end`, `thin`, and `subset`, which are explained
 
 
 ### Monte Carlo Error {#sec:mcerror}
-Precision of the MCMC sample can be checked with the function
+The precision of the MCMC sample can be checked with the function
 [`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html).
 It uses the function `mcmcse.mat()` from the package [**mcmcse**](https://CRAN.R-project.org/package=mcmcse)
 to calculate the Monte Carlo error (the error that is made since the sample
-is finite) and compares is to the standard deviation of the posterior sample.
+is finite) and compares it to the standard deviation of the posterior sample.
 A rule of thumb is that the Monte Carlo error should not be more than 5% of the
 standard deviation^[Lesaffre, E. M. and A. B. Lawson (2012).
 *Bayesian Biostatistics*. John Wiley & Sons. doi: 10.1002/9781119942412.].
@@ -305,7 +304,7 @@ plot(MC_error(mod13a, end = 250))  # right panel: iterations 101:250
 By default, the functions `traceplot()`, `densplot()`, `summary()`, 
 `GR_crit()` and `MC_Error()` use all iterations of the MCMC sample and consider
 only the parameters of the analysis model (if they were monitored).
-In this section we describe how the
+In this section, we describe how the
 set of iterations and parameters to display can be changed using the
 arguments `subset`, `start`, `end` and `thin`.
 
@@ -369,22 +368,22 @@ traceplot(mod13e, subset = list(other = sample(rs, size = 12)), ncol = 4)
 With the arguments `start`, `end` and `thin` it is possible to
 select which iterations from the MCMC sample are included in the summary.
 `start` and `end` specify the first and last iterations to be used,
-`thin` the thinning interval. Specification of `start`, thus, allows to discard
+`thin` the thinning interval. Specification of `start`, thus, allows discarding
 a "burn-in", i.e., the iterations before the MCMC chain had converged.
 
 
 ## Predicted values
 Often, the aim of an analysis is not only to estimate the association between outcome
-and covariates, but to predict future outcomes or outcomes for new subjects.
+and covariates but to predict future outcomes or outcomes for new subjects.
 
 The function [`predict()`](https://nerler.github.io/JointAI/reference/predict.JointAI.html)
-allows to obtain predicted values and corresponding
+allows obtaining predicted values and corresponding
 prediction intervals from `JointAI` objects. Note that for mixed
 models, currently, only marginal prediction but not prediction conditional on
 the random effects is implemented.
 
 A dataset containing data which the prediction should be performed is specified
-via the argument `newdata`. The argument `quantiles` allows to specify the 
+via the argument `newdata`. The argument `quantiles` allows specifying the 
 quantiles of the posterior sample that are used to obtain the prediction interval
 (by default the 2.5% and 97.5% quantile).
 Arguments `start`, `end` and `thin` control the subset of MCMC samples used.
@@ -449,7 +448,7 @@ seed value can be specified via the argument `seed`.
 When `export_to_SPSS = TRUE` the imputed data is exported to SPSS, i.e., 
 a `.txt` file containing the data and a `.sps` file containing SPSS syntax to 
 convert the data into an SPSS data file (with ending `.sav`) are written.
-Arguments `filename` and `resdir` allow to specify the name of the `.txt` and
+Arguments `filename` and `resdir` allow the specification of the name of the `.txt` and
 `.sps` file and the directory they are written to.
 
 `get_MIdat()` returns a long-format `data.frame` containing the imputed datasets
@@ -464,7 +463,7 @@ impDF <- get_MIdat(mod13d, m = 10, seed = 2018)
 
 The function `plot_imp_distr()` allows to visually compare the distribution
 of the observed and imputed values.
-```{r}
+```{r, fig.width = 7, fig.height = 2.5}
 plot_imp_distr(impDF, nrow = 1)
 ```
 

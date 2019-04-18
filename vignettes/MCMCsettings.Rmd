@@ -31,7 +31,7 @@ The sampling is done by the software [JAGS](http://mcmc-jags.sourceforge.net/)
 which performs [Gibbs](https://en.wikipedia.org/wiki/Gibbs_sampling) sampling.
 **JointAI** pre-processes the data to get it into a form that can be
 passed to JAGS and writes the JAGS model. The R package 
-[**rjags**](https://CRAN.R-project.org/package=rjags) is used as interface
+[**rjags**](https://CRAN.R-project.org/package=rjags) is used as an interface
 to JAGS.
 
 Here, we describe how to specify the arguments in the main functions that
@@ -39,7 +39,7 @@ control MCMC related settings.
 To learn more about how to specify the other arguments in **JointAI** models,
 check out the vignette on [*Model Specification*](https://nerler.github.io/JointAI/articles/ModelSpecification.html).
 
-In this vignette we use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
+In this vignette, we use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
 data for examples in cross-sectional data and the 
 dataset [simLong](https://nerler.github.io/JointAI/reference/simLong.html) for
 examples in longitudinal data.
@@ -49,7 +49,7 @@ in which the distributions of variables and missing values in both sets is
 explored.
 
 **Note:**<br>
-In many of the examples we use `progress.bar = 'none'` which prevents printing 
+In many of the examples, we use `progress.bar = 'none'` which prevents printing 
 of the progress of the MCMC sampling, since this would result in lengthy output
 in the vignette.
 
@@ -77,13 +77,13 @@ And some other parameters passed to functions from **rjags**:
 
 ## Chains and Iterations
 In MCMC sampling, values are drawn from a probability distribution.
-The distribution the current value is drawn from depends on the previously
+The distribution of the current value is drawn from depends on the previously
 drawn value (but not on values before that).
 Values, thus, form a chain. Once the chain has converged, its elements can be seen
 as a sample from the target posterior distribution.
 
 ### Number of chains
-To evaluate convergence of MCMC chains it is helpful to create multiple
+To evaluate the convergence of MCMC chains it is helpful to create multiple
 chains, that have different starting values.
 The argument `n.chains` selects the number of chains (by default, `n.chains = 3`).
 
@@ -109,7 +109,7 @@ have sufficient precision depends on the complexity of data and model, and may
 range from as few as 100 to several million.
 
 #### Side note: How to evaluate convergence?
-Convergence can for instance be evaluated visually using a 
+Convergence can, for instance, be evaluated visually using a 
 [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html) 
 or using the Gelman-Rubin diagnostic criterion^[
 Gelman, A., Meng, X. L., & Stern, H. (1996). Posterior predictive assessment 
@@ -120,10 +120,10 @@ The latter compares within and between chain variability and requires the
 JointAI object to have at least two chains.
 
 #### Side note: How to check precision?
-Precision of the MCMC sample can be checked with the function 
+The precision of the MCMC sample can be checked with the function 
 [`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html).
 It calculates the Monte Carlo error (the error that is made since the sample
-is finite) and compares is to the standard deviation of the posterior sample.
+is finite) and compares it to the standard deviation of the posterior sample.
 A rule of thumb is that the Monte Carlo error should not be more than 5% of the
 standard deviation.^[See p. 195 of Lesaffre, E., & Lawson, A. B. (2012).
 Bayesian Biostatistics. John Wiley & Sons.]
@@ -136,7 +136,7 @@ it may take many iterations before a sample is created that sufficiently
 represents the whole range of the posterior distribution.
 
 Processing of such long chains can be slow and take a lot of memory.
-The parameter `thin` allows to specify if and how much the MCMC chains should
+The parameter `thin` allows to user to specify if and how much the MCMC chains should
 be thinned out before storing them. By default `thin = 1` is used,
 which corresponds to keeping all values. A value `thin = 10` would result in
 keeping every 10th value and discarding all other values.
@@ -194,7 +194,7 @@ which the user has specified that they should be monitored. This is also the
 case in **JointAI**.
 
 ### What are nodes?
-Nodes are variables in the Bayesian framework, i.e., everything that is observed
+Nodes are variables in the Bayesian framework, i.e., everything observed
 or unobserved.
 This includes the data and parameters that are estimated, but also missing values in the
 data or parts of the data that are generally unobserved, such as random effects
@@ -219,7 +219,7 @@ The argument `seed` allows the specification of a seed value with which the
 starting values of the random number generator can be reproduced.
 
 
-### User specified initial values
+### User-specified initial values
 It is possible to supply initial values directly as
 
 * a list or
@@ -229,7 +229,7 @@ Initial values can be specified for every unobserved node, that is, parameters
 and missing values, but it is possible to only specify initial values for a 
 subset of nodes.
 
-Unless the user specified initial values contain initial values for the
+Unless the user-specified initial values contain initial values for the
 random number generator (named `.RNG.name` and `.RNG.seed`), **JointAI** will
 add these to the initial values. This is necessary for reproducibility of the
 results but also when the MCMC chains are sampled in parallel (i.e, when 
@@ -314,25 +314,30 @@ coef(mod4c$model)
 mod4c <- lme_imp(bmi ~ time + HEIGHT_M + hc + SMOKE, random = ~ time | ID,
                  data = simLong, no_model = 'time', progress.bar = 'none')
 
+options(max.print = 1e5)
 a4 <- capture.output(coef(mod4c$model))
 cat(
-  paste0(paste(a4[1:14], collapse = "\n"), # start
+  paste0(paste(a4[1:13], collapse = "\n"), # start & begin Xc
          '\n\n[...]\n\n',
-         paste(a4[21:24], collapse = "\n"), # values in Xc
+         paste(a4[94:96], collapse = "\n"), # values in Xc
          '\n\n[...]\n\n',
-         paste(a4[510:516], collapse = "\n"), # end Xc
+         paste(a4[211:217], collapse = "\n"), # end Xc
          '\n\n[...]\n\n',
-         paste(a4[550:555], collapse = "\n"), # values Xcat
+         paste(a4[354:358], collapse = "\n"), # values Xcat
          '\n\n[...]\n\n',
-         paste(a4[1012:1022], collapse = "\n"), # end Xcat; alpha; begin b
+         paste(a4[414:425], collapse = "\n"), # end Xcat; begin Xl
          '\n\n[...]\n\n',
-         paste(a4[1515:1524], collapse = "\n"), # end b; start b_hc
+         paste(a4[2817:2826], collapse = "\n"), # end Xl; alpha; begin b
          '\n\n[...]\n\n',
-         paste(a4[2018:2045], collapse = "\n"), # end b_hc; betas, delta, gamma, invD, begin mu_b
+         paste(a4[3024:3029], collapse = "\n"), # end b; start b_hc
          '\n\n[...]\n\n',
-         paste(a4[2540:2546], collapse = "\n"), # end mu_b; begin mu_b_hc
+         paste(a4[3226:3233], collapse = "\n"), # end b_hc; betas, begin bmi
          '\n\n[...]\n\n',
-         paste(a4[3042:3053], collapse = "\n")
+         paste(a4[3301:3322], collapse = "\n"), # end bmi, delta, gamma, invD, begin mu_b
+         '\n\n[...]\n\n',
+         paste(a4[3520:3525], collapse = "\n"), # end mu_b; begin mu_b_hc
+         '\n\n[...]\n\n',
+         paste(a4[3723:3053], collapse = "\n")
   )
 )
 
@@ -362,12 +367,21 @@ since these are fixed in the data.
 The following element in the output of `coef(mod4c$model)` is `Xc`, 
 the fixed effects design matrix containing baseline covariates.
 The corresponding matrix in the data is
-```{r}
-head(mod4c$data_list$Xc, 15)
+```{r, eval = FALSE}
+mod4c$data_list$Xc[81:85, ]
+```
+
+```{r, echo = FALSE}
+mat <- mod4c$data_list$Xc[81:85, ]
+colnames(mat) <- gsub("SMOKEsmoked until pregnancy was known",
+                      "SMOKEsmoked until[...]",
+                      gsub("SMOKEcontinued smoking in pregnancy",
+                           "SMOKEcontin[...]", colnames(mat)))
+mat
 ```
 
 Again, the matrix `Xc` in the initial values has the same dimension as `Xc` in the
-data, and values where there are missing values in `Xc`, e.g., `Xc[11, 2]` and
+data, and values where there are missing values in `Xc`, e.g., `Xc[83, 2]` and
 `NA` elsewhere.
 There are no initial values specified for the third and fourth column, since
 these columns contain the dummy variables corresponding to the categorical 
