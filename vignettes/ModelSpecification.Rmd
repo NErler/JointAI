@@ -885,7 +885,7 @@ When a vector of variable names is supplied to `scale_vars`, only those
 variables are scaled.
 
 By default, only the MCMC samples that is scaled back to the scale of the data
-is returned by **JointAI**. When the argument `keep_scaled_mcmc = TRUE` also
+is stored in a `JointAI` object. When the argument `keep_scaled_mcmc = TRUE` also
 the scaled sample is kept.
 
 

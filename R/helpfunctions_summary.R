@@ -66,7 +66,7 @@ print_type <- function(x) {
               lme = "Linear mixed model",
               glme = 'Generalized linear mixed model',
               coxph = 'Cox proportional hazards model',
-              survreg = 'Weibul survival model',
+              survreg = 'Weibull survival model',
               clm = 'Cumulative logit model',
               clmm = 'Cumulative logit mixed model'
   )
