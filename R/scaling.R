@@ -50,8 +50,13 @@ scale_matrix <- function(X, scale_vars, scale_pars, models) {
 
 
 get_scaling <- function(Mlist, scale_pars, models, data) {
-  varnams <- unique(unlist(strsplit(colnames(model.matrix(Mlist$fixed2, data)),
-                                    "[:|*]")))
+  ##### bugfix
+  # varnams <- unique(unlist(strsplit(colnames(model.matrix(Mlist$fixed2, data)),
+  #                                   "[:|*]")))
+
+  varnams <- unique(unlist(strsplit(unlist(Mlist$names_main), "[:|*]")))
+
+  ##### end bugfix
   scale_pars_new <- if (!is.null(Mlist$scale_vars))
     matrix(nrow = 2, ncol = length(varnams),
            data = c(1, 0),

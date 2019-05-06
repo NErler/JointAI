@@ -10,7 +10,7 @@
 * bugfix in ridge regression (gave an error message)
 * bugfix in recognition of binary factors that are coded as numeric and have missing values
 * bugfix in `summary`: range of iterations is printed correctly now when argument `end` is used
- 
+* bugfix: error that occured in re-scaling when reference category was changed is solved
 
 ## Minor changes
 * `summary()` calls `GR_crit()` with argument `autoburnin = FALSE` unless specified otherwise via `...`
