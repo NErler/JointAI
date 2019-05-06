@@ -16,7 +16,7 @@ get_coef_names <- function(Mlist, K) {
                    paste0("beta[", K[x, 1]:K[x, 2], "]")
                  }, simplify = FALSE)
         ),
-        unlist(lapply(Mlist$hc_list, function(x) {
+        unlist(lapply(Mlist$hc_list[rowSums(is.na(K[names(Mlist$hc_list), , drop = FALSE])) == 0], function(x) {
           names(x)[sapply(x, attr, 'matrix') %in% c('Xc', 'Z')]
         }))
       ),
