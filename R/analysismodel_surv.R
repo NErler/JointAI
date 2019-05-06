@@ -24,11 +24,11 @@ survreg_model <- function(Mlist, K, ...){
          tab(4), y_name, "[j] ~ dgen.gamma(1, rate_", y_name, "[j], shape_", y_name, ")", "\n",
          paste_ppc,
          tab(4), "cens[j] ~ dinterval(", y_name, "[j], ctime[j])", "\n",
-         tab(4), "log(rate_", y_name, "[j]) <- -",
+         tab(4), "log(rate_", y_name, "[j]) <- -1 * (",
          paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xc',
                          parelmts = K["Xc", 1]:K["Xc", 2],
                          cols = Mlist$cols_main$Xc, indent = indent),
-         paste_Xic
+         paste_Xic, ")"
   )
 }
 

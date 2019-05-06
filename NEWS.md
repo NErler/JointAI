@@ -18,6 +18,7 @@
 * the example data `simong` and `simWide` have changed (more variables, less subjects)
 * added check if there are incomplete covariates before setting `imp_pars = TRUE`
   (when user specified via `monitor_params` or `subset`)
+* in `survreg_imp` the sign of the regression coefficient is now opposite to match the one from `survreg`
 
 --------------------------------------------------------------------------------
 
