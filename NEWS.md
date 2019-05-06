@@ -7,7 +7,10 @@
 * enable thinning when using parallel sampling
 * matrix `Xl` is no longer included in `data_list` when it is not used in the model
 * bugfix in `subset` when specified as vector
-
+* bugfix in ridge regression (gave an error message)
+* bugfix in recognition of binary factors that are coded as numeric and have missing values
+* bugfix in `summary`: range of iterations is printed correctly now when argument `end` is used
+ 
 
 ## Minor changes
 * `summary()` calls `GR_crit()` with argument `autoburnin = FALSE` unless specified otherwise via `...`
