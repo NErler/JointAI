@@ -50,7 +50,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
                       dimnames = list(subj = c(), time = c()))
     for (j in 1:(length(etimes) - 1)) {
       Y[, j] <- ifelse(y - etimes[j] + defs$coxph['eps'] > 0, 1, 0)
-      dN[, j] <- Y[, j] * ifelse(etimes[j + 1] - y - defs$coxph['eps'] > 0, 1, 0) * (as.numeric(unlist(Mlist$cens)) - 1)
+      dN[, j] <- Y[, j] * ifelse(etimes[j + 1] - y - defs$coxph['eps'] > 0, 1, 0) * unlist(Mlist$cens)
     }
 
     priorhaz <- numeric(length(etimes) - 1)

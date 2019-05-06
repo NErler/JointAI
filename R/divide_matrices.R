@@ -22,7 +22,14 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   if (analysis_type %in% c('survreg', 'coxph')) {
     if (length(outnam) == 2) {
       y <- data[, outnam[1], drop = FALSE]
-      cens <- data[, outnam[2], drop = FALSE]
+      cens <- sapply(data[, outnam[2], drop = FALSE],
+                     function(x) {
+                       if (is.factor(x)) {
+                         as.numeric(x) - 1
+                       } else if (is.logical(x)) {
+                         as.numeric(d)
+                       } else  x
+                     })
     } else {
       stop("Expected two outcome variables.")
     }
