@@ -280,13 +280,13 @@ contains some examples how to specify the argument <code>subset</code>.</p></div
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'>This is new software. Please report any bugs to the package maintainer.</span></div><div class='input'>
 <span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                est  MCSE    SD MCSE/SD
-#&gt; (Intercept)  35.15 1.361 23.68   0.057
-#&gt; C1          -26.55 0.964 16.53   0.058
-#&gt; C2            0.91 0.028  0.65   0.043
-#&gt; M22          -0.36 0.064  0.66   0.098
-#&gt; M23           0.11 0.069  0.66   0.105
-#&gt; M24          -1.08 0.070  0.67   0.104
-#&gt; sigma_y       2.23 0.010  0.16   0.065</div><div class='input'>
+#&gt; (Intercept)  34.70 0.943 23.74   0.040
+#&gt; C1          -26.22 0.654 16.57   0.039
+#&gt; C2            0.99 0.036  0.65   0.056
+#&gt; M22          -0.38 0.029  0.65   0.044
+#&gt; M23           0.13 0.036  0.67   0.054
+#&gt; M24          -1.16 0.041  0.66   0.062
+#&gt; sigma_y       2.22 0.007  0.15   0.046</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'>MC_error</span>(<span class='no'>mod</span>), <span class='kw'>ablinepars</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='img'><img src='MC_error-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>

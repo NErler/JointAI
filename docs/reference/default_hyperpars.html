@@ -285,20 +285,23 @@ with output elements</p><table class='table'>
 #&gt;             0e+00             1e-04             0e+00             1e-04 
 #&gt; 
 #&gt; $Z
-#&gt; function (nranef) 
-#&gt; {
-#&gt;     if (nranef &gt; 1) {
+#&gt; function(nranef) {
+#&gt;       if (nranef &gt; 1) {
 #&gt;         RinvD &lt;- diag(as.numeric(rep(NA, nranef)))
 #&gt;         KinvD &lt;- nranef
-#&gt;     }
-#&gt;     else {
+#&gt;       } else {
 #&gt;         RinvD &lt;- KinvD &lt;- NULL
+#&gt;       }
+#&gt; 
+#&gt;       list(
+#&gt;         RinvD = RinvD,
+#&gt;         KinvD = KinvD,
+#&gt;         shape_diag_RinvD = 0.1,
+#&gt;         rate_diag_RinvD = 0.01
+#&gt;       )
 #&gt;     }
-#&gt;     list(RinvD = RinvD, KinvD = KinvD, shape_diag_RinvD = 0.1, 
-#&gt;         rate_diag_RinvD = 0.01)
-#&gt; }
-#&gt; &lt;bytecode: 0x000000001639aa18&gt;
-#&gt; &lt;environment: 0x0000000020690448&gt;
+#&gt; &lt;bytecode: 0x00000000160fa080&gt;
+#&gt; &lt;environment: 0x0000000022ddd060&gt;
 #&gt; 
 #&gt; $surv
 #&gt;  mu_reg_surv tau_reg_surv 

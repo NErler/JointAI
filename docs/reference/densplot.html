@@ -272,7 +272,11 @@ contains some examples how to specify the argument <code>subset</code>.</p></div
                             <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>mod</span>)$<span class='no'>stats</span>[, <span class='st'>"97.5%"</span>], <span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>2</span>)))</div><div class='img'><img src='densplot-3.png' alt='' width='700' height='433' /></div><div class='input'>
 
 <span class='co'># Example 4: ggplot version</span>
-<span class='fu'>densplot</span>(<span class='no'>mod</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='densplot-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>densplot</span>(<span class='no'>mod</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'ggplot2':</span>
+#&gt; <span class='message'>  method         from </span>
+#&gt; <span class='message'>  [.quosures     rlang</span>
+#&gt; <span class='message'>  c.quosures     rlang</span>
+#&gt; <span class='message'>  print.quosures rlang</span></div><div class='img'><img src='densplot-4.png' alt='' width='700' height='433' /></div><div class='input'>
 
 <span class='co'># Example 5: changing how the ggplot version looks (using standard ggplot syntax)</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)

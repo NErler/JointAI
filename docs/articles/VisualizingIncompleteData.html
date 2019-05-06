@@ -112,7 +112,7 @@
       <h1>Visualizing Incomplete Data</h1>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2019-04-18</h4>
+            <h4 class="date">2019-05-06</h4>
       
       
       <div class="hidden name"><code>VisualizingIncompleteData.Rmd</code></div>
@@ -170,7 +170,12 @@
 <h2 class="hasAnchor">
 <a href="#missing-data-pattern" class="anchor"></a>Missing Data Pattern</h2>
 <p>The pattern of the missing data can be visualized with the function <code><a href="../reference/md_pattern.html">md_pattern()</a></code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/md_pattern.html">md_pattern</a></span>(NHANES)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/md_pattern.html">md_pattern</a></span>(NHANES)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; Registered S3 methods overwritten by 'ggplot2':</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt;   method         from </span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt;   [.quosures     rlang</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt;   c.quosures     rlang</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt;   print.quosures rlang</span></a></code></pre></div>
 <p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p>In the resulting plot, variables are given in the columns and each row corresponds to one pattern of missingness across the variables. The numbers on the right margin give the number of cases per pattern. Underneath the plot, the number of missing values per variable is given. Columns are automatically sorted by number of missing values, rows by number of cases per pattern.</p>
 <p>The plot is generated with the help of <a href="https://ggplot2.tidyverse.org/"><code>ggplot()</code></a>, and, hence, the package <a href="https://CRAN.R-project.org/package=ggplot2"><strong>ggplot2</strong></a> needs to be installed. By setting <code>plot = FALSE</code>, no plot will be generated (and then <strong>ggplot2</strong> is not required).</p>

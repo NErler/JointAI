@@ -160,6 +160,11 @@
 <li>enable thinning when using parallel sampling</li>
 <li>matrix <code>Xl</code> is no longer included in <code>data_list</code> when it is not used in the model</li>
 <li>bugfix in <code>subset</code> when specified as vector</li>
+<li>bugfix in ridge regression (gave an error message)</li>
+<li>bugfix in recognition of binary factors that are coded as numeric and have missing values</li>
+<li>bugfix in <code>summary</code>: range of iterations is printed correctly now when argument <code>end</code> is used</li>
+<li>bugfix: error that occured in re-scaling when reference category was changed is solved</li>
+<li>bugfix in survival models: coding of censoring variable fixed</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level2">
@@ -172,6 +177,8 @@
 <li>when <code>inits</code> is specified as a function, the function is evaluated and the resulting list passed to JAGS (previously the function was passed to JAGS)</li>
 <li>the example data <code>simong</code> and <code>simWide</code> have changed (more variables, less subjects)</li>
 <li>added check if there are incomplete covariates before setting <code>imp_pars = TRUE</code> (when user specified via <code>monitor_params</code> or <code>subset</code>)</li>
+<li>in <code>survreg_imp</code> the sign of the regression coefficient is now opposite to match the one from <code>survreg</code>
+</li>
 </ul>
 <hr>
 </div>

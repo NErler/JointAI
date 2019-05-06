@@ -112,7 +112,7 @@
       <h1>Model Specification</h1>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2019-04-18</h4>
+            <h4 class="date">2019-05-06</h4>
       
       
       <div class="hidden name"><code>ModelSpecification.Rmd</code></div>
@@ -670,16 +670,16 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <a class="sourceLine" id="cb21-7" title="7"><span class="co">#&gt;     auxvars = c("educ", "smoke"), progress.bar = "none")</span></a>
 <a class="sourceLine" id="cb21-8" title="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb21-9" title="9"><span class="co">#&gt; Posterior summary:</span></a>
-<a class="sourceLine" id="cb21-10" title="10"><span class="co">#&gt;                          Mean     SD   2.5%   97.5% tail-prob. GR-crit</span></a>
-<a class="sourceLine" id="cb21-11" title="11"><span class="co">#&gt; (Intercept)           105.430 3.5132 98.607 111.438    0.00000    1.03</span></a>
-<a class="sourceLine" id="cb21-12" title="12"><span class="co">#&gt; genderfemale           -5.519 2.0521 -9.937  -1.643    0.00667    1.02</span></a>
-<a class="sourceLine" id="cb21-13" title="13"><span class="co">#&gt; age                     0.379 0.0778  0.238   0.531    0.00000    1.02</span></a>
-<a class="sourceLine" id="cb21-14" title="14"><span class="co">#&gt; occuplooking for work   4.000 6.7488 -8.792  16.823    0.59333    1.00</span></a>
-<a class="sourceLine" id="cb21-15" title="15"><span class="co">#&gt; occupnot working       -0.494 2.5444 -4.874   4.987    0.86667    1.04</span></a>
+<a class="sourceLine" id="cb21-10" title="10"><span class="co">#&gt;                          Mean     SD    2.5%   97.5% tail-prob. GR-crit</span></a>
+<a class="sourceLine" id="cb21-11" title="11"><span class="co">#&gt; (Intercept)           105.729 3.1453  99.626 111.656     0.0000   0.997</span></a>
+<a class="sourceLine" id="cb21-12" title="12"><span class="co">#&gt; genderfemale           -5.657 2.1894  -9.781  -1.468     0.0133   1.026</span></a>
+<a class="sourceLine" id="cb21-13" title="13"><span class="co">#&gt; age                     0.374 0.0686   0.247   0.501     0.0000   0.998</span></a>
+<a class="sourceLine" id="cb21-14" title="14"><span class="co">#&gt; occuplooking for work   3.676 6.8658 -10.085  16.907     0.6133   1.006</span></a>
+<a class="sourceLine" id="cb21-15" title="15"><span class="co">#&gt; occupnot working       -0.546 2.6560  -5.719   4.690     0.8533   1.002</span></a>
 <a class="sourceLine" id="cb21-16" title="16"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb21-17" title="17"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
 <a class="sourceLine" id="cb21-18" title="18"><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></a>
-<a class="sourceLine" id="cb21-19" title="19"><span class="co">#&gt; sigma_SBP 14.4 0.707   13  15.8    1.01</span></a>
+<a class="sourceLine" id="cb21-19" title="19"><span class="co">#&gt; sigma_SBP 14.4 0.721 13.2    16    1.01</span></a>
 <a class="sourceLine" id="cb21-20" title="20"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb21-21" title="21"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb21-22" title="22"><span class="co">#&gt; MCMC settings:</span></a>
@@ -833,28 +833,31 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <a class="sourceLine" id="cb31-32" title="32"><span class="co">#&gt;             0e+00             1e-04             0e+00             1e-04 </span></a>
 <a class="sourceLine" id="cb31-33" title="33"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb31-34" title="34"><span class="co">#&gt; $Z</span></a>
-<a class="sourceLine" id="cb31-35" title="35"><span class="co">#&gt; function (nranef) </span></a>
-<a class="sourceLine" id="cb31-36" title="36"><span class="co">#&gt; {</span></a>
-<a class="sourceLine" id="cb31-37" title="37"><span class="co">#&gt;     if (nranef &gt; 1) {</span></a>
-<a class="sourceLine" id="cb31-38" title="38"><span class="co">#&gt;         RinvD &lt;- diag(as.numeric(rep(NA, nranef)))</span></a>
-<a class="sourceLine" id="cb31-39" title="39"><span class="co">#&gt;         KinvD &lt;- nranef</span></a>
-<a class="sourceLine" id="cb31-40" title="40"><span class="co">#&gt;     }</span></a>
-<a class="sourceLine" id="cb31-41" title="41"><span class="co">#&gt;     else {</span></a>
-<a class="sourceLine" id="cb31-42" title="42"><span class="co">#&gt;         RinvD &lt;- KinvD &lt;- NULL</span></a>
-<a class="sourceLine" id="cb31-43" title="43"><span class="co">#&gt;     }</span></a>
-<a class="sourceLine" id="cb31-44" title="44"><span class="co">#&gt;     list(RinvD = RinvD, KinvD = KinvD, shape_diag_RinvD = 0.1, </span></a>
-<a class="sourceLine" id="cb31-45" title="45"><span class="co">#&gt;         rate_diag_RinvD = 0.01)</span></a>
-<a class="sourceLine" id="cb31-46" title="46"><span class="co">#&gt; }</span></a>
-<a class="sourceLine" id="cb31-47" title="47"><span class="co">#&gt; &lt;bytecode: 0x000000001a572908&gt;</span></a>
-<a class="sourceLine" id="cb31-48" title="48"><span class="co">#&gt; &lt;environment: 0x000000001b17f3b8&gt;</span></a>
-<a class="sourceLine" id="cb31-49" title="49"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb31-50" title="50"><span class="co">#&gt; $surv</span></a>
-<a class="sourceLine" id="cb31-51" title="51"><span class="co">#&gt;  mu_reg_surv tau_reg_surv </span></a>
-<a class="sourceLine" id="cb31-52" title="52"><span class="co">#&gt;        0.000        0.001 </span></a>
-<a class="sourceLine" id="cb31-53" title="53"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb31-54" title="54"><span class="co">#&gt; $coxph</span></a>
-<a class="sourceLine" id="cb31-55" title="55"><span class="co">#&gt;     c     r   eps </span></a>
-<a class="sourceLine" id="cb31-56" title="56"><span class="co">#&gt; 1e-03 1e-01 1e-10</span></a></code></pre></div>
+<a class="sourceLine" id="cb31-35" title="35"><span class="co">#&gt; function(nranef) {</span></a>
+<a class="sourceLine" id="cb31-36" title="36"><span class="co">#&gt;       if (nranef &gt; 1) {</span></a>
+<a class="sourceLine" id="cb31-37" title="37"><span class="co">#&gt;         RinvD &lt;- diag(as.numeric(rep(NA, nranef)))</span></a>
+<a class="sourceLine" id="cb31-38" title="38"><span class="co">#&gt;         KinvD &lt;- nranef</span></a>
+<a class="sourceLine" id="cb31-39" title="39"><span class="co">#&gt;       } else {</span></a>
+<a class="sourceLine" id="cb31-40" title="40"><span class="co">#&gt;         RinvD &lt;- KinvD &lt;- NULL</span></a>
+<a class="sourceLine" id="cb31-41" title="41"><span class="co">#&gt;       }</span></a>
+<a class="sourceLine" id="cb31-42" title="42"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb31-43" title="43"><span class="co">#&gt;       list(</span></a>
+<a class="sourceLine" id="cb31-44" title="44"><span class="co">#&gt;         RinvD = RinvD,</span></a>
+<a class="sourceLine" id="cb31-45" title="45"><span class="co">#&gt;         KinvD = KinvD,</span></a>
+<a class="sourceLine" id="cb31-46" title="46"><span class="co">#&gt;         shape_diag_RinvD = 0.1,</span></a>
+<a class="sourceLine" id="cb31-47" title="47"><span class="co">#&gt;         rate_diag_RinvD = 0.01</span></a>
+<a class="sourceLine" id="cb31-48" title="48"><span class="co">#&gt;       )</span></a>
+<a class="sourceLine" id="cb31-49" title="49"><span class="co">#&gt;     }</span></a>
+<a class="sourceLine" id="cb31-50" title="50"><span class="co">#&gt; &lt;bytecode: 0x000000001008fa70&gt;</span></a>
+<a class="sourceLine" id="cb31-51" title="51"><span class="co">#&gt; &lt;environment: 0x000000000617ee78&gt;</span></a>
+<a class="sourceLine" id="cb31-52" title="52"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb31-53" title="53"><span class="co">#&gt; $surv</span></a>
+<a class="sourceLine" id="cb31-54" title="54"><span class="co">#&gt;  mu_reg_surv tau_reg_surv </span></a>
+<a class="sourceLine" id="cb31-55" title="55"><span class="co">#&gt;        0.000        0.001 </span></a>
+<a class="sourceLine" id="cb31-56" title="56"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb31-57" title="57"><span class="co">#&gt; $coxph</span></a>
+<a class="sourceLine" id="cb31-58" title="58"><span class="co">#&gt;     c     r   eps </span></a>
+<a class="sourceLine" id="cb31-59" title="59"><span class="co">#&gt; 1e-03 1e-01 1e-10</span></a></code></pre></div>
 <p>To change the hyperparameters in a <strong>JointAI</strong> model, the list obtained from <code><a href="../reference/default_hyperpars.html">default_hyperpars()</a></code> can be edited and passed to the argument <code>hyperpars</code> in the main functions <code>*_imp()</code>.</p>
 <p><code>mu_reg_*</code> and <code>tau_reg_*</code> refer to the mean and precision in the distribution for regression coefficients. <code>shape_tau_*</code> and <code>rate_tau_*</code> are the shape and rate parameters of a Gamma distribution that is used has prior for precision parameters. <code>RinvD</code> is the scale matrix in the Wishart prior for the inverse of the random effects design matrix <code>D</code>, and <code>KinvD</code> the number of degrees of freedom in that distribution. <code>shape_diag_RinvD</code> and <code>rate_diag_RinvD</code> are the scale and rate parameters of the Gamma prior of the diagonal elements of <code>RinvD</code>. In random effects models with only one random effect, instead of the Wishart distribution a Gamma prior is used for the inverse of <code>D</code>.</p>
 </div>

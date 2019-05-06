@@ -167,7 +167,12 @@
 <a class="sourceLine" id="cb3-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/par">par</a></span>(<span class="dt">mar =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">2.5</span>, <span class="dv">3</span>, <span class="fl">2.5</span>, <span class="dv">1</span>), <span class="dt">mgp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="fl">0.8</span>, <span class="dv">0</span>))</a>
 <a class="sourceLine" id="cb3-4" title="4"><span class="kw"><a href="reference/plot_all.html">plot_all</a></span>(NHANES[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">5</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">8</span><span class="op">:</span><span class="dv">12</span>)], <span class="dt">fill =</span> <span class="st">'#18bc9c'</span>, <span class="dt">border =</span> <span class="st">'#2C3E50'</span>, <span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">nclass =</span> <span class="dv">30</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/md_pattern.html">md_pattern</a></span>(NHANES, <span class="dt">color =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'#2C3E50'</span>, <span class="st">'#18bc9c'</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/md_pattern.html">md_pattern</a></span>(NHANES, <span class="dt">color =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'#2C3E50'</span>, <span class="st">'#18bc9c'</span>))</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; Registered S3 methods overwritten by 'ggplot2':</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt;   method         from </span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt;   [.quosures     rlang</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt;   c.quosures     rlang</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt;   print.quosures rlang</span></a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div id="fit-a-linear-regression-model-with-incomplete-covariates" class="section level3">
@@ -197,17 +202,17 @@
 <a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; Posterior summary:</span></a>
 <a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt;                Mean     SD     2.5%   97.5% tail-prob. GR-crit</span></a>
-<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; (Intercept)  88.350 8.7018  72.5372 105.511    0.00000    1.00</span></a>
-<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; genderfemale -3.365 2.2246  -7.8899   0.952    0.10667    1.01</span></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; age           0.332 0.0699   0.1959   0.472    0.00000    1.01</span></a>
-<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; WC            0.225 0.0717   0.0822   0.365    0.00133    1.02</span></a>
-<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; alc&gt;=1        6.481 2.3272   1.5382  10.915    0.00800    1.00</span></a>
-<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; educhigh     -2.902 2.1353  -7.0676   1.274    0.18267    1.00</span></a>
-<a class="sourceLine" id="cb8-17" title="17"><span class="co">#&gt; bili         -5.413 4.9590 -15.4449   3.982    0.28267    1.01</span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; (Intercept)  87.658 9.1176  69.2026 105.598    0.00000    1.01</span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; genderfemale -3.440 2.2311  -7.8685   0.818    0.12400    1.00</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; age           0.333 0.0694   0.1996   0.467    0.00000    1.00</span></a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; WC            0.230 0.0746   0.0801   0.382    0.00400    1.01</span></a>
+<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; alc&gt;=1        6.474 2.3411   1.7598  10.993    0.00667    1.01</span></a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; educhigh     -2.759 2.1511  -6.9137   1.431    0.18133    1.01</span></a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="co">#&gt; bili         -5.267 4.8470 -14.6441   3.985    0.26933    1.01</span></a>
 <a class="sourceLine" id="cb8-18" title="18"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-19" title="19"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
 <a class="sourceLine" id="cb8-20" title="20"><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></a>
-<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt; sigma_SBP 13.6 0.713 12.2    15       1</span></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt; sigma_SBP 13.5 0.717 12.3  15.1    1.01</span></a>
 <a class="sourceLine" id="cb8-22" title="22"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-23" title="23"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-24" title="24"><span class="co">#&gt; MCMC settings:</span></a>
@@ -219,20 +224,20 @@
 <a class="sourceLine" id="cb8-30" title="30"><span class="co">#&gt; Number of observations: 186</span></a></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/coef">coef</a></span>(lm1)</a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="co">#&gt;  (Intercept) genderfemale          age           WC       alc&gt;=1 </span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="co">#&gt;   88.3500525   -3.3654388    0.3321829    0.2246888    6.4813489 </span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="co">#&gt;   87.6582921   -3.4396226    0.3329556    0.2295846    6.4736664 </span></a>
 <a class="sourceLine" id="cb9-4" title="4"><span class="co">#&gt;     educhigh         bili </span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="co">#&gt;   -2.9016089   -5.4127214</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="co">#&gt;   -2.7589268   -5.2673664</span></a>
 <a class="sourceLine" id="cb9-6" title="6"></a>
 <a class="sourceLine" id="cb9-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/confint">confint</a></span>(lm1)</a>
 <a class="sourceLine" id="cb9-8" title="8"><span class="co">#&gt;                      2.5%       97.5%</span></a>
-<a class="sourceLine" id="cb9-9" title="9"><span class="co">#&gt; (Intercept)   72.53719205 105.5110394</span></a>
-<a class="sourceLine" id="cb9-10" title="10"><span class="co">#&gt; genderfemale  -7.88991093   0.9516119</span></a>
-<a class="sourceLine" id="cb9-11" title="11"><span class="co">#&gt; age            0.19590241   0.4722650</span></a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="co">#&gt; WC             0.08219026   0.3647989</span></a>
-<a class="sourceLine" id="cb9-13" title="13"><span class="co">#&gt; alc&gt;=1         1.53817543  10.9152868</span></a>
-<a class="sourceLine" id="cb9-14" title="14"><span class="co">#&gt; educhigh      -7.06755086   1.2742598</span></a>
-<a class="sourceLine" id="cb9-15" title="15"><span class="co">#&gt; bili         -15.44489983   3.9822678</span></a>
-<a class="sourceLine" id="cb9-16" title="16"><span class="co">#&gt; sigma_SBP     12.19885259  14.9746007</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-9" title="9"><span class="co">#&gt; (Intercept)   69.20255468 105.5977831</span></a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="co">#&gt; genderfemale  -7.86847224   0.8177574</span></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="co">#&gt; age            0.19959975   0.4671655</span></a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="co">#&gt; WC             0.08011188   0.3820969</span></a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="co">#&gt; alc&gt;=1         1.75983217  10.9932606</span></a>
+<a class="sourceLine" id="cb9-14" title="14"><span class="co">#&gt; educhigh      -6.91367778   1.4312201</span></a>
+<a class="sourceLine" id="cb9-15" title="15"><span class="co">#&gt; bili         -14.64410056   3.9851476</span></a>
+<a class="sourceLine" id="cb9-16" title="16"><span class="co">#&gt; sigma_SBP     12.25375214  15.0548165</span></a></code></pre></div>
 </div>
 </div>
 </div>
