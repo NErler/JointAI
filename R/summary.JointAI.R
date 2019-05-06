@@ -54,7 +54,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out <- list()
   out$call <- object$call
   out$start <- ifelse(is.null(start), start(object$MCMC), max(start, start(object$MCMC)))
-  out$end <- ifelse(is.null(end), end(object$MCMC), max(end, end(object$MCMC)))
+  out$end <- ifelse(is.null(end), end(object$MCMC), min(end, end(object$MCMC)))
   out$thin <- thin(object$MCMC)
   out$nchain <- nchain(object$MCMC)
   out$stats <- stats
