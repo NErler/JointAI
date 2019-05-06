@@ -333,11 +333,11 @@ cat(
          '\n\n[...]\n\n',
          paste(a4[3226:3233], collapse = "\n"), # end b_hc; betas, begin bmi
          '\n\n[...]\n\n',
-         paste(a4[3284:3305], collapse = "\n"), # end bmi, delta, gamma, invD, invD_hc, begin mu_b
+         paste(a4[3310:3331], collapse = "\n"), # end bmi, delta, gamma, invD, invD_hc, begin mu_b
          '\n\n[...]\n\n',
-         paste(a4[3502:3510], collapse = "\n"), # end mu_b; begin mu_b_hc
+         paste(a4[3528:3534], collapse = "\n"), # end mu_b; begin mu_b_hc
          '\n\n[...]\n\n',
-         paste(a4[3705:3716], collapse = "\n")
+         paste(a4[3732:3742], collapse = "\n")
   )
 )
 
