@@ -372,7 +372,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   # * convert continuous variable with 2 different values to factor ------------
   for (k in allvars) {
-    if (all(class(data[, k]) != 'factor') & length(unique(data[, k])) == 2) {
+    if (all(class(data[, k]) != 'factor') & length(unique(na.omit(data[, k]))) == 2) {
       data[, k] <- factor(data[, k])
       if (mess)
         message(gettextf('The variable %s was converted to a factor.',
