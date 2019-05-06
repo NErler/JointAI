@@ -27,7 +27,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
                        if (is.factor(x)) {
                          as.numeric(x) - 1
                        } else if (is.logical(x)) {
-                         as.numeric(d)
+                         as.numeric(x)
                        } else  x
                      })
     } else {
