@@ -99,7 +99,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
   if (any(models %in% c('norm', 'lognorm', 'lme', 'lmm')) | (family == 'gaussian' & !Mlist$ridge))
     l <- c(l, defs$norm)
   else if (family == 'gaussian' & Mlist$ridge)
-    l <- c(l, defs$norm["mu_reg_norm", "shape_tau_norm", "rate_tau_norm"])
+    l <- c(l, defs$norm[c("mu_reg_norm", "shape_tau_norm", "rate_tau_norm")])
 
 
   if ((family == 'binomial' & link == 'logit' & !Mlist$ridge) | any(models %in% c('logit', 'glmm_logit')))
@@ -117,7 +117,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
   if ((family == 'Gamma' & !Mlist$ridge) | any(models %in% c('gamma', 'glmm_gamma')))
     l <- c(l, defs$gamma)
   else if (family == 'Gamma' & Mlist$ridge)
-    l <- c(l, defs$gamma["mu_reg_gamma", "shape_tau_gamma", "rate_tau_gamma"])
+    l <- c(l, defs$gamma[c("mu_reg_gamma", "shape_tau_gamma", "rate_tau_gamma")])
 
 
   if ((family == 'poisson' & !Mlist$ridge) | any(models %in% c('glmm_poisson')))
@@ -129,7 +129,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
   if (family == 'ordinal' & !Mlist$ridge | any(models %in% c('clmm', "cumlogit")))
     l <- c(l, defs$ordinal)
   else if (family == 'ordinal' & Mlist$ridge)
-    l <- c(l, defs$ordinal["mu_reg_ordinal", "mu_delta_ordinal", "tau_delta_ordinal"])
+    l <- c(l, defs$ordinal[c("mu_reg_ordinal", "mu_delta_ordinal", "tau_delta_ordinal")])
   if (family == 'ordinal' & is.null(models) & all(sapply(Mlist$cols_main, is.null)))
     l$mu_reg_ordinal <- l$tau_reg_ordinal <- NULL
 
