@@ -406,7 +406,6 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     if (!setequal(names(models_user), names(models_default))) {
       models <- models_default
       models[names(models_user)] <- models_user
-      models
     }
   }
 
