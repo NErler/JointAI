@@ -317,7 +317,7 @@ mod4c <- lme_imp(bmi ~ time + HEIGHT_M + hc + SMOKE, random = ~ time | ID,
 options(max.print = 1e5)
 a4 <- capture.output(coef(mod4c$model))
 cat(
-  paste0(paste(a4[1:13], collapse = "\n"), # start & begin Xc
+  paste0(paste(a4[1:14], collapse = "\n"), # start & begin Xc
          '\n\n[...]\n\n',
          paste(a4[94:96], collapse = "\n"), # values in Xc
          '\n\n[...]\n\n',
@@ -333,11 +333,11 @@ cat(
          '\n\n[...]\n\n',
          paste(a4[3226:3233], collapse = "\n"), # end b_hc; betas, begin bmi
          '\n\n[...]\n\n',
-         paste(a4[3301:3322], collapse = "\n"), # end bmi, delta, gamma, invD, begin mu_b
+         paste(a4[3284:3305], collapse = "\n"), # end bmi, delta, gamma, invD, invD_hc, begin mu_b
          '\n\n[...]\n\n',
-         paste(a4[3520:3525], collapse = "\n"), # end mu_b; begin mu_b_hc
+         paste(a4[3502:3510], collapse = "\n"), # end mu_b; begin mu_b_hc
          '\n\n[...]\n\n',
-         paste(a4[3723:3053], collapse = "\n")
+         paste(a4[3705:3716], collapse = "\n")
   )
 )
 
