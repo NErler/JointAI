@@ -1,3 +1,9 @@
+# JointAI 0.5.1.9999
+
+## Bug fixes
+* Error message in `print.JointAI` fixed
+
+--------------------------------------------------------------------------------
 
 # JointAI 0.5.1
 

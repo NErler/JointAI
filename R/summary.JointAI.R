@@ -241,7 +241,8 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
 
 
   MCMC <- if (!is.null(x$MCMC))
-    prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL, ...)
+    prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL,
+              mess = TRUE, warn = TRUE, ...)
 
 
   cat("\nCall:\n")
