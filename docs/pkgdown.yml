@@ -2,12 +2,12 @@ pandoc: 2.7.1
 pkgdown: 1.3.0
 pkgdown_sha: ~
 articles:
-  AfterFitting: ../../../../../../../../../../../N:/Projects/JointAI/JointAI/vignettes/AfterFitting.html
-  MCMCsettings: ../../../../../../../../../../../N:/Projects/JointAI/JointAI/vignettes/MCMCsettings.html
-  MinimalExample: ../../../../../../../../../../../N:/Projects/JointAI/JointAI/vignettes/MinimalExample.html
-  ModelSpecification: ../../../../../../../../../../../N:/Projects/JointAI/JointAI/vignettes/ModelSpecification.html
-  SelectingParameters: ../../../../../../../../../../../N:/Projects/JointAI/JointAI/vignettes/SelectingParameters.html
-  VisualizingIncompleteData: ../../../../../../../../../../../N:/Projects/JointAI/JointAI/vignettes/VisualizingIncompleteData.html
+  AfterFitting: AfterFitting.html
+  MCMCsettings: MCMCsettings.html
+  MinimalExample: MinimalExample.html
+  ModelSpecification: ModelSpecification.html
+  SelectingParameters: SelectingParameters.html
+  VisualizingIncompleteData: VisualizingIncompleteData.html
 urls:
   reference: https://nerler.github.io/JointAI//reference
   article: https://nerler.github.io/JointAI//articles

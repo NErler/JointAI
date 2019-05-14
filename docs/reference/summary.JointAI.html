@@ -70,7 +70,7 @@ and credible interval (confint) for an object of class 'JointAI'." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1.9999</span>
       </span>
     </div>
 
@@ -266,17 +266,17 @@ given directly by <strong>JointAI</strong>.</p></td>
 #&gt; lm_imp(formula = y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #&gt; 
 #&gt; Posterior summary:
-#&gt;                 Mean     SD    2.5%   97.5% tail-prob. GR-crit
-#&gt; (Intercept)  35.9266 25.078 -13.167 85.0785     0.1667    1.02
-#&gt; C1          -27.0295 17.506 -61.589  7.2831     0.1467    1.02
-#&gt; C2            0.8441  0.635  -0.335  2.0417     0.1933    1.03
-#&gt; M22          -0.4536  0.680  -1.779  0.7489     0.5467    1.00
-#&gt; M23           0.0231  0.630  -1.232  1.1619     0.9667    1.06
-#&gt; M24          -1.1790  0.680  -2.572  0.0179     0.0667    1.01
+#&gt;                Mean     SD    2.5%   97.5% tail-prob. GR-crit
+#&gt; (Intercept)  34.985 23.688 -11.704 81.9519      0.147    1.05
+#&gt; C1          -26.410 16.536 -59.450  6.4219      0.120    1.05
+#&gt; C2            0.875  0.721  -0.638  2.1480      0.213    1.00
+#&gt; M22          -0.400  0.627  -1.588  0.7357      0.493    1.04
+#&gt; M23           0.121  0.593  -1.043  1.1805      0.873    1.03
+#&gt; M24          -1.217  0.633  -2.401  0.0897      0.060    1.05
 #&gt; 
 #&gt; Posterior summary of residual std. deviation:
-#&gt;         Mean    SD 2.5% 97.5% GR-crit
-#&gt; sigma_y 2.24 0.165 1.94  2.59    1.05
+#&gt;         Mean   SD 2.5% 97.5% GR-crit
+#&gt; sigma_y 2.22 0.16 1.95  2.55    1.03
 #&gt; 
 #&gt; 
 #&gt; MCMC settings:
@@ -285,15 +285,15 @@ given directly by <strong>JointAI</strong>.</p></td>
 #&gt; Thinning interval = 1 
 #&gt; Number of chains = 3 
 #&gt; 
-#&gt; Number of observations: 100 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/coef'>coef</a></span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt;  (Intercept)           C1           C2          M22          M23          M24 
-#&gt;  35.92662356 -27.02953400   0.84411974  -0.45364779   0.02310191  -1.17901466 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/confint'>confint</a></span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt;                    2.5%       97.5%
-#&gt; (Intercept) -13.1672406 85.07847609
-#&gt; C1          -61.5887206  7.28310117
-#&gt; C2           -0.3350643  2.04173199
-#&gt; M22          -1.7793492  0.74889976
-#&gt; M23          -1.2324534  1.16193443
-#&gt; M24          -2.5724005  0.01788788
-#&gt; sigma_y       1.9425775  2.58765691</div><div class='input'>
+#&gt; Number of observations: 100 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/coef'>coef</a></span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; (Intercept)          C1          C2         M22         M23         M24 
+#&gt;  34.9852609 -26.4103359   0.8753785  -0.4002128   0.1206103  -1.2172699 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/confint'>confint</a></span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt;                    2.5%      97.5%
+#&gt; (Intercept) -11.7039987 81.9518908
+#&gt; C1          -59.4500982  6.4219170
+#&gt; C2           -0.6383488  2.1479551
+#&gt; M22          -1.5880527  0.7357431
+#&gt; M23          -1.0432477  1.1804853
+#&gt; M24          -2.4010531  0.0897469
+#&gt; sigma_y       1.9473444  2.5542198</div><div class='input'>
 
 </div></pre>
   </div>

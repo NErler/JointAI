@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1.9999</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@
       <h1>MCMC Settings</h1>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2019-05-06</h4>
+            <h4 class="date">2019-05-14</h4>
       
       
       <div class="hidden name"><code>MCMCsettings.Rmd</code></div>
@@ -284,26 +284,26 @@
 <a class="sourceLine" id="cb7-6" title="6">init_list</a>
 <a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; [[1]]</span></a>
 <a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; [[1]]$beta</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; [1]  0.9619800  0.8138199 -0.8767526 -2.8637071</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; [1]  0.4342672 -0.6149186  1.0724531 -0.9924826</span></a>
 <a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt; [[1]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt; [1] 1.641371</span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt; [1] 8.284968</span></a>
 <a class="sourceLine" id="cb7-13" title="13"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-14" title="14"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt; [[2]]</span></a>
 <a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; [[2]]$beta</span></a>
-<a class="sourceLine" id="cb7-17" title="17"><span class="co">#&gt; [1]  0.3847062 -0.7578468  2.2694818 -0.2502833</span></a>
+<a class="sourceLine" id="cb7-17" title="17"><span class="co">#&gt; [1] -0.9651939 -0.5123054  0.9804101  1.1067640</span></a>
 <a class="sourceLine" id="cb7-18" title="18"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-19" title="19"><span class="co">#&gt; [[2]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb7-20" title="20"><span class="co">#&gt; [1] 1.522182</span></a>
+<a class="sourceLine" id="cb7-20" title="20"><span class="co">#&gt; [1] 0.4817988</span></a>
 <a class="sourceLine" id="cb7-21" title="21"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-22" title="22"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-23" title="23"><span class="co">#&gt; [[3]]</span></a>
 <a class="sourceLine" id="cb7-24" title="24"><span class="co">#&gt; [[3]]$beta</span></a>
-<a class="sourceLine" id="cb7-25" title="25"><span class="co">#&gt; [1]  0.14619740  0.07620685 -1.00543362 -0.56587830</span></a>
+<a class="sourceLine" id="cb7-25" title="25"><span class="co">#&gt; [1]  0.1573611 -0.5761640  1.9775121 -0.5531337</span></a>
 <a class="sourceLine" id="cb7-26" title="26"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb7-27" title="27"><span class="co">#&gt; [[3]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb7-28" title="28"><span class="co">#&gt; [1] 1.747959</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-28" title="28"><span class="co">#&gt; [1] 1.706011</span></a></code></pre></div>
 <p>The list is then passed to the argument <code>inits</code>. The amended version of the user provided lists of initial values are stored in the JointAI object:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">mod4a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC, <span class="dt">data =</span> NHANES, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
 <a class="sourceLine" id="cb8-2" title="2">                <span class="dt">inits =</span> init_list)</a>
@@ -311,44 +311,44 @@
 <a class="sourceLine" id="cb8-4" title="4">mod4a<span class="op">$</span>mcmc_settings<span class="op">$</span>inits</a>
 <a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; [[1]]</span></a>
 <a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; [[1]]$beta</span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; [1]  0.9619800  0.8138199 -0.8767526 -2.8637071</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt; [1]  0.4342672 -0.6149186  1.0724531 -0.9924826</span></a>
 <a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; [[1]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; [1] 1.641371</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; [1] 8.284968</span></a>
 <a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; [[1]]$.RNG.name</span></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; [1] "base::Super-Duper"</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; [1] "base::Mersenne-Twister"</span></a>
 <a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; [[1]]$.RNG.seed</span></a>
-<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; [1] 85094</span></a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; [1] 48081</span></a>
 <a class="sourceLine" id="cb8-17" title="17"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-18" title="18"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-19" title="19"><span class="co">#&gt; [[2]]</span></a>
 <a class="sourceLine" id="cb8-20" title="20"><span class="co">#&gt; [[2]]$beta</span></a>
-<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt; [1]  0.3847062 -0.7578468  2.2694818 -0.2502833</span></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt; [1] -0.9651939 -0.5123054  0.9804101  1.1067640</span></a>
 <a class="sourceLine" id="cb8-22" title="22"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-23" title="23"><span class="co">#&gt; [[2]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb8-24" title="24"><span class="co">#&gt; [1] 1.522182</span></a>
+<a class="sourceLine" id="cb8-24" title="24"><span class="co">#&gt; [1] 0.4817988</span></a>
 <a class="sourceLine" id="cb8-25" title="25"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-26" title="26"><span class="co">#&gt; [[2]]$.RNG.name</span></a>
-<a class="sourceLine" id="cb8-27" title="27"><span class="co">#&gt; [1] "base::Mersenne-Twister"</span></a>
+<a class="sourceLine" id="cb8-27" title="27"><span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span></a>
 <a class="sourceLine" id="cb8-28" title="28"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-29" title="29"><span class="co">#&gt; [[2]]$.RNG.seed</span></a>
-<a class="sourceLine" id="cb8-30" title="30"><span class="co">#&gt; [1] 93389</span></a>
+<a class="sourceLine" id="cb8-30" title="30"><span class="co">#&gt; [1] 16346</span></a>
 <a class="sourceLine" id="cb8-31" title="31"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-32" title="32"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-33" title="33"><span class="co">#&gt; [[3]]</span></a>
 <a class="sourceLine" id="cb8-34" title="34"><span class="co">#&gt; [[3]]$beta</span></a>
-<a class="sourceLine" id="cb8-35" title="35"><span class="co">#&gt; [1]  0.14619740  0.07620685 -1.00543362 -0.56587830</span></a>
+<a class="sourceLine" id="cb8-35" title="35"><span class="co">#&gt; [1]  0.1573611 -0.5761640  1.9775121 -0.5531337</span></a>
 <a class="sourceLine" id="cb8-36" title="36"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-37" title="37"><span class="co">#&gt; [[3]]$tau_SBP</span></a>
-<a class="sourceLine" id="cb8-38" title="38"><span class="co">#&gt; [1] 1.747959</span></a>
+<a class="sourceLine" id="cb8-38" title="38"><span class="co">#&gt; [1] 1.706011</span></a>
 <a class="sourceLine" id="cb8-39" title="39"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-40" title="40"><span class="co">#&gt; [[3]]$.RNG.name</span></a>
-<a class="sourceLine" id="cb8-41" title="41"><span class="co">#&gt; [1] "base::Super-Duper"</span></a>
+<a class="sourceLine" id="cb8-41" title="41"><span class="co">#&gt; [1] "base::Wichmann-Hill"</span></a>
 <a class="sourceLine" id="cb8-42" title="42"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-43" title="43"><span class="co">#&gt; [[3]]$.RNG.seed</span></a>
-<a class="sourceLine" id="cb8-44" title="44"><span class="co">#&gt; [1] 44551</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-44" title="44"><span class="co">#&gt; [1] 92414</span></a></code></pre></div>
 </div>
 <div id="initial-values-as-a-function" class="section level4">
 <h4 class="hasAnchor">
@@ -362,10 +362,10 @@
 <a class="sourceLine" id="cb9-5" title="5"></a>
 <a class="sourceLine" id="cb9-6" title="6"><span class="kw">inits_fun</span>()</a>
 <a class="sourceLine" id="cb9-7" title="7"><span class="co">#&gt; $beta</span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="co">#&gt; [1]  0.819505128 -1.236640844 -0.004504821 -1.585268303</span></a>
+<a class="sourceLine" id="cb9-8" title="8"><span class="co">#&gt; [1] -0.3915359 -0.4018456 -2.0225237 -0.9905653</span></a>
 <a class="sourceLine" id="cb9-9" title="9"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-10" title="10"><span class="co">#&gt; $alpha</span></a>
-<a class="sourceLine" id="cb9-11" title="11"><span class="co">#&gt; [1] -1.8529396 -0.9521706  0.9540807</span></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="co">#&gt; [1]  0.01369007 -0.65944500  0.91156812</span></a>
 <a class="sourceLine" id="cb9-12" title="12"></a>
 <a class="sourceLine" id="cb9-13" title="13"></a>
 <a class="sourceLine" id="cb9-14" title="14">mod4b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC, <span class="dt">data =</span> NHANES, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</a>
@@ -374,44 +374,44 @@
 <a class="sourceLine" id="cb9-17" title="17">mod4b<span class="op">$</span>mcmc_settings<span class="op">$</span>inits</a>
 <a class="sourceLine" id="cb9-18" title="18"><span class="co">#&gt; [[1]]</span></a>
 <a class="sourceLine" id="cb9-19" title="19"><span class="co">#&gt; [[1]]$beta</span></a>
-<a class="sourceLine" id="cb9-20" title="20"><span class="co">#&gt; [1]  0.8732070  1.0638546  1.3808521 -0.2081396</span></a>
+<a class="sourceLine" id="cb9-20" title="20"><span class="co">#&gt; [1] -1.3170181  2.3984447  0.3192511  0.6687064</span></a>
 <a class="sourceLine" id="cb9-21" title="21"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-22" title="22"><span class="co">#&gt; [[1]]$alpha</span></a>
-<a class="sourceLine" id="cb9-23" title="23"><span class="co">#&gt; [1] -0.22271541  0.02539335 -1.48185010</span></a>
+<a class="sourceLine" id="cb9-23" title="23"><span class="co">#&gt; [1] -0.008502663  0.617073710 -1.593835404</span></a>
 <a class="sourceLine" id="cb9-24" title="24"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-25" title="25"><span class="co">#&gt; [[1]]$.RNG.name</span></a>
-<a class="sourceLine" id="cb9-26" title="26"><span class="co">#&gt; [1] "base::Wichmann-Hill"</span></a>
+<a class="sourceLine" id="cb9-26" title="26"><span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span></a>
 <a class="sourceLine" id="cb9-27" title="27"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-28" title="28"><span class="co">#&gt; [[1]]$.RNG.seed</span></a>
-<a class="sourceLine" id="cb9-29" title="29"><span class="co">#&gt; [1] 86107</span></a>
+<a class="sourceLine" id="cb9-29" title="29"><span class="co">#&gt; [1] 73728</span></a>
 <a class="sourceLine" id="cb9-30" title="30"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-31" title="31"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-32" title="32"><span class="co">#&gt; [[2]]</span></a>
 <a class="sourceLine" id="cb9-33" title="33"><span class="co">#&gt; [[2]]$beta</span></a>
-<a class="sourceLine" id="cb9-34" title="34"><span class="co">#&gt; [1] 2.37575070 0.09972196 1.78583472 0.47759161</span></a>
+<a class="sourceLine" id="cb9-34" title="34"><span class="co">#&gt; [1]  1.1431973 -2.0317917  1.5287537 -0.8073824</span></a>
 <a class="sourceLine" id="cb9-35" title="35"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-36" title="36"><span class="co">#&gt; [[2]]$alpha</span></a>
-<a class="sourceLine" id="cb9-37" title="37"><span class="co">#&gt; [1] -0.0277381  0.9676032  0.5826224</span></a>
+<a class="sourceLine" id="cb9-37" title="37"><span class="co">#&gt; [1] -0.0511129 -0.4577026  0.4282895</span></a>
 <a class="sourceLine" id="cb9-38" title="38"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-39" title="39"><span class="co">#&gt; [[2]]$.RNG.name</span></a>
-<a class="sourceLine" id="cb9-40" title="40"><span class="co">#&gt; [1] "base::Super-Duper"</span></a>
+<a class="sourceLine" id="cb9-40" title="40"><span class="co">#&gt; [1] "base::Wichmann-Hill"</span></a>
 <a class="sourceLine" id="cb9-41" title="41"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-42" title="42"><span class="co">#&gt; [[2]]$.RNG.seed</span></a>
-<a class="sourceLine" id="cb9-43" title="43"><span class="co">#&gt; [1] 64379</span></a>
+<a class="sourceLine" id="cb9-43" title="43"><span class="co">#&gt; [1] 47239</span></a>
 <a class="sourceLine" id="cb9-44" title="44"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-45" title="45"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-46" title="46"><span class="co">#&gt; [[3]]</span></a>
 <a class="sourceLine" id="cb9-47" title="47"><span class="co">#&gt; [[3]]$beta</span></a>
-<a class="sourceLine" id="cb9-48" title="48"><span class="co">#&gt; [1] 0.11482952 0.69725761 1.38228417 0.04369339</span></a>
+<a class="sourceLine" id="cb9-48" title="48"><span class="co">#&gt; [1]  0.3908994 -0.3055180 -1.1434528  0.3281874</span></a>
 <a class="sourceLine" id="cb9-49" title="49"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-50" title="50"><span class="co">#&gt; [[3]]$alpha</span></a>
-<a class="sourceLine" id="cb9-51" title="51"><span class="co">#&gt; [1] -0.8611245  1.7361977 -0.4422237</span></a>
+<a class="sourceLine" id="cb9-51" title="51"><span class="co">#&gt; [1] 1.71638701 0.01748694 0.43947426</span></a>
 <a class="sourceLine" id="cb9-52" title="52"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-53" title="53"><span class="co">#&gt; [[3]]$.RNG.name</span></a>
 <a class="sourceLine" id="cb9-54" title="54"><span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span></a>
 <a class="sourceLine" id="cb9-55" title="55"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-56" title="56"><span class="co">#&gt; [[3]]$.RNG.seed</span></a>
-<a class="sourceLine" id="cb9-57" title="57"><span class="co">#&gt; [1] 86760</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-57" title="57"><span class="co">#&gt; [1] 64457</span></a></code></pre></div>
 <p>When a function is supplied, the function will be evaluated once per chain and the resulting list is stored.</p>
 </div>
 </div>
@@ -428,13 +428,13 @@
 <a class="sourceLine" id="cb10-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/coef">coef</a></span>(mod4c<span class="op">$</span>model)</a></code></pre></div>
 <pre><code>#&gt; $RinvD
 #&gt;           [,1]      [,2]
-#&gt; [1,] 0.5688008        NA
-#&gt; [2,]        NA 0.4764791
+#&gt; [1,] 0.1344621        NA
+#&gt; [2,]        NA 0.1416115
 #&gt; 
 #&gt; $RinvD_hc
-#&gt;             [,1]        [,2]
-#&gt; [1,] 0.001310819          NA
-#&gt; [2,]          NA 0.002272115
+#&gt;           [,1]         [,2]
+#&gt; [1,] 0.1404115           NA
+#&gt; [2,]        NA 0.0001085911
 #&gt; 
 #&gt; $Xc
 #&gt;        [,1]       [,2] [,3] [,4]
@@ -444,7 +444,7 @@
 #&gt; [...]
 #&gt; 
 #&gt;  [82,]   NA         NA   NA   NA
-#&gt;  [83,]   NA -1.6244167   NA   NA
+#&gt;  [83,]   NA -1.5390117   NA   NA
 #&gt;  [84,]   NA         NA   NA   NA
 #&gt; 
 #&gt; [...]
@@ -460,9 +460,9 @@
 #&gt; [...]
 #&gt; 
 #&gt; [139,]   NA
-#&gt; [140,]    2
+#&gt; [140,]    1
 #&gt; [141,]   NA
-#&gt; [142,]    3
+#&gt; [142,]    1
 #&gt; [143,]   NA
 #&gt; 
 #&gt; [...]
@@ -478,7 +478,7 @@
 #&gt;    [4,]           NA
 #&gt;    [5,]           NA
 #&gt;    [6,]           NA
-#&gt;    [7,] -0.086962480
+#&gt;    [7,] -0.869037347
 #&gt; 
 #&gt; [...]
 #&gt; 
@@ -486,29 +486,29 @@
 #&gt; [2400,]           NA
 #&gt; 
 #&gt; $alpha
-#&gt; [1]  0.01904477 -0.13130552  0.03763788  0.02390082 -0.01845788  0.04092774  0.83478274
+#&gt; [1] -0.05182277  0.25867003  0.01796989  0.05378095 -0.06483536  0.10349063  0.81808222
 #&gt; 
 #&gt; $b
 #&gt;            [,1]       [,2]
-#&gt;   [1,] 16.03389 -1.0522845
-#&gt;   [2,] 17.02595 -1.0924336
+#&gt;   [1,] 16.40982 -1.0587063
+#&gt;   [2,] 16.84527 -1.3508055
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [200,] 16.86671 -0.9321142
+#&gt; [200,] 16.94300 -1.1541219
 #&gt; 
 #&gt; $b_hc
-#&gt;                 [,1]      [,2]
-#&gt;   [1,] -0.3648765947 0.8333417
-#&gt;   [2,] -0.0366514865 0.8413301
+#&gt;                [,1]      [,2]
+#&gt;   [1,] -0.203206194 0.8004886
+#&gt;   [2,]  0.258447716 0.8419637
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [199,] -0.1235071779 0.8082939
-#&gt; [200,] -0.1343528008 0.8128534
+#&gt; [199,] -0.201189786 0.7733581
+#&gt; [200,] -0.223394314 0.7933409
 #&gt; 
 #&gt; $beta
-#&gt; [1] 16.4587806  0.0197602 -0.5941979  0.1972887 -1.3808347  1.4187707
+#&gt; [1] 16.38693077  0.01099912 -0.07873786 -0.14131022 -1.38805977  1.43892220
 #&gt; 
 #&gt; $bmi
 #&gt;    [1] NA NA  0  0 NA NA NA NA NA NA NA NA  0  0 NA  0 NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA
@@ -518,48 +518,48 @@
 #&gt; [2388] NA NA  0 NA  0 NA NA NA NA NA NA NA NA
 #&gt; 
 #&gt; $delta_SMOKE
-#&gt; [1] -0.6757168
+#&gt; [1] -0.6195254
 #&gt; 
 #&gt; $gamma_SMOKE
-#&gt; [1] 1.160456       NA
+#&gt; [1] 1.428009       NA
 #&gt; 
 #&gt; $invD
 #&gt;           [,1]      [,2]
-#&gt; [1,]  1.748890 -1.490244
-#&gt; [2,] -1.490244  8.342582
+#&gt; [1,]  1.871873 -1.645964
+#&gt; [2,] -1.645964  8.841232
 #&gt; 
 #&gt; $invD_hc
-#&gt;           [,1]      [,2]
-#&gt; [1,]   20.7030 -126.4369
-#&gt; [2,] -126.4369 3120.3927
+#&gt;            [,1]      [,2]
+#&gt; [1,]   53.16441 -364.9537
+#&gt; [2,] -364.95367 3576.7699
 #&gt; 
 #&gt; $mu_b
-#&gt;        [,1]      [,2]
-#&gt;   [1,]   NA -1.380835
-#&gt;   [2,]   NA -1.380835
+#&gt;        [,1]     [,2]
+#&gt;   [1,]   NA -1.38806
+#&gt;   [2,]   NA -1.38806
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [199,]   NA -1.380835
-#&gt; [200,]   NA -1.380835
+#&gt; [199,]   NA -1.38806
+#&gt; [200,]   NA -1.38806
 #&gt; 
 #&gt; $mu_b_hc
 #&gt;        [,1]      [,2]
-#&gt;   [1,]   NA 0.8347827
-#&gt;   [2,]   NA 0.8347827
+#&gt;   [1,]   NA 0.8180822
+#&gt;   [2,]   NA 0.8180822
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [200,]   NA 0.8347827
+#&gt; [200,]   NA 0.8180822
 #&gt; 
 #&gt; $tau_HEIGHT_M
-#&gt; [1] 0.9339256
+#&gt; [1] 1.048682
 #&gt; 
 #&gt; $tau_bmi
-#&gt; [1] 4.554218
+#&gt; [1] 4.531551
 #&gt; 
 #&gt; $tau_hc
-#&gt; [1] 5.017729</code></pre>
+#&gt; [1] 5.116374</code></pre>
 <p><code>RinvD</code> is the scale matrix in the Wishart prior for the inverse of the random effects design matrix <code>D</code>. In the data that is passed JAGS (which is stored in the element <code>data_list</code> in a JointAI object), this matrix is specified as diagonal matrix, with unknown diagonal elements:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">mod4c<span class="op">$</span>data_list[<span class="st">'RinvD'</span>]</a>
 <a class="sourceLine" id="cb12-2" title="2"><span class="co">#&gt; $RinvD</span></a>
