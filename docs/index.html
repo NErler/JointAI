@@ -201,18 +201,18 @@
 <a class="sourceLine" id="cb8-7" title="7"><span class="co">#&gt;     data = NHANES, n.iter = 500, progress.bar = "none")</span></a>
 <a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt; Posterior summary:</span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt;                Mean     SD    2.5%   97.5% tail-prob. GR-crit</span></a>
-<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; (Intercept)  88.241 9.0384  70.205 105.981    0.00000   1.000</span></a>
-<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; genderfemale -3.427 2.2469  -7.845   1.080    0.14267   1.001</span></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; age           0.331 0.0708   0.195   0.471    0.00000   0.999</span></a>
-<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; WC            0.225 0.0743   0.079   0.371    0.00400   1.000</span></a>
-<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; alc&gt;=1        6.594 2.2927   1.955  11.129    0.00667   1.008</span></a>
-<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; educhigh     -2.832 2.1667  -7.181   1.381    0.18933   1.005</span></a>
-<a class="sourceLine" id="cb8-17" title="17"><span class="co">#&gt; bili         -5.256 4.9019 -14.723   4.256    0.28267   1.002</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt;                Mean     SD     2.5%   97.5% tail-prob. GR-crit</span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; (Intercept)  88.200 8.6134  71.2665 105.427    0.00000    1.00</span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; genderfemale -3.465 2.1516  -7.5576   0.764    0.11067    1.00</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; age           0.332 0.0682   0.1954   0.462    0.00000    1.00</span></a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; WC            0.225 0.0710   0.0791   0.366    0.00133    1.00</span></a>
+<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; alc&gt;=1        6.382 2.3668   1.5988  10.823    0.00267    1.01</span></a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; educhigh     -2.876 2.0834  -6.9088   1.282    0.16267    1.02</span></a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="co">#&gt; bili         -5.225 4.8555 -14.9548   4.131    0.27867    1.00</span></a>
 <a class="sourceLine" id="cb8-18" title="18"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-19" title="19"><span class="co">#&gt; Posterior summary of residual std. deviation:</span></a>
 <a class="sourceLine" id="cb8-20" title="20"><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></a>
-<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt; sigma_SBP 13.6 0.733 12.3  15.1    1.01</span></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt; sigma_SBP 13.5 0.707 12.3    15       1</span></a>
 <a class="sourceLine" id="cb8-22" title="22"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-23" title="23"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-24" title="24"><span class="co">#&gt; MCMC settings:</span></a>
@@ -224,20 +224,20 @@
 <a class="sourceLine" id="cb8-30" title="30"><span class="co">#&gt; Number of observations: 186</span></a></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/coef">coef</a></span>(lm1)</a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="co">#&gt;  (Intercept) genderfemale          age           WC       alc&gt;=1 </span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="co">#&gt;   88.2409972   -3.4267514    0.3306932    0.2251470    6.5936924 </span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="co">#&gt;   88.2000253   -3.4652040    0.3317528    0.2254208    6.3823919 </span></a>
 <a class="sourceLine" id="cb9-4" title="4"><span class="co">#&gt;     educhigh         bili </span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="co">#&gt;   -2.8321256   -5.2561130</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="co">#&gt;   -2.8762176   -5.2253479</span></a>
 <a class="sourceLine" id="cb9-6" title="6"></a>
 <a class="sourceLine" id="cb9-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/confint">confint</a></span>(lm1)</a>
 <a class="sourceLine" id="cb9-8" title="8"><span class="co">#&gt;                      2.5%       97.5%</span></a>
-<a class="sourceLine" id="cb9-9" title="9"><span class="co">#&gt; (Intercept)   70.20483572 105.9811600</span></a>
-<a class="sourceLine" id="cb9-10" title="10"><span class="co">#&gt; genderfemale  -7.84517891   1.0799499</span></a>
-<a class="sourceLine" id="cb9-11" title="11"><span class="co">#&gt; age            0.19509130   0.4708887</span></a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="co">#&gt; WC             0.07896542   0.3714566</span></a>
-<a class="sourceLine" id="cb9-13" title="13"><span class="co">#&gt; alc&gt;=1         1.95514796  11.1285932</span></a>
-<a class="sourceLine" id="cb9-14" title="14"><span class="co">#&gt; educhigh      -7.18130552   1.3813374</span></a>
-<a class="sourceLine" id="cb9-15" title="15"><span class="co">#&gt; bili         -14.72337597   4.2555892</span></a>
-<a class="sourceLine" id="cb9-16" title="16"><span class="co">#&gt; sigma_SBP     12.27693577  15.0676814</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-9" title="9"><span class="co">#&gt; (Intercept)   71.26651855 105.4273649</span></a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="co">#&gt; genderfemale  -7.55756734   0.7643059</span></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="co">#&gt; age            0.19537773   0.4615955</span></a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="co">#&gt; WC             0.07911304   0.3655631</span></a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="co">#&gt; alc&gt;=1         1.59875077  10.8230015</span></a>
+<a class="sourceLine" id="cb9-14" title="14"><span class="co">#&gt; educhigh      -6.90875253   1.2822119</span></a>
+<a class="sourceLine" id="cb9-15" title="15"><span class="co">#&gt; bili         -14.95481910   4.1312689</span></a>
+<a class="sourceLine" id="cb9-16" title="16"><span class="co">#&gt; sigma_SBP     12.27408786  15.0216976</span></a></code></pre></div>
 </div>
 </div>
 </div>
