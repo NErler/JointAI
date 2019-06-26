@@ -101,7 +101,7 @@ glme_model <- function(family, link, Mlist, K, ...){
 
 
 # priors for generalized lineasr mixed model -----------------------------------
-glme_priors <- function(family, link, K, Mlist, ...){
+glme_priors <- function(family, link, K_list, Mlist, ...){
   y_name <- colnames(Mlist$y)
 
   secndpar <- switch(family,
@@ -127,13 +127,13 @@ glme_priors <- function(family, link, K, Mlist, ...){
 
   paste0(c(ranef_priors(Mlist$nranef),
            secndpar,
-           glmereg_priors(K, Mlist, family, link),
+           glmereg_priors(K_list, Mlist, family, link),
            paste_ppc), collapse = "\n\n")
 }
 
 
 
-glmereg_priors <- function(K, Mlist, family, link){
+glmereg_priors <- function(K_list, Mlist, family, link){
   type <- switch(family,
                  gaussian = 'norm',
                  binomial = link,
@@ -151,7 +151,6 @@ glmereg_priors <- function(K, Mlist, family, link){
 
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
-    tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
-    distr,
-    tab(), "}",  "\n\n")
+    paste_regcoef_prior(K_list, distr, 'beta'),
+    "\n\n")
 }
