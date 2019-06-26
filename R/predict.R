@@ -30,7 +30,7 @@ predDF <- function(...) {
 
 #' @rdname predDF
 #' @export
-predDF.JointAI <- function(object, var, ...) {
+predDF.JointAI <- function(object, var, length = 100, ...) {
 
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
@@ -41,7 +41,7 @@ predDF.JointAI <- function(object, var, ...) {
 
 #' @rdname predDF
 #' @export
-predDF.formula <- function(formula, dat, var, ...) {
+predDF.formula <- function(formula, dat, var, length = 100, ...) {
 
   allvars <- all.vars(formula)
 
@@ -51,7 +51,7 @@ predDF.formula <- function(formula, dat, var, ...) {
         unique(dat[, k])
       } else {
         seq(min(dat[, k], na.rm = TRUE),
-            max(dat[, k], na.rm = TRUE), length = 100)
+            max(dat[, k], na.rm = TRUE), length = length)
       }
     } else {
       if (is.factor(dat[, k])) {
