@@ -8,9 +8,9 @@
 \usage{
 predDF(...)
 
-\method{predDF}{JointAI}(object, var, ...)
+\method{predDF}{JointAI}(object, var, length = 100, ...)
 
-\method{predDF}{formula}(formula, dat, var, ...)
+\method{predDF}{formula}(formula, dat, var, length = 100, ...)
 }
 \arguments{
 \item{...}{optional, additional arguments (currently not used)}
