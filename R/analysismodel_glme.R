@@ -20,10 +20,10 @@ glme_model <- function(family, link, Mlist, K, ...){
   repar <- switch(family,
                   "gaussian" = NULL,
                   "binomial" = NULL,
-                  "Gamma" = paste0(tab(), "shape_", y_name, "[j] <- pow(mu_", y_name,
+                  "Gamma" = paste0(tab(4), "shape_", y_name, "[j] <- pow(mu_", y_name,
                                    "[j], 2) / pow(sigma_", y_name, ", 2)",
                                    "\n",
-                                   tab(), "rate_", y_name, "[j]  <- mu_", y_name,
+                                   tab(4), "rate_", y_name, "[j]  <- mu_", y_name,
                                    "[j] / pow(sigma_", y_name, ", 2)", "\n"),
                   "Poisson" = NULL)
 
