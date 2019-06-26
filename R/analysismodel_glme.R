@@ -34,8 +34,11 @@ glme_model <- function(family, link, Mlist, K, ...){
                     "probit"   = function(x) paste0("probit(", x, ")"),
                     "log"      = function(x) paste0("log(", x, ")"),
                     "cloglog"  = function(x) paste0("cloglog(", x, ")"),
-                    # "sqrt": JAGS does not have sqrt has link function
-                    "inverse"  = function(x) paste0("1/", x)
+                    # "sqrt": JAGS does not have sqrt as link function
+                    # "inverse"  = function(x) paste0("1/", x)
+                    "inverse"  = function(x)
+                      paste0(x, " <- 1/max(1e-10, inv_", x, ")", "\n",
+                             tab(4), "inv_", x)
   )
 
 
