@@ -773,7 +773,7 @@ glm_imp <- function(formula, family, data,
 
 
   if (!arglist$link %in% c("identity", "log", "logit", "probit", "log",
-                           "cloglog"))
+                           "cloglog", "inverse"))
     stop(gettextf("%s is not an allowed link function.",
                   dQuote(arglist$link)))
 
@@ -913,7 +913,7 @@ glme_imp <- function(fixed, data, random, family,
   }
 
   if (!arglist$link %in% c("identity", "log", "logit", "probit", "log",
-                           "cloglog"))
+                           "cloglog", "inverse"))
     stop(gettextf("%s is not an allowed link function.",
                   dQuote(arglist$link)))
 
