@@ -292,7 +292,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     stop("A fixed effects structure needs to be specified.")
   }
 
-  if (!analysis_type %in% c("lme", "glme", "clmm") & !is.null(random)) {
+  if (!analysis_type %in% c("lme", "glme", "clmm", "lnmm") & !is.null(random)) {
     if (warn)
       warning(gettextf("Random effects structure not used in a model of type %s.",
                        sQuote(analysis_type)), immediate. = TRUE, call. = FALSE)
