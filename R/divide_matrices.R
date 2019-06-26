@@ -243,7 +243,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   }
 
 
-  ncat <- if (analysis_type %in% c('clmm', 'clm'))
+  ncat <- if (analysis_type %in% c('clmm', 'clm', 'lnmm'))
     length(unique(unlist(y)))
 
   N <- length(unique(groups))

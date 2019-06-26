@@ -16,7 +16,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 
   # outcome variable
   l[[names(Mlist$y)]] <- if (any(sapply(Mlist$y, is.factor))) {
-    if (analysis_type %in% c('clmm', 'clm')) {
+    if (analysis_type %in% c('clmm', 'clm', 'lnmm')) {
       # ordinal variables have values 1, 2, 3, ...
       c(sapply(Mlist$y, as.numeric))
     } else {
@@ -142,7 +142,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     l <- c(l, defs$multinomial)
 
 
-  if (analysis_type %in% c("lme", 'glme', 'clmm')) {
+  if (analysis_type %in% c("lme", 'glme', 'clmm', 'lnmm')) {
     l <- c(l, defs$Z(Mlist$nranef))
     l$groups <- match(Mlist$groups, unique(Mlist$groups)) # can this be just Mlist$groups???
   }

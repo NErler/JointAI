@@ -26,7 +26,7 @@ get_params <- function(models, analysis_type, family, Mlist,
       gamma_y <- TRUE
     }
   }
-  if (analysis_type %in% c("lme", "glme", "clmm")) {
+  if (analysis_type %in% c("lme", "glme", "clmm", "lnmm")) {
     if (analysis_main & is.null(D)) D <- TRUE
   }
 
@@ -79,7 +79,7 @@ get_params <- function(models, analysis_type, family, Mlist,
               other
   )
 
-  if (analysis_type %in% c("lme", "glme", "clmm")) {
+  if (analysis_type %in% c("lme", "glme", "clmm", "lnmm")) {
     params <- c(params,
                 if (ranef) "b",
                 if (invD) unlist(sapply(1:Mlist$nranef, function(x)

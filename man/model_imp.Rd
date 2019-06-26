@@ -9,6 +9,7 @@
 \alias{glme_imp}
 \alias{glmer_imp}
 \alias{clmm_imp}
+\alias{lnmm_imp}
 \alias{survreg_imp}
 \alias{coxph_imp}
 \title{Joint analysis and imputation of incomplete data}
@@ -64,6 +65,16 @@ glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
   keep_scaled_mcmc = FALSE, ...)
 
 clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, ncores = NULL, scale_vars = NULL,
+  scale_pars = NULL, hyperpars = NULL, modelname = NULL,
+  modeldir = NULL, keep_model = FALSE, overwrite = NULL,
+  quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
+
+lnmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
   refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
   ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
