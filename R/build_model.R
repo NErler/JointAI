@@ -1,7 +1,7 @@
 # Function to build JAGS model
 
 build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
-                       Ntot, Mlist = NULL, K, imp_par_list, ...) {
+                       Ntot, Mlist = NULL, K, K_list, imp_par_list, ...) {
   arglist <- as.list(match.call())[-1]
 
   analysis_model <- switch(analysis_type,
