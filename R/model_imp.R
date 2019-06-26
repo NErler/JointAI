@@ -421,7 +421,6 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     }
   }
 
-
   # divide matrices ------------------------------------------------------------
   if (is.null(Mlist)) {
     Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
@@ -431,11 +430,11 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                              ridge = ridge)
   }
 
-
   # model dimensions -----------------------------------------------------------
 
   if (is.null(K)) {
     K <- get_model_dim(Mlist$cols_main, Mlist$hc_list)
+    K_list <- get_Klist(K, Mlist)
   }
 
   if (is.null(imp_pos)) {
@@ -512,7 +511,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
     write_model(analysis_type = analysis_type, family = family,
                 link = link, models = models,
-                Ntot = Ntot, Mlist = Mlist, K = K,
+                Ntot = Ntot, Mlist = Mlist, K = K, K_list = K_list,
                 imp_par_list = imp_par_list,
                 file = modelfile)
   }
@@ -654,7 +653,7 @@ if (!is.null(inits)) {
     list(analysis_type = analysis_type,
          data = data, models = models, fixed = fixed, random = random,
          Mlist = Mlist,
-         K = K,
+         K = K, K_list = K_list,
          K_imp = K_imp,
          mcmc_settings = mcmc_settings,
          monitor_params = c(monitor_params,

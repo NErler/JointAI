@@ -31,7 +31,7 @@ lm_model <- function(Mlist, K, ...){
 
 
 # priors for linear regression model -------------------------------------------
-lm_priors <- function(K, Mlist, ...){
+lm_priors <- function(K_list, Mlist, ...){
   y_name <- colnames(Mlist$y)
 
   paste_ppc <- NULL # if (Mlist$ppc) {
@@ -54,10 +54,13 @@ lm_priors <- function(K, Mlist, ...){
 
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
-    tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
-    distr,
-    tab(), "}", "\n",
-    tab(), "tau_", y_name ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
-    tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")", "\n",
+    paste_regcoef_prior(K_list, distr, 'beta'),
+    if (any(rownames(K_list) == "uni")) {
+      paste0(
+        tab(), "tau_", y_name ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
+        tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")", "\n"
+      )
+    },
     paste_ppc, "\n")
 }
+

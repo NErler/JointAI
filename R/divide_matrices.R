@@ -55,6 +55,25 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   fcts_all <- extract_fcts(fixed2, data, random = random, complete = TRUE)
 
 
+  knots <- if (any(fcts_all$type %in% c('bs', 'ps', 'ns'))) {
+    trafo_sub <- unique(fcts_all[which(fcts_all$type %in% c('bs', 'ps', 'ns')), c('var', 'fct', 'type', 'dupl')])
+    kn <- sapply(seq_along(trafo_sub$fct),
+                 function(k) {
+                   sB <- eval(parse(text = trafo_sub$fct[k]), envir = data)
+                   knt <- get_knots(sB)
+                   attr(knt, "degree") <- attr(sB, "degree")
+                   attr(knt, 'fct') <- trafo_sub$fct[k]
+                   attr(knt, 'varname') <- trafo_sub$var[k]
+                   attr(knt, 'df') <- ncol(sB)
+                   attr(knt, 'type') <- trafo_sub$type[k]
+                   knt
+
+                 }, simplify = FALSE)
+    attr(kn, 'names') <- paste0("kn_", trafo_sub$var)
+    kn
+  }
+
+
   # Give a message about coding of ordinal factors if there are any in the predictor
   if (any(unlist(sapply(data[, all.vars(fixed2[c(1,3)])],
                         class)) == 'ordered') & mess)
@@ -156,11 +175,10 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
   # Xtrafo ---------------------------------------------------------------------
   fcts_mis <- extract_fcts(fixed2, data, random = random, complete = FALSE)
-
-  if (any(fcts_mis$type %in% c('ns', 'bs')))
-    stop("Splines are currently not implemented for incomplete variables.",
-         call. = FALSE)
-
+  if (any(fcts_mis$type %in% c('ns')))
+    stop(paste0("Natural cubic splines are not implemented for incomplete variables. ",
+               "Please use B-splines (using ", dQuote("bs()"), ") instead."),
+            call. = FALSE)
 
   if (!is.null(fcts_mis)) {
     fmla_trafo <- as.formula(
@@ -273,5 +291,5 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
               trafos = fcts_all, hc_list = hc_list, refs = refs,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars,
               fixed2 = fixed2, ncat = ncat,
-              N = N, ppc = ppc, ridge = ridge, nranef = ncol(Z2)))
+              N = N, ppc = ppc, ridge = ridge, nranef = ncol(Z2), knots = knots))
 }

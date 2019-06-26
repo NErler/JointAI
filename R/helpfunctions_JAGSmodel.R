@@ -106,15 +106,15 @@ ranef_priors <- function(Zcols, varnam = NULL){
 
 
   paste0("\n",
-    tab(), "# Priors for the covariance of the random effects", modnam, "\n",
-    if (Zcols > 1) {
-      paste0(
-        tab(), "for (k in 1:", Zcols, "){", "\n",
-        tab(4), "RinvD", varnam, "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)", "\n",
-        tab(), "}", "\n")
-    },
-    tab(), "invD", varnam, "[1:", Zcols, ", 1:", Zcols,"] ~ ", invD_distr(Zcols, varnam), "\n",
-    tab(), "D", varnam, "[1:", Zcols,", 1:", Zcols, "] <- inverse(invD", varnam, "[ , ])"
+         tab(), "# Priors for the covariance of the random effects", modnam, "\n",
+         if (Zcols > 1) {
+           paste0(
+             tab(), "for (k in 1:", Zcols, "){", "\n",
+             tab(4), "RinvD", varnam, "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)", "\n",
+             tab(), "}", "\n")
+         },
+         tab(), "invD", varnam, "[1:", Zcols, ", 1:", Zcols,"] ~ ", invD_distr(Zcols, varnam), "\n",
+         tab(), "D", varnam, "[1:", Zcols,", 1:", Zcols, "] <- inverse(invD", varnam, "[ , ])"
   )
 }
 
@@ -228,4 +228,26 @@ paste_long_interactions <- function(index, mat0, mat1, mat0_col, mat1_col) {
               paste0("Xc[groups[", index, "],"),
               out, fixed = TRUE)
   out
+}
+
+
+
+
+
+paste_regcoef_prior <- function(K_list, distr, coefnam) {
+  paste0(c(
+    apply(K_list[which(rownames(K_list) == 'uni'), , drop = FALSE], 1, function(x) {
+      paste0(tab(), "for (k in ", x['start'], ":", x['end'], ") {", "\n",
+             distr,
+             tab(), "}", "\n"
+      )
+    }),
+
+    apply(K_list[which(rownames(K_list) != 'uni'), , drop = FALSE], 1, function(x) {
+      paste0(tab(), coefnam, "[", x['start'], ":", x['end'], "] ~ dmnorm(priorMean_",
+             x["varname"], ", tau_", coefnam, "_", x["varname"], " * priorTau_",
+             x["varname"], ")", "\n",
+             tab(), "tau_", coefnam, "_", x["varname"], " ~ dgamma(1, 0.005)", "\n")
+    })
+  ), collapse = '')
 }

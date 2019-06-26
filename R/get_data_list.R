@@ -159,6 +159,23 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
   }
 
 
+
+  l <- c(l,
+         Mlist$knots
+  )
+  if (any(Mlist$trafos$type %in% c('bs', 'ps', 'ns'))) {
+    for (k in Mlist$knots) {
+      l <- c(l, get_kndiff(k))
+
+      if (attr(k, 'type') == 'ps') {
+        DDal <- diag(attr(k, "df"))
+        l[[paste0("priorTau_", attr(k, 'varname'))]] <- crossprod(diff(DDal, diff = 2)) + 1e-06 * DDal
+        l[[paste0("priorMean_", attr(k, 'varname'))]] <- rep(0, attr(k, 'df'))
+      }
+    }
+  }
+
+
   return(list(data_list = Filter(Negate(is.null), l),
               scale_pars = scaled$scale_pars,
               hyperpars = defs)
@@ -336,7 +353,7 @@ default_hyperpars <- function() {
     coxph = c(c = 0.001,
               r = 0.1,
               eps = 1e-10
-              )
+    )
   )
 }
 

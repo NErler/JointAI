@@ -71,7 +71,7 @@ glm_model <- function(family, link, Mlist, K, ...){
 
 
 # priors for GLM analysis model
-glm_priors <- function(family, link, K, Mlist, ...){
+glm_priors <- function(family, link, K_list, Mlist, ...){
   y_name <- colnames(Mlist$y)
 
   secndpar <- switch(family,
@@ -111,10 +111,17 @@ glm_priors <- function(family, link, K, Mlist, ...){
 
 
   paste0(
+    paste_regcoef_prior(K_list, distr, 'beta'),
+    if (any(rownames(K_list) == "uni")) {
+      paste0(
+        tab(), "tau_", y_name ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
+        tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")", "\n"
+      )
+    },
     tab(), "# Priors for the coefficients in the analysis model", "\n",
-    tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
-    distr,
-    tab(), "}",
+    # tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
+    # distr,
+    # tab(), "}",
     secndpar,
     paste_ppc, "\n\n")
 }

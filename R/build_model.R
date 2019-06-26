@@ -148,7 +148,8 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
 
 
 write_model <- function(analysis_type, family = NULL, link = NULL,
-                        models = NULL, Ntot, Mlist, K, imp_par_list, file = NULL,
+                        models = NULL, Ntot, Mlist, K, K_list = NULL,
+                        imp_par_list, file = NULL,
                         package = "JAGS") {
 
   arglist <- as.list(match.call())[-1]
