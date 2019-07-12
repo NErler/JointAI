@@ -61,11 +61,13 @@ traceplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, .
 #' @export
 traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                               subset = c(analysis_main = TRUE),
+                              exclude_chains = NULL,
                               nrow = NULL, ncol = NULL, keep_aux = FALSE,
                               use_ggplot = FALSE, warn = TRUE, mess = TRUE,
                               ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin, subset = subset,
+                    exclude_chains = exclude_chains,
                     nrow = nrow, ncol = ncol, warn = warn, mess = mess,
                     keep_aux = keep_aux)
 
@@ -174,12 +176,14 @@ densplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, ..
 #' @rdname densplot
 #' @export
 densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
-                             subset = c(analysis_main = TRUE), vlines = NULL, nrow = NULL,
+                             subset = c(analysis_main = TRUE),
+                             exclude_chains = NULL, vlines = NULL, nrow = NULL,
                              ncol = NULL, joined = FALSE, use_ggplot = FALSE,
                              keep_aux = FALSE, warn = TRUE, mess = TRUE, ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin,
-                    subset = subset, nrow = nrow, ncol = ncol, warn = warn,
+                    subset = subset, exclude_chains = exclude_chains,
+                    nrow = nrow, ncol = ncol, warn = warn,
                     mess = mess, keep_aux = keep_aux)
 
   if (joined)
@@ -251,6 +255,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 # Helpfunction for densityplot and traceplot
 plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL,
+                      exclude_chains = NULL,
                       nrow = NULL, ncol = NULL, warn = TRUE, mess = TRUE,
                       keep_aux = FALSE, ...) {
   if (is.null(object$MCMC))
@@ -267,7 +272,13 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 
   MCMC <- get_subset(object, subset, keep_aux = keep_aux,
                      warn = warn, mess = mess)
-  MCMC <- window(MCMC,
+
+  chains <- seq_along(MCMC)
+  if (!is.null(exclude_chains)) {
+    chains <- chains[-exclude_chains]
+  }
+
+  MCMC <- window(MCMC[chains],
                  start = start,
                  end = end,
                  thin = thin)

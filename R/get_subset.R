@@ -11,7 +11,11 @@ get_subset <- function(object, subset, keep_aux = FALSE, warn = TRUE, mess = TRU
   if (!length(subset) == 0 && is.null(as.list(subset)$analysis_main))
     subset$analysis_main <- FALSE
 
-  s <- do.call(get_params, c(object, object$Mlist, subset, mess = mess))
+
+  Mlist_new <- object$Mlist
+  Mlist_new$ppc <- as.list(subset)$ppc
+
+  s <- do.call(get_params, c(object, Mlist_new, subset, mess = mess))
 
   repl <- sapply(s, function(r) {
     if (grepl("^beta$", r)) {

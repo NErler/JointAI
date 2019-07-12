@@ -1,5 +1,6 @@
 
 prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL,
+                      exclude_chains = NULL,
                       warn = warn, mess = mess, ...) {
 
   if (is.null(start)) {
@@ -19,18 +20,23 @@ prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 
   MCMC <- get_subset(object, subset, warn = warn, mess = mess)
 
+  chains <- seq_along(MCMC)
+  if (!is.null(exclude_chains)) {
+    chains <- chains[-exclude_chains]
+  }
+
   MCMC <- do.call(rbind,
-                  window(MCMC,
+                  window(MCMC[chains],
                          start = start,
                          end = end,
                          thin = thin))
-
   return(MCMC)
 }
 
 
 get_Dmat <- function(x) {
-  MCMC <- prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL)
+  MCMC <- prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL,
+                    exclude_chains = NULL)
 
   Ds <- grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", colnames(MCMC), value = TRUE)
   Dpos <- t(sapply(strsplit(gsub('D|\\[|\\]', '', Ds), ","), as.numeric))
