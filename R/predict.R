@@ -8,6 +8,7 @@
 #' @inheritParams sharedParams
 #' @param dat original data
 #' @param var name of variable that should be varying
+#' @param length number of values used in the sequence when \code{var} is continuous
 #' @param ... optional, additional arguments (currently not used)
 #'
 #' @seealso \code{\link{predict.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
