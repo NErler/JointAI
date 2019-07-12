@@ -100,12 +100,15 @@ clmm_priors <- function(Mlist, K, K_list, ...){
     distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal)", "\n")
   }
 
+
   paste0(tab(), "# Priors for the coefficients in the analysis model", "\n",
          if (any(!is.na(K))) {
-         paste0(
-           tab(), "for (k in 1:", max(K, na.rm = T), ") {", "\n",
-           distr,
-           tab(), "}", "\n\n")
+           paste0(
+             paste_regcoef_prior(K_list, distr, 'beta'),
+           #   tab(), "for (k in 1:", max(K, na.rm = T), ") {", "\n",
+           #   distr,
+           #   tab(), "}",
+           "\n\n")
          },
          paste(deltas, collapse = "\n"), "\n\n",
          paste(gammas, collapse = "\n"), "\n\n",
