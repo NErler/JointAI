@@ -1,5 +1,5 @@
 # Imputation by cumulative logistic regression
-impmodel_cumlogit <- function(varname, dest_mat, dest_col, Xc_cols, par_elmts, dummy_cols, ncat, refcat, ...){
+impmodel_cumlogit <- function(varname, dest_mat, dest_col, Xc_cols, par_elmts, dummy_cols, ncat, refcat, ppc, ...){
 
   indent <- nchar(varname) + 15
 
@@ -18,9 +18,16 @@ impmodel_cumlogit <- function(varname, dest_mat, dest_col, Xc_cols, par_elmts, d
 
   dummies <- paste_dummies(c(1:ncat)[-refcat], dest_mat, dest_col, 'Xc', dummy_cols, index = 'i')
 
+  paste_ppc <- if (ppc) {
+    paste0("\n",
+           tab(4), "# For posterior predictive check:", "\n",
+           tab(4), varname, "_ppc[i] ~ dcat(p_", varname, "[i, 1:", ncat, "])", "\n"
+    )
+  }
 
   paste0(tab(4), "# ordinal model for ", varname, "\n",
          tab(4), "Xcat[i, ", dest_col, "] ~ dcat(p_", varname, "[i, 1:", ncat, "])", "\n",
+         paste_ppc,
          tab(4), "eta_", varname,"[i] <- ", predictor, "\n\n",
          tab(4), "p_", varname, "[i, 1] <- max(1e-10, min(1-1e-7, psum_", varname, "[i, 1]))", "\n",
          paste(probs, collapse = "\n"), "\n",
@@ -82,16 +89,17 @@ impmodel_clmm <- function(varname, dest_mat, dest_col, Xc_cols, Xl_cols, ncat, r
   dummies <- paste_dummies(c(1:ncat)[-refcat], dest_mat, dest_col, dummy_mat, dummy_cols, index = 'j')
 
 
-  paste_ppc <- NULL #if (ppc) {
-  # paste0("\n",
-  # tab(4), "# For posterior predictive check:", "\n",
-  # tab(4), varname, "_ppc[j] ~ ", distr(varname), "\n"
-  # )
-  # }
+  paste_ppc <- if (ppc) {
+    paste0("\n",
+           tab(4), "# For posterior predictive check:", "\n",
+           tab(4), varname, "_ppc[j] ~ dcat(p_", varname, "[j, 1:", ncat, "])", "\n"
+    )
+  }
 
   paste0(tab(), "# Cumulative logit mixed effects model for ", varname, "\n",
          tab(), "for (j in 1:", Ntot, ") {", "\n",
          tab(4), dest_mat, "[j, ", dest_col, "] ~ dcat(p_", varname, "[j, 1:", ncat, "])", "\n",
+         paste_ppc,
          tab(4), "eta_", varname,"[j] <- ",
          paste_ranef_predictor(parnam = paste0("b_", varname), parindex = 'j',
                                matnam = 'Z',
@@ -104,7 +112,6 @@ impmodel_clmm <- function(varname, dest_mat, dest_col, Xc_cols, Xl_cols, ncat, r
          varname, "[j, 1:", ncat - 1,"])))", "\n\n",
          paste0(logits, collapse = "\n"), "\n\n",
          paste0(dummies, collapse = "\n"), "\n",
-         paste_ppc,
          tab(), "}", "\n\n",
          tab(), "for (i in 1:", N, ") {", "\n",
          tab(4), "b_", varname, "[i, 1:", nranef, "] ~ ", norm.distr,

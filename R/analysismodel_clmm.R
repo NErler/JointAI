@@ -42,8 +42,16 @@ clmm_model <- function(Mlist = NULL, K, ...){
   })
 
 
+  paste_ppc <- if (Mlist$ppc) {
+    paste0(
+      tab(4), y_name, "_ppc[j] ~ dcat(p_", y_name, "[j, 1:", Mlist$ncat, "])", "\n"
+    )
+  }
+
+
   paste0(tab(4), "# Cumulative logit mixed effects model for ", y_name, "\n",
          tab(4), y_name, "[j] ~ dcat(p_", y_name, "[j, 1:", Mlist$ncat, "])", "\n",
+         paste_ppc,
          tab(4), 'eta_', y_name, "[j] <- inprod(Z[j, ], b[groups[j], ])",
          paste_Xl,
          paste_Xil,
@@ -141,9 +149,17 @@ lnmm_model <- function(Mlist = NULL, K, ...) {
     )
   }
 
+  paste_ppc <- if (Mlist$ppc) {
+    paste0(
+      tab(4), y_name, "_lat_ppc[j] ~ dnorm(mu_", y_name, "[j], 1)", "\n",
+      tab(4), y_name, "_ppc[j] ~ dinterval(", y_name, "_lat_ppc[j], delta_", y_name, "[])", "\n",
+    )
+  }
+
   paste0(tab(4), "# Latent normal mixed effects model for ", y_name, "\n",
          tab(4), y_name, "_lat[j] ~ dnorm(mu_", y_name, "[j], 1)", "\n",
          tab(4), y_name, "[j] ~ dinterval(", y_name, "_lat[j], delta_", y_name, "[])", "\n",
+         paste_ppc,
          tab(4), "mu_", y_name, "[j] <- inprod(Z[j, ], b[groups[j], ])",
          paste_Xl,
          paste_Xil,

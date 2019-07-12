@@ -75,11 +75,11 @@ glme_model <- function(family, link, Mlist, K, ...){
     )
   }
 
-  paste_ppc <- NULL # if (Mlist$ppc) {
-  #   paste0(
-  #     tab(4), y_name, "_ppc[j] ~ ", distr(y_name), "\n"
-  #   )
-  # }
+  paste_ppc <- if (Mlist$ppc) {
+    paste0(
+      tab(4), y_name, "_ppc[j] ~ ", distr(y_name), "\n"
+    )
+  }
 
   paste0(tab(4), "# Generalized linear mixed effects model for ", y_name, "\n",
          tab(4), y_name, "[j] ~ ", distr(y_name), "\n",

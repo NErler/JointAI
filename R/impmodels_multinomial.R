@@ -1,5 +1,5 @@
 # Imputation by cumulative logistic regression
-impmodel_multilogit <- function(varname, dest_col, Xc_cols, par_elmts, dummy_cols, ncat, dest_mat, refcat, ...){
+impmodel_multilogit <- function(varname, dest_col, Xc_cols, par_elmts, dummy_cols, ncat, dest_mat, refcat, ppc, ...){
 
   indent <- nchar(varname) + 23
 
@@ -19,8 +19,16 @@ impmodel_multilogit <- function(varname, dest_col, Xc_cols, par_elmts, dummy_col
   dummies <- paste_dummies(c(1:ncat)[-refcat], dest_mat, dest_col, 'Xc', dummy_cols, index = 'i')
 
 
+  paste_ppc <- if (ppc) {
+    paste0("\n",
+           tab(4), "# For posterior predictive check:", "\n",
+           tab(4), varname, "_ppc[i] ~ dcat(p_", varname, "[i, 1:", ncat, "])", "\n"
+    )
+  }
+
   paste0(tab(4), "# multinomial model for ", varname, "\n",
          tab(4), "Xcat[i, ", dest_col, "] ~ dcat(p_", varname, "[i, 1:", ncat, "])", "\n\n",
+         paste_ppc,
          paste(probs, collapse = "\n"), "\n\n",
          paste0(logs, collapse = "\n"), "\n\n",
          paste0(dummies, collapse = "\n"), "\n\n")

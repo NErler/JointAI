@@ -69,12 +69,12 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
     )
   }
 
-  paste_ppc <- NULL #if (ppc) {
-    # paste0("\n",
-           # tab(4), "# For posterior predictive check:", "\n",
-           # tab(4), varname, "_ppc[j] ~ ", distr(varname), "\n"
-    # )
-  # }
+  paste_ppc <- if (ppc) {
+    paste0("\n",
+           tab(4), "# For posterior predictive check:", "\n",
+           tab(4), varname, "_ppc[j] ~ ", distr(varname), "\n"
+    )
+  }
   paste0(tab(), "# Generalized linear mixed effects model for ", varname, "\n",
          tab(), "for (j in 1:", Ntot, ") {", "\n",
          tab(4), dest_mat, "[j, ", dest_col, "] ~ ", distr(varname), "\n",

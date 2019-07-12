@@ -52,11 +52,11 @@ glm_model <- function(family, link, Mlist, K, ...){
                            cols = Mlist$cols_main$Xic, indent = indent))
   }
 
-  paste_ppc <- NULL #if (Mlist$ppc) {
-  #   paste0(
-  #     tab(4), y_name, "_ppc[j] ~ ", distr(y_name), "\n"
-  #   )
-  # }
+  paste_ppc <- if (Mlist$ppc) {
+    paste0(
+      tab(4), y_name, "_ppc[j] ~ ", distr(y_name), "\n"
+    )
+  }
 
 
   paste0(tab(4), "# ", capitalize(family), " model for ", y_name, "\n",

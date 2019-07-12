@@ -55,26 +55,26 @@ impmodel_continuous <- function(impmeth, varname, dest_col, dest_mat, trafo_cols
     )
   }
 
-  paste_ppc <- NULL # if (ppc) {
-  #   if (impmeth == 'norm') {
-  #     paste0(tab(4), '# Posterior predictive check for ', varname, '\n',
-  #       tab(4), varname, "_ppc[i] ~ dnorm(mu_", varname, "[i], tau_", varname,")", trunc, "\n"
-  #     )
-  #   } else if (impmeth == 'lognorm') {
-  #     paste0(tab(4), '# Posterior predictive check for ', varname, '\n',
-  #       tab(4), varname, "_ppc[i] ~ dlnorm(mu_", varname, "[i], tau_", varname,")", "\n"
-  #     )
-  #   } else if (impmeth == 'beta') {
-  #     paste0(tab(4), '# Posterior predictive check for ', varname, '\n',
-  #       tab(4),  varname, "_ppc[i]] ~ dbeta(shape1_", varname, "[i], shape2_",
-  #       varname, "[i])T(1e-15, 1 - 1e-15)", "\n"
-  #     )
-  #   } else if (impmeth == 'gamma') {
-  #     paste0(tab(4), '# Posterior predictive check for ', varname, '\n',
-  #       tab(4), varname, "_ppc[i] ~ dgamma(shape_", varname, "[i], rate_", varname, "[i])", "\n"
-  #     )
-  #   }
-  # }
+  paste_ppc <- if (ppc) {
+    if (impmeth == 'norm') {
+      paste0(tab(4), '# Posterior predictive check for ', varname, '\n',
+        tab(4), varname, "_ppc[i] ~ dnorm(mu_", varname, "[i], tau_", varname,")", trunc, "\n"
+      )
+    } else if (impmeth == 'lognorm') {
+      paste0(tab(4), '# Posterior predictive check for ', varname, '\n',
+        tab(4), varname, "_ppc[i] ~ dlnorm(mu_", varname, "[i], tau_", varname,")", "\n"
+      )
+    } else if (impmeth == 'beta') {
+      paste0(tab(4), '# Posterior predictive check for ', varname, '\n',
+        tab(4),  varname, "_ppc[i]] ~ dbeta(shape1_", varname, "[i], shape2_",
+        varname, "[i])T(1e-15, 1 - 1e-15)", "\n"
+      )
+    } else if (impmeth == 'gamma') {
+      paste0(tab(4), '# Posterior predictive check for ', varname, '\n',
+        tab(4), varname, "_ppc[i] ~ dgamma(shape_", varname, "[i], rate_", varname, "[i])", "\n"
+      )
+    }
+  }
 
   paste0('\n' ,
          tab(4), "# ", type_spec['title'], " model for ", varname, "\n",

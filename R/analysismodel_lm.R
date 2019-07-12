@@ -11,11 +11,11 @@ lm_model <- function(Mlist, K, ...){
                            cols = Mlist$cols_main$Xic, indent = indent))
   }
 
-  paste_ppc <- NULL #if (Mlist$ppc) {
-  #   paste0(
-  #     tab(4), y_name, "_ppc[j] ~ dnorm(mu_", y_name, "[j], tau_", y_name, ")", "\n"
-  #   )
-  # }
+  paste_ppc <- if (Mlist$ppc) {
+    paste0(
+      tab(4), y_name, "_ppc[j] ~ dnorm(mu_", y_name, "[j], tau_", y_name, ")", "\n"
+    )
+  }
 
   paste0(tab(4), "# Linear model for ", y_name, "\n",
          tab(4), y_name, "[j] ~ dnorm(mu_", y_name, "[j], tau_", y_name, ")", "\n",

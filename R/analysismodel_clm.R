@@ -24,11 +24,11 @@ clm_model <- function(Mlist = NULL, K, ...){
   })
 
 
-  paste_ppc <- NULL #if (Mlist$ppc) {
-  #   paste0(
-  #     tab(4), y_name, "_ppc[j] ~ dcat(p_", y_name, "[j, 1:", Mlist$ncat, "])", "\n"
-  #   )
-  # }
+  paste_ppc <- if (Mlist$ppc) {
+    paste0(
+      tab(4), y_name, "_ppc[j] ~ dcat(p_", y_name, "[j, 1:", Mlist$ncat, "])", "\n"
+    )
+  }
 
 
   paste0(tab(4), "# Cumulative logit mixed effects model for ", y_name, "\n",
