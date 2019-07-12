@@ -52,7 +52,7 @@ clm_model <- function(Mlist = NULL, K, ...){
 }
 
 
-clm_priors <- function(Mlist, K, ...){
+clm_priors <- function(Mlist, K, K_list, ...){
 
   y_name <- colnames(Mlist$y)
 
@@ -96,9 +96,11 @@ clm_priors <- function(Mlist, K, ...){
   paste0(tab(), "# Priors for the coefficients in the analysis model", "\n",
          if (any(!is.na(K))) {
          paste0(
-           tab(), "for (k in 1:", max(K, na.rm = T), ") {", "\n",
-           distr,
-           tab(), "}", "\n\n")
+           paste_regcoef_prior(K_list, distr, 'beta'),
+         #   tab(), "for (k in 1:", max(K, na.rm = T), ") {", "\n",
+         #   distr,
+         #   tab(), "}",
+           "\n\n")
          },
          paste(deltas, collapse = "\n"), "\n\n",
          paste(gammas, collapse = "\n"),

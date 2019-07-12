@@ -179,29 +179,40 @@ get_imp_dim <- function(models, imp_pos, Mlist){
 
 
 get_Klist <- function(K, Mlist) {
-  # separate the different ps functions
-  ps_list <- split(Mlist$trafos[Mlist$trafos$type == 'ps', c('X_var', 'var')],
-                   Mlist$trafos$fct[Mlist$trafos$type == 'ps'])
+  if (any(Mlist$trafos$type %in% "ps")) {
+    # separate the different ps functions
+    ps_list <- split(Mlist$trafos[Mlist$trafos$type == 'ps', c('X_var', 'var')],
+                     Mlist$trafos$fct[Mlist$trafos$type == 'ps'])
 
-  # check where in the data matrices they occur
-  find_ps <- lapply(Mlist$names_main, function(x) {
-    anyps <- lapply(ps_list, function(k) {
-      cols <- match(k[, 'X_var'], x)
-      attr(cols, "names") <- k[, 'var']
-      cols
+    # check where in the data matrices they occur
+    find_ps <- lapply(Mlist$names_main, function(x) {
+      anyps <- lapply(ps_list, function(k) {
+        cols <- match(k[, 'X_var'], x)
+        attr(cols, "names") <- k[, 'var']
+        cols
+      })
+      anyps[sapply(anyps, function(i) !all(is.na(i)))]
     })
-    anyps[sapply(anyps, function(i) !all(is.na(i)))]
-  })
+  } else {
+    find_ps <- NULL
+  }
 
   K_list <- NULL
   for (k in rownames(K)) {
     if (all(!is.na(K[k, ]))) {
-      all_uni <- seq(from = K[k, 'start'], to = K[k, 'end'], by = 1)[-unlist(find_ps[[k]])]
-      mat <- cbind(start = all_uni[1 + c(0, which(diff(all_uni) > 1))],
-                   end = all_uni[c(which(diff(all_uni) > 1), length(all_uni))],
-                   varname = rep(NA, sum(diff(all_uni) > 1) + 1)
-      )
-      rownames(mat) <- rep('uni', nrow(mat))
+      all_uni <- seq(from = K[k, 'start'], to = K[k, 'end'], by = 1)
+      if (length(find_ps[[k]]) > 0)
+        all_uni <- all_uni[-unlist(find_ps[[k]])]
+
+      if (length(all_uni) > 0) {
+        mat <- cbind(start = all_uni[1 + c(0, which(diff(all_uni) > 1))],
+                     end = all_uni[c(which(diff(all_uni) > 1), length(all_uni))],
+                     varname = rep(NA, sum(diff(all_uni) > 1) + 1)
+        )
+        rownames(mat) <- rep('uni', nrow(mat))
+      } else {
+        mat <- matrix(nrow = 0, ncol = 3, dimnames = list(c(), c('start', 'end', 'varname')))
+      }
       mat <- rbind(mat, do.call(rbind,
                                 lapply(find_ps[[k]], function(i)
                                   c(range(seq(from = K[k, 'start'],
@@ -213,5 +224,7 @@ get_Klist <- function(K, Mlist) {
       K_list[[k]] <- mat
     }
   }
-  return(do.call(rbind, K_list))
+  if (!is.null(K_list))
+    K_list <- do.call(rbind, K_list)
+  return(K_list)
 }

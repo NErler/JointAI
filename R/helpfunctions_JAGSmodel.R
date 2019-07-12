@@ -247,7 +247,7 @@ paste_regcoef_prior <- function(K_list, distr, coefnam) {
       paste0(tab(), coefnam, "[", x['start'], ":", x['end'], "] ~ dmnorm(priorMean_",
              x["varname"], ", tau_", coefnam, "_", x["varname"], " * priorTau_",
              x["varname"], ")", "\n",
-             tab(), "tau_", coefnam, "_", x["varname"], " ~ dgamma(1, 0.005)", "\n")
+             tab(), "tau_", coefnam, "_", x["varname"], " ~ dgamma(shape_ps, rate_ps)", "\n")
     })
   ), collapse = '')
 }

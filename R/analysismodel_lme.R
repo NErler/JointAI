@@ -86,18 +86,11 @@ lmereg_priors <- function(K_list, y_name, Mlist){
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
     paste_regcoef_prior(K_list, distr, 'beta'),
-    if (any(rownames(K_list) == "uni")) {
-      paste0(
-        tab(), "tau_", y_name ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
-        tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")", "\n"
-      )
-    },
-
     # tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
     # distr,
     # tab(), "}", "\n",
-    # tab(), "tau_", y_name ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
-    # tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")",
+    tab(), "tau_", y_name ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
+    tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")",
     "\n")
 }
 

@@ -55,17 +55,21 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   fcts_all <- extract_fcts(fixed2, data, random = random, complete = TRUE)
 
 
-  knots <- if (any(fcts_all$type %in% c('bs', 'ps', 'ns'))) {
-    trafo_sub <- unique(fcts_all[which(fcts_all$type %in% c('bs', 'ps', 'ns')), c('var', 'fct', 'type', 'dupl')])
+  knots <- if (any(fcts_all$type %in% c('bs', 'ps'))) {
+    trafo_sub <- unique(fcts_all[which(fcts_all$type %in% c('bs', 'ps')), c('var', 'fct', 'type', 'dupl')])
     kn <- sapply(seq_along(trafo_sub$fct),
                  function(k) {
                    sB <- eval(parse(text = trafo_sub$fct[k]), envir = data)
-                   knt <- get_knots(sB)
+                   knt <- switch(trafo_sub$type[k],
+                     ps = attr(sB, 'knots'),
+                     bs = get_bs_knots(sB)
+                   )
                    attr(knt, "degree") <- attr(sB, "degree")
                    attr(knt, 'fct') <- trafo_sub$fct[k]
                    attr(knt, 'varname') <- trafo_sub$var[k]
                    attr(knt, 'df') <- ncol(sB)
                    attr(knt, 'type') <- trafo_sub$type[k]
+                   attr(knt, 'dx') <- attr(sB, 'dx')
                    knt
 
                  }, simplify = FALSE)

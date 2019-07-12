@@ -33,7 +33,7 @@ survreg_model <- function(Mlist, K, ...){
 }
 
 # priors for parametric survival model -----------------------------------------
-survreg_priors <- function(K, Mlist, ...){
+survreg_priors <- function(K_list, Mlist, ...){
   y_name <- colnames(Mlist$y)
 
   paste_ppc <- NULL # if (Mlist$ppc) {
@@ -54,9 +54,11 @@ survreg_priors <- function(K, Mlist, ...){
 
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
-    tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
-    distr,
-    tab(), "}", "\n",
+    paste_regcoef_prior(K_list, distr, 'beta'),
+    # tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
+    # distr,
+    # tab(), "}",
+    "\n",
     tab(), "shape_", y_name ," ~ dexp(0.01)", "\n",
     paste_ppc,
     "\n")
@@ -94,8 +96,7 @@ coxph_model <- function(Mlist, K, ...){
 
 
 # priors for Cox PH model ------------------------------------------------------
-coxph_priors <- function(K, Mlist, ...){
-  y_name <- colnames(Mlist$y)
+coxph_priors <- function(K_list, Mlist, ...){
 
   if (Mlist$ridge) {
     distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv_ridge[k])", "\n",
@@ -107,8 +108,9 @@ coxph_priors <- function(K, Mlist, ...){
 
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
-    tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
-    distr,
-    tab(), "}"
+    paste_regcoef_prior(K_list, distr, 'beta'),
+    # tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
+    # distr,
+    # tab(), "}"
   )
 }

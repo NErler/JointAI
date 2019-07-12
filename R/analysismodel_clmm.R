@@ -76,7 +76,7 @@ clmm_model <- function(Mlist = NULL, K, ...){
 }
 
 
-clmm_priors <- function(Mlist, K, ...){
+clmm_priors <- function(Mlist, K, K_list, ...){
 
   y_name <- colnames(Mlist$y)
 

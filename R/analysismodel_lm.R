@@ -55,12 +55,10 @@ lm_priors <- function(K_list, Mlist, ...){
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
     paste_regcoef_prior(K_list, distr, 'beta'),
-    if (any(rownames(K_list) == "uni")) {
-      paste0(
-        tab(), "tau_", y_name ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
-        tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")", "\n"
-      )
-    },
+    paste0(
+      tab(), "tau_", y_name ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
+      tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")", "\n"
+    ),
     paste_ppc, "\n")
 }
 
