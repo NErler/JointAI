@@ -181,8 +181,8 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   fcts_mis <- extract_fcts(fixed2, data, random = random, complete = FALSE)
   if (any(fcts_mis$type %in% c('ns')))
     stop(paste0("Natural cubic splines are not implemented for incomplete variables. ",
-               "Please use B-splines (using ", dQuote("bs()"), ") instead."),
-            call. = FALSE)
+                "Please use B-splines (using ", dQuote("bs()"), ") instead."),
+         call. = FALSE)
 
   if (!is.null(fcts_mis)) {
     fmla_trafo <- as.formula(
@@ -221,10 +221,11 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   # - variabe categorical with >2 categories?
   catvars <- sapply(colnames(data), function(i) i %in% names(refs) && length(levels(refs[[i]])) > 2)
 
+  misvar_long <- if (any(infmla & !sapply(data, check_tvar, groups) & misvar)) TRUE else misvar
 
   # select names of relevant variables
   cat_vars_base <- names(data)[infmla & misvar & catvars & !sapply(data, check_tvar, groups)]
-  cat_vars_long <- names(data)[infmla & catvars & sapply(data, check_tvar, groups)]
+  cat_vars_long <- names(data)[infmla & misvar_long & catvars & sapply(data, check_tvar, groups)]
 
   # match them to the position in Xc
   cat_vars_base <- sapply(cat_vars_base, match_positions,
@@ -254,7 +255,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     scale_vars <- find_continuous_main(fixed2, data)
 
     compl_fcts_vars <- fcts_all$X_var[fcts_all$type != "identity" &
-                                     colSums(is.na(data[, fcts_all$var, drop = FALSE])) == 0]
+                                        colSums(is.na(data[, fcts_all$var, drop = FALSE])) == 0]
 
     excl <- grep("[[:alpha:]]*\\(", scale_vars, value = TRUE)
     excl <- c(excl, unique(fcts_mis$X_var))
