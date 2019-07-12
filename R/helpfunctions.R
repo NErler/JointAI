@@ -110,7 +110,30 @@ melt_data.frame <- function(data, id.vars = NULL, varnames = NULL, valname = 'va
 }
 
 
+melt_list <- function(x, varnames = NULL, ...) {
 
+  while (all(sapply(x, is.list) & !sapply(x, is.data.frame))) {
+    x <- lapply(x, melt_list)
+  }
+  nam <- if (is.null(names(x))) {seq_along(x)} else {names(x)}
+
+  newnum <- 1 + max(0, as.numeric(gsub('L', '',
+                                       grep("^L[[:digit:]]+$", names(x[[1]]),
+                                            value = TRUE))))
+
+  l <- mapply(function(value, nam) {
+    df <- as.data.frame(value)
+    df[, paste0("L", newnum)] = nam
+    df
+  }, value = x, nam = nam, SIMPLIFY = FALSE)
+
+  l <- do.call(rbind, l)
+
+  # if (!is.null(varnames)) {
+    # names(l)[names(l) == paste0("L", newnum)] <- varnames
+  # }
+  l
+}
 
 
 sort_cols <- function(mat, fct_all, auxvars) {
