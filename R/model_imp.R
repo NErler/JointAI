@@ -313,9 +313,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   # check if the argument meth is provided (no longer used)
   args <- as.list(match.call())
   if (!is.null(args$meth))
-      warning('The argument "meth" has been changed to "models". Please use "models".',
-              call. = FALSE, immediate. = TRUE)
-
+    warning('The argument "meth" has been changed to "models". Please use "models".',
+            call. = FALSE, immediate. = TRUE)
 
 
   # data pre-processing --------------------------------------------------------
@@ -379,16 +378,16 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   # * convert logicals to factors ----------------------------------------------
-  if (any(unlist(sapply(data[allvars], class)) == 'logical')) {
-    for (x in allvars) {
-      if ('logical' %in% class(data[, x])) {
-        data[, x] <- factor(data[, x])
-        if (mess)
-          message(gettextf('%s was converted to a factor.', dQuote(x)))
-      }
+  for (x in allvars) {
+    if ('logical' %in% class(data[, x])) {
+      data[, x] <- factor(data[, x])
+      if (mess)
+        message(gettextf('%s was converted to a factor.', dQuote(x)))
+    }
+    if (is.factor(data[, x])) {
+      levels(data[, x]) <- make.names(levels(data[, x]))
     }
   }
-
 
 
   # imputation method ----------------------------------------------------------
@@ -485,26 +484,26 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     # This warning can not be switched off by warn = FALSE, because an input is required.
     warning(gettextf("\nThe file %s already exists in %s.",
                      dQuote(modelname), dQuote(modeldir)),
-              call. = FALSE, immediate. = TRUE)
+            call. = FALSE, immediate. = TRUE)
     reply <- menu(c('yes', 'no'),
                   title = "\nDo you want me to overwrite this file?")
     if (reply == 1) {
       if (mess)
         message('The modelfile was overwritten.')
-    overwrite = TRUE
+      overwrite = TRUE
     } else {
       overwrite = FALSE
       if (mess)
         message('The old model will be used.')
     }
     if (mess)
-    message("To skip this question in the future, set 'overwrite = TRUE' or 'overwrite = FALSE'.")
+      message("To skip this question in the future, set 'overwrite = TRUE' or 'overwrite = FALSE'.")
   }
 
   if (!file.exists(modelfile) || (file.exists(modelfile) & overwrite == TRUE)) {
     Ntot <- ifelse(analysis_type == 'coxph',
-           sum(data_list$RiskSet != 0),
-           length(data_list[[names(Mlist$y)]]))
+                   sum(data_list$RiskSet != 0),
+                   length(data_list[[names(Mlist$y)]]))
 
     write_model(analysis_type = analysis_type, family = family,
                 link = link, models = models,
@@ -523,22 +522,22 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     inits <- NULL
   }
 
-if (!is.null(inits)) {
-  if (inherits(inits, 'function')) {
-    # if (!is.null(seed) | parallel) {
+  if (!is.null(inits)) {
+    if (inherits(inits, 'function')) {
+      # if (!is.null(seed) | parallel) {
       if (!is.null(seed)) set.seed(seed)
       inits <- replicate(n.chains, inits(), simplify = FALSE)
-    # }
+      # }
+    }
+    if (inherits(inits, "list")) {
+      if (!any(c('.RNG.name', '.RNG.seed') %in% unlist(lapply(inits, names))))
+        inits <- mapply(function(inits, rng) c(inits, rng), inits = inits,
+                        rng = get_RNG(seed, n.chains),
+                        SIMPLIFY = FALSE)
+    }
+  } else {
+    inits <- get_RNG(seed, n.chains)
   }
-  if (inherits(inits, "list")) {
-    if (!any(c('.RNG.name', '.RNG.seed') %in% unlist(lapply(inits, names))))
-      inits <- mapply(function(inits, rng) c(inits, rng), inits = inits,
-                      rng = get_RNG(seed, n.chains),
-                      SIMPLIFY = FALSE)
-  }
-} else {
-  inits <- get_RNG(seed, n.chains)
-}
   # parameters to monitor ------------------------------------------------------
 
   if (is.null(monitor_params)) {
@@ -578,9 +577,9 @@ if (!is.null(inits)) {
                        Sys.time(), ")."))
 
       res <- foreach(i = seq_along(inits)) %dopar% {run_jags(inits[[i]], data_list = data_list,
-                          modelfile = modelfile,
-                          n.adapt = n.adapt, n.iter = n.iter, thin = thin,
-                          var.names = var.names)}
+                                                             modelfile = modelfile,
+                                                             n.adapt = n.adapt, n.iter = n.iter, thin = thin,
+                                                             var.names = var.names)}
       doParallel::stopImplicitCluster()
       mcmc <- as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
       adapt <- lapply(res, function(x) x$adapt)
@@ -610,19 +609,19 @@ if (!is.null(inits)) {
     coefs <- try(get_coef_names(Mlist, K))
 
     if (!inherits(coefs, "try-error")) {
-    for (k in 1:length(MCMC)) {
-      # change names of MCMC to variable names where possible
-      colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <-
-        coefs[na.omit(match(colnames(MCMC[[k]]), coefs[, 1])), 2]
+      for (k in 1:length(MCMC)) {
+        # change names of MCMC to variable names where possible
+        colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <-
+          coefs[na.omit(match(colnames(MCMC[[k]]), coefs[, 1])), 2]
 
-      if (!is.null(scale_pars)) {
-        # re-scale parameters
-        MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
-                                    scale_pars, MCMC[[k]], Mlist$refs,
-                                    unlist(Mlist$names_main)))
-        attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
+        if (!is.null(scale_pars)) {
+          # re-scale parameters
+          MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
+                                      scale_pars, MCMC[[k]], Mlist$refs,
+                                      unlist(Mlist$names_main)))
+          attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
+        }
       }
-    }
     }
   }
 
@@ -664,7 +663,7 @@ if (!is.null(inits)) {
          sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
          MCMC = if (n.iter > 0 & !is.null(mcmc)) as.mcmc.list(MCMC),
          time = t1 - t0
-         ), class = "JointAI")
+    ), class = "JointAI")
   )
 }
 
