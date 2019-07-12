@@ -125,9 +125,11 @@ NULL
 
 .onLoad <- function(libname, pkgname) {
   rjags::load.module("glm", quiet = TRUE)
-  message("This is new software. Please report any bugs to the package maintainer.")
 }
 
+packageStartupMessage(
+  "This is new software. Please report any bugs to the package maintainer."
+)
 
 utils::globalVariables(c("i", "value", "chain", "iteration"))
 
