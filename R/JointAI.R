@@ -143,8 +143,10 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #' @param subset subset of parameters/variables/nodes (columns in the MCMC sample).
 #'               Uses the same logic as the argument \code{monitor_params} in
 #'               \code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
-#'               \code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{survreg_imp}}
+#'               \code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{clmm_imp}},
+#'               \code{\link{survreg_imp}}
 #'               and \code{\link{coxph_imp}}.
+#' @param exclude_chains optional vector of the number of chains that should be excluded
 #' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
 #' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
 #' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
