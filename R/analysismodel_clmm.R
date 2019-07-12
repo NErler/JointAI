@@ -187,8 +187,6 @@ lnmm_model <- function(Mlist = NULL, K, ...) {
 
 lnmm_priors <- function(Mlist, K, ...){
 
-  y_name <- colnames(Mlist$y)
-
   if (Mlist$ridge) {
     distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm_ridge[k])", "\n",
                     tab(4), "tau_reg_norm_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
