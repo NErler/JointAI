@@ -121,7 +121,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                                           MCMC[[k]]),
                                                     start = start(object$MCMC),
                                                     end = end(object$MCMC) +
-                                                      niter(mcmc[[k]]))
+                                                      niter(mcmc[[k]]) * thin(mcmc[[k]]),
+                                                    thin = thin(mcmc[[k]]))
     ))
   } else {
     newmcmc <- mcmc
