@@ -1,3 +1,25 @@
+
+# JointAI 0.5.99999
+
+## Bug fixes
+* bug in `add_samples()` when used in parallel with thinning fixed
+* bug fixed that occured when a complete longitudinal categorical variable was
+  used in a model that did not contain any incomplete baseline variables
+
+## New features / extensions
+* argument `exclude_chains` in `summary()`, `densplot()`, `traceplot()`,
+  `predict()`, ... added to allow the exclusion of chains that haven't converged
+* argument `ppc` in main analysis models allows to monitor 
+* `bs()`: B-splines can now be used in the analysis model as well for incomplete
+   variables
+* `ps()`: Penalized splines can be used in the analysis model for complete as 
+  well as incomplete variables
+
+## Minor changes
+* `make.names()` is now used to clean up factor levels from characters that might cause problems
+
+--------------------------------------------------------------------------------
+
 # JointAI 0.5.2
 
 ## Bug fixes
