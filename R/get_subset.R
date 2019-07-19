@@ -20,8 +20,9 @@ get_subset <- function(object, subset, keep_aux = FALSE, warn = TRUE, mess = TRU
   repl <- sapply(s, function(r) {
     if (grepl("^beta$", r)) {
       get_coef_names(object$Mlist, object$K)[, 2]
-    } else if (!r %in% colnames(object$MCMC[[1]]) & any(grepl(r, colnames(object$MCMC[[1]])))) {
-      grep(paste0(r, "\\[[[:digit:]]+\\]"), colnames(object$MCMC[[1]]), value = TRUE)
+    } else if (!r %in% colnames(object$MCMC[[1]]) & any(grepl(paste0('^', r, '\\['), colnames(object$MCMC[[1]])))) {
+      # grep(paste0(r, "\\[[[:digit:]]+\\]"), colnames(object$MCMC[[1]]), value = TRUE)
+      grep(paste0("^", r, "\\["), colnames(object$MCMC[[1]]), value = TRUE)
     }
   }, simplify = FALSE)
 
