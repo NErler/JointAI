@@ -34,9 +34,10 @@ prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 }
 
 
+# @param x object of class JointAI
 get_Dmat <- function(x) {
   MCMC <- prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL,
-                    exclude_chains = NULL)
+                    exclude_chains = NULL, warn = TRUE, mess = TRUE)
 
   Ds <- grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", colnames(MCMC), value = TRUE)
   Dpos <- t(sapply(strsplit(gsub('D|\\[|\\]', '', Ds), ","), as.numeric))
