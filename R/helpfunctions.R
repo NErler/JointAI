@@ -191,3 +191,8 @@ add_breaks <- function(string) {
   br <- ifelse(c(0, diff(as.numeric(m) %/% getOption('width'))) > 0, "\n", "")
   gsub("\n, ", ",\n  ", paste0(strsplit(string, ", ")[[1]], br, collapse = ", "))
 }
+
+
+clean_names <- function(string) {
+  gsub(":", "_", string)
+}

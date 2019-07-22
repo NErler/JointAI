@@ -385,7 +385,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
         message(gettextf('%s was converted to a factor.', dQuote(x)))
     }
     if (is.factor(data[, x])) {
-      levels(data[, x]) <- make.names(levels(data[, x]))
+      levels(data[, x]) <- clean_names(levels(data[, x]))
     }
   }
 
