@@ -379,13 +379,21 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   # * convert logicals to factors ----------------------------------------------
-  if (any(unlist(sapply(data[allvars], class)) == 'logical')) {
-    for (x in allvars) {
-      if ('logical' %in% class(data[, x])) {
-        data[, x] <- factor(data[, x])
-        if (mess)
-          message(gettextf('%s was converted to a factor.', dQuote(x)))
-      }
+  # if (any(unlist(sapply(data[allvars], class)) == 'logical')) {
+  #   for (x in allvars) {
+  #     if ('logical' %in% class(data[, x])) {
+  #       data[, x] <- factor(data[, x])
+  #       if (mess)
+  #         message(gettextf('%s was converted to a factor.', dQuote(x)))
+  #     }
+  for (x in allvars) {
+    if ('logical' %in% class(data[, x])) {
+      data[, x] <- factor(data[, x])
+      if (mess)
+        message(gettextf('%s was converted to a factor.', dQuote(x)))
+    }
+    if (is.factor(data[, x])) {
+      levels(data[, x]) <- clean_names(levels(data[, x]))
     }
   }
 
