@@ -1,7 +1,7 @@
 
 prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL,
                       exclude_chains = NULL,
-                      warn = warn, mess = mess, ...) {
+                      warn = TRUE, mess = TRUE, ...) {
 
   if (is.null(start)) {
     start <- start(object$MCMC)
