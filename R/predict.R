@@ -81,6 +81,9 @@ predDF.formula <- function(formula, dat, var, length = 100, ...) {
 #' @inheritParams summary.JointAI
 #' @param newdata new dataset for prediction
 #' @param quantiles quantiles of the predicted distribution of the outcome
+#' @param random should the random effects be used to generate subject specific predictions?
+#' @param n.iter number of iterations used when random effects have to be sampled
+#'               (for new subjects or when they were not monitored in the original model)
 #'
 #' @details A \code{model.matrix} \eqn{X} is created from the model formula (fixed
 #'          effects only) and \code{newdata}. \eqn{X\beta} is then calculated for
@@ -121,29 +124,132 @@ predDF.formula <- function(formula, dat, var, length = 100, ...) {
 
 #' @export
 predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
+                            random = NULL, n.iter = 1,
                             start = NULL, end = NULL, thin = NULL,
-                            exclude_chains = NULL, mess = TRUE, ...) {
+                            exclude_chains = NULL, mess = TRUE, adj = 1,  ...) {
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
-  MCMC <- prep_MCMC(object, start = start, end = end, thin = thin, subset = NULL,
+  MCMC <- prep_MCMC(object, start = start, end = end, thin = thin,
+                    subset = c(analysis_main = TRUE, ranef = TRUE),
                     exclude_chains = exclude_chains,
                     mess = mess, ...)
 
 
-  mf <- model.frame(object$fixed, object$data)
-  mt <- attr(mf, "terms")
+  op <- options(na.action = 'na.pass',  # change option to keep missing values
+                contrasts = rep("contr.treatment", 2))
 
-  oldop <- getOption("contrasts")
-  options(contrasts = rep("contr.treatment", 2))
-  X <- model.matrix(mt, data = newdata)
-  options(contrasts = oldop)
+  if (!is.null(object$random)) {
+    mfZ <- model.frame(remove_grouping(object$random), object$data)
+    mtZ <- attr(mfZ, "terms")
+    # Z <- model.matrix(mtZ, data = newdata)
 
-  pred <- sapply(1:nrow(X), function(i) MCMC[, colnames(X), drop = FALSE] %*% X[i, ])
+    idvar <- extract_id(object$random)
+  } else {
+    random <- NULL
+  }
 
-  fit <- colMeans(pred)
-  quantiles <- apply(pred, 2, quantile, quantiles)
+  mfX <- model.frame(object$fixed, object$data)
+  mtX <- attr(mfX, "terms")
 
-  return(list(dat = as.data.frame(cbind(newdata, fit, t(quantiles))),
-              fit = fit, quantiles = quantiles))
+  options(op)
+
+  if (is.null(random)) {
+    X <- model.matrix(mtX, data = newdata, na.action = na.pass)
+    if(!"(Intercept)" %in% object$Mlist$names_main)
+      X <- X[, -1]
+
+    pred <- sapply(1:nrow(X),
+                   function(i) MCMC[, colnames(X), drop = FALSE] %*% X[i, ])
+    fit <- colMeans(pred)
+    quantiles <- apply(pred, 2, quantile, quantiles)
+    dat <- as.data.frame(cbind(newdata, fit, t(quantiles)))
+    smpl_list <- acceptance <- NULL
+  } else {
+    if (any(unique(newdata[, idvar]) %in% object$data[, idvar])) {
+      # if the subject was in the original data, use the random effects from that model
+      ndl <- split(newdata, newdata[, idvar])
+
+      datlist <- smpl_list <- list()
+      acceptance <- numeric()
+      for(x in names(ndl)) {
+        group <- unique(object$data_list$groups[which(object$data[, idvar] == x)])
+
+        X <- model.matrix(mtX, data = ndl[[x]])
+        Z <- model.matrix(mtZ, data = ndl[[x]])
+        Xl <- X[, object$Mlist$names_main$Xl, drop = FALSE]
+        Xil <- X[, object$Mlist$names_main$Xil, drop = FALSE]
+
+        if (x %in% object$data[, idvar] &
+            any(grepl(paste0('^b\\[', group, ",[[:digit:]]+\\]"),
+                      colnames(MCMC)))) {
+
+          ranefs <- MCMC[, grep(paste0('^b\\[', group, ",[[:digit:]]+\\]"),
+                                colnames(MCMC))] %*% t(Z) +
+            MCMC[, colnames(Xl), drop = FALSE] %*% t(Xl) +
+            MCMC[, colnames(Xil), drop = FALSE] %*% t(Xil)
+
+          ranef_summary <- rbind(
+            fit = colMeans(ranefs),
+            apply(ranefs, 2, quantile, quantiles)
+          )
+        } else {
+          rf_smpl <- ranef_sample(object, ndl[[x]], start = start,
+                                  end = end, thin = thin,
+                                  exclude_chains = exclude_chains,
+                                  warn = warn, mess = mess,
+                                  n.iter = n.iter, adj = adj)
+          ranefs <- as.matrix(rf_smpl$sample) %*% t(Z) +
+            MCMC[, colnames(Xl), drop = FALSE] %*% t(Xl) +
+            MCMC[, colnames(Xil), drop = FALSE] %*% t(Xil)
+
+          ranef_summary <- rbind(
+            fit = colMeans(ranefs),
+            apply(ranefs, 2, quantile, quantiles)
+          )
+          acceptance <- c(acceptance, mean(rf_smpl$acceptance))
+          names(acceptance)[length(acceptance)] <- x
+          smpl_list[[x]] <- cbind(it = 1:nrow(rf_smpl$sample), rf_smpl$sample)
+        }
+        datlist[[x]] <- cbind(ndl[[x]], t(ranef_summary))
+      }
+      dat <- do.call(rbind, datlist)
+    }
+    fit <- NULL
+    quantiles <- NULL
+  }
+  return(list(dat = dat, fit = fit, quantiles = quantiles,
+              acceptance = acceptance, smpl = smpl_list))
 }
+
+
+
+# predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
+#                             start = NULL, end = NULL, thin = NULL,
+#                             exclude_chains = NULL, mess = TRUE, ...) {
+#   if (!inherits(object, "JointAI"))
+#     stop("Use only with 'JointAI' objects.\n")
+#
+#   MCMC <- prep_MCMC(object, start = start, end = end, thin = thin, subset = NULL,
+#                     exclude_chains = exclude_chains,
+#                     mess = mess, ...)
+#
+#
+#   mf <- model.frame(object$fixed, object$data)
+#   mt <- attr(mf, "terms")
+#
+#   oldop <- getOption("contrasts")
+#   options(contrasts = rep("contr.treatment", 2))
+#   X <- model.matrix(mt, data = newdata)
+#   options(contrasts = oldop)
+#
+#   pred <- sapply(1:nrow(X), function(i) MCMC[, colnames(X), drop = FALSE] %*% X[i, ])
+#
+#   fit <- colMeans(pred)
+#   quantiles <- apply(pred, 2, quantile, quantiles)
+#
+#   return(list(dat = as.data.frame(cbind(newdata, fit, t(quantiles))),
+#               fit = fit, quantiles = quantiles))
+# }
+#
+
