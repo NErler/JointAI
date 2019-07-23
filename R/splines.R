@@ -55,7 +55,7 @@ get_bs_knots <- function(spB) {
 get_kndiff <- function(kn) {
   l <- sapply(1:attr(kn, "degree"), function(k) {
     pmax(1e-5, diff(kn, lag = k))
-  })
+  }, simplify = FALSE)
   names(l) <- paste0("knd", 1:attr(kn, "degree"), "_", attr(kn, "varname"))
   l
 }

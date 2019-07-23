@@ -161,9 +161,10 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 
   if (!is.null(Mlist$knots)) {
     l <- c(l,
-           Mlist$knots[paste0('kn_',
-                              Mlist$trafos$var[Mlist$trafos$type %in% c("ps", 'bs') &
-                                                 !Mlist$trafos$compl])]
+           Mlist$knots
+           # Mlist$knots[paste0('kn_',
+           #                    Mlist$trafos$var[Mlist$trafos$type %in% c("ps", 'bs') &
+           #                                       !Mlist$trafos$compl])]
     )
   }
 
@@ -183,7 +184,6 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
         DDal <- diag(attr(k, "df"))
         l[[paste0("priorTau_", attr(k, 'varname'))]] <- crossprod(diff(DDal, diff = 2)) + 1e-06 * DDal
         l[[paste0("priorMean_", attr(k, 'varname'))]] <- rep(0, attr(k, 'df'))
-
       }
     }
     l <- c(l, defs$ps)
