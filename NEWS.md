@@ -5,6 +5,7 @@
 * bug in `add_samples()` when used in parallel with thinning fixed
 * bug fixed that occured when a complete longitudinal categorical variable was
   used in a model that did not contain any incomplete baseline variables
+* `predDF()`: bugfix for setting where `var` is a categorical covariate with missing values
 
 ## New features / extensions
 * argument `exclude_chains` in `summary()`, `densplot()`, `traceplot()`,
