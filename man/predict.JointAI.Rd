@@ -5,8 +5,8 @@
 \title{Predict values from an object of class JointAI}
 \usage{
 \method{predict}{JointAI}(object, newdata, quantiles = c(0.025, 0.975),
-  start = NULL, end = NULL, thin = NULL, exclude_chains = NULL,
-  mess = TRUE, ...)
+  random = NULL, n.iter = 1, start = NULL, end = NULL,
+  thin = NULL, exclude_chains = NULL, mess = TRUE, adj = 1, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -14,6 +14,11 @@
 \item{newdata}{new dataset for prediction}
 
 \item{quantiles}{quantiles of the predicted distribution of the outcome}
+
+\item{random}{should the random effects be used to generate subject specific predictions?}
+
+\item{n.iter}{number of iterations used when random effects have to be sampled
+(for new subjects or when they were not monitored in the original model)}
 
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
