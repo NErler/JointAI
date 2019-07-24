@@ -26,12 +26,12 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
   nam <- names(Mlist$hc_list)[which(!hcvar %in% unlist(mod_dum[i:length(mod_dum)]))]
 
 
-  Xc_cols = if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
+  Xc_cols = if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
     (1 + (!intercept)):ncol(Mlist$Xc)
   } else {
     (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1)
   }
-  Xl_cols = if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
+  Xl_cols = if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
     if (all(is.na(dest_cols[[varname]]$Xl[varname]))) {
       wouldbe <- max(0, which(colnames(Mlist$Xl) %in% unlist(mod_dum[seq_along(models) < i]))) + 1
       if (wouldbe > 1) 1:(wouldbe - 1)
@@ -40,7 +40,7 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
     }
   }
   # columns of Z to be used
-  Z_cols = if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
+  Z_cols = if (impmeth %in% c('lmm','glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
     if (Mlist$nranef > 1) {
       which(!ifelse(colnames(Mlist$Z) %in% Mlist$trafos$X_var,
                     Mlist$trafos$var[match(colnames(Mlist$Z), Mlist$trafos$X_var)],
@@ -83,7 +83,7 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
          "Xtrafo"
        } else if (!is.na(dest_cols[[varname]]$Xltrafo)) {
          "Xltrafo"
-       } else if (impmeth %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson')) {
+       } else if (impmeth %in% c('lmm','glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson')) {
          varname_dum <- attr(Mlist$refs[[varname]], 'dummies')
          names(dest_cols[[varname]][which(sapply(dest_cols[[varname]],
                                                   function(k) any(!is.na(k[c(varname, varname_dum)]))
@@ -99,7 +99,7 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
          dest_cols[[varname]]$Xtrafo
        } else if (!is.na(dest_cols[[varname]]$Xltrafo)) {
          dest_cols[[varname]]$Xltrafo
-       } else if (impmeth %in% c("lmm", "glmm_logit", "glmm_gamma", "glmm_poisson")) {
+       } else if (impmeth %in% c("lmm",'glmm_lognorm', "glmm_logit", "glmm_gamma", "glmm_poisson")) {
          varname_dum <- attr(Mlist$refs[[varname]], 'dummies')
          dc <- dest_cols[[varname]][[which(sapply(dest_cols[[varname]],
                                             function(k) any(!is.na(k[c(varname, varname_dum)]))

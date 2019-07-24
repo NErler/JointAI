@@ -150,7 +150,7 @@ get_imp_dim <- function(models, imp_pos, Mlist){
         names(imp_pos$pos_Xc[[i]])
     }
 
-    if (models[i] %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
+    if (models[i] %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
 
       nrf <- sum(unlist(lapply(Mlist$hc_list[!names(Mlist$hc_list) %in% unlist(mod_dum[i:length(mod_dum)])],
                                function(x) sapply(x, attr, 'matrix'))) %in% c('Z', 'Xc'))

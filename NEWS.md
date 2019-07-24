@@ -10,6 +10,7 @@
   values for cases with missing covariates are `NA` (prediction with incomplete
   covariates is planned to be implemented in the future)
   
+
 ## Minor changes
 * moved message about bug reports to startup
 * enabled inverse link by adding max restriction
@@ -20,6 +21,7 @@
 * `summary()`, `predict()`, `traceplot()`, `densplot()` now have an argument
   `exclude_chains` that allows to specify chains that should be omitted
 * `citation()` now refers to a manuscript on arXiv
+* `glmm_lognorm` available to impute level-1 covariates with a log-normal mixed model
 
 --------------------------------------------------------------------------------
 

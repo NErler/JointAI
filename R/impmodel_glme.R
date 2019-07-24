@@ -7,6 +7,9 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
                   "gaussian" = function(varname) {
                     paste0("dnorm(mu_", varname, "[j], tau_", varname, ")")
                   },
+                  "lognorm" = function(varname) {
+                    paste0("dlnorm(mu_", varname, "[j], tau_", varname, ")")
+                  },
                   "binomial" =  function(varname) {
                     paste0("dbern(mu_", varname, "[j])")
                   },
@@ -21,6 +24,7 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
 
   repar <- switch(family,
                   "gaussian" = NULL,
+                  "lognorm" = NULL,
                   "binomial" = NULL,
                   "Gamma" = paste0(tab(), "shape_", varname, "[j] <- pow(mu_", varname,
                                    "[j], 2) / pow(sigma_", varname, ", 2)",
@@ -141,6 +145,9 @@ impprior_glmm <- function(family, link, varname, par_elmts, dest_mat, dest_col, 
                      "gaussian" = paste0("\n",
                                          tab(), "tau_", varname ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
                                          tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")"),
+                     "lognorm" = paste0("\n",
+                                         tab(), "tau_", varname ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
+                                         tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")"),
                      "binomial" = NULL,
                      "Gamma" = paste0("\n",
                                       tab(), "tau_", varname ," ~ dgamma(shape_tau_gamma, rate_tau_gamma)", "\n",
@@ -159,6 +166,7 @@ impprior_glmm <- function(family, link, varname, par_elmts, dest_mat, dest_col, 
   # }
   type <- switch(family,
                  gaussian = 'norm',
+                 lognorm = 'norm',
                  binomial = link,
                  Gamma = 'gamma',
                  poisson = 'poisson')
@@ -184,6 +192,13 @@ impmodel_lmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl_
                 Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, trafo_cols, trfo_fct, ...)
 }
 
+impmodel_glmm_lognorm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl_cols,
+                         Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, trafo_cols, trfo_fct, ...) {
+  impmodel_glmm(family = 'lognorm', link = 'identity', varname, dest_mat, dest_col, Xc_cols, Xl_cols,
+                Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, trafo_cols, trfo_fct, ...)
+}
+
+
 impmodel_glmm_logit <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl_cols,
                                 Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list, trafo_cols, trfo_fct, ...) {
   impmodel_glmm(family = 'binomial', link = 'logit', varname, dest_mat, dest_col, Xc_cols, Xl_cols,
@@ -205,6 +220,11 @@ impmodel_glmm_poisson <- function(family, link, varname, dest_mat, dest_col, Xc_
 impprior_lmm <- function(varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...) {
   impprior_glmm(family = 'gaussian', link = NULL, varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...)
 }
+
+impprior_glmm_lognorm <- function(varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...) {
+  impprior_glmm(family = 'lognorm', link = NULL, varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...)
+}
+
 
 impprior_glmm_logit <- function(varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...) {
   impprior_glmm(family = 'binomial', link = 'logit', varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...)
