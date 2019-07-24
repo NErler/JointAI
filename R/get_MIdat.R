@@ -175,7 +175,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
 
     # imputation with lmm ------------------------------------------------------
-    if (meth[i] %in% c('lmm', 'glmm_gamma', 'glmm_poisson')) {
+    if (meth[i] %in% c('lmm', 'glmm_lognorm', 'glmm_gamma', 'glmm_poisson')) {
       if (names(meth[i]) %in% colnames(object$data_list$Xl)) {
         pat <- paste0("Xl\\[[[:digit:]]*,",
                       match(names(meth)[i], colnames(object$data_list$Xl)),

@@ -14,6 +14,7 @@
    variables
 * `ps()`: Penalized splines can be used in the analysis model for complete as 
   well as incomplete variables
+* `glmm_lognorm` available to impute level-1 covariates with a log-normal mixed model
 
 ## Minor changes
 * `make.names()` is now used to clean up factor levels from characters that might cause problems
