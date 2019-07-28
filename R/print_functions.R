@@ -60,6 +60,7 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
                    lognorm = list(name = "Log-normal regression", pars = 'norm'),
                    beta = list(name = "Beta regression", pars = 'beta'),
                    lmm = list(name = "Linear mixed model", pars = 'norm'),
+                   glmm_lognorm = list(name = 'Log-normal mixed model', pars = 'norm'),
                    glmm_logit = list(name = "Logistic mixed model", pars = 'logit'),
                    glmm_gamma = list(name = "Gamma mixed model", pars = 'gamma'),
                    cumlogit = list(name = 'Cumulative logit model', pars = 'ordinal'),
@@ -217,6 +218,14 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
     # lmm ----------------------------------------------------------------------
     if (object$models[i] == 'lmm') {
       cat(paste0("Linear mixed model for '", names(object$models)[i], "'\n"))
+      if (predvars) cat(pv)
+      if (regcoef) cat(rc)
+      if (otherpars) cat(opar)
+    }
+
+    # glmm_lognorm -------------------------------------------------------------
+    if (object$models[i] == 'glmm_lognorm') {
+      cat(paste0("Log-normal mixed model for '", names(object$models)[i], "'\n"))
       if (predvars) cat(pv)
       if (regcoef) cat(rc)
       if (otherpars) cat(opar)

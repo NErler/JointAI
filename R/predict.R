@@ -49,7 +49,7 @@ predDF.formula <- function(formula, dat, var, length = 100, ...) {
   vals <- sapply(allvars, function(k) {
     if (k %in% var) {
       if (is.factor(dat[, k])) {
-        unique(dat[, k])
+        unique(na.omit(dat[, k]))
       } else {
         seq(min(dat[, k], na.rm = TRUE),
             max(dat[, k], na.rm = TRUE), length = length)
@@ -156,8 +156,8 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
 
   if (is.null(random)) {
     X <- model.matrix(mtX, data = newdata, na.action = na.pass)
-    if(!"(Intercept)" %in% object$Mlist$names_main)
-      X <- X[, -1]
+    if (!"(Intercept)" %in% object$Mlist$names_main)
+      X <- X[, -1, drop = FALSE]
 
     pred <- sapply(1:nrow(X),
                    function(i) MCMC[, colnames(X), drop = FALSE] %*% X[i, ])

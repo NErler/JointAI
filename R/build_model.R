@@ -90,7 +90,7 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
                                             'lognorm')]
 
   imp_par_list_long <- imp_par_list[sapply(imp_par_list, '[[', 'impmeth') %in%
-                                      c('lmm', 'glmm_gamma', 'glmm_logit',
+                                      c('lmm', 'glmm_lognorm', 'glmm_gamma', 'glmm_logit',
                                         'glmm_poisson', 'clmm', 'lnmm')]
 
 

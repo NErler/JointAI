@@ -5,6 +5,7 @@
 * bug in `add_samples()` when used in parallel with thinning fixed
 * bug fixed that occured when a complete longitudinal categorical variable was
   used in a model that did not contain any incomplete baseline variables
+* `predDF()`: bugfix for setting where `var` is a categorical covariate with missing values
 
 ## New features / extensions
 * argument `exclude_chains` in `summary()`, `densplot()`, `traceplot()`,
@@ -14,6 +15,7 @@
    variables
 * `ps()`: Penalized splines can be used in the analysis model for complete as 
   well as incomplete variables
+* `glmm_lognorm` available to impute level-1 covariates with a log-normal mixed model
 
 ## Minor changes
 * `make.names()` is now used to clean up factor levels from characters that might cause problems

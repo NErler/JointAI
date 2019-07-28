@@ -52,6 +52,7 @@ paste_imp_model <- function(imp_par_list) {
                       cumlogit = impmodel_cumlogit,
                       clmm = impmodel_clmm,
                       lmm = impmodel_lmm,
+                      glmm_lognorm = impmodel_glmm_lognorm,
                       glmm_logit = impmodel_glmm_logit,
                       glmm_gamma = impmodel_glmm_gamma,
                       glmm_poisson = impmodel_glmm_poisson)
@@ -71,6 +72,7 @@ paste_imp_priors <- function(imp_par_list) {
                       cumlogit = impprior_cumlogit,
                       clmm = impprior_clmm,
                       lmm = impprior_lmm,
+                      glmm_lognorm = impprior_glmm_lognorm,
                       glmm_logit = impprior_glmm_logit,
                       glmm_gamma = impprior_glmm_gamma,
                       glmm_poisson = impprior_glmm_poisson)

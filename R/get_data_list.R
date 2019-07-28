@@ -96,7 +96,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     l$Xl <- NULL
   }
 
-  if (any(models %in% c('norm', 'lognorm', 'lme', 'lmm')) | (family == 'gaussian' & !Mlist$ridge))
+  if (any(models %in% c('norm', 'lognorm', 'lme', 'lmm', 'glmm_lognorm')) | (family == 'gaussian' & !Mlist$ridge))
     l <- c(l, defs$norm)
   else if (family == 'gaussian' & Mlist$ridge)
     l <- c(l, defs$norm[c("mu_reg_norm", "shape_tau_norm", "rate_tau_norm")])
@@ -148,8 +148,8 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
   }
 
   # Random effects hyperparameters for longitudinal covariates
-  if (any(models %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm'))) {
-    nam <- names(models)[models %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')]
+  if (any(models %in% c('lmm', "glmm_lognorm", 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm'))) {
+    nam <- names(models)[models %in% c('lmm',  'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')]
 
     for (k in nam) {
       pars <- defs$Z(imp_par_list[[k]]$nranef)[c('RinvD', 'KinvD')]
@@ -161,9 +161,10 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 
   if (!is.null(Mlist$knots)) {
     l <- c(l,
-           Mlist$knots[paste0('kn_',
-                              Mlist$trafos$var[Mlist$trafos$type %in% c("ps", 'bs') &
-                                                 !Mlist$trafos$compl])]
+           Mlist$knots
+           # Mlist$knots[paste0('kn_',
+           #                    Mlist$trafos$var[Mlist$trafos$type %in% c("ps", 'bs') &
+           #                                       !Mlist$trafos$compl])]
     )
   }
 
@@ -183,7 +184,6 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
         DDal <- diag(attr(k, "df"))
         l[[paste0("priorTau_", attr(k, 'varname'))]] <- crossprod(diff(DDal, diff = 2)) + 1e-06 * DDal
         l[[paste0("priorMean_", attr(k, 'varname'))]] <- rep(0, attr(k, 'df'))
-
       }
     }
     l <- c(l, defs$ps)
