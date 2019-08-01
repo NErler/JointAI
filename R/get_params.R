@@ -19,7 +19,7 @@ get_params <- function(models, analysis_type, family, Mlist,
 
   if (analysis_main) {
     if (is.null(betas)) betas <- TRUE
-    if (family %in% c("gaussian", "gamma", 'weibull')) {
+    if (family %in% c("gaussian", "Gamma", 'weibull')) {
       if (is.null(sigma_y)) sigma_y <- TRUE
     }
     if (family %in% c('ordinal')) {
