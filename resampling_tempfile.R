@@ -2,28 +2,79 @@ library(JointAI)
 library(splines)
 simLong <- simLong[!is.na(simLong$sleep), ]
 
-mod <- lme_imp(bmi ~ AGE_M + GESTBIR + ns(age, df = 3),
-               random = ~ns(age, df = 3)|ID, data = simLong, n.iter = 500,
-               no_model = 'age', seed = 2019)
+
+N <- 100
+J <- 8
+
+b <- mvtnorm::rmvnorm(N, mean = c(0, 0, 0), sigma = diag(c(0.5, 0.1, 0.001)))
+
+DF <- data.frame(id = rep(1:N, each = J),
+                 time  = c(sapply(1:N, function(i) sort(runif(J, 0, 1)))),
+                 x  = rnorm(N*J, 0, 0.1)
+)
+
+X <- model.matrix(~x + time + I(time^2), DF)
+Z <- model.matrix(~ time + I(time^2), DF)
+
+
+eta <- exp((X %*% t(t(c(0, -0.3, -0.5, -1.5))) + rowSums(Z * b[DF$id, ])))
+plot(DF$time, eta)
+hist(eta)
+
+var <- 0.5^2
+shape = eta^2 / var
+rate = eta / var
+
+DF$y <- abs(rnorm(nrow(DF), mean = eta, sd = 0.3))
+# DF$y <- rpois(nrow(DF), lambda = exp(eta))
+hist(DF$y, nclass = 50)
+plot(DF$x, DF$y)
+ggplot(DF, aes(x = time, y = y, group = id)) +
+  geom_line()
+
+library(lme4)
+test <- glmer(y ~ time + I(time^2) + (time| id), data = DF, family = Gamma())
+
+
+mod <- glme_imp(y ~ time + I(time^2) + x,
+               random = ~ time| id, data = DF, n.iter = 500,
+               seed = 2019, family = Gamma(), n.adapt = 200,
+               monitor_params = c(ranef = T))
 
 
 traceplot(mod)
 
-object = add_samples(mod, n.iter = 500, add = FALSE)
+object = add_samples(mod, n.iter = 5000, add = FALSE, thin = 10)
 traceplot(object)
 
-newdata <- simLong[simLong$ID %in% c('id118'), ]
+
+newdata <- DF[DF$id %in% 1:6, ]
 newdata <- newdata[complete.cases(newdata[, all.vars(object$fixed)]), ]
+newdata2 <- newdata
+newdata2$newid <- newdata2$id
+newdata$newid <- newdata$id
+newdata$type = 'JAGS'
+newdata2$id <- paste0('id00', newdata2$id)
+newdata2$type = "sim"
 
-# plot(bmi ~ age, newdata, pch = 19)
+test <- predict(object, newdata = rbind(newdata, newdata2), random = T, n.iter = 1, adj = 1,
+                exclude_chains = 3)
 
 
-test <- predict(object, newdata = newdata, random = T, n.iter = 1, adj = 1)
+ggplot(test$dat, aes(x = time, y = exp(fit), group = type, fill = type, color = type)) +
+  # geom_ribbon(aes(ymin = `2.5%`, ymax = `97.5%`), alpha = 0.5) +
+  geom_line() +
+  facet_wrap("newid") +
+  theme(legend.position = 'bottom') +
+  geom_point(data = rbind(newdata, newdata2), aes(x = time, y = y, shape = type))
+
+
 
 plot(test$smpl[[1]][, 1:2], type = 'l')
 plot(test$smpl[[1]][, c(1,3)], type = 'l')
 test$acceptance
 
+library(ggplot2)
 ggplot(test$dat, aes(x = age)) +
   geom_point(aes(y = bmi)) +
   geom_line(aes(y = fit)) +
@@ -108,4 +159,33 @@ mod2 <- lme(bmi ~ AGE_M * GESTBIR + age * AGE_M + I(age^2),
             data = simLong, na.action = na.omit, control = lmeControl(niterEM = 250))
 b0 <- predict(mod2, newdata = newDF, level = 0)
 b1 <- predict(mod2, newdata = newDF, level = 1)
+
+
+
+sum(dbinom(as.numeric(DF$y > 3), 1, plogis(eta), TRUE))
+sum(-log(1 + exp(eta)) + as.numeric(DF$y > 3) * eta)
+
+sum(dpois(DF$y, lambda = exp(eta), log = TRUE))
+sum(c(DF$y * log(exp(eta)) - exp(eta) - lgamma(DF$y + 1)))
+
+
+a <- -0.5 * (DF$y - eta)^2 / 0.5^2 + log(1/sqrt(2*pi)/0.5)
+b <- dnorm(DF$y, mean = eta, sd = 0.5, log = T)
+
+
+eta <- 1
+var <- 1
+
+var <- 0.5^2
+shape = eta^2 / var
+rate = eta / var
+
+dev.off()
+  a <- dgamma(DF$y, shape = eta^2 / var, rate = eta / var, log = T)
+  b <- (shape - 1) * log(DF$y) +  shape * log(rate) - log(gamma(shape)) - rate * DF$y
+
+plot(DF$y, a, ylim = c(-45, 0))
+points(DF$y, b, col = 2)
+
+abline(a = 0, b = 1)
 
