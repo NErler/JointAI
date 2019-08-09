@@ -1,3 +1,28 @@
+# JointAI 0.5.3
+
+## Bug fixes
+* bug in `add_samples()` when used in parallel with thinning fixed
+* bug fixed that occured when a complete longitudinal categorical variable was
+  used in a model that did not contain any incomplete baseline variables
+* bugfix for monitoring random effects
+* fixed typo in selecting parameters in Gamma models
+* `predict()` can now handle `newdata` with missing outcome values; predicted
+  values for cases with missing covariates are `NA` (prediction with incomplete
+  covariates is planned to be implemented in the future)
+  
+## Minor changes
+* moved message about bug reports to startup
+* enabled inverse link by adding max restriction
+* ":" in factor labels are automatically replaced by "_"
+
+## New Features / Extensions
+* `predict()` now has an argument `length` to change number of evaluation points
+* `summary()`, `predict()`, `traceplot()`, `densplot()` now have an argument
+  `exclude_chains` that allows to specify chains that should be omitted
+* `citation()` now refers to a manuscript on arXiv
+
+--------------------------------------------------------------------------------
+
 # JointAI 0.5.2
 
 ## Bug fixes
