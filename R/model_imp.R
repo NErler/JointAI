@@ -288,9 +288,6 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   # Checks & warnings -------------------------------------------------------
-  if (mess)
-    message("This is new software. Please report any bugs to the package maintainer.")
-
   if (missing(fixed)) {
     stop("A fixed effects structure needs to be specified.")
   }
