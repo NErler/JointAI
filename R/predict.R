@@ -126,23 +126,32 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
+  if (missing(newdata))
+    newdata <- object$data
+    # newdata <- subset(object$data,
+    #                   subset = complete.cases(object$data[, all.vars(object$fixed)[
+    #                     !all.vars(object$fixed) %in% extract_outcome(object$fixed)]]
+    #                   ))
+
+
   MCMC <- prep_MCMC(object, start = start, end = end, thin = thin, subset = NULL,
                     exclude_chains = exclude_chains,
                     mess = mess, ...)
 
 
-  mf <- model.frame(object$fixed, object$data)
+  mf <- model.frame(object$fixed, object$data, na.action = na.pass)
   mt <- attr(mf, "terms")
 
-  oldop <- getOption("contrasts")
-  options(contrasts = rep("contr.treatment", 2))
+  oldop <- options()
+  options(contrasts = rep("contr.treatment", 2),
+          na.action = na.pass)
   X <- model.matrix(mt, data = newdata)
-  options(contrasts = oldop)
+  options(oldop)
 
   pred <- sapply(1:nrow(X), function(i) MCMC[, colnames(X), drop = FALSE] %*% X[i, ])
 
   fit <- colMeans(pred)
-  quantiles <- apply(pred, 2, quantile, quantiles)
+  quantiles <- apply(pred, 2, quantile, quantiles, na.rm  = TRUE)
 
   return(list(dat = as.data.frame(cbind(newdata, fit, t(quantiles))),
               fit = fit, quantiles = quantiles))
