@@ -10,17 +10,19 @@
 \usage{
 \method{summary}{JointAI}(object, start = NULL, end = NULL,
   thin = NULL, quantiles = c(0.025, 0.975), subset = NULL,
-  warn = TRUE, mess = TRUE, ...)
+  exclude_chains = NULL, warn = TRUE, mess = TRUE, ...)
 
 \method{print}{summary.JointAI}(x, digits = max(3, .Options$digits - 4),
   ...)
 
 \method{coef}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
-  subset = NULL, warn = TRUE, mess = TRUE, ...)
+  subset = NULL, exclude_chains = NULL, warn = TRUE, mess = TRUE,
+  ...)
 
 \method{confint}{JointAI}(object, parm = NULL, level = 0.95,
   quantiles = NULL, start = NULL, end = NULL, thin = NULL,
-  subset = NULL, warn = TRUE, mess = TRUE, ...)
+  subset = NULL, exclude_chains = NULL, warn = TRUE, mess = TRUE,
+  ...)
 
 \method{print}{JointAI}(x, digits = max(4, getOption("digits") - 4), ...)
 }
@@ -38,8 +40,11 @@
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
 \code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
-\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{survreg_imp}}
+\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{clmm_imp}},
+\code{\link{survreg_imp}}
 and \code{\link{coxph_imp}}.}
+
+\item{exclude_chains}{optional vector of the number of chains that should be excluded}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. Note: this applies only to warnings

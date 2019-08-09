@@ -5,7 +5,8 @@
 \title{Predict values from an object of class JointAI}
 \usage{
 \method{predict}{JointAI}(object, newdata, quantiles = c(0.025, 0.975),
-  start = NULL, end = NULL, thin = NULL, mess = TRUE, ...)
+  start = NULL, end = NULL, thin = NULL, exclude_chains = NULL,
+  mess = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -19,6 +20,8 @@
 \item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
 \item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
+
+\item{exclude_chains}{optional vector of the number of chains that should be excluded}
 
 \item{mess}{logical; should messages be given? Default is
 \code{TRUE}. Note: this applies only to messages

@@ -12,9 +12,10 @@ densplot(object, ...)
   thin = NULL, ...)
 
 \method{densplot}{JointAI}(object, start = NULL, end = NULL,
-  thin = NULL, subset = c(analysis_main = TRUE), vlines = NULL,
-  nrow = NULL, ncol = NULL, joined = FALSE, use_ggplot = FALSE,
-  keep_aux = FALSE, warn = TRUE, mess = TRUE, ...)
+  thin = NULL, subset = c(analysis_main = TRUE),
+  exclude_chains = NULL, vlines = NULL, nrow = NULL, ncol = NULL,
+  joined = FALSE, use_ggplot = FALSE, keep_aux = FALSE,
+  warn = TRUE, mess = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -30,8 +31,11 @@ densplot(object, ...)
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
 \code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
-\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{survreg_imp}}
+\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{clmm_imp}},
+\code{\link{survreg_imp}}
 and \code{\link{coxph_imp}}.}
+
+\item{exclude_chains}{optional vector of the number of chains that should be excluded}
 
 \item{vlines}{list, where each element is a named list of parameters that
 can be passed to \code{\link[graphics]{abline}} to create

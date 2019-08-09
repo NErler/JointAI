@@ -12,9 +12,10 @@ traceplot(object, ...)
   thin = NULL, ...)
 
 \method{traceplot}{JointAI}(object, start = NULL, end = NULL,
-  thin = NULL, subset = c(analysis_main = TRUE), nrow = NULL,
-  ncol = NULL, keep_aux = FALSE, use_ggplot = FALSE, warn = TRUE,
-  mess = TRUE, ...)
+  thin = NULL, subset = c(analysis_main = TRUE),
+  exclude_chains = NULL, nrow = NULL, ncol = NULL,
+  keep_aux = FALSE, use_ggplot = FALSE, warn = TRUE, mess = TRUE,
+  ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -61,8 +62,11 @@ traceplot(object, ...)
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
 \code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
-\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{survreg_imp}}
+\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{clmm_imp}},
+\code{\link{survreg_imp}}
 and \code{\link{coxph_imp}}.}
+
+\item{exclude_chains}{optional vector of the number of chains that should be excluded}
 
 \item{nrow}{optional number of rows and columns in the plot layout;
 automatically chosen if unspecified}

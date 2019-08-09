@@ -19,6 +19,8 @@ predDF(...)
 
 \item{var}{name of variable that should be varying}
 
+\item{length}{number of values used in the sequence when \code{var} is continuous}
+
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
 
 \item{dat}{original data}
