@@ -43,15 +43,17 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
   # variables that do not have a main effect in fixed are added to the auxiliary variables
   trafosX <- extract_fcts(fixed, data, random = random, complete = TRUE)
-  add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), auxvars))]
+  add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), all.vars(auxvars)))]
 
   if (length(add_to_aux) > 0 & !is.null(models))
-    auxvars <- c(auxvars, unique(add_to_aux))
+    auxvars <- as.formula(paste(ifelse(is.null(auxvars), "~ ",
+                                       paste0(deparse(auxvars, width.cutoff = 500), " + ")),
+                          paste0(unique(add_to_aux), collapse = " + ")))
 
   # fixed effects design matrices
   fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed, width.cutoff = 500),
                                    fixed = TRUE),
-                               auxvars), collapse = " + "))
+                               auxvars[[2]]), collapse = " + "))
   fcts_all <- extract_fcts(fixed2, data, random = random, complete = TRUE)
 
 
