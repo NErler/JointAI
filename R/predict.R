@@ -46,6 +46,10 @@ predDF.formula <- function(formula, dat, var, length = 100, ...) {
 
   allvars <- all.vars(formula)
 
+  if (!var %in% allvars) {
+    stop(paste0(var , "was not used in the model formula."))
+  }
+
   vals <- sapply(allvars, function(k) {
     if (k %in% var) {
       if (is.factor(dat[, k])) {
@@ -81,6 +85,8 @@ predDF.formula <- function(formula, dat, var, length = 100, ...) {
 #' @inheritParams summary.JointAI
 #' @param newdata new dataset for prediction
 #' @param quantiles quantiles of the predicted distribution of the outcome
+#' @params type the type of prediction. The default is on the scale of the
+#'         linear predictor (\code{"link"} or \code{"lp"}). For generalized
 #'
 #' @details A \code{model.matrix} \eqn{X} is created from the model formula (fixed
 #'          effects only) and \code{newdata}. \eqn{X\beta} is then calculated for
@@ -121,10 +127,20 @@ predDF.formula <- function(formula, dat, var, length = 100, ...) {
 
 #' @export
 predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
+                            type = c("link", "response", "prob", "class",
+                                     "lp", "risk"),
                             start = NULL, end = NULL, thin = NULL,
                             exclude_chains = NULL, mess = TRUE, ...) {
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
+
+  if (!object$analysis_type %in% c('lm', 'glm', 'lme', 'glme', 'clm', 'clmm',
+                                   'survreg', 'coxph')) {
+    stop("Prediction is currently only available for (generalized) linear
+         and (generalized) linear mixed models.")
+  }
+
+  type <- match.arg(type)
 
   if (missing(newdata))
     newdata <- object$data
@@ -148,11 +164,73 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
   X <- model.matrix(mt, data = newdata)
   options(oldop)
 
-  pred <- sapply(1:nrow(X), function(i) MCMC[, colnames(X), drop = FALSE] %*% X[i, ])
+  if (object$analysis_type %in% c('clm', 'clmm')) {
+    X <- X[, -1, drop = FALSE]
+    eta <- sapply(1:nrow(X), function(i) MCMC[, colnames(X), drop = FALSE] %*% X[i, ])
+    pred <- sapply(grep(paste0('gamma_', names(object$Mlist$y)), colnames(MCMC), value = TRUE),
+                   function(k)
+                     eta + matrix(nrow = nrow(eta), ncol = ncol(eta),
+                                  data = rep(MCMC[, k], ncol(eta)),
+                                  byrow = FALSE),
+                   simplify = 'array'
+    )
 
-  fit <- colMeans(pred)
-  quantiles <- apply(pred, 2, quantile, quantiles, na.rm  = TRUE)
+    fit <- apply(pred, 2:3, function(k) mean(plogis(k)))
+    fit <- cbind(fit[, 1], t(apply(cbind(fit, 1), 1, diff)))
+    colnames(fit) <- paste0("P(", names(object$Mlist$y), "=",
+                            levels(object$data[, colnames(object$Mlist$y)]),
+                            ")")
+    if (type == 'class') {
+      fit <- apply(fit, 1, which.max)
+    }
 
-  return(list(dat = as.data.frame(cbind(newdata, fit, t(quantiles))),
-              fit = fit, quantiles = quantiles))
+    quants <- if (type == 'prob') {
+      apply(pred, 2:3, function(q) {
+        quantile(plogis(q), probs = quantiles, na.rm  = TRUE)
+      })
+    }
+  } else {
+    if (object$analysis_type %in% 'coxph') {
+      X <- X[, -1, drop = FALSE]
+    }
+
+    pred <- sapply(1:nrow(X), function(i) MCMC[, colnames(X),
+                                               drop = FALSE] %*% X[i, ])
+
+    if (object$analysis_type %in% 'coxph') {
+      pred <- pred - mean(c(pred))
+    }
+
+    fit <- if (type == 'response' | type == 'risk' & object$analysis_type == 'coxph') {
+      if (object$analysis_type == 'survreg') {
+        colMeans(family(object)$linkinv(pred, MCMC[, 'shape_time']))
+      } else {
+        colMeans(family(object)$linkinv(pred))
+      }
+    } else {
+      colMeans(pred)
+    }
+
+    quants <- if (type == 'response' | type == 'risk' & object$analysis_type == 'coxph') {
+      if (object$analysis_type == 'survreg') {
+        apply(pred, 2, function(q) {
+          quantile(family(object)$linkinv(q, MCMC[, 'shape_time']),
+                   probs = quantiles, na.rm  = TRUE)
+        })
+      } else {
+        apply(pred, 2, function(q) {
+          quantile(family(object)$linkinv(q), probs = quantiles, na.rm  = TRUE)
+        })
+      }
+    } else {
+      apply(pred, 2, quantile, quantiles, na.rm  = TRUE)
+    }
+  }
+
+
+  dat <- as.data.frame(cbind(newdata, fit))
+  if (length(dim(quants)) <= 2 & !is.null(quants))
+    dat <- cbind(dat, t(quants))
+
+  return(list(dat = dat, fit = fit, quantiles = t(quants)))
 }
