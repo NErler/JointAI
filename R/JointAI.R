@@ -127,9 +127,12 @@ NULL
   rjags::load.module("glm", quiet = TRUE)
 }
 
-packageStartupMessage(
-  "This is new software. Please report any bugs to the package maintainer."
-)
+.onAttach <- function(libname, pkgname) {
+  packageStartupMessage(
+    "This is new software. Please report any bugs to the package maintainer (https://github.com/NErler/JointAI/issues)."
+  )
+}
+
 
 utils::globalVariables(c("i", "value", "chain", "iteration"))
 
