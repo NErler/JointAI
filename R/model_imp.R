@@ -650,7 +650,7 @@ if (!is.null(inits)) {
   # set contrasts back to what they were
   options(contrasts = opt)
 
-  return(structure(
+  object <- structure(
     list(analysis_type = analysis_type,
          data = data, models = models, fixed = fixed, random = random,
          Mlist = Mlist,
@@ -668,8 +668,13 @@ if (!is.null(inits)) {
          sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
          MCMC = if (n.iter > 0 & !is.null(mcmc)) as.mcmc.list(MCMC),
          time = t1 - t0
-         ), class = "JointAI")
-  )
+    ), class = "JointAI")
+  object$fitted.values <- try(predict(object, type = 'response')$fit, silent = TRUE)
+  object$residuals <- try(object$data_list[[names(object$Mlist$y)]] - object$fitted.values, silent = TRUE)
+  if (!inherits(object$residuals, 'try-error'))
+    names(object$fitted.values) <- names(object$residuals) <- rownames(object$Mlist$y)
+
+  return(object)
 }
 
 

@@ -178,7 +178,8 @@ NULL
 
 # define family weibull
 weibull <- function(link = 'log') {
-  structure(list(family = "weibull", link = 'log'),
+  structure(list(family = "weibull", link = 'log',
+                 linkinv = function(eta, shape) exp(-eta)^{-1} * gamma(1 + 1/shape)),
             class = "family")
 }
 
@@ -189,6 +190,7 @@ ordinal <- function(link = 'identity') {
 
 # define family coxph
 prophaz <- function(link = 'log') {
-  structure(list(family = "prophaz", link = 'log'),
+  structure(list(family = "prophaz", link = 'log',
+                 linkinv = exp),
             class = "family")
 }
