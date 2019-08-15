@@ -35,7 +35,7 @@
         \item specification for transformations (\code{trafos})
         \item specification for hierarchical centering (\code{hc_list})
         \item reference values and dummies for categorical variables (\code{refs})
-        \item vector of auxiliary variables (\code{auxvars})
+        \item formula specifying auxiliary variables (\code{auxvars})
         \item grouping specification (\code{groups})
         \item the vector of variables to be scaled (\code{scale_vars})
         \item updated fixed effects structure (\code{fixed2})

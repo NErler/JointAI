@@ -4,7 +4,7 @@
 \alias{set_refcat}
 \title{Set the reference categories for all categorical covariates in the model}
 \usage{
-set_refcat(data, formula, covars, auxvars)
+set_refcat(data, formula, covars, auxvars = NULL)
 }
 \arguments{
 \item{data}{a \code{data.frame}}
@@ -13,7 +13,7 @@ set_refcat(data, formula, covars, auxvars)
 
 \item{covars}{optional; vector containing the names of relevant columns of \code{data}}
 
-\item{auxvars}{optional; vector containing the names of relevant columns of
+\item{auxvars}{optional; formula containing the names of relevant columns of
 \code{data} that should be considered additionally to the columns
 occurring in the \code{formula}}
 }

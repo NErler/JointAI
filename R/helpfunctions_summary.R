@@ -60,9 +60,11 @@ get_Dmat <- function(x) {
 
 get_aux <- function(object) {
   aux <- object$Mlist$auxvars
-  unlist(sapply(aux, function(x)
-    if (x %in% names(object$Mlist$refs))
-      attr(object$Mlist$refs[[x]], 'dummies')
+  unlist(sapply(if (!is.null(object$Mlist$auxvars))
+    attr(terms(aux), 'term.labels'),
+    function(x)
+      if (x %in% names(object$Mlist$refs))
+        attr(object$Mlist$refs[[x]], 'dummies')
     else x
   ))
 }

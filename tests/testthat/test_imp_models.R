@@ -16,7 +16,7 @@ test_that("no models when no missing values", {
                list(models = NULL, meth = NULL))
 
   expect_equal(get_models(fixed = y ~ C1 * c1 + o1 + time,
-                          random = ~ time * o1|id, auxvars = 'B1',
+                          random = ~ time * o1|id, auxvars = ~B1,
                           data = longDF),
                list(models = NULL, meth = NULL))
 })
@@ -26,11 +26,12 @@ test_that("error when unknown variable or missing part", {
   expect_error(get_models(fixed = y ~ Bb1 + M1 + O1, data = wideDF))
 
   expect_error(get_models(fixed = y ~ B1 + M1 + O1, data = wideDF, auxvars = 'other'))
+  expect_error(get_models(fixed = y ~ B1 + M1 + O1, data = wideDF, auxvars = ~other))
 
   expect_error(get_models(fixed = y ~ B1 + M1 + O1, data = longDF,
                           random = ~1 |subj))
   expect_error(get_models(fixed = y ~ B1 + M1 + O1))
-  expect_error(get_models(data = longDF, random = ~1 |subj, auxvars = 'C2'))
+  expect_error(get_models(data = longDF, random = ~1 |subj, auxvars = ~ C2))
 })
 
 
@@ -90,7 +91,7 @@ test_that("correct imputation methods are chosen", {
 })
 
 test_that("auxvars are included", {
-  expect_equal(get_models(fixed = y ~ c1 + C2, auxvars = c("C1", "B2", "b1"),
+  expect_equal(get_models(fixed = y ~ c1 + C2, auxvars = ~ C1 + B2 + b1,
                           random = ~ time | id, data = longDF,
                           no_model = 'time'),
                list(models = c(B2 = 'logit', C2 = 'norm', c1 = 'lmm', b1 = 'glmm_logit'),

@@ -121,7 +121,7 @@ sort_cols <- function(mat, fct_all, auxvars) {
     if (istrafo[k] == 'main') 'asmain'
     else {
       if (any(fct_all$var[fct_all$X_var == k] %in% colnames(mat))) {
-        if (k %in% auxvars) {
+        if (k %in% if (!is.null(auxvars)) attr(terms(auxvars), 'term.labels')) {
           TRUE
         } else {
           FALSE

@@ -275,7 +275,7 @@ is not part of the model for `SBP`, and `I(WC^2)` is used in the linear
 predictor of the imputation model for `bili`:
 <a id="mod3e"></a>
 ```{r, message = FALSE}
-mod3e <- lm_imp(SBP ~ age + gender + bili, auxvars = "I(WC^2)", data = NHANES)
+mod3e <- lm_imp(SBP ~ age + gender + bili, auxvars = ~ I(WC^2), data = NHANES)
 
 list_impmodels(mod3e, priors = F, regcoef = F, otherpars = F)
 ```
@@ -284,7 +284,7 @@ When `WC` is used as predictor variable in the main model and a function of `WC`
 is specified as auxiliary variable, both variables are used as predictors in the
 imputation models:
 ```{r, message = FALSE}
-mod3f <- lm_imp(SBP ~ age + gender + bili + WC, auxvars = "I(WC^2)", data = NHANES)
+mod3f <- lm_imp(SBP ~ age + gender + bili + WC, auxvars = ~ I(WC^2), data = NHANES)
 
 list_impmodels(mod3f, priors = F, regcoef = F, otherpars = F)
 ```
@@ -295,7 +295,7 @@ imputation models, it is necessary to also include that function in the
 argument `auxvars`:
 
 ```{r, message = FALSE}
-mod3g <- lm_imp(SBP ~ age + gender + bili + I(WC^2), auxvars = "I(WC^2)", data = NHANES)
+mod3g <- lm_imp(SBP ~ age + gender + bili + I(WC^2), auxvars = ~ I(WC^2), data = NHANES)
 
 list_impmodels(mod3g, priors = F, regcoef = F, otherpars = F)
 ```
@@ -585,7 +585,7 @@ which finds and assigns the default imputation methods, can be called directly.
 * `fixed`: the fixed effects formula
 * `random`: the random effects formula (if necessary)
 * `data`: the dataset
-* `auxvars`: an optional vector of auxiliary variables
+* `auxvars`: an optional one-sided formula of auxiliary variables
 * `no_model`: an optional vector of variables for which no model should be specified
 
 ```{r}
@@ -664,7 +664,7 @@ vector containing the names or functions of the auxiliary variables.
 We might consider the variables `educ` and `smoke` as predictors
 for the imputation of `occup`:
 ```{r, message = FALSE}
-mod9a <- lm_imp(SBP ~ gender + age + occup, auxvars = c('educ', 'smoke'),
+mod9a <- lm_imp(SBP ~ gender + age + occup, auxvars = ~ educ + smoke,
                 data = NHANES, n.iter = 100, progress.bar = 'none')
 ```
 The variables `educ` and `smoke` are not used as predictors in the analysis model:
@@ -685,7 +685,7 @@ auxiliary variables. In that case, the auxiliary variable is not considered as
 linear effect but as specified by the function:
 ```{r, message = FALSE}
 mod9b <- lm_imp(SBP ~ gender + age + occup, data = NHANES,
-                auxvars = c('educ', 'smoke', 'log(WC)'),
+                auxvars = ~ educ + smoke + log(WC),
                 trunc = list(WC = c(1e-10, 1e10)), n.adapt = 0)
 ```
 
@@ -766,7 +766,7 @@ set_refcat <- function(data, formula, covars, auxvars) {
     covars <- all.vars(formula)[all.vars(formula) != JointAI:::extract_outcome(formula)]
   }
   if (!missing(auxvars))
-    covars <- unique(c(covars, auxvars))
+    covars <- unique(c(covars, attr(terms(auxvars), 'term.labels')))
 
   factors <- covars[sapply(data[, covars, drop = FALSE], is.factor)]
 

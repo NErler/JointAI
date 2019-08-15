@@ -45,7 +45,7 @@
 #' @param keep_model logical; whether the created JAGS model should be saved
 #'                   or removed from the disk (\code{FALSE}; default) when the
 #'                   sampling has finished.
-#' @param auxvars optional vector of variable names that should be used as
+#' @param auxvars optional one-sided formula of variables that should be used as
 #'                predictors in the imputation procedure (and will be imputed
 #'                if necessary) but are not part of the analysis model
 #' @param models optional named vector specifying the order and types of the
@@ -325,10 +325,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   allvars <- unique(c(all.vars(fixed),
                       all.vars(random),
-                      if (!is.null(auxvars))
-                        all.vars(as.formula(paste('~',
-                                                  paste(auxvars, collapse = " + "))))
-  ))
+                      all.vars(auxvars))
+  )
 
   if (any(!allvars %in% names(data))) {
     stop(gettextf("Variable(s) %s were not found in the data." ,
@@ -340,10 +338,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   # * check classes of covariates ----------------------------------------------
   covars <- unique(c(all.vars(fixed),
                      all.vars(remove_grouping(random)),
-                     if (!is.null(auxvars))
-                       all.vars(as.formula(paste('~',
-                                                 paste(auxvars, collapse = " + "))))
-  ))
+                     all.vars(auxvars)))
   classes <- unique(unlist(sapply(data[covars], class)))
 
   if (any(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))) {

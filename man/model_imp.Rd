@@ -92,6 +92,16 @@ coxph_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
   keep_scaled_mcmc = FALSE, ...)
+
+coxph_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  ncores = NULL, scale_vars = NULL, scale_pars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 }
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
@@ -111,7 +121,7 @@ coxph_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
 \item{monitor_params}{named vector specifying which parameters should be
 monitored}
 
-\item{auxvars}{optional vector of variable names that should be used as
+\item{auxvars}{optional one-sided formula of variables that should be used as
 predictors in the imputation procedure (and will be imputed
 if necessary) but are not part of the analysis model}
 

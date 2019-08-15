@@ -26,19 +26,18 @@ get_models <- function(fixed, random = NULL, data,
                          auxvars = NULL, no_model = NULL){
 
   if (missing(fixed))
-    stop("No formula specified.")
+    stop("No formula specified.", call. = FALSE)
 
   if (missing(data))
-    stop("No dataset given.")
+    stop("No dataset given.", call. = FALSE)
+
+  if (!is.null(auxvars) & class(auxvars) != 'formula')
+    stop(gettextf("The argument %s should be a formula.", dQuote("auxvars")), call. = FALSE)
 
   # check that all variables are found in the data
   allvars <- unique(c(all.vars(fixed[[3]]),
                       all.vars(random),
-                      if (!is.null(auxvars))
-                        all.vars(as.formula(paste('~',
-                                                  paste(auxvars, collapse = "+")))
-                        )
-  ))
+                      all.vars(auxvars)))
 
   if (any(!allvars %in% names(data))) {
     stop(gettextf("Variable(s) %s were not found in the data." ,
@@ -67,11 +66,7 @@ get_models <- function(fixed, random = NULL, data,
 
   allvars <- unique(c(all.vars(fixed[[3]]),
                       all.vars(random2),
-                      if (!is.null(auxvars))
-                        all.vars(as.formula(paste('~',
-                                                  paste(auxvars, collapse = "+")))
-                        )
-  ))
+                      all.vars(auxvars)))
 
 
   if (length(allvars) > 0) {
