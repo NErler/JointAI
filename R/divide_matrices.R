@@ -22,7 +22,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   if (analysis_type %in% c('survreg', 'coxph')) {
     if (length(outnam) == 2) {
       y <- data[, outnam[1], drop = FALSE]
-      cens <- sapply(data[, outnam[2], drop = FALSE],
+      event <- sapply(data[, outnam[2], drop = FALSE],
                      function(x) {
                        if (is.factor(x)) {
                          as.numeric(x) - 1
@@ -35,7 +35,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     }
   } else {
     y <- data[, outnam, drop = FALSE]
-    cens <- NULL
+    event <- NULL
   }
 
   # * preliminary design matrix ------------------------------------------------
@@ -273,7 +273,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   }, cols = cols_main,
   mat = list(Xc, Xl, Xic, Xil, Z))
 
-  return(list(y = y, cens = cens,
+  return(list(y = y, event = event,
               Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat, Xlcat = Xlcat,
               Xtrafo = Xtrafo, Xltrafo = Xltrafo,
               Z = Z, cols_main = cols_main, names_main = names_main,
