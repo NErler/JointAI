@@ -89,7 +89,7 @@ melt_data.frame <- function(data, id.vars = NULL, varnames = NULL, valname = 'va
     stop("This function may not work for objects that are not data.frames.")
 
   data$rowID <- paste0('rowID', 1:nrow(data))
-  X <- data[, !names(data) %in% c('rowID', id.vars)]
+  X <- data[, !names(data) %in% c('rowID', id.vars), drop = FALSE]
 
   g <- list(rowID = data$rowID,
             variable = names(X)

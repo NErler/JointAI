@@ -64,7 +64,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
   groups <- match(object$Mlist$groups, unique(object$Mlist$groups))
 
-  meth <- object$models[colSums(is.na(DF[, names(object$models)])) > 0]
+  meth <- object$models[colSums(is.na(DF[, names(object$models), drop = FALSE])) > 0]
 
   if (is.null(start)) {
     start <- start(object$MCMC)

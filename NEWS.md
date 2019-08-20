@@ -9,6 +9,7 @@
 * `predict()` can now handle `newdata` with missing outcome values; predicted
   values for cases with missing covariates are `NA` (prediction with incomplete
   covariates is planned to be implemented in the future)
+* bugfix for `get_MIdat()` and `plot_imp_distr()` when only one variable has missing values
   
 
 ## Minor changes
