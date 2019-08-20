@@ -1,21 +1,35 @@
-#' Plot an object of class JointAI
+#' Plot an object object inheriting from class 'JointAI'
+#'
+#' @param x object inheriting from class 'JointAI'
+#' @param ... currently not used
+#'
+#' @examples
+#' mod <- lm_imp(y ~ C1 + C2 + B1, data = wideDF, n.iter = 100)
+#' plot(mod)
 #'
 #' @export
-plot.JointAI <- function(x) {
+plot.JointAI <- function(x, ...) {
   if (!inherits(x, "JointAI"))
-    stop("use only with objects of class JointAI.")
+    stop("Use only with objects of class JointAI.")
+
+  if (!x$analysis_type %in% c('lm', 'lme', 'glm', 'glme'))
+    stop(gettextf('At the moment there is not plotting method implemented for a %s model of type %s.',
+         dQuote("JointAI"), dQuote(x$analysis_type)), call. = FALSE)
 
   l.fit <- if (x$analysis_type %in% c('glm', 'glme'))  {
     "Predicted values"
   } else {"Fitted values"}
 
-  plot(x$fitted.values, x$residuals, xlab = l.fit,
+  fit <- predict(x)$fit
+  r <- residuals(x)
+
+  plot(fit, r, xlab = l.fit,
        ylab = "Residuals", main = 'Residuals vs Fitted'
        # ylim = ylim, type = "n"
   )
-  panel.smooth(x$fitted.values, x$residuals)
+  panel.smooth(fit, r,
+               iter = ifelse(x$analysis_type %in% c('glm', 'glmer'), 0, 3))
   abline(h = 0, lty = 3, col = "gray")
-
 }
 
 
@@ -32,15 +46,47 @@ family.JointAI <- function(object, ...) {
 #' Extract residuals from an object of class JointAI
 #'
 #' @inheritParams sharedParams
-#' @type type of residuals: deviance, response, working
+#' @param type type of residuals: \code{"deviance"}, \code{"response"},
+#'             \code{"working"}
+#' @param ... currently not used
+#'
+#' @section Note:
+#' \itemize{
+#' \item For mixed models residuals are currently calculated using the fixed effects only.
+#' \item For ordinal (mixed) models and parametric survival models only \code{type = "response"} is avaiable.
+#' \item For Cox proportional hazards models residuals are not yet implemented.
+#' }
+#'
+#' @examples
+#' mod <- glm_imp(B1 ~ C1 + C2 + O1, data = wideDF, n.iter = 100,
+#'                family = binomial())
+#' summary(residuals(mod, type = 'response'))
+#' summary(residuals(mod, type = 'working'))
+#'
+#'
 #' @export
 residuals.JointAI <- function(object,
                               type = c('deviance', 'response', 'working'), ...) {
   type <- match.arg(type)
+
+  if (object$analysis_type %in% c('clm', "clmm", 'survreg') & type %in% c('working', 'deviance'))
+    stop(gettextf("Residuals of type %s are not implemented for a model of type %s.",
+                  dQuote(type), dQuote(object$analysis_type)), call. = FALSE)
+
+  if (object$analysis_type %in% c('coxph'))
+    stop(gettextf("Residuals are not yet implemented for a model of type %s.",
+                  dQuote(type), dQuote(object$analysis_type)), call. = FALSE)
+
   # r <- object$residuals
   y <- object$data_list[[names(object$Mlist$y)]]
   mu <- object$fitted.values
   wts <- rep(1, length(mu))
+
+  if (object$analysis_type == 'survreg') {
+    MCMC <- prep_MCMC(object, ...)
+  }
+
+
 
   res <- switch(type,
                 working = (y - mu)/family(object)$mu.eta(predict(object, type = 'link')$fit),

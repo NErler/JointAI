@@ -24,6 +24,7 @@
   `exclude_chains` that allows to specify chains that should be omitted
 * `citation()` now refers to a manuscript on arXiv
 * `glmm_lognorm` available to impute level-1 covariates with a log-normal mixed model
+* methods `residuals()` and `plot()` avaiable for (some of the) main analysis types (details see documentation)
 
 --------------------------------------------------------------------------------
 

@@ -2,10 +2,20 @@
 % Please edit documentation in R/methods.R
 \name{plot.JointAI}
 \alias{plot.JointAI}
-\title{Plot an object of class JointAI}
+\title{Plot an object object inheriting from class 'JointAI'}
 \usage{
-\method{plot}{JointAI}(x)
+\method{plot}{JointAI}(x, ...)
+}
+\arguments{
+\item{x}{object inheriting from class 'JointAI'}
+
+\item{...}{currently not used}
 }
 \description{
-Plot an object of class JointAI
+Plot an object object inheriting from class 'JointAI'
+}
+\examples{
+mod <- lm_imp(y ~ C1 + C2 + B1, data = wideDF, n.iter = 100)
+plot(mod)
+
 }

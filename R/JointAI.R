@@ -182,7 +182,8 @@ NULL
 # define family weibull
 weibull <- function(link = 'log') {
   structure(list(family = "weibull", link = 'log',
-                 linkinv = function(eta, shape) exp(-eta)^{-1} * gamma(1 + 1/shape)),
+                 linkinv = function(eta, shape) exp(eta) * gamma(1 + 1/shape)),
+                 #mu.eta = function(eta, shape) exp(eta) * gamma(1 + 1/shape)),
             class = "family")
 }
 
