@@ -396,24 +396,25 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   # imputation method ----------------------------------------------------------
-  models_default <- get_models(fixed = fixed, random = random, data = data,
-                               auxvars = auxvars, no_model = no_model)$models
+  models <- get_models(fixed = fixed, random = random, data = data,
+                       auxvars = auxvars, no_model = no_model, models)$models
 
-  if (is.null(models)) {
-    models <- models_default
-    models_user <- NULL
-  } else {
-    models_user <- models
-    if (!setequal(names(models_user), names(models_default))) {
-      models <- models_default
-      models[names(models_user)] <- models_user
-    }
-  }
+  # if (is.null(models)) {
+  #   models <- models_default
+  #   models_user <- NULL
+  # } else {
+  #   models_user <- models
+  #   if (!setequal(names(models_user), names(models_default))) {
+  #     models <- models_default
+  #     models[names(models_user)] <- models_user
+  #
+  #   }
+  # }
 
   # warning if JointAI set imputation method for a continuous variable with only
   # two different values to "logit"
   for (k in names(models)[models == 'logit']) {
-    if (is.numeric(data[, k]) & !k %in% names(models_user) & warn) {
+    if (is.numeric(data[, k]) & !k %in% names(models) & warn) {
       data[, k] <- factor(data[, k])
       warning(
         gettextf("\nThe variable %s is coded as continuous but has only two different values. I will consider it binary.\nTo overwrite this behavior, specify a different imputation modelsod for %s using the argument %s.",

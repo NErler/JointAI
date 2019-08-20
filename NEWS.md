@@ -25,6 +25,9 @@
 * `citation()` now refers to a manuscript on arXiv
 * `glmm_lognorm` available to impute level-1 covariates with a log-normal mixed model
 * methods `residuals()` and `plot()` avaiable for (some of the) main analysis types (details see documentation)
+* argument `models` added to `get_models()` so that the user can specify to also
+  include models for complete covariates (which are then positioned in the 
+  sequence of models according to the systematic used in **JointAI**)
 
 --------------------------------------------------------------------------------
 

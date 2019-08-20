@@ -6,7 +6,7 @@
 \title{Set default (imputation) models and order}
 \usage{
 get_models(fixed, random = NULL, data, auxvars = NULL,
-  no_model = NULL)
+  no_model = NULL, models = NULL)
 
 get_imp_meth(fixed, random = NULL, data, auxvars = NULL,
   no_model = NULL)
@@ -30,6 +30,17 @@ if necessary) but are not part of the analysis model}
 Note that this is only possible for completely observed
 variables and may imply assumptions of independence between
 the excluded variable and incomplete variables.}
+
+\item{models}{optional named vector specifying the order and types of the
+  models for incomplete covariates and longitudinal covariates.
+  This arguments replaces the argument \code{meth} used in earlier versions.
+  If \code{NULL} (default) models will be determined
+automatically based on the class of the respective columns of \code{data}
+(see Details).
+The default order is incomplete baseline covariates, complete
+longitudinal covariates, incomplete longitudinal covariates,
+and within each group variables are ordered according to the
+proportion of missing values (increasing).}
 }
 \value{
 \code{get_models()} returns a list of two vectors named \code{models}

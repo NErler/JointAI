@@ -23,7 +23,7 @@
 #' @export
 
 get_models <- function(fixed, random = NULL, data,
-                         auxvars = NULL, no_model = NULL){
+                         auxvars = NULL, no_model = NULL, models = NULL){
 
   if (missing(fixed))
     stop("No formula specified.", call. = FALSE)
@@ -37,7 +37,8 @@ get_models <- function(fixed, random = NULL, data,
   # check that all variables are found in the data
   allvars <- unique(c(all.vars(fixed[[3]]),
                       all.vars(random),
-                      all.vars(auxvars)))
+                      all.vars(auxvars),
+                      names(models)))
 
   if (any(!allvars %in% names(data))) {
     stop(gettextf("Variable(s) %s were not found in the data." ,
@@ -66,7 +67,8 @@ get_models <- function(fixed, random = NULL, data,
 
   allvars <- unique(c(all.vars(fixed[[3]]),
                       all.vars(random2),
-                      all.vars(auxvars)))
+                      all.vars(auxvars),
+                      names(models)))
 
 
   if (length(allvars) > 0) {
@@ -87,8 +89,25 @@ get_models <- function(fixed, random = NULL, data,
                     function(x) if (length(x) > 0) sort(x)
     )
 
-    models <- c(types$incomplete.baseline,
-                if (!is.null(types$incomplete.baseline)) types$complete.tvar,
+    unnecessary <- c(names(nmis[nmis == 0 & !tvar & names(nmis) %in% names(models)]),
+                     if (is.null(types$incomplete.baseline))
+                       names(types$complete.tvar))
+
+    if (length(unnecessary) > 0)
+      message(gettextf(paste0("Note:\nModels have been specified for the variabe(s) %s.\n",
+                      'These models are not needed for imputation and are likely ',
+                      'to increase the computational time.'),
+                      paste0(unnecessary, collapse = ', '))
+                      )
+
+    models <- c(if(any(names(models) %in% names(types$complete.baseline))) types$complete.baseline,
+                types$incomplete.baseline,
+                if (!is.null(types$incomplete.baseline)) {
+                  types$complete.tvar
+                } else {
+                  if (any(names(models) %in% names(types$complete.tvar)))
+                  types$complete.tvar[names(types$complete.tvar) %in% names(models)]
+                },
                 types$incomplete.tvar)
 
     nlevel <- sapply(data[, names(models), drop = FALSE],
@@ -111,7 +130,6 @@ get_models <- function(fixed, random = NULL, data,
       stop(paste0("JointAI can't yet handle unordered longitudinal categorical covariates (>2 levels).\n",
                   "This feature is planned for the future."), call. = FALSE)
     }
-
   } else {
     models <- NULL
     meth <- NULL
