@@ -83,12 +83,17 @@ predDF.formula <- function(formula, dat, var, length = 100, ...) {
 #' and an object of class 'JointAI', and corresponding 2.5\% and 97.5\% (or other
 #' quantiles) credible intervals.
 #' @inheritParams summary.JointAI
-#' @param newdata new dataset for prediction
+#' @param newdata optional new dataset for prediction. If left empty, the original data is used.
 #' @param quantiles quantiles of the predicted distribution of the outcome
-#' @params type the type of prediction. The default is on the scale of the
+#' @param type the type of prediction. The default is on the scale of the
 #'         linear predictor (\code{"link"} or \code{"lp"}). For generalized
+#'         linear (mixed) models \code{type = "response"} transforms the
+#'         predicted values to the scale of the response. For ordinal (mixed)
+#'         models \code{type} may be \code{"prob"} (to obtain probabilities per
+#'         class) or \code{"class"} to obtain the class with the hightest posterior
+#'         probability.
 #'
-#' @details A \code{model.matrix} \eqn{X} is created from the model formula (fixed
+#' @details A \code{model.matrix} \eqn{X} is created from the model formula (currently fixed
 #'          effects only) and \code{newdata}. \eqn{X\beta} is then calculated for
 #'          each iteration of the MCMC sample in \code{object}, i.e., \eqn{X\beta}
 #'          has \code{n.iter} rows and \code{nrow(newdata)} columns.
@@ -100,7 +105,8 @@ predDF.formula <- function(formula, dat, var, length = 100, ...) {
 #'         and "quantiles" contain the specified quantiles (by default 2.5\%
 #'         and 97.5\%) of each column of \eqn{X\beta}.
 #' @seealso \code{\link{predDF.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
-#'           \code{\link{lm_imp}}
+#'           \code{\link{lm_imp}}, \code{\link{glme_imp}}, \code{\link{clm_imp}},
+#'           \code{\link{clmm_imp}}
 #'
 #' @section Note:
 #' \itemize{
@@ -122,7 +128,7 @@ predDF.formula <- function(formula, dat, var, length = 100, ...) {
 #' # plot predicted values and 95% confidence band
 #' plot(newDF$C2, pred$fit, type = "l", ylim = range(pred$quantiles),
 #'      xlab = "C2", ylab = "predicted values")
-#' matplot(newDF$C2, t(pred$quantiles), lty = 2, add = TRUE, type = "l", col = 1)
+#' matplot(newDF$C2, pred$quantiles, lty = 2, add = TRUE, type = "l", col = 1)
 #'
 
 #' @export
@@ -185,14 +191,16 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
     }
 
     quants <- if (type == 'prob') {
-      apply(pred, 2:3, function(q) {
+      aperm(apply(pred, 2:3, function(q) {
         quantile(plogis(q), probs = quantiles, na.rm  = TRUE)
-      })
+      }), c(2, 1, 3))
     }
   } else {
     if (object$analysis_type %in% 'coxph') {
       X <- X[, -1, drop = FALSE]
     }
+    if (ncol(X) == 0)
+      stop('Prediction without covariates is currently not possible.', call. = FALSE)
 
     pred <- sapply(1:nrow(X), function(i) MCMC[, colnames(X),
                                                drop = FALSE] %*% X[i, ])
@@ -204,6 +212,8 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
     fit <- if (type == 'response' | type == 'risk' & object$analysis_type == 'coxph') {
       if (object$analysis_type == 'survreg') {
         colMeans(family(object)$linkinv(pred, MCMC[, 'shape_time']))
+      } else if (family(object)$family == 'poisson') {
+        round(colMeans(family(object)$linkinv(pred)))
       } else {
         colMeans(family(object)$linkinv(pred))
       }
@@ -213,24 +223,24 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
 
     quants <- if (type == 'response' | type == 'risk' & object$analysis_type == 'coxph') {
       if (object$analysis_type == 'survreg') {
-        apply(pred, 2, function(q) {
+        t(apply(pred, 2, function(q) {
           quantile(family(object)$linkinv(q, MCMC[, 'shape_time']),
                    probs = quantiles, na.rm  = TRUE)
-        })
+        }))
       } else {
-        apply(pred, 2, function(q) {
+        t(apply(pred, 2, function(q) {
           quantile(family(object)$linkinv(q), probs = quantiles, na.rm  = TRUE)
-        })
+        }))
       }
     } else {
-      apply(pred, 2, quantile, quantiles, na.rm  = TRUE)
+      t(apply(pred, 2, quantile, quantiles, na.rm  = TRUE))
     }
   }
 
 
   dat <- as.data.frame(cbind(newdata, fit))
   if (length(dim(quants)) <= 2 & !is.null(quants))
-    dat <- cbind(dat, t(quants))
+    dat <- cbind(dat, quants)
 
-  return(list(dat = dat, fit = fit, quantiles = t(quants)))
+  return(list(dat = dat, fit = fit, quantiles = quants))
 }
