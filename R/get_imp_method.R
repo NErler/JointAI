@@ -90,7 +90,7 @@ get_models <- function(fixed, random = NULL, data,
     )
 
     unnecessary <- c(names(nmis[nmis == 0 & !tvar & names(nmis) %in% names(models)]),
-                     if (is.null(types$incomplete.baseline))
+                     if (!is.null(types$incomplete.baseline))
                        names(types$complete.tvar))
 
     if (length(unnecessary) > 0)
