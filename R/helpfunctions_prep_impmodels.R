@@ -69,7 +69,11 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
       # K_imp_x['Z', ] <- max(K_imp_x, na.rm = T) + c(1, length(Z_cols) - 1)
       for (k in nam) {
         if (!is.null(Mlist$hc_list[[k]]))
-          K_imp_x[k, ] <- max(K_imp_x, na.rm = T) + c(1, sum(sapply(Mlist$hc_list[[k]],  "!=", varname)))
+          # K_imp_x[k, ] <- max(K_imp_x, na.rm = T) + c(1, sum(sapply(Mlist$hc_list[[k]],  "!=", varname)))
+          K_imp_x[k, ] <- max(K_imp_x, na.rm = T) +
+            c(1, sum(!sapply(Mlist$hc_list[[k]],
+                            "%in%", unlist(mod_dum[i:length(mod_dum)]))
+                     ))
       }
     K_imp_x
   }

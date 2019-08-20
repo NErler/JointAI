@@ -10,7 +10,7 @@
   values for cases with missing covariates are `NA` (prediction with incomplete
   covariates is planned to be implemented in the future)
 * bugfix for `get_MIdat()` and `plot_imp_distr()` when only one variable has missing values
-  
+* bugfix for longitudinal model with interaction with random slope variable
 
 ## Minor changes
 * moved message about bug reports to startup
