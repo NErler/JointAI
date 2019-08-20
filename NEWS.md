@@ -33,7 +33,8 @@
 * methods `residuals()` and `plot()` avaiable for (some of the) main analysis types (details see documentation)
 * argument `models` added to `get_models()` so that the user can specify to also
   include models for complete covariates (which are then positioned in the 
-  sequence of models according to the systematic used in **JointAI**)
+  sequence of models according to the systematic used in **JointAI**).
+  Specification of a model not needed for imputation prints a notification.
 * `JointAI` objects (most types) now also include residuals and fitted values (so far, only using fixed effects)
 
 --------------------------------------------------------------------------------
