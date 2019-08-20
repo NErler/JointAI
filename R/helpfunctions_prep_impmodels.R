@@ -17,7 +17,7 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
     } else {
       k
     }
-  })
+  }, simplify = FALSE)
 
   hcvar <- ifelse(names(Mlist$hc_list) %in% Mlist$trafos$X_var,
            Mlist$trafos$var[match(names(Mlist$hc_list), Mlist$trafos$X_var)],
@@ -25,20 +25,23 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
 
   nam <- names(Mlist$hc_list)[which(!hcvar %in% unlist(mod_dum[i:length(mod_dum)]))]
 
-
+  # columns in Xc to be used
   Xc_cols = if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
     (1 + (!intercept)):ncol(Mlist$Xc)
   } else {
     (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1)
   }
-  Xl_cols = if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
-    if (all(is.na(dest_cols[[varname]]$Xl[varname]))) {
+
+  # columns in Xl to be used
+  Xl_cols <- if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
+    if (all(is.na(dest_cols[[varname]]$Xl[mod_dum[[varname]]]))) {
       wouldbe <- max(0, which(colnames(Mlist$Xl) %in% unlist(mod_dum[seq_along(models) < i]))) + 1
       if (wouldbe > 1) 1:(wouldbe - 1)
     } else  if (min(dest_cols[[varname]]$Xl, na.rm = TRUE) > 1) {
       1:(min(dest_cols[[varname]]$Xl, na.rm = TRUE) - 1)
     }
   }
+
   # columns of Z to be used
   Z_cols = if (impmeth %in% c('lmm','glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
     if (Mlist$nranef > 1) {
