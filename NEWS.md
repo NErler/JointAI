@@ -17,6 +17,9 @@
 * enabled inverse link by adding max restriction
 * ":" in factor labels are automatically replaced by "_"
 * argument `ncores` has changed to `n.cores` for consistenc with `n.iter`, `n.chains`, etc.
+* `coxph_imp()` does no longer use a counting process implementation but uses the
+  likelihood in JAGS directy via the zeros trick
+
 
 ## New Features / Extensions
 * `predict()` now has an argument `length` to change number of evaluation points
