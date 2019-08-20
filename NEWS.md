@@ -15,6 +15,7 @@
 * moved message about bug reports to startup
 * enabled inverse link by adding max restriction
 * ":" in factor labels are automatically replaced by "_"
+* argument `ncores` has changed to `n.cores` for consistenc with `n.iter`, `n.chains`, etc.
 
 ## New Features / Extensions
 * `predict()` now has an argument `length` to change number of evaluation points

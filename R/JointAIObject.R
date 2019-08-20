@@ -65,7 +65,7 @@
 #'      \item{\code{thin}}{thinning of the MCMC sample}
 #'      \item{\code{inits}}{a list containing the initial values that were passed to \strong{rjags}}
 #'      \item{\code{parallel}}{whether parallel sampling was used}
-#'      \item{\code{ncores}}{how many cores were used in parallel sampling}
+#'      \item{\code{n.cores}}{how many cores were used in parallel sampling}
 #'      }}
 #' \item{\code{monitor_params}}{the list of parameter groups to be monitored}
 #' \item{\code{data_list}}{list with data that was passed to \strong{rjags}}

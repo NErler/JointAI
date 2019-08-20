@@ -64,14 +64,14 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
 
   t0 <- Sys.time()
   if (object$mcmc_settings$parallel) {
-    ncores <- object$mcmc_settings$ncores
-    cl <- parallel::makeCluster(ncores,
+    n.cores <- object$mcmc_settings$n.cores
+    cl <- parallel::makeCluster(n.cores,
                                 type = ifelse(grepl('linux', R.Version()$platform),
                                               'FORK', 'PSOCK'))
     doParallel::registerDoParallel(cl)
 
     if (mess)
-      message(paste0("Parallel sampling on ", ncores, " cores started (",
+      message(paste0("Parallel sampling on ", n.cores, " cores started (",
                      Sys.time(), ")."))
     res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(object$model)),
                               run_samples(object$model[[i]], n.iter = n.iter,

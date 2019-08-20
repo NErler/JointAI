@@ -52,7 +52,7 @@ This requires specification of the argument \code{idvar}.}
 
 \item{parallel}{logical; should the chains be sampled using parallel computation? Default is \code{FALSE}}
 
-\item{ncores}{number of cores to use for parallel computation; if left empty all except two cores will be used}
+\item{n.cores}{number of cores to use for parallel computation; if left empty all except two cores will be used}
 
 \item{seed}{optional seed value for reproducibility}
 
