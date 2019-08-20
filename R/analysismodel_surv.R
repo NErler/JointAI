@@ -108,8 +108,10 @@ coxph_model <- function(Mlist, K, ...){
 
   paste0(tab(4), "# Cox PH model for ", y_name, "\n",
          tab(4), "etaBaseline[j] <- ",
-         paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xc',
-                         parelmts = K["Xc", 1]:K["Xc", 2],
+         if (any(is.na(K["Xc", ]))) '0'
+         else
+           paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xc',
+                           parelmts = K["Xc", 1]:K["Xc", 2],
                          cols = Mlist$cols_main$Xc, indent = indent),
          paste_Xic, "\n",
          tab(4), "log.h0.T[j] <- inprod(Bs.gammas[], Bmat_h0[j, ])", "\n",
@@ -159,11 +161,14 @@ coxph_priors <- function(K, Mlist, ...){
 
   paste0(
     tab(), "# Priors for the coefficients in the analysis model", "\n",
-    tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
-    distr,
-    tab(), "}", "\n",
+    if (!all(is.na(K))) {
+      paste0(
+      tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
+      distr,
+      tab(), "}", "\n")
+    },
     tab(), "for (k in 1:9) {", "\n",
-    tab(4), "Bs.gammas[k] ~ dnorm(mu_reg_surv, tau_reg_surv)",
+    tab(4), "Bs.gammas[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n",
     tab(), "}"
     # tab(), "Bs.gammas[1:9] ~ dmnorm(priorMean.Bs.gammas[], tau_reg_surv * priorTau.Bs.gammas[, ])"
   )
