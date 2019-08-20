@@ -671,10 +671,20 @@ if (!is.null(inits)) {
          MCMC = if (n.iter > 0 & !is.null(mcmc)) as.mcmc.list(MCMC),
          time = t1 - t0
     ), class = "JointAI")
+
   object$fitted.values <- try(predict(object, type = 'response')$fit, silent = TRUE)
-  object$residuals <- try(object$data_list[[names(object$Mlist$y)]] - object$fitted.values, silent = TRUE)
-  if (!inherits(object$residuals, 'try-error'))
-    names(object$fitted.values) <- names(object$residuals) <- rownames(object$Mlist$y)
+  object$residuals <- try(residuals(object, type = 'working'),
+                          silent = TRUE)
+
+  if (!inherits(object$residuals, 'try-error')) {
+    if (!object$analysis_type %in% c('clm', 'clmm'))
+      names(object$fitted.values) <- names(object$residuals) <- rownames(object$Mlist$y)
+  }
+
+  if (inherits(object$fitted.values, 'try-error'))
+    object$fitted.values <- NULL
+  if (inherits(object$residuals, 'try-error'))
+    object$residuals <- NULL
 
   return(object)
 }
