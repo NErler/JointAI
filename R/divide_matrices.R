@@ -60,7 +60,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   # Give a message about coding of ordinal factors if there are any in the predictor
   if (any(unlist(sapply(data[, all.vars(fixed2[c(1,3)])],
                         class)) == 'ordered') & mess)
-    message("Note: ordered factors are included as dummy variables into the linear predictor (not as orthogonal polynomials).")
+    message("Note: Ordered factors are included as dummy variables into the linear predictor (not as orthogonal polynomials).")
 
 
 

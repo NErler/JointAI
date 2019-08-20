@@ -337,6 +337,7 @@ are used for ordered factors in any linear predictor.
 However, since the order of levels in an ordered factor contains information relevant
 to the imputation of missing values, it is important that incomplete ordinal
 variables are coded as such.
+It is not possible to overwrite this behaviour using the base R contrasts specification.
 }
 
 \subsection{Non-linear effects and transformation of variables:}{
