@@ -141,10 +141,9 @@ get_models <- function(fixed, random = NULL, data,
 
 
 
-#' @rdname get_models
-#' @export
-get_imp_meth <- function(fixed, random = NULL, data,
-                         auxvars = NULL, no_model = NULL){
-  get_models(fixed = fixed, random = random, data = data, auxvars = auxvars,
-             no_model = no_model)$meth
-}
+# #' @rdname get_models
+# #' @export
+# get_imp_meth <- function(fixed, random = NULL, data,
+#                          auxvars = NULL, no_model = NULL, models = NULL){
+#   get_models(fixed = fixed, random = random, data = data, auxvars = auxvars,
+#              no_model = no_model, models = models)$meth
