@@ -62,17 +62,23 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
   for (i in seq_along(object$models)) {
     pars <- switch(object$models[i],
                    norm = list(name = 'Linear regression', pars = 'norm'),
+                   lognorm = list(name = "Log-normal regression", pars = 'norm'),
                    logit = list(name = 'Logistic regression', pars = 'logit'),
                    gamma = list(name = 'Gamma regression', pars = 'gamma'),
-                   lognorm = list(name = "Log-normal regression", pars = 'norm'),
                    beta = list(name = "Beta regression", pars = 'beta'),
-                   lmm = list(name = "Linear mixed model", pars = 'norm'),
-                   glmm_lognorm = list(name = 'Log-normal mixed model', pars = 'norm'),
-                   glmm_logit = list(name = "Logistic mixed model", pars = 'logit'),
-                   glmm_gamma = list(name = "Gamma mixed model", pars = 'gamma'),
-                   cumlogit = list(name = 'Cumulative logit model', pars = 'ordinal'),
-                   clmm = list(name = "Cumulative logit mixed model", pars = 'ordinal')
+                   multilogit = list(name = "Multinomial logit", pars = 'multinomial'),
+                   lmm = list(name = "Linear mixed", pars = 'norm'),
+                   glmm_lognorm = list(name = 'Log-normal mixed', pars = 'norm'),
+                   glmm_logit = list(name = "Logistic mixed", pars = 'logit'),
+                   glmm_gamma = list(name = "Gamma mixed", pars = 'gamma'),
+                   glmm_poisson = list(name = 'Poisson mixed', pars = 'poisson'),
+                   cumlogit = list(name = 'Cumulative logit', pars = 'ordinal'),
+                   clmm = list(name = "Cumulative logit mixed", pars = 'ordinal')
     )
+
+    if (is.null(pars))
+      warning(gettextf("Info for model of type %s is not known. Please contact the package maintainer.",
+                       dQuote(object$models[i])))
 
     pv <- paste0("* Predictor variables: \n",
              tab(), add_breaks(
@@ -123,7 +129,7 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
                      norm = list(lab = 'norm', name = "Normal"),
                      lognorm = list(lab = 'lognorm', name = "Log-normal"))
 
-      cat(paste0(type$name, " imputation model for '", names(object$models)[i], "'\n"))
+      print_title(pars$name, names(object$models[i]))
       if (predvars) cat(pv)
       if (regcoef) cat(rc)
       if (otherpars) cat(opar)
@@ -131,7 +137,7 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 
     # Gamma imputation model ----------------------------------------------------
     if (object$models[i] %in% c("gamma")) {
-      cat(paste0("Gamma imputation model for '", names(object$models)[i], "'\n"))
+      print_title(pars$name, names(object$models[i]))
       cat(paste0("* Parametrization:\n",
                  tab(), "- shape: shape_", names(object$models)[i],
                  " = mu_", names(object$models)[i], "^2 * tau_", names(object$models)[i], "\n",
@@ -144,7 +150,7 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 
     # beta imputation model ----------------------------------------------------
     if (object$models[i] %in% c("beta")) {
-      cat(paste0("Beta imputation model for '", names(object$models)[i], "'\n"))
+      print_title(pars$name, names(object$models[i]))
       cat(paste0("* Parametrization:\n",
                  tab(), "- shape 1: shape1_", names(object$models)[i],
                  " = mu_", names(object$models)[i], " * tau_", names(object$models)[i], "\n",
@@ -157,18 +163,16 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 
     # logit imputation model ---------------------------------------------------
     if (object$models[i] == "logit") {
-      cat(paste0("Logistic imputation model for '", names(object$models)[i], "'\n"))
-      if (refcat)
-        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$models)[i]]], "'\n"))
+      print_title(pars$name, names(object$models[i]))
+      if (refcat) print_refcat(object$Mlist$refs[[names(object$models[i])]])
       if (predvars) cat(pv)
       if (regcoef) cat(rc)
     }
 
     # multinomial logit imputation model ---------------------------------------
     if (object$models[i] == "multilogit") {
-      cat(paste0("Multinomial logit imputation model for '", names(object$models)[i], "'\n"))
-      if (refcat)
-        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$models)[i]]], "'\n"))
+      print_title(pars$name, names(object$models[i]))
+      if (refcat) print_refcat(object$Mlist$refs[[names(object$models[i])]])
       if (predvars) cat(pv)
       if (regcoef) {
         cat(paste0("* Regression coefficients: \n"))
@@ -191,9 +195,8 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 
     # cumlogit -----------------------------------------------------------------
     if (object$models[i] == "cumlogit") {
-      cat(paste0("Cumulative logit imputation model for '", names(object$models)[i], "'\n"))
-      if (refcat)
-        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$models)[i]]], "'\n"))
+      print_title(pars$name, names(object$models[i]))
+      if (refcat) print_refcat(object$Mlist$refs[[names(object$models[i])]])
       if (predvars) cat(pv)
       if (regcoef) cat(rc)
       if (otherpars) {
@@ -224,7 +227,7 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 
     # lmm ----------------------------------------------------------------------
     if (object$models[i] == 'lmm') {
-      cat(paste0("Linear mixed model for '", names(object$models)[i], "'\n"))
+      print_title(pars$name, names(object$models[i]))
       if (predvars) cat(pv)
       if (regcoef) cat(rc)
       if (otherpars) cat(opar)
@@ -232,7 +235,7 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 
     # glmm_lognorm -------------------------------------------------------------
     if (object$models[i] == 'glmm_lognorm') {
-      cat(paste0("Log-normal mixed model for '", names(object$models)[i], "'\n"))
+      print_title(pars$name, names(object$models[i]))
       if (predvars) cat(pv)
       if (regcoef) cat(rc)
       if (otherpars) cat(opar)
@@ -240,16 +243,15 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 
     # glmm_logit ---------------------------------------------------------------
     if (object$models[i] == 'glmm_logit') {
-      cat(paste0("Logistic mixed model for '", names(object$models)[i], "'\n"))
-      if (refcat)
-        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$models)[i]]], "'\n"))
+      print_title(pars$name, names(object$models[i]))
+      if (refcat) print_refcat(object$Mlist$refs[[names(object$models[i])]])
       if (predvars) cat(pv)
       if (regcoef) cat(rc)
     }
 
     # glmm_gamma ---------------------------------------------------------------
     if (object$models[i] == 'glmm_gamma') {
-      cat(paste0("Gamma mixed model for '", names(object$models)[i], "'\n"))
+      print_title(pars$name, names(object$models[i]))
       cat(paste0("* Parametrization:\n",
                  tab(), "- shape: shape_", names(object$models)[i],
                  " = mu_", names(object$models)[i], "^2 * tau_", names(object$models)[i], "\n",
@@ -262,23 +264,20 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 
     # glmm_poisson -------------------------------------------------------------
     if (object$models[i] == 'glmm_poisson') {
-      cat(paste0("Poisson mixed model for '", names(object$models)[i], "'\n"))
+      print_title(pars$name, names(object$models[i]))
+      if (predvars) cat(pv)
+      if (regcoef) cat(rc)
     }
 
     # clmm ---------------------------------------------------------------------
     if (object$models[i] == 'clmm') {
-      cat(paste0("Cumulative logit mixed model for '", names(object$models)[i], "'\n"))
-      if (refcat)
-        cat(paste0("* Reference category: '", object$Mlist$refs[[names(object$models)[i]]], "'\n"))
+      print_title(pars$name, names(object$models[i]))
+      if (refcat) print_refcat(object$Mlist$refs[[names(object$models[i])]])
       if (predvars) cat(pv)
       if (regcoef) cat(rc)
     }
   }
 }
-
-#' @name list_models
-#' @export
-list_impmodels <- list_models
 
 
 

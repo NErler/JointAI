@@ -170,6 +170,16 @@ add_breaks <- function(string) {
 }
 
 
+print_title <- function(name, var) {
+  cat(paste0(name, " model for ", dQuote(var), "\n"))
+}
+
+
+print_refcat <- function(rc) {
+  cat(paste0("* Reference category: ", dQuote(rc), "\n"))
+}
+
+
 clean_names <- function(string) {
   gsub(":", "_", string)
 }
