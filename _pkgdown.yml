@@ -7,6 +7,7 @@ template:
     docsearch:
       api_key: 0d21d69e7c3eb00e029f5b8d9424cd56
       index_name: jointal
+    ganalytics: UA-127879026-4
 navbar:
   structure:
     left:
