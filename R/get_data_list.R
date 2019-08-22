@@ -195,34 +195,24 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 
 
 
-#' Get default values for hyperparameters
+#' Get the default values for hyperparameters
 #'
-#' Prints the list of default values for the hyperparameters.
-# @param family distribution family of the analysis model
-#               (\code{gaussian}, \code{binomial}, \code{poisson} or \code{Gamma})
-# @param link link function (if the link is already given in the family,
-#             e.g. \code{family = binomial("logit"))} this argument does not
-#             need to be specified
-# @param nranef number of random effects
-#
-# @section Value:
-# A list containing the default hyperparameters for JointAI models. The elements
-# of the list are
+#' This function returns a list of default values for the hyperparameters.
 #'
 #' \strong{norm:} hyperparameters for normal and lognormal models
 #' \tabular{ll}{
 #' \code{mu_reg_norm} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_norm} \tab precision in the priors for regression coefficients\cr
-#' \code{shape_tau_norm} \tab shape parameter in Gamma prior for precision of imputed variable\cr
-#' \code{rate_tau_norm} \tab rate parameter in Gamma prior for precision of imputed variable
+#' \code{shape_tau_norm} \tab shape parameter in Gamma prior for precision of an imputed variable\cr
+#' \code{rate_tau_norm} \tab rate parameter in Gamma prior for precision of an imputed variable
 #' }
 #'
 #' \strong{gamma:} hyperparameters for Gamma models
 #' \tabular{ll}{
 #' \code{mu_reg_gamma} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_gamma} \tab precision in the priors for regression coefficients\cr
-#' \code{shape_tau_gamma} \tab shape parameter in Gamma prior for precision of imputed variable\cr
-#' \code{rate_tau_gamma} \tab rate parameter in Gamma prior for precision of imputed variable
+#' \code{shape_tau_gamma} \tab shape parameter in Gamma prior for precision of an imputed variable\cr
+#' \code{rate_tau_gamma} \tab rate parameter in Gamma prior for precision of an imputed variable
 #' }
 #'
 #' \strong{beta:} hyperparameters for beta models
@@ -285,6 +275,11 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 #'
 #' @examples
 #' default_hyperpars()
+#'
+#' # To change the hyperparameters:
+#' hyp <- default_hyperpars()
+#' hyp$norm['rate_tau_norm'] <- 1e-3
+#' mod <- lm_imp(y ~ C1 + C2 + B1, data = wideDF, hyperpars = hyp, mess = FALSE)
 #'
 #'
 #' @export

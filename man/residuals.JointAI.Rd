@@ -22,14 +22,14 @@ Extract residuals from an object of class JointAI
 
 \itemize{
 \item For mixed models residuals are currently calculated using the fixed effects only.
-\item For ordinal (mixed) models and parametric survival models only \code{type = "response"} is avaiable.
+\item For ordinal (mixed) models and parametric survival models only \code{type = "response"} is available.
 \item For Cox proportional hazards models residuals are not yet implemented.
 }
 }
 
 \examples{
 mod <- glm_imp(B1 ~ C1 + C2 + O1, data = wideDF, n.iter = 100,
-               family = binomial())
+               family = binomial(), mess = FALSE)
 summary(residuals(mod, type = 'response'))
 summary(residuals(mod, type = 'working'))
 

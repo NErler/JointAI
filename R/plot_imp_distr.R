@@ -1,9 +1,10 @@
 #' Plot the distribution of observed and imputed values
 #'
 #' Plots densities and barplots of the observed and imputed values in a
-#' long-format dataset (multiple imputed datasets stacked onto each other).#'
+#' long-format dataset (multiple imputed datasets stacked onto each other).
 #'
-#' @param data a data.frame containing multiple imputations (and the original incomplete data)
+#' @param data a \code{data.frame} containing multiple imputations
+#'             and the original incomplete data stacked onto each other
 #' @param imp the name of the variable specifying the imputation indicator
 #' @param id the name of the variable specifying the subject indicator
 #' @param rownr the name of a variable identifying which rows correspond to the
@@ -15,7 +16,7 @@
 #' mod <- lme_imp(y ~ C1 + c2 + B2 + b2 + C2 + p2, random = ~ 1 | id, data = longDF,
 #'                n.iter = 200, monitor_params = c(imps = TRUE), mess = FALSE)
 #' impDF <- get_MIdat(mod, m = 5)
-#' plot_imp_distr(impDF, id = "id")
+#' plot_imp_distr(impDF, id = "id", ncol = 3)
 #'
 
 plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id', rownr = '.rownr',

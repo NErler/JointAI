@@ -53,13 +53,12 @@ get_refs <- function(fmla, data, refcats = NULL) {
 }
 
 
-#' Set the reference categories for all categorical covariates in the model
+#' Specify reference categories for all categorical covariates in the model
 #'
-#' The function asks questions and, depending on the answers given by the user,
-#' returns the input for the argument \code{refcats} in the functions
-#' \code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
-#' \code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{clmm_imp}},
-#' \code{\link{survreg_imp}} and \code{\link{coxph_imp}}.
+#' The function is a helper function that asks questions and, depending on the
+#' answers given by the user,
+#' returns the input for the argument \code{refcats} in the main analysis functions
+#' \code{\link[JointAI:model_imp]{*_imp}}.
 #'
 #' @param data a \code{data.frame}
 #' @param formula optional; model formula (used to select subset of relevant columns of \code{data})

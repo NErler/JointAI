@@ -2,28 +2,28 @@
 % Please edit documentation in R/get_data_list.R
 \name{default_hyperpars}
 \alias{default_hyperpars}
-\title{Get default values for hyperparameters}
+\title{Get the default values for hyperparameters}
 \usage{
 default_hyperpars()
 }
 \description{
-Prints the list of default values for the hyperparameters.
+This function returns a list of default values for the hyperparameters.
 }
 \details{
 \strong{norm:} hyperparameters for normal and lognormal models
 \tabular{ll}{
 \code{mu_reg_norm} \tab mean in the priors for regression coefficients\cr
 \code{tau_reg_norm} \tab precision in the priors for regression coefficients\cr
-\code{shape_tau_norm} \tab shape parameter in Gamma prior for precision of imputed variable\cr
-\code{rate_tau_norm} \tab rate parameter in Gamma prior for precision of imputed variable
+\code{shape_tau_norm} \tab shape parameter in Gamma prior for precision of an imputed variable\cr
+\code{rate_tau_norm} \tab rate parameter in Gamma prior for precision of an imputed variable
 }
 
 \strong{gamma:} hyperparameters for Gamma models
 \tabular{ll}{
 \code{mu_reg_gamma} \tab mean in the priors for regression coefficients\cr
 \code{tau_reg_gamma} \tab precision in the priors for regression coefficients\cr
-\code{shape_tau_gamma} \tab shape parameter in Gamma prior for precision of imputed variable\cr
-\code{rate_tau_gamma} \tab rate parameter in Gamma prior for precision of imputed variable
+\code{shape_tau_gamma} \tab shape parameter in Gamma prior for precision of an imputed variable\cr
+\code{rate_tau_gamma} \tab rate parameter in Gamma prior for precision of an imputed variable
 }
 
 \strong{beta:} hyperparameters for beta models
@@ -86,6 +86,11 @@ with output elements
 }
 \examples{
 default_hyperpars()
+
+# To change the hyperparameters:
+hyp <- default_hyperpars()
+hyp$norm['rate_tau_norm'] <- 1e-3
+mod <- lm_imp(y ~ C1 + C2 + B1, data = wideDF, hyperpars = hyp, mess = FALSE)
 
 
 }

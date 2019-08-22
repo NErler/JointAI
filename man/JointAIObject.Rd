@@ -2,7 +2,7 @@
 % Please edit documentation in R/JointAIObject.R
 \name{JointAIObject}
 \alias{JointAIObject}
-\title{Fitted object of class JointAI}
+\title{Fitted object of class 'JointAI'}
 \value{
 \item{\code{analysis_type}}{\code{lm}, \code{glm}, \code{clm}, \code{lme},
                             \code{glme}, \code{clmm}, \code{survreg} or
@@ -16,7 +16,7 @@
 \item{\code{Mlist}}{a list: containing the data, split up into
       \itemize{
         \item outcome (\code{y})
-        \item censoring indicator for survival outcomes (\code{cens})
+        \item event indicator for survival outcomes (\code{event})
         \item cross-sectional main effects (\code{Xc})
         \item cross-sectional interactions (\code{Xic})
         \item longitudinal main effects (\code{Xl})
@@ -24,6 +24,7 @@
         \item categorical cross-sectional incomplete variables (\code{Xcat})
         \item categorical longitudinal variables (\code{Xlcat})
         \item transformed cross-sectional variables (\code{Xtrafo})
+        \item transformed longitudinal variables (\code{Xltrafo})
         \item random effects design matrix (\code{Z})
       }
       and other important specifications:
@@ -72,11 +73,10 @@ for the imputation models relating to different covariates}
 \item{\code{sample}}{MCMC sample on the sampling scale (included only if \code{keep_scaled_sample = TRUE})}
 \item{\code{MCMC}}{MCMC sample, scaled back to the scale of the data}
 \item{\code{time}}{the computational time used for the sampling (adaptive phase + sampling)}
+\item{\code{fitted.values}}{fitted (or predicted) values (if available)}
+\item{\code{residuals}}{residuals (if available)}
 \item{\code{call}}{the original call}
 }
 \description{
-An object returned by one of the functions \code{\link{lm_imp}()},
-\code{\link{glm_imp}()}, \code{\link{clm_imp}()}, \code{\link{lme_imp}()},
-\code{\link{glme_imp}()}, \code{\link{clmm_imp}()}, \code{\link{survreg_imp}()}
-or \code{\link{coxph_imp}()}.
+An object returned by one of the main functions \code{\link[JointAI:model_imp]{*_imp}}.
 }

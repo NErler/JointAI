@@ -1,19 +1,20 @@
-#' List imputation models
+#' List covariate models
 #'
-#' Print information on all models for incomplete covariates used in a JointAI object,
+#' This function prints information on models specified for (incomplete) covariates in a JointAI object,
 #' including the model type, names of the parameters used and hyperparameters.
 #'
 #' @inheritParams sharedParams
-#' @param predvars logical; should information on the predictor variables be printed?
-#' @param regcoef logical; should information on the regression coefficients be printed?
-#' @param otherpars logical; should information on other parameters be printed?
-#' @param priors logical; should information on the priors be printed?
-#' @param refcat logical; should information on the reference category be printed?
+#' @param predvars logical; should information on the predictor variables be printed? (default is \code{TRUE})
+#' @param regcoef logical; should information on the regression coefficients be printed? (default is \code{TRUE})
+#' @param otherpars logical; should information on other parameters be printed? (default is \code{TRUE})
+#' @param priors logical; should information on the priors (and hyperparameters)
+#'               be printed? (default is \code{TRUE})
+#' @param refcat logical; should information on the reference category be printed? (default is \code{TRUE})
 #'
 #' @section Note:
 #' The models listed by this function are not the actual imputation models,
 #' but the conditional models that are part of the specification of the joint
-#' distribution of the data.
+#' distribution.
 #' Briefly, the joint distribution is specified as a sequence of conditional
 #' models
 #' \deqn{p(y | x_1, x_2, x_3, ..., \theta) p(x_1|x_2, x_3, ..., \theta) p(x_2|x_3, ..., \theta) ...}
@@ -23,25 +24,31 @@
 #' other covariates in their linear predictor, outcome and other covariates are
 #' taken into account implicitly, since imputations are sampled
 #' from the full conditional distributions.
-#' For more details, see Erler et al. (2016).
+#' For more details, see Erler et al. (2016) and Erler et al. (2019).
 #'
 #' The function \code{list_models} prints information on the conditional
-#' distributions of the incomplete covariates (since they are what is specified;
+#' distributions of the covariates (since they are what is specified;
 #' the full-conditionals are automatically derived within JAGS). The outcome
 #' is, thus, not part of the printed linear predictor, but is still included
 #' during imputation.
 #'
 #'
 #'
-#' @references Erler, N. S., Rizopoulos, D., Rosmalen, J. V., Jaddoe,
-#' V. W., Franco, O. H., & Lesaffre, E. M. (2016).
+#' @references Erler, N.S., Rizopoulos, D., Rosmalen, J.V., Jaddoe,
+#' V.W., Franco, O.H., & Lesaffre, E.M.E.H. (2016).
 #' Dealing with missing covariates in epidemiologic studies: A comparison
 #' between multiple imputation and a full Bayesian approach.
 #' \emph{Statistics in Medicine}, 35(17), 2955-2974.
 #'
+#' Erler, N.S., Rizopoulos D. and Lesaffre E.M.E.H. (2019).
+#' JointAI: Joint Analysis and Imputation of Incomplete Data in R.
+#' \emph{arXiv e-prints}, arXiv:1907.10867.
+#' URL https://arxiv.org/abs/1907.10867.
+#'
+#'
 #' @examples
 #' # (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save time)
-#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0)
+#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0, mess = FALSE)
 #'
 #' list_models(mod1)
 #'
@@ -286,7 +293,7 @@ list_impmodels <- list_models
 #' @examples
 #' # (does not need MCMC samples to work, so we will set n.adapt = 0 and
 #' # n.iter = 0 to reduce computational time)
-#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0)
+#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0, mess = FALSE)
 #'
 #' parameters(mod1)
 #'

@@ -14,10 +14,10 @@
 #' \itemize{
 #' \item \code{\link{lm_imp}} for linear regression
 #' \item \code{\link{glm_imp}} for generalized linear regression
-#' \item \code{\link{clm_imp}} for cumulative logit models
+#' \item \code{\link{clm_imp}} for (ordinal) cumulative logit models
 #' \item \code{\link{lme_imp}} for linear mixed models
 #' \item \code{\link{glme_imp}} for generalized linear mixed models
-#' \item \code{\link{clmm_imp}} for cumulative logit mixed models
+#' \item \code{\link{clmm_imp}} for (ordinal) cumulative logit mixed models
 #' \item \code{\link{survreg_imp}} for parametric (Weibull) survival models
 #' \item \code{\link{coxph_imp}} for Cox proportional hazard models
 #' }
@@ -31,12 +31,17 @@
 #' \code{\link[survival]{survreg}} (from the package \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}) and
 #' \code{\link[survival]{coxph}} (from the package \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}).
 #'
+#' Computations can be performed in parallel using the argument \code{parallel = TRUE},
+#' the argument \code{ridge} allows the user to impose a ridge penalty on the
+#' regression coefficients of the analysis model, and hyperparameters can be
+#' changed via the argument \code{hyperpars} and the function \code{\link{default_hyperpars}}.
 #'
-#' Results can be summarized and printed with \code{\link{summary.JointAI}},
-#' \code{\link{coef.JointAI}} and \code{\link{confint.JointAI}},
+#'
+#' Results can be summarized and printed with \code{\link[JointAI:summary.JointAI]{summary()}},
+#' \code{\link[JointAI:summary.JointAI]{coef()}} and \code{\link[JointAI:summary.JointAI]{confint()}},
 #' and visualized using
-#' \code{\link{traceplot}} or \code{\link{densplot}}.
-#' The function \code{\link{predict.JointAI}} allows prediction (including credible intervals)
+#' \code{\link[JointAI:traceplot]{traceplot()}} or \code{\link[JointAI:densplot]{densplot()}}.
+#' The function \code{\link[JointAI:predict.JointAI]{predict()}} allows prediction (including credible intervals)
 #' from \code{JointAI} models.
 #'
 #'
@@ -44,17 +49,20 @@
 #' Two criteria for evaluation of convergence and precision of the posterior
 #' estimate are available:
 #' \itemize{
-#' \item \code{\link{GR_crit}} implements the Gelman-Rubin criterion ('potential scale reduction factor') for convergence
-#' \item \code{\link{MC_error}} calculates the Monte Carlo error to evaluate the precision of the MCMC sample
+#' \item \code{\link{GR_crit}} implements the Gelman-Rubin criterion
+#'       ('potential scale reduction factor') for convergence
+#' \item \code{\link{MC_error}} calculates the Monte Carlo error to evaluate
+#'       the precision of the MCMC sample
 #' }
 #'
-#' Imputed data can be extracted (and exported to SPSS) using \code{\link{get_MIdat}}.
-#' The function \code{\link{plot_imp_distr}} allows visual comparison of the
-#' distribution of observed and imputed values.
+#' Imputed data can be extracted (and exported to SPSS) using
+#' \code{\link[JointAI:get_MIdat]{get_MIdat()}}.
+#' The function \code{\link[JointAI:plot_imp_distr]{plot_imp_distr()}} allows
+#' visual comparison of the distribution of observed and imputed values.
 #'
 #' @section Other useful functions:
 #' \itemize{
-#' \item \code{\link{parameters}} and \code{\link{list_impmodels}} to gain
+#' \item \code{\link{parameters}} and \code{\link{list_models}} to gain
 #'       insight in the specified model
 #' \item \code{\link{plot_all}} and \code{\link{md_pattern}} to visualize the
 #'       distribution of the data and the missing data pattern
@@ -78,8 +86,8 @@
 #' Explanation and demonstration of all parameters that are required or optional
 #' to specify the model structure in \code{\link{lm_imp}}, \code{\link{glm_imp}}
 #' and \code{\link{lme_imp}}.
-#' Among others, the functions \code{\link{parameters}}, \code{\link{list_impmodels}},
-#' \code{\link{get_imp_meth}} and \code{\link{set_refcat}} are used.
+#' Among others, the functions \code{\link{parameters}}, \code{\link{list_models}},
+#' \code{\link{get_models}} and \code{\link{set_refcat}} are used.
 #'
 #' \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{\emph{Parameter Selection}}:\cr
 #' Examples on how to select the parameters/variables/nodes
@@ -99,7 +107,13 @@
 #' \code{\link{GR_crit}}, \code{\link{MC_error}}, \code{\link{predict}},
 #' \code{\link{predDF}} and \code{\link{get_MIdat}}.
 #'}
-#' @references Erler, N.S., Rizopoulos, D., Rosmalen, J., Jaddoe, V.W.V.,
+#' @references
+#' Nicole S. Erler, Dimitris Rizopoulos and Emmanuel M.E.H. Lesaffre (2019).
+#' JointAI: Joint Analysis and Imputation of Incomplete Data in R.
+#' \emph{arXiv e-prints}, arXiv:1907.10867, July 2019.
+#' URL \href{https://arxiv.org/abs/1907.10867}{https://arxiv.org/abs/1907.10867}.
+#'
+#' Erler, N.S., Rizopoulos, D., Rosmalen, J., Jaddoe, V.W.V.,
 #' Franco, O. H., & Lesaffre, E.M.E.H. (2016).
 #' Dealing with missing covariates in epidemiologic studies: A comparison
 #' between multiple imputation and a full Bayesian approach.
@@ -141,27 +155,32 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #' @param object object inheriting from class 'JointAI'
 #' @param no_model names of variables for which no model should be specified.
 #'                 Note that this is only possible for completely observed
-#'                 variables and may imply assumptions of independence between
-#'                 the excluded variable and incomplete variables.
+#'                 variables and implies the assumptions of independence between
+#'                 the excluded variable and the incomplete variables.
 #' @param subset subset of parameters/variables/nodes (columns in the MCMC sample).
 #'               Uses the same logic as the argument \code{monitor_params} in
-#'               \code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
-#'               \code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{clmm_imp}},
-#'               \code{\link{survreg_imp}}
-#'               and \code{\link{coxph_imp}}.
-#' @param exclude_chains optional vector of the number of chains that should be excluded
+#'               \code{\link[JointAI:model_imp]{*_imp}}.
+#' @param exclude_chains optional vector of the index numbers of chains that should be excluded
 #' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
 #' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
+#' @param n.adapt the number of iterations for adaptation of the MCMC samplers
+#'                (see also \code{\link[rjags]{adapt}})
+#' @param n.iter the number of iterations of the MCMC chain (after adaptation;
+#'               see also \code{\link[rjags]{coda.samples}})
+#' @param n.chains the number of MCMC chains to be used
+#' @param quiet if \code{TRUE} then messages generated during compilation
+#'                      will be suppressed, as well as the progress bar during adaptation
+#'                      (see \code{\link[rjags]{jags.model}})
 #' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
 #' @param nrow,ncol optional number of rows and columns in the plot layout;
 #'                  automatically chosen if unspecified
 #' @param use_ggplot logical; Should ggplot be used instead of the base graphics?
 #' @param warn logical; should warnings be given? Default is
-#'             \code{TRUE}. Note: this applies only to warnings
-#'             given directly by \strong{JointAI}.
+#'             \code{TRUE}. (Note: this applies only to warnings
+#'             given directly by \strong{JointAI}.)
 #' @param mess logical; should messages be given? Default is
-#'             \code{TRUE}. Note: this applies only to messages
-#'             given directly by \strong{JointAI}.
+#'             \code{TRUE}. (Note: this applies only to messages
+#'             given directly by \strong{JointAI}.)
 #' @param xlab,ylab labels for the x- and y-axis
 #' @param use_level logical; should the multi-level structure be taken into account?
 #'        This requires specification of the argument \code{idvar}.

@@ -1,24 +1,26 @@
-#' Set default (imputation) models and order
+#' Specify the default (imputation) model types
 #' @inheritParams model_imp
 #'
 #' @return \code{get_models()} returns a list of two vectors named \code{models}
-#'         and \code{meth}.
+#'         and \code{meth}.\cr
 #'         \code{models} is a named vector containing the names of covariates
 #'         that either have missing values and/or are longitudinal (level-1)
-#'         covariates and the corresponding default (imputation) models.
+#'         covariates and the corresponding (imputation) models as well
+#'         as models for variables for which the user has specified a model.\cr
 #'         \code{meth} is a subset of \code{models} containing only the variables
 #'         that have missing values.
 #'
 #'
 #' @examples
 #' get_models(y ~ C1 + C2 + B2 + O2 + M2, data = wideDF)
-#' get_imp_meth(y ~ C1 + C2 + B2 + O2 + M2, data = wideDF)
 #'
 #' get_models(y ~ C1 + O2 + c2 + b1 + o2 + time, random = ~ 1 | id, data = longDF)
-#' get_imp_meth(y ~ C1 + O2 + c2 + b1 + o2 + time, random = ~ 1 | id, data = longDF)
 #'
 #' get_models(y ~ C1 + O2 + c2 + b1 + o2 + time, random = ~ 1 | id,
 #'            no_model = 'time', data = longDF)
+#'
+#' get_models(y ~ C1 + O2 + c2 + b1 + o2 + time, random = ~ 1 | id,
+#'            no_model = 'time', data = longDF, models = c(C1 = 'norm'))
 #'
 #' @export
 

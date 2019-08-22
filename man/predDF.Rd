@@ -6,16 +6,16 @@
 \alias{predDF.formula}
 \title{Create a new dataframe for prediction}
 \usage{
-predDF(...)
+predDF(object, ...)
 
 \method{predDF}{JointAI}(object, var, length = 100, ...)
 
 \method{predDF}{formula}(formula, dat, var, length = 100, ...)
 }
 \arguments{
-\item{...}{optional, additional arguments (currently not used)}
-
 \item{object}{object inheriting from class 'JointAI'}
+
+\item{...}{optional, additional arguments (currently not used)}
 
 \item{var}{name of variable that should be varying}
 
