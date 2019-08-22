@@ -339,8 +339,8 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
 
   # get number of rows and columns of plots
   if (is.null(nrow) & is.null(ncol)) {
-    dims <- if (ncol(data) > 64) {
-      grDevices::n2mfrow(49)
+    dims <- if (ncol(data) > 49) {
+      grDevices::n2mfrow(36)
     } else {
       grDevices::n2mfrow(ncol(data))
     }
