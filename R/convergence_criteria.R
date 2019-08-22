@@ -90,7 +90,7 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #' provides some examples how to specify the argument \code{subset}.
 #'
 #' @examples
-#' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
 #' MC_error(mod)
 #'

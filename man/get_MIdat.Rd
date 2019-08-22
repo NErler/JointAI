@@ -53,7 +53,7 @@ argument \code{monitor_params} in \code{\link[JointAI:model_imp]{*_imp}}.
 
 \examples{
 # fit a model and monitor the imputed values with monitor_params = c(imps = TRUE)
-mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, monitor_params = c(imps = TRUE), n.iter = 100)
+mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, monitor_params = c(imps = TRUE), n.iter = 100)
 
 # Example 1: without export to SPSS
 MIs <- get_MIdat(mod, m = 3, seed = 123)

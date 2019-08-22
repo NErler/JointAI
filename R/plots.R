@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' # fit a JointAI model
-#' mod <- lm_imp(y~C1 + C2 + M1, data = wideDF, n.iter = 100)
+#' mod <- lm_imp(y ~ C1 + C2 + M1, data = wideDF, n.iter = 100)
 #'
 #'
 #' # Example 1: simple traceplot

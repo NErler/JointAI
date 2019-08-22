@@ -67,7 +67,7 @@ Obtain and print the \code{summary}, (fixed effects) coefficients (\code{coef})
 and credible interval (\code{confint}) for an object of class 'JointAI'.
 }
 \examples{
-mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+mod1 <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 
 summary(mod1)
 coef(mod1)

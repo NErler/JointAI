@@ -265,7 +265,7 @@
 #'
 #' @examples
 #' # Example 1: Linear regression with incomplete covariates
-#' mod1 <- lm_imp(y~C1 + C2 + M1 + B1, data = wideDF, n.iter = 100)
+#' mod1 <- lm_imp(y ~ C1 + C2 + M1 + B1, data = wideDF, n.iter = 100)
 #'
 #'
 #' # Example 2: Logistic regression with incomplete covariats

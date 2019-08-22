@@ -15,7 +15,7 @@
 #'           \code{\link{lm_imp}}
 #' @examples
 #' # fit a JointAI model
-#' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
 #' # generate a dataframe with varying "C2" and reference values for all other variables in the model
 #' newDF <- predDF(mod, var = "C2")
