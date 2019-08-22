@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' # fit a JointAI model
-#' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' mod <- lm_imp(y ~ C1 + C2 + M1, data = wideDF, n.iter = 100)
 #'
 #'
 #' # Example 1: simple traceplot
@@ -61,11 +61,13 @@ traceplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, .
 #' @export
 traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                               subset = c(analysis_main = TRUE),
+                              exclude_chains = NULL,
                               nrow = NULL, ncol = NULL, keep_aux = FALSE,
                               use_ggplot = FALSE, warn = TRUE, mess = TRUE,
                               ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin, subset = subset,
+                    exclude_chains = exclude_chains,
                     nrow = nrow, ncol = ncol, warn = warn, mess = mess,
                     keep_aux = keep_aux)
 
@@ -96,10 +98,10 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
 
-#' Plot posterior density from JointAI model
+#' Plot the posterior density from object of class JointAI
 #'
-#' Plots a set of densities (per MC chain and coefficient) from the MCMC sample
-#' of an object of class "JointAI".
+#' The function plots a set of densities (per chain and coefficient) from
+#' the MCMC sample of an object of class "JointAI".
 #' @inheritParams traceplot
 #' @param vlines list, where each element is a named list of parameters that
 #'               can be passed to \code{\link[graphics]{abline}} to create
@@ -112,10 +114,11 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' @examples
 #'
 #' # fit a JointAI object:
-#' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' mod <- lm_imp(y ~ C1 + C2 + M1, data = wideDF, n.iter = 100)
 #'
 #' # Example 1: basic densityplot
 #' densplot(mod)
+#' densplot(mod, exclude_chains = 2)
 #'
 #'
 #' # Example 2: use vlines to mark zero
@@ -174,12 +177,14 @@ densplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, ..
 #' @rdname densplot
 #' @export
 densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
-                             subset = c(analysis_main = TRUE), vlines = NULL, nrow = NULL,
+                             subset = c(analysis_main = TRUE),
+                             exclude_chains = NULL, vlines = NULL, nrow = NULL,
                              ncol = NULL, joined = FALSE, use_ggplot = FALSE,
                              keep_aux = FALSE, warn = TRUE, mess = TRUE, ...) {
 
   prep <- plot_prep(object, start = start, end = end, thin = thin,
-                    subset = subset, nrow = nrow, ncol = ncol, warn = warn,
+                    subset = subset, exclude_chains = exclude_chains,
+                    nrow = nrow, ncol = ncol, warn = warn,
                     mess = mess, keep_aux = keep_aux)
 
   if (joined)
@@ -251,6 +256,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 # Helpfunction for densityplot and traceplot
 plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL,
+                      exclude_chains = NULL,
                       nrow = NULL, ncol = NULL, warn = TRUE, mess = TRUE,
                       keep_aux = FALSE, ...) {
   if (is.null(object$MCMC))
@@ -267,7 +273,13 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 
   MCMC <- get_subset(object, subset, keep_aux = keep_aux,
                      warn = warn, mess = mess)
-  MCMC <- window(MCMC,
+
+  chains <- seq_along(MCMC)
+  if (!is.null(exclude_chains)) {
+    chains <- chains[-exclude_chains]
+  }
+
+  MCMC <- window(MCMC[chains],
                  start = start,
                  end = end,
                  thin = thin)
@@ -296,8 +308,8 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 
 #' Visualize the distribution of all variables in the dataset
 #'
-#' Plots a grid of histograms (for continuous variables) and barplots (for
-#' categorical variables) together with the proportion of missing values in
+#' This function plots a grid of histograms (for continuous variables) and barplots (for
+#' categorical variables) and labels it with the proportion of missing values in
 #' each variable.
 #' @param data a \code{data.frame} (or a \code{matrix})
 #' @param fill color the histograms and bars are filled with
@@ -311,7 +323,7 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 #'
 #' @seealso Vignette: \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
 #' @examples
-#' par(mar = c(1,2,3,1), mgp = c(2, 0.6, 0))
+#' par(mar = c(2,2,3,1), mgp = c(2, 0.6, 0))
 #' plot_all(wideDF)
 #'
 #' @export
@@ -327,8 +339,8 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
 
   # get number of rows and columns of plots
   if (is.null(nrow) & is.null(ncol)) {
-    dims <- if (ncol(data) > 64) {
-      grDevices::n2mfrow(49)
+    dims <- if (ncol(data) > 49) {
+      grDevices::n2mfrow(36)
     } else {
       grDevices::n2mfrow(ncol(data))
     }

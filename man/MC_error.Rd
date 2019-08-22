@@ -5,8 +5,9 @@
 \alias{plot.MCElist}
 \title{Monte Carlo error}
 \usage{
-MC_error(x, subset = NULL, start = NULL, end = NULL, thin = NULL,
-  digits = 2, warn = TRUE, mess = TRUE, ...)
+MC_error(x, subset = NULL, exclude_chains = NULL, start = NULL,
+  end = NULL, thin = NULL, digits = 2, warn = TRUE, mess = TRUE,
+  ...)
 
 \method{plot}{MCElist}(x, data_scale = TRUE, plotpars = NULL,
   ablinepars = list(v = 0.05), ...)
@@ -16,9 +17,9 @@ MC_error(x, subset = NULL, start = NULL, end = NULL, thin = NULL,
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
-\code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
-\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{survreg_imp}}
-and \code{\link{coxph_imp}}.}
+\code{\link[JointAI:model_imp]{*_imp}}.}
+
+\item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
 
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
@@ -29,12 +30,12 @@ and \code{\link{coxph_imp}}.}
 \item{digits}{number of digits for output}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. Note: this applies only to warnings
-given directly by \strong{JointAI}.}
+\code{TRUE}. (Note: this applies only to warnings
+given directly by \strong{JointAI}.)}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. Note: this applies only to messages
-given directly by \strong{JointAI}.}
+\code{TRUE}. (Note: this applies only to messages
+given directly by \strong{JointAI}.)}
 
 \item{...}{Arguments passed on to \code{mcmcse::mcse.mat}
 \describe{
@@ -72,7 +73,7 @@ An object of class \code{MCElist} with elements \code{unscaled},
         (Monte Carlo error divided by post. standard deviation.)
 }
 \description{
-Calculate and plot the Monte Carlo error of the samples from a JointAI model.
+Calculate, print and plot the Monte Carlo error of the samples from a JointAI model.
 }
 \section{Methods (by generic)}{
 \itemize{
@@ -85,7 +86,7 @@ Lesaffre & Lawson (2012) [p. 195] suggest the Monte Carlo error of a
       deviation of this parameter (i.e., \eqn{MCSE/SD \le 0.05}).
 }
 \examples{
-mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 
 MC_error(mod)
 
@@ -99,5 +100,5 @@ John Wiley & Sons.
 }
 \seealso{
 The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
-contains some examples how to specify the argument \code{subset}.
+provides some examples how to specify the argument \code{subset}.
 }

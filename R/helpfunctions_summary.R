@@ -1,6 +1,7 @@
 
 prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL,
-                      warn = warn, mess = mess, ...) {
+                      exclude_chains = NULL,
+                      warn = TRUE, mess = TRUE, ...) {
 
   if (is.null(start)) {
     start <- start(object$MCMC)
@@ -19,18 +20,24 @@ prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 
   MCMC <- get_subset(object, subset, warn = warn, mess = mess)
 
+  chains <- seq_along(MCMC)
+  if (!is.null(exclude_chains)) {
+    chains <- chains[-exclude_chains]
+  }
+
   MCMC <- do.call(rbind,
-                  window(MCMC,
+                  window(MCMC[chains],
                          start = start,
                          end = end,
                          thin = thin))
-
   return(MCMC)
 }
 
 
+# @param x object of class JointAI
 get_Dmat <- function(x) {
-  MCMC <- prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL)
+  MCMC <- prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL,
+                    exclude_chains = NULL, warn = TRUE, mess = TRUE)
 
   Ds <- grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", colnames(MCMC), value = TRUE)
   Dpos <- t(sapply(strsplit(gsub('D|\\[|\\]', '', Ds), ","), as.numeric))
@@ -53,9 +60,11 @@ get_Dmat <- function(x) {
 
 get_aux <- function(object) {
   aux <- object$Mlist$auxvars
-  unlist(sapply(aux, function(x)
-    if (x %in% names(object$Mlist$refs))
-      attr(object$Mlist$refs[[x]], 'dummies')
+  unlist(sapply(if (!is.null(object$Mlist$auxvars))
+    attr(terms(aux), 'term.labels'),
+    function(x)
+      if (x %in% names(object$Mlist$refs))
+        attr(object$Mlist$refs[[x]], 'dummies')
     else x
   ))
 }

@@ -1,3 +1,44 @@
+# JointAI 0.6.0
+
+## Bug fixes
+* bug in `add_samples()` when used in parallel with thinning fixed
+* bug fixed that occurred when a complete longitudinal categorical variable was
+  used in a model that did not contain any incomplete baseline variables
+* bug-fix for monitoring random effects
+* fixed typo in selecting parameters in Gamma models
+* `predict()` can now handle `newdata` with missing outcome values; predicted
+  values for cases with missing covariates are `NA` (prediction with incomplete
+  covariates is planned to be implemented in the future)
+* bug-fix for `get_MIdat()` and `plot_imp_distr()` when only one variable has missing values
+* bug-fix for longitudinal model with interaction with random slope variable
+* bug-fix for model with multiple longitudinal ordinal incomplete covariates
+ (fixed wrong selection of columns of the design matrix of longitudinal covariates
+  in these models)
+
+## Minor changes
+* moved message about bug reports to startup
+* enabled inverse link by adding max restriction
+* ":" in factor labels are automatically replaced by "_"
+* argument `ncores` has changed to `n.cores` for consistency with `n.iter`, `n.chains`, etc.
+* `coxph_imp()` does no longer use a counting process implementation but uses the
+  likelihood in JAGS directly via the zeros trick
+
+
+## New Features / Extensions
+* `predict()` now has an argument `length` to change number of evaluation points
+* `summary()`, `predict()`, `traceplot()`, `densplot()`, `GR_crit()`, `MC_error()`
+   now have an argument `exclude_chains` that allows to specify chains that should be omitted
+* `citation()` now refers to a manuscript on arXiv
+* `glmm_lognorm` available to impute level-1 covariates with a log-normal mixed model
+* methods `residuals()` and `plot()` available for (some of the) main analysis types (details see documentation)
+* argument `models` added to `get_models()` so that the user can specify to also
+  include models for complete covariates (which are then positioned in the 
+  sequence of models according to the systematic used in **JointAI**).
+  Specification of a model not needed for imputation prints a notification.
+* `JointAI` objects (most types) now also include residuals and fitted values (so far, only using fixed effects)
+
+--------------------------------------------------------------------------------
+
 # JointAI 0.5.2
 
 ## Bug fixes
@@ -12,12 +53,12 @@
   (all necessary data is not passed to JAGS)
 * enable thinning when using parallel sampling
 * matrix `Xl` is no longer included in `data_list` when it is not used in the model
-* bugfix in `subset` when specified as vector
-* bugfix in ridge regression (gave an error message)
-* bugfix in recognition of binary factors that are coded as numeric and have missing values
-* bugfix in `summary`: range of iterations is printed correctly now when argument `end` is used
-* bugfix: error that occured in re-scaling when reference category was changed is solved
-* bugfix in survival models: coding of censoring variable fixed
+* bug-fix in `subset` when specified as vector
+* bug-fix in ridge regression (gave an error message)
+* bug-fix in recognition of binary factors that are coded as numeric and have missing values
+* bug-fix in `summary`: range of iterations is printed correctly now when argument `end` is used
+* bug-fix: error that occurred in re-scaling when reference category was changed is solved
+* bug-fix in survival models: coding of censoring variable fixed
 
 
 ## Minor changes
@@ -37,7 +78,7 @@
 
 ## Bug fixes
 * `add_samples()`: bug that copied the last chain to all other chains fixed
-* bugfix for the order of columns in the matrix `Xc`, so that specification of
+* bug-fix for the order of columns in the matrix `Xc`, so that specification of
   functions of covariates in auxiliary variables works better
 * adding vertical lines to a `densplot()` issue (all plots showed all lines) fixed
 * nested functions involving powers made possible
@@ -50,7 +91,7 @@
 * change in `longDF` example data: new version containing complete and incomplete
   categorical longitudinal variables (and variable names L1 and L2 changed to c1 and c2)
 * Some minor changes in notes, warnings and error messages
-* The funciton `list_impmodels()` changed to `list_models()`
+* The function `list_impmodels()` changed to `list_models()`
   (but `list_impmodels()` is kept as an alias for now)
 * improved handling of functional forms of covariates (also in longitudinal 
   covariates and random effects)
@@ -71,7 +112,7 @@
 * new argument `ncores` allows to specify the maximum number of cores to be used
 * new argument `seed` added for reproducible results; also a sampler (`.RNG.name`)
   and seed value for the sampler (`.RNG.seed`) are set or added to user-provided
-  inital values (necessary for parallel sampling and reproducibility of results)
+  initial values (necessary for parallel sampling and reproducibility of results)
 * `plot_imp_distr()`: new function to plot distribution of observed and imputed values
 
 --------------------------------------------------------------------------------
@@ -155,9 +196,9 @@
 * `monitor_params` is now checked to avoid problems when only part of the main parameters is selected
 * categorical imputation models now use min-max trick to prevent probabilities outside [0, 1]
 * initial value generation for logistic analysis model fixed
-* bugfix in re-ordering columns when a function is part of the linear predictor
-* bugfix in initial values for categorical covariates
-* bugfix in finding imputation method when function of variable is specified as
+* bug-fix in re-ordering columns when a function is part of the linear predictor
+* bug-fix in initial values for categorical covariates
+* bug-fix in finding imputation method when function of variable is specified as
   auxiliary variable
 
 ## Minor changes

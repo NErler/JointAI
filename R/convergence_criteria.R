@@ -19,14 +19,14 @@
 #'
 #'
 #' @examples
-#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' mod1 <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #' GR_crit(mod1)
 #'
 #'
 #'
 #' @export
 GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = TRUE,
-                    multivariate = TRUE, subset = NULL,
+                    multivariate = TRUE, subset = NULL, exclude_chains = NULL,
                     start = NULL, end = NULL, thin = NULL, warn = TRUE, mess = TRUE, ...) {
 
   if (!inherits(object, "JointAI"))
@@ -46,7 +46,13 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
     thin <- thin(object$MCMC)
 
   MCMC <- get_subset(object, subset, warn = warn, mess = mess)
-  MCMC <- window(MCMC, start = start, end = end, thin = thin)
+
+  chains <- seq_along(MCMC)
+  if (!is.null(exclude_chains)) {
+    chains <- chains[-exclude_chains]
+  }
+
+  MCMC <- window(MCMC[chains], start = start, end = end, thin = thin)
 
 
   gelman.diag(x = MCMC, confidence = confidence, transform = transform,
@@ -57,7 +63,7 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 
 #' Monte Carlo error
 #'
-#' Calculate and plot the Monte Carlo error of the samples from a JointAI model.
+#' Calculate, print and plot the Monte Carlo error of the samples from a JointAI model.
 #' @param x object inheriting from class 'JointAI'
 #' @param digits number of digits for output
 #' @inheritParams sharedParams
@@ -81,17 +87,17 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #'
 #' @seealso
 #' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
-#' contains some examples how to specify the argument \code{subset}.
+#' provides some examples how to specify the argument \code{subset}.
 #'
 #' @examples
-#' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
 #' MC_error(mod)
 #'
 #' plot(MC_error(mod), ablinepars = list(lty = 2))
 #'
 #' @export
-MC_error <- function(x, subset = NULL,
+MC_error <- function(x, subset = NULL, exclude_chains = NULL,
                      start = NULL, end = NULL, thin = NULL,
                      digits = 2, warn = TRUE, mess = TRUE, ...) {
 
@@ -115,8 +121,12 @@ MC_error <- function(x, subset = NULL,
 
   # MC error for MCMC sample scaled back to data scale
   MCMC <- get_subset(object = x, subset = subset, warn = warn, mess = mess)
+  chains <- seq_along(MCMC)
+  if (!is.null(exclude_chains)) {
+    chains <- chains[-exclude_chains]
+  }
 
-  MCMC <- do.call(rbind, window(MCMC, start = start, end = end, thin = thin))
+  MCMC <- do.call(rbind, window(MCMC[chains], start = start, end = end, thin = thin))
 
   MCE1 <- mcmcse::mcse.mat(x = MCMC, ...)
   colnames(MCE1) <- gsub("se", "MCSE", colnames(MCE1))
@@ -130,11 +140,11 @@ MC_error <- function(x, subset = NULL,
 
   # MC error for scaled MCMC sample
   if (!is.null(x$sample)) {
-  mcmc <- do.call(rbind, window(x$sample, start = start, end = end, thin = thin))
+  mcmc <- do.call(rbind, window(x$sample[chains], start = start, end = end, thin = thin))
   mcmc <- mcmc[match(colnames(MCMC), colnames(x$MCMC[[1]])), ]
 
   MCE2 <- mcmcse::mcse.mat(x = do.call(rbind,
-                                       window(x$sample, start = start,
+                                       window(x$sample[chains], start = start,
                                               end = end,  thin = thin)), ...)
   colnames(MCE2) <- gsub("se", "MCSE", colnames(MCE2))
 

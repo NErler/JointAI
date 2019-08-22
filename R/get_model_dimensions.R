@@ -129,7 +129,7 @@ get_imp_dim <- function(models, imp_pos, Mlist){
     } else {
       k
     }
-  })
+  }, simplify = FALSE)
 
 
   for (i in 1:length(models)) {
@@ -150,10 +150,12 @@ get_imp_dim <- function(models, imp_pos, Mlist){
         names(imp_pos$pos_Xc[[i]])
     }
 
-    if (models[i] %in% c('lmm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
+    if (models[i] %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
 
-      nrf <- sum(unlist(lapply(Mlist$hc_list[!names(Mlist$hc_list) %in% unlist(mod_dum[i:length(mod_dum)])],
-                               function(x) sapply(x, attr, 'matrix'))) %in% c('Z', 'Xc'))
+      # number of random effects
+      nrf <- sum(unlist(
+        lapply(Mlist$hc_list[!names(Mlist$hc_list) %in% unlist(mod_dum[i:length(mod_dum)])],
+               function(x) sapply(x, attr, 'matrix'))) %in% c('Z', 'Xc'))
 
       Xlpos <- if (any(is.na(imp_pos$pos_Xl[[names(models)[i]]]))) {
         max(c(match(unlist(mod_dum[1:i]), colnames(Mlist$Xl)) + 1, 1), na.rm = T)
@@ -163,6 +165,7 @@ get_imp_dim <- function(models, imp_pos, Mlist){
 
       intercept <- ifelse(!models[i] %in% "clmm", 0,
                           ifelse(ncol(Mlist$Xc) == 1 & Xlpos == 1, 0, 1))
+
       n_imp_coef[names(models)[i]] <- max(1, ncol(Mlist$Xc) - intercept +
                                             Xlpos - 1 +
                                             nrf)

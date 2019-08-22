@@ -10,7 +10,8 @@ get_params <- function(models, analysis_type, family, Mlist,
                        gamma_y = NULL, delta_y = NULL,
                        ranef = NULL, invD = NULL, D = NULL, RinvD = NULL,
                        alphas = NULL, tau_imp = NULL, gamma_imp = NULL,
-                       delta_imp = NULL, other = NULL, mess = TRUE, ...){
+                       delta_imp = NULL, other = NULL, mess = TRUE, basehaz = FALSE,
+                       ...){
 
   y_name <- colnames(Mlist$y)
 
@@ -18,16 +19,18 @@ get_params <- function(models, analysis_type, family, Mlist,
     family <- attr(analysis_type, "family")
 
   if (analysis_main) {
-    if (is.null(betas)) betas <- TRUE
-    if (family %in% c("gaussian", "gamma", 'weibull')) {
+    if (is.null(betas) & any(!sapply(Mlist$cols_main, is.null))) betas <- TRUE
+    if (family %in% c("gaussian", "Gamma", 'weibull')) {
       if (is.null(sigma_y)) sigma_y <- TRUE
     }
     if (family %in% c('ordinal')) {
       gamma_y <- TRUE
     }
-  }
-  if (analysis_type %in% c("lme", "glme", "clmm")) {
-    if (analysis_main & is.null(D)) D <- TRUE
+    basehaz <- family == 'prophaz' & all(sapply(Mlist$cols_main, is.null))
+
+    if (analysis_type %in% c("lme", "glme", "clmm")) {
+      if (analysis_main & is.null(D)) D <- TRUE
+    }
   }
 
 
@@ -56,6 +59,7 @@ get_params <- function(models, analysis_type, family, Mlist,
   }
 
   params <- c(if (betas) "beta",
+              if (basehaz) "Bs.gammas",
               if (gamma_y) paste0("gamma_", y_name),
               if (delta_y) paste0("delta_", y_name),
               if (tau_y) paste0("tau_", y_name),

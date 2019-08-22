@@ -5,14 +5,24 @@
 \title{Predict values from an object of class JointAI}
 \usage{
 \method{predict}{JointAI}(object, newdata, quantiles = c(0.025, 0.975),
-  start = NULL, end = NULL, thin = NULL, mess = TRUE, ...)
+  type = c("link", "response", "prob", "class", "lp", "risk"),
+  start = NULL, end = NULL, thin = NULL, exclude_chains = NULL,
+  mess = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
-\item{newdata}{new dataset for prediction}
+\item{newdata}{optional new dataset for prediction. If left empty, the original data is used.}
 
 \item{quantiles}{quantiles of the predicted distribution of the outcome}
+
+\item{type}{the type of prediction. The default is on the scale of the
+linear predictor (\code{"link"} or \code{"lp"}). For generalized
+linear (mixed) models \code{type = "response"} transforms the
+predicted values to the scale of the response. For ordinal (mixed)
+models \code{type} may be \code{"prob"} (to obtain probabilities per
+class) or \code{"class"} to obtain the class with the highest posterior
+probability.}
 
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
@@ -20,25 +30,31 @@
 
 \item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
+\item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
+
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. Note: this applies only to messages
-given directly by \strong{JointAI}.}
+\code{TRUE}. (Note: this applies only to messages
+given directly by \strong{JointAI}.)}
 
 \item{...}{currently not used}
 }
 \value{
-A list with entries "fit" and "quantiles", where
-        "fit" contains the column means of \eqn{X\beta} (see details)
-        and "quantiles" contain the specified quantiles (by default 2.5\%
-        and 97.5\%) of each column of \eqn{X\beta}.
+A list with entries \code{"dat"}, \code{fit"} and \code{"quantiles"},
+        where
+        \code{"fit"} contains the predicted values (mean over the values calculated
+        from the iterations of the MCMC sample),
+        \code{"quantiles"} contain the specified quantiles (by default 2.5\%
+        and 97.5\%),
+        and \code{"dat"} is \code{newdata}, extended with \code{fit} and \code{quantiles"}
+        (unless prediction for an ordinal outcome is done with \code{type = "prob"},
+        in which case the quantiles are an array with three dimensions and are
+        therefore not included in \code{"dat"}).
 }
 \description{
-Calculates the expected outcome value for a given set of covariate values
-and an object of class 'JointAI', and corresponding 2.5\% and 97.5\% (or other
-quantiles) credible intervals.
+Obtains predictions and corresponding credible intervals from an object of class 'JointAI'.
 }
 \details{
-A \code{model.matrix} \eqn{X} is created from the model formula (fixed
+A \code{model.matrix} \eqn{X} is created from the model formula (currently fixed
          effects only) and \code{newdata}. \eqn{X\beta} is then calculated for
          each iteration of the MCMC sample in \code{object}, i.e., \eqn{X\beta}
          has \code{n.iter} rows and \code{nrow(newdata)} columns.
@@ -48,8 +64,9 @@ A \code{model.matrix} \eqn{X} is created from the model formula (fixed
 \section{Note}{
 
 \itemize{
-\item For repeated measures models prediction is performed on fixed effects only.
-\item Prediction is performed on the scale of the linear predictor.
+\item So far, \code{predict} cannot calculate predicted values for cases with
+      missing values in covariates. Predicted values for such cases are \code{NA}.
+\item For repeated measures models prediction currently only uses fixed effects.
 }
 Functionality will be extended in the future.
 }
@@ -57,6 +74,9 @@ Functionality will be extended in the future.
 \examples{
 # fit model
 mod <- lm_imp(y ~ C1 + C2 + I(C2^2), data = wideDF, n.iter = 100)
+
+# calculate the fitted values
+fit <- predict(mod)
 
 # create dataset for prediction
 newDF <- predDF(mod, var = "C2")
@@ -67,10 +87,9 @@ pred <- predict(mod, newdata = newDF)
 # plot predicted values and 95\% confidence band
 plot(newDF$C2, pred$fit, type = "l", ylim = range(pred$quantiles),
      xlab = "C2", ylab = "predicted values")
-matplot(newDF$C2, t(pred$quantiles), lty = 2, add = TRUE, type = "l", col = 1)
+matplot(newDF$C2, pred$quantiles, lty = 2, add = TRUE, type = "l", col = 1)
 
 }
 \seealso{
-\code{\link{predDF.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
-          \code{\link{lm_imp}}
+\code{\link{predDF.JointAI}}, \code{\link[JointAI:model_imp]{*_imp}}
 }

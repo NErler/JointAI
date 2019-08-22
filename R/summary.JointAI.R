@@ -9,7 +9,7 @@
 #' @param \dots currently not used
 #'
 #' @examples
-#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' mod1 <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
 #' summary(mod1)
 #' coef(mod1)
@@ -26,6 +26,7 @@
 #' @export
 summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                             quantiles = c(0.025, 0.975), subset = NULL,
+                            exclude_chains = NULL,
                             warn = TRUE, mess = TRUE, ...) {
 
   if (is.null(object$MCMC))
@@ -35,7 +36,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   autoburnin <- if (is.null(cl$autoburnin)) FALSE else eval(cl$autoburnin)
 
   MCMC <- prep_MCMC(object, start = start, end = end, thin = thin,
-                    subset = subset, warn = warn, mess = mess, ...)
+                    subset = subset, exclude_chains = exclude_chains,
+                    warn = warn, mess = mess, ...)
 
   # create results matrix
   statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.", "GR-crit")
@@ -56,7 +58,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$start <- ifelse(is.null(start), start(object$MCMC), max(start, start(object$MCMC)))
   out$end <- ifelse(is.null(end), end(object$MCMC), min(end, end(object$MCMC)))
   out$thin <- thin(object$MCMC)
-  out$nchain <- nchain(object$MCMC)
+  out$nchain <- nchain(object$MCMC) - sum(exclude_chains %in% seq_along(object$MCMC))
   out$stats <- stats
 
   out$ranefvar <- if (object$analysis_type %in% c("lme", "glme", "clmm")) {
@@ -163,7 +165,8 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
 #' @rdname summary.JointAI
 #' @export
 coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
-                         subset = NULL, warn = TRUE, mess = TRUE, ...) {
+                         subset = NULL, exclude_chains = NULL,
+                         warn = TRUE, mess = TRUE, ...) {
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
@@ -171,7 +174,8 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     stop("There is no MCMC sample.\n")
   }
 
-  MCMC <- prep_MCMC(object, start, end, thin, subset, mess = mess, warn = warn)
+  MCMC <- prep_MCMC(object, start, end, thin, subset, exclude_chains = exclude_chains,
+                    mess = mess, warn = warn)
 
   coefs <- colMeans(MCMC)[intersect(colnames(MCMC),
                                     get_coef_names(object$Mlist, object$K)[, 2])]
@@ -192,7 +196,8 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 #' @export
 coef.summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
-                         subset = NULL, warn = TRUE, mess = TRUE, ...) {
+                         subset = NULL, exclude_chains = NULL,
+                         warn = TRUE, mess = TRUE, ...) {
   if (!inherits(object, "summary.JointAI"))
     stop("Use only with 'summary.JointAI' objects.\n")
 
@@ -208,7 +213,8 @@ coef.summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 confint.JointAI <- function(object, parm = NULL, level = 0.95,
                             quantiles = NULL,
                             start = NULL, end = NULL, thin = NULL,
-                         subset = NULL, warn = TRUE, mess = TRUE, ...) {
+                            subset = NULL, exclude_chains = NULL,
+                            warn = TRUE, mess = TRUE, ...) {
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
@@ -225,7 +231,8 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
   if (is.null(quantiles) & !is.null(level))
     quantiles <- c((1 - level)/2, 1 - (1 - level)/2)
 
-  MCMC <- prep_MCMC(object, start, end, thin, subset, mess = mess, warn = warn)
+  MCMC <- prep_MCMC(object, start, end, thin, subset, exclude_chains = exclude_chains,
+                    mess = mess, warn = warn)
 
   cis <- t(apply(MCMC, 2, quantile, quantiles))
 
@@ -242,6 +249,7 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
 
   MCMC <- if (!is.null(x$MCMC))
     prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL,
+              exclude_chains = NULL,
               mess = TRUE, warn = TRUE, ...)
 
 

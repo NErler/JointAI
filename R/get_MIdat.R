@@ -1,13 +1,13 @@
-#' Extract multiple imputed datasets
+#' Extract multiple imputed datasets from an object of class JointAI
 #'
-#' Creates a dataset containing multiple imputed datasets stacked onto each other
-#' (i.e., long format).
+#' This function returns a dataset containing multiple imputed datasets stacked
+#' onto each other (i.e., long format; optionally including the original, incomplete data).\cr
 #' These data can be automatically exported to SPSS (i.e., a .txt file containing the data and a
 #' .sps file containing syntax to generate a .sav file). For the export function
 #' the \href{https://CRAN.R-project.org/package=foreign}{\strong{foreign}} package needs to be installed.
 #' @inheritParams sharedParams
 #' @param m number of imputed datasets
-#' @param include should the original, incomplete data be included?
+#' @param include should the original, incomplete data be included? Default is \code{TRUE}.
 #' @param minspace minimum number of iterations between iterations chosen as imputed values.
 #' @param seed optional seed
 #' @param export_to_SPSS logical; should the completed data be exported to SPSS?
@@ -16,20 +16,27 @@
 #' @param filename optional file name (without ending; if unspecified and
 #'                 \code{export_to_SPSS = TRUE} a name is generated automatically)
 #'
-#' @return A dataframe containing the imputed values (and original data) stacked.
-#'        The variable \code{Imputation_} identifies the imputations, while
-#'        \code{.rownr} identifies rows of the rows of the original data.
+#' @return A dataframe in which the original data (if \code{include = TRUE}) and
+#'         the imputed datasets are stacked onto each other.\cr
+#'        The variable \code{Imputation_} indexes the imputation, while
+#'        \code{.rownr} links the rows to the rows of the original data.
 #'        In cross-sectional datasets the
 #'        variable \code{.id} is added as subject identifier.
+#'
+#' @section Note:
+#' In order to be able to extract (multiple) imputed datasets the imputed values
+#' must have been monitored, i.e., \code{imps = TRUE} had to be specified in the
+#' argument \code{monitor_params} in \code{\link[JointAI:model_imp]{*_imp}}.
 #'
 #' @seealso \code{\link{plot_imp_distr}}
 #'
 #' @examples
 #' # fit a model and monitor the imputed values with monitor_params = c(imps = TRUE)
-#' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, monitor_params = c(imps = TRUE), n.iter = 100)
+#' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, monitor_params = c(imps = TRUE), n.iter = 100)
 #'
 #' # Example 1: without export to SPSS
 #' MIs <- get_MIdat(mod, m = 3, seed = 123)
+#'
 #'
 #' \dontrun{
 #' # Example 2: with export for SPSS (here: to the temporary directory "temp_dir")
@@ -39,6 +46,7 @@
 #'                  export_to_SPSS = TRUE)
 #'
 #' }
+#'
 #' @export
 #'
 get_MIdat <- function(object, m = 10, include = TRUE,
@@ -64,7 +72,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
   groups <- match(object$Mlist$groups, unique(object$Mlist$groups))
 
-  meth <- object$models[colSums(is.na(DF[, names(object$models)])) > 0]
+  meth <- object$models[colSums(is.na(DF[, names(object$models), drop = FALSE])) > 0]
 
   if (is.null(start)) {
     start <- start(object$MCMC)
@@ -175,7 +183,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
 
     # imputation with lmm ------------------------------------------------------
-    if (meth[i] %in% c('lmm', 'glmm_gamma', 'glmm_poisson')) {
+    if (meth[i] %in% c('lmm', 'glmm_lognorm', 'glmm_gamma', 'glmm_poisson')) {
       if (names(meth[i]) %in% colnames(object$data_list$Xl)) {
         pat <- paste0("Xl\\[[[:digit:]]*,",
                       match(names(meth)[i], colnames(object$data_list$Xl)),

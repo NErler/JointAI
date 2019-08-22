@@ -6,18 +6,20 @@
 \alias{predDF.formula}
 \title{Create a new dataframe for prediction}
 \usage{
-predDF(...)
+predDF(object, ...)
 
-\method{predDF}{JointAI}(object, var, ...)
+\method{predDF}{JointAI}(object, var, length = 100, ...)
 
-\method{predDF}{formula}(formula, dat, var, ...)
+\method{predDF}{formula}(formula, dat, var, length = 100, ...)
 }
 \arguments{
-\item{...}{optional, additional arguments (currently not used)}
-
 \item{object}{object inheriting from class 'JointAI'}
 
+\item{...}{optional, additional arguments (currently not used)}
+
 \item{var}{name of variable that should be varying}
+
+\item{length}{number of values used in the sequence when \code{var} is continuous}
 
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
 
@@ -30,7 +32,7 @@ continuous variables).
 }
 \examples{
 # fit a JointAI model
-mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 
 # generate a dataframe with varying "C2" and reference values for all other variables in the model
 newDF <- predDF(mod, var = "C2")

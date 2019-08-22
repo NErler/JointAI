@@ -8,18 +8,30 @@
 
 \item{no_model}{names of variables for which no model should be specified.
 Note that this is only possible for completely observed
-variables and may imply assumptions of independence between
-the excluded variable and incomplete variables.}
+variables and implies the assumptions of independence between
+the excluded variable and the incomplete variables.}
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
-\code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
-\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{survreg_imp}}
-and \code{\link{coxph_imp}}.}
+\code{\link[JointAI:model_imp]{*_imp}}.}
+
+\item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
 
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
 \item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
+
+\item{n.adapt}{the number of iterations for adaptation of the MCMC samplers
+(see also \code{\link[rjags]{adapt}})}
+
+\item{n.iter}{the number of iterations of the MCMC chain (after adaptation;
+see also \code{\link[rjags]{coda.samples}})}
+
+\item{n.chains}{the number of MCMC chains to be used}
+
+\item{quiet}{if \code{TRUE} then messages generated during compilation
+will be suppressed, as well as the progress bar during adaptation
+(see \code{\link[rjags]{jags.model}})}
 
 \item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
@@ -29,12 +41,12 @@ automatically chosen if unspecified}
 \item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. Note: this applies only to warnings
-given directly by \strong{JointAI}.}
+\code{TRUE}. (Note: this applies only to warnings
+given directly by \strong{JointAI}.)}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. Note: this applies only to messages
-given directly by \strong{JointAI}.}
+\code{TRUE}. (Note: this applies only to messages
+given directly by \strong{JointAI}.)}
 
 \item{xlab, ylab}{labels for the x- and y-axis}
 
@@ -49,7 +61,7 @@ This requires specification of the argument \code{idvar}.}
 
 \item{parallel}{logical; should the chains be sampled using parallel computation? Default is \code{FALSE}}
 
-\item{ncores}{number of cores to use for parallel computation; if left empty all except two cores will be used}
+\item{n.cores}{number of cores to use for parallel computation; if left empty all except two cores will be used}
 
 \item{seed}{optional seed value for reproducibility}
 

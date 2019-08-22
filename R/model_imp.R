@@ -8,7 +8,7 @@
 #' @param formula a two sided model formula (see \code{\link[stats]{formula}})
 #' @param fixed a two sided formula describing the fixed-effects part of the
 #'              model (see \code{\link[stats]{formula}})
-#' @param random only for \code{lme_imp}, \code{glme_imp} and \code{clmm_imp}:
+#' @param random only for multi-level models:
 #'               a one-sided formula of the form \code{~x1 + ... + xn | g},
 #'               where \code{x1 + ... + xn} specifies the model for the random
 #'               effects and \code{g} the grouping variable
@@ -20,52 +20,50 @@
 #'               a family function. (See \code{\link[stats]{family}} and the
 #'               `Details` section below.)
 #' @param monitor_params named vector specifying which parameters should be
-#'                       monitored
+#'                       monitored (see details)
 #' @param inits optional specification of initial values in the form of a list
 #'              or a function (see \code{\link[rjags]{jags.model}}).
 #'              If omitted, initial values will be generated automatically by JAGS.
 #'              It is an error to supply an initial value for an observed node.
 #' @param progress.bar character string specifying the type of progress bar.
-#'                     Possible values are "text", "gui", and "none".
-#'                     See \code{\link[rjags]{update}}.
-#' @inheritParams rjags::jags.model
-#' @inheritParams rjags::coda.samples
+#'                     Possible values are "text", "gui", and "none" (see
+#'                     \code{\link[rjags]{update}}). Note: when sampling is performed
+#'                     in parallel it is currently not possible to display a
+#'                     progress bar.
 #' @inheritParams sharedParams
 #' @param modelname optional; character string specifying the name of the model file
 #'                  (including the ending, either .R or .txt).
 #'                  If unspecified a random name will be generated.
-#' @param modeldir optional; directory containing model file or directory in which
-#'                 the model file will be written. If unspecified a
+#' @param modeldir optional; directory containing the model file or directory in which
+#'                 the model file should be written. If unspecified a
 #'                 temporary directory will be created.
 #' @param overwrite logical; whether an existing model file with the specified
 #'                  \code{<modeldir>/<modelname>} should be overwritten. If set to
 #'                  \code{FALSE} and a model already exists, that model will be used.
 #'                  If unspecified (\code{NULL}) and a file exists, the user is
-#'                  asked for input on how to proceed
+#'                  asked for input on how to proceed.
 #' @param keep_model logical; whether the created JAGS model should be saved
 #'                   or removed from the disk (\code{FALSE}; default) when the
 #'                   sampling has finished.
-#' @param auxvars optional vector of variable names that should be used as
+#' @param auxvars optional one-sided formula of variables that should be used as
 #'                predictors in the imputation procedure (and will be imputed
 #'                if necessary) but are not part of the analysis model
-#' @param models optional named vector specifying the order and types of the
-#'               models for incomplete covariates and longitudinal covariates.
+#' @param models optional named vector specifying the types of models for
+#'               (incomplete) covariates.
 #'               This arguments replaces the argument \code{meth} used in earlier versions.
 #'               If \code{NULL} (default) models will be determined
-#'             automatically based on the class of the respective columns of \code{data}
-#'             (see Details).
-#'             The default order is incomplete baseline covariates, complete
-#'             longitudinal covariates, incomplete longitudinal covariates,
-#'             and within each group variables are ordered according to the
-#'             proportion of missing values (increasing).
-#' @param refcats optional; a named list specifying which category should be
+#'             automatically based on the class of the respective columns of \code{data}.
+#' @param refcats optional; either one of \code{"first"}, \code{"last"}, \code{"largest"}
+#'                (which sets the category for all categorical variables)
+#'                or a named list specifying which category should be
 #'                used as reference category for each of the categorical variables.
-#'                Options are the category label, the category number,
+#'                Options are the category label, the category number, or one of
 #'                "first" (the first category), "last" (the last category)
 #'                or "largest" (chooses the category with the most observations).
 #'                Default is "first". (See also \code{\link{set_refcat}})
 #' @param trunc optional named list specifying the limits of truncation for the
-#'              distribution of the named incomplete variables
+#'              distribution of the named incomplete variables (see the vignette
+#'              \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support}{ModelSpecification})
 #' @param hyperpars list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
 #'                  only needs to be supplied if hyperparameters other than the
 #'                  default should be used
@@ -74,13 +72,13 @@
 #'                   convergence of the MCMC sampling. Default is that all
 #'                   continuous variables that are not transformed by a function
 #'                   (e.g. \code{log(), ns()}) will be scaled. Variables
-#'                   for which \code{"lognorm"} is set as imputation model are
+#'                   for which a log-normal model is used are
 #'                   only scaled with regards to the standard deviation, but not
-#'                   centered. Variables to be imputed with \code{"gamma"}, \code{"beta"}
-#'                   or \code{"glmm_gamma"} are not scaled.
+#'                   centered. Variables modeled with a Gamma or beta distribution
+#'                   are not scaled.
 #'                   If set to \code{FALSE} no scaling will be done.
 #' @param scale_pars optional matrix of parameters used for centering and
-#'                   scaling continuous covariates. If not specified, this will
+#'                   scaling of continuous covariates. If not specified, this will
 #'                   be calculated automatically. If \code{FALSE}, no scaling
 #'                   will be done.
 #' @param keep_scaled_mcmc should the "original" MCMC sample
@@ -93,14 +91,18 @@
 #'
 #'
 #' @section Details:
-#' See also the vignette: \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification}
+#' See also the vignettes
+#' \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification},
+#' \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{MCMC Settings} and
+#' \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}.
+#'
 #' \subsection{Implemented distribution families and link functions for \code{glm_imp()}
 #' and \code{glme_imp()}}{
 #' \tabular{ll}{
 # \emph{family} \tab \emph{link}\cr
 #' \code{gaussian} \tab with links: \code{identity}, \code{log}\cr
 #' \code{binomial} \tab with links: \code{logit}, \code{probit}, \code{log}, \code{cloglog}\cr
-#' \code{Gamma}    \tab with links: \code{identity}, \code{log}\cr
+#' \code{Gamma}    \tab with links: \code{inverse}, \code{identity}, \code{log}\cr
 #' \code{poisson}  \tab with links: \code{log}, \code{identity}
 #' }
 #' }
@@ -111,20 +113,21 @@
 #' Implemented imputation models that can be chosen in the argument \code{models} are:
 #' \tabular{ll}{
 #' \code{norm} \tab linear model\cr
-#' \code{lognorm} \tab log-linear model for skewed continuous data\cr
+#' \code{lognorm} \tab log-normal model for skewed continuous data\cr
 #' \code{gamma} \tab gamma model (with log-link) for skewed continuous data\cr
 #' \code{beta} \tab beta model (with logit-link) for skewed continuous data in (0, 1)\cr
 #' \code{logit} \tab logistic model for binary data\cr
 #' \code{multilogit} \tab multinomial logit model for unordered categorical variables\cr
 #' \code{cumlogit} \tab cumulative logit model for ordered categorical variables\cr
 #' \code{lmm} \tab linear mixed model for continuous longitudinal covariates\cr
+#' \code{glmm_lognorm} \tab log-normal mixed model for skewed longitudinal covariates\cr
 #' \code{glmm_gamma} \tab Gamma mixed model for skewed longitudinal covariates\cr
 #' \code{glmm_logit} \tab logit mixed model for binary longitudinal covariates\cr
 #' \code{glmm_poisson} \tab Poisson mixed model for longitudinal count covariates\cr
 #' \code{clmm} \tab cumulative logit mixed model for longitudinal ordered factors
 #' }
 #' When models are specified for only a subset of the incomplete or longitudinal
-#' covariates involved in a model, the default choices are used for all unspecified
+#' covariates involved in a model, the default choices are used for the unspecified
 #' variables.
 #' }
 #'
@@ -139,7 +142,7 @@
 #' If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)} will be used.
 #' \tabular{ll}{
 #' \strong{name/key word} \tab \strong{what is monitored}\cr
-#' \code{analysis_main} \tab \code{betas} and \code{sigma_y} (and \code{D} in mixed models)\cr
+#' \code{analysis_main} \tab \code{betas} and \code{sigma_y} (and \code{D} in multi-level models)\cr
 #' \code{analysis_random} \tab \code{ranef}, \code{D}, \code{invD}, \code{RinvD}\cr
 #' \code{imp_pars} \tab \code{alphas}, \code{tau_imp}, \code{gamma_imp}, \code{delta_imp}\cr
 #' \code{imps} \tab imputed values\cr
@@ -150,14 +153,13 @@
 #' \code{D} \tab covariance matrix of the random effects\cr
 #' \code{invD} \tab inverse of \code{D}\cr
 #' \code{RinvD} \tab matrix in the prior for \code{invD}\cr
-#' \code{alphas} \tab regression coefficients in the imputation models\cr
-#' \code{tau_imp} \tab precision parameters of the residuals from imputation models\cr
-#' \code{gamma_imp} \tab intercepts in ordinal imputation models\cr
+#' \code{alphas} \tab regression coefficients in the covariate models\cr
+#' \code{tau_imp} \tab precision parameters of the residuals from covariate models\cr
+#' \code{gamma_imp} \tab intercepts in ordinal covariate models\cr
 #' \code{delta_imp} \tab increments of ordinal intercepts\cr
 #' \code{other} \tab additional parameters
 #' }
-#' For example:
-#'
+#' \strong{For example:}\cr
 #' \code{monitor_params = c(analysis_main = TRUE, tau_y = TRUE, sigma_y = FALSE)}
 #' would monitor the regression parameters \code{betas} and the
 #' residual precision \code{tau_y} instead of the residual standard
@@ -176,17 +178,18 @@
 #' The default imputation methods are chosen based on the \code{class} of each
 #' of the incomplete variables, distinguishing between \code{numeric},
 #' \code{factor} with two levels, unordered \code{factor} with >2 levels and
-#' ordered \code{factor} with >2 levels.
+#' ordered \code{factor} with >2 levels.\cr
 #'
-#' When a continuous incomplete variable has only two different values it is
-#' assumed to be binary and its coding and default imputation model will be
-#' changed accordingly. This behavior can be overwritten when the imputation
-#' method for that variable is specified directly by the user.
+#' When a continuous variable has only two different values it is
+#' assumed to be binary and its coding and default (imputation) model will be
+#' changed accordingly. This behavior can be overwritten specifying a model type
+#' via the argument \code{models}.\cr
 #'
-#' Variables of type `logical` are automatically be converted to unordered factors.
+#' Variables of type \code{logical} are automatically converted to unordered factors.\cr
 #'
 #' Contrary to base R behavior, dummy coding (i.e., \code{contr.treatment} contrasts)
 #' are used for ordered factors in any linear predictor.
+#' It is not possible to overwrite this behavior using the base R contrasts specification.
 #' However, since the order of levels in an ordered factor contains information relevant
 #' to the imputation of missing values, it is important that incomplete ordinal
 #' variables are coded as such.
@@ -194,19 +197,19 @@
 #'
 #' \subsection{Non-linear effects and transformation of variables:}{
 #' \strong{JointAI} handles non-linear effects, transformation of covariates and
-#' interactions the following way:
+#' interactions the following way:\cr
 #' When, for instance, the model formula contains the function \code{log(x)} and
 #' \code{x} has missing values, \code{x} will be imputed and used in the linear
-#' predictor of models for other incomplete variables, i.e., it is assumed that
+#' predictor of models for covariates, i.e., it is assumed that
 #' the other variables have a linear association with \code{x} but not with
 #' \code{log(x)}. The \code{log()} of the observed and imputed values of
-#' \code{x} is calculated and used in the linear predictor of the analysis model.
+#' \code{x} is calculated and used in the linear predictor of the analysis model.\cr
 #'
-#' If, instead of using \code{log(x)} in the model formula a pre-calculated
-#' variable \code{logx} would be used instead, this variable is imputed directly
-#' and used in the linear predictors of all models, implying that other incomplete
+#' If, instead of using \code{log(x)} in the model formula, a pre-calculated
+#' variable \code{logx} is used instead, this variable is imputed directly
+#' and used in the linear predictors of all models, implying that
 #' variables that have \code{logx} in their linear predictors have a linear
-#' association with \code{logx} but not with \code{x}.
+#' association with \code{logx} but not with \code{x}.\cr
 #'
 #' When different transformations of the same incomplete variable are used in
 #' one model it is strongly discouraged to calculate these transformations beforehand
@@ -215,13 +218,21 @@
 #' \code{x2} = \code{x^2}), they are treated as separate variables and imputed
 #' with separate models. Imputed values of \code{x2} are thus not equal to the
 #' square of imputed values of \code{x}.
-#' Instead, \code{x + I(x^2)} should be used in the model formula. Then, only
+#' Instead, \code{x} and \code{I(x^2)} should be used in the model formula. Then only
 #' \code{x} is imputed and used in the linear predictor of models for other
 #' incomplete variables, and \code{x^2} is calculated from the imputed values
 #' of \code{x} internally.
 #'
 #' The same applies to interactions involving incomplete variables.
 #' }
+#'
+#' \subsection{Sequence of covariate models:}{
+#'             The default order is incomplete baseline covariates, complete
+#'             longitudinal covariates, incomplete longitudinal covariates,
+#'             and within each group variables are ordered according to the
+#'             proportion of missing values (increasing).
+#' }
+#'
 #' \subsection{Not (yet) possible:}{
 #' \itemize{
 #' \item multiple nesting levels of random effects (nested or crossed)
@@ -238,10 +249,10 @@
 #' @seealso \code{\link{set_refcat}}, \code{\link{get_models}},
 #'          \code{\link{traceplot}}, \code{\link{densplot}},
 #'          \code{\link{summary.JointAI}}, \code{\link{MC_error}},
-#'          \code{\link{GR_crit}}, \code{\link[rjags]{jags.model}},
-#'          \code{\link[rjags]{coda.samples}}, \code{\link{predict.JointAI}},
+#'          \code{\link{GR_crit}},
+#'          \code{\link{predict.JointAI}}, \code{\link{add_samples}},
 #'          \code{\link{JointAIObject}}, \code{\link{add_samples}},
-#'          \code{\link{parameters}}, \code{\link{list_impmodels}}
+#'          \code{\link{parameters}}, \code{\link{list_models}}
 #'
 #' Vignettes
 #' \itemize{
@@ -254,17 +265,17 @@
 #'
 #' @examples
 #' # Example 1: Linear regression with incomplete covariates
-#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' mod1 <- lm_imp(y ~ C1 + C2 + M1 + B1, data = wideDF, n.iter = 100)
 #'
 #'
 #' # Example 2: Logistic regression with incomplete covariats
-#' mod2 <- glm_imp(B1 ~ C1 + C2 + M2, data = wideDF,
+#' mod2 <- glm_imp(B1 ~ C1 + C2 + M1, data = wideDF,
 #'                 family = binomial(link = "logit"), n.iter = 100)
 #'
 #'
 #' # Example 3: Linear mixed model with incomplete covariates
 #' mod3 <- lme_imp(y ~ C1 + B2 + c1 + time, random = ~ time|id,
-#'                 data = longDF, n.iter = 500)
+#'                 data = longDF, n.iter = 300)
 #'
 #'
 #' @name model_imp
@@ -275,7 +286,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                       models = NULL, no_model = NULL, trunc = NULL,
                       ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                      parallel = FALSE, ncores = NULL,
+                      parallel = FALSE, n.cores = NULL,
                       scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                       modelname = NULL, modeldir = NULL,
                       keep_model = FALSE, overwrite = NULL,
@@ -288,9 +299,6 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   # Checks & warnings -------------------------------------------------------
-  if (mess)
-    message("This is new software. Please report any bugs to the package maintainer.")
-
   if (missing(fixed)) {
     stop("A fixed effects structure needs to be specified.")
   }
@@ -328,10 +336,8 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   allvars <- unique(c(all.vars(fixed),
                       all.vars(random),
-                      if (!is.null(auxvars))
-                        all.vars(as.formula(paste('~',
-                                                  paste(auxvars, collapse = " + "))))
-  ))
+                      all.vars(auxvars))
+  )
 
   if (any(!allvars %in% names(data))) {
     stop(gettextf("Variable(s) %s were not found in the data." ,
@@ -343,10 +349,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   # * check classes of covariates ----------------------------------------------
   covars <- unique(c(all.vars(fixed),
                      all.vars(remove_grouping(random)),
-                     if (!is.null(auxvars))
-                       all.vars(as.formula(paste('~',
-                                                 paste(auxvars, collapse = " + "))))
-  ))
+                     all.vars(auxvars)))
   classes <- unique(unlist(sapply(data[covars], class)))
 
   if (any(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))) {
@@ -382,37 +385,46 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   # * convert logicals to factors ----------------------------------------------
-  if (any(unlist(sapply(data[allvars], class)) == 'logical')) {
-    for (x in allvars) {
-      if ('logical' %in% class(data[, x])) {
-        data[, x] <- factor(data[, x])
-        if (mess)
-          message(gettextf('%s was converted to a factor.', dQuote(x)))
-      }
+  # if (any(unlist(sapply(data[allvars], class)) == 'logical')) {
+  #   for (x in allvars) {
+  #     if ('logical' %in% class(data[, x])) {
+  #       data[, x] <- factor(data[, x])
+  #       if (mess)
+  #         message(gettextf('%s was converted to a factor.', dQuote(x)))
+  #     }
+  for (x in allvars) {
+    if ('logical' %in% class(data[, x])) {
+      data[, x] <- factor(data[, x])
+      if (mess)
+        message(gettextf('%s was converted to a factor.', dQuote(x)))
+    }
+    if (is.factor(data[, x])) {
+      levels(data[, x]) <- clean_names(levels(data[, x]))
     }
   }
 
 
 
   # imputation method ----------------------------------------------------------
-  models_default <- get_models(fixed = fixed, random = random, data = data,
-                               auxvars = auxvars, no_model = no_model)$models
+  models <- get_models(fixed = fixed, random = random, data = data,
+                       auxvars = auxvars, no_model = no_model, models)$models
 
-  if (is.null(models)) {
-    models <- models_default
-    models_user <- NULL
-  } else {
-    models_user <- models
-    if (!setequal(names(models_user), names(models_default))) {
-      models <- models_default
-      models[names(models_user)] <- models_user
-    }
-  }
+  # if (is.null(models)) {
+  #   models <- models_default
+  #   models_user <- NULL
+  # } else {
+  #   models_user <- models
+  #   if (!setequal(names(models_user), names(models_default))) {
+  #     models <- models_default
+  #     models[names(models_user)] <- models_user
+  #
+  #   }
+  # }
 
   # warning if JointAI set imputation method for a continuous variable with only
   # two different values to "logit"
   for (k in names(models)[models == 'logit']) {
-    if (is.numeric(data[, k]) & !k %in% names(models_user) & warn) {
+    if (is.numeric(data[, k]) & !k %in% names(models) & warn) {
       data[, k] <- factor(data[, k])
       warning(
         gettextf("\nThe variable %s is coded as continuous but has only two different values. I will consider it binary.\nTo overwrite this behavior, specify a different imputation modelsod for %s using the argument %s.",
@@ -506,9 +518,9 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   }
 
   if (!file.exists(modelfile) || (file.exists(modelfile) & overwrite == TRUE)) {
-    Ntot <- ifelse(analysis_type == 'coxph',
-           sum(data_list$RiskSet != 0),
-           length(data_list[[names(Mlist$y)]]))
+    Ntot <- #ifelse(analysis_type == 'coxph',
+           #sum(data_list$RiskSet != 0),
+           length(data_list[[names(Mlist$y)]])#)
 
     write_model(analysis_type = analysis_type, family = family,
                 link = link, models = models,
@@ -574,11 +586,11 @@ if (!is.null(inits)) {
       stop("Parallel sampling requires the 'doParallel' package to be installed.")
 
     if (any(n.adapt > 0, n.iter > 0)) {
-      if (is.null(ncores)) ncores <- min(parallel::detectCores() - 2, n.chains)
+      if (is.null(n.cores)) n.cores <- min(parallel::detectCores() - 2, n.chains)
 
-      doParallel::registerDoParallel(cores = ncores)
+      doParallel::registerDoParallel(cores = n.cores)
       if (mess)
-        message(paste0("Parallel sampling on ", ncores, " cores started (",
+        message(paste0("Parallel sampling on ", n.cores, " cores started (",
                        Sys.time(), ")."))
 
       res <- foreach(i = seq_along(inits)) %dopar% {run_jags(inits[[i]], data_list = data_list,
@@ -642,7 +654,7 @@ if (!is.null(inits)) {
                         thin = thin,
                         inits = inits,
                         parallel = parallel,
-                        ncores = if (parallel) ncores)
+                        n.cores = if (parallel) n.cores)
 
   attr(analysis_type, "family") <- family
   attr(analysis_type, "link") <- link
@@ -650,7 +662,7 @@ if (!is.null(inits)) {
   # set contrasts back to what they were
   options(contrasts = opt)
 
-  return(structure(
+  object <- structure(
     list(analysis_type = analysis_type,
          data = data, models = models, fixed = fixed, random = random,
          Mlist = Mlist,
@@ -668,8 +680,23 @@ if (!is.null(inits)) {
          sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
          MCMC = if (n.iter > 0 & !is.null(mcmc)) as.mcmc.list(MCMC),
          time = t1 - t0
-         ), class = "JointAI")
-  )
+    ), class = "JointAI")
+
+  object$fitted.values <- try(predict(object, type = 'response')$fit, silent = TRUE)
+  object$residuals <- try(residuals(object, type = 'working'),
+                          silent = TRUE)
+
+  if (!inherits(object$residuals, 'try-error')) {
+    if (!object$analysis_type %in% c('clm', 'clmm'))
+      names(object$fitted.values) <- names(object$residuals) <- rownames(object$Mlist$y)
+  }
+
+  if (inherits(object$fitted.values, 'try-error'))
+    object$fitted.values <- NULL
+  if (inherits(object$residuals, 'try-error'))
+    object$residuals <- NULL
+
+  return(object)
 }
 
 
@@ -680,7 +707,7 @@ lm_imp <- function(formula, data,
                    monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                    models = NULL, no_model = NULL, trunc = NULL,
                    ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                   parallel = FALSE, ncores = NULL,
+                   parallel = FALSE, n.cores = NULL,
                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                    modelname = NULL, modeldir = NULL,
                    keep_model = FALSE, overwrite = NULL,
@@ -702,9 +729,9 @@ lm_imp <- function(formula, data,
   arglist$link <- "identity"
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -724,7 +751,7 @@ glm_imp <- function(formula, family, data,
                     monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                     models = NULL, no_model = NULL, trunc = NULL,
                     ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                    parallel = FALSE, ncores = NULL,
+                    parallel = FALSE, n.cores = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     modelname = NULL, modeldir = NULL,
                     keep_model = FALSE, overwrite = NULL,
@@ -765,16 +792,16 @@ glm_imp <- function(formula, family, data,
   arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
 
   if (!arglist$link %in% c("identity", "log", "logit", "probit", "log",
-                           "cloglog"))
+                           "cloglog", "inverse"))
     stop(gettextf("%s is not an allowed link function.",
                   dQuote(arglist$link)))
 
@@ -792,7 +819,7 @@ clm_imp <- function(fixed, data,
                     monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                     models = NULL, no_model = NULL, trunc = NULL,
                     ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                    parallel = FALSE, ncores = NULL,
+                    parallel = FALSE, n.cores = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     modelname = NULL, modeldir = NULL,
                     keep_model = FALSE, overwrite = NULL,
@@ -812,9 +839,9 @@ clm_imp <- function(fixed, data,
 
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -834,7 +861,7 @@ lme_imp <- function(fixed, data, random,
                     monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                     models = NULL, no_model = NULL, trunc = NULL,
                     ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                    parallel = FALSE, ncores = NULL,
+                    parallel = FALSE, n.cores = NULL,
                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                     modelname = NULL, modeldir = NULL,
                     keep_model = FALSE, overwrite = NULL,
@@ -856,9 +883,11 @@ lme_imp <- function(fixed, data, random,
 
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) {
+  #     eval(x)
+  #     } else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -879,7 +908,7 @@ glme_imp <- function(fixed, data, random, family,
                      monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                      models = NULL, no_model = NULL, trunc = NULL,
                      ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                     parallel = FALSE, ncores = NULL,
+                     parallel = FALSE, n.cores = NULL,
                      scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                      modelname = NULL, modeldir = NULL,
                      keep_model = FALSE, overwrite = NULL,
@@ -914,16 +943,16 @@ glme_imp <- function(fixed, data, random, family,
   }
 
   if (!arglist$link %in% c("identity", "log", "logit", "probit", "log",
-                           "cloglog"))
+                           "cloglog", "inverse"))
     stop(gettextf("%s is not an allowed link function.",
                   dQuote(arglist$link)))
 
 
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -943,7 +972,7 @@ clmm_imp <- function(fixed, data, random,
                      monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                      models = NULL, no_model = NULL, trunc = NULL,
                      ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                     parallel = FALSE, ncores = NULL,
+                     parallel = FALSE, n.cores = NULL,
                      scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                      modelname = NULL, modeldir = NULL,
                      keep_model = FALSE, overwrite = NULL,
@@ -965,9 +994,9 @@ clmm_imp <- function(fixed, data, random,
 
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -988,7 +1017,7 @@ survreg_imp <- function(formula, data,
                         monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                         models = NULL, no_model = NULL, trunc = NULL,
                         ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                        parallel = FALSE, ncores = NULL,
+                        parallel = FALSE, n.cores = NULL,
                         scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                         modelname = NULL, modeldir = NULL,
                         keep_model = FALSE, overwrite = NULL,
@@ -1011,9 +1040,9 @@ survreg_imp <- function(formula, data,
   arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -1033,7 +1062,7 @@ coxph_imp <- function(formula, data,
                       monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                       models = NULL, no_model = NULL, trunc = NULL,
                       ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                      parallel = FALSE, ncores = NULL,
+                      parallel = FALSE, n.cores = NULL,
                       scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
                       modelname = NULL, modeldir = NULL,
                       keep_model = FALSE, overwrite = NULL,
@@ -1056,9 +1085,9 @@ coxph_imp <- function(formula, data,
   arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -1067,3 +1096,4 @@ coxph_imp <- function(formula, data,
   res$call <- match.call()
   return(res)
 }
+

@@ -12,9 +12,10 @@ traceplot(object, ...)
   thin = NULL, ...)
 
 \method{traceplot}{JointAI}(object, start = NULL, end = NULL,
-  thin = NULL, subset = c(analysis_main = TRUE), nrow = NULL,
-  ncol = NULL, keep_aux = FALSE, use_ggplot = FALSE, warn = TRUE,
-  mess = TRUE, ...)
+  thin = NULL, subset = c(analysis_main = TRUE),
+  exclude_chains = NULL, nrow = NULL, ncol = NULL,
+  keep_aux = FALSE, use_ggplot = FALSE, warn = TRUE, mess = TRUE,
+  ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -60,9 +61,9 @@ traceplot(object, ...)
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
-\code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
-\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{survreg_imp}}
-and \code{\link{coxph_imp}}.}
+\code{\link[JointAI:model_imp]{*_imp}}.}
+
+\item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
 
 \item{nrow}{optional number of rows and columns in the plot layout;
 automatically chosen if unspecified}
@@ -75,19 +76,19 @@ automatically chosen if unspecified}
 \item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. Note: this applies only to warnings
-given directly by \strong{JointAI}.}
+\code{TRUE}. (Note: this applies only to warnings
+given directly by \strong{JointAI}.)}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. Note: this applies only to messages
-given directly by \strong{JointAI}.}
+\code{TRUE}. (Note: this applies only to messages
+given directly by \strong{JointAI}.)}
 }
 \description{
 Creates a set of traceplots from the MCMC sample of an object of class "JointAI".
 }
 \examples{
 # fit a JointAI model
-mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+mod <- lm_imp(y ~ C1 + C2 + M1, data = wideDF, n.iter = 100)
 
 
 # Example 1: simple traceplot

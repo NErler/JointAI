@@ -2,9 +2,9 @@
 % Please edit documentation in R/get_refs.R
 \name{set_refcat}
 \alias{set_refcat}
-\title{Set the reference categories for all categorical covariates in the model}
+\title{Specify reference categories for all categorical covariates in the model}
 \usage{
-set_refcat(data, formula, covars, auxvars)
+set_refcat(data, formula, covars, auxvars = NULL)
 }
 \arguments{
 \item{data}{a \code{data.frame}}
@@ -13,16 +13,15 @@ set_refcat(data, formula, covars, auxvars)
 
 \item{covars}{optional; vector containing the names of relevant columns of \code{data}}
 
-\item{auxvars}{optional; vector containing the names of relevant columns of
+\item{auxvars}{optional; formula containing the names of relevant columns of
 \code{data} that should be considered additionally to the columns
 occurring in the \code{formula}}
 }
 \description{
-The function asks questions and, depending on the answers given by the user,
-returns the input for the argument \code{refcats} in the functions
-\code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
-\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{clmm_imp}},
-\code{\link{survreg_imp}} and \code{\link{coxph_imp}}.
+The function is a helper function that asks questions and, depending on the
+answers given by the user,
+returns the input for the argument \code{refcats} in the main analysis functions
+\code{\link[JointAI:model_imp]{*_imp}}.
 }
 \examples{
 \dontrun{

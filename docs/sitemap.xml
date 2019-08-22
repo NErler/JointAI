@@ -52,6 +52,9 @@
     <loc>https://nerler.github.io/JointAI//reference/parameters.html</loc>
   </url>
   <url>
+    <loc>https://nerler.github.io/JointAI//reference/plot.JointAI.html</loc>
+  </url>
+  <url>
     <loc>https://nerler.github.io/JointAI//reference/plot_all.html</loc>
   </url>
   <url>
@@ -62,6 +65,9 @@
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/predict.JointAI.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI//reference/residuals.JointAI.html</loc>
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/set_refcat.html</loc>

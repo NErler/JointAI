@@ -22,7 +22,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   if (analysis_type %in% c('survreg', 'coxph')) {
     if (length(outnam) == 2) {
       y <- data[, outnam[1], drop = FALSE]
-      cens <- sapply(data[, outnam[2], drop = FALSE],
+      event <- sapply(data[, outnam[2], drop = FALSE],
                      function(x) {
                        if (is.factor(x)) {
                          as.numeric(x) - 1
@@ -35,7 +35,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     }
   } else {
     y <- data[, outnam, drop = FALSE]
-    cens <- NULL
+    event <- NULL
   }
 
   # * preliminary design matrix ------------------------------------------------
@@ -43,22 +43,24 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
   # variables that do not have a main effect in fixed are added to the auxiliary variables
   trafosX <- extract_fcts(fixed, data, random = random, complete = TRUE)
-  add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), auxvars))]
+  add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), all.vars(auxvars)))]
 
   if (length(add_to_aux) > 0 & !is.null(models))
-    auxvars <- c(auxvars, unique(add_to_aux))
+    auxvars <- as.formula(paste(ifelse(is.null(auxvars), "~ ",
+                                       paste0(deparse(auxvars, width.cutoff = 500), " + ")),
+                          paste0(unique(add_to_aux), collapse = " + ")))
 
   # fixed effects design matrices
   fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed, width.cutoff = 500),
                                    fixed = TRUE),
-                               auxvars), collapse = " + "))
+                               auxvars[[2]]), collapse = " + "))
   fcts_all <- extract_fcts(fixed2, data, random = random, complete = TRUE)
 
 
   # Give a message about coding of ordinal factors if there are any in the predictor
   if (any(unlist(sapply(data[, all.vars(fixed2[c(1,3)])],
                         class)) == 'ordered') & mess)
-    message("Note: ordered factors are included as dummy variables into the linear predictor (not as orthogonal polynomials).")
+    message("Note: Ordered factors are included as dummy variables into the linear predictor (not as orthogonal polynomials).")
 
 
 
@@ -161,6 +163,10 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     stop("Splines are currently not implemented for incomplete variables.",
          call. = FALSE)
 
+  # if (any(fcts_mis$type %in% c('ns')))
+  #   stop(paste0("Natural cubic splines are not implemented for incomplete variables. ",
+  #               "Please use B-splines (using ", dQuote("bs()"), ") instead."),
+  #        call. = FALSE)
 
   if (!is.null(fcts_mis)) {
     fmla_trafo <- as.formula(
@@ -199,10 +205,11 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   # - variabe categorical with >2 categories?
   catvars <- sapply(colnames(data), function(i) i %in% names(refs) && length(levels(refs[[i]])) > 2)
 
+  misvar_long <- if (any(infmla & !sapply(data, check_tvar, groups) & misvar)) TRUE else misvar
 
   # select names of relevant variables
   cat_vars_base <- names(data)[infmla & misvar & catvars & !sapply(data, check_tvar, groups)]
-  cat_vars_long <- names(data)[infmla & catvars & sapply(data, check_tvar, groups)]
+  cat_vars_long <- names(data)[infmla & misvar_long & catvars & sapply(data, check_tvar, groups)]
 
   # match them to the position in Xc
   cat_vars_base <- sapply(cat_vars_base, match_positions,
@@ -232,7 +239,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     scale_vars <- find_continuous_main(fixed2, data)
 
     compl_fcts_vars <- fcts_all$X_var[fcts_all$type != "identity" &
-                                     colSums(is.na(data[, fcts_all$var, drop = FALSE])) == 0]
+                                        colSums(is.na(data[, fcts_all$var, drop = FALSE])) == 0]
 
     excl <- grep("[[:alpha:]]*\\(", scale_vars, value = TRUE)
     excl <- c(excl, unique(fcts_mis$X_var))
@@ -266,7 +273,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   }, cols = cols_main,
   mat = list(Xc, Xl, Xic, Xil, Z))
 
-  return(list(y = y, cens = cens,
+  return(list(y = y, event = event,
               Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat, Xlcat = Xlcat,
               Xtrafo = Xtrafo, Xltrafo = Xltrafo,
               Z = Z, cols_main = cols_main, names_main = names_main,

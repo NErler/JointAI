@@ -17,7 +17,7 @@ lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
   models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
   ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  ncores = NULL, scale_vars = NULL, scale_pars = NULL,
+  n.cores = NULL, scale_vars = NULL, scale_pars = NULL,
   hyperpars = NULL, modelname = NULL, modeldir = NULL,
   keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
@@ -27,7 +27,7 @@ glm_imp(formula, family, data, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
   refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
   ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  parallel = FALSE, ncores = NULL, scale_vars = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
   scale_pars = NULL, hyperpars = NULL, modelname = NULL,
   modeldir = NULL, keep_model = FALSE, overwrite = NULL,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
@@ -37,7 +37,7 @@ clm_imp(fixed, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
   models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
   ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  ncores = NULL, scale_vars = NULL, scale_pars = NULL,
+  n.cores = NULL, scale_vars = NULL, scale_pars = NULL,
   hyperpars = NULL, modelname = NULL, modeldir = NULL,
   keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
@@ -47,7 +47,7 @@ lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
   models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
   ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  ncores = NULL, scale_vars = NULL, scale_pars = NULL,
+  n.cores = NULL, scale_vars = NULL, scale_pars = NULL,
   hyperpars = NULL, modelname = NULL, modeldir = NULL,
   keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
@@ -57,7 +57,7 @@ glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
   refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
   ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  parallel = FALSE, ncores = NULL, scale_vars = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
   scale_pars = NULL, hyperpars = NULL, modelname = NULL,
   modeldir = NULL, keep_model = FALSE, overwrite = NULL,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
@@ -67,7 +67,7 @@ clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
   refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
   ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  parallel = FALSE, ncores = NULL, scale_vars = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
   scale_pars = NULL, hyperpars = NULL, modelname = NULL,
   modeldir = NULL, keep_model = FALSE, overwrite = NULL,
   quiet = TRUE, progress.bar = "text", warn = TRUE, mess = TRUE,
@@ -77,7 +77,7 @@ survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
   models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
   ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  ncores = NULL, scale_vars = NULL, scale_pars = NULL,
+  n.cores = NULL, scale_vars = NULL, scale_pars = NULL,
   hyperpars = NULL, modelname = NULL, modeldir = NULL,
   keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
@@ -87,7 +87,7 @@ coxph_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
   models = NULL, no_model = NULL, trunc = NULL, ridge = FALSE,
   ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  ncores = NULL, scale_vars = NULL, scale_pars = NULL,
+  n.cores = NULL, scale_vars = NULL, scale_pars = NULL,
   hyperpars = NULL, modelname = NULL, modeldir = NULL,
   keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
@@ -98,48 +98,46 @@ coxph_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
 
 \item{data}{a \code{data.frame}}
 
-\item{n.chains}{the number of parallel chains for the model}
+\item{n.chains}{the number of MCMC chains to be used}
 
-\item{n.adapt}{the number of iterations for adaptation. See 
-    \code{\link{adapt}} for details. If \code{n.adapt = 0} then no 
-    adaptation takes place.}
+\item{n.adapt}{the number of iterations for adaptation of the MCMC samplers
+(see also \code{\link[rjags]{adapt}})}
 
-\item{n.iter}{number of iterations to monitor}
+\item{n.iter}{the number of iterations of the MCMC chain (after adaptation;
+see also \code{\link[rjags]{coda.samples}})}
 
-\item{thin}{thinning interval for monitors}
+\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
 \item{monitor_params}{named vector specifying which parameters should be
-monitored}
+monitored (see details)}
 
-\item{auxvars}{optional vector of variable names that should be used as
+\item{auxvars}{optional one-sided formula of variables that should be used as
 predictors in the imputation procedure (and will be imputed
 if necessary) but are not part of the analysis model}
 
-\item{refcats}{optional; a named list specifying which category should be
+\item{refcats}{optional; either one of \code{"first"}, \code{"last"}, \code{"largest"}
+(which sets the category for all categorical variables)
+or a named list specifying which category should be
 used as reference category for each of the categorical variables.
-Options are the category label, the category number,
+Options are the category label, the category number, or one of
 "first" (the first category), "last" (the last category)
 or "largest" (chooses the category with the most observations).
 Default is "first". (See also \code{\link{set_refcat}})}
 
-\item{models}{optional named vector specifying the order and types of the
-  models for incomplete covariates and longitudinal covariates.
+\item{models}{optional named vector specifying the types of models for
+  (incomplete) covariates.
   This arguments replaces the argument \code{meth} used in earlier versions.
   If \code{NULL} (default) models will be determined
-automatically based on the class of the respective columns of \code{data}
-(see Details).
-The default order is incomplete baseline covariates, complete
-longitudinal covariates, incomplete longitudinal covariates,
-and within each group variables are ordered according to the
-proportion of missing values (increasing).}
+automatically based on the class of the respective columns of \code{data}.}
 
 \item{no_model}{names of variables for which no model should be specified.
 Note that this is only possible for completely observed
-variables and may imply assumptions of independence between
-the excluded variable and incomplete variables.}
+variables and implies the assumptions of independence between
+the excluded variable and the incomplete variables.}
 
 \item{trunc}{optional named list specifying the limits of truncation for the
-distribution of the named incomplete variables}
+distribution of the named incomplete variables (see the vignette
+\href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support}{ModelSpecification})}
 
 \item{ridge}{logical; should the parameters of the main model be penalized using ridge regression? Default is \code{FALSE}}
 
@@ -154,21 +152,21 @@ It is an error to supply an initial value for an observed node.}
 
 \item{parallel}{logical; should the chains be sampled using parallel computation? Default is \code{FALSE}}
 
-\item{ncores}{number of cores to use for parallel computation; if left empty all except two cores will be used}
+\item{n.cores}{number of cores to use for parallel computation; if left empty all except two cores will be used}
 
 \item{scale_vars}{optional; named vector of (continuous) variables that will
 be scaled (such that mean = 0 and sd = 1) to improve
 convergence of the MCMC sampling. Default is that all
 continuous variables that are not transformed by a function
 (e.g. \code{log(), ns()}) will be scaled. Variables
-for which \code{"lognorm"} is set as imputation model are
+for which a log-normal model is used are
 only scaled with regards to the standard deviation, but not
-centered. Variables to be imputed with \code{"gamma"}, \code{"beta"}
-or \code{"glmm_gamma"} are not scaled.
+centered. Variables modeled with a Gamma or beta distribution
+are not scaled.
 If set to \code{FALSE} no scaling will be done.}
 
 \item{scale_pars}{optional matrix of parameters used for centering and
-scaling continuous covariates. If not specified, this will
+scaling of continuous covariates. If not specified, this will
 be calculated automatically. If \code{FALSE}, no scaling
 will be done.}
 
@@ -180,8 +178,8 @@ default should be used}
 (including the ending, either .R or .txt).
 If unspecified a random name will be generated.}
 
-\item{modeldir}{optional; directory containing model file or directory in which
-the model file will be written. If unspecified a
+\item{modeldir}{optional; directory containing the model file or directory in which
+the model file should be written. If unspecified a
 temporary directory will be created.}
 
 \item{keep_model}{logical; whether the created JAGS model should be saved
@@ -192,22 +190,25 @@ sampling has finished.}
 \code{<modeldir>/<modelname>} should be overwritten. If set to
 \code{FALSE} and a model already exists, that model will be used.
 If unspecified (\code{NULL}) and a file exists, the user is
-asked for input on how to proceed}
+asked for input on how to proceed.}
 
 \item{quiet}{if \code{TRUE} then messages generated during compilation
-    will be suppressed, as well as the progress bar during adaptation.}
+will be suppressed, as well as the progress bar during adaptation
+(see \code{\link[rjags]{jags.model}})}
 
 \item{progress.bar}{character string specifying the type of progress bar.
-Possible values are "text", "gui", and "none".
-See \code{\link[rjags]{update}}.}
+Possible values are "text", "gui", and "none" (see
+\code{\link[rjags]{update}}). Note: when sampling is performed
+in parallel it is currently not possible to display a
+progress bar.}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. Note: this applies only to warnings
-given directly by \strong{JointAI}.}
+\code{TRUE}. (Note: this applies only to warnings
+given directly by \strong{JointAI}.)}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. Note: this applies only to messages
-given directly by \strong{JointAI}.}
+\code{TRUE}. (Note: this applies only to messages
+given directly by \strong{JointAI}.)}
 
 \item{keep_scaled_mcmc}{should the "original" MCMC sample
 (i.e., the scaled version returned by \code{coda.samples()}) be kept?
@@ -226,7 +227,7 @@ a family function. (See \code{\link[stats]{family}} and the
 \item{fixed}{a two sided formula describing the fixed-effects part of the
 model (see \code{\link[stats]{formula}})}
 
-\item{random}{only for \code{lme_imp}, \code{glme_imp} and \code{clmm_imp}:
+\item{random}{only for multi-level models:
 a one-sided formula of the form \code{~x1 + ... + xn | g},
 where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}
@@ -242,13 +243,17 @@ survival models using MCMC sampling, while imputing missing values.
 }
 \section{Details}{
 
-See also the vignette: \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification}
+See also the vignettes
+\href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification},
+\href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{MCMC Settings} and
+\href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}.
+
 \subsection{Implemented distribution families and link functions for \code{glm_imp()}
 and \code{glme_imp()}}{
 \tabular{ll}{
 \code{gaussian} \tab with links: \code{identity}, \code{log}\cr
 \code{binomial} \tab with links: \code{logit}, \code{probit}, \code{log}, \code{cloglog}\cr
-\code{Gamma}    \tab with links: \code{identity}, \code{log}\cr
+\code{Gamma}    \tab with links: \code{inverse}, \code{identity}, \code{log}\cr
 \code{poisson}  \tab with links: \code{log}, \code{identity}
 }
 }
@@ -259,20 +264,21 @@ and \code{glme_imp()}}{
 Implemented imputation models that can be chosen in the argument \code{models} are:
 \tabular{ll}{
 \code{norm} \tab linear model\cr
-\code{lognorm} \tab log-linear model for skewed continuous data\cr
+\code{lognorm} \tab log-normal model for skewed continuous data\cr
 \code{gamma} \tab gamma model (with log-link) for skewed continuous data\cr
 \code{beta} \tab beta model (with logit-link) for skewed continuous data in (0, 1)\cr
 \code{logit} \tab logistic model for binary data\cr
 \code{multilogit} \tab multinomial logit model for unordered categorical variables\cr
 \code{cumlogit} \tab cumulative logit model for ordered categorical variables\cr
 \code{lmm} \tab linear mixed model for continuous longitudinal covariates\cr
+\code{glmm_lognorm} \tab log-normal mixed model for skewed longitudinal covariates\cr
 \code{glmm_gamma} \tab Gamma mixed model for skewed longitudinal covariates\cr
 \code{glmm_logit} \tab logit mixed model for binary longitudinal covariates\cr
 \code{glmm_poisson} \tab Poisson mixed model for longitudinal count covariates\cr
 \code{clmm} \tab cumulative logit mixed model for longitudinal ordered factors
 }
 When models are specified for only a subset of the incomplete or longitudinal
-covariates involved in a model, the default choices are used for all unspecified
+covariates involved in a model, the default choices are used for the unspecified
 variables.
 }
 
@@ -287,7 +293,7 @@ set as \code{TRUE} or \code{FALSE}.
 If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)} will be used.
 \tabular{ll}{
 \strong{name/key word} \tab \strong{what is monitored}\cr
-\code{analysis_main} \tab \code{betas} and \code{sigma_y} (and \code{D} in mixed models)\cr
+\code{analysis_main} \tab \code{betas} and \code{sigma_y} (and \code{D} in multi-level models)\cr
 \code{analysis_random} \tab \code{ranef}, \code{D}, \code{invD}, \code{RinvD}\cr
 \code{imp_pars} \tab \code{alphas}, \code{tau_imp}, \code{gamma_imp}, \code{delta_imp}\cr
 \code{imps} \tab imputed values\cr
@@ -298,14 +304,13 @@ If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)} will be u
 \code{D} \tab covariance matrix of the random effects\cr
 \code{invD} \tab inverse of \code{D}\cr
 \code{RinvD} \tab matrix in the prior for \code{invD}\cr
-\code{alphas} \tab regression coefficients in the imputation models\cr
-\code{tau_imp} \tab precision parameters of the residuals from imputation models\cr
-\code{gamma_imp} \tab intercepts in ordinal imputation models\cr
+\code{alphas} \tab regression coefficients in the covariate models\cr
+\code{tau_imp} \tab precision parameters of the residuals from covariate models\cr
+\code{gamma_imp} \tab intercepts in ordinal covariate models\cr
 \code{delta_imp} \tab increments of ordinal intercepts\cr
 \code{other} \tab additional parameters
 }
-For example:
-
+\strong{For example:}\cr
 \code{monitor_params = c(analysis_main = TRUE, tau_y = TRUE, sigma_y = FALSE)}
 would monitor the regression parameters \code{betas} and the
 residual precision \code{tau_y} instead of the residual standard
@@ -323,17 +328,18 @@ the imputed values.
 The default imputation methods are chosen based on the \code{class} of each
 of the incomplete variables, distinguishing between \code{numeric},
 \code{factor} with two levels, unordered \code{factor} with >2 levels and
-ordered \code{factor} with >2 levels.
+ordered \code{factor} with >2 levels.\cr
 
-When a continuous incomplete variable has only two different values it is
-assumed to be binary and its coding and default imputation model will be
-changed accordingly. This behavior can be overwritten when the imputation
-method for that variable is specified directly by the user.
+When a continuous variable has only two different values it is
+assumed to be binary and its coding and default (imputation) model will be
+changed accordingly. This behavior can be overwritten specifying a model type
+via the argument \code{models}.\cr
 
-Variables of type `logical` are automatically be converted to unordered factors.
+Variables of type \code{logical} are automatically converted to unordered factors.\cr
 
 Contrary to base R behavior, dummy coding (i.e., \code{contr.treatment} contrasts)
 are used for ordered factors in any linear predictor.
+It is not possible to overwrite this behavior using the base R contrasts specification.
 However, since the order of levels in an ordered factor contains information relevant
 to the imputation of missing values, it is important that incomplete ordinal
 variables are coded as such.
@@ -341,19 +347,19 @@ variables are coded as such.
 
 \subsection{Non-linear effects and transformation of variables:}{
 \strong{JointAI} handles non-linear effects, transformation of covariates and
-interactions the following way:
+interactions the following way:\cr
 When, for instance, the model formula contains the function \code{log(x)} and
 \code{x} has missing values, \code{x} will be imputed and used in the linear
-predictor of models for other incomplete variables, i.e., it is assumed that
+predictor of models for covariates, i.e., it is assumed that
 the other variables have a linear association with \code{x} but not with
 \code{log(x)}. The \code{log()} of the observed and imputed values of
-\code{x} is calculated and used in the linear predictor of the analysis model.
+\code{x} is calculated and used in the linear predictor of the analysis model.\cr
 
-If, instead of using \code{log(x)} in the model formula a pre-calculated
-variable \code{logx} would be used instead, this variable is imputed directly
-and used in the linear predictors of all models, implying that other incomplete
+If, instead of using \code{log(x)} in the model formula, a pre-calculated
+variable \code{logx} is used instead, this variable is imputed directly
+and used in the linear predictors of all models, implying that
 variables that have \code{logx} in their linear predictors have a linear
-association with \code{logx} but not with \code{x}.
+association with \code{logx} but not with \code{x}.\cr
 
 When different transformations of the same incomplete variable are used in
 one model it is strongly discouraged to calculate these transformations beforehand
@@ -362,13 +368,21 @@ If, for example, a model formula contains both \code{x} and \code{x2} (where
 \code{x2} = \code{x^2}), they are treated as separate variables and imputed
 with separate models. Imputed values of \code{x2} are thus not equal to the
 square of imputed values of \code{x}.
-Instead, \code{x + I(x^2)} should be used in the model formula. Then, only
+Instead, \code{x} and \code{I(x^2)} should be used in the model formula. Then only
 \code{x} is imputed and used in the linear predictor of models for other
 incomplete variables, and \code{x^2} is calculated from the imputed values
 of \code{x} internally.
 
 The same applies to interactions involving incomplete variables.
 }
+
+\subsection{Sequence of covariate models:}{
+            The default order is incomplete baseline covariates, complete
+            longitudinal covariates, incomplete longitudinal covariates,
+            and within each group variables are ordered according to the
+            proportion of missing values (increasing).
+}
+
 \subsection{Not (yet) possible:}{
 \itemize{
 \item multiple nesting levels of random effects (nested or crossed)
@@ -384,17 +398,17 @@ The same applies to interactions involving incomplete variables.
 
 \examples{
 # Example 1: Linear regression with incomplete covariates
-mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+mod1 <- lm_imp(y ~ C1 + C2 + M1 + B1, data = wideDF, n.iter = 100)
 
 
 # Example 2: Logistic regression with incomplete covariats
-mod2 <- glm_imp(B1 ~ C1 + C2 + M2, data = wideDF,
+mod2 <- glm_imp(B1 ~ C1 + C2 + M1, data = wideDF,
                 family = binomial(link = "logit"), n.iter = 100)
 
 
 # Example 3: Linear mixed model with incomplete covariates
 mod3 <- lme_imp(y ~ C1 + B2 + c1 + time, random = ~ time|id,
-                data = longDF, n.iter = 500)
+                data = longDF, n.iter = 300)
 
 
 }
@@ -402,10 +416,10 @@ mod3 <- lme_imp(y ~ C1 + B2 + c1 + time, random = ~ time|id,
 \code{\link{set_refcat}}, \code{\link{get_models}},
          \code{\link{traceplot}}, \code{\link{densplot}},
          \code{\link{summary.JointAI}}, \code{\link{MC_error}},
-         \code{\link{GR_crit}}, \code{\link[rjags]{jags.model}},
-         \code{\link[rjags]{coda.samples}}, \code{\link{predict.JointAI}},
+         \code{\link{GR_crit}},
+         \code{\link{predict.JointAI}}, \code{\link{add_samples}},
          \code{\link{JointAIObject}}, \code{\link{add_samples}},
-         \code{\link{parameters}}, \code{\link{list_impmodels}}
+         \code{\link{parameters}}, \code{\link{list_models}}
 
 Vignettes
 \itemize{

@@ -4,7 +4,7 @@
 \alias{densplot}
 \alias{densplot.mcmc.list}
 \alias{densplot.JointAI}
-\title{Plot posterior density from JointAI model}
+\title{Plot the posterior density from object of class JointAI}
 \usage{
 densplot(object, ...)
 
@@ -12,9 +12,10 @@ densplot(object, ...)
   thin = NULL, ...)
 
 \method{densplot}{JointAI}(object, start = NULL, end = NULL,
-  thin = NULL, subset = c(analysis_main = TRUE), vlines = NULL,
-  nrow = NULL, ncol = NULL, joined = FALSE, use_ggplot = FALSE,
-  keep_aux = FALSE, warn = TRUE, mess = TRUE, ...)
+  thin = NULL, subset = c(analysis_main = TRUE),
+  exclude_chains = NULL, vlines = NULL, nrow = NULL, ncol = NULL,
+  joined = FALSE, use_ggplot = FALSE, keep_aux = FALSE,
+  warn = TRUE, mess = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -29,9 +30,9 @@ densplot(object, ...)
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Uses the same logic as the argument \code{monitor_params} in
-\code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
-\code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{survreg_imp}}
-and \code{\link{coxph_imp}}.}
+\code{\link[JointAI:model_imp]{*_imp}}.}
+
+\item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
 
 \item{vlines}{list, where each element is a named list of parameters that
 can be passed to \code{\link[graphics]{abline}} to create
@@ -53,24 +54,25 @@ automatically chosen if unspecified}
 \item{keep_aux}{logical; Should constant effects of auxiliary variables be kept in the output?}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. Note: this applies only to warnings
-given directly by \strong{JointAI}.}
+\code{TRUE}. (Note: this applies only to warnings
+given directly by \strong{JointAI}.)}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. Note: this applies only to messages
-given directly by \strong{JointAI}.}
+\code{TRUE}. (Note: this applies only to messages
+given directly by \strong{JointAI}.)}
 }
 \description{
-Plots a set of densities (per MC chain and coefficient) from the MCMC sample
-of an object of class "JointAI".
+The function plots a set of densities (per chain and coefficient) from
+the MCMC sample of an object of class "JointAI".
 }
 \examples{
 
 # fit a JointAI object:
-mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
+mod <- lm_imp(y ~ C1 + C2 + M1, data = wideDF, n.iter = 100)
 
 # Example 1: basic densityplot
 densplot(mod)
+densplot(mod, exclude_chains = 2)
 
 
 # Example 2: use vlines to mark zero

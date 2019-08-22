@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_MIdat.R
 \name{get_MIdat}
 \alias{get_MIdat}
-\title{Extract multiple imputed datasets}
+\title{Extract multiple imputed datasets from an object of class JointAI}
 \usage{
 get_MIdat(object, m = 10, include = TRUE, start = NULL,
   minspace = 50, seed = NULL, export_to_SPSS = FALSE,
@@ -13,7 +13,7 @@ get_MIdat(object, m = 10, include = TRUE, start = NULL,
 
 \item{m}{number of imputed datasets}
 
-\item{include}{should the original, incomplete data be included?}
+\item{include}{should the original, incomplete data be included? Default is \code{TRUE}.}
 
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
@@ -30,25 +30,34 @@ get_MIdat(object, m = 10, include = TRUE, start = NULL,
 \code{export_to_SPSS = TRUE} a name is generated automatically)}
 }
 \value{
-A dataframe containing the imputed values (and original data) stacked.
-       The variable \code{Imputation_} identifies the imputations, while
-       \code{.rownr} identifies rows of the rows of the original data.
+A dataframe in which the original data (if \code{include = TRUE}) and
+        the imputed datasets are stacked onto each other.\cr
+       The variable \code{Imputation_} indexes the imputation, while
+       \code{.rownr} links the rows to the rows of the original data.
        In cross-sectional datasets the
        variable \code{.id} is added as subject identifier.
 }
 \description{
-Creates a dataset containing multiple imputed datasets stacked onto each other
-(i.e., long format).
+This function returns a dataset containing multiple imputed datasets stacked
+onto each other (i.e., long format; optionally including the original, incomplete data).\cr
 These data can be automatically exported to SPSS (i.e., a .txt file containing the data and a
 .sps file containing syntax to generate a .sav file). For the export function
 the \href{https://CRAN.R-project.org/package=foreign}{\strong{foreign}} package needs to be installed.
 }
+\section{Note}{
+
+In order to be able to extract (multiple) imputed datasets the imputed values
+must have been monitored, i.e., \code{imps = TRUE} had to be specified in the
+argument \code{monitor_params} in \code{\link[JointAI:model_imp]{*_imp}}.
+}
+
 \examples{
 # fit a model and monitor the imputed values with monitor_params = c(imps = TRUE)
-mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, monitor_params = c(imps = TRUE), n.iter = 100)
+mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, monitor_params = c(imps = TRUE), n.iter = 100)
 
 # Example 1: without export to SPSS
 MIs <- get_MIdat(mod, m = 3, seed = 123)
+
 
 \dontrun{
 # Example 2: with export for SPSS (here: to the temporary directory "temp_dir")
@@ -58,6 +67,7 @@ MIs <- get_MIdat(mod, m = 3, seed = 123, resdir = temp_dir,
                  export_to_SPSS = TRUE)
 
 }
+
 }
 \seealso{
 \code{\link{plot_imp_distr}}

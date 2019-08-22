@@ -15,7 +15,7 @@ scale_matrix <- function(X, scale_vars, scale_pars, models) {
           usecenter <- if (!k %in% names(models)) {
             TRUE
           } else {
-            !models[k] %in% c("lognorm", "gamma", "beta", 'glmm_gamma', 'glmm_poisson')
+            !models[k] %in% c("lognorm", "gamma", "beta", 'glmm_lognorm', 'glmm_gamma', 'glmm_poisson')
           }
 
           usescale <- if (!k %in% names(models)) {
@@ -54,7 +54,9 @@ get_scaling <- function(Mlist, scale_pars, models, data) {
   # varnams <- unique(unlist(strsplit(colnames(model.matrix(Mlist$fixed2, data)),
   #                                   "[:|*]")))
 
-  varnams <- unique(c(unlist(strsplit(unlist(Mlist$names_main), "[:|*]")), Mlist$auxvars))
+  varnams <- unique(c(unlist(strsplit(unlist(Mlist$names_main), "[:|*]")),
+                      if (!is.null(Mlist$auxvars))
+                        attr(terms(Mlist$auxvars), 'term.labels')))
 
   ##### end bugfix
   scale_pars_new <- if (!is.null(Mlist$scale_vars))

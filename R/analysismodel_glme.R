@@ -13,17 +13,17 @@ glme_model <- function(family, link, Mlist, K, ...){
                     paste0("dgamma(shape_", y_name, "[j], rate_", y_name, "[j])")
                   },
                   "poisson" = function(y_name) {
-                    paste0("dpois(mu_", y_name, "[j])")
+                    paste0("dpois(max(1e10, mu_", y_name, "[j]))")
                   }
   )
 
   repar <- switch(family,
                   "gaussian" = NULL,
                   "binomial" = NULL,
-                  "Gamma" = paste0(tab(), "shape_", y_name, "[j] <- pow(mu_", y_name,
+                  "Gamma" = paste0(tab(4), "shape_", y_name, "[j] <- pow(mu_", y_name,
                                    "[j], 2) / pow(sigma_", y_name, ", 2)",
                                    "\n",
-                                   tab(), "rate_", y_name, "[j]  <- mu_", y_name,
+                                   tab(4), "rate_", y_name, "[j]  <- mu_", y_name,
                                    "[j] / pow(sigma_", y_name, ", 2)", "\n"),
                   "Poisson" = NULL)
 
@@ -34,8 +34,11 @@ glme_model <- function(family, link, Mlist, K, ...){
                     "probit"   = function(x) paste0("probit(", x, ")"),
                     "log"      = function(x) paste0("log(", x, ")"),
                     "cloglog"  = function(x) paste0("cloglog(", x, ")"),
-                    # "sqrt": JAGS does not have sqrt has link function
-                    "inverse"  = function(x) paste0("1/", x)
+                    # "sqrt": JAGS does not have sqrt as link function
+                    # "inverse"  = function(x) paste0("1/", x)
+                    "inverse"  = function(x)
+                      paste0(x, " <- 1/max(1e-10, inv_", x, ")", "\n",
+                             tab(4), "inv_", x)
   )
 
 
