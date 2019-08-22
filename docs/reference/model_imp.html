@@ -618,7 +618,7 @@ of <code>x</code> internally.
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Example 1: Linear regression with incomplete covariates</span>
-<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'>lm_imp</span>(<span class='no'>y</span>~<span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M1</span> + <span class='no'>B1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'>lm_imp</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M1</span> + <span class='no'>B1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 
 
 <span class='co'># Example 2: Logistic regression with incomplete covariats</span>
@@ -668,7 +668,7 @@ of <code>x</code> internally.
     
     
     apiKey: '0d21d69e7c3eb00e029f5b8d9424cd56',
-    indexName: 'JointAI',
+    indexName: 'jointal',
     inputSelector: 'input#search-input.form-control',
     transformData: function(hits) {
       return hits.map(function (hit) {
