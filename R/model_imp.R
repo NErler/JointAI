@@ -729,9 +729,9 @@ lm_imp <- function(formula, data,
   arglist$link <- "identity"
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -792,9 +792,9 @@ glm_imp <- function(formula, family, data,
   arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -839,9 +839,9 @@ clm_imp <- function(fixed, data,
 
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -883,9 +883,11 @@ lme_imp <- function(fixed, data, random,
 
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) {
+  #     eval(x)
+  #     } else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -948,9 +950,9 @@ glme_imp <- function(fixed, data, random, family,
 
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -992,9 +994,9 @@ clmm_imp <- function(fixed, data, random,
 
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -1038,9 +1040,9 @@ survreg_imp <- function(formula, data,
   arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -1083,9 +1085,9 @@ coxph_imp <- function(formula, data,
   arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]
-  thiscall <- lapply(thiscall, function(x) {
-    if (is.language(x)) eval(x) else x
-  })
+  # thiscall <- lapply(thiscall, function(x) {
+  #   if (is.language(x)) eval(x) else x
+  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
