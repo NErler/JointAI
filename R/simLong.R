@@ -41,7 +41,7 @@
 #'   \item{hc}{child head circumference in cm}
 #'   \item{hgt}{child height in cm}
 #'   \item{wgt}{child weight in gram}
-#'   \item{sleep}{sleeping behaviour of the child (3 ordered catgegories)}
+#'   \item{sleep}{sleeping behavior of the child (3 ordered categories)}
 #' }
 #'
 #'
@@ -59,7 +59,7 @@
 #'    wgt40, wgt50}{repeated measurements of child weight in gram}
 #'   \item{sleep1, sleep2, sleep3, sleep4, sleep7, sleep11, sleep15, sleep20,
 #'    sleep26, sleep32, sleep40, sleep50}{repeated measurements of child sleep
-#'    behaviour (3 ordered categories)}
+#'    behavior (3 ordered categories)}
 #' }
 #'
 #'

@@ -437,7 +437,7 @@ mod7a <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 2),
 Currently, multiple levels of nesting (nested or crossed random effects) are not yet available.
 
 ### Longitudinal covariates
-From **JointAI** version 0.5.0 onwards imputation of longitudinal covariates is
+From **JointAI** version 0.5.0 onward imputation of longitudinal covariates is
 possible. Currently, imputation of continuous, binary and ordered factors is 
 implemented. For more details, see the section [Imputation model types](#meth)
 below.

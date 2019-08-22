@@ -53,7 +53,7 @@ family.JointAI <- function(object, ...) {
 #' @section Note:
 #' \itemize{
 #' \item For mixed models residuals are currently calculated using the fixed effects only.
-#' \item For ordinal (mixed) models and parametric survival models only \code{type = "response"} is avaiable.
+#' \item For ordinal (mixed) models and parametric survival models only \code{type = "response"} is available.
 #' \item For Cox proportional hazards models residuals are not yet implemented.
 #' }
 #'

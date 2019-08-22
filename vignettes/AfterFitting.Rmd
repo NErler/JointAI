@@ -68,7 +68,7 @@ reached and more iterations are necessary (e.g., using `add_samples()`).
 
 Graphical aspects of the traceplot can be controlled by specifying 
 standard graphical arguments via the dots argument `"..."`, which are passed to `matplot()`.
-This allows changing colour, linetype and -width, limits, etc.
+This allows changing color, linetype and -width, limits, etc.
 Arguments `nrow` and/or `ncol` can be supplied to set specific numbers of 
 rows and columns for the layout of the grid of plots.
 

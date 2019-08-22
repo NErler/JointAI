@@ -289,7 +289,7 @@ GR_crit(lm5)
 MC_error(lm5)
 ```
 
-When `analysis_main` was not switched on the default behaviour is that all
+When `analysis_main` was not switched on the default behavior is that all
 parameters are displayed:
 ```{r, fig.height = 1.5, message = FALSE}
 # Re-run the model from above, now creating MCMC samples
