@@ -92,8 +92,9 @@ get_models <- function(fixed, random = NULL, data,
     )
 
     unnecessary <- c(names(nmis[nmis == 0 & !tvar & names(nmis) %in% names(models)]),
-                     if (!is.null(types$incomplete.baseline))
-                       names(types$complete.tvar))
+                     if (is.null(types$incomplete.baseline))
+                       types$complete.tvar[names(types$complete.tvar) %in% names(models)]
+                     )
 
     if (length(unnecessary) > 0)
       message(gettextf(paste0("Note:\nModels have been specified for the variabe(s) %s.\n",
@@ -101,6 +102,8 @@ get_models <- function(fixed, random = NULL, data,
                       'to increase the computational time.'),
                       paste0(unnecessary, collapse = ', '))
                       )
+
+    models_user <- models
 
     models <- c(if(any(names(models) %in% names(types$complete.baseline))) types$complete.baseline,
                 types$incomplete.baseline,
@@ -126,6 +129,8 @@ get_models <- function(fixed, random = NULL, data,
       models[sapply(data[, names(nlevel), drop = FALSE], is.ordered) & tvar[names(nlevel)]] <- "clmm"
     }
 
+    models[names(models_user)] <- models_user
+
     meth <- models[nmis[names(models)] > 0]
 
     if (any(models %in% c('mlmm'))) {
@@ -147,3 +152,4 @@ get_models <- function(fixed, random = NULL, data,
 #                          auxvars = NULL, no_model = NULL, models = NULL){
 #   get_models(fixed = fixed, random = random, data = data, auxvars = auxvars,
 #              no_model = no_model, models = models)$meth
+# }
