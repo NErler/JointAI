@@ -277,7 +277,7 @@ predictor of the imputation model for `bili`:
 ```{r, message = FALSE}
 mod3e <- lm_imp(SBP ~ age + gender + bili, auxvars = ~ I(WC^2), data = NHANES)
 
-list_impmodels(mod3e, priors = F, regcoef = F, otherpars = F)
+list_models(mod3e, priors = F, regcoef = F, otherpars = F)
 ```
 
 When `WC` is used as predictor variable in the main model and a function of `WC`
@@ -286,7 +286,7 @@ imputation models:
 ```{r, message = FALSE}
 mod3f <- lm_imp(SBP ~ age + gender + bili + WC, auxvars = ~ I(WC^2), data = NHANES)
 
-list_impmodels(mod3f, priors = F, regcoef = F, otherpars = F)
+list_models(mod3f, priors = F, regcoef = F, otherpars = F)
 ```
 
 When a function of a covariate is used in the linear predictor of the analysis
@@ -297,7 +297,7 @@ argument `auxvars`:
 ```{r, message = FALSE}
 mod3g <- lm_imp(SBP ~ age + gender + bili + I(WC^2), auxvars = ~ I(WC^2), data = NHANES)
 
-list_impmodels(mod3g, priors = F, regcoef = F, otherpars = F)
+list_models(mod3g, priors = F, regcoef = F, otherpars = F)
 ```
 
 
@@ -639,7 +639,7 @@ has the most other variables in its linear predictor:
 colSums(is.na(NHANES[, names(mod8a$models)]))
 
 # print information on the imputation models (and omit everything but the predictor variables)
-list_impmodels(mod8a, priors = F, regcoef = F, otherpars = F, refcat = F)
+list_models(mod8a, priors = F, regcoef = F, otherpars = F, refcat = F)
 ```
 
 
@@ -675,7 +675,7 @@ summary(mod9a)
 They are, however, used as predictors in the imputation for `occup` and
 imputed themselves (if they have missing values):
 ```{r}
-list_impmodels(mod9a, priors = FALSE, regcoef = FALSE, otherpars = FALSE, refcat = FALSE)
+list_models(mod9a, priors = FALSE, regcoef = FALSE, otherpars = FALSE, refcat = FALSE)
 ```
 
 
@@ -690,7 +690,7 @@ mod9b <- lm_imp(SBP ~ gender + age + occup, data = NHANES,
 ```
 
 ```{r}
-list_impmodels(mod9b, priors = FALSE, regcoef = FALSE, otherpars = FALSE,
+list_models(mod9b, priors = FALSE, regcoef = FALSE, otherpars = FALSE,
                refcat = FALSE)
 ```
 

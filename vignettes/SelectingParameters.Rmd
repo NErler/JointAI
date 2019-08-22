@@ -151,7 +151,7 @@ parameters(lm3)
 An overview of the imputation models used, including the names of the 
 parameters and the hyperparameters can be obtained with
 ```{r list_lm2}
-list_impmodels(lm2)
+list_models(lm2)
 ```
 
 #### Side note: How to extract imputed datasets
