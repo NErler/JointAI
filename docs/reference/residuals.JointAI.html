@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Specify reference categories for all categorical covariates in the model — set_refcat • JointAI</title>
+<title>Extract residuals from an object of class JointAI — residuals.JointAI • JointAI</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -36,12 +36,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Specify reference categories for all categorical covariates in the model — set_refcat" />
+<meta property="og:title" content="Extract residuals from an object of class JointAI — residuals.JointAI" />
 
-<meta property="og:description" content="The function is a helper function that asks questions and, depending on the
-answers given by the user,
-returns the input for the argument refcats in the main analysis functions
-*_imp." />
+<meta property="og:description" content="Extract residuals from an object of class JointAI" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -158,77 +155,65 @@ returns the input for the argument refcats in the main analysis functions
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Specify reference categories for all categorical covariates in the model</h1>
+    <h1>Extract residuals from an object of class JointAI</h1>
     
-    <div class="hidden name"><code>set_refcat.Rd</code></div>
+    <div class="hidden name"><code>residuals.JointAI.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The function is a helper function that asks questions and, depending on the
-answers given by the user,
-returns the input for the argument <code>refcats</code> in the main analysis functions
-<code><a href='model_imp.html'>*_imp</a></code>.</p>
+    <p>Extract residuals from an object of class JointAI</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>set_refcat</span>(<span class='no'>data</span>, <span class='no'>formula</span>, <span class='no'>covars</span>, <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for JointAI</span>
+<span class='fu'>residuals</span>(<span class='no'>object</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"deviance"</span>, <span class='st'>"response"</span>,
+  <span class='st'>"working"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>a <code>data.frame</code></p></td>
+      <th>object</th>
+      <td><p>object inheriting from class 'JointAI'</p></td>
     </tr>
     <tr>
-      <th>formula</th>
-      <td><p>optional; model formula (used to select subset of relevant columns of <code>data</code>)</p></td>
+      <th>type</th>
+      <td><p>type of residuals: <code>"deviance"</code>, <code>"response"</code>,
+<code>"working"</code></p></td>
     </tr>
     <tr>
-      <th>covars</th>
-      <td><p>optional; vector containing the names of relevant columns of <code>data</code></p></td>
-    </tr>
-    <tr>
-      <th>auxvars</th>
-      <td><p>optional; formula containing the names of relevant columns of
-<code>data</code> that should be considered additionally to the columns
-occurring in the <code>formula</code></p></td>
+      <th>...</th>
+      <td><p>currently not used</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    
+    <ul>
+<li><p>For mixed models residuals are currently calculated using the fixed effects only.</p></li>
+<li><p>For ordinal (mixed) models and parametric survival models only <code>type = "response"</code> is available.</p></li>
+<li><p>For Cox proportional hazards models residuals are not yet implemented.</p></li>
+</ul>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># Example 1: set reference categories for the whole dataset and choose answer option 3:</span>
-<span class='fu'>set_refcat</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>)
-<span class='fl'>3</span>
+    <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>glm_imp</a></span>(<span class='no'>B1</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>O1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+               <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'>binomial</span>(), <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>summary</span>(<span class='fu'>residuals</span>(<span class='no'>mod</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'response'</span>))</div><div class='output co'>#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max.      NA's 
+#&gt; -0.899681  0.089544  0.174830 -0.007514  0.248635  0.417168         4 </div><div class='input'><span class='fu'>summary</span>(<span class='fu'>residuals</span>(<span class='no'>mod</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'working'</span>))</div><div class='output co'>#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max.      NA's 
+#&gt; -11.26751   1.24773   1.32997  -0.03055   1.40448   1.72355         4 </div><div class='input'>
 
-<span class='co'># insert the returned string as argument refcats</span>
-<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>SBP</span> ~ <span class='no'>age</span> + <span class='no'>race</span> + <span class='no'>creat</span> + <span class='no'>educ</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='st'>'largest'</span>)
-
-<span class='co'># Example 2:</span>
-<span class='co'># specify a model formula</span>
-<span class='no'>fmla</span> <span class='kw'>&lt;-</span> <span class='no'>SBP</span> ~ <span class='no'>age</span> + <span class='no'>gender</span> + <span class='no'>race</span> + <span class='no'>bili</span> + <span class='no'>smoke</span> + <span class='no'>alc</span>
-
-<span class='co'># write the output of set_refcat to an object</span>
-<span class='no'>ref_mod2</span> <span class='kw'>&lt;-</span> <span class='fu'>set_refcat</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>, <span class='kw'>formula</span> <span class='kw'>=</span> <span class='no'>fmla</span>)
-<span class='fl'>4</span>
-<span class='fl'>2</span>
-<span class='fl'>5</span>
-<span class='fl'>1</span>
-<span class='fl'>1</span>
-
-<span class='co'># enter the output in the model specification</span>
-<span class='no'>mod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='kw'>formula</span> <span class='kw'>=</span> <span class='no'>fmla</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='no'>ref_mod2</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>0</span>)
-<span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#note">Note</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
