@@ -69,13 +69,14 @@ residuals.JointAI <- function(object,
                               type = c('deviance', 'response', 'working'), ...) {
   type <- match.arg(type)
 
-  if (object$analysis_type %in% c('clm', "clmm", 'survreg') & type %in% c('working', 'deviance'))
-    stop(gettextf("Residuals of type %s are not implemented for a model of type %s.",
-                  dQuote(type), dQuote(object$analysis_type)), call. = FALSE)
+  if (object$analysis_type %in% c('survreg') & type %in% c('working', 'deviance'))
+    stop(gettextf("Residuals of type %s are not implemented for a JointAI model of type %s. Currently only residuals of type %s are available for parametric survival models.",
+                  dQuote(type), dQuote(object$analysis_type), dQuote('response')),
+         call. = FALSE)
 
-  if (object$analysis_type %in% c('coxph'))
-    stop(gettextf("Residuals are not yet implemented for a model of type %s.",
-                  dQuote(type), dQuote(object$analysis_type)), call. = FALSE)
+  if (object$analysis_type %in% c('coxph', 'clm', 'clmm'))
+    stop(gettextf("Residuals are not yet implemented for a JointAI model of type %s.",
+                  dQuote(object$analysis_type)), call. = FALSE)
 
   # r <- object$residuals
   y <- object$data_list[[names(object$Mlist$y)]]

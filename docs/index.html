@@ -202,17 +202,17 @@
 <span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; </span></span>
 <span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt; Posterior summary:</span></span>
 <span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt;                Mean     SD     2.5%   97.5% tail-prob. GR-crit</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; (Intercept)  87.928 9.0078  69.8630 105.780    0.00000    1.00</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt; genderfemale -3.459 2.2683  -7.8167   0.945    0.12267    1.01</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; age           0.330 0.0695   0.1898   0.468    0.00000    1.00</span></span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt; WC            0.228 0.0765   0.0725   0.376    0.00533    1.00</span></span>
-<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt; alc&gt;=1        6.345 2.3085   1.7133  10.815    0.00667    1.00</span></span>
-<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt; educhigh     -2.773 2.1545  -7.3530   1.374    0.19467    1.01</span></span>
-<span id="cb8-17"><a href="#cb8-17"></a><span class="co">#&gt; bili         -5.178 4.9262 -14.8150   4.504    0.30400    1.00</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; (Intercept)  88.052 8.9302  70.4538 104.530    0.00000   1.003</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt; genderfemale -3.552 2.2370  -8.0352   0.733    0.10267   1.007</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; age           0.331 0.0702   0.1917   0.462    0.00000   0.999</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt; WC            0.228 0.0745   0.0845   0.378    0.00267   1.001</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt; alc&gt;=1        6.472 2.2896   2.1731  11.006    0.00267   1.003</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt; educhigh     -2.903 2.1326  -7.1398   1.229    0.18000   1.007</span></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="co">#&gt; bili         -5.171 4.9648 -15.2099   4.127    0.31600   1.002</span></span>
 <span id="cb8-18"><a href="#cb8-18"></a><span class="co">#&gt; </span></span>
 <span id="cb8-19"><a href="#cb8-19"></a><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
-<span id="cb8-20"><a href="#cb8-20"></a><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></span>
-<span id="cb8-21"><a href="#cb8-21"></a><span class="co">#&gt; sigma_SBP 13.6 0.761 12.2  15.1       1</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a><span class="co">#&gt;           Mean   SD 2.5% 97.5% GR-crit</span></span>
+<span id="cb8-21"><a href="#cb8-21"></a><span class="co">#&gt; sigma_SBP 13.6 0.73 12.2  15.1       1</span></span>
 <span id="cb8-22"><a href="#cb8-22"></a><span class="co">#&gt; </span></span>
 <span id="cb8-23"><a href="#cb8-23"></a><span class="co">#&gt; </span></span>
 <span id="cb8-24"><a href="#cb8-24"></a><span class="co">#&gt; MCMC settings:</span></span>
@@ -224,20 +224,20 @@
 <span id="cb8-30"><a href="#cb8-30"></a><span class="co">#&gt; Number of observations: 186</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">coef</span>(lm1)</span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="co">#&gt;  (Intercept) genderfemale          age           WC       alc&gt;=1 </span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt;   87.9278293   -3.4588209    0.3300324    0.2280833    6.3454462 </span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt;   88.0516592   -3.5521192    0.3307056    0.2275129    6.4715959 </span></span>
 <span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt;     educhigh         bili </span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt;   -2.7727713   -5.1783441</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt;   -2.9034070   -5.1707861</span></span>
 <span id="cb9-6"><a href="#cb9-6"></a></span>
 <span id="cb9-7"><a href="#cb9-7"></a><span class="kw">confint</span>(lm1)</span>
 <span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt;                      2.5%       97.5%</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; (Intercept)   69.86303510 105.7799306</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt; genderfemale  -7.81674618   0.9450853</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; age            0.18976248   0.4679624</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; WC             0.07252898   0.3762462</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; alc&gt;=1         1.71331707  10.8148708</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; educhigh      -7.35303125   1.3737715</span></span>
-<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt; bili         -14.81498637   4.5037918</span></span>
-<span id="cb9-16"><a href="#cb9-16"></a><span class="co">#&gt; sigma_SBP     12.24555867  15.1254299</span></span></code></pre></div>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; (Intercept)   70.45384054 104.5299176</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt; genderfemale  -8.03516037   0.7333743</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; age            0.19166256   0.4615605</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; WC             0.08451856   0.3778814</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; alc&gt;=1         2.17312820  11.0056675</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; educhigh      -7.13982875   1.2287120</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt; bili         -15.20994908   4.1268427</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="co">#&gt; sigma_SBP     12.21835832  15.1290212</span></span></code></pre></div>
 </div>
 </div>
 </div>
