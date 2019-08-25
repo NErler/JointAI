@@ -331,8 +331,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   # data pre-processing --------------------------------------------------------
   # * set contrasts to dummies -------------------------------------------------
-  opt <- getOption("contrasts")
-  options(contrasts = rep("contr.treatment", 2))
+  opt <- options(contrasts = rep("contr.treatment", 2))
 
   allvars <- unique(c(all.vars(fixed),
                       all.vars(random),
@@ -660,7 +659,7 @@ if (!is.null(inits)) {
   attr(analysis_type, "link") <- link
 
   # set contrasts back to what they were
-  options(contrasts = opt)
+  on.exit(options(opt))
 
   object <- structure(
     list(analysis_type = analysis_type,

@@ -21,9 +21,9 @@
 #' @export
 #'
 #' @examples
-#' par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
+#' op <- par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
 #' md_pattern(wideDF)
-#'
+#' par(op)
 #'
 md_pattern <- function(data, color = c(grDevices::grey(0.1),
                                        grDevices::grey(0.7)),

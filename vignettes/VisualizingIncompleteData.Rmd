@@ -45,8 +45,9 @@ Using `plot_all()`, an array of histograms (for continuous variables and dates)
 and barplots (for categorical variables) can be obtained.
 
 ```{r, fig.height = 8}
-par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
+op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
 plot_all(NHANES)
+par(op)
 ```
 
 **Note:** Here, we are looking at the marginal distribution of each variable.
@@ -75,8 +76,9 @@ or [`barplot()`](https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/bar
 
 For example:
 ```{r, fig.width = 8, fig.height = 10}
-par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
+op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
 plot_all(NHANES, allNA = TRUE, fill = '#18bc9c', border = '#2C3E50', ncol = 3, nclass = 30)
+par(op)
 ```
 
 
@@ -89,9 +91,10 @@ the level of each variable can be taken into account by specifying
 
 
 ```{r, fig.width = 8, fig.height = 10}
-par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
+op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
 plot_all(simLong, allNA = TRUE, fill = '#18bc9c', border = '#2C3E50',
          ncol = 3, nclass = 30, use_level = TRUE, idvar = "ID")
+par(op)
 ```
 The information whether a variable is level-1 (i.e., varies within the groups
 specified by `idvar`) or level-2 (i.e., constant within the groups) is added to

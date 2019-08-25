@@ -92,7 +92,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
               xlab = "Iterations", ylab = "",
               main = colnames(prep$MCMC[[1]])[i], ...)
     }
-    par(op)
+    on.exit(par(op))
   }
 }
 
@@ -249,7 +249,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
         }
       }
     }
-    par(op)
+    on.exit(par(op))
   }
 }
 
@@ -323,8 +323,9 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 #'
 #' @seealso Vignette: \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
 #' @examples
-#' par(mar = c(2,2,3,1), mgp = c(2, 0.6, 0))
+#' op <- par(mar = c(2,2,3,1), mgp = c(2, 0.6, 0))
 #' plot_all(wideDF)
+#' par(op)
 #'
 #' @export
 
@@ -426,5 +427,5 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
     }
   }
 
-  par(op)
+  on.exit(par(op))
 }

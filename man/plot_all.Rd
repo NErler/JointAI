@@ -43,8 +43,9 @@ categorical variables) and labels it with the proportion of missing values in
 each variable.
 }
 \examples{
-par(mar = c(2,2,3,1), mgp = c(2, 0.6, 0))
+op <- par(mar = c(2,2,3,1), mgp = c(2, 0.6, 0))
 plot_all(wideDF)
+par(op)
 
 }
 \seealso{

@@ -87,8 +87,9 @@ data and missing values, export of imputed values and prediction.
 ```{r, fig.width = 8, fig.height = 4, message = FALSE}
 library(JointAI)
 
-par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
+op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
 plot_all(NHANES[c(1, 5:6, 8:12)], fill = '#18bc9c', border = '#2C3E50', ncol = 4, nclass = 30)
+par(op)
 ```
 
 

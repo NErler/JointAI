@@ -171,11 +171,9 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
   mf <- model.frame(object$fixed, object$data, na.action = na.pass)
   mt <- attr(mf, "terms")
 
-  oldop <- options()
-  options(contrasts = rep("contr.treatment", 2),
+  op <- options(contrasts = rep("contr.treatment", 2),
           na.action = na.pass)
   X <- model.matrix(mt, data = newdata)
-  options(oldop)
 
   if (object$analysis_type %in% c('clm', 'clmm')) {
     X <- X[, -1, drop = FALSE]
@@ -249,5 +247,6 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
   if (length(dim(quants)) <= 2 & !is.null(quants))
     dat <- cbind(dat, quants)
 
+  on.exit(options(op))
   return(list(dat = dat, fit = fit, quantiles = quants))
 }

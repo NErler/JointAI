@@ -38,9 +38,9 @@ Obtain a plot of the pattern of missing data and/or return the pattern as a matr
 This function requires the \href{https://CRAN.R-project.org/package=ggplot2}{\strong{ggplot2}} package to be installed.
 }
 \examples{
-par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
+op <- par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
 md_pattern(wideDF)
-
+par(op)
 
 }
 \seealso{
