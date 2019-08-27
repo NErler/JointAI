@@ -36,9 +36,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="Predict values from an object of class JointAI — predict.JointAI" />
 
 <meta property="og:description" content="Obtains predictions and corresponding credible intervals from an object of class 'JointAI'." />
+
+<meta property="og:image" content="https://nerler.github.io/JointAI/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -227,16 +231,16 @@ given directly by <strong>JointAI</strong>.)</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list with entries <code>"dat"</code>, <code>fit"} and \code{"quantiles"},
+    <p>A list with entries <code>dat</code>, <code>fit</code> and <code>quantiles</code>,
         where
-        \code{"fit"} contains the predicted values (mean over the values calculated
+        <code>fit</code> contains the predicted values (mean over the values calculated
         from the iterations of the MCMC sample),
-        \code{"quantiles"} contain the specified quantiles (by default 2.5%
+        <code>quantiles</code> contain the specified quantiles (by default 2.5%
         and 97.5%),
-        and \code{"dat"} is \code{newdata}, extended with \code{fit} and \code{quantiles"</code>
+        and <code>dat</code> is <code>newdata</code>, extended with <code>fit</code> and <code>quantiles</code>
         (unless prediction for an ordinal outcome is done with <code>type = "prob"</code>,
         in which case the quantiles are an array with three dimensions and are
-        therefore not included in <code>"dat"</code>).</p>
+        therefore not included in <code>dat</code>).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

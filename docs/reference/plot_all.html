@@ -36,11 +36,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="Visualize the distribution of all variables in the dataset — plot_all" />
 
 <meta property="og:description" content="This function plots a grid of histograms (for continuous variables) and barplots (for
 categorical variables) and labels it with the proportion of missing values in
 each variable." />
+
+<meta property="og:image" content="https://nerler.github.io/JointAI/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -235,9 +239,8 @@ and <code><a href='http://www.rdocumentation.org/packages/graphics/topics/hist'>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>par</span>(<span class='kw'>mar</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>1</span>), <span class='kw'>mgp</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>0.6</span>, <span class='fl'>0</span>))
-<span class='fu'>plot_all</span>(<span class='no'>wideDF</span>)</div><div class='img'><img src='plot_all-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>op</span> <span class='kw'>&lt;-</span> <span class='fu'>par</span>(<span class='kw'>mar</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>1</span>), <span class='kw'>mgp</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>0.6</span>, <span class='fl'>0</span>))
+<span class='fu'>plot_all</span>(<span class='no'>wideDF</span>)</div><div class='img'><img src='plot_all-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>par</span>(<span class='no'>op</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
