@@ -39,16 +39,16 @@ given directly by \strong{JointAI}.)}
 \item{...}{currently not used}
 }
 \value{
-A list with entries \code{"dat"}, \code{fit"} and \code{"quantiles"},
+A list with entries \code{dat}, \code{fit} and \code{quantiles},
         where
-        \code{"fit"} contains the predicted values (mean over the values calculated
+        \code{fit} contains the predicted values (mean over the values calculated
         from the iterations of the MCMC sample),
-        \code{"quantiles"} contain the specified quantiles (by default 2.5\%
+        \code{quantiles} contain the specified quantiles (by default 2.5\%
         and 97.5\%),
-        and \code{"dat"} is \code{newdata}, extended with \code{fit} and \code{quantiles"}
+        and \code{dat} is \code{newdata}, extended with \code{fit} and \code{quantiles}
         (unless prediction for an ordinal outcome is done with \code{type = "prob"},
         in which case the quantiles are an array with three dimensions and are
-        therefore not included in \code{"dat"}).
+        therefore not included in \code{dat}).
 }
 \description{
 Obtains predictions and corresponding credible intervals from an object of class 'JointAI'.
