@@ -8,6 +8,8 @@ template:
       api_key: 0d21d69e7c3eb00e029f5b8d9424cd56
       index_name: jointal
     ganalytics: UA-127879026-4
+  opengraph:
+    img: logo.png
 navbar:
   structure:
     left:
@@ -37,3 +39,5 @@ navbar:
       icon: fa-twitter fa-lg
       href: https://twitter.com/N_Erler
 url: https://nerler.github.io/JointAI/
+hexURL:
+  https://github.com/NErler/JointAI/tree/master/man/figures/logo.png

@@ -13,7 +13,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-# JointAI: Joint Analysis and Imputation of Incomplete Data
+# JointAI: Joint Analysis and Imputation of Incomplete Data <img src="man/figures/logo.png" align="right" alt="" width="200" />
+
 
 [![Travis-CI Build Status](https://travis-ci.org/NErler/JointAI.svg?branch=master)](https://travis-ci.org/NErler/JointAI)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version-last-release/JointAI)](https://CRAN.R-project.org/package=JointAI)
