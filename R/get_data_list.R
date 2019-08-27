@@ -51,7 +51,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     gkx <- gkx[ordgkx]
 
     l$gkw <- gkw[ordgkx]
-    h0knots <- get_knots_h0(nkn = 5, Time = l[[names(Mlist$y)]],
+    h0knots <- get_knots_h0(nkn = 2, Time = l[[names(Mlist$y)]],
                             event = Mlist$event, gkx = gkx)
 
     l$Bmat_h0 <- splines::splineDesign(h0knots, l[[names(Mlist$y)]], ord = 4)

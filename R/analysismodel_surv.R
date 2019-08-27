@@ -167,9 +167,9 @@ coxph_priors <- function(K, Mlist, ...){
       distr,
       tab(), "}", "\n")
     },
-    tab(), "for (k in 1:9) {", "\n",
+    tab(), "for (k in 1:6) {", "\n",
     tab(4), "Bs.gammas[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n",
     tab(), "}"
-    # tab(), "Bs.gammas[1:9] ~ dmnorm(priorMean.Bs.gammas[], tau_reg_surv * priorTau.Bs.gammas[, ])"
+    # tab(), "Bs.gammas[1:5] ~ dmnorm(priorMean.Bs.gammas[], tau_reg_surv * priorTau.Bs.gammas[, ])"
   )
 }
