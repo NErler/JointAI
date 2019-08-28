@@ -1,12 +1,12 @@
 #' Missing data pattern
 #'
-#' Plot the pattern of missing data.
+#' Obtain a plot of the pattern of missing data and/or return the pattern as a matrix.
 #' @param data data frame
 #' @param color vector of length two, that specifies the color used to indicate
-#'              observed and missing  (in that order)
+#'              observed and missing values (in that order)
 #' @param border color of the grid
-#' @param plot logical; should the missing data pattern be plotted?
-#' @param pattern logical; should the missing data pattern be returned as matrix?
+#' @param plot logical; should the missing data pattern be plotted? (default is \code{TRUE})
+#' @param pattern logical; should the missing data pattern be returned as matrix? (default is \code{FALSE})
 #' @param print_xaxis,print_yaxis logical; should the x-axis (below the plot) and
 #'                              y-axis (on the right) be printed?
 #' @param ylab y-axis label
@@ -21,9 +21,9 @@
 #' @export
 #'
 #' @examples
-#' par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
+#' op <- par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
 #' md_pattern(wideDF)
-#'
+#' par(op)
 #'
 md_pattern <- function(data, color = c(grDevices::grey(0.1),
                                        grDevices::grey(0.7)),

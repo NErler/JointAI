@@ -9,7 +9,7 @@
 #' @param \dots currently not used
 #'
 #' @examples
-#' mod1 <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' mod1 <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
 #' summary(mod1)
 #' coef(mod1)

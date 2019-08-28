@@ -2,55 +2,59 @@
 % Please edit documentation in R/get_imp_method.R
 \name{get_models}
 \alias{get_models}
-\alias{get_imp_meth}
-\title{Set default (imputation) models and order}
+\title{Specify the default (imputation) model types}
 \usage{
 get_models(fixed, random = NULL, data, auxvars = NULL,
-  no_model = NULL)
-
-get_imp_meth(fixed, random = NULL, data, auxvars = NULL,
-  no_model = NULL)
+  no_model = NULL, models = NULL)
 }
 \arguments{
 \item{fixed}{a two sided formula describing the fixed-effects part of the
 model (see \code{\link[stats]{formula}})}
 
-\item{random}{only for \code{lme_imp}, \code{glme_imp} and \code{clmm_imp}:
+\item{random}{only for multi-level models:
 a one-sided formula of the form \code{~x1 + ... + xn | g},
 where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}
 
 \item{data}{a \code{data.frame}}
 
-\item{auxvars}{optional vector of variable names that should be used as
+\item{auxvars}{optional one-sided formula of variables that should be used as
 predictors in the imputation procedure (and will be imputed
 if necessary) but are not part of the analysis model}
 
 \item{no_model}{names of variables for which no model should be specified.
 Note that this is only possible for completely observed
-variables and may imply assumptions of independence between
-the excluded variable and incomplete variables.}
+variables and implies the assumptions of independence between
+the excluded variable and the incomplete variables.}
+
+\item{models}{optional named vector specifying the types of models for
+  (incomplete) covariates.
+  This arguments replaces the argument \code{meth} used in earlier versions.
+  If \code{NULL} (default) models will be determined
+automatically based on the class of the respective columns of \code{data}.}
 }
 \value{
 \code{get_models()} returns a list of two vectors named \code{models}
-        and \code{meth}.
+        and \code{meth}.\cr
         \code{models} is a named vector containing the names of covariates
         that either have missing values and/or are longitudinal (level-1)
-        covariates and the corresponding default (imputation) models.
+        covariates and the corresponding (imputation) models as well
+        as models for variables for which the user has specified a model.\cr
         \code{meth} is a subset of \code{models} containing only the variables
         that have missing values.
 }
 \description{
-Set default (imputation) models and order
+Specify the default (imputation) model types
 }
 \examples{
 get_models(y ~ C1 + C2 + B2 + O2 + M2, data = wideDF)
-get_imp_meth(y ~ C1 + C2 + B2 + O2 + M2, data = wideDF)
 
 get_models(y ~ C1 + O2 + c2 + b1 + o2 + time, random = ~ 1 | id, data = longDF)
-get_imp_meth(y ~ C1 + O2 + c2 + b1 + o2 + time, random = ~ 1 | id, data = longDF)
 
 get_models(y ~ C1 + O2 + c2 + b1 + o2 + time, random = ~ 1 | id,
            no_model = 'time', data = longDF)
+
+get_models(y ~ C1 + O2 + c2 + b1 + o2 + time, random = ~ 1 | id,
+           no_model = 'time', data = longDF, models = c(C1 = 'norm'))
 
 }

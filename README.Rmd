@@ -13,7 +13,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-# JointAI: Joint Analysis and Imputation of Incomplete Data
+
+# JointAI: Joint Analysis and Imputation of Incomplete Data <img src="man/figures/logo.png" align="right" alt="" width="160" />
+
 
 [![Travis-CI Build Status](https://travis-ci.org/NErler/JointAI.svg?branch=master)](https://travis-ci.org/NErler/JointAI)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version-last-release/JointAI)](https://CRAN.R-project.org/package=JointAI)
@@ -87,13 +89,14 @@ data and missing values, export of imputed values and prediction.
 ```{r, fig.width = 8, fig.height = 4, message = FALSE}
 library(JointAI)
 
-par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
-plot_all(NHANES[c(1, 5:6, 8:12)], fill = '#18bc9c', border = '#2C3E50', ncol = 4, nclass = 30)
+op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
+plot_all(NHANES[c(1, 5:6, 8:12)], fill = '#e30f41', border = '#34111b', ncol = 4, nclass = 30)
+par(op)
 ```
 
 
 ```{r, fig.height = 5}
-md_pattern(NHANES, color = c('#2C3E50', '#18bc9c'))
+md_pattern(NHANES, color = c('#34111b', '#e30f41'))
 ```
 
 ### Fit a linear regression model with incomplete covariates
@@ -105,11 +108,11 @@ lm1 <- lm_imp(SBP ~ gender + age + WC + alc + educ + bili,
 
 ### Visualize the MCMC sample
 ```{r fig.width = 8, fig.height = 4, out.width = '100%', dpi = 300}
-traceplot(lm1, col = c('#E74C3C', '#2C3E50', '#18bc9c'), ncol = 4)
+traceplot(lm1, col = c('#d4af37', '#34111b', '#e30f41'), ncol = 4)
 ```
 
 ```{r fig.width = 8, fig.height = 4, out.width = '100%', dpi = 300}
-densplot(lm1, col = c('#E74C3C', '#2C3E50', '#18bc9c'), ncol = 4, lwd = 2)
+densplot(lm1, col = c('#d4af37', '#34111b', '#e30f41'), ncol = 4, lwd = 2)
 ```
 
 ### Summarize the Result

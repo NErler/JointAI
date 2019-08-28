@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' # fit a JointAI model
-#' mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' mod <- lm_imp(y ~ C1 + C2 + M1, data = wideDF, n.iter = 100)
 #'
 #'
 #' # Example 1: simple traceplot
@@ -92,16 +92,16 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
               xlab = "Iterations", ylab = "",
               main = colnames(prep$MCMC[[1]])[i], ...)
     }
-    par(op)
+    on.exit(par(op))
   }
 }
 
 
 
-#' Plot posterior density from JointAI model
+#' Plot the posterior density from object of class JointAI
 #'
-#' Plots a set of densities (per MC chain and coefficient) from the MCMC sample
-#' of an object of class "JointAI".
+#' The function plots a set of densities (per chain and coefficient) from
+#' the MCMC sample of an object of class "JointAI".
 #' @inheritParams traceplot
 #' @param vlines list, where each element is a named list of parameters that
 #'               can be passed to \code{\link[graphics]{abline}} to create
@@ -114,10 +114,11 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' @examples
 #'
 #' # fit a JointAI object:
-#' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
+#' mod <- lm_imp(y ~ C1 + C2 + M1, data = wideDF, n.iter = 100)
 #'
 #' # Example 1: basic densityplot
 #' densplot(mod)
+#' densplot(mod, exclude_chains = 2)
 #'
 #'
 #' # Example 2: use vlines to mark zero
@@ -248,7 +249,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
         }
       }
     }
-    par(op)
+    on.exit(par(op))
   }
 }
 
@@ -307,8 +308,8 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 
 #' Visualize the distribution of all variables in the dataset
 #'
-#' Plots a grid of histograms (for continuous variables) and barplots (for
-#' categorical variables) together with the proportion of missing values in
+#' This function plots a grid of histograms (for continuous variables) and barplots (for
+#' categorical variables) and labels it with the proportion of missing values in
 #' each variable.
 #' @param data a \code{data.frame} (or a \code{matrix})
 #' @param fill color the histograms and bars are filled with
@@ -322,8 +323,9 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 #'
 #' @seealso Vignette: \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
 #' @examples
-#' par(mar = c(1,2,3,1), mgp = c(2, 0.6, 0))
+#' op <- par(mar = c(2,2,3,1), mgp = c(2, 0.6, 0))
 #' plot_all(wideDF)
+#' par(op)
 #'
 #' @export
 
@@ -338,8 +340,8 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
 
   # get number of rows and columns of plots
   if (is.null(nrow) & is.null(ncol)) {
-    dims <- if (ncol(data) > 64) {
-      grDevices::n2mfrow(49)
+    dims <- if (ncol(data) > 49) {
+      grDevices::n2mfrow(36)
     } else {
       grDevices::n2mfrow(ncol(data))
     }
@@ -425,5 +427,5 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
     }
   }
 
-  par(op)
+  on.exit(par(op))
 }

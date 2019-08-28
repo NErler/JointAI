@@ -1,0 +1,436 @@
+---
+title: "Theoretical Background"
+author: "Nicole Erler"
+date: "`r Sys.Date()`"
+output: 
+  bookdown::html_document2:
+    toc: true
+    toc_depth: 4
+    number_sections: false
+pkgdown:
+  as_is: true
+vignette: >
+  %\VignetteIndexEntry{Theoretical Background}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+references:
+- id: Erler2016
+  title: "Dealing with missing covariates in epidemiologic studies: A comparison between multiple imputation and a full Bayesian approach"
+  author:
+  - family: Erler
+    given: NS
+  - family: Rizopoulos
+    given: D
+  - family: van Rosmalen
+    given: J
+  - family: Jaddoe
+    given: VWV
+  - family: Franco
+    given: OH
+  - family: Lesaffre
+    given: EMEH
+  container-title: Statistics in Medicine
+  volume: 35
+  URL: 'https://dx.doi.org/10.1002/sim.6944'
+  DOI: 10.1002/sim.6944
+  issue: 17
+  page: 2955 -- 2974
+  type: article-journal
+  issued:
+    year: 2016
+- id: Ibrahim2002
+  title: Bayesian Methods for Generalized Linear Models with Covariates Missing At Random
+  author:
+    - family: Ibrahim
+      given: JG
+    - family: Chen
+      given: MH,
+    - family: Lipsitz
+      given: SR
+  issued:
+    year: 2002
+  container-title: Canadian Journal of Statistics
+  volume: 30
+  issue: 1
+  page: 55 -- 78
+  DOI: 10.2307/3315865
+  URL: 'https://dx.doi.org/10.2307/3315865'
+- id: White2011
+  author:
+    - family: White
+      given: IR
+    - family: Royston
+      given: P
+    - family: Wood
+      given: AM
+  issued:
+    year: 2011
+  title: "Multiple Imputation using Chained Equations: Issues and Guidance for Practice"
+  container-title: Statistics in Medicine
+  volume: 30
+  issue: 4
+  page: 377 -- 399
+  DOI: 10.1002/sim.4067
+  URL: 'https://dx.doi.org/10.1002/sim.4067'
+- id: Bartlett2015
+  author: 
+  - family: Bartlett
+    given: JW
+  - family: Seaman
+    given: SR
+  - family: White
+    given: IR
+  - family: Carpenter
+    given: JR
+  issued:
+    year: 2015
+  title: "Multiple Imputation of Covariates by Fully Conditional Specification: Accommodating the Substantive Model"
+  container-title: Statistical Methods in Medical Research
+  volume: 24
+  issue: 4
+  page: 462 -- 487
+  DOI: 10.1177/0962280214521348
+  URL: https://dx.doi.org/10.1177/0962280214521348
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.align = 'center'
+)
+library(JointAI)
+options(width = 100)
+```
+
+
+Consider the general setting of a regression model where interest lies in a set
+of parameters $\boldsymbol\theta$ that describe the association between a univariate outcome
+$\mathbf y$ and a set of covariates $\mathbf X = (\mathbf x_1, \ldots, \mathbf x_p)$.
+In the Bayesian framework, inference over $\boldsymbol\theta$ is obtained
+by estimation of the posterior distribution of $\boldsymbol\theta$, which is proportional
+to the product of the likelihood of the data $(\mathbf y, \mathbf X)$
+and the prior distribution of $\boldsymbol\theta$,
+$$ p(\boldsymbol\theta\mid \mathbf y, \mathbf X) \propto
+p(\mathbf y, \mathbf X \mid \boldsymbol\theta)\,p(\boldsymbol\theta).$$
+
+
+When some of the covariates are incomplete, $\mathbf X$ consists of two parts,
+the completely observed variables $\mathbf X_{obs}$ and those variables
+that are incomplete, $\mathbf X_{mis}$.
+If $\mathbf y$ had missing values (and this missingness was ignorable),
+the only necessary change in the formulas below
+would be to replace $\mathbf y$ by $\mathbf y_{mis}$.
+Here, we will, therefore, consider $\mathbf y$ to be completely observed. 
+In the implementation in the R package **JointAI**, however,
+missing values in the outcome are allowed and are imputed automatically. 
+
+
+The likelihood of the complete data, i.e., observed and unobserved data,
+can be factorized in the following convenient way:
+\[p(\mathbf y, \mathbf X_{obs}, \mathbf X_{mis} \mid \boldsymbol\theta) =
+p(\mathbf y \mid \mathbf X_{obs}, \mathbf X_{mis}, \boldsymbol\theta_{y\mid x})\,
+p(\mathbf X_{mis} \mid \mathbf X_{obs}, \boldsymbol\theta_x),
+\]
+where the first factor constitutes the analysis model of interest,
+described by a vector of parameters $\boldsymbol\theta_{y\mid x}$, and the second 
+factor is the joint distribution of the incomplete variables,
+i.e., the imputation part of the model,
+described by parameters $\boldsymbol\theta_x$, and
+$\boldsymbol\theta = (\boldsymbol\theta_{y\mid x}^\top, \boldsymbol\theta_x^\top)^\top$.
+
+Explicitly specifying the joint distribution of all
+data is one of the major advantages of the Bayesian approach,
+since this facilitates the use of all available information
+of the outcome in the imputation of the incomplete covariates [@Erler2016],
+which becomes especially relevant for more complex outcomes like repeatedly
+measured variables (see section on [imputation with longitudinal outcomes](#sec:impLong)).
+
+
+In complex models the posterior distribution can usually not be derived
+analytically but MCMC methods are used to obtain samples
+from the posterior distribution.
+The MCMC sampling in **JointAI** is done using Gibbs sampling,
+which iteratively samples from the full conditional distributions of the unknown
+parameters and missing values.
+
+In the following sections we describe each of the three parts of the model,
+the analysis model, the imputation part and the prior distributions, in detail.
+
+
+## Analysis model {#sec:AnalysisModel}
+The analysis model of interest is described by the probability density function 
+\(p(\mathbf y \mid \mathbf X, \boldsymbol\theta_{y\mid x})\).
+The R package **JointAI** can currently handle analysis models that are 
+either generalized linear regression models (GLM),
+generalized linear mixed models (GLMM),
+cumulative logit (mixed) models, parametric (Weibull) survival models or Cox proportional hazards models.
+
+### Generalized linear (mixed) models
+For a GLM the probability density function is chosen from the exponential family
+and has the linear predictor
+$$g\{E(y_i\mid \mathbf X, \boldsymbol\theta_{y\mid x})\} = \mathbf x_i^\top\boldsymbol\beta,$$
+where $g(\cdot)$ is a link function, $y_i$ the value of the outcome variable
+for subject $i$, and $\mathbf x_i$ is a column vector containing the row of 
+$\mathbf X$ that contains the covariate information for $i$.
+
+For a GLMM the linear predictor is of the form
+$$g\{E(y_{ij}\mid \mathbf X, \mathbf b_i, \boldsymbol\theta_{y\mid x})\} = \mathbf x_{ij}^\top\boldsymbol\beta + \mathbf z_{ij}^\top\mathbf b_i,$$
+where $y_{ij}$ is the $j$-th outcome of subject $i$, $\mathbf x_{ij}$ is the
+corresponding vector of covariate values, $\mathbf b_i$ a vector of random effects
+pertaining to subject $i$,
+and $\mathbf z_{ij}$ a column vector containing  the row of the design matrix of the random effects, $\mathbf Z$,
+that corresponds to the $j$-th measurement of subject $i$.
+$\mathbf Z$ typically contains a subset of the variables in $\mathbf X$, and
+$\mathbf b_i$ follows a normal distribution with mean zero and covariance matrix
+$\mathbf D$.
+
+In both cases the parameter vector $\boldsymbol\theta_{y\mid x}$ contains the
+regression coefficients $\boldsymbol\beta$, and potentially additional variance
+parameters (e.g., for linear (mixed) models), for which prior distributions
+will be specified in the section on [prior distributions](#sec:priors).
+
+
+### Cumulative logit (mixed) models
+Cumulative logit mixed models are of the form
+\begin{eqnarray*}
+y_{ij} &\sim& \text{Mult}(\pi_{ij,1}, \ldots, \pi_{ij,K}),\\[2ex]
+\pi_{ij,1} &=& P(y_{ij} \leq 1),\\
+\pi_{ij,k} &=& P(y_{ij} \leq k) - P(y_{ij} \leq k-1), \quad k \in 2, \ldots, K-1,\\
+\pi_{ij,K} &=& 1 - \sum_{k = 1}^{K-1}\pi_{ij,k},\\[2ex]
+\text{logit}(P(y_{ij} \leq k)) &=& \gamma_k + \eta_{ij}, \quad k \in 1,\ldots,K,\\
+\eta_{ij} &=& \mathbf x_{ij}^\top\boldsymbol\beta + \mathbf z_{ij}^\top\mathbf b_i,\\[2ex]
+\gamma_1,\delta_1,\ldots,\delta_{K-1} &\overset{iid}{\sim}& N(\mu_\gamma, \sigma_\gamma^2),\\
+\gamma_k &\sim& \gamma_{k-1} + \exp(\delta_{k-1}),\quad k = 2,\ldots,K,
+\end{eqnarray*}
+where $\pi_{ij,k} = P(y_{ij} = k)$ and $\text{logit}(x) = \log\left(\frac{x}{1-x}\right)$.
+A cumulative logit regression model for a univariate outcome $y_i$ can be 
+obtained by dropping the index \(j\) and omitting \(\mathbf z_{ij}^\top\mathbf b_i\).
+In cumulative logit (mixed) models, the design matrix $\mathbf X$ does not contain
+an intercept, since outcome category specific intercepts $\gamma_1,\ldots, \gamma_K$ 
+are specified. Here, the parameter vector $\boldsymbol \theta_{y\mid x}$ includes
+the regression coefficients $\boldsymbol\beta$, the first intercept $\gamma_1$
+and increments $\delta_1, \ldots, \delta_{K-1}$.
+
+
+### Survival models
+Survival data are typically characterized by the observed event or censoring times,
+$T_i$, and the event indicator, $D_i$, which is one if the event was observed
+and zero otherwise.
+**JointAI** provides two types of models to analyse right censored survival data,
+a parametric model which assumes a Weibull distribution for the true
+(but partially unobserved) survival times $T^*$, and a semi-parametric
+Cox proportional hazards model.
+
+The parametric survival model is implemented as
+\begin{eqnarray*}
+T_i^* &\sim& \text{Weibull}(1, r_i, s),\\
+D_i &\sim& \unicode{x1D7D9}(T_i^* \geq C_i),\\
+\log(r_j) &=& - \mathbf x_i^\top\boldsymbol\beta,\\
+s &\sim& \text{Exp}(0.01),
+\end{eqnarray*}
+where $\unicode{x1D7D9}$ is the indicator function which is one if $T_i^*\geq C_i$, and zero otherwise.
+
+The Cox proportional hazards model can be written as
+$$h_i(t) = h_0(t)\exp(\mathbf X_i \boldsymbol\beta),$$
+where $h_0(t)$ is the baseline hazard function, which, in **JointAI**,
+we model using a B-spline approach with six degrees of freedom, i.e.,
+$h_0(t) = \sum_{q = 1}^6 \gamma_{Bq} B_q(t),$ where $B_q$ denotes the $q$-th basis
+function.
+
+The survival function of the Cox model is
+$$S(t\mid \boldsymbol\theta) = \exp\left\{-\int_0^th_0(s)\exp\left(\mathbf X_i\boldsymbol\beta\right)ds\right\} = \exp\left\{-\exp\left(\mathbf X_i\boldsymbol\beta\right)\int_0^th_0(s)ds\right\},$$
+where $\boldsymbol\theta$ includes the regression coefficients $\boldsymbol\beta$
+(which do not contain an intercept) and the coefficients
+$\boldsymbol \gamma_{B}$ used in the specification of the baseline hazard.
+Since the integral over the baseline hazard does not have a closed-form solution,
+in **JointAI** it is approximated using Gauss-Kronrod quadrature with 15 
+evaluation points.
+
+## Imputation part
+A convenient way to specify the joint distribution of the incomplete covariates
+\(\mathbf X_{mis} = (\mathbf x_{mis_1}, \ldots, \mathbf x_{mis_q})\) is to use
+a sequence of conditional univariate distributions [@Ibrahim2002; @Erler2016]
+<!--  -->
+\begin{eqnarray}
+p(\mathbf x_{mis_1}, \ldots, \mathbf x_{mis_q} \mid \mathbf X_{obs}, \boldsymbol\theta_{x})
+& = & p(\mathbf x_{mis_1} \mid \mathbf X_{obs}, \boldsymbol\theta_{x_1})\\
+&   & \prod_{\ell=2}^q p(\mathbf x_{mis_{\ell}} \mid \mathbf X_{obs}, \mathbf x_{mis_1},
+\ldots, \mathbf x_{mis_{\ell-1}}, \boldsymbol\theta_{x_\ell}),(\#eq:factorization)
+\end{eqnarray}
+with $\boldsymbol\theta_{x} = (\boldsymbol\theta_{x_1}^\top, \ldots, \boldsymbol\theta_{x_q}^\top)^\top$.
+
+Each of the conditional distributions is a member of the exponential family,
+extended with distributions for ordinal categorical variables,
+and chosen according to the type of the respective variable.
+Its linear predictor is
+\[
+g_\ell\left\{E\left(x_{i,mis_\ell} \mid \mathbf x_{i,obs},
+\mathbf x_{i, mis_{<\ell}},
+\boldsymbol\theta_{x_\ell}\right)
+\right\} = (\mathbf x_{i, obs}^\top, x_{i, mis_1},
+\ldots, x_{i, mis_{\ell-1}}) \boldsymbol\alpha_{\ell},
+\quad \ell=1,\ldots,q,
+\]
+where $\mathbf x_{i,mis_{<\ell}} = (x_{i,mis_1}, \ldots, x_{i,mis_{\ell-1}})^\top$
+and $\mathbf x_{i,obs}$ is the vector of values for subject $i$ of those covariates
+that are observed for all subjects.
+
+Factorization of the joint distribution of the covariates in such a sequence
+yields a straightforward specification of the joint distribution, even when the
+covariates are of mixed type. 
+
+
+Missing values in the covariates are sampled from their full-conditional
+distribution that can be derived from the full joint distribution of outcome
+and covariates.
+
+
+When, for instance, the analysis model is a GLM, the full conditional 
+distribution of an incomplete covariate $x_{i, mis_{\ell}}$ can be written as
+\begin{eqnarray} \nonumber
+p(x_{i, mis_{\ell}} \mid \mathbf y_i, \mathbf x_{i,obs},
+\mathbf x_{i,mis_{-\ell}}, \boldsymbol\theta)
+&\propto& p \left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
+\boldsymbol\theta_{y\mid x}
+\right)
+p(\mathbf x_{i, mis}\mid \mathbf x_{i, obs}, \boldsymbol\theta_{x})\,
+p(\boldsymbol\theta_{y\mid x})\, p(\boldsymbol\theta_{x})\\\nonumber
+&\propto& p \left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
+\boldsymbol\theta_{y\mid x}
+\right)\\\nonumber
+&        & p(x_{i, mis_\ell} \mid \mathbf x_{i, obs}, \mathbf x_{i, mis_{<\ell}}, \boldsymbol\theta_{x_\ell})\\\nonumber
+&        & \left\{
+\prod_{k=\ell+1}^q p(x_{i,mis_k}\mid \mathbf x_{i, obs},
+\mathbf x_{i, mis_{<k}},
+\boldsymbol\theta_{x_k})
+\right\}\\
+&        & p(\boldsymbol\theta_{y\mid x}) p(\boldsymbol\theta_{x_\ell})
+\prod_{k=\ell+1}^p p(\boldsymbol\theta_{x_k}), (\#eq:fullcond)
+\end{eqnarray}
+where $\boldsymbol\theta_{x_{\ell}}$ is the vector of parameters describing the model
+for the $\ell$-th covariate, and contains the vector of regression coefficients
+$\boldsymbol\alpha_\ell$ and potentially additional (variance) parameters.
+The product of distributions enclosed by curly brackets represents the
+distributions of those covariates that have $x_{mis_\ell}$ as a predictive
+variable in the specification of the sequence in \@ref(eq:factorization).
+
+Even though \@ref(eq:fullcond) describes the actual imputation model,
+i.e., the distribution the imputed values for $x_{i, mis_{\ell}}$ are sampled from,
+we will use the term ``imputation model'' for the conditional distribution
+of $x_{i, mis_{\ell}}$ from \@ref(eq:factorization), since the latter is 
+the distribution that is explicitly specified by the user and, hence, of more
+relevance when using **JointAI**.
+
+### Imputation with longitudinal outcomes {#sec:impLong}
+Factorizing the joint distribution into analysis model and imputation part
+also facilitates extensions to settings with more complex outcomes,
+such as repeatedly measured outcomes.
+In the case where the analysis model is a GLMM or ordinal mixed model,
+the conditional distribution of the outcome in \@ref(eq:fullcond),
+$p\left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis}, \boldsymbol\theta_{y\mid x}
+\right),$
+has to be replaced by
+\begin{eqnarray}
+\left\{\prod_{j=1}^{n_i} p \left(y_{ij} \mid \mathbf x_{i, obs},
+\mathbf x_{i, mis}, \mathbf b_i,
+\boldsymbol\theta_{y\mid x}\right)
+\right\}. (\#eq:lmmpartfullcond)
+\end{eqnarray}
+Since $\mathbf y$ does not appear in any of the other terms in \@ref(eq:fullcond),
+and \@ref(eq:lmmpartfullcond) can be chosen to be a model that is appropriate
+for the outcome at hand, the thereby specified full conditional distribution
+of $x_{i, mis_\ell}$ allows us to draw valid imputations that use all available
+information on the outcome.
+
+This is an important difference to standard FCS, where the full conditional
+distributions used to impute missing values are specified directly, usually
+as regression models, and require the outcome to be explicitly included into
+the linear predictor of the imputation model. In settings with complex outcomes
+it is not clear how this should be done and simplifications may lead to biased
+results [@Erler2016].
+The joint model specification utilized in **JointAI** overcomes this difficulty.
+
+When some of the covariates are time-varying, it is convenient to specify models
+for these variables in the beginning of the sequence of covariate models, so 
+that models for longitudinal variables have other longitudinal and baseline
+covariates in their linear predictor, but longitudinal covariates do not
+enter the predictors of baseline covariates.
+
+
+Note that, whenever there are incomplete baseline covariates it is necessary
+to specify models for all longitudinal variables, even completely observed ones,
+while models for completely observed baseline covariates can be omitted.
+This becomes clear when we extend the factorized joint distribution from above
+with completely and incompletely observed longitudinal (level-1) 
+covariates $\mathbf s_{obs}$ and $\mathbf s_{mis}$:
+\begin{multline*}
+p \left(y_{ij} \mid \mathbf s_{ij, obs}, \mathbf s_{ij, mis},
+\mathbf x_{i, obs}, \mathbf x_{i, mis}, \boldsymbol\theta_{y\mid x} \right)\\
+p(\mathbf s_{ij, mis}\mid \mathbf s_{ij, obs}, \mathbf x_{i, obs},
+\mathbf x_{i, mis}, \boldsymbol\theta_{s_{mis}})\,
+p(\mathbf s_{ij, obs}\mid \mathbf x_{i, obs}, \mathbf x_{i, mis},
+\boldsymbol\theta_{s_{obs}})\\
+p(\mathbf x_{i, mis}\mid \mathbf x_{i, obs}, \boldsymbol\theta_{x_{mis}})\,
+p(\mathbf x_{i, obs} \mid \boldsymbol\theta_{x_{obs}})\,
+p(\boldsymbol\theta_{y\mid x})\, p(\boldsymbol\theta_{s_{mis}}) \,
+p(\boldsymbol\theta_{s_{obs}})\, p(\boldsymbol\theta_{x_{mis}}) \,
+p(\boldsymbol\theta_{x_{obs}})
+\end{multline*}
+Given that the parameter vectors $\theta_{x_{obs}}$, $\theta_{x_{mis}}$, $\theta_{s_{obs}}$
+and $\theta_{s_{mis}}$ are a priori independent, and 
+$p(\mathbf x_{i, obs} \mid \boldsymbol\theta_{x_{obs}})$ is independent of
+both $x_{mis}$ and $s_{mis}$, it can be omitted.
+
+
+Since $p(\mathbf s_{ij, obs}\mid \mathbf x_{i, obs}, \mathbf x_{i, mis}, \boldsymbol\theta_{s_{obs}})$,
+however, has $\mathbf x_{i, mis}$ in its linear predictor and will, hence, be
+part of the full conditional distribution of $\mathbf x_{i, mis}$, it cannot
+be omitted from the model.
+
+
+
+### Non-linear associations and interactions
+Other settings in which the fully Bayesian approach employed in **JointAI**
+has an advantage over standard FCS are settings with interaction terms that
+involve incomplete covariates or when the association of the outcome with an
+incomplete covariate is non-linear.
+In standard FCS such settings lead to incompatible imputation models
+[@White2011; @Bartlett2015].
+This becomes clear when considering the following simple example
+where the analysis model of interest is the linear regression
+$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i$
+and $x_i$ is imputed using
+$x_i = \alpha_0 + \alpha_1 y_i + \tilde\varepsilon_i$.
+While the analysis model assumes a quadratic relationship, the imputation model
+assumes a linear association between $\mathbf x$ and $\mathbf y$ and there cannot
+be a joint distribution that
+has the imputation and analysis model as its full conditional distributions.
+
+Because, in **JointAI**, the analysis model is a factor in the full conditional distribution
+that is used to impute $x_i$, the non-linear association is
+taken into account. Furthermore, since it is the joint distribution that is 
+specified, and the full conditional then derived from it, the joint distribution
+is ensured to exist.
+
+
+## Prior distributions {#sec:priors}
+Prior distributions have to be specified for all (hyper)parameters.
+A common prior choice for the regression coefficients is the normal distribution
+with mean zero and large variance.
+In **JointAI** variance parameters in models for normally distributed variables are
+specified as, by default vague, inverse-gamma distributions.
+
+The covariance matrix of the random effects in a mixed model, $\mathbf D$,
+is assumed to follow an inverse Wishart distribution where the degrees of freedom
+are usually chosen to be equal to the dimension of the random effects, and the
+scale matrix is diagonal. Since the magnitude of the diagonal elements relates 
+to the variance of the random effects, the choice of suitable values depends on the
+scale of the variable the random effect is associated with. Therefore, **JointAI**
+uses independent gamma hyperpriors for each of the diagonal elements.
+More details about the default hyperparameters and how to change them are given
+in the section on [hyperparameters in the vignette about Model Specification ](https://nerler.github.io/JointAI/articles/ModelSpecification.html#hyperparameters).
+
+
+## References

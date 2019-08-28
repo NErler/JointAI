@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_samples.R
 \name{add_samples}
 \alias{add_samples}
-\title{Add samples to an object of class JointAI}
+\title{Continue sampling from an object of class JointAI}
 \usage{
 add_samples(object, n.iter, add = TRUE, thin = NULL,
   monitor_params = NULL, progress.bar = "text", mess = TRUE)
@@ -10,35 +10,47 @@ add_samples(object, n.iter, add = TRUE, thin = NULL,
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
-\item{n.iter}{number of iterations to monitor}
+\item{n.iter}{the number of iterations of the MCMC chain (after adaptation;
+see also \code{\link[rjags]{coda.samples}})}
 
 \item{add}{logical; should the new MCMC samples be added to the existing
-samples or replace them? If samples are added, \code{thin} and
-\code{var.names} are ignored.}
+samples or replace them? If samples are added,
+\code{var.names} is ignored.}
 
 \item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
 \item{monitor_params}{named vector specifying which parameters should be
-monitored}
+monitored (see details)}
 
 \item{progress.bar}{character string specifying the type of progress bar.
-Possible values are "text", "gui", and "none".
-See \code{\link[rjags]{update}}.}
+Possible values are "text", "gui", and "none" (see
+\code{\link[rjags]{update}}). Note: when sampling is performed
+in parallel it is currently not possible to display a
+progress bar.}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. Note: this applies only to messages
-given directly by \strong{JointAI}.}
+\code{TRUE}. (Note: this applies only to messages
+given directly by \strong{JointAI}.)}
 }
 \description{
-Allows to continue sampling from an existing object of class 'JointAI'.
-When the original sample was created using parallel computation, the
+This function allows to continue sampling from an existing object of class 'JointAI'.\cr
+If the original sample was created using parallel computation, the
 separate 'jags' objects will be recompiled and sampling will again be
 performed in parallel.
 }
+\section{Note}{
+
+When the thinning interval differs between the original model and the added
+samples, the resulting, new, 'JointAI' object does not yet record this information.
+Moreover, when \code{add_samples()} is used with \code{add = FALSE} the
+indices of iterations (for example given in the \code{summary()}) may not be
+correct.
+}
+
 \examples{
 # Example 1:
 # Run an initial JointAI model:
-mod <- lm_imp(y~C1 + C2 + M2, data = wideDF, n.iter = 100)
+mod <- lm_imp(y ~ C1 + C2, data = wideDF, n.iter = 100)
 
 # Continue sampling:
 mod_add <- add_samples(mod, n.iter = 200, add = TRUE)
@@ -53,10 +65,8 @@ imps <- add_samples(mod, n.iter = 200, monitor_params = c("imps" = TRUE),
 
 }
 \seealso{
-\code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{lme_imp}}, \code{\link{clm_imp}}
-\code{\link{glme_imp}}, \code{\link{clmm_imp}}, \code{\link{survreg_imp}},
-\code{\link{coxph_imp}}
+\code{\link[JointAI:model_imp]{*_imp}}
 
 The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
-contains some examples how to specify the argument \code{monitor_params}.
+contains some examples on how to specify the argument \code{monitor_params}.
 }

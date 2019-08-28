@@ -22,7 +22,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   if (analysis_type %in% c('survreg', 'coxph')) {
     if (length(outnam) == 2) {
       y <- data[, outnam[1], drop = FALSE]
-      cens <- sapply(data[, outnam[2], drop = FALSE],
+      event <- sapply(data[, outnam[2], drop = FALSE],
                      function(x) {
                        if (is.factor(x)) {
                          as.numeric(x) - 1
@@ -35,7 +35,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     }
   } else {
     y <- data[, outnam, drop = FALSE]
-    cens <- NULL
+    event <- NULL
   }
 
   # * preliminary design matrix ------------------------------------------------
@@ -43,15 +43,17 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
   # variables that do not have a main effect in fixed are added to the auxiliary variables
   trafosX <- extract_fcts(fixed, data, random = random, complete = TRUE)
-  add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), auxvars))]
+  add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), all.vars(auxvars)))]
 
   if (length(add_to_aux) > 0 & !is.null(models))
-    auxvars <- c(auxvars, unique(add_to_aux))
+    auxvars <- as.formula(paste(ifelse(is.null(auxvars), "~ ",
+                                       paste0(deparse(auxvars, width.cutoff = 500), " + ")),
+                          paste0(unique(add_to_aux), collapse = " + ")))
 
   # fixed effects design matrices
   fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed, width.cutoff = 500),
                                    fixed = TRUE),
-                               auxvars), collapse = " + "))
+                               auxvars[[2]]), collapse = " + "))
   fcts_all <- extract_fcts(fixed2, data, random = random, complete = TRUE)
 
 
@@ -81,7 +83,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   # Give a message about coding of ordinal factors if there are any in the predictor
   if (any(unlist(sapply(data[, all.vars(fixed2[c(1,3)])],
                         class)) == 'ordered') & mess)
-    message("Note: ordered factors are included as dummy variables into the linear predictor (not as orthogonal polynomials).")
+    message("Note: Ordered factors are included as dummy variables into the linear predictor (not as orthogonal polynomials).")
 
 
 
@@ -183,6 +185,11 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     stop(paste0("Natural cubic splines are not implemented for incomplete variables. ",
                 "Please use B-splines (using ", dQuote("bs()"), ") instead."),
          call. = FALSE)
+
+  # if (any(fcts_mis$type %in% c('ns')))
+  #   stop(paste0("Natural cubic splines are not implemented for incomplete variables. ",
+  #               "Please use B-splines (using ", dQuote("bs()"), ") instead."),
+  #        call. = FALSE)
 
   if (!is.null(fcts_mis)) {
     fmla_trafo <- as.formula(
@@ -289,7 +296,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   }, cols = cols_main,
   mat = list(Xc, Xl, Xic, Xil, Z))
 
-  return(list(y = y, cens = cens,
+  return(list(y = y, event = event,
               Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat, Xlcat = Xlcat,
               Xtrafo = Xtrafo, Xltrafo = Xltrafo,
               Z = Z, cols_main = cols_main, names_main = names_main,

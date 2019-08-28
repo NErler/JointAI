@@ -94,6 +94,7 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
                                         'glmm_poisson', 'clmm', 'lnmm')]
 
 
+
   imputation_part_baseline <- if (length(imp_par_list_baseline) > 0) {
     paste0('\n\n',
       tab(), "# ----------------------------------------- #", "\n",

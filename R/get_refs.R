@@ -53,18 +53,17 @@ get_refs <- function(fmla, data, refcats = NULL) {
 }
 
 
-#' Set the reference categories for all categorical covariates in the model
+#' Specify reference categories for all categorical covariates in the model
 #'
-#' The function asks questions and, depending on the answers given by the user,
-#' returns the input for the argument \code{refcats} in the functions
-#' \code{\link{lm_imp}}, \code{\link{glm_imp}}, \code{\link{clm_imp}},
-#' \code{\link{lme_imp}}, \code{\link{glme_imp}}, \code{\link{clmm_imp}},
-#' \code{\link{survreg_imp}} and \code{\link{coxph_imp}}.
+#' The function is a helper function that asks questions and, depending on the
+#' answers given by the user,
+#' returns the input for the argument \code{refcats} in the main analysis functions
+#' \code{\link[JointAI:model_imp]{*_imp}}.
 #'
 #' @param data a \code{data.frame}
 #' @param formula optional; model formula (used to select subset of relevant columns of \code{data})
 #' @param covars optional; vector containing the names of relevant columns of \code{data}
-#' @param auxvars optional; vector containing the names of relevant columns of
+#' @param auxvars optional; formula containing the names of relevant columns of
 #'                \code{data} that should be considered additionally to the columns
 #'                occurring in the \code{formula}
 #'
@@ -95,14 +94,14 @@ get_refs <- function(fmla, data, refcats = NULL) {
 #'
 #' @export
 
-set_refcat <- function(data, formula, covars, auxvars) {
-  if (missing(formula) & missing(covars) & missing(auxvars)) {
+set_refcat <- function(data, formula, covars, auxvars = NULL) {
+  if (missing(formula) & missing(covars) & is.null(auxvars)) {
     covars <- colnames(data)
   } else  if (missing(covars) & !missing(formula)) {
     covars <- all.vars(formula)[!all.vars(formula) %in% c(extract_outcome(formula))]
   }
-  if (!missing(auxvars))
-    covars <- unique(c(covars, auxvars))
+  if (!is.null(auxvars))
+    covars <- unique(c(covars, attr(terms(auxvars), 'term.labels')))
 
   factors <- covars[sapply(data[, covars, drop = FALSE], is.factor)]
 
@@ -117,7 +116,7 @@ set_refcat <- function(data, formula, covars, auxvars) {
 
   if (q1 == 4) {
     q2 <- q3 <- setNames(numeric(length(factors)), factors)
-    for(i in seq_along(factors)) {
+    for (i in seq_along(factors)) {
       q2[i] <- menu(levels(data[, factors[i]]),
                     title = gettextf("The reference category for %s should be", dQuote(factors[i]))
       )

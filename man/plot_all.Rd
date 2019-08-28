@@ -38,13 +38,14 @@ This requires specification of the argument \code{idvar}.}
 and \code{\link[graphics]{hist}}}
 }
 \description{
-Plots a grid of histograms (for continuous variables) and barplots (for
-categorical variables) together with the proportion of missing values in
+This function plots a grid of histograms (for continuous variables) and barplots (for
+categorical variables) and labels it with the proportion of missing values in
 each variable.
 }
 \examples{
-par(mar = c(1,2,3,1), mgp = c(2, 0.6, 0))
+op <- par(mar = c(2,2,3,1), mgp = c(2, 0.6, 0))
 plot_all(wideDF)
+par(op)
 
 }
 \seealso{

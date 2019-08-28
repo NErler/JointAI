@@ -68,7 +68,7 @@ survreg_priors <- function(K_list, Mlist, ...){
 
 
 # Cox PH model -----------------------------------------------------------------
-coxph_model <- function(Mlist, K, ...){
+coxph_count_model <- function(Mlist, K, ...){
 
   y_name <- colnames(Mlist$y)
   indent <- 4 + 10 + 4
@@ -95,8 +95,44 @@ coxph_model <- function(Mlist, K, ...){
 }
 
 
+coxph_model <- function(Mlist, K, ...){
+
+  y_name <- colnames(Mlist$y)
+  indent <- 4 + 10 + 4
+
+  paste_Xic <- if (!is.null(Mlist$Xic)) {
+    paste0(" + \n", tab(indent),
+           paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xic',
+                           parelmts = K["Xic", 1]:K["Xic", 2],
+                           cols = Mlist$cols_main$Xic, indent = indent))
+  }
+
+
+  paste0(tab(4), "# Cox PH model for ", y_name, "\n",
+         tab(4), "etaBaseline[j] <- ",
+         if (any(is.na(K["Xc", ]))) '0'
+         else
+           paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xc',
+                           parelmts = K["Xc", 1]:K["Xc", 2],
+                         cols = Mlist$cols_main$Xc, indent = indent),
+         paste_Xic, "\n",
+         tab(4), "log.h0.T[j] <- inprod(Bs.gammas[], Bmat_h0[j, ])", "\n",
+         tab(4), "log.hazard[j] <- log.h0.T[j] + etaBaseline[j]", "\n",
+         tab(4), "for (k in 1:15) {", "\n",
+         tab(6), "log.h0.s[j, k] <- inprod(Bs.gammas[], Bmat_h0s[15 * (j - 1) + k, ])", "\n",
+         tab(6), "SurvLong[j, k] <- gkw[k] * exp(log.h0.s[j, k])", "\n",
+         tab(4), "}", "\n\n",
+         tab(4), "log.survival[j] <- -exp(etaBaseline[j]) * ", y_name ,"[j]/2 * sum(SurvLong[j, ])", "\n",
+         tab(4), "phi[j] <- 5000 - ((event[j] * log.hazard[j])) - (log.survival[j])", "\n",
+         tab(4), "zeros[j] ~ dpois(phi[j])"
+  )
+}
+
+
 # priors for Cox PH model ------------------------------------------------------
-coxph_priors <- function(K_list, Mlist, ...){
+coxph_count_priors <- function(K, Mlist, ...){
+  # y_name <- colnames(Mlist$y)
+
 
   if (Mlist$ridge) {
     distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv_ridge[k])", "\n",
@@ -112,5 +148,32 @@ coxph_priors <- function(K_list, Mlist, ...){
     # tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
     # distr,
     # tab(), "}"
+  )
+}
+
+
+
+
+coxph_priors <- function(K, Mlist, ...){
+  if (Mlist$ridge) {
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv_ridge[k])", "\n",
+                    tab(4), "tau_reg_surv_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
+  } else {
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n")
+  }
+
+
+  paste0(
+    tab(), "# Priors for the coefficients in the analysis model", "\n",
+    if (!all(is.na(K))) {
+      paste0(
+      tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
+      distr,
+      tab(), "}", "\n")
+    },
+    tab(), "for (k in 1:6) {", "\n",
+    tab(4), "Bs.gammas[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n",
+    tab(), "}"
+    # tab(), "Bs.gammas[1:5] ~ dmnorm(priorMean.Bs.gammas[], tau_reg_surv * priorTau.Bs.gammas[, ])"
   )
 }

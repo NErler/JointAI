@@ -31,9 +31,9 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 
   # outcome specification for parametric survival models
   if (analysis_type == "survreg") {
-    l$cens <- as.numeric(unlist(Mlist$cens == 0))
+    l$cens <- as.numeric(unlist(Mlist$event == 0))
     l$ctime <- as.numeric(unlist(Mlist$y))
-    l[[names(Mlist$y)]][Mlist$cens == 0] <- NA
+    l[[names(Mlist$y)]][Mlist$event == 0] <- NA
     l <- c(l, defs$surv)
 
     if (Mlist$ridge)
@@ -42,40 +42,68 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 
   # outcome specification for Cox PH models
   if (analysis_type == 'coxph') {
-    l[[names(Mlist$y)]] <- NULL
+    l$event <- as.numeric(unlist(Mlist$event))
 
-    y <- unlist(Mlist$y)
-    etimes <- c(sort(unique(y[Mlist$cens == 1])), max(y))
-    Y <- dN <- matrix(nrow = length(y), ncol = length(etimes) - 1,
-                      dimnames = list(subj = c(), time = c()))
-    for (j in 1:(length(etimes) - 1)) {
-      Y[, j] <- ifelse(y - etimes[j] + defs$coxph['eps'] > 0, 1, 0)
-      dN[, j] <- Y[, j] * ifelse(etimes[j + 1] - y - defs$coxph['eps'] > 0, 1, 0) * unlist(Mlist$cens)
-    }
+    gkw <- gauss_kronrod()$gkw
+    gkx <- gauss_kronrod()$gkx
 
-    priorhaz <- numeric(length(etimes) - 1)
-    for (j in 1:(length(etimes) - 1)) {
-      priorhaz[j] <- defs$coxph['r'] * max(1e-10, etimes[j + 1] - etimes[j]) * defs$coxph['c']
-    }
+    ordgkx <- order(gkx)
+    gkx <- gkx[ordgkx]
 
-    Ylong <- melt_matrix(Y)
-    Ylong$dN <- melt_matrix(dN)$value
+    l$gkw <- gkw[ordgkx]
+    h0knots <- get_knots_h0(nkn = 2, Time = l[[names(Mlist$y)]],
+                            event = Mlist$event, gkx = gkx)
 
-    Ylong <- Ylong[order(Ylong$value, decreasing = T), ]
+    l$Bmat_h0 <- splines::splineDesign(h0knots, l[[names(Mlist$y)]], ord = 4)
+    l$Bmat_h0s <- splines::splineDesign(h0knots,
+                                        c(t(outer(l[[names(Mlist$y)]]/2, gkx + 1))),
+                                        ord = 4)
+    l$zeros <- numeric(length(l[[names(Mlist$y)]]))
+    # l$priorTau.Bs.gammas <- diag(1, ncol(l$Bmat_h0))
+    # l$priorMean.Bs.gammas = rep(0, ncol(l$Bmat_h0))
 
-    l$priorhaz <- priorhaz
-    l$subj <- Ylong$subj
-    l$time <- Ylong$time
-    l$RiskSet <- Ylong$value
-    l$dN <- Ylong$dN
-    l$nt <- length(etimes)
-    l$Idt <- ifelse(l$RiskSet == 0, 0, NA)
-    l$c <- defs$coxph["c"]
     l <- c(l, defs$surv)
 
     if (Mlist$ridge)
       tau_reg_surv <- NULL
   }
+
+#
+#   if (analysis_type == 'coxph_count') {
+#     l[[names(Mlist$y)]] <- NULL
+#
+#     y <- unlist(Mlist$y)
+#     etimes <- c(sort(unique(y[Mlist$event == 1])), max(y))
+#     Y <- dN <- matrix(nrow = length(y), ncol = length(etimes) - 1,
+#                       dimnames = list(subj = c(), time = c()))
+#     for (j in 1:(length(etimes) - 1)) {
+#       Y[, j] <- ifelse(y - etimes[j] + defs$coxph['eps'] > 0, 1, 0)
+#       dN[, j] <- Y[, j] * ifelse(etimes[j + 1] - y - defs$coxph['eps'] > 0, 1, 0) * unlist(Mlist$event)
+#     }
+#
+#     priorhaz <- numeric(length(etimes) - 1)
+#     for (j in 1:(length(etimes) - 1)) {
+#       priorhaz[j] <- defs$coxph['r'] * max(1e-10, etimes[j + 1] - etimes[j]) * defs$coxph['c']
+#     }
+#
+#     Ylong <- melt_matrix(Y)
+#     Ylong$dN <- melt_matrix(dN)$value
+#
+#     Ylong <- Ylong[order(Ylong$value, decreasing = T), ]
+#
+#     l$priorhaz <- priorhaz
+#     l$subj <- Ylong$subj
+#     l$time <- Ylong$time
+#     l$RiskSet <- Ylong$value
+#     l$dN <- Ylong$dN
+#     l$nt <- length(etimes)
+#     l$Idt <- ifelse(l$RiskSet == 0, 0, NA)
+#     l$c <- defs$coxph["c"]
+#     l <- c(l, defs$surv)
+#
+#     if (Mlist$ridge)
+#       tau_reg_surv <- NULL
+#   }
 
 
   # scaled versions of Xc, Xtrafo, Xl and Z
@@ -200,34 +228,24 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 
 
 
-#' Get default values for hyperparameters
+#' Get the default values for hyperparameters
 #'
-#' Prints the list of default values for the hyperparameters.
-# @param family distribution family of the analysis model
-#               (\code{gaussian}, \code{binomial}, \code{poisson} or \code{Gamma})
-# @param link link function (if the link is already given in the family,
-#             e.g. \code{family = binomial("logit"))} this argument does not
-#             need to be specified
-# @param nranef number of random effects
-#
-# @section Value:
-# A list containing the default hyperparameters for JointAI models. The elements
-# of the list are
+#' This function returns a list of default values for the hyperparameters.
 #'
 #' \strong{norm:} hyperparameters for normal and lognormal models
 #' \tabular{ll}{
 #' \code{mu_reg_norm} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_norm} \tab precision in the priors for regression coefficients\cr
-#' \code{shape_tau_norm} \tab shape parameter in Gamma prior for precision of imputed variable\cr
-#' \code{rate_tau_norm} \tab rate parameter in Gamma prior for precision of imputed variable
+#' \code{shape_tau_norm} \tab shape parameter in Gamma prior for precision of an imputed variable\cr
+#' \code{rate_tau_norm} \tab rate parameter in Gamma prior for precision of an imputed variable
 #' }
 #'
 #' \strong{gamma:} hyperparameters for Gamma models
 #' \tabular{ll}{
 #' \code{mu_reg_gamma} \tab mean in the priors for regression coefficients\cr
 #' \code{tau_reg_gamma} \tab precision in the priors for regression coefficients\cr
-#' \code{shape_tau_gamma} \tab shape parameter in Gamma prior for precision of imputed variable\cr
-#' \code{rate_tau_gamma} \tab rate parameter in Gamma prior for precision of imputed variable
+#' \code{shape_tau_gamma} \tab shape parameter in Gamma prior for precision of an imputed variable\cr
+#' \code{rate_tau_gamma} \tab rate parameter in Gamma prior for precision of an imputed variable
 #' }
 #'
 #' \strong{beta:} hyperparameters for beta models
@@ -290,6 +308,11 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
 #'
 #' @examples
 #' default_hyperpars()
+#'
+#' # To change the hyperparameters:
+#' hyp <- default_hyperpars()
+#' hyp$norm['rate_tau_norm'] <- 1e-3
+#' mod <- lm_imp(y ~ C1 + C2 + B1, data = wideDF, hyperpars = hyp, mess = FALSE)
 #'
 #'
 #' @export
@@ -366,14 +389,14 @@ default_hyperpars <- function() {
     surv = c(mu_reg_surv = 0,
              tau_reg_surv = 0.001),
 
-    coxph = c(c = 0.001,
-              r = 0.1,
-              eps = 1e-10
-    ),
-
     ps = c(shape_ps = 1,
            rate_ps = 0.0005
     )
+    # # only needed for counting process version of the cox model
+    # coxph = c(c = 0.001,
+    #           r = 0.1,
+    #           eps = 1e-10
+    #           )
   )
 }
 

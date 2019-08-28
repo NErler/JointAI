@@ -13,7 +13,7 @@ glme_model <- function(family, link, Mlist, K, ...){
                     paste0("dgamma(shape_", y_name, "[j], rate_", y_name, "[j])")
                   },
                   "poisson" = function(y_name) {
-                    paste0("dpois(mu_", y_name, "[j])")
+                    paste0("dpois(max(1e10, mu_", y_name, "[j]))")
                   }
   )
 
