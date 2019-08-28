@@ -87,6 +87,9 @@
       <a href="articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
+      <a href="articles/TheoreticalBackground.html">Theoretical Background</a>
+    </li>
+    <li>
       <a href="articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
     </li>
   </ul>
@@ -132,7 +135,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="jointai-joint-analysis-and-imputation-of-incomplete-data" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#jointai-joint-analysis-and-imputation-of-incomplete-data" class="anchor"></a>JointAI: Joint Analysis and Imputation of Incomplete Data <img src="reference/figures/logo.png" align="right" alt="" width="200">
+<a href="#jointai-joint-analysis-and-imputation-of-incomplete-data" class="anchor"></a>JointAI: Joint Analysis and Imputation of Incomplete Data <img src="reference/figures/logo.png" align="right" alt="" width="160">
 </h1></div>
 
 <p>The package <strong>JointAI</strong> provides joint analysis and imputation of (generalized) linear regression models, (generalized) linear mixed models and parametric (Weibull) survival models with incomplete (covariate) data in the Bayesian framework.</p>
@@ -205,18 +208,18 @@
 <span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt;     data = NHANES, n.iter = 500, progress.bar = "none")</span></span>
 <span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; </span></span>
 <span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; Posterior summary:</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt;                Mean     SD     2.5%   97.5% tail-prob. GR-crit</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; (Intercept)  88.092 9.0198  70.4343 106.417    0.00000    1.00</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; genderfemale -3.292 2.1678  -7.4846   0.896    0.12400    1.01</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; age           0.331 0.0698   0.1953   0.461    0.00000    1.00</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; WC            0.226 0.0754   0.0754   0.375    0.00133    1.00</span></span>
-<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt; alc&gt;=1        6.517 2.2906   1.9680  10.861    0.00400    1.00</span></span>
-<span id="cb9-16"><a href="#cb9-16"></a><span class="co">#&gt; educhigh     -2.838 2.0806  -6.9807   1.188    0.18267    1.00</span></span>
-<span id="cb9-17"><a href="#cb9-17"></a><span class="co">#&gt; bili         -5.245 4.7102 -14.2022   3.861    0.26933    1.00</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt;                Mean     SD    2.5%   97.5% tail-prob. GR-crit</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; (Intercept)  87.776 8.7109  71.044 104.557    0.00000    1.00</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; genderfemale -3.367 2.2644  -7.956   1.094    0.14000    1.01</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; age           0.334 0.0714   0.202   0.476    0.00000    1.00</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; WC            0.229 0.0747   0.083   0.378    0.00267    1.00</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt; alc&gt;=1        6.361 2.3225   1.879  10.939    0.00400    1.00</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="co">#&gt; educhigh     -2.777 2.1691  -6.985   1.356    0.19200    1.00</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="co">#&gt; bili         -5.337 4.7139 -15.008   3.447    0.23067    1.00</span></span>
 <span id="cb9-18"><a href="#cb9-18"></a><span class="co">#&gt; </span></span>
 <span id="cb9-19"><a href="#cb9-19"></a><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
-<span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt;           Mean   SD 2.5% 97.5% GR-crit</span></span>
-<span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt; sigma_SBP 13.6 0.73 12.2  15.1   0.999</span></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt; sigma_SBP 13.6 0.714 12.3    15    1.01</span></span>
 <span id="cb9-22"><a href="#cb9-22"></a><span class="co">#&gt; </span></span>
 <span id="cb9-23"><a href="#cb9-23"></a><span class="co">#&gt; </span></span>
 <span id="cb9-24"><a href="#cb9-24"></a><span class="co">#&gt; MCMC settings:</span></span>
@@ -228,20 +231,20 @@
 <span id="cb9-30"><a href="#cb9-30"></a><span class="co">#&gt; Number of observations: 186</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">coef</span>(lm1)</span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="co">#&gt;  (Intercept) genderfemale          age           WC       alc&gt;=1 </span></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt;   88.0916330   -3.2916416    0.3305905    0.2261960    6.5170797 </span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt;   87.7759982   -3.3666872    0.3339875    0.2291704    6.3612463 </span></span>
 <span id="cb10-4"><a href="#cb10-4"></a><span class="co">#&gt;     educhigh         bili </span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt;   -2.8383007   -5.2450493</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt;   -2.7769321   -5.3373204</span></span>
 <span id="cb10-6"><a href="#cb10-6"></a></span>
 <span id="cb10-7"><a href="#cb10-7"></a><span class="kw">confint</span>(lm1)</span>
 <span id="cb10-8"><a href="#cb10-8"></a><span class="co">#&gt;                      2.5%       97.5%</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a><span class="co">#&gt; (Intercept)   70.43431716 106.4171864</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt; genderfemale  -7.48464541   0.8962883</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a><span class="co">#&gt; age            0.19532255   0.4609044</span></span>
-<span id="cb10-12"><a href="#cb10-12"></a><span class="co">#&gt; WC             0.07541614   0.3747826</span></span>
-<span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; alc&gt;=1         1.96800742  10.8611904</span></span>
-<span id="cb10-14"><a href="#cb10-14"></a><span class="co">#&gt; educhigh      -6.98069360   1.1876778</span></span>
-<span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt; bili         -14.20223929   3.8606145</span></span>
-<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; sigma_SBP     12.18817483  15.0532878</span></span></code></pre></div>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="co">#&gt; (Intercept)   71.04362191 104.5571704</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt; genderfemale  -7.95575570   1.0943058</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="co">#&gt; age            0.20169390   0.4758695</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="co">#&gt; WC             0.08303636   0.3780265</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; alc&gt;=1         1.87869304  10.9393001</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="co">#&gt; educhigh      -6.98544861   1.3555576</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt; bili         -15.00825533   3.4468412</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; sigma_SBP     12.28059430  15.0342633</span></span></code></pre></div>
 </div>
 </div>
 </div>

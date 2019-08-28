@@ -7,6 +7,7 @@ articles:
   MinimalExample: MinimalExample.html
   ModelSpecification: ModelSpecification.html
   SelectingParameters: SelectingParameters.html
+  TheoreticalBackground: TheoreticalBackground.html
   VisualizingIncompleteData: VisualizingIncompleteData.html
 urls:
   reference: https://nerler.github.io/JointAI//reference

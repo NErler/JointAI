@@ -77,6 +77,9 @@
       <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
+      <a href="../articles/TheoreticalBackground.html">Theoretical Background</a>
+    </li>
+    <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
     </li>
   </ul>
@@ -120,7 +123,7 @@
             <h3 class="subtitle">Summary, visualization and evaluation of the results</h3>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2019-08-27</h4>
+            <h4 class="date">2019-08-28</h4>
       
       
       <div class="hidden name"><code>AfterFitting.Rmd</code></div>
@@ -232,16 +235,16 @@
 <span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt;     n.iter = 500)</span></span>
 <span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt; </span></span>
 <span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt; Posterior summary:</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;                Mean     SD   2.5%   97.5% tail-prob. GR-crit</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt; (Intercept)  81.559 9.8364 62.107 100.595     0.0000    1.02</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt; genderfemale  0.320 2.6022 -4.889   5.323     0.9173    1.00</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt; WC            0.302 0.0751  0.158   0.447     0.0000    1.02</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt; alc&gt;=1        6.291 2.4604  1.551  11.209     0.0107    1.00</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt; creat         7.719 7.6075 -7.354  22.645     0.3107    1.00</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;                Mean      SD   2.5%   97.5% tail-prob. GR-crit</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt; (Intercept)  81.427 10.2707 61.876 102.215    0.00000    1.00</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt; genderfemale  0.367  2.5865 -4.629   5.334    0.87333    1.01</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt; WC            0.303  0.0772  0.155   0.455    0.00000    1.00</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt; alc&gt;=1        6.206  2.5247  1.276  11.083    0.00933    1.00</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt; creat         7.771  7.8443 -7.997  23.035    0.32400    1.00</span></span>
 <span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt; </span></span>
 <span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></span>
-<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt; sigma_SBP 14.4 0.767   13  15.9    1.01</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt; sigma_SBP 14.4 0.771   13  15.9    1.01</span></span>
 <span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt; </span></span>
 <span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt; </span></span>
 <span id="cb6-22"><a href="#cb6-22"></a><span class="co">#&gt; MCMC settings:</span></span>
@@ -315,12 +318,12 @@
 <span id="cb8-2"><a href="#cb8-2"></a><span class="co">#&gt; Potential scale reduction factors:</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt; </span></span>
 <span id="cb8-4"><a href="#cb8-4"></a><span class="co">#&gt;              Point est. Upper C.I.</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt; (Intercept)           1       1.02</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt; genderfemale          1       1.02</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; WC                    1       1.01</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; alc&gt;=1                1       1.01</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt; creat                 1       1.01</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; sigma_SBP             1       1.00</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt; (Intercept)       1.000       1.01</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt; genderfemale      1.001       1.00</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; WC                1.001       1.00</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; alc&gt;=1            0.999       1.00</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt; creat             1.000       1.00</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; sigma_SBP         1.003       1.01</span></span>
 <span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; </span></span>
 <span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt; Multivariate psrf</span></span>
 <span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; </span></span>
@@ -332,13 +335,13 @@
 <a href="#sec:mcerror" class="anchor"></a>Monte Carlo Error</h3>
 <p>The precision of the MCMC sample can be checked with the function <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code><a href="../reference/MC_error.html">MC_error()</a></code></a>. It uses the function <code>mcmcse.mat()</code> from the package <a href="https://CRAN.R-project.org/package=mcmcse"><strong>mcmcse</strong></a> to calculate the Monte Carlo error (the error that is made since the sample is finite) and compares it to the standard deviation of the posterior sample. A rule of thumb is that the Monte Carlo error should not be more than 5% of the standard deviation<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Besides the arguments explained <a href="#sec:subset">below</a>, <code><a href="../reference/MC_error.html">MC_error()</a></code> takes the arguments of <code>mcmcse.mat()</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="../reference/MC_error.html">MC_error</a></span>(mod13a)</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#&gt;                est  MCSE    SD MCSE/SD</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; (Intercept)  81.56 0.247 9.836   0.025</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; genderfemale  0.32 0.072 2.602   0.028</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; WC            0.30 0.002 0.075   0.027</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; alc&gt;=1        6.29 0.077 2.460   0.031</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; creat         7.72 0.213 7.608   0.028</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; sigma_SBP    14.41 0.017 0.767   0.023</span></span></code></pre></div>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#&gt;                est   MCSE     SD MCSE/SD</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; (Intercept)  81.43 0.3329 10.271   0.032</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; genderfemale  0.37 0.0735  2.586   0.028</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; WC            0.30 0.0025  0.077   0.032</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; alc&gt;=1        6.21 0.0892  2.525   0.035</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; creat         7.77 0.2158  7.844   0.028</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; sigma_SBP    14.42 0.0199  0.771   0.026</span></span></code></pre></div>
 <p><code><a href="../reference/MC_error.html">MC_error()</a></code> returns an object of class <code>MCElist</code>, which is a list containing matrices with the posterior mean, estimated Monte Carlo error, posterior standard deviation and the ratio of the Monte Carlo error to the posterior standard deviation, for the scaled (if they are part of the <code>JointAI</code> object) and unscaled (transformed back to the scale of the data) posterior samples. The associated print method prints only the latter.</p>
 <p>To facilitate quick evaluation of the Monte Carlo error to posterior standard deviation ratio, plotting of an object of class <code>MCElist</code> using <code>plot()</code> shows this ratio for each (selected) node and automatically adds a vertical line at the desired cut-off (by default 5%).</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="dt">mgp =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="fl">0.6</span>, <span class="dv">0</span>), <span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
@@ -435,14 +438,14 @@
 <span id="cb16-3"><a href="#cb16-3"></a><span class="co">#&gt;          SBP gender age             race   WC alc educ creat albu</span></span>
 <span id="cb16-4"><a href="#cb16-4"></a><span class="co">#&gt; 392 126.6667   male  32 Mexican American 94.1  &lt;1  low  0.83  4.2</span></span>
 <span id="cb16-5"><a href="#cb16-5"></a><span class="co">#&gt;     uricacid bili occup  smoke      fit     2.5%    97.5%</span></span>
-<span id="cb16-6"><a href="#cb16-6"></a><span class="co">#&gt; 392      8.7    1  &lt;NA&gt; former 116.3735 112.6167 120.3852</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="co">#&gt; 392      8.7    1  &lt;NA&gt; former 116.3918 112.2196 120.1574</span></span>
 <span id="cb16-7"><a href="#cb16-7"></a><span class="co">#&gt; </span></span>
 <span id="cb16-8"><a href="#cb16-8"></a><span class="co">#&gt; $fit</span></span>
-<span id="cb16-9"><a href="#cb16-9"></a><span class="co">#&gt; [1] 116.3735</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a><span class="co">#&gt; [1] 116.3918</span></span>
 <span id="cb16-10"><a href="#cb16-10"></a><span class="co">#&gt; </span></span>
 <span id="cb16-11"><a href="#cb16-11"></a><span class="co">#&gt; $quantiles</span></span>
 <span id="cb16-12"><a href="#cb16-12"></a><span class="co">#&gt;          2.5%    97.5%</span></span>
-<span id="cb16-13"><a href="#cb16-13"></a><span class="co">#&gt; [1,] 112.6167 120.3852</span></span></code></pre></div>
+<span id="cb16-13"><a href="#cb16-13"></a><span class="co">#&gt; [1,] 112.2196 120.1574</span></span></code></pre></div>
 <p><code>predict()</code> returns a list with elements <code>dat</code>, <code>fit</code> and <code>quantiles</code>, containing <code>newdata</code> with the predicted values and quantiles appended, the predicted values and quantiles that form the prediction interval.</p>
 <div id="prediction-to-visualize-non-linear-effects" class="section level3">
 <h3 class="hasAnchor">

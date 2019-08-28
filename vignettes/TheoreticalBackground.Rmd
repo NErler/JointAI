@@ -391,8 +391,6 @@ be omitted from the model.
 
 
 
-\pagebreak
-
 ### Non-linear associations and interactions
 Other settings in which the fully Bayesian approach employed in **JointAI**
 has an advantage over standard FCS are settings with interaction terms that

@@ -77,6 +77,9 @@
       <a href="../articles/SelectingParameters.html">Parameter Selection</a>
     </li>
     <li>
+      <a href="../articles/TheoreticalBackground.html">Theoretical Background</a>
+    </li>
+    <li>
       <a href="../articles/VisualizingIncompleteData.html">Visualizing Incomplete Data</a>
     </li>
   </ul>
@@ -120,7 +123,7 @@
             <h3 class="subtitle">How to specify which parameters to monitor and display in the results.</h3>
                         <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2019-08-27</h4>
+            <h4 class="date">2019-08-28</h4>
       
       
       <div class="hidden name"><code>SelectingParameters.Rmd</code></div>
@@ -425,16 +428,16 @@
 <span id="cb10-12"><a href="#cb10-12"></a><span class="co">#&gt;     n.iter = 100, monitor_params = c(imp_pars = TRUE), progress.bar = "none")</span></span>
 <span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; </span></span>
 <span id="cb10-14"><a href="#cb10-14"></a><span class="co">#&gt; Posterior summary:</span></span>
-<span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt;                Mean     SD   2.5%  97.5% tail-prob. GR-crit</span></span>
-<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; (Intercept)  80.617 9.4045 61.683 98.798    0.00000   1.050</span></span>
-<span id="cb10-17"><a href="#cb10-17"></a><span class="co">#&gt; genderfemale  0.289 2.3776 -4.313  4.637    0.95333   0.999</span></span>
-<span id="cb10-18"><a href="#cb10-18"></a><span class="co">#&gt; WC            0.307 0.0739  0.154  0.449    0.00000   1.116</span></span>
-<span id="cb10-19"><a href="#cb10-19"></a><span class="co">#&gt; alc&gt;=1        6.337 2.3916  1.540 10.790    0.00667   1.055</span></span>
-<span id="cb10-20"><a href="#cb10-20"></a><span class="co">#&gt; creat         8.274 6.7541 -4.071 21.759    0.22667   1.011</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt;                Mean      SD   2.5%   97.5% tail-prob. GR-crit</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; (Intercept)  80.737 10.2896 61.471 100.842     0.0000    1.05</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="co">#&gt; genderfemale  0.441  2.7182 -4.786   5.216     0.8667    1.06</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a><span class="co">#&gt; WC            0.307  0.0721  0.183   0.445     0.0000    1.02</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a><span class="co">#&gt; alc&gt;=1        6.253  2.7823  0.967  11.744     0.0267    1.13</span></span>
+<span id="cb10-20"><a href="#cb10-20"></a><span class="co">#&gt; creat         8.100  8.2238 -7.775  23.995     0.3333    1.08</span></span>
 <span id="cb10-21"><a href="#cb10-21"></a><span class="co">#&gt; </span></span>
 <span id="cb10-22"><a href="#cb10-22"></a><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span id="cb10-23"><a href="#cb10-23"></a><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></span>
-<span id="cb10-24"><a href="#cb10-24"></a><span class="co">#&gt; sigma_SBP 14.3 0.763 12.9  15.9    1.02</span></span>
+<span id="cb10-24"><a href="#cb10-24"></a><span class="co">#&gt; sigma_SBP 14.4 0.758   13    16    1.01</span></span>
 <span id="cb10-25"><a href="#cb10-25"></a><span class="co">#&gt; </span></span>
 <span id="cb10-26"><a href="#cb10-26"></a><span class="co">#&gt; </span></span>
 <span id="cb10-27"><a href="#cb10-27"></a><span class="co">#&gt; MCMC settings:</span></span>
@@ -458,26 +461,26 @@
 <span id="cb12-4"><a href="#cb12-4"></a><span class="co">#&gt; Potential scale reduction factors:</span></span>
 <span id="cb12-5"><a href="#cb12-5"></a><span class="co">#&gt; </span></span>
 <span id="cb12-6"><a href="#cb12-6"></a><span class="co">#&gt;              Point est. Upper C.I.</span></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="co">#&gt; (Intercept)       1.012      1.050</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="co">#&gt; genderfemale      0.997      0.999</span></span>
-<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt; WC                1.031      1.116</span></span>
-<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt; alc&gt;=1            1.017      1.055</span></span>
-<span id="cb12-11"><a href="#cb12-11"></a><span class="co">#&gt; creat             1.007      1.011</span></span>
-<span id="cb12-12"><a href="#cb12-12"></a><span class="co">#&gt; sigma_SBP         1.012      1.020</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="co">#&gt; (Intercept)        1.01       1.05</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="co">#&gt; genderfemale       1.01       1.06</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt; WC                 1.00       1.02</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt; alc&gt;=1             1.04       1.13</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="co">#&gt; creat              1.02       1.08</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a><span class="co">#&gt; sigma_SBP          1.00       1.01</span></span>
 <span id="cb12-13"><a href="#cb12-13"></a><span class="co">#&gt; </span></span>
 <span id="cb12-14"><a href="#cb12-14"></a><span class="co">#&gt; Multivariate psrf</span></span>
 <span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt; </span></span>
-<span id="cb12-16"><a href="#cb12-16"></a><span class="co">#&gt; 1.03</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a><span class="co">#&gt; 1.05</span></span>
 <span id="cb12-17"><a href="#cb12-17"></a></span>
 <span id="cb12-18"><a href="#cb12-18"></a><span class="co"># Monte Carlo Error of the MCMC sample</span></span>
 <span id="cb12-19"><a href="#cb12-19"></a><span class="kw"><a href="../reference/MC_error.html">MC_error</a></span>(lm5)</span>
-<span id="cb12-20"><a href="#cb12-20"></a><span class="co">#&gt;                est   MCSE    SD MCSE/SD</span></span>
-<span id="cb12-21"><a href="#cb12-21"></a><span class="co">#&gt; (Intercept)  80.62 0.5722 9.404   0.061</span></span>
-<span id="cb12-22"><a href="#cb12-22"></a><span class="co">#&gt; genderfemale  0.29 0.1232 2.378   0.052</span></span>
-<span id="cb12-23"><a href="#cb12-23"></a><span class="co">#&gt; WC            0.31 0.0053 0.074   0.072</span></span>
-<span id="cb12-24"><a href="#cb12-24"></a><span class="co">#&gt; alc&gt;=1        6.34 0.1687 2.392   0.071</span></span>
-<span id="cb12-25"><a href="#cb12-25"></a><span class="co">#&gt; creat         8.27 0.3258 6.754   0.048</span></span>
-<span id="cb12-26"><a href="#cb12-26"></a><span class="co">#&gt; sigma_SBP    14.31 0.0439 0.763   0.058</span></span></code></pre></div>
+<span id="cb12-20"><a href="#cb12-20"></a><span class="co">#&gt;                est  MCSE     SD MCSE/SD</span></span>
+<span id="cb12-21"><a href="#cb12-21"></a><span class="co">#&gt; (Intercept)  80.74 0.526 10.290   0.051</span></span>
+<span id="cb12-22"><a href="#cb12-22"></a><span class="co">#&gt; genderfemale  0.44 0.132  2.718   0.049</span></span>
+<span id="cb12-23"><a href="#cb12-23"></a><span class="co">#&gt; WC            0.31 0.004  0.072   0.056</span></span>
+<span id="cb12-24"><a href="#cb12-24"></a><span class="co">#&gt; alc&gt;=1        6.25 0.242  2.782   0.087</span></span>
+<span id="cb12-25"><a href="#cb12-25"></a><span class="co">#&gt; creat         8.10 0.488  8.224   0.059</span></span>
+<span id="cb12-26"><a href="#cb12-26"></a><span class="co">#&gt; sigma_SBP    14.42 0.055  0.758   0.072</span></span></code></pre></div>
 <p>When <code>analysis_main</code> was not switched on the default behavior is that all parameters are displayed:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Re-run the model from above, now creating MCMC samples</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a>lm4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat,</span>
@@ -496,21 +499,21 @@
 <span id="cb14-3"><a href="#cb14-3"></a><span class="co">#&gt; Potential scale reduction factors:</span></span>
 <span id="cb14-4"><a href="#cb14-4"></a><span class="co">#&gt; </span></span>
 <span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt;           Point est. Upper C.I.</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; alpha[1]       1.001       1.00</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a><span class="co">#&gt; alpha[2]       0.999       1.00</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a><span class="co">#&gt; alpha[3]       1.009       1.04</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a><span class="co">#&gt; alpha[4]       1.004       1.02</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a><span class="co">#&gt; alpha[5]       0.998       1.00</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a><span class="co">#&gt; alpha[6]       1.047       1.14</span></span>
-<span id="cb14-12"><a href="#cb14-12"></a><span class="co">#&gt; alpha[7]       1.076       1.24</span></span>
-<span id="cb14-13"><a href="#cb14-13"></a><span class="co">#&gt; alpha[8]       1.000       1.01</span></span>
-<span id="cb14-14"><a href="#cb14-14"></a><span class="co">#&gt; alpha[9]       1.087       1.28</span></span>
-<span id="cb14-15"><a href="#cb14-15"></a><span class="co">#&gt; tau_WC         1.006       1.01</span></span>
-<span id="cb14-16"><a href="#cb14-16"></a><span class="co">#&gt; tau_creat      1.001       1.02</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; alpha[1]       1.027       1.08</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="co">#&gt; alpha[2]       1.009       1.02</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="co">#&gt; alpha[3]       0.997       1.00</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="co">#&gt; alpha[4]       1.001       1.00</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="co">#&gt; alpha[5]       1.019       1.08</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="co">#&gt; alpha[6]       1.013       1.05</span></span>
+<span id="cb14-12"><a href="#cb14-12"></a><span class="co">#&gt; alpha[7]       1.026       1.09</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a><span class="co">#&gt; alpha[8]       1.008       1.04</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a><span class="co">#&gt; alpha[9]       1.000       1.00</span></span>
+<span id="cb14-15"><a href="#cb14-15"></a><span class="co">#&gt; tau_WC         1.008       1.03</span></span>
+<span id="cb14-16"><a href="#cb14-16"></a><span class="co">#&gt; tau_creat      1.012       1.05</span></span>
 <span id="cb14-17"><a href="#cb14-17"></a><span class="co">#&gt; </span></span>
 <span id="cb14-18"><a href="#cb14-18"></a><span class="co">#&gt; Multivariate psrf</span></span>
 <span id="cb14-19"><a href="#cb14-19"></a><span class="co">#&gt; </span></span>
-<span id="cb14-20"><a href="#cb14-20"></a><span class="co">#&gt; 1.09</span></span></code></pre></div>
+<span id="cb14-20"><a href="#cb14-20"></a><span class="co">#&gt; 1.06</span></span></code></pre></div>
 <p>To select only some of the parameters, they can be specified directly by name via the <code>other</code> element of <code>subset</code>:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">summary</span>(lm5, <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">other =</span> <span class="kw">c</span>(<span class="st">'creat'</span>, <span class="st">'alc&gt;=1'</span>)))</span>
 <span id="cb15-2"><a href="#cb15-2"></a><span class="co">#&gt; </span></span>
@@ -521,9 +524,9 @@
 <span id="cb15-7"><a href="#cb15-7"></a><span class="co">#&gt;     n.iter = 100, monitor_params = c(imp_pars = TRUE), progress.bar = "none")</span></span>
 <span id="cb15-8"><a href="#cb15-8"></a><span class="co">#&gt; </span></span>
 <span id="cb15-9"><a href="#cb15-9"></a><span class="co">#&gt; Posterior summary:</span></span>
-<span id="cb15-10"><a href="#cb15-10"></a><span class="co">#&gt;        Mean   SD  2.5% 97.5% tail-prob. GR-crit</span></span>
-<span id="cb15-11"><a href="#cb15-11"></a><span class="co">#&gt; creat  8.27 6.75 -4.07  21.8    0.22667    1.01</span></span>
-<span id="cb15-12"><a href="#cb15-12"></a><span class="co">#&gt; alc&gt;=1 6.34 2.39  1.54  10.8    0.00667    1.06</span></span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="co">#&gt;        Mean   SD   2.5% 97.5% tail-prob. GR-crit</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a><span class="co">#&gt; creat  8.10 8.22 -7.775  24.0     0.3333    1.08</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="co">#&gt; alc&gt;=1 6.25 2.78  0.967  11.7     0.0267    1.13</span></span>
 <span id="cb15-13"><a href="#cb15-13"></a><span class="co">#&gt; </span></span>
 <span id="cb15-14"><a href="#cb15-14"></a><span class="co">#&gt; </span></span>
 <span id="cb15-15"><a href="#cb15-15"></a><span class="co">#&gt; MCMC settings:</span></span>
