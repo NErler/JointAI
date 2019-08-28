@@ -27,6 +27,7 @@ SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
 Suggests: 
     knitr,
     rmarkdown,
+    bookdown,
     foreign,
     ggplot2,
     ggpubr,
