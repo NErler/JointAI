@@ -106,11 +106,14 @@
 #' including \code{\link{traceplot}}, \code{\link{densplot}}, \code{\link{summary}},
 #' \code{\link{GR_crit}}, \code{\link{MC_error}}, \code{\link{predict}},
 #' \code{\link{predDF}} and \code{\link{get_MIdat}}.
+#'
+#' \item \href{https://nerler.github.io/JointAI/articles/TheoreticalBackground.html}{\emph{Theoretical Background}}:\cr
+#' Explanation of the statistical method implemented in \strong{JointAI}.
 #'}
 #' @references
 #' Nicole S. Erler, Dimitris Rizopoulos and Emmanuel M.E.H. Lesaffre (2019).
 #' JointAI: Joint Analysis and Imputation of Incomplete Data in R.
-#' \emph{arXiv e-prints}, arXiv:1907.10867, July 2019.
+#' \emph{arXiv e-prints}, arXiv:1907.10867.
 #' URL \href{https://arxiv.org/abs/1907.10867}{https://arxiv.org/abs/1907.10867}.
 #'
 #' Erler, N.S., Rizopoulos, D., Rosmalen, J., Jaddoe, V.W.V.,

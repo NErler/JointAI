@@ -1,7 +1,6 @@
 ---
 title: "MCMC Settings"
-author: "Nicole Erler"
-date: "`r Sys.Date()`"
+date: "2019-08-29"
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -36,8 +35,10 @@ to JAGS.
 
 Here, we describe how to specify the arguments in the main functions that
 control MCMC related settings.
-To learn more about how to specify the other arguments in **JointAI** models,
-check out the vignette on [*Model Specification*](https://nerler.github.io/JointAI/articles/ModelSpecification.html).
+To learn more about how to specify the other arguments in **JointAI** models
+or the theoretical background of the statistical approach,
+check out the vignettes [*Model Specification*](https://nerler.github.io/JointAI/articles/ModelSpecification.html)
+and [*TheoreticalBackground*](https://nerler.github.io/JointAI/articles/TheoreticalBackground.html).
 
 In this vignette, we use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
 data for examples in cross-sectional data and the 
@@ -49,7 +50,7 @@ in which the distributions of variables and missing values in both sets is
 explored.
 
 **Note:**<br>
-In many of the examples, we use `progress.bar = 'none'` which prevents printing 
+In several examples we use `progress.bar = 'none'` which prevents printing 
 of the progress of the MCMC sampling, since this would result in lengthy output
 in the vignette.
 
@@ -66,7 +67,7 @@ have a number of arguments that specify settings for the MCMC sampling:
 * `seed`: optional seed value for reproducibility
 * `inits`: initial values
 * `parallel`: whether the MCMC chains should be sampled in parallel
-* `ncores`: how many cores are used for parallel sampling
+* `n.cores`: how many cores are used for parallel sampling
 
 
 And some other parameters passed to functions from **rjags**:
@@ -84,7 +85,7 @@ as a sample from the target posterior distribution.
 
 ### Number of chains
 To evaluate the convergence of MCMC chains it is helpful to create multiple
-chains, that have different starting values.
+chains that have different starting values.
 The argument `n.chains` selects the number of chains (by default, `n.chains = 3`).
 
 For calculating the model summary, multiple chains are merged.
@@ -130,13 +131,13 @@ Bayesian Biostatistics. John Wiley & Sons.]
 
 
 ### Thinning
-In settings with high autocorrelation i.e., there are no large jumps in
+In settings with high autocorrelation, i.e., there are no large jumps in
 the chain but sampled values are always close to the previous value,
 it may take many iterations before a sample is created that sufficiently
 represents the whole range of the posterior distribution.
 
 Processing of such long chains can be slow and take a lot of memory.
-The parameter `thin` allows to user to specify if and how much the MCMC chains should
+The parameter `thin` allows the user to specify if and how much the MCMC chains should
 be thinned out before storing them. By default `thin = 1` is used,
 which corresponds to keeping all values. A value `thin = 10` would result in
 keeping every 10th value and discarding all other values.
@@ -295,7 +296,8 @@ value is used in the JAGS model.
 
 
 To find out which nodes there are in a model, the function `coef()` from 
-package **rjags** can be used. It returns a list with the current values of the
+package **rjags** can be used on a JAGS model object.
+It returns a list with the current values of the
 MCMC chains,  by default the first chain. Elements of the initial values should 
 have the same structure as the elements in this list.
 
@@ -412,12 +414,13 @@ and `beta`, the random effects `b` or scalar parameters `delta_SMOKE` and
 To reduce computational time, it is possible to perform sampling of multiple
 MCMC chains in parallel on multiple cores. This can be specified by setting
 the argument `parallel = TRUE`. The maximum number of cores to be used can be
-set with the argument `ncores`. By default, this is two less than the number of
+set with the argument `n.cores`. By default, this is two less than the number of
 cores available on the machine, but never more than the number of MCMC chains.
 
 Parallel computation is done using the R packages [**foreach**](https://CRAN.R-project.org/package=foreach) and [**doParallel**](https://CRAN.R-project.org/package=doParallel).
 Unfortunately, currently it is not possible to obtain a progress bar when using
-parallel computation.
+parallel computation and warning messages produced during the sampling are 
+not returned.
 
 
 ## Other arguments

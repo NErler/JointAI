@@ -1,7 +1,6 @@
 ---
 title: "Visualizing Incomplete Data"
-author: "Nicole Erler"
-date: "`r Sys.Date()`"
+date: "2019-08-29"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -76,9 +75,8 @@ or [`barplot()`](https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/bar
 
 For example:
 ```{r, fig.width = 8, fig.height = 10}
-op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
-plot_all(NHANES, allNA = TRUE, fill = '#18bc9c', border = '#2C3E50', ncol = 3, nclass = 30)
-par(op)
+par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
+plot_all(NHANES, allNA = TRUE, fill = '#e30f41', border = '#34111b', ncol = 3, nclass = 30)
 ```
 
 
@@ -91,10 +89,9 @@ the level of each variable can be taken into account by specifying
 
 
 ```{r, fig.width = 8, fig.height = 10}
-op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
-plot_all(simLong, allNA = TRUE, fill = '#18bc9c', border = '#2C3E50',
+par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
+plot_all(simLong, allNA = TRUE, fill = '#e30f41', border = '#34111b',
          ncol = 3, nclass = 30, use_level = TRUE, idvar = "ID")
-par(op)
 ```
 The information whether a variable is level-1 (i.e., varies within the groups
 specified by `idvar`) or level-2 (i.e., constant within the groups) is added to
@@ -147,7 +144,7 @@ To change the title of the y-axis, you can change the argument `ylab`. Setting
 missing data pattern.
 
 ```{r, fig.height = 5}
-md_pattern(NHANES, color = c('#2C3E50', '#E74C3C'), border = 'white',
+md_pattern(NHANES, color = c('#34111b', '#e30f41'), border = 'white',
            legend.position = 'none', print_xaxis = FALSE, 
            ylab = 'Alternative axis title')
 ```
@@ -155,6 +152,6 @@ md_pattern(NHANES, color = c('#2C3E50', '#E74C3C'), border = 'white',
 <br>
 
 For the simLong data, the missing data pattern is:
-```{r, fig.height = 8}
-md_pattern(simLong, color = c('#2C3E50', '#E74C3C'))
+```{r, fig.height = 9}
+md_pattern(simLong, color = c('#34111b', '#e30f41'))
 ```

@@ -1,7 +1,6 @@
 ---
 title: "Theoretical Background"
-author: "Nicole Erler"
-date: "`r Sys.Date()`"
+date: "2019-08-29"
 output: 
   bookdown::html_document2:
     toc: true

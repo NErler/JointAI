@@ -1,8 +1,7 @@
 ---
 title: "After Fitting"
 subtitle: "Summary, visualization and evaluation of the results"
-author: "Nicole Erler"
-date: "`r Sys.Date()`"
+date: "2019-08-29"
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -39,10 +38,11 @@ explored.
 
 The functions described in this section use, by default, the full MCMC sample
 and show only the parameters of the analysis model.
-Arguments `start`, `end` and `thin` are available to select a subset of the MCMC
-samples that is used to calculate the summary. The argument `subset` allows controlling
+A number of arguments are available to select a subset of the MCMC
+samples that is used to calculate the summary.
+The argument `subset` allows controlling
 which part of the MCMC sample is returned and follows the same logic as
-the argument `monitor_params` in `*_imp()`.
+the argument [`monitor_params`](https://nerler.github.io/JointAI/articles/SelectingParameters.html) in [`*_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html).
 The use of these arguments is further explained [below](#sec:subset).
 
 ## Visualizing the posterior sample
@@ -53,8 +53,9 @@ density of the posterior sample.
 
 ### Traceplot
 A traceplot shows the sampled values per chain and node throughout
-iterations. It allows to visually evaluate convergence and mixing of the chains,
-and can be obtained with the function `traceplot()`:
+iterations. It allows us to visually evaluate convergence and mixing of the chains,
+and can be obtained with the function 
+[`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html):
 ```{r, message = FALSE, fig.width = 7, fig.height = 4, out.width = '100%'}
 mod13a <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 500)
 
@@ -64,10 +65,10 @@ traceplot(mod13a)
 
 When the sampler has converged the chains show one horizontal band, as in the above figure.
 Consequently, when traces show a trend convergence has not been
-reached and more iterations are necessary (e.g., using `add_samples()`).
+reached and more iterations are necessary (e.g., using [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.html)).
 
 Graphical aspects of the traceplot can be controlled by specifying 
-standard graphical arguments via the dots argument `"..."`, which are passed to `matplot()`.
+standard graphical arguments via the dots argument `"..."`, which are passed to [`matplot()`](https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/matplot.html).
 This allows changing color, linetype and -width, limits, etc.
 Arguments `nrow` and/or `ncol` can be supplied to set specific numbers of 
 rows and columns for the layout of the grid of plots.
@@ -83,7 +84,8 @@ traceplot(mod13a, ncol = 3, use_ggplot = TRUE) +
 
 
 ### Density plot
-The posterior distributions can also be visualized using the function `densplot()`,
+The posterior distributions can also be visualized using the function 
+[`densplot()`](https://nerler.github.io/JointAI/reference/densplot.html),
 which plots the empirical density per node per chain, or combining chains
 (when `joined = TRUE`).
 ```{r, echo = F, eval = F, fig.width = 7, fig.height = 3.5, out.width = '100%'}
@@ -91,7 +93,7 @@ densplot(mod13a, joined = TRUE, ncol = 3)
 ```
 
 The argument `vlines` takes a list of lists, containing specifications passed
-to `abline`, and allows to add (vertical) lines to the plot, e.g., marking zero:
+to `abline`, and allows us to add (vertical) lines to the plot, e.g., marking zero:
 ```{r, fig.width = 7, fig.height = 3.5, out.width = '100%'}
 densplot(mod13a, ncol = 3, col = c("darkred", "darkblue", "darkgreen"),
          vlines = list(list(v = c(rep(0, nrow(summary(mod13a)$stats) - 1), NA),
@@ -215,10 +217,10 @@ for (i in seq_along(mus)) {
   
   if (mus[i] > 0) {
     polygon(x = c(x[x < 0], max(x[x < 0])),
-            y = c(y[x < 0], min(y)), col = "#18bc9c", border = NA)
+            y = c(y[x < 0], min(y)), col = "#e30f41", border = NA)
   } else {
     polygon(x = c(x[x > 0], min(x[x > 0])),
-            y = c(y[x > 0], min(y)), col = "#18bc9c", border = NA)
+            y = c(y[x > 0], min(y)), col = "#e30f41", border = NA)
   }
   lines(x,y)
   axis(side = 1, at = 0)
@@ -228,14 +230,14 @@ par(op)
 ```
 
 
-By default, `summary()` will only print the posterior summary for the main
-model parameters of the analysis model and use the whole MCMC sample.
-The argument `subset` allows to control
-which part of the MCMC sample is returned and follows the same logic as
-the argument `monitor_params` in `*_imp()`.
-Arguments `start`, `end` and `thin` are available to select a subset of the MCMC
-samples that is used to calculate the summary.
-The use of these arguments is further explained [below](#sec:subset)).
+<!-- By default, `summary()` will only print the posterior summary for the main -->
+<!-- model parameters of the analysis model and use the whole MCMC sample. -->
+<!-- The argument `subset` allows to control -->
+<!-- which part of the MCMC sample is returned and follows the same logic as -->
+<!-- the argument `monitor_params` in `*_imp()`. -->
+<!-- Arguments `start`, `end` and `thin` are available to select a subset of the MCMC -->
+<!-- samples that is used to calculate the summary. -->
+<!-- The use of these arguments is further explained [below](#sec:subset)). -->
 
 
 ## Evaluation criteria
@@ -296,20 +298,20 @@ deviation ratio, plotting of an object of class `MCElist` using `plot()` shows
 this ratio for each (selected) node and automatically adds a vertical line at
 the desired cut-off (by default 5%).
 ```{r MCE15a, fig.width = 8, fig.height = 3, out.width = '100%'}
-op <- par(mar = c(3, 5, 0.5, 0.5), mgp = c(2, 0.6, 0), mfrow = c(1, 2))
+par(mar = c(3, 5, 0.5, 0.5), mgp = c(2, 0.6, 0), mfrow = c(1, 2))
 plot(MC_error(mod13a))  # left panel: all iterations 101:600
 plot(MC_error(mod13a, end = 250))  # right panel: iterations 101:250
-par(op)
 ```
 
 
 ## Subset of output {#sec:subset}
 By default, the functions `traceplot()`, `densplot()`, `summary()`, 
-`GR_crit()` and `MC_Error()` use all iterations of the MCMC sample and consider
+`GR_crit()`, `MC_Error()` and `predict()`
+use all iterations of the MCMC sample and consider
 only the parameters of the analysis model (if they were monitored).
 In this section, we describe how the
 set of iterations and parameters to display can be changed using the
-arguments `subset`, `start`, `end` and `thin`.
+arguments `subset`, `start`, `end`, `thin` and `exclude_chains`.
 
 ### Subset of parameters
 As long as the main parameters have been monitored in a `JointAI` object, 
@@ -353,7 +355,7 @@ When the number of imputed values is large or in order to check convergence
 of random effects, it may not be feasible to plot and inspect all traceplots.
 In that case a random subset of, for instance the random effects, can be selected
 (output not shown):
-```{r, eval = FALSE}
+```{r}
 # re-fit the model monitoring the random effects
 mod13e <- update(mod13b, monitor_params = c(ranef = TRUE))
 
@@ -374,22 +376,43 @@ select which iterations from the MCMC sample are included in the summary.
 `thin` the thinning interval. Specification of `start`, thus, allows discarding
 a "burn-in", i.e., the iterations before the MCMC chain had converged.
 
+If a particular chain does not have converged it can be excluded from the result
+summary or plot using the argument `exclude_chains` which takes a numeric
+vector identifying chains to be excluded, for example:
+
+```{r}
+mod14 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
+              progress.bar = 'none', n.chains = 5)
+
+densplot(mod14, ncol = 3)
+densplot(mod14, exclude_chains = c(2,4), ncol = 3)
+```
+
+```{r}
+traceplot(mod14, thin = 5, ncol = 3)
+traceplot(mod14, start = 150, ncol = 3)
+traceplot(mod14, end = 120, ncol = 3)
+```
+
+
 
 ## Predicted values
 Often, the aim of an analysis is not only to estimate the association between outcome
 and covariates but to predict future outcomes or outcomes for new subjects.
 
 The function [`predict()`](https://nerler.github.io/JointAI/reference/predict.JointAI.html)
-allows obtaining predicted values and corresponding
-prediction intervals from `JointAI` objects. Note that for mixed
+allows us to obtain predicted values and corresponding
+credible intervals from `JointAI` objects. Note that for mixed
 models, currently, only marginal prediction but not prediction conditional on
 the random effects is implemented.
 
 A dataset containing data which the prediction should be performed is specified
-via the argument `newdata`. The argument `quantiles` allows specifying the 
-quantiles of the posterior sample that are used to obtain the prediction interval
+via the argument `newdata`. If no `newdata` is given, the original data from the
+JointAI object are used.
+The argument `quantiles` allows the specification of the 
+quantiles of the posterior sample that are used to obtain the credible interval
 (by default the 2.5% and 97.5% quantile).
-Arguments `start`, `end` and `thin` control the subset of MCMC samples used.
+Arguments `start`, `end`, `thin` and `exclude_chains` control the subset of MCMC samples that is used.
 
 ```{r, echo = FALSE}
 options(width = 70)
@@ -401,7 +424,7 @@ predict(mod13a, newdata = NHANES[27, ])
 
 `predict()` returns a list with elements `dat`, `fit` and `quantiles`,
 containing `newdata` with the predicted values and quantiles appended, 
-the predicted values and quantiles that form the prediction interval.
+the predicted values and quantiles that form the credible interval.
 
 ### Prediction to visualize non-linear effects
 Another reason to obtain predicted values is the visualization of non-linear
@@ -421,7 +444,7 @@ newDF <- predDF(mod13b, var = "age")
 # obtain predicted values
 pred <- predict(mod13b, newdata = newDF)
 
-# plot predicted values and prediction interval
+# plot predicted values and credible interval
 matplot(pred$dat$age, pred$dat[, c('fit', '2.5%', '97.5%')],
         lty = c(1,2,2), type = 'l', col = 1,
         xlab = 'age in months', ylab = 'predicted value')
@@ -464,7 +487,7 @@ already contain an id variable).
 impDF <- get_MIdat(mod13d, m = 10, seed = 2018)
 ```
 
-The function `plot_imp_distr()` allows to visually compare the distribution
+The function `plot_imp_distr()` allows us to visually compare the distribution
 of the observed and imputed values.
 ```{r, fig.width = 7, fig.height = 2.5}
 plot_imp_distr(impDF, nrow = 1)

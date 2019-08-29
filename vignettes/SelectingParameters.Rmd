@@ -1,8 +1,7 @@
 ---
 title: "Parameter Selection"
 subtitle: "How to specify which parameters to monitor and display in the results."
-author: "Nicole Erler"
-date: "`r Sys.Date()`"
+date: "2019-08-29"
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -34,7 +33,7 @@ in which the distribution of variables and missing values in both sets is
 explored.
 
 **Note:**<br>
-In many of the examples we use `n.adapt = 0`
+In several of the examples we use `n.adapt = 0`
 (and `n.iter = 0`, which is the default) in order to prevent the MCMC sampling 
 to reduce computational some time.
 `progress.bar = 'none'` prevents printing of the progress of the MCMC
@@ -50,15 +49,8 @@ which the user has specified that they should be monitored, this is also the
 case in **JointAI**.
 
 For this purpose, the main functions
-[`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html), [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html),
-[`clm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html),
-[`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html), 
-[`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html),
-[`glme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html),
-[`clmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html),
-[`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) and
-[`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) have an argument
-`monitor_params`.
+[`*_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) 
+have an argument `monitor_params`.
 
 `monitor_params` takes a named list (often a named vector also works) with
 the following possible entries:
@@ -95,7 +87,8 @@ only the main parameters of the analysis model are monitored, and
 monitoring is switched off for all other parameters.
 
 The main parameters are the regression coefficients of the analysis model
-(`beta`) and the residual standard deviation (`sigma_y`).
+(`beta`) and potentially the residual standard deviation (`sigma_y`), for example
+in linear models.
 
 The function [`parameters()`](https://nerler.github.io/JointAI/reference/parameters.html) returns the parameters that are specified to be followed
 (even for models where no MCMC sampling was performed, i.e. when `n.iter = 0` and
@@ -108,6 +101,8 @@ lm1 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES,  n.adpat = 0)
 parameters(lm1)
 ```
 
+Note that instead of `"beta"` the names of the covariates are returned that
+are associated with the different elements of `beta`.
 
 
 ### Imputed values & parameters of the imputation models
@@ -216,7 +211,7 @@ It is possible to select only a subset of the random effects parameters by
 specifying them directly, e.g.
 ```{r, message = FALSE}
 lme3a <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
-                monitor_params = c(analysis_main = TRUE, RinvD = TRUE))
+                 monitor_params = c(analysis_main = TRUE, RinvD = TRUE))
 
 parameters(lme3a)
 ```
@@ -241,7 +236,9 @@ element, `monitor_params` has to be a list.
 
 Here, we monitor the probability to be in the `alc>=1` group for subjects 1
 through 3 and the expected value of the distribution of `creat` for the first
-subject.
+subject. (This may not make a lot of sense here but being able to monitor
+any node in a JAGS model can be quite useful when investigating convergence
+issues.)
 ```{r, message = FALSE}
 lm4 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES,
               monitor_params = list(analysis_main = FALSE,
@@ -258,7 +255,7 @@ The functions
 [`densplot()`](https://nerler.github.io/JointAI/reference/densplot.html),
 [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.html) and 
 [`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html)
-all have an argument `subset`. This argument allows to select a subset of 
+all have an argument `subset`. This argument allows us to select a subset of 
 parameters to be shown in the output.
 Especially when not only the parameters of the main
 analysis model are followed, but also, for example, imputed values, looking at
@@ -352,5 +349,4 @@ traceplot(lme4, subset = list(other = sample(ri, size = 8)), ncol = 4)
 # plot the chains of 8 randomly selected random slopes
 traceplot(lme4, subset = list(other = sample(rs, size = 8)), ncol = 4)
 ```
-
 
