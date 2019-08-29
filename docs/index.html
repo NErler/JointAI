@@ -13,16 +13,16 @@
 <link href="docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Joint Analysis and Imputation of Incomplete Data">
-<meta property="og:description" content="Provides joint analysis and imputation of (generalized)
-    linear and cumulative logit regression models, (generalized) linear and
+<meta property="og:description" content="Provides joint analysis and imputation of (generalized) 
+    linear and cumulative logit regression models, (generalized) linear and 
     cumulative logit mixed models and parametric (Weibull) as well as Cox
-    proportional hazards survival models with incomplete (covariate) data in
+    proportional hazards survival models with incomplete (covariate) data in 
     the Bayesian framework.
     The package performs some preprocessing of the data and creates a 'JAGS'
-    model, which will then automatically be passed to 'JAGS'
-    &lt;http://mcmc-jags.sourceforge.net&gt; with the help of
+    model, which will then automatically be passed to 'JAGS' 
+    &lt;http://mcmc-jags.sourceforge.net&gt; with the help of 
     the package 'rjags'.
-    It also provides summary and plotting functions for the output and allows
+    It also provides summary and plotting functions for the output and allows 
     the user to export imputed values.">
 <meta property="og:image" content="https://nerler.github.io/JointAI/logo.png">
 <meta name="twitter:card" content="summary">
@@ -58,7 +58,7 @@
 <li>
   <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
-
+     
   </a>
 </li>
 <li>
@@ -67,7 +67,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
-
+     
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -102,13 +102,13 @@
 <li>
   <a href="https://github.com/nerler/JointAI">
     <span class="fa fa-github fa-lg"></span>
-
+     
   </a>
 </li>
 <li>
   <a href="https://twitter.com/N_Erler">
     <span class="fa fa-twitter fa-lg"></span>
-
+     
   </a>
 </li>
       </ul>
@@ -117,7 +117,7 @@
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
       </form>
-
+      
     </div>
 <!--/.nav-collapse -->
   </div>
@@ -125,13 +125,13 @@
 </div>
 <!--/.navbar -->
 
-
+      
       </header><div class="row">
   <div class="col-md-9 contents">
+    
 
-
-
-
+    
+    
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="jointai-joint-analysis-and-imputation-of-incomplete-data" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
@@ -208,18 +208,18 @@
 <span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt;     data = NHANES, n.iter = 500, progress.bar = "none")</span></span>
 <span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; </span></span>
 <span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; Posterior summary:</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt;                Mean     SD    2.5%   97.5% tail-prob. GR-crit</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; (Intercept)  87.776 8.7109  71.044 104.557    0.00000    1.00</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; genderfemale -3.367 2.2644  -7.956   1.094    0.14000    1.01</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; age           0.334 0.0714   0.202   0.476    0.00000    1.00</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; WC            0.229 0.0747   0.083   0.378    0.00267    1.00</span></span>
-<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt; alc&gt;=1        6.361 2.3225   1.879  10.939    0.00400    1.00</span></span>
-<span id="cb9-16"><a href="#cb9-16"></a><span class="co">#&gt; educhigh     -2.777 2.1691  -6.985   1.356    0.19200    1.00</span></span>
-<span id="cb9-17"><a href="#cb9-17"></a><span class="co">#&gt; bili         -5.337 4.7139 -15.008   3.447    0.23067    1.00</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt;                Mean     SD     2.5%   97.5% tail-prob. GR-crit</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; (Intercept)  87.952 8.8894  70.6361 105.903    0.00000    1.00</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; genderfemale -3.413 2.2864  -7.9189   1.104    0.13733    1.00</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; age           0.333 0.0682   0.2013   0.461    0.00000    1.00</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; WC            0.226 0.0721   0.0862   0.366    0.00133    1.00</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt; alc&gt;=1        6.397 2.3872   1.7662  10.941    0.00933    1.00</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="co">#&gt; educhigh     -2.796 2.1435  -6.9589   1.401    0.18000    1.00</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="co">#&gt; bili         -5.096 4.8768 -14.8361   4.190    0.29600    1.01</span></span>
 <span id="cb9-18"><a href="#cb9-18"></a><span class="co">#&gt; </span></span>
 <span id="cb9-19"><a href="#cb9-19"></a><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></span>
-<span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt; sigma_SBP 13.6 0.714 12.3    15    1.01</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt; sigma_SBP 13.6 0.731 12.2  15.1    1.01</span></span>
 <span id="cb9-22"><a href="#cb9-22"></a><span class="co">#&gt; </span></span>
 <span id="cb9-23"><a href="#cb9-23"></a><span class="co">#&gt; </span></span>
 <span id="cb9-24"><a href="#cb9-24"></a><span class="co">#&gt; MCMC settings:</span></span>
@@ -231,20 +231,20 @@
 <span id="cb9-30"><a href="#cb9-30"></a><span class="co">#&gt; Number of observations: 186</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">coef</span>(lm1)</span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="co">#&gt;  (Intercept) genderfemale          age           WC       alc&gt;=1 </span></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt;   87.7759982   -3.3666872    0.3339875    0.2291704    6.3612463 </span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt;   87.9519460   -3.4130221    0.3325896    0.2258110    6.3973732 </span></span>
 <span id="cb10-4"><a href="#cb10-4"></a><span class="co">#&gt;     educhigh         bili </span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt;   -2.7769321   -5.3373204</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt;   -2.7963728   -5.0964713</span></span>
 <span id="cb10-6"><a href="#cb10-6"></a></span>
 <span id="cb10-7"><a href="#cb10-7"></a><span class="kw">confint</span>(lm1)</span>
 <span id="cb10-8"><a href="#cb10-8"></a><span class="co">#&gt;                      2.5%       97.5%</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a><span class="co">#&gt; (Intercept)   71.04362191 104.5571704</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt; genderfemale  -7.95575570   1.0943058</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a><span class="co">#&gt; age            0.20169390   0.4758695</span></span>
-<span id="cb10-12"><a href="#cb10-12"></a><span class="co">#&gt; WC             0.08303636   0.3780265</span></span>
-<span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; alc&gt;=1         1.87869304  10.9393001</span></span>
-<span id="cb10-14"><a href="#cb10-14"></a><span class="co">#&gt; educhigh      -6.98544861   1.3555576</span></span>
-<span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt; bili         -15.00825533   3.4468412</span></span>
-<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; sigma_SBP     12.28059430  15.0342633</span></span></code></pre></div>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="co">#&gt; (Intercept)   70.63608396 105.9034597</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt; genderfemale  -7.91886055   1.1043983</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="co">#&gt; age            0.20130624   0.4613454</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="co">#&gt; WC             0.08617029   0.3659872</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; alc&gt;=1         1.76622274  10.9411352</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="co">#&gt; educhigh      -6.95894882   1.4014145</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt; bili         -14.83605361   4.1902621</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; sigma_SBP     12.22436262  15.0842408</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -254,9 +254,9 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=JointAI">https://cloud.r-project.org/package=JointAI</a>
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=JointAI">https://​cloud.r-project.org/​package=JointAI</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/nerler/JointAI/issues">https://github.com/nerler/JointAI/issues</a>
+<li>Report a bug at <br><a href="https://github.com/nerler/JointAI/issues">https://​github.com/​nerler/​JointAI/​issues</a>
 </li>
 </ul>
 </div>
@@ -305,11 +305,11 @@
       </footer>
 </div>
 
-
+  
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script><script>
   docsearch({
-
-
+    
+    
     apiKey: '0d21d69e7c3eb00e029f5b8d9424cd56',
     indexName: 'jointal',
     inputSelector: 'input#search-input.form-control',

@@ -121,9 +121,8 @@
     <div class="page-header toc-ignore">
       <h1>After Fitting</h1>
             <h3 class="subtitle">Summary, visualization and evaluation of the results</h3>
-                        <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2019-08-28</h4>
+            <h4 class="date">2019-08-29</h4>
       
       
       <div class="hidden name"><code>AfterFitting.Rmd</code></div>
@@ -133,7 +132,7 @@
     
     
 <p>This vignette describes how the results from a <code>JointAI</code> model can be visualized, summarized and evaluated. We use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a> data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a> for examples in longitudinal data. For more info on these datasets, check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the distributions of variables and missing values in both sets is explored.</p>
-<p>The functions described in this section use, by default, the full MCMC sample and show only the parameters of the analysis model. Arguments <code>start</code>, <code>end</code> and <code>thin</code> are available to select a subset of the MCMC samples that is used to calculate the summary. The argument <code>subset</code> allows controlling which part of the MCMC sample is returned and follows the same logic as the argument <code>monitor_params</code> in <code>*_imp()</code>. The use of these arguments is further explained <a href="#sec:subset">below</a>.</p>
+<p>The functions described in this section use, by default, the full MCMC sample and show only the parameters of the analysis model. A number of arguments are available to select a subset of the MCMC samples that is used to calculate the summary. The argument <code>subset</code> allows controlling which part of the MCMC sample is returned and follows the same logic as the argument <a href="https://nerler.github.io/JointAI/articles/SelectingParameters.html"><code>monitor_params</code></a> in <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code>*_imp()</code></a>. The use of these arguments is further explained <a href="#sec:subset">below</a>.</p>
 <div id="visualizing-the-posterior-sample" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualizing-the-posterior-sample" class="anchor"></a>Visualizing the posterior sample</h2>
@@ -141,13 +140,13 @@
 <div id="traceplot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#traceplot" class="anchor"></a>Traceplot</h3>
-<p>A traceplot shows the sampled values per chain and node throughout iterations. It allows to visually evaluate convergence and mixing of the chains, and can be obtained with the function <code><a href="../reference/traceplot.html">traceplot()</a></code>:</p>
+<p>A traceplot shows the sampled values per chain and node throughout iterations. It allows us to visually evaluate convergence and mixing of the chains, and can be obtained with the function <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code><a href="../reference/traceplot.html">traceplot()</a></code></a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>mod13a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat, <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">500</span>)</span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(mod13a)</span></code></pre></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-1-1.png" width="100%" style="display: block; margin: auto;"></p>
-<p>When the sampler has converged the chains show one horizontal band, as in the above figure. Consequently, when traces show a trend convergence has not been reached and more iterations are necessary (e.g., using <code><a href="../reference/add_samples.html">add_samples()</a></code>).</p>
-<p>Graphical aspects of the traceplot can be controlled by specifying standard graphical arguments via the dots argument <code>"..."</code>, which are passed to <code>matplot()</code>. This allows changing color, linetype and -width, limits, etc. Arguments <code>nrow</code> and/or <code>ncol</code> can be supplied to set specific numbers of rows and columns for the layout of the grid of plots.</p>
+<p>When the sampler has converged the chains show one horizontal band, as in the above figure. Consequently, when traces show a trend convergence has not been reached and more iterations are necessary (e.g., using <a href="https://nerler.github.io/JointAI/reference/add_samples.html"><code><a href="../reference/add_samples.html">add_samples()</a></code></a>).</p>
+<p>Graphical aspects of the traceplot can be controlled by specifying standard graphical arguments via the dots argument <code>"..."</code>, which are passed to <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/matplot.html"><code>matplot()</code></a>. This allows changing color, linetype and -width, limits, etc. Arguments <code>nrow</code> and/or <code>ncol</code> can be supplied to set specific numbers of rows and columns for the layout of the grid of plots.</p>
 <p>With the argument <code>use_ggplot</code> it is possible to get a <a href="https://CRAN.R-project.org/package=ggplot2"><strong>ggplot2</strong></a> version of the traceplot. It can be extended using standard <strong>ggplot2</strong> syntax.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">library</span>(ggplot2)</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(mod13a, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">use_ggplot =</span> <span class="ot">TRUE</span>) <span class="op">+</span></span>
@@ -158,8 +157,8 @@
 <div id="density-plot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#density-plot" class="anchor"></a>Density plot</h3>
-<p>The posterior distributions can also be visualized using the function <code><a href="../reference/densplot.html">densplot()</a></code>, which plots the empirical density per node per chain, or combining chains (when <code>joined = TRUE</code>).</p>
-<p>The argument <code>vlines</code> takes a list of lists, containing specifications passed to <code>abline</code>, and allows to add (vertical) lines to the plot, e.g., marking zero:</p>
+<p>The posterior distributions can also be visualized using the function <a href="https://nerler.github.io/JointAI/reference/densplot.html"><code><a href="../reference/densplot.html">densplot()</a></code></a>, which plots the empirical density per node per chain, or combining chains (when <code>joined = TRUE</code>).</p>
+<p>The argument <code>vlines</code> takes a list of lists, containing specifications passed to <code>abline</code>, and allows us to add (vertical) lines to the plot, e.g., marking zero:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="../reference/densplot.html">densplot</a></span>(mod13a, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">"darkred"</span>, <span class="st">"darkblue"</span>, <span class="st">"darkgreen"</span>),</span>
 <span id="cb3-2"><a href="#cb3-2"></a>         <span class="dt">vlines =</span> <span class="kw">list</span>(<span class="kw">list</span>(<span class="dt">v =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">nrow</span>(<span class="kw">summary</span>(mod13a)<span class="op">$</span>stats) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>), <span class="ot">NA</span>),</span>
 <span id="cb3-3"><a href="#cb3-3"></a>                            <span class="dt">col =</span> <span class="kw">grey</span>(<span class="fl">0.8</span>))))</span></code></pre></div>
@@ -235,16 +234,16 @@
 <span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt;     n.iter = 500)</span></span>
 <span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt; </span></span>
 <span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt; Posterior summary:</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;                Mean      SD   2.5%   97.5% tail-prob. GR-crit</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt; (Intercept)  81.427 10.2707 61.876 102.215    0.00000    1.00</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt; genderfemale  0.367  2.5865 -4.629   5.334    0.87333    1.01</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt; WC            0.303  0.0772  0.155   0.455    0.00000    1.00</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt; alc&gt;=1        6.206  2.5247  1.276  11.083    0.00933    1.00</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt; creat         7.771  7.8443 -7.997  23.035    0.32400    1.00</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt;                Mean     SD   2.5%  97.5% tail-prob. GR-crit</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt; (Intercept)  81.123 9.9152 61.395 99.878      0.000    1.02</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt; genderfemale  0.339 2.6602 -5.057  5.285      0.884    1.01</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt; WC            0.308 0.0744  0.164  0.453      0.000    1.01</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt; alc&gt;=1        6.280 2.4278  1.548 10.945      0.012    1.00</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt; creat         7.564 7.6562 -6.971 22.812      0.327    1.02</span></span>
 <span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt; </span></span>
 <span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></span>
-<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt; sigma_SBP 14.4 0.771   13  15.9    1.01</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt; sigma_SBP 14.4 0.797   13  16.2       1</span></span>
 <span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt; </span></span>
 <span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt; </span></span>
 <span id="cb6-22"><a href="#cb6-22"></a><span class="co">#&gt; MCMC settings:</span></span>
@@ -303,7 +302,14 @@
 <h3 class="hasAnchor">
 <a href="#tail-probability" class="anchor"></a>Tail probability</h3>
 <p>The tail probability, calculated as <span class="math inline">\(2\times\min\left\{Pr(\theta &gt; 0), Pr(\theta &lt; 0)\right\},\)</span> where <span class="math inline">\(\theta\)</span> is the parameter of interest, is a measure of how likely the value 0 is under the estimated posterior distribution. The figure visualizes three examples of posterior distributions and the corresponding minimum of <span class="math inline">\(Pr(\theta &gt; 0)\)</span> and <span class="math inline">\(Pr(\theta &lt; 0)\)</span> (shaded area): <img src="AfterFitting_files/figure-html/tailprob-1.png" width="100%" style="display: block; margin: auto;"></p>
-<p>By default, <code>summary()</code> will only print the posterior summary for the main model parameters of the analysis model and use the whole MCMC sample. The argument <code>subset</code> allows to control which part of the MCMC sample is returned and follows the same logic as the argument <code>monitor_params</code> in <code>*_imp()</code>. Arguments <code>start</code>, <code>end</code> and <code>thin</code> are available to select a subset of the MCMC samples that is used to calculate the summary. The use of these arguments is further explained <a href="#sec:subset">below</a>).</p>
+<!-- By default, `summary()` will only print the posterior summary for the main -->
+<!-- model parameters of the analysis model and use the whole MCMC sample. -->
+<!-- The argument `subset` allows to control -->
+<!-- which part of the MCMC sample is returned and follows the same logic as -->
+<!-- the argument `monitor_params` in `*_imp()`. -->
+<!-- Arguments `start`, `end` and `thin` are available to select a subset of the MCMC -->
+<!-- samples that is used to calculate the summary. -->
+<!-- The use of these arguments is further explained [below](#sec:subset)). -->
 </div>
 </div>
 <div id="evaluation-criteria" class="section level2">
@@ -318,16 +324,16 @@
 <span id="cb8-2"><a href="#cb8-2"></a><span class="co">#&gt; Potential scale reduction factors:</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt; </span></span>
 <span id="cb8-4"><a href="#cb8-4"></a><span class="co">#&gt;              Point est. Upper C.I.</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt; (Intercept)       1.000       1.01</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt; genderfemale      1.001       1.00</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; WC                1.001       1.00</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; alc&gt;=1            0.999       1.00</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt; creat             1.000       1.00</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; sigma_SBP         1.003       1.01</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt; (Intercept)        1.00       1.02</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt; genderfemale       1.00       1.01</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; WC                 1.00       1.01</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; alc&gt;=1             1.00       1.01</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt; creat              1.01       1.03</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; sigma_SBP          1.00       1.00</span></span>
 <span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; </span></span>
 <span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt; Multivariate psrf</span></span>
 <span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; </span></span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt; 1</span></span></code></pre></div>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt; 1.01</span></span></code></pre></div>
 <p>Besides the arguments <code>start</code>, <code>end</code>, <code>thin</code>, and <code>subset</code>, which are explained <a href="#sec:subset">below</a>, <code><a href="../reference/GR_crit.html">GR_crit()</a></code> also takes the arguments of <code>gelman.diag()</code>.</p>
 </div>
 <div id="sec:mcerror" class="section level3">
@@ -335,26 +341,25 @@
 <a href="#sec:mcerror" class="anchor"></a>Monte Carlo Error</h3>
 <p>The precision of the MCMC sample can be checked with the function <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code><a href="../reference/MC_error.html">MC_error()</a></code></a>. It uses the function <code>mcmcse.mat()</code> from the package <a href="https://CRAN.R-project.org/package=mcmcse"><strong>mcmcse</strong></a> to calculate the Monte Carlo error (the error that is made since the sample is finite) and compares it to the standard deviation of the posterior sample. A rule of thumb is that the Monte Carlo error should not be more than 5% of the standard deviation<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Besides the arguments explained <a href="#sec:subset">below</a>, <code><a href="../reference/MC_error.html">MC_error()</a></code> takes the arguments of <code>mcmcse.mat()</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="../reference/MC_error.html">MC_error</a></span>(mod13a)</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#&gt;                est   MCSE     SD MCSE/SD</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; (Intercept)  81.43 0.3329 10.271   0.032</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; genderfemale  0.37 0.0735  2.586   0.028</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; WC            0.30 0.0025  0.077   0.032</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; alc&gt;=1        6.21 0.0892  2.525   0.035</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; creat         7.77 0.2158  7.844   0.028</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; sigma_SBP    14.42 0.0199  0.771   0.026</span></span></code></pre></div>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#&gt;                est   MCSE    SD MCSE/SD</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; (Intercept)  81.12 0.3026 9.915   0.031</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; genderfemale  0.34 0.0732 2.660   0.028</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; WC            0.31 0.0019 0.074   0.026</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; alc&gt;=1        6.28 0.0575 2.428   0.024</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; creat         7.56 0.2525 7.656   0.033</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; sigma_SBP    14.41 0.0211 0.797   0.026</span></span></code></pre></div>
 <p><code><a href="../reference/MC_error.html">MC_error()</a></code> returns an object of class <code>MCElist</code>, which is a list containing matrices with the posterior mean, estimated Monte Carlo error, posterior standard deviation and the ratio of the Monte Carlo error to the posterior standard deviation, for the scaled (if they are part of the <code>JointAI</code> object) and unscaled (transformed back to the scale of the data) posterior samples. The associated print method prints only the latter.</p>
 <p>To facilitate quick evaluation of the Monte Carlo error to posterior standard deviation ratio, plotting of an object of class <code>MCElist</code> using <code>plot()</code> shows this ratio for each (selected) node and automatically adds a vertical line at the desired cut-off (by default 5%).</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="dt">mgp =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="fl">0.6</span>, <span class="dv">0</span>), <span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="dt">mgp =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="fl">0.6</span>, <span class="dv">0</span>), <span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="kw">plot</span>(<span class="kw"><a href="../reference/MC_error.html">MC_error</a></span>(mod13a))  <span class="co"># left panel: all iterations 101:600</span></span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="kw">plot</span>(<span class="kw"><a href="../reference/MC_error.html">MC_error</a></span>(mod13a, <span class="dt">end =</span> <span class="dv">250</span>))  <span class="co"># right panel: iterations 101:250</span></span></code></pre></div>
 <p><img src="AfterFitting_files/figure-html/MCE15a-1.png" width="100%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">par</span>(op)</span></code></pre></div>
 </div>
 </div>
 <div id="sec:subset" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sec:subset" class="anchor"></a>Subset of output</h2>
-<p>By default, the functions <code><a href="../reference/traceplot.html">traceplot()</a></code>, <code><a href="../reference/densplot.html">densplot()</a></code>, <code>summary()</code>, <code><a href="../reference/GR_crit.html">GR_crit()</a></code> and <code>MC_Error()</code> use all iterations of the MCMC sample and consider only the parameters of the analysis model (if they were monitored). In this section, we describe how the set of iterations and parameters to display can be changed using the arguments <code>subset</code>, <code>start</code>, <code>end</code> and <code>thin</code>.</p>
+<p>By default, the functions <code><a href="../reference/traceplot.html">traceplot()</a></code>, <code><a href="../reference/densplot.html">densplot()</a></code>, <code>summary()</code>, <code><a href="../reference/GR_crit.html">GR_crit()</a></code>, <code>MC_Error()</code> and <code>predict()</code> use all iterations of the MCMC sample and consider only the parameters of the analysis model (if they were monitored). In this section, we describe how the set of iterations and parameters to display can be changed using the arguments <code>subset</code>, <code>start</code>, <code>end</code>, <code>thin</code> and <code>exclude_chains</code>.</p>
 <div id="subset-of-parameters" class="section level3">
 <h3 class="hasAnchor">
 <a href="#subset-of-parameters" class="anchor"></a>Subset of parameters</h3>
@@ -364,104 +369,120 @@
 <h4 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h4>
 <p>To display only the parameters of the imputation models, we set <code>subset = c(analysis_main = FALSE, imp_pars = TRUE)</code> (after re-estimating the model with the monitor for these parameters switched on):</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>mod13c &lt;-<span class="st"> </span><span class="kw">update</span>(mod13a, <span class="dt">monitor_params =</span> <span class="kw">c</span>(<span class="dt">imp_pars =</span> <span class="ot">TRUE</span>))</span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">summary</span>(mod13c, <span class="dt">subset =</span> <span class="kw">c</span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>, <span class="dt">imp_pars =</span> <span class="ot">TRUE</span>))</span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="co">#&gt; </span></span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="co">#&gt;  Linear model fitted with JointAI </span></span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="co">#&gt; </span></span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="co">#&gt; lm_imp(formula = SBP ~ gender + WC + alc + creat, data = NHANES, </span></span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="co">#&gt;     n.iter = 500, monitor_params = c(imp_pars = TRUE))</span></span>
-<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt; </span></span>
-<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt; Posterior summary:</span></span>
-<span id="cb12-11"><a href="#cb12-11"></a><span class="co">#&gt;              Mean     SD    2.5%   97.5% tail-prob. GR-crit</span></span>
-<span id="cb12-12"><a href="#cb12-12"></a><span class="co">#&gt; alpha[1]   0.1644 0.1011 -0.0297  0.3654     0.0880    1.00</span></span>
-<span id="cb12-13"><a href="#cb12-13"></a><span class="co">#&gt; alpha[2]  -0.3537 0.1492 -0.6476 -0.0608     0.0187    1.01</span></span>
-<span id="cb12-14"><a href="#cb12-14"></a><span class="co">#&gt; alpha[3]   0.4917 0.0862  0.3211  0.6630     0.0000    1.00</span></span>
-<span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt; alpha[4]  -1.0420 0.1281 -1.3031 -0.7830     0.0000    1.00</span></span>
-<span id="cb12-16"><a href="#cb12-16"></a><span class="co">#&gt; alpha[5]   0.0741 0.0653 -0.0603  0.1989     0.2573    1.00</span></span>
-<span id="cb12-17"><a href="#cb12-17"></a><span class="co">#&gt; alpha[6]  -0.1396 0.2391 -0.5974  0.3248     0.5427    1.05</span></span>
-<span id="cb12-18"><a href="#cb12-18"></a><span class="co">#&gt; alpha[7]  -0.8796 0.4223 -1.7223 -0.0750     0.0280    1.07</span></span>
-<span id="cb12-19"><a href="#cb12-19"></a><span class="co">#&gt; alpha[8]   0.1049 0.1753 -0.2355  0.4470     0.5373    1.01</span></span>
-<span id="cb12-20"><a href="#cb12-20"></a><span class="co">#&gt; alpha[9]  -0.2545 0.2124 -0.6812  0.1503     0.2427    1.04</span></span>
-<span id="cb12-21"><a href="#cb12-21"></a><span class="co">#&gt; tau_WC     1.0292 0.1051  0.8307  1.2457     0.0000    1.00</span></span>
-<span id="cb12-22"><a href="#cb12-22"></a><span class="co">#&gt; tau_creat  1.3992 0.1486  1.1328  1.7211     0.0000    1.00</span></span>
-<span id="cb12-23"><a href="#cb12-23"></a><span class="co">#&gt; </span></span>
-<span id="cb12-24"><a href="#cb12-24"></a><span class="co">#&gt; </span></span>
-<span id="cb12-25"><a href="#cb12-25"></a><span class="co">#&gt; MCMC settings:</span></span>
-<span id="cb12-26"><a href="#cb12-26"></a><span class="co">#&gt; Iterations = 101:600</span></span>
-<span id="cb12-27"><a href="#cb12-27"></a><span class="co">#&gt; Sample size per chain = 500 </span></span>
-<span id="cb12-28"><a href="#cb12-28"></a><span class="co">#&gt; Thinning interval = 1 </span></span>
-<span id="cb12-29"><a href="#cb12-29"></a><span class="co">#&gt; Number of chains = 3 </span></span>
-<span id="cb12-30"><a href="#cb12-30"></a><span class="co">#&gt; </span></span>
-<span id="cb12-31"><a href="#cb12-31"></a><span class="co">#&gt; Number of observations: 186</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>mod13c &lt;-<span class="st"> </span><span class="kw">update</span>(mod13a, <span class="dt">monitor_params =</span> <span class="kw">c</span>(<span class="dt">imp_pars =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">summary</span>(mod13c, <span class="dt">subset =</span> <span class="kw">c</span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>, <span class="dt">imp_pars =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co">#&gt; </span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co">#&gt;  Linear model fitted with JointAI </span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co">#&gt; </span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="co">#&gt; lm_imp(formula = SBP ~ gender + WC + alc + creat, data = NHANES, </span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co">#&gt;     n.iter = 500, monitor_params = c(imp_pars = TRUE))</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="co">#&gt; </span></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co">#&gt; Posterior summary:</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="co">#&gt;              Mean     SD    2.5%   97.5% tail-prob. GR-crit</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="co">#&gt; alpha[1]   0.1644 0.1011 -0.0297  0.3654     0.0880    1.00</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a><span class="co">#&gt; alpha[2]  -0.3537 0.1492 -0.6476 -0.0608     0.0187    1.01</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a><span class="co">#&gt; alpha[3]   0.4917 0.0862  0.3211  0.6630     0.0000    1.00</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="co">#&gt; alpha[4]  -1.0420 0.1281 -1.3031 -0.7830     0.0000    1.00</span></span>
+<span id="cb11-16"><a href="#cb11-16"></a><span class="co">#&gt; alpha[5]   0.0741 0.0653 -0.0603  0.1989     0.2573    1.00</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a><span class="co">#&gt; alpha[6]  -0.1396 0.2391 -0.5974  0.3248     0.5427    1.05</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a><span class="co">#&gt; alpha[7]  -0.8796 0.4223 -1.7223 -0.0750     0.0280    1.07</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a><span class="co">#&gt; alpha[8]   0.1049 0.1753 -0.2355  0.4470     0.5373    1.01</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a><span class="co">#&gt; alpha[9]  -0.2545 0.2124 -0.6812  0.1503     0.2427    1.04</span></span>
+<span id="cb11-21"><a href="#cb11-21"></a><span class="co">#&gt; tau_WC     1.0292 0.1051  0.8307  1.2457     0.0000    1.00</span></span>
+<span id="cb11-22"><a href="#cb11-22"></a><span class="co">#&gt; tau_creat  1.3992 0.1486  1.1328  1.7211     0.0000    1.00</span></span>
+<span id="cb11-23"><a href="#cb11-23"></a><span class="co">#&gt; </span></span>
+<span id="cb11-24"><a href="#cb11-24"></a><span class="co">#&gt; </span></span>
+<span id="cb11-25"><a href="#cb11-25"></a><span class="co">#&gt; MCMC settings:</span></span>
+<span id="cb11-26"><a href="#cb11-26"></a><span class="co">#&gt; Iterations = 101:600</span></span>
+<span id="cb11-27"><a href="#cb11-27"></a><span class="co">#&gt; Sample size per chain = 500 </span></span>
+<span id="cb11-28"><a href="#cb11-28"></a><span class="co">#&gt; Thinning interval = 1 </span></span>
+<span id="cb11-29"><a href="#cb11-29"></a><span class="co">#&gt; Number of chains = 3 </span></span>
+<span id="cb11-30"><a href="#cb11-30"></a><span class="co">#&gt; </span></span>
+<span id="cb11-31"><a href="#cb11-31"></a><span class="co">#&gt; Number of observations: 186</span></span></code></pre></div>
 <p>To select only some of the parameters, they can be specified directly by name via the <code>other</code> element of <code>subset</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw"><a href="../reference/densplot.html">densplot</a></span>(mod13c, <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">other =</span> <span class="kw">c</span>(<span class="st">'creat'</span>, <span class="st">'alc&gt;=1'</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="../reference/densplot.html">densplot</a></span>(mod13c, <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">other =</span> <span class="kw">c</span>(<span class="st">'creat'</span>, <span class="st">'alc&gt;=1'</span>)))</span></code></pre></div>
 <p>This also works when a subset of the imputed values should be displayed:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># re-fit the model and monitor the imputed values</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a>mod13d &lt;-<span class="st"> </span><span class="kw">update</span>(mod13a, <span class="dt">monitor_params =</span> <span class="kw">c</span>(<span class="dt">imps =</span> <span class="ot">TRUE</span>))</span>
-<span id="cb14-3"><a href="#cb14-3"></a></span>
-<span id="cb14-4"><a href="#cb14-4"></a><span class="co"># select all imputed values for 'WC' (3rd column of Xc)</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a>sub3 &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">'Xc</span><span class="ch">\\</span><span class="st">[[[:digit:]]+,3</span><span class="ch">\\</span><span class="st">]'</span>, <span class="kw"><a href="../reference/parameters.html">parameters</a></span>(mod13d), <span class="dt">value =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb14-6"><a href="#cb14-6"></a>sub3</span>
-<span id="cb14-7"><a href="#cb14-7"></a><span class="co">#&gt; [1] "Xc[33,3]"  "Xc[150,3]"</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a></span>
-<span id="cb14-9"><a href="#cb14-9"></a><span class="co"># pass "sub3" to "subset" via "other", for example in a traceplot:</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a><span class="co"># traceplot(mod13d, subset = list(other = sub3), ncol = 2)</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># re-fit the model and monitor the imputed values</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>mod13d &lt;-<span class="st"> </span><span class="kw">update</span>(mod13a, <span class="dt">monitor_params =</span> <span class="kw">c</span>(<span class="dt">imps =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb13-3"><a href="#cb13-3"></a></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="co"># select all imputed values for 'WC' (3rd column of Xc)</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>sub3 &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">'Xc</span><span class="ch">\\</span><span class="st">[[[:digit:]]+,3</span><span class="ch">\\</span><span class="st">]'</span>, <span class="kw"><a href="../reference/parameters.html">parameters</a></span>(mod13d), <span class="dt">value =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb13-6"><a href="#cb13-6"></a>sub3</span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="co">#&gt; [1] "Xc[33,3]"  "Xc[150,3]"</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="co"># pass "sub3" to "subset" via "other", for example in a traceplot:</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="co"># traceplot(mod13d, subset = list(other = sub3), ncol = 2)</span></span></code></pre></div>
 <p>When the number of imputed values is large or in order to check convergence of random effects, it may not be feasible to plot and inspect all traceplots. In that case a random subset of, for instance the random effects, can be selected (output not shown):</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># re-fit the model monitoring the random effects</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>mod13e &lt;-<span class="st"> </span><span class="kw">update</span>(mod13b, <span class="dt">monitor_params =</span> <span class="kw">c</span>(<span class="dt">ranef =</span> <span class="ot">TRUE</span>))</span>
-<span id="cb15-3"><a href="#cb15-3"></a></span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="co"># extract random intercepts and random slopes</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a>ri &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">'^b</span><span class="ch">\\</span><span class="st">[[[:digit:]]+,1</span><span class="ch">\\</span><span class="st">]$'</span>, <span class="kw">colnames</span>(mod13e<span class="op">$</span>MCMC[[<span class="dv">1</span>]]), <span class="dt">value =</span> T)</span>
-<span id="cb15-6"><a href="#cb15-6"></a>rs &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">'^b</span><span class="ch">\\</span><span class="st">[[[:digit:]]+,2</span><span class="ch">\\</span><span class="st">]$'</span>, <span class="kw">colnames</span>(mod13e<span class="op">$</span>MCMC[[<span class="dv">1</span>]]), <span class="dt">value =</span> T)</span>
-<span id="cb15-7"><a href="#cb15-7"></a></span>
-<span id="cb15-8"><a href="#cb15-8"></a><span class="co"># to plot the chains of 12 randomly selected random intercepts and slopes:</span></span>
-<span id="cb15-9"><a href="#cb15-9"></a><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(mod13e, <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">other =</span> <span class="kw">sample</span>(ri, <span class="dt">size =</span> <span class="dv">12</span>)), <span class="dt">ncol =</span> <span class="dv">4</span>)</span>
-<span id="cb15-10"><a href="#cb15-10"></a><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(mod13e, <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">other =</span> <span class="kw">sample</span>(rs, <span class="dt">size =</span> <span class="dv">12</span>)), <span class="dt">ncol =</span> <span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># re-fit the model monitoring the random effects</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>mod13e &lt;-<span class="st"> </span><span class="kw">update</span>(mod13b, <span class="dt">monitor_params =</span> <span class="kw">c</span>(<span class="dt">ranef =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb14-3"><a href="#cb14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co"># extract random intercepts and random slopes</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>ri &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">'^b</span><span class="ch">\\</span><span class="st">[[[:digit:]]+,1</span><span class="ch">\\</span><span class="st">]$'</span>, <span class="kw">colnames</span>(mod13e<span class="op">$</span>MCMC[[<span class="dv">1</span>]]), <span class="dt">value =</span> T)</span>
+<span id="cb14-6"><a href="#cb14-6"></a>rs &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">'^b</span><span class="ch">\\</span><span class="st">[[[:digit:]]+,2</span><span class="ch">\\</span><span class="st">]$'</span>, <span class="kw">colnames</span>(mod13e<span class="op">$</span>MCMC[[<span class="dv">1</span>]]), <span class="dt">value =</span> T)</span>
+<span id="cb14-7"><a href="#cb14-7"></a></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="co"># to plot the chains of 12 randomly selected random intercepts and slopes:</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(mod13e, <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">other =</span> <span class="kw">sample</span>(ri, <span class="dt">size =</span> <span class="dv">12</span>)), <span class="dt">ncol =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p><img src="AfterFitting_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(mod13e, <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">other =</span> <span class="kw">sample</span>(rs, <span class="dt">size =</span> <span class="dv">12</span>)), <span class="dt">ncol =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p><img src="AfterFitting_files/figure-html/unnamed-chunk-10-2.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="subset-of-mcmc-samples" class="section level3">
 <h3 class="hasAnchor">
 <a href="#subset-of-mcmc-samples" class="anchor"></a>Subset of MCMC samples</h3>
 <p>With the arguments <code>start</code>, <code>end</code> and <code>thin</code> it is possible to select which iterations from the MCMC sample are included in the summary. <code>start</code> and <code>end</code> specify the first and last iterations to be used, <code>thin</code> the thinning interval. Specification of <code>start</code>, thus, allows discarding a “burn-in”, i.e., the iterations before the MCMC chain had converged.</p>
+<p>If a particular chain does not have converged it can be excluded from the result summary or plot using the argument <code>exclude_chains</code> which takes a numeric vector identifying chains to be excluded, for example:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>mod14 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat, <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">100</span>,</span>
+<span id="cb16-2"><a href="#cb16-2"></a>              <span class="dt">progress.bar =</span> <span class="st">'none'</span>, <span class="dt">n.chains =</span> <span class="dv">5</span>)</span>
+<span id="cb16-3"><a href="#cb16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="kw"><a href="../reference/densplot.html">densplot</a></span>(mod14, <span class="dt">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="AfterFitting_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw"><a href="../reference/densplot.html">densplot</a></span>(mod14, <span class="dt">exclude_chains =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>), <span class="dt">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="AfterFitting_files/figure-html/unnamed-chunk-11-2.png" width="672" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(mod14, <span class="dt">thin =</span> <span class="dv">5</span>, <span class="dt">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="AfterFitting_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(mod14, <span class="dt">start =</span> <span class="dv">150</span>, <span class="dt">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="AfterFitting_files/figure-html/unnamed-chunk-12-2.png" width="672" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw"><a href="../reference/traceplot.html">traceplot</a></span>(mod14, <span class="dt">end =</span> <span class="dv">120</span>, <span class="dt">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="AfterFitting_files/figure-html/unnamed-chunk-12-3.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="predicted-values" class="section level2">
 <h2 class="hasAnchor">
 <a href="#predicted-values" class="anchor"></a>Predicted values</h2>
 <p>Often, the aim of an analysis is not only to estimate the association between outcome and covariates but to predict future outcomes or outcomes for new subjects.</p>
-<p>The function <a href="https://nerler.github.io/JointAI/reference/predict.JointAI.html"><code>predict()</code></a> allows obtaining predicted values and corresponding prediction intervals from <code>JointAI</code> objects. Note that for mixed models, currently, only marginal prediction but not prediction conditional on the random effects is implemented.</p>
-<p>A dataset containing data which the prediction should be performed is specified via the argument <code>newdata</code>. The argument <code>quantiles</code> allows specifying the quantiles of the posterior sample that are used to obtain the prediction interval (by default the 2.5% and 97.5% quantile). Arguments <code>start</code>, <code>end</code> and <code>thin</code> control the subset of MCMC samples used.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">predict</span>(mod13a, <span class="dt">newdata =</span> NHANES[<span class="dv">27</span>, ])</span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="co">#&gt; $dat</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="co">#&gt;          SBP gender age             race   WC alc educ creat albu</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a><span class="co">#&gt; 392 126.6667   male  32 Mexican American 94.1  &lt;1  low  0.83  4.2</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a><span class="co">#&gt;     uricacid bili occup  smoke      fit     2.5%    97.5%</span></span>
-<span id="cb16-6"><a href="#cb16-6"></a><span class="co">#&gt; 392      8.7    1  &lt;NA&gt; former 116.3918 112.2196 120.1574</span></span>
-<span id="cb16-7"><a href="#cb16-7"></a><span class="co">#&gt; </span></span>
-<span id="cb16-8"><a href="#cb16-8"></a><span class="co">#&gt; $fit</span></span>
-<span id="cb16-9"><a href="#cb16-9"></a><span class="co">#&gt; [1] 116.3918</span></span>
-<span id="cb16-10"><a href="#cb16-10"></a><span class="co">#&gt; </span></span>
-<span id="cb16-11"><a href="#cb16-11"></a><span class="co">#&gt; $quantiles</span></span>
-<span id="cb16-12"><a href="#cb16-12"></a><span class="co">#&gt;          2.5%    97.5%</span></span>
-<span id="cb16-13"><a href="#cb16-13"></a><span class="co">#&gt; [1,] 112.2196 120.1574</span></span></code></pre></div>
-<p><code>predict()</code> returns a list with elements <code>dat</code>, <code>fit</code> and <code>quantiles</code>, containing <code>newdata</code> with the predicted values and quantiles appended, the predicted values and quantiles that form the prediction interval.</p>
+<p>The function <a href="https://nerler.github.io/JointAI/reference/predict.JointAI.html"><code>predict()</code></a> allows us to obtain predicted values and corresponding credible intervals from <code>JointAI</code> objects. Note that for mixed models, currently, only marginal prediction but not prediction conditional on the random effects is implemented.</p>
+<p>A dataset containing data which the prediction should be performed is specified via the argument <code>newdata</code>. If no <code>newdata</code> is given, the original data from the JointAI object are used. The argument <code>quantiles</code> allows the specification of the quantiles of the posterior sample that are used to obtain the credible interval (by default the 2.5% and 97.5% quantile). Arguments <code>start</code>, <code>end</code>, <code>thin</code> and <code>exclude_chains</code> control the subset of MCMC samples that is used.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">predict</span>(mod13a, <span class="dt">newdata =</span> NHANES[<span class="dv">27</span>, ])</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="co">#&gt; $dat</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="co">#&gt;          SBP gender age             race   WC alc educ creat albu</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="co">#&gt; 392 126.6667   male  32 Mexican American 94.1  &lt;1  low  0.83  4.2</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="co">#&gt;     uricacid bili occup  smoke      fit     2.5%   97.5%</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="co">#&gt; 392      8.7    1  &lt;NA&gt; former 116.3604 112.5081 120.295</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="co">#&gt; </span></span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="co">#&gt; $fit</span></span>
+<span id="cb21-9"><a href="#cb21-9"></a><span class="co">#&gt; [1] 116.3604</span></span>
+<span id="cb21-10"><a href="#cb21-10"></a><span class="co">#&gt; </span></span>
+<span id="cb21-11"><a href="#cb21-11"></a><span class="co">#&gt; $quantiles</span></span>
+<span id="cb21-12"><a href="#cb21-12"></a><span class="co">#&gt;          2.5%   97.5%</span></span>
+<span id="cb21-13"><a href="#cb21-13"></a><span class="co">#&gt; [1,] 112.5081 120.295</span></span></code></pre></div>
+<p><code>predict()</code> returns a list with elements <code>dat</code>, <code>fit</code> and <code>quantiles</code>, containing <code>newdata</code> with the predicted values and quantiles appended, the predicted values and quantiles that form the credible interval.</p>
 <div id="prediction-to-visualize-non-linear-effects" class="section level3">
 <h3 class="hasAnchor">
 <a href="#prediction-to-visualize-non-linear-effects" class="anchor"></a>Prediction to visualize non-linear effects</h3>
 <p>Another reason to obtain predicted values is the visualization of non-linear effects. To facilitate the generation of a dataset for such a prediction, the function <a href="https://nerler.github.io/JointAI/reference/predDF.html"><code><a href="../reference/predDF.html">predDF()</a></code></a> can be used. It generates a <code>data.frame</code> that contains a sequence of values through the range of observed values for a covariate specified by the argument <code>var</code>, and the median or reference value for all other continuous and categorical variables.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># create dataset for prediction</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>newDF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predDF.html">predDF</a></span>(mod13b, <span class="dt">var =</span> <span class="st">"age"</span>)</span>
-<span id="cb17-3"><a href="#cb17-3"></a></span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="co"># obtain predicted values</span></span>
-<span id="cb17-5"><a href="#cb17-5"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(mod13b, <span class="dt">newdata =</span> newDF)</span>
-<span id="cb17-6"><a href="#cb17-6"></a></span>
-<span id="cb17-7"><a href="#cb17-7"></a><span class="co"># plot predicted values and prediction interval</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a><span class="kw">matplot</span>(pred<span class="op">$</span>dat<span class="op">$</span>age, pred<span class="op">$</span>dat[, <span class="kw">c</span>(<span class="st">'fit'</span>, <span class="st">'2.5%'</span>, <span class="st">'97.5%'</span>)],</span>
-<span id="cb17-9"><a href="#cb17-9"></a>        <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>), <span class="dt">type =</span> <span class="st">'l'</span>, <span class="dt">col =</span> <span class="dv">1</span>,</span>
-<span id="cb17-10"><a href="#cb17-10"></a>        <span class="dt">xlab =</span> <span class="st">'age in months'</span>, <span class="dt">ylab =</span> <span class="st">'predicted value'</span>)</span></code></pre></div>
-<p><img src="AfterFitting_files/figure-html/unnamed-chunk-13-1.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># create dataset for prediction</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>newDF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predDF.html">predDF</a></span>(mod13b, <span class="dt">var =</span> <span class="st">"age"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3"></a></span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="co"># obtain predicted values</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(mod13b, <span class="dt">newdata =</span> newDF)</span>
+<span id="cb22-6"><a href="#cb22-6"></a></span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="co"># plot predicted values and credible interval</span></span>
+<span id="cb22-8"><a href="#cb22-8"></a><span class="kw">matplot</span>(pred<span class="op">$</span>dat<span class="op">$</span>age, pred<span class="op">$</span>dat[, <span class="kw">c</span>(<span class="st">'fit'</span>, <span class="st">'2.5%'</span>, <span class="st">'97.5%'</span>)],</span>
+<span id="cb22-9"><a href="#cb22-9"></a>        <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>), <span class="dt">type =</span> <span class="st">'l'</span>, <span class="dt">col =</span> <span class="dv">1</span>,</span>
+<span id="cb22-10"><a href="#cb22-10"></a>        <span class="dt">xlab =</span> <span class="st">'age in months'</span>, <span class="dt">ylab =</span> <span class="st">'predicted value'</span>)</span></code></pre></div>
+<p><img src="AfterFitting_files/figure-html/unnamed-chunk-15-1.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="export-of-imputed-values" class="section level2">
@@ -473,10 +494,10 @@
 <p>To make the selection of iterations to form the imputed data reproducible, a seed value can be specified via the argument <code>seed</code>.</p>
 <p>When <code>export_to_SPSS = TRUE</code> the imputed data is exported to SPSS, i.e., a <code>.txt</code> file containing the data and a <code>.sps</code> file containing SPSS syntax to convert the data into an SPSS data file (with ending <code>.sav</code>) are written. Arguments <code>filename</code> and <code>resdir</code> allow the specification of the name of the <code>.txt</code> and <code>.sps</code> file and the directory they are written to.</p>
 <p><code><a href="../reference/get_MIdat.html">get_MIdat()</a></code> returns a long-format <code>data.frame</code> containing the imputed datasets (and by default the original data) stacked onto each other. The imputation number is given in the variable <code>Imputation_</code>, column <code>.id</code> contains a newly created id variable for each observation in cross-sectional data (multi-level data should already contain an id variable).</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>impDF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_MIdat.html">get_MIdat</a></span>(mod13d, <span class="dt">m =</span> <span class="dv">10</span>, <span class="dt">seed =</span> <span class="dv">2018</span>)</span></code></pre></div>
-<p>The function <code><a href="../reference/plot_imp_distr.html">plot_imp_distr()</a></code> allows to visually compare the distribution of the observed and imputed values.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw"><a href="../reference/plot_imp_distr.html">plot_imp_distr</a></span>(impDF, <span class="dt">nrow =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="AfterFitting_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>impDF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_MIdat.html">get_MIdat</a></span>(mod13d, <span class="dt">m =</span> <span class="dv">10</span>, <span class="dt">seed =</span> <span class="dv">2018</span>)</span></code></pre></div>
+<p>The function <code><a href="../reference/plot_imp_distr.html">plot_imp_distr()</a></code> allows us to visually compare the distribution of the observed and imputed values.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw"><a href="../reference/plot_imp_distr.html">plot_imp_distr</a></span>(impDF, <span class="dt">nrow =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="AfterFitting_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div class="footnotes">
 <hr>

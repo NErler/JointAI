@@ -120,9 +120,8 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>MCMC Settings</h1>
-                        <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2019-08-28</h4>
+            <h4 class="date">2019-08-29</h4>
       
       
       <div class="hidden name"><code>MCMCsettings.Rmd</code></div>
@@ -132,9 +131,9 @@
     
     
 <p>In <strong>JointAI</strong>, models are estimated in the Bayesian framework, using MCMC (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Markov Chain Monte Carlo</a>) sampling. The sampling is done by the software <a href="http://mcmc-jags.sourceforge.net/">JAGS</a> (“Just Another Gibbs Sampler”), which performs <a href="https://en.wikipedia.org/wiki/Gibbs_sampling">Gibbs</a> sampling. <strong>JointAI</strong> pre-processes the data to get it into a form that can be passed to JAGS and writes the JAGS model. The R package <a href="https://CRAN.R-project.org/package=rjags"><strong>rjags</strong></a> is used as an interface to JAGS.</p>
-<p>Here, we describe how to specify the arguments in the main functions that control MCMC related settings. To learn more about how to specify the other arguments in <strong>JointAI</strong> models, check out the vignette on <a href="https://nerler.github.io/JointAI/articles/ModelSpecification.html"><em>Model Specification</em></a>.</p>
+<p>Here, we describe how to specify the arguments in the main functions that control MCMC related settings. To learn more about how to specify the other arguments in <strong>JointAI</strong> models or the theoretical background of the statistical approach, check out the vignettes <a href="https://nerler.github.io/JointAI/articles/ModelSpecification.html"><em>Model Specification</em></a> and <a href="https://nerler.github.io/JointAI/articles/TheoreticalBackground.html"><em>TheoreticalBackground</em></a>.</p>
 <p>In this vignette, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a> data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a> for examples in longitudinal data. For more info on these datasets, check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the distributions of variables and missing values in both sets is explored.</p>
-<p><strong>Note:</strong><br> In many of the examples, we use <code>progress.bar = 'none'</code> which prevents printing of the progress of the MCMC sampling, since this would result in lengthy output in the vignette.</p>
+<p><strong>Note:</strong><br> In several examples we use <code>progress.bar = 'none'</code> which prevents printing of the progress of the MCMC sampling, since this would result in lengthy output in the vignette.</p>
 <div id="mcmc-related-parameters-in-jointai" class="section level2">
 <h2 class="hasAnchor">
 <a href="#mcmc-related-parameters-in-jointai" class="anchor"></a>MCMC related parameters in <strong>JointAI</strong>
@@ -158,7 +157,7 @@
 <li>
 <code>parallel</code>: whether the MCMC chains should be sampled in parallel</li>
 <li>
-<code>ncores</code>: how many cores are used for parallel sampling</li>
+<code>n.cores</code>: how many cores are used for parallel sampling</li>
 </ul>
 <p>And some other parameters passed to functions from <strong>rjags</strong>:</p>
 <ul>
@@ -175,7 +174,7 @@
 <div id="number-of-chains" class="section level3">
 <h3 class="hasAnchor">
 <a href="#number-of-chains" class="anchor"></a>Number of chains</h3>
-<p>To evaluate the convergence of MCMC chains it is helpful to create multiple chains, that have different starting values. The argument <code>n.chains</code> selects the number of chains (by default, <code>n.chains = 3</code>).</p>
+<p>To evaluate the convergence of MCMC chains it is helpful to create multiple chains that have different starting values. The argument <code>n.chains</code> selects the number of chains (by default, <code>n.chains = 3</code>).</p>
 <p>For calculating the model summary, multiple chains are merged.</p>
 </div>
 <div id="adaptive-phase" class="section level3">
@@ -202,8 +201,8 @@
 <div id="thinning" class="section level3">
 <h3 class="hasAnchor">
 <a href="#thinning" class="anchor"></a>Thinning</h3>
-<p>In settings with high autocorrelation i.e., there are no large jumps in the chain but sampled values are always close to the previous value, it may take many iterations before a sample is created that sufficiently represents the whole range of the posterior distribution.</p>
-<p>Processing of such long chains can be slow and take a lot of memory. The parameter <code>thin</code> allows to user to specify if and how much the MCMC chains should be thinned out before storing them. By default <code>thin = 1</code> is used, which corresponds to keeping all values. A value <code>thin = 10</code> would result in keeping every 10th value and discarding all other values.</p>
+<p>In settings with high autocorrelation, i.e., there are no large jumps in the chain but sampled values are always close to the previous value, it may take many iterations before a sample is created that sufficiently represents the whole range of the posterior distribution.</p>
+<p>Processing of such long chains can be slow and take a lot of memory. The parameter <code>thin</code> allows the user to specify if and how much the MCMC chains should be thinned out before storing them. By default <code>thin = 1</code> is used, which corresponds to keeping all values. A value <code>thin = 10</code> would result in keeping every 10th value and discarding all other values.</p>
 </div>
 <div id="examples" class="section level3">
 <h3 class="hasAnchor">
@@ -294,26 +293,26 @@
 <span id="cb7-6"><a href="#cb7-6"></a>init_list</span>
 <span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt; [[1]]</span></span>
 <span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt; [[1]]$beta</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt; [1]  0.8657983  1.8102140 -1.5324909  0.4610431</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt; [1] -0.01093191 -0.55096398 -2.30954732  0.51000450</span></span>
 <span id="cb7-10"><a href="#cb7-10"></a><span class="co">#&gt; </span></span>
 <span id="cb7-11"><a href="#cb7-11"></a><span class="co">#&gt; [[1]]$tau_SBP</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a><span class="co">#&gt; [1] 0.5919943</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co">#&gt; [1] 0.273426</span></span>
 <span id="cb7-13"><a href="#cb7-13"></a><span class="co">#&gt; </span></span>
 <span id="cb7-14"><a href="#cb7-14"></a><span class="co">#&gt; </span></span>
 <span id="cb7-15"><a href="#cb7-15"></a><span class="co">#&gt; [[2]]</span></span>
 <span id="cb7-16"><a href="#cb7-16"></a><span class="co">#&gt; [[2]]$beta</span></span>
-<span id="cb7-17"><a href="#cb7-17"></a><span class="co">#&gt; [1] -0.4035302 -0.3048904 -0.9576998  2.1964961</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="co">#&gt; [1] -0.58924347 -1.15185944 -0.02091025 -0.79162997</span></span>
 <span id="cb7-18"><a href="#cb7-18"></a><span class="co">#&gt; </span></span>
 <span id="cb7-19"><a href="#cb7-19"></a><span class="co">#&gt; [[2]]$tau_SBP</span></span>
-<span id="cb7-20"><a href="#cb7-20"></a><span class="co">#&gt; [1] 2.099023</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a><span class="co">#&gt; [1] 0.06069071</span></span>
 <span id="cb7-21"><a href="#cb7-21"></a><span class="co">#&gt; </span></span>
 <span id="cb7-22"><a href="#cb7-22"></a><span class="co">#&gt; </span></span>
 <span id="cb7-23"><a href="#cb7-23"></a><span class="co">#&gt; [[3]]</span></span>
 <span id="cb7-24"><a href="#cb7-24"></a><span class="co">#&gt; [[3]]$beta</span></span>
-<span id="cb7-25"><a href="#cb7-25"></a><span class="co">#&gt; [1] -1.1165711  0.1515887 -0.2015973  0.3160238</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a><span class="co">#&gt; [1]  0.20272030 -0.05810403 -0.30501232  1.28073150</span></span>
 <span id="cb7-26"><a href="#cb7-26"></a><span class="co">#&gt; </span></span>
 <span id="cb7-27"><a href="#cb7-27"></a><span class="co">#&gt; [[3]]$tau_SBP</span></span>
-<span id="cb7-28"><a href="#cb7-28"></a><span class="co">#&gt; [1] 1.227517</span></span></code></pre></div>
+<span id="cb7-28"><a href="#cb7-28"></a><span class="co">#&gt; [1] 0.4597495</span></span></code></pre></div>
 <p>The list is then passed to the argument <code>inits</code>. The amended version of the user provided lists of initial values are stored in the JointAI object:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>mod4a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC, <span class="dt">data =</span> NHANES, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</span>
 <span id="cb8-2"><a href="#cb8-2"></a>                <span class="dt">inits =</span> init_list)</span>
@@ -321,44 +320,44 @@
 <span id="cb8-4"><a href="#cb8-4"></a>mod4a<span class="op">$</span>mcmc_settings<span class="op">$</span>inits</span>
 <span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt; [[1]]</span></span>
 <span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt; [[1]]$beta</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; [1]  0.8657983  1.8102140 -1.5324909  0.4610431</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; [1] -0.01093191 -0.55096398 -2.30954732  0.51000450</span></span>
 <span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; </span></span>
 <span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt; [[1]]$tau_SBP</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; [1] 0.5919943</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; [1] 0.273426</span></span>
 <span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; </span></span>
 <span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt; [[1]]$.RNG.name</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; [1] "base::Super-Duper"</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; [1] "base::Wichmann-Hill"</span></span>
 <span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt; </span></span>
 <span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt; [[1]]$.RNG.seed</span></span>
-<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt; [1] 66639</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt; [1] 33014</span></span>
 <span id="cb8-17"><a href="#cb8-17"></a><span class="co">#&gt; </span></span>
 <span id="cb8-18"><a href="#cb8-18"></a><span class="co">#&gt; </span></span>
 <span id="cb8-19"><a href="#cb8-19"></a><span class="co">#&gt; [[2]]</span></span>
 <span id="cb8-20"><a href="#cb8-20"></a><span class="co">#&gt; [[2]]$beta</span></span>
-<span id="cb8-21"><a href="#cb8-21"></a><span class="co">#&gt; [1] -0.4035302 -0.3048904 -0.9576998  2.1964961</span></span>
+<span id="cb8-21"><a href="#cb8-21"></a><span class="co">#&gt; [1] -0.58924347 -1.15185944 -0.02091025 -0.79162997</span></span>
 <span id="cb8-22"><a href="#cb8-22"></a><span class="co">#&gt; </span></span>
 <span id="cb8-23"><a href="#cb8-23"></a><span class="co">#&gt; [[2]]$tau_SBP</span></span>
-<span id="cb8-24"><a href="#cb8-24"></a><span class="co">#&gt; [1] 2.099023</span></span>
+<span id="cb8-24"><a href="#cb8-24"></a><span class="co">#&gt; [1] 0.06069071</span></span>
 <span id="cb8-25"><a href="#cb8-25"></a><span class="co">#&gt; </span></span>
 <span id="cb8-26"><a href="#cb8-26"></a><span class="co">#&gt; [[2]]$.RNG.name</span></span>
-<span id="cb8-27"><a href="#cb8-27"></a><span class="co">#&gt; [1] "base::Mersenne-Twister"</span></span>
+<span id="cb8-27"><a href="#cb8-27"></a><span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span></span>
 <span id="cb8-28"><a href="#cb8-28"></a><span class="co">#&gt; </span></span>
 <span id="cb8-29"><a href="#cb8-29"></a><span class="co">#&gt; [[2]]$.RNG.seed</span></span>
-<span id="cb8-30"><a href="#cb8-30"></a><span class="co">#&gt; [1] 13522</span></span>
+<span id="cb8-30"><a href="#cb8-30"></a><span class="co">#&gt; [1] 94588</span></span>
 <span id="cb8-31"><a href="#cb8-31"></a><span class="co">#&gt; </span></span>
 <span id="cb8-32"><a href="#cb8-32"></a><span class="co">#&gt; </span></span>
 <span id="cb8-33"><a href="#cb8-33"></a><span class="co">#&gt; [[3]]</span></span>
 <span id="cb8-34"><a href="#cb8-34"></a><span class="co">#&gt; [[3]]$beta</span></span>
-<span id="cb8-35"><a href="#cb8-35"></a><span class="co">#&gt; [1] -1.1165711  0.1515887 -0.2015973  0.3160238</span></span>
+<span id="cb8-35"><a href="#cb8-35"></a><span class="co">#&gt; [1]  0.20272030 -0.05810403 -0.30501232  1.28073150</span></span>
 <span id="cb8-36"><a href="#cb8-36"></a><span class="co">#&gt; </span></span>
 <span id="cb8-37"><a href="#cb8-37"></a><span class="co">#&gt; [[3]]$tau_SBP</span></span>
-<span id="cb8-38"><a href="#cb8-38"></a><span class="co">#&gt; [1] 1.227517</span></span>
+<span id="cb8-38"><a href="#cb8-38"></a><span class="co">#&gt; [1] 0.4597495</span></span>
 <span id="cb8-39"><a href="#cb8-39"></a><span class="co">#&gt; </span></span>
 <span id="cb8-40"><a href="#cb8-40"></a><span class="co">#&gt; [[3]]$.RNG.name</span></span>
 <span id="cb8-41"><a href="#cb8-41"></a><span class="co">#&gt; [1] "base::Wichmann-Hill"</span></span>
 <span id="cb8-42"><a href="#cb8-42"></a><span class="co">#&gt; </span></span>
 <span id="cb8-43"><a href="#cb8-43"></a><span class="co">#&gt; [[3]]$.RNG.seed</span></span>
-<span id="cb8-44"><a href="#cb8-44"></a><span class="co">#&gt; [1] 66858</span></span></code></pre></div>
+<span id="cb8-44"><a href="#cb8-44"></a><span class="co">#&gt; [1] 60496</span></span></code></pre></div>
 </div>
 <div id="initial-values-as-a-function" class="section level4">
 <h4 class="hasAnchor">
@@ -372,10 +371,10 @@
 <span id="cb9-5"><a href="#cb9-5"></a></span>
 <span id="cb9-6"><a href="#cb9-6"></a><span class="kw">inits_fun</span>()</span>
 <span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; $beta</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; [1] -0.69649282 -1.65640565  1.52307612  0.07784647</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; [1] -0.9312337 -1.3014700  0.3302096 -0.9041773</span></span>
 <span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; </span></span>
 <span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt; $alpha</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; [1] -0.08190489  0.41432131  0.35667346</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; [1] -0.09018428 -0.59845237  0.08685785</span></span>
 <span id="cb9-12"><a href="#cb9-12"></a></span>
 <span id="cb9-13"><a href="#cb9-13"></a></span>
 <span id="cb9-14"><a href="#cb9-14"></a>mod4b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>WC, <span class="dt">data =</span> NHANES, <span class="dt">progress.bar =</span> <span class="st">'none'</span>,</span>
@@ -384,44 +383,44 @@
 <span id="cb9-17"><a href="#cb9-17"></a>mod4b<span class="op">$</span>mcmc_settings<span class="op">$</span>inits</span>
 <span id="cb9-18"><a href="#cb9-18"></a><span class="co">#&gt; [[1]]</span></span>
 <span id="cb9-19"><a href="#cb9-19"></a><span class="co">#&gt; [[1]]$beta</span></span>
-<span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt; [1]  1.8082700  0.9727969  1.9861519 -1.8373593</span></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt; [1]  0.748650 -1.277869  1.333955 -1.046115</span></span>
 <span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt; </span></span>
 <span id="cb9-22"><a href="#cb9-22"></a><span class="co">#&gt; [[1]]$alpha</span></span>
-<span id="cb9-23"><a href="#cb9-23"></a><span class="co">#&gt; [1] -1.256468  1.052332  1.024378</span></span>
+<span id="cb9-23"><a href="#cb9-23"></a><span class="co">#&gt; [1]  1.3448079  1.4072229 -0.6296155</span></span>
 <span id="cb9-24"><a href="#cb9-24"></a><span class="co">#&gt; </span></span>
 <span id="cb9-25"><a href="#cb9-25"></a><span class="co">#&gt; [[1]]$.RNG.name</span></span>
-<span id="cb9-26"><a href="#cb9-26"></a><span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span></span>
+<span id="cb9-26"><a href="#cb9-26"></a><span class="co">#&gt; [1] "base::Wichmann-Hill"</span></span>
 <span id="cb9-27"><a href="#cb9-27"></a><span class="co">#&gt; </span></span>
 <span id="cb9-28"><a href="#cb9-28"></a><span class="co">#&gt; [[1]]$.RNG.seed</span></span>
-<span id="cb9-29"><a href="#cb9-29"></a><span class="co">#&gt; [1] 59135</span></span>
+<span id="cb9-29"><a href="#cb9-29"></a><span class="co">#&gt; [1] 65736</span></span>
 <span id="cb9-30"><a href="#cb9-30"></a><span class="co">#&gt; </span></span>
 <span id="cb9-31"><a href="#cb9-31"></a><span class="co">#&gt; </span></span>
 <span id="cb9-32"><a href="#cb9-32"></a><span class="co">#&gt; [[2]]</span></span>
 <span id="cb9-33"><a href="#cb9-33"></a><span class="co">#&gt; [[2]]$beta</span></span>
-<span id="cb9-34"><a href="#cb9-34"></a><span class="co">#&gt; [1]  0.79204558  0.09769806 -0.58201576  0.37508426</span></span>
+<span id="cb9-34"><a href="#cb9-34"></a><span class="co">#&gt; [1]  0.6059823 -0.4236974  1.7362917  0.6622899</span></span>
 <span id="cb9-35"><a href="#cb9-35"></a><span class="co">#&gt; </span></span>
 <span id="cb9-36"><a href="#cb9-36"></a><span class="co">#&gt; [[2]]$alpha</span></span>
-<span id="cb9-37"><a href="#cb9-37"></a><span class="co">#&gt; [1] 2.0192920 1.5500963 0.7291777</span></span>
+<span id="cb9-37"><a href="#cb9-37"></a><span class="co">#&gt; [1] 0.5048475 1.6335190 0.7945107</span></span>
 <span id="cb9-38"><a href="#cb9-38"></a><span class="co">#&gt; </span></span>
 <span id="cb9-39"><a href="#cb9-39"></a><span class="co">#&gt; [[2]]$.RNG.name</span></span>
-<span id="cb9-40"><a href="#cb9-40"></a><span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span></span>
+<span id="cb9-40"><a href="#cb9-40"></a><span class="co">#&gt; [1] "base::Wichmann-Hill"</span></span>
 <span id="cb9-41"><a href="#cb9-41"></a><span class="co">#&gt; </span></span>
 <span id="cb9-42"><a href="#cb9-42"></a><span class="co">#&gt; [[2]]$.RNG.seed</span></span>
-<span id="cb9-43"><a href="#cb9-43"></a><span class="co">#&gt; [1] 19174</span></span>
+<span id="cb9-43"><a href="#cb9-43"></a><span class="co">#&gt; [1] 2252</span></span>
 <span id="cb9-44"><a href="#cb9-44"></a><span class="co">#&gt; </span></span>
 <span id="cb9-45"><a href="#cb9-45"></a><span class="co">#&gt; </span></span>
 <span id="cb9-46"><a href="#cb9-46"></a><span class="co">#&gt; [[3]]</span></span>
 <span id="cb9-47"><a href="#cb9-47"></a><span class="co">#&gt; [[3]]$beta</span></span>
-<span id="cb9-48"><a href="#cb9-48"></a><span class="co">#&gt; [1]  1.1296553 -1.5214744 -0.4056848 -0.2957161</span></span>
+<span id="cb9-48"><a href="#cb9-48"></a><span class="co">#&gt; [1]  0.1846369 -0.9118768  1.9810780  1.2401163</span></span>
 <span id="cb9-49"><a href="#cb9-49"></a><span class="co">#&gt; </span></span>
 <span id="cb9-50"><a href="#cb9-50"></a><span class="co">#&gt; [[3]]$alpha</span></span>
-<span id="cb9-51"><a href="#cb9-51"></a><span class="co">#&gt; [1]  0.1728951  1.6856180 -0.9085099</span></span>
+<span id="cb9-51"><a href="#cb9-51"></a><span class="co">#&gt; [1]  1.0897362  0.4233677 -0.4887012</span></span>
 <span id="cb9-52"><a href="#cb9-52"></a><span class="co">#&gt; </span></span>
 <span id="cb9-53"><a href="#cb9-53"></a><span class="co">#&gt; [[3]]$.RNG.name</span></span>
-<span id="cb9-54"><a href="#cb9-54"></a><span class="co">#&gt; [1] "base::Wichmann-Hill"</span></span>
+<span id="cb9-54"><a href="#cb9-54"></a><span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span></span>
 <span id="cb9-55"><a href="#cb9-55"></a><span class="co">#&gt; </span></span>
 <span id="cb9-56"><a href="#cb9-56"></a><span class="co">#&gt; [[3]]$.RNG.seed</span></span>
-<span id="cb9-57"><a href="#cb9-57"></a><span class="co">#&gt; [1] 93125</span></span></code></pre></div>
+<span id="cb9-57"><a href="#cb9-57"></a><span class="co">#&gt; [1] 45631</span></span></code></pre></div>
 <p>When a function is supplied, the function will be evaluated once per chain and the resulting list is stored.</p>
 </div>
 </div>
@@ -430,37 +429,37 @@
 <a href="#for-which-nodes-can-initial-values-be-specified" class="anchor"></a>For which nodes can initial values be specified?</h3>
 <p>Initial values can be specified for all unobserved stochastic nodes, i.e., parameters or unobserved data for which a distribution is specified in the JAGS model.</p>
 <p>Initial values have to be supplied in the format the parameter or unobserved value is used in the JAGS model.</p>
-<p>To find out which nodes there are in a model, the function <code>coef()</code> from package <strong>rjags</strong> can be used. It returns a list with the current values of the MCMC chains, by default the first chain. Elements of the initial values should have the same structure as the elements in this list.</p>
+<p>To find out which nodes there are in a model, the function <code>coef()</code> from package <strong>rjags</strong> can be used on a JAGS model object. It returns a list with the current values of the MCMC chains, by default the first chain. Elements of the initial values should have the same structure as the elements in this list.</p>
 <p><strong>Example:<br></strong> We are using a longitudinal model and the <code>simLong</code> data in this example. The output is abbreviated to show the relevant characteristics.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>mod4c &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>time <span class="op">+</span><span class="st"> </span>HEIGHT_M <span class="op">+</span><span class="st"> </span>hc <span class="op">+</span><span class="st"> </span>SMOKE, <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>time <span class="op">|</span><span class="st"> </span>ID,</span>
 <span id="cb10-2"><a href="#cb10-2"></a>                 <span class="dt">data =</span> simLong, <span class="dt">no_model =</span> <span class="st">'time'</span>, <span class="dt">progress.bar =</span> <span class="st">'none'</span>)</span>
 <span id="cb10-3"><a href="#cb10-3"></a></span>
 <span id="cb10-4"><a href="#cb10-4"></a><span class="kw">coef</span>(mod4c<span class="op">$</span>model)</span></code></pre></div>
 <pre><code>#&gt; $RinvD
-#&gt;           [,1]      [,2]
-#&gt; [1,] 0.6062445        NA
-#&gt; [2,]        NA 0.7974495
+#&gt;           [,1]        [,2]
+#&gt; [1,] 0.6399476          NA
+#&gt; [2,]        NA 0.002460732
 #&gt; 
 #&gt; $RinvD_hc
-#&gt;            [,1]        [,2]
-#&gt; [1,] 0.04656375          NA
-#&gt; [2,]         NA 0.002277935
+#&gt;             [,1]         [,2]
+#&gt; [1,] 0.002781073           NA
+#&gt; [2,]          NA 3.072463e-05
 #&gt; 
 #&gt; $Xc
-#&gt;        [,1]          [,2] [,3] [,4]
-#&gt;   [1,]   NA            NA   NA   NA
-#&gt;   [2,]   NA            NA   NA   NA
+#&gt;        [,1]       [,2] [,3] [,4]
+#&gt;   [1,]   NA         NA   NA   NA
+#&gt;   [2,]   NA         NA   NA   NA
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt;  [82,]   NA            NA   NA   NA
-#&gt;  [83,]   NA  0.0969805863   NA   NA
-#&gt;  [84,]   NA            NA   NA   NA
+#&gt;  [82,]   NA         NA   NA   NA
+#&gt;  [83,]   NA  0.7800597   NA   NA
+#&gt;  [84,]   NA         NA   NA   NA
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [199,]   NA            NA   NA   NA
-#&gt; [200,]   NA            NA   NA   NA
+#&gt; [199,]   NA         NA   NA   NA
+#&gt; [200,]   NA         NA   NA   NA
 #&gt; 
 #&gt; $Xcat
 #&gt;        [,1]
@@ -488,7 +487,7 @@
 #&gt;    [4,]           NA
 #&gt;    [5,]           NA
 #&gt;    [6,]           NA
-#&gt;    [7,] -0.042841979
+#&gt;    [7,] -0.367188771
 #&gt; 
 #&gt; [...]
 #&gt; 
@@ -496,29 +495,29 @@
 #&gt; [2400,]           NA
 #&gt; 
 #&gt; $alpha
-#&gt; [1]  0.02512235 -0.02905479  0.08692988  0.04754477 -0.22327997 -0.07886496  0.83338263
+#&gt; [1]  0.078303583 -0.057842690  0.003233384  0.009380311 -0.109164772  0.112619478  0.815789322
 #&gt; 
 #&gt; $b
-#&gt;            [,1]        [,2]
-#&gt;   [1,] 16.22954 -1.25372207
-#&gt;   [2,] 16.73882 -1.32576036
+#&gt;            [,1]       [,2]
+#&gt;   [1,] 16.29400 -1.4052480
+#&gt;   [2,] 17.00258 -1.5791907
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [200,] 17.04706 -1.49039284
+#&gt; [200,] 16.86638 -1.2398040
 #&gt; 
 #&gt; $b_hc
 #&gt;                [,1]      [,2]
-#&gt;   [1,] -0.400942307 0.7774189
-#&gt;   [2,]  0.043389023 0.8371590
+#&gt;   [1,] -0.351484718 0.7927903
+#&gt;   [2,] -0.175090363 0.8609381
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [199,] -0.142786846 0.8050499
-#&gt; [200,] -0.092082035 0.8396163
+#&gt; [199,]  0.073175579 0.8413094
+#&gt; [200,] -0.153563810 0.8418821
 #&gt; 
 #&gt; $beta
-#&gt; [1] 16.44131125 -0.08434637  0.09253126  0.10430755 -1.40902034  1.43080344
+#&gt; [1] 16.37619016 -0.07907623  0.10994008  0.28432515 -1.44852745  1.45630861
 #&gt; 
 #&gt; $bmi
 #&gt;    [1] NA NA  0  0 NA NA NA NA NA NA NA NA  0  0 NA  0 NA  0 NA NA NA NA NA NA NA NA NA NA NA NA NA
@@ -528,48 +527,48 @@
 #&gt; [2388] NA NA  0 NA  0 NA NA NA NA NA NA NA NA
 #&gt; 
 #&gt; $delta_SMOKE
-#&gt; [1] -1.229134
+#&gt; [1] -1.118077
 #&gt; 
 #&gt; $gamma_SMOKE
-#&gt; [1] 0.9831871        NA
+#&gt; [1] 1.387941       NA
 #&gt; 
 #&gt; $invD
-#&gt;           [,1]      [,2]
-#&gt; [1,]  1.964590 -1.857995
-#&gt; [2,] -1.857995  8.222128
+#&gt;            [,1]       [,2]
+#&gt; [1,]  1.6418828 -0.8852032
+#&gt; [2,] -0.8852032  7.3956899
 #&gt; 
 #&gt; $invD_hc
-#&gt;            [,1]      [,2]
-#&gt; [1,]   34.23048 -230.3669
-#&gt; [2,] -230.36691 2538.7773
+#&gt;           [,1]     [,2]
+#&gt; [1,]   38.7886 -173.626
+#&gt; [2,] -173.6260 1276.829
 #&gt; 
 #&gt; $mu_b
-#&gt;        [,1]     [,2]
-#&gt;   [1,]   NA -1.40902
-#&gt;   [2,]   NA -1.40902
+#&gt;        [,1]      [,2]
+#&gt;   [1,]   NA -1.448527
+#&gt;   [2,]   NA -1.448527
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [199,]   NA -1.40902
-#&gt; [200,]   NA -1.40902
+#&gt; [199,]   NA -1.448527
+#&gt; [200,]   NA -1.448527
 #&gt; 
 #&gt; $mu_b_hc
 #&gt;        [,1]      [,2]
-#&gt;   [1,]   NA 0.8333826
-#&gt;   [2,]   NA 0.8333826
+#&gt;   [1,]   NA 0.8157893
+#&gt;   [2,]   NA 0.8157893
 #&gt; 
 #&gt; [...]
 #&gt; 
-#&gt; [200,]   NA 0.8333826
+#&gt; [200,]   NA 0.8157893
 #&gt; 
 #&gt; $tau_HEIGHT_M
-#&gt; [1] 1.23082
+#&gt; [1] 1.013696
 #&gt; 
 #&gt; $tau_bmi
-#&gt; [1] 4.977683
+#&gt; [1] 4.788033
 #&gt; 
 #&gt; $tau_hc
-#&gt; [1] 4.843184</code></pre>
+#&gt; [1] 5.127269</code></pre>
 <p><code>RinvD</code> is the scale matrix in the Wishart prior for the inverse of the random effects design matrix <code>D</code>. In the data that is passed JAGS (which is stored in the element <code>data_list</code> in a JointAI object), this matrix is specified as diagonal matrix, with unknown diagonal elements:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>mod4c<span class="op">$</span>data_list[<span class="st">'RinvD'</span>]</span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="co">#&gt; $RinvD</span></span>
@@ -620,8 +619,8 @@
 <div id="parallel-sampling" class="section level2">
 <h2 class="hasAnchor">
 <a href="#parallel-sampling" class="anchor"></a>Parallel sampling</h2>
-<p>To reduce computational time, it is possible to perform sampling of multiple MCMC chains in parallel on multiple cores. This can be specified by setting the argument <code>parallel = TRUE</code>. The maximum number of cores to be used can be set with the argument <code>ncores</code>. By default, this is two less than the number of cores available on the machine, but never more than the number of MCMC chains.</p>
-<p>Parallel computation is done using the R packages <a href="https://CRAN.R-project.org/package=foreach"><strong>foreach</strong></a> and <a href="https://CRAN.R-project.org/package=doParallel"><strong>doParallel</strong></a>. Unfortunately, currently it is not possible to obtain a progress bar when using parallel computation.</p>
+<p>To reduce computational time, it is possible to perform sampling of multiple MCMC chains in parallel on multiple cores. This can be specified by setting the argument <code>parallel = TRUE</code>. The maximum number of cores to be used can be set with the argument <code>n.cores</code>. By default, this is two less than the number of cores available on the machine, but never more than the number of MCMC chains.</p>
+<p>Parallel computation is done using the R packages <a href="https://CRAN.R-project.org/package=foreach"><strong>foreach</strong></a> and <a href="https://CRAN.R-project.org/package=doParallel"><strong>doParallel</strong></a>. Unfortunately, currently it is not possible to obtain a progress bar when using parallel computation and warning messages produced during the sampling are not returned.</p>
 </div>
 <div id="other-arguments" class="section level2">
 <h2 class="hasAnchor">

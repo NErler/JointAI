@@ -121,9 +121,8 @@
     <div class="page-header toc-ignore">
       <h1>Parameter Selection</h1>
             <h3 class="subtitle">How to specify which parameters to monitor and display in the results.</h3>
-                        <h4 class="author">Nicole Erler</h4>
             
-            <h4 class="date">2019-08-28</h4>
+            <h4 class="date">2019-08-29</h4>
       
       
       <div class="hidden name"><code>SelectingParameters.Rmd</code></div>
@@ -133,12 +132,12 @@
     
     
 <p>In this vignette, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a> data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a> for examples in longitudinal data. For more info on these datasets, check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the distribution of variables and missing values in both sets is explored.</p>
-<p><strong>Note:</strong><br> In many of the examples we use <code>n.adapt = 0</code> (and <code>n.iter = 0</code>, which is the default) in order to prevent the MCMC sampling to reduce computational some time. <code>progress.bar = 'none'</code> prevents printing of the progress of the MCMC sampling, which results in lengthy output in the vignette, but is useful in practice.</p>
+<p><strong>Note:</strong><br> In several of the examples we use <code>n.adapt = 0</code> (and <code>n.iter = 0</code>, which is the default) in order to prevent the MCMC sampling to reduce computational some time. <code>progress.bar = 'none'</code> prevents printing of the progress of the MCMC sampling, which results in lengthy output in the vignette, but is useful in practice.</p>
 <div id="monitoring-parameters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#monitoring-parameters" class="anchor"></a>Monitoring parameters</h2>
 <p><strong>JointAI</strong> uses <a href="http://mcmc-jags.sourceforge.net/">JAGS</a> for performing the MCMC (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Markov Chain Monte Carlo</a>) sampling. Since JAGS only saves the values of MCMC chains for those parameters/variables for which the user has specified that they should be monitored, this is also the case in <strong>JointAI</strong>.</p>
-<p>For this purpose, the main functions <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code><a href="../reference/model_imp.html">lm_imp()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code><a href="../reference/model_imp.html">glm_imp()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code><a href="../reference/model_imp.html">clm_imp()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code><a href="../reference/model_imp.html">lme_imp()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code><a href="../reference/model_imp.html">glm_imp()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code><a href="../reference/model_imp.html">glme_imp()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code><a href="../reference/model_imp.html">clmm_imp()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code><a href="../reference/model_imp.html">survreg_imp()</a></code></a> and <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code><a href="../reference/model_imp.html">coxph_imp()</a></code></a> have an argument <code>monitor_params</code>.</p>
+<p>For this purpose, the main functions <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code>*_imp()</code></a> have an argument <code>monitor_params</code>.</p>
 <p><code>monitor_params</code> takes a named list (often a named vector also works) with the following possible entries:</p>
 <table class="table">
 <thead><tr class="header">
@@ -224,7 +223,7 @@
 <h3 class="hasAnchor">
 <a href="#parameters-of-the-analysis-model" class="anchor"></a>Parameters of the analysis model</h3>
 <p>The default setting is <code>monitor_params = c(analysis_main = TRUE)</code>, i.e., only the main parameters of the analysis model are monitored, and monitoring is switched off for all other parameters.</p>
-<p>The main parameters are the regression coefficients of the analysis model (<code>beta</code>) and the residual standard deviation (<code>sigma_y</code>).</p>
+<p>The main parameters are the regression coefficients of the analysis model (<code>beta</code>) and potentially the residual standard deviation (<code>sigma_y</code>), for example in linear models.</p>
 <p>The function <a href="https://nerler.github.io/JointAI/reference/parameters.html"><code><a href="../reference/parameters.html">parameters()</a></code></a> returns the parameters that are specified to be followed (even for models where no MCMC sampling was performed, i.e. when <code>n.iter = 0</code> and <code>n.adapt = 0</code>).</p>
 <p>For example:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>lm1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat, <span class="dt">data =</span> NHANES,  <span class="dt">n.adpat =</span> <span class="dv">0</span>)</span>
@@ -232,6 +231,7 @@
 <span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lm1)</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="co">#&gt; [1] "(Intercept)"  "genderfemale" "WC"           "alc&gt;=1"      </span></span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="co">#&gt; [5] "creat"        "sigma_SBP"</span></span></code></pre></div>
+<p>Note that instead of <code>"beta"</code> the names of the covariates are returned that are associated with the different elements of <code>beta</code>.</p>
 </div>
 <div id="imputed-values-parameters-of-the-imputation-models" class="section level3">
 <h3 class="hasAnchor">
@@ -378,7 +378,7 @@
 <span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt; [11] "D[1,2]"      "D[2,2]"      "RinvD[1,1]"  "RinvD[2,2]"</span></span></code></pre></div>
 <p>It is possible to select only a subset of the random effects parameters by specifying them directly, e.g.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>lme3a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lme_imp</a></span>(bmi <span class="op">~</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>EDUC, <span class="dt">random =</span> <span class="op">~</span>age <span class="op">|</span><span class="st"> </span>ID, <span class="dt">data =</span> simLong, <span class="dt">n.adapt =</span> <span class="dv">0</span>,</span>
-<span id="cb7-2"><a href="#cb7-2"></a>                <span class="dt">monitor_params =</span> <span class="kw">c</span>(<span class="dt">analysis_main =</span> <span class="ot">TRUE</span>, <span class="dt">RinvD =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb7-2"><a href="#cb7-2"></a>                 <span class="dt">monitor_params =</span> <span class="kw">c</span>(<span class="dt">analysis_main =</span> <span class="ot">TRUE</span>, <span class="dt">RinvD =</span> <span class="ot">TRUE</span>))</span>
 <span id="cb7-3"><a href="#cb7-3"></a></span>
 <span id="cb7-4"><a href="#cb7-4"></a><span class="kw"><a href="../reference/parameters.html">parameters</a></span>(lme3a)</span>
 <span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt;  [1] "(Intercept)" "EDUCmid"     "EDUClow"     "age"         "sigma_bmi"  </span></span>
@@ -399,7 +399,7 @@
 <h3 class="hasAnchor">
 <a href="#other-parameters" class="anchor"></a>Other parameters</h3>
 <p>The element <code>other</code> in <code>monitor_params</code> allows to specify one or multiple additional parameters to be monitored. When <code>other</code> is used with more than one element, <code>monitor_params</code> has to be a list.</p>
-<p>Here, we monitor the probability to be in the <code>alc&gt;=1</code> group for subjects 1 through 3 and the expected value of the distribution of <code>creat</code> for the first subject.</p>
+<p>Here, we monitor the probability to be in the <code>alc&gt;=1</code> group for subjects 1 through 3 and the expected value of the distribution of <code>creat</code> for the first subject. (This may not make a lot of sense here but being able to monitor any node in a JAGS model can be quite useful when investigating convergence issues.)</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>lm4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat, <span class="dt">data =</span> NHANES,</span>
 <span id="cb9-2"><a href="#cb9-2"></a>              <span class="dt">monitor_params =</span> <span class="kw">list</span>(<span class="dt">analysis_main =</span> <span class="ot">FALSE</span>,</span>
 <span id="cb9-3"><a href="#cb9-3"></a>                                    <span class="dt">other =</span> <span class="kw">c</span>(<span class="st">'p_alc[1:3]'</span>, <span class="st">"mu_creat[1]"</span>)))</span>
@@ -411,7 +411,7 @@
 <div id="subsets-of-parameters-for-plots-summaries-etc-" class="section level2">
 <h2 class="hasAnchor">
 <a href="#subsets-of-parameters-for-plots-summaries-etc-" class="anchor"></a>Subsets of Parameters for Plots, Summaries, etc.</h2>
-<p>The functions <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html"><code>summary()</code></a>, <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code><a href="../reference/traceplot.html">traceplot()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/densplot.html"><code><a href="../reference/densplot.html">densplot()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code><a href="../reference/GR_crit.html">GR_crit()</a></code></a> and <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code><a href="../reference/MC_error.html">MC_error()</a></code></a> all have an argument <code>subset</code>. This argument allows to select a subset of parameters to be shown in the output. Especially when not only the parameters of the main analysis model are followed, but also, for example, imputed values, looking at a subset may be desirable.</p>
+<p>The functions <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html"><code>summary()</code></a>, <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code><a href="../reference/traceplot.html">traceplot()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/densplot.html"><code><a href="../reference/densplot.html">densplot()</a></code></a>, <a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code><a href="../reference/GR_crit.html">GR_crit()</a></code></a> and <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code><a href="../reference/MC_error.html">MC_error()</a></code></a> all have an argument <code>subset</code>. This argument allows us to select a subset of parameters to be shown in the output. Especially when not only the parameters of the main analysis model are followed, but also, for example, imputed values, looking at a subset may be desirable.</p>
 <p><code>subset</code> follows the same logic as <code>monitor_params</code> described above.</p>
 <p>By default, only the parameters of the main analysis model are displayed if they were monitored:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Run a model monitoring analysis parameters and imputation parameters</span></span>
@@ -429,15 +429,15 @@
 <span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; </span></span>
 <span id="cb10-14"><a href="#cb10-14"></a><span class="co">#&gt; Posterior summary:</span></span>
 <span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt;                Mean      SD   2.5%   97.5% tail-prob. GR-crit</span></span>
-<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; (Intercept)  80.737 10.2896 61.471 100.842     0.0000    1.05</span></span>
-<span id="cb10-17"><a href="#cb10-17"></a><span class="co">#&gt; genderfemale  0.441  2.7182 -4.786   5.216     0.8667    1.06</span></span>
-<span id="cb10-18"><a href="#cb10-18"></a><span class="co">#&gt; WC            0.307  0.0721  0.183   0.445     0.0000    1.02</span></span>
-<span id="cb10-19"><a href="#cb10-19"></a><span class="co">#&gt; alc&gt;=1        6.253  2.7823  0.967  11.744     0.0267    1.13</span></span>
-<span id="cb10-20"><a href="#cb10-20"></a><span class="co">#&gt; creat         8.100  8.2238 -7.775  23.995     0.3333    1.08</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; (Intercept)  81.081 10.4247 59.865 101.357       0.00   1.060</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="co">#&gt; genderfemale  0.428  2.7273 -4.951   6.063       0.90   1.012</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a><span class="co">#&gt; WC            0.306  0.0712  0.164   0.449       0.00   1.012</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a><span class="co">#&gt; alc&gt;=1        6.236  2.5144  1.217  10.809       0.02   0.997</span></span>
+<span id="cb10-20"><a href="#cb10-20"></a><span class="co">#&gt; creat         7.777  7.8763 -6.696  23.558       0.30   1.063</span></span>
 <span id="cb10-21"><a href="#cb10-21"></a><span class="co">#&gt; </span></span>
 <span id="cb10-22"><a href="#cb10-22"></a><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span id="cb10-23"><a href="#cb10-23"></a><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></span>
-<span id="cb10-24"><a href="#cb10-24"></a><span class="co">#&gt; sigma_SBP 14.4 0.758   13    16    1.01</span></span>
+<span id="cb10-24"><a href="#cb10-24"></a><span class="co">#&gt; sigma_SBP 14.4 0.753 12.9  15.9    1.05</span></span>
 <span id="cb10-25"><a href="#cb10-25"></a><span class="co">#&gt; </span></span>
 <span id="cb10-26"><a href="#cb10-26"></a><span class="co">#&gt; </span></span>
 <span id="cb10-27"><a href="#cb10-27"></a><span class="co">#&gt; MCMC settings:</span></span>
@@ -461,12 +461,12 @@
 <span id="cb12-4"><a href="#cb12-4"></a><span class="co">#&gt; Potential scale reduction factors:</span></span>
 <span id="cb12-5"><a href="#cb12-5"></a><span class="co">#&gt; </span></span>
 <span id="cb12-6"><a href="#cb12-6"></a><span class="co">#&gt;              Point est. Upper C.I.</span></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="co">#&gt; (Intercept)        1.01       1.05</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="co">#&gt; genderfemale       1.01       1.06</span></span>
-<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt; WC                 1.00       1.02</span></span>
-<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt; alc&gt;=1             1.04       1.13</span></span>
-<span id="cb12-11"><a href="#cb12-11"></a><span class="co">#&gt; creat              1.02       1.08</span></span>
-<span id="cb12-12"><a href="#cb12-12"></a><span class="co">#&gt; sigma_SBP          1.00       1.01</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="co">#&gt; (Intercept)       1.013      1.060</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="co">#&gt; genderfemale      1.001      1.012</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt; WC                1.000      1.012</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt; alc&gt;=1            0.996      0.997</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="co">#&gt; creat             1.018      1.063</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a><span class="co">#&gt; sigma_SBP         1.012      1.053</span></span>
 <span id="cb12-13"><a href="#cb12-13"></a><span class="co">#&gt; </span></span>
 <span id="cb12-14"><a href="#cb12-14"></a><span class="co">#&gt; Multivariate psrf</span></span>
 <span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt; </span></span>
@@ -474,13 +474,13 @@
 <span id="cb12-17"><a href="#cb12-17"></a></span>
 <span id="cb12-18"><a href="#cb12-18"></a><span class="co"># Monte Carlo Error of the MCMC sample</span></span>
 <span id="cb12-19"><a href="#cb12-19"></a><span class="kw"><a href="../reference/MC_error.html">MC_error</a></span>(lm5)</span>
-<span id="cb12-20"><a href="#cb12-20"></a><span class="co">#&gt;                est  MCSE     SD MCSE/SD</span></span>
-<span id="cb12-21"><a href="#cb12-21"></a><span class="co">#&gt; (Intercept)  80.74 0.526 10.290   0.051</span></span>
-<span id="cb12-22"><a href="#cb12-22"></a><span class="co">#&gt; genderfemale  0.44 0.132  2.718   0.049</span></span>
-<span id="cb12-23"><a href="#cb12-23"></a><span class="co">#&gt; WC            0.31 0.004  0.072   0.056</span></span>
-<span id="cb12-24"><a href="#cb12-24"></a><span class="co">#&gt; alc&gt;=1        6.25 0.242  2.782   0.087</span></span>
-<span id="cb12-25"><a href="#cb12-25"></a><span class="co">#&gt; creat         8.10 0.488  8.224   0.059</span></span>
-<span id="cb12-26"><a href="#cb12-26"></a><span class="co">#&gt; sigma_SBP    14.42 0.055  0.758   0.072</span></span></code></pre></div>
+<span id="cb12-20"><a href="#cb12-20"></a><span class="co">#&gt;                est   MCSE     SD MCSE/SD</span></span>
+<span id="cb12-21"><a href="#cb12-21"></a><span class="co">#&gt; (Intercept)  81.08 0.5949 10.425   0.057</span></span>
+<span id="cb12-22"><a href="#cb12-22"></a><span class="co">#&gt; genderfemale  0.43 0.1635  2.727   0.060</span></span>
+<span id="cb12-23"><a href="#cb12-23"></a><span class="co">#&gt; WC            0.31 0.0041  0.071   0.057</span></span>
+<span id="cb12-24"><a href="#cb12-24"></a><span class="co">#&gt; alc&gt;=1        6.24 0.1690  2.514   0.067</span></span>
+<span id="cb12-25"><a href="#cb12-25"></a><span class="co">#&gt; creat         7.78 0.4097  7.876   0.052</span></span>
+<span id="cb12-26"><a href="#cb12-26"></a><span class="co">#&gt; sigma_SBP    14.40 0.0385  0.753   0.051</span></span></code></pre></div>
 <p>When <code>analysis_main</code> was not switched on the default behavior is that all parameters are displayed:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Re-run the model from above, now creating MCMC samples</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a>lm4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/model_imp.html">lm_imp</a></span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>creat,</span>
@@ -499,17 +499,17 @@
 <span id="cb14-3"><a href="#cb14-3"></a><span class="co">#&gt; Potential scale reduction factors:</span></span>
 <span id="cb14-4"><a href="#cb14-4"></a><span class="co">#&gt; </span></span>
 <span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt;           Point est. Upper C.I.</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; alpha[1]       1.027       1.08</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a><span class="co">#&gt; alpha[2]       1.009       1.02</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a><span class="co">#&gt; alpha[3]       0.997       1.00</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a><span class="co">#&gt; alpha[4]       1.001       1.00</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a><span class="co">#&gt; alpha[5]       1.019       1.08</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a><span class="co">#&gt; alpha[6]       1.013       1.05</span></span>
-<span id="cb14-12"><a href="#cb14-12"></a><span class="co">#&gt; alpha[7]       1.026       1.09</span></span>
-<span id="cb14-13"><a href="#cb14-13"></a><span class="co">#&gt; alpha[8]       1.008       1.04</span></span>
-<span id="cb14-14"><a href="#cb14-14"></a><span class="co">#&gt; alpha[9]       1.000       1.00</span></span>
-<span id="cb14-15"><a href="#cb14-15"></a><span class="co">#&gt; tau_WC         1.008       1.03</span></span>
-<span id="cb14-16"><a href="#cb14-16"></a><span class="co">#&gt; tau_creat      1.012       1.05</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; alpha[1]       1.002      1.015</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="co">#&gt; alpha[2]       0.997      0.997</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="co">#&gt; alpha[3]       0.999      1.002</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="co">#&gt; alpha[4]       1.001      1.010</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="co">#&gt; alpha[5]       0.999      1.007</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="co">#&gt; alpha[6]       1.010      1.030</span></span>
+<span id="cb14-12"><a href="#cb14-12"></a><span class="co">#&gt; alpha[7]       1.042      1.145</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a><span class="co">#&gt; alpha[8]       1.046      1.149</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a><span class="co">#&gt; alpha[9]       1.030      1.095</span></span>
+<span id="cb14-15"><a href="#cb14-15"></a><span class="co">#&gt; tau_WC         1.007      1.010</span></span>
+<span id="cb14-16"><a href="#cb14-16"></a><span class="co">#&gt; tau_creat      1.012      1.042</span></span>
 <span id="cb14-17"><a href="#cb14-17"></a><span class="co">#&gt; </span></span>
 <span id="cb14-18"><a href="#cb14-18"></a><span class="co">#&gt; Multivariate psrf</span></span>
 <span id="cb14-19"><a href="#cb14-19"></a><span class="co">#&gt; </span></span>
@@ -524,9 +524,9 @@
 <span id="cb15-7"><a href="#cb15-7"></a><span class="co">#&gt;     n.iter = 100, monitor_params = c(imp_pars = TRUE), progress.bar = "none")</span></span>
 <span id="cb15-8"><a href="#cb15-8"></a><span class="co">#&gt; </span></span>
 <span id="cb15-9"><a href="#cb15-9"></a><span class="co">#&gt; Posterior summary:</span></span>
-<span id="cb15-10"><a href="#cb15-10"></a><span class="co">#&gt;        Mean   SD   2.5% 97.5% tail-prob. GR-crit</span></span>
-<span id="cb15-11"><a href="#cb15-11"></a><span class="co">#&gt; creat  8.10 8.22 -7.775  24.0     0.3333    1.08</span></span>
-<span id="cb15-12"><a href="#cb15-12"></a><span class="co">#&gt; alc&gt;=1 6.25 2.78  0.967  11.7     0.0267    1.13</span></span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="co">#&gt;        Mean   SD  2.5% 97.5% tail-prob. GR-crit</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a><span class="co">#&gt; creat  7.78 7.88 -6.70  23.6       0.30   1.063</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="co">#&gt; alc&gt;=1 6.24 2.51  1.22  10.8       0.02   0.997</span></span>
 <span id="cb15-13"><a href="#cb15-13"></a><span class="co">#&gt; </span></span>
 <span id="cb15-14"><a href="#cb15-14"></a><span class="co">#&gt; </span></span>
 <span id="cb15-15"><a href="#cb15-15"></a><span class="co">#&gt; MCMC settings:</span></span>
