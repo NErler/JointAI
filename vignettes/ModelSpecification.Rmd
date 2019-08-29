@@ -33,7 +33,7 @@ in which the distributions of variables and missing values in both sets is
 explored.
 
 To learn more about the theoretical background of the statistical approach that
-is implemented in **JointAI**, check out the vignette [Theoretical Background](https://nerler.github.io/articles/TheoreticalBackground.html).
+is implemented in **JointAI**, check out the vignette [Theoretical Background](https://nerler.github.io/JointAI/articles/TheoreticalBackground.html).
 
 **Note:**<br>
 In some of the examples we use `n.adapt = 0`
