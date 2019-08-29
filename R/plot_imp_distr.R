@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-#' mod <- lme_imp(y ~ C1 + c2 + B2 + b2 + C2 + p2, random = ~ 1 | id, data = longDF,
+#' mod <- lme_imp(y ~ C1 + c2 + B2 + C2, random = ~ 1 | id, data = longDF,
 #'                n.iter = 200, monitor_params = c(imps = TRUE), mess = FALSE)
 #' impDF <- get_MIdat(mod, m = 5)
 #' plot_imp_distr(impDF, id = "id", ncol = 3)
