@@ -49,9 +49,14 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
-  if (is.null(thin))
+  if (is.null(thin)) {
     thin <- object$mcmc_settings$thin
-
+  } else {
+    if (add & thin != object$mcmc_settings$thin) {
+      stop(gettextf("When adding samples (%s) the thinning interval cannot be changed.",
+                     dQuote("add = TRUE")), call. = FALSE)
+    }
+  }
 
   if (is.null(monitor_params)) {
     var.names <- object$mcmc_settings$variable.names
@@ -65,8 +70,9 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                        monitor_params))
   }
 
-  if (!identical(var.names, object$mcmc_settings$variable.names) & add == TRUE)
-    stop("The provided parameters to monitor do not match the monitored parameters in the original JointAI object.")
+  if (!identical(var.names, object$mcmc_settings$variable.names) & add)
+    stop(gettextf("When %s it is not possible to monitor different parameters than were monitored in the original model.",
+                  dQuote("add = TRUE")), call. = FALSE)
 
   t0 <- Sys.time()
   if (object$mcmc_settings$parallel) {
@@ -126,8 +132,9 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                    function(k) mcmc(rbind(object$MCMC[[k]],
                                                           MCMC[[k]]),
                                                     start = start(object$MCMC),
-                                                    end = end(object$MCMC) +
-                                                      niter(mcmc[[k]]) * thin(mcmc[[k]]),
+                                                    end = end(mcmc[[k]]),
+                                                    # end = end(object$MCMC) +
+                                                    #   niter(mcmc[[k]]) * thin(mcmc[[k]]),
                                                     thin = thin(mcmc[[k]]))
     ))
   } else {
