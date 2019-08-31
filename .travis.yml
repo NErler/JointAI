@@ -28,3 +28,7 @@ repos:
 r_packages:
   - rjags
   - devtools
+  - covr
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'
