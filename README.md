@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# JointAI: Joint Analysis and Imputation of Incomplete Data
+# JointAI: Joint Analysis and Imputation of Incomplete Data <img src="man/figures/logo.png" align="right" alt="" width="160" />
 
 [![Travis-CI Build
 Status](https://travis-ci.org/NErler/JointAI.svg?branch=master)](https://travis-ci.org/NErler/JointAI)
@@ -78,14 +78,18 @@ of the data and missing values, export of imputed values and prediction.
 ``` r
 library(JointAI)
 
-par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
-plot_all(NHANES[c(1, 5:6, 8:12)], fill = '#18bc9c', border = '#2C3E50', ncol = 4, nclass = 30)
+op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
+plot_all(NHANES[c(1, 5:6, 8:12)], fill = '#e30f41', border = '#34111b', ncol = 4, nclass = 30)
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
 ``` r
-md_pattern(NHANES, color = c('#2C3E50', '#18bc9c'))
+par(op)
+```
+
+``` r
+md_pattern(NHANES, color = c('#34111b', '#e30f41'))
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
@@ -100,13 +104,13 @@ lm1 <- lm_imp(SBP ~ gender + age + WC + alc + educ + bili,
 ### Visualize the MCMC sample
 
 ``` r
-traceplot(lm1, col = c('#E74C3C', '#2C3E50', '#18bc9c'), ncol = 4)
+traceplot(lm1, col = c('#d4af37', '#34111b', '#e30f41'), ncol = 4)
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;" />
 
 ``` r
-densplot(lm1, col = c('#E74C3C', '#2C3E50', '#18bc9c'), ncol = 4, lwd = 2)
+densplot(lm1, col = c('#d4af37', '#34111b', '#e30f41'), ncol = 4, lwd = 2)
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" />
@@ -123,18 +127,18 @@ summary(lm1)
 #>     data = NHANES, n.iter = 500, progress.bar = "none")
 #> 
 #> Posterior summary:
-#>                Mean     SD    2.5%   97.5% tail-prob. GR-crit
-#> (Intercept)  88.089 8.8597  69.619 105.178    0.00000    1.01
-#> genderfemale -3.566 2.2571  -7.950   0.803    0.11333    1.04
-#> age           0.335 0.0700   0.193   0.469    0.00000    1.01
-#> WC            0.226 0.0725   0.080   0.368    0.00267    1.00
-#> alc>=1        6.350 2.3114   1.783  10.889    0.01200    1.00
-#> educhigh     -2.828 2.0465  -6.797   1.157    0.17333    1.03
-#> bili         -5.356 4.9196 -14.911   4.290    0.27867    1.04
+#>                Mean     SD     2.5%   97.5% tail-prob. GR-crit
+#> (Intercept)  88.066 9.1234  70.9406 105.990    0.00000   1.000
+#> genderfemale -3.392 2.2278  -7.8947   1.001    0.12800   1.027
+#> age           0.333 0.0683   0.2004   0.476    0.00000   1.003
+#> WC            0.228 0.0747   0.0829   0.369    0.00133   0.999
+#> alc>=1        6.231 2.2845   1.9325  10.565    0.00667   1.006
+#> educhigh     -2.922 2.1708  -7.3576   1.198    0.18933   1.001
+#> bili         -5.264 4.9555 -15.3574   4.495    0.27733   1.007
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit
-#> sigma_SBP 13.5 0.738 12.2  15.2       1
+#> sigma_SBP 13.6 0.741 12.2  15.2    1.01
 #> 
 #> 
 #> MCMC settings:
@@ -149,18 +153,18 @@ summary(lm1)
 ``` r
 coef(lm1)
 #>  (Intercept) genderfemale          age           WC       alc>=1 
-#>   88.0889587   -3.5660647    0.3350489    0.2262964    6.3497173 
+#>   88.0658628   -3.3918580    0.3332954    0.2276082    6.2308668 
 #>     educhigh         bili 
-#>   -2.8283599   -5.3562879
+#>   -2.9221744   -5.2639112
 
 confint(lm1)
 #>                      2.5%       97.5%
-#> (Intercept)   69.61859898 105.1784708
-#> genderfemale  -7.95045888   0.8034015
-#> age            0.19331277   0.4685157
-#> WC             0.07998274   0.3681013
-#> alc>=1         1.78289844  10.8888495
-#> educhigh      -6.79742752   1.1568467
-#> bili         -14.91144335   4.2900062
-#> sigma_SBP     12.17745503  15.1533245
+#> (Intercept)   70.94063285 105.9902466
+#> genderfemale  -7.89471742   1.0012343
+#> age            0.20038858   0.4755302
+#> WC             0.08292169   0.3692680
+#> alc>=1         1.93251832  10.5647886
+#> educhigh      -7.35763120   1.1975503
+#> bili         -15.35739492   4.4949908
+#> sigma_SBP     12.23240846  15.1502809
 ```
