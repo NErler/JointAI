@@ -131,7 +131,7 @@
     
     
 <p>In this vignette we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a> data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a> for examples in longitudinal data. For more info on these datasets, check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the distributions of variables and missing values in both sets is explored.</p>
-<p>To learn more about the theoretical background of the statistical approach that is implemented in <strong>JointAI</strong>, check out the vignette <a href="https://nerler.github.io/articles/TheoreticalBackground.html">Theoretical Background</a>.</p>
+<p>To learn more about the theoretical background of the statistical approach that is implemented in <strong>JointAI</strong>, check out the vignette <a href="https://nerler.github.io/JointAI/articles/TheoreticalBackground.html">Theoretical Background</a>.</p>
 <p><strong>Note:</strong><br> In some of the examples we use <code>n.adapt = 0</code> (and <code>n.iter = 0</code>, which is the default). This is in order to prevent the MCMC sampling and thereby reduce computational time when compiling this vignette.</p>
 <div id="analysis-model-type" class="section level2">
 <h2 class="hasAnchor">
@@ -688,16 +688,16 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <span id="cb21-7"><a href="#cb21-7"></a><span class="co">#&gt;     auxvars = ~educ + smoke, progress.bar = "none")</span></span>
 <span id="cb21-8"><a href="#cb21-8"></a><span class="co">#&gt; </span></span>
 <span id="cb21-9"><a href="#cb21-9"></a><span class="co">#&gt; Posterior summary:</span></span>
-<span id="cb21-10"><a href="#cb21-10"></a><span class="co">#&gt;                          Mean     SD   2.5%   97.5% tail-prob. GR-crit</span></span>
-<span id="cb21-11"><a href="#cb21-11"></a><span class="co">#&gt; (Intercept)           105.667 3.3728 99.519 112.610    0.00000   1.006</span></span>
-<span id="cb21-12"><a href="#cb21-12"></a><span class="co">#&gt; genderfemale           -5.461 2.2060 -9.723  -1.692    0.00667   1.058</span></span>
-<span id="cb21-13"><a href="#cb21-13"></a><span class="co">#&gt; age                     0.376 0.0741  0.236   0.509    0.00000   0.998</span></span>
-<span id="cb21-14"><a href="#cb21-14"></a><span class="co">#&gt; occuplooking for work   3.953 6.6189 -9.157  17.229    0.52667   1.053</span></span>
-<span id="cb21-15"><a href="#cb21-15"></a><span class="co">#&gt; occupnot working       -0.881 2.4056 -4.900   3.876    0.68667   1.085</span></span>
+<span id="cb21-10"><a href="#cb21-10"></a><span class="co">#&gt;                          Mean     SD    2.5%   97.5% tail-prob. GR-crit</span></span>
+<span id="cb21-11"><a href="#cb21-11"></a><span class="co">#&gt; (Intercept)           105.984 3.3214  99.420 112.437      0.000    1.01</span></span>
+<span id="cb21-12"><a href="#cb21-12"></a><span class="co">#&gt; genderfemale           -5.880 2.2662 -10.449  -1.399      0.020    1.12</span></span>
+<span id="cb21-13"><a href="#cb21-13"></a><span class="co">#&gt; age                     0.369 0.0762   0.226   0.528      0.000    1.00</span></span>
+<span id="cb21-14"><a href="#cb21-14"></a><span class="co">#&gt; occuplooking for work   3.732 7.2562  -9.387  17.981      0.647    1.02</span></span>
+<span id="cb21-15"><a href="#cb21-15"></a><span class="co">#&gt; occupnot working       -0.547 2.6481  -5.591   4.685      0.853    1.13</span></span>
 <span id="cb21-16"><a href="#cb21-16"></a><span class="co">#&gt; </span></span>
 <span id="cb21-17"><a href="#cb21-17"></a><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span id="cb21-18"><a href="#cb21-18"></a><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></span>
-<span id="cb21-19"><a href="#cb21-19"></a><span class="co">#&gt; sigma_SBP 14.4 0.769   13  15.9       1</span></span>
+<span id="cb21-19"><a href="#cb21-19"></a><span class="co">#&gt; sigma_SBP 14.4 0.685 13.2    16   0.998</span></span>
 <span id="cb21-20"><a href="#cb21-20"></a><span class="co">#&gt; </span></span>
 <span id="cb21-21"><a href="#cb21-21"></a><span class="co">#&gt; </span></span>
 <span id="cb21-22"><a href="#cb21-22"></a><span class="co">#&gt; MCMC settings:</span></span>
@@ -866,8 +866,8 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <span id="cb31-47"><a href="#cb31-47"></a><span class="co">#&gt;         rate_diag_RinvD = 0.01</span></span>
 <span id="cb31-48"><a href="#cb31-48"></a><span class="co">#&gt;       )</span></span>
 <span id="cb31-49"><a href="#cb31-49"></a><span class="co">#&gt;     }</span></span>
-<span id="cb31-50"><a href="#cb31-50"></a><span class="co">#&gt; &lt;bytecode: 0x0000000018f29088&gt;</span></span>
-<span id="cb31-51"><a href="#cb31-51"></a><span class="co">#&gt; &lt;environment: 0x0000000012ac5620&gt;</span></span>
+<span id="cb31-50"><a href="#cb31-50"></a><span class="co">#&gt; &lt;bytecode: 0x0000000018f2cfa8&gt;</span></span>
+<span id="cb31-51"><a href="#cb31-51"></a><span class="co">#&gt; &lt;environment: 0x000000001b649d30&gt;</span></span>
 <span id="cb31-52"><a href="#cb31-52"></a><span class="co">#&gt; </span></span>
 <span id="cb31-53"><a href="#cb31-53"></a><span class="co">#&gt; $surv</span></span>
 <span id="cb31-54"><a href="#cb31-54"></a><span class="co">#&gt;  mu_reg_surv tau_reg_surv </span></span>
