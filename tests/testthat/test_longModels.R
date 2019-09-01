@@ -195,10 +195,10 @@ test_that('ordinal mixed models', {
   expect_s3_class(clmm_imp(o1 ~ C1 * time + I(time^2) + b2 * c1, random = ~ time | id,
                            data = longDF, n.iter = 10), class = "JointAI")
 
-  expect_s3_class(clmm_imp(o1 ~ C1 + log(time) + I(time^2) + p1, random = ~ 1 | id,
-                           data = longDF, n.iter = 10, ridge = TRUE, parallel = TRUE),
+  expect_s3_class(clmm_imp(o1 ~ 1, random = ~ 1|id, data = longDF, n.iter = 10),
                   class = "JointAI")
 
-  expect_s3_class(clmm_imp(o1 ~ 1, random = ~ 1|id, data = longDF, n.iter = 10),
+  expect_s3_class(clmm_imp(o1 ~ C1 + log(time) + I(time^2) + p1, random = ~ 1 | id,
+                           data = longDF, n.iter = 10, ridge = TRUE, parallel = TRUE, n.cores = 2),
                   class = "JointAI")
 })
