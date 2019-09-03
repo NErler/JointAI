@@ -1,31 +1,56 @@
-# Extract the id variable from a random effects formula ------------------------
+# Extract the id variable(s) from a random effects formula ------------------------
+# random: formula object or a list of formulas
+# warn: logical
 extract_id <- function(random, warn = TRUE) {
 
-  # match the |... pattern
-  idmatch <- regexpr(pattern = "[[:print:]]*\\|[[:space:]]*",
-                     deparse(random, width.cutoff = 500))
-
-  if (idmatch > 0) {
-    id <- unlist(regmatches(deparse(random, width.cutoff = 500),
-                            idmatch, invert = TRUE))
-    id <- id[id != ""]
+  # if random is not a list, make it one (anticipating future implementation of crossed random effects)
+  if (!is.list(random)) {
+    # check if random is a formulas
+    if (!inherits(random, 'formula') & !is.null(random))
+      stop('"random" seems not be be of class "formula".', call. = FALSE)
+    random <- list(random)
   } else {
-    id <- NULL
+    # check if random is a list of formulas
+    if (any(!sapply(random, inherits, 'formula')))
+      stop('At least one element of "random" is not of class "formula".', call. = FALSE)
   }
 
-  if (is.null(id) & !is.null(random))
+  ids <- lapply(random, function(x) {
+    # match the pattern "... | "
+    idmatch <- regexpr(pattern = "[[:print:]]*\\|[[:space:]]*",
+                       deparse(x, width.cutoff = 500))
+
+    if (idmatch > 0) {
+      # remove "... | " from the formula
+      id <- unlist(regmatches(deparse(x, width.cutoff = 500),
+                              idmatch, invert = TRUE))
+      id <- strsplit(id[id != ""], split = "[[:space:]]*[+*:/][[:space:]]*")[[1]]
+    } else {
+      id <- NULL
+    }
+    id
+  })
+
+  if (is.null(unlist(ids)) & !is.null(unlist(random)))
     if (warn)
       warning('No "id" variable could be identified. I will assume that all observations are independent.',
               call. = FALSE, immediate. = TRUE)
-  return(id)
+
+  return(unlist(ids))
 }
 
 
 # Extract the names(s) of the outcome variable(s) from fixed effects formula ------
 extract_outcome <- function(fixed) {
 
-  if (!inherits(fixed, "formula")) {
-    fixed <- as.formula(fixed)
+  if (!inherits(fixed, "formula"))
+    fixed <- try(as.formula(fixed))
+
+  if (inherits(fixed, "try-error"))
+    stop("Please provide a valid (fixed effects) formula.", call. = FALSE)
+
+  if (attr(terms(fixed), "response") != 1) {
+    stop("Unable to extract response from model formula.", call. = FALSE)
   }
 
   # get the LHS of the formula
