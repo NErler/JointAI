@@ -110,9 +110,13 @@ impmodel_clmm <- function(varname, dest_mat, dest_col, Xc_cols, Xl_cols, ncat, r
          tab(4), "b_", varname, "[i, 1:", nranef, "] ~ ", norm.distr,
          "(mu_b_", varname, "[i, ], invD_", varname, "[ , ])", "\n",
          tab(4), "mu_b_", varname, "[i, 1] <- ",
+         if (!any(is.na(par_elmts['Xc', ]))) {
          paste_predictor(parnam = 'alpha', parindex = 'i', matnam = 'Xc',
                          parelmts = par_elmts["Xc", 1]:par_elmts["Xc", 2],
-                         cols = Xc_cols, indent = 19 + nchar(varname)), "\n",
+                         cols = Xc_cols, indent = 19 + nchar(varname))
+           } else {
+             0
+           }, "\n",
          paste_rdslopes_covmod(nranef, hc_list, par_elmts, varname), "\n",
          tab(), "}\n"
   )
