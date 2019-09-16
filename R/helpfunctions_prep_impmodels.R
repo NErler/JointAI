@@ -173,6 +173,20 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
 }
 
 
+#
+# impmeth: covariate model type
+# nbasevars: how many baseline covariates are in this covariate model
+# prevlongvars: how many longitudinal covariates are in this covariate model
+intercept_needed <- function(impmeth, nbasevars, nlongvars) {
+  if (impmeth == "cumlogit") {
+    ifelse(nbasevars > 0, FALSE, TRUE)
+  } else if (impmeth == "clmm") {
+    ifelse(nbasevars + nlongvars > 0, FALSE, TRUE)
+  } else {
+    TRUE
+  }
+}
+
 
 # replace_power <- function(a) {
 #   # test if a power is involved
