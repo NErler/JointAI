@@ -1,3 +1,11 @@
+# JointAI 0.6.0.9000
+
+## Bug fixes
+* Fixed bug that messed up coefficients in `clmm` covariate model when there are
+  no baseline covariates in the model
+
+--------------------------------------------------------------------------------
+
 # JointAI 0.6.0
 
 ## Bug fixes
