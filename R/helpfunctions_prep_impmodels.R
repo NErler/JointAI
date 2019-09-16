@@ -2,13 +2,17 @@
 # Creates a list of parameters that will be passed to the functions generating the imputation models
 get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, models) {
 
-  intercept <- if (impmeth == "cumlogit") {
-    ifelse(min(dest_cols[[varname]]$Xc) > 2, FALSE, TRUE)
-  } else if (impmeth == "clmm") {
-    ifelse(ncol(Mlist$Xc) > 1 | min(dest_cols[[varname]]$Xl) > 2, FALSE, TRUE)
-  } else {
-    TRUE
-  }
+  # intercept <- if (impmeth == "cumlogit") {
+  #   ifelse(min(dest_cols[[varname]]$Xc) > 2, FALSE, TRUE)
+  # } else if (impmeth == "clmm") {
+  #   ifelse(ncol(Mlist$Xc) > 1 | min(dest_cols[[varname]]$Xl) > 2, FALSE, TRUE)
+  # } else {
+  #   TRUE
+  # }
+
+  intercept <- intercept_needed(varname,
+                                nbasevars = get_nbasevars(varname, Mlist),
+                                nlongvars = get_nlongvars(varname, Mlist))
 
   i <- which(names(models) == varname)
   mod_dum <- sapply(names(models), function(k) {
@@ -187,6 +191,49 @@ intercept_needed <- function(impmeth, nbasevars, nlongvars) {
   }
 }
 
+get_nbasevars <- function(varname, Mlist) {
+  varname_dum <- ifelse(varname %in% Mlist$refs,
+                        attr(Mlist$refs[[varname]], 'dummies'),
+                        varname)
+
+  posXc <- if (!is.na(match(varname_dum, colnames(Mlist$Xc))))
+    match(varname_dum, colnames(Mlist$Xc))
+
+  posinterc <- match('(Intercept)', colnames(Mlist$Xc))
+
+  nbasevars <- if (!is.null(posXc)) {
+    ifelse(!is.na(posinterc), (1:(min(posXc) - 1))[-posinterc], 1:(min(posXc) - 1))
+  } else {
+    if(!is.na(posinterc)) {
+      (1:ncol(Mlist$Xc))[-posinterc]
+    } else {
+      1:ncol(Mlist$Xc)
+    }
+  }
+
+  return(length(nbasevars))
+}
+
+get_nlongvars <- function(varname, Mlist) {
+  varname_dum <- ifelse(varname %in% Mlist$refs,
+                        attr(Mlist$refs[[varname]], 'dummies'),
+                        varname)
+
+  posXl <- if (!is.na(match(varname_dum, colnames(Mlist$Xl))))
+    match(varname_dum, colnames(Mlist$Xc))
+
+  posinterc <- match('(Intercept)', colnames(Mlist$Xl))
+
+  nlongvars <- if (!is.null(posXl)) {
+    if (!is.na(posinterc)) {
+      (1:(min(posXl) - 1))[-posinterc]
+    } else {
+      1:(min(posXl) - 1)
+    }
+  }
+
+  return(length(nlongvars))
+}
 
 # replace_power <- function(a) {
 #   # test if a power is involved
