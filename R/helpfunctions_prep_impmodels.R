@@ -10,18 +10,28 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
   #   TRUE
   # }
 
-  intercept <- intercept_needed(varname,
-                                nbasevars = get_nbasevars(varname, Mlist),
-                                nlongvars = get_nlongvars(varname, Mlist))
+  varname_dum <- dummyfy(varname, Mlist$refs)
+  intercept <- intercept_needed(impmeth,
+                                nbasevars = get_nbasevars(varname_dum,
+                                                          colnames(Mlist$Xc),
+                                                          intercept = FALSE),
+                                nlongvars = get_nlongvars(varname_dum,
+                                                          colnames(Mlist$Xl),
+                                                          intercept = FALSE))
+
+  # get a dummy version of the names of "models"
+  mod_dum <- sapply(names(models), dummyfy, Mlist$refs, simplify = FALSE)
+
+  # mod_dum <- sapply(names(models), function(k) {
+  #   if (k %in% names(Mlist$refs)) {
+  #     attr(Mlist$refs[[k]], 'dummies')
+  #   } else {
+  #     k
+  #   }
+  # }, simplify = FALSE)
+
 
   i <- which(names(models) == varname)
-  mod_dum <- sapply(names(models), function(k) {
-    if (k %in% names(Mlist$refs)) {
-      attr(Mlist$refs[[k]], 'dummies')
-    } else {
-      k
-    }
-  }, simplify = FALSE)
 
   hcvar <- ifelse(names(Mlist$hc_list) %in% Mlist$trafos$X_var,
            Mlist$trafos$var[match(names(Mlist$hc_list), Mlist$trafos$X_var)],
@@ -30,22 +40,27 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
   nam <- names(Mlist$hc_list)[which(!hcvar %in% unlist(mod_dum[i:length(mod_dum)]))]
 
   # columns in Xc to be used
-  Xc_cols = if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
-    if(1 + (!intercept) <= ncol(Mlist$Xc))
-      (1 + (!intercept)):ncol(Mlist$Xc)
-  } else {
-    (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1)
-  }
+  # Xc_cols = if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma',
+  #                              'glmm_poisson', 'clmm')) {
+  #   if (1 + (!intercept) <= ncol(Mlist$Xc))
+  #     (1 + (!intercept)):ncol(Mlist$Xc)
+  # } else {
+  #   (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1)
+  # }
+
+  Xc_cols <- get_basevar_cols(varname_dum, colnames(Mlist$Xc), intercept = intercept)
+
 
   # columns in Xl to be used
-  Xl_cols <- if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
-    if (all(is.na(dest_cols[[varname]]$Xl[mod_dum[[varname]]]))) {
-      wouldbe <- max(0, which(colnames(Mlist$Xl) %in% unlist(mod_dum[seq_along(models) < i]))) + 1
-      if (wouldbe > 1) 1:(wouldbe - 1)
-    } else  if (min(dest_cols[[varname]]$Xl, na.rm = TRUE) > 1) {
-      1:(min(dest_cols[[varname]]$Xl, na.rm = TRUE) - 1)
-    }
-  }
+  # Xl_cols <- if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
+  #   if (all(is.na(dest_cols[[varname]]$Xl[mod_dum[[varname]]]))) {
+  #     wouldbe <- max(0, which(colnames(Mlist$Xl) %in% unlist(mod_dum[seq_along(models) < i]))) + 1
+  #     if (wouldbe > 1) 1:(wouldbe - 1)
+  #   } else  if (min(dest_cols[[varname]]$Xl, na.rm = TRUE) > 1) {
+  #     1:(min(dest_cols[[varname]]$Xl, na.rm = TRUE) - 1)
+  #   }
+  # }
+  Xl_cols <- get_longvar_cols(varname_dum, colnames(Mlist$Xl), intercept = intercept)
 
   # columns of Z to be used
   Z_cols = if (impmeth %in% c('lmm','glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
@@ -191,48 +206,70 @@ intercept_needed <- function(impmeth, nbasevars, nlongvars) {
   }
 }
 
-get_nbasevars <- function(varname, Mlist) {
-  varname_dum <- ifelse(varname %in% Mlist$refs,
-                        attr(Mlist$refs[[varname]], 'dummies'),
-                        varname)
 
-  posXc <- if (!is.na(match(varname_dum, colnames(Mlist$Xc))))
-    match(varname_dum, colnames(Mlist$Xc))
 
-  posinterc <- match('(Intercept)', colnames(Mlist$Xc))
-
-  nbasevars <- if (!is.null(posXc)) {
-    ifelse(!is.na(posinterc), (1:(min(posXc) - 1))[-posinterc], 1:(min(posXc) - 1))
-  } else {
-    if(!is.na(posinterc)) {
-      (1:ncol(Mlist$Xc))[-posinterc]
-    } else {
-      1:ncol(Mlist$Xc)
-    }
-  }
-
-  return(length(nbasevars))
+# function that returns the names of the dummies of a variable name if they exist
+# (used if a variable name needs to be matched to column names, e.g. in Xc or Xl)
+# varname: the name or the original variable
+# refs: list of reference categories; obtained from Mlist$refs
+dummyfy <- function(varname, refs) {
+  if (varname %in% names(refs)) attr(refs[[varname]], 'dummies') else varname
 }
 
-get_nlongvars <- function(varname, Mlist) {
-  varname_dum <- ifelse(varname %in% Mlist$refs,
-                        attr(Mlist$refs[[varname]], 'dummies'),
-                        varname)
+# function that counts how many variables (columns, excluding the intercept) from
+# Xc should be included in the predictor for a given variable
+# varname: dumified name of the covariate
+# Xc_names: column names of Xc
+get_basevar_cols <- function(varname, Xc_names, intercept = TRUE) {
+  posXc <- if (!any(is.na(match(varname, Xc_names))))
+    min(match(varname, Xc_names), na.rm = TRUE)
 
-  posXl <- if (!is.na(match(varname_dum, colnames(Mlist$Xl))))
-    match(varname_dum, colnames(Mlist$Xc))
+  posinterc <- match('(Intercept)', Xc_names)
 
-  posinterc <- match('(Intercept)', colnames(Mlist$Xl))
-
-  nlongvars <- if (!is.null(posXl)) {
-    if (!is.na(posinterc)) {
-      (1:(min(posXl) - 1))[-posinterc]
+  basevars <- if (!is.null(posXc)) {
+    if (!intercept & !is.na(posinterc)) {
+      (1:(posXc - 1))[-posinterc]
     } else {
-      1:(min(posXl) - 1)
+      1:(posXc - 1)
+    }
+  } else {
+    if(!intercept & !is.na(posinterc)) {
+      (1:length(Xc_names))[-posinterc]
+    } else {
+      1:length(Xc_names)
     }
   }
+  return(basevars)
+}
 
-  return(length(nlongvars))
+get_nbasevars <- function(varname, Xc_cols, intercept = TRUE) {
+  length(get_basevar_cols(varname, Xc_cols, intercept))
+}
+
+
+# function that counts how many variables (columns, excluding the intercept) from
+# Xl should be included in the predictor for a given variable
+# varname: dumified name of the covariate
+# Xl_names: column names of Xl
+get_longvar_cols <- function(varname, Xl_names, intercept = TRUE) {
+
+  posXl <- if (!any(is.na(match(varname, Xl_names))))
+    min(match(varname, Xl_names), na.rm = TRUE)
+
+  posinterc <- match('(Intercept)', Xl_names)
+
+  longvars <- if (!is.null(posXl)) {
+    if (!is.na(posinterc)) {
+      (1:(posXl - 1))[-posinterc]
+    } else {
+      1:(posXl - 1)
+    }
+  }
+  return(longvars)
+}
+
+get_nlongvars <- function(varname, Xl_names, intercept = TRUE) {
+  length(get_longvar_cols(varname, Xl_names, intercept))
 }
 
 # replace_power <- function(a) {
