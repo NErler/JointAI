@@ -6,7 +6,6 @@ test_that('extract_id works', {
   runs <- list(list(random = ~ 1 | id, ids = 'id'),
                list(random = ~ 0 | id, ids = 'id'),
                list(random = NULL, ids = NULL),
-               list(random = y ~ a + b + c, ids = NULL),
                list(random = y ~ time | id, ids = 'id'),
                list(random =  ~ a | id/class, ids = c('id', 'class')),
                list(random = ~ a | id + class, ids = c('id', 'class')),
@@ -35,7 +34,9 @@ test_that('extract_id results in error', {
 
 test_that('extract_id results in warning', {
   rd_warn <- list(~1,
-                  ~a + b + c)
+                  ~a + b + c,
+                  y ~ a + b + c
+  )
 
   for (i in seq_along(rd_warn)) {
     expect_warning(extract_id(rd_warn[[i]]))
