@@ -65,6 +65,9 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     # l$priorMean.Bs.gammas = rep(0, ncol(l$Bmat_h0))
     l <- c(l, defs$surv)
 
+    l$priorMean.Bs.gammas <- rep(0, ncol(l$Bmat_h0))
+    l$priorTau.Bs.gammas <- diag(l$priorMean.Bs.gammas + 0.1)
+
     if (Mlist$ridge)
       tau_reg_surv <- NULL
   }
