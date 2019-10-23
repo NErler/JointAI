@@ -80,7 +80,7 @@ get_models <- function(fixed, random = NULL, data,
               colSums(is.na(data[match(unique(idvar), idvar), names(tvar[!tvar]), drop = FALSE]))
     )
 
-    if (all(nmis == 0))
+    if (all(nmis == 0) & is.null(models))
       return(list(models = NULL, meth = NULL))
 
     nmis <- nmis[!names(nmis) %in% no_model]
@@ -100,7 +100,7 @@ get_models <- function(fixed, random = NULL, data,
       message(gettextf(paste0("Note:\nModels have been specified for the variabe(s) %s.\n",
                       'These models are not needed for imputation and are likely ',
                       'to increase the computational time.'),
-                      paste0(unnecessary, collapse = ', '))
+                      paste0(names(unnecessary), collapse = ', '))
                       )
 
     models_user <- models
