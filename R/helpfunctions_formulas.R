@@ -44,6 +44,24 @@ extract_outcome <- function(fixed) {
 }
 
 
+# Extract the names(s) of the outcome formula from fixed effects formula ------
+extract_outcome_fmla <- function(fixed) {
+
+  if (!inherits(fixed, "formula")) {
+    fixed <- as.formula(fixed)
+  }
+
+  # get the LHS of the formula
+  LHS <- sub("[[:space:]]*\\~[[:print:]]*", "",
+             deparse(fixed, width.cutoff = 500))
+
+  # if (any(length(outnam) == 0, is.na(outnam), is.null(outnam))) {
+  #   stop("Unable to extract the outcome variable.")
+  # }
+
+  return(LHS)
+}
+
 # Extract functions from a formula ---------------------------------------------
 extract_fcts <- function(formula, data, random = NULL, complete = FALSE, ...) {
   # get the term.labels from the formula and split by :

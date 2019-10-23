@@ -19,24 +19,55 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
   # extract the outcome from the fixed effects formula
   outnam <- extract_outcome(fixed)
-  if (analysis_type %in% c('survreg', 'coxph')) {
-    if (length(outnam) == 2) {
-      y <- data[, outnam[1], drop = FALSE]
-      event <- sapply(data[, outnam[2], drop = FALSE],
-                     function(x) {
-                       if (is.factor(x)) {
-                         as.numeric(x) - 1
-                       } else if (is.logical(x)) {
-                         as.numeric(x)
-                       } else  x
-                     })
+  if (analysis_type %in% c('survreg', 'coxph', 'JM')) {
+    out <- as.data.frame.matrix(eval(parse(text = extract_outcome_fmla(fixed)),
+                                     env = data))
+
+    if (ncol(out) == 2) {
+      out <- cbind(id = data[, id], out, rownr = 1:nrow(out))
+
+      out_lr <- do.call(rbind, lapply(split(out, out[, id]), function(x) {
+
+        if (sum(x$status, na.rm = TRUE) > 1)
+          stop("At least one subject has multiple events.")
+
+
+        # if (any(x$status == 1) && max(x$stop[which(x$status == 1)]) < max(x$stop))
+        #   stop("Currently only terminal events can be handled.")
+
+        x[nrow(x), ]
+      }))
+      y <- out_lr[, "time", drop = FALSE]
+      event <- out_lr[, "status", drop = FALSE]
+      survrow <- out_lr[, 'rownr']
+    } else if (ncol(out) == 3) {
+      out <- cbind(id = data[, id], out, rownr = 1:nrow(out))
+
+      out_lr <- do.call(rbind, lapply(split(out, out[, id]), function(x) {
+
+        if (sum(x$status, na.rm = TRUE) > 1)
+          stop("At least one subject has multiple events.")
+
+
+        # if (any(x$status == 1) && max(x$stop[which(x$status == 1)]) < max(x$stop))
+        #   stop("Currently only terminal events can be handled.")
+
+        x[nrow(x), ]
+      }))
+      y <- out_lr[, 'stop', drop = FALSE]
+      event <- out_lr[, 'status', drop = FALSE]
+      survrow <- out_lr[, 'rownr']
     } else {
-      stop("Expected two outcome variables.")
+      stop("Expected two or three outcome variables.")
     }
+    if (!is.null(timevar)) names(y) <- timevar
+    else timevar <- names(y)
+
   } else {
     y <- data[, outnam, drop = FALSE]
     event <- NULL
   }
+
 
   # * preliminary design matrix ------------------------------------------------
   X <- model.matrix(fixed, model.frame(fixed, data, na.action = na.pass))
