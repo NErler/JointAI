@@ -283,7 +283,8 @@ NULL
 
 model_imp <- function(fixed, data, random = NULL, link, family,
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                      monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                      monitor_params = NULL,  auxvars = NULL, timevar = NULL,
+                      refcats = NULL,
                       models = NULL, no_model = NULL, trunc = NULL,
                       ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
                       parallel = FALSE, n.cores = NULL,
@@ -436,7 +437,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   # divide matrices ------------------------------------------------------------
   if (is.null(Mlist)) {
     Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
-                             random = random, auxvars = auxvars,
+                             random = random, auxvars = auxvars, timevar = timevar,
                              scale_vars = scale_vars, refcats = refcats,
                              models = models, warn = warn, mess = mess, ppc = ppc,
                              ridge = ridge)
@@ -1143,3 +1144,4 @@ JM_imp <- function(formula, data, random,
   res <- do.call(model_imp, arglist)
   res$call <- match.call()
   return(res)
+}

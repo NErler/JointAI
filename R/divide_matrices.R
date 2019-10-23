@@ -2,7 +2,7 @@
 
 divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars = NULL,
                             scale_vars = NULL, refcats = NULL, models, warn = TRUE,
-                            mess = TRUE, ppc = TRUE, ridge = FALSE, ...) {
+                            mess = TRUE, ppc = TRUE, ridge = FALSE, timevar = NULL, ...) {
 
   # general design matrix ------------------------------------------------------
 
@@ -277,8 +277,9 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
               Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat, Xlcat = Xlcat,
               Xtrafo = Xtrafo, Xltrafo = Xltrafo,
               Z = Z, cols_main = cols_main, names_main = names_main,
-              trafos = fcts_all, hc_list = hc_list, refs = refs,
+              trafos = fcts_all, hc_list = hc_list, refs = refs, timevar = timevar,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars,
               fixed2 = fixed2, ncat = ncat,
-              N = N, ppc = ppc, ridge = ridge, nranef = ncol(Z2)))
+              N = N, ppc = ppc, ridge = ridge, nranef = ncol(Z2),
+              survrow = if(exists("survrow")) survrow))
 }

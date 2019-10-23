@@ -52,17 +52,17 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     gkx <- gkx[ordgkx]
 
     l$gkw <- gkw[ordgkx]
-    h0knots <- get_knots_h0(nkn = 2, Time = l[[names(Mlist$y)]],
+
+    h0knots <- get_knots_h0(nkn = 5, Time = l[[Mlist$timevar]],
                             event = Mlist$event, gkx = gkx)
 
-    l$Bmat_h0 <- splines::splineDesign(h0knots, l[[names(Mlist$y)]], ord = 4)
+    l$Bmat_h0 <- splines::splineDesign(h0knots, l[[Mlist$timevar]], ord = 4)
     l$Bmat_h0s <- splines::splineDesign(h0knots,
-                                        c(t(outer(l[[names(Mlist$y)]]/2, gkx + 1))),
+                                        c(t(outer(l[[Mlist$timevar]]/2, gkx + 1))),
                                         ord = 4)
-    l$zeros <- numeric(length(l[[names(Mlist$y)]]))
+    l$zeros <- numeric(length(l[[Mlist$timevar]]))
     # l$priorTau.Bs.gammas <- diag(1, ncol(l$Bmat_h0))
     # l$priorMean.Bs.gammas = rep(0, ncol(l$Bmat_h0))
-
     l <- c(l, defs$surv)
 
     if (Mlist$ridge)
