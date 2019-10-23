@@ -41,7 +41,8 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
   }
 
   # outcome specification for Cox PH models
-  if (analysis_type == 'coxph') {
+  if (analysis_type %in% c('coxph', 'JM')) {
+
     l$event <- as.numeric(unlist(Mlist$event))
 
     gkw <- gauss_kronrod()$gkw
@@ -170,7 +171,8 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     l <- c(l, defs$multinomial)
 
 
-  if (analysis_type %in% c("lme", 'glme', 'clmm')) {
+  if (analysis_type %in% c("lme", 'glme', 'clmm', 'JM') |
+      any(models %in% c('lmm', "glmm_lognorm", 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm'))) {
     l <- c(l, defs$Z(Mlist$nranef))
     l$groups <- match(Mlist$groups, unique(Mlist$groups)) # can this be just Mlist$groups???
   }
@@ -184,6 +186,16 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
       names(pars) <- paste0(names(pars), '_', k)
       l <- c(l, pars)
     }
+  }
+
+  if (analysis_type == 'JM') {
+    l$Zgk <- l$Z[match(unique(l$groups), l$groups), , drop = FALSE]
+    l$Zgk <- l$Zgk[rep(1:nrow(l$Zgk), each = length(gkw)), , drop = FALSE]
+
+    if (Mlist$timevar %in% colnames(l$Zgk))
+      l$Zgk[, Mlist$timevar] <- c(t(outer(l[[Mlist$timevar]]/2, gkx + 1)))
+
+    l$survrow <- Mlist$survrow
   }
 
 

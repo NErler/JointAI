@@ -12,7 +12,8 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
                            "glm" = glm_model,
                            "clm" = clm_model,
                            "survreg" = survreg_model,
-                           "coxph" = coxph_model)
+                           "coxph" = coxph_model,
+                           "JM" = JM_model)
   analysis_priors <- switch(analysis_type,
                             "lme" = lme_priors,
                             "glme" = glme_priors,
@@ -21,7 +22,8 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
                             "clm" = clm_priors,
                             "lm" = lm_priors,
                             "survreg" = survreg_priors,
-                            "coxph" = coxph_priors)
+                            "coxph" = coxph_priors,
+                            "JM" = JM_priors)
 
 
   # Interactions within cross-sectional variables inlcuding missing values

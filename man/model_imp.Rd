@@ -11,6 +11,7 @@
 \alias{clmm_imp}
 \alias{survreg_imp}
 \alias{coxph_imp}
+\alias{JM_imp}
 \title{Joint analysis and imputation of incomplete data}
 \usage{
 lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
@@ -92,6 +93,16 @@ coxph_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
   keep_scaled_mcmc = FALSE, ...)
+
+JM_imp(formula, data, random, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  timevar = NULL, refcats = NULL, models = NULL,
+  no_model = timevar, trunc = NULL, ridge = FALSE, ppc = TRUE,
+  seed = NULL, inits = NULL, parallel = FALSE, n.cores = NULL,
+  scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+  modelname = NULL, modeldir = NULL, keep_model = FALSE,
+  overwrite = NULL, quiet = TRUE, progress.bar = "text",
+  warn = TRUE, mess = TRUE, keep_scaled_mcmc = FALSE, ...)
 }
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}

@@ -303,7 +303,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
     stop("A fixed effects structure needs to be specified.")
   }
 
-  if (!analysis_type %in% c("lme", "glme", "clmm") & !is.null(random)) {
+  if (!analysis_type %in% c("lme", "glme", "clmm", "JM") & !is.null(random)) {
     if (warn)
       warning(gettextf("Random effects structure not used in a model of type %s.",
                        sQuote(analysis_type)), immediate. = TRUE, call. = FALSE)
@@ -1096,3 +1096,50 @@ coxph_imp <- function(formula, data,
   return(res)
 }
 
+
+
+#' @rdname model_imp
+#' @export
+JM_imp <- function(formula, data, random,
+                   n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                   monitor_params = NULL,  auxvars = NULL, timevar = NULL,
+                   refcats = NULL,
+                   models = NULL, no_model = timevar, trunc = NULL,
+                   ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                   parallel = FALSE, n.cores = NULL,
+                   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                   modelname = NULL, modeldir = NULL,
+                   keep_model = FALSE, overwrite = NULL,
+                   quiet = TRUE, progress.bar = "text",
+                   warn = TRUE, mess = TRUE,
+                   keep_scaled_mcmc = FALSE, ...){
+
+  if (missing(formula))
+    stop("No model formula specified.")
+
+  if (missing(random))
+    stop("No random effects structure specified.")
+
+  if (missing(data))
+    stop("No dataset given.")
+
+  if (missing(timevar))
+    stop(gettextf("The name of the %s variable must be specified via the argument %s.",
+                  dQuote("time"), dQuote("timevar")))
+
+
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$fixed <- arglist$formula
+  arglist$analysis_type <- "JM"
+  arglist$family <- 'prophaz'
+  arglist$link <- "log"
+  arglist$fixed <- formula
+
+  thiscall <- as.list(match.call())[-1L]
+
+  arglist <- c(arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+  return(res)

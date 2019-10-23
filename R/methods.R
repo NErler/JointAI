@@ -74,7 +74,7 @@ residuals.JointAI <- function(object,
                   dQuote(type), dQuote(object$analysis_type), dQuote('response')),
          call. = FALSE)
 
-  if (object$analysis_type %in% c('coxph', 'clm', 'clmm'))
+  if (object$analysis_type %in% c('coxph', 'clm', 'clmm', 'JM'))
     stop(gettextf("Residuals are not yet implemented for a JointAI model of type %s.",
                   dQuote(object$analysis_type)), call. = FALSE)
 
