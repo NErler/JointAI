@@ -1,3 +1,12 @@
+# JointAI 0.6.0.9000
+
+## Bug fixes
+* Fixed bug that messed up coefficients in `clmm` covariate model when there are
+  no baseline covariates in the model
+* enable `newdata` for `predict()` that does not contain the outcome variable
+
+--------------------------------------------------------------------------------
+
 # JointAI 0.6.0
 
 ## Bug fixes

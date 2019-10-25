@@ -27,7 +27,8 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
 
   # columns in Xc to be used
   Xc_cols = if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
-    (1 + (!intercept)):ncol(Mlist$Xc)
+    if(1 + (!intercept) <= ncol(Mlist$Xc))
+      (1 + (!intercept)):ncol(Mlist$Xc)
   } else {
     (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1)
   }
@@ -63,10 +64,11 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, m
                       dimnames = list(c('Xc', 'Xl', nam),
                                       c('start', 'end')))
 
-    K_imp_x['Xc', ] <- K_imp[varname, 1] + c(1, length(Xc_cols)) - 1
+    if (length(Xc_cols) > 0)
+      K_imp_x['Xc', ] <- K_imp[varname, 1] + c(1, length(Xc_cols)) - 1
 
     if (length(Xl_cols) > 0)
-      K_imp_x['Xl', ] <- K_imp_x['Xc', 2] + c(1, length(Xl_cols))
+      K_imp_x['Xl', ] <- max(0, K_imp_x['Xc', 2], na.rm = TRUE) + c(1, length(Xl_cols))
 
     if (length(Z_cols) > 0)
       # K_imp_x['Z', ] <- max(K_imp_x, na.rm = T) + c(1, length(Z_cols) - 1)

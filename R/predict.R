@@ -167,13 +167,14 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
                     exclude_chains = exclude_chains,
                     mess = mess, ...)
 
-
-  mf <- model.frame(object$fixed, object$data, na.action = na.pass)
+  mf <- model.frame(as.formula(paste(object$fixed)[-2]),
+                    object$data, na.action = na.pass)
   mt <- attr(mf, "terms")
 
   op <- options(contrasts = rep("contr.treatment", 2),
           na.action = na.pass)
   X <- model.matrix(mt, data = newdata)
+
 
   if (object$analysis_type %in% c('clm', 'clmm')) {
     X <- X[, -1, drop = FALSE]
