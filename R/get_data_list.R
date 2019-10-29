@@ -369,7 +369,13 @@ default_hyperpars <- function() {
     },
 
     surv = c(mu_reg_surv = 0,
-             tau_reg_surv = 0.001)#,
+             tau_reg_surv = 0.001),
+
+    JM = function(nBh0) {
+      # nBh0 is the number of columns in the design matrix for the baseline hazard Bmat_h0
+      list(mu_reg_Bh0 = rep(0, nBh0),
+           tau_reg_Bh0 = diag(nBh0) * 0.1)
+    }
 
     # # only needed for counting process version of the cox model
     # coxph = c(c = 0.001,
