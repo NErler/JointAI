@@ -1,7 +1,7 @@
 # build a linear predictor -----------------------------------------------------
 paste_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent, isgk = FALSE) {
 
-  if (length(cols) != length(parelmts)) {
+  if (!is.null(cols) && length(cols) != length(parelmts)) {
     stop("The size of the design matrix and length of parameter vector do not match!")
   }
 
@@ -11,10 +11,13 @@ paste_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent, is
   )[1:length(parelmts)]
 
   paste0(lb,
-         matnam, "[", parindex, ", ", cols, if(isgk) paste0(", k"),
+         matnam, "[", parindex,
+         if(!is.null(cols)) paste0(", ", cols),
+         if(isgk) paste0(", k"),
          "] * ", parnam, "[", parelmts, "]",
          collapse = " + ")
 }
+
 
 
 paste_ranef_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent) {
