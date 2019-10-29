@@ -5,6 +5,9 @@
   no baseline covariates in the model
 * enable `newdata` for `predict()` that does not contain the outcome variable
 
+## New features
+* `JM_imp()` performs analysis of joint models for longitudinal and survival data
+
 --------------------------------------------------------------------------------
 
 # JointAI 0.6.0
