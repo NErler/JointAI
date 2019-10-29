@@ -61,53 +61,13 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
                                         c(t(outer(l[[Mlist$timevar]]/2, gkx + 1))),
                                         ord = 4)
     l$zeros <- numeric(length(l[[Mlist$timevar]]))
-    # l$priorTau.Bs.gammas <- diag(1, ncol(l$Bmat_h0))
-    # l$priorMean.Bs.gammas = rep(0, ncol(l$Bmat_h0))
-    l <- c(l, defs$surv)
 
-    l$priorMean.Bs.gammas <- rep(0, ncol(l$Bmat_h0))
-    l$priorTau.Bs.gammas <- diag(l$priorMean.Bs.gammas + 0.1)
+    l <- c(l, defs$surv, defs$JM(ncol(l$Bmat_h0)))
 
     if (Mlist$ridge)
       tau_reg_surv <- NULL
   }
 
-#
-#   if (analysis_type == 'coxph_count') {
-#     l[[names(Mlist$y)]] <- NULL
-#
-#     y <- unlist(Mlist$y)
-#     etimes <- c(sort(unique(y[Mlist$event == 1])), max(y))
-#     Y <- dN <- matrix(nrow = length(y), ncol = length(etimes) - 1,
-#                       dimnames = list(subj = c(), time = c()))
-#     for (j in 1:(length(etimes) - 1)) {
-#       Y[, j] <- ifelse(y - etimes[j] + defs$coxph['eps'] > 0, 1, 0)
-#       dN[, j] <- Y[, j] * ifelse(etimes[j + 1] - y - defs$coxph['eps'] > 0, 1, 0) * unlist(Mlist$event)
-#     }
-#
-#     priorhaz <- numeric(length(etimes) - 1)
-#     for (j in 1:(length(etimes) - 1)) {
-#       priorhaz[j] <- defs$coxph['r'] * max(1e-10, etimes[j + 1] - etimes[j]) * defs$coxph['c']
-#     }
-#
-#     Ylong <- melt_matrix(Y)
-#     Ylong$dN <- melt_matrix(dN)$value
-#
-#     Ylong <- Ylong[order(Ylong$value, decreasing = T), ]
-#
-#     l$priorhaz <- priorhaz
-#     l$subj <- Ylong$subj
-#     l$time <- Ylong$time
-#     l$RiskSet <- Ylong$value
-#     l$dN <- Ylong$dN
-#     l$nt <- length(etimes)
-#     l$Idt <- ifelse(l$RiskSet == 0, 0, NA)
-#     l$c <- defs$coxph["c"]
-#     l <- c(l, defs$surv)
-#
-#     if (Mlist$ridge)
-#       tau_reg_surv <- NULL
-#   }
 
 
   # scaled versions of Xc, Xtrafo, Xl and Z
