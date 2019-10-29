@@ -1,5 +1,8 @@
 #' Specify the default (imputation) model types
 #' @inheritParams model_imp
+#' @param analysis_type character sting identifying the type of analysis model;
+#'                      currently only required for joint models for longitudinal
+#'                      and survival data ("JM")
 #'
 #' @return \code{get_models()} returns a list of two vectors named \code{models}
 #'         and \code{meth}.\cr
@@ -24,8 +27,9 @@
 #'
 #' @export
 
-get_models <- function(fixed, random = NULL, data,
-                         auxvars = NULL, no_model = NULL, models = NULL){
+get_models <- function(fixed, random = NULL, data, auxvars = NULL,
+                       timevar = NULL, no_model = NULL, models = NULL,
+                       analysis_type = NULL) {
 
   if (missing(fixed))
     stop("No formula specified.", call. = FALSE)
@@ -35,6 +39,14 @@ get_models <- function(fixed, random = NULL, data,
 
   if (!is.null(auxvars) & class(auxvars) != 'formula')
     stop(gettextf("The argument %s should be a formula.", dQuote("auxvars")), call. = FALSE)
+
+  models_user <- models
+
+
+  # if there is a time variable, add it to no_model
+  if (!is.null(timevar)) {
+    no_model <- c(no_model, timevar)
+  }
 
   # check that all variables are found in the data
   allvars <- unique(c(all.vars(fixed[[3]]),
@@ -67,6 +79,7 @@ get_models <- function(fixed, random = NULL, data,
   random2 <- remove_grouping(random)
 
 
+  # new version of allvars, without the grouping variable
   allvars <- unique(c(all.vars(fixed[[3]]),
                       all.vars(random2),
                       all.vars(auxvars),
@@ -80,8 +93,10 @@ get_models <- function(fixed, random = NULL, data,
               colSums(is.na(data[match(unique(idvar), idvar), names(tvar[!tvar]), drop = FALSE]))
     )
 
-    if (all(nmis == 0) & is.null(models))
+
+    if (all(nmis == 0) & is.null(models_user) & (is.null(analysis_type) || analysis_type!= "JM"))
       return(list(models = NULL, meth = NULL))
+
 
     nmis <- nmis[!names(nmis) %in% no_model]
     tvar <- tvar[names(nmis)]
@@ -91,10 +106,11 @@ get_models <- function(fixed, random = NULL, data,
                     function(x) if (length(x) > 0) sort(x)
     )
 
-    unnecessary <- c(names(nmis[nmis == 0 & !tvar & names(nmis) %in% names(models)]),
-                     if (is.null(types$incomplete.baseline))
-                       types$complete.tvar[names(types$complete.tvar) %in% names(models)]
-                     )
+    unnecessary <- c(
+      names(nmis[nmis == 0 & !tvar & names(nmis) %in% names(models)]),
+      if (is.null(types$incomplete.baseline) & ((is.null(analysis_type) || analysis_type!= "JM")))
+        types$complete.tvar[names(types$complete.tvar) %in% names(models)]
+    )
 
     if (length(unnecessary) > 0)
       message(gettextf(paste0("Note:\nModels have been specified for the variabe(s) %s.\n",
@@ -103,17 +119,18 @@ get_models <- function(fixed, random = NULL, data,
                       paste0(names(unnecessary), collapse = ', '))
                       )
 
-    models_user <- models
-
-    models <- c(if(any(names(models) %in% names(types$complete.baseline))) types$complete.baseline,
-                types$incomplete.baseline,
-                if (!is.null(types$incomplete.baseline)) {
-                  types$complete.tvar
-                } else {
-                  if (any(names(models) %in% names(types$complete.tvar)))
-                  types$complete.tvar[names(types$complete.tvar) %in% names(models)]
-                },
-                types$incomplete.tvar)
+    models <- c(
+      if (any(names(models) %in% names(types$complete.baseline)))
+        types$complete.baseline,
+      types$incomplete.baseline,
+      if (!is.null(types$incomplete.baseline) || analysis_type == 'JM') {
+        types$complete.tvar
+      } else {
+        if (any(names(models) %in% names(types$complete.tvar)))
+          types$complete.tvar[names(types$complete.tvar) %in% names(models)]
+      },
+      types$incomplete.tvar
+    )
 
     nlevel <- sapply(data[, names(models), drop = FALSE],
                      function(x) length(levels(x)))
