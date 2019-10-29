@@ -128,6 +128,55 @@ coxph_model <- function(Mlist, K, ...){
 
 
 
+# priors for Cox PH model ------------------------------------------------------
+coxph_count_priors <- function(K, Mlist, ...){
+  # y_name <- colnames(Mlist$y)
+
+  if (Mlist$ridge) {
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv_ridge[k])", "\n",
+                    tab(4), "tau_reg_surv_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
+  } else {
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n")
+  }
+
+
+  paste0(
+    tab(), "# Priors for the coefficients in the analysis model", "\n",
+    tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
+    distr,
+    tab(), "}"
+  )
+}
+
+
+
+
+coxph_priors <- function(K, Mlist, ...){
+  if (Mlist$ridge) {
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv_ridge[k])", "\n",
+                    tab(4), "tau_reg_surv_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
+  } else {
+    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n")
+  }
+
+
+  paste0(
+    tab(), "# Priors for the coefficients in the analysis model", "\n",
+    if (!all(is.na(K))) {
+      paste0(
+      tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
+      distr,
+      tab(), "}", "\n")
+    },
+    tab(), "for (k in 1:6) {", "\n",
+    tab(4), "Bs.gammas[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n",
+    tab(), "}"
+    # tab(), "Bs.gammas[1:5] ~ dmnorm(priorMean.Bs.gammas[], tau_reg_surv * priorTau.Bs.gammas[, ])"
+  )
+}
+
+
+# Joint model ------------------------------------------------------------------
 JM_model <- function(Mlist, K, imp_par_list_long, ...){
 
   y_name <- colnames(Mlist$y)
@@ -206,54 +255,6 @@ JM_model <- function(Mlist, K, imp_par_list_long, ...){
          tab(4), "zeros[j] ~ dpois(phi[j])"
   )
 }
-
-# priors for Cox PH model ------------------------------------------------------
-coxph_count_priors <- function(K, Mlist, ...){
-  # y_name <- colnames(Mlist$y)
-
-  if (Mlist$ridge) {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv_ridge[k])", "\n",
-                    tab(4), "tau_reg_surv_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
-  } else {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n")
-  }
-
-
-  paste0(
-    tab(), "# Priors for the coefficients in the analysis model", "\n",
-    tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
-    distr,
-    tab(), "}"
-  )
-}
-
-
-
-
-coxph_priors <- function(K, Mlist, ...){
-  if (Mlist$ridge) {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv_ridge[k])", "\n",
-                    tab(4), "tau_reg_surv_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
-  } else {
-    distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n")
-  }
-
-
-  paste0(
-    tab(), "# Priors for the coefficients in the analysis model", "\n",
-    if (!all(is.na(K))) {
-      paste0(
-      tab(), "for (k in 1:", max(K, na.rm = TRUE), ") {", "\n",
-      distr,
-      tab(), "}", "\n")
-    },
-    tab(), "for (k in 1:6) {", "\n",
-    tab(4), "Bs.gammas[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n",
-    tab(), "}"
-    # tab(), "Bs.gammas[1:5] ~ dmnorm(priorMean.Bs.gammas[], tau_reg_surv * priorTau.Bs.gammas[, ])"
-  )
-}
-
 
 JM_priors <- function(K, Mlist, ...){
   if (Mlist$ridge) {
