@@ -169,16 +169,17 @@ JM_model <- function(Mlist, K, imp_par_list_long, ...){
   }
 
   fit_Xlgk <- if (length(Mlist$cols_main$Xl) > 0) {
-    sapply(seq_along(imp_par_list_long), function(x) {
-        paste0(tab(6), "Xlgk[j, ", x, ", k] <- ",
-           paste_ranef_predictor_gk(parnam = paste0("b_", imp_par_list_long[[x]]$varname),
-                                 parindex1 = '15 * (j - 1) + k',
-                                 parindex2 = 'j',
-                                 matnam = 'Zgk',
-                                 parelmts = 1:imp_par_list_long[[x]]$nranef,
-                                 cols = imp_par_list_long[[x]]$Z_cols,
-                                 indent = indent))
-    })
+    paste(
+      sapply(seq_along(imp_par_list_long), function(x) {
+      paste0(tab(6), "Xlgk[j, ", x, ", k] <- ",
+             paste_ranef_predictor_gk(parnam = paste0("b_", imp_par_list_long[[x]]$varname),
+                                      parindex1 = '15 * (j - 1) + k',
+                                      parindex2 = 'j',
+                                      matnam = 'Zgk',
+                                      parelmts = 1:imp_par_list_long[[x]]$nranef,
+                                      cols = imp_par_list_long[[x]]$Z_cols,
+                                      indent = indent))
+    }), collapse = "\n")
   }
 
 
