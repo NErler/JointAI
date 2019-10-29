@@ -142,9 +142,10 @@ JM_model <- function(Mlist, K, imp_par_list_long, ...){
 
   paste_Xl <- if (length(Mlist$cols_main$Xl) > 0) {
     paste0(" + \n", tab(indent),
-           paste_predictor(parnam = 'beta', parindex = 'survrow[j]', matnam = 'Xl',
+           paste_predictor(parnam = 'beta', parindex = 'survrow[j]',
+                           matnam = paste0('mu_', Mlist$names_main$Xl),
                            parelmts = K["Xl", 1]:K["Xl", 2],
-                           cols = Mlist$cols_main$Xl, indent = indent)
+                           cols = NULL, indent = indent)
     )
   }
 
