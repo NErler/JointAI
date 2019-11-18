@@ -295,8 +295,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                       warn = TRUE, mess = TRUE,
                       keep_scaled_mcmc = FALSE,
                       analysis_type,
-                      Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
-                      dest_cols = NULL, imp_par_list = NULL,  data_list = NULL, ...) {
+                      imp_par_list = NULL,  data_list = NULL, ...) {
 
 
   # Checks & warnings -------------------------------------------------------
