@@ -179,6 +179,9 @@ coxph_priors <- function(K, Mlist, ...){
 # Joint model ------------------------------------------------------------------
 JM_model <- function(Mlist, K, imp_par_list_long, ...){
 
+  K <- K[[which(sapply(Mlist$outnam, 'attr', 'type') == 'survival')]]
+  cols_main <- Mlist$cols_main[[which(sapply(Mlist$outnam, 'attr', 'type') == 'survival')]]
+
   y_name <- colnames(Mlist$y)
   indent <- 4 + 14 + 4
 
@@ -186,13 +189,14 @@ JM_model <- function(Mlist, K, imp_par_list_long, ...){
     paste0(" + \n", tab(indent),
            paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xic',
                            parelmts = K["Xic", 1]:K["Xic", 2],
-                           cols = Mlist$cols_main$Xic, indent = indent))
+                           cols = cols_main$Xic, indent = indent))
   }
 
-  paste_Xl <- if (length(Mlist$cols_main$Xl) > 0) {
+  paste_Xl <- if (length(cols_main$Xl) > 0) {
     paste0(" + \n", tab(indent),
            paste_predictor(parnam = 'beta', parindex = 'survrow[j]',
-                           matnam = paste0('mu_', Mlist$names_main$Xl),
+                           matnam = paste0('mu_', Mlist$names_main[[
+                             which(sapply(Mlist$outnam, 'attr', 'type') == 'survival')]]$Xl),
                            parelmts = K["Xl", 1]:K["Xl", 2],
                            cols = NULL, indent = indent)
     )
