@@ -333,9 +333,9 @@ model_imp <- function(fixed, data, random = NULL, link, family,
   # * set contrasts to dummies -------------------------------------------------
   opt <- options(contrasts = rep("contr.treatment", 2))
 
-  allvars <- unique(c(all.vars(fixed),
-                      all.vars(random),
-                      all.vars(auxvars))
+  allvars <- unique(c(all_vars(fixed),
+                      all_vars(random),
+                      all_vars(auxvars))
   )
 
   if (any(!allvars %in% names(data))) {
@@ -346,9 +346,9 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   # * check classes of covariates ----------------------------------------------
-  covars <- unique(c(all.vars(fixed),
-                     all.vars(remove_grouping(random)),
-                     all.vars(auxvars)))
+  covars <- unique(c(all_vars(fixed),
+                     all_vars(remove_grouping(random)),
+                     all_vars(auxvars)))
   classes <- unique(unlist(sapply(data[covars], class)))
 
   if (any(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))) {
