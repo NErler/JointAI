@@ -3,17 +3,13 @@
 # warn: logical
 extract_id <- function(random, warn = TRUE) {
 
-  # if random is not a list, make it one (anticipating future implementation of crossed random effects)
-  if (!is.list(random)) {
-    # check if random is a formulas
-    if (!inherits(random, 'formula') & !is.null(random))
-      stop('"random" seems not be be of class "formula".', call. = FALSE)
+  # if random is not a list, make it one
+  if (!is.list(random))
     random <- list(random)
-  } else {
-    # check if random is a list of formulas
-    if (any(!sapply(random, inherits, 'formula')))
-      stop('At least one element of "random" is not of class "formula".', call. = FALSE)
-  }
+
+  # check if random is a list of formulas
+  if (!all(sapply(random, function(x) inherits(x, "formula") | is.null(x))))
+    stop('At least one element of "random" is not of class "formula".', call. = FALSE)
 
   ids <- lapply(random, function(x) {
     # match the pattern "... | "
@@ -36,36 +32,43 @@ extract_id <- function(random, warn = TRUE) {
       warning('No "id" variable could be identified. I will assume that all observations are independent.',
               call. = FALSE, immediate. = TRUE)
 
-  return(unlist(ids))
+  if (length(unique(unlist(ids))) > 1)
+    stop("Different grouping levels detected.", call. = FALSE)
+
+  return(unique(unlist(ids)))
 }
 
 
 # Extract the names(s) of the outcome variable(s) from fixed effects formula ------
 extract_outcome <- function(fixed) {
+  # if fixed is not a list, turn into list
+  if (!is.list(fixed)) fixed <- list(fixed)
 
-  if (!inherits(fixed, "formula"))
-    fixed <- try(as.formula(fixed))
+  out_nam_list <- lapply(fixed, function(x) {
+    if (!inherits(x, "formula"))
+      x <- try(as.formula(x))
 
-  if (inherits(fixed, "try-error"))
-    stop("Please provide a valid (fixed effects) formula.", call. = FALSE)
+    if (inherits(x, "try-error"))
+      stop("Please provide a valid (fixed effects) formula.", call. = FALSE)
 
-  if (attr(terms(fixed), "response") != 1) {
-    stop("Unable to extract response from model formula.", call. = FALSE)
-  }
+    if (attr(terms(x), "response") != 1) {
+      stop("Unable to extract response from model formula.", call. = FALSE)
+    }
 
-  # get the LHS of the formula
-  LHS <- sub("[[:space:]]*\\~[[:print:]]*", "",
-             deparse(fixed, width.cutoff = 500))
+    # get the LHS of the formula
+    LHS <- sub("[[:space:]]*\\~[[:print:]]*", "",
+               deparse(x, width.cutoff = 500))
 
-  # names of the outcome variables
-  outnam <- all.vars(as.formula(paste0(LHS, "~ 1")))
+    # names of the outcome variables
+    outnam <- all.vars(as.formula(paste0(LHS, "~ 1")))
 
+    if (any(length(outnam) == 0, is.na(outnam), is.null(outnam))) {
+      stop("Unable to extract the outcome variable.")
+    }
+    outnam
+  })
 
-  if (any(length(outnam) == 0, is.na(outnam), is.null(outnam))) {
-    stop("Unable to extract the outcome variable.")
-  }
-
-  return(outnam)
+  if (length(out_nam_list) == 1) out_nam_list[[1]] else out_nam_list
 }
 
 
@@ -211,14 +214,22 @@ extract_fcts <- function(formula, data, random = NULL, complete = FALSE, ...) {
 
 
 # Remove grouping from formula -------------------------------------------------
-remove_grouping <- function(fmla){
-  if (is.null(fmla)) return(NULL)
+remove_grouping <- function(fmla) {
+  if (!is.list(fmla)) fmla <- list(fmla)
 
-  fmla2 <- sub("[[:space:]]*\\|[[:print:]]*", "",
-               deparse(fmla, width.cutoff = 500))
-  if (class(fmla) == "formula") {
-    as.formula(fmla2)
-  } else {
-    fmla2
-  }
+  fl <- lapply(fmla, function(x) {
+    if (!is.null(x)) {
+      fmla2 <- sub("[[:space:]]*\\|[[:print:]]*", "",
+                   deparse(x, width.cutoff = 500))
+
+      if (class(x) == "formula") {
+        as.formula(fmla2)
+      } else {
+        fmla2
+      }
+    }
+  })
+
+  if (length(fl) == 1) fl[[1]] else fl
+}
 }
