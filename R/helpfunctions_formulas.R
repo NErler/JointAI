@@ -232,4 +232,50 @@ remove_grouping <- function(fmla) {
 
   if (length(fl) == 1) fl[[1]] else fl
 }
+
+# Remove the left hand side from formula -------------------------------------------------
+remove_LHS <- function(fmla) {
+  if (!is.list(fmla)) fmla <- list(fmla)
+
+  fl <- lapply(fmla, function(x) {
+    if (!is.null(x))
+      as.formula(paste0("~ ", paste(attr(terms(x), "term.labels"),
+                                    collapse = " + ")))
+  })
+
+  if (length(fl) == 1) fl[[1]] else fl
+}
+
+# split a lmer type formula into fixed and random part
+split_formula <- function(formula) {
+  term_labels <- attr(terms(formula), "term.labels")
+  which_ranef <- grepl("|", term_labels, fixed = TRUE)
+
+  fixed = paste0(as.character(formula)[2L], " ~ ",
+                 paste(term_labels[!which_ranef], collapse = " + ")
+  )
+
+  random = if(any(which_ranef)) as.formula(paste0("~", term_labels[which_ranef]))
+
+  return(list(fixed = as.formula(fixed),
+              random = random)
+  )
+}
+
+# split a list of formulas into a list with fixed effects formulas and a list
+# with random effects formulas
+split_formula_list <- function(formulas) {
+  l <- lapply(formulas, split_formula)
+  names(l) <- sapply(formulas, function(x) as.character(x)[2L])
+
+  return(list(fixed = lapply(l, "[[", "fixed"),
+              random = lapply(l, "[[", "random"))
+  )
+}
+
+
+all_vars <- function(fmla) {
+  if (is.list(fmla))
+    unique(unlist(lapply(fmla, all.vars)))
+  else all.vars(fmla)
 }
