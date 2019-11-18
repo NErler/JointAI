@@ -1,5 +1,5 @@
 
-get_model_dim <- function(cols_main, hc_list){
+get_1model_dim <- function(cols_main, hc_list, names_main){
 
   K <- matrix(NA,
               nrow = 4 + length(hc_list),
@@ -9,7 +9,7 @@ get_model_dim <- function(cols_main, hc_list){
 
   if (length(cols_main$Xc) > 0) K["Xc", ] <- c(1, length(cols_main$Xc))
   if (length(cols_main$Xic) > 0) K["Xic", ] <- c(1, length(cols_main$Xic)) + max(c(K, 0), na.rm = TRUE)
-  if (!is.null(hc_list)) {
+  if (!is.null(hc_list) && length(hc_list) > 0) {
     for (i in 1:length(hc_list)) {
       K[names(hc_list)[i], ] <-
         if (length(hc_list[[i]]) > 0) {
@@ -34,7 +34,21 @@ get_model_dim <- function(cols_main, hc_list){
   return(K)
 }
 
+get_model_dim <- function(cols_main, hc_list, names_main = NULL) {
+  if (is.list(cols_main)) {
+    Klist <- sapply(names(cols_main), function(i) {
+      get_1model_dim(cols_main = cols_main[[i]],
+                     hc_list = hc_list[names(hc_list) %in% names_main[[i]]$Z])
+    }, simplify = FALSE)
 
+    for(i in 2:length(Klist)) {
+      Klist[[i]] <- Klist[[i]] + max(Klist[[i-1]], na.rm = TRUE)
+    }
+    Klist
+  } else {
+    get_1model_dim(cols_main, hc_list)
+  }
+}
 
 
 # Determine positions of incomplete variables in the data matrices
