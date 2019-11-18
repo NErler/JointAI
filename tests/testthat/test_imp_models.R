@@ -22,6 +22,14 @@ test_that("no models when no missing values", {
 })
 
 
+test_that('model included when specified via models', {
+  expect_equal(get_models(fixed = y ~ C1 + B1 + O1, data = wideDF,
+                          models = c(B1 = 'logit')),
+               list(models = c(B1 = 'logit'), meth = NULL)
+  )
+})
+
+
 test_that("error when unknown variable or missing part", {
   expect_error(get_models(fixed = y ~ Bb1 + M1 + O1, data = wideDF))
 
@@ -126,4 +134,41 @@ test_that("splines in random effects give an error when a model is needed for th
                list(models = c(C2 = 'norm', c1 = 'lmm'), meth = c(C2 = 'norm'))
   )
 })
+
+
+test_that("all longitudinal variables are included when the analysis model is a JM", {
+  library(survival)
+  expect_equal(get_models(fixed = Surv(futime , status) ~ age + sex + bili, random = ~ 1|id,
+                          data = pbcseq),
+               list(models = NULL, meth = NULL))
+
+  expect_equal(get_models(fixed = Surv(futime , status) ~ age + sex + bili,
+                          random = ~ 1|id, analysis_type = 'JM',
+                          data = pbcseq),
+               list(models = c(bili = 'lmm'), meth = NULL))
+
+  expect_equal(get_models(fixed = Surv(futime , status) ~ age + sex + bili + chol,
+                          random = ~ 1|id, analysis_type = 'JM',
+                          data = pbcseq),
+               list(models = c(bili = 'lmm', chol = 'lmm'), meth = c(chol = 'lmm')))
+
+  expect_equal(get_models(fixed = Surv(futime , status) ~ age + sex + bili + chol,
+                          random = ~ 1|id,
+                          data = pbcseq),
+               list(models = c(chol = 'lmm'), meth = c(chol = 'lmm')))
+
+  expect_equal(get_models(fixed = Surv(futime , status) ~ age + sex + bili + chol + day,
+                          random = ~ 1|id, analysis_type = 'JM',
+                          data = pbcseq),
+               list(models = c(bili = 'lmm', day = 'lmm', chol = 'lmm'),
+                    meth = c(chol = 'lmm')))
+
+  expect_equal(get_models(fixed = Surv(futime , status) ~ age + sex + bili + chol + day,
+                          random = ~ 1|id, analysis_type = 'JM',
+                          data = pbcseq, timevar = 'day'),
+               list(models = c(bili = 'lmm', chol = 'lmm'),
+                    meth = c(chol = 'lmm')))
+})
+
+
 
