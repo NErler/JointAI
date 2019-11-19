@@ -2,7 +2,7 @@
 
 impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl_cols,
                           Z_cols, par_elmts, ppc, nranef, N, Ntot, hc_list,
-                          trafo_cols, trfo_fct, ...) {
+                          trafo_cols, trfo_fct, parname = 'alpha', ...) {
   distr <- switch(family,
                   "gaussian" = function(varname) {
                     paste0("dnorm(mu_", varname, "[j], tau_", varname, ")")
@@ -58,7 +58,7 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
 
   paste_Xl <- if (!is.null(Xl_cols)) {
     paste0(" + \n", tab(indent),
-           paste_predictor(parnam = 'alpha', parindex = 'j', matnam = 'Xl',
+           paste_predictor(parnam = parname, parindex = 'j', matnam = 'Xl',
                            parelmts = par_elmts["Xl", 1]:par_elmts["Xl", 2],
                            cols = Xl_cols, indent = indent)
     )
@@ -97,15 +97,15 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
          tab(4), "b_", varname, "[i, 1:", nranef, "] ~ ", norm.distr,
          "(mu_b_", varname, "[i, ], invD_", varname, "[ , ])", "\n",
          tab(4), "mu_b_", varname, "[i, 1] <- ",
-         paste_predictor(parnam = 'alpha', parindex = 'i', matnam = 'Xc',
+         paste_predictor(parnam = parname, parindex = 'i', matnam = 'Xc',
                          parelmts = par_elmts["Xc", 1]:par_elmts["Xc", 2],
                          cols = Xc_cols, indent = 19 + nchar(varname)), "\n",
-         paste_rdslopes_covmod(nranef, hc_list, par_elmts, varname), "\n",
+         paste_rdslopes_covmod(nranef, hc_list, par_elmts, varname, parname = parname), "\n",
          tab(), "}\n"
   )
 }
 
-paste_rdslopes_covmod <- function(nranef, hc_list, par_elmts, varname){
+paste_rdslopes_covmod <- function(nranef, hc_list, par_elmts, varname, parname = 'alpha'){
   if (nranef > 1) {
     rd_slopes <- list()
     for (k in 2:nranef) {
@@ -118,7 +118,7 @@ paste_rdslopes_covmod <- function(nranef, hc_list, par_elmts, varname){
                  'Xlong' = NULL)
         })
 
-        hc_interact <- paste0("alpha[",
+        hc_interact <- paste0(parname, "[",
                               par_elmts[names(hc_list)[k - 1], 1]:par_elmts[names(hc_list)[k - 1], 2], "]",
                               sapply(unlist(Xc_pos), function(x) {
                                 if (!is.na(x)) {
@@ -139,7 +139,7 @@ paste_rdslopes_covmod <- function(nranef, hc_list, par_elmts, varname){
 }
 
 
-impprior_glmm <- function(family, link, varname, par_elmts, dest_mat, dest_col, ppc, nranef, ...){
+impprior_glmm <- function(family, link, varname, par_elmts, dest_mat, dest_col, ppc, nranef, parname, ...){
 
   secndpar <- switch(family,
                      "gaussian" = paste0("\n",
@@ -175,7 +175,7 @@ impprior_glmm <- function(family, link, varname, par_elmts, dest_mat, dest_col, 
     "\n",
     tab(), "# Priors for the model for ", varname, "\n",
     tab(), "for (k in ", min(par_elmts, na.rm = T), ":", max(par_elmts, na.rm = TRUE), ") {", "\n",
-    tab(4), "alpha[k] ~ dnorm(mu_reg_", type, ", tau_reg_", type, ")", "\n",
+    tab(4), parname, "[k] ~ dnorm(mu_reg_", type, ", tau_reg_", type, ")", "\n",
     tab(), "}")
 
   paste0(c(priors,
