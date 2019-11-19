@@ -78,7 +78,8 @@ print_type <- function(x) {
               coxph = 'Cox proportional hazards model',
               survreg = 'Weibull survival model',
               clm = 'Cumulative logit model',
-              clmm = 'Cumulative logit mixed model'
+              clmm = 'Cumulative logit mixed model',
+              JM = "Joint survival and longitudinal model"
   )
   paste0(a, " fitted with JointAI")
 }
