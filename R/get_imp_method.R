@@ -49,9 +49,9 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
   }
 
   # check that all variables are found in the data
-  allvars <- unique(c(all.vars(fixed[[3]]),
-                      all.vars(random),
-                      all.vars(auxvars),
+  allvars <- unique(c(all_vars(remove_LHS(fixed)),
+                      all_vars(random),
+                      all_vars(auxvars),
                       names(models)))
 
   if (any(!allvars %in% names(data))) {
@@ -80,9 +80,9 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
 
   # new version of allvars, without the grouping variable
-  allvars <- unique(c(all.vars(fixed[[3]]),
-                      all.vars(random2),
-                      all.vars(auxvars),
+  allvars <- unique(c(all_vars(remove_LHS(fixed)),
+                      all_vars(random2),
+                      all_vars(auxvars),
                       names(models)))
 
 
@@ -121,9 +121,9 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
     models <- c(
       if (any(names(models) %in% names(types$complete.baseline)))
-        types$complete.baseline,
+        types$complete.baseline[names(types$complete.baseline) %in% names(models)],
       types$incomplete.baseline,
-      if (!is.null(types$incomplete.baseline) || analysis_type == 'JM') {
+      if (!is.null(types$incomplete.baseline) | (!is.null(analysis_type) && analysis_type == 'JM')) {
         types$complete.tvar
       } else {
         if (any(names(models) %in% names(types$complete.tvar)))
@@ -148,7 +148,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
     models[names(models_user)] <- models_user
 
-    meth <- models[nmis[names(models)] > 0]
+    meth <- if(any(nmis[names(models)] > 0)) models[nmis[names(models)] > 0]
 
     if (any(models %in% c('mlmm'))) {
       stop(paste0("JointAI can't yet handle unordered longitudinal categorical covariates (>2 levels).\n",
