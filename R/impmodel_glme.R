@@ -87,7 +87,7 @@ impmodel_glmm <- function(family, link, varname, dest_mat, dest_col, Xc_cols, Xl
          paste_ranef_predictor(parnam = paste0("b_", varname), parindex = 'j',
                                matnam = 'Z',
                                parelmts = 1:nranef,
-                               cols = Z_cols, indent = indent),
+                               cols = Z_cols, indent = indent, breakafter = 2),
          paste_Xl,
          "\n",
          paste_ppc,
