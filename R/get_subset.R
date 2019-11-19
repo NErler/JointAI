@@ -17,6 +17,7 @@ get_subset <- function(object, subset, keep_aux = FALSE, warn = TRUE, mess = TRU
 
   s <- do.call(get_params, c(object, Mlist_new, subset, mess = mess))
 
+  if (object$analysis_type != "JM") {
   repl <- sapply(s, function(r) {
     if (grepl("^beta$", r)) {
       get_coef_names(object$Mlist, object$K)[, 2]
@@ -34,6 +35,10 @@ get_subset <- function(object, subset, keep_aux = FALSE, warn = TRUE, mess = TRU
   }
 
   sub <- unique(s[s %in% colnames(object$MCMC[[1]])])
+  } else {
+    sub <- unlist(sapply(s, function(i)
+      grep(i, colnames(object$MCMC[[1]]), value = TRUE, fixed = TRUE), simplify = FALSE))
+  }
   if (!keep_aux)
     sub <- sub[!sub %in% get_aux(object)]
 
