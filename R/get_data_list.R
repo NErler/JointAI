@@ -134,9 +134,15 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     l <- c(l, defs$multinomial)
 
 
-  if (analysis_type %in% c("lme", 'glme', 'clmm', 'JM') |
-      any(models %in% c('lmm', "glmm_lognorm", 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm'))) {
-    l <- c(l, defs$Z(Mlist$nranef))
+  if (analysis_type %in% c("lme", 'glme', 'clmm') |
+      any(models %in% c('lmm', "glmm_lognorm", 'glmm_logit', 'glmm_gamma',
+                        'glmm_poisson', 'clmm'))) {
+    l <- c(l, defs$ranef[c('shape_diag_RinvD', 'rate_diag_RinvD')],
+           defs$ranef$wish(Mlist$nranef))
+
+    if (!analysis_type %in% c("lme", 'glme', 'clmm'))
+      l$RinvD <- l$KinvD <- NULL
+
     l$groups <- match(Mlist$groups, unique(Mlist$groups)) # can this be just Mlist$groups???
   }
 
@@ -145,7 +151,7 @@ get_data_list <- function(analysis_type, family, link, models, Mlist,
     nam <- names(models)[models %in% c('lmm',  'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')]
 
     for (k in nam) {
-      pars <- defs$Z(imp_par_list[[k]]$nranef)[c('RinvD', 'KinvD')]
+      pars <- defs$ranef$wish(imp_par_list[[k]]$nranef)
       names(pars) <- paste0(names(pars), '_', k)
       l <- c(l, pars)
     }
@@ -312,21 +318,21 @@ default_hyperpars <- function() {
 
 
 
-    Z = function(nranef) {
-      if (nranef > 1) {
-        RinvD <- diag(as.numeric(rep(NA, nranef)))
-        KinvD <- nranef
-      } else {
-        RinvD <- KinvD <- NULL
-      }
+    ranef = list(shape_diag_RinvD = 0.5,
+                 rate_diag_RinvD = 0.001,
+                 wish = function(nranef) {
+                   if (nranef > 1) {
+                     RinvD <- diag(as.numeric(rep(NA, nranef)))
+                     KinvD <- nranef
+                   } else {
+                     RinvD <- KinvD <- NULL
+                   }
 
-      list(
-        RinvD = RinvD,
-        KinvD = KinvD,
-        shape_diag_RinvD = 0.1,
-        rate_diag_RinvD = 0.01
-      )
-    },
+                   list(
+                     RinvD = RinvD,
+                     KinvD = KinvD
+                   )
+                 }),
 
     surv = c(mu_reg_surv = 0,
              tau_reg_surv = 0.001),
