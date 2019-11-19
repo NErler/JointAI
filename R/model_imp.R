@@ -622,7 +622,8 @@ if (!is.null(inits)) {
         # re-scale parameters
         MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
                                     scale_pars, MCMC[[k]], Mlist$refs,
-                                    unlist(Mlist$names_main)))
+                                    Mlist$names_main, coefs = coefs))
+
         attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
       }
     }
