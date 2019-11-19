@@ -23,64 +23,80 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, K, dest_cols, trunc
            Mlist$trafos$var[match(names(Mlist$hc_list), Mlist$trafos$X_var)],
            names(Mlist$hc_list))
 
-  nam <- names(Mlist$hc_list)[which(!hcvar %in% unlist(mod_dum[i:length(mod_dum)]))]
 
-  # columns in Xc to be used
-  Xc_cols = if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
-    if(1 + (!intercept) <= ncol(Mlist$Xc))
-      (1 + (!intercept)):ncol(Mlist$Xc)
-  } else {
-    (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1)
-  }
 
-  # columns in Xl to be used
-  Xl_cols <- if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
-    if (all(is.na(dest_cols[[varname]]$Xl[mod_dum[[varname]]]))) {
-      wouldbe <- max(0, which(colnames(Mlist$Xl) %in% unlist(mod_dum[seq_along(models) < i]))) + 1
-      if (wouldbe > 1) 1:(wouldbe - 1)
-    } else  if (min(dest_cols[[varname]]$Xl, na.rm = TRUE) > 1) {
-      1:(min(dest_cols[[varname]]$Xl, na.rm = TRUE) - 1)
+  if (varname %in% rownames(K_imp)) {
+
+    nam <- names(Mlist$hc_list)[which(!hcvar %in% unlist(mod_dum[i:length(mod_dum)]))]
+
+    # columns in Xc to be used
+    Xc_cols = if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
+      if(1 + (!intercept) <= ncol(Mlist$Xc))
+        (1 + (!intercept)):ncol(Mlist$Xc)
+    } else {
+      (1 + (!intercept)):(min(dest_cols[[varname]]$Xc) - 1)
     }
-  }
 
-  # columns of Z to be used
-  Z_cols = if (impmeth %in% c('lmm','glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
-    if (Mlist$nranef > 1) {
-      which(!ifelse(colnames(Mlist$Z) %in% Mlist$trafos$X_var,
-                    Mlist$trafos$var[match(colnames(Mlist$Z), Mlist$trafos$X_var)],
-                    colnames(Mlist$Z)) %in% unlist(mod_dum[i:length(mod_dum)]))
-    } else if (Mlist$nranef == 1) {
-      1
-    }
-  }
-
-  par_elmts <- if (impmeth == "multilogit") {
-    sapply(names(dest_cols[[varname]]$Xc), function(i) {
-      matrix(nrow = 1, ncol = 2, data = c(K_imp[i, 1], K_imp[i, 2]),
-             byrow = T, dimnames = list('Xc', c('start', 'end')))
-    }, simplify = FALSE)
-  } else {
-    K_imp_x <- matrix(nrow = 2 + length(nam), ncol = 2,
-                      dimnames = list(c('Xc', 'Xl', nam),
-                                      c('start', 'end')))
-
-    if (length(Xc_cols) > 0)
-      K_imp_x['Xc', ] <- K_imp[varname, 1] + c(1, length(Xc_cols)) - 1
-
-    if (length(Xl_cols) > 0)
-      K_imp_x['Xl', ] <- max(0, K_imp_x['Xc', 2], na.rm = TRUE) + c(1, length(Xl_cols))
-
-    if (length(Z_cols) > 0)
-      # K_imp_x['Z', ] <- max(K_imp_x, na.rm = T) + c(1, length(Z_cols) - 1)
-      for (k in nam) {
-        if (!is.null(Mlist$hc_list[[k]]))
-          # K_imp_x[k, ] <- max(K_imp_x, na.rm = T) + c(1, sum(sapply(Mlist$hc_list[[k]],  "!=", varname)))
-          K_imp_x[k, ] <- max(K_imp_x, na.rm = T) +
-            c(1, sum(!sapply(Mlist$hc_list[[k]],
-                            "%in%", unlist(mod_dum[i:length(mod_dum)]))
-                     ))
+    # columns in Xl to be used
+    Xl_cols <- if (impmeth %in% c('lmm', 'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
+      if (all(is.na(dest_cols[[varname]]$Xl[mod_dum[[varname]]]))) {
+        wouldbe <- max(0, which(colnames(Mlist$Xl) %in% unlist(mod_dum[seq_along(models) < i]))) + 1
+        if (wouldbe > 1) 1:(wouldbe - 1)
+      } else  if (min(dest_cols[[varname]]$Xl, na.rm = TRUE) > 1) {
+        1:(min(dest_cols[[varname]]$Xl, na.rm = TRUE) - 1)
       }
-    K_imp_x
+    }
+
+    # columns of Z to be used
+    Z_cols = if (impmeth %in% c('lmm','glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')) {
+      if (Mlist$nranef > 1) {
+        which(!ifelse(colnames(Mlist$Z) %in% Mlist$trafos$X_var,
+                      Mlist$trafos$var[match(colnames(Mlist$Z), Mlist$trafos$X_var)],
+                      colnames(Mlist$Z)) %in% unlist(mod_dum[i:length(mod_dum)]))
+      } else if (Mlist$nranef == 1) {
+        1
+      }
+    }
+    parname = 'alpha'
+  } else {
+    nam <- names(Mlist$hc_list)[names(Mlist$hc_list) %in% Mlist$names_main[[varname]]$Z]
+    parname <- "beta"
+    Xc_cols <- Mlist$cols_main[[varname]]$Xc
+    Xl_cols <- Mlist$cols_main[[varname]]$Xl
+    Z_cols <- Mlist$cols_main[[varname]]$Z
+  }
+
+  par_elmts <- if (varname %in% rownames(K_imp)) {
+    if (impmeth == "multilogit") {
+      sapply(names(dest_cols[[varname]]$Xc), function(i) {
+        matrix(nrow = 1, ncol = 2, data = c(K_imp[i, 1], K_imp[i, 2]),
+               byrow = T, dimnames = list('Xc', c('start', 'end')))
+      }, simplify = FALSE)
+    } else {
+      K_imp_x <- matrix(nrow = 2 + length(nam), ncol = 2,
+                        dimnames = list(c('Xc', 'Xl', nam),
+                                        c('start', 'end')))
+
+      if (length(Xc_cols) > 0)
+        K_imp_x['Xc', ] <- K_imp[varname, 1] + c(1, length(Xc_cols)) - 1
+
+      if (length(Xl_cols) > 0)
+        K_imp_x['Xl', ] <- max(0, K_imp_x['Xc', 2], na.rm = TRUE) + c(1, length(Xl_cols))
+
+      if (length(Z_cols) > 0)
+        # K_imp_x['Z', ] <- max(K_imp_x, na.rm = T) + c(1, length(Z_cols) - 1)
+        for (k in nam) {
+          if (!is.null(Mlist$hc_list[[k]]))
+            # K_imp_x[k, ] <- max(K_imp_x, na.rm = T) + c(1, sum(sapply(Mlist$hc_list[[k]],  "!=", varname)))
+            K_imp_x[k, ] <- max(K_imp_x, na.rm = T) +
+              c(1, sum(!sapply(Mlist$hc_list[[k]],
+                               "%in%", unlist(mod_dum[i:length(mod_dum)]))
+              ))
+        }
+      K_imp_x
+    }
+  } else {
+    K[[varname]]
   }
 
   list(varname = varname,
@@ -162,10 +178,12 @@ get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, K, dest_cols, trunc
        trunc = trunc[[varname]],
        trafos = Mlist$trafos,
        ppc = Mlist$ppc,
-       nranef = sum(!ifelse(colnames(Mlist$Z) %in% Mlist$trafos$X_var,
-                            Mlist$trafos$var[match(colnames(Mlist$Z), Mlist$trafos$X_var)],
-                            colnames(Mlist$Z))
-                    %in% unlist(mod_dum[i:length(mod_dum)])),
+       parname = parname,
+       nranef = length(Z_cols),
+       # nranef = sum(!ifelse(colnames(Mlist$Z) %in% Mlist$trafos$X_var,
+       #                      Mlist$trafos$var[match(colnames(Mlist$Z), Mlist$trafos$X_var)],
+       #                      colnames(Mlist$Z))
+       #              %in% unlist(mod_dum[i:length(mod_dum)])),
        N = Mlist$N,
        Ntot = nrow(Mlist$Z),
        hc_list = Mlist$hc_list[nam]
