@@ -456,7 +456,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
     imp_par_list <- mapply(get_imp_par_list, models, names(models),
-                           MoreArgs = list(Mlist, K_imp, dest_cols, trunc, models),
+                           MoreArgs = list(Mlist, K_imp, K, dest_cols, trunc, models),
                            SIMPLIFY = FALSE)
 
   # data list ------------------------------------------------------------------
