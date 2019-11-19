@@ -1,12 +1,18 @@
 # JointAI 0.6.0.9000
 
+## New features
+* `JM_imp()` performs analysis of joint models for longitudinal and survival data
+
 ## Bug fixes
 * Fixed bug that messed up coefficients in `clmm` covariate model when there are
   no baseline covariates in the model
 * enable `newdata` for `predict()` that does not contain the outcome variable
 
-## New features
-* `JM_imp()` performs analysis of joint models for longitudinal and survival data
+## Minor changes
+* Within `summary()`, the argument `multivariate` to the function `GR_crit()` is
+  now set to `FALSE` to avoid issues. The multivariate version can still be 
+  obtained by using `GR_crit()` directly.
+
 
 --------------------------------------------------------------------------------
 

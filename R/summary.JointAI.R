@@ -50,7 +50,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   stats[, paste0(quantiles * 100, "%")] <- t(apply(MCMC, 2, quantile, quantiles))
   stats[, "tail-prob."] <- apply(MCMC, 2, computeP)
   stats[, "GR-crit"] <- GR_crit(object = object, start = start, end = end, thin = thin,
-                                warn = warn, mess = FALSE,
+                                warn = warn, mess = FALSE, multivariate = FALSE,
                                 subset = subset, autoburnin = autoburnin)[[1]][, "Upper C.I."]
 
   out <- list()
