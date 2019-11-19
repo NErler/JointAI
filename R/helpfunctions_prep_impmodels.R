@@ -1,6 +1,6 @@
 
 # Creates a list of parameters that will be passed to the functions generating the imputation models
-get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, dest_cols, trunc, models) {
+get_imp_par_list <- function(impmeth, varname, Mlist, K_imp, K, dest_cols, trunc, models) {
 
   intercept <- if (impmeth == "cumlogit") {
     ifelse(min(dest_cols[[varname]]$Xc) > 2, FALSE, TRUE)
