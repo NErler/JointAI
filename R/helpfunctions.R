@@ -92,10 +92,10 @@ melt_data.frame <- function(data, id.vars = NULL, varnames = NULL, valname = 'va
   X <- data[, !names(data) %in% c('rowID', id.vars), drop = FALSE]
 
   g <- list(rowID = data$rowID,
-            variable = names(X)
+            variable = if (ncol(X) > 0) names(X)
   )
 
-  out <- expand.grid(g, stringsAsFactors = FALSE)
+  out <- expand.grid(Filter(Negate(is.null), g), stringsAsFactors = FALSE)
 
   if (length(unique(sapply(X, class))) > 1) {
     out[, valname] <- unlist(lapply(X, as.character))
@@ -106,7 +106,8 @@ melt_data.frame <- function(data, id.vars = NULL, varnames = NULL, valname = 'va
   mout <- merge(data[, c("rowID", id.vars)], out)
 
   attr(mout, 'out.attrs') <- NULL
-  return(mout[order(mout$variable), -1])
+
+  if (ncol(X) > 0) mout[order(mout$variable), -1] else mout
 }
 
 
