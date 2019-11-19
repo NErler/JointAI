@@ -254,7 +254,8 @@ JM_model <- function(Mlist, K, imp_par_list_long, ...){
                                       matnam = 'Zgk',
                                       parelmts = 1:imp_par_list_long[[x]]$nranef,
                                       cols = imp_par_list_long[[x]]$Z_cols,
-                                      indent = indent))
+                                      indent = indent + 3, breakafter = 1),
+             Xlpart)
     }), collapse = "\n")
   }
 
