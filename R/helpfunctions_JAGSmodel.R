@@ -1,13 +1,13 @@
 # build a linear predictor -----------------------------------------------------
-paste_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent, isgk = FALSE) {
+paste_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent, isgk = FALSE, breakafter = 3) {
 
   if (!is.null(cols) && length(cols) != length(parelmts)) {
     stop("The size of the design matrix and length of parameter vector do not match!")
   }
 
-  lb <- c(rep("", 3),
-          rep(c(paste0(c("\n", tab(indent)), collapse = ""), rep("", 2)),
-              ceiling((length(parelmts) - 3)/3))
+  lb <- c(rep("", breakafter),
+          rep(c(paste0(c("\n", tab(indent)), collapse = ""), rep("", breakafter - 1)),
+              ceiling((length(parelmts) - breakafter)/breakafter))
   )[1:length(parelmts)]
 
   paste0(lb,
@@ -20,14 +20,14 @@ paste_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent, is
 
 
 
-paste_ranef_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent) {
+paste_ranef_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent, breakafter = 3) {
   if (length(cols) != length(parelmts)) {
     stop("The size of the design matrix and length of parameter vector do not match!")
   }
 
-  lb <- c(rep("", 3),
-          rep(c(paste0(c("\n", tab(indent)), collapse = ""), rep("", 2)),
-              ceiling((length(parelmts) - 3)/3))
+  lb <- c(rep("", breakafter),
+          rep(c(paste0(c("\n", tab(indent)), collapse = ""), rep("", breakafter - 1)),
+              ceiling((length(parelmts) - breakafter)/breakafter))
   )[1:length(parelmts)]
 
   paste0(lb,
@@ -36,14 +36,14 @@ paste_ranef_predictor <- function(parnam, parindex, matnam, parelmts, cols, inde
 }
 
 
-paste_ranef_predictor_gk <- function(parnam, parindex1, parindex2, matnam, parelmts, cols, indent) {
+paste_ranef_predictor_gk <- function(parnam, parindex1, parindex2, matnam, parelmts, cols, indent, breakafter = 3) {
   if (length(cols) != length(parelmts)) {
     stop("The size of the design matrix and length of parameter vector do not match!")
   }
 
-  lb <- c(rep("", 3),
-          rep(c(paste0(c("\n", tab(indent)), collapse = ""), rep("", 2)),
-              ceiling((length(parelmts) - 3)/3))
+  lb <- c(rep("", breakafter),
+          rep(c(paste0(c("\n", tab(indent)), collapse = ""), rep("", breakafter-1)),
+              ceiling((length(parelmts) - breakafter)/breakafter))
   )[1:length(parelmts)]
 
   paste0(lb,
