@@ -1,24 +1,36 @@
 
-rescale <- function(x, fixed2, scale_pars, MCMC, refs, coef_lvl) {
-  x_split <- unlist(strsplit(x, ":"))
+rescale <- function(x, fixed2, scale_pars, MCMC, refs, coef_lvl, coefs) {
+  coefs <- if (is.list(coefs))
+    melt_data.frame_list(coefs, id.vars = colnames(coefs[[1]])) else coefs
 
-  coef_split <- sapply(coef_lvl, splitstring2, x = x, x_split = x_split, simplify = FALSE)
+  x_data <- if(x %in% coefs[, 'JAGS']) {
+    coefs[na.omit(match(x, coefs[, "JAGS"])), "data"]
+  } else x
+
+  x_split <- unlist(strsplit(x_data, ":"))
+
+  if (!any(x_split %in% coefs[, 'JAGS']))
+    return(MCMC[, x])
+
+  coef_lvl <- unlist(coef_lvl[[coefs[na.omit(match(x, coefs[, 'JAGS'])), "L1"]]])
+
+  coef_split <- sapply(coef_lvl, splitstring2, x = x_data, x_split = x_split, simplify = FALSE)
   names(coef_split) <- coef_lvl
 
 
 
   pars <- sapply(coef_split, function(i) {
-    all(x_split %in% i) | x %in% i
+    all(x_split %in% i) | x_data %in% i
   })
-  if (x == "(Intercept)") pars <- !pars
+  if (x_data == "(Intercept)") pars <- !pars
   if (!any(pars)) return(MCMC[, x])
 
-  interact <- names(pars[names(pars) != x & pars])
+  interact <- names(pars[names(pars) != x_data & pars])
 
   vec <- MCMC[, x, drop = FALSE]
 
   interactions <- sapply(interact, function(i) {
-    other <- coef_split[[i]][coef_split[[i]] != x]
+    other <- coef_split[[i]][coef_split[[i]] != x_data]
     split_coef <- unlist(strsplit(coef_split[[i]], ":"))
     as.numeric(MCMC[ , i]) / prod(scale_pars["scale", split_coef]) *
       prod(scale_pars["center", other]) * (-1)^(length(other) + 1)
@@ -30,7 +42,7 @@ rescale <- function(x, fixed2, scale_pars, MCMC, refs, coef_lvl) {
     0
   }
 
-  new_vec <- vec / prod(scale_pars["scale", unlist(strsplit(x, ":"))]) - inter_sum
+  new_vec <- vec / prod(scale_pars["scale", unlist(strsplit(x_data, ":"))]) - inter_sum
   new_vec
 }
 
