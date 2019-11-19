@@ -198,7 +198,7 @@ JM_model <- function(Mlist, K, imp_par_list_long, ...){
                            matnam = paste0('mu_', Mlist$names_main[[
                              which(sapply(Mlist$outnam, 'attr', 'type') == 'survival')]]$Xl),
                            parelmts = K["Xl", 1]:K["Xl", 2],
-                           cols = NULL, indent = indent)
+                           cols = NULL, indent = indent, breakafter = 2)
     )
   }
 
