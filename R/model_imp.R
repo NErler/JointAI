@@ -1089,9 +1089,9 @@ coxph_imp <- function(formula, data,
 
 #' @rdname model_imp
 #' @export
-JM_imp <- function(formula, data, random,
+JM_imp <- function(formulas, data,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                   monitor_params = NULL,  auxvars = NULL, timevar = NULL,
+                   monitor_params = NULL, auxvars = NULL, timevar = NULL,
                    refcats = NULL,
                    models = NULL, no_model = timevar, trunc = NULL,
                    ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
@@ -1103,11 +1103,8 @@ JM_imp <- function(formula, data, random,
                    warn = TRUE, mess = TRUE,
                    keep_scaled_mcmc = FALSE, ...){
 
-  if (missing(formula))
-    stop("No model formula specified.")
-
-  if (missing(random))
-    stop("No random effects structure specified.")
+  if (missing(formulas))
+    stop("No model formulas specified.")
 
   if (missing(data))
     stop("No dataset given.")
@@ -1117,12 +1114,15 @@ JM_imp <- function(formula, data, random,
                   dQuote("time"), dQuote("timevar")))
 
 
+
+  fmls <- split_formula_list(formulas)
+
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$fixed <- arglist$formula
+  arglist$fixed <- fmls$fixed
+  arglist$random <- fmls$random
   arglist$analysis_type <- "JM"
   arglist$family <- 'prophaz'
   arglist$link <- "log"
-  arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]
 
