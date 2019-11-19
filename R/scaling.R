@@ -1,5 +1,5 @@
 
-scale_matrix <- function(X, scale_vars, scale_pars, models) {
+scale_matrix <- function(X, scale_vars, scale_pars, models, timevar) {
   Xsc <- X
   if (!is.null(X)) {
     Xsub <- X[, apply(X, 2, function(x)(any(!is.na(x)))), drop = FALSE]
@@ -11,22 +11,30 @@ scale_matrix <- function(X, scale_vars, scale_pars, models) {
                              ncol = length(scale_vars[scale_vars %in% colnames(Xsub)]),
                              dimnames = list(c("scale", "center"),
                                              scale_vars[scale_vars %in% colnames(Xsub)]))
-        for (k in scale_vars[scale_vars %in% colnames(Xsub)]) {
-          usecenter <- if (!k %in% names(models)) {
-            TRUE
-          } else {
-            !models[k] %in% c("lognorm", "gamma", "beta", 'glmm_lognorm', 'glmm_gamma', 'glmm_poisson')
-          }
 
-          usescale <- if (!k %in% names(models)) {
-            TRUE
-          } else {
-            !models[k] %in% c("gamma", "beta", 'glmm_gamma', 'glmm_poisson')
-          }
 
-          xsc <- scale(X[, k], center = usecenter, scale = usescale)
-          Xsc[, k] <- xsc
-          scale_pars["scale", k] <- ifelse(!is.null(attr(xsc, "scaled:scale")),
+          for (k in scale_vars[scale_vars %in% colnames(Xsub)]) {
+            if (!is.null(timevar) && k == timevar) {
+              usecenter <- usescale <- FALSE
+            } else {
+              usecenter <- if (!k %in% names(models)) {
+                TRUE
+              } else {
+                !models[k] %in% c("lognorm", "gamma", "beta", 'glmm_lognorm',
+                                  'glmm_gamma', 'glmm_poisson')
+              }
+
+              usescale <- if (!k %in% names(models)) {
+                TRUE
+              } else {
+                !(models[k] %in% c("gamma", "beta", 'glmm_gamma', 'glmm_poisson') |
+                    (!is.null(timevar) && k == timevar))
+              }
+            }
+
+            xsc <- scale(X[, k], center = usecenter, scale = usescale)
+            Xsc[, k] <- xsc
+            scale_pars["scale", k] <- ifelse(!is.null(attr(xsc, "scaled:scale")),
                                            attr(xsc, "scaled:scale"), 1)
           scale_pars["center", k] <- ifelse(!is.null(attr(xsc, "scaled:center")),
                                             attr(xsc, "scaled:center"), 0)
@@ -69,7 +77,8 @@ get_scaling <- function(Mlist, scale_pars, models, data) {
   scaled_dat <- sapply(Mlist[c("Xc", "Xtrafo", "Xl", "Z", "Xltrafo")], scale_matrix,
                        scale_vars = Mlist$scale_vars,
                        scale_pars = scale_pars,
-                       models = models, simplify = FALSE)
+                       models = models, timevar = Mlist$timevar,
+                       simplify = FALSE)
 
 
   scale_pars <- do.call(cbind, lapply(scaled_dat, "[[", 2))
