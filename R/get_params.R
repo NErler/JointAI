@@ -9,7 +9,7 @@ get_params <- function(models, analysis_type, family, Mlist,
                        betas = NULL, tau_y = NULL, sigma_y = NULL,
                        gamma_y = NULL, delta_y = NULL,
                        ranef = NULL, invD = NULL, D = NULL, RinvD = NULL,
-                       alphas = NULL, tau_imp = NULL, gamma_imp = NULL,
+                       alphas = NULL, tau_imp = NULL, gamma_imp = NULL, D_imp = NULL,
                        delta_imp = NULL, other = NULL, mess = TRUE, basehaz = FALSE,
                        ...){
 
@@ -50,6 +50,7 @@ get_params <- function(models, analysis_type, family, Mlist,
     if (is.null(tau_imp)) tau_imp <- TRUE
     if (is.null(gamma_imp)) gamma_imp <- TRUE
     if (is.null(delta_imp)) delta_imp <- TRUE
+    if (is.null(D_imp)) D_imp <- TRUE
   }
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
@@ -70,14 +71,22 @@ get_params <- function(models, analysis_type, family, Mlist,
                   paste0("sigma_", y_name)
               },
               if (alphas) "alpha",
-              if (tau_imp & any(models %in% c("norm", "lognorm", "gamma", "beta"))) {
-                paste0("tau_", names(models)[models %in% c("norm", "lognorm", "gamma", "beta")])
+              if (tau_imp & any(models %in% c("norm", "lognorm", "gamma", "beta",
+                                              "lmm", 'glmm_gamma', 'glmm_lognorm'))) {
+                paste0("tau_", names(models)[models %in% c("norm", "lognorm",
+                                                           "gamma", "beta", "lmm",
+                                                           "glmm_gamma", "glmm_lognorm")])
               },
-              if (gamma_imp & any(models == "cumlogit")) {
-                paste0("gamma_", names(models)[models == "cumlogit"])
+              if (gamma_imp & any(models %in% c("cumlogit", "clmm"))) {
+                paste0("gamma_", names(models)[models %in% c("cumlogit", "clmm")])
               },
-              if (delta_imp & any(models == "cumlogit")) {
-                paste0("delta_", names(models)[models == "cumlogit"])
+              if (delta_imp & any(models %in% c("cumlogit", "clmm"))) {
+                paste0("delta_", names(models)[models %in% c("cumlogit", "clmm")])
+              },
+              if (D_imp & any(models %in% c("lmm", "glmm_logit", "glmm_gamma",
+                                            "glmm_lognorm", "glmm_poisson"))) {
+                paste0("D_", names(models)[models %in% c("lmm", "glmm_logit", "glmm_gamma",
+                                                         "glmm_lognorm", "glmm_poisson")])
               },
               # if (ppc) paste0('ppc_', c(y_name, names(models))),
               other
