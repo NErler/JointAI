@@ -111,7 +111,24 @@ melt_data.frame <- function(data, id.vars = NULL, varnames = NULL, valname = 'va
 }
 
 
+melt_data.frame_list <- function(X, id.vars = NULL, varnames = NULL, valname = 'value') {
+  if (!inherits(X, 'list') || !all(sapply(X, inherits, 'data.frame')))
+    stop("This function may not work for objects that are not a list of data frames.")
 
+  Xnew <- lapply(X, melt_data.frame, varnames = varnames, id.vars = id.vars)
+
+  if (is.null(names(Xnew)))
+    names(Xnew) <- seq_along(Xnew)
+
+  Xnew <- lapply(names(Xnew), function(k) {
+    cbind(Xnew[[k]], L1 = k)
+  })
+
+  out <- do.call(rbind, Xnew)
+
+  attr(out, 'out.attrs') <- NULL
+  return(out)
+}
 
 
 sort_cols <- function(mat, fct_all, auxvars) {
