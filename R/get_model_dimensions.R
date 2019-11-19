@@ -132,6 +132,7 @@ get_imp_pos <- function(models, Mlist){
 # Determine number of parameters in the imputation models
 get_imp_dim <- function(models, imp_pos, Mlist){
   if (is.null(models)) return(NULL)
+  models <- models[!names(models) %in% names(Mlist$cols_main)]
 
   # number of regression coefficients in the imputation models
   n_imp_coef <- numeric(length(models))
