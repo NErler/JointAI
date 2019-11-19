@@ -441,6 +441,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
                              ridge = ridge)
 
   # model dimensions -----------------------------------------------------------
+    K <- get_model_dim(Mlist$cols_main, Mlist$hc_list, Mlist$names_main)
 
   # position of the variables to be imputed in Xc, Xic, Xl, Xil, Xcat
     imp_pos <- get_imp_pos(models, Mlist)
