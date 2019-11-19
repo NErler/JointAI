@@ -434,42 +434,29 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
 
   # divide matrices ------------------------------------------------------------
-  if (is.null(Mlist)) {
     Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
                              random = random, auxvars = auxvars, timevar = timevar,
                              scale_vars = scale_vars, refcats = refcats,
                              models = models, warn = warn, mess = mess, ppc = ppc,
                              ridge = ridge)
-  }
-
 
   # model dimensions -----------------------------------------------------------
 
-  if (is.null(K)) {
-    K <- get_model_dim(Mlist$cols_main, Mlist$hc_list)
-  }
-
-  if (is.null(imp_pos)) {
-    # position of the variables to be imputed in Xc, Xic, Xl, Xil, Xcat
+  # position of the variables to be imputed in Xc, Xic, Xl, Xil, Xcat
     imp_pos <- get_imp_pos(models, Mlist)
-  }
 
-  if (is.null(K_imp)) {
     K_imp <- get_imp_dim(models, imp_pos, Mlist)
-  }
 
   # imputation parameters/specifications ---------------------------------------
-  if (is.null(dest_cols)) {
-    dest_cols <- sapply(unique(c(names(models), colnames(Mlist$Xtrafo), colnames(Mlist$Xltrafo))),
-                        get_dest_column, Mlist = Mlist, simplify = FALSE)
-  }
 
-  if (is.null(imp_par_list)) {
+    dest_cols <- sapply(unique(c(names(models), colnames(Mlist$Xtrafo),
+                                 colnames(Mlist$Xltrafo))),
+                        get_dest_column, Mlist = Mlist, simplify = FALSE)
+
+
     imp_par_list <- mapply(get_imp_par_list, models, names(models),
                            MoreArgs = list(Mlist, K_imp, dest_cols, trunc, models),
                            SIMPLIFY = FALSE)
-  }
-
 
   # data list ------------------------------------------------------------------
   if (is.null(data_list)) {
