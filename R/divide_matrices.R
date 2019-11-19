@@ -18,18 +18,28 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
 
   # extract the outcome from the fixed effects formula
-  outnam <- extract_outcome(fixed)
+  outnam <- outcomes <- extract_outcome(fixed)
+  for (i in seq_along(outnam)) {
+    if (is.Surv(eval(parse(text = names(outnam[i])), env = data))) {
+      outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnam[i])), env = data))
+      attr(outnam[[i]], "type") <- "survival"
+    } else {
+      outcomes[[i]] <- as.data.frame(eval(parse(text = names(outnam[i])), env = data))
+      names(outcomes[[i]]) <- outnam[i]
+      attr(outnam[[i]], "type") <- "other"
+    }
+  }
+
   if (analysis_type %in% c('survreg', 'coxph', 'JM')) {
-    out <- as.data.frame.matrix(eval(parse(text = extract_outcome_fmla(fixed)),
-                                     env = data))
+    out <- outcomes[[which(sapply(outnam, 'attr', 'type') ==  'survival')]]
 
     if (ncol(out) == 2) {
-      out <- cbind(id = data[, id], out, rownr = 1:nrow(out))
+      out <- cbind(data[, id, drop = FALSE], out, rownr = 1:nrow(out))
 
       out_lr <- do.call(rbind, lapply(split(out, out[, id]), function(x) {
 
-        if (sum(x$status, na.rm = TRUE) > 1)
-          stop("At least one subject has multiple events.")
+        # if (sum(x$status, na.rm = TRUE) > 1)
+        #   stop("At least one subject has multiple events.")
 
 
         # if (any(x$status == 1) && max(x$stop[which(x$status == 1)]) < max(x$stop))
@@ -64,16 +74,52 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     else timevar <- names(y)
 
   } else {
-    y <- data[, outnam, drop = FALSE]
+    y <- data[, outnam[[which(sapply(outnam, 'attr', 'type') ==  'survival')]],
+              drop = FALSE]
     event <- NULL
   }
 
 
+  fixed_combined <- if (any(sapply(outnam, attr, "type") == "survival")) {
+    as.formula(
+      paste0(names(outnam)[sapply(outnam, attr, "type") == "survival"],
+             " ~ ",
+             paste(unique(unlist(lapply(fixed, function(x) attr(terms(x), 'term.labels'))),
+                          names(outnam)[sapply(outnam, attr, "type") != "survival"]),
+                   collapse = " + ")
+      ))
+  } else {
+    as.formula(
+      paste0(names(outnam)[1], " ~ ",
+             paste(unique(unlist(lapply(fixed, function(x) attr(terms(x), 'term.labels')))),
+                   collapse = " + ")
+      ))
+  }
+
+  random_combined_nogroup <- if(!is.null(random))
+    as.formula(paste("~",
+                     paste(unique(unlist(lapply(remove_grouping(random),
+                                                function(x) if(!is.null(x)) attr(terms(x), 'term.labels'))
+                     )), collapse = " + ")
+    ))
+
+
   # * preliminary design matrix ------------------------------------------------
-  X <- model.matrix(fixed, model.frame(fixed, data, na.action = na.pass))
+  X <- model.matrix(fixed_combined, model.frame(fixed_combined, data, na.action = na.pass))
+
+
+  # # for a JM, add the random effects structure to the auxiliary formula
+  # if (analysis_type == 'JM') {
+  #   auxvars <- if (is.null(auxvars)) {
+  #     random_combined_nogroup
+  #   } else if (!all_vars(remove_grouping(random)) %in% all_vars(auxvars)) {
+  #     as.formula(paste(deparse(auxvars), paste(random_combined_nogroup)[2], sep = " + "))
+  #   } else {auxvars}
+  # }
+
 
   # variables that do not have a main effect in fixed are added to the auxiliary variables
-  trafosX <- extract_fcts(fixed, data, random = random, complete = TRUE)
+  trafosX <- extract_fcts(fixed_combined, data, random = random_combined_nogroup, complete = TRUE)
   add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), all.vars(auxvars)))]
 
   if (length(add_to_aux) > 0 & !is.null(models))
@@ -82,10 +128,10 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
                           paste0(unique(add_to_aux), collapse = " + ")))
 
   # fixed effects design matrices
-  fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed, width.cutoff = 500),
+  fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed_combined, width.cutoff = 500),
                                    fixed = TRUE),
                                auxvars[[2]]), collapse = " + "))
-  fcts_all <- extract_fcts(fixed2, data, random = random, complete = TRUE)
+  fcts_all <- extract_fcts(fixed2, data, random = random_combined_nogroup, complete = TRUE)
 
 
   # Give a message about coding of ordinal factors if there are any in the predictor
@@ -114,8 +160,8 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   # Z --------------------------------------------------------------------------
   # random effects design matrix
   Z <- if (!is.null(random)) {
-    model.matrix(as.formula(remove_grouping(random)),
-                 model.frame(as.formula(remove_grouping(random)),
+    model.matrix(random_combined_nogroup,
+                 model.frame(random_combined_nogroup,
                              data, na.action = na.pass))
   }
 
@@ -188,7 +234,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
 
   # Xtrafo ---------------------------------------------------------------------
-  fcts_mis <- extract_fcts(fixed2, data, random = random, complete = FALSE)
+  fcts_mis <- extract_fcts(fixed2, data, random = random_combined_nogroup, complete = FALSE)
 
   if (any(fcts_mis$type %in% c('ns', 'bs')))
     stop("Splines are currently not implemented for incomplete variables.",
@@ -229,22 +275,26 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
   # Xcat & Xlcat ---------------------------------------------------------------
   # make filter variables:
+
   # - variable relevant?
   infmla <- names(data) %in% all.vars(fixed2)
   # - variabe incomplete?
-  misvar <- colSums(is.na(data)) > 0
+  misvar <- colSums(is.na(data[, infmla])) > 0
   # - variabe categorical with >2 categories?
-  catvars <- sapply(colnames(data), function(i) i %in% names(refs) && length(levels(refs[[i]])) > 2)
+  catvars <- sapply(colnames(data[infmla]),
+                    function(i) i %in% names(refs) && length(levels(refs[[i]])) > 2)
 
-  misvar_long <- if (any(infmla & !sapply(data, check_tvar, groups) & misvar)) TRUE else misvar
+  tvar_data <- sapply(data[, infmla], check_tvar, groups)
+
+  misvar_long <- if (any(!tvar_data & misvar)) TRUE else misvar
 
   # select names of relevant variables
-  cat_vars_base <- names(data)[infmla & misvar & catvars & !sapply(data, check_tvar, groups)]
-  cat_vars_long <- names(data)[infmla & misvar_long & catvars & sapply(data, check_tvar, groups)]
+  cat_vars_base <- names(data[, infmla])[misvar & catvars & !tvar_data]
+  cat_vars_long <- names(data[, infmla])[misvar_long & catvars & tvar_data]
 
   # match them to the position in Xc
   cat_vars_base <- sapply(cat_vars_base, match_positions,
-                          data, colnames(Xc), simplify = FALSE)
+                          data[, infmla], colnames(Xc), simplify = FALSE)
 
 
   Xcat <- if (length(cat_vars_base) > 0) {
@@ -287,30 +337,47 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   N <- length(unique(groups))
 
 
-  XXnam <- colnames(model.matrix(fixed, data))
-  if (analysis_type %in% c('clm', 'clmm', 'coxph', "JM"))
-    XXnam <- XXnam[-1]
+  XXnam <- lapply(fixed, function(x) colnames(model.matrix(x, data)))
 
-  cols_main <- list(Xc = c(na.omit(match(XXnam[!XXnam %in% names(hc_list)], colnames(Xc)))),
-                    Xl = if (!is.null(Xl)) c(na.omit(match(XXnam, colnames(Xl)))),
-                    Xic = if (!is.null(Xic)) c(na.omit(match(XXnam, colnames(Xic)))),
-                    Xil = if (!is.null(Xil)) c(na.omit(match(XXnam, colnames(Xil)))),
-                    Z = if (!is.null(Z)) c(na.omit(match(XXnam, colnames(Z))))
-  )
-  cols_main <- sapply(cols_main, function(x) if (length(x) > 0) x)
 
-  names_main <- mapply(function(cols, mat) {
-    colnames(mat)[cols]
-  }, cols = cols_main,
-  mat = list(Xc, Xl, Xic, Xil, Z))
+  if (analysis_type %in% c('coxph', "JM")) {
+    XXnam[[which(sapply(outnam, "attr", "type") == 'survival')]] <-
+    XXnam[[which(sapply(outnam, "attr", "type") == 'survival')]][-1]
+
+    if (any(names(outnam) %in% names(models)[models %in% "clmm"])) {
+      for (i in which(names(outnam) %in% names(models)[models %in% "clmm"]))
+        XXnam[[i]] <- XXnam[[i]][-1]
+    }
+  }
+
+  if (analysis_type %in% c('clm', 'clmm'))
+    XXnam[[1]] <- XXnam[[1]][-1]
+
+
+  cols_main <- lapply(XXnam, function(XX) {
+    cml <- list(Xc = c(na.omit(match(XX[!XX %in% names(hc_list)], colnames(Xc)))),
+         Xl = if (!is.null(Xl)) c(na.omit(match(XX, colnames(Xl)))),
+         Xic = if (!is.null(Xic)) c(na.omit(match(XX, colnames(Xic)))),
+         Xil = if (!is.null(Xil)) c(na.omit(match(XX, colnames(Xil)))),
+         Z = if (!is.null(Z)) c(na.omit(match(XX, colnames(Z))))
+    )
+    sapply(cml, function(x) if (length(x) > 0) x)
+  })
+
+  names_main <- sapply(names(cols_main), function(i) {
+    mapply(function(cols, mat) {
+      colnames(mat)[cols]
+    }, cols = cols_main[[i]],
+    mat = list(Xc, Xl, Xic, Xil, Z))
+  }, simplify = FALSE)
 
   return(list(y = y, event = event,
               Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat, Xlcat = Xlcat,
-              Xtrafo = Xtrafo, Xltrafo = Xltrafo,
-              Z = Z, cols_main = cols_main, names_main = names_main,
+              Xtrafo = Xtrafo, Xltrafo = Xltrafo, Z = Z,
+              cols_main = cols_main, names_main = names_main,
               trafos = fcts_all, hc_list = hc_list, refs = refs, timevar = timevar,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars,
               fixed2 = fixed2, ncat = ncat,
               N = N, ppc = ppc, ridge = ridge, nranef = ncol(Z2),
-              survrow = if(exists("survrow")) survrow))
+              survrow = if(exists("survrow")) survrow, outnam = outnam))
 }
