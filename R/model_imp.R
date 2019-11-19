@@ -615,8 +615,8 @@ if (!is.null(inits)) {
     if (!inherits(coefs, "try-error")) {
     for (k in 1:length(MCMC)) {
       # change names of MCMC to variable names where possible
-      colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <-
-        coefs[na.omit(match(colnames(MCMC[[k]]), coefs[, 1])), 2]
+      # colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <-
+      #   coefs[na.omit(match(colnames(MCMC[[k]]), coefs[, 1])), 2]
 
       if (!is.null(scale_pars)) {
         # re-scale parameters
