@@ -183,7 +183,7 @@ JM_model <- function(Mlist, K, imp_par_list_long, ...){
   cols_main <- Mlist$cols_main[[which(sapply(Mlist$outnam, 'attr', 'type') == 'survival')]]
 
   y_name <- colnames(Mlist$y)
-  indent <- 4 + 14 + 4
+  indent <- 4 + 13 + 4
 
   paste_Xic <- if (!is.null(Mlist$Xic)) {
     paste0(" + \n", tab(indent),
