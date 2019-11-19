@@ -406,7 +406,7 @@ model_imp <- function(fixed, data, random = NULL, link, family,
 
   # imputation method ----------------------------------------------------------
   models <- get_models(fixed = fixed, random = random, data = data,
-                       auxvars = auxvars, no_model = no_model, models)$models
+                       auxvars = auxvars, no_model = no_model, models = models)$models
 
   # if (is.null(models)) {
   #   models <- models_default
