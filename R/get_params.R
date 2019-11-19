@@ -26,9 +26,9 @@ get_params <- function(models, analysis_type, family, Mlist,
     if (family %in% c('ordinal')) {
       gamma_y <- TRUE
     }
-    basehaz <- family == 'prophaz' & all(sapply(Mlist$cols_main, is.null))
+    basehaz <- family == 'prophaz'# & all(sapply(Mlist$cols_main, is.null))
 
-    if (analysis_type %in% c("lme", "glme", "clmm")) {
+    if (analysis_type %in% c("lme", "glme", "clmm", "JM")) {
       if (analysis_main & is.null(D)) D <- TRUE
     }
   }
@@ -92,13 +92,25 @@ get_params <- function(models, analysis_type, family, Mlist,
               other
   )
 
-  if (analysis_type %in% c("lme", "glme", "clmm")) {
+  if (analysis_type %in% c("lme", "glme", "clmm", "JM")) {
     params <- c(params,
                 if (ranef) "b",
                 if (invD) unlist(sapply(1:Mlist$nranef, function(x)
                   paste0("invD[", 1:x, ",", x,"]"))),
-                if (D) unlist(sapply(1:Mlist$nranef, function(x)
-                  paste0("D[", 1:x, ",", x,"]"))),
+                if (D) {
+                  if(analysis_type != "JM") {
+                    unlist(sapply(1:Mlist$nranef, function(x)
+                      paste0("D[", 1:x, ",", x,"]")))
+                  } else {
+                    sapply(names(sapply(Mlist$outnam, 'attr', 'type'))[
+                      sapply(Mlist$outnam, 'attr', 'type') == 'other'],
+                    function(k) {
+                      unlist(sapply(1:imp_par_list[[k]]$nranef, function(x)
+                               paste0("D_", k, "[", 1:x, ",", x,"]")
+                             ))
+                    })
+                  }
+                },
                 if (RinvD) paste0("RinvD[", 1:Mlist$nranef, ",", 1:Mlist$nranef,"]")
     )
   }
