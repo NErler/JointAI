@@ -61,8 +61,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$nchain <- nchain(object$MCMC) - sum(exclude_chains %in% seq_along(object$MCMC))
   out$stats <- stats
 
-  out$ranefvar <- if (object$analysis_type %in% c("lme", "glme", "clmm")) {
-    Ds <- stats[grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]",
+  out$ranefvar <- if (object$analysis_type %in% c("lme", "glme", "clmm", 'JM')) {
+    Ds <- stats[grep("^D_[[:print:]]*\\[[[:digit:]]+,[[:digit:]]+\\]",
                      rownames(stats), value = TRUE), , drop = FALSE]
     if (nrow(Ds) > 0) {
       Ddiag <- sapply(regmatches(rownames(Ds), gregexpr('[[:digit:]]*', rownames(Ds))),
