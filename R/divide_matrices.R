@@ -91,7 +91,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   } else {
     as.formula(
       paste0(names(outnam)[1], " ~ ",
-             paste(unique(unlist(lapply(fixed, function(x) attr(terms(x), 'term.labels')))),
+             paste(unique(gsub("~", '', unlist(lapply(remove_LHS(fixed), deparse)))),
                    collapse = " + ")
       ))
   }
