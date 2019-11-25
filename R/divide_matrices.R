@@ -74,8 +74,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     else timevar <- names(y)
 
   } else {
-    y <- data[, outnam[[which(sapply(outnam, 'attr', 'type') ==  'survival')]],
-              drop = FALSE]
+    y <- data[, unlist(outnam), drop = FALSE]
     event <- NULL
   }
 
