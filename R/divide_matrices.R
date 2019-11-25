@@ -20,7 +20,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   # extract the outcome from the fixed effects formula
   outnam <- outcomes <- extract_outcome(fixed)
   for (i in seq_along(outnam)) {
-    if (is.Surv(eval(parse(text = names(outnam[i])), env = data))) {
+    if (survival::is.Surv(eval(parse(text = names(outnam[i])), env = data))) {
       outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnam[i])), env = data))
       attr(outnam[[i]], "type") <- "survival"
     } else {
