@@ -41,6 +41,21 @@ grep_names <- function(nams1, nams2){
 
 
 
+melt_list <- function(l, varname = "L1", valname = NULL) {
+
+  do.call(rbind,
+          lapply(seq_along(l), function(k) {
+            if (is.vector(l[[k]]) & !is.null(valname))
+              df <- as.data.frame(list(l[[k]]), col.names = valname,
+                                  stringsAsFactors = FALSE)
+            else
+              df <- as.data.frame(l[[k]], stringsAsFactors = FALSE)
+
+    df[, varname] <- names(l)[k]
+    df
+  }))
+}
+
 
 melt_matrix <- function(X, varnames = NULL, valname = 'value') {
   if (!inherits(X, 'matrix'))
