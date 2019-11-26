@@ -20,7 +20,7 @@ License: GPL (>= 2)
 Date: 2019-08-31
 BugReports: https://github.com/nerler/JointAI/issues
 LazyData: TRUE
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
 Depends: rjags (>= 4-6)
 Imports: MASS, mcmcse, coda, rlang, foreach, doParallel
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)

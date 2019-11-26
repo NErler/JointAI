@@ -4,8 +4,16 @@
 \alias{get_models}
 \title{Specify the default (imputation) model types}
 \usage{
-get_models(fixed, random = NULL, data, auxvars = NULL,
-  no_model = NULL, models = NULL)
+get_models(
+  fixed,
+  random = NULL,
+  data,
+  auxvars = NULL,
+  timevar = NULL,
+  no_model = NULL,
+  models = NULL,
+  analysis_type = NULL
+)
 }
 \arguments{
 \item{fixed}{a two sided formula describing the fixed-effects part of the
@@ -32,6 +40,10 @@ the excluded variable and the incomplete variables.}
   This arguments replaces the argument \code{meth} used in earlier versions.
   If \code{NULL} (default) models will be determined
 automatically based on the class of the respective columns of \code{data}.}
+
+\item{analysis_type}{character sting identifying the type of analysis model;
+currently only required for joint models for longitudinal
+and survival data ("JM")}
 }
 \value{
 \code{get_models()} returns a list of two vectors named \code{models}

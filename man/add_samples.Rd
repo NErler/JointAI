@@ -4,8 +4,15 @@
 \alias{add_samples}
 \title{Continue sampling from an object of class JointAI}
 \usage{
-add_samples(object, n.iter, add = TRUE, thin = NULL,
-  monitor_params = NULL, progress.bar = "text", mess = TRUE)
+add_samples(
+  object,
+  n.iter,
+  add = TRUE,
+  thin = NULL,
+  monitor_params = NULL,
+  progress.bar = "text",
+  mess = TRUE
+)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}

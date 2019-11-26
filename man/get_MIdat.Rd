@@ -4,9 +4,17 @@
 \alias{get_MIdat}
 \title{Extract multiple imputed datasets from an object of class JointAI}
 \usage{
-get_MIdat(object, m = 10, include = TRUE, start = NULL,
-  minspace = 50, seed = NULL, export_to_SPSS = FALSE,
-  resdir = NULL, filename = NULL)
+get_MIdat(
+  object,
+  m = 10,
+  include = TRUE,
+  start = NULL,
+  minspace = 50,
+  seed = NULL,
+  export_to_SPSS = FALSE,
+  resdir = NULL,
+  filename = NULL
+)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}

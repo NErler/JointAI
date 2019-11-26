@@ -4,10 +4,26 @@
 \alias{sim_data}
 \title{Simulate dataset}
 \usage{
-sim_data(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
-  norm = 2, bin = 2, multi = 2, ord = 2, count = 2,
-  longnorm = 2, longbin = 2, longord = 2, longcount = 2,
-  coef = NULL, misvar = NULL, nmisvar = 7, seed = NULL)
+sim_data(
+  N = 100,
+  Jmin = 1,
+  Jmax = 6,
+  tmin = 0,
+  tmax = 5,
+  norm = 2,
+  bin = 2,
+  multi = 2,
+  ord = 2,
+  count = 2,
+  longnorm = 2,
+  longbin = 2,
+  longord = 2,
+  longcount = 2,
+  coef = NULL,
+  misvar = NULL,
+  nmisvar = 7,
+  seed = NULL
+)
 }
 \arguments{
 \item{N}{sample size (integer)}

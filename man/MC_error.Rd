@@ -5,12 +5,20 @@
 \alias{plot.MCElist}
 \title{Monte Carlo error}
 \usage{
-MC_error(x, subset = NULL, exclude_chains = NULL, start = NULL,
-  end = NULL, thin = NULL, digits = 2, warn = TRUE, mess = TRUE,
-  ...)
+MC_error(
+  x,
+  subset = NULL,
+  exclude_chains = NULL,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  digits = 2,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+)
 
-\method{plot}{MCElist}(x, data_scale = TRUE, plotpars = NULL,
-  ablinepars = list(v = 0.05), ...)
+\method{plot}{MCElist}(x, data_scale = TRUE, plotpars = NULL, ablinepars = list(v = 0.05), ...)
 }
 \arguments{
 \item{x}{object inheriting from class 'JointAI'}
@@ -37,25 +45,26 @@ given directly by \strong{JointAI}.)}
 \code{TRUE}. (Note: this applies only to messages
 given directly by \strong{JointAI}.)}
 
-\item{...}{Arguments passed on to \code{mcmcse::mcse.mat}
-\describe{
-  \item{size}{the batch size. The default value is
+\item{...}{
+  Arguments passed on to \code{\link[mcmcse:mcse.mat]{mcmcse::mcse.mat}}
+  \describe{
+    \item{\code{size}}{the batch size. The default value is
   \dQuote{\code{sqroot}}, which uses the square root of the
   sample size. \dQuote{\code{cuberoot}} will cause the
   function to use the cube root of the sample size. A
   numeric value may be provided if neither
   \dQuote{\code{sqroot}} nor \dQuote{\code{cuberoot}} is
   satisfactory.}
-  \item{g}{a function such that \eqn{E(g(x))} is the
+    \item{\code{g}}{a function such that \eqn{E(g(x))} is the
   quantity of interest. The default is \code{NULL}, which
   causes the identity function to be used.}
-  \item{method}{the method used to compute the standard
+    \item{\code{method}}{the method used to compute the standard
   error. This is one of \dQuote{\code{bm}} (batch means,
   the default), \dQuote{\code{obm}} (overlapping batch
   means), \dQuote{\code{tukey}} (spectral variance method
   with a Tukey-Hanning window), or \dQuote{\code{bartlett}}
   (spectral variance method with a Bartlett window).}
-}}
+  }}
 
 \item{data_scale}{show the Monte Carlo error of the sample transformed back
 to the scale of the data (\code{TRUE}) or on the sampling scale (this

@@ -8,50 +8,60 @@
 \usage{
 traceplot(object, ...)
 
-\method{traceplot}{mcmc.list}(object, start = NULL, end = NULL,
-  thin = NULL, ...)
+\method{traceplot}{mcmc.list}(object, start = NULL, end = NULL, thin = NULL, ...)
 
-\method{traceplot}{JointAI}(object, start = NULL, end = NULL,
-  thin = NULL, subset = c(analysis_main = TRUE),
-  exclude_chains = NULL, nrow = NULL, ncol = NULL,
-  keep_aux = FALSE, use_ggplot = FALSE, warn = TRUE, mess = TRUE,
-  ...)
+\method{traceplot}{JointAI}(
+  object,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  subset = c(analysis_main = TRUE),
+  exclude_chains = NULL,
+  nrow = NULL,
+  ncol = NULL,
+  keep_aux = FALSE,
+  use_ggplot = FALSE,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
-\item{...}{Arguments passed on to \code{graphics::matplot}
-\describe{
-  \item{lty}{vector of line types, widths, and end styles.
+\item{...}{
+  Arguments passed on to \code{\link[graphics:matplot]{graphics::matplot}}
+  \describe{
+    \item{\code{lty}}{vector of line types, widths, and end styles.
     The first element is for the first column, the second element for
     the second column, etc., even if lines are not plotted for all
     columns. Line types will be used cyclically until all plots are
     drawn.}
-  \item{lwd}{vector of line types, widths, and end styles.
+    \item{\code{lwd}}{vector of line types, widths, and end styles.
     The first element is for the first column, the second element for
     the second column, etc., even if lines are not plotted for all
     columns. Line types will be used cyclically until all plots are
     drawn.}
-  \item{lend}{vector of line types, widths, and end styles.
+    \item{\code{lend}}{vector of line types, widths, and end styles.
     The first element is for the first column, the second element for
     the second column, etc., even if lines are not plotted for all
     columns. Line types will be used cyclically until all plots are
     drawn.}
-  \item{col}{vector of colors.  Colors are used cyclically.}
-  \item{cex}{vector of character expansion sizes, used cyclically.
-    This works as a multiple of \code{\link{par}("cex")}.  \code{NULL} is
+    \item{\code{col}}{vector of colors.  Colors are used cyclically.}
+    \item{\code{cex}}{vector of character expansion sizes, used cyclically.
+    This works as a multiple of \code{\link[graphics]{par}("cex")}.  \code{NULL} is
     equivalent to \code{1.0}. }
-  \item{bg}{vector of background (fill) colors for the open plot
-    symbols given by \code{pch = 21:25} as in \code{\link{points}}.  The
+    \item{\code{bg}}{vector of background (fill) colors for the open plot
+    symbols given by \code{pch = 21:25} as in \code{\link[graphics]{points}}.  The
     default \code{NA} corresponds to the one of the underlying function
-    \code{\link{plot.xy}}.}
-  \item{xlim}{ranges of x and y axes, as in \code{\link{plot}}.}
-  \item{ylim}{ranges of x and y axes, as in \code{\link{plot}}.}
-  \item{add}{logical.  If \code{TRUE}, plots are added to current one,
-    using \code{\link{points}} and \code{\link{lines}}.}
-  \item{verbose}{logical.  If \code{TRUE}, write one line of what is
+    \code{\link[graphics]{plot.xy}}.}
+    \item{\code{xlim}}{ranges of x and y axes, as in \code{\link[graphics]{plot}}.}
+    \item{\code{ylim}}{ranges of x and y axes, as in \code{\link[graphics]{plot}}.}
+    \item{\code{add}}{logical.  If \code{TRUE}, plots are added to current one,
+    using \code{\link[graphics]{points}} and \code{\link[graphics]{lines}}.}
+    \item{\code{verbose}}{logical.  If \code{TRUE}, write one line of what is
     done.}
-}}
+  }}
 
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
