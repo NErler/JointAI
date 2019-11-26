@@ -1,5 +1,5 @@
 # Generalized linear mixed model -----------------------------------------------
-glme_model <- function(family, link, Mlist, K, ...){
+glme_model <- function(family, Mlist, K, ...){
   y_name <- colnames(Mlist$y)
 
   distr <- switch(family,
@@ -17,7 +17,7 @@ glme_model <- function(family, link, Mlist, K, ...){
                   }
   )
 
-  repar <- switch(family,
+  repar <- switch(family$family,
                   "gaussian" = NULL,
                   "binomial" = NULL,
                   "Gamma" = paste0(tab(4), "shape_", y_name, "[j] <- pow(mu_", y_name,
@@ -28,7 +28,7 @@ glme_model <- function(family, link, Mlist, K, ...){
                   "Poisson" = NULL)
 
 
-  linkfun <- switch(link,
+  linkfun <- switch(family$link,
                     "identity" = function(x) x,
                     "logit"    = function(x) paste0("logit(", x, ")"),
                     "probit"   = function(x) paste0("probit(", x, ")"),
@@ -104,10 +104,10 @@ glme_model <- function(family, link, Mlist, K, ...){
 
 
 # priors for generalized lineasr mixed model -----------------------------------
-glme_priors <- function(family, link, K, Mlist, ...){
+glme_priors <- function(family, K, Mlist, ...){
   y_name <- colnames(Mlist$y)
 
-  secndpar <- switch(family,
+  secndpar <- switch(family$family,
                      "gaussian" = paste0("\n",
                                          tab(), "tau_", y_name ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
                                          tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")"),
@@ -130,16 +130,16 @@ glme_priors <- function(family, link, K, Mlist, ...){
 
   paste0(c(ranef_priors(Mlist$nranef),
            secndpar,
-           glmereg_priors(K, Mlist, family, link),
+           glmereg_priors(K, Mlist, family$family, family$link),
            paste_ppc), collapse = "\n\n")
 }
 
 
 
-glmereg_priors <- function(K, Mlist, family, link){
-  type <- switch(family,
+glmereg_priors <- function(K, Mlist, family){
+  type <- switch(family$family,
                  gaussian = 'norm',
-                 binomial = link,
+                 binomial = family$link,
                  Gamma = 'gamma',
                  poisson = 'poisson'
   )

@@ -73,7 +73,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     Ds
     }
   }
-  out$sigma <- if (attr(object$analysis_type, "family") == "gaussian" &
+  out$sigma <- if (attr(object$analysis_type, "family")$family == "gaussian" &
                    any(grepl(paste0("sigma_", names(object$Mlist$y)), rownames(stats))))
     stats[grep(paste0("sigma_", names(object$Mlist$y)), rownames(stats), value = TRUE),
           -which(colnames(stats) == 'tail-prob.'), drop = FALSE]

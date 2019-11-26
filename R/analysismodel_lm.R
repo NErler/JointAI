@@ -1,7 +1,7 @@
 # Linear regression model ------------------------------------------------------
 lm_model <- function(Mlist, K, ...){
 
-  y_name <- colnames(Mlist$y)
+  y_name <- colnames(Mlist$outcomes[[1]])
   indent <- 4 + 10 + nchar(y_name)
 
   paste_Xic <- if (!is.null(Mlist$Xic)) {
@@ -23,7 +23,7 @@ lm_model <- function(Mlist, K, ...){
          tab(4), "mu_", y_name, "[j] <- ",
          paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xc',
                          parelmts = K["Xc", 1]:K["Xc", 2],
-                         cols = Mlist$cols_main$Xc, indent = indent),
+                         cols = Mlist$cols_main[[1]]$Xc, indent = indent),
          paste_Xic
   )
 }
@@ -32,7 +32,7 @@ lm_model <- function(Mlist, K, ...){
 
 # priors for linear regression model -------------------------------------------
 lm_priors <- function(K, Mlist, ...){
-  y_name <- colnames(Mlist$y)
+  y_name <- colnames(Mlist$outcomes[[1]])
 
   paste_ppc <- NULL # if (Mlist$ppc) {
   #   paste0('\n',

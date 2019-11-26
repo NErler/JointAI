@@ -10,14 +10,14 @@ get_inits <- function(object, ...) {
 }
 
 
-get_inits.default = function(models, Mlist, K, K_imp, analysis_type, family, link = link, ...){
+get_inits.default = function(models, Mlist, K, K_imp, analysis_type, family, ...){
   l <- list()
 
   # analysis model ---------------------------------------------------------------
   # fixed parameters: beta and precision parameter
   if (analysis_type %in% c('lm', 'glm')) {
     mu0 <- coef(glm(unlist(Mlist$y) ~ 1,
-                     family = get(family)(link = link)))
+                     family = family))
   } else if (analysis_type == 'survreg') {
     mu0 <- log(colMeans(Mlist$y))
   } else {

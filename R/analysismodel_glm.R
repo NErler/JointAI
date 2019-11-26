@@ -1,11 +1,11 @@
 # Generalized linear model
-glm_model <- function(family, link, Mlist, K, ...){
+glm_model <- function(family,  Mlist, K, ...){
 
-  y_name <- colnames(Mlist$y)
-  indent <- 4 + nchar(link) + 12 + nchar(y_name)
+  y_name <- names(Mlist$outcomes)[1]
+  indent <- 4 + nchar(family$link) + 12 + nchar(y_name)
 
 
-  distr <- switch(family,
+  distr <- switch(family$family,
                   "gaussian" = function(y_name) {
                     paste0("dnorm(mu_", y_name, "[j], tau_", y_name, ")")
                   },
@@ -20,7 +20,7 @@ glm_model <- function(family, link, Mlist, K, ...){
                   }
   )
 
-  repar <- switch(family,
+  repar <- switch(family$family,
                   "gaussian" = NULL,
                   "binomial" = NULL,
                   "Gamma" = paste0(tab(4), "shape_", y_name, "[j] <- pow(mu_", y_name,
@@ -32,7 +32,7 @@ glm_model <- function(family, link, Mlist, K, ...){
 
 
 
-  linkfun <- switch(link,
+  linkfun <- switch(family$link,
                     "identity" = function(x) x,
                     "logit"    = function(x) paste0("logit(", x, ")"),
                     "probit"   = function(x) paste0("probit(", x, ")"),
@@ -59,14 +59,14 @@ glm_model <- function(family, link, Mlist, K, ...){
   # }
 
 
-  paste0(tab(4), "# ", capitalize(family), " model for ", y_name, "\n",
+  paste0(tab(4), "# ", capitalize(family$family), " model for ", y_name, "\n",
          tab(4), y_name, "[j] ~ ", distr(y_name), "\n",
          paste_ppc,
          repar,
          tab(4), linkfun(paste0("mu_", y_name, "[j]")), " <- ",
          paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xc',
                          parelmts = K["Xc", 1]:K["Xc", 2],
-                         cols = Mlist$cols_main$Xc, indent = indent),
+                         cols = Mlist$cols_main[[1]]$Xc, indent = indent),
          paste_Xic
   )
 }
@@ -74,10 +74,10 @@ glm_model <- function(family, link, Mlist, K, ...){
 
 
 # priors for GLM analysis model
-glm_priors <- function(family, link, K, Mlist, ...){
-  y_name <- colnames(Mlist$y)
+glm_priors <- function(family, K, Mlist, ...){
+  y_name <- names(Mlist$outcomes)[1]
 
-  secndpar <- switch(family,
+  secndpar <- switch(family$family,
                      "gaussian" = paste0("\n",
                                          tab(), "tau_", y_name ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
                                          tab(), "sigma_", y_name," <- sqrt(1/tau_", y_name, ")"),
@@ -97,9 +97,9 @@ glm_priors <- function(family, link, K, Mlist, ...){
   #   )
   # }
 
-  type <- switch(family,
+  type <- switch(family$family,
                  gaussian = 'norm',
-                 binomial = link,
+                 binomial = family$link,
                  Gamma = 'gamma',
                  poisson = 'poisson'
   )

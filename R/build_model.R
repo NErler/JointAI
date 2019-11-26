@@ -1,6 +1,6 @@
 # Function to build JAGS model
 
-build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
+build_JAGS <- function(analysis_type, family = NULL, models = NULL,
                        Ntot, Mlist = NULL, K, imp_par_list, ...) {
   arglist <- as.list(match.call())[-1]
 
@@ -151,7 +151,7 @@ build_JAGS <- function(analysis_type, family = NULL, link = NULL, models = NULL,
 
 
 
-write_model <- function(analysis_type, family = NULL, link = NULL,
+write_model <- function(analysis_type, family = NULL,
                         models = NULL, Ntot, Mlist, K, imp_par_list, file = NULL,
                         package = "JAGS") {
 
