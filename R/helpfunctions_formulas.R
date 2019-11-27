@@ -121,10 +121,10 @@ remove_LHS <- function(fmla) {
       LHS <- try(extract_LHS(x), silent = TRUE)
       if (inherits(LHS, "try-error")) {
         x
-        } else {
-          as.formula(gsub(extract_LHS(x), '',
-                          deparse(x, width.cutoff = 500), fixed = TRUE))
-        }
+      } else {
+        as.formula(gsub(extract_LHS(x), '',
+                        deparse(x, width.cutoff = 500), fixed = TRUE))
+      }
     }
   })
 }
@@ -250,7 +250,7 @@ identify_functions <- function(formula, random = NULL) {
 extract_fcts <- function(formula, data, random = NULL, complete = FALSE) {
   funlist <- identify_functions(formula, random = random)
 
-  if(is.null(funlist)) return(NULL)
+  if (is.null(funlist)) return(NULL)
 
   # for each function, get all variables used in the expression
   varlist <- lapply(funlist, function(x) {
@@ -449,3 +449,86 @@ extract_fcts <- function(formula, data, random = NULL, complete = FALSE) {
 # }
 #
 #
+
+
+
+# extract the outcome data from the fixed effects formula ----------------------
+extract_outcome_data <- function(fixed, data) {
+
+  fixed <- check_formula_list(fixed)
+
+  outcomes <- outnams <- extract_outcome(fixed)
+
+  # set attribute "type" to identify survival outcomes
+  for (i in seq_along(outnams)) {
+    if (survival::is.Surv(eval(parse(text = names(outnams[i])), env = data))) {
+      outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnams[i])), env = data))
+      attr(fixed[[i]], "type") <- "survival"
+    } else {
+      outcomes[[i]] <- as.data.frame(eval(parse(text = names(outnams[i])), env = data))
+      names(outcomes[[i]]) <- outnams[i]
+      attr(fixed[[i]], "type") <- "other"
+      names(fixed)[i] <- outnams[i]
+    }
+  }
+  return(list(fixed = fixed, outcomes = outcomes))
+}
+
+
+
+# if (analysis_type %in% c('survreg', 'coxph', 'JM')) {
+#   out <- outcomes[[which(sapply(outnam, 'attr', 'type') ==  'survival')]]
+#
+#   if (ncol(out) == 2) {
+#     out <- cbind(data[, id, drop = FALSE], out, rownr = 1:nrow(out))
+#
+#     out_lr <- do.call(rbind, lapply(split(out, out[, id]), function(x) {
+#
+#       x[nrow(x), ]
+#     }))
+#     y <- out_lr[, "time", drop = FALSE]
+#     event <- out_lr[, "status", drop = FALSE]
+#     survrow <- out_lr[, 'rownr']
+#   } else if (ncol(out) == 3) {
+#     out <- cbind(id = data[, id], out, rownr = 1:nrow(out))
+#
+#     out_lr <- do.call(rbind, lapply(split(out, out[, id]), function(x) {
+#
+#       if (sum(x$status, na.rm = TRUE) > 1)
+#         stop("At least one subject has multiple events.")
+#
+#       x[nrow(x), ]
+#     }))
+#     y <- out_lr[, 'stop', drop = FALSE]
+#     event <- out_lr[, 'status', drop = FALSE]
+#     survrow <- out_lr[, 'rownr']
+#   } else {
+#     stop("Expected two or three outcome variables.")
+#   }
+#   if (!is.null(timevar)) names(y) <- timevar
+#   else timevar <- names(y)
+#
+# } else {
+#   y <- data[, unlist(outnam), drop = FALSE]
+#   event <- NULL
+# }
+
+
+
+# make a design matrix from a list of formulas
+model.matrix_combi <- function(fmla, data) {
+
+  mats <- mapply(model.matrix, object = fmla,
+                 data = lapply(fmla, model.frame, data = data, na.action = na.pass),
+                 SIMPLIFY = FALSE)
+
+  X <- mats[[1]]
+
+  if (length(mats) > 1) {
+    for (i in seq_along(mats)[-1]) {
+      X <- cbind(X, mats[[i]][, setdiff(colnames(mats[[i]]), colnames(X)), drop = FALSE])
+    }
+  }
+
+  return(X)
+}
