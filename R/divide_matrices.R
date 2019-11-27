@@ -307,22 +307,25 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     XXnam[[1]] <- XXnam[[1]][-1]
 
 
+
+
   cols_main <- lapply(XXnam, function(XX) {
     cml <- list(Xc = c(na.omit(match(XX[!XX %in% names(hc_list)], colnames(Xc)))),
-         Xl = if (!is.null(Xl)) c(na.omit(match(XX, colnames(Xl)))),
-         Xic = if (!is.null(Xic)) c(na.omit(match(XX, colnames(Xic)))),
-         Xil = if (!is.null(Xil)) c(na.omit(match(XX, colnames(Xil)))),
-         Z = if (!is.null(Z)) c(na.omit(match(XX, colnames(Z))))
+                Xl = if (!is.null(Xl)) c(na.omit(match(XX, colnames(Xl)))),
+                Xic = if (!is.null(Xic)) c(na.omit(match(XX, colnames(Xic)))),
+                Xil = if (!is.null(Xil)) c(na.omit(match(XX, colnames(Xil)))),
+                Z = if (!is.null(Z)) c(na.omit(match(XX, colnames(Z))))
     )
-    sapply(cml, function(x) if (length(x) > 0) x)
+    sapply(cml, function(x) if (length(x) > 0)  x else NULL)
   })
 
-  names_main <- sapply(names(cols_main), function(i) {
+  names_main <- lapply(cols_main, function(k) {
     mapply(function(cols, mat) {
       colnames(mat)[cols]
-    }, cols = cols_main[[i]],
+    }, cols = k,
     mat = list(Xc, Xl, Xic, Xil, Z))
-  }, simplify = FALSE)
+  })
+
 
   return(list(outcomes = outcomes$outcomes, #event = event,
               Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat, Xlcat = Xlcat,
