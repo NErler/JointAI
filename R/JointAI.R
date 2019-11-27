@@ -133,6 +133,7 @@
 #' @import utils
 #' @import rjags
 #' @import stats
+#' @importFrom survival Surv
 #'
 #'
 #' @docType package
