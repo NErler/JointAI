@@ -210,13 +210,13 @@ weibull <- function(link = 'log') {
 }
 
 ordinal <- function(link = 'identity') {
-  structure(list(family = "ordinal", link = 'identity'),
+  structure(list(family = "ordinal", link = link),
             class = "family")
 }
 
 # define family coxph
 prophaz <- function(link = 'log') {
-  structure(list(family = "prophaz", link = 'log',
+  structure(list(family = "prophaz", link = link,
                  linkinv = exp),
             class = "family")
 }
