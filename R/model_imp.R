@@ -461,7 +461,7 @@ model_imp <- function(fixed, data, random = NULL, family,
 
   # data list ------------------------------------------------------------------
   if (is.null(data_list)) {
-    data_list <- try(get_data_list(analysis_type, family, link, models, Mlist,
+    data_list <- try(get_data_list(analysis_type, family, models, Mlist,
                                    scale_pars = scale_pars, hyperpars = hyperpars,
                                    data = data, imp_par_list = imp_par_list))
     scale_pars <- data_list$scale_pars
@@ -505,13 +505,12 @@ model_imp <- function(fixed, data, random = NULL, family,
   }
 
   if (!file.exists(modelfile) || (file.exists(modelfile) & overwrite == TRUE)) {
-    Ntot <- #ifelse(analysis_type == 'coxph',
-           #sum(data_list$RiskSet != 0),
-           length(data_list[[names(Mlist$y)]])#)
+    Ntot <- length(data_list[[names(Mlist$outcomes)]])
 
     write_model(analysis_type = analysis_type, family = family,
-                link = link, models = models,
-                Ntot = Ntot, Mlist = Mlist, K = K,
+                models = models,
+                Ntot = Ntot, Mlist = Mlist,
+                K = K,
                 imp_par_list = imp_par_list,
                 file = modelfile)
   }
@@ -645,7 +644,7 @@ if (!is.null(inits)) {
                         n.cores = if (parallel) n.cores)
 
   attr(analysis_type, "family") <- family
-  attr(analysis_type, "link") <- link
+  # attr(analysis_type, "link") <- link
 
   # set contrasts back to what they were
   on.exit(options(opt))
@@ -711,15 +710,12 @@ lm_imp <- function(formula, data,
 
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$fixed <- arglist$formula
+  arglist$fixed <- check_formula_list(arglist$formula)
   arglist$analysis_type <- "lm"
-  arglist$family <- "gaussian"
-  arglist$link <- "identity"
+  arglist$family <- gaussian()
+  # arglist$link <- "identity"
 
   thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -763,35 +759,32 @@ glm_imp <- function(formula, family, data,
 
   if (is.character(family)) {
     family <- get(family, mode = "function", envir = parent.frame())
-    arglist$family <- family()$family
-    arglist$link <- family()$link
+    arglist$family <- family()
+    # arglist$link <- family()$link
   }
 
   if (is.function(family)) {
-    arglist$family <- family()$family
-    arglist$link <- family()$link
+    arglist$family <- family()
+    # arglist$link <- family()$link
   }
 
   if (inherits(family, "family")) {
-    arglist$family <- family$family
-    arglist$link <- family$link
+    arglist$family <- family
+    # arglist$link <- family$link
   }
 
   arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
 
-  if (!arglist$link %in% c("identity", "log", "logit", "probit", "log",
+  if (!arglist$family$link %in% c("identity", "log", "logit", "probit", "log",
                            "cloglog", "inverse"))
     stop(gettextf("%s is not an allowed link function.",
-                  dQuote(arglist$link)))
+                  dQuote(arglist$family$link)))
 
 
   res <- do.call(model_imp, arglist)
@@ -822,8 +815,8 @@ clm_imp <- function(fixed, data,
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$analysis_type <- "clm"
-  arglist$family <- "ordinal"
-  arglist$link <- "logit"
+  arglist$family <- ordinal()
+  # arglist$link <- "logit"
 
 
   thiscall <- as.list(match.call())[-1L]
@@ -866,8 +859,8 @@ lme_imp <- function(fixed, data, random,
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$analysis_type <- "lme"
-  arglist$family <- "gaussian"
-  arglist$link <- "identity"
+  arglist$family <- gaussian()
+  # arglist$link <- "identity"
 
 
   thiscall <- as.list(match.call())[-1L]
@@ -916,18 +909,18 @@ glme_imp <- function(fixed, data, random, family,
 
   if (is.character(family)) {
     family <- get(family, mode = "function", envir = parent.frame())
-    arglist$family <- family()$family
-    arglist$link <- family()$link
+    arglist$family <- family()
+    # arglist$link <- family()$link
   }
 
   if (is.function(family)) {
-    arglist$family <- family()$family
-    arglist$link <- family()$link
+    arglist$family <- family()
+    # arglist$link <- family()$link
   }
 
   if (inherits(family, "family")) {
-    arglist$family <- family$family
-    arglist$link <- family$link
+    arglist$family <- family
+    # arglist$link <- family$link
   }
 
   if (!arglist$link %in% c("identity", "log", "logit", "probit", "log",
@@ -977,8 +970,8 @@ clmm_imp <- function(fixed, data, random,
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$analysis_type <- "clmm"
-  arglist$family <- "ordinal"
-  arglist$link <- "logit"
+  arglist$family <- ordinal()
+  # arglist$link <- "logit"
 
 
   thiscall <- as.list(match.call())[-1L]
@@ -1023,8 +1016,8 @@ survreg_imp <- function(formula, data,
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$fixed <- arglist$formula
   arglist$analysis_type <- "survreg"
-  arglist$family <- 'weibull'
-  arglist$link <- "log"
+  arglist$family <- weibull()
+  # arglist$link <- "log"
   arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]
@@ -1068,8 +1061,8 @@ coxph_imp <- function(formula, data,
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$fixed <- arglist$formula
   arglist$analysis_type <- "coxph"
-  arglist$family <- 'prophaz'
-  arglist$link <- "log"
+  arglist$family <- prophaz()
+  # arglist$link <- "log"
   arglist$fixed <- formula
 
   thiscall <- as.list(match.call())[-1L]
@@ -1121,8 +1114,8 @@ JM_imp <- function(formulas, data,
   arglist$fixed <- fmls$fixed
   arglist$random <- fmls$random
   arglist$analysis_type <- "JM"
-  arglist$family <- 'prophaz'
-  arglist$link <- "log"
+  arglist$family <- prophaz()
+  # arglist$link <- "log"
 
   thiscall <- as.list(match.call())[-1L]
 
