@@ -1,6 +1,6 @@
 
 rescale <- function(x, fixed2, scale_pars, MCMC, refs, coef_lvl, coefs) {
-  coefs <- if (is.list(coefs))
+  coefs <- if (inherits(coefs, 'list'))
     melt_data.frame_list(coefs, id.vars = colnames(coefs[[1]])) else coefs
 
   x_data <- if(x %in% coefs[, 'JAGS']) {
