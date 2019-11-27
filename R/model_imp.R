@@ -298,11 +298,9 @@ model_imp <- function(fixed, data, random = NULL, family,
                       imp_par_list = NULL,  data_list = NULL, ...) {
 
 
-  # Checks & warnings -------------------------------------------------------
-  if (missing(fixed)) {
-    stop("A fixed effects structure needs to be specified.")
-  }
+  # checks & warnings -------------------------------------------------------
 
+  # Warning if random is provided in a model where it is not used (and set random = NULL)
   if (!analysis_type %in% c("lme", "glme", "clmm", "JM") & !is.null(random)) {
     if (warn)
       warning(gettextf("Random effects structure not used in a model of type %s.",
@@ -310,16 +308,13 @@ model_imp <- function(fixed, data, random = NULL, family,
     random <- NULL
   }
 
-  if (analysis_type %in% c("lme", "glme", "clmm") & is.null(random)) {
-    stop(gettextf("A random effects structure needs to be specified when using a model of type %s.",
-                  sQuote(analysis_type)))
-    random <- NULL
-  }
 
+  # Message if no MCMC sample will be produced.
   if (n.iter == 0) {
     if (mess)
       message("Note: No MCMC sample will be created when n.iter is set to 0.")
   }
+
 
   # check if the argument meth is provided (no longer used)
   args <- as.list(match.call())
@@ -330,134 +325,59 @@ model_imp <- function(fixed, data, random = NULL, family,
 
 
   # data pre-processing --------------------------------------------------------
-  # * set contrasts to dummies -------------------------------------------------
+  # set contrasts to dummies
   opt <- options(contrasts = rep("contr.treatment", 2))
 
-  allvars <- unique(c(all_vars(fixed),
-                      all_vars(random),
-                      all_vars(auxvars))
-  )
+  # check all variables are in the data
+  check_vars_in_data(names(data), fixed = fixed, random = random, auxvars = auxvars)
 
-  if (any(!allvars %in% names(data))) {
-    stop(gettextf("Variable(s) %s were not found in the data." ,
-                  paste(dQuote(allvars[!allvars %in% names(data)]), collapse = ", ")),
-         call. = FALSE)
-  }
+  # check classes of covariates
+  check_classes(data, fixed = fixed, random = random, auxvars = auxvars)
 
-
-  # * check classes of covariates ----------------------------------------------
-  covars <- unique(c(all_vars(fixed),
-                     all_vars(remove_grouping(random)),
-                     all_vars(auxvars)))
-  classes <- unique(unlist(sapply(data[covars], class)))
-
-  if (any(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))) {
-    w <- which(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))
-    stop(gettextf("Variables of type %s can not be handled.",
-                  paste(dQuote(classes[w]), collapse = ', ')))
-  }
+  # drop empty levels
+  data <- drop_levels(data = data,
+                      allvars = unique(c(all_vars(fixed),
+                                         all_vars(random),
+                                         all_vars(auxvars))), mess = mess)
 
 
-  # * drop empty categories ----------------------------------------------------
-  data_orig <- data
-  data[allvars] <- droplevels(data[allvars])
-
-  if (mess) {
-    lvl1 <- sapply(data_orig[allvars], function(x) length(levels(x)))
-    lvl2 <- sapply(data[allvars], function(x) length(levels(x)))
-    if (any(lvl1 != lvl2)) {
-      message(gettextf('Empty levels were dropped from %s.',
-                       dQuote(names(lvl1)[which(lvl1 != lvl2)])))
-    }
-  }
-
-
-  # * convert continuous variable with 2 different values to factor ------------
-  for (k in allvars) {
-    if (all(class(data[, k]) != 'factor') & length(unique(na.omit(data[, k]))) == 2) {
-      data[, k] <- factor(data[, k])
-      if (mess)
-        message(gettextf('The variable %s was converted to a factor.',
-                         dQuote(k)))
-    }
-  }
-
-
-  # * convert logicals to factors ----------------------------------------------
-  # if (any(unlist(sapply(data[allvars], class)) == 'logical')) {
-  #   for (x in allvars) {
-  #     if ('logical' %in% class(data[, x])) {
-  #       data[, x] <- factor(data[, x])
-  #       if (mess)
-  #         message(gettextf('%s was converted to a factor.', dQuote(x)))
-  #     }
-  for (x in allvars) {
-    if ('logical' %in% class(data[, x])) {
-      data[, x] <- factor(data[, x])
-      if (mess)
-        message(gettextf('%s was converted to a factor.', dQuote(x)))
-    }
-    if (is.factor(data[, x])) {
-      levels(data[, x]) <- clean_names(levels(data[, x]))
-    }
-  }
-
+  # convert continuous variable with 2 different values and logical variables to factors
+  data <- convert_variables(data = data,
+                            allvars = unique(c(all_vars(fixed),
+                                               all_vars(random),
+                                               all_vars(auxvars))), mess = mess)
 
 
   # imputation method ----------------------------------------------------------
   models <- get_models(fixed = fixed, random = random, data = data,
                        auxvars = auxvars, no_model = no_model, models = models)$models
 
-  # if (is.null(models)) {
-  #   models <- models_default
-  #   models_user <- NULL
-  # } else {
-  #   models_user <- models
-  #   if (!setequal(names(models_user), names(models_default))) {
-  #     models <- models_default
-  #     models[names(models_user)] <- models_user
-  #
-  #   }
-  # }
-
-  # warning if JointAI set imputation method for a continuous variable with only
-  # two different values to "logit"
-  for (k in names(models)[models == 'logit']) {
-    if (is.numeric(data[, k]) & !k %in% names(models) & warn) {
-      data[, k] <- factor(data[, k])
-      warning(
-        gettextf("\nThe variable %s is coded as continuous but has only two different values. I will consider it binary.\nTo overwrite this behavior, specify a different imputation modelsod for %s using the argument %s.",
-                 dQuote(k), dQuote(k), dQuote("models")),
-        call. = FALSE, immediate. = TRUE)
-    }
-  }
-
 
   # divide matrices ------------------------------------------------------------
-    Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
-                             random = random, auxvars = auxvars, timevar = timevar,
-                             scale_vars = scale_vars, refcats = refcats,
-                             models = models, warn = warn, mess = mess, ppc = ppc,
-                             ridge = ridge)
+  Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
+                           random = random, auxvars = auxvars, timevar = timevar,
+                           scale_vars = scale_vars, refcats = refcats,
+                           models = models, warn = warn, mess = mess, ppc = ppc,
+                           ridge = ridge)
 
   # model dimensions -----------------------------------------------------------
-    K <- get_model_dim(Mlist$cols_main, Mlist$hc_list, Mlist$names_main)
+  K <- get_model_dim(Mlist$cols_main, Mlist$hc_list, Mlist$names_main)
 
   # position of the variables to be imputed in Xc, Xic, Xl, Xil, Xcat
-    imp_pos <- get_imp_pos(models, Mlist)
+  imp_pos <- get_imp_pos(models, Mlist)
 
-    K_imp <- get_imp_dim(models, imp_pos, Mlist)
+  K_imp <- get_imp_dim(models, imp_pos, Mlist)
 
   # imputation parameters/specifications ---------------------------------------
 
-    dest_cols <- sapply(unique(c(names(models), colnames(Mlist$Xtrafo),
-                                 colnames(Mlist$Xltrafo))),
-                        get_dest_column, Mlist = Mlist, simplify = FALSE)
+  dest_cols <- sapply(unique(c(names(models), colnames(Mlist$Xtrafo),
+                               colnames(Mlist$Xltrafo))),
+                      get_dest_column, Mlist = Mlist, simplify = FALSE)
 
 
-    imp_par_list <- mapply(get_imp_par_list, models, names(models),
-                           MoreArgs = list(Mlist, K_imp, K, dest_cols, trunc, models),
-                           SIMPLIFY = FALSE)
+  imp_par_list <- mapply(get_imp_par_list, models, names(models),
+                         MoreArgs = list(Mlist, K_imp, K, dest_cols, trunc, models),
+                         SIMPLIFY = FALSE)
 
   # data list ------------------------------------------------------------------
   if (is.null(data_list)) {
