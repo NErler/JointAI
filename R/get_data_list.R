@@ -18,8 +18,8 @@ get_data_list <- function(analysis_type, family, models, Mlist,
   # outcome specification for parametric survival models
   if (analysis_type == "survreg") {
     l$cens <- as.numeric(unlist(Mlist$event == 0))
-    l$ctime <- as.numeric(unlist(Mlist$y))
-    l[[names(Mlist$y)]][Mlist$event == 0] <- NA
+    l$ctime <- as.numeric(unlist(Mlist$outcomes))
+    l[[names(Mlist$outcomes)]][Mlist$event == 0] <- NA
     l <- c(l, defs$surv)
 
     if (Mlist$ridge)
@@ -29,7 +29,7 @@ get_data_list <- function(analysis_type, family, models, Mlist,
   # outcome specification for Cox PH models
   if (analysis_type %in% c('coxph', 'JM')) {
 
-    l$event <- as.numeric(unlist(Mlist$event))
+    # l$event <- as.numeric(unlist(Mlist$event))
 
     gkw <- gauss_kronrod()$gkw
     gkx <- gauss_kronrod()$gkx
