@@ -16,110 +16,75 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     1:nrow(data)
   }
 
+  outcomes <- extract_outcome_data(fixed, data)
+  fixed <- outcomes$fixed
 
-  # extract the outcome from the fixed effects formula
-  outnam <- outcomes <- extract_outcome(fixed)
-  for (i in seq_along(outnam)) {
-    if (survival::is.Surv(eval(parse(text = names(outnam[i])), env = data))) {
-      outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnam[i])), env = data))
-      attr(outnam[[i]], "type") <- "survival"
-    } else {
-      outcomes[[i]] <- as.data.frame(eval(parse(text = names(outnam[i])), env = data))
-      names(outcomes[[i]]) <- outnam[i]
-      attr(outnam[[i]], "type") <- "other"
-    }
-  }
-
-  if (analysis_type %in% c('survreg', 'coxph', 'JM')) {
-    out <- outcomes[[which(sapply(outnam, 'attr', 'type') ==  'survival')]]
-
-    if (ncol(out) == 2) {
-      out <- cbind(data[, id, drop = FALSE], out, rownr = 1:nrow(out))
-
-      out_lr <- do.call(rbind, lapply(split(out, out[, id]), function(x) {
-
-        # if (sum(x$status, na.rm = TRUE) > 1)
-        #   stop("At least one subject has multiple events.")
-
-
-        # if (any(x$status == 1) && max(x$stop[which(x$status == 1)]) < max(x$stop))
-        #   stop("Currently only terminal events can be handled.")
-
-        x[nrow(x), ]
-      }))
-      y <- out_lr[, "time", drop = FALSE]
-      event <- out_lr[, "status", drop = FALSE]
-      survrow <- out_lr[, 'rownr']
-    } else if (ncol(out) == 3) {
-      out <- cbind(id = data[, id], out, rownr = 1:nrow(out))
-
-      out_lr <- do.call(rbind, lapply(split(out, out[, id]), function(x) {
-
-        if (sum(x$status, na.rm = TRUE) > 1)
-          stop("At least one subject has multiple events.")
-
-
-        # if (any(x$status == 1) && max(x$stop[which(x$status == 1)]) < max(x$stop))
-        #   stop("Currently only terminal events can be handled.")
-
-        x[nrow(x), ]
-      }))
-      y <- out_lr[, 'stop', drop = FALSE]
-      event <- out_lr[, 'status', drop = FALSE]
-      survrow <- out_lr[, 'rownr']
-    } else {
-      stop("Expected two or three outcome variables.")
-    }
-    if (!is.null(timevar)) names(y) <- timevar
-    else timevar <- names(y)
-
-  } else {
-    y <- data[, unlist(outnam), drop = FALSE]
-    event <- NULL
-  }
-
-
-  fixed_combined <- if (any(sapply(outnam, attr, "type") == "survival")) {
-    as.formula(
-      paste0(names(outnam)[sapply(outnam, attr, "type") == "survival"],
-             " ~ ",
-             paste(unique(unlist(lapply(fixed, function(x) attr(terms(x), 'term.labels'))),
-                          names(outnam)[sapply(outnam, attr, "type") != "survival"]),
-                   collapse = " + ")
-      ))
-  } else {
-    as.formula(
-      paste0(names(outnam)[1], " ~ ",
-             paste(unique(gsub("~", '', unlist(lapply(remove_LHS(fixed), deparse)))),
-                   collapse = " + ")
-      ))
-  }
-
-  random_combined_nogroup <- if(!is.null(random))
-    as.formula(paste("~",
-                     paste(unique(unlist(lapply(remove_grouping(random),
-                                                function(x) if(!is.null(x)) attr(terms(x), 'term.labels'))
-                     )), collapse = " + ")
-    ))
-
-
-  # * preliminary design matrix ------------------------------------------------
-  X <- model.matrix(fixed_combined, model.frame(fixed_combined, data, na.action = na.pass))
-
-
-  # # for a JM, add the random effects structure to the auxiliary formula
-  # if (analysis_type == 'JM') {
-  #   auxvars <- if (is.null(auxvars)) {
-  #     random_combined_nogroup
-  #   } else if (!all_vars(remove_grouping(random)) %in% all_vars(auxvars)) {
-  #     as.formula(paste(deparse(auxvars), paste(random_combined_nogroup)[2], sep = " + "))
-  #   } else {auxvars}
+  # # extract the outcome data from the fixed effects formula
+  # outnam <- outcomes <- extract_outcome(fixed)
+  #
+  # for (i in seq_along(outnam)) {
+  #   if (survival::is.Surv(eval(parse(text = names(outnam[i])), env = data))) {
+  #     outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnam[i])), env = data))
+  #     attr(outnam[[i]], "type") <- "survival"
+  #   } else {
+  #     outcomes[[i]] <- as.data.frame(eval(parse(text = names(outnam[i])), env = data))
+  #     names(outcomes[[i]]) <- outnam[i]
+  #     attr(outnam[[i]], "type") <- "other"
+  #   }
+  # }
+  #
+  # if (analysis_type %in% c('survreg', 'coxph', 'JM')) {
+  #   out <- outcomes[[which(sapply(outnam, 'attr', 'type') ==  'survival')]]
+  #
+  #   if (ncol(out) == 2) {
+  #     out <- cbind(data[, id, drop = FALSE], out, rownr = 1:nrow(out))
+  #
+  #     out_lr <- do.call(rbind, lapply(split(out, out[, id]), function(x) {
+  #
+  #       x[nrow(x), ]
+  #     }))
+  #     y <- out_lr[, "time", drop = FALSE]
+  #     event <- out_lr[, "status", drop = FALSE]
+  #     survrow <- out_lr[, 'rownr']
+  #   } else if (ncol(out) == 3) {
+  #     out <- cbind(id = data[, id], out, rownr = 1:nrow(out))
+  #
+  #     out_lr <- do.call(rbind, lapply(split(out, out[, id]), function(x) {
+  #
+  #       if (sum(x$status, na.rm = TRUE) > 1)
+  #         stop("At least one subject has multiple events.")
+  #
+  #       x[nrow(x), ]
+  #     }))
+  #     y <- out_lr[, 'stop', drop = FALSE]
+  #     event <- out_lr[, 'status', drop = FALSE]
+  #     survrow <- out_lr[, 'rownr']
+  #   } else {
+  #     stop("Expected two or three outcome variables.")
+  #   }
+  #   if (!is.null(timevar)) names(y) <- timevar
+  #   else timevar <- names(y)
+  #
+  # } else {
+  #   y <- data[, unlist(outnam), drop = FALSE]
+  #   event <- NULL
   # }
 
 
+  # random_combined_nogroup <- if(!is.null(random))
+  #   as.formula(paste("~",
+  #                    paste(unique(unlist(lapply(remove_grouping(random),
+  #                                               function(x) if(!is.null(x)) attr(terms(x), 'term.labels'))
+  #                    )), collapse = " + ")
+  #   ))
+
+
+  # * preliminary design matrix ------------------------------------------------
+  X <- model.matrix_combi(fixed, data)
+
   # variables that do not have a main effect in fixed are added to the auxiliary variables
-  trafosX <- extract_fcts(fixed_combined, data, random = random_combined_nogroup, complete = TRUE)
-  add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), all.vars(auxvars)))]
+  trafosX <- extract_fcts(formula = fixed, data, random = random, complete = TRUE)
+  add_to_aux <- trafosX$var[which(!trafosX$var %in% c(colnames(X), all_vars(auxvars)))]
 
   if (length(add_to_aux) > 0 & !is.null(models))
     auxvars <- as.formula(paste(ifelse(is.null(auxvars), "~ ",
@@ -127,21 +92,15 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
                           paste0(unique(add_to_aux), collapse = " + ")))
 
   # fixed effects design matrices
-  fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed_combined, width.cutoff = 500),
-                                   fixed = TRUE),
-                               auxvars[[2]]), collapse = " + "))
-  fcts_all <- extract_fcts(fixed2, data, random = random_combined_nogroup, complete = TRUE)
+  # fixed2 <- as.formula(paste(c(sub(":", "*", deparse(fixed_combined, width.cutoff = 500),
+  #                                  fixed = TRUE),
+  #                              auxvars[[2]]), collapse = " + "))
 
-
-  # Give a message about coding of ordinal factors if there are any in the predictor
-  if (any(unlist(sapply(data[, all.vars(fixed2[c(1,3)])],
-                        class)) == 'ordered') & mess)
-    message("Note: Ordered factors are included as dummy variables into the linear predictor (not as orthogonal polynomials).")
-
+  fcts_all <- extract_fcts(c(fixed, auxvars), data, random = random, complete = TRUE)
 
 
   # * reference categories -----------------------------------------------------
-  refs <- get_refs(fixed2, data, refcats)
+  refs <- get_refs(c(fixed, auxvars), data, refcats)
 
   for (i in names(refs)) {
     data[, i] <- relevel(factor(data[, i], ordered = FALSE),
@@ -149,26 +108,21 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   }
 
 
-  # * final design matrix ------------------------------------------------------
-  X2 <- model.matrix(fixed2,
-                     model.frame(fixed2, data, na.action = na.pass))
-
-  X2[is.nan(X2)] <- NA
+  # * final combined design matrix ---------------------------------------------
+  X2 <- model.matrix_combi(c(fixed, auxvars), data)
 
 
   # Z --------------------------------------------------------------------------
   # random effects design matrix
   Z <- if (!is.null(random)) {
-    model.matrix(random_combined_nogroup,
-                 model.frame(random_combined_nogroup,
-                             data, na.action = na.pass))
+    model.matrix_combi(remove_grouping(random), data)
   }
 
 
   # Xc and Xic -----------------------------------------------------------------
   tvar <- apply(X2, 2, check_tvar, groups)
 
-  # make sure that interactions where at least one partner is time-varying
+  # make sure that interactions in which at least one partner is time-varying
   # are also recognized as time-varying
   inter <- grep(":", names(tvar), fixed = TRUE, value = TRUE)
   if (length(inter) > 0)
@@ -233,7 +187,7 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
 
   # Xtrafo ---------------------------------------------------------------------
-  fcts_mis <- extract_fcts(fixed2, data, random = random_combined_nogroup, complete = FALSE)
+  fcts_mis <- extract_fcts(c(fixed, auxvars), data, random = random, complete = FALSE)
 
   if (any(fcts_mis$type %in% c('ns', 'bs')))
     stop("Splines are currently not implemented for incomplete variables.",
@@ -276,14 +230,14 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   # make filter variables:
 
   # - variable relevant?
-  infmla <- names(data) %in% all.vars(fixed2)
+  infmla <- names(data) %in% all_vars(c(fixed, auxvars))
   # - variabe incomplete?
-  misvar <- colSums(is.na(data[, infmla])) > 0
+  misvar <- colSums(is.na(data[, infmla, drop = FALSE])) > 0
   # - variabe categorical with >2 categories?
   catvars <- sapply(colnames(data[infmla]),
                     function(i) i %in% names(refs) && length(levels(refs[[i]])) > 2)
 
-  tvar_data <- sapply(data[, infmla], check_tvar, groups)
+  tvar_data <- sapply(data[, infmla, drop = FALSE], check_tvar, groups)
 
   misvar_long <- if (any(!tvar_data & misvar)) TRUE else misvar
 
@@ -316,10 +270,10 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
 
   # scaling --------------------------------------------------------------------
   if (is.null(scale_vars)) {
-    scale_vars <- find_continuous_main(fixed2, data)
+    scale_vars <- find_continuous(c(fixed, auxvars), data)
 
     compl_fcts_vars <- fcts_all$X_var[fcts_all$type != "identity" &
-                                        colSums(is.na(data[, fcts_all$var, drop = FALSE])) == 0]
+                                        colSums(is.na(data[fcts_all$var])) == 0]
 
     excl <- grep("[[:alpha:]]*\\(", scale_vars, value = TRUE)
     excl <- c(excl, unique(fcts_mis$X_var))
@@ -370,13 +324,13 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
     mat = list(Xc, Xl, Xic, Xil, Z))
   }, simplify = FALSE)
 
-  return(list(y = y, event = event,
+  return(list(outcomes = outcomes$outcomes, #event = event,
               Xc = Xc, Xic = Xic, Xl = Xl, Xil = Xil, Xcat = Xcat, Xlcat = Xlcat,
               Xtrafo = Xtrafo, Xltrafo = Xltrafo, Z = Z,
               cols_main = cols_main, names_main = names_main,
               trafos = fcts_all, hc_list = hc_list, refs = refs, timevar = timevar,
               auxvars = auxvars, groups = groups, scale_vars = scale_vars,
-              fixed2 = fixed2, ncat = ncat,
+              ncat = ncat,
               N = N, ppc = ppc, ridge = ridge, nranef = ncol(Z2),
-              survrow = if(exists("survrow")) survrow, outnam = outnam))
+              survrow = if(exists("survrow")) survrow))
 }
