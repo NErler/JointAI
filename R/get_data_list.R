@@ -12,22 +12,8 @@ get_data_list <- function(analysis_type, family, models, Mlist,
     defs <- hyperpars
   }
 
-  l <- list()
-
-  # outcome variable
-  l[[names(Mlist$y)]] <- if (any(sapply(Mlist$y, is.factor))) {
-    if (analysis_type %in% c('clmm', 'clm')) {
-      # ordinal variables have values 1, 2, 3, ...
-      c(sapply(Mlist$y, as.numeric))
-    } else {
-      # binary variables have values 0, 1
-      c(sapply(Mlist$y, as.numeric) - 1)
-    }
-  } else {
-    # continuous outcomes
-    unname(unlist(Mlist$y))
-  }
-
+  # outcome variables
+  l <- prep_outcome(Mlist$outcomes)
 
   # outcome specification for parametric survival models
   if (analysis_type == "survreg") {
