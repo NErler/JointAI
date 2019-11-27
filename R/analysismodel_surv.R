@@ -121,7 +121,7 @@ coxph_model <- function(Mlist, K, ...){
          tab(6), "SurvLong[j, k] <- gkw[k] * exp(log.h0.s[j, k])", "\n",
          tab(4), "}", "\n\n",
          tab(4), "log.survival[j] <- -exp(etaBaseline[j]) * ", y_name ,"[j]/2 * sum(SurvLong[j, ])", "\n",
-         tab(4), "phi[j] <- 5000 - ((event[j] * log.hazard[j])) - (log.survival[j])", "\n",
+         tab(4), "phi[j] <- 5000 - ((status[j] * log.hazard[j])) - (log.survival[j])", "\n",
          tab(4), "zeros[j] ~ dpois(phi[j])"
   )
 }
@@ -307,7 +307,7 @@ JM_model <- function(Mlist, K, imp_par_list_long, ...){
          fit_Xlgk, "\n",
          tab(4), "}", "\n\n",
          tab(4), "log.survival[j] <- -exp(etaBaseline[j]) * ", y_name ,"[j]/2 * sum(SurvLong[j, ])", "\n",
-         tab(4), "phi[j] <- 5000 - ((event[j] * log.hazard[j])) - (log.survival[j])", "\n",
+         tab(4), "phi[j] <- 5000 - ((status[j] * log.hazard[j])) - (log.survival[j])", "\n",
          tab(4), "zeros[j] ~ dpois(phi[j])"
   )
 }
