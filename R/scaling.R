@@ -118,15 +118,15 @@ get_scaling <- function(Mlist, scale_pars, models, data) {
 
 
 # Function to find the names of columns in the model matrix that involve
-# continuous covariates (and hence may need to be scaled) - only main effects
-find_continuous_main <- function(fixed, DF) {
-  # remove left side of formula
-  fmla <- as.formula(sub("[[:print:]]*\\~", "~",
-                         deparse(fixed, width.cutoff = 500)))
+# continuous covariates (and hence may need to be scaled)
+find_continuous <- function(fmla, data) {
+
+  fmla <- check_formula_list(fmla)
+
+  allvars <- all_vars(remove_LHS(fmla))
 
   # check which variables involved are continuous
-  is_continuous <- !sapply(model.frame(fmla, DF), is.factor)
-  # Note: does this have to be so complicated? can't I just take the columns of DF???
+  is_continuous <- !sapply(data[allvars], is.factor)
 
   names(is_continuous)[is_continuous]
 }
