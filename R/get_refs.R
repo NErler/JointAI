@@ -1,10 +1,13 @@
 
 get_refs <- function(fmla, data, refcats = NULL) {
 
-  covars <- all.vars(fmla)[!all.vars(fmla) %in% c(extract_outcome(fmla))]
-  if (length(covars) > 0) {
+  # check if fmla is a list of formulas, otherwise make it a list
+  fmla <- check_formula_list(fmla)
 
-    factors <- covars[sapply(data[, covars, drop = FALSE], is.factor)]
+  covars <- all_vars(remove_LHS(fmla))
+
+  if (length(covars) > 0) {
+    factors <- covars[sapply(data[covars], is.factor)]
 
     default <- "first"
 
@@ -98,12 +101,12 @@ set_refcat <- function(data, formula, covars, auxvars = NULL) {
   if (missing(formula) & missing(covars) & is.null(auxvars)) {
     covars <- colnames(data)
   } else  if (missing(covars) & !missing(formula)) {
-    covars <- all.vars(formula)[!all.vars(formula) %in% c(extract_outcome(formula))]
+    covars <- all_vars(remove_LHS(formula))
   }
   if (!is.null(auxvars))
-    covars <- unique(c(covars, attr(terms(auxvars), 'term.labels')))
+    covars <- unique(c(covars, all_vars(auxvars)))
 
-  factors <- covars[sapply(data[, covars, drop = FALSE], is.factor)]
+  factors <- covars[sapply(data[covars], is.factor)]
 
   message(gettextf("The categorical variables are:\n%s",
                    paste('-', sapply(factors, dQuote), collapse = "\n")))
@@ -117,10 +120,10 @@ set_refcat <- function(data, formula, covars, auxvars = NULL) {
   if (q1 == 4) {
     q2 <- q3 <- setNames(numeric(length(factors)), factors)
     for (i in seq_along(factors)) {
-      q2[i] <- menu(levels(data[, factors[i]]),
+      q2[i] <- menu(levels(data[factors[i]]),
                     title = gettextf("The reference category for %s should be", dQuote(factors[i]))
       )
-      q3[i] <- levels(data[, factors[i]])[q2[i]]
+      q3[i] <- levels(data[factors[i]])[q2[i]]
     }
 
     out <- paste0("refcats = c(", paste0(names(q3),  " = '", q3, "'", collapse = ", "), ")")
