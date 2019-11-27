@@ -130,7 +130,7 @@ glme_priors <- function(family, K, Mlist, ...){
 
   paste0(c(ranef_priors(Mlist$nranef),
            secndpar,
-           glmereg_priors(K, Mlist, family$family, family$link),
+           glmereg_priors(K, Mlist, family),
            paste_ppc), collapse = "\n\n")
 }
 
