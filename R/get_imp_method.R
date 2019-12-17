@@ -43,13 +43,17 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
   models_user <- models
 
 
+  if (is.null(names(fixed)))
+    fixed <- extract_outcome_data(fixed, random = random, data = data,
+                                  analysis_type = analysis_type)$fixed
+
   # if there is a time variable, add it to no_model
   if (!is.null(timevar)) {
     no_model <- c(no_model, timevar)
   }
 
   # check that all variables are found in the data
-  allvars <- unique(c(all_vars(remove_LHS(fixed)),
+  allvars <- unique(c(all_vars(fixed),
                       all_vars(random),
                       all_vars(auxvars),
                       names(models)))
@@ -70,7 +74,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
 
   # try to extract id variable from random
-  id <- extract_id(random)
+  id <- extract_id(random = random)
   idvar <- if (!is.null(id)) {
     data[, id]
   } else {
@@ -80,85 +84,132 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
 
   # new version of allvars, without the grouping variable
-  allvars <- unique(c(all_vars(remove_LHS(fixed)),
-                      all_vars(random2),
-                      all_vars(auxvars),
-                      names(models)))
+  allvars <- unique(c(
+    names(fixed),
+    all_vars(remove_LHS(fixed)),
+    all_vars(random2),
+    all_vars(auxvars),
+    names(models)))
 
 
   if (length(allvars) > 0) {
-    tvar <- sapply(data[, allvars, drop = FALSE], check_tvar, idvar)
 
-    nmis <- c(colSums(is.na(data[, names(tvar[tvar]), drop = FALSE])),
-              colSums(is.na(data[match(unique(idvar), idvar), names(tvar[!tvar]), drop = FALSE]))
-    )
+    varinfo <- sapply(allvars, function(k) {
+      x <- eval(parse(text = k), envir = data)
+      out <- k %in% names(fixed)
+      tvar <- check_tvar(x, idvar)
+      nmis <- if (tvar) sum(is.na(x)) else sum(is.na(x[match(unique(idvar), idvar)]))
+      nlev <- length(levels(x))
+      ordered <- is.ordered(x)
+      data.frame(out = out, tvar = tvar, nmis = nmis, nlev = nlev, ordered = ordered, type = NA)
+    }, simplify = FALSE)
+
+    varinfo <- melt_data.frame_list(varinfo, id.vars = colnames(varinfo[[1]]))
+
+    varinfo$type[varinfo$out] <- sapply(fixed, attr, 'type')
+    varinfo$type[varinfo$tvar & varinfo$nlev > 2 & varinfo$ordered] <- 'clmm'
+    varinfo$type[!varinfo$tvar & varinfo$nlev > 2 & varinfo$ordered] <- 'clm'
+    varinfo$type[varinfo$tvar & varinfo$nlev > 2 & !varinfo$ordered] <- 'mlogitmm'
+    varinfo$type[!varinfo$tvar & varinfo$nlev > 2 & !varinfo$ordered] <- 'mlogit'
+    varinfo$type[varinfo$tvar & varinfo$nlev == 2] <- 'glmm_logit'
+    varinfo$type[!varinfo$tvar & varinfo$nlev == 2] <- 'glm_logit'
+    varinfo$type[varinfo$tvar & varinfo$nlev == 0] <- 'lmm'
+    varinfo$type[!varinfo$tvar & varinfo$nlev == 0] <- 'lm'
 
 
-    if (all(nmis == 0) & is.null(models_user) & (is.null(analysis_type) || analysis_type!= "JM"))
-      return(list(models = NULL, meth = NULL))
+
+    # tvar <- sapply(data[, allvars, drop = FALSE], check_tvar, idvar)
+
+    # nmis <- c(colSums(is.na(data[, names(tvar[tvar]), drop = FALSE])),
+    #           colSums(is.na(data[match(unique(idvar), idvar), names(tvar[!tvar]), drop = FALSE]))
+    # )
 
 
-    nmis <- nmis[!names(nmis) %in% no_model]
-    tvar <- tvar[names(nmis)]
+    # if (all(nmis == 0) & is.null(models_user) & (is.null(analysis_type) || analysis_type!= "JM"))
+    #   return(list(models = NULL, meth = NULL))
 
-    types <- lapply(split(nmis, list(ifelse(nmis > 0, 'incomplete', 'complete'),
-                                     ifelse(tvar, 'tvar', 'baseline'))),
-                    function(x) if (length(x) > 0) sort(x)
-    )
+    varinfo <- subset(varinfo, !L1 %in% no_model)
 
-    unnecessary <- c(
-      names(nmis[nmis == 0 & !tvar & names(nmis) %in% names(models)]),
-      if (is.null(types$incomplete.baseline) & ((is.null(analysis_type) || analysis_type!= "JM")))
-        types$complete.tvar[names(types$complete.tvar) %in% names(models)]
-    )
+    types <- split(varinfo,
+                   ifelse(varinfo$out, 'outcome',
+                          ifelse(varinfo$nmis > 0,
+                                 ifelse(varinfo$tvar, 'incomplete_tvar', 'incomplete_baseline'),
+                                 ifelse(varinfo$tvar, 'complete_tvar', 'complete_baseline'))))
 
-    if (length(unnecessary) > 0)
-      message(gettextf(paste0("Note:\nModels have been specified for the variabe(s) %s.\n",
-                      'These models are not needed for imputation and are likely ',
-                      'to increase the computational time.'),
-                      paste0(names(unnecessary), collapse = ', '))
-                      )
 
-    models <- c(
-      if (any(names(models) %in% names(types$complete.baseline)))
-        types$complete.baseline[names(types$complete.baseline) %in% names(models)],
-      types$incomplete.baseline,
-      if (!is.null(types$incomplete.baseline) | (!is.null(analysis_type) && analysis_type == 'JM')) {
-        types$complete.tvar
-      } else {
-        if (any(names(models) %in% names(types$complete.tvar)))
-          types$complete.tvar[names(types$complete.tvar) %in% names(models)]
-      },
-      types$incomplete.tvar
-    )
+    # types <- lapply(split(nmis, list(ifelse(nmis > 0, 'incomplete', 'complete'),
+    #                                  ifelse(tvar, 'tvar', 'baseline'))),
+    #                 function(x) if (length(x) > 0) sort(x, decreasing = TRUE)
+    # )
+    #
 
-    nlevel <- sapply(data[, names(models), drop = FALSE],
-                     function(x) length(levels(x)))
+    types[which(names(types) != 'outcome')] <-
+      lapply(types[which(names(types) != 'outcome')], function(x)
+        x[order(x$nmis, decreasing = TRUE), , drop = FALSE]
+      )
 
-    if (length(nlevel) > 0) {
-      models[nlevel == 0 & !tvar[names(nlevel)]] <- "norm"
-      models[nlevel == 0 &  tvar[names(nlevel)]] <- "lmm"
-      models[nlevel == 2 & !tvar[names(nlevel)]] <- "logit"
-      models[nlevel == 2 &  tvar[names(nlevel)]] <- "glmm_logit"
-      models[nlevel  > 2 & !tvar[names(nlevel)]] <- "multilogit"
-      models[nlevel  > 2 &  tvar[names(nlevel)]] <- "mlmm"
-      models[sapply(data[, names(nlevel), drop = FALSE], is.ordered) & !tvar[names(nlevel)]] <- "cumlogit"
-      models[sapply(data[, names(nlevel), drop = FALSE], is.ordered) & tvar[names(nlevel)]] <- "clmm"
-    }
+
+
+    # unnecessary <- c(
+    #   names(nmis[nmis == 0 & !tvar & names(nmis) %in% names(models)]),
+    #   if (is.null(types$incomplete.baseline) & ((is.null(analysis_type) || analysis_type!= "JM")))
+    #     types$complete.tvar[names(types$complete.tvar) %in% names(models)]
+    # )
+    #
+    # if (length(unnecessary) > 0)
+    #   message(gettextf(paste0("Note:\nModels have been specified for the variabe(s) %s.\n",
+    #                   'These models are not needed for imputation and are likely ',
+    #                   'to increase the computational time.'),
+    #                   paste0(names(unnecessary), collapse = ', '))
+    #                   )
+
+    models <- rbind(types$outcome, types$incomplete_tvar,
+                if (!is.null(types$incomplete_baseline))
+                  types$complete_tvar,
+                types$incomplete_baseline)
+
+    models <- unlist(setNames(models$type, models$L1))
+
+    # models <- c(
+    #   types$incomplete.tvar,
+    #   if (!is.null(types$incomplete.baseline) | (!is.null(analysis_type) && analysis_type == 'JM')) {
+    #     types$complete.tvar
+    #   } else {
+    #     if (any(names(models) %in% names(types$complete.tvar)))
+    #       types$complete.tvar[names(types$complete.tvar) %in% names(models)]
+    #   },
+    #   types$incomplete.baseline,
+    #   if (any(names(models) %in% names(types$complete.baseline)))
+    #     types$complete.baseline[names(types$complete.baseline) %in% names(models)]
+    # )
+    #
+    # nlevel <- sapply(data[, names(models), drop = FALSE],
+    #                  function(x) length(levels(x)))
+
+    # if (length(nlevel) > 0) {
+    #   models[nlevel == 0 & !tvar[names(nlevel)]] <- "norm"
+    #   models[nlevel == 0 &  tvar[names(nlevel)]] <- "lmm"
+    #   models[nlevel == 2 & !tvar[names(nlevel)]] <- "logit"
+    #   models[nlevel == 2 &  tvar[names(nlevel)]] <- "glmm_logit"
+    #   models[nlevel  > 2 & !tvar[names(nlevel)]] <- "multilogit"
+    #   models[nlevel  > 2 &  tvar[names(nlevel)]] <- "mlmm"
+    #   models[sapply(data[, names(nlevel), drop = FALSE], is.ordered) & !tvar[names(nlevel)]] <- "cumlogit"
+    #   models[sapply(data[, names(nlevel), drop = FALSE], is.ordered) & tvar[names(nlevel)]] <- "clmm"
+    # }
 
     models[names(models_user)] <- models_user
 
-    meth <- if(any(nmis[names(models)] > 0)) models[nmis[names(models)] > 0]
+    # meth <- if(any(nmis[names(models)] > 0)) models[nmis[names(models)] > 0]
 
-    if (any(models %in% c('mlmm'))) {
+    if (any(models %in% c('mlogitmm'))) {
       stop(paste0("JointAI can't yet handle unordered longitudinal categorical covariates (>2 levels).\n",
                   "This feature is planned for the future."), call. = FALSE)
     }
   } else {
     models <- NULL
-    meth <- NULL
+    # meth <- NULL
   }
-  return(list(models = models, meth = meth))
+  return(models)
 }
 
 
