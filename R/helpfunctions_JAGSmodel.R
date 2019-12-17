@@ -1,39 +1,53 @@
 # build a linear predictor -----------------------------------------------------
-paste_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent, isgk = FALSE, breakafter = 3) {
+paste_predictor <- function(parnam, parindex, matnam, parelmts, cols, scale_pars, indent, isgk = FALSE, breakafter = 3) {
 
   if (!is.null(cols) && length(cols) != length(parelmts)) {
     stop("The size of the design matrix and length of parameter vector do not match!")
   }
 
   lb <- c(rep("", breakafter),
-          rep(c(paste0(c("\n", tab(indent)), collapse = ""), rep("", breakafter - 1)),
+          rep(c(paste0(c("\n", tab(indent)), collapse = ""),
+                rep("", breakafter - 1)),
               ceiling((length(parelmts) - breakafter)/breakafter))
   )[1:length(parelmts)]
 
   paste0(lb,
          matnam, "[", parindex,
-         if(!is.null(cols)) paste0(", ", cols),
-         if(isgk) paste0(", k"),
+         if (!is.null(cols)) paste0(", ", cols),
+         if (isgk) paste0(", k"),
          "] * ", parnam, "[", parelmts, "]",
          collapse = " + ")
-}
 
-
-
-paste_ranef_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent, breakafter = 3) {
-  if (length(cols) != length(parelmts)) {
-    stop("The size of the design matrix and length of parameter vector do not match!")
-  }
-
-  lb <- c(rep("", breakafter),
-          rep(c(paste0(c("\n", tab(indent)), collapse = ""), rep("", breakafter - 1)),
-              ceiling((length(parelmts) - breakafter)/breakafter))
-  )[1:length(parelmts)]
+  s <- apply(!is.na(scale_pars), 1, any)
 
   paste0(lb,
-         matnam, "[", parindex, ", ", cols, "] * ", parnam, "[groups[", parindex, "], ", parelmts, "]",
+         ifelse(s, "(", ""),
+         matnam, "[", parindex,
+         if (!is.null(cols)) paste0(", ", cols),
+         if (isgk) paste0(", k"),
+         "]",
+         ifelse(s, paste0(" - sp", matnam, "[", cols, ", 1])/sp",
+                          matnam, "[", cols, ", 2]"), ""),
+         " * ", parnam, "[", parelmts, "]",
          collapse = " + ")
 }
+
+
+
+# paste_ranef_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent, breakafter = 3) {
+#   if (length(cols) != length(parelmts)) {
+#     stop("The size of the design matrix and length of parameter vector do not match!")
+#   }
+#
+#   lb <- c(rep("", breakafter),
+#           rep(c(paste0(c("\n", tab(indent)), collapse = ""), rep("", breakafter - 1)),
+#               ceiling((length(parelmts) - breakafter)/breakafter))
+#   )[1:length(parelmts)]
+#
+#   paste0(lb,
+#          matnam, "[", parindex, ", ", cols, "] * ", parnam, "[groups[", parindex, "], ", parelmts, "]",
+#          collapse = " + ")
+# }
 
 
 paste_ranef_predictor_gk <- function(parnam, parindex1, parindex2, matnam, parelmts, cols, indent, breakafter = 3) {
