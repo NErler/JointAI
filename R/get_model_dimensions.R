@@ -1,53 +1,35 @@
 
-get_1model_dim <- function(cols_main, hc_list, names_main){
+get_1model_dim <- function(lp_cols, modeltype, ncat) {
 
   K <- matrix(NA,
-              nrow = 4 + length(hc_list),
+              nrow = 2,
               ncol = 2,
-              dimnames = list(c("Xc", "Xic", names(hc_list), "Xl", "Xil"),
+              dimnames = list(c("Mc", "Ml"),
                               c("start", "end")))
 
-  if (length(cols_main$Xc) > 0) K["Xc", ] <- c(1, length(cols_main$Xc))
-  if (length(cols_main$Xic) > 0) K["Xic", ] <- c(1, length(cols_main$Xic)) + max(c(K, 0), na.rm = TRUE)
-  if (!is.null(hc_list) && length(hc_list) > 0) {
-    for (i in 1:length(hc_list)) {
-      K[names(hc_list)[i], ] <-
-        if (length(hc_list[[i]]) > 0) {
-          nef <- sapply(hc_list[[i]], function(x) {
-            mat <- attr(x, 'matrix')
-            col <- attr(x, 'column')
-            sum(col %in% cols_main[[mat]])
-          })
+  nlp <- if (modeltype %in% c('mlogit', 'mlogitmm')) ncat - 1 else 1
 
-          if (sum(nef) > 0) {
-            c(1, sum(nef)) + max(c(K, 0), na.rm = TRUE)
-          } else {
-            c(NA, NA)
-          }
-        } else {
-          c(NA, NA)
-        }
-    }
-  }
-  if (length(cols_main$Xl) > 0) K["Xl", ] <- c(1, length(cols_main$Xl)) + max(c(K, 0), na.rm = TRUE)
-  if (length(cols_main$Xil) > 0) K["Xil", ] <- c(1, length(cols_main$Xil)) + max(c(K, 0), na.rm = TRUE)
+  if (length(lp_cols$Mc) > 0) K["Mc", ] <- c(1, nlp * length(lp_cols$Mc))
+  if (length(lp_cols$Ml) > 0) K["Ml", ] <- c(1, nlp * length(lp_cols$Ml)) + max(c(K, 0), na.rm = TRUE)
+
   return(K)
 }
 
-get_model_dim <- function(cols_main, hc_list, names_main = NULL) {
-  if (is.list(cols_main)) {
-    Klist <- sapply(names(cols_main), function(i) {
-      get_1model_dim(cols_main = cols_main[[i]],
-                     hc_list = hc_list[names(hc_list) %in% names_main[[i]]$Z])
+
+
+get_model_dim <- function(lp_cols, Mlist) {
+  if (!is.list(lp_cols))
+    stop("lp_cols is not a list, but I expected a list!")
+
+    Klist <- sapply(names(lp_cols), function(i) {
+      get_1model_dim(lp_cols = lp_cols[[i]], modeltype = Mlist$models[i],
+                     ncat = length(levels(Mlist$refs[[i]])))
     }, simplify = FALSE)
 
-    for(i in 2:length(Klist)) {
+    for(i in seq_along(Klist)[-1]) {
       Klist[[i]] <- Klist[[i]] + max(Klist[[i-1]], na.rm = TRUE)
     }
     Klist
-  } else {
-    get_1model_dim(cols_main, hc_list)
-  }
 }
 
 
