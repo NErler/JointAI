@@ -113,11 +113,24 @@ paste_imp_priors <- function(imp_par_list) {
   do.call(imp_prior, imp_par_list)
 }
 
+# paste model ----------------------------------------------------------------
+paste_model <- function(info) {
+  modelfun <- switch(info$modeltype,
+                     glm = writemodel_glm,
+                     glmm = writemodel_glmm,
+                     clm = writemodel_clm,
+                     clmm = writemodel_clmm,
+                     coxph = writemodel_coxph,
+                     survreg = writemodel_survreg,
+                     JM = writemodel_JM)
+  do.call(modelfun, info)
+}
+
 
 # paste dummy variables --------------------------------------------------------
-paste_dummies <- function(categories, dest_mat, dest_col, dummy_mat, dummy_cols, index, ...){
+paste_dummies <- function(categories, dest_mat, dest_col, dummy_cols, index, ...){
   mapply(function(dummy_cols, categories) {
-    paste0(tab(4), dummy_mat, "[", index, ", ", dummy_cols, "] <- ifelse(", dest_mat,
+    paste0(tab(4), dest_mat, "[", index, ", ", dummy_cols, "] <- ifelse(", dest_mat,
            "[", index, ", ",
            dest_col, "] == ", categories, ", 1, 0)")
   }, dummy_cols, categories)
