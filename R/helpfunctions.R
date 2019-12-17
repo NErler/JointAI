@@ -182,16 +182,17 @@ melt_data.frame <- function(data, id.vars = NULL, varnames = NULL, valname = 'va
 
 
 melt_data.frame_list <- function(X, id.vars = NULL, varnames = NULL, valname = 'value') {
-  if (!inherits(X, 'list') || !all(sapply(X, inherits, 'data.frame')))
+  if (!inherits(X, 'list') || !all(sapply(X, inherits, 'data.frame') | sapply(X, inherits, 'NULL')))
     stop("This function may not work for objects that are not a list of data frames.")
 
-  Xnew <- lapply(X, melt_data.frame, varnames = varnames, id.vars = id.vars)
+  Xnew <- lapply(X[!sapply(X, is.null)],
+                 melt_data.frame, varnames = varnames, id.vars = id.vars)
 
   if (is.null(names(Xnew)))
     names(Xnew) <- seq_along(Xnew)
 
   Xnew <- lapply(names(Xnew), function(k) {
-    cbind(Xnew[[k]], L1 = k)
+    cbind(Xnew[[k]], L1 = k, stringsAsFactors = FALSE)
   })
 
   out <- do.call(rbind, Xnew)
@@ -307,3 +308,55 @@ get_knots_h0 <- function(nkn, Time, event, gkx, obs_kn = TRUE) {
   kn <- kn[kn < max(Time)]
   sort(c(rep(range(Time, outer(Time/2, gkx + 1)), 4), kn))
 }
+
+
+
+
+# prepare the outcome for the data_list to be passed to JAGS
+# outcomes: a data.frame containing covariates for which models are specified
+# analysis_type: string specifying the type of model
+prep_covoutcomes <- function(dat) {
+
+  nlev <- sapply(dat, function(x) length(levels(x)))
+
+  if (any(nlev > 2))
+    # ordinal variables have values 1, 2, 3, ...
+    dat[nlev > 2] <- sapply(dat[nlev > 2], as.numeric)
+
+  if (any(nlev == 2))
+    # binary variables have values 0, 1
+    dat[nlev == 2] <- sapply(dat[nlev == 2], as.numeric) - 1
+
+  data.matrix(dat)
+}
+
+
+#
+# outcome1 <- list(y = data.frame(y = rgamma(10, 1, 0.1)))
+# outcome2 <- list(y = data.frame(y = factor(sample(0:1, size = 10, replace = TRUE))))
+# outcome3 <- list(y = data.frame(y = factor(sample(1:4, size = 20, replace = TRUE), ordered = TRUE)))
+# outcome4 <- list(y = data.frame(y = factor(sample(1:4, size = 20, replace = TRUE), ordered = FALSE)))
+# outcome5 <- list("Surv(time, status)" = as.data.frame.matrix(survival::Surv(rgamma(10, 1, 0.1), rbinom(10, 1, 0.5))))
+# outcome6 <- list("cbind(x,y)" = data.frame(x = rnorm(10), y = rnorm(10)))
+# outcome7 <- list(x = data.frame(x = rnorm(10)),
+#                  y = data.frame(y = rnorm(10)))
+#
+# df <- data.frame(x = rnorm(10), y = rnorm(10), z = factor(rbinom(10, 1, 0.5)), a = factor(sample(1:3, 10, replace = T)))
+# outcome8 <- list("cbind(x,y)" = with(df, data.frame(x, y)),
+#                  "cbind(x,z)" = with(df, data.frame(x, z)),
+#                  "cbind(x,a)" = with(df, data.frame(x, a, z)))
+# outcome9 <- list("Surv(time, status)" = as.data.frame.matrix(survival::Surv(rgamma(10, 1, 0.1), rbinom(10, 1, 0.5))),
+#                  x = data.frame(x = rnorm(30)))
+#
+#
+# prep_outcome(outcomes = outcome1)
+# prep_outcome(outcomes = outcome2)
+# prep_outcome(outcomes = outcome3)
+# prep_outcome(outcomes = outcome4)
+# prep_outcome(outcomes = outcome5)
+# prep_outcome(outcomes = outcome6)
+# prep_outcome(outcomes = outcome7)
+# prep_outcome(outcomes = outcome8)
+# prep_outcome(outcomes = outcome9)
+
+
