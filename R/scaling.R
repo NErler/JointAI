@@ -1,4 +1,47 @@
 
+# Function to find the names of columns in the model matrix that are not integers
+# or have many different values
+find_scalevars <- function(mat) {
+
+  intgr <- apply(mat, 2, function(x) all(na.omit(as.integer(x) == x)))
+  lvls <- apply(mat, 2, function(x) length(unique(na.omit(x))))
+
+  return(!intgr | lvls > 20)
+}
+
+
+get_scale_pars <- function(mat, idvar, scale_vars) {
+
+  if (is.null(mat))
+    return(NULL)
+
+  vars <- find_scalevars(mat)
+
+  if (!is.null(scale_vars))
+    vars[vars %in% scale_vars]
+
+
+  do.call(rbind, sapply(names(vars), function(k) {
+    if (vars[k]) {
+      scaled <- if (check_tvar(mat[, k], idvar)) {
+        scale(mat[, k])
+      } else {
+        scale(mat[match(unique(idvar), idvar), k])
+      }
+      data.frame(center = attr(scaled, 'scaled:center'),
+                 scale = attr(scaled, 'scaled:scale')
+      )
+    } else {
+      data.frame(center = NA, scale = NA)
+    }
+  }, simplify = FALSE))
+}
+
+
+
+
+
+
 scale_matrix <- function(X, scale_vars, scale_pars, models, timevar) {
   Xsc <- X
   if (!is.null(X)) {
@@ -114,19 +157,3 @@ get_scaling <- function(Mlist, scale_pars, models, data) {
               scale_pars = scale_pars_new))
 }
 
-
-
-
-# Function to find the names of columns in the model matrix that involve
-# continuous covariates (and hence may need to be scaled)
-find_continuous <- function(fmla, data) {
-
-  fmla <- check_formula_list(fmla)
-
-  allvars <- all_vars(remove_LHS(fmla))
-
-  # check which variables involved are continuous
-  is_continuous <- !sapply(data[allvars], is.factor)
-
-  names(is_continuous)[is_continuous]
-}
