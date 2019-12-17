@@ -23,8 +23,62 @@ match_positions <- function(varname, DF, colnams) {
 
 
 
+match_interaction <- function(inter, Mc, Ml) {
+  Mcnam <- colnames(Mc)
+  Mlnam <- colnames(Ml)
+
+  out <- sapply(inter, function(i) {
+    elmts <- strsplit(i, ":")[[1]]
+
+    if (!any(is.na(c(match(i, c(Mcnam, Mlnam)),
+                     sapply(elmts, match, c(Mcnam, Mlnam)))))) {
+
+      inter_match <- c(
+        if (!is.na(match(i, Mcnam)))
+          setNames(match(i, Mcnam), 'Mc'),
+        if (!is.na(match(i, Mlnam)))
+          setNames(match(i, Mlnam), 'Ml')
+      )
+
+      elmt_match <- lapply(elmts, function(k) {
+        c(
+          if (!is.na(match(k, Mcnam)))
+            setNames(match(k, Mcnam), 'Mc'),
+          if (!is.na(match(k, Mlnam)))
+            setNames(match(k, Mlnam), 'Ml')
+        )})
 
 
+
+
+      if (any(is.na(Mc[, elmts[elmts %in% Mcnam]]),
+              is.na(Ml[, elmts[elmts %in% Mlnam]]))) {
+        structure(
+          list(
+            interterm = inter_match,
+            elmts = unlist(elmt_match)),
+          interaction = i, elements = elmts
+        )
+      }
+    }}, simplify = FALSE)
+
+  if (any(!sapply(out, is.null))) out[!sapply(out, is.null)]
+}
+
+
+# match_trafos <- function(fcts_mis, colnams, matname) {
+#   out <- sapply(seq_along(fcts_mis$colname), function(i) {
+#     if (!is.na(match(fcts_mis$colname[i], colnams)) &
+#         all(!is.na(match(fcts_mis$var[i], colnams)))) {
+#       list(
+#         fctterm = setNames(match(fcts_mis$colname[i], colnams), matname),
+#         vrble = setNames(match(fcts_mis$var[i], colnams), matname)
+#       )}},
+#     simplify = FALSE)
+#   names(out) <- fcts_mis$colname
+#
+#   if(any(!sapply(out, is.null))) out[!sapply(out, is.null)]
+# }
 
 # Generate pattern (used in get_hc_list) ---------------------------------------
 gen_pat <- function(nam) {
