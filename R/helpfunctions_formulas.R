@@ -91,6 +91,9 @@ extract_outcome <- function(fixed) {
 # formula: two-sided formula (no list of formulas!!!)
 extract_LHS <- function(formula) {
 
+  if(is.null(formula))
+    return(NULL)
+
   # check that formula is a formula object
   if (!inherits(formula, "formula")) {
     stop('The provided formula is not a "formula" object', call. = FALSE)
@@ -153,6 +156,7 @@ remove_grouping <- function(fmla) {
 
 
 
+# split fixed and random -------------------------------------------------------
 # split a lmer type formula into fixed and random part
 split_formula <- function(formula) {
   term_labels <- attr(terms(formula), "term.labels")
@@ -195,17 +199,33 @@ all_vars <- function(fmla) {
 # identify all functions in fixed and random effects formulas ------------------
 # fixed: two-sided formula or list of two-sided formulas
 # random: optional; one-sided formula or list of one-sided formulas
-identify_functions <- function(formula, random = NULL) {
+identify_functions <- function(formula) {
 
-  formula <- c(remove_LHS(formula),
-               remove_grouping(check_formula_list(random)))
+  formula <- check_formula_list(formula)
+
+  # fixed <- check_formula_list(fixed)
+  #
+  # LHSs <- if (any(unlist(sapply(fixed, attr, 'type')) == 'survival')) {
+  #   lapply(fixed[sapply(fixed, attr, 'type') != 'survival'], extract_LHS)
+  # } else {
+  #   lapply(fixed, extract_LHS)
+  # }
+  #
+  # fmla_outcomes <- if(!is.null(unlist(LHSs)))
+  #   as.formula(paste("~", paste0(unique(unlist(LHSs)), collapse = " + ")))
+  #
+  #
+  # formula <- c(fixed,
+  #              remove_grouping(check_formula_list(random)),
+  #              fmla_outcomes)
 
   if (is.null(formula))
     return(NULL)
 
 
   # get the term.labels from the formula and split by :
-  termlabs <- unlist(lapply(formula, function(x) attr(terms(x), "term.labels")))
+  termlabs <- unlist(lapply(formula, function(x)
+    if(!is.null(x)) attr(terms(x), "term.labels")))
   termlabs <- unique(unlist(strsplit(termlabs, ":")))
 
 
@@ -221,13 +241,13 @@ identify_functions <- function(formula, random = NULL) {
 
 
   # select only functions that are not operators or variable names
-  funs <- isfun[!names(isfun) %in% c("~", "+", "-", ":", "*", "(", "^", "/",
+  funs <- isfun[!names(isfun) %in% c("~", "+", "-", ":", "*", "(", "^", "/", "Surv",
                                      all_vars(formula)) & isfun]
 
   if (length(funs) > 0) {
     # for each function, extract formula elements containing it
     funlist <- sapply(names(funs), function(f) {
-      fl <- c(#grep(paste0("\\(", f, "\\("), x = termlabs, value = TRUE),
+      fl <- c(
         grep(paste0("^", f, "\\("), x = termlabs, value = TRUE),
         grep(paste0("[(+\\-\\*/] *", f, "\\("), x = termlabs, value = TRUE)
       )
@@ -239,89 +259,138 @@ identify_functions <- function(formula, random = NULL) {
     funlist <- funlist[!sapply(funlist, is.null)]
 
     # add main effects as function "identity"
-    if (any(!termlabs %in% unlist(funlist)))
-      funlist$identity <- termlabs[!termlabs %in% unlist(funlist)]
+    # (this is needed to be able to identify which variables need to occur in
+    # multiple versions in the design matrices)
+    # if (any(!termlabs %in% unlist(funlist)))
+    #   funlist$identity <- termlabs[!termlabs %in% unlist(funlist)]
 
     funlist
   }
 }
 
 
-extract_fcts <- function(formula, data, random = NULL, complete = FALSE) {
-  funlist <- identify_functions(formula, random = random)
-
-  if (is.null(funlist)) return(NULL)
-
-  # for each function, get all variables used in the expression
-  varlist <- lapply(funlist, function(x) {
+# make a list per function type, listing all functions and their element variables
+# funlist: a list of all functions by type (result of identify_functions())
+get_varlist <- function(funlist) {
+  lapply(funlist, function(x) {
     sapply(x, function(z) all.vars(as.formula(paste("~", z))), simplify = FALSE)
   })
-
-  # make a list of data.frames, one for each function, containing the
-  # expression and involved variables
-  fctList <- sapply(varlist, function(x) {
-    X_vars <- sapply(names(x), function(k)
-      colnames(model.matrix(as.formula(paste("~", k)), data))[-1],
-      simplify = FALSE)
-
-    df <- melt_list(x, varname = 'fct', valname = 'var')
-
-    if (any(sapply(X_vars, length) > 1))
-      df <- df[match(rep(names(X_vars), sapply(X_vars, length)), df$fct), ]
-
-    df$X_var <- unlist(X_vars)
-
-    df[, c("X_var", "var", 'fct')]
-  }, simplify = FALSE)
+}
 
 
-  # convert to data.frame
-  fctDF <- melt_list(fctList, varname = 'type')
 
-  # remove duplicates
-  fctDF <- subset(fctDF, subset= !duplicated(subset(fctDF, select = -type)))
 
-  # if chosen, remove functions only involving complete variables
-  if (complete == FALSE & nrow(fctDF) > 0) {
-    compl <- colSums(is.na(data[, fctDF$var, drop = FALSE])) == 0
-    partners <- sapply(fctDF$X_var,
-                       function(x) which(fctDF$X_var %in% x), simplify = FALSE)
-    anymis <- sapply(partners, function(x) any(!compl[x]))
-    fctDF <- if (any(anymis)) {
-      fctDF[anymis, , drop = FALSE]
-    }
+make_fctDF <- function(varlist_elmt, data) {
+
+  X_vars <- sapply(names(varlist_elmt), function(k)
+    colnames(split_outcome(k, data = data)),
+    simplify = FALSE)
+
+  df <- melt_list(varlist_elmt, varname = 'fct', valname = 'var')
+
+  if (any(sapply(X_vars, length) > sapply(varlist_elmt, length)))
+    df <- df[match(rep(names(X_vars), sapply(X_vars, length)), df$fct), ]
+
+  df$colname <- unlist(X_vars)
+    # df$X_var <- rep(unlist(X_vars), sapply(varlist_elmt, length))
+
+  df[, c("var", "colname", 'fct')]
+}
+
+
+
+# get data.frames per function type with infor for transformations
+# varlist: list with an element for each type of function; these elements are lists
+#          with an element per expressions using the function, which contains a
+#          vector of all variable names involved in the function, output from get_varlist()
+get_fctDFList <- function(varlist, data) {
+
+  if (!unique(sapply(varlist, is.list)))
+    varlist <- list(varlist)
+
+  sapply(varlist, make_fctDF, data = data, simplify = FALSE)
+}
+
+
+extract_fcts <- function(fixed, data, random = NULL, complete = FALSE) {
+
+  fixed <- check_formula_list(fixed)
+  random <- check_formula_list(random)
+
+  LHSs <- if (any(unlist(sapply(fixed, attr, 'type')) == 'survival')) {
+    lapply(fixed[sapply(fixed, attr, 'type') != 'survival'], extract_LHS)
   } else {
-    fctDF$compl <- colSums(is.na(data[, fctDF$var, drop = FALSE])) == 0
+    lapply(fixed, extract_LHS)
   }
 
+  fmla_outcomes <- if(!is.null(unlist(LHSs)))
+    as.formula(paste("~", paste0(unique(unlist(LHSs)), collapse = " + ")))
 
-  if (!is.null(fctDF)) {
-    # look for functions that involve several variables and occur multiple times in fctDF
-    dupl <- duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl'))]) |
-      duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl'))], fromLast = TRUE)
+  if (any(names(identify_functions(fmla_outcomes)) != 'identity'))
+      stop('Functions in the outcome are not allowed.')
 
-    fctDF$dupl <- FALSE
+  funlist <- list(covars = identify_functions(remove_LHS(fixed)),
+                  ranef = identify_functions(remove_grouping(random))
+  )
 
-    # identify which rows relate to the same expression in the formula
-    p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'compl'))], 1, paste, collapse = "")
+  fctDFlist <- sapply(funlist, function(fl) {
+    if (is.null(fl)) return(NULL)
 
-    for (k in which(dupl)) {
-      eq <- which(p == p[k])
-      ord <- order(sapply(data[fctDF$var[eq]], function(x)any(is.na(x))), decreasing = T)
+    # make a list of data.frames, one for each function, containing the
+    # expression and involved variables
+    fctList <- get_fctDFList(varlist = get_varlist(fl), data = data)
 
-      fctDF$dupl[eq[ord]] <- duplicated(p[eq[ord]])
+    # convert to data.frame
+    fctDF <- melt_list(fctList, varname = 'type')
+
+    # remove duplicates
+    subset(fctDF, subset= !duplicated(subset(fctDF, select = -c(type, fct))))
+  }, simplify = FALSE)
+
+  if (any(!sapply(fctDFlist, is.null))) {
+    fctDF <- subset(melt_data.frame_list(fctDFlist, id.vars = colnames(fctDFlist[[1]])),
+                    select = -rowID)
+
+  # if chosen, remove functions only involving complete variables
+    compl <- colSums(is.na(data[, fctDF$var, drop = FALSE])) == 0
+    partners <- sapply(fctDF$colname,
+                       function(x) which(fctDF$colname %in% x), simplify = FALSE)
+    anymis <- sapply(partners, function(x) any(!compl[x]))
+
+    fctDF$compl <- !anymis
+
+    if (complete == FALSE)
+      fctDF <- if (any(anymis)) fctDF[anymis, , drop = FALSE]
+
+
+    if (!is.null(fctDF)) {
+      # look for functions that involve several variables and occur multiple times in fctDF
+      dupl <- duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl'))]) |
+        duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl'))], fromLast = TRUE)
+
+      fctDF$dupl <- FALSE
+
+      # identify which rows relate to the same expression in the formula
+      p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'compl'))], 1, paste, collapse = "")
+
+      for (k in which(dupl)) {
+        eq <- which(p == p[k])
+        ord <- order(sapply(data[fctDF$var[eq]], function(x)any(is.na(x))), decreasing = T)
+
+        fctDF$dupl[eq[ord]] <- duplicated(p[eq[ord]])
+      }
+
+      # fctDF$dupl <- duplicated(fctDF[, -which(names(fctDF) == 'var')])
+
+      p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'dupl', 'compl'))], 1, paste, collapse = "")
+      fctDF$dupl_rows <- NA
+      fctDF$dupl_rows[which(dupl)] <- lapply(which(dupl), function(i) {
+        m <- unname(which(p == p[i]))
+        m[m != i]
+      })
+
+      fctDF
     }
-
-    # fctDF$dupl <- duplicated(fctDF[, -which(names(fctDF) == 'var')])
-
-    p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'dupl', 'compl'))], 1, paste, collapse = "")
-    fctDF$dupl_rows <- NA
-    fctDF$dupl_rows[which(dupl)] <- lapply(which(dupl), function(i) {
-      m <- unname(which(p == p[i]))
-      m[m != i]
-    })
-
-    fctDF
   }
 }
 
@@ -450,28 +519,137 @@ extract_fcts <- function(formula, data, random = NULL, complete = FALSE) {
 #
 #
 
-
-
 # extract the outcome data from the fixed effects formula ----------------------
-extract_outcome_data <- function(fixed, data) {
+
+split_outcome <- function(LHS, data) {
+  if(missing(data))
+    stop("No data provided")
+
+
+  if (grepl("^cbind\\(", LHS)) {
+    LHS2 <- gsub("\\)$", '', gsub('^cbind\\(', '', LHS))
+
+    splitpos <- c(gregexpr(',', text = LHS2)[[1]], nchar(LHS2) + 1)
+
+    if (splitpos[1] > 0) {
+      start <- 1
+      end <- splitpos[1] - 1
+      i <- 1
+      outlist <- list()
+      while(start <= splitpos[length(splitpos)]) {
+        fct <- substr(LHS2, start, end)
+        fct <- gsub(" $", '', gsub("^ ", '', fct))
+        var <- try(eval(parse(text = fct), env = data), silent = TRUE)
+        if (!inherits(var, 'try-error')) {
+          var <- data.frame(var)
+          names(var) <- if(ncol(var) > 1) {
+            paste0(fct, 1:ncol(var))
+          } else fct
+          outlist <- c(outlist, var)
+          start <- splitpos[i] + 1
+          end <- splitpos[i + 1] - ifelse(splitpos[i + 1] == nchar(LHS2), 0, 1)
+          i <- i + 1
+        } else {
+          end <- splitpos[i + 1] - 1#ifelse(splitpos[i + 1] == nchar(LHS2), 0, 1)
+          i <- i + 1
+        }
+      }
+      outdat <- as.data.frame(outlist)
+      names(outdat) <- names(outlist)
+
+    }} else {
+      outdat <- as.data.frame(eval(parse(text = LHS), env = data))
+      names(outdat) <- LHS
+    }
+
+  return(outdat)
+}
+
+
+# extract_outcome_data <- function(fixed, data) {
+#
+#   fixed <- check_formula_list(fixed)
+#
+#   outcomes <- outnams <- extract_outcome(fixed)
+#
+#   # set attribute "type" to identify survival outcomes
+#   for (i in seq_along(outnams)) {
+#     if (survival::is.Surv(eval(parse(text = names(outnams[i])), env = data))) {
+#       outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnams[i])), env = data))
+#       attr(fixed[[i]], "type") <- "survival"
+#     } else {
+#       outcomes[[i]] <- as.data.frame(eval(parse(text = names(outnams[i])), env = data))
+#         #subset(data, select = outnams[[i]])
+#       if (ncol(outcomes[[i]]) == 1)
+#         names(outcomes[[i]]) <- names(outnams[i])
+#
+#       # ordinal variables have values 1, 2, 3, ...
+#       outcomes[[i]][sapply(outcomes[[i]], function(x) length(levels(x)) > 2)] <-
+#         lapply(outcomes[[i]][sapply(outcomes[[i]],
+#                                     function(x) length(levels(x)) > 2)],
+#                function(x) as.numeric(x))
+#
+#       if (any(sapply(outcomes[[i]], function(x) length(levels(x)) == 2)))
+#         # binary variables have values 0, 1
+#         outcomes[[i]][sapply(outcomes[[i]], function(x) length(levels(x)) == 2)] <-
+#         lapply(outcomes[[i]][sapply(outcomes[[i]], function(x) length(levels(x)) == 2)],
+#                function(x) as.numeric(x) - 1)
+#
+#       attr(fixed[[i]], "type") <- "other"
+#       names(fixed)[i] <- outnams[i]
+#     }
+#   }
+#   return(list(fixed = fixed, outcomes = outcomes, outnams = outnams))
+# }
+#
+
+
+
+extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NULL) {
 
   fixed <- check_formula_list(fixed)
+
+  id <- extract_id(random, warn = warn)
+  # define/identify groups/clusters in the data
+  idvar <- if (!is.null(id)) {
+    data[, id]
+  } else {
+    1:nrow(data)
+  }
+
 
   outcomes <- outnams <- extract_outcome(fixed)
 
   # set attribute "type" to identify survival outcomes
-  for (i in seq_along(outnams)) {
+  for (i in seq_along(fixed)) {
     if (survival::is.Surv(eval(parse(text = names(outnams[i])), env = data))) {
       outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnams[i])), env = data))
-      attr(fixed[[i]], "type") <- "survival"
+      attr(fixed[[i]], "type") <- if (analysis_type == 'coxph') 'coxph' else "survreg"
+      names(fixed)[i] <- names(outnams[i])
     } else {
-      outcomes[[i]] <- as.data.frame(eval(parse(text = names(outnams[i])), env = data))
-      names(outcomes[[i]]) <- outnams[i]
-      attr(fixed[[i]], "type") <- "other"
+      outcomes[[i]] <- split_outcome(LHS = extract_LHS(fixed[[i]]), data = data)
+      nlev <- sapply(outcomes[[i]], function(x) length(levels(x)))
+      is_tvar <- sapply(outcomes[[i]], function(x) check_tvar(x, idvar))
+
+      if (any(nlev > 2)) {
+        # ordinal variables have values 1, 2, 3, ...
+        outcomes[[i]][which(nlev > 2)] <- lapply(outcomes[[i]][which(nlev > 2)],
+                                                 function(x) as.numeric(x))
+        attr(fixed[[i]], "type") <- ifelse(is_tvar, 'clmm', 'clm')
+      } else if (any(nlev == 2)) {
+          # binary variables have values 0, 1
+          outcomes[[i]][nlev == 2] <- lapply(outcomes[[i]][nlev == 2],
+                                             function(x) as.numeric(x) - 1)
+
+          attr(fixed[[i]], "type") <- ifelse(is_tvar, 'glmm_binary', 'glm_binary')
+      } else if (any(nlev == 0)) {
+          # continuous variables
+          attr(fixed[[i]], "type") <- ifelse(is_tvar, 'glmm_continuous', 'glm_continuous')
+      }
       names(fixed)[i] <- outnams[i]
     }
   }
-  return(list(fixed = fixed, outcomes = outcomes))
+  return(list(fixed = fixed, outcomes = outcomes, outnams = outnams))
 }
 
 
@@ -517,6 +695,9 @@ extract_outcome_data <- function(fixed, data) {
 
 # make a design matrix from a list of formulas
 model.matrix_combi <- function(fmla, data) {
+  fmla <- fmla[!sapply(fmla, is.null)]
+
+  fmla <- check_formula_list(fmla)
 
   mats <- mapply(model.matrix, object = fmla,
                  data = lapply(fmla, model.frame, data = data, na.action = na.pass),
@@ -531,4 +712,79 @@ model.matrix_combi <- function(fmla, data) {
   }
 
   return(X)
+}
+
+
+# make a design matrix from the outcomes of a list of formulas
+# (used in divide_matrices.R)
+# outcomes: list produced by extract_outcome_data()
+outcomes_to_mat <- function(outcomes) {
+
+  outlist <- unlist(unname(lapply(outcomes$outcomes, as.list)), recursive = FALSE)
+
+  if (any(duplicated(outlist))) {
+    d1 <- duplicated(outlist)
+    d2 <- duplicated(outlist, fromLast = TRUE)
+
+    d <- unique(unlist(outcomes$outnams)[d1 | d2])
+    stop(paste0("You can only specify one model per outcome.\n",
+                gettextf(
+                  if (length(d) == 1) {
+                    "The variable %s is used on the left hand side of more than one of the model formulas."
+                  } else {
+                    "The variables %s are used on the left hand side of more than one of the model formulas."
+                  }, paste0(dQuote(d), collapse = ", "))),
+         call. = FALSE)
+  }
+
+  return(data.matrix(as.data.frame(outlist, check.names = FALSE)))
+}
+
+
+
+get_linpreds <- function(fixed, random, data, models, auxvars = NULL, analysis_type = NULL) {
+
+  fixed <- check_formula_list(fixed)
+
+  # try to extract id variable from random
+  id <- extract_id(random)
+  idvar <- if (!is.null(id)) {
+    data[, id]
+  } else {
+    1:nrow(data)
+  }
+
+  allvars <- unique(c(all_vars(fixed),
+                      all_vars(remove_grouping(random)),
+                      all_vars(auxvars)))
+
+  covars <- allvars[!allvars %in% sapply(fixed, extract_LHS)]
+
+  subdat <- subset(data, select = covars)
+
+  lp <- sapply(fixed, function(fmla) {
+    if (attr(fmla, 'type') %in% c('clm', 'clmm', 'coxph')) {
+      colnam <- colnames(model.matrix(fmla, data))[-1]
+      if (length(colnam) > 0) colnam
+    } else {
+      colnames(model.matrix(fmla, data))
+    }
+  }, simplify = FALSE)
+
+
+
+  for (out in names(models)[!names(models) %in% names(fixed)]) {
+    nointercept <- models[out] %in% c('clmm', 'clm', 'coxph')
+    fmla <- as.formula(paste0(out, " ~ .", if(nointercept)'-1'))
+
+    lp[[out]] <- if (!check_tvar(data[, out], idvar)) {
+      colnames(
+        model.matrix(fmla, subset(subdat, select = !sapply(subdat, check_tvar, idvar)))
+        )
+    } else {
+      colnames(model.matrix(fmla, subdat))
+    }
+    subdat <- subset(subdat, select = - c(get(out)))
+  }
+  return(lp)
 }
