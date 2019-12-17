@@ -4,10 +4,12 @@ get_refs <- function(fmla, data, refcats = NULL) {
   # check if fmla is a list of formulas, otherwise make it a list
   fmla <- check_formula_list(fmla)
 
-  covars <- all_vars(remove_LHS(fmla))
+  # covars <- all_vars(remove_LHS(fmla))
+  allvars <- all_vars(fmla)
 
-  if (length(covars) > 0) {
-    factors <- covars[sapply(data[covars], is.factor)]
+
+  if (length(allvars) > 0) {
+    factors <- allvars[sapply(data[allvars], is.factor)]
 
     default <- "first"
 
