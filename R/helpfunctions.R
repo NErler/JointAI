@@ -6,7 +6,8 @@
 #' @return a logical value
 check_tvar <- function(x, idvar) {
   !all(sapply(split(x, idvar),
-              function(z) all(z == z[1], na.rm = TRUE)
+              function(z) identical(unname(z), rep(unname(z[1]), length(z)))
+              #all.equal(z == z[1], na.rm = TRUE)
   ))
 }
 
