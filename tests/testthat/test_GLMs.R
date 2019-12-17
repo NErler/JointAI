@@ -34,11 +34,11 @@ test_that('non-standard imputation models', {
                             data = NHANES, mess = FALSE)), "JointAI")
 
   expect_equal(class(lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
-                            models = c(bili = 'lognorm', creat = 'norm'),
+                            models = c(bili = 'lognorm', creat = 'lm'),
                             data = NHANES, mess = FALSE)), "JointAI")
 
   expect_equal(class(lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
-                            models = c(bili = 'gamma', creat = 'norm'),
+                            models = c(bili = 'glm_gamma_inverse', creat = 'lm'),
                             data = NHANES, mess = FALSE)), "JointAI")
 
 })
