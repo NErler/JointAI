@@ -1,7 +1,11 @@
 
 paste_ranefpreds <- function(ranefpreds, info) {
-  paste0(tab(4), "mu_b_", info$varname, "[", info$index, ", ", seq_along(ranefpreds), "] <- ",
-         ranefpreds, collapse = "\n")
+  if (length(ranefpreds) > 0) {
+    paste0(tab(4), "mu_b_", info$varname, "[", info$index[2], ", ", seq_along(ranefpreds), "] <- ",
+           ranefpreds, collapse = "\n")
+  } else {
+    paste0(tab(4), "mu_b_", info$varname, "[", info$index[2], ", 1] <- 0", collapse = "\n")
+  }
 }
 
 
@@ -66,20 +70,26 @@ get_ranefpreds <- function(info) {
   w <- which(!info$parelmts$Mc %in% in_rdslope)
 
   # random intercept:
-  ranefpreds[["(Intercept)"]] <- paste_predictor(parnam = info$parname, parindex = info$index,
-                                                 matnam = 'Mc',
-                                                 cols = info$lp$Mc[w],
-                                                 parelmts = info$parelmts$Mc[w],
-                                                 indent = 4 + nchar(info$varname) + 5 + 10)
+  if (length(info$lp$Mc[w]) > 0)
+    ranefpreds[["(Intercept)"]] <- paste_predictor(parnam = info$parname, parindex = info$index[2],
+                                                   matnam = 'Mc',
+                                                   cols = info$lp$Mc[w],
+                                                   scale_pars = info$scale_pars$Mc,
+                                                   parelmts = info$parelmts$Mc[w],
+                                                   indent = linkindent(info$link) + nchar(info$varname) + 14)
 
 
   wl <- which(!info$parelmts$Ml %in% in_rdslope)
 
-  Ml_predictor <- paste_predictor(parnam = info$parname, parindex = info$index,
-                                  matnam = 'Ml',
-                                  cols = info$lp$Ml[wl],
-                                  parelmts = info$parelmts$Ml[wl],
-                                  indent = 4 + nchar(info$varname) + 2 + 8)
+  Ml_predictor <- if (length(info$parelmts$Ml[wl]) > 0)
+    paste0(tab(4 + nchar(info$varname) + 2 + 8),
+           paste_predictor(parnam = info$parname, parindex = info$index[1],
+                           matnam = 'Ml',
+                           cols = info$lp$Ml[wl],
+                           scale_pars = info$scale_pars$Ml,
+                           parelmts = info$parelmts$Ml[wl],
+                           indent = 4 + nchar(info$varname) + 2 + 8)
+    )
 
 
   Z_predictor <- paste0(
@@ -89,7 +99,7 @@ get_ranefpreds <- function(info) {
              info$index, ", ",
              sapply(sapply(rdslopes, "[[", 'main_effect'), "[[", 'column'), "] * "
            ), ''),
-    'b_', info$varname, "[group[", info$index, "], ", seq_along(ranefpreds), "]",
+    'b_', info$varname, "[group[", info$index[1], "], ", seq_along(ranefpreds), "]",
     collapse = " + "
   )
 
@@ -99,6 +109,6 @@ get_ranefpreds <- function(info) {
 
   # ranefpreds
   return(list(ranefpreds = paste_ranefpreds(ranefpreds, info),
-              Ml_predictor = paste0(tab(4 + nchar(info$varname) + 2 + 8), Ml_predictor),
+              Ml_predictor = Ml_predictor,
               Z_predictor = Z_predictor))
 }
