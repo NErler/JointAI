@@ -348,7 +348,8 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE) {
   }, simplify = FALSE)
 
   if (any(!sapply(fctDFlist, is.null))) {
-    fctDF <- subset(melt_data.frame_list(fctDFlist, id.vars = colnames(fctDFlist[[1]])),
+    fctDF <- subset(melt_data.frame_list(fctDFlist,
+                                         id.vars = c('var', 'colname', 'fct', 'type')),
                     select = -rowID)
 
   # if chosen, remove functions only involving complete variables
