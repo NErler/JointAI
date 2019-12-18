@@ -11,12 +11,10 @@ write_model <- function(info_list, Mlist, modelfile = '') {
 
       '\n',
       if (!is.null(Mlist$interactions)) {
-        paste0(
-          tab(),
-          "for (i in 1:", Mlist$N, ") {\n",
-          paste0(sapply(Mlist$interactions, paste_interaction, index = 'i'), collapse = "\n"),
-          "\n", tab(), "}\n"
-        )},
+        paste0(tab(), "# Re-calculate interaction terms\n",
+               paste_interactions(Mlist$interactions, N = Mlist$N, Ntot = Mlist$Ntot)
+        )
+      },
       "\n}", file = modelfile
   )
 }
