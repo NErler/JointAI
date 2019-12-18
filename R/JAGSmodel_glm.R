@@ -18,6 +18,19 @@ JAGSmodel_glm <- function(info) {
                                   info$index, "])T(1e-15, 1 - 1e-15)")
   )
 
+
+  linkfun <- switch(info$link,
+                    "identity" = function(x) x,
+                    "logit"    = function(x) paste0("logit(", x, ")"),
+                    "probit"   = function(x) paste0("probit(", x, ")"),
+                    "log"      = function(x) paste0("log(", x, ")"),
+                    "cloglog"  = function(x) paste0("cloglog(", x, ")"),
+                    # "sqrt": JAGS does not have this link function
+                    "inverse"  = function(x)
+                      paste0(x, " <- 1/max(1e-10, inv_", x, ")", "\n",
+                             tab(4), "inv_", x)
+  )
+
   repar <- switch(info$family,
                   "gaussian" = NULL,
                   "binomial" = NULL,
@@ -50,17 +63,6 @@ JAGSmodel_glm <- function(info) {
   )
 
 
-  linkfun <- switch(info$link,
-                    "identity" = function(x) x,
-                    "logit"    = function(x) paste0("logit(", x, ")"),
-                    "probit"   = function(x) paste0("probit(", x, ")"),
-                    "log"      = function(x) paste0("log(", x, ")"),
-                    "cloglog"  = function(x) paste0("cloglog(", x, ")"),
-                    # "sqrt": JAGS does not have this link function
-                    "inverse"  = function(x)
-                      paste0(x, " <- 1/max(1e-10, inv_", x, ")", "\n",
-                             tab(4), "inv_", x)
-  )
 
   linkindent <- switch(info$link,
                        identity = 0,
