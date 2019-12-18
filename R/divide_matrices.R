@@ -361,8 +361,8 @@ divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars =
   M <- cbind(Y, X2[, setdiff(colnames(X2), colnames(Y)), drop = FALSE])
   tvarM <- apply(M, 2, check_tvar, groups)
 
-  Mc <- if (any(!tvarM)) M[, !tvarM]
-  Ml <- if (any(tvarM)) M[, tvarM]
+  Mc <- if (any(!tvarM)) M[, !tvarM, drop = FALSE]
+  Ml <- if (any(tvarM)) M[, tvarM, drop = FALSE]
 
   fcts_mis <- extract_fcts(fixed = fixed, data, random = random, complete = FALSE)
 
