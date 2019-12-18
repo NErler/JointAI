@@ -186,7 +186,7 @@ test_that('glme_imp', {
 test_that('poisson imputation', {
   testthat::skip_on_cran()
   expect_equal(class(lme_imp(y ~ C1 + C2 + p2 + time, random = ~time|id, data = longDF,
-                             models = c(p2 = "glmm_poisson"), n.iter = 100)),
+                             models = c(p2 = "glmm_poisson_log"), n.iter = 100)),
                "JointAI")
 })
 
