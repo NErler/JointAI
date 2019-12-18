@@ -292,10 +292,11 @@
 
 # split the data into matrices and obtain other relevant info for the further steps
 
-divide_matrices <- function(data, fixed, analysis_type, random = NULL, auxvars = NULL,
-                            scale_vars = NULL, refcats = NULL, models = NULL, warn = TRUE,
-                            mess = TRUE, ppc = TRUE, ridge = FALSE, timevar = NULL,
-                            no_model = NULL, ...) {
+divide_matrices <- function(data, fixed, random = NULL, analysis_type,
+                            auxvars = NULL, scale_vars = NULL, refcats = NULL,
+                            models = NULL,  timevar = NULL, no_model = NULL,
+                            ppc = TRUE, ridge = FALSE,
+                            warn = TRUE, mess = TRUE, ...) {
 
   # id's and groups ------------------------------------------------------------
   # extract the id variable from the random effects formula
