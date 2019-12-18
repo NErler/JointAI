@@ -225,11 +225,46 @@ linkindent <- function(link) {
 }
 
 # interaction terms ------------------------------------------------------------
-paste_interaction <- function(int, index) {
-  paste0(names(int$interterm), "[", index, ", ", int$interterm ,"] <- ",
-         paste0(names(int$elmts), "[", index, ", ", int$elmts, "]", collapse = " * ")
+# paste_interaction <- function(int, index) {
+#   paste0(names(int$interterm), "[", index, ", ", int$interterm ,"] <- ",
+#          paste0(names(int$elmts), "[", index, ", ", int$elmts, "]", collapse = " * ")
+#   )
+# }
+
+paste_interactions <- function(interactions, N, Ntot) {
+  interlong <- sapply(interactions, function(x)
+    any(names(unlist(unname(x))) %in% 'Ml'))
+
+  c(
+    if (any(interlong)) {
+      paste0(
+        tab(),
+        "for (j in 1:", Ntot, ") {\n",
+        paste0(
+          sapply(interactions, function(x) {
+            paste0(tab(4), names(x$interterm), "[j, ", x$interterm, "] <- ",
+                   paste0(names(x$elmts), "[", ifelse(names(x$elmts) == 'Ml', 'j', 'group[j]'),
+                          ", ", x$elmts, "]", collapse = " * ")
+            )
+          }), collapse = "\n"),
+        "\n", tab(), "}\n")
+    },
+    if (any(!interlong)) {
+      paste0(
+        tab(),
+        "for (i in 1:", N, ") {\n",
+        paste0(
+          sapply(interactions, function(x) {
+            paste0(tab(4), names(x$interterm), "[j, ", x$interterm, "] <- ",
+                   paste0(names(x$elmts), "[i]", ", ", x$elmts, "]", collapse = " * ")
+            )
+          }), collapse = "\n"),
+        "\n", tab(), "}\n")
+    }
   )
 }
+
+
 
 #
 #
