@@ -609,7 +609,7 @@ get_model_info <- function(Mlist, K, K_imp, trunc) {
          lp = lp,
          parelmts = parelmts,
          scale_pars = scale_pars,
-         index = ifelse(resp_mat == 'Ml', 'j', 'i'),
+         index = if (resp_mat == 'Ml') c('j', 'i') else 'i',
          parname = ifelse(k %in% names(Mlist$fixed), 'beta', 'alpha'),
          hc_list = Mlist$hc_list[[k]],
          trafos = trafos,
