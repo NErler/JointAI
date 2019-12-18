@@ -13,7 +13,7 @@ JAGSmodel_clm <- function(info) {
 
   paste_ppc <- if (info$ppc) {
     paste0(
-      tab(4), info$varname, "_ppc[j] ~ dcat(p_", info$varname, "[", info$index, ", 1:", info$ncat, "])", "\n"
+      tab(4), info$varname, "_ppc[", info$index, "] ~ dcat(p_", info$varname, "[", info$index, ", 1:", info$ncat, "])", "\n"
     )
   }
 
