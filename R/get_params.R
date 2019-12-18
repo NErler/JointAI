@@ -99,17 +99,17 @@ get_params <- function(Mlist, info_list, data,
                   if (ranef_main) paste0("b_", long_main),
                   if (invD_main)
                     sapply(list_main[long_main], function(x)
-                      sapply(1:length(x$hc_list), function(i)
+                      sapply(1:max(1, length(x$hc_list)), function(i)
                         paste0("invD_", x$varname, "[", 1:i, ", ", i, "]")
                       )),
                   if (D_main)
                     sapply(list_main[long_main], function(x)
-                      sapply(1:length(x$hc_list), function(i)
+                      sapply(1:max(1, length(x$hc_list)), function(i)
                         paste0("D_", x$varname, "[", 1:i, ", ", i, "]")
                       )),
                   if (RinvD_main)
                     sapply(list_main[long_main], function(x)
-                      paste0("RinvD_", x$varname, "[", 1:length(x$hc_list), ",", 1:length(x$hc_list), "]")
+                      paste0("RinvD_", x$varname, "[", 1:max(1, length(x$hc_list)), ",", 1:max(1, length(x$hc_list)), "]")
                     )
                 )
               },
@@ -136,17 +136,17 @@ get_params <- function(Mlist, info_list, data,
                   if (ranef_other) paste0("b_", long_other),
                   if (invD_other)
                     sapply(list_other[long_other], function(x)
-                      sapply(1:length(x$hc_list), function(i)
+                      sapply(1:max(1, length(x$hc_list)), function(i)
                         paste0("invD_", x$varname, "[", 1:i, ", ", i, "]")
                       )),
                   if (D_other)
                     sapply(list_other[long_other], function(x)
-                      sapply(1:length(x$hc_list), function(i)
+                      sapply(1:max(1, length(x$hc_list)), function(i)
                         paste0("D_", x$varname, "[", 1:i, ", ", i, "]")
                       )),
                   if (RinvD_other)
                     sapply(list_other[long_other], function(x)
-                      paste0("RinvD_", x$varname, "[", 1:length(x$hc_list), ",", 1:length(x$hc_list), "]")
+                      paste0("RinvD_", x$varname, "[", 1:max(1, length(x$hc_list)), ",", 1:max(1, length(x$hc_list)), "]")
                     )
                 )
               },
