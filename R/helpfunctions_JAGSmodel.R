@@ -146,35 +146,26 @@ paste_trafos <- function(dest_col, trafo_cols, trafos, Xmat, index, ...) {
 
 
 # random effects specifications ------------------------------------------------
-ranef_priors <- function(Zcols, varnam = NULL){
-  modnam <- if (!is.null(varnam))
-    paste0(" for ", varnam)
-
-  if (!is.null(varnam))
-    varnam <- paste0("_", varnam)
-
+ranef_priors <- function(nranef, varname) {
+  invD_distr <- if (nranef == 1) {
+    "dgamma(shape_diag_RinvD, rate_diag_RinvD)"
+  } else {
+    paste0("dwish(RinvD_", varname, "[ , ], KinvD_", varname, ")")
+  }
 
   paste0("\n",
-    tab(), "# Priors for the covariance of the random effects", modnam, "\n",
-    if (Zcols > 1) {
-      paste0(
-        tab(), "for (k in 1:", Zcols, "){", "\n",
-        tab(4), "RinvD", varnam, "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)", "\n",
-        tab(), "}", "\n")
-    },
-    tab(), "invD", varnam, "[1:", Zcols, ", 1:", Zcols,"] ~ ", invD_distr(Zcols, varnam), "\n",
-    tab(), "D", varnam, "[1:", Zcols,", 1:", Zcols, "] <- inverse(invD", varnam, "[ , ])"
+         if (nranef > 1) {
+           paste0(
+             tab(), "for (k in 1:", nranef, "){", "\n",
+             tab(4), "RinvD_", varname, "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)", "\n",
+             tab(), "}", "\n")
+         },
+         tab(), "invD_", varname, "[1:", nranef, ", 1:", nranef,"] ~ ", invD_distr, "\n",
+         tab(), "D_", varname, "[1:", nranef,", 1:", nranef, "] <- inverse(invD_", varname, "[ , ])"
   )
 }
 
 
-invD_distr <- function(Zcols, varnam = NULL){
-  if (Zcols == 1) {
-    "dgamma(shape_diag_RinvD, rate_diag_RinvD)"
-  } else {
-    paste0("dwish(RinvD", varnam, "[ , ], KinvD", varnam, ")")
-  }
-}
 
 paste_rdslopes <- function(nranef, hc_list, K){
   if (nranef > 1) {
