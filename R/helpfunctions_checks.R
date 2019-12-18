@@ -9,7 +9,7 @@ check_vars_in_data <- function(datanames, fixed = NULL, random = NULL, auxvars =
 
   if (any(!allvars %in% datanames)) {
     stop(gettextf("Variable(s) %s were not found in the data." ,
-                  paste(dQuote(allvars[!allvars %in% names(data)]), collapse = ", ")),
+                  paste(dQuote(allvars[!allvars %in% datanames]), collapse = ", ")),
          call. = FALSE)
   }
 }
