@@ -1,17 +1,31 @@
 
 
-get_data_list <- function(Mlist) {
+get_data_list <- function(Mlist, info_list) {
 
   l <- Mlist[c('Mc', 'Ml')]
 
 
   # scaling parameters
-  if (any(is.na(Mlist$scale_pars$Mc)))
+  if (any(!is.na(Mlist$scale_pars$Mc)))
     l$spMc <- Mlist$scale_pars$Mc
-  if (any(is.na(Mlist$scale_pars$Ml)))
+  if (any(!is.na(Mlist$scale_pars$Ml)))
     l$spMl <- Mlist$scale_pars$Ml
 
   l <- c(l, unlist(unname(default_hyperpars()[1:8])))
+
+  if (any(sapply(info_list, '[[', 'modeltype') %in% c('glmm', 'clmm', 'mlogitmm'))) {
+    l <- c(l, default_hyperpars()$ranef[c('shape_diag_RinvD', 'rate_diag_RinvD')])
+    l$group <- Mlist$groups
+
+    l <- c(l,
+           unlist(lapply(info_list[sapply(info_list, '[[', 'modeltype') %in% c('glmm', 'clmm', 'mlogitmm')],
+                  function(x) {
+                    setNames(default_hyperpars()$ranef$wish(nranef = max(1, length(x$hc_list))),
+                             paste(c("RinvD", "KinvD"), x$varname, sep = "_")
+                    )
+                  }))
+    )
+  }
   return(l)
 }
 
