@@ -212,6 +212,17 @@ capitalize <- function(string) {
 }
 
 
+linkindent <- function(link) {
+  if (is.null(link)) 0
+  else
+    switch(link,
+           identity = 0,
+           logit = 7,
+           probit = 8,
+           log = 5,
+           cloglog = 9,
+           inverse = 4)
+}
 
 # interaction terms ------------------------------------------------------------
 paste_interaction <- function(int, index) {
