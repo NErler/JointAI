@@ -439,7 +439,7 @@ get_model_info <- function(Mlist, K, K_imp, trunc) {
             K[[k]][i, 1]:K[[k]][i, 2]
           }
         }
-      })
+      }, simplify = FALSE)
     } else {
       sapply(rownames(K_imp[[k]]), function(i) {
         if (!any(is.na(K_imp[[k]][i, ]))) {
@@ -451,7 +451,7 @@ get_model_info <- function(Mlist, K, K_imp, trunc) {
             K_imp[[k]][i, 1]:K_imp[[k]][i, 2]
           }
         }
-      })
+      }, simplify = FALSE)
     }
 
 
