@@ -35,11 +35,11 @@ prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 
 
 # @param x object of class JointAI
-get_Dmat <- function(x) {
+get_Dmat <- function(x, varname) {
   MCMC <- prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL,
                     exclude_chains = NULL, warn = TRUE, mess = TRUE)
 
-  Ds <- grep("^D\\[[[:digit:]]*,[[:digit:]]*\\]", colnames(MCMC), value = TRUE)
+  Ds <- grep(paste0("^D\\_", varname, "\\[[[:digit:]]*,[[:digit:]]*\\]"), colnames(MCMC), value = TRUE)
   Dpos <- t(sapply(strsplit(gsub('D|\\[|\\]', '', Ds), ","), as.numeric))
 
   term <- terms(remove_grouping(x$random))
