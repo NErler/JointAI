@@ -281,7 +281,7 @@
 #' @name model_imp
 NULL
 
-model_imp <- function(fixed, data, random = NULL, family,
+model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                       monitor_params = NULL, auxvars = NULL, timevar = NULL,
                       refcats = NULL,
