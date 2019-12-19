@@ -558,7 +558,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
                         parallel = parallel,
                         n.cores = if (parallel) n.cores)
 
-  attr(analysis_type, "family") <- family
+
+  # attr(analysis_type, "family") <- family
   # attr(analysis_type, "link") <- link
 
   # set contrasts back to what they were
@@ -575,14 +576,15 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
                             if (!'analysis_main' %in% names(monitor_params))
                               setNames(TRUE, 'analysis_main')),
          data_list = data_list,
-         scale_pars = scale_pars,
          hyperpars = hyperpars,
-         imp_par_list = imp_par_list,
+         info_list = info_list,
+         coef_list = get_coef_names(info_list),
          model = if (n.adapt > 0) adapt,
          sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
          MCMC = if (n.iter > 0 & !is.null(mcmc)) as.mcmc.list(MCMC),
          time = t1 - t0
     ), class = "JointAI")
+
 
   object$fitted.values <- try(predict(object, type = 'response')$fit, silent = TRUE)
   object$residuals <- try(residuals(object, type = 'working'),
