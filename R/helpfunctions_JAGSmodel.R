@@ -255,8 +255,8 @@ paste_interactions <- function(interactions, N, Ntot) {
         "for (i in 1:", N, ") {\n",
         paste0(
           sapply(interactions, function(x) {
-            paste0(tab(4), names(x$interterm), "[j, ", x$interterm, "] <- ",
-                   paste0(names(x$elmts), "[i]", ", ", x$elmts, "]", collapse = " * ")
+            paste0(tab(4), names(x$interterm), "[i, ", x$interterm, "] <- ",
+                   paste0(names(x$elmts), "[i", ", ", x$elmts, "]", collapse = " * ")
             )
           }), collapse = "\n"),
         "\n", tab(), "}\n")
