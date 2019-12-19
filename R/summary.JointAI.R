@@ -39,7 +39,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                     subset = subset, exclude_chains = exclude_chains,
                     warn = warn, mess = mess, ...)
 
-  # create results matrix
+  # create results matrices
   statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.", "GR-crit")
   stats <- matrix(nrow = length(colnames(MCMC)),
                   ncol = length(statnames),
@@ -177,19 +177,22 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   MCMC <- prep_MCMC(object, start, end, thin, subset, exclude_chains = exclude_chains,
                     mess = mess, warn = warn)
 
-  coefs <- colMeans(MCMC)[intersect(colnames(MCMC),
-                                    get_coef_names(object$Mlist, object$K)[, 2])]
 
-  if (object$analysis_type %in% c('clm', 'clmm')) {
-    interc <- colMeans(MCMC)[grep(paste0('gamma_', colnames(object$Mlist$y), "\\["),
-                                  colnames(MCMC))]
+  coefs <- sapply(names(object$fixed), function(k) {
+    x <- object$coef_list[[k]]
 
-    lvl <- levels(object$data[, colnames(object$Mlist$y)])
-    names(interc) <- paste(colnames(object$Mlist$y), "\u2264",
-                                    lvl[-length(lvl)])
+    c(
+      if (object$info_list[[k]]$modeltype %in% c('clm', 'clmm')) {
+        interc <- colMeans(MCMC)[grep(paste0('gamma_', k, "\\["), colnames(MCMC))]
 
-    coefs <- c(interc, coefs)
-  }
+        lvl <- levels(object$Mlist$refs[[k]])
+        names(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
+      },
+      setNames(colMeans(MCMC[, intersect(colnames(MCMC), x$coef)]),
+               x$varname[match(x$coef, intersect(colnames(MCMC), x$coef))]
+      )
+    )
+  }, simplify = FALSE)
 
   return(coefs)
 }
@@ -257,21 +260,26 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
   print(x$call)
 
   if (!is.null(MCMC)) {
-    if (x$analysis_type != "lme")
-      cat("\n\nCoefficients:\n")
-    else
-      cat("\n\nFixed effects:\n")
-    print(coef(x), digits = digits)
+    coefs <- coef(x)
 
-    if (x$analysis_type == 'lme') {
-      cat("\n\nRandom effects covariance matrix:\n")
-      print(get_Dmat(x), digits = digits)
-    }
+    for (k in seq_along(coefs)) {
+      if (x$info_list[[names(coefs)[k]]]$modeltype %in% c('glmm', 'clmm', 'mlogitmm')) {
+        cat("\n\nFixed effects of the model for ", names(coefs)[k], ":\n")
+        print(coefs[[k]], digits = digits)
 
-    if (paste0("sigma_", names(x$Mlist$y)) %in% colnames(MCMC)) {
-      cat("\n\nResidual standard deviation:\n")
-      print(colMeans(MCMC[, paste0("sigma_", names(x$Mlist$y)), drop = FALSE]),
-            digits = digits)
+        cat("\n\nRandom effects covariance matrix:\n")
+        print(get_Dmat(x, varname = names(coefs)[k]), digits = digits)
+
+      } else {
+        cat("\n\nCoefficients of the model for ", names(coefs)[k], ":\n")
+        print(coefs[[k]], digits = digits)
+      }
+
+      if (paste0("sigma_", names(coefs)[k]) %in% colnames(MCMC)) {
+        cat("\n\nResidual standard deviation:\n")
+        print(colMeans(MCMC[, paste0("sigma_", names(coefs)[k]), drop = FALSE]),
+              digits = digits)
+      }
     }
   } else {
     cat("\n(The object does not contain an MCMC sample.)")
