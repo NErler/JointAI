@@ -298,15 +298,28 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
                       imp_par_list = NULL,  data_list = NULL, ...) {
 
 
-  # checks & warnings -------------------------------------------------------
 
-  # Warning if random is provided in a model where it is not used (and set random = NULL)
-  if (!analysis_type %in% c("lme", "glme", "clmm", "JM") & !is.null(random)) {
-    if (warn)
-      warning(gettextf("Random effects structure not used in a model of type %s.",
-                       sQuote(analysis_type)), immediate. = TRUE, call. = FALSE)
-    random <- NULL
+  # checks & warnings -------------------------------------------------------
+  # if only "formula" is provided, split it into fixed and random parts
+  if (!is.null(formula) & any(!is.null(fixed), !is.null(random))) {
+    stop(paste("When the argument", dQuote("formula"),
+               "is provided, the arguments", dQuote("fixed"), "and",
+               dQuote("random"), "should not be used."), call. = FALSE)
   }
+
+  if (!is.null(formula) & is.null(fixed) & is.null(random)) {
+    fixed <- split_formula_list(formula)$fixed
+    random <- split_formula_list(formula)$random
+  }
+
+
+  # # Warning if random is provided in a model where it is not used (and set random = NULL)
+  # if (!analysis_type %in% c("lme", "glme", "clmm", "JM") & !is.null(random)) {
+  #   if (warn)
+  #     warning(gettextf("Random effects structure not used in a model of type %s.",
+  #                      sQuote(analysis_type)), immediate. = TRUE, call. = FALSE)
+  #   random <- NULL
+  # }
 
 
   # Message if no MCMC sample will be produced.
