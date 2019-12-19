@@ -172,18 +172,19 @@ test_that('split_formula_list works', {
 # identify_functions ------------------------------------------------------------
 library(splines)
 fmls <- list(list(formula = y ~ I(a^2) + b + log(a),
-                  fcts = list(I = "I(a^2)", log = "log(a)", identity = "b")),
+                  fcts = list(I = "I(a^2)", log = "log(a)", identity = c("b", "y"))),
              list(formula = out ~ log(x) + log(y) + log(x + z) + y*z,
                   fcts = list(log = c("log(x)", "log(y)", "log(x + z)"),
-                              identity = c('y', 'z'))),
+                              identity = c('y', 'z', 'out'))),
              list(formula = y ~ ns(a, df = 3)*exp(log(z)) + ns(b, df = 2) + I(a^2/log(x) + 23*x*z),
                   fcts = list(ns = c("ns(a, df = 3)", "ns(b, df = 2)"),
                               exp = "exp(log(z))",
                               log = c("exp(log(z))", "I(a^2/log(x) + 23 * x * z)"),
-                              I = "I(a^2/log(x) + 23 * x * z)")),
+                              I = "I(a^2/log(x) + 23 * x * z)",
+                              identity = "y")),
              list(formula = log(abc) ~ xy + zb + bs(a, df = 2),
-                  fcts = list(bs = "bs(a, df = 2)", identity = c('xy', 'zb'))),
-             list(formula = Surv(time, status) ~ (x+z+k)^3 + plogis(m),
+                  fcts = list(log = "log(abc)", bs = "bs(a, df = 2)", identity = c('xy', 'zb'))),
+             list(formula = structure(Surv(time, status) ~ (x+z+k)^3 + plogis(m), type = 'survival'),
                   fcts = list(plogis = "plogis(m)", identity = c('x', 'z', 'k'))),
              list(formula = NULL, fcts = NULL)
 )
@@ -195,3 +196,100 @@ test_that('identify_functions works', {
   }
 })
 
+
+# !!! test for get_varlist ------------------------------------------------------------------
+
+
+# !!! test for get_fctDFList ----------------------------------------------------------------
+# funlist <- list(log = c('log(p1)', "log(C1 + p1)"),
+#                 sqrt = c("sqrt(C1)"),
+#                 bs = c("bs(C1, df = 3)"),
+#                 I = c("I(C1 + plogis(C2)^2)"),
+#                 plogis = c("I(C1 + plogis(C2)^2)")
+# )
+#
+#
+# varlist <- get_varlist(funlist)
+#
+# DFlist <- list(log = data.frame(X_var = ))
+#
+# for(i in seq_along(varlist)) {
+#   get_fctDFList(varlist[[i]], data = longDF)
+# }
+#
+# get_fctDFList(varlist, data = longDF)
+
+
+# !!! tests for extract_fcts() -----------------------------------------------
+
+
+# !!! test for split_outcome() -------------------------------------------------
+
+# extract_outcome_data() -------------------------------------------------------
+fmla <- list('C1' = list(fixed = C1 ~ C2 + B1,
+                         outcome = data.frame(C1 = longDF$C1)),
+             'cbind(C2, B1)' = list(fixed = cbind(C2, B1) ~ M2,
+                                    outcome = data.frame(C2 = longDF$C2,
+                                                         B1 = as.numeric(longDF$B1) - 1)),
+             'Surv(c1, b1)' = list(fixed = Surv(c1, b1) ~ O1 + C1,
+                                   outcome = as.data.frame.matrix(with(longDF, Surv(c1, b1)))),
+             'log(p2)' = list(fixed = log(p2) ~ c1 + b1,
+                              outcome = data.frame(`log(p2)` = log(longDF$p2), check.names = FALSE)),
+             'cbind(c2, log(p1))' = list(fixed = cbind(c2, log(p1)) ~ M2,
+                                         outcome = data.frame(c2 = longDF$c2,
+                                                              'log(p1)' = log(longDF$p1), check.names = FALSE))
+)
+
+test_that("extract_outcome_data works", {
+  for (i in seq_along(fmla)) {
+    expect_equal(extract_outcome_data(fmla[[i]]$fixed, data = longDF)$outcome[[1]],
+                 fmla[[i]]$outcome)
+  }
+
+  expect_equal(extract_outcome_data(lapply(fmla, "[[", "fixed"), data = longDF)$outcome,
+               lapply(fmla, "[[", 'outcome'))
+})
+
+# model.matrix_combi() ---------------------------------------------------------
+
+test_that('model.matrix_combi works', {
+  opt <- options(contrasts = rep("contr.treatment", 2))
+
+  fmla_combi <- as.formula(paste("~", paste0(unique(unlist(
+    lapply(fmla, function(x) attr(terms(x$fixed), 'term.labels')))),
+    collapse = " + ")))
+
+  X <- model.matrix(fmla_combi,
+                    model.frame(fmla_combi, data = longDF, na.action = na.pass),
+                    )
+
+  attr(X, 'assign') <- NULL
+  attr(X, 'contrasts') <- NULL
+
+  expect_equal(
+    model.matrix_combi(fmla = lapply(fmla, "[[", 'fixed'), data = longDF),
+    X
+  )
+  options(opt)
+})
+
+
+# outcomes_to_mat() ------------------------------------------------------------
+test_that("outcomes_to_mat works", {
+  mat <- data.matrix(do.call(cbind, unname(lapply(fmla, "[[", "outcome"))))
+  dimnames(mat) <- list(c(), dimnames(mat)[[2]])
+  expect_equal(outcomes_to_mat(extract_outcome_data(lapply(fmla, "[[", "fixed"), data = longDF)),
+               mat)
+})
+
+test_that("outcomes_to_mat gives error with duplicate outcome", {
+  fmla_err <- list('C1' = list(fixed = C1 ~ C2 + B1,
+                           outcome = subset(longDF, select = "C1")),
+               'cbind(C1, B1)' = list(fixed = cbind(C1, B1) ~ M2,
+                                      outcome = subset(longDF, select = c("C1", "B1"))),
+               'Surv(c1, B1)' = list(fixed = Surv(c1, B1) ~ O1 + C1,
+                                     outcome = as.data.frame.matrix(with(longDF, Surv(c1, B1))))
+  )
+
+  expect_error(outcomes_to_mat(extract_outcome_data(lapply(fmla_err, "[[", "fixed"), data = longDF)))
+})
