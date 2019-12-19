@@ -428,17 +428,11 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
   }
 
   if (!file.exists(modelfile) || (file.exists(modelfile) & overwrite == TRUE)) {
-    Ntot <- length(data_list[[names(Mlist$outcomes)]])
-
-    write_model(analysis_type = analysis_type, family = family,
-                models = models,
-                Ntot = Ntot, Mlist = Mlist,
-                K = K,
-                imp_par_list = imp_par_list,
-                file = modelfile)
+    write_model(info_list = info_list, Mlist = Mlist, modelfile = modelfile)
   }
 
 
+  print('inits')
   # initial values -------------------------------------------------------------
   # * check if initial values are supplied or should be generated
   if (!(is.null(inits) | inherits(inits, c("function", "list")))) {
@@ -448,24 +442,24 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
     inits <- NULL
   }
 
-if (!is.null(inits)) {
-  if (inherits(inits, 'function')) {
-    # if (!is.null(seed) | parallel) {
+  if (!is.null(inits)) {
+    if (inherits(inits, 'function')) {
       if (!is.null(seed)) set.seed(seed)
       inits <- replicate(n.chains, inits(), simplify = FALSE)
-    # }
+    }
+    if (inherits(inits, "list")) {
+      if (!any(c('.RNG.name', '.RNG.seed') %in% unlist(lapply(inits, names))))
+        inits <- mapply(function(inits, rng) c(inits, rng), inits = inits,
+                        rng = get_RNG(seed, n.chains),
+                        SIMPLIFY = FALSE)
+    }
+  } else {
+    inits <- get_RNG(seed, n.chains)
   }
-  if (inherits(inits, "list")) {
-    if (!any(c('.RNG.name', '.RNG.seed') %in% unlist(lapply(inits, names))))
-      inits <- mapply(function(inits, rng) c(inits, rng), inits = inits,
-                      rng = get_RNG(seed, n.chains),
-                      SIMPLIFY = FALSE)
-  }
-} else {
-  inits <- get_RNG(seed, n.chains)
-}
-  # parameters to monitor ------------------------------------------------------
 
+
+  # parameters to monitor ------------------------------------------------------
+  print('monitor params')
   if (is.null(monitor_params)) {
     monitor_params <- c("analysis_main" = TRUE)
   } else {
@@ -527,29 +521,28 @@ if (!is.null(inits)) {
     warning('There is no mcmc sample. Something went wrong.',
             call. = FALSE, immediate. = TRUE)
 
+  print('post processing')
   # post processing ------------------------------------------------------------
   if (n.iter > 0 & !is.null(mcmc)) {
     MCMC <- mcmc
 
-    coefs <- try(get_coef_names(Mlist, K))
+    coefs <- try(get_coef_names(info_list))
 
-    if (!inherits(coefs, "try-error")) {
-    for (k in 1:length(MCMC)) {
-      # change names of MCMC to variable names where possible
-      # colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <-
-      #   coefs[na.omit(match(colnames(MCMC[[k]]), coefs[, 1])), 2]
-
-      if (!is.null(scale_pars)) {
-        # re-scale parameters
-        MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
-                                    scale_pars, MCMC[[k]], Mlist$refs,
-                                    Mlist$names_main, coefs = coefs))
-
-        attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
-      }
-    }
-    }
+    # if (!inherits(coefs, "try-error")) {
+    # for (k in 1:length(MCMC)) {
+    #   if (!is.null(Mlist$scale_pars)) {
+    #     # re-scale parameters
+    #     MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
+    #                                 scale_pars, MCMC[[k]], Mlist$refs,
+    #                                 Mlist$names_main, coefs = coefs))
+    #
+    #     attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
+    #   }
+    # }
+    # }
   }
+
+
 
 
   # prepare output -------------------------------------------------------------
