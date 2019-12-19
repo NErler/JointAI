@@ -86,7 +86,7 @@ get_ranefpreds <- function(info) {
            paste_predictor(parnam = info$parname, parindex = info$index[1],
                            matnam = 'Ml',
                            cols = info$lp$Ml[wl],
-                           scale_pars = info$scale_pars$Ml,
+                           scale_pars = info$scale_pars$Ml[wl, ],
                            parelmts = info$parelmts$Ml[wl],
                            indent = 4 + nchar(info$varname) + 2 + 8)
     )
@@ -96,7 +96,7 @@ get_ranefpreds <- function(info) {
     ifelse(!sapply(rdslopes, is.null),
            paste0(
              sapply(sapply(rdslopes, "[[", 'main_effect'), "[[", 'matrix'), "[",
-             info$index, ", ",
+             info$index[1], ", ",
              sapply(sapply(rdslopes, "[[", 'main_effect'), "[[", 'column'), "] * "
            ), ''),
     'b_', info$varname, "[group[", info$index[1], "], ", seq_along(ranefpreds), "]",
