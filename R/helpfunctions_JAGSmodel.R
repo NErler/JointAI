@@ -11,12 +11,12 @@ paste_predictor <- function(parnam, parindex, matnam, parelmts, cols, scale_pars
               ceiling((length(parelmts) - breakafter)/breakafter))
   )[1:length(parelmts)]
 
-  paste0(lb,
-         matnam, "[", parindex,
-         if (!is.null(cols)) paste0(", ", cols),
-         if (isgk) paste0(", k"),
-         "] * ", parnam, "[", parelmts, "]",
-         collapse = " + ")
+  # paste0(lb,
+  #        matnam, "[", parindex,
+  #        if (!is.null(cols)) paste0(", ", cols),
+  #        if (isgk) paste0(", k"),
+  #        "] * ", parnam, "[", parelmts, "]",
+  #        collapse = " + ")
 
   s <- apply(!is.na(scale_pars), 1, any)
 
@@ -75,56 +75,56 @@ tab <- function(times = 2) {
 
 
 # switch for imp_model ---------------------------------------------------------
-paste_imp_model <- function(imp_par_list) {
-  imp_model <- switch(imp_par_list$impmeth,
-                      norm = impmodel_continuous,
-                      lognorm = impmodel_continuous,
-                      gamma = impmodel_continuous,
-                      beta = impmodel_continuous,
-                      logit = impmodel_logit,
-                      multilogit = impmodel_multilogit,
-                      cumlogit = impmodel_cumlogit,
-                      clmm = impmodel_clmm,
-                      lmm = impmodel_lmm,
-                      glmm_lognorm = impmodel_glmm_lognorm,
-                      glmm_logit = impmodel_glmm_logit,
-                      glmm_gamma = impmodel_glmm_gamma,
-                      glmm_poisson = impmodel_glmm_poisson)
-  do.call(imp_model, imp_par_list)
-}
+# paste_imp_model <- function(imp_par_list) {
+#   imp_model <- switch(imp_par_list$impmeth,
+#                       norm = impmodel_continuous,
+#                       lognorm = impmodel_continuous,
+#                       gamma = impmodel_continuous,
+#                       beta = impmodel_continuous,
+#                       logit = impmodel_logit,
+#                       multilogit = impmodel_multilogit,
+#                       cumlogit = impmodel_cumlogit,
+#                       clmm = impmodel_clmm,
+#                       lmm = impmodel_lmm,
+#                       glmm_lognorm = impmodel_glmm_lognorm,
+#                       glmm_logit = impmodel_glmm_logit,
+#                       glmm_gamma = impmodel_glmm_gamma,
+#                       glmm_poisson = impmodel_glmm_poisson)
+#   do.call(imp_model, imp_par_list)
+# }
 
 
 # switch for imp_prior ---------------------------------------------------------
-paste_imp_priors <- function(imp_par_list) {
-  imp_prior <- switch(imp_par_list$impmeth,
-                      norm = impprior_continuous,
-                      lognorm = impprior_continuous,
-                      gamma = impprior_continuous,
-                      beta = impprior_continuous,
-                      logit = impprior_logit,
-                      multilogit = impprior_multilogit,
-                      cumlogit = impprior_cumlogit,
-                      clmm = impprior_clmm,
-                      lmm = impprior_lmm,
-                      glmm_lognorm = impprior_glmm_lognorm,
-                      glmm_logit = impprior_glmm_logit,
-                      glmm_gamma = impprior_glmm_gamma,
-                      glmm_poisson = impprior_glmm_poisson)
-  do.call(imp_prior, imp_par_list)
-}
+# paste_imp_priors <- function(imp_par_list) {
+#   imp_prior <- switch(imp_par_list$impmeth,
+#                       norm = impprior_continuous,
+#                       lognorm = impprior_continuous,
+#                       gamma = impprior_continuous,
+#                       beta = impprior_continuous,
+#                       logit = impprior_logit,
+#                       multilogit = impprior_multilogit,
+#                       cumlogit = impprior_cumlogit,
+#                       clmm = impprior_clmm,
+#                       lmm = impprior_lmm,
+#                       glmm_lognorm = impprior_glmm_lognorm,
+#                       glmm_logit = impprior_glmm_logit,
+#                       glmm_gamma = impprior_glmm_gamma,
+#                       glmm_poisson = impprior_glmm_poisson)
+#   do.call(imp_prior, imp_par_list)
+# }
 
 # paste model ----------------------------------------------------------------
-paste_model <- function(info) {
-  modelfun <- switch(info$modeltype,
-                     glm = writemodel_glm,
-                     glmm = writemodel_glmm,
-                     clm = writemodel_clm,
-                     clmm = writemodel_clmm,
-                     coxph = writemodel_coxph,
-                     survreg = writemodel_survreg,
-                     JM = writemodel_JM)
-  do.call(modelfun, info)
-}
+# paste_model <- function(info) {
+#   modelfun <- switch(info$modeltype,
+#                      glm = writemodel_glm,
+#                      glmm = writemodel_glmm,
+#                      clm = writemodel_clm,
+#                      clmm = writemodel_clmm,
+#                      coxph = writemodel_coxph,
+#                      survreg = writemodel_survreg,
+#                      JM = writemodel_JM)
+#   do.call(modelfun, info)
+# }
 
 
 # paste dummy variables --------------------------------------------------------
@@ -167,40 +167,40 @@ ranef_priors <- function(nranef, varname) {
 
 
 
-paste_rdslopes <- function(nranef, hc_list, K){
-  if (nranef > 1) {
-    rd_slopes <- list()
-    for (k in 2:nranef) {
-      beta_start <- K[names(hc_list)[k - 1], 1]
-      beta_end <- K[names(hc_list)[k - 1], 2]
-
-      if (any(sapply(hc_list[[k - 1]], attr, "matrix") %in% c("Xc", 'Z')) & !is.na(beta_start)) {
-        vec <- sapply(hc_list[[k - 1]], attr, "matrix")
-
-        Xc_pos <- lapply(seq_along(vec), function(i) {
-          switch(vec[i], 'Xc' = attr(hc_list[[k - 1]][[i]], 'column'),
-                 'Z' = NA,
-                 'Xlong' = NULL)
-        })
-
-        hc_interact <- paste0("beta[", beta_start:beta_end, "]",
-                              sapply(unlist(Xc_pos), function(x) {
-                                if (!is.na(x)) {
-                                  paste0(" * Xc[i, ", x, "]")
-                                } else {
-                                  ""
-                                }
-                              })
-        )
-      } else {
-        hc_interact <- "0"
-      }
-      rd_slopes[[k - 1]] <- paste0(tab(4), "mu_b[i, ", k,"] <- ",
-                                   paste0(hc_interact, sep = "", collapse = " + "))
-    }
-    paste(rd_slopes, collapse = "\n")
-  }
-}
+# paste_rdslopes <- function(nranef, hc_list, K){
+#   if (nranef > 1) {
+#     rd_slopes <- list()
+#     for (k in 2:nranef) {
+#       beta_start <- K[names(hc_list)[k - 1], 1]
+#       beta_end <- K[names(hc_list)[k - 1], 2]
+#
+#       if (any(sapply(hc_list[[k - 1]], attr, "matrix") %in% c("Xc", 'Z')) & !is.na(beta_start)) {
+#         vec <- sapply(hc_list[[k - 1]], attr, "matrix")
+#
+#         Xc_pos <- lapply(seq_along(vec), function(i) {
+#           switch(vec[i], 'Xc' = attr(hc_list[[k - 1]][[i]], 'column'),
+#                  'Z' = NA,
+#                  'Xlong' = NULL)
+#         })
+#
+#         hc_interact <- paste0("beta[", beta_start:beta_end, "]",
+#                               sapply(unlist(Xc_pos), function(x) {
+#                                 if (!is.na(x)) {
+#                                   paste0(" * Xc[i, ", x, "]")
+#                                 } else {
+#                                   ""
+#                                 }
+#                               })
+#         )
+#       } else {
+#         hc_interact <- "0"
+#       }
+#       rd_slopes[[k - 1]] <- paste0(tab(4), "mu_b[i, ", k,"] <- ",
+#                                    paste0(hc_interact, sep = "", collapse = " + "))
+#     }
+#     paste(rd_slopes, collapse = "\n")
+#   }
+# }
 
 
 # ------------------------------------------------------------------------------
