@@ -5,7 +5,6 @@ write_model <- function(info_list, Mlist, modelfile = '') {
 
     cat("model {", "\n\n",
       paste0(lapply(info_list, function(k) {
-        print(k$modeltype)
         get(paste0("JAGSmodel_", k$modeltype))(k)
       }), collapse = "\n\n\n"),
 
