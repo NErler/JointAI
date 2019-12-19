@@ -632,10 +632,9 @@ lm_imp <- function(formula, data,
 
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$fixed <- check_formula_list(arglist$formula)
+  arglist$formula <- check_formula_list(arglist$formula)
   arglist$analysis_type <- "lm"
-  arglist$family <- gaussian()
-  # arglist$link <- "identity"
+  attr(arglist$analysis_type, "family") <- gaussian()
 
   thiscall <- as.list(match.call())[-1L]
 
@@ -673,41 +672,30 @@ glm_imp <- function(formula, family, data,
     stop("The family needs to be specified.")
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$fixed <- arglist$formula
-
-
+  arglist$formula <- check_formula_list(arglist$formula)
   arglist$analysis_type <- "glm"
 
 
   if (is.character(family)) {
     family <- get(family, mode = "function", envir = parent.frame())
-    arglist$family <- family()
-    # arglist$link <- family()$link
+    thefamily <- family()
+  } else if (is.function(family)) {
+    thefamily <- family()
+  } else if (inherits(family, "family")) {
+    thefamily <- family
   }
 
-  if (is.function(family)) {
-    arglist$family <- family()
-    # arglist$link <- family()$link
-  }
-
-  if (inherits(family, "family")) {
-    arglist$family <- family
-    # arglist$link <- family$link
-  }
-
-  arglist$fixed <- formula
+  attr(arglist$analysis_type, "family") <- thefamily
 
   thiscall <- as.list(match.call())[-1L]
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
-
-  if (!arglist$family$link %in% c("identity", "log", "logit", "probit", "log",
+  if (!attr(arglist$analysis_type, 'family')$link %in% c("identity", "log", "logit", "probit", "log",
                            "cloglog", "inverse"))
     stop(gettextf("%s is not an allowed link function.",
                   dQuote(arglist$family$link)))
-
 
   res <- do.call(model_imp, arglist)
   res$call <- match.call()
@@ -717,7 +705,7 @@ glm_imp <- function(formula, family, data,
 
 #' @rdname model_imp
 #' @export
-clm_imp <- function(fixed, data,
+clm_imp <- function(formula, data,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                     monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                     models = NULL, no_model = NULL, trunc = NULL,
@@ -730,12 +718,13 @@ clm_imp <- function(fixed, data,
                     warn = TRUE, mess = TRUE,
                     keep_scaled_mcmc = FALSE, ...){
 
-  if (missing(fixed))
+  if (missing(formula))
     stop("No fixed effects structure specified.")
   if (missing(data))
     stop("No dataset given.")
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$formula <- check_formula_list(arglist$formula)
   arglist$analysis_type <- "clm"
   arglist$family <- ordinal()
   # arglist$link <- "logit"
@@ -772,34 +761,44 @@ lme_imp <- function(fixed, data, random,
                     warn = TRUE, mess = TRUE,
                     keep_scaled_mcmc = FALSE, ...){
 
-  if (missing(fixed))
-    stop("No fixed effects structure specified.")
-  if (missing(random))
-    stop("No random effects structure specified.")
-  if (missing(data))
-    stop("No dataset given.")
-
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$analysis_type <- "lme"
-  arglist$family <- gaussian()
-  # arglist$link <- "identity"
-
-
   thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) {
-  #     eval(x)
-  #     } else x
-  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
 
+  if (missing(fixed) & is.null(arglist$formula))
+    stop("No fixed effects structure specified.")
+  if (missing(random) & is.null(arglist$formula))
+    stop("No random effects structure specified.")
+  if (missing(data))
+    stop("No dataset given.")
+
+  arglist$analysis_type <- "lme"
+  attr(arglist$analysis_type, "family") <- gaussian()
+
+
+  if (!is.null(arglist$formula)) {
+    arglist$formula <- check_formula_list(eval(arglist$formula))
+  } else {
+    arglist$fixed <- check_formula_list(arglist$fixed)
+    arglist$random <- check_formula_list(arglist$random)
+  }
+
   res <- do.call(model_imp, arglist)
   res$call <- match.call()
 
   return(res)
+}
+
+
+
+#' @rdname model_imp
+#' @aliases lme_imp
+#' @export
+lmer_imp <- function(formula, data, ...) {
+  lme_imp(formula, data, ...)
 }
 
 
@@ -819,43 +818,43 @@ glme_imp <- function(fixed, data, random, family,
                      warn = TRUE, mess = TRUE,
                      keep_scaled_mcmc = FALSE, ...){
 
-  if (missing(fixed))
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+
+  if (missing(fixed) & is.null(arglist$formula))
     stop("No fixed effects structure specified.")
-  if (missing(random))
+  if (missing(random) & is.null(arglist$formula))
     stop("No random effects structure specified.")
   if (missing(data))
     stop("No dataset given.")
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$analysis_type <- "glme"
+
+  if (!is.null(arglist$formula)) {
+    arglist$formula <- check_formula_list(arglist$formula)
+  } else {
+    arglist$fixed <- check_formula_list(arglist$fixed)
+    arglist$random <- check_formula_list(arglist$random)
+  }
 
   if (is.character(family)) {
     family <- get(family, mode = "function", envir = parent.frame())
-    arglist$family <- family()
-    # arglist$link <- family()$link
+    thefamily <- family()
+  } else if (is.function(family)) {
+    thefamily <- family()
+  } else if (inherits(family, "family")) {
+    thefamily <- family
   }
 
-  if (is.function(family)) {
-    arglist$family <- family()
-    # arglist$link <- family()$link
-  }
-
-  if (inherits(family, "family")) {
-    arglist$family <- family
-    # arglist$link <- family$link
-  }
-
-  if (!arglist$link %in% c("identity", "log", "logit", "probit", "log",
-                           "cloglog", "inverse"))
-    stop(gettextf("%s is not an allowed link function.",
-                  dQuote(arglist$link)))
-
+  attr(arglist$analysis_type, "family") <- thefamily
 
 
   thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
+
+  if (!attr(arglist$analysis_type, 'family')$link %in% c("identity", "log", "logit", "probit", "log",
+                                                         "cloglog", "inverse"))
+    stop(gettextf("%s is not an allowed link function.",
+                  dQuote(arglist$family$link)))
+
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
@@ -866,6 +865,12 @@ glme_imp <- function(fixed, data, random, family,
 
   return(res)
 }
+
+
+#' @rdname model_imp
+#' @aliases glme_imp
+#' @export
+glmer_imp <- glme_imp
 
 
 #' @rdname model_imp
@@ -883,23 +888,27 @@ clmm_imp <- function(fixed, data, random,
                      warn = TRUE, mess = TRUE,
                      keep_scaled_mcmc = FALSE, ...){
 
-  if (missing(fixed))
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+
+  if (missing(fixed) & is.null(arglist$formula))
     stop("No fixed effects structure specified.")
-  if (missing(random))
+  if (missing(random) & is.null(arglist$formula))
     stop("No random effects structure specified.")
   if (missing(data))
     stop("No dataset given.")
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$analysis_type <- "clmm"
-  arglist$family <- ordinal()
-  # arglist$link <- "logit"
+  attr(arglist$analysis_type, "family") <- ordinal()
 
+
+  if (!is.null(arglist$formula)) {
+    arglist$formula <- check_formula_list(arglist$formula)
+  } else {
+    arglist$fixed <- check_formula_list(arglist$fixed)
+    arglist$random <- check_formula_list(arglist$random)
+  }
 
   thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
