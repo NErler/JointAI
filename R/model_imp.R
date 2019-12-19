@@ -360,49 +360,39 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
                                                all_vars(random),
                                                all_vars(auxvars))), mess = mess)
 
-
-  # imputation method ----------------------------------------------------------
-  models <- get_models(fixed = fixed, random = random, data = data,
-                       auxvars = auxvars, no_model = no_model, models = models)$models
-
-
-  # divide matrices ------------------------------------------------------------
+  print('Mlist')
+  # * divide matrices ------------------------------------------------------------
   Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
-                           random = random, auxvars = auxvars, timevar = timevar,
+                           random = random, models = models, auxvars = auxvars,
+                           timevar = timevar, no_model = no_model,
                            scale_vars = scale_vars, refcats = refcats,
-                           models = models, warn = warn, mess = mess, ppc = ppc,
+                           warn = warn, mess = mess, ppc = ppc,
                            ridge = ridge)
+  print("K & K_imp")
+  # * model dimensions ---------------------------------------------------------
+  K <- get_model_dim(Mlist$lp_cols[names(Mlist$lp_cols) %in% names(Mlist$fixed)],
+                     Mlist = Mlist)
+  K_imp <- get_model_dim(Mlist$lp_cols[!names(Mlist$lp_cols) %in% names(Mlist$fixed)],
+                         Mlist = Mlist)
 
-  # model dimensions -----------------------------------------------------------
-  K <- get_model_dim(Mlist$cols_main, Mlist$hc_list, Mlist$names_main)
+  print('info_list')
+  # * model info ---------------------------------------------------------------
+  info_list <- get_model_info(Mlist, K = K, K_imp = K_imp, trunc = trunc)
 
-  # position of the variables to be imputed in Xc, Xic, Xl, Xil, Xcat
-  imp_pos <- get_imp_pos(models, Mlist)
-
-  K_imp <- get_imp_dim(models, imp_pos, Mlist)
-
-  # imputation parameters/specifications ---------------------------------------
-
-  dest_cols <- sapply(unique(c(names(models), colnames(Mlist$Xtrafo),
-                               colnames(Mlist$Xltrafo))),
-                      get_dest_column, Mlist = Mlist, simplify = FALSE)
-
-
-  imp_par_list <- mapply(get_imp_par_list, models, names(models),
-                         MoreArgs = list(Mlist, K_imp, K, dest_cols, trunc, models),
-                         SIMPLIFY = FALSE)
-
-  # data list ------------------------------------------------------------------
-  if (is.null(data_list)) {
-    data_list <- try(get_data_list(analysis_type, family, models, Mlist,
-                                   scale_pars = scale_pars, hyperpars = hyperpars,
-                                   data = data, imp_par_list = imp_par_list))
-    scale_pars <- data_list$scale_pars
-    hyperpars <- data_list$hyperpars
-    data_list <- data_list$data_list
-  }
+  print('data_list')
+  # * data list ----------------------------------------------------------------
+  data_list <- get_data_list(Mlist, info_list)
 
 
+
+  # data_list <- try(get_data_list(analysis_type, family, models, Mlist,
+  #                                scale_pars = scale_pars, hyperpars = hyperpars,
+  #                                data = data, imp_par_list = imp_par_list))
+  # scale_pars <- data_list$scale_pars
+  # hyperpars <- data_list$hyperpars
+  # data_list <- data_list$data_list
+
+  print('write_model')
   # write model ----------------------------------------------------------------
   # generate default name for model file if not specified
   if (is.null(modeldir)) modeldir <- tempdir()
@@ -488,13 +478,12 @@ if (!is.null(inits)) {
       if (mess)
         message('Note: Main model parameter were added to the list of parameters to follow.')
     }}
-  var.names <- do.call(get_params, c(list(models = models, analysis_type = analysis_type,
-                                          family = family, Mlist,
-                                          imp_par_list = imp_par_list,
-                                          ppc = ppc, mess = mess),
+  var.names <- do.call(get_params, c(list(Mlist = Mlist, info_list = info_list,
+                                          data = data, mess = mess),
                                      monitor_params))
+  print(var.names)
 
-
+  print('run JAGS')
   # run JAGS -----------------------------------------------------------------
   t0 <- Sys.time()
   if (parallel == TRUE) {
