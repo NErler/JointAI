@@ -18,15 +18,15 @@ get_data_list <- function(Mlist, info_list) {
     l$group <- Mlist$groups
 
     l <- c(l,
-           unlist(lapply(info_list[sapply(info_list, '[[', 'modeltype') %in% c('glmm', 'clmm', 'mlogitmm')],
+           unlist(unname(lapply(info_list[sapply(info_list, '[[', 'modeltype') %in% c('glmm', 'clmm', 'mlogitmm')],
                   function(x) {
                     setNames(default_hyperpars()$ranef$wish(nranef = max(1, length(x$hc_list))),
                              paste(c("RinvD", "KinvD"), x$varname, sep = "_")
                     )
-                  }))
+                  })), recursive = FALSE)
     )
   }
-  return(l)
+  return(l[!sapply(l, is.null)])
 }
 
 
