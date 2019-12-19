@@ -100,12 +100,12 @@ get_params <- function(Mlist, info_list, data,
                   if (invD_main)
                     unlist(sapply(list_main[long_main], function(x)
                       sapply(1:max(1, length(x$hc_list)), function(i)
-                        paste0("invD_", x$varname, "[", 1:i, ", ", i, "]")
+                        paste0("invD_", x$varname, "[", 1:i, ",", i, "]")
                       ))),
                   if (D_main)
                     unlist(sapply(list_main[long_main], function(x)
                       sapply(1:max(1, length(x$hc_list)), function(i)
-                        paste0("D_", x$varname, "[", 1:i, ", ", i, "]")
+                        paste0("D_", x$varname, "[", 1:i, ",", i, "]")
                       ))),
                   if (RinvD_main)
                     sapply(list_main[long_main], function(x)
