@@ -40,9 +40,9 @@ get_Dmat <- function(x, varname) {
                     exclude_chains = NULL, warn = TRUE, mess = TRUE)
 
   Ds <- grep(paste0("^D\\_", varname, "\\[[[:digit:]]*,[[:digit:]]*\\]"), colnames(MCMC), value = TRUE)
-  Dpos <- t(sapply(strsplit(gsub('D|\\[|\\]', '', Ds), ","), as.numeric))
+  Dpos <- t(sapply(strsplit(gsub(paste0('D_', varname, '|\\[|\\]'), '', Ds), ","), as.numeric))
 
-  term <- terms(remove_grouping(x$random))
+  term <- terms(remove_grouping(x$random[[varname]]))
 
   dimnam <- c(if (attr(term, 'intercept') == 1) "(Intercept)",
               attr(term, 'term.labels'))
@@ -74,6 +74,7 @@ print_type <- function(x) {
               lm = "Linear model",
               glm = "Generalized linear model",
               lme = "Linear mixed model",
+              glmm = 'Generalized linear mixed model',
               glme = 'Generalized linear mixed model',
               coxph = 'Cox proportional hazards model',
               survreg = 'Weibull survival model',
@@ -81,15 +82,17 @@ print_type <- function(x) {
               clmm = 'Cumulative logit mixed model',
               JM = "Joint survival and longitudinal model"
   )
-  paste0(a, " fitted with JointAI")
+  return(a)
+  # paste0(a, " fitted with JointAI")
 }
 
-get_intercepts <- function(x, yname) {
-  x[grep(paste0("gamma_", yname), rownames(x)), ]
-}
+# get_intercepts <- function(x, yname) {
+#   x[grep(paste0("gamma_", yname), rownames(x)), ]
+# }
 
-print_intercepts <- function(interc, yname, lvl) {
-  rownames(interc) <- paste(yname, "\u2264", lvl[-length(lvl)])
+get_intercepts <- function(stats, varname, lvls) {
+  interc <-   stats[grep(paste0("gamma_", varname), rownames(stats)), ]
+  rownames(interc) <- paste(varname, "\u2264", lvls[-length(lvls)])
   interc
 }
 
