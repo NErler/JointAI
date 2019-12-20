@@ -3,17 +3,21 @@ JAGSmodel_clm <- function(info) {
   indent <- 4 + 4 + nchar(info$varname) + 7
 
   probs <- sapply(2:(info$ncat - 1), function(k) {
-    paste0(tab(4), "p_", info$varname, "[", info$index, ", ", k, "] <- max(1e-7, min(1-1e-10, psum_",
-           info$varname, "[", info$index, ", ", k,"] - psum_", info$varname, "[", info$index, ", ", k - 1, "]))")})
+    paste0(tab(4), "p_", info$varname, "[", info$index, ", ", k,
+           "] <- max(1e-7, min(1-1e-10, psum_",
+           info$varname, "[", info$index, ", ", k,"] - psum_", info$varname,
+           "[", info$index, ", ", k - 1, "]))")})
 
   logits <- sapply(1:(info$ncat - 1), function(k) {
-    paste0(tab(4), "logit(psum_", info$varname, "[", info$index, ", ", k, "])  <- gamma_", info$varname,
+    paste0(tab(4), "logit(psum_", info$varname, "[", info$index, ", ", k,
+           "]) <- gamma_", info$varname,
            "[", k, "]", " + eta_", info$varname,"[", info$index, "]")
   })
 
   paste_ppc <- if (info$ppc) {
     paste0(
-      tab(4), info$varname, "_ppc[", info$index, "] ~ dcat(p_", info$varname, "[", info$index, ", 1:", info$ncat, "])", "\n"
+      tab(4), info$varname, "_ppc[", info$index, "] ~ dcat(p_", info$varname,
+      "[", info$index, ", 1:", info$ncat, "])", "\n"
     )
   }
 
@@ -29,13 +33,20 @@ JAGSmodel_clm <- function(info) {
          tab(), "# Posterior predictive check for the model for ", info$varname, "\n",
          tab(), "for (", info$index, " in 1:", info$N, ") {", "\n",
          tab(4), "for (k in 1:", info$ncat, ") {", "\n",
-         tab(6), info$varname, "_dummies[", info$index, ", k] <- ifelse(", info$varname, "[", info$index, "] == k, 1, 0)", "\n",
-         tab(6), info$varname, "_ppc_dummies[", info$index, ", k] <- ifelse(", info$varname, "_ppc[", info$index, "] == k, 1, 0)", "\n",
+         tab(6), info$varname, "_dummies[", info$index, ", k] <- ifelse(",
+         info$varname, "[", info$index, "] == k, 1, 0)", "\n",
+         tab(6), info$varname, "_ppc_dummies[", info$index, ", k] <- ifelse(",
+         info$varname, "_ppc[", info$index, "] == k, 1, 0)", "\n",
          tab(4), "}", "\n",
-         tab(4), "ppc_", info$varname, "_o[", info$index, "] <- sum(pow(", info$varname, "_dummies[", info$index, ", ] - p_", info$varname, "[", info$index, ", ], 2))", "\n",
-         tab(4), "ppc_", info$varname, "_e[", info$index, "] <- sum(pow(", info$varname, "_ppc_dummies[", info$index, ", ] - p_", info$varname, "[", info$index, ", ], 2))", "\n",
+         tab(4), "ppc_", info$varname, "_o[", info$index, "] <- sum(pow(",
+         info$varname, "_dummies[", info$index, ", ] - p_", info$varname, "[",
+         info$index, ", ], 2))", "\n",
+         tab(4), "ppc_", info$varname, "_e[", info$index, "] <- sum(pow(",
+         info$varname, "_ppc_dummies[", info$index, ", ] - p_", info$varname,
+         "[", info$index, ", ], 2))", "\n",
          tab(), "}", "\n",
-         tab(), "ppc_", info$varname, " <- mean(ifelse(ppc_", info$varname, "_o > ppc_", info$varname, "_e, 1, 0) + ",
+         tab(), "ppc_", info$varname, " <- mean(ifelse(ppc_", info$varname,
+         "_o > ppc_", info$varname, "_e, 1, 0) + ",
          "ifelse(ppc_", info$varname, "_o == ppc_", info$varname, "_e, 0.5, 0)) - 0.5", "\n"
   )
   }
@@ -81,9 +92,11 @@ JAGSmodel_clm <- function(info) {
          tab(4), 'eta_', info$varname, "[", info$index, "] <- ",
          Mc_predictor,
          "\n\n",
-         tab(4), "p_", info$varname, "[", info$index, ", 1] <- max(1e-10, min(1-1e-7, psum_", info$varname, "[", info$index, ", 1]))", "\n",
+         tab(4), "p_", info$varname, "[", info$index, ", 1] <- max(1e-10, min(1-1e-7, psum_",
+         info$varname, "[", info$index, ", 1]))", "\n",
          paste(probs, collapse = "\n"), "\n",
-         tab(4), "p_", info$varname, "[", info$index, ", ", info$ncat, "] <- 1 - max(1e-10, min(1-1e-7, sum(p_",
+         tab(4), "p_", info$varname, "[", info$index, ", ", info$ncat,
+         "] <- 1 - max(1e-10, min(1-1e-7, sum(p_",
          info$varname, "[", info$index, ", 1:", info$ncat - 1,"])))", "\n\n",
          paste0(logits, collapse = "\n"), "\n",
          paste(dummies, collapse = "\n"), "\n",
