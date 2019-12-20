@@ -18,7 +18,11 @@ paste_predictor <- function(parnam, parindex, matnam, parelmts, cols, scale_pars
   #        "] * ", parnam, "[", parelmts, "]",
   #        collapse = " + ")
 
-  s <- apply(!is.na(scale_pars), 1, any)
+  s <- if (!is.null(scale_pars)) {
+    apply(!is.na(scale_pars), 1, any)
+  } else {
+    rep(F, length(cols))
+  }
 
   paste0(lb,
          ifelse(s, "(", ""),
