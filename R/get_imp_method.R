@@ -42,8 +42,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
   models_user <- models
 
-
-  if (is.null(names(fixed)))
+  if (any(sapply(sapply(fixed, attr, 'type'), is.null)))
     fixed <- extract_outcome_data(fixed, random = random, data = data,
                                   analysis_type = analysis_type)$fixed
 
