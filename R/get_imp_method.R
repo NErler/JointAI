@@ -105,7 +105,6 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
     varinfo <- melt_data.frame_list(varinfo, id.vars = colnames(varinfo[[1]]))
 
-    varinfo$type[varinfo$out] <- sapply(fixed, attr, 'type')
     varinfo$type[varinfo$tvar & varinfo$nlev > 2 & varinfo$ordered] <- 'clmm'
     varinfo$type[!varinfo$tvar & varinfo$nlev > 2 & varinfo$ordered] <- 'clm'
     varinfo$type[varinfo$tvar & varinfo$nlev > 2 & !varinfo$ordered] <- 'mlogitmm'
@@ -114,6 +113,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
     varinfo$type[!varinfo$tvar & varinfo$nlev == 2] <- 'glm_logit'
     varinfo$type[varinfo$tvar & varinfo$nlev == 0] <- 'lmm'
     varinfo$type[!varinfo$tvar & varinfo$nlev == 0] <- 'lm'
+    varinfo$type[varinfo$out] <- sapply(fixed, attr, 'type')
 
 
 
