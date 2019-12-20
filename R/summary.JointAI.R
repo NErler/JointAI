@@ -41,17 +41,67 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
   # create results matrices
   statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.", "GR-crit")
-  stats <- matrix(nrow = length(colnames(MCMC)),
-                  ncol = length(statnames),
-                  dimnames = list(colnames(MCMC), statnames))
 
-  stats[, "Mean"] <- apply(MCMC, 2, mean)
-  stats[, "SD"] <- apply(MCMC, 2, sd)
-  stats[, paste0(quantiles * 100, "%")] <- t(apply(MCMC, 2, quantile, quantiles))
-  stats[, "tail-prob."] <- apply(MCMC, 2, computeP)
-  stats[, "GR-crit"] <- GR_crit(object = object, start = start, end = end, thin = thin,
-                                warn = warn, mess = FALSE, multivariate = FALSE,
-                                subset = subset, autoburnin = autoburnin)[[1]][, "Upper C.I."]
+  res_list <- lapply(names(object$coef_list), function(varname) {
+    MCMCsub <- MCMC[, intersect(colnames(MCMC),
+                                c(object$coef_list[[varname]]$coef,
+                                  grep(paste0('_', object$info_list[[varname]]$varname, '\\b'),
+                                       colnames(MCMC), value = TRUE)))]
+
+    if (ncol(MCMCsub) > 0){
+      colnames(MCMCsub)[na.omit(match(colnames(MCMCsub),
+                                      object$coef_list[[varname]]$coef))] <-
+        object$coef_list[[varname]]$varname
+
+      stats <- matrix(nrow = length(colnames(MCMCsub)),
+                      ncol = length(statnames),
+                      dimnames = list(colnames(MCMCsub), statnames))
+
+      stats[, "Mean"] <- apply(MCMCsub, 2, mean)
+      stats[, "SD"] <- apply(MCMCsub, 2, sd)
+      stats[, paste0(quantiles * 100, "%")] <- t(apply(MCMCsub, 2, quantile, quantiles))
+      stats[, "tail-prob."] <- apply(MCMCsub, 2, computeP)
+      # stats[, "GR-crit"] <- GR_crit(object = object, start = start, end = end, thin = thin,
+      #                               warn = warn, mess = FALSE, multivariate = FALSE,
+      #                               subset = subset, autoburnin = autoburnin)[[1]][, "Upper C.I."]
+      #
+      regcoef <- stats[object$coef_list[[varname]]$varname, ]
+
+      sigma <- if (object$info_list[[varname]]$family %in% c('gaussian', 'Gamma') &&
+                   !is.null(object$ifno_list[[varname]]$family))
+        stats[grep(paste0("sigma_", varname), rownames(stats)),
+              -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
+
+
+      intercepts <- if (object$info_list[[varname]]$modeltype %in% c('clm', 'clmm'))
+        get_intercepts(stats, varname, levels(object$Mlist$refs[[varname]]))
+
+
+      rd_vcov <- if (object$info_list[[varname]]$modeltype %in%
+                     c("glmm", "clmm", "mlogitmm")) {
+        Ds <- stats[grep(paste0("^D_", varname, "\\[[[:digit:]]+,[[:digit:]]+\\]"),
+                         rownames(stats), value = TRUE), , drop = FALSE]
+        if (nrow(Ds) > 0) {
+          Ddiag <- sapply(regmatches(rownames(Ds), gregexpr('[[:digit:]]*', rownames(Ds))),
+                          function(k) {
+                            length(unique(grep('[[:digit:]]+', k, value = T))) == 1
+                          })
+          Ds[Ddiag, 'tail-prob.'] <- NA
+          Ds
+        }
+      }
+
+      wb_shape <- if (object$info_list[[varname]]$modeltype %in% c('survreg')) {
+        stats[c(paste0("shape_", object$info_list[[varname]]$varname)),
+              -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
+      }
+
+      list(modeltype = object$info_list[[varname]]$modeltype,
+           regcoef = regcoef, sigma = sigma, intercepts = intercepts,
+           rd_vcov = rd_vcov, wb_shape = wb_shape)
+    }
+  })
+
 
   out <- list()
   out$call <- object$call
@@ -59,44 +109,15 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$end <- ifelse(is.null(end), end(object$MCMC), min(end, end(object$MCMC)))
   out$thin <- thin(object$MCMC)
   out$nchain <- nchain(object$MCMC) - sum(exclude_chains %in% seq_along(object$MCMC))
-  out$stats <- stats
+  out$res <- res_list
 
-  out$ranefvar <- if (object$analysis_type %in% c("lme", "glme", "clmm", 'JM')) {
-    Ds <- stats[grep("^D_[[:print:]]*\\[[[:digit:]]+,[[:digit:]]+\\]",
-                     rownames(stats), value = TRUE), , drop = FALSE]
-    if (nrow(Ds) > 0) {
-      Ddiag <- sapply(regmatches(rownames(Ds), gregexpr('[[:digit:]]*', rownames(Ds))),
-                      function(k) {
-                        length(unique(grep('[[:digit:]]+', k, value = T))) == 1
-                      })
-      Ds[Ddiag, 'tail-prob.'] <- NA
-    Ds
-    }
-  }
-  out$sigma <- if (attr(object$analysis_type, "family")$family == "gaussian" &
-                   any(grepl(paste0("sigma_", names(object$Mlist$y)), rownames(stats))))
-    stats[grep(paste0("sigma_", names(object$Mlist$y)), rownames(stats), value = TRUE),
-          -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
-
-  if (object$analysis_type %in% c('clm', 'clmm')) {
-    out$intercepts <- get_intercepts(stats, colnames(object$Mlist$y))
-    out$yname <- colnames(object$Mlist$y)
-    out$ylvl <- levels(object$data[, colnames(object$Mlist$y)])
-  } else {
-    out$intercepts <- NULL
-  }
-  out$weibull <- if (object$analysis_type == 'survreg') {
-    stats[c(paste0("shape_", names(object$Mlist$y))),
-          -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
-  }
-
-  out$main <- stats[!rownames(stats) %in% c(rownames(out$ranefvar),
-                                            rownames(out$intercepts),
-                                            get_aux(object),
-                                            rownames(out$sigma),
-                                            rownames(out$weibull),
-                                            paste0("tau_", names(object$Mlist$y))),
-                    , drop = FALSE]
+  # out$main <- stats[!rownames(stats) %in% c(rownames(out$ranefvar),
+  #                                           rownames(out$intercepts),
+  #                                           get_aux(object),
+  #                                           rownames(out$sigma),
+  #                                           rownames(out$weibull),
+  #                                           paste0("tau_", names(object$Mlist$y))),
+  #                   , drop = FALSE]
 
   out$analysis_type <- object$analysis_type
   out$size <- nrow(object$data)
@@ -114,39 +135,53 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
   if (!inherits(x, "summary.JointAI"))
     stop("Use only with 'summary.JointAI' objects.\n")
 
-  cat("\n", print_type(x$analysis_type), "\n")
+  cat("\n")
+  cat(print_type(x$analysis_type), 'fitted with JointAI', "\n")
   cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
-      "\n\n", sep = "")
-  if (nrow(x$main > 0)) {
-    cat("Posterior summary:\n")
-    print(x$main, digits = digits)
+      "\n", sep = "")
+
+  for (k in seq_along(x$res)) {
+    if (!is.null(x$res[[k]])) {
+      cat("\n\n")
+      if (sum(!sapply(x$res, is.null)) > 1)
+      cat(paste0(
+        '# ', paste0(c(rep('-', 59)), collapse = ''), ' #\n',
+        '  ', print_type(x$res[[k]]$modeltype), ' for ', names(x$res)[k], '\n',
+        '# ', paste0(c(rep('-', 30)), collapse = ' '), ' #\n\n'
+      ))
+
+
+      if (!is.null(x$res[[k]]$regcoef)) {
+        cat("Posterior summary:\n")
+        print(x$res[[k]]$regcoef, digits = digits)
+      }
+
+      if (!is.null(x$res[[k]]$intercepts)) {
+        cat("\nPosterior summary of the intercepts:\n")
+        print(x$res[[k]]$intercepts, digits = digits)
+      }
+
+      if (!is.null(x$res[[k]]$rd_vcov)) {
+        cat("\nPosterior summary of random effects covariance matrix:\n")
+        print(x$res[[k]]$rd_vcov, digits = digits, na.print = "")
+      }
+
+      if (!is.null(x$res[[k]]$sigma)) {
+        cat("\nPosterior summary of residual std. deviation:\n")
+        print(x$res[[k]]$sigma, digits = digits)
+      }
+
+      if (!is.null(x$res[[k]]$wb_shape)) {
+        cat("\nPosterior summary of the shape of the Weibull distribution:\n")
+        print(x$res[[k]]$wb_shape, digits = digits)
+      }
+    }
   }
 
-  if (!is.null(x$intercepts)) {
-    cat("\n")
-    cat("Posterior summary of the intercepts:\n")
-    print(print_intercepts(x$intercepts, x$ynam, x$ylvl), digits = digits)
-  }
+  cat('\n\n')
+  if (sum(!sapply(x$res, is.null)) > 1)
+    cat('#', paste0(c(rep('-', 59)), collapse = ''), '#\n\n')
 
-  if (x$analysis_type %in% c("lme", "glme", "clmm") & !is.null(x$ranefvar)) {
-    cat("\n")
-    cat("Posterior summary of random effects covariance matrix:\n")
-    print(x$ranefvar, digits = digits, na.print = "")
-  }
-  if (!is.null(x$sigma)) {
-    cat("\n")
-    cat("Posterior summary of residual std. deviation:\n")
-    print(x$sigma, digits = digits)
-  }
-  if (!is.null(x$weibull)) {
-    cat("\n")
-    cat("Posterior summary of the shape of the Weibull distribution:\n")
-    wb <- x$weibull
-    rownames(wb) <- c('shape')
-    wb
-    print(wb, digits = digits)
-  }
-  cat("\n\n")
   cat("MCMC settings:\n")
   cat("Iterations = ", x$start, ":", x$end, "\n", sep = "")
   cat("Sample size per chain =", (x$end - x$start)/x$thin +
@@ -159,6 +194,8 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
     cat("Number of groups:", x$groups)
   invisible(x)
 }
+
+
 
 
 
@@ -263,19 +300,22 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
     coefs <- coef(x)
 
     for (k in seq_along(coefs)) {
+      varname <- names(coefs)[k]
+      cat("\n",
+          print_type(x$info_list[[varname]]$modeltype), "for", varname, '\n')
       if (x$info_list[[names(coefs)[k]]]$modeltype %in% c('glmm', 'clmm', 'mlogitmm')) {
-        cat("\n\nFixed effects of the model for ", names(coefs)[k], ":\n")
+        cat("\nFixed effects:\n")
         print(coefs[[k]], digits = digits)
 
         cat("\n\nRandom effects covariance matrix:\n")
-        print(get_Dmat(x, varname = names(coefs)[k]), digits = digits)
+        print(get_Dmat(x, varname = varname), digits = digits)
 
       } else {
-        cat("\n\nCoefficients of the model for ", names(coefs)[k], ":\n")
+        cat("\n\nCoefficients:\n")
         print(coefs[[k]], digits = digits)
       }
 
-      if (paste0("sigma_", names(coefs)[k]) %in% colnames(MCMC)) {
+      if (paste0("sigma_", varname) %in% colnames(MCMC)) {
         cat("\n\nResidual standard deviation:\n")
         print(colMeans(MCMC[, paste0("sigma_", names(coefs)[k]), drop = FALSE]),
               digits = digits)
