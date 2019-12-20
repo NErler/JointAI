@@ -932,6 +932,12 @@ survreg_imp <- function(formula, data,
                         warn = TRUE, mess = TRUE,
                         keep_scaled_mcmc = FALSE, ...){
 
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  thiscall <- as.list(match.call())[-1L]
+  arglist <- c(arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+
   if (missing(formula))
     stop("No model formula specified.")
 
@@ -939,20 +945,8 @@ survreg_imp <- function(formula, data,
     stop("No dataset given.")
 
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$fixed <- arglist$formula
+  arglist$formula <- check_formula_list(arglist$formula)
   arglist$analysis_type <- "survreg"
-  arglist$family <- weibull()
-  # arglist$link <- "log"
-  arglist$fixed <- formula
-
-  thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
 
   res <- do.call(model_imp, arglist)
   res$call <- match.call()
@@ -977,27 +971,21 @@ coxph_imp <- function(formula, data,
                       warn = TRUE, mess = TRUE,
                       keep_scaled_mcmc = FALSE, ...){
 
+
   if (missing(formula))
     stop("No model formula specified.")
 
   if (missing(data))
     stop("No dataset given.")
 
-
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$fixed <- arglist$formula
-  arglist$analysis_type <- "coxph"
-  arglist$family <- prophaz()
-  # arglist$link <- "log"
-  arglist$fixed <- formula
-
   thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
-
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
+
+
+  arglist$formula <- check_formula_list(arglist$formula)
+  arglist$analysis_type <- "coxph"
 
   res <- do.call(model_imp, arglist)
   res$call <- match.call()
