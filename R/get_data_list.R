@@ -11,21 +11,61 @@ get_data_list <- function(Mlist, info_list) {
   if (any(!is.na(Mlist$scale_pars$Ml)))
     l$spMl <- Mlist$scale_pars$Ml
 
-  l <- c(l, unlist(unname(default_hyperpars()[1:8])))
+  l <- c(l, unlist(unname(default_hyperpars()[c(1:8, 10)])))
 
+
+  # priors for mixed models
   if (any(sapply(info_list, '[[', 'modeltype') %in% c('glmm', 'clmm', 'mlogitmm'))) {
     l <- c(l, default_hyperpars()$ranef[c('shape_diag_RinvD', 'rate_diag_RinvD')])
     l$group <- Mlist$groups
 
     l <- c(l,
-           unlist(unname(lapply(info_list[sapply(info_list, '[[', 'modeltype') %in% c('glmm', 'clmm', 'mlogitmm')],
-                  function(x) {
-                    setNames(default_hyperpars()$ranef$wish(nranef = max(1, length(x$hc_list))),
-                             paste(c("RinvD", "KinvD"), x$varname, sep = "_")
-                    )
-                  })), recursive = FALSE)
+           unlist(unname(
+             lapply(info_list[sapply(info_list, '[[', 'modeltype') %in%
+                                c('glmm', 'clmm', 'mlogitmm')],
+                    function(x) {
+                      setNames(default_hyperpars()$ranef$wish(nranef = max(1, length(x$hc_list))),
+                               paste(c("RinvD", "KinvD"), x$varname, sep = "_")
+                      )
+                    })), recursive = FALSE)
     )
   }
+
+  # censoring indicator and true (unobserved) survival time for survreg models
+  if (any(sapply(info_list, "[[", 'modeltype') %in% c('survreg'))) {
+    for (x in info_list[sapply(info_list, "[[", 'modeltype') %in% c('survreg')]) {
+      l[[paste0('cens_', x$varname)]] <- 1 - Mlist[[x$resp_mat]][, x$resp_col[2]]
+      l[[x$varname]] <- ifelse(Mlist[[x$resp_mat]][, x$resp_col[2]] == 1,
+                               Mlist[[x$resp_mat]][, x$resp_col[1]],
+                               NA)
+    }
+  }
+
+  if (any(sapply(info_list, "[[", 'modeltype') %in% c('coxph'))) {
+        gkw <- gauss_kronrod()$gkw
+        gkx <- gauss_kronrod()$gkx
+
+        ordgkx <- order(gkx)
+        gkx <- gkx[ordgkx]
+
+        l$gkw <- gkw[ordgkx]
+
+        for (x in info_list[sapply(info_list, "[[", 'modeltype') %in% c('coxph')]) {
+          timevariable <- Mlist[[x$resp_mat]][, x$resp_col[1]]
+          eventvariable <- Mlist[[x$resp_mat]][, x$resp_col[2]]
+
+          h0knots <- get_knots_h0(nkn = 5, Time = timevariable,
+                                  event = eventvariable, gkx = gkx)
+
+          l[[paste0("B_", x$varname)]] <- splines::splineDesign(h0knots, timevariable, ord = 4)
+          l[[paste0("Bs_", x$varname)]] <- splines::splineDesign(h0knots,
+                                                                 c(t(outer(timevariable/2, gkx + 1))),
+                                                                 ord = 4)
+
+          l[[paste0("zero_", x$varname)]] <- numeric(length(timevariable))
+        }
+  }
+
   return(l[!sapply(l, is.null)])
 }
 
