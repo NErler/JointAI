@@ -360,3 +360,13 @@ prep_covoutcomes <- function(dat) {
 # prep_outcome(outcomes = outcome9)
 
 
+
+
+idfun <- function(time, status, ...) {
+  args <- as.list(match.call())[-1]
+  return(lapply(args, deparse))
+}
+
+idSurv <- function(LHS) {
+  eval(parse(text = gsub("^Surv\\(", 'idfun\\(', LHS)))
+}
