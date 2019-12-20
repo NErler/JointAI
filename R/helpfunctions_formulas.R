@@ -624,7 +624,22 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
   # set attribute "type" to identify survival outcomes
   for (i in seq_along(fixed)) {
     if (survival::is.Surv(eval(parse(text = names(outnams[i])), env = data))) {
+      # outcomes[[i]] <- as.data.frame(sapply(idSurv(names(outnams[i])),
+      #                                       function(k) eval(parse(text = k), env = data)))
+
       outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnams[i])), env = data))
+      names(outcomes[[i]]) <- idSurv(names(outnams[i]))[c('time', 'status')]
+      nlev <- sapply(outcomes[[i]], function(x) length(levels(x)))
+      if (any(nlev > 2)) {
+        # ordinal variables have values 1, 2, 3, ...
+        outcomes[[i]][which(nlev > 2)] <- lapply(outcomes[[i]][which(nlev > 2)],
+                                                 function(x) as.numeric(x))
+      } else if (any(nlev == 2)) {
+        # binary variables have values 0, 1
+        outcomes[[i]][nlev == 2] <- lapply(outcomes[[i]][nlev == 2],
+                                           function(x) as.numeric(x) - 1)
+      }
+
       attr(fixed[[i]], "type") <- if (analysis_type == 'coxph') 'coxph' else "survreg"
       names(fixed)[i] <- names(outnams[i])
     } else {
