@@ -597,27 +597,30 @@ get_model_info <- function(Mlist, K, K_imp, trunc) {
                    survreg = NULL,
                    JM = NULL)
 
-    list(varname = k,
-         modeltype = modeltype,
-         family = family,
-         link = link,
-         resp_mat = resp_mat,
-         resp_col = resp_col,
-         dummy_cols = dummy_cols,
-         categories = categories,
-         ncat = length(levels(Mlist$refs[[k]])),
-         lp = lp,
-         parelmts = parelmts,
-         scale_pars = scale_pars,
-         index = if (resp_mat == 'Ml') c('j', 'i') else 'i',
-         parname = ifelse(k %in% names(Mlist$fixed), 'beta', 'alpha'),
-         hc_list = Mlist$hc_list[[k]],
-         trafos = trafos,
-         trunc = trunc[[k]],
-         ppc = FALSE,
-         shrinkage = NULL,
-         N = Mlist$N,
-         Ntot = Mlist$Ntot
+    list(
+      varname = if (modeltype %in% c('survreg', 'coxph')) {
+        paste0(c('surv', Mlist$outcomes$outnams[[k]]), collapse = "_")
+      } else {k},
+      modeltype = modeltype,
+      family = family,
+      link = link,
+      resp_mat = resp_mat,
+      resp_col = resp_col,
+      dummy_cols = dummy_cols,
+      categories = categories,
+      ncat = length(levels(Mlist$refs[[k]])),
+      lp = lp,
+      parelmts = parelmts,
+      scale_pars = scale_pars,
+      index = if (resp_mat == 'Ml') c('j', 'i') else 'i',
+      parname = ifelse(k %in% names(Mlist$fixed), 'beta', 'alpha'),
+      hc_list = Mlist$hc_list[[k]],
+      trafos = trafos,
+      trunc = trunc[[k]],
+      ppc = FALSE,
+      shrinkage = NULL,
+      N = Mlist$N,
+      Ntot = Mlist$Ntot
     )
   }, simplify = FALSE)
 }
