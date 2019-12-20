@@ -97,10 +97,10 @@ convert_variables <- function(data, allvars, mess = TRUE) {
 
   if (mess & length(c(converted1)) > 0)
     message(gettextf(
-      ifelse(length(c(converted1) == 1,
+      ifelse(length(c(converted1)) == 1,
              'The variable %s was converted to a factor.',
              'The variables %s were converted to factors.'),
-      paste0(dQuote(converted1), collapse = ", "))))
+      paste0(dQuote(converted1), collapse = ", ")))
 
   return(data)
 }
