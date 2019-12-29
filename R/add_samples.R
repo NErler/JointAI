@@ -100,11 +100,11 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   }
   t1 <- Sys.time()
 
-  coefs <- get_coef_names(object$Mlist, object$K)
+  # coefs <- get_coef_names(object$Mlist, object$K)
 
   MCMC <- mcmc
   for (k in 1:length(MCMC)) {
-    colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <- coefs[, 2]
+    # colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <- coefs[, 2]
     if (!is.null(object$scale_pars)) {
       # re-scale parameters
       MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale,
