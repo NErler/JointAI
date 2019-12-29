@@ -721,21 +721,15 @@ clm_imp <- function(formula, data,
   if (missing(data))
     stop("No dataset given.")
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$formula <- check_formula_list(arglist$formula)
-  arglist$analysis_type <- "clm"
-  arglist$family <- ordinal()
-  # arglist$link <- "logit"
-
-
   thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
+
+  arglist$formula <- check_formula_list(arglist$formula)
+  arglist$analysis_type <- "clm"
 
   res <- do.call(model_imp, arglist)
   res$call <- match.call()
@@ -895,9 +889,12 @@ clmm_imp <- function(fixed, data, random,
   if (missing(data))
     stop("No dataset given.")
 
-  arglist$analysis_type <- "clmm"
-  attr(arglist$analysis_type, "family") <- ordinal()
+  thiscall <- as.list(match.call())[-1L]
+  arglist <- c(arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
 
+
+  arglist$analysis_type <- "clmm"
 
   if (!is.null(arglist$formula)) {
     arglist$formula <- check_formula_list(arglist$formula)
@@ -905,11 +902,6 @@ clmm_imp <- function(fixed, data, random,
     arglist$fixed <- check_formula_list(arglist$fixed)
     arglist$random <- check_formula_list(arglist$random)
   }
-
-  thiscall <- as.list(match.call())[-1L]
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
 
 
   res <- do.call(model_imp, arglist)
@@ -999,11 +991,12 @@ coxph_imp <- function(formula, data,
 
 #' @rdname model_imp
 #' @export
-JM_imp <- function(formulas, data,
+JM_imp <- function(formula, data,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                    monitor_params = NULL, auxvars = NULL, timevar = NULL,
                    refcats = NULL,
-                   models = NULL, no_model = timevar, trunc = NULL,
+                   models = NULL, no_model = timevar,
+                   assoc_type = NULL, trunc = NULL,
                    ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
                    parallel = FALSE, n.cores = NULL,
                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
@@ -1013,7 +1006,9 @@ JM_imp <- function(formulas, data,
                    warn = TRUE, mess = TRUE,
                    keep_scaled_mcmc = FALSE, ...){
 
-  if (missing(formulas))
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+
+  if (missing(formula))
     stop("No model formulas specified.")
 
   if (missing(data))
@@ -1024,20 +1019,14 @@ JM_imp <- function(formulas, data,
                   dQuote("time"), dQuote("timevar")))
 
 
-
-  fmls <- split_formula_list(formulas)
-
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$fixed <- fmls$fixed
-  arglist$random <- fmls$random
-  arglist$analysis_type <- "JM"
-  arglist$family <- prophaz()
-  # arglist$link <- "log"
-
   thiscall <- as.list(match.call())[-1L]
 
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
+
+  arglist$formula <- check_formula_list(arglist$formula)
+
+  arglist$analysis_type <- "JM"
 
   res <- do.call(model_imp, arglist)
   res$call <- match.call()
