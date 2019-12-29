@@ -42,17 +42,14 @@ match_interaction <- function(inter, Mc, Ml) {
         )})
 
 
-
-
-      if (any(is.na(Mc[, elmts[elmts %in% Mcnam]]),
-              is.na(Ml[, elmts[elmts %in% Mlnam]]))) {
-        structure(
-          list(
-            interterm = inter_match,
-            elmts = unlist(elmt_match)),
-          interaction = i, elements = elmts
-        )
-      }
+      structure(
+        list(
+          interterm = inter_match,
+          elmts = unlist(elmt_match)),
+        interaction = i, elements = elmts,
+        has_NAs = ifelse(any(is.na(Mc[, elmts[elmts %in% Mcnam]]),
+                           is.na(Ml[, elmts[elmts %in% Mlnam]])), TRUE, FALSE)
+      )
     }}, simplify = FALSE)
 
   if (any(!sapply(out, is.null))) out[!sapply(out, is.null)]
