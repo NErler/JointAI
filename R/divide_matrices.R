@@ -20,7 +20,11 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # extract the outcomes from the fixed effects formulas
   outcomes <- extract_outcome_data(fixed, random = random, data = data, analysis_type = analysis_type)
 
-  # * imputation method -------------------------------------------------------
+  # name the elements of fixed:
+  fixed <- outcomes$fixed
+  names(random) <- names(fixed)
+
+  # * model types --------------------------------------------------------------
   models <- get_models(fixed = fixed, random = random, data = data, timevar = timevar,
                        auxvars = auxvars, no_model = no_model, models = models)
 
