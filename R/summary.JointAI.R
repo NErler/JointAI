@@ -75,7 +75,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       regcoef <- stats[object$coef_list[[varname]]$varname, ]
 
       sigma <- if (object$info_list[[varname]]$family %in% c('gaussian', 'Gamma') &&
-                   !is.null(object$ifno_list[[varname]]$family))
+                   !is.null(object$info_list[[varname]]$family))
         stats[grep(paste0("sigma_", varname), rownames(stats)),
               -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
 
