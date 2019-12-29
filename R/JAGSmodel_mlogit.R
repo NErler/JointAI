@@ -11,13 +11,24 @@ JAGSmodel_mlogit <- function(info) {
 
 
 
+  # Mc_predictor <- mapply(function(k, par_elmts) {
+  #   paste0(tab(4), "log(phi_", info$varname, "[", info$index, ", ", k, "]) <- ",
+  #          paste_predictor(parnam = info$parname, parindex = info$index,
+  #                          matnam = 'Mc', parelmts = par_elmts, cols = info$lp$Mc,
+  #                          scale_pars = info$scale_pars$Mc, indent = indent)
+  #   )
+  # }, k = 2:info$ncat, info$parelmts$Mc)
+
+
   Mc_predictor <- mapply(function(k, par_elmts) {
     paste0(tab(4), "log(phi_", info$varname, "[", info$index, ", ", k, "]) <- ",
-           paste_predictor(parnam = info$parname, parindex = info$index,
-                           matnam = 'Mc', parelmts = par_elmts, cols = info$lp$Mc,
-                           scale_pars = info$scale_pars$Mc, indent = indent)
+           add_linebreaks(
+             paste_linpred(info$parname, par_elmts, matnam = "Mc",
+                         index = info$index, cols = info$lp$Mc,
+                         scale_pars = info$scale_pars$Mc),
+             indent = indent)
     )
-  }, k = 2:info$ncat, info$parelmts$Mc)
+  }, k = 2:info$ncat, par_elmts = info$parelmts$Mc)
 
 
   logs <- c(paste0(tab(4), "log(phi_", info$varname, "[", info$index, ", 1]) <- 0"),
