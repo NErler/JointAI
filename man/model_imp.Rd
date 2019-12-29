@@ -153,40 +153,7 @@ lme_imp(
   ...
 )
 
-lmer_imp(
-  fixed,
-  data,
-  random,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  ridge = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  scale_pars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+lmer_imp(formula, data, ...)
 
 glme_imp(
   fixed,
@@ -364,7 +331,7 @@ coxph_imp(
 )
 
 JM_imp(
-  formulas,
+  formula,
   data,
   n.chains = 3,
   n.adapt = 100,
@@ -376,6 +343,7 @@ JM_imp(
   refcats = NULL,
   models = NULL,
   no_model = timevar,
+  assoc_type = NULL,
   trunc = NULL,
   ridge = FALSE,
   ppc = TRUE,
@@ -536,6 +504,15 @@ model (see \code{\link[stats]{formula}})}
 a one-sided formula of the form \code{~x1 + ... + xn | g},
 where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}
+
+\item{timevar}{name of the "time" variable in mixed models.
+Only required in "JM" models. The variable specified in "timevar"
+will automatically be added to "no_model".}
+
+\item{assoc_type}{named vector specifying the type of the association usded
+for a time-varying covariate in the linear predictor of the
+survival model when using a "JM" model. Impemented options are
+"underl.value" and "obs.value".}
 }
 \value{
 An object of class \link[=JointAIObject]{JointAI}.
