@@ -266,7 +266,8 @@ get_varlist <- function(funlist) {
 make_fctDF <- function(varlist_elmt, data) {
 
   X_vars <- sapply(names(varlist_elmt), function(k)
-    colnames(split_outcome(k, data = data)),
+    # colnames(split_outcome(k, data = data)),
+    colnames(model.matrix(as.formula(paste0("~", k)), data))[-1],
     simplify = FALSE)
 
   df <- melt_list(varlist_elmt, varname = 'fct', valname = 'var')
