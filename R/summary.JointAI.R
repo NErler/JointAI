@@ -42,13 +42,20 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   # create results matrices
   statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.", "GR-crit")
 
-  res_list <- lapply(names(object$coef_list), function(varname) {
+  res_list <- sapply(names(object$coef_list), function(varname) {
     MCMCsub <- MCMC[, intersect(colnames(MCMC),
                                 c(object$coef_list[[varname]]$coef,
                                   grep(paste0('_', object$info_list[[varname]]$varname, '\\b'),
                                        colnames(MCMC), value = TRUE)))]
 
+
+
     if (ncol(MCMCsub) > 0){
+      grcrit <- GR_crit(object = object, start = start, end = end, thin = thin,
+                       warn = warn, mess = FALSE, multivariate = FALSE,
+                       subset = list(other = colnames(MCMCsub)),
+                       autoburnin = autoburnin)[[1]][, "Upper C.I."]
+
       colnames(MCMCsub)[na.omit(match(colnames(MCMCsub),
                                       object$coef_list[[varname]]$coef))] <-
         object$coef_list[[varname]]$varname
@@ -61,10 +68,10 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       stats[, "SD"] <- apply(MCMCsub, 2, sd)
       stats[, paste0(quantiles * 100, "%")] <- t(apply(MCMCsub, 2, quantile, quantiles))
       stats[, "tail-prob."] <- apply(MCMCsub, 2, computeP)
-      # stats[, "GR-crit"] <- GR_crit(object = object, start = start, end = end, thin = thin,
-      #                               warn = warn, mess = FALSE, multivariate = FALSE,
-      #                               subset = subset, autoburnin = autoburnin)[[1]][, "Upper C.I."]
-      #
+      stats[, "GR-crit"] <- grcrit
+
+
+
       regcoef <- stats[object$coef_list[[varname]]$varname, ]
 
       sigma <- if (object$info_list[[varname]]$family %in% c('gaussian', 'Gamma') &&
@@ -82,13 +89,20 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
         Ds <- stats[grep(paste0("^D_", varname, "\\[[[:digit:]]+,[[:digit:]]+\\]"),
                          rownames(stats), value = TRUE), , drop = FALSE]
         if (nrow(Ds) > 0) {
-          Ddiag <- sapply(regmatches(rownames(Ds), gregexpr('[[:digit:]]*', rownames(Ds))),
-                          function(k) {
-                            length(unique(grep('[[:digit:]]+', k, value = T))) == 1
-                          })
+
+          Ddiag <- sapply(strsplit(sub("\\]", '',
+                                       sub("^[[:print:]]*\\[", '', rownames(Ds))
+          ), ","),
+          function(i) length(unique(i)) == 1)
+
           Ds[Ddiag, 'tail-prob.'] <- NA
           Ds
         }
+      }
+
+      assoc_type <- if (object$info_list[[varname]]$modeltype %in% "JM") {
+        object$info_list[[which(sapply(object$info_list,
+                                       "[[", "modeltype") == "JM")]]$assoc_type
       }
 
       wb_shape <- if (object$info_list[[varname]]$modeltype %in% c('survreg')) {
@@ -98,9 +112,10 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
       list(modeltype = object$info_list[[varname]]$modeltype,
            regcoef = regcoef, sigma = sigma, intercepts = intercepts,
-           rd_vcov = rd_vcov, wb_shape = wb_shape)
+           rd_vcov = rd_vcov, wb_shape = wb_shape, assoc_type = assoc_type,
+           grcrit = grcrit)
     }
-  })
+  }, simplify = FALSE)
 
 
   out <- list()
@@ -111,13 +126,6 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$nchain <- nchain(object$MCMC) - sum(exclude_chains %in% seq_along(object$MCMC))
   out$res <- res_list
 
-  # out$main <- stats[!rownames(stats) %in% c(rownames(out$ranefvar),
-  #                                           rownames(out$intercepts),
-  #                                           get_aux(object),
-  #                                           rownames(out$sigma),
-  #                                           rownames(out$weibull),
-  #                                           paste0("tau_", names(object$Mlist$y))),
-  #                   , drop = FALSE]
 
   out$analysis_type <- object$analysis_type
   out$size <- nrow(object$data)
@@ -146,7 +154,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
       if (sum(!sapply(x$res, is.null)) > 1)
       cat(paste0(
         '# ', paste0(c(rep('-', 59)), collapse = ''), ' #\n',
-        '  ', print_type(x$res[[k]]$modeltype), ' for ', names(x$res)[k], '\n',
+        '  ', print_type(x$res[[k]]$modeltype), ' for ', dQuote(names(x$res)[k]), '\n',
         '# ', paste0(c(rep('-', 30)), collapse = ' '), ' #\n\n'
       ))
 
@@ -174,6 +182,17 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
       if (!is.null(x$res[[k]]$wb_shape)) {
         cat("\nPosterior summary of the shape of the Weibull distribution:\n")
         print(x$res[[k]]$wb_shape, digits = digits)
+      }
+
+      if (!is.null(x$res[[k]]$assoc_type)) {
+        cat("\nAssociation types:\n")
+        cat(paste0(names(x$res[[k]]$assoc_type), ": ",
+               sapply(x$res[[k]]$assoc_type, function(i)
+                 switch(i,
+                      'underl.value' = "underlying value",
+                      'obs.value' = 'observed value')
+               ), collapse = "\n"))
+
       }
     }
   }
@@ -204,6 +223,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
 coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                          subset = NULL, exclude_chains = NULL,
                          warn = TRUE, mess = TRUE, ...) {
+
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
@@ -225,9 +245,10 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
         lvl <- levels(object$Mlist$refs[[k]])
         names(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
       },
-      setNames(colMeans(MCMC[, intersect(colnames(MCMC), x$coef)]),
-               x$varname[match(x$coef, intersect(colnames(MCMC), x$coef))]
-      )
+      if (length(intersect(colnames(MCMC), x$coef)))
+        setNames(colMeans(MCMC[, intersect(colnames(MCMC), x$coef), drop = FALSE]),
+                 x$varname[match(x$coef, intersect(colnames(MCMC), x$coef))]
+        )
     )
   }, simplify = FALSE)
 
@@ -302,7 +323,7 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
     for (k in seq_along(coefs)) {
       varname <- names(coefs)[k]
       cat("\n",
-          print_type(x$info_list[[varname]]$modeltype), "for", varname, '\n')
+          print_type(x$info_list[[varname]]$modeltype), "for", dQuote(varname), '\n')
       if (x$info_list[[names(coefs)[k]]]$modeltype %in% c('glmm', 'clmm', 'mlogitmm')) {
         cat("\nFixed effects:\n")
         print(coefs[[k]], digits = digits)
@@ -311,8 +332,10 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
         print(get_Dmat(x, varname = varname), digits = digits)
 
       } else {
-        cat("\n\nCoefficients:\n")
-        print(coefs[[k]], digits = digits)
+        if (length(coefs[[k]] > 0)) {
+          cat("\n\nCoefficients:\n")
+          print(coefs[[k]], digits = digits)
+        }
       }
 
       if (paste0("sigma_", varname) %in% colnames(MCMC)) {
@@ -327,5 +350,3 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
 
   invisible(x)
 }
-
-
