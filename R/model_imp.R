@@ -294,9 +294,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
                       quiet = TRUE, progress.bar = "text",
                       warn = TRUE, mess = TRUE,
                       keep_scaled_mcmc = FALSE,
-                      analysis_type,
+                      analysis_type, assoc_type = NULL,
                       imp_par_list = NULL,  data_list = NULL, ...) {
-
 
 
   # checks & warnings -------------------------------------------------------
