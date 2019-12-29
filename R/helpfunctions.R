@@ -79,33 +79,6 @@ prep_covoutcomes <- function(dat) {
 }
 
 
-#
-# outcome1 <- list(y = data.frame(y = rgamma(10, 1, 0.1)))
-# outcome2 <- list(y = data.frame(y = factor(sample(0:1, size = 10, replace = TRUE))))
-# outcome3 <- list(y = data.frame(y = factor(sample(1:4, size = 20, replace = TRUE), ordered = TRUE)))
-# outcome4 <- list(y = data.frame(y = factor(sample(1:4, size = 20, replace = TRUE), ordered = FALSE)))
-# outcome5 <- list("Surv(time, status)" = as.data.frame.matrix(survival::Surv(rgamma(10, 1, 0.1), rbinom(10, 1, 0.5))))
-# outcome6 <- list("cbind(x,y)" = data.frame(x = rnorm(10), y = rnorm(10)))
-# outcome7 <- list(x = data.frame(x = rnorm(10)),
-#                  y = data.frame(y = rnorm(10)))
-#
-# df <- data.frame(x = rnorm(10), y = rnorm(10), z = factor(rbinom(10, 1, 0.5)), a = factor(sample(1:3, 10, replace = T)))
-# outcome8 <- list("cbind(x,y)" = with(df, data.frame(x, y)),
-#                  "cbind(x,z)" = with(df, data.frame(x, z)),
-#                  "cbind(x,a)" = with(df, data.frame(x, a, z)))
-# outcome9 <- list("Surv(time, status)" = as.data.frame.matrix(survival::Surv(rgamma(10, 1, 0.1), rbinom(10, 1, 0.5))),
-#                  x = data.frame(x = rnorm(30)))
-#
-#
-# prep_outcome(outcomes = outcome1)
-# prep_outcome(outcomes = outcome2)
-# prep_outcome(outcomes = outcome3)
-# prep_outcome(outcomes = outcome4)
-# prep_outcome(outcomes = outcome5)
-# prep_outcome(outcomes = outcome6)
-# prep_outcome(outcomes = outcome7)
-# prep_outcome(outcomes = outcome8)
-# prep_outcome(outcomes = outcome9)
 
 replace_dummy <- function(nam, refs) {
   if (is.null(refs))
