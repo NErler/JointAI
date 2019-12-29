@@ -359,7 +359,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
                                                all_vars(random),
                                                all_vars(auxvars))), mess = mess)
 
-  print('Mlist')
+
   # * divide matrices ------------------------------------------------------------
   Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
                            random = random, models = models, auxvars = auxvars,
@@ -367,31 +367,39 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
                            scale_vars = scale_vars, refcats = refcats,
                            warn = warn, mess = mess, ppc = ppc,
                            ridge = ridge)
-  print("K & K_imp")
+
   # * model dimensions ---------------------------------------------------------
   K <- get_model_dim(Mlist$lp_cols[names(Mlist$lp_cols) %in% names(Mlist$fixed)],
                      Mlist = Mlist)
   K_imp <- get_model_dim(Mlist$lp_cols[!names(Mlist$lp_cols) %in% names(Mlist$fixed)],
                          Mlist = Mlist)
 
-  print('info_list')
   # * model info ---------------------------------------------------------------
-  info_list <- get_model_info(Mlist, K = K, K_imp = K_imp, trunc = trunc)
+  info_list <- get_model_info(Mlist, K = K, K_imp = K_imp, trunc = trunc,
+                              assoc_type = assoc_type)
+  # whichJM <- which(sapply(info_list, "[[", 'modeltype') %in% 'JM')
+  # if (length(whichJM) > 0) {
+  #   for (k in whichJM) {
+  #     longvars <- names(info_list[[k]]$lp$Ml)
+  #     longvars <- unique(
+  #       c(longvars,
+  #         unlist(lapply(info_list[longvars], function(x) {
+  #           names(x$lp$Ml)
+  #         }))
+  #       ))
+  #     longvars <- sapply(longvars, replace_dummy, refs = Mlist$refs)
+  #     longvars <- longvars[!longvars %in% Mlist$timevar]
+  #
+  #     info_list[[k]]$tv_vars <- info_list[longvars]
+  #   }
+  # }
 
-  print('data_list')
+
+
   # * data list ----------------------------------------------------------------
-  data_list <- get_data_list(Mlist, info_list)
+  data_list <- get_data_list(Mlist, info_list, data)
 
 
-
-  # data_list <- try(get_data_list(analysis_type, family, models, Mlist,
-  #                                scale_pars = scale_pars, hyperpars = hyperpars,
-  #                                data = data, imp_par_list = imp_par_list))
-  # scale_pars <- data_list$scale_pars
-  # hyperpars <- data_list$hyperpars
-  # data_list <- data_list$data_list
-
-  print('write_model')
   # write model ----------------------------------------------------------------
   # generate default name for model file if not specified
   if (is.null(modeldir)) modeldir <- tempdir()
@@ -431,7 +439,6 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
   }
 
 
-  print('inits')
   # initial values -------------------------------------------------------------
   # * check if initial values are supplied or should be generated
   if (!(is.null(inits) | inherits(inits, c("function", "list")))) {
@@ -458,7 +465,6 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
 
 
   # parameters to monitor ------------------------------------------------------
-  print('monitor params')
   if (is.null(monitor_params)) {
     monitor_params <- c("analysis_main" = TRUE)
   } else {
@@ -474,9 +480,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
   var.names <- do.call(get_params, c(list(Mlist = Mlist, info_list = info_list,
                                           data = data, mess = mess),
                                      monitor_params))
-  print(var.names)
 
-  print('run JAGS')
   # run JAGS -----------------------------------------------------------------
   t0 <- Sys.time()
   if (parallel == TRUE) {
@@ -494,7 +498,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
         message(paste0("Parallel sampling on ", n.cores, " cores started (",
                        Sys.time(), ")."))
 
-      res <- foreach(i = seq_along(inits)) %dopar% {run_jags(inits[[i]], data_list = data_list,
+      res <- foreach(i = seq_along(inits)) %dopar% {
+        run_jags(inits[[i]], data_list = data_list,
                           modelfile = modelfile,
                           n.adapt = n.adapt, n.iter = n.iter, thin = thin,
                           var.names = var.names)}
@@ -520,7 +525,6 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
     warning('There is no mcmc sample. Something went wrong.',
             call. = FALSE, immediate. = TRUE)
 
-  print('post processing')
   # post processing ------------------------------------------------------------
   if (n.iter > 0 & !is.null(mcmc)) {
     MCMC <- mcmc
