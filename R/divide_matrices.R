@@ -29,8 +29,6 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
              prep_covoutcomes(data[setdiff(names(models), outcomes$outnams)])
   )
 
-  # name the elements of fixed:
-  fixed <- outcomes$fixed
 
   # reference categories -----------------------------------------------------
   refs <- get_refs(c(fixed, auxvars), data, refcats)
@@ -139,11 +137,6 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   hc_list <- if (!all(sapply(random, is.null)))
     HC(fixed, random, data, interactions = interactions,
        Mcnam = colnames(Mc), Mlnam = colnames(Ml))
-
-
-  # other info ----------------------------------------------------------------
-  # ncat <- if (analysis_type %in% c('clmm', 'clm'))
-  #   length(unique(unlist(y)))
 
   # column names of the linear predictors for all models -----------------------
   XXnam <- get_linpreds(fixed, random, data, models, auxvars, analysis_type)
