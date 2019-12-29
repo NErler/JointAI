@@ -54,9 +54,6 @@ get_MIdat <- function(object, m = 10, include = TRUE,
                       export_to_SPSS = FALSE,
                       resdir = NULL, filename = NULL){
 
-  if (is.null(object$models) | sum(is.na(object$data[, names(object$models)])) == 0)
-    stop("This JointAI object did not impute any values.")
-
   if (!"foreign" %in% rownames(installed.packages()))
     stop("This function requires the 'foreign' package to be installed.")
 
@@ -66,13 +63,20 @@ get_MIdat <- function(object, m = 10, include = TRUE,
   DF <- object$data
   DF$.rownr <- 1:nrow(DF)
 
-  if (!object$analysis_type %in% c("lme", "glme", 'clmm')) {
+  if (!any(sapply(object$info_list, "[[", "modeltype") %in% c("glmm", "clmm", 'mlogitmm'))) {
     DF$.id <- 1:nrow(DF)
   }
 
   groups <- match(object$Mlist$groups, unique(object$Mlist$groups))
 
-  meth <- object$models[colSums(is.na(DF[, names(object$models), drop = FALSE])) > 0]
+  vars <- names(object$models)[colSums(is.na(DF[, names(object$models), drop = FALSE])) > 0]
+
+  varinfo <- lapply(object$info_list[vars], function(x) {
+    data.frame(varname = x$varname,
+               modeltype = x$modeltype,
+               family = ifelse(!is.null(x$family), x$family, NA),
+               stringsAsFactors = FALSE)
+  })
 
   if (is.null(start)) {
     start <- start(object$MCMC)
@@ -104,42 +108,32 @@ get_MIdat <- function(object, m = 10, include = TRUE,
     DF_list[[i]] <- cbind("Imputation_" = i - 1, DF)
   }
 
-  for (i in seq_along(meth)) {
+  for (i in vars) {
     impval <- NULL
-    # imputation by linear regression --------------------------------------------------------
-    if (meth[i] %in% c("norm", "lognorm", "gamma", "beta")) {
-      if (names(meth[i]) %in% colnames(object$data_list$Xtrafo)) {
-        pat <- paste0("Xtrafo\\[[[:digit:]]*,",
-                      match(names(meth)[i], colnames(object$data_list$Xtrafo)),
-                      "\\]")
-      } else {
-        pat <- paste0("Xc\\[[[:digit:]]*,",
-                      match(names(meth)[i], colnames(object$data_list$Xc)),
-                      "\\]")
-      }
+
+    if (varinfo[[i]]$modeltype %in% c("glm", "clm", "mlogit")) {
+      # baseline variables -------------------------------------------------------
+      pat <- paste0("Mc\\[[[:digit:]]*,",
+                    match(i, colnames(object$data_list$Mc)),
+                    "\\]")
 
       impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
-      if (!is.null(object$scale_pars)) {
-        impval <- impval * object$scale_pars["scale", names(meth)[i]]  +
-          object$scale_pars["center", names(meth)[i]]
-      }
 
       if (length(impval) > 0) {
         rownrs <- gsub(",[[:digit:]]*\\]", "",
                        gsub("[[:alpha:]]*\\[", "", colnames(impval)))
 
         for (j in (1:m) + 1) {
-          DF_list[[j]][is.na(DF_list[[j]][, names(meth)[i]]), names(meth)[i]] <-
+          DF_list[[j]][is.na(DF_list[[j]][, i]), i] <-
             impval[j - 1, na.omit(match(groups, as.numeric(rownrs)))]
         }
       }
-    }
-    # imputation by binary regression --------------------------------------------------------
-    if (meth[i] %in% c("logit")) {
-      pat <- paste0("Xc\\[[[:digit:]]*,",
-                    match(attr(object$Mlist$refs[[names(meth)[i]]], "dummies"),
-                          colnames(object$data_list$Xc)),
+    } else if (varinfo[[i]]$modeltype %in% c("glmm", "clmm", "mlogitmm")) {
+      # longitudinal variables ---------------------------------------------------
+      pat <- paste0("Ml\\[[[:digit:]]*,",
+                    match(i, colnames(object$data_list$Ml)),
                     "\\]")
+
       impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
 
       if (length(impval) > 0) {
@@ -147,125 +141,16 @@ get_MIdat <- function(object, m = 10, include = TRUE,
                        gsub("[[:alpha:]]*\\[", "", colnames(impval)))
 
         for (j in (1:m) + 1) {
-          vec <- as.numeric(DF_list[[j]][, names(meth)[i]]) - 1
-          vec[is.na(vec)] <- impval[j - 1, na.omit(match(groups, as.numeric(rownrs)))]
-          vec <- as.factor(vec)
-          levels(vec) <- levels(DF_list[[j]][, names(meth)[i]])
-          DF_list[[j]][, names(meth)[i]] <- vec
-        }
-      }
-    }
-
-    # imputation of categorical variables ----------------------------------------------------
-    if (meth[i] %in% c("cumlogit", "multilogit")) {
-      pat <- paste0("Xcat\\[[[:digit:]]*,",
-                    match(names(meth)[i], colnames(object$data_list$Xcat)),
-                    "\\]")
-      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
-
-      if (length(impval) > 0) {
-        rownrs <- gsub(",[[:digit:]]*\\]", "",
-                       gsub("[[:alpha:]]*\\[", "", colnames(impval)))
-
-        for (j in (1:m) + 1) {
-          vec <- as.numeric(DF_list[[j]][, names(meth)[i]])
-          vec[is.na(vec)] <- impval[j - 1, na.omit(match(groups, as.numeric(rownrs)))]
-          if (meth[i] == "cumlogit") {
-            vec <- as.ordered(vec)
-          }else{
-            vec <- as.factor(vec)
-          }
-          levels(vec) <- levels(DF_list[[j]][, names(meth)[i]])
-          DF_list[[j]][, names(meth)[i]] <- vec
-        }
-      }
-    }
-
-
-    # imputation with lmm ------------------------------------------------------
-    if (meth[i] %in% c('lmm', 'glmm_lognorm', 'glmm_gamma', 'glmm_poisson')) {
-      if (names(meth[i]) %in% colnames(object$data_list$Xl)) {
-        pat <- paste0("Xl\\[[[:digit:]]*,",
-                      match(names(meth)[i], colnames(object$data_list$Xl)),
-                      "\\]")
-      } else if (names(meth[i]) %in% colnames(object$data_list$Z)) {
-        pat <- paste0("Z\\[[[:digit:]]*,",
-                      match(names(meth)[i], colnames(object$data_list$Z)),
-                      "\\]")
-      } else if (names(meth[i]) %in% colnames(object$data_list$Xltrafo)) {
-        pat <- paste0("Xltrafo\\[[[:digit:]]*,",
-                      match(names(meth)[i], colnames(object$data_list$Xltrafo)),
-                      "\\]")
-      }
-
-      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
-      if (!is.null(object$scale_pars)) {
-        impval <- impval * object$scale_pars["scale", names(meth)[i]]  +
-          object$scale_pars["center", names(meth)[i]]
-      }
-
-      if (length(impval) > 0) {
-        rownrs <- gsub(",[[:digit:]]*\\]", "",
-                       gsub("[[:alpha:]]*\\[", "", colnames(impval)))
-
-        for (j in (1:m) + 1) {
-          DF_list[[j]][is.na(DF_list[[j]][, names(meth)[i]]), names(meth)[i]] <-
+          DF_list[[j]][is.na(DF_list[[j]][, i]), i] <-
             impval[j - 1, order(as.numeric(rownrs))]
         }
       }
+    } else {
+      stop(gettextf("I don't know how to fill in imputed values from a model of type %s.",
+                    dQuote(varinfo[[i]]$modeltype)),
+           call. = FALSE)
     }
 
-    # imputation with glmm_logit -----------------------------------------------
-    if (meth[i] %in% c('glmm_logit')) {
-      if (attr(object$Mlist$refs[[names(meth)[i]]], "dummies") %in% colnames(object$data_list$Xl)) {
-        pat <- paste0("Xl\\[[[:digit:]]*,",
-                      match(attr(object$Mlist$refs[[names(meth)[i]]], "dummies"),
-                            colnames(object$data_list$Xl)),
-                      "\\]")
-      } else if (attr(object$Mlist$refs[[names(meth)[i]]], "dummies") %in% colnames(object$data_list$Z)) {
-        pat <- paste0("Z\\[[[:digit:]]*,",
-                      match(attr(object$Mlist$refs[[names(meth)[i]]], "dummies"),
-                            colnames(object$data_list$Z)),
-                      "\\]")
-      }
-
-      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
-
-      if (length(impval) > 0) {
-        rownrs <- gsub(",[[:digit:]]*\\]", "",
-                       gsub("[[:alpha:]]*\\[", "", colnames(impval)))
-
-        for (j in (1:m) + 1) {
-          DF_list[[j]][is.na(DF_list[[j]][, names(meth)[i]]), names(meth)[i]] <-
-            impval[j - 1, order(as.numeric(rownrs))]
-        }
-      }
-    }
-
-    # imputation with clmm ------------------------------------------------------
-    if (meth[i] %in% 'clmm') {
-      if (names(meth[i]) %in% colnames(object$data_list$Xlcat)) {
-        pat <- paste0("Xlcat\\[[[:digit:]]*,",
-                      match(names(meth)[i], colnames(object$data_list$Xlcat)),
-                      "\\]")
-      } else if (names(meth[i]) %in% colnames(object$data_list$Z)) {
-        pat <- paste0("Z\\[[[:digit:]]*,",
-                      match(names(meth)[i], colnames(object$data_list$Z)),
-                      "\\]")
-      }
-      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
-
-      if (length(impval) > 0) {
-        rownrs <- gsub(",[[:digit:]]*\\]", "",
-                       gsub("[[:alpha:]]*\\[", "", colnames(impval)))
-
-        for (j in (1:m) + 1) {
-          DF_list[[j]][is.na(DF_list[[j]][, names(meth)[i]]), names(meth)[i]] <-
-            impval[j - 1, order(as.numeric(rownrs))]
-        }
-      }
-    }
-  }
 
   if (!include)
     DF_list <- DF_list[-1]
