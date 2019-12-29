@@ -133,13 +133,19 @@
 #' @import utils
 #' @import rjags
 #' @import stats
-#' @importFrom survival Surv
 #'
 #'
 #' @docType package
 #' @name JointAI
 NULL
 
+
+#' Create a Survival Object
+#' This function just calls \code{Surv()} from the \href{https://CRAN.R-project.org/package=survival}{\strong{survival}} package.
+#'
+#' @inheritParams survival::Surv
+#' @export
+Surv <- survival::Surv
 
 .onLoad <- function(libname, pkgname) {
   rjags::load.module("glm", quiet = TRUE)
@@ -205,26 +211,3 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #' @name sharedParams
 NULL
 
-
-
-
-
-# define family weibull
-weibull <- function(link = 'log') {
-  structure(list(family = "weibull", link = 'log',
-                 linkinv = function(eta, shape) exp(eta) * gamma(1 + 1/shape)),
-                 #mu.eta = function(eta, shape) exp(eta) * gamma(1 + 1/shape)),
-            class = "family")
-}
-
-ordinal <- function(link = 'identity') {
-  structure(list(family = "ordinal", link = link),
-            class = "family")
-}
-
-# define family coxph
-prophaz <- function(link = 'log') {
-  structure(list(family = "prophaz", link = link,
-                 linkinv = exp),
-            class = "family")
-}
