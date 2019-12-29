@@ -13,6 +13,7 @@ check_tvar <- function(x, idvar) {
 
 
 
+# used in divide_matrices (2019-12-26)
 match_interaction <- function(inter, Mc, Ml) {
   Mcnam <- colnames(Mc)
   Mlnam <- colnames(Ml)
@@ -23,6 +24,7 @@ match_interaction <- function(inter, Mc, Ml) {
     if (!any(is.na(c(match(i, c(Mcnam, Mlnam)),
                      sapply(elmts, match, c(Mcnam, Mlnam)))))) {
 
+      # find matrix and column containing the interaction term
       inter_match <- c(
         if (!is.na(match(i, Mcnam)))
           setNames(match(i, Mcnam), 'Mc'),
@@ -30,6 +32,7 @@ match_interaction <- function(inter, Mc, Ml) {
           setNames(match(i, Mlnam), 'Ml')
       )
 
+      # find matrices and columns of the elements
       elmt_match <- lapply(elmts, function(k) {
         c(
           if (!is.na(match(k, Mcnam)))
