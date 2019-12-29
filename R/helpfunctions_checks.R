@@ -1,3 +1,9 @@
+# helper functions ------------------------------------------------------------
+clean_names <- function(string) {
+  gsub(":", "_", string)
+}
+
+
 # check all variables are in the data ------------------------------------------
 check_vars_in_data <- function(datanames, fixed = NULL, random = NULL, auxvars = NULL) {
 
