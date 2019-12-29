@@ -1,155 +1,298 @@
-# build a linear predictor -----------------------------------------------------
-paste_predictor <- function(parnam, parindex, matnam, parelmts, cols, scale_pars, indent, isgk = FALSE, breakafter = 3) {
-
-  if (!is.null(cols) && length(cols) != length(parelmts)) {
-    stop("The size of the design matrix and length of parameter vector do not match!")
-  }
-
-  lb <- c(rep("", breakafter),
-          rep(c(paste0(c("\n", tab(indent)), collapse = ""),
-                rep("", breakafter - 1)),
-              ceiling((length(parelmts) - breakafter)/breakafter))
-  )[1:length(parelmts)]
-
-  # paste0(lb,
-  #        matnam, "[", parindex,
-  #        if (!is.null(cols)) paste0(", ", cols),
-  #        if (isgk) paste0(", k"),
-  #        "] * ", parnam, "[", parelmts, "]",
-  #        collapse = " + ")
-
-  s <- if (!is.null(scale_pars)) {
-    apply(!is.na(scale_pars), 1, any)
-  } else {
-    rep(F, length(cols))
-  }
-
-  paste0(lb,
-         ifelse(s, "(", ""),
-         matnam, "[", parindex,
-         if (!is.null(cols)) paste0(", ", cols),
-         if (isgk) paste0(", k"),
-         "]",
-         ifelse(s, paste0(" - sp", matnam, "[", cols, ", 1])/sp",
-                          matnam, "[", cols, ", 2]"), ""),
-         " * ", parnam, "[", parelmts, "]",
-         collapse = " + ")
-}
-
-
-
-# paste_ranef_predictor <- function(parnam, parindex, matnam, parelmts, cols, indent, breakafter = 3) {
-#   if (length(cols) != length(parelmts)) {
-#     stop("The size of the design matrix and length of parameter vector do not match!")
-#   }
-#
-#   lb <- c(rep("", breakafter),
-#           rep(c(paste0(c("\n", tab(indent)), collapse = ""), rep("", breakafter - 1)),
-#               ceiling((length(parelmts) - breakafter)/breakafter))
-#   )[1:length(parelmts)]
-#
-#   paste0(lb,
-#          matnam, "[", parindex, ", ", cols, "] * ", parnam, "[groups[", parindex, "], ", parelmts, "]",
-#          collapse = " + ")
-# }
-
-
-paste_ranef_predictor_gk <- function(parnam, parindex1, parindex2, matnam, parelmts, cols, indent, breakafter = 3) {
-  if (length(cols) != length(parelmts)) {
-    stop("The size of the design matrix and length of parameter vector do not match!")
-  }
-
-  lb <- c(rep("", breakafter),
-          rep(c(paste0(c("\n", tab(indent)), collapse = ""), rep("", breakafter-1)),
-              ceiling((length(parelmts) - breakafter)/breakafter))
-  )[1:length(parelmts)]
-
-  paste0(lb,
-         matnam, "[", parindex1, ", ", cols, "] * ", parnam, "[", parindex2, ", ", parelmts, "]",
-         collapse = " + ")
-}
-
-
-# Help function for indenting lines in model files -----------------------------
+# help functions ---------------------------------------------------------------
 tab <- function(times = 2) {
   tb <- " "
   paste(rep(tb, times), collapse = "")
 }
 
+add_linebreaks <- function(string, indent, width = 85) {
+  # string: the linear predictor string to be broken
+  # indent: in case of a linebreak, how much should the new line be indented?
+  # width: output width
 
+  if (is.null(string))
+    return(NULL)
 
-# switch for imp_model ---------------------------------------------------------
-# paste_imp_model <- function(imp_par_list) {
-#   imp_model <- switch(imp_par_list$impmeth,
-#                       norm = impmodel_continuous,
-#                       lognorm = impmodel_continuous,
-#                       gamma = impmodel_continuous,
-#                       beta = impmodel_continuous,
-#                       logit = impmodel_logit,
-#                       multilogit = impmodel_multilogit,
-#                       cumlogit = impmodel_cumlogit,
-#                       clmm = impmodel_clmm,
-#                       lmm = impmodel_lmm,
-#                       glmm_lognorm = impmodel_glmm_lognorm,
-#                       glmm_logit = impmodel_glmm_logit,
-#                       glmm_gamma = impmodel_glmm_gamma,
-#                       glmm_poisson = impmodel_glmm_poisson)
-#   do.call(imp_model, imp_par_list)
-# }
+  m <- gregexpr(" \\+ ", string)[[1]]
+  if (all(m < 0))
+    return(string)
 
+  len <- c(as.numeric(m)[1], diff(c(as.numeric(m), nchar(string))))
 
-# switch for imp_prior ---------------------------------------------------------
-# paste_imp_priors <- function(imp_par_list) {
-#   imp_prior <- switch(imp_par_list$impmeth,
-#                       norm = impprior_continuous,
-#                       lognorm = impprior_continuous,
-#                       gamma = impprior_continuous,
-#                       beta = impprior_continuous,
-#                       logit = impprior_logit,
-#                       multilogit = impprior_multilogit,
-#                       cumlogit = impprior_cumlogit,
-#                       clmm = impprior_clmm,
-#                       lmm = impprior_lmm,
-#                       glmm_lognorm = impprior_glmm_lognorm,
-#                       glmm_logit = impprior_glmm_logit,
-#                       glmm_gamma = impprior_glmm_gamma,
-#                       glmm_poisson = impprior_glmm_poisson)
-#   do.call(imp_prior, imp_par_list)
-# }
+  i <- 1
+  br <- c()
+  while(i < length(len)) {
+    cs <- cumsum(len[i:length(len)])
+    nfit <- max(1, which(cs <= (width - indent)))
+    br <- c(br, rep(' + ', nfit - 1),
+            if ((i + nfit - 1) < length(len)) paste0(' +\n', tab(indent)))
+    i <- i + nfit
+  }
 
-# paste model ----------------------------------------------------------------
-# paste_model <- function(info) {
-#   modelfun <- switch(info$modeltype,
-#                      glm = writemodel_glm,
-#                      glmm = writemodel_glmm,
-#                      clm = writemodel_clm,
-#                      clmm = writemodel_clmm,
-#                      coxph = writemodel_coxph,
-#                      survreg = writemodel_survreg,
-#                      JM = writemodel_JM)
-#   do.call(modelfun, info)
-# }
-
-
-# paste dummy variables --------------------------------------------------------
-paste_dummies <- function(categories, dest_mat, dest_col, dummy_cols, index, ...){
-  mapply(function(dummy_cols, categories) {
-    paste0(tab(4), dest_mat, "[", index, ", ", dummy_cols, "] <- ifelse(", dest_mat,
-           "[", index, ", ",
-           dest_col, "] == ", categories, ", 1, 0)")
-  }, dummy_cols, categories)
+  paste0(strsplit(string, " \\+ ")[[1]], c(br, ''), collapse = '')
 }
 
 
-# paste transformations of continuous imputed variables ------------------------
-paste_trafos <- function(dest_col, trafo_cols, trafos, Xmat, index, ...) {
-  mapply(function(trafo_cols, trafo) {
-    paste0(tab(4), Xmat, "[", index, ", ", trafo_cols, "] <- ", trafo)
-  }, trafo_cols = trafo_cols, trafo = trafos)
+# pasting linear predictors ----------------------------------------------------
+paste_linpred <- function(parname, parelmts, matnam, index, cols, scale_pars, isgk = FALSE) {
+  # parname: name of the parameter, e.g. "beta"
+  # parelmts: vector specifying which elements of the parameter vector are to be
+  #           used, e.g. c(1,2,3,6,8,4)
+  # matnam: name or the design matrix, e.g. "Ml" or "Mc"
+  # index: character sting specifying the index to be used, e.g. "i" or "j"
+  # cols: index of the columns of the design matrix to be used, e.g. c(1, 4, 2, 10)
+  # scale_pars: a matrix with rownames according to the columns of the design matrix
+  #             and columns 'center' and 'scale'. Contains NA if a variable should
+  #             not be scaled (could also be NULL instead of a matrix)
+
+  paste(
+    paste_scaling(x = paste_data(matnam, index, cols, isgk),
+                  rows = cols,
+                  scale_pars = scale_pars,
+                  scalemat = paste0('sp', matnam)
+    ),
+    paste_coef(parname, parelmts),
+    sep = " * ", collapse = " + ")
+}
+
+paste_scale <- function(x, row, scalemat) {
+  # x: term that will be scaled (or vector of terms)
+  # row: the row number(s) of the matrix containing the scaling parameters
+  # scalemat: the name of the matrix containing the scaling parameters, e.g. "spMl" or "spMc"
+  paste0("(", x, " - ", scalemat, "[", row, ", 1])/", scalemat, "[", row, ", 2]")
+}
+
+paste_scaling <- function(x, rows, scale_pars, scalemat) {
+  # x: vector of expressions to scale
+  # row: the row number(s) of the matrix containing the scaling parameters
+  # scale_pars: scaling matrix
+  # scalemat: name of the scaling matrix in JAGS
+
+  if (is.null(scale_pars)) {
+    x
+  } else {
+    ifelse(rowSums(is.na(scale_pars[rows, ])) > 0,
+           x,
+           paste_scale(x, row = rows, scalemat = scalemat)
+    )
+  }
+}
+
+paste_data <- function(matnam, index, col, isgk = FALSE) {
+  # matnam: the name of the design matrix
+  # index: the index to be used, e.g. "i" or "j"
+  # col: the column (or vector of columns) of the design matrix
+  # isgk: is this whithin the Gauss-Kronrod quadrature?
+  paste0(matnam, ifelse(isgk, "gk", ''), "[", index, ", ", col,
+         ifelse(isgk, ", k]", "]"))
+}
+
+paste_coef <- function(parname, parelmts) {
+  # parname: the name of the parameter, e.g. "alpha" or "beta"
+  # parelmts: vector of integers giving the elements of the parameter to be used
+  paste0(parname, '[', parelmts, ']')
 }
 
 
-# random effects specifications ------------------------------------------------
+# pasting random effects -------------------------------------------------------
+
+paste_rdslope_lp <- function(hc_info, info) {
+  if (is.null(hc_info))
+    return(NULL)
+
+  lapply(hc_info, function(k) {
+
+    if (is.na(k$main_effect$coef_nr)) {
+      # if there is no corresponding fixed effect, the mean of the
+      # random effect distribution is 0:
+      "0"
+    } else {
+      paste0(
+        c(# main effects part: only coefficient
+          paste_coef(info$parname, k$main_effect$coef_nr),
+
+          if (!is.null(k$interact_effect)) {
+            # interaction part (baseline covs): coefficient * variable
+            cols <- Filter(Negate(is.null),
+                           lapply(k$interact_effect, function(x) {
+                             if (any(x$matrix %in% 'Mc'))
+                               x$column[x$matrix %in% 'Mc']
+                           }))
+
+            matnam <- Filter(Negate(is.null),
+                             lapply(k$interact_effect, function(x) {
+                               if (any(x$matrix %in% 'Mc'))
+                                 x$matrix[x$matrix %in% 'Mc']
+                             }))
+
+            coefnrs <- Filter(Negate(is.null),
+                              lapply(k$interact_effect, function(x) {
+                                if (any(x$matrix %in% 'Mc'))
+                                  x$coef_nr
+                              }))
+
+            paste(
+              paste_coef(info$parname, coefnrs),
+              mapply(function(x, col) {
+                paste0(
+                  paste_scaling(x = x,
+                                scale_pars = info$scale_pars$Mc,
+                                rows = col,
+                                scalemat = 'spMc'
+                  ), collapse = " * ")
+              }, x = sapply(cols, paste_data, matnam = "Mc", index = "i"),
+              col = cols),
+              sep = " * ")
+
+          }
+        ), collapse = " + ") # add up main * interaction
+    }
+  })
+}
+
+
+paste_rdintercept_lp <- function(info, in_b0) {
+  if (length(in_b0) > 0) {
+  paste_linpred(parname = info$parname,
+                parelmts = info$parelmts$Mc[in_b0],
+                matnam = "Mc",
+                index = info$index[2],
+                cols = info$lp$Mc[in_b0],
+                scale_pars = info$scale_pars$Mc[in_b0, ],
+                isgk = FALSE)
+  } else {
+    "0"
+  }
+}
+
+
+paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
+  paste0(c(
+    # random intercept
+    paste0(tab(4),
+      paste_data(matnam = paste0("mu_b_", varname), index = index, col = 1),
+      " <- ",
+      add_linebreaks(rdintercept,
+                     indent = 4 + 5 + nchar(varname) + 1 + nchar(index) + 8)
+    ),
+    if (length(rdslopes) > 0) {
+      # random slopes
+      paste0(
+        tab(4),
+        paste_data(matnam = paste0("mu_b_", varname), index = index,
+                   col = seq_along(rdslopes) + 1),
+        " <- ",
+        sapply(rdslopes, add_linebreaks,
+               indent = 4 + 5 + nchar(varname) + 1 + nchar(index) + 8)
+      )
+    }), collapse = "\n"
+  )
+}
+
+paste_Zpart <- function(info, index, hc_info, notin_b, isgk = FALSE) {
+  matnam <- unlist(lapply(lapply(hc_info, "[[", 'main_effect'), "[[", 'matrix'))
+  cols <- unlist(lapply(lapply(hc_info, "[[", 'main_effect'), "[[", 'column'))
+
+  rdindex <- if (isgk) index else paste0("group[", index, "]")
+
+  paste(c(
+    # random intercept
+    paste_data(matnam = paste0("b_", info$varname), index = rdindex, col = 1),
+
+    # random slopes
+    if (length(matnam) > 0) {
+      pastedat <- paste_data(matnam = paste0(matnam, if (isgk) "gk"),
+                             index = c('Ml' = index,
+                                       'Mc' = paste0("group[", index, "]"))[matnam],
+                             col = paste0(cols, if (isgk) ", k"))
+      paste(
+        paste_data(matnam = paste0("b_", info$varname), index = rdindex,
+                   col = seq_along(matnam) + 1),
+        mapply(function(x, rows, scale_pars, scalemat) {
+          paste_scaling(
+            x = x,
+            rows = rows,
+            scale_pars = scale_pars,
+            scalemat = scalemat
+          )
+        }, x = pastedat, rows = cols, scale_pars = info$scale_pars[matnam],
+        scalemat = paste0('sp', matnam)),
+        sep = " * "
+      )},
+    if (length(info$parelmts$Ml[notin_b]) > 0)
+      paste_linpred(parname = info$parname,
+                    parelmts = info$parelmts$Ml[notin_b],
+                    matnam = "Ml",
+                    index = index,
+                    cols = info$lp$Ml[notin_b],
+                    scale_pars = info$scale_pars$Ml,
+                    isgk = isgk)),
+    collapse = " + ")
+}
+
+# Joint model ------------------------------------------------------------------
+
+paste_obsvalue <- function(matname, index, column, isgk, ...) {
+  if (isgk)
+    paste0(matname, "gk[", index, ", ", column, ", k]")
+  else
+    paste0(matname, "[survrow[", index, "], ", column, "]")
+}
+
+paste_underlvalue <- function(covname, index, isgk, ...) {
+  if (isgk)
+    paste0("mugk_", covname, "[", index, ", k]")
+  else
+    paste0('mu_', covname, "[survrow[", index, "]]")
+}
+
+paste_association <- function(covnames, matname, index, columns, assoc_type, isgk) {
+  mapply(function(assoc_type, covname, matname, column, index, isgk) {
+    paste_ass <- switch(assoc_type,
+                        "obs.value" = paste_obsvalue,
+                        "underl.value" = paste_underlvalue)
+    paste_ass(covname = covname,
+              matname = matname,
+              index = index,
+              column = column,
+              isgk = isgk)
+  }, assoc_type = assoc_type, covname = covnames, matname = matname, column = columns,
+  MoreArgs = list(index = index, isgk = isgk)
+  )
+}
+
+
+paste_linpred_JM <- function(parname, parelmts, matnam, index, cols, scale_pars,
+                             assoc_type, covnames, isgk = FALSE) {
+  # parname: name of the parameter, e.g. "beta"
+  # parelmts: vector specifying which elements of the parameter vector are to be
+  #           used, e.g. c(1,2,3,6,8,4)
+  # matnam: name or the design matrix, e.g. "Ml" or "Mc"
+  # index: character sting specifying the index to be used, e.g. "i" or "j"
+  # cols: index of the columns of the design matrix to be used, e.g. c(1, 4, 2, 10)
+  # scale_pars: a matrix with rownames according to the columns of the design matrix
+  #             and columns 'center' and 'scale'. Contains NA if a variable should
+  #             not be scaled (could also be NULL instead of a matrix)
+
+
+  pastedat <- paste_association(covnames = covnames, matname = matnam,
+                                index = index, columns = cols,
+                                assoc_type = assoc_type, isgk = isgk)
+
+  paste(
+    paste_scaling(x = pastedat,
+                  rows = cols,
+                  scale_pars = scale_pars,
+                  scalemat = paste0('sp', matnam)
+    ),
+    paste_coef(parname, parelmts),
+    sep = " * ", collapse = " + ")
+}
+
+
+
+
+
+# * random effects specifications ------------------------------------------------
 ranef_priors <- function(nranef, varname) {
   invD_distr <- if (nranef == 1) {
     "dgamma(shape_diag_RinvD, rate_diag_RinvD)"
@@ -169,54 +312,222 @@ ranef_priors <- function(nranef, varname) {
   )
 }
 
+# paste other model parts ------------------------------------------------------
+paste_dummies <- function(categories, dest_mat, dest_col, dummy_cols, index, ...){
+  mapply(function(dummy_cols, categories) {
+    paste0(tab(4), dest_mat, "[", index, ", ", dummy_cols, "] <- ifelse(", dest_mat,
+           "[", index, ", ",
+           dest_col, "] == ", categories, ", 1, 0)")
+  }, dummy_cols, categories)
+}
 
+paste_interactions <- function(interactions, N, Ntot) {
 
-# paste_rdslopes <- function(nranef, hc_list, K){
-#   if (nranef > 1) {
-#     rd_slopes <- list()
-#     for (k in 2:nranef) {
-#       beta_start <- K[names(hc_list)[k - 1], 1]
-#       beta_end <- K[names(hc_list)[k - 1], 2]
-#
-#       if (any(sapply(hc_list[[k - 1]], attr, "matrix") %in% c("Xc", 'Z')) & !is.na(beta_start)) {
-#         vec <- sapply(hc_list[[k - 1]], attr, "matrix")
-#
-#         Xc_pos <- lapply(seq_along(vec), function(i) {
-#           switch(vec[i], 'Xc' = attr(hc_list[[k - 1]][[i]], 'column'),
-#                  'Z' = NA,
-#                  'Xlong' = NULL)
-#         })
-#
-#         hc_interact <- paste0("beta[", beta_start:beta_end, "]",
-#                               sapply(unlist(Xc_pos), function(x) {
-#                                 if (!is.na(x)) {
-#                                   paste0(" * Xc[i, ", x, "]")
-#                                 } else {
-#                                   ""
-#                                 }
-#                               })
-#         )
-#       } else {
-#         hc_interact <- "0"
-#       }
-#       rd_slopes[[k - 1]] <- paste0(tab(4), "mu_b[i, ", k,"] <- ",
-#                                    paste0(hc_interact, sep = "", collapse = " + "))
-#     }
-#     paste(rd_slopes, collapse = "\n")
-#   }
-# }
+  interactions <- interactions[sapply(interactions, "attr", "has_NAs")]
 
+  interlong <- sapply(interactions, function(x)
+    any(names(unlist(unname(x))) %in% 'Ml'))
 
-# ------------------------------------------------------------------------------
-capitalize <- function(string) {
-  capped <- grep("^[^A-Z]*$", string, perl = TRUE)
-  substr(string[capped], 1, 1) <- toupper(substr(string[capped],
-                                                 1, 1))
-  return(string)
+  paste0(
+    if (any(interlong)) {
+      paste0(
+        tab(),
+        "for (j in 1:", Ntot, ") {\n",
+        paste0(
+          sapply(interactions[interlong], function(x) {
+            paste0(tab(4),
+                   paste_data(names(x$interterm), index = "j", col = x$interterm),
+                   " <- ",
+                   paste0(paste_data(names(x$elmts),
+                                     index = ifelse(names(x$elmts) == 'Ml', 'j', 'group[j]'),
+                                     x$elmts), collapse = " * ")
+            )
+          }), collapse = "\n"),
+        "\n", tab(), "}\n")
+    },
+    if (any(!interlong)) {
+      paste0(tab(),
+             "for (i in 1:", N, ") {\n",
+             paste0(
+               sapply(interactions[!interlong], function(x) {
+                 paste0(tab(4),
+                        paste_data(names(x$interterm), index = "i", x$interterm),
+                        " <- ",
+                        paste0(paste_data(names(x$elmts), index = "i", x$elmts),
+                               collapse = " * ")
+                 )
+               }), collapse = "\n"),
+             "\n", tab(), "}\n")
+    }
+  )
+}
+
+paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
+
+  trafos <- if (isgk) Mlist$fcts_all else Mlist$trafos
+
+  if (!any(trafos$var %in% varname))
+    return(NULL)
+
+  trafolist <- sapply(which(trafos$var == varname), function(i) {
+    x <- trafos[i, , drop = FALSE]
+
+    if (!x$dupl) {
+      dest_mat <- if (x$colname %in% colnames(Mlist$Mc)) 'Mc' else 'Ml'
+      dest_col <- match(x$colname, colnames(Mlist[[dest_mat]]))
+
+      if (!is.na(x$dupl_rows)) {
+        xx <- trafos[c(i, unlist(x$dupl_rows)), ]
+      } else {
+        xx <- x
+      }
+      vars <- xx$var
+      vars_mat <- ifelse(xx$var%in% colnames(Mlist$Mc), 'Mc', 'Ml')
+      vars_cols <- sapply(seq_along(vars), function(k)
+        match(xx$var[k], colnames(Mlist[[vars_mat[k]]]))
+      )
+
+      fct <- x$fct
+      for (k in seq_along(vars)) {
+
+        if (any(vars_mat %in% "Ml") & vars_mat[k] %in% "Mc" & !isgk) {
+          theindex <- paste0("group[", index, "]")
+        } else {
+          theindex <- index
+        }
+
+        fct <- if (vars_mat[k] %in% "Ml" & isgk) {
+          gsub(paste0('\\b', vars[k], '\\b'),
+                    paste0(vars_mat[k], "gk[", theindex, ", ",
+                           vars_cols[k], ", k]"), fct)
+        } else {
+          gsub(paste0('\\b', vars[k], '\\b'),
+               paste0(vars_mat[k], "[", theindex, ", ",
+                      vars_cols[k], "]"), fct)
+        }
+      }
+
+      paste0('\n\n', tab(4),
+             dest_mat, if (isgk) "gk", "[", index, ", ", dest_col,
+             if (isgk) ", k", "] <- ", fct, '\n')
+    }
+  })
+
+  Filter(Negate(is.null), trafolist)
 }
 
 
-linkindent <- function(link) {
+# specifications for GLMs (and GLMMs) ------------------------------------------
+# * distribution ---------------------------------------------------------------
+get_distr <- function(family, varname, index, isgk = FALSE) {
+  if (is.null(family))
+    return(NULL)
+
+  switch(family,
+         "gaussian" = paste0("dnorm(mu", if(isgk) "gk", "_", varname,
+                             "[", index, if(isgk) ", k", "], tau_", varname, ")"),
+         "binomial" = paste0("dbern(mu", if(isgk) "gk", "_", varname,
+                             "[", index, if(isgk) ", k", "])"),
+         "Gamma" = paste0("dgamma(shape", if(isgk) "gk", "_", varname,
+                          "[", index, if(isgk) ", k", "], rate", if(isgk) "gk", "_",
+                          varname, "[", index, if(isgk) ", k", "])"),
+         "poisson" = paste0("dpois(max(1e-10, mu", if(isgk) "gk", "_", varname,
+                            "[", index, if(isgk) ", k", "]))"),
+         "lognorm" = paste0("dlnorm(mu", if(isgk) "gk", "_", varname, "[",
+                            index, if(isgk) ", k", "], tau_", varname, ")"),
+         "beta" = paste0("dbeta(shape1", if(isgk) "gk", "_", varname,
+                         "[", index, if(isgk) ", k", "], shape2", if(isgk) "gk",
+                         "_", varname, "[", index, if(isgk) ", k", "])T(1e-15, 1 - 1e-15)")
+  )
+}
+
+# * link -----------------------------------------------------------------------
+get_linkfun <- function(link) {
+  if (is.null(link))
+    return(NULL)
+
+  switch(link,
+         "identity" = function(x) x,
+         "logit"    = function(x) paste0("logit(", x, ")"),
+         "probit"   = function(x) paste0("probit(", x, ")"),
+         "log"      = function(x) paste0("log(", x, ")"),
+         "cloglog"  = function(x) paste0("cloglog(", x, ")"),
+         # "sqrt": JAGS does not know this link function
+         # "cauchit is not available in JAGS
+         "inverse"  = function(x)
+           paste0(x, " <- 1/max(1e-10, inv_", x, ")", "\n",
+                  tab(4), "inv_", x)
+  )
+}
+
+# * reparametrization ----------------------------------------------------------
+get_repar <- function(family, varname, index, isgk = FALSE) {
+  if (is.null(family))
+    return(NULL)
+
+  switch(family,
+         "gaussian" = NULL,
+         "binomial" = NULL,
+         "Gamma" = paste0(tab(4), "shape", if (isgk) "gk", "_", varname,
+                          "[", index, if (isgk) ", k", "] <- pow(mu",
+                          if (isgk) "gk", "_", varname, "[", index,
+                          if (isgk) ", k", "], 2) / pow(sigma_", varname, ", 2)",
+                          "\n",
+                          tab(4), "rate", if (isgk) "gk", "_", varname,
+                          "[", index, if (isgk) ", k", "] <- mu",
+                          if (isgk) "gk", "_", varname, "[", index,
+                          if (isgk) ", k", "] / pow(sigma_", varname, ", 2)", "\n"),
+         "Poisson" = NULL,
+         'lognorm' = NULL,
+         'beta' = paste0(tab(4), "shape1", if (isgk) "gk", "_", varname,
+                         "[", index, if (isgk) ", k", "] <- mu",
+                         if (isgk) "gk", "_", varname, "[", index,
+                         if (isgk) ", k", "] * tau_",
+                         varname, "\n",
+                         tab(4), "shape2", if (isgk) "gk", "_", varname,
+                         "[", index, if (isgk) ", k", "] <- (1 - mu", if (isgk) "gk", "_",
+                         varname, "[", index, if (isgk) ", k", "]) * tau_", varname),
+  )
+}
+
+# * prior for a second parameter -----------------------------------------------
+get_secndpar <- function(family, varname) {
+  if (is.null(family))
+    return(NULL)
+
+  switch(family,
+         "gaussian" = paste0("\n",
+                             tab(), "tau_", varname ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
+                             tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")"),
+         "binomial" = NULL,
+         "Gamma" = paste0("\n",
+                          tab(), "tau_", varname ," ~ dgamma(shape_tau_gamma, rate_tau_gamma)", "\n",
+                          tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")"),
+         "poisson" = NULL,
+         "lognorm" = paste0("\n",
+                            tab(), "tau_", varname ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
+                            tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")")
+  )
+}
+
+
+
+get_GLM_modelname <- function(family) {
+  if (is.null(family))
+    return(NULL)
+
+  switch(family,
+         "gaussian" = 'Normal',
+         "binomial" = 'Binomial',
+         "Gamma" = 'Gamma',
+         "poisson" = 'Poisson',
+         "lognorm" = 'Log-normal',
+         "beta" = 'Beta'
+  )
+}
+
+
+get_linkindent <- function(link) {
   if (is.null(link)) 0
   else
     switch(link,
@@ -228,102 +539,29 @@ linkindent <- function(link) {
            inverse = 4)
 }
 
-# interaction terms ------------------------------------------------------------
-# paste_interaction <- function(int, index) {
-#   paste0(names(int$interterm), "[", index, ", ", int$interterm ,"] <- ",
-#          paste0(names(int$elmts), "[", index, ", ", int$elmts, "]", collapse = " * ")
-#   )
-# }
 
-paste_interactions <- function(interactions, N, Ntot) {
-  interlong <- sapply(interactions, function(x)
-    any(names(unlist(unname(x))) %in% 'Ml'))
 
-  c(
-    if (any(interlong)) {
-      paste0(
-        tab(),
-        "for (j in 1:", Ntot, ") {\n",
-        paste0(
-          sapply(interactions, function(x) {
-            paste0(tab(4), names(x$interterm), "[j, ", x$interterm, "] <- ",
-                   paste0(names(x$elmts), "[", ifelse(names(x$elmts) == 'Ml', 'j', 'group[j]'),
-                          ", ", x$elmts, "]", collapse = " * ")
-            )
-          }), collapse = "\n"),
-        "\n", tab(), "}\n")
-    },
-    if (any(!interlong)) {
-      paste0(
-        tab(),
-        "for (i in 1:", N, ") {\n",
-        paste0(
-          sapply(interactions, function(x) {
-            paste0(tab(4), names(x$interterm), "[i, ", x$interterm, "] <- ",
-                   paste0(names(x$elmts), "[i", ", ", x$elmts, "]", collapse = " * ")
-            )
-          }), collapse = "\n"),
-        "\n", tab(), "}\n")
-    }
+# * shrinkage ------------------------------------------------------------------
+get_priordistr <- function(shrinkage, family, link, parname) {
+  priorset <- switch(family,
+                     gaussian = 'norm',
+                     binomial = link,
+                     Gamma = 'gamma',
+                     poisson = 'poisson',
+                     lognorm = 'norm',
+                     beta = 'beta'
   )
+
+  if (is.null(shrinkage)) {
+    paste0(tab(4), parname, "[k] ~ dnorm(mu_reg_", priorset,
+           ", tau_reg_", priorset, ")", "\n")
+  } else if (shrinkage == 'ridge') {
+    paste0(tab(4), parname, "[k] ~ dnorm(mu_reg_", priorset,
+           ", tau_reg_", priorset , "_ridge[k])", "\n",
+           tab(4), "tau_reg_", priorset, "_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
+  } else {
+    stop(gettextf('Regularization of type %s is not implemented.', dQuote(shrinkage)),
+         call. = FALSE)
+  }
 }
 
-
-
-#
-#
-# paste_interactions <- function(index, mat0, mat1, mat0_col, mat1_col) {
-#   mat0_skip <- sapply(max(nchar(mat0_col)) - nchar(mat0_col), tab)
-#
-#   paste0(tab(4),
-#          paste0(mat0, "[", index, ", ", mat0_skip, mat0_col, "] <- "),
-#          lapply(mat1_col, function(x){
-#            paste0(mat1, "[", index, ", ", x, "]", collapse = " * ")
-#          })
-#   )
-# }
-#
-#
-# paste_long_interactions <- function(index, mat0, mat1, mat0_col, mat1_col) {
-#   mat0_skip <- sapply(max(nchar(mat0_col)) - nchar(mat0_col), tab)
-#
-#   out <- paste0(tab(4),
-#                 paste0(mat0, "[", index, ", ", mat0_skip, mat0_col, "] <- "),
-#                 lapply(seq_along(mat1_col), function(i){
-#                   paste0(mat1[[i]], "[", index, ", ", mat1_col[[i]], "]", collapse = " * ")
-#                 })
-#   )
-#   out <- gsub(paste0("Xc[", index, ","),
-#               paste0("Xc[groups[", index, "],"),
-#               out, fixed = TRUE)
-#   out
-# }
-
-
-# # Paste interaction terms for JAGS model
-# paste_interactions <- function(index, mat0, mat1, mat0_col, mat1_col) {
-#   mat0_skip <- sapply(max(nchar(mat0_col)) - nchar(mat0_col), tab)
-#
-#   paste0(tab(4),
-#          paste0(mat0, "[", index, ", ", mat0_skip, mat0_col, "] <- "),
-#          lapply(mat1_col, function(x){
-#            paste0(mat1, "[", index, ", ", x, "]", collapse = " * ")
-#          })
-#   )
-# }
-
-#
-# paste_long_interactions <- function(index, mat0, mat1, mat0_col, mat1_col) {
-#   mat0_skip <- sapply(max(nchar(mat0_col)) - nchar(mat0_col), tab)
-#
-#   out <- paste0(tab(4),
-#                 paste0(mat0, "[", index, ", ", mat0_skip, mat0_col, "] <- "),
-#                 lapply(seq_along(mat1_col), function(i){
-#                   paste0(mat1[[i]], "[", index, ", ", mat1_col[[i]], "]", collapse = " * ")
-#                 })
-#   )
-#   out <- gsub(paste0("Xc[", index, ","),
-#               paste0("Xc[groups[", index, "],"),
-#               out, fixed = TRUE)
-#   out
-# }
