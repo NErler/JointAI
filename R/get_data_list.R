@@ -1,28 +1,39 @@
 
 
-get_data_list <- function(Mlist, info_list) {
+get_data_list <- function(Mlist, info_list, data) {
+  modeltypes <- sapply(info_list, "[[", 'modeltype')
 
   l <- Mlist[c('Mc', 'Ml')]
 
 
   # scaling parameters
-  if (any(!is.na(Mlist$scale_pars$Mc)))
+  if (any(!is.na(Mlist$scale_pars$Mc[
+    unique(unlist(lapply(info_list, function(x) x$lp$Mc))), ])))
     l$spMc <- Mlist$scale_pars$Mc
-  if (any(!is.na(Mlist$scale_pars$Ml)))
+  if (any(!is.na(Mlist$scale_pars$Ml[
+    unique(unlist(lapply(info_list, function(x) x$lp$Ml))), ])))
     l$spMl <- Mlist$scale_pars$Ml
 
-  l <- c(l, unlist(unname(default_hyperpars()[c(1:8, 10)])))
-
+  l <- c(l, unlist(unname(default_hyperpars()[c(
+    if (any(sapply(info_list, "[[", 'family') %in% c('gaussian', 'lognorm'))) 'norm',
+    if (any(sapply(info_list, "[[", 'family') %in% c('gamma'))) 'gamma',
+    if (any(sapply(info_list, "[[", 'family') %in% c('beta'))) 'beta',
+    if (any(sapply(info_list, "[[", 'link') %in% c('logit'))) 'logit',
+    if (any(sapply(info_list, "[[", 'family') %in% c('poisson'))) 'poisson',
+    if (any(sapply(info_list, "[[", 'link') %in% c('probit'))) 'probit',
+    if (any(modeltypes %in% c('mlogit', 'mlogitmm'))) 'multinomial',
+    if (any(modeltypes %in% c('clm', 'clmm'))) 'ordinal',
+    if (any(modeltypes %in% c('survreg', 'coxph', 'JM'))) 'surv'
+  )])))
 
   # priors for mixed models
-  if (any(sapply(info_list, '[[', 'modeltype') %in% c('glmm', 'clmm', 'mlogitmm'))) {
+  if (any(modeltypes %in% c('glmm', 'clmm', 'mlogitmm'))) {
     l <- c(l, default_hyperpars()$ranef[c('shape_diag_RinvD', 'rate_diag_RinvD')])
     l$group <- Mlist$groups
 
     l <- c(l,
            unlist(unname(
-             lapply(info_list[sapply(info_list, '[[', 'modeltype') %in%
-                                c('glmm', 'clmm', 'mlogitmm')],
+             lapply(info_list[modeltypes %in% c('glmm', 'clmm', 'mlogitmm')],
                     function(x) {
                       setNames(default_hyperpars()$ranef$wish(nranef = max(1, length(x$hc_list))),
                                paste(c("RinvD", "KinvD"), x$varname, sep = "_")
@@ -32,209 +43,84 @@ get_data_list <- function(Mlist, info_list) {
   }
 
   # censoring indicator and true (unobserved) survival time for survreg models
-  if (any(sapply(info_list, "[[", 'modeltype') %in% c('survreg'))) {
-    for (x in info_list[sapply(info_list, "[[", 'modeltype') %in% c('survreg')]) {
-      l[[paste0('cens_', x$varname)]] <- 1 - Mlist[[x$resp_mat]][, x$resp_col[2]]
-      l[[x$varname]] <- ifelse(Mlist[[x$resp_mat]][, x$resp_col[2]] == 1,
-                               Mlist[[x$resp_mat]][, x$resp_col[1]],
+  if (any(modeltypes %in% c('survreg'))) {
+    for (x in info_list[modeltypes %in% c('survreg')]) {
+      l[[paste0('cens_', x$varname)]] <- 1 - Mlist[[x$resp_mat[2]]][, x$resp_col[2]]
+      l[[x$varname]] <- ifelse(Mlist[[x$resp_mat[2]]][, x$resp_col[2]] == 1,
+                               Mlist[[x$resp_mat[1]]][, x$resp_col[1]],
                                NA)
     }
   }
 
-  if (any(sapply(info_list, "[[", 'modeltype') %in% c('coxph'))) {
-        gkw <- gauss_kronrod()$gkw
-        gkx <- gauss_kronrod()$gkx
+  if (any(modeltypes %in% c('coxph', 'JM'))) {
+    x <- info_list[[which(modeltypes %in% c('coxph', 'JM'))]]
 
-        ordgkx <- order(gkx)
-        gkx <- gkx[ordgkx]
+    timevariable <- Mlist[[x$resp_mat[1]]][, x$resp_col[1]]
+    eventvariable <- Mlist[[x$resp_mat[1]]][, x$resp_col[2]]
+    timevar <- colnames(Mlist[[x$resp_mat[1]]])[x$resp_col[1]]
 
-        l$gkw <- gkw[ordgkx]
 
-        for (x in info_list[sapply(info_list, "[[", 'modeltype') %in% c('coxph')]) {
-          timevariable <- Mlist[[x$resp_mat]][, x$resp_col[1]]
-          eventvariable <- Mlist[[x$resp_mat]][, x$resp_col[2]]
+    # spline specification for the baseline hazard
+    gkw <- gauss_kronrod()$gkw
+    gkx <- gauss_kronrod()$gkx
 
-          h0knots <- get_knots_h0(nkn = 5, Time = timevariable,
-                                  event = eventvariable, gkx = gkx)
+    ordgkx <- order(gkx)
+    gkx <- gkx[ordgkx]
 
-          l[[paste0("B_", x$varname)]] <- splines::splineDesign(h0knots, timevariable, ord = 4)
-          l[[paste0("Bs_", x$varname)]] <- splines::splineDesign(h0knots,
-                                                                 c(t(outer(timevariable/2, gkx + 1))),
-                                                                 ord = 4)
+    l$gkw <- gkw[ordgkx]
 
-          l[[paste0("zero_", x$varname)]] <- numeric(length(timevariable))
-        }
+    h0knots <- get_knots_h0(nkn = 2, Time = timevariable,
+                            event = eventvariable, gkx = gkx)
+
+    l$Bh0 <- splines::splineDesign(h0knots, timevariable, ord = 4)
+    l$Bsh0 <- splines::splineDesign(h0knots,
+                                    c(t(outer(timevariable/2, gkx + 1))),
+                                    ord = 4)
+
+    l$zeros <- numeric(length(timevariable))
+
+    if (x$modeltype == "JM") {
+      # find row with largest time (= row for survival analysis)
+      l$survrow <- sapply(
+        split(data.frame(nr = 1:nrow(Mlist[[x$resp_mat[1]]]),
+                         timevar = timevariable),
+              Mlist$groups),
+        function(k) {
+          k$nr[which.max(k$timevar)]
+        })
+
+
+      if (length(l$survrow) != length(unique(Mlist$groups)))
+        stop("The number of observations for survival differs from the number of subjects.")
+
+      gk_data <- data[rep(NA, length(l$survrow) * length(gkx)), ]
+
+      gk_data[, timevar] <- c(t(outer(Mlist$Ml[l$survrow, timevar]/2, gkx + 1)))
+
+      X <- model.matrix_combi(fmla = c(Mlist$fixed, Mlist$auxvars),
+                              data = gk_data,
+                              terms_list = Mlist$terms_list)
+
+      Xnew <- matrix(nrow = length(l$survrow) * length(gkx),
+                     ncol = ncol(Mlist$Ml),
+                     dimnames = list(c(), colnames(Mlist$Ml)))
+
+      Xnew[, colnames(X)[colnames(X) %in% colnames(Xnew)]] <-
+        X[, colnames(X)[colnames(X) %in% colnames(Xnew)]]
+
+      Mlgk <- lapply(1:length(gkx), function(k) {
+        Xnew[length(gkx) * ((1:length(l$survrow)) - 1) + k, ]
+      })
+
+      l$Mlgk <- array(data = unlist(Mlgk),
+                      dim = c(length(l$survrow), ncol(Mlgk[[1]]), length(gkx)),
+                      dimnames = list(c(), colnames(Mlist$Ml), c())
+      )
+    }
   }
 
   return(l[!sapply(l, is.null)])
 }
-
-
-
-
-
-#
-# get_data_list <- function(analysis_type, family, models, Mlist,
-#                           scale_pars = NULL, hyperpars = NULL, data, imp_par_list) {
-#
-#   # scale the data
-#   scaled <- get_scaling(Mlist, scale_pars, models, data)
-#
-#   # get hyperparameters
-#   if (is.null(hyperpars)) {
-#     defs <- default_hyperpars()
-#   } else {
-#     defs <- hyperpars
-#   }
-#
-#   # outcome variables
-#   l <- prep_outcome(Mlist$outcomes)
-#
-#   # outcome specification for parametric survival models
-#   if (analysis_type == "survreg") {
-#     l$cens <- as.numeric(unlist(Mlist$event == 0))
-#     l$ctime <- as.numeric(unlist(Mlist$outcomes))
-#     l[[names(Mlist$outcomes)]][Mlist$event == 0] <- NA
-#     l <- c(l, defs$surv)
-#
-#     if (Mlist$ridge)
-#       tau_reg_surv <- NULL
-#   }
-#
-#   # outcome specification for Cox PH models
-#   if (analysis_type %in% c('coxph', 'JM')) {
-#
-#     # l$event <- as.numeric(unlist(Mlist$event))
-#
-#     gkw <- gauss_kronrod()$gkw
-#     gkx <- gauss_kronrod()$gkx
-#
-#     ordgkx <- order(gkx)
-#     gkx <- gkx[ordgkx]
-#
-#     l$gkw <- gkw[ordgkx]
-#
-#     h0knots <- get_knots_h0(nkn = 5, Time = l[[Mlist$timevar]],
-#                             event = Mlist$event, gkx = gkx)
-#
-#     l$Bmat_h0 <- splines::splineDesign(h0knots, l[[Mlist$timevar]], ord = 4)
-#     l$Bmat_h0s <- splines::splineDesign(h0knots,
-#                                         c(t(outer(l[[Mlist$timevar]]/2, gkx + 1))),
-#                                         ord = 4)
-#     l$zeros <- numeric(length(l[[Mlist$timevar]]))
-#
-#     l <- c(l, defs$surv, defs$JM(ncol(l$Bmat_h0)))
-#
-#     if (Mlist$ridge)
-#       tau_reg_surv <- NULL
-#   }
-#
-#
-#
-#   # scaled versions of Xc, Xtrafo, Xl and Z
-#   l <- c(l,
-#          scaled$scaled_matrices[!sapply(scaled$scaled_matrices, is.null)]
-#   )
-#
-#   if (is.null(models) & all(sapply(Mlist$cols_main, is.null)))
-#     l$Xc <- NULL
-#
-#   if (!is.null(Mlist$Xcat)) l$Xcat <- data.matrix(Mlist$Xcat)
-#   if (!is.null(Mlist$Xlcat)) l$Xlcat <- data.matrix(Mlist$Xlcat)
-#   if (!is.null(Mlist$Xic)) l$Xic <- data.matrix(Mlist$Xic)
-#   if (!is.null(Mlist$Xil)) l$Xil <- data.matrix(Mlist$Xil)
-#
-#   if (all(is.null(Mlist$cols_main$Xl),
-#           is.null(unlist(sapply(imp_par_list, '[[', 'Xl_cols'))))) {
-#     l$Xl <- NULL
-#   }
-#
-#   if (any(models %in% c('norm', 'lognorm', 'lme', 'lmm', 'glmm_lognorm')) | (family$family == 'gaussian' & !Mlist$ridge))
-#     l <- c(l, defs$norm)
-#   else if (family$family == 'gaussian' & Mlist$ridge)
-#     l <- c(l, defs$norm[c("mu_reg_norm", "shape_tau_norm", "rate_tau_norm")])
-#
-#
-#   if ((family$family == 'binomial' & family$link == 'logit' & !Mlist$ridge) | any(models %in% c('logit', 'glmm_logit')))
-#     l <- c(l, defs$logit)
-#   else if (family$family == 'binomial' & family$link == 'logit' & Mlist$ridge)
-#     l <- c(l, defs$logit['mu_reg_logit'])
-#
-#
-#   if ((family$family == 'binomial' & family$link == "probit" & !Mlist$ridge) | any(models %in% c('probit')))
-#     l <- c(l, defs$probit)
-#   else if (family$family == 'binomial' & family$link == "probit" & !Mlist$ridge)
-#     l <- c(l, defs$probit["mu_reg_probit"])
-#
-#
-#   if ((family$family == 'Gamma' & !Mlist$ridge) | any(models %in% c('gamma', 'glmm_gamma')))
-#     l <- c(l, defs$gamma)
-#   else if (family$family == 'Gamma' & Mlist$ridge)
-#     l <- c(l, defs$gamma[c("mu_reg_gamma", "shape_tau_gamma", "rate_tau_gamma")])
-#
-#
-#   if ((family$family == 'poisson' & !Mlist$ridge) | any(models %in% c('glmm_poisson')))
-#     l <- c(l, defs$poisson)
-#   else if (family$family == 'poisson' & !Mlist$ridge)
-#     l <- c(l, defs$probit["mu_reg_poisson"])
-#
-#
-#   if (family$family == 'ordinal' & !Mlist$ridge | any(models %in% c('clmm', "cumlogit")))
-#     l <- c(l, defs$ordinal)
-#   else if (family$family == 'ordinal' & Mlist$ridge)
-#     l <- c(l, defs$ordinal[c("mu_reg_ordinal", "mu_delta_ordinal", "tau_delta_ordinal")])
-#   if (family$family == 'ordinal' & is.null(models) & all(sapply(Mlist$cols_main, is.null)))
-#     l$mu_reg_ordinal <- l$tau_reg_ordinal <- NULL
-#
-#
-#   if (any(models %in% c('beta')))
-#     l <- c(l, defs$beta)
-#
-#
-#   if (any(models %in% c('multilogit')))
-#     l <- c(l, defs$multinomial)
-#
-#
-#   if (analysis_type %in% c("lme", 'glme', 'clmm') |
-#       any(models %in% c('lmm', "glmm_lognorm", 'glmm_logit', 'glmm_gamma',
-#                         'glmm_poisson', 'clmm'))) {
-#     l <- c(l, defs$ranef[c('shape_diag_RinvD', 'rate_diag_RinvD')],
-#            defs$ranef$wish(Mlist$nranef))
-#
-#     if (!analysis_type %in% c("lme", 'glme', 'clmm'))
-#       l$RinvD <- l$KinvD <- NULL
-#
-#     l$groups <- match(Mlist$groups, unique(Mlist$groups)) # can this be just Mlist$groups???
-#   }
-#
-#   # Random effects hyperparameters for longitudinal covariates
-#   if (any(models %in% c('lmm', "glmm_lognorm", 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm'))) {
-#     nam <- names(models)[models %in% c('lmm',  'glmm_lognorm', 'glmm_logit', 'glmm_gamma', 'glmm_poisson', 'clmm')]
-#
-#     for (k in nam) {
-#       pars <- defs$ranef$wish(imp_par_list[[k]]$nranef)
-#       names(pars) <- paste0(names(pars), '_', k)
-#       l <- c(l, pars)
-#     }
-#   }
-#
-#   if (analysis_type == 'JM') {
-#     l$Zgk <- l$Z[match(unique(l$groups), l$groups), , drop = FALSE]
-#     l$Zgk <- l$Zgk[rep(1:nrow(l$Zgk), each = length(gkw)), , drop = FALSE]
-#
-#     if (Mlist$timevar %in% colnames(l$Zgk))
-#       l$Zgk[, Mlist$timevar] <- c(t(outer(l[[Mlist$timevar]]/2, gkx + 1)))
-#
-#     l$survrow <- Mlist$survrow
-#   }
-#
-#
-#   return(list(data_list = Filter(Negate(is.null), l),
-#               scale_pars = scaled$scale_pars,
-#               hyperpars = defs)
-#   )
-# }
-
 
 
 #' Get the default values for hyperparameters
