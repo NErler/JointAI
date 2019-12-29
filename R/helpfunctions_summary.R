@@ -80,6 +80,8 @@ print_type <- function(x) {
               survreg = 'Weibull survival model',
               clm = 'Cumulative logit model',
               clmm = 'Cumulative logit mixed model',
+              mlogit = "Multinomial logit model",
+              mlogitmm = "Multinomial logit mixed model",
               JM = "Joint survival and longitudinal model"
   )
   return(a)
