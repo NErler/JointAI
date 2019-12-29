@@ -329,13 +329,15 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE,
     fctDF <- melt_list(fctList, varname = 'type')
 
     # remove duplicates
-    subset(fctDF, subset= !duplicated(subset(fctDF, select = -c(type, fct))))
+    subset(fctDF,
+           subset = !duplicated(subset(fctDF,
+                                       select = !names(fctDF) %in% c("type", "fct"))))
   }, simplify = FALSE)
 
   if (any(!sapply(fctDFlist, is.null))) {
-    fctDF <- subset(melt_data.frame_list(fctDFlist,
-                                         id.vars = c('var', 'colname', 'fct', 'type')),
-                    select = -rowID)
+    fctDF <- melt_data.frame_list(fctDFlist,
+                                   id.vars = c('var', 'colname', 'fct', 'type'))
+    fctDF <- subset(fctDF, select = which(!names(fctDF) %in% c("rowID")))
 
   # if chosen, remove functions only involving complete variables
     compl <- colSums(is.na(data[, fctDF$var, drop = FALSE])) == 0
@@ -402,7 +404,7 @@ split_outcome <- function(LHS, data) {
       while(start <= splitpos[length(splitpos)]) {
         fct <- substr(LHS2, start, end)
         fct <- gsub(" $", '', gsub("^ ", '', fct))
-        var <- try(eval(parse(text = fct), env = data), silent = TRUE)
+        var <- try(eval(parse(text = fct), envir = data), silent = TRUE)
         if (!inherits(var, 'try-error')) {
           var <- data.frame(var)
           names(var) <- if(ncol(var) > 1) {
