@@ -107,9 +107,42 @@ prep_covoutcomes <- function(dat) {
 # prep_outcome(outcomes = outcome8)
 # prep_outcome(outcomes = outcome9)
 
+replace_dummy <- function(nam, refs) {
+  if (is.null(refs))
+    return(nam)
 
+  dummies <- lapply(refs, "attr",  "dummies")
 
-
+  if (any(sapply(dummies, function(k) nam %in% k)))
+    names(dummies)[sapply(dummies, function(k) nam %in% k)]
+  else
+    nam
 }
 
+replace_trafo <- function(nam, trafos) {
+  if (nam %in% trafos$colname) {
+    unique(trafos$var[trafos$colname %in% nam])
+  } else {nam}
+}
+
+
+
+
+get_coef_names <- function(info_list) {
+  sapply(info_list, function(info) {
+
+    pars <- sapply(info_list, function(k) {
+      if (k$parname %in% info$parname)
+        unlist(k$parelmts)
+    })
+
+    if (any(!sapply(info$lp, is.null)))
+      data.frame(outcome = info$varname,
+                 varname = names(unlist(unname(info$lp))),
+                 coef = paste0(info$parname,
+                               if(length(pars) > 1) paste0("[", unlist(info$parelmts), "]")
+                 ),
+                 stringsAsFactors = FALSE
+      )
+  }, simplify = FALSE)
 }
