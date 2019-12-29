@@ -1,95 +1,37 @@
 
 JAGSmodel_glmm <- function(info) {
   # settings for different types -----------------------------------------------
-  distr <- switch(info$family,
-                  "gaussian" = paste0("dnorm(mu_", info$varname, "[", info$index[1], "], tau_", info$varname, ")"),
-                  "binomial" = paste0("dbern(mu_", info$varname, "[", info$index[1], "])"),
-                  "Gamma" = paste0("dgamma(shape_", info$varname, "[", info$index[1],
-                                   "], rate_", info$varname, "[", info$index[1], "])"),
-                  "poisson" = paste0("dpois(mu_", info$varname, "[", info$index[1], "])"),
-                  "lognorm" = paste0("dlnorm(mu_", info$varname, "[", info$index[1], "], tau_", info$varname, ")"),
-                  "beta" = paste0('dbeta(shape1_', info$varname, "[",
-                                  info$index[1], "], shape2_", info$varname, "[",
-                                  info$index[1], "])T(1e-15, 1 - 1e-15)")
+  distr <- get_distr(family = info$family, varname = info$varname,
+                     index = info$index[1])
 
-  )
+  linkfun <- get_linkfun(info$link)
 
-  linkfun <- switch(info$link,
-                    "identity" = function(x) x,
-                    "logit"    = function(x) paste0("logit(", x, ")"),
-                    "probit"   = function(x) paste0("probit(", x, ")"),
-                    "log"      = function(x) paste0("log(", x, ")"),
-                    "cloglog"  = function(x) paste0("cloglog(", x, ")"),
-                    # "sqrt"     = function(x) paste0("sqrt(", x, ")"),
-                    # "cauchit is not available in JAGS
-                    "inverse"  = function(x) paste0("1/", x)
-  )
+  repar <- get_repar(family = info$family, varname = info$varname,
+                     index = info$index)
 
+  secndpar <- get_secndpar(family = info$family, varname = info$varname)
 
+  modelname <- get_GLM_modelname(info$family)
+
+  linkindent <- get_linkindent(info$link)
 
   indent <- switch(info$family,
-                   gaussian = nchar(info$varname) + 14 + linkindent(info$link),
-                   binomial = nchar(info$varname) + 14 + linkindent(info$link),
-                   Gamma = nchar(info$varname) + 14 + linkindent(info$link),
-                   poisson = nchar(info$varname) + 14 + linkindent(info$link),
-                   lognorm = nchar(info$varname) + 14 + linkindent(info$link),
-                   beta = 4 + 9 + nchar(info$varname) + 8 + linkindent(info$link)
+                   gaussian = nchar(info$varname) + 14 + linkindent,
+                   binomial = nchar(info$varname) + 14 + linkindent,
+                   Gamma = nchar(info$varname) + 14 + linkindent,
+                   poisson = nchar(info$varname) + 14 + linkindent,
+                   lognorm = nchar(info$varname) + 14 + linkindent,
+                   beta = 4 + 9 + nchar(info$varname) + 8 + linkindent
   )
-
-
-  modelname <- switch(info$family,
-                      "gaussian" = 'Normal',
-                      "binomial" = 'Binomial',
-                      "Gamma" = 'Gamma',
-                      "poisson" = 'Poisson',
-                      "lognorm" = 'Log-normal',
-                      "beta" = 'Beta'
-  )
-
-
-  repar <- switch(info$family,
-                  "gaussian" = NULL,
-                  "binomial" = NULL,
-                  "Gamma" = paste0(tab(4), "shape_", info$varname, "[", info$index[1], "] <- pow(mu_", info$varname,
-                                   "[", info$index[1], "], 2) / pow(sigma_", info$varname, ", 2)",
-                                   "\n",
-                                   tab(4), "rate_", info$varname, "[", info$index[1], "]  <- mu_", info$varname,
-                                   "[", info$index[1], "] / pow(sigma_", info$varname, ", 2)", "\n"),
-                  "Poisson" = NULL,
-                  'lognorm' = NULL,
-                  'beta' = paste0(tab(4), "shape1_", info$varname,"[", info$index[1], "] <- mu_",
-                                  info$varname, "[", info$index[1], "] * tau_", info$varname, "\n",
-                                  tab(4), "shape2_", info$varname, "[", info$index[1], "] <- (1 - mu_",
-                                  info$varname, "[", info$index[1], "]) * tau_", info$varname),
-  )
-
-
-  secndpar <- switch(info$family,
-                     "gaussian" = paste0("\n",
-                                         tab(), "tau_", info$varname ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
-                                         tab(), "sigma_", info$varname," <- sqrt(1/tau_", info$varname, ")"),
-                     "binomial" = NULL,
-                     "Gamma" = paste0("\n",
-                                      tab(), "tau_", info$varname ," ~ dgamma(shape_tau_gamma, rate_tau_gamma)", "\n",
-                                      tab(), "sigma_", info$varname," <- sqrt(1/tau_", info$varname, ")"),
-                     "poisson" = NULL,
-                     "lognorm" = paste0("\n",
-                                        tab(), "tau_", info$varname ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
-                                        tab(), "sigma_", info$varname," <- sqrt(1/tau_", info$varname, ")")
-  )
-
-  priorset <- switch(info$family,
-                     gaussian = 'norm',
-                     binomial = info$link,
-                     Gamma = 'gamma',
-                     poisson = 'poisson',
-                     lognorm = 'norm',
-                     beta = 'beta'
-  )
-
 
   # model parts ----------------------------------------------------------------
-  rd_predictor <- get_ranefpreds(info)
+  hc_info <- get_hc_info(info)
+  hc_parelmts <- organize_hc_parelmts(hc_info, info = info)
+  rdslopes <- paste_rdslope_lp(hc_info, info)
+  rdintercept <- paste_rdintercept_lp(info, hc_parelmts$in_b0)
+
+  Z_predictor <- paste_Zpart(info, index = info$index[1], hc_info,
+                             notin_b = hc_parelmts$notin_b, isgk = FALSE)
 
   norm.distr  <- if (length(info$hc_list) < 2) {"dnorm"} else {"dmnorm"}
 
@@ -109,26 +51,20 @@ JAGSmodel_glmm <- function(info) {
   paste_ppc <- if (info$ppc) {
     paste0("\n",
            tab(4), "# For posterior predictive check:", "\n",
-           tab(4), info$varname, "_ppc[", info$index[1], "] ~ ", distr(info$varname), trunct, "\n"
+           tab(4), info$varname, "_ppc[", info$index[1], "] ~ ", distr(info$varname), trunc, "\n"
     )
   }
 
   paste_ppc_prior <- if (info$ppc) {
     paste0('\n',
            tab(), '# Posterior predictive check for the model for ', info$varname, '\n',
-           tab(), 'ppc_', info$varname, "_o <- pow(", info$varname, "[] - mu_", info$varname, "[], 2)", "\n",
-           tab(), 'ppc_', info$varname, "_e <- pow(", info$varname, "_ppc[] - mu_", info$varname, "[], 2)", "\n",
-           tab(), 'ppc_', info$varname, " <- mean(step(ppc_", info$varname, "_o - ppc_", info$varname, "_e)) - 0.5", "\n"
+           tab(), 'ppc_', info$varname, "_o <- pow(", info$varname, "[] - mu_",
+           info$varname, "[], 2)", "\n",
+           tab(), 'ppc_', info$varname, "_e <- pow(", info$varname, "_ppc[] - mu_",
+           info$varname, "[], 2)", "\n",
+           tab(), 'ppc_', info$varname, " <- mean(step(ppc_", info$varname,
+           "_o - ppc_", info$varname, "_e)) - 0.5", "\n"
     )
-  }
-
-
-  # shrinkage ------------------------------------------------------------------
-  if (info$shrinkage == 'ridge' && !is.null(info$shrinkage)) {
-    priordistr <- paste0(tab(4), info$parname, "[k] ~ dnorm(mu_reg_", priorset, ", tau_reg_", priorset , "_ridge[k])", "\n",
-                         tab(4), "tau_reg_", priorset, "_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
-  } else {
-    priordistr <- paste0(tab(4), info$parname, "[k] ~ dnorm(mu_reg_", priorset, ", tau_reg_", priorset, ")", "\n")
   }
 
 
@@ -139,23 +75,25 @@ JAGSmodel_glmm <- function(info) {
          distr, trunc, "\n",
          repar,
          tab(4), linkfun(paste0("mu_", info$varname, "[", info$index[1], "]")), " <- ",
-         paste0(c(rd_predictor$Z_predictor, rd_predictor$Ml_predictor), collapse = " +\n"),
+         add_linebreaks(Z_predictor, indent = indent),
          "\n",
          paste_ppc,
          dummies,
+         info$trafos,
          "\n",
          tab(), "}", "\n",
          "\n",
          tab(), "for (", info$index[2], " in 1:", info$N, ") {", "\n",
-         tab(4), "b_", info$varname, "[", info$index[2], ", 1:", max(1, length(info$hc_list)), "] ~ ", norm.distr,
+         tab(4), "b_", info$varname, "[", info$index[2], ", 1:",
+         max(1, length(info$hc_list)), "] ~ ", norm.distr,
          "(mu_b_", info$varname, "[", info$index[2], ", ], invD_", info$varname, "[ , ])", "\n",
-         rd_predictor$ranefpreds, "\n",
-         info$trafos,
+         paste_mu_b(rdintercept, rdslopes, info$varname, info$index[2]),
+         "\n",
          tab(), "}", "\n\n",
          tab(), "# Priors for the model for ", info$varname, "\n",
          tab(), "for (k in ", min(info$parelmts$Mc, info$parelmts$Ml), ":",
          max(info$parelmts$Mc, info$parelmts$Ml), ") {", "\n",
-         priordistr,
+         get_priordistr(info$shrinkage, info$family, info$link, info$parname),
          tab(), "}",
          secndpar,
          paste_ppc_prior,
@@ -163,3 +101,58 @@ JAGSmodel_glmm <- function(info) {
          ranef_priors(max(1, length(info$hc_list)), info$varname)
   )
 }
+
+
+
+glmm_in_JM <- function(info) {
+  # settings for different types -----------------------------------------------
+  distr <- get_distr(family = info$family,
+                     varname = info$varname,
+                     index = info$index[2], isgk = TRUE)
+
+  linkfun <- get_linkfun(info$link)
+
+  repar <- get_repar(family = info$family,
+                     varname = info$varname,
+                     index = info$index[2],
+                     isgk = TRUE)
+
+  linkindent <- get_linkindent(info$link)
+
+
+  # model parts ----------------------------------------------------------------
+  hc_info <- get_hc_info(info)
+  hc_parelmts <- organize_hc_parelmts(hc_info, info = info)
+  # rdslopes <- paste_rdslope_lp(hc_info, info)
+  # rdintercept <- paste_rdintercept_lp(info, hc_parelmts$in_b0)
+
+  Z_predictor <- paste_Zpart(info, index = info$index[2], hc_info,
+                             notin_b = hc_parelmts$notin_b, isgk = TRUE)
+
+
+  trunc <- if (!is.null(info$trunc))
+    paste0("T(", paste0(info$trunc, collapse = ", "), ")")
+
+  dummies <- if (!is.null(info$dummy_cols)) {
+    paste0('\n',tab(),
+           paste_dummies(categories = info$categories,
+                         dest_mat = paste0(info$resp_mat, "gk"),
+                         dest_col = paste0(info$resp_col, ', k'),
+                         dummy_cols = paste0(info$dummy_cols, ', k'),
+                         index = info$index[2]), collapse = "\n")
+  }
+
+
+  # write model ----------------------------------------------------------------
+  paste0(tab(6), info$resp_mat, "gk[", info$index[2], ", ", info$resp_col, ", k] ~ ",
+         distr, trunc, "\n",
+         repar,
+         tab(6), linkfun(paste0("mugk_", info$varname, "[", info$index[2], ", k]")), " <- ",
+         add_linebreaks(Z_predictor, indent = linkindent + 11 + nchar(info$varname) + 10),
+         "\n",
+         dummies,
+         info$trafos,
+         "\n"
+  )
+}
+

@@ -1,76 +1,16 @@
-# model specification ----------------------------------------------------------
 JAGSmodel_glm <- function(info) {
+  # * settings for families & links -------------------------------------------
+  distr <- get_distr(family = info$family, varname = info$varname,
+                     index = info$index)
 
-  distr <- switch(info$family,
-                  "gaussian" = paste0("dnorm(mu_", info$varname, "[",
-                                      info$index, "], tau_", info$varname, ")"),
-                  "binomial" = paste0("dbern(mu_", info$varname, "[",
-                                      info$index, "])"),
-                  "Gamma" = paste0("dgamma(shape_", info$varname, "[",
-                                   info$index, "], rate_", info$varname, "[",
-                                   info$index, "])"),
-                  "poisson" = paste0("dpois(max(1e-10, mu_", info$varname, "[",
-                                     info$index, "]))"),
-                  "lognorm" = paste0("dlnorm(mu_", info$varname, "[",
-                                     info$index, "], tau_", info$varname, ")"),
-                  "beta" = paste0('dbeta(shape1_', info$varname, "[",
-                                  info$index, "], shape2_", info$varname, "[",
-                                  info$index, "])T(1e-15, 1 - 1e-15)")
-  )
+  linkfun <- get_linkfun(info$link)
 
+  repar <- get_repar(family = info$family, varname = info$varname,
+                     index = info$index)
 
-  linkfun <- switch(info$link,
-                    "identity" = function(x) x,
-                    "logit"    = function(x) paste0("logit(", x, ")"),
-                    "probit"   = function(x) paste0("probit(", x, ")"),
-                    "log"      = function(x) paste0("log(", x, ")"),
-                    "cloglog"  = function(x) paste0("cloglog(", x, ")"),
-                    # "sqrt": JAGS does not have this link function
-                    "inverse"  = function(x)
-                      paste0(x, " <- 1/max(1e-10, inv_", x, ")", "\n",
-                             tab(4), "inv_", x)
-  )
+  secndpar <- get_secndpar(family = info$family, varname = info$varname)
 
-  repar <- switch(info$family,
-                  "gaussian" = NULL,
-                  "binomial" = NULL,
-                  "Gamma" = paste0(tab(4), "shape_", info$varname, "[", info$index, "] <- pow(mu_", info$varname,
-                                   "[", info$index, "], 2) / pow(sigma_", info$varname, ", 2)",
-                                   "\n",
-                                   tab(4), "rate_", info$varname, "[", info$index, "]  <- mu_", info$varname,
-                                   "[", info$index, "] / pow(sigma_", info$varname, ", 2)", "\n"),
-                  "Poisson" = NULL,
-                  'lognorm' = NULL,
-                  'beta' = paste0(tab(4), "shape1_", info$varname,"[", info$index, "] <- mu_",
-                                  info$varname, "[", info$index, "] * tau_", info$varname, "\n",
-                                  tab(4), "shape2_", info$varname, "[", info$index, "] <- (1 - mu_",
-                                  info$varname, "[", info$index, "]) * tau_", info$varname),
-  )
-
-
-  secndpar <- switch(info$family,
-                     "gaussian" = paste0("\n",
-                                         tab(), "tau_", info$varname ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
-                                         tab(), "sigma_", info$varname," <- sqrt(1/tau_", info$varname, ")"),
-                     "binomial" = NULL,
-                     "Gamma" = paste0("\n",
-                                      tab(), "tau_", info$varname ," ~ dgamma(shape_tau_gamma, rate_tau_gamma)", "\n",
-                                      tab(), "sigma_", info$varname," <- sqrt(1/tau_", info$varname, ")"),
-                     "poisson" = NULL,
-                     "lognorm" = paste0("\n",
-                                         tab(), "tau_", info$varname ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
-                                         tab(), "sigma_", info$varname," <- sqrt(1/tau_", info$varname, ")")
-  )
-
-
-
-  linkindent <- switch(info$link,
-                       identity = 0,
-                       logit = 7,
-                       probit = 8,
-                       log = 5,
-                       cloglog = 9,
-                       inverse = 4)
+  linkindent <- get_linkindent(info$link)
 
   indent <- switch(info$family,
                    gaussian = nchar(info$varname) + 14 + linkindent,
@@ -81,45 +21,40 @@ JAGSmodel_glm <- function(info) {
                    beta = 4 + 9 + nchar(info$varname) + 8 + linkindent
   )
 
-  modelname <- switch(info$family,
-                      "gaussian" = 'Normal',
-                      "binomial" = 'Binomial',
-                      "Gamma" = 'Gamma',
-                      "poisson" = 'Poisson',
-                      "lognorm" = 'Log-normal',
-                      "beta" = 'Beta'
-  )
+  modelname <- get_GLM_modelname(info$family)
 
+  # * truncation ---------------------------------------------------------------
   trunc <- if (!is.null(info$trunc))
     paste0("T(", paste0(info$trunc, collapse = ", "), ")")
 
-  # linear predictor of baseline covariates (including interaction terms)
-  Mc_predictor <- paste_predictor(parnam = info$parname, parindex = info$index,
-                                  matnam = 'Mc',
-                                  cols = info$lp$Mc,
-                                  parelmts = info$parelmts$Mc,
-                                  scale_pars = info$scale_pars$Mc,
-                                  indent = indent)
+
+  # * lin. predictor of baseline covariates (including interaction terms) ------
+  Mc_predictor <- paste_linpred(info$parname, info$parelmts$Mc, matnam = "Mc",
+                                index = info$index, cols = info$lp$Mc,
+                                scale_pars = info$scale_pars$Mc)
 
 
+  # * dummy variables ----------------------------------------------------------
   dummies <- if (!is.null(info$dummy_cols)) {
-    paste0('\n', paste_dummies(categories = info$categories, dest_mat = info$resp_mat,
+    paste0('\n',
+           paste_dummies(categories = info$categories, dest_mat = info$resp_mat,
                          dest_col = info$resp_col, dummy_cols = info$dummy_cols,
                          index = info$index), collapse = "\n")
   }
 
+  # * posterior predictive check -----------------------------------------------
   paste_ppc <- if (info$ppc) {
-    if (type == 'norm') {
+    if (info$family == 'gaussian') {
       paste0(tab(4), '# Posterior predictive check for ', info$varname, '\n',
         tab(4), info$varname, "_ppc[", info$index, "] ~ dnorm(mu_", info$varname,
         "[", info$index, "], tau_", info$varname,")", info$trunc, "\n"
       )
-    } else if (type == 'lognorm') {
+    } else if (info$family == 'lognorm') {
       paste0(tab(4), '# Posterior predictive check for ', info$varname, '\n',
         tab(4), info$varname, "_ppc[", info$index, "] ~ dlnorm(mu_", info$varname,
         "[", info$index, "], tau_", info$varname,")", "\n"
       )
-    } else if (type == 'beta') {
+    } else if (info$family == 'beta') {
       paste0(tab(4), '# Posterior predictive check for ', info$varname, '\n',
         tab(4),  info$varname, "_ppc[", info$index, "]] ~ dbeta(shape1_", info$varname,
         "[", info$index, "], shape2_",
@@ -128,24 +63,7 @@ JAGSmodel_glm <- function(info) {
     }
   }
 
-  priorset <- switch(info$family,
-                     gaussian = 'norm',
-                     binomial = info$link,
-                     Gamma = 'gamma',
-                     poisson = 'poisson',
-                     lognorm = 'norm',
-                     beta = 'beta'
-  )
-
-
-  if (info$shrinkage == 'ridge' && !is.null(info$shrinkage)) {
-    priordistr <- paste0(tab(4), info$parname, "[k] ~ dnorm(mu_reg_", priorset, ", tau_reg_", priorset , "_ridge[k])", "\n",
-                    tab(4), "tau_reg_", priorset, "_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
-  } else {
-    priordistr <- paste0(tab(4), info$parname, "[k] ~ dnorm(mu_reg_", priorset, ", tau_reg_", priorset, ")", "\n")
-  }
-
-
+  # * paste model --------------------------------------------------------------
   paste0(tab(), "# ", modelname, " model for ", info$varname, "\n",
          tab(), "for (", info$index, " in 1:", info$N, ") {", "\n",
          tab(4), info$resp_mat, "[", info$index,", ", info$resp_col,
@@ -153,14 +71,14 @@ JAGSmodel_glm <- function(info) {
          paste_ppc,
          repar,
          tab(4), linkfun(paste0("mu_", info$varname, "[", info$index, "]")), " <- ",
-         Mc_predictor,
+         add_linebreaks(Mc_predictor, indent = indent),
          dummies,
          info$trafos,
          "\n",
          tab(), "}", "\n\n",
          tab(), "# Priors for the model for ", info$varname, "\n",
          tab(), "for (k in ", min(info$parelmts$Mc), ":", max(info$parelmts$Mc), ") {", "\n",
-         priordistr,
+         get_priordistr(info$shrinkage, info$family, info$link, info$parname),
          tab(), "}",
          secndpar,
          # paste_ppc_prior,
