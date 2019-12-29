@@ -64,15 +64,13 @@ JAGSmodel_clm <- function(info) {
     }
   })
 
-  # linear predictor of baseline covariates (including interaction terms)
+  # * lin. predictor of baseline covariates (including interaction terms) ------
   Mc_predictor <- if (!is.null(info$lp$Mc)) {
-    paste_predictor(parnam = info$parname, parindex = info$index,
-                                  matnam = 'Mc',
-                                  cols = info$lp$Mc,
-                                  parelmts = info$parelmts$Mc,
-                                  scale_pars = info$scale_pars$Mc,
-                                  indent = indent)
+    paste_linpred(info$parname, info$parelmts$Mc, matnam = "Mc",
+                  index = info$index, cols = info$lp$Mc,
+                  scale_pars = info$scale_pars$Mc)
   } else {"0"}
+
 
 
   if (info$shrinkage == 'ridge' && !is.null(info$shrinkage)) {
@@ -90,7 +88,7 @@ JAGSmodel_clm <- function(info) {
          "] ~ dcat(p_", info$varname, "[", info$index, ", 1:", info$ncat, "])", "\n",
          paste_ppc,
          tab(4), 'eta_', info$varname, "[", info$index, "] <- ",
-         Mc_predictor,
+         add_linebreaks(Mc_predictor, indent = indent),
          "\n\n",
          tab(4), "p_", info$varname, "[", info$index, ", 1] <- max(1e-10, min(1-1e-7, psum_",
          info$varname, "[", info$index, ", 1]))", "\n",
