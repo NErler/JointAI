@@ -26,7 +26,14 @@ JAGSmodel_clmm <- function(info) {
   })
 
 
-  rd_predictor <- get_ranefpreds(info)
+  hc_info <- get_hc_info(info)
+  hc_parelmts <- organize_hc_parelmts(hc_info, info = info)
+  rdslopes <- paste_rdslope_lp(hc_info, info)
+  rdintercept <- paste_rdintercept_lp(info, hc_parelmts$in_b0)
+
+  Z_predictor <- paste_Zpart(info, index = info$index[1], hc_info,
+                             notin_b = hc_parelmts$notin_b, isgk = FALSE)
+
 
   norm.distr  <- if (length(info$hc_list) < 2) {"dnorm"} else {"dmnorm"}
 
@@ -35,12 +42,6 @@ JAGSmodel_clmm <- function(info) {
                                dest_col = info$resp_col, dummy_cols = info$dummy_cols,
                                index = info$index[1]), collapse = "\n")
   }
-
-
-  trunc <- if (!is.null(info$trunc))
-    paste0("T(", paste0(info$trunc, collapse = ", "), ")")
-
-
 
   # posterior predictive check -------------------------------------------------
   paste_ppc <- if (info$ppc) {
@@ -76,8 +77,10 @@ JAGSmodel_clmm <- function(info) {
          "] ~ dcat(p_", info$varname, "[", info$index[1], ", 1:", info$ncat, "])", "\n",
 
          tab(4), 'eta_', info$varname, "[", info$index[1], "] <- ",
-         paste0(c(rd_predictor$Z_predictor, rd_predictor$Ml_predictor), collapse = " +\n"), "\n\n",
-         tab(4), "p_", info$varname, "[", info$index[1], ", 1] <- max(1e-10, min(1-1e-7, psum_", info$varname, "[", info$index[1], ", 1]))", "\n",
+         add_linebreaks(Z_predictor, indent = indent),
+         "\n\n",
+         tab(4), "p_", info$varname, "[", info$index[1], ", 1] <- max(1e-10, min(1-1e-7, psum_",
+         info$varname, "[", info$index[1], ", 1]))", "\n",
          paste(probs, collapse = "\n"), "\n",
          tab(4), "p_", info$varname, "[", info$index[1], ", ", info$ncat, "] <- 1 - max(1e-10, min(1-1e-7, sum(p_",
          info$varname, "[", info$index[1], ", 1:", info$ncat - 1,"])))", "\n\n",
@@ -90,7 +93,7 @@ JAGSmodel_clmm <- function(info) {
          tab(), "for (", info$index[2], " in 1:", info$N, ") {", "\n",
          tab(4), "b_", info$varname, "[", info$index[2], ", 1:", max(1, length(info$hc_list)), "] ~ ", norm.distr,
          "(mu_b_", info$varname, "[", info$index[2], ", ], invD_", info$varname, "[ , ])", "\n",
-         rd_predictor$ranefpreds, "\n",
+         paste_mu_b(rdintercept, rdslopes, info$varname, info$index[2]),
          tab(), "}", "\n\n",
          tab(), "# Priors for the model for ", info$varname, "\n",
          if (any(!sapply(info$parelmts, is.null))) {
@@ -108,112 +111,59 @@ JAGSmodel_clmm <- function(info) {
 }
 
 
+clmm_in_JM <- function(info) {
+  indent <- 4 + 4 + nchar(info$varname) + 7
+
+  # model parts ----------------------------------------------------------------
+  probs <- sapply(2:(info$ncat - 1), function(k) {
+    paste0(tab(6), "pgk_", info$varname, "[", info$index[2], ", ", k,
+           ", k] <- max(1e-7, min(1-1e-10, psumgk_",
+           info$varname, "[", info$index[2], ", ", k,", k] - psumgk_",
+           info$varname, "[", info$index[2], ", ", k - 1, ", k]))"
+           )
+    })
+
+  logits <- sapply(1:(info$ncat - 1), function(k) {
+    paste0(tab(6), "logit(psumgk_", info$varname, "[", info$index[2], ", ", k,
+           ", k])  <- gamma_", info$varname,
+           "[", k, "]", " + etagk_", info$varname,"[", info$index[2], ", k]")
+  })
+
+  hc_info <- get_hc_info(info)
+  hc_parelmts <- organize_hc_parelmts(hc_info, info = info)
+
+  Z_predictor <- paste_Zpart(info, index = info$index[2], hc_info,
+                             notin_b = hc_parelmts$notin_b, isgk = TRUE)
 
 
-#
-# # Cumulative logit mixed model
-#
-# clmm_model <- function(Mlist = NULL, K, ...){
-#
-#   y_name <- colnames(Mlist$y)
-#
-#   norm.distr  <- if (ncol(Mlist$Z) < 2) {"dnorm"} else {"dmnorm"}
-#
-#
-#   paste_Xic <- if (!is.null(Mlist$Xic)) {
-#     paste0(" + \n", tab(nchar(y_name) + 17),
-#            paste_predictor(parnam = 'beta', parindex = 'i', matnam = 'Xic',
-#                            parelmts = K["Xic", 1]:K["Xic", 2],
-#                            cols = Mlist$cols_main$Xic, indent = 0))
-#   }
-#
-#   paste_Xl <- if (!is.null(Mlist$Xl)) {
-#     paste0(" + \n", tab(nchar(y_name) + 15),
-#            paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xl',
-#                            parelmts = K["Xl", 1]:K["Xl", 2],
-#                            cols = Mlist$cols_main$Xl, indent = 0)
-#     )
-#   }
-#
-#   paste_Xil <- if (!is.null(Mlist$Xil)) {
-#     paste0(" + \n", tab(nchar(y_name) + 15),
-#            paste_predictor(parnam = 'beta', parindex = 'j', matnam = 'Xil',
-#                            parelmts = K["Xil", 1]:K["Xil", 2],
-#                            cols = Mlist$cols_main$Xil, indent = 0)
-#     )
-#   }
-#
-#
-#
-#   probs <- sapply(2:(Mlist$ncat - 1), function(k){
-#     paste0(tab(4), "p_", y_name, "[j, ", k, "] <- max(1e-7, min(1-1e-10, psum_",
-#            y_name, "[j, ", k,"] - psum_", y_name, "[j, ", k - 1, "]))")})
-#
-#   logits <- sapply(1:(Mlist$ncat - 1), function(k) {
-#     paste0(tab(4), "logit(psum_", y_name, "[j, ", k, "])  <- gamma_", y_name,
-#            "[", k, "]", " + eta_", y_name,"[j]")
-#   })
-#
-#
-#   paste0(tab(4), "# Cumulative logit mixed effects model for ", y_name, "\n",
-#          tab(4), y_name, "[j] ~ dcat(p_", y_name, "[j, 1:", Mlist$ncat, "])", "\n",
-#          tab(4), 'eta_', y_name, "[j] <- inprod(Z[j, ], b[groups[j], ])",
-#          paste_Xl,
-#          paste_Xil,
-#          "\n\n",
-#          tab(4), "p_", y_name, "[j, 1] <- max(1e-10, min(1-1e-7, psum_", y_name, "[j, 1]))", "\n",
-#          paste(probs, collapse = "\n"), "\n",
-#          tab(4), "p_", y_name, "[j, ", Mlist$ncat, "] <- 1 - max(1e-10, min(1-1e-7, sum(p_",
-#          y_name, "[j, 1:", Mlist$ncat - 1,"])))", "\n\n",
-#          paste0(logits, collapse = "\n"), "\n",
-#          tab(), "}", "\n\n",
-#          tab(), "for (i in 1:", Mlist$N, ") {", "\n",
-#          tab(4), "b[i, 1:", ncol(Mlist$Z), "] ~ ", norm.distr, "(mu_b[i, ], invD[ , ])", "\n",
-#          tab(4), "mu_b[i, 1] <- ",
-#          if (length(Mlist$cols_main$Xc) > 0) {
-#            paste_predictor(parnam = 'beta', parindex = 'i', matnam = 'Xc',
-#                            parelmts = K["Xc", 1]:K["Xc", 2],
-#                            cols = Mlist$cols_main$Xc, indent = 18)
-#            } else {'0'},
-#          paste_Xic, "\n",
-#          paste_rdslopes(Mlist$nranef, Mlist$hc_list, K)
-#   )
-# }
-#
-#
-# clmm_priors <- function(Mlist, K, ...){
-#
-#   y_name <- colnames(Mlist$y)
-#
-#   deltas <- sapply(1:(Mlist$ncat - 2), function(k) {
-#     paste0(tab(), "delta_", y_name, "[", k, "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
-#   })
-#
-#   gammas <- sapply(1:(Mlist$ncat - 1), function(k) {
-#     if (k == 1) {
-#       paste0(tab(), "gamma_", y_name, "[", k, "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
-#     } else {
-#       paste0(tab(), "gamma_", y_name, "[", k, "] <- gamma_", y_name, "[", k - 1,
-#              "] + exp(delta_", y_name, "[", k - 1, "])")
-#     }
-#   })
-#
-#   if (Mlist$ridge) {
-#     distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal_ridge[k])", "\n",
-#                     tab(4), "tau_reg_ordinal_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
-#   } else {
-#     distr <- paste0(tab(4), "beta[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal)", "\n")
-#   }
-#
-#   paste0(tab(), "# Priors for the coefficients in the analysis model", "\n",
-#          if (any(!is.na(K))) {
-#          paste0(
-#            tab(), "for (k in 1:", max(K, na.rm = T), ") {", "\n",
-#            distr,
-#            tab(), "}", "\n\n")
-#          },
-#          paste(deltas, collapse = "\n"), "\n\n",
-#          paste(gammas, collapse = "\n"), "\n\n",
-#          ranef_priors(Mlist$nranef)
-#   )
-# }
+  dummies <- if (!is.null(info$dummy_cols)) {
+    paste0(tab(),
+           paste_dummies(categories = info$categories,
+                         dest_mat = paste0(info$resp_mat, "gk"),
+                         dest_col = paste0(info$resp_col, ', k'),
+                         dummy_cols = paste0(info$dummy_cols, ', k'),
+                         index = info$index[2]),
+           collapse = "\n")
+  }
+
+
+  # write model ----------------------------------------------------------------
+  paste0(tab(6), info$resp_mat, "gk[", info$index[2], ", ", info$resp_col,
+         ", k] ~ dcat(pgk_", info$varname, "[", info$index[2], ", 1:", info$ncat, ", k])", "\n",
+
+         tab(6), 'etagk_', info$varname, "[", info$index[2], ", k] <- ",
+         add_linebreaks(Z_predictor, indent = 12 + nchar(info$varname) + 10),
+         "\n\n",
+         tab(6), "pgk_", info$varname, "[", info$index[2], ", 1, k] <- max(1e-10, min(1-1e-7, psumgk_",
+         info$varname, "[", info$index[2], ", 1, k]))", "\n",
+         paste(probs, collapse = "\n"), "\n",
+         tab(6), "pgk_", info$varname, "[", info$index[2], ", ", info$ncat,
+         ", k] <- 1 - max(1e-10, min(1-1e-7, sum(pgk_",
+         info$varname, "[", info$index[2], ", 1:", info$ncat - 1,", k])))", "\n\n",
+         paste0(logits, collapse = "\n"),
+         "\n\n",
+         dummies,
+         "\n"
+  )
+}
+
