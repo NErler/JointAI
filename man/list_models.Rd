@@ -16,20 +16,25 @@ list_models(
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
-\item{predvars}{logical; should information on the predictor variables be printed? (default is \code{TRUE})}
+\item{predvars}{logical; should information on the predictor variables be
+printed? (default is \code{TRUE})}
 
-\item{regcoef}{logical; should information on the regression coefficients be printed? (default is \code{TRUE})}
+\item{regcoef}{logical; should information on the regression coefficients
+be printed? (default is \code{TRUE})}
 
-\item{otherpars}{logical; should information on other parameters be printed? (default is \code{TRUE})}
+\item{otherpars}{logical; should information on other parameters be printed?
+(default is \code{TRUE})}
 
 \item{priors}{logical; should information on the priors (and hyperparameters)
 be printed? (default is \code{TRUE})}
 
-\item{refcat}{logical; should information on the reference category be printed? (default is \code{TRUE})}
+\item{refcat}{logical; should information on the reference category be
+printed? (default is \code{TRUE})}
 }
 \description{
-This function prints information on models specified for (incomplete) covariates in a JointAI object,
-including the model type, names of the parameters used and hyperparameters.
+This function prints information on models specified for (incomplete)
+covariates in a JointAI object, including the model type, names of the
+parameters used and hyperparameters.
 }
 \section{Note}{
 

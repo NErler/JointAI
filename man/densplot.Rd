@@ -88,14 +88,17 @@ densplot(mod, exclude_chains = 2)
 
 # Example 2: use vlines to mark zero
 densplot(mod, col = c("darkred", "darkblue", "darkgreen"),
-         vlines = list(list(v = rep(0, nrow(summary(mod)$stats)),
+         vlines = list(list(v = rep(0, nrow(summary(mod)$res$y$regcoef)),
                             col = grey(0.8))))
 
 
 # Example 3: use vlines to visualize the posterior mean and 2.5\% and 97.5\% quantiles
-densplot(mod, vlines = list(list(v = summary(mod)$stats[, "Mean"], lty = 1, lwd = 2),
-                            list(v = summary(mod)$stats[, "2.5\%"], lty = 2),
-                            list(v = summary(mod)$stats[, "97.5\%"], lty = 2)))
+res <- rbind(summary(mod)$res$y$regcoef[, c('Mean', '2.5\%', '97.5\%')],
+             summary(mod)$res$y$sigma[, c('Mean', '2.5\%', '97.5\%'), drop = FALSE]
+             )
+densplot(mod, vlines = list(list(v = res[, "Mean"], lty = 1, lwd = 2),
+                            list(v = res[, "2.5\%"], lty = 2),
+                            list(v = res[, "97.5\%"], lty = 2)))
 
 
 # Example 4: ggplot version
