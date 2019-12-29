@@ -296,7 +296,8 @@ get_fctDFList <- function(varlist, data) {
 }
 
 
-extract_fcts <- function(fixed, data, random = NULL, complete = FALSE) {
+extract_fcts <- function(fixed, data, random = NULL, complete = FALSE,
+                         Mcnam) {
 
   fixed <- check_formula_list(fixed)
   random <- check_formula_list(random)
