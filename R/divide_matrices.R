@@ -78,7 +78,10 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   Mc <- if (any(!tvarM)) M[, !tvarM, drop = FALSE]
   Ml <- if (any(tvarM)) M[, tvarM, drop = FALSE]
 
-  fcts_mis <- extract_fcts(fixed = fixed, data, random = random, complete = FALSE)
+  fcts_mis <- extract_fcts(fixed = fixed, data, random = random, complete = FALSE,
+                           Mcnam = colnames(Mc))
+  fcts_all <- extract_fcts(fixed = fixed, data, random = random, complete = TRUE,
+                           Mcnam = colnames(Mc))
 
 
   # scaling --------------------------------------------------------------------
