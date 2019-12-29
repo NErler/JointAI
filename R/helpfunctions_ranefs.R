@@ -1,22 +1,62 @@
+HC <- function(fixed, random, data, interactions, Mcnam, Mlnam) {
 
-paste_ranefpreds <- function(ranefpreds, info) {
-  if (length(ranefpreds) > 0) {
-    paste0(tab(4), "mu_b_", info$varname, "[", info$index[2], ", ", seq_along(ranefpreds), "] <- ",
-           ranefpreds, collapse = "\n")
-  } else {
-    paste0(tab(4), "mu_b_", info$varname, "[", info$index[2], ", 1] <- 0", collapse = "\n")
-  }
+  # for each random effects formula:
+  hc <- sapply(seq_along(random), function(k) {
+    if (!is.null(random[[k]])) {
+      # make the design matrices
+      Z <- model.matrix(remove_grouping(random[[k]]), data)
+      X <- model.matrix(fixed[[k]], data)
+
+      # identify interactions from fixed
+      inters <- interactions[names(interactions) %in% colnames(X)]
+
+      # identify if there are elements of interaction in Z
+      inZ <- if (length(inters) > 0)
+        sapply(colnames(Z), function(x)
+          lapply(lapply(inters, attr, 'elements'), `%in%`, x), simplify = FALSE)
+
+      sapply(colnames(Z), function(x) {
+        list(
+          main = #if (x %in% colnames(X)) {
+            # if the ranom effect is in the fixed effects, find the column of the design matrix
+            c(
+              if (!is.na(match(x, Mcnam)))
+                setNames(match(x, Mcnam), 'Mc'),
+              if (!is.na(match(x, Mlnam)))
+                setNames(match(x, Mlnam), 'Ml')
+            ),
+          # if the random effect is not in the fixed effects, return 0
+          # } else 0,
+
+          interact = if (any(unlist(inZ[[x]]))) {
+            w <- sapply(inZ[[x]], any)
+            inters[w]
+          }
+        )
+      }, simplify = FALSE)
+    }}, simplify = FALSE)
+  names(hc) <- names(random)
+  return(hc)
 }
 
 
-get_ranefpreds <- function(info) {
+get_hc_info <- function(info) {
+
+  if (is.null(info$hc_list))
+    return(NULL)
+
   hc_list <- info$hc_list
   # find the main effect elements in Ml and Mc
-  rdslopes <- sapply(names(hc_list), function(ranefnam) {
+  hcinfo <- list()
+  allcoefs <- c()
+  for (ranefnam in names(hc_list)) {
+    # for each random (slope) effect, do:
 
     if (ranefnam != "(Intercept)") {
       hc <- hc_list[[ranefnam]]
 
+      # main effects in the random effects design matrix
+      # (coefficients go into mu_b, b is multiplied with the column of M)
       main_effect <- list(matrix = names(hc$main),
                           column = unname(hc$main),
                           coef_nr = if (names(hc$main) == 'Mc')
@@ -25,90 +65,61 @@ get_ranefpreds <- function(info) {
                             info$parelmts$Ml[match(hc$main, info$lp$Ml)]
       )
 
-
-      interact_effect <- if(!is.null(hc$interact))
+      # interactions of fixed effects with random effects variables
+      # (if baseline: coefficient and variable inside mu_b;
+      #  if lonitudinal: interaction with random effect treated as standard
+      #  longitudinal variable and is added separately)
+      interact_effect <- if (!is.null(hc$interact))
         sapply(hc$interact, function(k) {
+          # for each interaction with this random (slope) effect, do:
+
+          # find which of the elements of the interaction is not the random effect
           elmts <- k$elmts[which(attr(k, 'elements') != ranefnam)]
 
-          list(
-            matrix = names(elmts),
-            column = unname(elmts),
-            coef_nr = if (names(k$interterm) == 'Mc')
-              info$parelmts$Mc[match(k$interterm, info$lp$Mc)]
-            else if (names(k$interterm) == 'Ml')
-              info$parelmts$Ml[match(k$interterm, info$lp$Ml)]
-          )
+          coefnr <- if (names(k$interterm) == 'Mc')
+            info$parelmts$Mc[match(k$interterm, info$lp$Mc)]
+          else if (names(k$interterm) == 'Ml')
+            info$parelmts$Ml[match(k$interterm, info$lp$Ml)]
+
+
+            list(
+              matrix = names(elmts),
+              column = unname(elmts),
+              coef_nr = coefnr
+            )
         }, simplify = FALSE)
 
-
-      list(main_effect = main_effect,
-           interact_effect = interact_effect,
-           ranefpred = if (is.na(main_effect$coef_nr)) {
-             "0"
-           } else {
-             paste0(
-               c(paste0(info$parname, "[", main_effect$coef_nr, "]"),
-                 if (!is.null(interact_effect))
-                   paste0(info$parname, "[",
-                          sapply(interact_effect, "[[", 'coef_nr')[sapply(interact_effect, "[[", 'matrix') == 'Mc'],
-                          "] * Mc[", info$index, ", ",
-                          sapply(interact_effect, "[[", 'column')[sapply(interact_effect, "[[", 'matrix') == 'Mc'],
-                          "]")
-               ), collapse = " + ")
-           }
+      hcinfo[[ranefnam]] <- list(main_effect = main_effect,
+                                  interact_effect = interact_effect[
+                                    !sapply(interact_effect, "[[", 'coef_nr') %in% allcoefs]
       )
-    }}, simplify = FALSE)
+      allcoefs <- c(allcoefs, sapply(interact_effect, "[[", 'coef_nr'))
+    }}
+
+  return(hcinfo)
+}
 
 
-  ranefpreds <- sapply(rdslopes, "[[", 'ranefpred')
+organize_hc_parelmts <- function(hc_info, info) {
+  # find which parameter elements are used in the hierarchical centering
+  # specification of the random slopes
 
-  in_rdslope <- unlist(lapply(rdslopes[!sapply(rdslopes, is.null)], function(k) {
-    c(k$main_effect$coef_nr,
-      sapply(k$interact_effect, "[[", 'coef_nr'))
-  }))
-
-  w <- which(!info$parelmts$Mc %in% in_rdslope)
-
-  # random intercept:
-  if (length(info$lp$Mc[w]) > 0)
-    ranefpreds[["(Intercept)"]] <- paste_predictor(parnam = info$parname, parindex = info$index[2],
-                                                   matnam = 'Mc',
-                                                   cols = info$lp$Mc[w],
-                                                   scale_pars = info$scale_pars$Mc,
-                                                   parelmts = info$parelmts$Mc[w],
-                                                   indent = linkindent(info$link) + nchar(info$varname) + 14)
-
-
-  wl <- which(!info$parelmts$Ml %in% in_rdslope)
-
-  Ml_predictor <- if (length(info$parelmts$Ml[wl]) > 0)
-    paste0(tab(4 + nchar(info$varname) + 2 + 8),
-           paste_predictor(parnam = info$parname, parindex = info$index[1],
-                           matnam = 'Ml',
-                           cols = info$lp$Ml[wl],
-                           scale_pars = info$scale_pars$Ml[wl, ],
-                           parelmts = info$parelmts$Ml[wl],
-                           indent = 4 + nchar(info$varname) + 2 + 8)
+  in_rdslope <- unlist(sapply(hc_info, function(k) {
+    c(# coefficients of fixed effects that are also random effects:
+      k$main_effect$coef_nr,
+      # coefficients of baseline fixed effects that have interaction with rd. effects
+      sapply(k$interact_effect, "[[", "coef_nr")[
+        sapply(k$interact_effect, "[[", "matrix") %in% "Mc"]
     )
-
-
-  Z_predictor <- paste0(
-    ifelse(!sapply(rdslopes, is.null),
-           paste0(
-             sapply(sapply(rdslopes, "[[", 'main_effect'), "[[", 'matrix'), "[",
-             info$index[1], ", ",
-             sapply(sapply(rdslopes, "[[", 'main_effect'), "[[", 'column'), "] * "
-           ), ''),
-    'b_', info$varname, "[group[", info$index[1], "], ", seq_along(ranefpreds), "]",
-    collapse = " + "
+  })
   )
 
+  # parameter elements left for the baseline covariates
+  in_b0 <- which(!info$parelmts$Mc %in% in_rdslope)
+  # parameter elements left for the longitudinal covariates,
+  # added to the "Zb" part of the linear predictor
+  notin_b <- which(!info$parelmts$Ml %in% in_rdslope)
 
-
-  # "mu_b_", info$varname, "[] * "
-
-  # ranefpreds
-  return(list(ranefpreds = paste_ranefpreds(ranefpreds, info),
-              Ml_predictor = Ml_predictor,
-              Z_predictor = Z_predictor))
+  return(list(in_b0 = in_b0, notin_b = notin_b, in_rdslope = in_rdslope))
 }
+
