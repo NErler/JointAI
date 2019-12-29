@@ -322,3 +322,34 @@ parameters <- function(object, mess = TRUE, warn = TRUE) {
 
   return(vnam)
 }
+
+
+# helpfunctions ---------------------------------------------------------------
+
+# used in print_functions.R
+print_seq <- function(min, max) {
+  if (min == max)
+    max
+  else
+    paste0(min, ":", max)
+}
+
+
+# add linebreaks when printing a string
+add_breaks <- function(string) {
+  m <- gregexpr(", ", string)[[1]]
+  br <- ifelse(c(0, diff(as.numeric(m) %/% getOption('width'))) > 0, "\n", "")
+  gsub("\n, ", ",\n  ", paste0(strsplit(string, ", ")[[1]], br, collapse = ", "))
+}
+
+
+# used in print_functions.R
+print_title <- function(name, var) {
+  cat(paste0(name, " model for ", dQuote(var), "\n"))
+}
+
+# used in print_functions.R
+print_refcat <- function(rc) {
+  cat(paste0("* Reference category: ", dQuote(rc), "\n"))
+}
+
