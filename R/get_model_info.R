@@ -3,7 +3,7 @@ get_model_info <- function(Mlist, K, K_imp, trunc = NULL, assoc_type = NULL) {
   args <- as.list(match.call())[-1L]
 
   sapply(names(Mlist$lp_cols), function(k) {
-    do.call(get_model1_info, c(k = k, args))
+    do.call(get_model1_info, c(k = replace_dummy(k, refs = Mlist$refs), args))
   },  simplify = FALSE)
 }
 
