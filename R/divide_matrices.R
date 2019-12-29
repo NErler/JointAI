@@ -43,7 +43,9 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # covariates -----------------------------------------------------------------
   # * preliminary design matrix ------------------------------------------------
-  X <- model.matrix_combi(c(fixed, auxvars), data)
+  X <- model.matrix_combi(fmla = c(fixed, auxvars), data = data,
+                          terms_list = get_terms_list(fmla = c(fixed, auxvars),
+                                                      data = data))
 
   av <- sapply(all_vars(remove_LHS(fixed)), function(i) {
     if (i %in% names(refs)) {
@@ -64,7 +66,9 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   }
 
   # design matrix with updated auxiliary variables
-  X2 <- model.matrix_combi(c(fixed, auxvars), data)
+  terms_list <- get_terms_list(fmla = c(fixed, auxvars), data = data)
+  X2 <- model.matrix_combi(fmla = c(fixed, auxvars), data = data,
+                           terms_list = terms_list)
 
   M <- cbind(Y, X2[, setdiff(colnames(X2), colnames(Y)), drop = FALSE])
   tvarM <- apply(M, 2, check_tvar, groups)
@@ -165,6 +169,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
               ppc = ppc, ridge = ridge,
               models = models, scale_pars = scale_pars
               # survrow = if(exists("survrow")) survrow
+              terms_list = terms_list
               )
          )
 }
