@@ -161,6 +161,13 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #'                 Note that this is only possible for completely observed
 #'                 variables and implies the assumptions of independence between
 #'                 the excluded variable and the incomplete variables.
+#' @param timevar name of the "time" variable in mixed models.
+#'                Only required in "JM" models. The variable specified in "timevar"
+#'                will automatically be added to "no_model".
+#' @param assoc_type named vector specifying the type of the association usded
+#'                   for a time-varying covariate in the linear predictor of the
+#'                   survival model when using a "JM" model. Impemented options are
+#'                   "underl.value" and "obs.value".
 #' @param subset subset of parameters/variables/nodes (columns in the MCMC sample).
 #'               Uses the same logic as the argument \code{monitor_params} in
 #'               \code{\link[JointAI:model_imp]{*_imp}}.
