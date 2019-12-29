@@ -49,6 +49,7 @@
 #'
 #' @export
 #'
+
 get_MIdat <- function(object, m = 10, include = TRUE,
                       start = NULL, minspace = 50, seed = NULL,
                       export_to_SPSS = FALSE,
@@ -150,12 +151,13 @@ get_MIdat <- function(object, m = 10, include = TRUE,
                     dQuote(varinfo[[i]]$modeltype)),
            call. = FALSE)
     }
+  }
 
 
   if (!include)
     DF_list <- DF_list[-1]
 
-# build dataset --------------------------------------------------------------------------
+  # build dataset --------------------------------------------------------------------------
   impDF <- do.call(rbind, DF_list)
 
   if (is.null(resdir))
@@ -166,9 +168,9 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
   if (export_to_SPSS == TRUE) {
     foreign::write.foreign(impDF,
-               file.path(resdir, paste0(filename, ".txt")),
-               file.path(resdir, paste0(filename, ".sps")),
-               package = 'SPSS'
+                           file.path(resdir, paste0(filename, ".txt")),
+                           file.path(resdir, paste0(filename, ".sps")),
+                           package = 'SPSS'
     )
   }
 
