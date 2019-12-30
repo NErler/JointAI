@@ -123,10 +123,10 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # * interactions -------------------------------------------------------------
   interactions <- match_interaction(inter, Mc = Mc, Ml = Ml)
 
-  if (any(colnames(Mc) %in% names(interactions)))
+  if (any(colnames(Mc) %in% names(interactions)[sapply(interactions, 'attr', "has_NAs")]))
     Mc[, which(colnames(Mc) %in% names(interactions))] <- NA
-  if (any(colnames(Ml) %in% names(interactions)))
-    Ml[, which(colnames(Ml) %in% names(interactions))] <- NA
+  if (any(colnames(Ml) %in% names(interactions)[sapply(interactions, 'attr', "has_NAs")]))
+    Ml[, which(colnames(Ml) %in% names(interactions)[sapply(interactions, 'attr', "has_NAs")])] <- NA
 
 
   # categorical variables ------------------------------------------------------
