@@ -18,7 +18,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # outcome --------------------------------------------------------------------
   # extract the outcomes from the fixed effects formulas
-  outcomes <- extract_outcome_data(fixed, random = random, data = data, analysis_type = analysis_type)
+  outcomes <- extract_outcome_data(fixed, random = random, data = data,
+                                   analysis_type = analysis_type)
 
   # name the elements of fixed:
   fixed <- outcomes$fixed
