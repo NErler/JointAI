@@ -36,10 +36,7 @@ plot.JointAI <- function(x, ...) {
 
 #' @export
 family.JointAI <- function(object, ...) {
-  eval(
-    parse(text = paste0(attr(object$analysis_type, 'family'),
-                        "(link = ",
-                        attr(object$analysis_type, 'link'), ")")))
+  attr(object$analysis_type, "family")
 }
 
 
