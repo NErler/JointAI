@@ -632,10 +632,15 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL, analysis_t
     lp[[out]] <- if (!check_tvar(data[, out], idvar)) {
       colnames(
         model.matrix(fmla, subset(subdat, select = !sapply(subdat, check_tvar, idvar)))
-        )
+      )
     } else {
       colnames(model.matrix(fmla, subdat))
     }
+    if (is.null(lp[[out]])) {
+      lp <- c(lp, setNames(list(NULL), out))
+    }
+
+
     subdat <- subset(subdat, select = - c(get(out)))
   }
   return(lp)
