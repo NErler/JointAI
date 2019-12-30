@@ -131,11 +131,14 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # categorical variables ------------------------------------------------------
   # set dummies of incomplete variables to NA because they need to be re-calculated
+  # also set dummies of complete long. variables to NA if there is a JM
+  # because they need to be re-calculated in the quadrature part
   for (k in names(refs)) {
-    if (any(is.na(data[, k])) & all(attr(refs[[k]], 'dummies') %in% colnames(M))) {
-      if (any(!tvarM[attr(refs[[k]], 'dummies')]))
+    if (all(attr(refs[[k]], 'dummies') %in% colnames(M))) {
+      if (any(is.na(data[, k])) & any(!tvarM[attr(refs[[k]], 'dummies')]))
         Mc[, attr(refs[[k]], 'dummies')] <- NA
-      else
+      else if ((any(is.na(data[, k])) | any(sapply(fixed, 'attr', 'type') %in% 'JM')) &
+               any(tvarM[attr(refs[[k]], 'dummies')]))
         Ml[, attr(refs[[k]], 'dummies')] <- NA
     }
   }
