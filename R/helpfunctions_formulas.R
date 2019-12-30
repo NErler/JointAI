@@ -270,6 +270,7 @@ make_fctDF <- function(varlist_elmt, data) {
     colnames(model.matrix(as.formula(paste0("~", k)), data))[-1],
     simplify = FALSE)
 
+
   df <- melt_list(varlist_elmt, varname = 'fct', valname = 'var')
 
   if (any(sapply(X_vars, length) > sapply(varlist_elmt, length)))
@@ -352,25 +353,31 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE,
 
 
     if (!is.null(fctDF)) {
+      fctDF$matrix <- ifelse(fctDF$var %in% Mcnam, "Mc", "Ml")
+
       # look for functions that involve several variables and occur multiple times in fctDF
-      dupl <- duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl'))]) |
-        duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl'))], fromLast = TRUE)
+      dupl <- duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl', 'matrix'))]) |
+        duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl', 'matrix'))], fromLast = TRUE)
 
       fctDF$dupl <- FALSE
 
       # identify which rows relate to the same expression in the formula
-      p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'compl'))], 1, paste, collapse = "")
+      p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'compl', 'matrix'))], 1,
+                 paste, collapse = "")
 
       for (k in which(dupl)) {
         eq <- which(p == p[k])
-        ord <- order(sapply(data[fctDF$var[eq]], function(x)any(is.na(x))), decreasing = T)
+        ord <- order(fctDF$matrix[eq],
+                     sapply(data[fctDF$var[eq]],
+                            function(x) any(is.na(x))), decreasing = T)
 
         fctDF$dupl[eq[ord]] <- duplicated(p[eq[ord]])
       }
 
       # fctDF$dupl <- duplicated(fctDF[, -which(names(fctDF) == 'var')])
 
-      p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'dupl', 'compl'))], 1, paste, collapse = "")
+      p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'dupl', 'compl', 'matrix'))],
+                 1, paste, collapse = "")
       fctDF$dupl_rows <- NA
       fctDF$dupl_rows[which(dupl)] <- lapply(which(dupl), function(i) {
         m <- unname(which(p == p[i]))
