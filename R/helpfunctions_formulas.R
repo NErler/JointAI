@@ -304,7 +304,8 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE,
   random <- check_formula_list(random)
 
   LHSs <- if (any(unlist(sapply(fixed, attr, 'type')) %in% c('survreg', 'coxph'))) {
-    lapply(fixed[!sapply(fixed, attr, 'type') %in% c('survreg', 'coxph')], extract_LHS)
+    lapply(fixed[!sapply(fixed, attr, 'type') %in% c('survreg', 'coxph')],
+           extract_LHS)
   } else {
     lapply(fixed, extract_LHS)
   }
