@@ -430,7 +430,7 @@ split_outcome <- function(LHS, data) {
       names(outdat) <- names(outlist)
 
     }} else {
-      outdat <- as.data.frame(eval(parse(text = LHS), env = data))
+      outdat <- as.data.frame(eval(parse(text = LHS), envir = data))
       names(outdat) <- LHS
     }
 
@@ -481,7 +481,7 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
 
   fixed <- check_formula_list(fixed)
 
-  id <- extract_id(random, warn = warn)
+  id <- extract_id(random, warn = FALSE)
   # define/identify groups/clusters in the data
   idvar <- if (!is.null(id)) {
     data[, id]
@@ -494,11 +494,13 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
 
   # set attribute "type" to identify survival outcomes
   for (i in seq_along(fixed)) {
-    if (survival::is.Surv(eval(parse(text = names(outnams[i])), env = data))) {
+    if (survival::is.Surv(eval(parse(text = names(outnams[i])), envir = data))) {
       # outcomes[[i]] <- as.data.frame(sapply(idSurv(names(outnams[i])),
-      #                                       function(k) eval(parse(text = k), env = data)))
+      #                                       function(k) eval(parse(text = k),
+      # envir = data)))
 
-      outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnams[i])), env = data))
+      outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnams[i])),
+                                                 envir = data))
       names(outcomes[[i]]) <- idSurv(names(outnams[i]))[c('time', 'status')]
       nlev <- sapply(outcomes[[i]], function(x) length(levels(x)))
       if (any(nlev > 2)) {
