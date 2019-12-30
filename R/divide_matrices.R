@@ -31,7 +31,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # * outcomes -------------------------------------------------------------------
   Y <- cbind(outcomes_to_mat(outcomes),
-             prep_covoutcomes(data[setdiff(names(models), outcomes$outnams)])
+             prep_covoutcomes(data[setdiff(names(models),
+                                           c(outcomes$outnams, names(outcomes$outnams)))])
   )
 
 
@@ -83,7 +84,6 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                            Mcnam = colnames(Mc))
   fcts_all <- extract_fcts(fixed = fixed, data, random = random, complete = TRUE,
                            Mcnam = colnames(Mc))
-
 
   # scaling --------------------------------------------------------------------
   scale_pars <- list(Mc = get_scale_pars(Mc, groups, scale_vars),
