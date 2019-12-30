@@ -16,33 +16,41 @@ get_params <- function(Mlist, info_list, data,
   list_main <- info_list[names(Mlist$fixed)]
   list_other <- info_list[!names(info_list) %in% names(Mlist$fixed)]
 
+  modeltypes_main <- sapply(list_main, "[[", 'modeltype')
+
   if (analysis_main) {
     if (is.null(betas)) betas <- TRUE
     if ((any(sapply(list_main, "[[", 'family') %in% c("gaussian", "Gamma")) |
-         any(sapply(list_main, "[[", 'modeltype') %in% c('survreg'))) &
+         any(modeltypes_main %in% c('survreg'))) &
         is.null(sigma_main)) {
       sigma_main <- TRUE
+    }
+    if (any(sapply(list_main, "[[", 'family') %in% c("gaussian", "Gamma")) &
+        is.null(sigma_main)) {
       tau_main <- TRUE
     }
 
-    if (any(sapply(list_main, '[[', 'modeltype') %in% c('clm', 'clmm')) &
+
+    if (any(modeltypes_main %in% c('clm', 'clmm')) &
         is.null(gamma_main))
       gamma_main <- TRUE
 
-    if (any(sapply(list_main, '[[', 'modeltype') %in% c('coxph')) &
-        is.null(basehaz))
+    if (any(modeltypes_main %in% c('coxph')) &
+        (is.null(basehaz) | !any(grepl("^beta\\b",
+                                       do.call(rbind, get_coef_names(info_list))$coef))))
+      # for a cox model with no betas, something needs to be monitored to prevent
+      # JAGS error "No valid monitors set".
       basehaz <- TRUE
-    # basehaz <- family$family == 'prophaz'# & all(sapply(Mlist$cols_main, is.null))
 
 
-    if (any(sapply(list_main, "[[", 'modeltype') %in% c("glmm", "clmm", "mlogitmm")) &
+    if (any(modeltypes_main %in% c("glmm", "clmm", "mlogitmm")) &
         is.null(D_main))
       D_main <- TRUE
   }
 
 
   if (analysis_random &
-      any(sapply(list_main, "[[", 'modeltype') %in% c("glmm", "clmm", "mlogitmm"))) {
+      any(modeltypes_main %in% c("glmm", "clmm", "mlogitmm"))) {
     if (is.null(ranef_main)) ranef_main <- TRUE
     if (is.null(invD_main)) invD_main <- TRUE
     if (is.null(D_main)) D_main <- TRUE
@@ -70,30 +78,31 @@ get_params <- function(Mlist, info_list, data,
     if (is.null(arglist[[i]]) & i != "other") assign(i, FALSE)
   }
 
-  params <- c(if (betas) "beta",
-              if (basehaz) paste0("Bs.gammas_", names(info_list)[
-                sapply(info_list, "[[", 'modeltype') %in% c('coxph')
-              ]),
+  params <- c(if (betas & any(
+    grepl("^beta\\b", do.call(rbind, get_coef_names(info_list))$coef))) "beta",
+              if (basehaz) "beta_Bh0",
               if (gamma_main) paste0("gamma_", names(list_main)[
-                sapply(list_main, '[[', 'modeltype') %in% c('clm', 'clmm')]),
+                modeltypes_main %in% c('clm', 'clmm')]),
               if (delta_main) paste0("delta_", names(list_main)[
-                sapply(list_main, '[[', 'modeltype') %in% c('clm', 'clmm')]),
+                modeltypes_main %in% c('clm', 'clmm')]),
               if (tau_main) paste0("tau_", names(list_main)[
                 sapply(list_main, '[[', 'family') %in% c('gaussian', 'Gamma')]),
               if (sigma_main) {
                 c(
-                  if (any(sapply(list_main, '[[', 'family') %in% c('gaussian', 'Gamma', 'lognorm', 'beta')))
+                  if (any(sapply(list_main, '[[', 'family') %in%
+                          c('gaussian', 'Gamma', 'lognorm', 'beta')))
                     paste0('sigma_', names(list_main)[
-                      sapply(list_main, '[[', 'family') %in% c('gaussian', 'Gamma', 'lognorm', 'beta')]),
+                      sapply(list_main, '[[', 'family') %in%
+                        c('gaussian', 'Gamma', 'lognorm', 'beta')]),
 
-                  if (any(sapply(list_main, '[[', 'modeltype') %in% c('coxph')))
-                    paste0("shape_", names(list_main)[
-                      sapply(list_main, '[[', 'modeltype') %in% c('coxph')])
+                  if (any(modeltypes_main %in% c('survreg')))
+                    paste0("shape_", sapply(list_main[modeltypes_main %in% c('survreg')],
+                                            "[[", 'varname'))
                 )
               },
-              if (any(sapply(list_main, "[[", 'modeltype') %in% c('glmm', 'clmm', 'mlogitmm'))) {
+              if (any(modeltypes_main %in% c('glmm', 'clmm', 'mlogitmm'))) {
                 long_main <- names(list_main)[
-                  sapply(list_main, "[[", 'modeltype') %in% c('glmm', 'clmm', 'mlogitmm')]
+                  modeltypes_main %in% c('glmm', 'clmm', 'mlogitmm')]
 
                 c(
                   if (ranef_main) paste0("b_", long_main),
@@ -109,13 +118,15 @@ get_params <- function(Mlist, info_list, data,
                       ))),
                   if (RinvD_main)
                     sapply(list_main[long_main], function(x)
-                      paste0("RinvD_", x$varname, "[", 1:max(1, length(x$hc_list)), ",", 1:max(1, length(x$hc_list)), "]")
+                      paste0("RinvD_", x$varname, "[", 1:max(1, length(x$hc_list)),
+                             ",", 1:max(1, length(x$hc_list)), "]")
                     )
                 )
               },
 
               if (alphas) "alpha",
-              if (tau_other & any(sapply(list_other, "[[", 'family') %in% c("gaussian", "lognorm", "gamma", "beta")))
+              if (tau_other & any(sapply(list_other, "[[", 'family') %in%
+                                  c("gaussian", "lognorm", "gamma", "beta")))
                 paste0("tau_", names(list_other)[
                   sapply(list_other, "[[", 'family') %in% c("gaussian", "lognorm",
                                                             "gamma", "beta")]),
@@ -146,7 +157,8 @@ get_params <- function(Mlist, info_list, data,
                       )),
                   if (RinvD_other)
                     sapply(list_other[long_other], function(x)
-                      paste0("RinvD_", x$varname, "[", 1:max(1, length(x$hc_list)), ",", 1:max(1, length(x$hc_list)), "]")
+                      paste0("RinvD_", x$varname, "[", 1:max(1, length(x$hc_list)),
+                             ",", 1:max(1, length(x$hc_list)), "]")
                     )
                 )
               },
@@ -155,13 +167,15 @@ get_params <- function(Mlist, info_list, data,
               other,
               if (imps) {
                 c(if (any(is.na(Mlist$Mc))) {
-                  Mc_NA <- which(is.na(Mlist$Mc[, colnames(Mc) %in% names(data), drop = FALSE]), arr.ind = TRUE)
+                  Mc_NA <- which(is.na(Mlist$Mc[, colnames(Mlist$Mc) %in% names(data),
+                                                drop = FALSE]), arr.ind = TRUE)
                   apply(Mc_NA, 1, function(x)
                     paste0("Mc[", x[1], ",", x[2], "]")
                   )
                 },
                 if (any(is.na(Mlist$Ml))) {
-                  Ml_NA <- which(is.na(Mlist$Ml[, colnames(Ml) %in% names(data), drop = FALSE]), arr.ind = TRUE)
+                  Ml_NA <- which(is.na(Mlist$Ml[, colnames(Mlist$Ml) %in% names(data),
+                                                drop = FALSE]), arr.ind = TRUE)
                   apply(Ml_NA, 1, function(x)
                     paste0("Ml[", x[1], ",", x[2], "]")
                   )
