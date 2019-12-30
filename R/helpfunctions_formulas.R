@@ -478,7 +478,8 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
                                            function(x) as.numeric(x) - 1)
       }
 
-      attr(fixed[[i]], "type") <- if (analysis_type == 'coxph') 'coxph' else "survreg"
+      attr(fixed[[i]], "type") <- if (analysis_type == 'coxph') 'coxph'
+      else if (analysis_type == 'JM') "JM" else "survreg"
       names(fixed)[i] <- names(outnams[i])
     } else {
       outcomes[[i]] <- split_outcome(LHS = extract_LHS(fixed[[i]]), data = data)
@@ -495,10 +496,10 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
           outcomes[[i]][nlev == 2] <- lapply(outcomes[[i]][nlev == 2],
                                              function(x) as.numeric(x) - 1)
 
-          attr(fixed[[i]], "type") <- ifelse(is_tvar, 'glmm_binary', 'glm_binary')
+          attr(fixed[[i]], "type") <- ifelse(is_tvar, 'glmm_binomial_logit', 'glm_binomial_logit')
       } else if (any(nlev == 0)) {
           # continuous variables
-          attr(fixed[[i]], "type") <- ifelse(is_tvar, 'glmm_continuous', 'glm_continuous')
+          attr(fixed[[i]], "type") <- ifelse(is_tvar, 'lmm', 'lm')
       }
       names(fixed)[i] <- outnams[i]
     }
@@ -509,17 +510,25 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
 
 
 
-
-
-# make a design matrix from a list of formulas
-model.matrix_combi <- function(fmla, data) {
+get_terms_list <- function(fmla, data) {
   fmla <- fmla[!sapply(fmla, is.null)]
 
   fmla <- check_formula_list(fmla)
 
-  mats <- mapply(model.matrix, object = fmla,
-                 data = lapply(fmla, model.frame, data = data, na.action = na.pass),
-                 SIMPLIFY = FALSE)
+  # list of model.frames
+  mf_list <- lapply(fmla, model.frame, data = data, na.action = na.pass)
+  # list of term objects
+  terms_list <- lapply(mf_list, terms)
+
+  return(terms_list)
+}
+
+
+model.matrix_combi <- function(fmla, data, terms_list) {
+  # list of model.frames
+  mf_list <- lapply(terms_list, model.frame, data = data, na.action = na.pass)
+
+  mats <- mapply(model.matrix, object = fmla, data = mf_list, SIMPLIFY = FALSE)
 
   X <- mats[[1]]
 
