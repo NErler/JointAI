@@ -164,17 +164,18 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
 
   return(list(fixed = fixed, random = random,
-              Mc = Mc, Ml = Ml, lp_cols = lp_cols, interactions = interactions,
+              Mc = Mc[match(unique(groups), groups), , drop = FALSE],
+              Ml = Ml, lp_cols = lp_cols, interactions = interactions,
               trafos = fcts_mis, hc_list = hc_list,
               refs = refs, timevar = timevar,
               auxvars = auxvars, groups = groups,
-              # ncat = ncat,
               N = length(unique(groups)), Ntot = length(groups),
               ppc = ppc, ridge = ridge,
-              models = models, scale_pars = scale_pars
-              # survrow = if(exists("survrow")) survrow
+              models = models, scale_pars = scale_pars,
+              outcomes = outcomes, fcts_all = fcts_all,
               terms_list = terms_list
               )
          )
 }
+
 
