@@ -8,7 +8,7 @@
   object,
   newdata,
   quantiles = c(0.025, 0.975),
-  type = c("link", "response", "prob", "class", "lp", "risk"),
+  type = "lp",
   start = NULL,
   end = NULL,
   thin = NULL,
