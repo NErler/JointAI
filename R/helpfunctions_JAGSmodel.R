@@ -491,7 +491,7 @@ get_repar <- function(family, varname, index, isgk = FALSE) {
                          varname, "\n",
                          tab(4), "shape2", if (isgk) "gk", "_", varname,
                          "[", index, if (isgk) ", k", "] <- (1 - mu", if (isgk) "gk", "_",
-                         varname, "[", index, if (isgk) ", k", "]) * tau_", varname),
+                         varname, "[", index, if (isgk) ", k", "]) * tau_", varname, "\n")
   )
 }
 
