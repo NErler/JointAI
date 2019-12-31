@@ -511,7 +511,9 @@ get_secndpar <- function(family, varname) {
          "poisson" = NULL,
          "lognorm" = paste0("\n",
                             tab(), "tau_", varname ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
-                            tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")")
+                            tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")"),
+         "beta" = paste0("\n",
+                         tab(), "tau_", varname, " ~ dgamma(shape_tau_beta, rate_tau_beta)", "\n")
   )
 }
 
