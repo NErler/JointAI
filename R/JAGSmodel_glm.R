@@ -18,7 +18,7 @@ JAGSmodel_glm <- function(info) {
                    Gamma = nchar(info$varname) + 14 + linkindent,
                    poisson = nchar(info$varname) + 14 + linkindent,
                    lognorm = nchar(info$varname) + 14 + linkindent,
-                   beta = 4 + 9 + nchar(info$varname) + 8 + linkindent
+                   beta = 4 + 3 + nchar(info$varname) + 7 + linkindent
   )
 
   modelname <- get_GLM_modelname(info$family)
