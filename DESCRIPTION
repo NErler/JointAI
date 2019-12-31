@@ -17,12 +17,12 @@ Description: Provides joint analysis and imputation of (generalized)
     the user to export imputed values.
 URL: https://nerler.github.io/JointAI
 License: GPL (>= 2)
-Date: 2019-08-31
+Date: 2019-12-31
 BugReports: https://github.com/nerler/JointAI/issues
 LazyData: TRUE
 RoxygenNote: 7.0.2
 Depends: rjags (>= 4-6)
-Imports: MASS, mcmcse, coda, rlang, foreach, doParallel
+Imports: MASS, mcmcse, coda, rlang, foreach, doParallel, survival
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
 Suggests: 
     knitr,
@@ -31,7 +31,6 @@ Suggests:
     foreign,
     ggplot2,
     ggpubr,
-    survival,
     testthat
 VignetteBuilder: knitr
 Encoding: UTF-8
