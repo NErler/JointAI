@@ -388,6 +388,10 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
       )
 
       fct <- x$fct
+      if (x$type == "I") {
+        fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))
+      }
+
       for (k in seq_along(vars)) {
 
         if (any(vars_mat %in% "Ml") & vars_mat[k] %in% "Mc" & !isgk) {
