@@ -572,8 +572,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
     ), class = "JointAI")
 
 
-  object$fitted.values <- try(predict(object, type = 'response')$fit, silent = TRUE)
-  object$residuals <- try(residuals(object, type = 'working'),
+  object$fitted.values <- try(predict(object, type = 'response', warn = FALSE)$fit, silent = TRUE)
+  object$residuals <- try(residuals(object, type = 'working', warn = FALSE),
                           silent = TRUE)
 
   if (!inherits(object$residuals, 'try-error')) {
