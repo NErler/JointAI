@@ -17,28 +17,36 @@ get_subset <- function(object, subset, keep_aux = FALSE, warn = TRUE, mess = TRU
 
   s <- do.call(get_params, c(object, Mlist_new, subset, mess = mess))
 
-  if (object$analysis_type != "JM") {
-  repl <- sapply(s, function(r) {
-    # if (grepl("^beta$", r)) {
-      # get_coef_names(object$Mlist, object$K)[, 2]
-    # } else
-      if (!r %in% colnames(object$MCMC[[1]]) & any(grepl(paste0('^', r, '\\['), colnames(object$MCMC[[1]])))) {
-      grep(paste0("^", r, "\\["), colnames(object$MCMC[[1]]), value = TRUE)
-    }
-  }, simplify = FALSE)
+  # if (object$analysis_type != "JM") {
+  # repl <- sapply(s, function(r) {
+  #   # if (grepl("^beta$", r)) {
+  #     # get_coef_names(object$Mlist, object$K)[, 2]
+  #   # } else
+  #     if (!r %in% colnames(object$MCMC[[1]]) & any(grepl(paste0('^', r, '\\['), colnames(object$MCMC[[1]])))) {
+  #     grep(paste0("^", r, "\\["), colnames(object$MCMC[[1]]), value = TRUE)
+  #   }
+  # }, simplify = FALSE)
 
-  for (i in seq_along(repl)) {
-    if (!is.null(repl[[i]])) {
-      s <- append(s, repl[[i]], after = match(names(repl)[i], s))
-      s <- s[-match(names(repl)[i], s)]
-    }
-  }
+  # for (i in seq_along(repl)) {
+  #   if (!is.null(repl[[i]])) {
+  #     s <- append(s, repl[[i]], after = match(names(repl)[i], s))
+  #     s <- s[-match(names(repl)[i], s)]
+  #   }
+  # }
 
-  sub <- unique(s[s %in% colnames(object$MCMC[[1]])])
-  } else {
-    sub <- unlist(sapply(s, function(i)
-      grep(i, colnames(object$MCMC[[1]]), value = TRUE, fixed = TRUE), simplify = FALSE))
-  }
+  sub <- unique(unlist(
+    c(
+      sapply(paste0("^", s, "\\["), grep, colnames(object$MCMC[[1]]), value = TRUE),
+      colnames(object$MCMC[[1]])[na.omit(sapply(s, match, table = colnames(object$MCMC[[1]])))]
+  )
+  ))
+
+
+  # sub <- unique(s[s %in% colnames(object$MCMC[[1]])])
+  # } else {
+  #   sub <- unlist(sapply(s, function(i)
+  #     grep(i, colnames(object$MCMC[[1]]), value = TRUE, fixed = TRUE), simplify = FALSE))
+  # }
   if (!keep_aux)
     sub <- sub[!sub %in% get_aux(object)]
 
