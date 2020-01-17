@@ -377,23 +377,6 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
   # * model info ---------------------------------------------------------------
   info_list <- get_model_info(Mlist, K = K, K_imp = K_imp, trunc = trunc,
                               assoc_type = assoc_type)
-  # whichJM <- which(sapply(info_list, "[[", 'modeltype') %in% 'JM')
-  # if (length(whichJM) > 0) {
-  #   for (k in whichJM) {
-  #     longvars <- names(info_list[[k]]$lp$Ml)
-  #     longvars <- unique(
-  #       c(longvars,
-  #         unlist(lapply(info_list[longvars], function(x) {
-  #           names(x$lp$Ml)
-  #         }))
-  #       ))
-  #     longvars <- sapply(longvars, replace_dummy, refs = Mlist$refs)
-  #     longvars <- longvars[!longvars %in% Mlist$timevar]
-  #
-  #     info_list[[k]]$tv_vars <- info_list[longvars]
-  #   }
-  # }
-
 
 
   # * data list ----------------------------------------------------------------
