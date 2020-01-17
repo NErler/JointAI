@@ -142,12 +142,12 @@ predDF.formula <- function(formula, dat, var, length = 100, ...) {
 predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
                             type = 'lp',
                             start = NULL, end = NULL, thin = NULL,
-                            exclude_chains = NULL, mess = TRUE, ...) {
+                            exclude_chains = NULL, mess = TRUE, warn = TRUE, ...) {
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
-  if (any(sapply(object$info_list, "[[", "modeltype") %in% c('glmm', 'clmm', 'mlogitmm'))) {
-    warning("Prediction for multi-level models is currently only possible on the population level (not using random effects.")
+  if (any(sapply(object$info_list, "[[", "modeltype") %in% c('glmm', 'clmm', 'mlogitmm')) & warn) {
+    warning("Prediction for multi-level models is currently only possible on the population level (not using random effects).")
     # stop("Prediction is currently only available for (generalized) linear
     #      and (generalized) linear mixed models.")
   }
