@@ -129,9 +129,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                    function(k) mcmc(rbind(object$MCMC[[k]],
                                                           MCMC[[k]]),
                                                     start = start(object$MCMC),
-                                                    end = end(mcmc[[k]]),
-                                                    # end = end(object$MCMC) +
-                                                    #   niter(mcmc[[k]]) * thin(mcmc[[k]]),
+                                                    end = end(object$MCMC) +
+                                                      niter(mcmc[[k]]) * thin(mcmc[[k]]),
                                                     thin = thin(mcmc[[k]]))
     ))
   } else {
