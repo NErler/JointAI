@@ -1,5 +1,9 @@
 
 get_subset <- function(object, subset, keep_aux = FALSE, warn = TRUE, mess = TRUE) {
+
+  if (is.logical(subset) && !subset)
+    return(object$MCMC)
+
   subset <- as.list(subset)
 
   if (length(subset) == 0 & !as.logical(as.list(object$monitor_params)$analysis_main))
