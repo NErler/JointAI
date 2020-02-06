@@ -261,7 +261,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   }
 
   # qunatiles
-  quants <- if (!is.null(quants)) {
+  quants <- if (!is.null(quantiles)) {
     if (type == 'response') {
       t(apply(pred, 2, function(q) {
         quantile(linkinv(q), probs = quantiles, na.rm  = TRUE)
@@ -326,7 +326,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp"
   }
 
   # qunatiles
-  quants <- if (!is.null(quants)) {
+  quants <- if (!is.null(quantiles)) {
     if (type == 'response') {
       t(apply(pred, 2, function(q) {
         quantile(exp(q), probs = quantiles, na.rm  = TRUE)
@@ -393,7 +393,7 @@ predict_coxph <- function(formula, newdata, type = c("lp", "risk", "expected",
   }
 
   # quantiles
-  quants <- if (!is.null(quants)) {
+  quants <- if (!is.null(quantiles)) {
     if (type == 'risk') {
       t(apply(exp(pred), 2, quantile, quantiles, na.rm  = TRUE))
     } else if (type == 'lp') {
@@ -477,7 +477,7 @@ predict_clm <- function(formula, newdata, type = c("lp", "prob", "class", "respo
     fit <- apply(fit, 1, function(x) if (all(is.na(x))) NA else which.max(x))
   }
 
-  quants <- if (type == 'prob' & !is.null(quants)) {
+  quants <- if (type == 'prob' & !is.null(quantiles)) {
     aperm(apply(probs, 1:2, quantile, probs = quantiles, na.rm = TRUE),
           c(2,1,3))
   }
