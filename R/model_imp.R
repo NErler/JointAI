@@ -569,14 +569,14 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
     ), class = "JointAI")
 
 
-  object$fitted.values <- try(predict(object, type = 'response', warn = FALSE)$fit, silent = TRUE)
+  object$fitted.values <- try(fitted(object, warn = FALSE), silent = TRUE)
   object$residuals <- try(residuals(object, type = 'working', warn = FALSE),
                           silent = TRUE)
 
-  if (!inherits(object$residuals, 'try-error')) {
-    if (!object$analysis_type %in% c('clm', 'clmm'))
-      names(object$fitted.values) <- names(object$residuals) <- rownames(object$Mlist$y)
-  }
+  # if (!inherits(object$residuals, 'try-error')) {
+  #   if (!object$analysis_type %in% c('clm', 'clmm'))
+  #     names(object$fitted.values) <- names(object$residuals) <- rownames(object$Mlist$y)
+  # }
 
   if (inherits(object$fitted.values, 'try-error'))
     object$fitted.values <- NULL
