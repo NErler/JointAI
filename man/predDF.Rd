@@ -19,6 +19,8 @@ predDF(object, ...)
 
 \item{var}{name of variable that should be varying}
 
+\item{outcome}{vector of variable names or numbers identifying for which outcome(s) the prediction should be performed.}
+
 \item{length}{number of values used in the sequence when \code{var} is continuous}
 
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
