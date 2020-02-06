@@ -59,10 +59,12 @@ get_hc_info <- function(info) {
       # (coefficients go into mu_b, b is multiplied with the column of M)
       main_effect <- list(matrix = names(hc$main),
                           column = unname(hc$main),
-                          coef_nr = if (names(hc$main) == 'Mc')
+                          coef_nr = if (length(names(hc$main)) > 0) {
+                            if (names(hc$main) == 'Mc')
                             info$parelmts$Mc[match(hc$main, info$lp$Mc)]
                           else if (names(hc$main) == 'Ml')
                             info$parelmts$Ml[match(hc$main, info$lp$Ml)]
+                          }
       )
 
       # interactions of fixed effects with random effects variables
