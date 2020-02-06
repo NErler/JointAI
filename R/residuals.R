@@ -21,7 +21,7 @@
 #'
 #' @export
 residuals.JointAI <- function(object,
-                              type = c('deviance', 'response', 'working'), ...) {
+                              type = c('working', 'deviance', 'response'), warn = TRUE, ...) {
 
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
@@ -55,17 +55,19 @@ residuals.JointAI <- function(object,
 
   resids <- sapply(names(object$fixed), function(varname) {
     resid_fun <- switch(object$info_list[[varname]]$modeltype,
-                          glm = residuals_glm,
-                          glmm = residuals_glm,
-                          clm = residuals_clm,
-                          clmm = residuals_clm,
-                          survreg = residuals_survreg,
-                          coxph = residuals_coxph
+                          glm = resid_glm,
+                          glmm = resid_glm,
+                          clm = resid_clm,
+                          clmm = resid_clm,
+                          survreg = resid_survreg,
+                          coxph = resid_coxph
     )
     if (!is.null(resid_fun)) {
       resid_fun(varname = varname, type = types[varname], data = object$data,
-                  MCMC = MCMC)
+                MCMC = MCMC, info = object$info_list[[varname]],
+                fitted = object$fitted.values[[varname]], warn = warn)
     } else {
+      if (warn)
       warning(gettextf("Prediction is not yet implemented for a model of type %s.",
                        dQuote(object$info_list[[varname]]$modeltype)))
     }
@@ -74,37 +76,52 @@ residuals.JointAI <- function(object,
 
 
 
-resid_glm <- function(y, mu, family,
-                      type = c("working", "pearson", "response")) {
-  # y: outcome
-  # mu: fitted values
+resid_glm <- function(varname, type = c("working", "pearson", "response"),
+                      data, info, fitted, ...) {
 
   type <- match.arg(type)
 
+  y <- data[, varname]
+  mu <- fitted
+
+
+  family <- if(info$family %in% c('gaussian', 'binomial', 'Gamma', 'poisson')) {
+    get(info$family)(link = info$link)
+  } else if (info$family %in% c('lognorm')) {
+    gaussian(link = 'log')
+  } else {
+    warning(gettextf('Residuals for %s models are currently not available.',
+                     dQuote(info$family)),
+            call. = FALSE)
+  }
+
   # linear predictor
-  eta <- family()$linkfun(mu)
+  eta <- family$linkfun(mu)
 
   # working residuals
-  r <- (y - mu)/family()$mu.eta(eta)
+  r <- (y - mu)/family$mu.eta(eta)
 
   resid <- switch(type,
                   working = r,
                   response = y - mu,
-                  pearson = (y - mu)/sqrt(family()$variance(mu))
+                  pearson = (y - mu)/sqrt(family$variance(mu))
   )
   resid
 }
 
 
-resid_clm <- function(...) {
+resid_clm <- function(..., warn = TRUE) {
+  if (warn)
   warning('It is currently not possible to obtain residuals for clm and clmm modes.')
 }
 
-resid_survreg <- function(...) {
+resid_survreg <- function(..., warn = TRUE) {
+  if (warn)
   warning('It is currently not possible to obtain residuals for survreg modes.')
 }
 
-resid_coxph <- function(...) {
+resid_coxph <- function(..., warn = TRUE) {
+  if (warn)
   warning('It is currently not possible to obtain residuals for coxph modes.')
   # martingale residuals
   # mresid <- lung$status - 1 + logsurv
