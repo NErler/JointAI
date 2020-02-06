@@ -732,6 +732,122 @@ clm_imp <- function(formula, data,
 
 #' @rdname model_imp
 #' @export
+lognormal_imp <- function(formula, data,
+                   n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                   monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                   models = NULL, no_model = NULL, trunc = NULL,
+                   ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                   parallel = FALSE, n.cores = NULL,
+                   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                   modelname = NULL, modeldir = NULL,
+                   keep_model = FALSE, overwrite = NULL,
+                   quiet = TRUE, progress.bar = "text",
+                   warn = TRUE, mess = TRUE,
+                   keep_scaled_mcmc = FALSE, ...){
+
+  if (missing(formula))
+    stop("No model formula specified.")
+
+  if (missing(data))
+    stop("No dataset given.")
+
+
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$formula <- check_formula_list(arglist$formula)
+  arglist$analysis_type <- "lognormal"
+  # attr(arglist$analysis_type, "family") <- "lognormal"
+
+  thiscall <- as.list(match.call())[-1L]
+
+  arglist <- c(arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+  return(res)
+}
+
+
+
+#' @rdname model_imp
+#' @export
+betreg_imp <- function(formula, data,
+                   n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                   monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                   models = NULL, no_model = NULL, trunc = NULL,
+                   ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                   parallel = FALSE, n.cores = NULL,
+                   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                   modelname = NULL, modeldir = NULL,
+                   keep_model = FALSE, overwrite = NULL,
+                   quiet = TRUE, progress.bar = "text",
+                   warn = TRUE, mess = TRUE,
+                   keep_scaled_mcmc = FALSE, ...){
+
+  if (missing(formula))
+    stop("No model formula specified.")
+
+  if (missing(data))
+    stop("No dataset given.")
+
+
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$formula <- check_formula_list(arglist$formula)
+  arglist$analysis_type <- "betareg"
+
+  thiscall <- as.list(match.call())[-1L]
+
+  arglist <- c(arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+  return(res)
+}
+
+
+#' @rdname model_imp
+#' @export
+multinomial_imp <- function(formula, data,
+                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                       monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                       models = NULL, no_model = NULL, trunc = NULL,
+                       ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                       parallel = FALSE, n.cores = NULL,
+                       scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                       modelname = NULL, modeldir = NULL,
+                       keep_model = FALSE, overwrite = NULL,
+                       quiet = TRUE, progress.bar = "text",
+                       warn = TRUE, mess = TRUE,
+                       keep_scaled_mcmc = FALSE, ...){
+
+  if (missing(formula))
+    stop("No model formula specified.")
+
+  if (missing(data))
+    stop("No dataset given.")
+
+
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  arglist$formula <- check_formula_list(arglist$formula)
+  arglist$analysis_type <- "mlogit"
+
+  thiscall <- as.list(match.call())[-1L]
+
+  arglist <- c(arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+  return(res)
+}
+
+
+#' @rdname model_imp
+#' @export
 lme_imp <- function(fixed, data, random,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                     monitor_params = NULL,  auxvars = NULL, refcats = NULL,
