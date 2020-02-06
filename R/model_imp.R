@@ -281,7 +281,8 @@
 #' @name model_imp
 NULL
 
-model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
+model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
+                      family = NULL,
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                       monitor_params = NULL, auxvars = NULL, timevar = NULL,
                       refcats = NULL,
@@ -295,7 +296,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
                       warn = TRUE, mess = TRUE,
                       keep_scaled_mcmc = FALSE,
                       analysis_type, assoc_type = NULL,
-                      imp_par_list = NULL,  data_list = NULL, ...) {
+                      data_list = NULL, ...) {
 
 
   # checks & warnings -------------------------------------------------------
