@@ -150,6 +150,8 @@ test_that("models with complex random effects structure work", {
 
   expect_equal(class(lme_imp(y ~ C1 + B2 * c1 * time, random = ~ time + I(time^2)|id,
                              data = longDF)), "JointAI")
+
+  expect_s3_class(lme_imp(y ~ c1 * b1 + o1, random = ~b1|id, data = longDF), "JointAI")
 })
 
 

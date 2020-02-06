@@ -110,7 +110,8 @@ paste_rdslope_lp <- function(hc_info, info) {
         c(# main effects part: only coefficient
           paste_coef(info$parname, k$main_effect$coef_nr),
 
-          if (!is.null(k$interact_effect)) {
+          if (!is.null(k$interact_effect) &&
+              any(sapply(k$interact_effect, "[[", "matrix") %in% 'Mc')) {
             # interaction part (baseline covs): coefficient * variable
             cols <- Filter(Negate(is.null),
                            lapply(k$interact_effect, function(x) {
