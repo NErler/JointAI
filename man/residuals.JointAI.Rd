@@ -4,17 +4,18 @@
 \alias{residuals.JointAI}
 \title{Extract residuals from an object of class JointAI}
 \usage{
-\method{residuals}{JointAI}(object, type = "working", mess = TRUE, warn = TRUE, ...)
+\method{residuals}{JointAI}(
+  object,
+  type = c("working", "deviance", "response"),
+  warn = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
 \item{type}{type of residuals: \code{"deviance"}, \code{"response"},
 \code{"working"}}
-
-\item{mess}{logical; should messages be given? Default is
-\code{TRUE}. (Note: this applies only to messages
-given directly by \strong{JointAI}.)}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. (Note: this applies only to warnings
@@ -37,8 +38,8 @@ Extract residuals from an object of class JointAI
 \examples{
 mod <- glm_imp(B1 ~ C1 + C2 + O1, data = wideDF, n.iter = 100,
                family = binomial(), mess = FALSE)
-summary(residuals(mod, type = 'response'))
-summary(residuals(mod, type = 'working'))
+summary(residuals(mod, type = 'response')[[1]])
+summary(residuals(mod, type = 'working')[[1]])
 
 
 }

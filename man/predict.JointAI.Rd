@@ -14,6 +14,7 @@
   thin = NULL,
   exclude_chains = NULL,
   mess = TRUE,
+  warn = TRUE,
   ...
 )
 }
@@ -42,6 +43,10 @@ probability.}
 
 \item{mess}{logical; should messages be given? Default is
 \code{TRUE}. (Note: this applies only to messages
+given directly by \strong{JointAI}.)}
+
+\item{warn}{logical; should warnings be given? Default is
+\code{TRUE}. (Note: this applies only to warnings
 given directly by \strong{JointAI}.)}
 
 \item{...}{currently not used}
@@ -93,9 +98,9 @@ newDF <- predDF(mod, var = "C2")
 pred <- predict(mod, newdata = newDF)
 
 # plot predicted values and 95\% confidence band
-plot(newDF$C2, pred$fit[[1]]$fit, type = "l", ylim = range(pred$quantiles),
+plot(newDF$C2, pred$fit[[1]]$fit, type = "l", ylim = range(pred$fitted[[1]]),
      xlab = "C2", ylab = "predicted values")
-matplot(newDF$C2, pred$quantiles, lty = 2, add = TRUE, type = "l", col = 1)
+matplot(newDF$C2, pred$fitted[[1]][, 2:3], lty = 2, add = TRUE, type = "l", col = 1)
 
 }
 \seealso{

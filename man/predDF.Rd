@@ -8,7 +8,7 @@
 \usage{
 predDF(object, ...)
 
-\method{predDF}{JointAI}(object, var, length = 100, ...)
+\method{predDF}{JointAI}(object, var, outcome = 1, length = 100, ...)
 
 \method{predDF}{formula}(formula, dat, var, length = 100, ...)
 }

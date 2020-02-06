@@ -48,22 +48,12 @@ given directly by \strong{JointAI}.)}
 \item{...}{
   Arguments passed on to \code{\link[mcmcse:mcse.mat]{mcmcse::mcse.mat}}
   \describe{
-    \item{\code{size}}{the batch size. The default value is
-  \dQuote{\code{sqroot}}, which uses the square root of the
-  sample size. \dQuote{\code{cuberoot}} will cause the
-  function to use the cube root of the sample size. A
-  numeric value may be provided if neither
-  \dQuote{\code{sqroot}} nor \dQuote{\code{cuberoot}} is
-  satisfactory.}
+    \item{\code{size}}{represents the batch size in ``bm'' and the truncation point in ``bartlett'' and ``tukey''. Default is \code{NULL} which implies that an optimal batch size is calculated using the \code{batchSize()} function. Can take character values of \code{``sqroot''} and \code{``cuberoot''} or any numeric value between 1 and n/2. \code{``sqroot''} means size is floor(n^(1/2)) and ``cuberoot'' means size is floor(n^(1/3)).}
     \item{\code{g}}{a function such that \eqn{E(g(x))} is the
   quantity of interest. The default is \code{NULL}, which
   causes the identity function to be used.}
-    \item{\code{method}}{the method used to compute the standard
-  error. This is one of \dQuote{\code{bm}} (batch means,
-  the default), \dQuote{\code{obm}} (overlapping batch
-  means), \dQuote{\code{tukey}} (spectral variance method
-  with a Tukey-Hanning window), or \dQuote{\code{bartlett}}
-  (spectral variance method with a Bartlett window).}
+    \item{\code{method}}{any of \code{``bm'', ``obm'', ``bartlett'', ``tukey''}. \code{``bm''} represents batch means estimator, \code{``obm''} represents overlapping batch means estimator with, \code{``bartlett''} and \code{``tukey''} represents the modified-Bartlett window and the Tukey-Hanning windows for  spectral variance estimators. }
+    \item{\code{r}}{the lugsail parameter that converts a lag window into its lugsail equivalent. Larger values of \code{``r''} will typically imply less underestimation of \code{``cov''},  but higher variability of the estimator. Default is \code{``r = 3''} and \code{``r = 1,2''} are good choices. \code{``r > 5''} is not recommended. Non-integer values are ok.}
   }}
 
 \item{data_scale}{show the Monte Carlo error of the sample transformed back
