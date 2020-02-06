@@ -20,8 +20,8 @@ plot.JointAI <- function(x, ...) {
     "Predicted values"
   } else {"Fitted values"}
 
-  fit <- predict(x)$fit
-  r <- residuals(x)
+  fit <- unlist(x$fitted.values)
+  r <- unlist(x$residuals[[1]])
 
   plot(fit, r, xlab = l.fit,
        ylab = "Residuals", main = 'Residuals vs Fitted'
