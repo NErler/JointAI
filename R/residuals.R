@@ -1,4 +1,4 @@
-' Extract residuals from an object of class JointAI
+#' Extract residuals from an object of class JointAI
 #'
 #' @inheritParams sharedParams
 #' @param type type of residuals: \code{"deviance"}, \code{"response"},
@@ -20,8 +20,8 @@
 #'
 #'
 #' @export
-residuals.JointAI <- function(object,
-                              type = c('deviance', 'response', 'working'), ...) {
+residuals.JointAI <- function(object, type = 'working', mess = TRUE, warn = TRUE,
+                              ...) {
 
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
@@ -34,9 +34,9 @@ residuals.JointAI <- function(object,
                   dQuote(type), dQuote(object$analysis_type), dQuote('response')),
          call. = FALSE)
 
-  if (object$analysis_type %in% c('coxph', 'clm', 'clmm', 'JM'))
-    stop(gettextf("Residuals are not yet implemented for a JointAI model of type %s.",
-                  dQuote(object$analysis_type)), call. = FALSE)
+  # if (object$analysis_type %in% c('coxph', 'clm', 'clmm', 'JM'))
+  #   stop(gettextf("Residuals are not yet implemented for a JointAI model of type %s.",
+  #                 dQuote(object$analysis_type)), call. = FALSE)
 
   if (length(type) == 1) {
     types <- setNames(rep(type, length(object$fixed)),
@@ -55,16 +55,20 @@ residuals.JointAI <- function(object,
 
   resids <- sapply(names(object$fixed), function(varname) {
     resid_fun <- switch(object$info_list[[varname]]$modeltype,
-                          glm = residuals_glm,
-                          glmm = residuals_glm,
-                          clm = residuals_clm,
-                          clmm = residuals_clm,
-                          survreg = residuals_survreg,
-                          coxph = residuals_coxph
+                          glm = resid_glm,
+                          glmm = resid_glm,
+                          clm = resid_clm,
+                          clmm = resid_clm,
+                          survreg = resid_survreg,
+                          coxph = resid_coxph,
+                          JM = resid_coxph
     )
     if (!is.null(resid_fun)) {
-      resid_fun(varname = varname, type = types[varname], data = object$data,
-                  MCMC = MCMC)
+      resid_fun(varname = varname,
+                mu = if(is.data.frame(object$fitted.values))
+                  object$fitted.values else object$fitted.values[[varname]],
+                type = types[varname], data = object$data,
+                MCMC = object$MCMC, info_list = object$info_list)
     } else {
       warning(gettextf("Prediction is not yet implemented for a model of type %s.",
                        dQuote(object$info_list[[varname]]$modeltype)))
@@ -74,18 +78,20 @@ residuals.JointAI <- function(object,
 
 
 
-resid_glm <- function(y, mu, family,
-                      type = c("working", "pearson", "response")) {
-  # y: outcome
-  # mu: fitted values
+resid_glm <- function(varname, mu, type = c("working", "pearson", "response"),
+                      data, MCMC, info_list, ...) {
 
   type <- match.arg(type)
 
+  y <- data[, varname]
+
+  family <- get(info_list[[varname]]$family)(link = info_list[[varname]]$link)
+
   # linear predictor
-  eta <- family()$linkfun(mu)
+  eta <- family$linkfun(mu)
 
   # working residuals
-  r <- (y - mu)/family()$mu.eta(eta)
+  r <- (y - mu)/family$mu.eta(eta)
 
   resid <- switch(type,
                   working = r,
