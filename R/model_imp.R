@@ -512,20 +512,16 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
   if (n.iter > 0 & !is.null(mcmc)) {
     MCMC <- mcmc
 
-    coefs <- try(get_coef_names(info_list))
+    if (!all(sapply(Mlist$scale_pars, is.null))) {
+      coefs <- try(get_coef_names(info_list))
 
-    # if (!inherits(coefs, "try-error")) {
-    # for (k in 1:length(MCMC)) {
-    #   if (!is.null(Mlist$scale_pars)) {
-    #     # re-scale parameters
-    #     MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
-    #                                 scale_pars, MCMC[[k]], Mlist$refs,
-    #                                 Mlist$names_main, coefs = coefs))
-    #
-    #     attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
-    #   }
-    # }
-    # }
+      for (k in 1:length(MCMC)) {
+        MCMC[[k]] <- as.mcmc(rescale(MCMC[[k]], coefs = do.call(rbind, coefs),
+                                     scale_pars = do.call(rbind, unname(Mlist$scale_pars)),
+                                     info_list))
+        attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
+      }
+    }
   }
 
 
