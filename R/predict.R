@@ -507,12 +507,7 @@ fitted.JointAI <- function(object, ...) {
            coxph = 'lp')
   })
 
-  pred <- predict(object, quantiles = NULL, mess = FALSE, type = types, fitted = TRUE)
-
-  if (length(pred$fitted) == 1)
-    pred$fitted[[1]]
-  else
-    pred$fitted
+  predict(object, quantiles = NULL, mess = FALSE, type = types)$fitted
 }
 
 
