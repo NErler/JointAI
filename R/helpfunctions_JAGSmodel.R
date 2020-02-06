@@ -101,7 +101,7 @@ paste_rdslope_lp <- function(hc_info, info) {
 
   lapply(hc_info, function(k) {
 
-    if (is.na(k$main_effect$coef_nr)) {
+    if (is.na(k$main_effect$coef_nr) || is.null(k$main_effect$coef_nr)) {
       # if there is no corresponding fixed effect, the mean of the
       # random effect distribution is 0:
       "0"
