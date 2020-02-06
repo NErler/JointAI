@@ -11,7 +11,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # define/identify groups/clusters in the data
   groups <- if (!is.null(id)) {
-    data[, id]
+    match(data[, id], unique(data[, id]))
   } else {
     1:nrow(data)
   }

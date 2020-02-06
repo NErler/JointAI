@@ -615,7 +615,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL, analysis_t
   subdat <- subset(data, select = covars)
 
   lp <- sapply(fixed, function(fmla) {
-    if (attr(fmla, 'type') %in% c('clm', 'clmm', 'coxph')) {
+    if (attr(fmla, 'type') %in% c('clm', 'clmm', 'coxph', "JM")) {
       colnam <- colnames(model.matrix(fmla, data))[-1]
       if (length(colnam) > 0) colnam
     } else {
