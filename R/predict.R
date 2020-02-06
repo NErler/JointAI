@@ -221,6 +221,8 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   linkinv <- if (info_list[[varname]]$family %in%
                  c('gaussian', 'binomial', 'Gamma', 'poisson')) {
     get(info_list[[varname]]$family)(link = info_list[[varname]]$link)$linkinv
+  } else if (info_list[[varname]]$family %in% 'lognorm') {
+    gaussian(link = 'log')$linkinv
   }
 
   coefs <- coef_list[[varname]]
