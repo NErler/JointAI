@@ -31,12 +31,12 @@ predDF <- function(object, ...) {
 
 #' @rdname predDF
 #' @export
-predDF.JointAI <- function(object, var, length = 100, ...) {
+predDF.JointAI <- function(object, var, outcome = 1, length = 100, ...) {
 
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
-  predDF(formula = object$fixed, dat = object$data, var = var, ...)
+  predDF(formula = object$fixed[[outcome]], dat = object$data, var = var, ...)
 }
 
 
