@@ -258,7 +258,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   }
 
   # qunatiles
-  quants <- if (!is.null(quants)) {
+  quants <- if (!is.null(quantiles)) {
     if (type == 'response') {
       t(apply(pred, 2, function(q) {
         quantile(linkinv(q), probs = quantiles, na.rm  = TRUE)
@@ -270,7 +270,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
   on.exit(options(op))
 
-  resDF <- if (!is.null(quants)) {
+  resDF <- if (!is.null(quantiles)) {
     cbind(data.frame(fit = fit),
           as.data.frame(quants))
   } else {
@@ -323,7 +323,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp"
   }
 
   # qunatiles
-  quants <- if (!is.null(quants)) {
+  quants <- if (!is.null(quantiles)) {
     if (type == 'response') {
       t(apply(pred, 2, function(q) {
         quantile(exp(q), probs = quantiles, na.rm  = TRUE)
@@ -334,7 +334,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp"
 
   on.exit(options(op))
 
-  resDF <- if (!is.null(quants)) {
+  resDF <- if (!is.null(quantiles)) {
     cbind(data.frame(fit = fit),
           as.data.frame(quants))
   } else {
@@ -390,7 +390,7 @@ predict_coxph <- function(formula, newdata, type = c("lp", "risk", "expected",
   }
 
   # quantiles
-  quants <- if (!is.null(quants)) {
+  quants <- if (!is.null(quantiles)) {
     if (type == 'risk') {
       t(apply(exp(pred), 2, quantile, quantiles, na.rm  = TRUE))
     } else if (type == 'lp') {
@@ -416,7 +416,7 @@ predict_coxph <- function(formula, newdata, type = c("lp", "risk", "expected",
 
   on.exit(options(op))
 
-  resDF <- if (!is.null(quants)) {
+  resDF <- if (!is.null(quantiles)) {
     cbind(data.frame(fit = fit),
           as.data.frame(quants))
   } else {
