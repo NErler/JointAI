@@ -147,7 +147,8 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
     stop("Use only with 'JointAI' objects.\n")
 
   if (any(sapply(object$info_list, "[[", "modeltype") %in% c('glmm', 'clmm', 'mlogitmm')) & warn) {
-    warning("Prediction for multi-level models is currently only possible on the population level (not using random effects).")
+    warning("Prediction for multi-level models is currently only possible on the population level (not using random effects).",
+            call. = FALSE)
     # stop("Prediction is currently only available for (generalized) linear
     #      and (generalized) linear mixed models.")
   }
