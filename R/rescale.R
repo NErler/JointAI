@@ -17,11 +17,16 @@ rescale <- function(MCMC, coefs, scale_pars, info_list) {
         covnames <- names(unlist(unname(info_list[[outcome]]$lp)))
         covnames <- covnames[which(!covnames %in% "(Intercept)")]
 
-        scaled_covs <- sapply(covnames, function(j) {
-          MCMC[, coefs$coef[match(j, coefs$varname)]] * scale_pars[j, 'center']/scale_pars[j, 'scale']
-        })
+        if (length(covnames) > 0) {
+          scaled_covs <- sapply(covnames, function(j) {
+            MCMC[, coefs$coef[match(j, coefs$varname)], drop = FALSE] *
+              scale_pars[j, 'center']/scale_pars[j, 'scale']
+          })
 
-        MCMC[, k] - rowSums(scaled_covs)
+          MCMC[, k] - rowSums(scaled_covs)
+        } else {
+          MCMC[, k]
+        }
       } else {
         # scaling parameters
         sp <- scale_pars[varnam, ]
