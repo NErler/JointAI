@@ -54,7 +54,7 @@ residuals.JointAI <- function(object,
     types[names(type)] <- type
   }
 
-  resids <- sapply(names(object$fixed), function(varname) {
+  sapply(names(object$fixed), function(varname) {
     resid_fun <- switch(object$info_list[[varname]]$modeltype,
                           glm = resid_glm,
                           glmm = resid_glm,
@@ -67,10 +67,10 @@ residuals.JointAI <- function(object,
 
     if (!is.null(resid_fun)) {
       resid_fun(varname = varname,
-                mu = if(is.data.frame(object$fitted.values))
-                  object$fitted.values else object$fitted.values[[varname]],
+                mu = if (is.data.frame(object$fitted.values))
+                  object$fitted.values else object$fitted.values[[varname]][, 1],
                 type = types[varname], data = object$data,
-                MCMC = object$MCMC, info_list = object$info_list)
+                MCMC = object$MCMC, info = object$info_list[[varname]])
 
     } else {
       if (warn)
@@ -83,12 +83,12 @@ residuals.JointAI <- function(object,
 
 
 resid_glm <- function(varname, type = c("working", "pearson", "response"),
-                      data, info, fitted, ...) {
+                      data, info, mu, ...) {
 
   type <- match.arg(type)
 
-  y <- data[, varname]
-  mu <- fitted
+  y <- as.numeric(as.character(data[, varname]))
+  # mu <- mu
 
 
   family <- if(info$family %in% c('gaussian', 'binomial', 'Gamma', 'poisson')) {
