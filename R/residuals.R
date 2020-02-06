@@ -1,4 +1,4 @@
-' Extract residuals from an object of class JointAI
+#' Extract residuals from an object of class JointAI
 #'
 #' @inheritParams sharedParams
 #' @param type type of residuals: \code{"deviance"}, \code{"response"},
@@ -20,6 +20,7 @@
 #'
 #'
 #' @export
+
 residuals.JointAI <- function(object,
                               type = c('working', 'deviance', 'response'), warn = TRUE, ...) {
 
@@ -34,9 +35,9 @@ residuals.JointAI <- function(object,
                   dQuote(type), dQuote(object$analysis_type), dQuote('response')),
          call. = FALSE)
 
-  if (object$analysis_type %in% c('coxph', 'clm', 'clmm', 'JM'))
-    stop(gettextf("Residuals are not yet implemented for a JointAI model of type %s.",
-                  dQuote(object$analysis_type)), call. = FALSE)
+  # if (object$analysis_type %in% c('coxph', 'clm', 'clmm', 'JM'))
+  #   stop(gettextf("Residuals are not yet implemented for a JointAI model of type %s.",
+  #                 dQuote(object$analysis_type)), call. = FALSE)
 
   if (length(type) == 1) {
     types <- setNames(rep(type, length(object$fixed)),
@@ -60,12 +61,17 @@ residuals.JointAI <- function(object,
                           clm = resid_clm,
                           clmm = resid_clm,
                           survreg = resid_survreg,
-                          coxph = resid_coxph
+                        coxph = resid_coxph,
+                        JM = resid_coxph
     )
+
     if (!is.null(resid_fun)) {
-      resid_fun(varname = varname, type = types[varname], data = object$data,
-                MCMC = MCMC, info = object$info_list[[varname]],
-                fitted = object$fitted.values[[varname]], warn = warn)
+      resid_fun(varname = varname,
+                mu = if(is.data.frame(object$fitted.values))
+                  object$fitted.values else object$fitted.values[[varname]],
+                type = types[varname], data = object$data,
+                MCMC = object$MCMC, info_list = object$info_list)
+
     } else {
       if (warn)
       warning(gettextf("Prediction is not yet implemented for a model of type %s.",

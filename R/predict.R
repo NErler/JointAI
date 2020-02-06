@@ -133,7 +133,7 @@ predDF.formula <- function(formula, dat, var, length = 100, ...) {
 #' pred <- predict(mod, newdata = newDF)
 #'
 #' # plot predicted values and 95% confidence band
-#' plot(newDF$C2, pred$fit, type = "l", ylim = range(pred$quantiles),
+#' plot(newDF$C2, pred$fit[[1]]$fit, type = "l", ylim = range(pred$quantiles),
 #'      xlab = "C2", ylab = "predicted values")
 #' matplot(newDF$C2, pred$quantiles, lty = 2, add = TRUE, type = "l", col = 1)
 #'
@@ -273,7 +273,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
   on.exit(options(op))
 
-  resDF <- if (!is.null(quants)) {
+  resDF <- if (!is.null(quantiles)) {
     cbind(data.frame(fit = fit),
           as.data.frame(quants))
   } else {
@@ -337,7 +337,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp"
 
   on.exit(options(op))
 
-  resDF <- if (!is.null(quants)) {
+  resDF <- if (!is.null(quantiles)) {
     cbind(data.frame(fit = fit),
           as.data.frame(quants))
   } else {
@@ -419,7 +419,7 @@ predict_coxph <- function(formula, newdata, type = c("lp", "risk", "expected",
 
   on.exit(options(op))
 
-  resDF <- if (!is.null(quants)) {
+  resDF <- if (!is.null(quantiles)) {
     cbind(data.frame(fit = fit),
           as.data.frame(quants))
   } else {
