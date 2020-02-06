@@ -247,8 +247,8 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
   # fitted values: mean over the (transformed) predicted values
   fit <- if (type == 'response') {
-    if (info_list[[varname]]$family %in% c('beta', 'lognorm'))
-      stop(paste0('Prediction for beta and lognorm models is currently only possible with type ',
+    if (info_list[[varname]]$family %in% c('beta'))
+      stop(paste0('Prediction for beta models is currently only possible with type ',
                   dQuote('link'), '.'))
 
     if (info_list[[varname]]$family == 'poisson') {
