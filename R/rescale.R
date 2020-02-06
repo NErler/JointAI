@@ -14,7 +14,7 @@ rescale <- function(MCMC, coefs, scale_pars, info_list) {
 
       if (varnam == "(Intercept)") {
         outcome <- coefs$outcome[which(coefs$coef == k)]
-        covnames <- names(unlist(unname(test$info_list[[outcome]]$lp)))
+        covnames <- names(unlist(unname(info_list[[outcome]]$lp)))
         covnames <- covnames[which(!covnames %in% "(Intercept)")]
 
         scaled_covs <- sapply(covnames, function(j) {
