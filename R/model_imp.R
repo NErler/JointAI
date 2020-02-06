@@ -549,7 +549,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL, family,
 
   object <- structure(
     list(analysis_type = analysis_type,
-         data = data, models = Mlist$models, fixed = fixed, random = random,
+         data = data, models = Mlist$models,
+         fixed = Mlist$fixed, random = Mlist$random,
          Mlist = Mlist,
          K = K,
          K_imp = K_imp,
