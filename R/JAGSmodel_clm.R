@@ -98,6 +98,7 @@ JAGSmodel_clm <- function(info) {
          info$varname, "[", info$index, ", 1:", info$ncat - 1,"])))", "\n\n",
          paste0(logits, collapse = "\n"), "\n",
          paste(dummies, collapse = "\n"), "\n",
+         info$trafos,
          tab(), "}", "\n\n",
          tab(), "# Priors for the model for ", info$varname, "\n",
          if (!is.null(info$lp$Mc)) {

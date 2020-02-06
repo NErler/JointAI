@@ -86,6 +86,7 @@ JAGSmodel_clmm <- function(info) {
          info$varname, "[", info$index[1], ", 1:", info$ncat - 1,"])))", "\n\n",
          paste0(logits, collapse = "\n"),
          paste(dummies, collapse = "\n"),
+         info$trafos,
          "\n",
          paste_ppc,
          tab(), "}", "\n",
