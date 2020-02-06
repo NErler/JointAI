@@ -9,6 +9,7 @@
 #' @param dat original data
 #' @param var name of variable that should be varying
 #' @param length number of values used in the sequence when \code{var} is continuous
+#' @param outcome vector of variable names or numbers identifying for which outcome(s) the prediction should be performed.
 #' @param ... optional, additional arguments (currently not used)
 #'
 #' @seealso \code{\link{predict.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
