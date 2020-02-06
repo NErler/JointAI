@@ -236,7 +236,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   X <- model.matrix(mt, data = newdata)
 
 
-  if (mess * any(is.na(X)))
+  if (mess & any(is.na(X)))
     message('Prediction for cases with missing covariates is not implemented.')
 
 
@@ -309,7 +309,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp"
   X <- model.matrix(mt, data = newdata)
 
 
-  if (mess * any(is.na(X)))
+  if (mess & any(is.na(X)))
     message('Prediction for cases with missing covariates is not implemented.')
 
 
@@ -367,7 +367,7 @@ predict_coxph <- function(formula, newdata, type = c("lp", "risk", "expected",
   X <- model.matrix(mt, data = newdata)[, -1, drop = FALSE]
 
 
-  if (mess * any(is.na(X)))
+  if (mess & any(is.na(X)))
     message('Prediction for cases with missing covariates is not implemented.')
 
 
@@ -447,7 +447,7 @@ predict_clm <- function(formula, newdata, type = c("lp", "prob", "class", "respo
                 na.action = na.pass)
   X <- model.matrix(mt, data = newdata)[, -1, drop = FALSE]
 
-  if (mess * any(is.na(X)))
+  if (mess & any(is.na(X)))
     message('Prediction for cases with missing covariates is not implemented.')
 
   eta <- sapply(1:nrow(X), function(i)
