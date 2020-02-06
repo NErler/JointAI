@@ -530,23 +530,17 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   if (n.iter > 0 & !is.null(mcmc)) {
     MCMC <- mcmc
 
-    coefs <- try(get_coef_names(info_list))
+    coefs <- get_coef_names(info_list)
 
-    # if (!inherits(coefs, "try-error")) {
-    # for (k in 1:length(MCMC)) {
-    #   if (!is.null(Mlist$scale_pars)) {
-    #     # re-scale parameters
-    #     MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
-    #                                 scale_pars, MCMC[[k]], Mlist$refs,
-    #                                 Mlist$names_main, coefs = coefs))
-    #
-    #     attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
-    #   }
-    # }
-    # }
+    for (k in 1:length(MCMC)) {
+      # re-scale parameters
+      MCMC[[k]] <- as.mcmc(rescale(MCMC[[k]], coefs = do.call(rbind, coefs),
+                                   scale_pars = do.call(rbind, unname(Mlist$scale_pars)),
+                                   info_list = info_list))
+
+      attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
+    }
   }
-
-
 
 
   # prepare output -------------------------------------------------------------
@@ -562,16 +556,13 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                         parallel = parallel,
                         n.cores = if (parallel) n.cores)
 
-
-  # attr(analysis_type, "family") <- family
-  # attr(analysis_type, "link") <- link
-
   # set contrasts back to what they were
   on.exit(options(opt))
 
   object <- structure(
     list(analysis_type = analysis_type,
-         data = data, models = Mlist$models, fixed = fixed, random = random,
+         data = data, models = Mlist$models,
+         fixed = Mlist$fixed, random = Mlist$random,
          Mlist = Mlist,
          K = K,
          K_imp = K_imp,
@@ -590,8 +581,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
     ), class = "JointAI")
 
 
-  object$fitted.values <- try(predict(object, type = 'response')$fit, silent = TRUE)
-  object$residuals <- try(residuals(object, type = 'working'),
+  object$fitted.values <- try(fitted(object, mess = FALSE), silent = TRUE)
+  object$residuals <- try(residuals(object, type = 'working', mess = FALSE),
                           silent = TRUE)
 
   if (!inherits(object$residuals, 'try-error')) {
