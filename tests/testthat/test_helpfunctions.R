@@ -7,10 +7,10 @@ test_that('extract_id works', {
                list(random = ~ 0 | id, ids = 'id'),
                list(random = NULL, ids = NULL),
                list(random = y ~ a + b + c, ids = NULL),
-               list(random = y ~ time | id, ids = 'id'),
-               list(random =  ~ a | id/class, ids = c('id', 'class')),
-               list(random = ~ a | id + class, ids = c('id', 'class')),
-               list(random = list(~a | id, ~ b | id2), ids = c('id', 'id2'))
+               list(random = y ~ time | id, ids = 'id')
+               # list(random =  ~ a | id/class, ids = c('id', 'class')),
+               # list(random = ~ a | id + class, ids = c('id', 'class')),
+               # list(random = list(~a | id, ~ b | id2), ids = c('id', 'id2'))
   )
 
   for (i in seq_along(runs)) {
@@ -45,11 +45,11 @@ test_that('extract_id results in warning', {
 
 
 test_that('extract_outcome works', {
-  ys <- list(list(fixed = y ~ a + b, out = 'y'),
-             list(fixed = y ~ 1, out = 'y'),
-             list(fixed = Surv(a, b) ~ 1, out = c('a', 'b')),
-             list(fixed = Surv(a, b, d) ~ x + z, out = c('a', 'b', 'd')),
-             list(fixed = cbind(a, b, d) ~ x + z, out = c('a', 'b', 'd'))
+  ys <- list(list(fixed = y ~ a + b, out = list(y = 'y')),
+             list(fixed = y ~ 1, out = list(y = 'y')),
+             list(fixed = Surv(a, b) ~ 1, out = list('Surv(a, b)' = c('a', 'b'))),
+             list(fixed = Surv(a, b, d) ~ x + z, out = list('Surv(a, b, d)' = c('a', 'b', 'd'))),
+             list(fixed = cbind(a, b, d) ~ x + z, out = list('cbind(a, b, d)' = c('a', 'b', 'd')))
              # list(fixed = y + x ~ a + b, out = c("y + x"))
   )
 
