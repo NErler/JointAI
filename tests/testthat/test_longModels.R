@@ -17,20 +17,20 @@ test_that("models with standard random effects structure work", {
   expect_equal(class(lme_imp(y ~ c1 + c2 + C1 + C2 + O2 + M2,
                              random = ~1|id, data = longDF)), "JointAI")
 
-  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 -C2) + log(C1),
+  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1),
                              random = ~ 1|id, data = longDF)), "JointAI")
 
-  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 -C2) + log(C1),
+  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1),
                              random = ~ time|id, data = longDF)), "JointAI")
 
-  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 -C2) + log(C1) + time,
+  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1) + time,
                              random = ~ time|id, data = longDF)), "JointAI")
 
-  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 -C2) + log(C1) + time + I(time^2),
+  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1) + time + I(time^2),
                              random = ~ time|id, data = longDF, no_model = 'time')),
                "JointAI")
 
-  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 -C2) + log(C1) + time + I(time^2),
+  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1) + time + I(time^2),
                              random = ~ time|id, data = longDF)),
                "JointAI")
 
