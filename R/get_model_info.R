@@ -89,7 +89,7 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
   categories <- if (k %in% names(Mlist$refs) &
                     (any(is.na(Mlist[[resp_mat[1]]][, resp_col[1]])) |
                      any(sapply(Mlist$fixed, 'attr', 'type') %in% 'JM'))) {
-    levels(Mlist$refs[[k]])[which(levels(Mlist$refs[[k]]) != Mlist$refs[[k]])]
+    which(levels(Mlist$refs[[k]]) != Mlist$refs[[k]])
   }
 
 
