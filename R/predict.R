@@ -203,7 +203,7 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
     #   cbind(newdata, unlist(unname(preds), recursive = FALSE))
     #
     # } else {
-      cbind(newdata, unlist(preds, recursive = FALSE)),
+      newdata = cbind(newdata, unlist(preds, recursive = FALSE)),
     # },
     fitted = preds
   ))
