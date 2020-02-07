@@ -53,6 +53,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     if (ncol(MCMCsub) > 0){
       grcrit <- GR_crit(object = object, start = start, end = end, thin = thin,
                        warn = warn, mess = FALSE, multivariate = FALSE,
+                       exclude_chains = exclude_chains,
                        subset = list(other = colnames(MCMCsub)),
                        autoburnin = autoburnin)[[1]][, "Upper C.I."]
 
