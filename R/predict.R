@@ -508,7 +508,7 @@ fitted.JointAI <- function(object, ...) {
            coxph = 'lp')
   })
 
-  predict(object, quantiles = NULL, mess = FALSE, type = types)$fitted
+  predict(object, quantiles = NULL, mess = FALSE, type = types, ...)$fitted
 }
 
 
