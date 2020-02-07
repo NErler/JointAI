@@ -86,7 +86,7 @@ get_params <- function(Mlist, info_list, data,
     if (delta_main) paste0("delta_", names(list_main)[
       modeltypes_main %in% c('clm', 'clmm')]),
     if (tau_main) paste0("tau_", names(list_main)[
-      sapply(list_main, '[[', 'family') %in% c('gaussian', 'Gamma')]),
+      sapply(list_main, '[[', 'family') %in% c('gaussian', 'Gamma', 'lognorm')]),
     if (sigma_main) {
       c(
         if (any(sapply(list_main, '[[', 'family') %in%
