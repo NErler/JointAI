@@ -173,7 +173,7 @@ get_modeltype <- function(model) {
   if (is.null(model))
     return(NULL)
 
-  switch(model,
+  modtype <- switch(model,
          lm = 'glm',
          glm_gaussian_identity = 'glm',
          glm_gaussian_log = 'glm',
@@ -215,7 +215,14 @@ get_modeltype <- function(model) {
          coxph = 'coxph',
          survreg = 'survreg',
          JM = 'JM')
+
+  if (is.null(modtype)) {
+    stop(gettextf("I do not know the model type %s.", dQuote(model)), call. = FALSE)
+  }
+
+  return(modtype)
 }
+
 
 get_family <- function(model) {
   if (is.null(model))
