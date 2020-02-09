@@ -128,7 +128,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       )
 
       otherpars <- if (length(other) > 0)
-        stats[otherpars, ]
+        stats[other, ]
 
       list(modeltype = object$info_list[[varname]]$modeltype,
            regcoef = regcoef, sigma = sigma, intercepts = intercepts,
