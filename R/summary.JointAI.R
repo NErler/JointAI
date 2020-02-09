@@ -175,7 +175,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
       cat(paste0(
         '# ', paste0(c(rep('-', 69)), collapse = ''), ' #\n',
         '  ', print_type(x$res[[k]]$modeltype), ' for ', dQuote(names(x$res)[k]), '\n',
-        '# ', paste0(c(rep('-', 30)), collapse = ' '), ' #\n\n'
+        '# ', paste0(c(rep('-', 35)), collapse = ' '), ' #\n\n'
       ))
 
 
