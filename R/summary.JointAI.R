@@ -79,10 +79,14 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
       regcoef <- stats[object$coef_list[[varname]]$varname, ]
 
-        stats[grep(paste0("sigma_", varname), rownames(stats)),
-              -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
       sigma <- if (object$info_list[[varname]]$family %in% c('gaussian', 'Gamma', 'lognorm') &&
                    !is.null(object$info_list[[varname]]$family)) {
+
+        sig <- grep(paste0("sigma_", varname), rownames(stats))
+
+        if (length(sig) > 0)
+          stats[sig, -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
+      }
 
 
       intercepts <- if (object$info_list[[varname]]$modeltype %in% c('clm', 'clmm'))
