@@ -1,7 +1,7 @@
 
 get_subset <- function(object, subset, keep_aux = FALSE, warn = TRUE, mess = TRUE) {
 
-  if (is.logical(subset) && !subset)
+  if (identical(subset, FALSE))
     return(object$MCMC)
 
   subset <- as.list(subset)
