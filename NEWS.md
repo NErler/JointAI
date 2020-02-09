@@ -1,4 +1,4 @@
-# JointAI 0.6.0.9000
+# JointAI 0.6.1
 
 ## Bug fixes
 * Fixed bug that messed up coefficients in `clmm` covariate model when there are
