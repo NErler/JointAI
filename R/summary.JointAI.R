@@ -50,15 +50,18 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
 
-    if (ncol(MCMCsub) > 0){
-      grcrit <- GR_crit(object = object, start = start, end = end, thin = thin,
-                       warn = warn, mess = FALSE, multivariate = FALSE,
-                       exclude_chains = exclude_chains,
-                       subset = list(other = colnames(MCMCsub)),
-                       autoburnin = autoburnin)[[1]][, "Upper C.I."]
+    if (ncol(MCMCsub) > 0) {
 
-      colnames(MCMCsub)[na.omit(match(colnames(MCMCsub),
-                                      object$coef_list[[varname]]$coef))] <-
+      grcrit <- if (length(object$MCMC) - length(exclude_chains) > 1) {
+        GR_crit(object = object, start = start, end = end, thin = thin,
+                warn = warn, mess = FALSE, multivariate = FALSE,
+                exclude_chains = exclude_chains,
+                subset = list(other = colnames(MCMCsub)),
+                autoburnin = autoburnin)[[1]][, "Upper C.I."]
+      }
+
+      colnames(MCMCsub)[na.omit(match(object$coef_list[[varname]]$coef,
+                                      colnames(MCMCsub)))] <-
         object$coef_list[[varname]]$varname
 
       stats <- matrix(nrow = length(colnames(MCMCsub)),
@@ -69,8 +72,9 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       stats[, "SD"] <- apply(MCMCsub, 2, sd)
       stats[, paste0(quantiles * 100, "%")] <- t(apply(MCMCsub, 2, quantile, quantiles))
       stats[, "tail-prob."] <- apply(MCMCsub, 2, computeP)
-      stats[, "GR-crit"] <- grcrit
 
+      if (length(object$MCMC) - length(exclude_chains) > 1)
+        stats[, "GR-crit"] <- grcrit
 
 
       regcoef <- stats[object$coef_list[[varname]]$varname, ]
