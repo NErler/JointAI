@@ -412,13 +412,15 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
         }
       }
 
-      paste0('\n\n', tab(4),
+      paste0(tab(4),
              dest_mat, if (isgk) "gk", "[", index, ", ", dest_col,
              if (isgk) ", k", "] <- ", fct, '\n')
     }
   })
 
-  Filter(Negate(is.null), trafolist)
+  paste0('\n\n',
+         paste0(Filter(Negate(is.null), trafolist), collapse = ''),
+         '\n')
 }
 
 
