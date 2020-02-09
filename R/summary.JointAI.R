@@ -214,6 +214,11 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
                ), collapse = "\n"))
 
       }
+
+      if (!is.null(x$res[[k]]$otherpars)) {
+        cat("\nPosterior summary of other parameters:\n")
+        print(x$res[[k]]$otherpars, digits = digits, na.print = "")
+      }
     }
   }
 
