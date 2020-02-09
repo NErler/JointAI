@@ -119,10 +119,21 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
               -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
       }
 
+      other <- setdiff(rownames(stats),
+                       c(rownames(regcoef),
+                         rownames(sigma),
+                         rownames(intercepts),
+                         rownames(rd_vcov),
+                         rownames(wb_shape))
+      )
+
+      otherpars <- if (length(other) > 0)
+        stats[otherpars, ]
+
       list(modeltype = object$info_list[[varname]]$modeltype,
            regcoef = regcoef, sigma = sigma, intercepts = intercepts,
            rd_vcov = rd_vcov, wb_shape = wb_shape, assoc_type = assoc_type,
-           grcrit = grcrit)
+           grcrit = grcrit, otherpars = otherpars)
     }
   }, simplify = FALSE)
 
