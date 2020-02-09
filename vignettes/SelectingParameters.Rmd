@@ -211,7 +211,7 @@ It is possible to select only a subset of the random effects parameters by
 specifying them directly, e.g.
 ```{r, message = FALSE}
 lme3a <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
-                 monitor_params = c(analysis_main = TRUE, RinvD = TRUE))
+                 monitor_params = c(analysis_main = TRUE, RinvD_main = TRUE))
 
 parameters(lme3a)
 ```
@@ -222,8 +222,8 @@ or by switching unwanted parts of `analysis_random` off, e.g.
 lme3b <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
                 monitor_params = c(analysis_main = TRUE,
                                    analysis_random = TRUE,
-                                   RinvD = FALSE,
-                                   ranef = FALSE))
+                                   RinvD_main = FALSE,
+                                   ranef_main = FALSE))
 
 parameters(lme3b)
 ```
@@ -320,8 +320,8 @@ lm2 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
               monitor_params = c(imps = TRUE, analysis_main = FALSE)
 )
 
-# select only imputed values for 'WC' (3rd column of Xc)
-sub3 <- grep('Xc\\[[[:digit:]]+,3\\]', parameters(lm2), value = TRUE)
+# select only imputed values for 'WC' (4th column of Wc)
+sub3 <- grep('Mc\\[[[:digit:]]+,5\\]', parameters(lm2), value = TRUE)
 sub3
 
 traceplot(lm2, subset = list(other = sub3), ncol = 2)
@@ -335,13 +335,13 @@ In that case, a random subset of, for instance the random effects, can be select
 ```{r, fig.height = 4, message = FALSE}
 lme4 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID,
                 data = simLong, n.iter = 100, progress.bar = 'none',
-                monitor_params = c(analysis_main = FALSE, ranef = TRUE))
+                monitor_params = c(analysis_main = FALSE, ranef_main = TRUE))
 
 # exract random intercepts
-ri <- grep('^b\\[[[:digit:]]+,1\\]$', colnames(lme4$MCMC[[1]]), value = T)
+ri <- grep('^b_bmi\\[[[:digit:]]+,1\\]$', colnames(lme4$MCMC[[1]]), value = T)
 
 # extract random slopes
-rs <- grep('^b\\[[[:digit:]]+,2\\]$', colnames(lme4$MCMC[[1]]), value = T)
+rs <- grep('^b_bmi\\[[[:digit:]]+,2\\]$', colnames(lme4$MCMC[[1]]), value = T)
 
 # plot the chains of 8 randomly selected random intercepts
 traceplot(lme4, subset = list(other = sample(ri, size = 8)), ncol = 4)

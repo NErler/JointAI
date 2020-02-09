@@ -353,11 +353,11 @@ mod4a <- lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
 
 # log-normal model for bili
 mod4b <- lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
-                models = c(bili = 'lognorm', creat = 'norm'), data = NHANES)
+                models = c(bili = 'lognorm', creat = 'lm'), data = NHANES)
 
 # gamma model for bili
 mod4c <- lm_imp(SBP ~ age + gender + log(bili) + exp(creat),
-                models = c(bili = 'gamma', creat = 'norm'), data = NHANES)
+                models = c(bili = 'glm_gamma_log', creat = 'lm'), data = NHANES)
 
 ```
 Truncation always requires to specify both limits. Since `-Inf` and `Inf` are not
@@ -577,7 +577,7 @@ the remaining variables.
 
 ```{r, message = FALSE}
 mod8a <- lm_imp(SBP ~ age + gender + WC + alc + bili + occup + smoke,
-                models = c(bili = 'gamma', WC = 'lognorm'),
+                models = c(bili = 'glm_gamma_log', WC = 'lognorm'),
                 data = NHANES, n.iter = 100, progress.bar = 'none')
 
 mod8a$models

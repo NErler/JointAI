@@ -370,11 +370,11 @@ The following element in the output of `coef(mod4c$model)` is `Xc`,
 the fixed effects design matrix containing baseline covariates.
 The corresponding matrix in the data is
 ```{r, eval = FALSE}
-mod4c$data_list$Xc[81:85, ]
+mod4c$data_list$Mc[81:85, ]
 ```
 
 ```{r, echo = FALSE}
-mat <- mod4c$data_list$Xc[81:85, ]
+mat <- mod4c$data_list$Mc[81:85, ]
 colnames(mat) <- gsub("SMOKEsmoked until pregnancy was known",
                       "SMOKEsmoked until[...]",
                       gsub("SMOKEcontinued smoking in pregnancy",
@@ -390,7 +390,7 @@ these columns contain the dummy variables corresponding to the categorical
 variable `SMOKE` and are calculated from a column in the matrix `Xcat`, 
 which contains the original version of `SMOKE`:
 ```{r}
-head(mod4c$data_list$Xcat)
+head(mod4c$data_list$Mc)
 ```
 
 The relevant part of the JAGS model is:
