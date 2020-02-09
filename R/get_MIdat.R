@@ -129,7 +129,8 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
           if (is.factor(DF_list[[j]][, i])) {
             DF_list[[j]][is.na(DF_list[[j]][, i]), i] <-
-              factor(iv, labels = levels(DF_list[[j]][, i]))
+              factor(iv, labels = levels(DF_list[[j]][, i]),
+                     levels = seq_along(levels(DF_list[[j]][, i])))
           } else {
             DF_list[[j]][is.na(DF_list[[j]][, i]), i] <- iv
           }
