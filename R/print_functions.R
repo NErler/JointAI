@@ -99,12 +99,15 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
     # * predvars ---------------------------------------------------------------
     if (predvars) {
       cat("* Predictor variables:\n")
-      cat(' ', add_breaks(paste0(names(c(i$lp$Mc, i$lp$Ml)), collapse = ", ")),
+      if (length(unlist(i$lp)) > 0)
+        cat(' ', add_breaks(paste0(names(c(i$lp$Mc, i$lp$Ml)), collapse = ", ")),
           "\n")
+      else
+        cat(' (no predictor variables)', '\n')
     }
 
     # * regcoef ---------------------------------------------------------------
-    if (regcoef) {
+    if (regcoef & any(!sapply(i$parelmts, is.null))) {
       cat("* Regression coefficients:\n")
       if (i$modeltype %in% c('mlogit', 'mlogitmm')) {
         cat(
