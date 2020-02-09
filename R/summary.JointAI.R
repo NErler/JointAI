@@ -97,8 +97,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                      c("glmm", "clmm", "mlogitmm")) {
         Ds <- stats[grep(paste0("^D_", varname, "\\[[[:digit:]]+,[[:digit:]]+\\]"),
                          rownames(stats), value = TRUE), , drop = FALSE]
-        if (nrow(Ds) > 0) {
 
+        if (nrow(Ds) > 0) {
           Ddiag <- sapply(strsplit(sub("\\]", '',
                                        sub("^[[:print:]]*\\[", '', rownames(Ds))
           ), ","),
@@ -181,12 +181,12 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
 
       if (!is.null(x$res[[k]]$regcoef)) {
         cat("Posterior summary:\n")
-        print(x$res[[k]]$regcoef, digits = digits)
+        print(x$res[[k]]$regcoef, digits = digits, na.print = "")
       }
 
       if (!is.null(x$res[[k]]$intercepts)) {
         cat("\nPosterior summary of the intercepts:\n")
-        print(x$res[[k]]$intercepts, digits = digits)
+        print(x$res[[k]]$intercepts, digits = digits, na.print = "")
       }
 
       if (!is.null(x$res[[k]]$rd_vcov)) {
@@ -196,12 +196,12 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
 
       if (!is.null(x$res[[k]]$sigma)) {
         cat("\nPosterior summary of residual std. deviation:\n")
-        print(x$res[[k]]$sigma, digits = digits)
+        print(x$res[[k]]$sigma, digits = digits, na.print = "")
       }
 
       if (!is.null(x$res[[k]]$wb_shape)) {
         cat("\nPosterior summary of the shape of the Weibull distribution:\n")
-        print(x$res[[k]]$wb_shape, digits = digits)
+        print(x$res[[k]]$wb_shape, digits = digits, na.print = "")
       }
 
       if (!is.null(x$res[[k]]$assoc_type)) {
