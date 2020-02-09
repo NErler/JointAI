@@ -125,8 +125,14 @@ get_MIdat <- function(object, m = 10, include = TRUE,
                        gsub("[[:alpha:]]*\\[", "", colnames(impval)))
 
         for (j in (1:m) + 1) {
-          DF_list[[j]][is.na(DF_list[[j]][, i]), i] <-
-            impval[j - 1, na.omit(match(groups, as.numeric(rownrs)))]
+          iv <- impval[j - 1, na.omit(match(groups, as.numeric(rownrs)))]
+
+          if (is.factor(DF_list[[j]][, i])) {
+            DF_list[[j]][is.na(DF_list[[j]][, i]), i] <-
+              factor(iv, labels = levels(DF_list[[j]][, i]))
+          } else {
+            DF_list[[j]][is.na(DF_list[[j]][, i]), i] <- iv
+          }
         }
       }
     } else if (varinfo[[i]]$modeltype %in% c("glmm", "clmm", "mlogitmm")) {
