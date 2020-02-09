@@ -57,7 +57,7 @@ iterations. It allows us to visually evaluate convergence and mixing of the chai
 and can be obtained with the function 
 [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html):
 ```{r, message = FALSE, fig.width = 7, fig.height = 4, out.width = '100%'}
-mod13a <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 500)
+mod13a <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 500, seed = 2020)
 
 traceplot(mod13a)
 ```
