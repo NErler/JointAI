@@ -19,3 +19,10 @@ test_that('parmeters for ordinal mixed models with no baseline covarites work', 
   expect_s3_class(lme_imp(y ~ o2 + o1 + c2 + b2, data = longDF, random = ~ 1|id),
                   'JointAI')
 })
+
+
+test_that('two-part trafo is pasted correctly', {
+  library(splines)
+  expect_s3_class(lm_imp(SBP ~ ns(age, df = 2) + gender + I(bili^2) + I(bili^3), data = NHANES),
+                  'JointAI')
+})
