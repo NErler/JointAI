@@ -8,14 +8,25 @@
 \usage{
 densplot(object, ...)
 
-\method{densplot}{mcmc.list}(object, start = NULL, end = NULL,
-  thin = NULL, ...)
+\method{densplot}{mcmc.list}(object, start = NULL, end = NULL, thin = NULL, ...)
 
-\method{densplot}{JointAI}(object, start = NULL, end = NULL,
-  thin = NULL, subset = c(analysis_main = TRUE),
-  exclude_chains = NULL, vlines = NULL, nrow = NULL, ncol = NULL,
-  joined = FALSE, use_ggplot = FALSE, keep_aux = FALSE,
-  warn = TRUE, mess = TRUE, ...)
+\method{densplot}{JointAI}(
+  object,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  subset = c(analysis_main = TRUE),
+  exclude_chains = NULL,
+  vlines = NULL,
+  nrow = NULL,
+  ncol = NULL,
+  joined = FALSE,
+  use_ggplot = FALSE,
+  keep_aux = FALSE,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}

@@ -4,9 +4,19 @@
 \alias{plot_all}
 \title{Visualize the distribution of all variables in the dataset}
 \usage{
-plot_all(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8),
-  border = "black", allNA = FALSE, use_level = FALSE, idvar,
-  xlab = "", ylab = "frequency", ...)
+plot_all(
+  data,
+  nrow = NULL,
+  ncol = NULL,
+  fill = grDevices::grey(0.8),
+  border = "black",
+  allNA = FALSE,
+  use_level = FALSE,
+  idvar,
+  xlab = "",
+  ylab = "frequency",
+  ...
+)
 }
 \arguments{
 \item{data}{a \code{data.frame} (or a \code{matrix})}

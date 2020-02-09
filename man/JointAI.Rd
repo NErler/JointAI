@@ -3,7 +3,6 @@
 \docType{package}
 \name{JointAI}
 \alias{JointAI}
-\alias{JointAI-package}
 \title{JointAI: Joint Analysis and Imputation of Incomplete Data}
 \description{
 The \strong{JointAI} package performs simultaneous imputation and inference for

@@ -4,8 +4,14 @@
 \alias{plot_imp_distr}
 \title{Plot the distribution of observed and imputed values}
 \usage{
-plot_imp_distr(data, imp = "Imputation_", id = ".id",
-  rownr = ".rownr", ncol = NULL, nrow = NULL)
+plot_imp_distr(
+  data,
+  imp = "Imputation_",
+  id = ".id",
+  rownr = ".rownr",
+  ncol = NULL,
+  nrow = NULL
+)
 }
 \arguments{
 \item{data}{a \code{data.frame} containing multiple imputations

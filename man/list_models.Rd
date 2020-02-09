@@ -4,8 +4,14 @@
 \alias{list_models}
 \title{List covariate models}
 \usage{
-list_models(object, predvars = TRUE, regcoef = TRUE,
-  otherpars = TRUE, priors = TRUE, refcat = TRUE)
+list_models(
+  object,
+  predvars = TRUE,
+  regcoef = TRUE,
+  otherpars = TRUE,
+  priors = TRUE,
+  refcat = TRUE
+)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}

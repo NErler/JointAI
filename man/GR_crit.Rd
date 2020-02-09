@@ -4,10 +4,21 @@
 \alias{GR_crit}
 \title{Gelman-Rubin criterion for convergence}
 \usage{
-GR_crit(object, confidence = 0.95, transform = FALSE,
-  autoburnin = TRUE, multivariate = TRUE, subset = NULL,
-  exclude_chains = NULL, start = NULL, end = NULL, thin = NULL,
-  warn = TRUE, mess = TRUE, ...)
+GR_crit(
+  object,
+  confidence = 0.95,
+  transform = FALSE,
+  autoburnin = TRUE,
+  multivariate = TRUE,
+  subset = NULL,
+  exclude_chains = NULL,
+  start = NULL,
+  end = NULL,
+  thin = NULL,
+  warn = TRUE,
+  mess = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}

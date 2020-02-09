@@ -4,8 +4,14 @@
 \alias{get_models}
 \title{Specify the default (imputation) model types}
 \usage{
-get_models(fixed, random = NULL, data, auxvars = NULL,
-  no_model = NULL, models = NULL)
+get_models(
+  fixed,
+  random = NULL,
+  data,
+  auxvars = NULL,
+  no_model = NULL,
+  models = NULL
+)
 }
 \arguments{
 \item{fixed}{a two sided formula describing the fixed-effects part of the
