@@ -1,3 +1,27 @@
+# JointAI (version 0.6.1)
+
+## Round 1
+
+### Test environments
+* local Windows 10, R 3.6.2
+* ubuntu 16.04.6 LTS (on travis-ci), R 3.5.3, R 3.6.2, devel
+* win-builder (devel and release)
+
+### R CMD check results
+
+0 errors | 0 warnings | 1 NOTE
+
+The NOTE occured in R-devel on win-builder and concerns "possibly invalid URLs".
+I have checked the URLs and they look fine.
+
+
+### Reverse dependencies
+
+There are no reverse dependencies.
+
+---
+
+
 # JointAI (version 0.6.0)
 
 ## Round 1
