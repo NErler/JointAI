@@ -144,6 +144,8 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
                             type = 'lp',
                             start = NULL, end = NULL, thin = NULL,
                             exclude_chains = NULL, mess = TRUE, warn = TRUE, ...) {
+
+
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
@@ -191,7 +193,7 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
                   newdata = newdata, type = types[varname], data = object$data,
                   MCMC = MCMC, varname = varname,
                   coef_list = object$coef_list, info_list = object$info_list,
-                  quantiles = quantiles)
+                  quantiles = quantiles, mess = mess)
     } else {
       warning(gettextf("Prediction is not yet implemented for a model of type %s.",
                        dQuote(object$info_list[[varname]]$modeltype)))
@@ -496,7 +498,7 @@ predict_clm <- function(formula, newdata, type = c("lp", "prob", "class", "respo
 
 
 
-fitted.JointAI <- function(object, ...) {
+fitted_values <- function(object, ...) {
 
   types <- sapply(names(object$fixed), function(k) {
     switch(object$info_list[[k]]$modeltype,
@@ -508,7 +510,8 @@ fitted.JointAI <- function(object, ...) {
            coxph = 'lp')
   })
 
-  predict(object, quantiles = NULL, mess = FALSE, type = types, ...)$fitted
+
+  predict(object, quantiles = NULL, type = types, ...)$fitted
 }
 
 

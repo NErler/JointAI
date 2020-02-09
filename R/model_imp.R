@@ -564,7 +564,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
     ), class = "JointAI")
 
 
-  object$fitted.values <- try(fitted(object, mess = FALSE, warn = FALSE), silent = TRUE)
+  object$fitted.values <- try(fitted_values(object, mess = FALSE, warn = FALSE), silent = TRUE)
   object$residuals <- try(residuals(object, type = 'working', warn = FALSE),
                           silent = TRUE)
 
