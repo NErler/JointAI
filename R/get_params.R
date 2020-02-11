@@ -20,12 +20,12 @@ get_params <- function(Mlist, info_list, data,
 
   if (analysis_main) {
     if (is.null(betas)) betas <- TRUE
-    if ((any(sapply(list_main, "[[", 'family') %in% c("gaussian", "Gamma")) |
+    if ((any(sapply(list_main, "[[", 'family') %in% c("gaussian", "Gamma", "lognorm")) |
          any(modeltypes_main %in% c('survreg'))) &
         is.null(sigma_main)) {
       sigma_main <- TRUE
     }
-    if (any(sapply(list_main, "[[", 'family') %in% c("gaussian", "Gamma")) &
+    if (any(sapply(list_main, "[[", 'family') %in% c("gaussian", "Gamma", "lognorm")) &
         is.null(sigma_main)) {
       tau_main <- TRUE
     }
