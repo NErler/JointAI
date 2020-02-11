@@ -75,6 +75,7 @@ test_that('extract_id results in warning', {
 
 
 # extract_outcome ----------------------------------------------------------
+library(splines)
 ys <- list(list(fixed = y ~ a + b, out = list(y = 'y'), LHS = "y", RHS = list(~ a + b)),
            list(fixed = y ~ 1, out = list(y = 'y'), LHS = "y", RHS = list(~1)),
            list(fixed = Surv(a, b) ~ 1, out = list("Surv(a, b)" = c('a', 'b')),
@@ -84,8 +85,12 @@ ys <- list(list(fixed = y ~ a + b, out = list(y = 'y'), LHS = "y", RHS = list(~ 
                 LHS = "Surv(a, b, d)", RHS = list(~ x + z)),
            list(fixed = cbind(a, b, d) ~ x + z,
                 out = list("cbind(a, b, d)" = c('a', 'b', 'd')),
-                LHS = "cbind(a, b, d)", RHS = list(~ x + z))
-           # list(fixed = y + x ~ a + b, out = c("y + x"))
+                LHS = "cbind(a, b, d)", RHS = list(~ x + z)),
+           list(fixed = y ~ C2 + ns(C1, df = 3,
+                                    Boundary.knots = quantile(C1, c(0.025, 0.975))),
+                out = list(y = 'y'), LHS = 'y',
+                RHS = list( ~ C2 + ns(C1, df = 3, Boundary.knots = quantile(C1, c(0.025, 0.975)))))
+# list(fixed = y + x ~ a + b, out = c("y + x"))
 )
 
 test_that('extract_outcome works', {

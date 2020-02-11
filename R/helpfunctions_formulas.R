@@ -124,8 +124,9 @@ remove_LHS <- function(fmla) {
       if (inherits(LHS, "try-error")) {
         x
       } else {
-        as.formula(gsub(extract_LHS(x), '',
-                        deparse(x, width.cutoff = 500), fixed = TRUE))
+        clean_LHS <- gsub("([^\\])\\(", "\\1\\\\(", extract_LHS(x))
+        as.formula(gsub(paste0("^", clean_LHS, "[[ ]]*~"), '~',
+                        deparse(x, width.cutoff = 500)))
       }
     }
   })
