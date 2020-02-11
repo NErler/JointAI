@@ -195,8 +195,10 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
                   coef_list = object$coef_list, info_list = object$info_list,
                   quantiles = quantiles, mess = mess)
     } else {
-      warning(gettextf("Prediction is not yet implemented for a model of type %s.",
-                       dQuote(object$info_list[[varname]]$modeltype)))
+      if (warn)
+        warning(gettextf("Prediction is not yet implemented for a model of type %s.",
+                         dQuote(object$info_list[[varname]]$modeltype)),
+                call. = FALSE)
     }
   },  simplify = FALSE)
 
