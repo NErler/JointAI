@@ -10,7 +10,7 @@ Status](https://travis-ci.org/NErler/JointAI.svg?branch=master)](https://travis-
 [![Download
 counter](http://cranlogs.r-pkg.org/badges/JointAI)](https://cran.r-project.org/package=JointAI)
 [![Rdoc](http://www.rdocumentation.org/badges/version/JointAI)](http://www.rdocumentation.org/packages/JointAI)
-[![](https://codecov.io/gh/NErler/JointAI/branch/master/graph/badge.svg)](https://codecov.io/gh/NErler/JointAI)
+<!-- [![](https://codecov.io/gh/NErler/JointAI/branch/master/graph/badge.svg)](https://codecov.io/gh/NErler/JointAI) -->
 
 The package **JointAI** provides joint analysis and imputation of
 (generalized) linear regression models, (generalized) linear mixed
@@ -129,17 +129,17 @@ summary(lm1)
 #> 
 #> Posterior summary:
 #>                Mean     SD     2.5%   97.5% tail-prob. GR-crit
-#> (Intercept)  88.025 8.6968  70.8670 105.632      0.000    1.02
-#> genderfemale -3.381 2.2125  -7.6129   0.773      0.132    1.00
-#> age           0.331 0.0684   0.1964   0.467      0.000    1.00
-#> WC            0.226 0.0719   0.0785   0.367      0.000    1.01
-#> alc>=1        6.511 2.3366   1.8639  11.069      0.004    1.02
-#> educhigh     -2.879 2.1689  -7.1914   1.259      0.180    1.00
-#> bili         -5.204 4.9315 -14.6288   4.363      0.285    1.01
+#> (Intercept)  88.330 8.7956  70.8815 105.510      0.000    1.02
+#> genderfemale -3.439 2.2033  -7.8477   0.948      0.123    1.00
+#> age           0.330 0.0682   0.2004   0.463      0.000    1.00
+#> WC            0.225 0.0717   0.0865   0.364      0.000    1.01
+#> alc>=1        6.388 2.3306   1.9035  10.788      0.008    1.00
+#> educhigh     -2.908 2.1390  -7.3109   1.166      0.177    1.00
+#> bili         -5.192 4.8641 -14.7564   3.913      0.289    1.01
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit
-#> sigma_SBP 13.5 0.719 12.2    15       1
+#> sigma_SBP 13.6 0.722 12.2    15       1
 #> 
 #> 
 #> MCMC settings:
@@ -153,19 +153,19 @@ summary(lm1)
 
 ``` r
 coef(lm1)
-#>  (Intercept) genderfemale          age           WC       alc>=1 
-#>   88.0248471   -3.3813839    0.3311555    0.2262784    6.5108742 
-#>     educhigh         bili 
-#>   -2.8786675   -5.2036401
+#>  (Intercept) genderfemale          age           WC       alc>=1     educhigh 
+#>   88.3300380   -3.4387701    0.3298298    0.2253663    6.3883253   -2.9079009 
+#>         bili 
+#>   -5.1915762
 
 confint(lm1)
-#>                      2.5%       97.5%
-#> (Intercept)   70.86702410 105.6319683
-#> genderfemale  -7.61290048   0.7729665
-#> age            0.19635287   0.4666932
-#> WC             0.07848737   0.3665819
-#> alc>=1         1.86385015  11.0693444
-#> educhigh      -7.19135991   1.2594576
-#> bili         -14.62875674   4.3625267
-#> sigma_SBP     12.19691645  14.9589424
+#>                     2.5%       97.5%
+#> (Intercept)   70.8814968 105.5095036
+#> genderfemale  -7.8476897   0.9479861
+#> age            0.2003926   0.4626324
+#> WC             0.0865418   0.3641664
+#> alc>=1         1.9034962  10.7884149
+#> educhigh      -7.3109043   1.1658549
+#> bili         -14.7563735   3.9129268
+#> sigma_SBP     12.2366034  15.0167016
 ```

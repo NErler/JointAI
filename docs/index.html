@@ -213,17 +213,17 @@
 <span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; </span></span>
 <span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; Posterior summary:</span></span>
 <span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt;                Mean     SD     2.5%   97.5% tail-prob. GR-crit</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; (Intercept)  88.025 8.6968  70.8670 105.632      0.000    1.02</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; genderfemale -3.381 2.2125  -7.6129   0.773      0.132    1.00</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; age           0.331 0.0684   0.1964   0.467      0.000    1.00</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; WC            0.226 0.0719   0.0785   0.367      0.000    1.01</span></span>
-<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt; alc&gt;=1        6.511 2.3366   1.8639  11.069      0.004    1.02</span></span>
-<span id="cb9-16"><a href="#cb9-16"></a><span class="co">#&gt; educhigh     -2.879 2.1689  -7.1914   1.259      0.180    1.00</span></span>
-<span id="cb9-17"><a href="#cb9-17"></a><span class="co">#&gt; bili         -5.204 4.9315 -14.6288   4.363      0.285    1.01</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; (Intercept)  88.330 8.7956  70.8815 105.510      0.000    1.02</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; genderfemale -3.439 2.2033  -7.8477   0.948      0.123    1.00</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt; age           0.330 0.0682   0.2004   0.463      0.000    1.00</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; WC            0.225 0.0717   0.0865   0.364      0.000    1.01</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt; alc&gt;=1        6.388 2.3306   1.9035  10.788      0.008    1.00</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="co">#&gt; educhigh     -2.908 2.1390  -7.3109   1.166      0.177    1.00</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="co">#&gt; bili         -5.192 4.8641 -14.7564   3.913      0.289    1.01</span></span>
 <span id="cb9-18"><a href="#cb9-18"></a><span class="co">#&gt; </span></span>
 <span id="cb9-19"><a href="#cb9-19"></a><span class="co">#&gt; Posterior summary of residual std. deviation:</span></span>
 <span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span></span>
-<span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt; sigma_SBP 13.5 0.719 12.2    15       1</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt; sigma_SBP 13.6 0.722 12.2    15       1</span></span>
 <span id="cb9-22"><a href="#cb9-22"></a><span class="co">#&gt; </span></span>
 <span id="cb9-23"><a href="#cb9-23"></a><span class="co">#&gt; </span></span>
 <span id="cb9-24"><a href="#cb9-24"></a><span class="co">#&gt; MCMC settings:</span></span>
@@ -234,21 +234,21 @@
 <span id="cb9-29"><a href="#cb9-29"></a><span class="co">#&gt; </span></span>
 <span id="cb9-30"><a href="#cb9-30"></a><span class="co">#&gt; Number of observations: 186</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span>(lm1)</span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="co">#&gt;  (Intercept) genderfemale          age           WC       alc&gt;=1 </span></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt;   88.0248471   -3.3813839    0.3311555    0.2262784    6.5108742 </span></span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="co">#&gt;     educhigh         bili </span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt;   -2.8786675   -5.2036401</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co">#&gt;  (Intercept) genderfemale          age           WC       alc&gt;=1     educhigh </span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt;   88.3300380   -3.4387701    0.3298298    0.2253663    6.3883253   -2.9079009 </span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co">#&gt;         bili </span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt;   -5.1915762</span></span>
 <span id="cb10-6"><a href="#cb10-6"></a></span>
 <span id="cb10-7"><a href="#cb10-7"></a><span class="kw"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span>(lm1)</span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="co">#&gt;                      2.5%       97.5%</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a><span class="co">#&gt; (Intercept)   70.86702410 105.6319683</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt; genderfemale  -7.61290048   0.7729665</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a><span class="co">#&gt; age            0.19635287   0.4666932</span></span>
-<span id="cb10-12"><a href="#cb10-12"></a><span class="co">#&gt; WC             0.07848737   0.3665819</span></span>
-<span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; alc&gt;=1         1.86385015  11.0693444</span></span>
-<span id="cb10-14"><a href="#cb10-14"></a><span class="co">#&gt; educhigh      -7.19135991   1.2594576</span></span>
-<span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt; bili         -14.62875674   4.3625267</span></span>
-<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; sigma_SBP     12.19691645  14.9589424</span></span></code></pre></div>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="co">#&gt;                     2.5%       97.5%</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="co">#&gt; (Intercept)   70.8814968 105.5095036</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co">#&gt; genderfemale  -7.8476897   0.9479861</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="co">#&gt; age            0.2003926   0.4626324</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="co">#&gt; WC             0.0865418   0.3641664</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="co">#&gt; alc&gt;=1         1.9034962  10.7884149</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="co">#&gt; educhigh      -7.3109043   1.1658549</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="co">#&gt; bili         -14.7563735   3.9129268</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt; sigma_SBP     12.2366034  15.0167016</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -291,7 +291,6 @@
 <li><a href="https://CRAN.R-project.org/package=JointAI"><img src="https://cranlogs.r-pkg.org/badges/grand-total/JointAI"></a></li>
 <li><a href="https://cran.r-project.org/package=JointAI"><img src="http://cranlogs.r-pkg.org/badges/JointAI" alt="Download counter"></a></li>
 <li><a href="http://www.rdocumentation.org/packages/JointAI"><img src="http://www.rdocumentation.org/badges/version/JointAI" alt="Rdoc"></a></li>
-<li><a href="https://codecov.io/gh/NErler/JointAI"><img src="https://codecov.io/gh/NErler/JointAI/branch/master/graph/badge.svg"></a></li>
 </ul>
 </div>
 </div>
