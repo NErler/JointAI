@@ -9,10 +9,7 @@
 
 ### R CMD check results
 
-0 errors | 0 warnings | 1 NOTE
-
-The NOTE occured in R-devel on win-builder and concerns "possibly invalid URLs".
-I have checked the URLs and they look fine.
+0 errors | 0 warnings | 0 NOTE
 
 
 ### Reverse dependencies
