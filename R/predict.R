@@ -140,7 +140,7 @@ predDF.formula <- function(formula, dat, var, length = 100, ...) {
 #'
 
 #' @export
-predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
+predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0.975),
                             type = 'lp',
                             start = NULL, end = NULL, thin = NULL,
                             exclude_chains = NULL, mess = TRUE, warn = TRUE, ...) {
@@ -164,7 +164,7 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
                     mess = mess, ...)
 
 
-  if (length(type) == 1) {
+  if (length(type) == 1 & length(outcome == 1)) {
     types <- setNames(rep(type, length(object$fixed)),
                       names(object$fixed))
   } else {
@@ -179,7 +179,7 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
     types[names(type)] <- type
   }
 
-  preds <- sapply(names(object$fixed), function(varname) {
+  preds <- sapply(names(object$fixed)[outcome], function(varname) {
     predict_fun <- switch(object$info_list[[varname]]$modeltype,
                           glm = predict_glm,
                           glmm = predict_glm,
@@ -208,7 +208,8 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
     #   cbind(newdata, unlist(unname(preds), recursive = FALSE))
     #
     # } else {
-      newdata = cbind(newdata, unlist(preds, recursive = FALSE)),
+      newdata = if (length(outcome == 1)) cbind(newdata, preds)
+      else cbind(newdata, unlist(preds, recursive = FALSE)),
     # },
     fitted = preds
   ))
