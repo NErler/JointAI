@@ -186,7 +186,8 @@ predict.JointAI <- function(object, newdata, quantiles = c(0.025, 0.975),
                           clm = predict_clm,
                           clmm = predict_clm,
                           survreg = predict_survreg,
-                          coxph = predict_coxph
+                          coxph = predict_coxph,
+                          JM = predict_coxph
     )
     if (!is.null(predict_fun)) {
       predict_fun(formula = object$fixed[[varname]],
