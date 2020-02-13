@@ -270,7 +270,7 @@ default_hyperpars <- function() {
                  wish = function(nranef) {
                    if (nranef > 1) {
                      RinvD <- diag(as.numeric(rep(NA, nranef)))
-                     KinvD <- nranef
+                     KinvD <- nranef + 1
                    } else {
                      RinvD <- KinvD <- NULL
                    }
