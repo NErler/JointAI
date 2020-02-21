@@ -56,7 +56,7 @@ get_data_list <- function(Mlist, info_list, data) {
     x <- info_list[[which(modeltypes %in% c('coxph', 'JM'))]]
 
     timevariable <- Mlist[[x$resp_mat[1]]][, x$resp_col[1]]
-    eventvariable <- Mlist[[x$resp_mat[1]]][, x$resp_col[2]]
+    eventvariable <- Mlist[[x$resp_mat[2]]][, x$resp_col[2]]
     timevar <- colnames(Mlist[[x$resp_mat[1]]])[x$resp_col[1]]
 
 
