@@ -91,6 +91,8 @@ predDF.formula <- function(formula, dat, var, length = 100, ...) {
 #'         models \code{type} may be \code{"prob"} (to obtain probabilities per
 #'         class) or \code{"class"} to obtain the class with the highest posterior
 #'         probability.
+#' @param outcome vector of variable names or numbers identifying for which
+#'        outcome(s) the prediction should be performed.
 #'
 #' @details A \code{model.matrix} \eqn{X} is created from the model formula (currently fixed
 #'          effects only) and \code{newdata}. \eqn{X\beta} is then calculated for
