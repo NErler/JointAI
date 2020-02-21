@@ -31,9 +31,8 @@ get_params <- function(Mlist, info_list, data,
     }
 
 
-    if (any(modeltypes_main %in% c('clm', 'clmm')) &
-        is.null(gamma_main))
-      gamma_main <- TRUE
+    gamma_main <- any(modeltypes_main %in% c('clmm', 'clm')) & isTRUE(gamma_main)
+
 
     if (any(modeltypes_main %in% c('coxph')) &
         (is.null(basehaz) | !any(grepl("^beta\\b",
@@ -80,14 +79,14 @@ get_params <- function(Mlist, info_list, data,
 
   params <- c(if (betas & any(
     grepl("^beta\\b", do.call(rbind, get_coef_names(info_list))$coef))) "beta",
-    if (basehaz) "beta_Bh0",
-    if (gamma_main) paste0("gamma_", names(list_main)[
+    if (isTRUE(basehaz)) "beta_Bh0",
+    if (isTRUE(gamma_main)) paste0("gamma_", names(list_main)[
       modeltypes_main %in% c('clm', 'clmm')]),
-    if (delta_main) paste0("delta_", names(list_main)[
+    if (isTRUE(delta_main)) paste0("delta_", names(list_main)[
       modeltypes_main %in% c('clm', 'clmm')]),
-    if (tau_main) paste0("tau_", names(list_main)[
+    if (isTRUE(tau_main)) paste0("tau_", names(list_main)[
       sapply(list_main, '[[', 'family') %in% c('gaussian', 'Gamma', 'lognorm')]),
-    if (sigma_main) {
+    if (isTRUE(sigma_main)) {
       c(
         if (any(sapply(list_main, '[[', 'family') %in%
                 c('gaussian', 'Gamma', 'lognorm', 'beta')))
@@ -105,18 +104,18 @@ get_params <- function(Mlist, info_list, data,
         modeltypes_main %in% c('glmm', 'clmm', 'mlogitmm')]
 
       c(
-        if (ranef_main) paste0("b_", long_main),
-        if (invD_main)
+        if (isTRUE(ranef_main)) paste0("b_", long_main),
+        if (isTRUE(invD_main))
           unlist(sapply(list_main[long_main], function(x)
             sapply(1:max(1, length(x$hc_list)), function(i)
               paste0("invD_", x$varname, "[", 1:i, ",", i, "]")
             ))),
-        if (D_main)
+        if (isTRUE(D_main))
           unlist(sapply(list_main[long_main], function(x)
             sapply(1:max(1, length(x$hc_list)), function(i)
               paste0("D_", x$varname, "[", 1:i, ",", i, "]")
             ))),
-        if (RinvD_main)
+        if (isTRUE(RinvD_main))
           unlist(sapply(list_main[long_main], function(x)
             paste0("RinvD_", x$varname, "[", 1:max(1, length(x$hc_list)),
                    ",", 1:max(1, length(x$hc_list)), "]")
@@ -124,18 +123,18 @@ get_params <- function(Mlist, info_list, data,
       )
     },
 
-    if (alphas) "alpha",
-    if (tau_other & any(sapply(list_other, "[[", 'family') %in%
+    if (isTRUE(alphas)) "alpha",
+    if (isTRUE(tau_other) & any(sapply(list_other, "[[", 'family') %in%
                         c("gaussian", "lognorm", "gamma", "beta")))
       paste0("tau_", names(list_other)[
         sapply(list_other, "[[", 'family') %in% c("gaussian", "lognorm",
                                                   "gamma", "beta")]),
 
-    if (gamma_other & any(sapply(list_other, "[[", 'modeltype') %in% c("clm", "clmm")))
+    if (isTRUE(gamma_other) & any(sapply(list_other, "[[", 'modeltype') %in% c("clm", "clmm")))
       paste0("gamma_", names(list_other)[
         sapply(list_other, "[[", 'modeltype') %in% c("clm", "clmm")]),
 
-    if (delta_other & any(sapply(list_other, "[[", 'modeltype') %in% c("clm", "clmm")))
+    if (isTRUE(delta_other) & any(sapply(list_other, "[[", 'modeltype') %in% c("clm", "clmm")))
       paste0("delta_", names(list_other)[
         sapply(list_other, "[[", 'modeltype') %in% c("clm", "clmm")]),
 
@@ -144,18 +143,18 @@ get_params <- function(Mlist, info_list, data,
         sapply(list_other, "[[", 'modeltype') %in% c('glmm', 'clmm', 'mlogitmm')]
 
       c(
-        if (ranef_other) paste0("b_", long_other),
-        if (invD_other)
+        if (isTRUE(ranef_other)) paste0("b_", long_other),
+        if (isTRUE(invD_other))
           unlist(sapply(list_other[long_other], function(x)
             sapply(1:max(1, length(x$hc_list)), function(i)
               paste0("invD_", x$varname, "[", 1:i, ", ", i, "]")
             ))),
-        if (D_other)
+        if (isTRUE(D_other))
           unlist(sapply(list_other[long_other], function(x)
             sapply(1:max(1, length(x$hc_list)), function(i)
               paste0("D_", x$varname, "[", 1:i, ", ", i, "]")
             ))),
-        if (RinvD_other)
+        if (isTRUE(RinvD_other))
           unlist(sapply(list_other[long_other], function(x)
             paste0("RinvD_", x$varname, "[", 1:max(1, length(x$hc_list)),
                    ",", 1:max(1, length(x$hc_list)), "]")
@@ -165,7 +164,7 @@ get_params <- function(Mlist, info_list, data,
 
     # if (ppc) paste0('ppc_', c(y_name, names(models))),
     other,
-    if (imps) {
+    if (isTRUE(imps)) {
       c(if (any(is.na(Mlist$Mc))) {
         Mc_NA <- which(is.na(Mlist$Mc[, colnames(Mlist$Mc) %in% names(data),
                                       drop = FALSE]), arr.ind = TRUE)
