@@ -5,13 +5,10 @@ get_data_list <- function(Mlist, info_list, data) {
 
   l <- Mlist[c('Mc', 'Ml')]
 
-
   # scaling parameters
-  if (any(!is.na(Mlist$scale_pars$Mc[
-    unique(unlist(lapply(info_list, function(x) x$lp$Mc))), ])))
+  if (any(!is.na(Mlist$scale_pars$Mc)))
     l$spMc <- Mlist$scale_pars$Mc
-  if (any(!is.na(Mlist$scale_pars$Ml[
-    unique(unlist(lapply(info_list, function(x) x$lp$Ml))), ])))
+  if (any(!is.na(Mlist$scale_pars$Ml)))
     l$spMl <- Mlist$scale_pars$Ml
 
   l <- c(l, unlist(unname(default_hyperpars()[c(
