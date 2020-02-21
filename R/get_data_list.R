@@ -69,17 +69,8 @@ get_data_list <- function(Mlist, info_list, data) {
 
     l$gkw <- gkw[ordgkx]
 
-    h0knots <- get_knots_h0(nkn = 2, Time = timevariable,
-                            event = eventvariable, gkx = gkx)
 
-    l$Bh0 <- splines::splineDesign(h0knots, timevariable, ord = 4)
-    l$Bsh0 <- splines::splineDesign(h0knots,
-                                    c(t(outer(timevariable/2, gkx + 1))),
-                                    ord = 4)
-
-    l$zeros <- numeric(length(timevariable))
-
-    if (x$modeltype == "JM") {
+    if (!is.na(Mlist$Ml)) {
       # find row with largest time (= row for survival analysis)
       l$survrow <- sapply(
         split(data.frame(nr = 1:nrow(Mlist[[x$resp_mat[1]]]),
@@ -89,12 +80,11 @@ get_data_list <- function(Mlist, info_list, data) {
           k$nr[which.max(k$timevar)]
         })
 
-
       if (length(l$survrow) != length(unique(Mlist$groups)))
         stop("The number of observations for survival differs from the number of subjects.")
 
-      gk_data <- data[rep(NA, length(l$survrow) * length(gkx)), ]
-
+      # gk_data <- data[rep(NA, length(l$survrow) * length(gkx)), ]
+      gk_data <- data[rep(l$survrow, each = length(gkx)), ]
       gk_data[, timevar] <- c(t(outer(Mlist$Ml[l$survrow, timevar]/2, gkx + 1)))
 
       X <- model.matrix_combi(fmla = c(Mlist$fixed, Mlist$auxvars),
@@ -116,7 +106,22 @@ get_data_list <- function(Mlist, info_list, data) {
                       dim = c(length(l$survrow), ncol(Mlgk[[1]]), length(gkx)),
                       dimnames = list(c(), colnames(Mlist$Ml), c())
       )
+
+
+      timevariable <- timevariable[l$survrow]
     }
+
+
+    h0knots <- get_knots_h0(nkn = Mlist$df_basehaz - 4, Time = timevariable,
+                            event = eventvariable, gkx = gkx)
+
+
+    l$Bh0 <- splines::splineDesign(h0knots, timevariable, ord = 4)
+    l$Bsh0 <- splines::splineDesign(h0knots,
+                                    c(t(outer(timevariable/2, gkx + 1))),
+                                    ord = 4)
+
+    l$zeros <- numeric(length(timevariable))
   }
 
   return(l[!sapply(l, is.null)])
