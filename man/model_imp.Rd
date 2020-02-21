@@ -404,6 +404,7 @@ survreg_imp(
 coxph_imp(
   formula,
   data,
+  df_basehaz = 6,
   n.chains = 3,
   n.adapt = 100,
   n.iter = 0,
@@ -438,6 +439,7 @@ coxph_imp(
 JM_imp(
   formula,
   data,
+  df_basehaz = 6,
   n.chains = 3,
   n.adapt = 100,
   n.iter = 0,
@@ -609,6 +611,8 @@ model (see \code{\link[stats]{formula}})}
 a one-sided formula of the form \code{~x1 + ... + xn | g},
 where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}
+
+\item{df_basehaz}{degrees of freedom for the B-spline used to model the baseline hazard}
 
 \item{timevar}{name of the "time" variable in mixed models.
 Only required in "JM" models. The variable specified in "timevar"

@@ -6,6 +6,7 @@
 \usage{
 \method{predict}{JointAI}(
   object,
+  outcome = 1,
   newdata,
   quantiles = c(0.025, 0.975),
   type = "lp",
@@ -20,6 +21,9 @@
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
+
+\item{outcome}{vector of variable names or numbers identifying for which
+outcome(s) the prediction should be performed.}
 
 \item{newdata}{optional new dataset for prediction. If left empty, the original data is used.}
 
