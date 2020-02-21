@@ -226,7 +226,7 @@ parameters <- function(object, mess = TRUE, warn = TRUE) {
 
   vnam <- object$mcmc_settings$variable.names
   if ('beta' %in% vnam) {
-    pos <- grep('beta', vnam)
+    pos <- grep('\\bbeta\\b', vnam)
     vnam <- append(vnam,
                    unlist(sapply(object$coef_list, function(x)
                      grep("^beta\\b", x$coef, value = TRUE)
@@ -234,7 +234,7 @@ parameters <- function(object, mess = TRUE, warn = TRUE) {
                    after = pos)[-pos]
   }
   if ('alpha' %in% vnam) {
-    pos <- grep('alpha', vnam)
+    pos <- grep('\\balpha\\b', vnam)
     vnam <- append(vnam,
                    unlist(sapply(object$coef_list, function(x)
                      grep("^alpha\\b", x$coef, value = TRUE)
