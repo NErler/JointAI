@@ -163,7 +163,8 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
     },
     tv_vars = tv_vars,
     N = Mlist$N,
-    Ntot = Mlist$Ntot
+    Ntot = Mlist$Ntot,
+    df_basehaz = Mlist$df_basehaz
   )
 }
 

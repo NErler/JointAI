@@ -3,7 +3,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                             auxvars = NULL, scale_vars = NULL, refcats = NULL,
                             models = NULL,  timevar = NULL, no_model = NULL,
                             ppc = TRUE, ridge = FALSE,
-                            warn = TRUE, mess = TRUE, ...) {
+                            warn = TRUE, mess = TRUE, df_basehaz = NULL, ...) {
 
   # id's and groups ------------------------------------------------------------
   # extract the id variable from the random effects formula
@@ -173,7 +173,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
               ppc = ppc, ridge = ridge,
               models = models, scale_pars = scale_pars,
               outcomes = outcomes, fcts_all = fcts_all,
-              terms_list = terms_list
+              terms_list = terms_list, df_basehaz = df_basehaz
               )
          )
 }

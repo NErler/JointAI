@@ -124,7 +124,7 @@ JAGSmodel_coxph <- function(info) {
              priordistr,
              tab(), "}", "\n\n")
          },
-         tab(), "for (k in 1:6) {", "\n",
+         tab(), "for (k in 1:", info$df_basehaz, ") {", "\n",
          tab(4), info$parname, "_Bh0[k] ~ dnorm(mu_reg_surv, tau_reg_surv)",
          "\n",
          tab(), "}"
@@ -220,7 +220,7 @@ JAGSmodel_JM <- function(info) {
              priordistr,
              tab(), "}", "\n\n")
          },
-         tab(), "for (k in 1:6) {", "\n",
+         tab(), "for (k in 1:", info$df_basehaz, ") {", "\n",
          tab(4), info$parname, "_Bh0[k] ~ dnorm(mu_reg_surv, tau_reg_surv)",
          "\n",
          tab(), "}"

@@ -85,6 +85,7 @@
 #'                         (i.e., the scaled version returned by \code{coda.samples()}) be kept?
 #'                         (The MCMC sample that is re-scaled to the scale of the
 #'                         data is always kept.)
+#' @param df_basehaz degrees of freedom for the B-spline used to model the baseline hazard
 #' @param ... additional, optional arguments
 #' @importFrom foreach foreach %dopar%
 #'
@@ -282,7 +283,7 @@
 NULL
 
 model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
-                      family = NULL,
+                      family = NULL, df_basehaz = NULL,
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                       monitor_params = NULL, auxvars = NULL, timevar = NULL,
                       refcats = NULL,
@@ -367,7 +368,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                            timevar = timevar, no_model = no_model,
                            scale_vars = scale_vars, refcats = refcats,
                            warn = warn, mess = mess, ppc = ppc,
-                           ridge = ridge)
+                           ridge = ridge, df_basehaz = df_basehaz)
 
   # * model dimensions ---------------------------------------------------------
   K <- get_model_dim(Mlist$lp_cols[names(Mlist$lp_cols) %in% names(Mlist$fixed)],
@@ -1044,7 +1045,7 @@ survreg_imp <- function(formula, data,
 
 #' @rdname model_imp
 #' @export
-coxph_imp <- function(formula, data,
+coxph_imp <- function(formula, data, df_basehaz = 6,
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                       monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                       models = NULL, no_model = NULL, trunc = NULL,
@@ -1082,7 +1083,7 @@ coxph_imp <- function(formula, data,
 
 #' @rdname model_imp
 #' @export
-JM_imp <- function(formula, data,
+JM_imp <- function(formula, data, df_basehaz = 6,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                    monitor_params = NULL, auxvars = NULL, timevar = NULL,
                    refcats = NULL,
