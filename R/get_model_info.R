@@ -30,7 +30,7 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
         "Ml"
       })
   } else {
-    stop(gettextf("I can't find the variable %s in neither of the matrices Mc and Ml.",
+    stop(gettextf("I canot find the variable %s in either of the matrices Mc and Ml.",
                   dQuote(k)))
   }
 
