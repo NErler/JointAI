@@ -579,6 +579,9 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   if (inherits(object$residuals, 'try-error'))
     object$residuals <- NULL
 
+  if (inherits(adapt, 'try-error'))
+    class(object) <- "JointAI_errored"
+
   return(object)
 }
 
