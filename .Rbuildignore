@@ -20,3 +20,4 @@ data/simWide_old.RData_
 pkgdown
 
 R/old_stuff.R
+R/samplers.R
