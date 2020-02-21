@@ -12,6 +12,7 @@ test_that("model with no covariates work", {
 })
 
 
+context("Longitudinal Models standard rd effects")
 test_that("models with standard random effects structure work", {
   testthat::skip_on_cran()
   expect_equal(class(lme_imp(y ~ c1 + c2 + C1 + C2 + O2 + M2,
@@ -43,6 +44,8 @@ test_that("models with standard random effects structure work", {
                "JointAI")
 })
 
+
+context("Longitudinal Models spline rd effects")
 test_that('models with spline random effects work', {
   testthat::skip_on_cran()
   library(splines)
@@ -113,6 +116,8 @@ test_that('models with spline random effects work', {
 
 })
 
+
+context("Longitudinal Models complex rd effects")
 test_that("models with complex random effects structure work", {
   testthat::skip_on_cran()
   expect_equal(class(lme_imp(y ~ c1 + c2 + time, random = ~ time + c2|id,
@@ -155,6 +160,8 @@ test_that("models with complex random effects structure work", {
 })
 
 
+context("Longitudinal Models glme")
+
 test_that('glme_imp', {
   testthat::skip_on_cran()
   expect_equal(class(glme_imp(b1 ~ C1 + B1, random = ~1 | id, data = longDF,
@@ -184,7 +191,7 @@ test_that('glme_imp', {
 })
 
 
-
+context("Longitudinal Models poisson")
 test_that('poisson imputation', {
   testthat::skip_on_cran()
   expect_equal(class(lme_imp(y ~ C1 + C2 + p2 + time, random = ~time|id, data = longDF,
@@ -193,6 +200,7 @@ test_that('poisson imputation', {
 })
 
 
+context("Longitudinal Models ordinal")
 test_that('ordinal mixed models', {
   expect_s3_class(clmm_imp(o1 ~ C1 * time + I(time^2) + b2 * c1, random = ~ time | id,
                            data = longDF, n.iter = 10), class = "JointAI")
