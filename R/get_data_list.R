@@ -67,7 +67,7 @@ get_data_list <- function(Mlist, info_list, data) {
     l$gkw <- gkw[ordgkx]
 
 
-    if (!is.na(Mlist$Ml)) {
+    if (!is.null(Mlist$Ml)) {
       # find row with largest time (= row for survival analysis)
       l$survrow <- sapply(
         split(data.frame(nr = 1:nrow(Mlist[[x$resp_mat[1]]]),
