@@ -82,7 +82,13 @@ get_data_list <- function(Mlist, info_list, data) {
 
       # gk_data <- data[rep(NA, length(l$survrow) * length(gkx)), ]
       gk_data <- data[rep(l$survrow, each = length(gkx)), ]
+      gk_data[, Mlist$idvar] <- rep(unique(data[, Mlist$idvar]), each = length(gkx))
       gk_data[, timevar] <- c(t(outer(Mlist$Ml[l$survrow, timevar]/2, gkx + 1)))
+
+
+      if (any(modeltypes %in% 'coxph')) {
+        gk_data <- get_locf(fixed = Mlist$fixed, data, idvar = Mlist$idvar, timevar, gk_data)
+      }
 
       X <- model.matrix_combi(fmla = c(Mlist$fixed, Mlist$auxvars),
                               data = gk_data,

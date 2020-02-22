@@ -116,3 +116,41 @@ get_coef_names <- function(info_list) {
       )
   }, simplify = FALSE)
 }
+
+
+
+
+get_locf <- function(fixed, data, idvar, timevar, gk_data) {
+  covars <- all_vars(remove_LHS(fixed))
+  longvars <- covars[sapply(data[, covars], check_tvar, idvar = data[, idvar])]
+
+  ld <- subset(data, select = c(idvar, timevar, longvars))
+  ld$obstime <- unlist(lapply(table(ld[, idvar]), function(k) 1:k))
+
+  wd <- reshape(ld, direction = 'wide', v.names = c(timevar, longvars),
+                timevar = 'obstime', idvar = idvar)
+
+  md <- merge(subset(gk_data, select = c(idvar, timevar)), wd)
+
+
+  locf <- sapply(1:nrow(md), function(i) {
+    # identify which visit should be used
+    valcol <-  max(cumsum(
+      c(md[i, timevar] > md[i, grep(paste0("^", timevar, "."), colnames(md))])
+    ) + 1, na.rm = TRUE)
+
+
+    # identify which columns have the covariate values of the correct visit
+    covcols <- sapply(longvars, function(k) {
+      grep(paste0("^", k, "."), colnames(md))[valcol]
+    })
+
+    out <- md[i, covcols, drop = FALSE]
+    names(out) = longvars
+    out
+  }, simplify = FALSE)
+
+  gk_data[, longvars] <- do.call(rbind, locf)
+  gk_data
+}
+

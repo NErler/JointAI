@@ -85,6 +85,48 @@ JAGSmodel_coxph <- function(info) {
   } else {"0"}
 
 
+
+  logh_pred <- paste(
+    c(paste0("logh0[", info$index, "] + eta_surv[", info$index, "]"),
+    if (!is.null(info$parelmts$Ml)) {
+      paste_linpred_JM(parname = info$parname,
+                       parelmts = info$parelmts$Ml,
+                       matnam = "Ml",
+                       index = info$index,
+                       cols = info$lp$Ml,
+                       scale_pars = info$scale_pars$Ml,
+                       assoc_type = info$assoc_type,
+                       covnames = vector(mode = "list", length = length(info$lp$Ml)),
+                       isgk = FALSE)
+      }), collapse = " + ")
+
+  Surv_predictor <- paste0(
+    paste0(
+      c(paste0("gkw[k] * exp(logh0s[", info$index, ", k]"),
+        if (!is.null(info$parelmts$Ml)) {
+          paste_linpred_JM(parname = info$parname,
+                           parelmts = info$parelmts$Ml,
+                           matnam = "Ml",
+                           index = info$index,
+                           cols = info$lp$Ml,
+                           scale_pars = info$scale_pars$Ml,
+                           assoc_type = info$assoc_type,
+                           covnames = vector(mode = "list", length = length(info$lp$Ml)),
+                           isgk = TRUE)
+        }
+        ), collapse = " + "),
+    ")"
+  )
+
+
+  survtime_col <- paste0(info$resp_mat[1] , "[",
+                         if (info$resp_mat[1] == 'Ml') {
+                           paste0("survrow[", info$index, "]")
+                         } else {
+                           info$index
+                         }, ", ", info$resp_col[1], "]")
+
+
   if (info$shrinkage == 'ridge' && !is.null(info$shrinkage)) {
     priordistr <- paste0(tab(4), info$parname, "[k] ~ dnorm(mu_reg_surv, tau_reg_surv_ridge[k])",
                          "\n",
@@ -100,17 +142,17 @@ JAGSmodel_coxph <- function(info) {
          tab(4), "logh0[", info$index, "] <- inprod(",
          info$parname, "_Bh0[], Bh0[", info$index, ", ])", "\n",
          tab(4), "eta_surv[", info$index, "] <- ", Mc_predictor, "\n",
-         tab(4), "logh[", info$index, "] <- logh0[",
-         info$index, "] + eta_surv[", info$index, "]", "\n\n",
+         tab(4), "logh[", info$index, "] <- ",
+         add_linebreaks(logh_pred, indent = 15),
+         "\n\n",
          tab(4), "for (k in 1:15) {", "\n",
          tab(6), "logh0s[", info$index, ", k] <- inprod(", info$parname,
          "_Bh0[], Bsh0[15 * (", info$index, " - 1) + k, ])", "\n",
-         tab(6), "Surv[", info$index, ", k] <- gkw[k] * exp(logh0s[", info$index,
-         ", k])", "\n",
-         tab(4), "}", "\n\n",
+         tab(6), "Surv[", info$index, ", k] <- ",
+         add_linebreaks(Surv_predictor, indent = 20),
+         tab(4), "\n}", "\n\n",
          tab(4), "log.surv[", info$index, "] <- -exp(eta_surv[", info$index,
-         "]) * ", info$resp_mat[1] ,"[", info$index, ", ", info$resp_col[1],
-         "]/2 * sum(Surv[", info$index, ", ])", "\n",
+         "]) * ", survtime_col, "/2 * sum(Surv[", info$index, ", ])", "\n",
          tab(4), "phi_", info$varname, "[", info$index, "] <- 5000 - ((",
          info$resp_mat[2] ,"[", info$index, ", ", info$resp_col[2], "] * logh[",
          info$index, "])) - (log.surv[", info$index, "])", "\n",
@@ -120,7 +162,8 @@ JAGSmodel_coxph <- function(info) {
          tab(), "# Priors for the coefficients in the model for ", info$varname, "\n",
          if (!is.null(info$lp$Mc)) {
            paste0(
-             tab(), "for (k in ", min(info$parelmts$Mc), ":", max(info$parelmts$Mc), ") {", "\n",
+             tab(), "for (k in ", min(info$parelmts$Mc, info$parelmts$Ml), ":",
+             max(info$parelmts$Mc, info$parelmts$Ml), ") {", "\n",
              priordistr,
              tab(), "}", "\n\n")
          },

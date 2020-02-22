@@ -159,7 +159,9 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
     shrinkage = NULL,
     covnames = covnames,
     assoc_type  = if (modeltype %in% "JM") {
-      assoc_type <- get_assoc_type(covnames, Mlist$models, assoc_type)
+      get_assoc_type(covnames, Mlist$models, assoc_type)
+    } else if (modeltype %in% "coxph") {
+      "obs.value"
     },
     tv_vars = tv_vars,
     N = Mlist$N,
