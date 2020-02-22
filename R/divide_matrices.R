@@ -7,11 +7,11 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # id's and groups ------------------------------------------------------------
   # extract the id variable from the random effects formula
-  id <- extract_id(random, warn = warn)
+  idvar <- extract_id(random, warn = warn)
 
   # define/identify groups/clusters in the data
-  groups <- if (!is.null(id)) {
-    match(data[, id], unique(data[, id]))
+  groups <- if (!is.null(idvar)) {
+    match(data[, idvar], unique(data[, idvar]))
   } else {
     1:nrow(data)
   }
@@ -163,7 +163,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   })
 
 
-  return(list(fixed = fixed, random = random,
+  return(list(fixed = fixed, random = random, idvar = idvar,
               Mc = Mc[match(unique(groups), groups), , drop = FALSE],
               Ml = Ml, lp_cols = lp_cols, interactions = interactions,
               trafos = fcts_mis, hc_list = hc_list,
