@@ -23,7 +23,7 @@ get_data_list <- function(Mlist, info_list, data) {
     if (any(modeltypes %in% c('survreg', 'coxph', 'JM'))) 'surv'
   )])))
 
-  # priors for mixed models
+  # prior for mixed models ----------------------------------------------------
   if (any(modeltypes %in% c('glmm', 'clmm', 'mlogitmm'))) {
     l <- c(l, default_hyperpars()$ranef[c('shape_diag_RinvD', 'rate_diag_RinvD')])
     l$group <- Mlist$groups
@@ -39,7 +39,7 @@ get_data_list <- function(Mlist, info_list, data) {
     )
   }
 
-  # censoring indicator and true (unobserved) survival time for survreg models
+  # survreg models -------------------------------------------------------------
   if (any(modeltypes %in% c('survreg'))) {
     for (x in info_list[modeltypes %in% c('survreg')]) {
       l[[paste0('cens_', x$varname)]] <- 1 - Mlist[[x$resp_mat[2]]][, x$resp_col[2]]
@@ -49,6 +49,7 @@ get_data_list <- function(Mlist, info_list, data) {
     }
   }
 
+  # coxph & JM -----------------------------------------------------------------
   if (any(modeltypes %in% c('coxph', 'JM'))) {
     x <- info_list[[which(modeltypes %in% c('coxph', 'JM'))]]
 
