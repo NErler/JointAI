@@ -287,7 +287,6 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 #' which a monitor is set.
 #'
 #' @inheritParams sharedParams
-#' @param ... currently not used
 #'
 #' @examples
 #' # (does not need MCMC samples to work, so we will set n.adapt = 0 and

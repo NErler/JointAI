@@ -16,8 +16,6 @@ given directly by \strong{JointAI}.)}
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. (Note: this applies only to warnings
 given directly by \strong{JointAI}.)}
-
-\item{...}{currently not used}
 }
 \description{
 Returns the names of the parameters/nodes of an object of class 'JointAI' for
