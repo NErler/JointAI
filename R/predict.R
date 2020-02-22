@@ -195,6 +195,7 @@ predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0
       predict_fun(formula = object$fixed[[varname]],
                   newdata = newdata, type = types[varname], data = object$data,
                   MCMC = MCMC, varname = varname,
+                  Mlist = object$Mlist,
                   coef_list = object$coef_list, info_list = object$info_list,
                   quantiles = quantiles, mess = mess)
     } else {
@@ -358,71 +359,101 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp"
 
 
 
-predict_coxph <- function(formula, newdata, type = c("lp", "risk", "expected",
-                                                     "survival"),
-                          data, MCMC, varname, coef_list, info_list,
-                          quantiles = c(0.025, 0.975), mess = TRUE, ...) {
-
+predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data,
+                          type = c("lp", "risk", "expected", "survival"),
+                          varname, quantiles = c(0.025, 0.975),
+                          mess = TRUE, ...) {
   type <- match.arg(type)
 
   coefs <- coef_list[[varname]]
 
-  mf <- model.frame(as.formula(paste(formula)[-2]),
+  mf <- model.frame(as.formula(paste(Mlist$fixed[[varname]])[-2]),
                     data, na.action = na.pass)
   mt <- attr(mf, "terms")
+
 
   op <- options(contrasts = rep("contr.treatment", 2),
                 na.action = na.pass)
   X <- model.matrix(mt, data = newdata)[, -1, drop = FALSE]
 
-
   if (mess & any(is.na(X)))
-    message('Prediction for cases with missing covariates is not implemented.')
-
+    message('Prediction for cases with missing covariates is not yet implemented.')
 
   # linear predictor values for the selected iterations of the MCMC sample
-  pred <- sapply(1:nrow(X), function(i)
-    MCMC[, coefs$coef[match(colnames(X), coefs$varname)],
-         drop = FALSE] %*% X[i, ])
+  # pred <- sapply(1:nrow(X), function(i)
+  #   MCMC[, coefs$coef[match(colnames(X), coefs$varname)],
+  #        drop = FALSE] %*% X[i, ])
 
-  pred <- pred - mean(c(pred))
+  scale_pars <- do.call(rbind, unname(Mlist$scale_pars))
+  scale_pars$center[is.na(scale_pars$center)] <- 0
+  # scale_pars$scale[is.na(scale_pars$scale)] <- 1
 
-  logsurv <- MCMC[, grep('log.surv', colnames(MCMC))]
+
+  eta_surv <- sapply(1:nrow(X), function(i)
+    MCMC[, coefs$coef[match(colnames(X), coefs$varname)], drop = FALSE] %*%
+      (X[i, ] - scale_pars$center[match(colnames(X), rownames(scale_pars))])
+  )
+
+  timevar <- Mlist$outcomes$outnams[[varname]][1]
+
+  gkx <- gauss_kronrod()$gkx
+  ordgkx <- order(gkx)
+  gkw <- gauss_kronrod()$gkw[ordgkx]
+
+
+  h0knots <- get_knots_h0(nkn = Mlist$df_basehaz - 4,
+                          Time = Mlist$Mc[, timevar],
+                          event = NULL, gkx = gkx)
+
+  if (type %in% c('expected', 'survival')) {
+    Bsh0 <- splines::splineDesign(h0knots,
+                                  c(t(outer(newdata[, timevar]/2, gkx + 1))),
+                                  ord = 4)
+
+    logh0s <- lapply(1:nrow(MCMC), function(m) {
+      matrix(Bsh0 %*% MCMC[m, grep('\\bbeta_Bh0\\b', colnames(MCMC))],
+             ncol = 15, nrow = nrow(newdata), byrow = TRUE)
+    })
+
+    Surv <- sapply(logh0s, function(m) {
+      exp(m) %*% gkw
+    })
+
+    logSurv <- -exp(t(eta_surv)) * Surv * outer(newdata[, timevar], rep(1, nrow(MCMC)))/2
+  } else {
+    Bh0 <- splines::splineDesign(h0knots, newdata[, timevar], ord = 4)
+
+    logh0 <- sapply(1:nrow(Bh0), function(i) {
+      MCMC[, grep('beta_Bh0', colnames(MCMC))] %*% Bh0[i, ]
+    })
+
+    logh <- logh0 + eta_surv# <- eta_surv - mean(c(eta_surv))
+  }
+  # logsurv <- MCMC[, grep('log.surv', colnames(MCMC))]
+
 
 
   # fitted values: mean over the (transformed) predicted values
   fit <- if (type == 'risk') {
-    colMeans(exp(pred))
+    colMeans(exp(logh))
   } else if (type == 'lp') {
-    colMeans(pred)
+    colMeans(logh)
   } else if (type == 'expected') {
-    colMeans(-logsurv)
+    rowMeans(-logSurv)
   } else if (type == 'survival') {
-    colMeans(exp(logsurv))
+    rowMeans(exp(logSurv))
   }
 
   # quantiles
   quants <- if (!is.null(quantiles)) {
     if (type == 'risk') {
-      t(apply(exp(pred), 2, quantile, quantiles, na.rm  = TRUE))
+      t(apply(exp(eta_surv), 2, quantile, quantiles, na.rm  = TRUE))
     } else if (type == 'lp') {
-      t(apply(pred, 2, quantile, quantiles, na.rm  = TRUE))
+      t(apply(eta_surv, 2, quantile, quantiles, na.rm  = TRUE))
     } else if (type == 'expected') {
-      if (ncol(logsurv) == 0)
-        stop(paste0('\nFor predictions of type ', dQuote('expected'), ' or ',
-                    dQuote('survival'), ', ', dQuote('log.surv'),
-                    ' needs to be monitored.\n',
-                    'Set ', dQuote('monitor_params = list(other = "log.surv")', ),
-                    '.'), call. = FALSE)
-      t(apply(-logsurv, 2, quantile, quantiles, na.rm  = TRUE))
+      t(apply(-logSurv, 1, quantile, quantiles, na.rm  = TRUE))
     } else if (type == 'survival') {
-      if (ncol(logsurv) == 0)
-        stop(paste0('\nFor predictions of type ', dQuote('expected'), ' or ',
-                    dQuote('survival'), ', ', dQuote('log.surv'),
-                    ' needs to be monitored.\n',
-                    'Set ', dQuote('monitor_params = list(other = "log.surv")', ),
-                    '.'), call. = FALSE)
-      t(apply(exp(logsurv), 2, quantile, quantiles, na.rm  = TRUE))
+      t(apply(exp(logSurv), 1, quantile, quantiles, na.rm  = TRUE))
     }
   }
 
