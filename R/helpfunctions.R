@@ -154,3 +154,38 @@ get_locf <- function(fixed, data, idvar, timevar, gk_data) {
   gk_data
 }
 
+
+
+
+get_Mlgk <- function(survrow, gkx, dat, Mlist, timevar, td_cox = FALSE) {
+
+  gk_data <- dat[rep(survrow, each = length(gkx)), ]
+  gk_data[, Mlist$idvar] <- rep(unique(dat[, Mlist$idvar]), each = length(gkx))
+  gk_data[, timevar] <- c(t(outer(dat[survrow, timevar]/2, gkx + 1)))
+
+
+  if (td_cox) {
+    gk_data <- get_locf(fixed = Mlist$fixed, data = dat, idvar = Mlist$idvar, timevar, gk_data)
+  }
+
+  Xgk <- model.matrix_combi(fmla = c(Mlist$fixed, Mlist$auxvars),
+                            data = gk_data,
+                            terms_list = Mlist$terms_list)
+
+  Xgk_new <- matrix(nrow = length(survrow) * length(gkx),
+                    ncol = ncol(Mlist$Ml),
+                    dimnames = list(c(), colnames(Mlist$Ml)))
+
+  Xgk_new[, colnames(Xgk)[colnames(Xgk) %in% colnames(Xgk_new)]] <-
+    Xgk[, colnames(Xgk)[colnames(Xgk) %in% colnames(Xgk_new)]]
+
+  Mlgk <- lapply(1:length(gkx), function(k) {
+    Xgk_new[length(gkx) * ((1:length(survrow)) - 1) + k, ]
+  })
+
+  Mlgk <- array(data = unlist(Mlgk),
+                dim = c(length(survrow), ncol(Mlgk[[1]]), length(gkx)),
+                dimnames = list(c(), colnames(Mlist$Ml), c())
+  )
+}
+
