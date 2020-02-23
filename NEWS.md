@@ -1,4 +1,4 @@
-# JointAI 0.6.0.9000
+# JointAI 0.6.9000
 
 ## New features
 * `JM_imp()` performs analysis of joint models for longitudinal and survival data
@@ -13,6 +13,10 @@
   now set to `FALSE` to avoid issues. The multivariate version can still be 
   obtained by using `GR_crit()` directly.
 
+## Other changes
+* `default_hyperpars()`: the default number of degrees of freedom in the Wishart
+  distribution used for the inverse of the random effects covariance matrix
+  is now the number of random effects + 1 (was the number of random effects before)
 
 --------------------------------------------------------------------------------
 
