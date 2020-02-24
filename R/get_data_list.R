@@ -88,8 +88,11 @@ get_data_list <- function(Mlist, info_list, data) {
 
 
       if (any(modeltypes %in% 'coxph')) {
-        gk_data <- get_locf(fixed = Mlist$fixed, data, idvar = Mlist$idvar, timevar, gk_data)
+        gk_data <- get_locf(fixed = Mlist$fixed, newdata = data, data = data,
+                            idvar = Mlist$idvar, timevar, gk_data)
+        # gk_data <- get_locf(fixed = Mlist$fixed, data, idvar = Mlist$idvar, timevar, gk_data)
       }
+
 
       X <- model.matrix_combi(fmla = c(Mlist$fixed, Mlist$auxvars),
                               data = gk_data,
@@ -110,7 +113,6 @@ get_data_list <- function(Mlist, info_list, data) {
                       dim = c(length(l$survrow), ncol(Mlgk[[1]]), length(gkx)),
                       dimnames = list(c(), colnames(Mlist$Ml), c())
       )
-
 
       timevariable <- timevariable[l$survrow]
     }
