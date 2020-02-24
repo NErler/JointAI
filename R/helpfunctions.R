@@ -160,7 +160,7 @@ get_locf <- function(fixed, data, idvar, timevar, gk_data) {
 get_Mlgk <- function(survrow, gkx, dat, Mlist, timevar, td_cox = FALSE) {
 
   gk_data <- dat[rep(survrow, each = length(gkx)), ]
-  gk_data[, Mlist$idvar] <- rep(unique(dat[, Mlist$idvar]), each = length(gkx))
+  gk_data[, Mlist$idvar] <- rep(dat[survrow, Mlist$idvar], each = length(gkx))
   gk_data[, timevar] <- c(t(outer(dat[survrow, timevar]/2, gkx + 1)))
 
 
