@@ -234,7 +234,7 @@ predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0
       predict_fun(formula = object$fixed[[varname]],
                   newdata = newdata, type = types[varname], data = object$data,
                   MCMC = MCMC, varname = varname,
-                  Mlist = object$Mlist,
+                  Mlist = object$Mlist, survrow = object$data_list$survrow,
                   coef_list = object$coef_list, info_list = object$info_list,
                   quantiles = quantiles, mess = mess)
     } else {
@@ -397,6 +397,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp"
 predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                           type = c("lp", "risk", "expected", "survival"),
                           varname, quantiles = c(0.025, 0.975),
+                          survrow = NULL,
                           mess = TRUE, ...) {
   type <- match.arg(type)
 
@@ -404,13 +405,13 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
   timevar <- Mlist$outcomes$outnams[[varname]][1]
 
-  survrow <- if (!is.null(Mlist$idvar)) {
-    by(data.frame(nr = 1:nrow(newdata),
-                  timevar = newdata[, timevar]),
-       factor(match(newdata[, Mlist$idvar], unique(newdata[, Mlist$idvar]))),
-       function(k) k$nr[which.max(k$timevar)]
-    )
-  } else {1:nrow(newdata)}
+  # survrow <- if (!is.null(Mlist$idvar)) {
+  #   by(data.frame(nr = 1:nrow(newdata),
+  #                 timevar = newdata[, timevar]),
+  #      factor(match(newdata[, Mlist$idvar], unique(newdata[, Mlist$idvar]))),
+  #      function(k) k$nr[which.max(k$timevar)]
+  #   )
+  # } else {1:nrow(newdata)}
 
 
   mf <- model.frame(as.formula(paste(Mlist$fixed[[varname]])[-2]),
