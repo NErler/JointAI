@@ -2,6 +2,9 @@
 
 ## New features
 * `JM_imp()` performs analysis of joint models for longitudinal and survival data
+* `coxph_imp()` can now handle time-dependent covariates using last-observation-carried-forward.
+  This requires to add `(1 | <id variable>)` to the model formula to identify
+  which rows belong to the same subject.
 
 ## Bug fixes
 * Fixed bug that messed up coefficients in `clmm` covariate model when there are
@@ -12,8 +15,10 @@
 * Within `summary()`, the argument `multivariate` to the function `GR_crit()` is
   now set to `FALSE` to avoid issues. The multivariate version can still be 
   obtained by using `GR_crit()` directly.
+* The parameters of the baseline hazard for `coxph_imp()` and `JM_imp()`
+  are monitored automatically when "analysis_main = TRUE"
 
-## Other changes
+## Important changes
 * `default_hyperpars()`: the default number of degrees of freedom in the Wishart
   distribution used for the inverse of the random effects covariance matrix
   is now the number of random effects + 1 (was the number of random effects before)
