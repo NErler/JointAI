@@ -213,7 +213,7 @@ predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0
     }
   },  simplify = FALSE)
 
-  print('in mainfun')
+
   return(list(
       newdata = if (length(outcome == 1)) cbind(newdata, preds)
       else cbind(newdata, unlist(preds, recursive = FALSE)),
@@ -482,7 +482,6 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   } else if (type == 'survival') {
     rowMeans(exp(logSurv))
   }
-  print('after fit')
 
   # quantiles
   quants <- if (!is.null(quantiles)) {
@@ -496,9 +495,6 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
       t(apply(exp(logSurv), 1, quantile, quantiles, na.rm  = TRUE))
     }
   }
-  print('after quants')
-  print(dim(fit))
-  print(dim(quants))
 
   on.exit(options(op))
 
