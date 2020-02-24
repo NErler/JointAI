@@ -409,6 +409,18 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     }
   )
 
+  eta_surv_long <- if (!is.null(Mlist$Ml)) {
+    Xl <- X[, colnames(X) %in% colnames(Mlist$Ml), drop = FALSE]
+
+    sapply(1:nrow(Xl), function(i)
+      if (!is.null(scale_pars)) {
+        MCMC[, coefs$coef[match(colnames(Xl), coefs$varname)], drop = FALSE] %*%
+          (Xl[i, ] - scale_pars$center[match(colnames(Xc), rownames(scale_pars))])
+      } else {
+        MCMC[, coefs$coef[match(colnames(Xl), coefs$varname)], drop = FALSE] %*% Xl[i, ]
+      }
+    )
+  } else {0}
   gkx <- gauss_kronrod()$gkx
   ordgkx <- order(gkx)
   gkw <- gauss_kronrod()$gkw[ordgkx]
@@ -468,7 +480,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     })
 
 
-    logh <- logh0 + eta_surv# <- eta_surv - mean(c(eta_surv))
+    logh <- logh0 + eta_surv + eta_surv_long# <- eta_surv - mean(c(eta_surv))
   }
 
 
