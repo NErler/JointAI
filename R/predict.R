@@ -478,18 +478,20 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
 
     tvpred <- if (!is.null(Mlist$Ml)) {
-      Mlgk <- get_Mlgk(survrow = 1:nrow(newdata), gkx, dat = newdata, Mlist, timevar, td_cox = TRUE)
+      Mlgk <- do.call(rbind,
+                      get_Mlgk(survrow = 1:nrow(newdata), gkx, newdata = newdata,
+                               data = data, Mlist, timevar, td_cox = TRUE))
       vars <- coefs$varname[na.omit(match(dimnames(Mlgk)[[2]], coefs$varname))]
 
       lapply(1:nrow(MCMC), function(m) {
         if (!is.null(scale_pars)) {
-        matrix((apply(Mlgk[, vars, , drop = FALSE], 2, function(x) x) -
-                  outer(rep(1, prod(dim(Mlgk)[-2])),
-                        scale_pars$center[match(vars, rownames(scale_pars))])) %*%
-                 MCMC[m, coefs$coef[match(vars, coefs$varname)]],
-               nrow = nrow(newdata), ncol = length(gkx))
+          matrix((Mlgk[, vars, drop = FALSE] -
+                    outer(rep(1, prod(dim(Mlgk)[-2])),
+                          scale_pars$center[match(vars, rownames(scale_pars))])) %*%
+                   MCMC[m, coefs$coef[match(vars, coefs$varname)]],
+                 nrow = nrow(newdata), ncol = length(gkx))
         } else {
-          matrix(apply(Mlgk[, vars, , drop = FALSE], 2, function(x) x) %*%
+          matrix(Mlgk[, vars, drop = FALSE] %*%
                    MCMC[m, coefs$coef[match(vars, coefs$varname)]],
                  nrow = nrow(newdata), ncol = length(gkx))
         }
