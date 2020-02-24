@@ -184,13 +184,13 @@ get_Mlgk <- function(survrow, gkx, newdata, data, Mlist, timevar, td_cox = FALSE
   Xgk_new[, colnames(Xgk)[colnames(Xgk) %in% colnames(Xgk_new)]] <-
     Xgk[, colnames(Xgk)[colnames(Xgk) %in% colnames(Xgk_new)]]
 
-  Mlgk <- lapply(1:length(gkx), function(k) {
+  lapply(1:length(gkx), function(k) {
     Xgk_new[length(gkx) * ((1:length(survrow)) - 1) + k, ]
   })
 
-  Mlgk <- array(data = unlist(Mlgk),
-                dim = c(length(survrow), ncol(Mlgk[[1]]), length(gkx)),
-                dimnames = list(c(), colnames(Mlist$Ml), c())
-  )
+  # Mlgk <- array(data = unlist(Mlgk),
+  #               dim = c(length(survrow), ncol(Mlgk[[1]]), length(gkx)),
+  #               dimnames = list(c(), colnames(Mlist$Ml), c())
+  # )
 }
 
