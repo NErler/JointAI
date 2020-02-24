@@ -20,7 +20,7 @@ check_formula_list <- function(formula) {
 # random: formula object or a list of formulas;
 #         formulas are expected to be in nlme format (random = ~ x | id)
 # warn: logical
-extract_id <- function(random, warn = TRUE) {
+extract_id <- function(random, warn = TRUE, allow_multiple = FALSE) {
 
   # if random is not a list, make it one
   random <- check_formula_list(random)
@@ -50,7 +50,7 @@ extract_id <- function(random, warn = TRUE) {
       warning('No "id" variable could be identified. I will assume that all observations are independent.',
               call. = FALSE, immediate. = TRUE)
 
-  if (length(unique(unlist(ids))) > 1)
+  if (length(unique(unlist(ids))) > 1 & !allow_multiple)
     stop("Different grouping levels detected. JointAI can not yet handle this.", call. = FALSE)
 
   return(unique(unlist(ids)))
