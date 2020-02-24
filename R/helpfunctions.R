@@ -120,17 +120,18 @@ get_coef_names <- function(info_list) {
 
 
 
-get_locf <- function(fixed, data, idvar, timevar, gk_data) {
+get_locf <- function(fixed, newdata, data, idvar, timevar, gk_data) {
   covars <- all_vars(remove_LHS(fixed))
   longvars <- covars[sapply(data[, covars], check_tvar, idvar = data[, idvar])]
 
-  ld <- subset(data, select = c(idvar, timevar, longvars))
+  ld <- subset(newdata, select = c(idvar, timevar, longvars))
   ld$obstime <- unlist(lapply(table(ld[, idvar]), function(k) 1:k))
 
   wd <- reshape(ld, direction = 'wide', v.names = c(timevar, longvars),
                 timevar = 'obstime', idvar = idvar)
 
-  md <- merge(subset(gk_data, select = c(idvar, timevar)), wd)
+  gk_data$rowid <- 1:nrow(gk_data)
+  md <- merge(subset(gk_data, select = c(idvar, timevar, 'rowid')), wd)
 
 
   locf <- sapply(1:nrow(md), function(i) {
