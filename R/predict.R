@@ -7,8 +7,8 @@
 #' @inheritParams model_imp
 #' @inheritParams sharedParams
 #' @param dat original data
-#' @param var name of variable that should be varying
-#' @param length number of values used in the sequence when \code{var} is continuous
+#' @param vars name of variable that should be varying
+#' @param length number of values used in the sequence when \code{vars} is continuous
 #' @param outcome vector of variable names or numbers identifying for which outcome(s) the prediction should be performed.
 #' @param ... optional, additional arguments (currently not used)
 #'
@@ -19,7 +19,7 @@
 #' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
 #' # generate a dataframe with varying "C2" and reference values for all other variables in the model
-#' newDF <- predDF(mod, var = "C2")
+#' newDF <- predDF(mod, vars = "C2")
 #'
 #' head(newDF)
 #'
@@ -32,43 +32,55 @@ predDF <- function(object, ...) {
 
 #' @rdname predDF
 #' @export
-predDF.JointAI <- function(object, var, outcome = 1, length = 100, ...) {
+predDF.JointAI <- function(object, vars, outcome = 1, length = 100, ...) {
 
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
   predDF(formulas = c(object$fixed[[outcome]],
                       object$random[[outcome]],
-                      object$auxvars), dat = object$data, var = var, ...)
+                      object$auxvars), dat = object$data, vars = vars,
+         length = length, idvar = object$Mlist$idvar, ...)
 }
 
 
 # @rdname predDF
 # @export
-predDF.formula <- function(formula, dat, var, length = 100, ...) {
+predDF.formula <- function(formula, dat, vars, length = 100, ...) {
   if (!inherits(object, "formula"))
     stop("Use only with 'formula' objects.\n")
 
-  predDF(formulas = check_formula_list(formula), dat = object$data, var = var, ...)
+  predDF(formulas = check_formula_list(formula), dat = object$data, vars = vars,
+         length = length, ...)
 }
 
 # @rdname predDF
 # @export
-predDF.list <- function(formulas, dat, var, length = 100, ...) {
+predDF.list <- function(formulas, dat, vars, length = 100, idvar = NULL, ...) {
+
+  id_vars <- extract_id(vars, allow_multiple = TRUE, warn = FALSE)
+  varying <- all_vars(vars)
+
+  if (is.null(idvar))
+    idvar <- 'id'
 
   allvars <- all_vars(formulas)
 
-  if (!var %in% allvars) {
-    stop(paste0(var , "was not used in the model formula."))
+  if (any(!varying %in% allvars)) {
+    stop(paste0(varying , "was not used in the model formula."))
   }
 
   vals <- sapply(allvars, function(k) {
-    if (k %in% var) {
+    if (k %in% varying) {
       if (is.factor(dat[, k])) {
         unique(dat[, k])
       } else {
-        seq(min(dat[, k], na.rm = TRUE),
-            max(dat[, k], na.rm = TRUE), length = length)
+        if (k %in% names(list(...))) {
+          list(...)[[k]]
+        } else {
+          seq(min(dat[, k], na.rm = TRUE),
+              max(dat[, k], na.rm = TRUE), length = length)
+        }
       }
     } else {
       if (is.factor(dat[, k])) {
@@ -81,7 +93,16 @@ predDF.list <- function(formulas, dat, var, length = 100, ...) {
       }
     }
   })
-  expand.grid(vals)
+
+  ndf <- expand.grid(vals)
+
+  if (!is.null(id_vars)) {
+    id_df <- unique(subset(ndf, select = id_vars))
+    id_df[, idvar] <- 1:nrow(id_df)
+    ndf <- merge(subset(ndf, select = !names(ndf) %in% idvar),
+                 id_df)
+  }
+  ndf
 }
 
 
@@ -141,7 +162,7 @@ predDF.list <- function(formulas, dat, var, length = 100, ...) {
 #' fit <- predict(mod)
 #'
 #' # create dataset for prediction
-#' newDF <- predDF(mod, var = "C2")
+#' newDF <- predDF(mod, vars = "C2")
 #'
 #' # obtain predicted values
 #' pred <- predict(mod, newdata = newDF)
