@@ -448,7 +448,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     sapply(1:nrow(Xl), function(i)
       if (!is.null(scale_pars)) {
         MCMC[, coefs$coef[match(colnames(Xl), coefs$varname)], drop = FALSE] %*%
-          (Xl[i, ] - scale_pars$center[match(colnames(Xc), rownames(scale_pars))])
+          (Xl[i, ] - scale_pars$center[match(colnames(Xl), rownames(scale_pars))])
       } else {
         MCMC[, coefs$coef[match(colnames(Xl), coefs$varname)], drop = FALSE] %*% Xl[i, ]
       }
