@@ -7,18 +7,18 @@
 \usage{
 predDF(object, ...)
 
-\method{predDF}{JointAI}(object, var, outcome = 1, length = 100, ...)
+\method{predDF}{JointAI}(object, vars, outcome = 1, length = 100, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
 \item{...}{optional, additional arguments (currently not used)}
 
-\item{var}{name of variable that should be varying}
+\item{vars}{name of variable that should be varying}
 
 \item{outcome}{vector of variable names or numbers identifying for which outcome(s) the prediction should be performed.}
 
-\item{length}{number of values used in the sequence when \code{var} is continuous}
+\item{length}{number of values used in the sequence when \code{vars} is continuous}
 
 \item{dat}{original data}
 }
@@ -32,7 +32,7 @@ continuous variables).
 mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 
 # generate a dataframe with varying "C2" and reference values for all other variables in the model
-newDF <- predDF(mod, var = "C2")
+newDF <- predDF(mod, vars = "C2")
 
 head(newDF)
 
