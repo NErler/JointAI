@@ -151,22 +151,26 @@ get_locf <- function(fixed, newdata, data, idvar, timevar, gk_data) {
     out
   }, simplify = FALSE)
 
-  gk_data[, longvars] <- do.call(rbind, locf)
-  gk_data
+  md[, longvars] <- do.call(rbind, locf)
+
+  gk_data_new <- merge(subset(gk_data, select = !names(gk_data) %in% longvars),
+                       subset(md, select = c(idvar, timevar, longvars, 'rowid'))
+  )
+  gk_data_new[order(gk_data_new$rowid), ]
 }
 
 
 
+get_Mlgk <- function(survrow, gkx, newdata, data, Mlist, timevar, td_cox = FALSE) {
 
-get_Mlgk <- function(survrow, gkx, dat, Mlist, timevar, td_cox = FALSE) {
-
-  gk_data <- dat[rep(survrow, each = length(gkx)), ]
-  gk_data[, Mlist$idvar] <- rep(dat[survrow, Mlist$idvar], each = length(gkx))
-  gk_data[, timevar] <- c(t(outer(dat[survrow, timevar]/2, gkx + 1)))
+  gk_data <- newdata[rep(survrow, each = length(gkx)), ]
+  gk_data[, Mlist$idvar] <- rep(newdata[survrow, Mlist$idvar], each = length(gkx))
+  gk_data[, timevar] <- c(t(outer(newdata[survrow, timevar]/2, gkx + 1)))
 
 
   if (td_cox) {
-    gk_data <- get_locf(fixed = Mlist$fixed, data = dat, idvar = Mlist$idvar, timevar, gk_data)
+    gk_data <- get_locf(fixed = Mlist$fixed, newdata = newdata, data = data,
+                        idvar = Mlist$idvar, timevar, gk_data)
   }
 
   Xgk <- model.matrix_combi(fmla = c(Mlist$fixed, Mlist$auxvars),
