@@ -10,7 +10,7 @@ get_params <- function(Mlist, info_list, data,
                        alphas = NULL, tau_other = NULL, sigma_other = NULL,
                        gamma_other = NULL, delta_other = NULL,
                        ranef_other = NULL, invD_other = NULL, D_other = NULL, RinvD_other = NULL,
-                       other = NULL, mess = TRUE, basehaz = FALSE,
+                       other = NULL, mess = TRUE, basehaz = NULL,
                        ...){
 
   list_main <- info_list[names(Mlist$fixed)]
@@ -34,9 +34,7 @@ get_params <- function(Mlist, info_list, data,
     gamma_main <- any(modeltypes_main %in% c('clmm', 'clm')) & isTRUE(gamma_main)
 
 
-    if (any(modeltypes_main %in% c('coxph')) &
-        (is.null(basehaz) | !any(grepl("^beta\\b",
-                                       do.call(rbind, get_coef_names(info_list))$coef))))
+    if (any(modeltypes_main %in% c('coxph', "JM")) & !isFALSE(basehaz))
       # for a cox model with no betas, something needs to be monitored to prevent
       # JAGS error "No valid monitors set".
       basehaz <- TRUE
