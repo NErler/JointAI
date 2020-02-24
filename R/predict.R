@@ -450,13 +450,13 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
       lapply(1:nrow(MCMC), function(m) {
         if (!is.null(scale_pars)) {
-        matrix((apply(Mlgk[, vars, ], 2, function(x) x) -
+        matrix((apply(Mlgk[, vars, , drop = FALSE], 2, function(x) x) -
                   outer(rep(1, prod(dim(Mlgk)[-2])),
                         scale_pars$center[match(vars, rownames(scale_pars))])) %*%
                  MCMC[m, coefs$coef[match(vars, coefs$varname)]],
                nrow = nrow(newdata), ncol = length(gkx))
         } else {
-          matrix(apply(Mlgk[, vars, ], 2, function(x) x) %*%
+          matrix(apply(Mlgk[, vars, , drop = FALSE], 2, function(x) x) %*%
                    MCMC[m, coefs$coef[match(vars, coefs$varname)]],
                  nrow = nrow(newdata), ncol = length(gkx))
         }
