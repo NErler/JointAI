@@ -3,14 +3,11 @@
 \name{predDF}
 \alias{predDF}
 \alias{predDF.JointAI}
-\alias{predDF.formula}
 \title{Create a new dataframe for prediction}
 \usage{
 predDF(object, ...)
 
 \method{predDF}{JointAI}(object, var, outcome = 1, length = 100, ...)
-
-\method{predDF}{formula}(formula, dat, var, length = 100, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -22,8 +19,6 @@ predDF(object, ...)
 \item{outcome}{vector of variable names or numbers identifying for which outcome(s) the prediction should be performed.}
 
 \item{length}{number of values used in the sequence when \code{var} is continuous}
-
-\item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
 
 \item{dat}{original data}
 }

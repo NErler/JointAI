@@ -37,15 +37,26 @@ predDF.JointAI <- function(object, var, outcome = 1, length = 100, ...) {
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
-  predDF(formula = object$fixed[[outcome]], dat = object$data, var = var, ...)
+  predDF(formulas = c(object$fixed[[outcome]],
+                      object$random[[outcome]],
+                      object$auxvars), dat = object$data, var = var, ...)
 }
 
 
-#' @rdname predDF
-#' @export
+# @rdname predDF
+# @export
 predDF.formula <- function(formula, dat, var, length = 100, ...) {
+  if (!inherits(object, "formula"))
+    stop("Use only with 'formula' objects.\n")
 
-  allvars <- all.vars(formula)
+  predDF(formulas = check_formula_list(formula), dat = object$data, var = var, ...)
+}
+
+# @rdname predDF
+# @export
+predDF.list <- function(formulas, dat, var, length = 100, ...) {
+
+  allvars <- all_vars(formulas)
 
   if (!var %in% allvars) {
     stop(paste0(var , "was not used in the model formula."))
