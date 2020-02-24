@@ -445,7 +445,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
 
     tvpred <- if (!is.null(Mlist$Ml)) {
-      Mlgk <- get_Mlgk(survrow, gkx, dat = newdata, Mlist, timevar, td_cox = TRUE)
+      Mlgk <- get_Mlgk(survrow = 1:nrow(newdata), gkx, dat = newdata, Mlist, timevar, td_cox = TRUE)
       vars <- coefs$varname[na.omit(match(dimnames(Mlgk)[[2]], coefs$varname))]
 
       lapply(1:nrow(MCMC), function(m) {
