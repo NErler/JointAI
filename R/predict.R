@@ -463,6 +463,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   gkw <- gauss_kronrod()$gkw[ordgkx]
 
 
+  if (is.null(survrow))
+    survrow <- 1:nrow(Mlist[[info_list[[varname]]$resp_mat[timevar]]])
   time_orig <- Mlist[[info_list[[varname]]$resp_mat[timevar]]][survrow, timevar]
 
   h0knots <- get_knots_h0(nkn = Mlist$df_basehaz - 4,
