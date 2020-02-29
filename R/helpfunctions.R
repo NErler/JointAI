@@ -125,6 +125,7 @@ get_locf <- function(fixed, newdata, data, idvar, timevar, gk_data) {
   longvars <- covars[sapply(data[, covars], check_tvar, idvar = data[, idvar])]
 
   ld <- subset(newdata, select = c(idvar, timevar, longvars))
+  ld <- ld[order(ld[, idvar]), ]
   ld$obstime <- unlist(lapply(table(ld[, idvar]), function(k) 1:k))
 
   wd <- reshape(ld, direction = 'wide', v.names = c(timevar, longvars),
