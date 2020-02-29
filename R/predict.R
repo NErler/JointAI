@@ -73,7 +73,11 @@ predDF.list <- function(formulas, dat, vars, length = 100, idvar = NULL, ...) {
   vals <- sapply(allvars, function(k) {
     if (k %in% varying) {
       if (is.factor(dat[, k])) {
-        unique(dat[, k])
+        if (k %in% names(list(...))) {
+          list(...)[[k]]
+        } else {
+          unique(na.omit(dat[, k]))
+        }
       } else {
         if (k %in% names(list(...))) {
           list(...)[[k]]
