@@ -1,5 +1,5 @@
 
-get_model_info <- function(Mlist, K, K_imp, trunc = NULL, assoc_type = NULL) {
+get_model_info <- function(Mlist, data, K, K_imp, trunc = NULL, assoc_type = NULL) {
   args <- as.list(match.call())[-1L]
 
   sapply(names(Mlist$lp_cols), function(k) {
@@ -7,7 +7,7 @@ get_model_info <- function(Mlist, K, K_imp, trunc = NULL, assoc_type = NULL) {
   },  simplify = FALSE)
 }
 
-get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
+get_model1_info <- function(k, Mlist, data, K, K_imp, trunc = NULL, assoc_type = NULL,
                             isgk = FALSE) {
   arglist <- as.list(match.call())[-1L]
 
@@ -18,28 +18,28 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
 
 
   # response matrix and column(s) --------------------------------------------
-  resp_mat <- if (k %in% colnames(Mlist$Mc)) {
-    'Mc'
-  } else if (k %in% colnames(Mlist$Ml)) {
-    "Ml"
+  resp_mat <- if (k %in% names(Mlist$Mlvls)) {
+    Mlist$Mlvls[k]
   } else if (attr(Mlist$fixed[[k]], 'type') %in% c('survreg', 'coxph', 'JM')) {
-    sapply(names(Mlist$outcomes$outcomes[[k]]), function(x)
-      if (x %in% colnames(Mlist$Mc)) {
-        'Mc'
-      } else if (x %in% colnames(Mlist$Ml)) {
-        "Ml"
-      })
+    if (all(names(Mlist$outcomes$outcomes[[k]]) %in% names(Mlist$Mlvls))) {
+      Mlist$Mlvls[names(Mlist$outcomes$outcomes[[k]])]
+    } else {
+      stop(paste0(strwrap(
+        gettextf("I have identified %s as a survival outcome, but I cannot find
+                 some of its elements in any of the matrices %s.",
+                 dQuote(k), dQuote("M"))), collapse = "\n"), call. = FALSE)
+    }
   } else {
-    stop(gettextf("I canot find the variable %s in either of the matrices Mc and Ml.",
-                  dQuote(k)))
+    stop(gettextf("I cannot find the variable %s in any of the matrices %s.",
+                  dQuote(k), dQuote("M")), call. = FALSE)
   }
 
   resp_col <- if (k %in% names(Mlist$fixed) &&
                   attr(Mlist$fixed[[k]], 'type') %in% c('survreg', 'coxph', 'JM')) {
     sapply(names(Mlist$outcomes$outcomes[[k]]), function(x)
-      match(x, colnames(Mlist[[resp_mat[x]]])))
+      match(x, colnames(Mlist$M[[resp_mat[x]]])))
   } else {
-    match(k, colnames(Mlist[[resp_mat[1]]]))
+    match(k, colnames(Mlist$M[[resp_mat[1]]]))
   }
 
   # linear predictor columns -------------------------------------------------
@@ -72,42 +72,53 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
     }, simplify = FALSE)
   }
 
+  parelmts <- mapply(function(parelmts, lp) {
+    setNames(parelmts, names(lp))
+  }, parelmts = parelmts, lp = lp, SIMPLIFY = FALSE)
+
 
   # scaling parameter matrices -----------------------------------------------
-  scale_pars <- list(Mc = Mlist$scale_pars$Mc,#[lp$Mc, ],
-                     Ml = Mlist$scale_pars$Ml)#[lp$Ml, ])
+  scale_pars <- Mlist$scale_pars
 
   # dummy colums -------------------------------------------------------------
   dummy_cols <- if (k %in% names(Mlist$refs) &
-                    (any(is.na(Mlist[[resp_mat[1]]][, resp_col[1]])) |
+                    (any(is.na(Mlist$M[[resp_mat[1]]][, resp_col[1]])) |
                      any(sapply(Mlist$fixed, 'attr', 'type') %in% 'JM'))) {
-    match(attr(Mlist$refs[[k]], 'dummies'), colnames(Mlist[[resp_mat[1]]]))
+    match(attr(Mlist$refs[[k]], 'dummies'), colnames(Mlist$M[[resp_mat[1]]]))
   }
+
   if (all(is.na(dummy_cols)))
     dummy_cols <- NULL
 
   categories <- if (k %in% names(Mlist$refs) &
-                    (any(is.na(Mlist[[resp_mat[1]]][, resp_col[1]])) |
+                    (any(is.na(Mlist$M[[resp_mat[1]]][, resp_col[1]])) |
                      any(sapply(Mlist$fixed, 'attr', 'type') %in% 'JM'))) {
     which(levels(Mlist$refs[[k]]) != Mlist$refs[[k]]) - as.numeric(length(levels(Mlist$refs[[k]])) == 2)
   }
 
 
+
+  index <- setNames(sapply(seq_along(sort(Mlist$group_lvls)),
+                           function(k) paste0(rep('i', k), collapse = '')),
+                    names(sort(Mlist$group_lvls)))
+
+
+
   # transformations ----------------------------------------------------------
-  trafos <- paste_trafos(Mlist, varname = k,
-                         index = ifelse(resp_mat[1] == 'Ml' & !isgk, 'j', 'i'),
+  trafos <- paste_trafos(Mlist, varname = k,#################################################################
+                         index = index[[resp_mat[1]]],
                          isgk = isgk)
 
   covnames = if (modeltype %in% "JM") {
-    unique(sapply(names(lp$Ml), replace_dummy, refs = Mlist$refs))
+    unique(unlist(sapply(lp, function(x) sapply(names(x), replace_dummy, refs = Mlist$refs))))
   }
 
-  tv_vars <- if (modeltype %in% "JM") {
+  tv_vars <- if (modeltype %in% "JM") {#################################################################
 
     # find the (longitudinal) covariates infolved in the lp of the survival part
-    covars <- unlist(sapply(names(lp$Ml), replace_trafo, Mlist$fcts_all))
+    covars <- unlist(sapply(unlist(sapply(lp, names)), replace_trafo, Mlist$fcts_all))
     covars <- sapply(covars, replace_dummy, refs = Mlist$refs)
-    covars <- covars[covars %in% colnames(Mlist$Ml)]
+    covars <- covars[covars %in% unlist(sapply(Mlist$M, colnames))]
 
     tvars <- unique(unlist(c(names(lp$Ml),
                              lapply(Mlist$lp_cols[covars],
@@ -134,10 +145,18 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
 
 
 
+  # Hierarchical centering -----------------------------------------------------
+  hc_list <- get_hc_info(varname = k,
+                         lvl = gsub("M_", "", resp_mat[length(resp_mat)]),
+                         Mlist, data, parelmts, lp)
+  nranef <- sapply(hc_list$hcvars, function(x)
+    as.numeric(!is.null(x$rd_intercept_coefs)) + length(x$rd_slope_coefs))
+
   # collect all info ---------------------------------------------------------
   list(
     varname = if (modeltype %in% c('survreg', 'coxph', 'JM')) {
-      paste0(c('surv', Mlist$outcomes$outnams[[k]]), collapse = "_")
+      # paste0(c('surv', Mlist$outcomes$outnams[[k]]), collapse = "_")
+      "surv"
     } else {k},
     modeltype = modeltype,
     family = family,
@@ -150,9 +169,11 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
     lp = lp,
     parelmts = parelmts,
     scale_pars = scale_pars,
-    index = if (resp_mat[1] == 'Ml' && !modeltype %in% c("JM", "coxph")) c('j', 'i') else 'i',
+    index = index, #if (resp_mat[1] == 'Ml' && !modeltype %in% c("JM", "coxph")) c('j', 'i') else 'i',
     parname = ifelse(k %in% names(Mlist$fixed), 'beta', 'alpha'),
-    hc_list = Mlist$hc_list[[k]],
+    hc_list = if (length(hc_list) > 0) hc_list,
+    nranef = nranef,
+    group_lvls = Mlist$group_lvls,
     trafos = trafos,
     trunc = trunc[[k]],
     ppc = FALSE,
@@ -165,7 +186,6 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
     },
     tv_vars = tv_vars,
     N = Mlist$N,
-    Ntot = Mlist$Ntot,
     df_basehaz = Mlist$df_basehaz
   )
 }

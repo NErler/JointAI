@@ -3,13 +3,15 @@
 get_data_list <- function(Mlist, info_list, data) {
   modeltypes <- sapply(info_list, "[[", 'modeltype')
 
-  l <- Mlist[c('Mc', 'Ml')]
+  l <- Mlist$M
 
   # scaling parameters
-  if (any(!is.na(Mlist$scale_pars$Mc)))
-    l$spMc <- Mlist$scale_pars$Mc
-  if (any(!is.na(Mlist$scale_pars$Ml)))
-    l$spMl <- Mlist$scale_pars$Ml
+  if (any(sapply(Mlist$scale_pars, function(x) any(!is.na(x))))) {
+    spM <- Mlist$scale_pars[sapply(Mlist$scale_pars, function(x) any(!is.na(x)))]
+    names(spM) <- paste0("sp", names(spM))
+    l <- c(l, spM)
+  }
+
 
   l <- c(l, unlist(unname(default_hyperpars()[c(
     if (any(sapply(info_list, "[[", 'family') %in% c('gaussian', 'lognorm'))) 'norm',
@@ -23,19 +25,29 @@ get_data_list <- function(Mlist, info_list, data) {
     if (any(modeltypes %in% c('survreg', 'coxph', 'JM'))) 'surv'
   )])))
 
+
   # prior for mixed models ----------------------------------------------------
-  if (any(modeltypes %in% c('glmm', 'clmm', 'mlogitmm'))) {
-    l <- c(l, default_hyperpars()$ranef[c('shape_diag_RinvD', 'rate_diag_RinvD')])
-    l$group <- Mlist$groups
+  if (length(Mlist$groups) > 1) {
+    groups <- Mlist$groups
+    names(groups) <- paste0("group_", names(groups))
+    l <- c(l,
+           groups,
+           default_hyperpars()$ranef[c('shape_diag_RinvD', 'rate_diag_RinvD')]
+    )
 
     l <- c(l,
            unlist(unname(
-             lapply(info_list[modeltypes %in% c('glmm', 'clmm', 'mlogitmm')],
+             lapply(info_list[modeltypes %in% c('coxph', 'glmm', 'clmm', 'mlogitmm')],
                     function(x) {
-                      setNames(default_hyperpars()$ranef$wish(nranef = max(1, length(x$hc_list))),
-                               paste(c("RinvD", "KinvD"), x$varname, sep = "_")
-                      )
-                    })), recursive = FALSE)
+                      unlist(unname(
+                        lapply(names(x$hc_list$hcvars), function(k) {
+                          nranef = x$nranef[k]
+                          setNames(default_hyperpars()$ranef$wish(nranef = nranef),
+                                   paste(c("RinvD", "KinvD"), x$varname, k, sep = "_")
+                          )
+                        })), recursive = FALSE)
+                    })
+           ), recursive = FALSE)
     )
   }
 
@@ -53,9 +65,9 @@ get_data_list <- function(Mlist, info_list, data) {
   if (any(modeltypes %in% c('coxph', 'JM'))) {
     x <- info_list[[which(modeltypes %in% c('coxph', 'JM'))]]
 
-    timevariable <- Mlist[[x$resp_mat[1]]][, x$resp_col[1]]
-    eventvariable <- Mlist[[x$resp_mat[2]]][, x$resp_col[2]]
-    timevar <- colnames(Mlist[[x$resp_mat[1]]])[x$resp_col[1]]
+    timevariable <- Mlist$M[[x$resp_mat[1]]][, x$resp_col[1]]
+    eventvariable <- Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]
+    timevar <- colnames(Mlist$M[[x$resp_mat[1]]])[x$resp_col[1]]
 
 
     # spline specification for the baseline hazard
@@ -68,28 +80,30 @@ get_data_list <- function(Mlist, info_list, data) {
     l$gkw <- gkw[ordgkx]
 
 
-    if (!is.null(Mlist$Ml)) {
+    if (Mlist$group_lvls[gsub('M_', '', x$resp_mat[2])] > 1) {
       # find row with largest time (= row for survival analysis)
       l$survrow <- sapply(
-        split(data.frame(nr = 1:nrow(Mlist[[x$resp_mat[1]]]),
+        split(data.frame(nr = 1:nrow(Mlist$M[[x$resp_mat[1]]]),
                          timevar = timevariable),
-              Mlist$groups),
+              Mlist$groups[[gsub("M_", "", x$resp_mat[2])]]),
         function(k) {
           k$nr[which.max(k$timevar)]
         })
 
-      if (length(l$survrow) != length(unique(Mlist$groups)))
+      if (length(l$survrow) != length(unique(Mlist$groups[[gsub("M_", "", x$resp_mat[2])]])))
         stop("The number of observations for survival differs from the number of subjects.")
 
       # gk_data <- data[rep(NA, length(l$survrow) * length(gkx)), ]
       gk_data <- data[rep(l$survrow, each = length(gkx)), ]
-      gk_data[, Mlist$idvar] <- rep(unique(data[, Mlist$idvar]), each = length(gkx))
-      gk_data[, timevar] <- c(t(outer(Mlist$Ml[l$survrow, timevar]/2, gkx + 1)))
+      gk_data[, gsub("M_", "", x$resp_mat[2])] <- rep(unique(data[, gsub("M_", "", x$resp_mat[2])]), each = length(gkx))
+      gk_data[, timevar] <- c(t(outer(Mlist$M[[x$resp_mat[1]]][l$survrow, timevar]/2, gkx + 1)))
 
 
       if (any(modeltypes %in% 'coxph')) {
         gk_data <- get_locf(fixed = Mlist$fixed, newdata = data, data = data,
-                            idvar = Mlist$idvar, timevar, gk_data)
+                            idvar = gsub("M_", "", x$resp_mat[2]),
+                            group_lvls = Mlist$group_lvls, groups = Mlist$groups,
+                            timevar, gk_data)
         # gk_data <- get_locf(fixed = Mlist$fixed, data, idvar = Mlist$idvar, timevar, gk_data)
       }
 
@@ -99,19 +113,19 @@ get_data_list <- function(Mlist, info_list, data) {
                               terms_list = Mlist$terms_list)
 
       Xnew <- matrix(nrow = length(l$survrow) * length(gkx),
-                     ncol = ncol(Mlist$Ml),
-                     dimnames = list(c(), colnames(Mlist$Ml)))
+                     ncol = ncol(Mlist$M[[x$resp_mat[1]]]),
+                     dimnames = list(c(), colnames(Mlist$M[[x$resp_mat[1]]])))
 
       Xnew[, colnames(X)[colnames(X) %in% colnames(Xnew)]] <-
         X[, colnames(X)[colnames(X) %in% colnames(Xnew)]]
 
-      Mlgk <- lapply(1:length(gkx), function(k) {
+      Mgk <- lapply(1:length(gkx), function(k) {
         Xnew[length(gkx) * ((1:length(l$survrow)) - 1) + k, ]
       })
 
-      l$Mlgk <- array(data = unlist(Mlgk),
-                      dim = c(length(l$survrow), ncol(Mlgk[[1]]), length(gkx)),
-                      dimnames = list(c(), colnames(Mlist$Ml), c())
+      l[[paste0(x$resp_mat[1], "gk")]] <- array(data = unlist(Mgk),
+                                                dim = c(length(l$survrow), ncol(Mgk[[1]]), length(gkx)),
+                                                dimnames = list(c(), colnames(Mlist$M[[x$resp_mat[1]]]), c())
       )
 
       timevariable <- timevariable[l$survrow]
@@ -276,7 +290,7 @@ default_hyperpars <- function() {
 
 
 
-    ranef = list(shape_diag_RinvD = 0.5,
+    ranef = list(shape_diag_RinvD = 0.01,
                  rate_diag_RinvD = 0.001,
                  wish = function(nranef) {
                    if (nranef > 1) {

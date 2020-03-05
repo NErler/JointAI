@@ -20,6 +20,45 @@ check_formula_list <- function(formula) {
 # random: formula object or a list of formulas;
 #         formulas are expected to be in nlme format (random = ~ x | id)
 # warn: logical
+# extract_id <- function(random, warn = TRUE, allow_multiple = FALSE) {
+#
+#   # if random is not a list, make it one
+#   random <- check_formula_list(random)
+#
+#   # check if random is a list of formulas
+#   if (!all(sapply(random, function(x) inherits(x, "formula") | is.null(x))))
+#     stop('At least one element of "random" is not of class "formula".', call. = FALSE)
+#
+#   ids <- lapply(random, function(x) {
+#     # match the pattern "... | "
+#     idmatch <- gregexpr(pattern = "[[:print:]]*\\|[[:space:]]*",
+#                        deparse(x, width.cutoff = 500))
+#
+#     if (any(idmatch > 0)) {
+#       # remove "... | " from the formula
+#       id <- unlist(regmatches(deparse(x, width.cutoff = 500),
+#                               idmatch, invert = TRUE))
+#       id <- strsplit(id[id != ""], split = "[[:space:]]*[+*:/][[:space:]]*")[[1]]
+#     } else {
+#       id <- NULL
+#     }
+#     id
+#   })
+#
+#   if (is.null(unlist(ids)) & !is.null(unlist(random)))
+#     if (warn)
+#       warning('No "id" variable could be identified. I will assume that all observations are independent.',
+#               call. = FALSE, immediate. = TRUE)
+#
+#   if (length(unique(unlist(ids))) > 1 & !allow_multiple)
+#     stop("Different grouping levels detected. JointAI can not yet handle this.", call. = FALSE)
+#
+#   return(unique(unlist(ids)))
+# }
+#
+
+
+
 extract_id <- function(random, warn = TRUE, allow_multiple = FALSE) {
 
   # if random is not a list, make it one
@@ -30,15 +69,20 @@ extract_id <- function(random, warn = TRUE, allow_multiple = FALSE) {
     stop('At least one element of "random" is not of class "formula".', call. = FALSE)
 
   ids <- lapply(random, function(x) {
-    # match the pattern "... | "
-    idmatch <- regexpr(pattern = "[[:print:]]*\\|[[:space:]]*",
-                       deparse(x, width.cutoff = 500))
+    # match (...|...)
+    rdmatch <- gregexpr(pattern = "\\([^|]*\\|[^)]*\\)", deparse(x, width.cutoff = 500))
 
-    if (idmatch > 0) {
-      # remove "... | " from the formula
-      id <- unlist(regmatches(deparse(x, width.cutoff = 500),
-                              idmatch, invert = TRUE))
-      id <- strsplit(id[id != ""], split = "[[:space:]]*[+*:/][[:space:]]*")[[1]]
+    if (any(rdmatch[[1]] > 0)) {
+      # remove "(... | " from the formula
+      rd <- unlist(regmatches(deparse(x, width.cutoff = 500),
+                              rdmatch, invert = FALSE))
+      rdid <- gregexpr(pattern = "[[:print:]]*\\|[[:space:]]*", rd)
+
+      # extract and remove )
+      id <- gsub(')', '', unlist(regmatches(rd, rdid, invert = TRUE)))
+
+      # split by + * : /
+      id <- unique(unlist(strsplit(id[id != ""], split = "[[:space:]]*[+*:/][[:space:]]*")))
     } else {
       id <- NULL
     }
@@ -53,8 +97,9 @@ extract_id <- function(random, warn = TRUE, allow_multiple = FALSE) {
   if (length(unique(unlist(ids))) > 1 & !allow_multiple)
     stop("Different grouping levels detected. JointAI can not yet handle this.", call. = FALSE)
 
-  return(unique(unlist(ids)))
+  unique(unlist(ids))
 }
+
 
 
 # Extract the names(s) of the outcome variable(s) from (a list of) fixed effects formula(s) ------
@@ -139,21 +184,62 @@ remove_grouping <- function(fmla) {
 
   # if fmla is not a list, turn into list
   fmla <- check_formula_list(fmla)
-  if(is.null(fmla)) return(NULL)
+
+  if (is.null(fmla)) return(NULL)
 
   fl <- lapply(fmla, function(x) {
     if (!is.null(x)) {
+      rdmatch <- gregexpr(pattern = "\\([^|]*\\|[^)]*\\)",
+                          deparse(x, width.cutoff = 500))
+
+      if (any(rdmatch[[1]] > 0)) {
+        rd <- unlist(regmatches(deparse(x, width.cutoff = 500),
+                                rdmatch, invert = FALSE))
+        # remove "|...) " from the formula
+        rdid <- gregexpr(pattern = " *\\|[[:print:]]*", rd)
+
+        # extract and remove (
+        ranef <- lapply(regmatches(rd, rdid, invert = TRUE), gsub,
+                        pattern = '^\\(', replacement =  '~ ' )
+        ranef <- lapply(ranef, function(k) as.formula(k[k != ""]))
+
+        nam <- extract_id(fmla, allow_multiple = TRUE)
+
+        if (length(nam) > 1 & length(ranef) == 1)
+          ranef <- rep(ranef, length(nam))
+        else if (length(nam) != length(ranef) & length(ranef) !=0)
+          stop(paste0(strwrap(
+            "The number of grouping variables in the random effects formula
+               does not the number of separate formulas. This may be a problem
+               with the specification of multiple random effects formula parts
+               which include nested grouping.", width = 80, exdent = 7),
+            collapse = "\n"), call. = FALSE)
+
+        names(ranef) <- nam
+        ranef
+
+      } else {
       # remove " | ..." from the formula
-      fmla2 <- sub("[[:space:]]*\\|[[:print:]]*", "",
+      ranef <- sub("[[:space:]]*\\|[[:print:]]*", "",
                    deparse(x, width.cutoff = 500))
 
       as.formula(fmla2)
+      }
     }
   })
 
   if (length(fl) == 1) fl[[1]] else fl
 }
 
+
+
+combi_rd_list <- function(fmlas) {
+  as.formula(paste0("~ ",
+                    paste0(unique(unlist(
+                      lapply(fmlas, function(x) gsub("~", '', deparse(x, width.cutoff = 500))))),
+                      collapse = " + ")
+  ))
+}
 
 
 # split fixed and random -------------------------------------------------------
@@ -168,13 +254,34 @@ split_formula <- function(formula) {
                   ifelse(RHS == '', 1, RHS)
   )
 
-  random <- if(any(which_ranef)) as.formula(
-    paste0("~", paste(term_labels[which_ranef], collapse = ' + ')))
+  # random <- if (any(which_ranef)) as.formula(
+  #   paste0("~", paste(term_labels[which_ranef], collapse = ' + ')))
+
+  # random <- gsub(prep_string(fixed), '', RHS) deparse(formula, width.cutoff = 500))
+  # random <- gsub("^ *\\+", "~", random)
+  # random <- if (random != "") as.formula(random)
+
+  RHS2 <- paste0("(", term_labels[which_ranef], ")", collapse = " + ")
+  random <- if (RHS2 != "()") as.formula(paste0(" ~ ", RHS2))
 
   return(list(fixed = as.formula(fixed),
               random = random)
   )
 }
+
+
+prep_string <- function(x) {
+  p <- gsub("\\.", "\\\\.", x)
+  # p <- gsub("\\.", "\\\\.", paste0("^", x, "$"))
+  p <- gsub("\\?", ".", gsub("\\*", ".*", p))
+  p <- gsub("\\+", "\\\\+", p)
+  p <- gsub("([^\\])\\(", "\\1\\\\(", p)
+  p <- gsub("([^\\])\\[", "\\1\\\\[", p)
+  p <- gsub("([^\\])\\{", "\\1\\\\{", p)
+  p
+}
+
+
 
 # split a list of formulas into a list with fixed effects formulas and a list
 # with random effects formulas
@@ -298,8 +405,7 @@ get_fctDFList <- function(varlist, data) {
 }
 
 
-extract_fcts <- function(fixed, data, random = NULL, complete = FALSE,
-                         Mcnam) {
+extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
 
   fixed <- check_formula_list(fixed)
   random <- check_formula_list(random)
@@ -355,7 +461,7 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE,
 
 
     if (!is.null(fctDF)) {
-      fctDF$matrix <- ifelse(fctDF$var %in% Mcnam, "Mc", "Ml")
+      fctDF$matrix <- Mlvls[fctDF$var]
 
       # look for functions that involve several variables and occur multiple times in fctDF
       dupl <- duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl', 'matrix'))]) |
@@ -447,23 +553,16 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
 
   fixed <- check_formula_list(fixed)
 
-  id <- extract_id(random, warn = FALSE)
-  # define/identify groups/clusters in the data
-  idvar <- if (!is.null(id)) {
-    data[, id]
-  } else {
-    1:nrow(data)
-  }
+  idvar <- extract_id(random, warn = warn, allow_multiple = TRUE)
+  groups <- get_groups(idvar, data)
 
+  lvls <- colSums(!identify_level_relations(groups))
 
   outcomes <- outnams <- extract_outcome(fixed)
 
   # set attribute "type" to identify survival outcomes
   for (i in seq_along(fixed)) {
     if (survival::is.Surv(eval(parse(text = names(outnams[i])), envir = data))) {
-      # outcomes[[i]] <- as.data.frame(sapply(idSurv(names(outnams[i])),
-      #                                       function(k) eval(parse(text = k),
-      # envir = data)))
 
       outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnams[i])),
                                                  envir = data))
@@ -485,22 +584,22 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
     } else {
       outcomes[[i]] <- split_outcome(LHS = extract_LHS(fixed[[i]]), data = data)
       nlev <- sapply(outcomes[[i]], function(x) length(levels(x)))
-      is_tvar <- sapply(outcomes[[i]], function(x) check_tvar(x, idvar))
+      varlvl <- sapply(outcomes[[i]], check_varlevel, groups = groups)
 
       if (any(nlev > 2)) {
         # ordinal variables have values 1, 2, 3, ...
         outcomes[[i]][which(nlev > 2)] <- lapply(outcomes[[i]][which(nlev > 2)],
                                                  function(x) as.numeric(x))
-        attr(fixed[[i]], "type") <- ifelse(is_tvar, 'clmm', 'clm')
+        attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls), 'clmm', 'clm')
       } else if (any(nlev == 2)) {
           # binary variables have values 0, 1
           outcomes[[i]][nlev == 2] <- lapply(outcomes[[i]][nlev == 2],
                                              function(x) as.numeric(x) - 1)
 
-          attr(fixed[[i]], "type") <- ifelse(is_tvar, 'glmm_binomial_logit', 'glm_binomial_logit')
+          attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls), 'glmm_binomial_logit', 'glm_binomial_logit')
       } else if (any(nlev == 0)) {
           # continuous variables
-          attr(fixed[[i]], "type") <- ifelse(is_tvar, 'lmm', 'lm')
+          attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls), 'lmm', 'lm')
       }
       names(fixed)[i] <- outnams[i]
     }
@@ -599,19 +698,18 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL, analysis_t
 
   fixed <- check_formula_list(fixed)
 
-  # try to extract id variable from random
-  id <- extract_id(random)
-  idvar <- if (!is.null(id)) {
-    data[, id]
-  } else {
-    1:nrow(data)
-  }
+  # extract the id variable from the random effects formula
+  idvar <- extract_id(random, warn = warn, allow_multiple = TRUE)
+  groups <- get_groups(idvar, data)
 
   allvars <- unique(c(all_vars(fixed),
                       all_vars(remove_grouping(random)),
                       all_vars(auxvars)))
 
-  covars <- allvars[!allvars %in% sapply(fixed, extract_LHS)]
+  covars <- allvars[!allvars %in% unlist(extract_outcome(fixed))]
+
+  lvl <- sapply(data[, allvars], check_varlevel, groups)
+  group_lvls <- colSums(!identify_level_relations(groups))
 
   subdat <- subset(data, select = covars)
 
@@ -630,19 +728,16 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL, analysis_t
     nointercept <- models[out] %in% c('clmm', 'clm', 'coxph')
     fmla <- as.formula(paste0(out, " ~ .", if(nointercept)'-1'))
 
-    lp[[out]] <- if (!check_tvar(data[, out], idvar)) {
-      colnames(
-        model.matrix(fmla, subset(subdat, select = !sapply(subdat, check_tvar, idvar)))
-      )
-    } else {
-      colnames(model.matrix(fmla, subdat))
-    }
+    lp[[out]] <- colnames(
+      model.matrix(fmla, subset(subdat,
+                                select = group_lvls[lvl[colnames(subdat)]] >= group_lvls[lvl[out]]))
+    )
+
     if (is.null(lp[[out]])) {
       lp <- c(lp, setNames(list(NULL), out))
     }
 
-
     subdat <- subset(subdat, select = - c(get(out)))
   }
-  return(lp)
+  lp
 }

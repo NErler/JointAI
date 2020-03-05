@@ -2,17 +2,19 @@
 get_1model_dim <- function(lp_cols, modeltype, ncat) {
 
   K <- matrix(NA,
-              nrow = 2,
+              nrow = length(lp_cols),
               ncol = 2,
-              dimnames = list(c("Mc", "Ml"),
+              dimnames = list(names(lp_cols),
                               c("start", "end")))
 
   nlp <- if (modeltype %in% c('mlogit', 'mlogitmm')) ncat - 1 else 1
 
-  if (length(lp_cols$Mc) > 0) K["Mc", ] <- c(1, nlp * length(lp_cols$Mc))
-  if (length(lp_cols$Ml) > 0) K["Ml", ] <- c(1, nlp * length(lp_cols$Ml)) + max(c(K, 0), na.rm = TRUE)
-
-  return(K)
+  # if (length(lp_cols$Mc) > 0) K["Mc", ] <- c(1, nlp * length(lp_cols$Mc))
+  if (length(lp_cols) > 0)
+    for (i in names(lp_cols)) {
+      K[i, ] <- c(1, nlp * length(lp_cols[[i]])) + max(c(K, 0), na.rm = TRUE)
+    }
+  K
 }
 
 

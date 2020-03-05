@@ -10,7 +10,7 @@ find_scalevars <- function(mat) {
 }
 
 
-get_scale_pars <- function(mat, idvar, scale_vars) {
+get_scale_pars <- function(mat, groups, scale_vars) {
 
   if (is.null(mat) | (!is.null(scale_vars) && !scale_vars))
     return(NULL)
@@ -22,12 +22,11 @@ get_scale_pars <- function(mat, idvar, scale_vars) {
 
 
   do.call(rbind, sapply(names(vars), function(k) {
+
+    rows <- match(unique(groups), groups)
+
     if (vars[k]) {
-      scaled <- if (check_tvar(mat[, k], idvar)) {
-        scale(mat[, k])
-      } else {
-        scale(mat[match(unique(idvar), idvar), k])
-      }
+      scaled <- scale(mat[rows, k])
       data.frame(center = attr(scaled, 'scaled:center'),
                  scale = attr(scaled, 'scaled:scale')
       )

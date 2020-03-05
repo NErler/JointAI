@@ -4,51 +4,103 @@
 #' @param idvar a vector specifying a grouping
 #' @keywords internal
 #' @return a logical value
-check_tvar <- function(x, idvar) {
-  !all(sapply(split(x, idvar),
-              function(z) identical(unname(z), rep(unname(z[1]), length(z)))
-              #all.equal(z == z[1], na.rm = TRUE)
-  ))
+# check_tvar <- function(x, idvar) {
+#   sapply(idvar, function(k) {
+#     !all(sapply(split(x, k),
+#                 function(z) identical(unname(z), rep(unname(z[1]), length(z)))
+#                 #all.equal(z == z[1], na.rm = TRUE)
+#     ))
+#   })
+# }
+
+
+get_groups <- function(idvar, data) {
+  if (!is.null(idvar)) {
+    groups <- sapply(idvar, function(i) {
+      match(data[, i], unique(data[, i]))
+    }, simplify = FALSE)
+    groups$toplevel <- 1:nrow(data)
+  } else {
+    groups = list(toplevel = 1:nrow(data))
+  }
+
+  groups
+}
+
+
+check_cluster <- function(x, grouping) {
+  sapply(grouping, function(k) {
+    !all(sapply(split(x, k),
+                function(z) identical(unname(z), rep(unname(z[1]), length(z)))
+    ))
+  })
+}
+
+identify_level_relations <- function(grouping) {
+  if (!is.list(grouping))
+    grouping <- list(grouping)
+
+  g <- do.call(cbind, grouping)
+  res <- apply(g, 2, check_cluster, grouping = grouping)
+
+  if (!is.matrix(res))
+    res <- t(res)
+
+  res
+}
+
+check_varlevel <- function(x, groups) {
+  if (!is.list(groups))
+    groups <- list('no_levels' = groups)
+
+  clus <- check_cluster(x, grouping = groups)
+
+  if (sum(!clus) > 1) {
+    group_lvls <- identify_level_relations(groups)
+    names(which.max(colSums(!group_lvls[!clus, !clus, drop = FALSE])))
+  } else if (sum(!clus) == 1) {
+    names(clus)[!clus]
+  } else {
+    'toplevel'
+  }
 }
 
 
 
-# used in divide_matrices (2019-12-26)
-match_interaction <- function(inter, Mc, Ml) {
-  Mcnam <- colnames(Mc)
-  Mlnam <- colnames(Ml)
+# used in divide_matrices (2020-03-04)
+match_interaction <- function(inter, M) {
+  Mnam <- sapply(M, colnames)
 
   out <- sapply(inter, function(i) {
     elmts <- strsplit(i, ":")[[1]]
 
-    if (!any(is.na(c(match(i, c(Mcnam, Mlnam)),
-                     sapply(elmts, match, c(Mcnam, Mlnam)))))) {
+    if (!any(is.na(c(match(i, unlist(Mnam)),
+                     sapply(elmts, match, unlist(Mnam)))))) {
 
       # find matrix and column containing the interaction term
-      inter_match <- c(
-        if (!is.na(match(i, Mcnam)))
-          setNames(match(i, Mcnam), 'Mc'),
-        if (!is.na(match(i, Mlnam)))
-          setNames(match(i, Mlnam), 'Ml')
-      )
+      inter_match <- sapply(names(M), function(k) {
+        if (!is.na(match(i, Mnam[[k]]))) setNames(match(i, Mnam[[k]]), k)
+      })
+
 
       # find matrices and columns of the elements
       elmt_match <- lapply(elmts, function(k) {
-        c(
-          if (!is.na(match(k, Mcnam)))
-            setNames(match(k, Mcnam), 'Mc'),
-          if (!is.na(match(k, Mlnam)))
-            setNames(match(k, Mlnam), 'Ml')
-        )})
+        unname(
+          sapply(names(M), function(j) {
+            if (!is.na(match(k, Mnam[[j]]))) setNames(match(k, Mnam[[j]]), j)
+          })
+        )
+      })
 
 
       structure(
         list(
-          interterm = inter_match,
+          interterm = unlist(unname(inter_match)),
           elmts = unlist(elmt_match)),
         interaction = i, elements = elmts,
-        has_NAs = ifelse(any(is.na(Mc[, elmts[elmts %in% Mcnam]]),
-                           is.na(Ml[, elmts[elmts %in% Mlnam]])), TRUE, FALSE)
+        has_NAs = ifelse(any(sapply(M, function(x)
+          any(is.na(x[, elmts[elmts %in% colnames(x)]])))
+        ), TRUE, FALSE)
       )
     }}, simplify = FALSE)
 
@@ -120,9 +172,11 @@ get_coef_names <- function(info_list) {
 
 
 
-get_locf <- function(fixed, newdata, data, idvar, timevar, gk_data) {
+get_locf <- function(fixed, newdata, data, idvar, group_lvls, groups, timevar, gk_data) {
   covars <- all_vars(remove_LHS(fixed))
-  longvars <- covars[sapply(data[, covars], check_tvar, idvar = data[, idvar])]
+
+  longvars <- covars[group_lvls[sapply(data[, covars], check_varlevel,
+                                       groups = groups)] < group_lvls[idvar]]
 
   ld <- subset(newdata, select = c(idvar, timevar, longvars))
   ld <- ld[order(ld[, idvar]), ]

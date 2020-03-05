@@ -1,14 +1,15 @@
 JAGSmodel_clmm <- function(info) {
   indent <- 4 + 4 + nchar(info$varname) + 7
+  index <- info$index[gsub("M_", "", info$resp_mat)]
 
   # model parts ----------------------------------------------------------------
   probs <- sapply(2:(info$ncat - 1), function(k) {
-    paste0(tab(4), "p_", info$varname, "[", info$index[1], ", ", k, "] <- max(1e-7, min(1-1e-10, psum_",
-           info$varname, "[", info$index[1], ", ", k,"] - psum_", info$varname, "[", info$index[1], ", ", k - 1, "]))")})
+    paste0(tab(4), "p_", info$varname, "[", index, ", ", k, "] <- max(1e-7, min(1-1e-10, psum_",
+           info$varname, "[", index, ", ", k,"] - psum_", info$varname, "[", index, ", ", k - 1, "]))")})
 
   logits <- sapply(1:(info$ncat - 1), function(k) {
-    paste0(tab(4), "logit(psum_", info$varname, "[", info$index[1], ", ", k, "])  <- gamma_", info$varname,
-           "[", k, "]", " + eta_", info$varname,"[", info$index[1], "]")
+    paste0(tab(4), "logit(psum_", info$varname, "[", index, ", ", k, "])  <- gamma_", info$varname,
+           "[", k, "]", " + eta_", info$varname,"[", index, "]")
   })
 
 
@@ -31,7 +32,7 @@ JAGSmodel_clmm <- function(info) {
   rdslopes <- paste_rdslope_lp(hc_info, info)
   rdintercept <- paste_rdintercept_lp(info, hc_parelmts$in_b0)
 
-  Z_predictor <- paste_Zpart(info, index = info$index[1], hc_info,
+  Z_predictor <- paste_Zpart(info, index = index, hc_info,
                              notin_b = hc_parelmts$notin_b, isgk = FALSE)
 
 
@@ -40,15 +41,15 @@ JAGSmodel_clmm <- function(info) {
   dummies <- if (!is.null(info$dummy_cols)) {
     paste0('\n', paste_dummies(categories = info$categories, dest_mat = info$resp_mat,
                                dest_col = info$resp_col, dummy_cols = info$dummy_cols,
-                               index = info$index[1]), collapse = "\n")
+                               index = index), collapse = "\n")
   }
 
   # posterior predictive check -------------------------------------------------
   paste_ppc <- if (info$ppc) {
     paste0("\n",
            tab(4), "# For posterior predictive check:", "\n",
-           tab(4), info$varname, "_ppc[", info$index[1], "] ~ dcat(p_",
-           info$varname, "[", info$index[1], ", 1:", info$ncat, "])", "\n"
+           tab(4), info$varname, "_ppc[", index, "] ~ dcat(p_",
+           info$varname, "[", index, ", 1:", info$ncat, "])", "\n"
     )
   }
 
@@ -72,18 +73,18 @@ JAGSmodel_clmm <- function(info) {
 
   # write model ----------------------------------------------------------------
   paste0(tab(), "# Cumulative logit mixed effects model for ", info$varname, "\n",
-         tab(), "for (", info$index[1], " in 1:", info$Ntot, ") {", "\n",
-         tab(4), info$resp_mat, "[", info$index[1], ", ", info$resp_col,
-         "] ~ dcat(p_", info$varname, "[", info$index[1], ", 1:", info$ncat, "])", "\n",
+         tab(), "for (", index, " in 1:", info$N[gsub("M_", "", info$resp_mat)], ") {", "\n",
+         tab(4), info$resp_mat, "[", index, ", ", info$resp_col,
+         "] ~ dcat(p_", info$varname, "[", index, ", 1:", info$ncat, "])", "\n",
 
-         tab(4), 'eta_', info$varname, "[", info$index[1], "] <- ",
+         tab(4), 'eta_', info$varname, "[", index, "] <- ",
          add_linebreaks(Z_predictor, indent = indent),
          "\n\n",
-         tab(4), "p_", info$varname, "[", info$index[1], ", 1] <- max(1e-10, min(1-1e-7, psum_",
-         info$varname, "[", info$index[1], ", 1]))", "\n",
+         tab(4), "p_", info$varname, "[", index, ", 1] <- max(1e-10, min(1-1e-7, psum_",
+         info$varname, "[", index, ", 1]))", "\n",
          paste(probs, collapse = "\n"), "\n",
-         tab(4), "p_", info$varname, "[", info$index[1], ", ", info$ncat, "] <- 1 - max(1e-10, min(1-1e-7, sum(p_",
-         info$varname, "[", info$index[1], ", 1:", info$ncat - 1,"])))", "\n\n",
+         tab(4), "p_", info$varname, "[", index, ", ", info$ncat, "] <- 1 - max(1e-10, min(1-1e-7, sum(p_",
+         info$varname, "[", index, ", 1:", info$ncat - 1,"])))", "\n\n",
          paste0(logits, collapse = "\n"),
          paste(dummies, collapse = "\n"),
          info$trafos,
@@ -91,15 +92,18 @@ JAGSmodel_clmm <- function(info) {
          paste_ppc,
          tab(), "}", "\n",
          "\n",
-         tab(), "for (", info$index[2], " in 1:", info$N, ") {", "\n",
-         tab(4), "b_", info$varname, "[", info$index[2], ", 1:", max(1, length(info$hc_list)), "] ~ ", norm.distr,
-         "(mu_b_", info$varname, "[", info$index[2], ", ], invD_", info$varname, "[ , ])", "\n",
-         paste_mu_b(rdintercept, rdslopes, info$varname, info$index[2]),
-         tab(), "}", "\n\n",
+         paste0(sapply(names(rdintercept), write_ranefs, info = info,
+                       rdintercept = rdintercept, rdslopes = rdslopes), collapse = ''),
+         "\n\n",
+         # tab(), "for (", info$index[2], " in 1:", info$N, ") {", "\n",
+         # tab(4), "b_", info$varname, "[", info$index[2], ", 1:", max(1, length(info$hc_list)), "] ~ ", norm.distr,
+         # "(mu_b_", info$varname, "[", info$index[2], ", ], invD_", info$varname, "[ , ])", "\n",
+         # paste_mu_b(rdintercept, rdslopes, info$varname, info$index[2]),
+         # tab(), "}", "\n\n",
          tab(), "# Priors for the model for ", info$varname, "\n",
          if (any(!sapply(info$parelmts, is.null))) {
-           paste0(tab(), "for (k in ", min(info$parelmts$Mc, info$parelmts$Ml), ":",
-                  max(info$parelmts$Mc, info$parelmts$Ml), ") {", "\n",
+           paste0(tab(), "for (k in ", min(unlist(info$parelmts)), ":",
+                  max(unlist(info$parelmts)), ") {", "\n",
                   priordistr,
                   tab(), "}")
          },
@@ -107,7 +111,11 @@ JAGSmodel_clmm <- function(info) {
          paste(gammas, collapse = "\n"),
          # paste_ppc_prior,
          "\n",
-         ranef_priors(max(1, length(info$hc_list)), info$varname)
+         paste0(
+           sapply(names(info$hc_list), function(x) {
+             ranef_priors(max(1, length(info$hc_list[[x]])), paste0(info$varname, "_", x))
+           }), collapse = "\n")
+         # ranef_priors(max(1, length(info$hc_list)), info$varname)
   )
 }
 

@@ -6,15 +6,10 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                             warn = TRUE, mess = TRUE, df_basehaz = 6, ...) {
 
   # id's and groups ------------------------------------------------------------
-  # extract the id variable from the random effects formula
-  idvar <- extract_id(random, warn = warn)
+  # extract the id variable from the random effects formula and get groups
+  idvar <- extract_id(random, warn = warn, allow_multiple = TRUE)
+  groups <- get_groups(idvar, data)
 
-  # define/identify groups/clusters in the data
-  groups <- if (!is.null(idvar)) {
-    match(data[, idvar], unique(data[, idvar]))
-  } else {
-    1:nrow(data)
-  }
 
   # outcome --------------------------------------------------------------------
   # extract the outcomes from the fixed effects formulas
@@ -74,20 +69,24 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   X2 <- model.matrix_combi(fmla = c(fixed, auxvars), data = data,
                            terms_list = terms_list)
 
-  M <- cbind(Y, X2[, setdiff(colnames(X2), colnames(Y)), drop = FALSE])
-  tvarM <- apply(M, 2, check_tvar, groups)
+  MX <- cbind(Y, X2[, setdiff(colnames(X2), colnames(Y)), drop = FALSE])
 
-  Mc <- if (any(!tvarM)) M[, !tvarM, drop = FALSE]
-  Ml <- if (any(tvarM)) M[, tvarM, drop = FALSE]
+  Mlvls <- apply(MX, 2, check_varlevel, groups = groups)
+  Mlvls <- setNames(paste0("M_", Mlvls), names(Mlvls))
+
+  M <- sapply(unique(Mlvls), function (k)
+    MX[ , Mlvls == k, drop = FALSE], simplify = FALSE)
 
   fcts_mis <- extract_fcts(fixed = fixed, data, random = random, complete = FALSE,
-                           Mcnam = colnames(Mc))
+                           Mlvls = Mlvls)
   fcts_all <- extract_fcts(fixed = fixed, data, random = random, complete = TRUE,
-                           Mcnam = colnames(Mc))
+                           Mlvls = Mlvls)
 
   # scaling --------------------------------------------------------------------
-  scale_pars <- list(Mc = get_scale_pars(Mc, groups, scale_vars),
-                     Ml = get_scale_pars(Ml, groups, scale_vars))
+  scale_pars <- mapply(get_scale_pars,
+                       mat = M, groups = groups[gsub('M_', '', names(M))],
+                       MoreArgs = list(scale_vars = scale_vars),
+                       SIMPLIFY  = FALSE)
 
 
   if (any(fcts_mis$type %in% c('ns', 'bs')))
@@ -95,11 +94,10 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
          call. = FALSE)
 
   # set columns of trafos that need to be re-calculated in JAGS to NA
-  if (any(fcts_mis$colname %in% colnames(Mc)))
-    Mc[, unique(fcts_mis$colname)] <- NA
-  if (any(fcts_mis$colname %in% colnames(Ml)))
-    Ml[, unique(fcts_mis$colname)] <- NA
-
+  for (k in names(M)) {
+    if (any(k %in% fcts_mis$matrix))
+      M[[k]][, unique(fcts_mis$colname[fcts_mis$matrix %in% k])] <- NA
+  }
 
   # if (any(fcts_mis$type %in% c('ns')))
   #   stop(paste0("Natural cubic splines are not implemented for incomplete variables. ",
@@ -113,20 +111,23 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # )
 
 
-  inter <- grep(":", names(tvarM), fixed = TRUE, value = TRUE)
+  inter <- grep(":", colnames(MX), fixed = TRUE, value = TRUE)
 
   # if one element in an interaction is time-varying the interaction is time-varying
-  if (length(inter) > 0 & any(tvarM))
-    tvarM[inter[sapply(strsplit(inter, ':'),
-                       function(k) any(na.omit(tvarM[k])))]] <- TRUE
+  # if (length(inter) > 0 & any(tvarM)) {
+    # for (j in 1:nrow(tvarM)) {
+      # tvarM[j, inter[sapply(strsplit(inter, ':'),
+                            # function(k) any(na.omit(tvarM[j, k])))]] <- TRUE
+    # }
+  # }
 
   # * interactions -------------------------------------------------------------
-  interactions <- match_interaction(inter, Mc = Mc, Ml = Ml)
+  interactions <- match_interaction(inter, M)
 
-  if (any(colnames(Mc) %in% names(interactions)[sapply(interactions, 'attr', "has_NAs")]))
-    Mc[, which(colnames(Mc) %in% names(interactions))] <- NA
-  if (any(colnames(Ml) %in% names(interactions)[sapply(interactions, 'attr', "has_NAs")]))
-    Ml[, which(colnames(Ml) %in% names(interactions)[sapply(interactions, 'attr', "has_NAs")])] <- NA
+  if (any(sapply(M, colnames) %in% names(interactions)[sapply(interactions, 'attr', "has_NAs")]))
+    for (k in names(M)) {
+      M[[k]][, which(colnames(M[[k]]) %in% names(interactions)[sapply(interactions, 'attr', "has_NAs")])] <- NA
+    }
 
 
   # categorical variables ------------------------------------------------------
@@ -134,48 +135,66 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # also set dummies of complete long. variables to NA if there is a JM
   # because they need to be re-calculated in the quadrature part
   for (k in names(refs)) {
-    if (all(attr(refs[[k]], 'dummies') %in% colnames(M))) {
-      if (any(is.na(data[, k])) & any(!tvarM[attr(refs[[k]], 'dummies')]))
-        Mc[, attr(refs[[k]], 'dummies')] <- NA
-      else if ((any(is.na(data[, k])) | any(sapply(fixed, 'attr', 'type') %in% 'JM')) &
-               any(tvarM[attr(refs[[k]], 'dummies')]))
-        Ml[, attr(refs[[k]], 'dummies')] <- NA
+    if (all(attr(refs[[k]], 'dummies') %in% colnames(MX))) {
+
+      if (any(is.na(data[, k]))) {
+        M[[unique(Mlvls[attr(refs[[k]], 'dummies')])]][, attr(refs[[k]], 'dummies')] <- NA
+
+      } else if (any(sapply(fixed, 'attr', 'type') %in% 'JM')) {
+        # dummmy matrix
+        covmat <- unique(Mlvls[attr(refs[[k]], 'dummies')])
+        # outcome matrix
+        outmat <- unique(Mlvls[colnames(outcomes$outcomes[[1]])[2]])
+        if (colSums(!identify_level_relations(groups))[gsub('M_', '', outmat)] <
+            colSums(!identify_level_relations(groups))[gsub('M_', '', covmat)]) {
+
+          M[[unique(Mlvls[attr(refs[[k]], 'dummies')])]][, attr(refs[[k]], 'dummies')] <- NA
+        }
+      }
     }
   }
 
 
-  # Hierarchical centering -----------------------------------------------------
-  hc_list <- if (!all(sapply(random, is.null)))
-    HC(fixed, random, data, interactions = interactions,
-       Mcnam = colnames(Mc), Mlnam = colnames(Ml))
+
+
+  # # Hierarchical centering -----------------------------------------------------
+  # hc_list <- if (!all(sapply(random, is.null)))
+  #   HC(fixed, random, data, interactions = interactions,
+  #      Mnam = sapply(M, colnames), Mlvls = Mlvls, models = models, groups = groups)
 
   # column names of the linear predictors for all models -----------------------
   XXnam <- get_linpreds(fixed, random, data, models, auxvars, analysis_type)
 
   lp_cols <- lapply(XXnam, function(XX) {
-    Mccols <- if (!is.null(Mc)) c(na.omit(match(XX, colnames(Mc))))
-    Mlcols <- if (!is.null(Ml)) c(na.omit(match(XX, colnames(Ml))))
+    Mcols <- if (!is.null(M)) sapply(M, function(x) c(na.omit(match(XX, colnames(x)))), simplify = FALSE)
 
-    cml <- list(Mc = if (length(Mccols) > 0) setNames(Mccols, colnames(Mc)[Mccols]),
-                Ml = if (length(Mlcols) > 0) setNames(Mlcols, colnames(Ml)[Mlcols])
-    )
-    cml[!sapply(cml, is.null)]
+    cml <- sapply(names(Mcols)[sapply(Mcols, length) > 0],
+                  function(i)
+                    setNames(Mcols[[i]], colnames(M[[i]])[Mcols[[i]]]),
+                  simplify = FALSE)
+
+    cml[sapply(cml, length) > 0]
   })
 
+  for (k in names(M)) {
+    M[[k]] <- M[[k]][match(unique(groups[[gsub('M_', '', k)]]),
+                           groups[[gsub('M_', '', k)]]), , drop = FALSE]
+  }
 
-  return(list(fixed = fixed, random = random, idvar = idvar,
-              Mc = Mc[match(unique(groups), groups), , drop = FALSE],
-              Ml = Ml, lp_cols = lp_cols, interactions = interactions,
-              trafos = fcts_mis, hc_list = hc_list,
-              refs = refs, timevar = timevar,
-              auxvars = auxvars, groups = groups,
-              N = length(unique(groups)), Ntot = length(groups),
-              ppc = ppc, ridge = ridge,
-              models = models, scale_pars = scale_pars,
-              outcomes = outcomes, fcts_all = fcts_all,
-              terms_list = terms_list, df_basehaz = df_basehaz
-              )
-         )
+  list(fixed = fixed, random = random, idvar = idvar,
+       M = M, Mlvls = Mlvls,
+       lp_cols = lp_cols, interactions = interactions,
+       trafos = fcts_mis, #hc_list = hc_list,
+       refs = refs, timevar = timevar,
+       auxvars = auxvars, groups = groups,
+       group_lvls = colSums(!identify_level_relations(groups)),
+       N = sapply(groups, function(x) length(unique(x))),
+       ppc = ppc, ridge = ridge,
+       models = models, scale_pars = scale_pars,
+       outcomes = outcomes, fcts_all = fcts_all,
+       terms_list = terms_list, df_basehaz = df_basehaz
+  )
 }
+
 
 

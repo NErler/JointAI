@@ -1,13 +1,16 @@
 
 JAGSmodel_glmm <- function(info) {
+
+  index <- info$index[gsub('M_', '', info$resp_mat)]
+
   # settings for different types -----------------------------------------------
   distr <- get_distr(family = info$family, varname = info$varname,
-                     index = info$index[1])
+                     index = index)
 
   linkfun <- get_linkfun(info$link)
 
   repar <- get_repar(family = info$family, varname = info$varname,
-                     index = info$index)
+                     index = index)
 
   secndpar <- get_secndpar(family = info$family, varname = info$varname)
 
@@ -24,21 +27,23 @@ JAGSmodel_glmm <- function(info) {
                    beta = 4 + 9 + nchar(info$varname) + 8 + linkindent
   )
 
+
   # model parts ----------------------------------------------------------------
   hc_info <- get_hc_info(info)
   hc_parelmts <- organize_hc_parelmts(hc_info, info = info)
+
   rdslopes <- paste_rdslope_lp(hc_info, info)
   rdintercept <- paste_rdintercept_lp(info, hc_parelmts$in_b0)
 
-  Z_predictor <- paste_Zpart(info, index = info$index[1], hc_info,
+  Z_predictor <- paste_Zpart(info, index = index, hc_info,
                              notin_b = hc_parelmts$notin_b, isgk = FALSE)
 
-  norm.distr  <- if (length(info$hc_list) < 2) {"dnorm"} else {"dmnorm"}
+  # norm.distr  <- if (length(info$hc_list) < 2) {"dnorm"} else {"dmnorm"}
 
   dummies <- if (!is.null(info$dummy_cols)) {
     paste0('\n', paste_dummies(categories = info$categories, dest_mat = info$resp_mat,
                                dest_col = info$resp_col, dummy_cols = info$dummy_cols,
-                               index = info$index[1]), collapse = "\n")
+                               index = index), collapse = "\n")
   }
 
 
@@ -51,7 +56,7 @@ JAGSmodel_glmm <- function(info) {
   paste_ppc <- if (info$ppc) {
     paste0("\n",
            tab(4), "# For posterior predictive check:", "\n",
-           tab(4), info$varname, "_ppc[", info$index[1], "] ~ ", distr(info$varname), trunc, "\n"
+           tab(4), info$varname, "_ppc[", index, "] ~ ", distr(info$varname), trunc, "\n"
     )
   }
 
@@ -70,12 +75,12 @@ JAGSmodel_glmm <- function(info) {
 
   # write model ----------------------------------------------------------------
   paste0(tab(), "# ", modelname, " mixed effects model for ", info$varname, "\n",
-         tab(), "for (", info$index[1], " in 1:", info$Ntot, ") {", "\n",
-         tab(4), info$resp_mat, "[", info$index[1], ", ", info$resp_col, "] ~ ",
+         tab(), "for (", index, " in 1:", info$N[gsub("M_", "", info$resp_mat)], ") {", "\n",
+         tab(4), info$resp_mat, "[", index, ", ", info$resp_col, "] ~ ",
          distr, trunc, "\n",
          repar,
-         tab(4), linkfun(paste0("mu_", info$varname, "[", info$index[1], "]")), " <- ",
-         add_linebreaks(Z_predictor, indent = indent),
+         tab(4), linkfun(paste0("mu_", info$varname, "[", index, "]")), " <- ",
+         add_linebreaks(paste0(Z_predictor, collapse = " + "), indent = indent),
          "\n",
          paste_ppc,
          dummies,
@@ -83,22 +88,20 @@ JAGSmodel_glmm <- function(info) {
          "\n",
          tab(), "}", "\n",
          "\n",
-         tab(), "for (", info$index[2], " in 1:", info$N, ") {", "\n",
-         tab(4), "b_", info$varname, "[", info$index[2], ", 1:",
-         max(1, length(info$hc_list)), "] ~ ", norm.distr,
-         "(mu_b_", info$varname, "[", info$index[2], ", ], invD_", info$varname, "[ , ])", "\n",
-         paste_mu_b(rdintercept, rdslopes, info$varname, info$index[2]),
-         "\n",
-         tab(), "}", "\n\n",
+         paste0(sapply(names(rdintercept), write_ranefs, info = info,
+                       rdintercept = rdintercept, rdslopes = rdslopes), collapse = ''),
          tab(), "# Priors for the model for ", info$varname, "\n",
-         tab(), "for (k in ", min(info$parelmts$Mc, info$parelmts$Ml), ":",
-         max(info$parelmts$Mc, info$parelmts$Ml), ") {", "\n",
+         tab(), "for (k in ", min(unlist(info$parelmts)), ":",
+         max(unlist(info$parelmts)), ") {", "\n",
          get_priordistr(info$shrinkage, info$family, info$link, info$parname),
          tab(), "}",
          secndpar,
          paste_ppc_prior,
          "\n",
-         ranef_priors(max(1, length(info$hc_list)), info$varname)
+         paste0(
+           sapply(names(info$hc_list), function(x) {
+             ranef_priors(max(1, length(info$hc_list[[x]])), paste0(info$varname, "_", x))
+           }), collapse = "\n")
   )
 }
 

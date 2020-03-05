@@ -4,7 +4,7 @@ tab <- function(times = 2) {
   paste(rep(tb, times), collapse = "")
 }
 
-add_linebreaks <- function(string, indent, width = 85) {
+add_linebreaks <- function(string, indent, width = 90) {
   # string: the linear predictor string to be broken
   # indent: in case of a linebreak, how much should the new line be indented?
   # width: output width
@@ -95,75 +95,134 @@ paste_coef <- function(parname, parelmts) {
 
 # pasting random effects -------------------------------------------------------
 
-paste_rdslope_lp <- function(hc_info, info) {
-  if (is.null(hc_info))
-    return(NULL)
+# paste_rdslope_lp <- function(hc_info, info) {
+#   if (is.null(hc_info))
+#     return(NULL)
+#
+#   lapply(hc_info, function(x) {
+#   lapply(x, function(k) {
+#
+#     if (is.na(k$main_effect$coef_nr) || is.null(k$main_effect$coef_nr)) {
+#       # if there is no corresponding fixed effect, the mean of the
+#       # random effect distribution is 0:
+#       "0"
+#     } else {
+#       paste0(
+#         c(# main effects part: only coefficient
+#           paste_coef(info$parname, k$main_effect$coef_nr),
+#
+#           if (!is.null(k$interact_effect) && #################################################
+#               any(sapply(k$interact_effect, "[[", "matrix") %in% 'Mc')) {
+#             # interaction part (baseline covs): coefficient * variable
+#             cols <- Filter(Negate(is.null),
+#                            lapply(k$interact_effect, function(x) {
+#                              if (any(x$matrix %in% 'Mc'))
+#                                x$column[x$matrix %in% 'Mc']
+#                            }))
+#
+#             matnam <- Filter(Negate(is.null),
+#                              lapply(k$interact_effect, function(x) {
+#                                if (any(x$matrix %in% 'Mc'))
+#                                  x$matrix[x$matrix %in% 'Mc']
+#                              }))
+#
+#             coefnrs <- Filter(Negate(is.null),
+#                               lapply(k$interact_effect, function(x) {
+#                                 if (any(x$matrix %in% 'Mc'))
+#                                   x$coef_nr
+#                               }))
+#
+#             paste(
+#               paste_coef(info$parname, coefnrs),
+#               mapply(function(x, col) {
+#                 paste0(
+#                   paste_scaling(x = x,
+#                                 scale_pars = info$scale_pars$Mc,
+#                                 rows = col,
+#                                 scalemat = 'spMc'
+#                   ), collapse = " * ")
+#               }, x = sapply(cols, paste_data, matnam = "Mc", index = "i"),
+#               col = cols),
+#               sep = " * ")
+#
+#           }
+#         ), collapse = " + ") # add up main * interaction
+#     }
+#   })
+#   })
+# }
+#
 
-  lapply(hc_info, function(k) {
 
-    if (is.na(k$main_effect$coef_nr) || is.null(k$main_effect$coef_nr)) {
-      # if there is no corresponding fixed effect, the mean of the
-      # random effect distribution is 0:
-      "0"
-    } else {
-      paste0(
-        c(# main effects part: only coefficient
-          paste_coef(info$parname, k$main_effect$coef_nr),
+paste_rdslope_lp <- function(info, isgk = FALSE) {
+  sapply(names(info$hc_list$hcvars), function(lvl) {
+    mat <- paste0("M_", lvl)
 
-          if (!is.null(k$interact_effect) &&
-              any(sapply(k$interact_effect, "[[", "matrix") %in% 'Mc')) {
-            # interaction part (baseline covs): coefficient * variable
-            cols <- Filter(Negate(is.null),
-                           lapply(k$interact_effect, function(x) {
-                             if (any(x$matrix %in% 'Mc'))
-                               x$column[x$matrix %in% 'Mc']
-                           }))
+    rds <- info$hc_list$hcvars[[lvl]]$rd_slope_coefs
+    rdsi <- info$hc_list$hcvars[[lvl]]$rd_slope_interact_coefs
 
-            matnam <- Filter(Negate(is.null),
-                             lapply(k$interact_effect, function(x) {
-                               if (any(x$matrix %in% 'Mc'))
-                                 x$matrix[x$matrix %in% 'Mc']
-                             }))
 
-            coefnrs <- Filter(Negate(is.null),
-                              lapply(k$interact_effect, function(x) {
-                                if (any(x$matrix %in% 'Mc'))
-                                  x$coef_nr
-                              }))
+    if (!is.null(rds) | !is.null(rdsi))
+      paste0(c(
+      # random slope coefficients
+      paste_coef(parname = info$parname,
+                 parelmts = rds$parelmts),
 
-            paste(
-              paste_coef(info$parname, coefnrs),
-              mapply(function(x, col) {
-                paste0(
-                  paste_scaling(x = x,
-                                scale_pars = info$scale_pars$Mc,
-                                rows = col,
-                                scalemat = 'spMc'
-                  ), collapse = " * ")
-              }, x = sapply(cols, paste_data, matnam = "Mc", index = "i"),
-              col = cols),
-              sep = " * ")
-
-          }
-        ), collapse = " + ") # add up main * interaction
-    }
-  })
+      # interactions with random slope
+      paste(
+        paste_scaling(x = paste_data(matnam = rdsi$matrix, index = info$index[lvl],
+                                     col = rdsi$cols, isgk),
+                      rows = rdsi$cols,
+                      scale_pars = info$scale_pars[[mat]],
+                      scalemat = paste0('sp', mat)
+        ),
+        paste_coef(parname = info$parname,
+                   parelmts = rdsi$parelmts),
+        sep = " * ")
+    ), collapse = " + ")
+  }, simplify = FALSE)
 }
 
 
-paste_rdintercept_lp <- function(info, in_b0) {
-  if (length(in_b0) > 0) {
-  paste_linpred(parname = info$parname,
-                parelmts = info$parelmts$Mc[in_b0],
-                matnam = "Mc",
-                index = info$index[2],
-                cols = info$lp$Mc[in_b0],
-                scale_pars = info$scale_pars$Mc[in_b0, ],
-                isgk = FALSE)
-  } else {
-    "0"
-  }
+
+
+
+# paste_rdintercept_lp <- function(info, in_b0) {
+#   sapply(names(in_b0), function(k) {
+#
+#     if (length(in_b0[[k]]) > 0) {
+#       paste_linpred(parname = info$parname,
+#                     parelmts = info$parelmts[[paste0("M_", k)]][in_b0[[k]]],
+#                     matnam = paste0("M_", k),
+#                     index = info$index[gsub("M_", "", k)],
+#                     cols = info$lp[[paste0("M_", k)]][in_b0[[k]]],
+#                     scale_pars = info$scale_pars[[k]][in_b0[[k]], ],
+#                     isgk = FALSE)
+#     } else {
+#       "0"
+#     }
+#   }, simplify = FALSE)
+# }
+
+paste_rdintercept_lp <- function(info) {
+  sapply(names(info$hc_list$hcvars), function (lvl) {
+    mat <- paste0("M_", lvl)
+
+    x <- info$hc_list$hcvars[[lvl]]$rd_intercept_coefs
+
+    if (length(x$parelmts) > 0) {
+      paste_linpred(parname = info$parname,
+                    parelmts = x$parelmts,
+                    matnam = unique(x$mat),
+                    index = info$index[lvl],
+                    cols = x$cols,
+                    scale_pars = info$scale_pars[[mat]],
+                    isgk = FALSE)
+    } else {"0"}
+  }, simplify = FALSE)
 }
+
+
 
 
 paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
@@ -189,46 +248,123 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
   )
 }
 
-paste_Zpart <- function(info, index, hc_info, notin_b, isgk = FALSE) {
-  matnam <- unlist(lapply(lapply(hc_info, "[[", 'main_effect'), "[[", 'matrix'))
-  cols <- unlist(lapply(lapply(hc_info, "[[", 'main_effect'), "[[", 'column'))
+# paste_Zpart <- function(info, index, hc_info, notin_b, isgk = FALSE) {
+#
+#   if (is.null(hc_info))
+#       return(NULL)
+#
+#
+#   sapply(names(info$parelmts), function(Mk) {
+#     k <- gsub("M_", "", Mk)
+#
+#     matnam <- unlist(lapply(lapply(hc_info[[k]], "[[", 'main_effect'), "[[", 'matrix'))
+#     cols <- unlist(lapply(lapply(hc_info[[k]], "[[", 'main_effect'), "[[", 'column'))
+#
+#     rdindex <- if (isgk) index else paste0("group_", k, "[", index, "]")
+#
+#     rd_intercept <- if (length(matnam) > 0) {
+#       # random intercept
+#       paste_data(matnam = paste0("b_", info$varname, "_", k),
+#                  index = rdindex, col = 1)
+#     }
+#
+#     rd_slope <- if (length(matnam) > 0) {
+#       pastedat <- paste_data(matnam = paste0(matnam, if (isgk) "gk"),
+#                              index = index,
+#                              col = paste0(cols, if (isgk) ", k"))
+#       paste(
+#         paste_data(matnam = paste0("b_", info$varname, "_", k), index = rdindex,
+#                    col = seq_along(matnam) + 1),
+#         mapply(function(x, rows, scale_pars, scalemat) {
+#           paste_scaling(
+#             x = x,
+#             rows = rows,
+#             scale_pars = scale_pars,
+#             scalemat = scalemat
+#           )
+#         }, x = pastedat, rows = cols, scale_pars = info$scale_pars[matnam],
+#         scalemat = paste0('sp', matnam)),
+#         sep = " * "
+#       )}
+#
+#     not_in_rd <- if (length(info$parelmts[[Mk]][notin_b[[Mk]]]) > 0)
+#         paste_linpred(parname = info$parname,
+#                       parelmts = info$parelmts[[Mk]][notin_b[[Mk]]],
+#                       matnam = Mk,
+#                       index = index,
+#                       cols = info$lp[[Mk]][notin_b[[Mk]]],
+#                       scale_pars = info$scale_pars[[Mk]],
+#                       isgk = isgk)
+#
+#     if (any(!sapply(list(rd_intercept, rd_slope, not_in_rd), is.null)))
+#       paste0(rd_intercept, rd_slope, not_in_rd, collapse = " + ")
+#   }, simplify = FALSE)
+# }
 
-  rdindex <- if (isgk) index else paste0("group[", index, "]")
 
-  paste(c(
-    # random intercept
-    paste_data(matnam = paste0("b_", info$varname), index = rdindex, col = 1),
 
-    # random slopes
-    if (length(matnam) > 0) {
-      pastedat <- paste_data(matnam = paste0(matnam, if (isgk) "gk"),
-                             index = c('Ml' = index,
-                                       'Mc' = paste0("group[", index, "]"))[matnam],
-                             col = paste0(cols, if (isgk) ", k"))
+paste_lp_Zpart <- function(info) {
+  lvl <- gsub("M_", "", info$resp_mat[length(info$resp_mat)])
+
+  Zlp <- sapply(names(info$group_lvls)[info$group_lvls >= info$group_lvls[lvl]],
+                function(k) {
+
+    rdi <- if (length(info$hc_list$hcvars[[k]]$rd_intercept_coefs$parelmts) > 0) {
+      paste_data(matnam = paste0("b_", info$varname, "_", k),
+                 index = paste0('group_', k, "[", info$index[lvl], "]"),
+                 col = 1)
+    }
+
+    rds <- if (length(info$hc_list$hcvars[[k]]$rd_slope_coefs$parelmts) > 0) {
       paste(
-        paste_data(matnam = paste0("b_", info$varname), index = rdindex,
-                   col = seq_along(matnam) + 1),
-        mapply(function(x, rows, scale_pars, scalemat) {
-          paste_scaling(
-            x = x,
-            rows = rows,
-            scale_pars = scale_pars,
-            scalemat = scalemat
-          )
-        }, x = pastedat, rows = cols, scale_pars = info$scale_pars[matnam],
-        scalemat = paste0('sp', matnam)),
-        sep = " * "
-      )},
-    if (length(info$parelmts$Ml[notin_b]) > 0)
-      paste_linpred(parname = info$parname,
-                    parelmts = info$parelmts$Ml[notin_b],
-                    matnam = "Ml",
-                    index = index,
-                    cols = info$lp$Ml[notin_b],
-                    scale_pars = info$scale_pars$Ml,
-                    isgk = isgk)),
-    collapse = " + ")
+        paste_data(matnam = paste0("b_", info$varname, "_", k),
+                   index = paste0('group_', k, "[", info$index[lvl], "]"),
+                   col = 1:nrow(info$hc_list$hcvars[[k]]$rd_slope_coefs) + 1),
+
+        paste_scaling(
+          paste_data(
+            matnam = info$hc_list$hcvars[[k]]$rd_slope_coefs$matrix,
+            index = info$index[lvl],
+            col = info$hc_list$hcvars[[k]]$rd_slope_coefs$cols),
+          row = info$hc_list$hcvars[[k]]$rd_slope_coefs$cols,
+          scale_pars = info$scale_pars[[unique(info$hc_list$hcvars[[k]]$rd_slope_coefs$matrix)]],
+          scalemat = paste0("spM_", k)), sep = ' * ')
+    }
+
+    other <- if (!is.null(info$hc_list$othervars[[k]]))
+      paste(
+        paste_coef(parname = info$parname, parelmts = info$hc_list$othervars[[k]]$parelmts),
+        paste_scaling(
+          paste_data(matnam = info$hc_list$othervars[[k]]$matrix,
+                     index = info$index[[lvl]],
+                     col = info$hc_list$othervars[[k]]$cols),
+          row = info$hc_list$othervars[[k]]$cols,
+          scale_pars = info$scale_pars[[paste0("M_", k)]],
+          scalemat = paste0("spM_", k)), sep = " * "
+      )
+
+  c(rdi, rds, other)
+  }, simplify = FALSE)
+
+  paste0(unlist(Zlp), collapse = " + ")
 }
+
+
+
+write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
+  norm.distr  <- if (info$nranef[lvl] < 2) {"dnorm"} else {"dmnorm"}
+  paste0(
+    tab(), "for (", info$index[lvl], " in 1:", info$N[lvl], ") {", "\n",
+    tab(4), "b_", info$varname, "_", lvl, "[", info$index[lvl], ", 1:",
+    max(1, length(info$hc_list[lvl])), "] ~ ", norm.distr,
+    "(mu_b_", info$varname, "_", lvl, "[", info$index[lvl], ", ], invD_",
+    info$varname, "_", lvl, "[ , ])", "\n",
+    paste_mu_b(rdintercept[[lvl]], rdslopes[[lvl]],
+               paste(info$varname, lvl, sep = "_"), info$index[lvl]),
+    "\n",
+    tab(), "}", "\n\n")
+}
+
 
 # Joint model ------------------------------------------------------------------
 
@@ -374,7 +510,7 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
     x <- trafos[i, , drop = FALSE]
 
     if (!x$dupl) {
-      dest_mat <- if (x$colname %in% colnames(Mlist$Mc)) 'Mc' else 'Ml'
+      dest_mat <- x$matrix
       dest_col <- match(x$colname, colnames(Mlist[[dest_mat]]))
 
       if (!is.na(x$dupl_rows)) {
@@ -383,7 +519,7 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
         xx <- x
       }
       vars <- xx$var
-      vars_mat <- ifelse(xx$var%in% colnames(Mlist$Mc), 'Mc', 'Ml')
+      vars_mat <- xx$matrix
       vars_cols <- sapply(seq_along(vars), function(k)
         match(xx$var[k], colnames(Mlist[[vars_mat[k]]]))
       )

@@ -73,13 +73,10 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
   }
 
 
-  # try to extract id variable from random
-  id <- extract_id(random = random)
-  idvar <- if (!is.null(id)) {
-    data[, id]
-  } else {
-    1:nrow(data)
-  }
+  # extract the id variable from the random effects formula and get groups
+  idvar <- extract_id(random, warn = warn, allow_multiple = TRUE)
+  groups <- get_groups(idvar, data)
+
   random2 <- remove_grouping(random)
 
 
@@ -91,61 +88,48 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
     all_vars(auxvars),
     names(models)))
 
+  group_lvls <- colSums(!identify_level_relations(groups))
+  max_lvl <- max(group_lvls)
 
   if (length(allvars) > 0) {
 
     varinfo <- sapply(allvars, function(k) {
       x <- eval(parse(text = k), envir = data)
       out <- k %in% names(fixed)
-      tvar <- check_tvar(x, idvar)
-      nmis <- if (tvar) sum(is.na(x)) else sum(is.na(x[match(unique(idvar), idvar)]))
+      lvl <- group_lvls[check_varlevel(x, groups)]
+      nmis <- sum(is.na(x[match(unique(groups[[names(lvl)]]), groups[[names(lvl)]])]))
       nlev <- length(levels(x))
       ordered <- is.ordered(x)
-      data.frame(out = out, tvar = tvar, nmis = nmis, nlev = nlev, ordered = ordered, type = NA)
+      data.frame(out = out, lvl = lvl, nmis = nmis, nlev = nlev, ordered = ordered, type = NA)
     }, simplify = FALSE)
 
     varinfo <- melt_data.frame_list(varinfo, id.vars = colnames(varinfo[[1]]))
 
-    varinfo$type[varinfo$tvar & varinfo$nlev > 2 & varinfo$ordered] <- 'clmm'
-    varinfo$type[!varinfo$tvar & varinfo$nlev > 2 & varinfo$ordered] <- 'clm'
-    varinfo$type[varinfo$tvar & varinfo$nlev > 2 & !varinfo$ordered] <- 'mlogitmm'
-    varinfo$type[!varinfo$tvar & varinfo$nlev > 2 & !varinfo$ordered] <- 'mlogit'
-    varinfo$type[varinfo$tvar & varinfo$nlev == 2] <- 'glmm_binomial_logit'
-    varinfo$type[!varinfo$tvar & varinfo$nlev == 2] <- 'glm_binomial_logit'
-    varinfo$type[varinfo$tvar & varinfo$nlev == 0] <- 'lmm'
-    varinfo$type[!varinfo$tvar & varinfo$nlev == 0] <- 'lm'
+
+
+    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev > 2 & varinfo$ordered] <- 'clmm'
+    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev > 2 & varinfo$ordered] <- 'clm'
+    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev > 2 & !varinfo$ordered] <- 'mlogitmm'
+    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev > 2 & !varinfo$ordered] <- 'mlogit'
+    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev == 2] <- 'glmm_binomial_logit'
+    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev == 2] <- 'glm_binomial_logit'
+    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev == 0] <- 'lmm'
+    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev == 0] <- 'lm'
     varinfo$type[varinfo$out] <- sapply(fixed, attr, 'type')
 
-
-
-    # tvar <- sapply(data[, allvars, drop = FALSE], check_tvar, idvar)
-
-    # nmis <- c(colSums(is.na(data[, names(tvar[tvar]), drop = FALSE])),
-    #           colSums(is.na(data[match(unique(idvar), idvar), names(tvar[!tvar]), drop = FALSE]))
-    # )
-
-
-    # if (all(nmis == 0) & is.null(models_user) & (is.null(analysis_type) || analysis_type!= "JM"))
-    #   return(list(models = NULL, meth = NULL))
 
     varinfo <- varinfo[which(!varinfo$L1 %in% no_model), , drop = FALSE]
 
     types <- split(varinfo,
                    ifelse(varinfo$out, 'outcome',
                           ifelse(varinfo$nmis > 0,
-                                 ifelse(varinfo$tvar, 'incomplete_tvar', 'incomplete_baseline'),
-                                 ifelse(varinfo$tvar, 'complete_tvar', 'complete_baseline'))))
+                                 ifelse(!varinfo$lvl %in% max_lvl, 'incomplete_tvar', 'incomplete_baseline'),
+                                 ifelse(!varinfo$lvl %in% max_lvl, 'complete_tvar', 'complete_baseline'))))
 
-
-    # types <- lapply(split(nmis, list(ifelse(nmis > 0, 'incomplete', 'complete'),
-    #                                  ifelse(tvar, 'tvar', 'baseline'))),
-    #                 function(x) if (length(x) > 0) sort(x, decreasing = TRUE)
-    # )
-    #
 
     types[which(names(types) != 'outcome')] <-
       lapply(types[which(names(types) != 'outcome')], function(x)
-        x[order(x$nmis, decreasing = TRUE), , drop = FALSE]
+        x[order(-x$lvl, x$nmis, decreasing = TRUE), , drop = FALSE]
       )
 
 
@@ -180,5 +164,5 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
   } else {
     models <- NULL
   }
-  return(models)
+  models
 }
