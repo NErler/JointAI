@@ -155,13 +155,6 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   }
 
 
-
-
-  # # Hierarchical centering -----------------------------------------------------
-  # hc_list <- if (!all(sapply(random, is.null)))
-  #   HC(fixed, random, data, interactions = interactions,
-  #      Mnam = sapply(M, colnames), Mlvls = Mlvls, models = models, groups = groups)
-
   # column names of the linear predictors for all models -----------------------
   XXnam <- get_linpreds(fixed, random, data, models, auxvars, analysis_type)
 

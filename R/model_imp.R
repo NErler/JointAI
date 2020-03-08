@@ -509,7 +509,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   if (n.iter > 0 & class(mcmc) != 'mcmc.list')
     warning('There is no mcmc sample. Something went wrong.',
             call. = FALSE, immediate. = TRUE)
-print('end of sampling')
+
   # post processing ------------------------------------------------------------
   if (n.iter > 0 & !is.null(mcmc)) {
     MCMC <- mcmc
@@ -526,7 +526,6 @@ print('end of sampling')
     }
   }
 
-print('prep output')
   # prepare output -------------------------------------------------------------
   if (!keep_model) {file.remove(modelfile)}
 
@@ -563,10 +562,10 @@ print('prep output')
          MCMC = if (n.iter > 0 & !is.null(mcmc)) as.mcmc.list(MCMC),
          time = t1 - t0
     ), class = "JointAI")
-print('fit and resid')
+
 
   object$fitted.values <- try(fitted_values(object, mess = FALSE, warn = FALSE), silent = TRUE)
-  print('between')
+
   object$residuals <- try(residuals(object, type = 'working', warn = FALSE),
                           silent = TRUE)
 
@@ -574,7 +573,7 @@ print('fit and resid')
   #   if (!object$analysis_type %in% c('clm', 'clmm'))
   #     names(object$fitted.values) <- names(object$residuals) <- rownames(object$Mlist$y)
   # }
-print('after')
+
   if (inherits(object$fitted.values, 'try-error'))
     object$fitted.values <- NULL
   if (inherits(object$residuals, 'try-error'))
