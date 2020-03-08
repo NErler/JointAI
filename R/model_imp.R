@@ -526,10 +526,10 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
     }
   }
 
-  # prepare output -------------------------------------------------------------
-  if (!keep_model) {file.remove(modelfile)}
 
+  # prepare output -------------------------------------------------------------
   mcmc_settings <- list(modelfile = modelfile,
+                        modelstring = readChar(modelfile, file.info(modelfile)$size),
                         n.chains = n.chains,
                         n.adapt = n.adapt,
                         n.iter = n.iter,
@@ -538,6 +538,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                         inits = inits,
                         parallel = parallel,
                         n.cores = if (parallel) n.cores)
+
+  if (!keep_model) {file.remove(modelfile)}
 
   # set contrasts back to what they were
   on.exit(options(opt))
