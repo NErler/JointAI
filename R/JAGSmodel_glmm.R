@@ -29,14 +29,9 @@ JAGSmodel_glmm <- function(info) {
 
 
   # model parts ----------------------------------------------------------------
-  hc_info <- get_hc_info(info)
-  hc_parelmts <- organize_hc_parelmts(hc_info, info = info)
-
-  rdslopes <- paste_rdslope_lp(hc_info, info)
-  rdintercept <- paste_rdintercept_lp(info, hc_parelmts$in_b0)
-
-  Z_predictor <- paste_Zpart(info, index = index, hc_info,
-                             notin_b = hc_parelmts$notin_b, isgk = FALSE)
+  rdintercept <- paste_rdintercept_lp(info)
+  rdslopes <- paste_rdslope_lp(info)
+  Z_predictor <- paste_lp_Zpart(info)
 
   # norm.distr  <- if (length(info$hc_list) < 2) {"dnorm"} else {"dmnorm"}
 
