@@ -194,7 +194,7 @@ get_hc_info <- function(varname, lvl, Mlist, data, parelmts, lp) {
 
 get_hc_list <- function(k, newrandom, data, Mlist) {
   Mlvls <- Mlist$Mlvls
-  Mnam <- sapply(Mlist$M, colnames)
+  Mnam <- sapply(Mlist$M, colnames, simplify = FALSE)
   # column names of random effect design matrices per required level
   Znam <- colnames(model.matrix(newrandom[[k]], data))
 
@@ -273,7 +273,10 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
                             parelmts = parelmts[[paste0("M_", k)]],
                             stringsAsFactors = FALSE)
 
-    othervars <- othervars[!othervars$parelmts %in% unlist(lapply(hcvars, "[[", "parelmts"))]
+    used <- sapply(lapply(hcvars, do.call, what = rbind), "[[", "parelmts")
+
+    othervars <- othervars[!othervars$parelmts %in% unlist(used), ]
+
     if (all(dim(othervars) > 0))
       othervars
   }, simplify = FALSE)
