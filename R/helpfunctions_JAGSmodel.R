@@ -162,12 +162,14 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
     rdsi <- info$hc_list$hcvars[[lvl]]$rd_slope_interact_coefs
 
 
-    if (!is.null(rds) | !is.null(rdsi))
+    if (!is.null(rds) | !is.null(rdsi)) {
       paste0(c(
+        if (!is.null(rds))
       # random slope coefficients
       paste_coef(parname = info$parname,
                  parelmts = rds$parelmts),
 
+      if (!is.null(rdsi))
       # interactions with random slope
       paste(
         paste_scaling(x = paste_data(matnam = rdsi$matrix, index = info$index[lvl],
@@ -180,6 +182,7 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
                    parelmts = rdsi$parelmts),
         sep = " * ")
     ), collapse = " + ")
+    }
   }, simplify = FALSE)
 }
 
@@ -328,7 +331,7 @@ paste_lp_Zpart <- function(info) {
             col = info$hc_list$hcvars[[k]]$rd_slope_coefs$cols),
           row = info$hc_list$hcvars[[k]]$rd_slope_coefs$cols,
           scale_pars = info$scale_pars[[unique(info$hc_list$hcvars[[k]]$rd_slope_coefs$matrix)]],
-          scalemat = paste0("spM_", k)), sep = ' * ')
+          scalemat = paste0("sp", unique(info$hc_list$hcvars[[k]]$rd_slope_coefs$matrix))), sep = ' * ')
     }
 
     other <- if (!is.null(info$hc_list$othervars[[k]]))
