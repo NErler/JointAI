@@ -94,8 +94,8 @@ JAGSmodel_glmm <- function(info) {
          paste_ppc_prior,
          "\n",
          paste0(
-           sapply(names(info$hc_list), function(x) {
-             ranef_priors(max(1, length(info$hc_list[[x]])), paste0(info$varname, "_", x))
+           sapply(names(info$hc_list$hcvars), function(x) {
+             ranef_priors(info$nranef[x], paste0(info$varname, "_", x))
            }), collapse = "\n")
   )
 }

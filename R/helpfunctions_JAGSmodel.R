@@ -356,7 +356,7 @@ write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
   paste0(
     tab(), "for (", info$index[lvl], " in 1:", info$N[lvl], ") {", "\n",
     tab(4), "b_", info$varname, "_", lvl, "[", info$index[lvl], ", 1:",
-    max(1, length(info$hc_list[lvl])), "] ~ ", norm.distr,
+    info$nranef[lvl], "] ~ ", norm.distr,
     "(mu_b_", info$varname, "_", lvl, "[", info$index[lvl], ", ], invD_",
     info$varname, "_", lvl, "[ , ])", "\n",
     paste_mu_b(rdintercept[[lvl]], rdslopes[[lvl]],
