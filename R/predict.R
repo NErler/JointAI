@@ -408,15 +408,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   coefs <- coef_list[[varname]]
 
   timevar <- Mlist$outcomes$outnams[[varname]][1]
-
-  # survrow <- if (!is.null(Mlist$idvar)) {
-  #   by(data.frame(nr = 1:nrow(newdata),
-  #                 timevar = newdata[, timevar]),
-  #      factor(match(newdata[, Mlist$idvar], unique(newdata[, Mlist$idvar]))),
-  #      function(k) k$nr[which.max(k$timevar)]
-  #   )
-  # } else {1:nrow(newdata)}
-
+  resp_mat <- info_list[[varname]]$resp_mat[2]
 
   mf <- model.frame(as.formula(paste(Mlist$fixed[[varname]])[-2]),
                     data, na.action = na.pass)
@@ -426,8 +418,13 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   op <- options(contrasts = rep("contr.treatment", 2),
                 na.action = na.pass)
 
-  X <- model.matrix(mt, data = newdata)[, -1, drop = FALSE]
-  Xc <- X[, colnames(X) %in% colnames(Mlist$Mc), drop = FALSE]
+  X0 <- model.matrix(mt, data = newdata)[, -1, drop = FALSE]
+
+  X <- sapply(names(Mlist$M), function(lvl) {
+    X0[, colnames(X0) %in% colnames(Mlist$M[[lvl]]), drop = FALSE]
+  })
+
+  # Xc <- X[, colnames(X) %in% colnames(Mlist$M[[info_list[[varname]]$resp_mat[2]]]), drop = FALSE]
 
   if (mess & any(is.na(X)))
     message('Prediction for cases with missing covariates is not yet implemented.')
@@ -437,35 +434,43 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     scale_pars$center[is.na(scale_pars$center)] <- 0
   }
 
-  eta_surv <- sapply(1:nrow(Xc), function(i)
-    if (!is.null(scale_pars)) {
-      MCMC[, coefs$coef[match(colnames(Xc), coefs$varname)], drop = FALSE] %*%
-        (Xc[i, ] - scale_pars$center[match(colnames(Xc), rownames(scale_pars))])
-    } else {
-      MCMC[, coefs$coef[match(colnames(Xc), coefs$varname)], drop = FALSE] %*% Xc[i, ]
-    }
-  )
-
-  eta_surv_long <- if (!is.null(Mlist$Ml)) {
-    Xl <- X[, colnames(X) %in% colnames(Mlist$Ml), drop = FALSE]
-
-    sapply(1:nrow(Xl), function(i)
+  lp_list <- sapply(X, function(x) {
+    sapply(1:nrow(x), function(i)
       if (!is.null(scale_pars)) {
-        MCMC[, coefs$coef[match(colnames(Xl), coefs$varname)], drop = FALSE] %*%
-          (Xl[i, ] - scale_pars$center[match(colnames(Xl), rownames(scale_pars))])
+        MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*%
+          (x[i, ] - scale_pars$center[match(colnames(x), rownames(scale_pars))])
       } else {
-        MCMC[, coefs$coef[match(colnames(Xl), coefs$varname)], drop = FALSE] %*% Xl[i, ]
+        MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*% x[i, ]
       }
     )
+  }, simplify = FALSE)
+
+  lps <- array(unlist(lp_list), dim = c(nrow(lp_list[[1]]),
+                                        ncol(lp_list[[1]]),
+                                        length(lp_list)),
+               dimnames = list(c(), c(), gsub("M_", "", names(lp_list))))
+
+
+  eta_surv <- if (any(Mlist$group_lvls >= Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
+    apply(lps[, , names(which(Mlist$group_lvls >=
+                                          Mlist$group_lvls[gsub("M_", "", resp_mat)]))],
+        c(1,2), sum)
   } else {0}
+
+  eta_surv_long <- if (any(Mlist$group_lvls < Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
+    apply(lps[, , names(which(Mlist$group_lvls <
+                              Mlist$group_lvls[gsub("M_", "", resp_mat)]))],
+          c(1,2), sum)
+  } else {0}
+
   gkx <- gauss_kronrod()$gkx
   ordgkx <- order(gkx)
   gkw <- gauss_kronrod()$gkw[ordgkx]
 
 
   if (is.null(survrow))
-    survrow <- 1:nrow(Mlist[[info_list[[varname]]$resp_mat[timevar]]])
-  time_orig <- Mlist[[info_list[[varname]]$resp_mat[timevar]]][survrow, timevar]
+    survrow <- 1:nrow(Mlist$M[[info_list[[varname]]$resp_mat[timevar]]])
+  time_orig <- Mlist$M[[info_list[[varname]]$resp_mat[timevar]]][survrow, timevar]
 
   h0knots <- get_knots_h0(nkn = Mlist$df_basehaz - 4,
                           Time = time_orig,
@@ -483,10 +488,11 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     })
 
 
-    tvpred <- if (!is.null(Mlist$Ml)) {
+    tvpred <- if (any(Mlist$group_lvls < Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
       Mlgk <- do.call(rbind,
                       get_Mlgk(survrow = 1:nrow(newdata), gkx, newdata = newdata,
-                               data = data, Mlist, timevar, td_cox = TRUE))
+                               data = data, Mlist, lvl = gsub("M_", "", resp_mat),
+                               timevar, td_cox = TRUE))
       vars <- coefs$varname[na.omit(match(dimnames(Mlgk)[[2]], coefs$varname))]
 
       lapply(1:nrow(MCMC), function(m) {
