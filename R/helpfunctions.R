@@ -177,13 +177,13 @@ get_coef_names <- function(info_list) {
 
 get_locf <- function(fixed, newdata, data, idvar, group_lvls, groups, timevar, gk_data) {
   covars <- all_vars(remove_LHS(fixed))
+  covar_lvls <- sapply(data[, covars], check_varlevel, groups = groups)
 
-  longvars <- covars[group_lvls[sapply(data[, covars], check_varlevel,
-                                       groups = groups)] < group_lvls[idvar]]
+  longvars <- covars[group_lvls[covar_lvls] < group_lvls[idvar]]
 
   ld <- subset(newdata, select = c(idvar, timevar, longvars))
   ld <- ld[order(ld[, idvar]), ]
-  ld$obstime <- unlist(lapply(table(ld[, idvar]), function(k) 1:k))
+  ld$obstime <- unlist(lapply(table(droplevels(ld[, idvar, drop = FALSE])), function(k) 1:k))
 
   wd <- reshape(ld, direction = 'wide', v.names = c(timevar, longvars),
                 timevar = 'obstime', idvar = idvar)
@@ -219,25 +219,27 @@ get_locf <- function(fixed, newdata, data, idvar, group_lvls, groups, timevar, g
 
 
 
-get_Mlgk <- function(survrow, gkx, newdata, data, Mlist, timevar, td_cox = FALSE) {
+get_Mlgk <- function(survrow, gkx, newdata, data, Mlist, lvl, timevar, td_cox = FALSE) {
 
   gk_data <- newdata[rep(survrow, each = length(gkx)), ]
-  gk_data[, Mlist$idvar] <- rep(newdata[survrow, Mlist$idvar], each = length(gkx))
+  gk_data[, lvl] <- rep(newdata[survrow, lvl], each = length(gkx))
   gk_data[, timevar] <- c(t(outer(newdata[survrow, timevar]/2, gkx + 1)))
 
 
   if (td_cox) {
     gk_data <- get_locf(fixed = Mlist$fixed, newdata = newdata, data = data,
-                        idvar = Mlist$idvar, timevar, gk_data)
+                        idvar = lvl, group_lvls = Mlist$group_lvls,
+                        groups = Mlist$groups, timevar, gk_data)
   }
 
-  Xgk <- model.matrix_combi(fmla = c(Mlist$fixed, Mlist$auxvars),
+  Xgk <- model.matrix_combi(fmla = c(Mlist$fixed, remove_grouping(Mlist$random),
+                                     Mlist$auxvars),
                             data = gk_data,
                             terms_list = Mlist$terms_list)
 
   Xgk_new <- matrix(nrow = length(survrow) * length(gkx),
-                    ncol = ncol(Mlist$Ml),
-                    dimnames = list(c(), colnames(Mlist$Ml)))
+                    ncol = ncol(Mlist$M$M_toplevel),
+                    dimnames = list(c(), colnames(Mlist$M$M_toplevel)))
 
   Xgk_new[, colnames(Xgk)[colnames(Xgk) %in% colnames(Xgk_new)]] <-
     Xgk[, colnames(Xgk)[colnames(Xgk) %in% colnames(Xgk_new)]]
