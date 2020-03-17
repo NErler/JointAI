@@ -386,3 +386,11 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
 
   invisible(x)
 }
+
+
+#' @export
+print.modelstring <- function(x) {
+  if (!inherits(x, "modelstring"))
+    stop("Use only with 'modelstring' objects.\n")
+
+  cat(x)

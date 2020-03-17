@@ -529,7 +529,9 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
   # prepare output -------------------------------------------------------------
   mcmc_settings <- list(modelfile = modelfile,
-                        modelstring = readChar(modelfile, file.info(modelfile)$size),
+                        modelstring = structure(readChar(modelfile,
+                                                         file.info(modelfile)$size),
+                                                class = 'modelstring'),
                         n.chains = n.chains,
                         n.adapt = n.adapt,
                         n.iter = n.iter,
