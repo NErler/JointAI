@@ -46,7 +46,10 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     MCMCsub <- MCMC[, intersect(colnames(MCMC),
                                 c(object$coef_list[[varname]]$coef,
                                   grep(paste0('_', object$info_list[[varname]]$varname, '\\b'),
-                                       colnames(MCMC), value = TRUE)))]
+                                       colnames(MCMC), value = TRUE),
+                                  grep(paste0('_', object$info_list[[varname]]$varname, '_'),
+                                       colnames(MCMC), value = TRUE)
+                                  ))]
 
 
 
@@ -106,7 +109,9 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
       rd_vcov <- if (object$info_list[[varname]]$modeltype %in%
                      c("glmm", "clmm", "mlogitmm")) {
-        Ds <- stats[grep(paste0("^D_", varname, "\\[[[:digit:]]+,[[:digit:]]+\\]"),
+        Ds <- stats[grep(paste0("^D_", varname, "_",
+                                paste0(names(object$Mlist$group_lvls), collapse = "|"),
+                                "\\[[[:digit:]]+,[[:digit:]]+\\]"),
                          rownames(stats), value = TRUE), , drop = FALSE]
 
         if (nrow(Ds) > 0) {
