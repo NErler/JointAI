@@ -42,3 +42,4 @@ test_that('non-standard imputation models', {
                             data = NHANES, mess = FALSE)), "JointAI")
 
 })
+
