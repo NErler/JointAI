@@ -164,8 +164,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
   out$analysis_type <- object$analysis_type
-  out$size <- nrow(object$data)
-  out$groups <- length(unique(object$Mlist$groups))
+  out$size <- object$Mlist$N
+  # out$groups <- length(unique(object$Mlist$groups))
 
   class(out) <- "summary.JointAI"
   return(out)
@@ -249,9 +249,13 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
   cat("Thinning interval =", x$thin, "\n")
   cat("Number of chains =", x$nchain, "\n")
   cat("\n")
-  cat("Number of observations:", x$size, "\n")
-  if (x$analysis_type %in% c("lme", "glme"))
-    cat("Number of groups:", x$groups)
+  cat("Number of observations:", x$size['toplevel'], "\n")
+  if (length(x$size) > 1) {
+    i <- which(!names(x$size) %in% 'toplevel')
+    cat("Number of groups:\n",
+        paste0('- ', names(x$size)[i], ": ", x$size[i], "\n")
+    )
+  }
   invisible(x)
 }
 
@@ -399,3 +403,4 @@ print.modelstring <- function(x) {
     stop("Use only with 'modelstring' objects.\n")
 
   cat(x)
+}
