@@ -558,7 +558,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                             if (!'analysis_main' %in% names(monitor_params))
                               setNames(TRUE, 'analysis_main')),
          data_list = data_list,
-         hyperpars = hyperpars,
+         hyperpars = if (is.null(hyperpars)) default_hyperpars() else hyperpars,
          info_list = info_list,
          coef_list = get_coef_names(info_list),
          model = if (n.adapt > 0) adapt,
