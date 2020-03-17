@@ -108,7 +108,8 @@ get_data_list <- function(Mlist, info_list, data) {
       }
 
 
-      X <- model.matrix_combi(fmla = c(Mlist$fixed, Mlist$auxvars),
+      X <- model.matrix_combi(fmla = c(Mlist$fixed, remove_grouping(Mlist$random),
+                                       Mlist$auxvars),
                               data = gk_data,
                               terms_list = Mlist$terms_list)
 
