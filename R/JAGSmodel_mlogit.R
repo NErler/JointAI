@@ -53,7 +53,7 @@ JAGSmodel_mlogit <- function(info) {
 
 
 
-  paste0(tab(2), "# Multinomial logit model for ", info$varname, "\n",
+  paste0(tab(2), add_dashes(paste0("# Multinomial logit model for ", info$varname)), "\n",
          tab(2), "for (", index, " in 1:", info$N[[gsub("M_", "", info$resp_mat)]], ") {", "\n",
          tab(4), info$resp_mat, "[", index, ", ", info$resp_col,
          "] ~ dcat(p_", info$varname, "[", index, ", 1:", info$ncat, "])", "\n\n",

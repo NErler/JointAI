@@ -45,7 +45,7 @@ JAGSmodel_survreg <- function(info) {
     priordistr <- paste0(tab(4), info$parname, "[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n")
   }
 
-  paste0(tab(2), "# Weibull survival model for ", info$varname, "\n",
+  paste0(tab(2), add_dashes(paste0("# Weibull survival model for ", info$varname)), "\n",
          tab(), "for (", info$index, " in 1:", info$N, ") {", "\n",
          tab(4), info$varname, "[", info$index,
          "] ~ dgen.gamma(1, rate_", info$varname, "[", info$index,
@@ -148,7 +148,7 @@ JAGSmodel_coxph <- function(info) {
 
 
 
-  paste0(tab(), "# Cox PH model for ", info$varname, "\n",
+  paste0(tab(), add_dashes(paste0("# Cox PH model for ", info$varname)), "\n",
          tab(), "for (", index, " in 1:", N, ") {", "\n",
          tab(4), "logh0[", index, "] <- inprod(",
          info$parname, "_Bh0[], Bh0[", index, ", ])", "\n",
@@ -246,7 +246,7 @@ JAGSmodel_JM <- function(info) {
     priordistr <- paste0(tab(4), info$parname, "[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n")
   }
 
-  paste0(tab(), "# Cox PH model for ", info$varname, "\n",
+  paste0(tab(), add_dashes(paste0("# Cox PH model for ", info$varname)), "\n",
          tab(), "for (", info$index, " in 1:", info$N, ") {", "\n",
          tab(4), "logh0[", info$index, "] <- inprod(",
          info$parname, "_Bh0[], Bh0[", info$index, ", ])", "\n",

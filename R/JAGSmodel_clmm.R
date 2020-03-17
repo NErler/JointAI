@@ -8,7 +8,7 @@ JAGSmodel_clmm <- function(info) {
            info$varname, "[", index, ", ", k,"] - psum_", info$varname, "[", index, ", ", k - 1, "]))")})
 
   logits <- sapply(1:(info$ncat - 1), function(k) {
-    paste0(tab(4), "logit(psum_", info$varname, "[", index, ", ", k, "])  <- gamma_", info$varname,
+    paste0(tab(4), "logit(psum_", info$varname, "[", index, ", ", k, "]) <- gamma_", info$varname,
            "[", k, "]", " + eta_", info$varname,"[", index, "]")
   })
 
@@ -68,7 +68,7 @@ JAGSmodel_clmm <- function(info) {
   }
 
   # write model ----------------------------------------------------------------
-  paste0(tab(), "# Cumulative logit mixed effects model for ", info$varname, "\n",
+  paste0(tab(), add_dashes(paste0("# Cumulative logit mixed effects model for ", info$varname)), "\n",
          tab(), "for (", index, " in 1:", info$N[gsub("M_", "", info$resp_mat)], ") {", "\n",
          tab(4), info$resp_mat, "[", index, ", ", info$resp_col,
          "] ~ dcat(p_", info$varname, "[", index, ", 1:", info$ncat, "])", "\n",

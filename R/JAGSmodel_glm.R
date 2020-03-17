@@ -71,7 +71,7 @@ JAGSmodel_glm <- function(info) {
   }
 
   # * paste model --------------------------------------------------------------
-  paste0(tab(), "# ", modelname, " model for ", info$varname, "\n",
+  paste0(tab(), add_dashes(paste0("# ", modelname, " model for ", info$varname)), "\n",
          tab(), "for (", index, " in 1:", N, ") {", "\n",
          tab(4), info$resp_mat, "[", index,", ", info$resp_col,
          "] ~ ", distr, trunc, "\n",
