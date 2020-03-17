@@ -787,3 +787,4 @@ get_priordistr <- function(shrinkage, family, link, parname) {
 
 add_dashes <- function(x, width = 95) {
   paste(x, paste0(rep('-', 80 - nchar(x)), collapse = ''))
+}
