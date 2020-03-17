@@ -69,7 +69,7 @@ check_varlevel <- function(x, groups) {
 
 # used in divide_matrices (2020-03-04)
 match_interaction <- function(inter, M) {
-  Mnam <- sapply(M, colnames)
+  Mnam <- sapply(M, colnames, simplify = FALSE)
 
   out <- sapply(inter, function(i) {
     elmts <- strsplit(i, ":")[[1]]
@@ -79,23 +79,26 @@ match_interaction <- function(inter, M) {
 
       # find matrix and column containing the interaction term
       inter_match <- sapply(names(M), function(k) {
-        if (!is.na(match(i, Mnam[[k]]))) setNames(match(i, Mnam[[k]]), k)
+        if (!is.na(match(i, Mnam[[k]])))
+          match(i, Mnam[[k]])
+          # setNames(match(i, Mnam[[k]]), k)
       })
 
 
       # find matrices and columns of the elements
-      elmt_match <- lapply(elmts, function(k) {
-        unname(
-          sapply(names(M), function(j) {
-            if (!is.na(match(k, Mnam[[j]]))) setNames(match(k, Mnam[[j]]), j)
+      elmt_match <- lapply(elmts, function(j) {
+        # unname(
+          sapply(names(M), function(k) {
+            if (!is.na(match(j, Mnam[[k]]))) match(j, Mnam[[k]])
+            # if (!is.na(match(j, Mnam[[k]]))) setNames(match(j, Mnam[[k]]), k)
           })
-        )
+        # )
       })
 
 
       structure(
         list(
-          interterm = unlist(unname(inter_match)),
+          interterm = unlist(inter_match),
           elmts = unlist(elmt_match)),
         interaction = i, elements = elmts,
         has_NAs = ifelse(any(sapply(M, function(x)

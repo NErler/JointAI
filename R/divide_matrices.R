@@ -74,6 +74,18 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   Mlvls <- apply(MX, 2, check_varlevel, groups = groups)
   Mlvls <- setNames(paste0("M_", Mlvls), names(Mlvls))
 
+  # identify interactions -------------------------------------------------------
+  inter <- grep(":", colnames(MX), fixed = TRUE, value = TRUE)
+
+  # if one element in an interaction is time-varying the interaction is time-varying
+  if (length(inter) > 0) {
+    minlvl <- sapply(strsplit(inter, ':'), function(k)
+      names(which.min(group_lvls[gsub('M_', '', Mlvls[k])]))
+    )
+    Mlvls[inter] <- paste0("M_", minlvl)
+  }
+
+
   M <- sapply(unique(Mlvls), function (k)
     MX[ , Mlvls == k, drop = FALSE], simplify = FALSE)
 
@@ -111,22 +123,16 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # )
 
 
-  inter <- grep(":", colnames(MX), fixed = TRUE, value = TRUE)
 
-  # if one element in an interaction is time-varying the interaction is time-varying
-  # if (length(inter) > 0 & any(tvarM)) {
-    # for (j in 1:nrow(tvarM)) {
-      # tvarM[j, inter[sapply(strsplit(inter, ':'),
-                            # function(k) any(na.omit(tvarM[j, k])))]] <- TRUE
-    # }
-  # }
 
   # * interactions -------------------------------------------------------------
   interactions <- match_interaction(inter, M)
 
-  if (any(sapply(M, colnames) %in% names(interactions)[sapply(interactions, 'attr', "has_NAs")]))
+  if (any(unlist(sapply(M, colnames)) %in% names(interactions)[
+    sapply(interactions, 'attr', "has_NAs")]))
     for (k in names(M)) {
-      M[[k]][, which(colnames(M[[k]]) %in% names(interactions)[sapply(interactions, 'attr', "has_NAs")])] <- NA
+      M[[k]][, which(colnames(M[[k]]) %in% names(interactions)[
+        sapply(interactions, 'attr', "has_NAs")])] <- NA
     }
 
 
