@@ -72,9 +72,15 @@ get_model1_info <- function(k, Mlist, data, K, K_imp, trunc = NULL, assoc_type =
     }, simplify = FALSE)
   }
 
-  parelmts <- mapply(function(parelmts, lp) {
-    setNames(parelmts, names(lp))
-  }, parelmts = parelmts, lp = lp, SIMPLIFY = FALSE)
+  parelmts <- mapply(function(pe, linpred) {
+    if (is.list(pe)) {
+      for (i in seq_along(pe))
+        names(pe[[i]]) <- names(linpred)
+      pe
+    } else {
+      setNames(pe, names(linpred))
+    }
+  }, pe = parelmts, linpred = lp, SIMPLIFY = FALSE)
 
 
   # scaling parameter matrices -----------------------------------------------
