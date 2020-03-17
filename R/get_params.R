@@ -180,20 +180,18 @@ get_params <- function(Mlist, info_list, data,
     # if (ppc) paste0('ppc_', c(y_name, names(models))),
     other,
     if (isTRUE(imps)) {
-      c(if (any(is.na(Mlist$Mc))) {
-        Mc_NA <- which(is.na(Mlist$Mc[, colnames(Mlist$Mc) %in% names(data),
-                                      drop = FALSE]), arr.ind = TRUE)
-        apply(Mc_NA, 1, function(x)
-          paste0("Mc[", x[1], ",", x[2], "]")
-        )
-      },
-      if (any(is.na(Mlist$Ml))) {
-        Ml_NA <- which(is.na(Mlist$Ml[, colnames(Mlist$Ml) %in% names(data),
-                                      drop = FALSE]), arr.ind = TRUE)
-        apply(Ml_NA, 1, function(x)
-          paste0("Ml[", x[1], ",", x[2], "]")
-        )
-      })
+      unlist(unname(
+        sapply(names(Mlist$M), function(k) {
+        if (any(is.na(Mlist$M[[k]]))) {
+          M_NA <- which(is.na(Mlist$M[[k]][, colnames(Mlist$M[[k]]) %in% names(data), drop = FALSE]),
+                        arr.ind = TRUE)
+
+          apply(M_NA, 1, function(x) {
+            paste0(k, "[", x[1], ",", x[2], "]")
+          })
+        }
+      }, simplify = FALSE)
+      ))
     }
   )
   return(params)
