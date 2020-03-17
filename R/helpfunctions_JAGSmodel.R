@@ -491,46 +491,86 @@ paste_dummies <- function(categories, dest_mat, dest_col, dummy_cols, index, ...
   }, dummy_cols, categories)
 }
 
-paste_interactions <- function(interactions, N, Ntot) {
+# paste_interactions <- function(interactions, N) {
+#
+#   interactions <- interactions[sapply(interactions, "attr", "has_NAs")]
+#
+#   interlong <- sapply(interactions, function(x)
+#     any(names(unlist(unname(x))) %in% 'Ml'))
+#
+#   paste0(
+#     if (any(interlong)) {
+#       paste0(
+#         tab(),
+#         "for (j in 1:", Ntot, ") {\n",
+#         paste0(
+#           sapply(interactions[interlong], function(x) {
+#             paste0(tab(4),
+#                    paste_data(names(x$interterm), index = "j", col = x$interterm),
+#                    " <- ",
+#                    paste0(paste_data(names(x$elmts),
+#                                      index = ifelse(names(x$elmts) == 'Ml', 'j', 'group[j]'),
+#                                      x$elmts), collapse = " * ")
+#             )
+#           }), collapse = "\n"),
+#         "\n", tab(), "}\n")
+#     },
+#     if (any(!interlong)) {
+#       paste0(tab(),
+#              "for (i in 1:", N, ") {\n",
+#              paste0(
+#                sapply(interactions[!interlong], function(x) {
+#                  paste0(tab(4),
+#                         paste_data(names(x$interterm), index = "i", x$interterm),
+#                         " <- ",
+#                         paste0(paste_data(names(x$elmts), index = "i", x$elmts),
+#                                collapse = " * ")
+#                  )
+#                }), collapse = "\n"),
+#              "\n", tab(), "}\n")
+#     }
+#   )
+# }
+
+
+paste_interactions <- function(interactions, group_lvls, N) {
+
+  index <- setNames(sapply(seq_along(sort(group_lvls)),
+                           function(k) paste0(rep('i', k), collapse = '')),
+                    names(sort(group_lvls)))
 
   interactions <- interactions[sapply(interactions, "attr", "has_NAs")]
 
-  interlong <- sapply(interactions, function(x)
-    any(names(unlist(unname(x))) %in% 'Ml'))
+  minlvl <- sapply(interactions, function(x) {
+    lvls <- gsub("M_", "", unique(names(unlist(unname(x)))))
+    lvls[which.min(group_lvls[lvls])]
+  })
 
   paste0(
-    if (any(interlong)) {
+    sapply(unique(minlvl), function(lvl) {
       paste0(
         tab(),
-        "for (j in 1:", Ntot, ") {\n",
+        "for (", index[lvl], " in 1:", N[lvl], ") {\n",
         paste0(
-          sapply(interactions[interlong], function(x) {
+          sapply(interactions[which(minlvl == lvl)], function(x) {
             paste0(tab(4),
-                   paste_data(names(x$interterm), index = "j", col = x$interterm),
+                   paste_data(names(x$interterm), index = index[lvl], col = x$interterm),
                    " <- ",
                    paste0(paste_data(names(x$elmts),
-                                     index = ifelse(names(x$elmts) == 'Ml', 'j', 'group[j]'),
+                                     index = ifelse(names(x$elmts) == paste0("M_", lvl),
+                                                    index[lvl],
+                                                    paste0('group_',
+                                                           gsub("M_", "", names(x$elmts)),
+                                                           '[', index[lvl], ']')),
                                      x$elmts), collapse = " * ")
             )
           }), collapse = "\n"),
         "\n", tab(), "}\n")
-    },
-    if (any(!interlong)) {
-      paste0(tab(),
-             "for (i in 1:", N, ") {\n",
-             paste0(
-               sapply(interactions[!interlong], function(x) {
-                 paste0(tab(4),
-                        paste_data(names(x$interterm), index = "i", x$interterm),
-                        " <- ",
-                        paste0(paste_data(names(x$elmts), index = "i", x$elmts),
-                               collapse = " * ")
-                 )
-               }), collapse = "\n"),
-             "\n", tab(), "}\n")
-    }
+    })
   )
 }
+
+
 
 paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
 
