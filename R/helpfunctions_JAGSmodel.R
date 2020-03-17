@@ -465,7 +465,7 @@ paste_linpred_JM <- function(parname, parelmts, matnam, index, cols, scale_pars,
 # * random effects specifications ------------------------------------------------
 ranef_priors <- function(nranef, varname) {
   invD_distr <- if (nranef == 1) {
-    "dgamma(shape_diag_RinvD, rate_diag_RinvD)"
+    "dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-278, 1e278)"
   } else {
     paste0("dwish(RinvD_", varname, "[ , ], KinvD_", varname, ")")
   }
