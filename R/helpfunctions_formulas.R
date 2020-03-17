@@ -723,7 +723,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL, analysis_t
 
   covars <- allvars[!allvars %in% unlist(extract_outcome(fixed))]
 
-  lvl <- sapply(data[, allvars], check_varlevel, groups)
+  lvl <- sapply(data[, allvars, drop = FALSE], check_varlevel, groups)
   group_lvls <- colSums(!identify_level_relations(groups))
 
   subdat <- subset(data, select = covars)
@@ -745,7 +745,9 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL, analysis_t
 
     lp[[out]] <- colnames(
       model.matrix(fmla, subset(subdat,
-                                select = group_lvls[lvl[colnames(subdat)]] >= group_lvls[lvl[out]]))
+                                select = group_lvls[lvl[colnames(subdat)]] > group_lvls[lvl[out]] |
+                                  lvl[colnames(subdat)] == lvl[out]
+                                ))
     )
 
     if (is.null(lp[[out]])) {
