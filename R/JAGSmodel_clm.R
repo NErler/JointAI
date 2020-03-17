@@ -66,10 +66,13 @@ JAGSmodel_clm <- function(info) {
   })
 
   # * lin. predictor of baseline covariates (including interaction terms) ------
-  Mc_predictor <- if (!is.null(info$lp$Mc)) {
-    paste_linpred(info$parname, info$parelmts$Mc, matnam = "Mc",
-                  index = info$index, cols = info$lp$Mc,
-                  scale_pars = info$scale_pars$Mc)
+  Mc_predictor <- if (!is.null(info$lp[[info$resp_mat]])) {
+    paste_linpred(info$parname,
+                  info$parelmts[[info$resp_mat]],
+                  matnam = info$resp_mat,
+                  index = index,
+                  cols = info$lp[[info$resp_mat]],
+                  scale_pars = info$scale_pars[[info$resp_mat]])
   } else {"0"}
 
 
@@ -102,9 +105,9 @@ JAGSmodel_clm <- function(info) {
          info$trafos,
          tab(), "}", "\n\n",
          tab(), "# Priors for the model for ", info$varname, "\n",
-         if (!is.null(info$lp$Mc)) {
+         if (!is.null(info$lp[[info$resp_mat]])) {
            paste0(
-             tab(), "for (k in ", min(info$parelmts$Mc), ":", max(info$parelmts$Mc), ") {", "\n",
+             tab(), "for (k in ", min(unlist(info$parelmts)), ":", max(unlist(info$parelmts)), ") {", "\n",
              distr,
              tab(), "}", "\n\n")
          },
@@ -113,5 +116,4 @@ JAGSmodel_clm <- function(info) {
          paste_ppc_prior
   )
 }
-
 

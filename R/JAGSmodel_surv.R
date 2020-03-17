@@ -77,23 +77,22 @@ JAGSmodel_coxph <- function(info) {
   index <- info$index[gsub("M_", "", info$resp_mat[2])]
   N <- info$N[gsub("M_", "", info$resp_mat[2])]
 
+
   rdintercept <- paste_rdintercept_lp(info)
   rdslopes <- paste_rdslope_lp(info)
   Z_predictor <- paste_lp_Zpart(info)
 
-  eta <- add_linebreaks(paste0(Z_predictor, collapse = " + "), indent = indent + 2)
-
-  # eta <- if (!is.null(Z_predictor)) {
-  #   add_linebreaks(paste0(Z_predictor, collapse = " + "), indent = indent)
-  # } else if (!is.null(info$lp[[info$resp_mat[2]]])) {
-  #   paste_linpred(parname = info$parname,
-  #                 parelmts = info$parelmts[[info$resp_mat[2]]],
-  #                 matnam = info$resp_mat[2],
-  #                 index = index,
-  #                 cols = info$lp[[info$resp_mat[2]]],
-  #                 scale_pars = info$scale_pars[[info$resp_mat[2]]],
-  #                 isgk = FALSE)
-  # } else {"0"}
+  eta <- if (!is.null(Z_predictor)) {
+    add_linebreaks(paste0(Z_predictor, collapse = " + "), indent = indent + 2)
+  } else if (!is.null(info$lp[[info$resp_mat[2]]])) {
+    paste_linpred(parname = info$parname,
+                  parelmts = info$parelmts[[info$resp_mat[2]]],
+                  matnam = info$resp_mat[2],
+                  index = index,
+                  cols = info$lp[[info$resp_mat[2]]],
+                  scale_pars = info$scale_pars[[info$resp_mat[2]]],
+                  isgk = FALSE)
+  } else {"0"}
 
 
 
