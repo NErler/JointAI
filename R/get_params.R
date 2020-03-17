@@ -16,6 +16,20 @@ get_params <- function(Mlist, info_list, data,
   list_main <- info_list[names(Mlist$fixed)]
   list_other <- info_list[!names(info_list) %in% names(Mlist$fixed)]
 
+  ranef_info_main <- lapply(list_main, function(x)
+    if (!is.null(x$hc_list))
+      list(varname = x$varname,
+           lvls = names(x$hc_list$hcvars),
+           nranef = x$nranef)
+  )
+
+  ranef_info_other <- lapply(list_other, function(x)
+    if (!is.null(x$hc_list))
+      list(varname = x$varname,
+           lvls = names(x$hc_list$hcvars),
+           nranef = x$nranef)
+  )
+
   modeltypes_main <- sapply(list_main, "[[", 'modeltype')
 
   if (analysis_main) {
@@ -97,27 +111,29 @@ get_params <- function(Mlist, info_list, data,
                                   "[[", 'varname'))
       )
     },
-    if (any(modeltypes_main %in% c('glmm', 'clmm', 'mlogitmm'))) {
-      long_main <- names(list_main)[
-        modeltypes_main %in% c('glmm', 'clmm', 'mlogitmm')]
 
+    if (any(!sapply(ranef_info_main, is.null))) {
       c(
-        if (isTRUE(ranef_main)) paste0("b_", long_main),
+        if (isTRUE(ranef_main)) sapply(ranef_info_main, function(k)
+          paste0('b_', k$varname, "_", k$lvls)),
         if (isTRUE(invD_main))
-          unlist(sapply(list_main[long_main], function(x)
-            sapply(1:max(1, length(x$hc_list)), function(i)
-              paste0("invD_", x$varname, "[", 1:i, ",", i, "]")
-            ))),
+          unlist(sapply(ranef_info_main, function(x)
+            sapply(x$lvls, function(lvl) {
+              sapply(1:max(1, x$nranef[lvl]), function(i)
+                paste0("invD_", x$varname, "_", lvl, "[", 1:i, ",", i, "]")
+              )}))),
         if (isTRUE(D_main))
-          unlist(sapply(list_main[long_main], function(x)
-            sapply(1:max(1, length(x$hc_list)), function(i)
-              paste0("D_", x$varname, "[", 1:i, ",", i, "]")
-            ))),
+          unlist(sapply(ranef_info_main, function(x)
+            sapply(x$lvls, function(lvl) {
+              sapply(1:max(1, x$nranef[lvl]), function(i)
+                paste0("D_", x$varname, "_", lvl, "[", 1:i, ",", i, "]")
+              )}))),
         if (isTRUE(RinvD_main))
-          unlist(sapply(list_main[long_main], function(x)
-            paste0("RinvD_", x$varname, "[", 1:max(1, length(x$hc_list)),
-                   ",", 1:max(1, length(x$hc_list)), "]")
-          ))
+          unlist(sapply(ranef_info_main, function(x)
+            sapply(x$lvls, function(lvl) {
+            paste0("RinvD_", x$varname, "_", lvl, "[", 1:max(1, x$nranef[lvl]),
+                   ",", 1:max(1, x$nranef[lvl]), "]")
+            })))
       )
     },
 
@@ -136,27 +152,28 @@ get_params <- function(Mlist, info_list, data,
       paste0("delta_", names(list_other)[
         sapply(list_other, "[[", 'modeltype') %in% c("clm", "clmm")]),
 
-    if (any(sapply(list_other, "[[", 'modeltype') %in% c('glmm', 'clmm', 'mlogitmm'))) {
-      long_other <- names(list_other)[
-        sapply(list_other, "[[", 'modeltype') %in% c('glmm', 'clmm', 'mlogitmm')]
-
+    if (any(!sapply(ranef_info_other, is.null))) {
       c(
-        if (isTRUE(ranef_other)) paste0("b_", long_other),
+        if (isTRUE(ranef_other)) sapply(ranef_info_other, function(k)
+          paste0('b_', k$varname, "_", k$lvls)),
         if (isTRUE(invD_other))
-          unlist(sapply(list_other[long_other], function(x)
-            sapply(1:max(1, length(x$hc_list)), function(i)
-              paste0("invD_", x$varname, "[", 1:i, ", ", i, "]")
-            ))),
+          unlist(sapply(ranef_info_other, function(x)
+            sapply(x$lvls, function(lvl) {
+              sapply(1:max(1, x$nranef[lvl]), function(i)
+                paste0("invD_", x$varname, "_", lvl, "[", 1:i, ",", i, "]")
+              )}))),
         if (isTRUE(D_other))
-          unlist(sapply(list_other[long_other], function(x)
-            sapply(1:max(1, length(x$hc_list)), function(i)
-              paste0("D_", x$varname, "[", 1:i, ", ", i, "]")
-            ))),
+          unlist(sapply(ranef_info_other, function(x)
+            sapply(x$lvls, function(lvl) {
+              sapply(1:max(1, x$nranef[lvl]), function(i)
+                paste0("D_", x$varname, "_", lvl, "[", 1:i, ",", i, "]")
+              )}))),
         if (isTRUE(RinvD_other))
-          unlist(sapply(list_other[long_other], function(x)
-            paste0("RinvD_", x$varname, "[", 1:max(1, length(x$hc_list)),
-                   ",", 1:max(1, length(x$hc_list)), "]")
-          ))
+          unlist(sapply(ranef_info_other, function(x)
+            sapply(x$lvls, function(lvl) {
+              paste0("RinvD_", x$varname, "_", lvl, "[", 1:max(1, x$nranef[lvl]),
+                     ",", 1:max(1, x$nranef[lvl]), "]")
+            })))
       )
     },
 
