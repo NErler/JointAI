@@ -111,8 +111,8 @@ get_model1_info <- function(k, Mlist, data, K, K_imp, trunc = NULL, assoc_type =
 
 
   # transformations ----------------------------------------------------------
-  trafos <- paste_trafos(Mlist, varname = k,#################################################################
-                         index = index[[resp_mat[1]]],
+  trafos <- paste_trafos(Mlist, varname = k,
+                         index = index[gsub("M_", "", resp_mat[1])],
                          isgk = isgk)
 
   covnames = if (modeltype %in% "JM") {

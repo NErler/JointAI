@@ -584,7 +584,7 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
 
     if (!x$dupl) {
       dest_mat <- x$matrix
-      dest_col <- match(x$colname, colnames(Mlist[[dest_mat]]))
+      dest_col <- match(x$colname, colnames(Mlist$M[[dest_mat]]))
 
       if (!is.na(x$dupl_rows)) {
         xx <- trafos[c(i, unlist(x$dupl_rows)), ]
@@ -594,7 +594,7 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
       vars <- xx$var
       vars_mat <- xx$matrix
       vars_cols <- sapply(seq_along(vars), function(k)
-        match(xx$var[k], colnames(Mlist[[vars_mat[k]]]))
+        match(xx$var[k], colnames(Mlist$M[[vars_mat[k]]]))
       )
 
       fct <- x$fct
@@ -612,8 +612,8 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
 
         fct <- if (vars_mat[k] %in% "Ml" & isgk) {
           gsub(paste0('\\b', vars[k], '\\b'),
-                    paste0(vars_mat[k], "gk[", theindex, ", ",
-                           vars_cols[k], ", k]"), fct)
+               paste0(vars_mat[k], "gk[", theindex, ", ",
+                      vars_cols[k], ", k]"), fct)
         } else {
           gsub(paste0('\\b', vars[k], '\\b'),
                paste0(vars_mat[k], "[", theindex, ", ",
