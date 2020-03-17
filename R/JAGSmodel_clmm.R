@@ -27,13 +27,9 @@ JAGSmodel_clmm <- function(info) {
   })
 
 
-  hc_info <- get_hc_info(info)
-  hc_parelmts <- organize_hc_parelmts(hc_info, info = info)
-  rdslopes <- paste_rdslope_lp(hc_info, info)
-  rdintercept <- paste_rdintercept_lp(info, hc_parelmts$in_b0)
-
-  Z_predictor <- paste_Zpart(info, index = index, hc_info,
-                             notin_b = hc_parelmts$notin_b, isgk = FALSE)
+  rdintercept <- paste_rdintercept_lp(info)
+  rdslopes <- paste_rdslope_lp(info)
+  Z_predictor <- paste_lp_Zpart(info)
 
 
   norm.distr  <- if (length(info$hc_list) < 2) {"dnorm"} else {"dmnorm"}
@@ -95,11 +91,6 @@ JAGSmodel_clmm <- function(info) {
          paste0(sapply(names(rdintercept), write_ranefs, info = info,
                        rdintercept = rdintercept, rdslopes = rdslopes), collapse = ''),
          "\n\n",
-         # tab(), "for (", info$index[2], " in 1:", info$N, ") {", "\n",
-         # tab(4), "b_", info$varname, "[", info$index[2], ", 1:", max(1, length(info$hc_list)), "] ~ ", norm.distr,
-         # "(mu_b_", info$varname, "[", info$index[2], ", ], invD_", info$varname, "[ , ])", "\n",
-         # paste_mu_b(rdintercept, rdslopes, info$varname, info$index[2]),
-         # tab(), "}", "\n\n",
          tab(), "# Priors for the model for ", info$varname, "\n",
          if (any(!sapply(info$parelmts, is.null))) {
            paste0(tab(), "for (k in ", min(unlist(info$parelmts)), ":",
@@ -112,10 +103,9 @@ JAGSmodel_clmm <- function(info) {
          # paste_ppc_prior,
          "\n",
          paste0(
-           sapply(names(info$hc_list), function(x) {
-             ranef_priors(max(1, length(info$hc_list[[x]])), paste0(info$varname, "_", x))
+           sapply(names(info$hc_list$hcvars), function(x) {
+             ranef_priors(info$nranef[x], paste0(info$varname, "_", x))
            }), collapse = "\n")
-         # ranef_priors(max(1, length(info$hc_list)), info$varname)
   )
 }
 

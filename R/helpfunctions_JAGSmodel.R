@@ -155,34 +155,40 @@ paste_coef <- function(parname, parelmts) {
 
 
 paste_rdslope_lp <- function(info, isgk = FALSE) {
+  if (is.null(info$hc_list))
+    return(NULL)
+
   sapply(names(info$hc_list$hcvars), function(lvl) {
     mat <- paste0("M_", lvl)
 
     rds <- info$hc_list$hcvars[[lvl]]$rd_slope_coefs
     rdsi <- info$hc_list$hcvars[[lvl]]$rd_slope_interact_coefs
 
+    sapply(unique(names(rds), names(rdsi)), function(x) {
+      paste(c(
+        # random slope coefficients
+        if (!is.null(rds[[x]]))
+          ifelse(is.na(rds[[x]]$parelmts),
+                 "0",
+                 paste_coef(parname = info$parname,
+                            parelmts = rds[[x]]$parelmts)
+          ),
 
-    if (!is.null(rds) | !is.null(rdsi)) {
-      paste0(c(
-        if (!is.null(rds))
-      # random slope coefficients
-      paste_coef(parname = info$parname,
-                 parelmts = rds$parelmts),
+        # interactions with random slope
+        if (!is.null(rdsi[[x]]))
+          paste(
+            paste_scaling(x = paste_data(matnam = rdsi[[x]]$matrix, index = info$index[lvl],
+                                         col = rdsi[[x]]$cols, isgk),
+                          rows = rdsi[[x]]$cols,
+                          scale_pars = info$scale_pars[[mat]],
+                          scalemat = paste0('sp', mat)
+            ),
+            paste_coef(parname = info$parname,
+                       parelmts = rdsi[[x]]$parelmts),
+            sep = " * ")
+      ), collapse = " + ")
 
-      if (!is.null(rdsi))
-      # interactions with random slope
-      paste(
-        paste_scaling(x = paste_data(matnam = rdsi$matrix, index = info$index[lvl],
-                                     col = rdsi$cols, isgk),
-                      rows = rdsi$cols,
-                      scale_pars = info$scale_pars[[mat]],
-                      scalemat = paste0('sp', mat)
-        ),
-        paste_coef(parname = info$parname,
-                   parelmts = rdsi$parelmts),
-        sep = " * ")
-    ), collapse = " + ")
-    }
+    }, simplify = FALSE)
   }, simplify = FALSE)
 }
 
@@ -208,6 +214,9 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
 # }
 
 paste_rdintercept_lp <- function(info) {
+  if (is.null(info$hc_list))
+    return(NULL)
+
   sapply(names(info$hc_list$hcvars), function (lvl) {
     mat <- paste0("M_", lvl)
 
@@ -232,10 +241,10 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
   paste0(c(
     # random intercept
     paste0(tab(4),
-      paste_data(matnam = paste0("mu_b_", varname), index = index, col = 1),
-      " <- ",
-      add_linebreaks(rdintercept,
-                     indent = 4 + 5 + nchar(varname) + 1 + nchar(index) + 8)
+           paste_data(matnam = paste0("mu_b_", varname), index = index, col = 1),
+           " <- ",
+           add_linebreaks(rdintercept,
+                          indent = 4 + 5 + nchar(varname) + 1 + nchar(index) + 8)
     ),
     if (length(rdslopes) > 0) {
       # random slopes
@@ -307,49 +316,70 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
 
 
 paste_lp_Zpart <- function(info) {
+
+  if (is.null(info$hc_list))
+    return(NULL)
+
+
   lvl <- gsub("M_", "", info$resp_mat[length(info$resp_mat)])
 
   Zlp <- sapply(names(info$group_lvls)[info$group_lvls >= info$group_lvls[lvl]],
                 function(k) {
+                  index <- if (lvl == 'toplevel') {
+                    paste0('group_', k, "[", info$index[lvl], "]")
+                  } else {
+                    paste0('group_', k, "[",
+                           "pos_", lvl, "[", info$index[lvl], "]]")
+                  }
 
-    rdi <- if (length(info$hc_list$hcvars[[k]]$rd_intercept_coefs$parelmts) > 0) {
-      paste_data(matnam = paste0("b_", info$varname, "_", k),
-                 index = paste0('group_', k, "[", info$index[lvl], "]"),
-                 col = 1)
-    }
+                  rdi <- if (length(info$hc_list$hcvars[[k]]$rd_intercept_coefs$parelmts) > 0) {
+                    paste_data(matnam = paste0("b_", info$varname, "_", k),
+                               index = index,
+                               col = 1)
+                  }
 
-    rds <- if (length(info$hc_list$hcvars[[k]]$rd_slope_coefs$parelmts) > 0) {
-      paste(
-        paste_data(matnam = paste0("b_", info$varname, "_", k),
-                   index = paste0('group_', k, "[", info$index[lvl], "]"),
-                   col = 1:nrow(info$hc_list$hcvars[[k]]$rd_slope_coefs) + 1),
+                  rds <- if (any(!sapply(info$hc_list$hcvars[[k]]$rd_slope_coefs, is.null))) {
+                    sapply(names(info$hc_list$hcvars[[k]]$rd_slope_coefs), function(var) {
 
-        paste_scaling(
-          paste_data(
-            matnam = info$hc_list$hcvars[[k]]$rd_slope_coefs$matrix,
-            index = info$index[lvl],
-            col = info$hc_list$hcvars[[k]]$rd_slope_coefs$cols),
-          row = info$hc_list$hcvars[[k]]$rd_slope_coefs$cols,
-          scale_pars = info$scale_pars[[unique(info$hc_list$hcvars[[k]]$rd_slope_coefs$matrix)]],
-          scalemat = paste0("sp", unique(info$hc_list$hcvars[[k]]$rd_slope_coefs$matrix))), sep = ' * ')
-    }
+                      rdsc <- info$hc_list$hcvars[[k]]$rd_slope_coefs[[var]]
 
-    other <- if (!is.null(info$hc_list$othervars[[k]]))
-      paste(
-        paste_coef(parname = info$parname, parelmts = info$hc_list$othervars[[k]]$parelmts),
-        paste_scaling(
-          paste_data(matnam = info$hc_list$othervars[[k]]$matrix,
-                     index = info$index[[lvl]],
-                     col = info$hc_list$othervars[[k]]$cols),
-          row = info$hc_list$othervars[[k]]$cols,
-          scale_pars = info$scale_pars[[paste0("M_", k)]],
-          scalemat = paste0("spM_", k)), sep = " * "
-      )
+                      paste(
+                        paste_data(matnam = paste0("b_", info$varname, "_", k),
+                                   index = index,
+                                   col = 1:nrow(info$hc_list$hcvars[[k]]$rd_slope_coefs[[var]]) + 1),
 
-  c(rdi, rds, other)
-  }, simplify = FALSE)
+                        paste_scaling(
+                          paste_data(
+                            matnam = rdsc$matrix,
+                            index = info$index[lvl],
+                            col = rdsc$cols),
+                          row = rdsc$cols,
+                          scale_pars = info$scale_pars[[unique(rdsc$matrix)]],
+                          scalemat = paste0("sp", unique(rdsc$matrix))), sep = ' * ')
+                    })
+                  }
 
-  paste0(unlist(Zlp), collapse = " + ")
+                  other <- if (!is.null(info$hc_list$othervars[[k]]))
+                    paste(
+                      paste_coef(parname = info$parname,
+                                 parelmts = info$hc_list$othervars[[k]]$parelmts),
+                      paste_scaling(
+                        paste_data(matnam = info$hc_list$othervars[[k]]$matrix,
+                                   index = info$index[[lvl]],
+                                   col = info$hc_list$othervars[[k]]$cols),
+                        row = info$hc_list$othervars[[k]]$cols,
+                        scale_pars = info$scale_pars[[paste0("M_", k)]],
+                        scalemat = paste0("spM_", k)), sep = " * "
+                    )
+
+                  c(rdi, rds, other)
+                }, simplify = FALSE)
+
+  if (any(!sapply(Zlp, is.null))) {
+    paste0(unlist(Zlp), collapse = " + ")
+  } else {
+    "0"
+  }
 }
 
 

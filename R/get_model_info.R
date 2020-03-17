@@ -150,8 +150,9 @@ get_model1_info <- function(k, Mlist, data, K, K_imp, trunc = NULL, assoc_type =
                          lvl = gsub("M_", "", resp_mat[length(resp_mat)]),
                          Mlist, data, parelmts, lp)
   nranef <- sapply(hc_list$hcvars, function(x)
-    as.numeric(!is.null(x$rd_intercept_coefs)) +
-      ifelse(!is.null(x$rd_slope_coefs), nrow(x$rd_slope_coefs), 0))
+    as.numeric(attr(x, 'rd_intercept')) +
+      ifelse(any(!sapply(x$rd_slope_coefs, is.null)),
+             nrow(do.call(rbind, x$rd_slope_coefs)), 0))
 
   # collect all info ---------------------------------------------------------
   list(

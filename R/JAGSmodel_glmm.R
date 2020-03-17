@@ -33,8 +33,6 @@ JAGSmodel_glmm <- function(info) {
   rdslopes <- paste_rdslope_lp(info)
   Z_predictor <- paste_lp_Zpart(info)
 
-  # norm.distr  <- if (length(info$hc_list) < 2) {"dnorm"} else {"dmnorm"}
-
   dummies <- if (!is.null(info$dummy_cols)) {
     paste0('\n', paste_dummies(categories = info$categories, dest_mat = info$resp_mat,
                                dest_col = info$resp_col, dummy_cols = info$dummy_cols,

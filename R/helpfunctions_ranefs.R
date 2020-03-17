@@ -185,10 +185,12 @@ get_hc_info <- function(varname, lvl, Mlist, data, parelmts, lp) {
     remove_grouping(Mlist$random[[varname]])[clus]
   }
 
-  hc_list <- sapply(clus, get_hc_list, newrandom = newrandom, data = data,
-                    Mlist = Mlist, simplify = FALSE)
+  if (length(newrandom) > 0) {
+    hc_list <- sapply(clus, get_hc_list, newrandom = newrandom, data = data,
+                      Mlist = Mlist, simplify = FALSE)
 
-  orga_hc_parelmts(lvl, lvls, hc_list, parelmts, lp)
+    orga_hc_parelmts(lvl, lvls, hc_list, parelmts, lp)
+  }
 }
 
 
@@ -223,19 +225,21 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
   clus <- names(lvls)[lvls > lvls[lvl]]
 
   hcvars <- sapply(clus, function(k) {
-    # if (any(names(hc_list[[k]]) != "(Intercept)")) {
       i <- names(hc_list[[k]])[names(hc_list[[k]]) != "(Intercept)"]
 
       rd_slope_coefs = sapply(i, function(ii) {
+
+        pe <- unname(parelmts[[names(hc_list[[k]][[ii]]$main)]][ii])
+
         data.frame(term = ii,
                    matrix = names(hc_list[[k]][[ii]]$main),
                    cols = hc_list[[k]][[ii]]$main,
-                   parelmts = unname(parelmts[[names(hc_list[[k]][[ii]]$main)]][ii]),
+                   parelmts = ifelse(is.null(pe), NA, pe),
                    stringsAsFactors = FALSE
         )
       }, simplify = FALSE)
 
-      rd_slope_interact_coefs <- lapply(i, function(ii) {
+      rd_slope_interact_coefs <- sapply(i, function(ii) {
         do.call(rbind, sapply(hc_list[[k]][[ii]]$interact, function(x) {
           data.frame(term = attr(x, 'interaction'),
                      matrix = names(x$elmts[attr(x, 'elements') != ii]),
@@ -244,36 +248,50 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
                      stringsAsFactors = FALSE
           )
         }, simplify = FALSE))
-      })
+      }, simplify = FALSE)
 
       elmts <- parelmts[[paste0("M_", k)]][
-        !parelmts[[paste0("M_", k)]] %in% unlist(c(rd_slope_coefs, rd_slope_interact_coefs))]
+        !parelmts[[paste0("M_", k)]] %in% rbind(do.call(rbind, rd_slope_coefs),
+                                                do.call(rbind, rd_slope_interact_coefs))$parelmts]
 
-      rd_intercept_coefs <- data.frame(
-        term = names(elmts),
-        matrix = paste0("M_", k),
-        cols = lp[[paste0("M_", k)]][names(elmts)],
-        parelmts = elmts,
-        stringsAsFactors = FALSE
+      rd_intercept_coefs <- if (!is.null(elmts))
+        data.frame(
+          term = names(elmts),
+          matrix = paste0("M_", k),
+          cols = lp[[paste0("M_", k)]][names(elmts)],
+          parelmts = elmts,
+          stringsAsFactors = FALSE
       )
 
-      list(rd_intercept_coefs = rd_intercept_coefs,
-           rd_slope_coefs = do.call(rbind, rd_slope_coefs),
-           rd_slope_interact_coefs = do.call(rbind, rd_slope_interact_coefs)
+      structure(
+        list(rd_intercept_coefs = rd_intercept_coefs,
+             rd_slope_coefs = rd_slope_coefs,
+             rd_slope_interact_coefs = rd_slope_interact_coefs
+        ),
+        'rd_intercept' = "(Intercept)" %in% names(hc_list[[k]])
       )
-
   }, simplify = FALSE)
 
 
   othervars <- sapply(names(lvls)[lvls < min(lvls[clus])], function(k) {
 
     othervars <- data.frame(term = names(parelmts[[paste0("M_", k)]]),
-                            matrix = paste0("M_", k),
+                            matrix = if (!is.null(lp[[paste0("M_", k)]])) paste0("M_", k),
                             cols = lp[[paste0("M_", k)]],
                             parelmts = parelmts[[paste0("M_", k)]],
                             stringsAsFactors = FALSE)
 
-    used <- sapply(lapply(hcvars, do.call, what = rbind), "[[", "parelmts")
+
+    collapsed <- lapply(lapply(hcvars, function(i) {
+      lapply(i, function(j) {
+        if (is.list(j) & !is.data.frame(j))
+          do.call(rbind, j)
+        else
+          j
+      })
+    }), do.call, what = rbind)
+
+    used <- lapply(collapsed, "[[", "parelmts")
 
     othervars <- othervars[!othervars$parelmts %in% unlist(used), ]
 
