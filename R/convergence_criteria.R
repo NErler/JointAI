@@ -128,8 +128,17 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
 
   MCMC <- do.call(rbind, window(MCMC[chains], start = start, end = end, thin = thin))
 
-  MCE1 <- mcmcse::mcse.mat(x = MCMC, ...)
-  colnames(MCE1) <- gsub("se", "MCSE", colnames(MCE1))
+  MCE1 <- t(apply(MCMC, 2, function(x) {
+    mce <- try(mcmcse::mcse(x, ...), silent = TRUE)
+    if (inherits(mce, "try-error")) {
+      c(NA, NA)
+    } else {
+      unlist(mce)
+    }
+  }))
+
+  colnames(MCE1) <- c('est', 'MCSE')
+    # gsub("se", "MCSE", colnames(MCE1))
 
   MCE1 <- cbind(MCE1,
                 SD = apply(MCMC, 2, sd)[match(colnames(MCMC), row.names(MCE1))]
