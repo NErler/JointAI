@@ -84,7 +84,18 @@ extract_id <- function(random, warn = TRUE, allow_multiple = FALSE) {
       # split by + * : /
       id <- unique(unlist(strsplit(id[id != ""], split = "[[:space:]]*[+*:/][[:space:]]*")))
     } else {
-      id <- NULL
+      rdmatch <- gregexpr(pattern = "[[:print:]]*\\|[ ]*", deparse(x, width.cutoff = 500))
+
+      if (any(rdmatch[[1]] > 0)) {
+        # remove "... | " from the formula
+        id <- unlist(regmatches(deparse(x, width.cutoff = 500),
+                                rdmatch, invert = TRUE))
+        id <- unique(unlist(strsplit(id[id != ""], split = "[[:space:]]*[+*:/][[:space:]]*")))
+
+        # id <- id[id != ""]
+      } else {
+        id <- NULL
+      }
     }
     id
   })
@@ -223,7 +234,11 @@ remove_grouping <- function(fmla) {
       ranef <- sub("[[:space:]]*\\|[[:print:]]*", "",
                    deparse(x, width.cutoff = 500))
 
-      as.formula(fmla2)
+      nam <- extract_id(fmla, allow_multiple = TRUE)
+
+      l <- list(as.formula(ranef))
+      names(l) <- nam
+      l
       }
     }
   })
