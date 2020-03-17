@@ -40,7 +40,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                     warn = warn, mess = mess, ...)
 
   # create results matrices
-  statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.", "GR-crit")
+  statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.", "GR-crit", "MC error")
 
   res_list <- sapply(names(object$coef_list), function(varname) {
     MCMCsub <- MCMC[, intersect(colnames(MCMC),
@@ -60,6 +60,13 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                 autoburnin = autoburnin)[[1]][, "Upper C.I."]
       }
 
+      mcerror <- if (length(object$MCMC) - length(exclude_chains) > 1) {
+        try(MC_error(object, subset = list(other = colnames(MCMCsub)),
+                 exclude_chains = exclude_chains,
+                 start = start, end = end, thin = thin,
+                 digits = 2, warn = FALSE, mess = FALSE))
+      }
+
       colnames(MCMCsub)[na.omit(match(object$coef_list[[varname]]$coef,
                                       colnames(MCMCsub)))] <-
         object$coef_list[[varname]]$varname
@@ -76,6 +83,10 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       if (length(object$MCMC) - length(exclude_chains) > 1)
         stats[, "GR-crit"] <- grcrit
 
+      if (length(object$MCMC) - length(exclude_chains) > 1) {
+        if (!inherits(mcerror, 'try-error'))
+          stats[, "MC error"] <- mcerror$data_scale[, 'MCSE/SD']
+      }
 
       regcoef <- stats[object$coef_list[[varname]]$varname, ]
 
