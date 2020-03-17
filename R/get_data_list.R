@@ -6,8 +6,13 @@ get_data_list <- function(Mlist, info_list, data) {
   l <- Mlist$M
 
   # scaling parameters
-  if (any(sapply(Mlist$scale_pars, function(x) any(!is.na(x))))) {
-    spM <- Mlist$scale_pars[sapply(Mlist$scale_pars, function(x) any(!is.na(x)))]
+  incl_sp <- sapply(Mlist$scale_pars, function(x) {
+    predvars <- unique(unlist(sapply(Mlist$lp_cols, sapply, names)))
+    any(!is.na(x[rownames(x) %in% predvars, ]))
+  })
+
+  if (any(incl_sp)) {
+    spM <- Mlist$scale_pars[incl_sp]
     names(spM) <- paste0("sp", names(spM))
     l <- c(l, spM)
   }
@@ -28,10 +33,19 @@ get_data_list <- function(Mlist, info_list, data) {
 
   # prior for mixed models ----------------------------------------------------
   if (length(Mlist$groups) > 1) {
-    groups <- Mlist$groups
+    groups <- Mlist$groups[!names(Mlist$groups) %in% 'toplevel']
+
+    pos <- sapply(groups[!names(groups) %in% names(which.max(Mlist$group_lvls))],
+                  function(x) {
+                    match(unique(x), x)
+                  }, simplify = FALSE)
+
     names(groups) <- paste0("group_", names(groups))
+    names(pos) <- if (length(pos) > 0) paste0('pos_', names(pos))
+
     l <- c(l,
            groups,
+           if (length(pos)) pos,
            default_hyperpars()$ranef[c('shape_diag_RinvD', 'rate_diag_RinvD')]
     )
 
