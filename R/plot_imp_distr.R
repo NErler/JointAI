@@ -9,6 +9,7 @@
 #' @param id the name of the variable specifying the subject indicator
 #' @param rownr the name of a variable identifying which rows correspond to the
 #'              same observation in the original (unimputed) data
+#' @inheritParams ggplot2::facet_wrap
 #' @inheritParams sharedParams
 #' @export
 #'
@@ -20,7 +21,7 @@
 #'
 
 plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id', rownr = '.rownr',
-                           ncol = NULL, nrow = NULL) {
+                           ncol = NULL, nrow = NULL, labeller = NULL) {
 
   if (!requireNamespace('ggplot2', quietly = TRUE))
     stop("This function requires the package ggplot2 to be installed.")
@@ -64,7 +65,8 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id', rownr = '.rown
     }
 
     pl <- ggplot2::ggplot(dat) +
-      ggplot2::facet_wrap('variable', scales = 'free') +
+      ggplot2::facet_wrap('variable', scales = 'free',
+                          labeller = if (!is.null(labeller)) labeller else "label_value") +
       ggplot2::scale_color_manual(name = '',
                          limits = c(FALSE, TRUE),
                          values = c('dodgerblue3', 'midnightblue'),
@@ -82,7 +84,12 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id', rownr = '.rown
           pl + ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
                                              color = get(imp) == 0,
                                              size = get(imp) == 0), geom = 'line',
-                                position = 'identity', na.rm = TRUE)
+                                position = 'identity', na.rm = TRUE) +
+            ggplot2::geom_point(data = subset(dat, get(imp) > 0),
+                                ggplot2::aes(x = as.numeric(.data$value),
+                                             y = 0, color = get(imp) == 0,
+                                             shape = get(imp) == 0),
+                                alpha = 0.5)
         } else {
           pl + ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
                                              size = get(imp) == 0,
