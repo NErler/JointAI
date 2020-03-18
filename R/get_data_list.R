@@ -7,7 +7,8 @@ get_data_list <- function(Mlist, info_list, data) {
 
   # scaling parameters
   incl_sp <- sapply(Mlist$scale_pars, function(x) {
-    predvars <- unique(unlist(sapply(Mlist$lp_cols, sapply, names)))
+    predvars <- unique(c(unlist(sapply(Mlist$lp_cols, sapply, names)),
+                         all_vars(remove_grouping(Mlist$random))))
     any(!is.na(x[rownames(x) %in% predvars, ]))
   })
 
