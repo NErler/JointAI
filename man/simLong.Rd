@@ -5,9 +5,15 @@
 \alias{simLong}
 \alias{simWide}
 \title{Simulated Longitudinal Data in Long and Wide Format}
-\format{\code{simLong}: A data frame in long format with 2400 rows and 16 variables
+\format{
+\code{simLong}: A data frame in long format with 2400 rows and 16 variables
 
-\code{simWide}: A data frame in wide format with 200 rows and 81 variables}
+\code{simWide}: A data frame in wide format with 200 rows and 81 variables
+
+An object of class \code{data.frame} with 2400 rows and 16 columns.
+
+An object of class \code{data.frame} with 200 rows and 81 columns.
+}
 \usage{
 simLong
 

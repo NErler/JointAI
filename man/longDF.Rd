@@ -4,7 +4,8 @@
 \name{longDF}
 \alias{longDF}
 \title{Longitudinal example dataset}
-\format{A simulated data frame with 329 rows and 21 variables with data from 100 subjects:
+\format{
+A simulated data frame with 329 rows and 21 variables with data from 100 subjects:
 \describe{
   \item{C1}{continuous, complete baseline variable}
   \item{C2}{continuous, incomplete baseline variable}
@@ -27,7 +28,8 @@
   \item{id}{id (grouping) variable}
   \item{time}{continuous complete longitudinal variable}
   \item{y}{continuous, longitudinal (outcome) variable}
-}}
+}
+}
 \usage{
 data(longDF)
 }
