@@ -7,14 +7,14 @@ test_that('extract_id works', {
                list(random = ~ 0 | id, ids = 'id'),
                list(random = NULL, ids = NULL),
                list(random = y ~ a + b + c, ids = NULL),
-               list(random = y ~ time | id, ids = 'id')
-               # list(random =  ~ a | id/class, ids = c('id', 'class')),
-               # list(random = ~ a | id + class, ids = c('id', 'class')),
-               # list(random = list(~a | id, ~ b | id2), ids = c('id', 'id2'))
+               list(random = y ~ time | id, ids = 'id'),
+               list(random =  ~ a | id/class, ids = c('id', 'class')),
+               list(random = ~ a | id + class, ids = c('id', 'class')),
+               list(random = ~(a | id) + (b | id2), ids = c('id', 'id2'))
   )
 
   for (i in seq_along(runs)) {
-    expect_equal(extract_id(runs[[i]]$random), runs[[i]]$ids)
+    expect_equal(extract_id(runs[[i]]$random, allow_multiple = TRUE), runs[[i]]$ids)
   }
 })
 

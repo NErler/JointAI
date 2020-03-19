@@ -28,12 +28,12 @@ test_that('check_formula_list gives error', {
 
 
 # extract_id--------------------------------------------------------------
-runs <- list(list(random = ~ 1 | id, ids = 'id', RHS = list(~ 1 | id), nogroup = ~ 1),
-             list(random = ~ 0 | id, ids = 'id', RHS = list(~ 0 | id), nogroup = ~ 0),
+runs <- list(list(random = ~ 1 | id, ids = 'id', RHS = list(~ 1 | id), nogroup = list(id = ~ 1)),
+             list(random = ~ 0 | id, ids = 'id', RHS = list(~ 0 | id), nogroup = list(id = ~ 0)),
              list(random = NULL, ids = NULL, RHS = NULL, nogroup = NULL),
-             list(random = y ~ a + b + c, ids = NULL, RHS = list(~a + b + c), nogroup = y ~ a + b + c),
-             list(random = y ~ time | id, ids = 'id', RHS = list(~time | id), nogroup = y ~ time),
-             list(random = y ~ 0, ids = NULL, RHS = list(~ 0), nogroup = y ~ 0)
+             list(random = y ~ a + b + c, ids = NULL, RHS = list(~a + b + c), nogroup = list(y ~ a + b + c)),
+             list(random = y ~ time | id, ids = 'id', RHS = list(~time | id), nogroup = list(id = y ~ time)),
+             list(random = y ~ 0, ids = NULL, RHS = list(~ 0), nogroup = list(y ~ 0))
 )
 
 test_that('extract_id works', {
@@ -138,25 +138,25 @@ test_that('remove_grouping works', {
 fmls <- list(
   list(fmla = y ~ a + b + (b | id),
        fixed = y ~ a + b,
-       random = ~ b | id),
+       random = ~ (b | id)),
   list(fmla = y ~ (1|id),
        fixed = y ~ 1,
-       random = ~ 1 | id),
+       random = ~ (1 | id)),
   list(fmla = y ~ a + (a + b|id),
        fixed = y ~ a,
-       random = ~a + b |id),
+       random = ~ (a + b |id)),
   list(fmla = y ~ a + I(a^2) + (a + I(a^2) | id),
        fixed = y ~ a + I(a^2),
-       random = ~a + I(a^2) | id),
+       random = ~ (a + I(a^2) | id)),
   list(fmla = y ~ x + (1| id/class),
        fixed = y ~ x,
-       random = ~1 | id/class),
+       random = ~ (1 | id/class)),
   list(fmla = y ~ x + (1|id) + (1|class),
        fixed = y ~ x,
-       random = ~ 1|id + 1|class))
+       random = ~ (1|id) + (1|class)))
 
 test_that('split_formula works', {
-  for(i in seq_along(fmls)) {
+  for (i in seq_along(fmls)) {
     expect_equal(split_formula(fmls[[i]]$fmla),
                  list(fixed = fmls[[i]]$fixed, random = fmls[[i]]$random)
     )
