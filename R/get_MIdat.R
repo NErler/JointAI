@@ -68,7 +68,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
     DF$.id <- 1:nrow(DF)
   }
 
-  groups <- match(object$Mlist$groups, unique(object$Mlist$groups))
+  Mlvls <- object$Mlist$Mlvls
 
   vars <- names(object$models)[colSums(is.na(DF[, names(object$models), drop = FALSE])) > 0]
 
@@ -111,53 +111,55 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
   for (i in vars) {
     impval <- NULL
+    # if (varinfo[[i]]$modeltype %in% c("glm", "clm", "mlogit")) {
+    pat <- paste0(Mlvls[i], "\\[[[:digit:]]*,",
+                  match(i, colnames(object$data_list[[Mlvls[i]]])),
+                  "\\]")
 
-    if (varinfo[[i]]$modeltype %in% c("glm", "clm", "mlogit")) {
-      # baseline variables -------------------------------------------------------
-      pat <- paste0("Mc\\[[[:digit:]]*,",
-                    match(i, colnames(object$data_list$Mc)),
-                    "\\]")
+    impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
 
-      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
+    if (length(impval) > 0) {
+      rownrs <- gsub(",[[:digit:]]*\\]", "",
+                     gsub("^[[:print:]]*\\[", "", colnames(impval)))
 
-      if (length(impval) > 0) {
-        rownrs <- gsub(",[[:digit:]]*\\]", "",
-                       gsub("[[:alpha:]]*\\[", "", colnames(impval)))
+      for (j in (1:m) + 1) {
+        iv <- impval[j - 1, na.omit(match(object$Mlist$groups[[gsub("M_", "", Mlvls[i])]],
+                                          as.numeric(rownrs)))]
 
-        for (j in (1:m) + 1) {
-          iv <- impval[j - 1, na.omit(match(groups, as.numeric(rownrs)))]
-
-          if (is.factor(DF_list[[j]][, i])) {
-            DF_list[[j]][is.na(DF_list[[j]][, i]), i] <-
-              factor(iv, labels = levels(DF_list[[j]][, i]),
-                     levels = seq_along(levels(DF_list[[j]][, i])))
-          } else {
-            DF_list[[j]][is.na(DF_list[[j]][, i]), i] <- iv
-          }
-        }
-      }
-    } else if (varinfo[[i]]$modeltype %in% c("glmm", "clmm", "mlogitmm")) {
-      # longitudinal variables ---------------------------------------------------
-      pat <- paste0("Ml\\[[[:digit:]]*,",
-                    match(i, colnames(object$data_list$Ml)),
-                    "\\]")
-
-      impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
-
-      if (length(impval) > 0) {
-        rownrs <- gsub(",[[:digit:]]*\\]", "",
-                       gsub("[[:alpha:]]*\\[", "", colnames(impval)))
-
-        for (j in (1:m) + 1) {
+        if (is.factor(DF_list[[j]][, i])) {
           DF_list[[j]][is.na(DF_list[[j]][, i]), i] <-
-            impval[j - 1, order(as.numeric(rownrs))]
+            factor(iv, labels = levels(DF_list[[j]][, i]),
+                   levels = seq_along(levels(DF_list[[j]][, i])) -
+                     as.numeric(length(levels(DF_list[[j]][, i])) == 2)
+                   )
+        } else {
+          DF_list[[j]][is.na(DF_list[[j]][, i]), i] <- iv
         }
       }
-    } else {
-      stop(gettextf("I don't know how to fill in imputed values from a model of type %s.",
-                    dQuote(varinfo[[i]]$modeltype)),
-           call. = FALSE)
     }
+
+     #else if (varinfo[[i]]$modeltype %in% c("glmm", "clmm", "mlogitmm")) {
+      # longitudinal variables ---------------------------------------------------
+      # pat <- paste0("Ml\\[[[:digit:]]*,",
+                    # match(i, colnames(object$data_list$Ml)),
+                    # "\\]")
+
+      # impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
+
+      # if (length(impval) > 0) {
+      #   rownrs <- gsub(",[[:digit:]]*\\]", "",
+      #                  gsub("[[:alpha:]]*\\[", "", colnames(impval)))
+      #
+      #   for (j in (1:m) + 1) {
+      #     DF_list[[j]][is.na(DF_list[[j]][, i]), i] <-
+      #       impval[j - 1, order(as.numeric(rownrs))]
+      #   }
+      # }
+    # } else {
+    #   stop(gettextf("I don't know how to fill in imputed values from a model of type %s.",
+    #                 dQuote(varinfo[[i]]$modeltype)),
+    #        call. = FALSE)
+    # }
   }
 
 
