@@ -214,17 +214,18 @@ remove_grouping <- function(fmla) {
                         pattern = '^\\(', replacement =  '~ ' )
         ranef <- lapply(ranef, function(k) as.formula(k[k != ""]))
 
-        nam <- extract_id(fmla, allow_multiple = TRUE)
+        nam <- extract_id(x, allow_multiple = TRUE, warn = FALSE)
 
-        if (length(nam) > 1 & length(ranef) == 1)
+        if (length(nam) > 1 & length(ranef) == 1) {
           ranef <- rep(ranef, length(nam))
-        else if (length(nam) != length(ranef) & length(ranef) !=0)
+        } else if (length(nam) != length(ranef) & length(ranef) != 0) {
           stop(paste0(strwrap(
             "The number of grouping variables in the random effects formula
                does not the number of separate formulas. This may be a problem
                with the specification of multiple random effects formula parts
                which include nested grouping.", width = 80, exdent = 7),
             collapse = "\n"), call. = FALSE)
+        }
 
         names(ranef) <- nam
         ranef
@@ -234,7 +235,7 @@ remove_grouping <- function(fmla) {
       ranef <- sub("[[:space:]]*\\|[[:print:]]*", "",
                    deparse(x, width.cutoff = 500))
 
-      nam <- extract_id(fmla, allow_multiple = TRUE)
+      nam <- extract_id(x, allow_multiple = TRUE, warn = FALSE)
 
       l <- list(as.formula(ranef))
       names(l) <- nam
