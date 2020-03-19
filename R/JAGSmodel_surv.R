@@ -1,25 +1,34 @@
 # parametric survival model ---------------------------------------------------
 JAGSmodel_survreg <- function(info) {
   indent <- 4 + 9 + nchar(info$varname) + 8
+  index <- info$index[gsub("M_", "", info$resp_mat[2])]
+  N <- info$N[gsub("M_", "", info$resp_mat[2])]
 
 
-  Mc_predictor <- if (!is.null(info$lp$Mc)) {
+  rdintercept <- paste_rdintercept_lp(info)
+  rdslopes <- paste_rdslope_lp(info)
+  Z_predictor <- paste_lp_Zpart(info)
+
+  eta <- if (!is.null(Z_predictor)) {
+    add_linebreaks(paste0(Z_predictor, collapse = " + "), indent = indent + 2)
+  } else if (!is.null(info$lp[[info$resp_mat[2]]])) {
     paste_linpred(parname = info$parname,
-                  parelmts = info$parelmts$Mc,
-                  matnam = "Mc",
-                  index = info$index,
-                  cols = info$lp$Mc,
-                  scale_pars = info$scale_pars$Mc,
+                  parelmts = info$parelmts[[info$resp_mat[2]]],
+                  matnam = info$resp_mat[2],
+                  index = index,
+                  cols = info$lp[[info$resp_mat[2]]],
+                  scale_pars = info$scale_pars[[info$resp_mat[2]]],
                   isgk = FALSE)
-  }
+  } else {"0"}
+
 
 
   paste_ppc <- if (info$ppc) {
     paste0(
-      tab(4), info$varname, "_ppc[", info$index, "] ~ dgen.gamma(1, rate_",
-      info$varname, "[", info$index, "], shape_", info$vaname, ")", "\n",
-      tab(4), "mu_", info$varname, "[", info$index, "] <- 1/rate_", info$varname,
-      "[", info$index, "] * exp(loggam(1 + 1/shape_", info$varname, "))", "\n"
+      tab(4), info$varname, "_ppc[", index, "] ~ dgen.gamma(1, rate_",
+      info$varname, "[", index, "], shape_", info$vaname, ")", "\n",
+      tab(4), "mu_", info$varname, "[", index, "] <- 1/rate_", info$varname,
+      "[", index, "] * exp(loggam(1 + 1/shape_", info$varname, "))", "\n"
     )
   }
 
@@ -46,23 +55,24 @@ JAGSmodel_survreg <- function(info) {
   }
 
   paste0(tab(2), add_dashes(paste0("# Weibull survival model for ", info$varname)), "\n",
-         tab(), "for (", info$index, " in 1:", info$N, ") {", "\n",
-         tab(4), info$varname, "[", info$index,
-         "] ~ dgen.gamma(1, rate_", info$varname, "[", info$index,
+         tab(), "for (", index, " in 1:", N, ") {", "\n",
+         tab(4), info$varname, "[", index,
+         "] ~ dgen.gamma(1, rate_", info$varname, "[", index,
          "], shape_", info$varname, ")", "\n",
          paste_ppc,
-         tab(4), "cens_", info$varname, "[", info$index, "] ~ dinterval(", info$varname, "[",
-         info$index, "], ", info$resp_mat[1], "[", info$index, ", ", info$resp_col[1],
+         tab(4), "cens_", info$varname, "[", index, "] ~ dinterval(", info$varname, "[",
+         index, "], ", info$resp_mat[1], "[", index, ", ", info$resp_col[1],
          "])", "\n",
-         tab(4), "log(rate_", info$varname, "[", info$index, "]) <- -1 * (",
-         Mc_predictor, ")", "\n",
+         tab(4), "log(rate_", info$varname, "[", index, "]) <- -1 * (",
+         add_linebreaks(eta, indent = 20), ")", "\n",
          tab(), "}\n\n",
          tab(), "# Priors for the model for ", info$varname, "\n",
-         if (!is.null(info$lp$Mc)) {
+         if (any(!sapply(info$lp, is.null))) {
            paste0(
-             tab(), "for (k in ", min(info$parelmts$Mc), ":", max(info$parelmts$Mc), ") {", "\n",
+             tab(), "for (k in ", min(unlist(info$parelmts)), ":",
+             max(unlist(info$parelmts)), ") {", "\n",
              priordistr,
-             tab(), "}", "\n")
+             tab(), "}", "\n\n")
          },
          tab(), "shape_", info$varname ," ~ dexp(0.01)", "\n",
          paste_ppc_prior
