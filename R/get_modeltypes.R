@@ -29,7 +29,7 @@
 
 get_models <- function(fixed, random = NULL, data, auxvars = NULL,
                        timevar = NULL, no_model = NULL, models = NULL,
-                       analysis_type = NULL) {
+                       analysis_type = NULL, warn = TRUE) {
 
   if (missing(fixed))
     stop("No formula specified.", call. = FALSE)
@@ -44,7 +44,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
   if (any(sapply(sapply(fixed, attr, 'type'), is.null)))
     fixed <- extract_outcome_data(fixed, random = random, data = data,
-                                  analysis_type = analysis_type)$fixed
+                                  analysis_type = analysis_type, warn = FALSE)$fixed
 
   # if there is a time variable, add it to no_model
   if (!is.null(timevar)) {

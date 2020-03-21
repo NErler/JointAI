@@ -15,7 +15,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # outcome --------------------------------------------------------------------
   # extract the outcomes from the fixed effects formulas
   outcomes <- extract_outcome_data(fixed, random = random, data = data,
-                                   analysis_type = analysis_type)
+                                   analysis_type = analysis_type, warn = warn)
 
   # name the elements of fixed:
   fixed <- outcomes$fixed
@@ -23,7 +23,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # * model types --------------------------------------------------------------
   models <- get_models(fixed = fixed, random = random, data = data, timevar = timevar,
-                       auxvars = auxvars, no_model = no_model, models = models)
+                       auxvars = auxvars, no_model = no_model, models = models,
+                       warn = warn)
 
   # * outcomes -------------------------------------------------------------------
   Y <- cbind(outcomes_to_mat(outcomes),
@@ -163,7 +164,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
 
   # column names of the linear predictors for all models -----------------------
-  XXnam <- get_linpreds(fixed, random, data, models, auxvars, analysis_type)
+  XXnam <- get_linpreds(fixed, random, data, models, auxvars, analysis_type,
+                        warn = warn)
 
   lp_cols <- lapply(XXnam, function(XX) {
     Mcols <- if (!is.null(M)) sapply(M, function(x) c(na.omit(match(XX, colnames(x)))), simplify = FALSE)

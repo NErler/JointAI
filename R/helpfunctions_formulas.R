@@ -565,7 +565,7 @@ split_outcome <- function(LHS, data) {
 
 
 
-extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NULL) {
+extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NULL, warn = TRUE) {
 
   fixed <- check_formula_list(fixed)
 
@@ -710,7 +710,8 @@ outcomes_to_mat <- function(outcomes) {
 
 
 
-get_linpreds <- function(fixed, random, data, models, auxvars = NULL, analysis_type = NULL) {
+get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
+                         analysis_type = NULL, warn = TRUE) {
 
   fixed <- check_formula_list(fixed)
 
