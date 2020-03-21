@@ -100,7 +100,7 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
     if (predvars) {
       cat("* Predictor variables:\n")
       if (length(unlist(i$lp)) > 0)
-        cat(' ', add_breaks(paste0(names(c(i$lp$Mc, i$lp$Ml)), collapse = ", ")),
+        cat(' ', add_breaks(paste0(names(unlist(unname(i$lp))), collapse = ", ")),
           "\n")
       else
         cat(' (no predictor variables)', '\n')
@@ -128,8 +128,8 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
           }, "\n")
       } else {
         cat(paste0(tab(),
-                   i$parname, "[", print_seq(min(c(i$parelmts$Mc, i$parelmts$Ml)),
-                                             max(c(i$parelmts$Mc), i$parelmts$Ml)),
+                   i$parname, "[", print_seq(min(unlist(i$parelmts)),
+                                             max(unlist(i$parelmts))),
                    "]"),
             if (priors) {
               paste0("(normal prior(s) with mean ",
