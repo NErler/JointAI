@@ -25,20 +25,14 @@ and the original incomplete data stacked onto each other}
 \item{rownr}{the name of a variable identifying which rows correspond to the
 same observation in the original (unimputed) data}
 
-\item{ncol}{Number of rows and columns.}
+\item{ncol}{optional number of rows and columns in the plot layout;
+automatically chosen if unspecified}
 
-\item{nrow}{Number of rows and columns.}
+\item{nrow}{optional number of rows and columns in the plot layout;
+automatically chosen if unspecified}
 
-\item{labeller}{A function that takes one data frame of labels and
-returns a list or data frame of character vectors. Each input
-column corresponds to one factor. Thus there will be more than
-one with \code{vars(cyl, am)}. Each output
-column gets displayed as one separate line in the strip
-label. This function should inherit from the "labeller" S3 class
-for compatibility with \code{\link[ggplot2:labeller]{labeller()}}. You can use different labeling
-functions for different kind of labels, for example use \code{\link[ggplot2:label_parsed]{label_parsed()}} for
-formatting facet labels. \code{\link[ggplot2:label_value]{label_value()}} is used by default,
-check it for more details and pointers to other options.}
+\item{labeller}{optional labeller to be passed to \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}
+to change the facet labels}
 }
 \description{
 Plots densities and barplots of the observed and imputed values in a

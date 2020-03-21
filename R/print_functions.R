@@ -213,7 +213,7 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 #'
 #' @export
 #'
-parameters <- function(object, mess = TRUE, warn = TRUE) {
+parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 

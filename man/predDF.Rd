@@ -19,8 +19,6 @@ predDF(object, ...)
 \item{outcome}{vector of variable names or numbers identifying for which outcome(s) the prediction should be performed.}
 
 \item{length}{number of values used in the sequence when \code{vars} is continuous}
-
-\item{dat}{original data}
 }
 \description{
 Build a \code{data.frame} for prediction, where one variable
@@ -31,8 +29,8 @@ continuous variables).
 # fit a JointAI model
 mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 
-# generate a dataframe with varying "C2" and reference values for all other variables in the model
-newDF <- predDF(mod, vars = "C2")
+# generate a data frame with varying "C2" and reference values for all other variables in the model
+newDF <- predDF(mod, vars = ~ C2)
 
 head(newDF)
 

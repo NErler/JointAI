@@ -4,7 +4,7 @@
 \alias{parameters}
 \title{Parameter names of an JointAI object}
 \usage{
-parameters(object, mess = TRUE, warn = TRUE)
+parameters(object, mess = TRUE, warn = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}

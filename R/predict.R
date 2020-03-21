@@ -6,7 +6,6 @@
 #'
 #' @inheritParams model_imp
 #' @inheritParams sharedParams
-#' @param dat original data
 #' @param vars name of variable that should be varying
 #' @param length number of values used in the sequence when \code{vars} is continuous
 #' @param outcome vector of variable names or numbers identifying for which outcome(s) the prediction should be performed.
@@ -18,8 +17,8 @@
 #' # fit a JointAI model
 #' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
-#' # generate a dataframe with varying "C2" and reference values for all other variables in the model
-#' newDF <- predDF(mod, vars = "C2")
+#' # generate a data frame with varying "C2" and reference values for all other variables in the model
+#' newDF <- predDF(mod, vars = ~ C2)
 #'
 #' head(newDF)
 #'
@@ -166,7 +165,7 @@ predDF.list <- function(formulas, dat, vars, length = 100, idvar = NULL, ...) {
 #' fit <- predict(mod)
 #'
 #' # create dataset for prediction
-#' newDF <- predDF(mod, vars = "C2")
+#' newDF <- predDF(mod, vars = ~ C2)
 #'
 #' # obtain predicted values
 #' pred <- predict(mod, newdata = newDF)

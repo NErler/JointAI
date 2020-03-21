@@ -12,7 +12,8 @@ get_models(
   timevar = NULL,
   no_model = NULL,
   models = NULL,
-  analysis_type = NULL
+  analysis_type = NULL,
+  warn = TRUE
 )
 }
 \arguments{
@@ -48,6 +49,10 @@ automatically based on the class of the respective columns of \code{data}.}
 \item{analysis_type}{character sting identifying the type of analysis model;
 currently only required for joint models for longitudinal
 and survival data ("JM")}
+
+\item{warn}{logical; should warnings be given? Default is
+\code{TRUE}. (Note: this applies only to warnings
+given directly by \strong{JointAI}.)}
 }
 \value{
 \code{get_models()} returns a list of two vectors named \code{models}

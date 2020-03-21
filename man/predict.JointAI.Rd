@@ -96,7 +96,7 @@ mod <- lm_imp(y ~ C1 + C2 + I(C2^2), data = wideDF, n.iter = 100)
 fit <- predict(mod)
 
 # create dataset for prediction
-newDF <- predDF(mod, vars = "C2")
+newDF <- predDF(mod, vars = ~ C2)
 
 # obtain predicted values
 pred <- predict(mod, newdata = newDF)

@@ -9,7 +9,8 @@
 #' @param id the name of the variable specifying the subject indicator
 #' @param rownr the name of a variable identifying which rows correspond to the
 #'              same observation in the original (unimputed) data
-#' @inheritParams ggplot2::facet_wrap
+#' @param labeller optional labeller to be passed to \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}
+#'                 to change the facet labels
 #' @inheritParams sharedParams
 #' @export
 #'
