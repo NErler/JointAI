@@ -111,28 +111,26 @@ JAGSmodel_clmm <- function(info) {
 
 
 clmm_in_JM <- function(info) {
+  index <- info$index[info$surv_lvl]
+
   indent <- 4 + 4 + nchar(info$varname) + 7
 
   # model parts ----------------------------------------------------------------
+  Z_predictor <- paste_lp_Zpart(info, isgk = TRUE)
+
   probs <- sapply(2:(info$ncat - 1), function(k) {
-    paste0(tab(6), "pgk_", info$varname, "[", info$index[2], ", ", k,
+    paste0(tab(6), "pgk_", info$varname, "[", index, ", ", k,
            ", k] <- max(1e-7, min(1-1e-10, psumgk_",
-           info$varname, "[", info$index[2], ", ", k,", k] - psumgk_",
-           info$varname, "[", info$index[2], ", ", k - 1, ", k]))"
+           info$varname, "[", index, ", ", k,", k] - psumgk_",
+           info$varname, "[", index, ", ", k - 1, ", k]))"
            )
     })
 
   logits <- sapply(1:(info$ncat - 1), function(k) {
-    paste0(tab(6), "logit(psumgk_", info$varname, "[", info$index[2], ", ", k,
+    paste0(tab(6), "logit(psumgk_", info$varname, "[", index, ", ", k,
            ", k])  <- gamma_", info$varname,
-           "[", k, "]", " + etagk_", info$varname,"[", info$index[2], ", k]")
+           "[", k, "]", " + etagk_", info$varname,"[", index, ", k]")
   })
-
-  hc_info <- get_hc_info(info)
-  hc_parelmts <- organize_hc_parelmts(hc_info, info = info)
-
-  Z_predictor <- paste_Zpart(info, index = info$index[2], hc_info,
-                             notin_b = hc_parelmts$notin_b, isgk = TRUE)
 
 
   dummies <- if (!is.null(info$dummy_cols)) {
@@ -141,24 +139,24 @@ clmm_in_JM <- function(info) {
                          dest_mat = paste0(info$resp_mat, "gk"),
                          dest_col = paste0(info$resp_col, ', k'),
                          dummy_cols = paste0(info$dummy_cols, ', k'),
-                         index = info$index[2]),
+                         index = index),
            collapse = "\n")
   }
 
 
   # write model ----------------------------------------------------------------
-  paste0(tab(6), info$resp_mat, "gk[", info$index[2], ", ", info$resp_col,
-         ", k] ~ dcat(pgk_", info$varname, "[", info$index[2], ", 1:", info$ncat, ", k])", "\n",
+  paste0(tab(6), info$resp_mat, "gk[", index, ", ", info$resp_col,
+         ", k] ~ dcat(pgk_", info$varname, "[", index, ", 1:", info$ncat, ", k])", "\n",
 
-         tab(6), 'etagk_', info$varname, "[", info$index[2], ", k] <- ",
+         tab(6), 'etagk_', info$varname, "[", index, ", k] <- ",
          add_linebreaks(Z_predictor, indent = 12 + nchar(info$varname) + 10),
          "\n\n",
-         tab(6), "pgk_", info$varname, "[", info$index[2], ", 1, k] <- max(1e-10, min(1-1e-7, psumgk_",
-         info$varname, "[", info$index[2], ", 1, k]))", "\n",
+         tab(6), "pgk_", info$varname, "[", index, ", 1, k] <- max(1e-10, min(1-1e-7, psumgk_",
+         info$varname, "[", index, ", 1, k]))", "\n",
          paste(probs, collapse = "\n"), "\n",
-         tab(6), "pgk_", info$varname, "[", info$index[2], ", ", info$ncat,
+         tab(6), "pgk_", info$varname, "[", index, ", ", info$ncat,
          ", k] <- 1 - max(1e-10, min(1-1e-7, sum(pgk_",
-         info$varname, "[", info$index[2], ", 1:", info$ncat - 1,", k])))", "\n\n",
+         info$varname, "[", index, ", 1:", info$ncat - 1,", k])))", "\n\n",
          paste0(logits, collapse = "\n"),
          "\n\n",
          dummies,
