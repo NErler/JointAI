@@ -59,10 +59,7 @@ given directly by \strong{JointAI}.)}
 
 \item{xlab, ylab}{labels for the x- and y-axis}
 
-\item{use_level}{logical; should the multi-level structure be taken into account?
-This requires specification of the argument \code{idvar}.}
-
-\item{idvar}{name of the column that specifies the multi-level grouping structure}
+\item{idvars}{name of the column that specifies the multi-level grouping structure}
 
 \item{keep_aux}{logical; Should constant effects of auxiliary variables be kept in the output?}
 

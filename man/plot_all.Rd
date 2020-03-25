@@ -11,8 +11,7 @@ plot_all(
   fill = grDevices::grey(0.8),
   border = "black",
   allNA = FALSE,
-  use_level = FALSE,
-  idvar,
+  idvars = NULL,
   xlab = "",
   ylab = "frequency",
   ...
@@ -35,10 +34,7 @@ automatically chosen if unspecified}
 values is only given for variables that have missing values,
 if \code{TRUE} it is given for all variables}
 
-\item{use_level}{logical; should the multi-level structure be taken into account?
-This requires specification of the argument \code{idvar}.}
-
-\item{idvar}{name of the column that specifies the multi-level grouping structure}
+\item{idvars}{name of the column that specifies the multi-level grouping structure}
 
 \item{xlab}{labels for the x- and y-axis}
 
