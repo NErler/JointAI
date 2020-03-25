@@ -478,7 +478,7 @@ paste_linpred_JM <- function(parname, parelmts, matnam, index, cols, scale_pars,
 # * random effects specifications ------------------------------------------------
 ranef_priors <- function(nranef, varname) {
   invD_distr <- if (nranef == 1) {
-    "dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-278, 1e278)"
+    "dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)"
   } else {
     paste0("dwish(RinvD_", varname, "[ , ], KinvD_", varname, ")")
   }
@@ -486,7 +486,7 @@ ranef_priors <- function(nranef, varname) {
   paste0("\n",
          if (nranef > 1) {
            paste0(
-             tab(), "for (k in 1:", nranef, "){", "\n",
+             tab(), "for (k in 1:", nranef, ") {", "\n",
              tab(4), "RinvD_", varname, "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)", "\n",
              tab(), "}", "\n")
          },
@@ -653,21 +653,21 @@ get_distr <- function(family, varname, index, isgk = FALSE) {
     return(NULL)
 
   switch(family,
-         "gaussian" = paste0("dnorm(mu", if(isgk) "gk", "_", varname,
-                             "[", index, if(isgk) ", k", "], tau_", varname, ")"),
+         "gaussian" = paste0("dnorm(mu", if (isgk) "gk", "_", varname,
+                             "[", index, if (isgk) ", k", "], tau_", varname, ")"),
          "binomial" = paste0("dbern(max(1e-16, min(1 - 1e-16, mu",
-                             if(isgk) "gk", "_", varname,
-                             "[", index, if(isgk) ", k", "])))"),
-         "Gamma" = paste0("dgamma(shape", if(isgk) "gk", "_", varname,
-                          "[", index, if(isgk) ", k", "], rate", if(isgk) "gk", "_",
-                          varname, "[", index, if(isgk) ", k", "])"),
-         "poisson" = paste0("dpois(max(1e-10, mu", if(isgk) "gk", "_", varname,
-                            "[", index, if(isgk) ", k", "]))"),
-         "lognorm" = paste0("dlnorm(mu", if(isgk) "gk", "_", varname, "[",
-                            index, if(isgk) ", k", "], tau_", varname, ")"),
-         "beta" = paste0("dbeta(shape1", if(isgk) "gk", "_", varname,
-                         "[", index, if(isgk) ", k", "], shape2", if(isgk) "gk",
-                         "_", varname, "[", index, if(isgk) ", k", "])T(1e-15, 1 - 1e-15)")
+                             if (isgk) "gk", "_", varname,
+                             "[", index, if (isgk) ", k", "])))"),
+         "Gamma" = paste0("dgamma(shape", if (isgk) "gk", "_", varname,
+                          "[", index, if (isgk) ", k", "], rate", if (isgk) "gk", "_",
+                          varname, "[", index, if (isgk) ", k", "])"),
+         "poisson" = paste0("dpois(max(1e-10, mu", if (isgk) "gk", "_", varname,
+                            "[", index, if (isgk) ", k", "]))"),
+         "lognorm" = paste0("dlnorm(mu", if (isgk) "gk", "_", varname, "[",
+                            index, if (isgk) ", k", "], tau_", varname, ")"),
+         "beta" = paste0("dbeta(shape1", if (isgk) "gk", "_", varname,
+                         "[", index, if (isgk) ", k", "], shape2", if (isgk) "gk",
+                         "_", varname, "[", index, if (isgk) ", k", "])T(1e-15, 1 - 1e-15)")
   )
 }
 
