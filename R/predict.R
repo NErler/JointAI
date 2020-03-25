@@ -46,10 +46,10 @@ predDF.JointAI <- function(object, vars, outcome = 1, length = 100, ...) {
 # @rdname predDF
 # @export
 predDF.formula <- function(formula, dat, vars, length = 100, ...) {
-  if (!inherits(object, "formula"))
+  if (!inherits(formula, "formula"))
     stop("Use only with 'formula' objects.\n")
 
-  predDF(formulas = check_formula_list(formula), dat = object$data, vars = vars,
+  predDF(formulas = check_formula_list(formula), dat = dat, vars = vars,
          length = length, ...)
 }
 
