@@ -199,9 +199,7 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #'             \code{TRUE}. (Note: this applies only to messages
 #'             given directly by \strong{JointAI}.)
 #' @param xlab,ylab labels for the x- and y-axis
-#' @param use_level logical; should the multi-level structure be taken into account?
-#'        This requires specification of the argument \code{idvar}.
-#' @param idvar name of the column that specifies the multi-level grouping structure
+#' @param idvars name of the column that specifies the multi-level grouping structure
 #' @param keep_aux logical; Should constant effects of auxiliary variables be kept in the output?
 #' @param ridge logical; should the parameters of the main model be penalized using ridge regression? Default is \code{FALSE}
 #' @param parallel logical; should the chains be sampled using parallel computation? Default is \code{FALSE}
