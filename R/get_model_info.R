@@ -192,7 +192,7 @@ get_model1_info <- function(k, Mlist, data, K, K_imp, trunc = NULL, assoc_type =
     shrinkage = NULL,
     covnames = covnames,
     assoc_type  = if (modeltype %in% "JM") {
-      get_assoc_type(covnames, Mlist$models, assoc_type)
+      get_assoc_type(tvars, Mlist$models, assoc_type)
     } else if (modeltype %in% "coxph") {
       "obs.value"
     },
