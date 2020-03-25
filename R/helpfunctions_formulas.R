@@ -433,14 +433,14 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
     lapply(fixed, extract_LHS)
   }
 
-  fmla_outcomes <- if(!is.null(unlist(LHSs)))
+  fmla_outcomes <- if (!is.null(unlist(LHSs)))
     as.formula(paste("~", paste0(unique(unlist(LHSs)), collapse = " + ")))
 
   if (any(names(identify_functions(fmla_outcomes)) != 'identity'))
       stop('Functions in the outcome are not allowed.')
 
   funlist <- list(covars = identify_functions(remove_LHS(fixed)),
-                  ranef = identify_functions(remove_grouping(random))
+                  ranef = identify_functions(unlist(remove_grouping(random)))
   )
 
   fctDFlist <- sapply(funlist, function(fl) {

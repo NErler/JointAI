@@ -67,8 +67,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   }
 
   # design matrix with updated auxiliary variables
-  terms_list <- get_terms_list(fmla = c(fixed, remove_grouping(random), auxvars), data = data)
-  X2 <- model.matrix_combi(fmla = c(fixed, remove_grouping(random), auxvars), data = data,
+  terms_list <- get_terms_list(fmla = c(fixed, unlist(remove_grouping(random)), auxvars), data = data)
+  X2 <- model.matrix_combi(fmla = c(fixed, unlist(remove_grouping(random)), auxvars), data = data,
                            terms_list = terms_list)
 
   MX <- cbind(Y, X2[, setdiff(colnames(X2), colnames(Y)), drop = FALSE])

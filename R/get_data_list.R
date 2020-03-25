@@ -122,8 +122,7 @@ get_data_list <- function(Mlist, info_list, data) {
         # gk_data <- get_locf(fixed = Mlist$fixed, data, idvar = Mlist$idvar, timevar, gk_data)
       }
 
-
-      X <- model.matrix_combi(fmla = c(Mlist$fixed, remove_grouping(Mlist$random),
+      X <- model.matrix_combi(fmla = c(Mlist$fixed, unlist(remove_grouping(Mlist$random)),
                                        Mlist$auxvars),
                               data = gk_data,
                               terms_list = Mlist$terms_list)
