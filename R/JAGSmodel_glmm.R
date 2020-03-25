@@ -101,30 +101,26 @@ JAGSmodel_glmm <- function(info) {
 
 
 glmm_in_JM <- function(info) {
+  index <- info$index[info$surv_lvl]
+
+
   # settings for different types -----------------------------------------------
   distr <- get_distr(family = info$family,
                      varname = info$varname,
-                     index = info$index[2], isgk = TRUE)
+                     index = index, isgk = TRUE)
 
   linkfun <- get_linkfun(info$link)
 
   repar <- get_repar(family = info$family,
                      varname = info$varname,
-                     index = info$index[2],
+                     index = index,
                      isgk = TRUE)
 
   linkindent <- get_linkindent(info$link)
 
 
   # model parts ----------------------------------------------------------------
-  hc_info <- get_hc_info(info)
-  hc_parelmts <- organize_hc_parelmts(hc_info, info = info)
-  # rdslopes <- paste_rdslope_lp(hc_info, info)
-  # rdintercept <- paste_rdintercept_lp(info, hc_parelmts$in_b0)
-
-  Z_predictor <- paste_Zpart(info, index = info$index[2], hc_info,
-                             notin_b = hc_parelmts$notin_b, isgk = TRUE)
-
+  Z_predictor <- paste_lp_Zpart(info, isgk = TRUE)
 
   trunc <- if (!is.null(info$trunc))
     paste0("T(", paste0(info$trunc, collapse = ", "), ")")
@@ -135,16 +131,16 @@ glmm_in_JM <- function(info) {
                          dest_mat = paste0(info$resp_mat, "gk"),
                          dest_col = paste0(info$resp_col, ', k'),
                          dummy_cols = paste0(info$dummy_cols, ', k'),
-                         index = info$index[2]), collapse = "\n")
+                         index = index), collapse = "\n")
   }
 
 
   # write model ----------------------------------------------------------------
-  paste0(tab(6), info$resp_mat, "gk[", info$index[2], ", ", info$resp_col, ", k] ~ ",
+  paste0(tab(6), info$resp_mat, "gk[", index, ", ", info$resp_col, ", k] ~ ",
          distr, trunc, "\n",
          repar,
-         tab(6), linkfun(paste0("mugk_", info$varname, "[", info$index[2], ", k]")), " <- ",
-         add_linebreaks(Z_predictor, indent = linkindent + 11 + nchar(info$varname) + 10),
+         tab(6), linkfun(paste0("mugk_", info$varname, "[", index, ", k]")), " <- ",
+         add_linebreaks(Z_predictor, indent = linkindent + 11 + nchar(info$varname) + 9 + nchar(index)),
          "\n",
          dummies,
          info$trafos,
