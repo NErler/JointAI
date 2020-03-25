@@ -116,19 +116,23 @@ get_model1_info <- function(k, Mlist, data, K, K_imp, trunc = NULL, assoc_type =
                          isgk = isgk)
 
   covnames = if (modeltype %in% "JM") {
-    unique(unlist(sapply(lp, function(x) sapply(names(x), replace_dummy, refs = Mlist$refs))))
+    unique(unlist(sapply(lp, function(x) sapply(names(x), replace_dummy,
+                                                refs = Mlist$refs))))
   }
 
-  tv_vars <- if (modeltype %in% "JM") {#################################################################
+  tv_vars <- if (modeltype %in% "JM") {
 
-    # find the (longitudinal) covariates infolved in the lp of the survival part
+    # find the (longitudinal) covariates involved in the lp of the survival part
     covars <- unlist(sapply(unlist(sapply(lp, names)), replace_trafo, Mlist$fcts_all))
     covars <- sapply(covars, replace_dummy, refs = Mlist$refs)
     covars <- covars[covars %in% unlist(sapply(Mlist$M, colnames))]
 
-    tvars <- unique(unlist(c(names(lp$Ml),
+
+    rep_lvls <- names(which(Mlist$group_lvls < Mlist$group_lvls[gsub("M_", "", resp_mat[2])]))
+
+    tvars <- unique(unlist(c(sapply(lp[paste0("M_", rep_lvls)], names),
                              lapply(Mlist$lp_cols[covars],
-                                    function(x) names(x$Ml))
+                                    function(x) names(unlist(unname(x[paste0("M_", rep_lvls)]))))
     )))
 
 
@@ -136,16 +140,16 @@ get_model1_info <- function(k, Mlist, data, K, K_imp, trunc = NULL, assoc_type =
     # quadrature
     tvars <- unlist(sapply(tvars, replace_trafo, Mlist$fcts_all))
 
-    tvars <- unique(sapply(tvars[!tvars %in% Mlist$timevar &
-                                   tvars %in% colnames(Mlist$Ml)],
-                           replace_dummy, refs = Mlist$refs))
+    tvars <- unique(sapply(tvars[!tvars %in% Mlist$timevar], replace_dummy, refs = Mlist$refs))
 
     # get the model info for these variables
     sapply(tvars, function(i) {
       arglist_new <- arglist
       arglist_new$k <- replace_dummy(i, refs = Mlist$refs)
       arglist_new$isgk <- TRUE
-      do.call(get_model1_info, arglist_new)
+      subinfo <- do.call(get_model1_info, arglist_new)
+      subinfo$surv_lvl <- gsub("M_", "", resp_mat[2])
+      subinfo
     },  simplify = FALSE)
   }
 

@@ -114,12 +114,18 @@ get_data_list <- function(Mlist, info_list, data) {
       gk_data[, timevar] <- c(t(outer(Mlist$M[[x$resp_mat[1]]][l$survrow, timevar]/2, gkx + 1)))
 
 
-      if (any(modeltypes %in% 'coxph')) {
+      if (x$modeltype %in% 'coxph') {
         gk_data <- get_locf(fixed = Mlist$fixed, newdata = data, data = data,
                             idvar = gsub("M_", "", x$resp_mat[2]),
                             group_lvls = Mlist$group_lvls, groups = Mlist$groups,
                             timevar, gk_data)
         # gk_data <- get_locf(fixed = Mlist$fixed, data, idvar = Mlist$idvar, timevar, gk_data)
+      } else if (x$modeltype %in% 'JM') {
+        for (k in names(x$tv_vars)) {
+          gk_data[, k] <- if (is.factor(gk_data[, k])) {
+            factor(NA, levels = levels(gk_data[, k]))
+          } else NA * gk_data[, k]
+        }
       }
 
       X <- model.matrix_combi(fmla = c(Mlist$fixed, unlist(remove_grouping(Mlist$random)),
