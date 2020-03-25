@@ -177,12 +177,18 @@ get_hc_info <- function(varname, lvl, Mlist, data, parelmts, lp) {
 
   # identify relevant levels (all higher levels)
   clus <- names(lvls)[lvls > lvls[lvl]]
-  # if there is no random effects structur specified, assume random intercepts
+  # if there is no random effects structure specified, assume random intercepts
   # at the appropriate levels
   newrandom <- if (is.null(Mlist$random[[varname]])) {
     sapply(clus, function(x) ~ 1)
   } else {
-    remove_grouping(Mlist$random[[varname]])[clus]
+    rd <- remove_grouping(Mlist$random[[varname]])
+    if (all(clus %in% names(rd))) {
+      rd[clus]
+    } else {
+      stop(gettextf("Some grouping levels are missing from the random effects structure of %s.",
+                    dQuote(varname)), call. = FALSE)
+    }
   }
 
   if (length(newrandom) > 0) {
