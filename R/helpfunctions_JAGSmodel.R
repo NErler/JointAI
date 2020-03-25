@@ -20,7 +20,7 @@ add_linebreaks <- function(string, indent, width = 90) {
 
   i <- 1
   br <- c()
-  while(i < length(len)) {
+  while (i < length(len)) {
     cs <- cumsum(len[i:length(len)])
     nfit <- max(1, which(cs <= (width - indent)))
     br <- c(br, rep(' + ', nfit - 1),
@@ -217,7 +217,7 @@ paste_rdintercept_lp <- function(info) {
   if (is.null(info$hc_list))
     return(NULL)
 
-  sapply(names(info$hc_list$hcvars), function (lvl) {
+  sapply(names(info$hc_list$hcvars), function(lvl) {
     mat <- paste0("M_", lvl)
 
     x <- info$hc_list$hcvars[[lvl]]$rd_intercept_coefs
@@ -315,7 +315,7 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
 
 
 
-paste_lp_Zpart <- function(info) {
+paste_lp_Zpart <- function(info, isgk = FALSE) {
 
   if (is.null(info$hc_list))
     return(NULL)
@@ -325,14 +325,26 @@ paste_lp_Zpart <- function(info) {
 
   Zlp <- sapply(names(info$group_lvls)[info$group_lvls >= info$group_lvls[lvl]],
                 function(k) {
-                  index <- if (lvl == 'toplevel') {
-                    paste0('group_', k, "[", info$index[lvl], "]")
-                  } else {
+                  index <- if (!isgk & lvl == 'toplevel') {
+                    if (k == lvl) {
+                      info$index[lvl]
+                    } else {
+                      paste0('group_', k, "[", info$index[lvl], "]")
+                    }
+                  } else if (!isgk & k == lvl) {
+                    info$index[[lvl]]
+                  } else if (!isgk) {
                     paste0('group_', k, "[",
                            "pos_", lvl, "[", info$index[lvl], "]]")
+                  } else if (isgk & (k == info$surv_lvl | k == 'toplevel')) {
+                    info$index[info$surv_lvl]
+                  } else if (isgk) {
+                    # info$index[info$surv_lvl]
+                    paste0('group_', k, "[",
+                           "pos_", info$surv_lvl, "[", info$index[info$surv_lvl], "]]")
                   }
 
-                  rdi <- if (length(info$hc_list$hcvars[[k]]$rd_intercept_coefs$parelmts) > 0) {
+                  rdi <- if (isTRUE(attr(info$hc_list$hcvars[[k]], "rd_intercept"))) {
                     paste_data(matnam = paste0("b_", info$varname, "_", k),
                                index = index,
                                col = 1)
@@ -351,9 +363,9 @@ paste_lp_Zpart <- function(info) {
                         paste_scaling(
                           paste_data(
                             matnam = rdsc$matrix,
-                            index = info$index[lvl],
-                            col = rdsc$cols),
-                          row = rdsc$cols,
+                            index = if (!isgk) info$index[[lvl]] else index,
+                            col = rdsc$cols, isgk = isgk),
+                          rows = rdsc$cols,
                           scale_pars = info$scale_pars[[unique(rdsc$matrix)]],
                           scalemat = paste0("sp", unique(rdsc$matrix))), sep = ' * ')
                     })
@@ -365,9 +377,10 @@ paste_lp_Zpart <- function(info) {
                                  parelmts = info$hc_list$othervars[[k]]$parelmts),
                       paste_scaling(
                         paste_data(matnam = info$hc_list$othervars[[k]]$matrix,
-                                   index = info$index[[lvl]],
-                                   col = info$hc_list$othervars[[k]]$cols),
-                        row = info$hc_list$othervars[[k]]$cols,
+                                   index = index, #info$index[[lvl]],
+                                   col = info$hc_list$othervars[[k]]$cols,
+                                   isgk = isgk),
+                        rows = info$hc_list$othervars[[k]]$cols,
                         scale_pars = info$scale_pars[[paste0("M_", k)]],
                         scalemat = paste0("spM_", k)), sep = " * "
                     )

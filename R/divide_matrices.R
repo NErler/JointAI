@@ -88,7 +88,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   }
 
 
-  M <- sapply(unique(Mlvls), function (k)
+  M <- sapply(unique(Mlvls), function(k)
     MX[ , Mlvls == k, drop = FALSE], simplify = FALSE)
 
   fcts_mis <- extract_fcts(fixed = fixed, data, random = random, complete = FALSE,

@@ -82,11 +82,11 @@ JAGSmodel_survreg <- function(info) {
 
 # Cox PH model ----------------------------------------------------------------
 JAGSmodel_coxph <- function(info) {
-  indent <- 4 + 10 + 4
 
   index <- info$index[gsub("M_", "", info$resp_mat[2])]
   N <- info$N[gsub("M_", "", info$resp_mat[2])]
 
+  indent <- 4 + 10 + 4 + nchar(index)
 
   rdintercept <- paste_rdintercept_lp(info)
   rdslopes <- paste_rdslope_lp(info)
@@ -162,9 +162,9 @@ JAGSmodel_coxph <- function(info) {
          tab(), "for (", index, " in 1:", N, ") {", "\n",
          tab(4), "logh0[", index, "] <- inprod(",
          info$parname, "_Bh0[], Bh0[", index, ", ])", "\n",
-         tab(4), "eta_surv[", index, "] <- ", add_linebreaks(eta, indent = 20), "\n",
+         tab(4), "eta_surv[", index, "] <- ", add_linebreaks(eta, indent = 18 + nchar(index)), "\n",
          tab(4), "logh[", index, "] <- ",
-         add_linebreaks(logh_pred, indent = 15),
+         add_linebreaks(logh_pred, indent = 14 + nchar(index)),
          "\n\n",
          tab(4), "for (k in 1:15) {", "\n",
          tab(6), "logh0s[", index, ", k] <- inprod(", info$parname,
