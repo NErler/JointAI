@@ -333,7 +333,7 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 #' @export
 
 plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8),
-                     border = 'black', allNA = FALSE, use_level = FALSE, idvar,
+                     border = 'black', allNA = FALSE, idvars = NULL,
                      xlab = '', ylab = 'frequency', ...) {
 
   args <- as.list(match.call())
@@ -358,34 +358,30 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
 
 
   op <- par(mfrow = dims)
-  for (i in 1:ncol(data)) {
-    # specify plot title, including % missing values for incomplete variables
+  if (!is.null(idvars)) {
+    groups <- data[, idvars, drop = FALSE]
+    groups$toplevel <- 1:nrow(groups)
+    varlvls <- sapply(data, check_varlevel, groups = groups)
+  }
 
-    if (use_level) {
-      if (missing(idvar))
-        stop("'idvar' must be specified when 'use_level = TRUE'.")
-
-      istvar <- check_tvar(data[, i], data[, idvar])
-      if (!istvar)
-        x <- data[match(unique(data[, idvar]), data[, idvar]), i]
-      else x <- data[, i]
-    } else {
-      x <- data[, i]
-    }
+  for (i in names(data)) {
+    if (!is.null(idvars)) {
+      x <- data[match(unique(groups[, varlvls[i]]), groups[, varlvls[i]]), i]
+    } else x <- data[, i]
 
     pNA <- round(mean(is.na(x))*100, 1)
 
     main <- if (any(is.na(data[, i])) | allNA) {
-      paste0(names(data)[i], " (", pNA, "% NA)")
+      paste0(i, " (", pNA, "% NA)")
     } else {
-      names(data)[i]
+      i
     }
 
-    if (use_level)
-      main <- paste0(main, "\n", ifelse(istvar, "level-1", "level-2"))
+    if (!is.null(idvars))
+      main <- paste0(main, "\n", "(", varlvls[i], ")")
 
 
-    if (is.factor(x)) {
+    if (is.factor(x) | is.logical(x)) {
       if (any(is.na(x))) {
         x <- factor(x, levels = c(levels(x), "NA"), ordered = T)
         x[is.na(x)] <- "NA"
@@ -403,7 +399,8 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
       text(1, 0, paste0(names(data)[i], " \nis coded as character\nand cannot be plotted."), xpd = TRUE)
     } else if (class(x) %in% c('Date', 'POSIXt')) {
       if (is.null(args_hist)) {
-        breaks <-  seq(min(x, na.rm  = TRUE), max(x, na.rm = TRUE), length.out = 10 + 1)
+        breaks <-  seq(min(x, na.rm  = TRUE), max(x, na.rm = TRUE),
+                       length.out = 10 + 1)
         hist(as.numeric(x), ylab = ylab, main = main, xaxt = 'n',
              col = fill, border = border, xlab = xlab,
              breaks = as.numeric(breaks))
