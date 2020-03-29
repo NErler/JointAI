@@ -69,9 +69,9 @@ get_data_list <- function(Mlist, info_list, data) {
   # survreg models -------------------------------------------------------------
   if (any(modeltypes %in% c('survreg'))) {
     for (x in info_list[modeltypes %in% c('survreg')]) {
-      l[[paste0('cens_', x$varname)]] <- 1 - Mlist[[x$resp_mat[2]]][, x$resp_col[2]]
-      l[[x$varname]] <- ifelse(Mlist[[x$resp_mat[2]]][, x$resp_col[2]] == 1,
-                               Mlist[[x$resp_mat[1]]][, x$resp_col[1]],
+      l[[paste0('cens_', x$varname)]] <- 1 - Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]
+      l[[x$varname]] <- ifelse(Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]] == 1,
+                               Mlist$M[[x$resp_mat[1]]][, x$resp_col[1]],
                                NA)
     }
   }
