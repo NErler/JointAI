@@ -249,9 +249,9 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
   cat("Thinning interval =", x$thin, "\n")
   cat("Number of chains =", x$nchain, "\n")
   cat("\n")
-  cat("Number of observations:", x$size['toplevel'], "\n")
+  cat("Number of observations:", x$size['levelone'], "\n")
   if (length(x$size) > 1) {
-    i <- which(!names(x$size) %in% 'toplevel')
+    i <- which(!names(x$size) %in% 'levelone')
     cat("Number of groups:\n",
         paste0('- ', names(x$size)[i], ": ", x$size[i], "\n")
     )

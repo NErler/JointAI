@@ -19,9 +19,9 @@ get_groups <- function(idvar, data) {
     groups <- sapply(idvar, function(i) {
       match(data[, i], unique(data[, i]))
     }, simplify = FALSE)
-    groups$toplevel <- 1:nrow(data)
+    groups$levelone <- 1:nrow(data)
   } else {
-    groups = list(toplevel = 1:nrow(data))
+    groups = list(levelone = 1:nrow(data))
   }
 
   groups
@@ -61,7 +61,7 @@ check_varlevel <- function(x, groups) {
   } else if (sum(!clus) == 1) {
     names(clus)[!clus]
   } else {
-    'toplevel'
+    'levelone'
   }
 }
 
@@ -238,8 +238,8 @@ get_Mlgk <- function(survrow, gkx, newdata, data, Mlist, lvl, timevar, td_cox = 
                             terms_list = Mlist$terms_list)
 
   Xgk_new <- matrix(nrow = length(survrow) * length(gkx),
-                    ncol = ncol(Mlist$M$M_toplevel),
-                    dimnames = list(c(), colnames(Mlist$M$M_toplevel)))
+                    ncol = ncol(Mlist$M$M_levelone),
+                    dimnames = list(c(), colnames(Mlist$M$M_levelone)))
 
   Xgk_new[, colnames(Xgk)[colnames(Xgk) %in% colnames(Xgk_new)]] <-
     Xgk[, colnames(Xgk)[colnames(Xgk) %in% colnames(Xgk_new)]]

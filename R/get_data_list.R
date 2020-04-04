@@ -34,7 +34,7 @@ get_data_list <- function(Mlist, info_list, data) {
 
   # prior for mixed models ----------------------------------------------------
   if (length(Mlist$groups) > 1) {
-    groups <- Mlist$groups[!names(Mlist$groups) %in% 'toplevel']
+    groups <- Mlist$groups[!names(Mlist$groups) %in% 'levelone']
 
     pos <- sapply(groups[!names(groups) %in% names(which.max(Mlist$group_lvls))],
                   function(x) {

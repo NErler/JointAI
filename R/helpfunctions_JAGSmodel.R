@@ -325,7 +325,7 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
 
   Zlp <- sapply(names(info$group_lvls)[info$group_lvls >= info$group_lvls[lvl]],
                 function(k) {
-                  index <- if (!isgk & lvl == 'toplevel') {
+                  index <- if (!isgk & lvl == 'levelone') {
                     if (k == lvl) {
                       info$index[lvl]
                     } else {
@@ -336,7 +336,7 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
                   } else if (!isgk) {
                     paste0('group_', k, "[",
                            "pos_", lvl, "[", info$index[lvl], "]]")
-                  } else if (isgk & (k == info$surv_lvl | k == 'toplevel')) {
+                  } else if (isgk & (k == info$surv_lvl | k == 'levelone')) {
                     info$index[info$surv_lvl]
                   } else if (isgk) {
                     # info$index[info$surv_lvl]
