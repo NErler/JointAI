@@ -71,26 +71,31 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                     nrow = nrow, ncol = ncol, warn = warn, mess = mess,
                     keep_aux = keep_aux)
 
+  plotnams <- get_plotmain(object, colnames(prep$MCMC[[1]]))
+
 
   if (use_ggplot) {
     meltMCMC <- melt_matrix_list(lapply(prep$MCMC, as.matrix),
                                  varnames = c('iteration', 'variable'))
     meltMCMC$chain <- factor(meltMCMC$L1)
 
+    labels <- setNames(plotnams, colnames(prep$MCMC[[1]]))
 
     ggplot2::ggplot(meltMCMC,
                     ggplot2::aes(iteration, value, color = chain)) +
       ggplot2::geom_line() +
       ggplot2::facet_wrap('variable', scales = 'free',
-                          ncol = prep$ncol, nrow = prep$nrow)
+                          ncol = prep$ncol, nrow = prep$nrow,
+                          labeller = ggplot2::as_labeller(labels))
   } else {
-    op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(3.2, 2.5, 2, 1),
+    op <- par(mfrow = c(prep$nrow, prep$ncol),
+              mar = c(3.2, 2.5, ifelse(length(object$fixed) == 1, 2, 3), 1),
               mgp = c(2, 0.6, 0))
 
     for (i in 1:nvar(prep$MCMC)) {
       matplot(x = prep$time, as.array(prep$MCMC, drop = FALSE)[, i, ], type = "l",
               xlab = "Iterations", ylab = "",
-              main = colnames(prep$MCMC[[1]])[i], ...)
+              main = plotnams[i], ...)
     }
     on.exit(par(op))
   }
@@ -194,10 +199,14 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     prep$MCMC <- as.mcmc.list(as.mcmc(do.call(rbind, prep$MCMC)))
 
 
+  plotnams <- get_plotmain(object, colnames(prep$MCMC[[1]]))
+
   if (use_ggplot) {
     meltMCMC <- melt_matrix_list(lapply(prep$MCMC, as.matrix),
                                  varnames = c('iteration', 'variable'))
     meltMCMC$chain <- factor(meltMCMC$L1)
+
+    labels <- setNames(plotnams, colnames(prep$MCMC[[1]]))
 
     if (joined)
       p <- ggplot2::ggplot(meltMCMC, ggplot2::aes(value))
@@ -206,7 +215,8 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
     p + ggplot2::geom_density() +
       ggplot2::facet_wrap('variable', scales = 'free', ncol = prep$ncol,
-                          nrow = prep$nrow)
+                          nrow = prep$nrow,
+                          labeller = ggplot2::as_labeller(labels))
   } else {
     args <- as.list(match.call())
     if (!is.null(args$col)) {
@@ -216,7 +226,8 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       col <- 1:length(prep$MCMC)
     }
 
-    op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(3, 3, 2, 1),
+
+    op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(2, 3, ifelse(length(object$fixed) == 1, 2, 3), 1),
               mgp = c(2, 0.6, 0))
     for (i in 1:ncol(prep$MCMC[[1]])) {
       dens <- lapply(prep$MCMC[, i], density)
@@ -228,7 +239,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       plot(NULL,
            xlim = range(lapply(dens, "[[", "x"), vline_range, na.rm = TRUE),
            ylim = range(lapply(dens, "[[", "y"), na.rm = TRUE),
-           main = colnames(prep$MCMC[[1]])[i],
+           main = plotnams[i],
            xlab = "", ylab = "density", ...
       )
 
@@ -307,6 +318,23 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
   return(list(MCMC = MCMC, nrow = dims[1], ncol = dims[2],
               thin = thin, time = time, subset = subset))
 }
+
+
+
+get_plotmain <- function(object, plotnams) {
+  coefs <- do.call(rbind, object$coef_list)
+
+  coef_set <- coefs[na.omit(match(plotnams, coefs$coef)), ]
+
+  if (length(unique(coef_set$outcome)) == 1) {
+    plotnams[na.omit(match(plotnams, coefs$coef))] <- coefs$varname[na.omit(match(plotnams, coefs$coef))]
+  } else {
+    plotnams[na.omit(match(plotnams, coefs$coef))] <- paste0(coefs$varname[na.omit(match(plotnams, coefs$coef))], "\n",
+                                                             "(", coefs$outcome[na.omit(match(plotnams, coefs$coef))], ")")
+  }
+  plotnams
+}
+
 
 
 #' Visualize the distribution of all variables in the dataset
