@@ -1,6 +1,6 @@
 ---
 title: "Visualizing Incomplete Data"
-date: "2019-08-29"
+date: "2020-04-03"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -23,13 +23,13 @@ options(width = 80)
 ```
 
 
-When analyzing data with missing values it is important to be familiar
+When analysing data with missing values it is important to be familiar
 with the variables of interest, i.e., to know their measurement level and
 distribution, as well as the amount of missing values per variable, and to
 investigate the pattern of missing values.
 
-Currently, the package **JointAI** has two function that help this fist
-exploration of an unknown dataset.
+Currently, the package **JointAI** has two functions to help the exploration of
+incomplete data.
 
 In this vignette, we use the `NHANES` data and the `simLong` data, that are part of
 the **JointAI** package.
@@ -43,30 +43,30 @@ go to the [web page of the National Health and Nutrition Examination Survey (NHA
 Using `plot_all()`, an array of histograms (for continuous variables and dates)
 and barplots (for categorical variables) can be obtained.
 
-```{r, fig.height = 8}
+```{r, fig.height = 8, collapse=TRUE}
 op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
 plot_all(NHANES)
 par(op)
 ```
 
 **Note:** Here, we are looking at the marginal distribution of each variable.
-Since missing values in one variable are (usually) imputed conditionally on 
+Since missing values are (usually) imputed conditionally on 
 other variables, marginal plots can only be used as an indication of what 
-type of imputation model (e.g., normal vs. non-normal) is appropriate.
+type of imputation model (e.g., normal vs non-normal) is appropriate.
 
 
 ### Plot titles: proportion of missing values
 The argument `allNA` allows to select whether the proportion of missing values
-is given only for incomplete variables or (by setting `allNA = TRUE`) for all
+is given only for incomplete variables or, by setting `allNA = TRUE`, for all
 variables.
 
 ### Changing colors
-The color of the bars and their border can be controlled with the arguments
+The colour of the bars and their border can be controlled with the arguments
 `fill` and `border`.
 
 ### Layout
-Depending on the number of variables in the data, the
-number of rows and columns of the plot layout is determined automatically, 
+The number of rows and columns of the plot layout is determined automatically
+depending on the number of variables in the data
 but can be overwritten using `nrow` and/or `ncol`.
 
 ### Additional arguments
@@ -76,7 +76,7 @@ or [`barplot()`](https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/bar
 For example:
 ```{r, fig.width = 8, fig.height = 10}
 par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
-plot_all(NHANES, allNA = TRUE, fill = '#e30f41', border = '#34111b', ncol = 3, nclass = 30)
+plot_all(NHANES, allNA = TRUE, fill = '#e30f41', border = '#34111b', ncol = 3, breaks = 30)
 ```
 
 
@@ -84,19 +84,22 @@ plot_all(NHANES, allNA = TRUE, fill = '#e30f41', border = '#34111b', ncol = 3, n
 When the data has a multi-level structure, e.g., subjects are nested within
 hospitals, or subjects have been measured repeatedly as in the `simLong` data,
 the level of each variable can be taken into account by specifying
-`use_levels = TRUE` and providing the name of the id variable in the argument
-`idvar`.
+the names of the grouping variables ("id" variables) via the argument
+`idvars`.
 
 
 ```{r, fig.width = 8, fig.height = 10}
 par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
 plot_all(simLong, allNA = TRUE, fill = '#e30f41', border = '#34111b',
-         ncol = 3, nclass = 30, use_level = TRUE, idvar = "ID")
+         ncol = 3, breaks = 30, use_level = TRUE, idvars = "ID")
 ```
-The information whether a variable is level-1 (i.e., varies within the groups
-specified by `idvar`) or level-2 (i.e., constant within the groups) is added to
-the title of each plot, and level-2 variables are plotted on the group-level
-instead of the observation level.
+The information to which level a variable belongs is added to
+the title of each plot ("levelone" refers to the first level, for which there is
+no grouping variable).
+Variables belonging to lower levels are summarized on their respective level, 
+i.e., the counts of `ETHN`, for instance, will sum up to the number of subjects
+in the `simLong` data.
+
 
 ## Missing Data Pattern
 The pattern of the missing data can be visualized with the function `md_pattern()`:
@@ -126,9 +129,9 @@ md_pattern(NHANES, pattern = T, plot = F)
 
 
 ### Changing colors
-The arguments `color` and `border` can be used to change the color that is
+The arguments `color` and `border` can be used to change the colour that is
 used for observed and missing values (in that order, i.e., `color` is a vector
-of length 2), and the border separating the rectangles, respectively. 
+of length two), and the border separating the rectangles, respectively. 
 
 ### Legend position
 The position of the legend can be controlled with the argument `legend.position`,
@@ -152,6 +155,6 @@ md_pattern(NHANES, color = c('#34111b', '#e30f41'), border = 'white',
 <br>
 
 For the simLong data, the missing data pattern is:
-```{r, fig.height = 9}
+```{r, fig.height = 11}
 md_pattern(simLong, color = c('#34111b', '#e30f41'))
 ```

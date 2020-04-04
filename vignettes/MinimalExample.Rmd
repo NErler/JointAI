@@ -1,6 +1,6 @@
 ---
 title: "Minimal Example"
-date: "2019-08-29"
+date: "2020-04-03"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -38,21 +38,21 @@ in which the NHANES data is explored.
 ##  Fitting a linear regression model
 Fitting a linear regression model with **JointAI** is straightforward with the
 function `lm_imp()`:
-```{r fit_lm1, message = F}
+```{r fit_lm1, message = FALSE}
 lm1 <- lm_imp(SBP ~ gender + age + race + WC + alc + educ + albu + bili,
-              data = NHANES, n.iter = 500, progress.bar = 'none')
+              data = NHANES, n.iter = 500)
 ```
 
 The specification of `lm_imp()` is similar to the specification of a
 linear regression model for complete data using `lm()`.
-In this minimal example the only difference is that for `lm_imp()` the number
+In this minimal example, the only difference is that for `lm_imp()` the number
 of iterations `n.iter` has to be specified.
-Of course there are many more parameters that can or should
+Of course there are many more parameters that can (and sometimes should)
 be specified.
 In the vignette [*Model Specification*](https://nerler.github.io/JointAI/articles/ModelSpecification.html) 
 many of these parameters are explained in detail.
 
-`n.iter` specifies the length of the [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain),
+`n.iter` specifies the length of the [Markov chain](https://en.wikipedia.org/wiki/Markov_chain),
 i.e., the number of draws from the posterior distribution of the parameter
 or unobserved value.
 How many iterations are necessary depends on the data and complexity of the
@@ -68,12 +68,11 @@ traceplot(lm1)
 
 The function [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html)
 produces a plot of the sampled values across 
-iterations per parameter. By default, three^[The number of chains can be changed with the argument `n.chain`.] Markov chains are produced for
-each parameter and represented by different colors.
+iterations per parameter. Different chains are represented by different colors.
 
 When the sampler has converged the chains show a horizontal band, as in the
 above figure. Consequently, when traces show a trend, convergence has not been
-reached  and more iterations are necessary (e.g., using the function
+reached and more iterations are necessary (e.g., using the function
 [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.html)).
 
 When convergence has been achieved, we can obtain the result of the model
@@ -82,7 +81,7 @@ from the model summary.
 ## Model Summary
 Results from a model fitted with **JointAI** can be printed using `summary()`:
 ```{r, echo = FALSE}
-options(width = 80)
+options(width = 90)
 ```
 
 ```{r}
@@ -100,10 +99,11 @@ is described in the vignette
 [*Selecting Parameters*](https://nerler.github.io/JointAI/articles/SelectingParameters.html).
 
 The summary consists of the posterior mean, the standard deviation and the 
-2.5% and 97.5% quantiles of the MCMC sample, the tail probability and the 
-Gelman-Rubin criterion for convergence.
+2.5% and 97.5% quantiles of the MCMC sample, the tail probability, the 
+Gelman-Rubin criterion for convergence and the ratio of the Monte Carlo error
+to the standard deviation of the posterior sample.
 
-
+#### Tail probability
 The tail probability is a measure of how likely the value 0 is under the 
 estimated posterior distribution, and is calculated as 
 $$2\times\min\left\{Pr(\theta > 0), Pr(\theta < 0)\right\}$$
@@ -137,6 +137,7 @@ for (i in seq_along(mus)) {
 par(op)
 ```
 
+#### Gelman-Rubin criterion
 The Gelman-Rubin^[Gelman, A and Rubin, DB (1992) Inference from iterative simulation using multiple sequences, Statistical Science, 7, 457-511.<br>
 Brooks, SP. and Gelman, A. (1998) General methods for monitoring convergence of iterative simulations. Journal of Computational and Graphical Statistics, 7, 434-455.] criterion,
 also available via the function [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.html),
@@ -144,6 +145,15 @@ compares the within and between chain variation. When it is close enough to
 1^[for example < 1.1; but this is not a generally accepted cut-off], the chains
 can be assumed to have converged.
 
+#### Monte Carlo error
+The Monte Carlo error is a measure of the error that is made because the estimate
+is based on a finite sample. It can also be obtained using the function
+[`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html).
+Ideally, the Monte Carlo error should be small compared to the standard error 
+of the posterior sample. The values shown in the model summary are the Monte 
+Carlo error divided by the posterior standard deviation.
+
+#### Additional information
 In the model summary, additionally, some important characteristics of the MCMC
 samples on which the summary is based, are given.
 This includes the range and number of iterations
@@ -186,6 +196,11 @@ specification of `clmm2()` from package [**ordinal**](https://CRAN.R-project.org
 * **parametric (Weibull) survival models**: `survreg_imp()` (follows the specification
 of [`survreg()`](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/survreg.html)
 from package [**survival**](https://CRAN.R-project.org/package=survival))
-* **Cox proportional hazards survival models**: `coxph_imp()` (follows the specification
+* **proportional hazards survival models**: `coxph_imp()` (follows the specification
 of [`coxph()`](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/coxph.html)
 from package [**survival**](https://CRAN.R-project.org/package=survival))
+* **Joint models for longitudinal and survival data**
+* linear (mixed) models using a log-normal or beta distribution for the outcome
+* multinomial models
+* multivariate models, by specifying a list of formulas
+
