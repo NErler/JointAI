@@ -745,8 +745,7 @@ lognormal_imp <- function(formula, data,
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$formula <- check_formula_list(arglist$formula)
-  arglist$analysis_type <- "lognormal"
-  # attr(arglist$analysis_type, "family") <- "lognormal"
+  arglist$analysis_type <- "lognorm"
 
   thiscall <- as.list(match.call())[-1L]
 
@@ -763,7 +762,7 @@ lognormal_imp <- function(formula, data,
 
 #' @rdname model_imp
 #' @export
-betreg_imp <- function(formula, data,
+betareg_imp <- function(formula, data,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                    monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                    models = NULL, no_model = NULL, trunc = NULL,
@@ -785,7 +784,7 @@ betreg_imp <- function(formula, data,
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$formula <- check_formula_list(arglist$formula)
-  arglist$analysis_type <- "betareg"
+  arglist$analysis_type <- "beta"
 
   thiscall <- as.list(match.call())[-1L]
 
@@ -801,7 +800,7 @@ betreg_imp <- function(formula, data,
 
 #' @rdname model_imp
 #' @export
-multinomial_imp <- function(formula, data,
+mlogit_imp <- function(formula, data,
                        n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                        monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                        models = NULL, no_model = NULL, trunc = NULL,
@@ -859,6 +858,15 @@ lme_imp <- function(fixed, data, random,
                thiscall[!names(thiscall) %in% names(arglist)])
 
 
+  if (!missing(fixed) & missing(random)) {
+    can_split <- try(split_formula_list(check_formula_list(fixed)))
+
+    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
+      arglist$formula <- check_formula_list(arglist$fixed)
+      arglist$fixed <- NULL
+    }
+  }
+
   if (missing(fixed) & is.null(arglist$formula))
     stop("No fixed effects structure specified.")
   if (missing(random) & is.null(arglist$formula))
@@ -888,9 +896,7 @@ lme_imp <- function(fixed, data, random,
 #' @rdname model_imp
 #' @aliases lme_imp
 #' @export
-lmer_imp <- function(formula, data, ...) {
-  lme_imp(formula, data, ...)
-}
+lmer_imp <- lme_imp
 
 
 #' @rdname model_imp
@@ -910,6 +916,20 @@ glme_imp <- function(fixed, data, random, family,
                      keep_scaled_mcmc = FALSE, ...){
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  thiscall <- as.list(match.call())[-1L]
+
+  arglist <- c(arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+
+  if (!missing(fixed) & missing(random)) {
+    can_split <- try(split_formula_list(check_formula_list(fixed)))
+
+    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
+      arglist$formula <- check_formula_list(arglist$fixed)
+      arglist$fixed <- NULL
+    }
+  }
 
   if (missing(fixed) & is.null(arglist$formula))
     stop("No fixed effects structure specified.")
@@ -939,17 +959,10 @@ glme_imp <- function(fixed, data, random, family,
   attr(arglist$analysis_type, "family") <- thefamily
 
 
-  thiscall <- as.list(match.call())[-1L]
-
   if (!attr(arglist$analysis_type, 'family')$link %in% c("identity", "log", "logit", "probit", "log",
                                                          "cloglog", "inverse"))
     stop(gettextf("%s is not an allowed link function.",
                   dQuote(arglist$family$link)))
-
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
-
 
   res <- do.call(model_imp, arglist)
   res$call <- match.call()
@@ -962,6 +975,102 @@ glme_imp <- function(fixed, data, random, family,
 #' @aliases glme_imp
 #' @export
 glmer_imp <- glme_imp
+
+
+
+
+#' @rdname model_imp
+#' @export
+betamm_imp <- function(fixed, random, data,
+                        n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                        monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                        models = NULL, no_model = NULL, trunc = NULL,
+                        ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                        parallel = FALSE, n.cores = NULL,
+                        scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                        modelname = NULL, modeldir = NULL,
+                        keep_model = FALSE, overwrite = NULL,
+                        quiet = TRUE, progress.bar = "text",
+                        warn = TRUE, mess = TRUE,
+                        keep_scaled_mcmc = FALSE, ...){
+
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  thiscall <- as.list(match.call())[-1L]
+
+  arglist <- c(arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+
+  if (!missing(fixed) & missing(random)) {
+    can_split <- try(split_formula_list(check_formula_list(fixed)))
+
+    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
+      arglist$formula <- check_formula_list(arglist$fixed)
+      arglist$fixed <- NULL
+    }
+  }
+
+  if (missing(fixed) & is.null(arglist$formula))
+    stop("No fixed effects structure specified.")
+  if (missing(random) & is.null(arglist$formula))
+    stop("No random effects structure specified.")
+  if (missing(data))
+    stop("No dataset given.")
+
+  arglist$analysis_type <- "glmm_beta"
+
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+  return(res)
+}
+
+
+
+
+#' @rdname model_imp
+#' @export
+lognormmm_imp <- function(fixed, random, data,
+                          n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                          monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                          models = NULL, no_model = NULL, trunc = NULL,
+                          ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                          parallel = FALSE, n.cores = NULL,
+                          scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                          modelname = NULL, modeldir = NULL,
+                          keep_model = FALSE, overwrite = NULL,
+                          quiet = TRUE, progress.bar = "text",
+                          warn = TRUE, mess = TRUE,
+                          keep_scaled_mcmc = FALSE, ...){
+
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  thiscall <- as.list(match.call())[-1L]
+
+  arglist <- c(arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+
+  if (!missing(fixed) & missing(random)) {
+    can_split <- try(split_formula_list(check_formula_list(fixed)))
+
+    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
+      arglist$formula <- check_formula_list(arglist$fixed)
+      arglist$fixed <- NULL
+    }
+  }
+
+  if (missing(fixed) & is.null(arglist$formula))
+    stop("No fixed effects structure specified.")
+  if (missing(random) & is.null(arglist$formula))
+    stop("No random effects structure specified.")
+  if (missing(data))
+    stop("No dataset given.")
+  arglist$analysis_type <- "glmm_lognorm"
+
+
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+  return(res)
+}
 
 
 #' @rdname model_imp
@@ -980,6 +1089,20 @@ clmm_imp <- function(fixed, data, random,
                      keep_scaled_mcmc = FALSE, ...){
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  thiscall <- as.list(match.call())[-1L]
+
+  arglist <- c(arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+
+  if (!missing(fixed) & missing(random)) {
+    can_split <- try(split_formula_list(check_formula_list(fixed)))
+
+    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
+      arglist$formula <- check_formula_list(arglist$fixed)
+      arglist$fixed <- NULL
+    }
+  }
 
   if (missing(fixed) & is.null(arglist$formula))
     stop("No fixed effects structure specified.")
@@ -988,12 +1111,7 @@ clmm_imp <- function(fixed, data, random,
   if (missing(data))
     stop("No dataset given.")
 
-  thiscall <- as.list(match.call())[-1L]
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
-
-
-  arglist$analysis_type <- "clmm"
+arglist$analysis_type <- "clmm"
 
   if (!is.null(arglist$formula)) {
     arglist$formula <- check_formula_list(arglist$formula)

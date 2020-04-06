@@ -6,12 +6,14 @@
 \alias{glm_imp}
 \alias{clm_imp}
 \alias{lognormal_imp}
-\alias{betreg_imp}
-\alias{multinomial_imp}
+\alias{betareg_imp}
+\alias{mlogit_imp}
 \alias{lme_imp}
 \alias{lmer_imp}
 \alias{glme_imp}
 \alias{glmer_imp}
+\alias{betamm_imp}
+\alias{lognormmm_imp}
 \alias{clmm_imp}
 \alias{survreg_imp}
 \alias{coxph_imp}
@@ -155,7 +157,7 @@ lognormal_imp(
   ...
 )
 
-betreg_imp(
+betareg_imp(
   formula,
   data,
   n.chains = 3,
@@ -189,7 +191,7 @@ betreg_imp(
   ...
 )
 
-multinomial_imp(
+mlogit_imp(
   formula,
   data,
   n.chains = 3,
@@ -258,7 +260,40 @@ lme_imp(
   ...
 )
 
-lmer_imp(formula, data, ...)
+lmer_imp(
+  fixed,
+  data,
+  random,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = NULL,
+  auxvars = NULL,
+  refcats = NULL,
+  models = NULL,
+  no_model = NULL,
+  trunc = NULL,
+  ridge = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  parallel = FALSE,
+  n.cores = NULL,
+  scale_vars = NULL,
+  scale_pars = NULL,
+  hyperpars = NULL,
+  modelname = NULL,
+  modeldir = NULL,
+  keep_model = FALSE,
+  overwrite = NULL,
+  quiet = TRUE,
+  progress.bar = "text",
+  warn = TRUE,
+  mess = TRUE,
+  keep_scaled_mcmc = FALSE,
+  ...
+)
 
 glme_imp(
   fixed,
@@ -301,6 +336,76 @@ glmer_imp(
   data,
   random,
   family,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = NULL,
+  auxvars = NULL,
+  refcats = NULL,
+  models = NULL,
+  no_model = NULL,
+  trunc = NULL,
+  ridge = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  parallel = FALSE,
+  n.cores = NULL,
+  scale_vars = NULL,
+  scale_pars = NULL,
+  hyperpars = NULL,
+  modelname = NULL,
+  modeldir = NULL,
+  keep_model = FALSE,
+  overwrite = NULL,
+  quiet = TRUE,
+  progress.bar = "text",
+  warn = TRUE,
+  mess = TRUE,
+  keep_scaled_mcmc = FALSE,
+  ...
+)
+
+betamm_imp(
+  fixed,
+  random,
+  data,
+  n.chains = 3,
+  n.adapt = 100,
+  n.iter = 0,
+  thin = 1,
+  monitor_params = NULL,
+  auxvars = NULL,
+  refcats = NULL,
+  models = NULL,
+  no_model = NULL,
+  trunc = NULL,
+  ridge = FALSE,
+  ppc = TRUE,
+  seed = NULL,
+  inits = NULL,
+  parallel = FALSE,
+  n.cores = NULL,
+  scale_vars = NULL,
+  scale_pars = NULL,
+  hyperpars = NULL,
+  modelname = NULL,
+  modeldir = NULL,
+  keep_model = FALSE,
+  overwrite = NULL,
+  quiet = TRUE,
+  progress.bar = "text",
+  warn = TRUE,
+  mess = TRUE,
+  keep_scaled_mcmc = FALSE,
+  ...
+)
+
+lognormmm_imp(
+  fixed,
+  random,
+  data,
   n.chains = 3,
   n.adapt = 100,
   n.iter = 0,
