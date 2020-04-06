@@ -84,7 +84,7 @@ residuals.JointAI <- function(object,
 
 
 resid_glm <- function(varname, type = c("working", "pearson", "response"),
-                      data, info, mu, ...) {
+                      data, info, mu, warn = TRUE, ...) {
 
   type <- match.arg(type)
 
@@ -92,11 +92,12 @@ resid_glm <- function(varname, type = c("working", "pearson", "response"),
   # mu <- mu
 
 
-  family <- if(info$family %in% c('gaussian', 'binomial', 'Gamma', 'poisson')) {
+  family <- if (info$family %in% c('gaussian', 'binomial', 'Gamma', 'poisson')) {
     get(info$family)(link = info$link)
   } else if (info$family %in% c('lognorm')) {
     gaussian(link = 'log')
   } else {
+    if (warn)
     warning(gettextf('Residuals for %s models are currently not available.',
                      dQuote(info$family)),
             call. = FALSE)
