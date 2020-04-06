@@ -23,7 +23,7 @@ options(width = 100)
 ```
 
 
-In this vignette we use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
+In this vignette, we use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
 data for examples in cross-sectional data and the 
 dataset [simLong](https://nerler.github.io/JointAI/reference/simLong.html) for
 examples in longitudinal data.
@@ -48,7 +48,7 @@ and thereby reduce computational time when compiling this vignette.
 * [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
   generalized linear regression
 * [`clm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
-  cumulative logit models
+  cumulative logit models for ordinal data
 * [`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
   linear mixed effects regression
 * [`glme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
@@ -58,7 +58,9 @@ and thereby reduce computational time when compiling this vignette.
 * [`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
   parametric (Weibull) survival models
 * [`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
-  Cox proportional hazards survival models
+  Proportional hazards survival models
+* [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
+  Joint model for longitudinal and survival data
   
 Specification of these functions is similar to the specification of the complete
 data versions [`lm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html), [`glm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html),
@@ -68,7 +70,7 @@ data versions [`lm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/
 [`survreg()`](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/survreg.html)
 and [`coxph()`](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/coxph.html)
 (from package [**survival**](https://CRAN.R-project.org/package=survival)).
-`glme_imp()` uses a combination of the specification used for `lme()` and `glm()`. 
+`glme_imp()` uses a combination of the specification used for `lme()` and `glm()`.
 
 
 `lm_imp()`, `glm_imp()`, `clm_imp()`, `survreg_imp()` and `coxph_imp()` 
