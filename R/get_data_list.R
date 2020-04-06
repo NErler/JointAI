@@ -23,7 +23,8 @@ get_data_list <- function(Mlist, info_list, data) {
     if (any(sapply(info_list, "[[", 'family') %in% c('gaussian', 'lognorm'))) 'norm',
     if (any(sapply(info_list, "[[", 'family') %in% c('Gamma'))) 'gamma',
     if (any(sapply(info_list, "[[", 'family') %in% c('beta'))) 'beta',
-    if (any(sapply(info_list, "[[", 'link') %in% c('logit'))) 'logit',
+    if (any(sapply(info_list, "[[", 'family') %in% c('binomial') &
+            sapply(info_list, "[[", 'link') %in% c('logit'))) 'logit',
     if (any(sapply(info_list, "[[", 'family') %in% c('poisson'))) 'poisson',
     if (any(sapply(info_list, "[[", 'link') %in% c('probit'))) 'probit',
     if (any(modeltypes %in% c('mlogit', 'mlogitmm'))) 'multinomial',
