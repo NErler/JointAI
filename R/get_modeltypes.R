@@ -42,9 +42,14 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
   models_user <- models
 
-  if (any(sapply(sapply(fixed, attr, 'type'), is.null)))
+  # if (any(sapply(sapply(fixed, attr, 'type'), is.null)))
+  #   fixed <- extract_outcome_data(fixed, random = random, data = data,
+  #                                 analysis_type = analysis_type, warn = FALSE)$fixed
+
+  if (is.null(attr(fixed[[1]], 'type')))
     fixed <- extract_outcome_data(fixed, random = random, data = data,
                                   analysis_type = analysis_type, warn = FALSE)$fixed
+
 
   # if there is a time variable, add it to no_model
   if (!is.null(timevar)) {
@@ -115,8 +120,8 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
     varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev == 2] <- 'glm_binomial_logit'
     varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev == 0] <- 'lmm'
     varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev == 0] <- 'lm'
-    varinfo$type[varinfo$out] <- sapply(fixed, attr, 'type')
 
+    varinfo$type[varinfo$L1 %in% names(fixed)[1]] <- attr(fixed[[1]], 'type')
 
     varinfo <- varinfo[which(!varinfo$L1 %in% no_model), , drop = FALSE]
 
