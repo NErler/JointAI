@@ -8,7 +8,8 @@
 #' @inheritParams sharedParams
 #' @param vars name of variable that should be varying
 #' @param length number of values used in the sequence when \code{vars} is continuous
-#' @param outcome vector of variable names or numbers identifying for which outcome(s) the prediction should be performed.
+#' @param outcome vector of variable names or numbers identifying for which
+#'                outcome(s) the prediction should be performed.
 #' @param ... optional, additional arguments (currently not used)
 #'
 #' @seealso \code{\link{predict.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
@@ -275,7 +276,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
   coefs <- coef_list[[varname]]
 
-  mf <- model.frame(as.formula(paste(formula)[-2]),
+  mf <- model.frame(as.formula(paste(formula[-2], collapse = " ")),
                     data, na.action = na.pass)
   mt <- attr(mf, "terms")
 
@@ -348,7 +349,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp"
 
   coefs <- coef_list[[varname]]
 
-  mf <- model.frame(as.formula(paste(formula)[-2]),
+  mf <- model.frame(as.formula(paste(formula[-2], collapse = " ")),
                     data, na.action = na.pass)
   mt <- attr(mf, "terms")
 
@@ -409,7 +410,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   timevar <- Mlist$outcomes$outnams[[varname]][1]
   resp_mat <- info_list[[varname]]$resp_mat[2]
 
-  mf <- model.frame(as.formula(paste(Mlist$fixed[[varname]])[-2]),
+  mf <- model.frame(as.formula(paste(Mlist$fixed[[varname]][-2], collapse = " ")),
                     data, na.action = na.pass)
   mt <- attr(mf, "terms")
 
@@ -576,7 +577,7 @@ predict_clm <- function(formula, newdata, type = c("lp", "prob", "class", "respo
 
   coefs <- coef_list[[varname]]
 
-  mf <- model.frame(as.formula(paste(formula)[-2]),
+  mf <- model.frame(as.formula(paste(formula[-2], collapse = " ")),
                     data, na.action = na.pass)
   mt <- attr(mf, "terms")
 

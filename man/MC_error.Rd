@@ -60,7 +60,7 @@ given directly by \strong{JointAI}.)}
 to the scale of the data (\code{TRUE}) or on the sampling scale (this
 requires the argument \code{keep_scaled_mcmc = TRUE} in the JointAI model)}
 
-\item{plotpars}{optional; list of parameters passed to \code{\link[graphics]{plot}()}}
+\item{plotpars}{optional; list of parameters passed to \code{\link[base]{plot}()}}
 
 \item{ablinepars}{optional; list of parameters passed to \code{\link[graphics]{abline}()}}
 }

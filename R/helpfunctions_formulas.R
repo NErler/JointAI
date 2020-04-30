@@ -612,7 +612,8 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
           outcomes[[i]][nlev == 2] <- lapply(outcomes[[i]][nlev == 2],
                                              function(x) as.numeric(x) - 1)
 
-          attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls), 'glmm_binomial_logit', 'glm_binomial_logit')
+          attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls),
+                                             'glmm_binomial_logit', 'glm_binomial_logit')
       } else if (any(nlev == 0)) {
           # continuous variables
           attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls), 'lmm', 'lm')

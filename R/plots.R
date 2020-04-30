@@ -93,7 +93,8 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
               mgp = c(2, 0.6, 0))
 
     for (i in 1:nvar(prep$MCMC)) {
-      matplot(x = prep$time, as.array(prep$MCMC, drop = FALSE)[, i, ], type = "l",
+      matplot(x = as.numeric(prep$time),
+              y = as.array(prep$MCMC, drop = FALSE)[, i, ], type = "l",
               xlab = "Iterations", ylab = "",
               main = plotnams[i], ...)
     }
@@ -115,7 +116,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #'               \code{v = <x location>}, where <x location> is a vector of the
 #'               same length as the number of plots (see examples).
 #' @param joined logical; should the chains be combined before plotting?
-#' @param ... additional parameters passed to \code{\link[graphics]{plot}}
+#' @param ... additional parameters passed to \code{\link[base]{plot}}
 #' @examples
 #'
 #' # fit a JointAI object:

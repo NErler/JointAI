@@ -16,7 +16,8 @@ predDF(object, ...)
 
 \item{vars}{name of variable that should be varying}
 
-\item{outcome}{vector of variable names or numbers identifying for which outcome(s) the prediction should be performed.}
+\item{outcome}{vector of variable names or numbers identifying for which
+outcome(s) the prediction should be performed.}
 
 \item{length}{number of values used in the sequence when \code{vars} is continuous}
 }

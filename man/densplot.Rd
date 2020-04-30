@@ -31,7 +31,7 @@ densplot(object, ...)
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
-\item{...}{additional parameters passed to \code{\link[graphics]{plot}}}
+\item{...}{additional parameters passed to \code{\link[base]{plot}}}
 
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
