@@ -19,6 +19,23 @@ get_groups <- function(idvar, data) {
     groups <- sapply(idvar, function(i) {
       match(data[, i], unique(data[, i]))
     }, simplify = FALSE)
+
+    # check for unnecessary nesting levels
+    gr_length <- sapply(groups, function(x)length(unique(x))) == nrow(data)
+    if (any(gr_length)) {
+      if (sum(gr_length) == 1) {
+        stop(strwrap(gettextf("\nThe grouping level %s seem to be unnecessary.
+                              There are only unique observations at this level.",
+                              names(gr_length[gr_length])
+        ), prefix = "\n", initial = ''), call. = FALSE)
+      } else {
+        stop(strwrap(gettextf("\nThe grouping levels %s seem to be unnecessary.
+                              There are only unique observations at these levels.",
+             names(gr_length[gr_length])
+             ), prefix = "\n", initial = ''), call. = FALSE)
+      }
+    }
+
     groups$levelone <- 1:nrow(data)
   } else {
     groups = list(levelone = 1:nrow(data))
