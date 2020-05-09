@@ -109,9 +109,9 @@ get_data_list <- function(Mlist, info_list, data) {
       if (length(l$survrow) != length(unique(Mlist$groups[[gsub("M_", "", x$resp_mat[2])]])))
         stop("The number of observations for survival differs from the number of subjects.")
 
-      # gk_data <- data[rep(NA, length(l$survrow) * length(gkx)), ]
       gk_data <- data[rep(l$survrow, each = length(gkx)), ]
-      gk_data[, gsub("M_", "", x$resp_mat[2])] <- rep(unique(data[, gsub("M_", "", x$resp_mat[2])]), each = length(gkx))
+      gk_data[, gsub("M_", "", x$resp_mat[2])] <-
+        rep(unique(data[, gsub("M_", "", x$resp_mat[2])]), each = length(gkx))
       gk_data[, timevar] <- c(t(outer(Mlist$M[[x$resp_mat[1]]][l$survrow, timevar]/2, gkx + 1)))
 
 
@@ -120,7 +120,6 @@ get_data_list <- function(Mlist, info_list, data) {
                             idvar = gsub("M_", "", x$resp_mat[2]),
                             group_lvls = Mlist$group_lvls, groups = Mlist$groups,
                             timevar, gk_data)
-        # gk_data <- get_locf(fixed = Mlist$fixed, data, idvar = Mlist$idvar, timevar, gk_data)
       } else if (x$modeltype %in% 'JM') {
         for (k in names(x$tv_vars)) {
           gk_data[, k] <- if (is.factor(gk_data[, k])) {
