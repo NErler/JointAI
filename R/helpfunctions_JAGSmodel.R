@@ -351,14 +351,16 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
                   }
 
                   rds <- if (any(!sapply(info$hc_list$hcvars[[k]]$rd_slope_coefs, is.null))) {
-                    sapply(names(info$hc_list$hcvars[[k]]$rd_slope_coefs), function(var) {
+                    sapply(seq_along(info$hc_list$hcvars[[k]]$rd_slope_coefs), function(q) {
+
+                      var <- names(info$hc_list$hcvars[[k]]$rd_slope_coefs)[q]
 
                       rdsc <- info$hc_list$hcvars[[k]]$rd_slope_coefs[[var]]
 
                       paste(
                         paste_data(matnam = paste0("b_", info$varname, "_", k),
                                    index = index,
-                                   col = 1:nrow(info$hc_list$hcvars[[k]]$rd_slope_coefs[[var]]) + 1),
+                                   col = q + 1),
 
                         paste_scaling(
                           paste_data(
