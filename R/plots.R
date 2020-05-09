@@ -328,10 +328,12 @@ get_plotmain <- function(object, plotnams) {
   coef_set <- coefs[na.omit(match(plotnams, coefs$coef)), ]
 
   if (length(unique(coef_set$outcome)) == 1) {
-    plotnams[na.omit(match(plotnams, coefs$coef))] <- coefs$varname[na.omit(match(plotnams, coefs$coef))]
+    plotnams[na.omit(match(coefs$coef, plotnams))] <-
+      coefs$varname[na.omit(match(plotnams, coefs$coef))]
   } else {
-    plotnams[na.omit(match(plotnams, coefs$coef))] <- paste0(coefs$varname[na.omit(match(plotnams, coefs$coef))], "\n",
-                                                             "(", coefs$outcome[na.omit(match(plotnams, coefs$coef))], ")")
+    plotnams[na.omit(match(coefs$coef, plotnams))] <-
+      paste0(coefs$varname[na.omit(match(plotnams, coefs$coef))], "\n",
+             "(", coefs$outcome[na.omit(match(plotnams, coefs$coef))], ")")
   }
   plotnams
 }
