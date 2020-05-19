@@ -113,7 +113,7 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
         cat(
           paste0(tab(), attr(object$Mlist$refs[[i$varname]], "dummies"), ": ",
                  i$parname, "[",
-                 sapply(i$parelmts$Mc, function(x) {
+                 sapply(unlist(i$parelmts, recursive = FALSE), function(x) {
                    print_seq(min(x), max(x))
                  }),
                  "]", collapse = "\n"),
