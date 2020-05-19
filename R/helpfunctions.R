@@ -37,6 +37,15 @@ get_groups <- function(idvar, data) {
     }
 
     groups$levelone <- 1:nrow(data)
+
+    # check for duplicate levels
+    gr_dupl <- duplicated(groups)
+    if (any(gr_dupl)) {
+      gr_dupl2 <- duplicated(groups, fromLast = TRUE)
+      stop(strwrap(gettextf("The grouping levels %s are duplicats.",
+                            unique(names(groups)[gr_dupl], names(groups)[gr_dupl2])),
+                   prefix = "\n", initial = ''), call. = FALSE)
+    }
   } else {
     groups = list(levelone = 1:nrow(data))
   }
