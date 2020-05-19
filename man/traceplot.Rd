@@ -55,8 +55,6 @@ traceplot(object, ...)
     symbols given by \code{pch = 21:25} as in \code{\link[graphics]{points}}.  The
     default \code{NA} corresponds to the one of the underlying function
     \code{\link[graphics]{plot.xy}}.}
-    \item{\code{xlim}}{ranges of x and y axes, as in \code{\link[graphics]{plot}}.}
-    \item{\code{ylim}}{ranges of x and y axes, as in \code{\link[graphics]{plot}}.}
     \item{\code{add}}{logical.  If \code{TRUE}, plots are added to current one,
     using \code{\link[graphics]{points}} and \code{\link[graphics]{lines}}.}
     \item{\code{verbose}}{logical.  If \code{TRUE}, write one line of what is

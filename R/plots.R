@@ -3,7 +3,8 @@
 #' Creates a set of traceplots from the MCMC sample of an object of class "JointAI".
 #'
 #' @inheritParams sharedParams
-#' @inheritDotParams graphics::matplot -x -y -type -xlab -ylab -pch -log
+#' @inheritDotParams graphics::matplot -x -y -type -xlab -ylab -pch -log -xlim -ylim
+#' @inheritParams base::plot
 #' @name traceplot
 #'
 #' @seealso \code{\link{summary.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
