@@ -10,7 +10,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
 
 ```{r setup, include = FALSE}
@@ -321,7 +321,7 @@ lm2 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
 )
 
 # select only imputed values for 'WC' (4th column of Wc)
-sub3 <- grep('Mc\\[[[:digit:]]+,5\\]', parameters(lm2), value = TRUE)
+sub3 <- grep('M_levelone\\[[[:digit:]]+,5\\]', parameters(lm2), value = TRUE)
 sub3
 
 traceplot(lm2, subset = list(other = sub3), ncol = 2)
@@ -338,10 +338,10 @@ lme4 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID,
                 monitor_params = c(analysis_main = FALSE, ranef_main = TRUE))
 
 # exract random intercepts
-ri <- grep('^b_bmi\\[[[:digit:]]+,1\\]$', colnames(lme4$MCMC[[1]]), value = T)
+ri <- grep('^b_bmi_ID\\[[[:digit:]]+,1\\]$', colnames(lme4$MCMC[[1]]), value = T)
 
 # extract random slopes
-rs <- grep('^b_bmi\\[[[:digit:]]+,2\\]$', colnames(lme4$MCMC[[1]]), value = T)
+rs <- grep('^b_bmi_ID\\[[[:digit:]]+,2\\]$', colnames(lme4$MCMC[[1]]), value = T)
 
 # plot the chains of 8 randomly selected random intercepts
 traceplot(lme4, subset = list(other = sample(ri, size = 8)), ncol = 4)

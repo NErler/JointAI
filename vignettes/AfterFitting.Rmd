@@ -338,7 +338,7 @@ summary(mod13c, subset = c(analysis_main = FALSE, imp_pars = TRUE))
 To select only some of the parameters, they can be specified directly by
 name via the `other` element of `subset`.
 ```{r message = FALSE, eval = FALSE}
-# densplot(mod13c, subset = list(other = c('creat', 'alc>=1')))
+densplot(mod13c, subset = list(other = c('creat', 'alc>=1')))
 ```
 
 This also works when a subset of the imputed values should be displayed:
@@ -346,12 +346,12 @@ This also works when a subset of the imputed values should be displayed:
 # re-fit the model and monitor the imputed values
 mod13d <- update(mod13a, monitor_params = c(imps = TRUE))
 
-# select all imputed values for 'WC' (4th column of Mc)
-sub3 <- grep('Mc\\[[[:digit:]]+,4\\]', parameters(mod13d), value = TRUE)
+# select all imputed values for 'WC' (4th column of M_levelone)
+sub3 <- grep('M_levelone\\[[[:digit:]]+,4\\]', parameters(mod13d), value = TRUE)
 sub3
 
 # pass "sub3" to "subset" via "other", for example in a traceplot:
-# traceplot(mod13d, subset = list(other = sub3), ncol = 2)
+traceplot(mod13d, subset = list(other = sub3), ncol = 2)
 ```
 
 When the number of imputed values is large or in order to check convergence
@@ -363,8 +363,8 @@ In that case a random subset of, for instance the random effects, can be selecte
 mod13e <- update(mod13b, monitor_params = c(ranef_main = TRUE))
 
 # extract random intercepts and random slopes
-ri <- grep('^b_bmi\\[[[:digit:]]+,1\\]$', colnames(mod13e$MCMC[[1]]), value = T)
-rs <- grep('^b_bmi\\[[[:digit:]]+,2\\]$', colnames(mod13e$MCMC[[1]]), value = T)
+ri <- grep('^b_bmi_ID\\[[[:digit:]]+,1\\]$', colnames(mod13e$MCMC[[1]]), value = T)
+rs <- grep('^b_bmi_ID\\[[[:digit:]]+,2\\]$', colnames(mod13e$MCMC[[1]]), value = T)
 
 # to plot the chains of 12 randomly selected random intercepts and slopes:
 traceplot(mod13e, subset = list(other = sample(ri, size = 12)), ncol = 4)
@@ -442,7 +442,7 @@ all other continuous and categorical variables.
 
 ```{r, fig.width = 7, fig.height = 4.5, out.width = '90%'}
 # create dataset for prediction
-newDF <- predDF(mod13b, var = "age")
+newDF <- predDF(mod13b, var = ~ age)
 
 # obtain predicted values
 pred <- predict(mod13b, newdata = newDF)
