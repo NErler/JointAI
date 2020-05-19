@@ -29,7 +29,7 @@
 #' library(ggplot2)
 #'
 #' traceplot(mod, use_ggplot = TRUE) +
-#'   theme(legend.position = 'botto') +
+#'   theme(legend.position = 'bottom') +
 #'   xlab('iteration') +
 #'   ylab('value') +
 #'   scale_color_discrete(name = 'chain')
