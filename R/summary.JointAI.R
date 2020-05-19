@@ -107,9 +107,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
         get_intercepts(stats, varname, levels(object$Mlist$refs[[varname]]))
 
 
-      rd_vcov <- if (object$info_list[[varname]]$modeltype %in%
-                     c("glmm", "clmm", "mlogitmm")) {
-        Ds <- stats[grep(paste0("^D_", varname, "_",
+      rd_vcov <- if (!is.null(object$info_list[[varname]]$hc_list)) {
+        Ds <- stats[grep(paste0("^D_", object$info_list[[varname]]$varname, "_",
                                 paste0(names(object$Mlist$group_lvls), collapse = "|"),
                                 "\\[[[:digit:]]+,[[:digit:]]+\\]"),
                          rownames(stats), value = TRUE), , drop = FALSE]
