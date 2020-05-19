@@ -121,7 +121,8 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
     varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev == 0] <- 'lmm'
     varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev == 0] <- 'lm'
 
-    varinfo$type[varinfo$L1 %in% names(fixed)[1]] <- attr(fixed[[1]], 'type')
+    if (!is.null(attr(fixed[[1]], 'type')))
+      varinfo$type[varinfo$L1 %in% names(fixed)[1]] <- attr(fixed[[1]], 'type')
 
     varinfo <- varinfo[which(!varinfo$L1 %in% no_model), , drop = FALSE]
 

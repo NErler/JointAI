@@ -619,11 +619,11 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
           attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls), 'lmm', 'lm')
       }
       if (i == 1) {
-        attr(fixed[[i]], 'type') <- if (analysis_type %in% c('glm', 'lm')) {
+        attr(fixed[[i]], 'type') <- if (isTRUE(analysis_type %in% c('glm', 'lm'))) {
         paste(gsub("^lm$", "glm", analysis_type),
               tolower(attr(analysis_type, 'family')$family),
               attr(analysis_type, 'family')$link, sep = "_")
-        } else if (analysis_type %in% c('glme', 'lme')) {
+        } else if (isTRUE(analysis_type %in% c('glme', 'lme'))) {
           paste(gsub("^[g]*lme$", "glmm", analysis_type),
                 tolower(attr(analysis_type, 'family')$family),
                 attr(analysis_type, 'family')$link, sep = "_")
