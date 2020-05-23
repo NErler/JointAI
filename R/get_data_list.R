@@ -33,6 +33,14 @@ get_data_list <- function(Mlist, info_list, data) {
   )])))
 
 
+  # if there are no regression coefficients in the ordinal models, remove the
+  # hyperpars for regr. coefs in ordinal models
+  if (length(unlist(sapply(info_list[modeltypes %in% c('clm', 'clmm')],
+                           "[[", 'parelmts'))) == 0) {
+    l[c('mu_reg_ordinal', 'tau_reg_ordinal')] <- NULL
+  }
+
+
   # prior for mixed models ----------------------------------------------------
   if (length(Mlist$groups) > 1) {
     groups <- Mlist$groups[!names(Mlist$groups) %in% 'levelone']
