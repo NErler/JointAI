@@ -67,7 +67,7 @@ get_groups <- function(idvar, data) {
 
 check_cluster <- function(x, grouping) {
   sapply(grouping, function(k) {
-    !identical(x[match(unique(k), k)][match(k, unique(k))], x)
+    !identical(unname(x[match(unique(k), k)][match(k, unique(k))]), unname(x))
   })
 }
 
