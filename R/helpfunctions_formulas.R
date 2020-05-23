@@ -745,7 +745,8 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
 
   covars <- allvars[!allvars %in% unlist(extract_outcome(fixed))]
 
-  lvl <- sapply(data[, allvars, drop = FALSE], check_varlevel, groups)
+  lvl <- sapply(data[, allvars, drop = FALSE], check_varlevel, groups = groups,
+                group_lvls = identify_level_relations(groups))
   group_lvls <- colSums(!identify_level_relations(groups))
 
   subdat <- subset(data, select = covars)
@@ -763,7 +764,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
 
   for (out in names(models)[!names(models) %in% names(fixed)]) {
     nointercept <- models[out] %in% c('clmm', 'clm', 'coxph')
-    fmla <- as.formula(paste0(out, " ~ .", if(nointercept)'-1'))
+    fmla <- as.formula(paste0(out, " ~ .", if (nointercept) '-1'))
 
     lp[[out]] <- colnames(
       model.matrix(fmla, subset(subdat,

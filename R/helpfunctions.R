@@ -15,6 +15,9 @@
 
 
 get_groups <- function(idvar, data) {
+  # idvar: vector of names of the id variables
+  # data: a data.frame
+
   if (!is.null(idvar)) {
     groups <- sapply(idvar, function(i) {
       match(data[, i], unique(data[, i]))
@@ -54,13 +57,20 @@ get_groups <- function(idvar, data) {
 }
 
 
+# check_cluster <- function(x, grouping) {
+#   sapply(grouping, function(k) {
+#     !all(sapply(split(x, k),
+#                 function(z) identical(unname(z), rep(unname(z[1]), length(z)))
+#     ))
+#   })
+# }
+
 check_cluster <- function(x, grouping) {
   sapply(grouping, function(k) {
-    !all(sapply(split(x, k),
-                function(z) identical(unname(z), rep(unname(z[1]), length(z)))
-    ))
+    !identical(x[match(unique(k), k)][match(k, unique(k))], x)
   })
 }
+
 
 identify_level_relations <- function(grouping) {
   if (!is.list(grouping))
@@ -75,14 +85,17 @@ identify_level_relations <- function(grouping) {
   res
 }
 
-check_varlevel <- function(x, groups) {
+check_varlevel <- function(x, groups, group_lvls = NULL) {
   if (!is.list(groups))
     groups <- list('no_levels' = groups)
+
 
   clus <- check_cluster(x, grouping = groups)
 
   if (sum(!clus) > 1) {
-    group_lvls <- identify_level_relations(groups)
+    if (is.null(group_lvls))
+      group_lvls <- identify_level_relations(groups)
+
     names(which.max(colSums(!group_lvls[!clus, !clus, drop = FALSE])))
   } else if (sum(!clus) == 1) {
     names(clus)[!clus]
@@ -203,7 +216,8 @@ get_coef_names <- function(info_list) {
 
 get_locf <- function(fixed, newdata, data, idvar, group_lvls, groups, timevar, gk_data) {
   covars <- all_vars(remove_LHS(fixed))
-  covar_lvls <- sapply(data[, covars], check_varlevel, groups = groups)
+  covar_lvls <- sapply(data[, covars], check_varlevel, groups = groups,
+                       group_lvls = identify_level_relations(groups))
 
   longvars <- covars[group_lvls[covar_lvls] < group_lvls[idvar]]
 

@@ -73,7 +73,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   MX <- cbind(Y, X2[, setdiff(colnames(X2), colnames(Y)), drop = FALSE])
 
-  Mlvls <- apply(MX, 2, check_varlevel, groups = groups)
+  Mlvls <- apply(MX, 2, check_varlevel, groups = groups,
+                 group_lvls = identify_level_relations(groups))
   Mlvls <- setNames(paste0("M_", Mlvls), names(Mlvls))
 
   # identify interactions -------------------------------------------------------

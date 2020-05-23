@@ -101,7 +101,8 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
     varinfo <- sapply(allvars, function(k) {
       x <- eval(parse(text = k), envir = data)
       out <- k %in% names(fixed)
-      lvl <- group_lvls[check_varlevel(x, groups)]
+      lvl <- group_lvls[check_varlevel(x, groups,
+                                       group_lvls = identify_level_relations(groups))]
       nmis <- sum(is.na(x[match(unique(groups[[names(lvl)]]), groups[[names(lvl)]])]))
       nlev <- length(levels(x))
       ordered <- is.ordered(x)
