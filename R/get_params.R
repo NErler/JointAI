@@ -45,7 +45,7 @@ get_params <- function(Mlist, info_list,
     }
 
 
-    gamma_main <- any(modeltypes_main %in% c('clmm', 'clm')) & isTRUE(gamma_main)
+    gamma_main <- any(modeltypes_main %in% c('clmm', 'clm')) & !isFALSE(gamma_main)
 
 
     if (any(modeltypes_main %in% c('coxph', "JM")) & !isFALSE(basehaz))
