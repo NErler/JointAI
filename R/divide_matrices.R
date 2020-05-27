@@ -81,6 +81,12 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                  group_lvls = identify_level_relations(groups))
   Mlvls <- setNames(paste0("M_", Mlvls), names(Mlvls))
 
+  if (length(unique(Mlvls)) < length(groups)) {
+    stop(gettextf("It seems some of the specified grouping levels are not necessary.
+                  All variables are from level %s but there are grouping variable(s)
+                  %s.", dQuote(gsub("M_", "", unique(Mlvls))), dQuote(idvar)))
+  }
+
   # identify interactions -------------------------------------------------------
   inter <- grep(":", colnames(MX), fixed = TRUE, value = TRUE)
 
