@@ -75,6 +75,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                            terms_list = terms_list)
 
   MX <- cbind(Y, X2[, setdiff(colnames(X2), colnames(Y)), drop = FALSE])
+  MX <- MX[, unique(colnames(MX))]
 
   Mlvls <- apply(MX, 2, check_varlevel, groups = groups,
                  group_lvls = identify_level_relations(groups))
