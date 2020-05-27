@@ -116,6 +116,30 @@ get_data_list <- function(Mlist, info_list) {
 
       if (length(l$survrow) != length(unique(Mlist$groups[[gsub("M_", "", x$resp_mat[2])]])))
         stop("The number of observations for survival differs from the number of subjects.")
+    for (x in survinfo) {
+      if (x$haslong) {
+        survrow <- which(Mlist$M$M_levelone[, Mlist$timevar] ==
+                           x$survtime[l[[paste0('group_', x$surv_lvl)]]])
+
+        if (length(survrow) != length(unique(Mlist$groups[[x$surv_lvl]])))
+          stop("The number of observations for survival differs from the number of subjects.")
+
+        l[[paste0('survrow_', x$varname)]] <- survrow
+        # timevariable <- timevariable[survrow]
+      }
+
+
+      h0knots <- get_knots_h0(nkn = Mlist$df_basehaz - 4, Time = x$survtime,
+                              event = x$survevent, gkx = gkx)
+
+
+      l[[paste0("Bh0_", x$varname)]] <- splines::splineDesign(h0knots, x$survtime, ord = 4)
+      l[[paste0("Bsh0_", x$varname)]] <- splines::splineDesign(h0knots,
+                                                               c(t(outer(x$survtime/2, gkx + 1))),
+                                                               ord = 4)
+
+      l[[paste0("zeros_", x$varname)]] <- numeric(length(x$survtime))
+    }
 
       gk_data <- data[rep(l$survrow, each = length(gkx)), ]
       gk_data[, gsub("M_", "", x$resp_mat[2])] <-
@@ -160,17 +184,6 @@ get_data_list <- function(Mlist, info_list) {
       timevariable <- timevariable[l$survrow]
     }
 
-
-    h0knots <- get_knots_h0(nkn = Mlist$df_basehaz - 4, Time = timevariable,
-                            event = eventvariable, gkx = gkx)
-
-
-    l$Bh0 <- splines::splineDesign(h0knots, timevariable, ord = 4)
-    l$Bsh0 <- splines::splineDesign(h0knots,
-                                    c(t(outer(timevariable/2, gkx + 1))),
-                                    ord = 4)
-
-    l$zeros <- numeric(length(timevariable))
   }
 
   return(l[!sapply(l, is.null)])

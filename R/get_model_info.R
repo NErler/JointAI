@@ -167,8 +167,9 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
   # collect all info ---------------------------------------------------------
   list(
     varname = if (modeltype %in% c('survreg', 'coxph', 'JM')) {
+      clean_survname(k)
       # paste0(c('surv', Mlist$outcomes$outnams[[k]]), collapse = "_")
-      "surv"
+      # "surv"
     } else {k},
     modeltype = modeltype,
     family = family,

@@ -416,37 +416,38 @@ write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
 
 # Joint model ------------------------------------------------------------------
 
-paste_obsvalue <- function(matname, index, column, isgk, ...) {
+paste_obsvalue <- function(varname, matname, index, column, isgk, ...) {
   if (isgk)
     paste0(matname, "gk[", index, ", ", column, ", k]")
   else
-    paste0(matname, "[survrow[", index, "], ", column, "]")
+    paste0(matname, "[survrow_", varname, "[", index, "], ", column, "]")
 }
 
-paste_underlvalue <- function(covname, index, isgk, ...) {
+paste_underlvalue <- function(varname, covname, index, isgk, ...) {
   if (isgk)
     paste0("mugk_", covname, "[", index, ", k]")
   else
-    paste0('mu_', covname, "[survrow[", index, "]]")
+    paste0('mu_', covname, "[survrow_", varname, "[", index, "]]")
 }
 
-paste_association <- function(covnames, matname, index, columns, assoc_type, isgk) {
-  mapply(function(assoc_type, covname, matname, column, index, isgk) {
+paste_association <- function(varname, covnames, matname, index, columns, assoc_type, isgk) {
+  mapply(function(varname, assoc_type, covname, matname, column, index, isgk) {
     paste_ass <- switch(assoc_type,
                         "obs.value" = paste_obsvalue,
                         "underl.value" = paste_underlvalue)
-    paste_ass(covname = covname,
+    paste_ass(varname = varname,
+              covname = covname,
               matname = matname,
               index = index,
               column = column,
               isgk = isgk)
-  }, assoc_type = assoc_type, covname = covnames, matname = matname, column = columns,
+  }, varname = varname, assoc_type = assoc_type, covname = covnames, matname = matname, column = columns,
   MoreArgs = list(index = index, isgk = isgk)
   )
 }
 
 
-paste_linpred_JM <- function(parname, parelmts, matnam, index, cols, scale_pars,
+paste_linpred_JM <- function(varname, parname, parelmts, matnam, index, cols, scale_pars,
                              assoc_type, covnames, isgk = FALSE) {
   # parname: name of the parameter, e.g. "beta"
   # parelmts: vector specifying which elements of the parameter vector are to be
@@ -459,7 +460,8 @@ paste_linpred_JM <- function(parname, parelmts, matnam, index, cols, scale_pars,
   #             not be scaled (could also be NULL instead of a matrix)
 
 
-  pastedat <- paste_association(covnames = covnames, matname = matnam,
+  pastedat <- paste_association(varname = varname,
+                                covnames = covnames, matname = matnam,
                                 index = index, columns = cols,
                                 assoc_type = assoc_type, isgk = isgk)
 

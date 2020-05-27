@@ -91,7 +91,9 @@ get_params <- function(Mlist, info_list,
 
   params <- c(if (betas & any(
     grepl("^beta\\b", do.call(rbind, get_coef_names(info_list))$coef))) "beta",
-    if (isTRUE(basehaz)) "beta_Bh0",
+    if (isTRUE(basehaz)) paste0("beta_Bh0_",
+                                sapply(list_main[modeltypes_main %in% c('coxph', 'JM')],
+                                       "[[", 'varname')),
     if (isTRUE(gamma_main)) paste0("gamma_", names(list_main)[
       modeltypes_main %in% c('clm', 'clmm')]),
     if (isTRUE(delta_main)) paste0("delta_", names(list_main)[
