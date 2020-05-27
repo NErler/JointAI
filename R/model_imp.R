@@ -1235,7 +1235,8 @@ JM_imp <- function(formula, data, df_basehaz = 6,
     stop("No dataset given.")
 
   if (missing(timevar))
-    stop(gettextf("The name of the %s variable must be specified via the argument %s.",
+    stop(gettextf("The name of the %s variable of the longitudinal outcome(s)
+                  must be specified via the argument %s.",
                   dQuote("time"), dQuote("timevar")))
 
 
