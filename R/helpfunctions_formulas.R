@@ -295,6 +295,18 @@ prep_string <- function(x) {
 
 
 
+clean_survname <- function(x) {
+  x <- gsub(',* *type * = * [[:print:]]*', '', x)
+  x <- gsub(')', '', x)
+  x <- gsub("[[:punct:]]* *I\\(", "_", x)
+  x <- gsub(' *== *', '_', x)
+  x <- gsub(' *<=* *', '_', x)
+  x <- gsub(' *>=* *', '_', x)
+  x <- gsub(' *, *', "_", x)
+  gsub("\\(", "_", x)
+
+}
+
 # split a list of formulas into a list with fixed effects formulas and a list
 # with random effects formulas
 split_formula_list <- function(formulas) {
