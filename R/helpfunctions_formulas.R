@@ -590,6 +590,10 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
 
       outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnams[i])),
                                                  envir = data))
+
+      if (any(is.na(outcomes[[i]])))
+        stop("There are invalid values in the survival status.")
+
       names(outcomes[[i]]) <- idSurv(names(outnams[i]))[c('time', 'status')]
       nlev <- sapply(outcomes[[i]], function(x) length(levels(x)))
       if (any(nlev > 2)) {
