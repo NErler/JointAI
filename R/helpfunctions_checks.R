@@ -110,3 +110,71 @@ convert_variables <- function(data, allvars, mess = TRUE) {
 
   return(data)
 }
+
+reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
+
+  groups <- get_groups(idvar, data)
+  group_lvls <- colSums(!identify_level_relations(groups))
+
+
+  # survinfo <- lapply(sapply(fixed, extract_LHS)[grepl("^Surv\\(", fixed)], idSurv)
+  survinfo <- extract_outcome(fixed)[grepl("^Surv\\(", fixed)]
+
+  datlvls <- sapply(data, check_varlevel, groups = groups,
+                    group_lvls = identify_level_relations(groups))
+
+  # if there are multiple survival variables and some time-varying variables
+  if (length(survinfo) > 0 & any(datlvls[unlist(survinfo)] != 'levelone')) {
+
+    surv_lvls <- sapply(survinfo, function(x) {
+      lvls <- datlvls[unlist(x)]
+      if (length(unique(lvls)) > 1)
+        stop('The event time and status do not have the same level.')
+
+      unique(lvls)
+    })
+
+    longlvls <- names(group_lvls)[group_lvls < min(group_lvls[surv_lvls])]
+
+    haslong <- sapply(names(survinfo), function(k) {
+      covar_lvls <- datlvls[all_vars(remove_LHS(fixed[[k]]))]
+      any(covar_lvls %in% longlvls)
+    })
+
+    if (any(haslong)) {
+
+      if (is.null(timevar))
+        stop(gettextf("For survival models with time-varying covariates the
+                      argument %s needs to be specified.", dQuote("timevar")))
+
+      survtimes <- sapply(survinfo[haslong], "[[", 1)
+
+      datsurv <- unique(subset(data, select = c(idvar, unique(survtimes))))
+      if (length(unique(survtimes)) > 1) {
+        datsurv <- reshape(datsurv, direction = 'long', varying = unique(survtimes),
+                           v.names = timevar, idvar = unique(surv_lvls),
+                           times = names(survtimes)[duplicated(survtimes)],
+                           timevar = 'eventtime')
+      } else {
+        names(datsurv) <- gsub(unique(survtimes), timevar, names(datsurv))
+      }
+
+
+      datlong <- subset(data, select = c(idvar, names(datlvls)[datlvls %in% longlvls]))
+
+
+      timedat <- merge(datlong, datsurv,
+                       by.y = c(idvar, timevar),
+                       by.x = c(idvar, timevar), all = TRUE)
+
+      datbase <- unique(subset(data, select = names(datlvls)[datlvls %in% idvar]))
+      merge(timedat, datbase)
+    } else {
+      data
+    }
+  } else {
+    data
+  }
+}
+
+
