@@ -529,9 +529,6 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
   # prepare output -------------------------------------------------------------
   mcmc_settings <- list(modelfile = modelfile,
-                        modelstring = structure(readChar(modelfile,
-                                                         file.info(modelfile)$size),
-                                                class = 'modelstring'),
                         n.chains = n.chains,
                         n.adapt = n.adapt,
                         n.iter = n.iter,
@@ -541,7 +538,6 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                         parallel = parallel,
                         n.cores = if (parallel) n.cores)
 
-  if (!keep_model) {file.remove(modelfile)}
 
   # set contrasts back to what they were
   on.exit(options(opt))
@@ -555,6 +551,9 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
          Mlist = Mlist,
          K = K,
          K_imp = K_imp,
+         JAGSmodel = structure(readChar(modelfile,
+                                        file.info(modelfile)$size),
+                               class = 'modelstring'),
          mcmc_settings = mcmc_settings,
          monitor_params = c(monitor_params,
                             if (!'analysis_main' %in% names(monitor_params))
@@ -587,6 +586,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
   if (inherits(adapt, 'try-error'))
     class(object) <- "JointAI_errored"
+
+  if (!keep_model) {file.remove(modelfile)}
 
   return(object)
 }
