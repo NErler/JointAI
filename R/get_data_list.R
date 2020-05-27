@@ -1,6 +1,6 @@
 
 
-get_data_list <- function(Mlist, info_list, data) {
+get_data_list <- function(Mlist, info_list) {
   modeltypes <- sapply(info_list, "[[", 'modeltype')
 
   l <- Mlist$M

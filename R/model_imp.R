@@ -377,12 +377,12 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                          Mlist = Mlist)
 
   # * model info ---------------------------------------------------------------
-  info_list <- get_model_info(Mlist, data = data, K = K, K_imp = K_imp, trunc = trunc,
-                              assoc_type = assoc_type)
+  info_list <- get_model_info(Mlist, K = K, K_imp = K_imp,
+                              trunc = trunc, assoc_type = assoc_type)
 
 
   # * data list ----------------------------------------------------------------
-  data_list <- get_data_list(Mlist, info_list, data)
+  data_list <- get_data_list(Mlist, info_list)
 
 
   # write model ----------------------------------------------------------------
@@ -463,7 +463,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
         message('Note: Main model parameter were added to the list of parameters to follow.')
     }}
   var.names <- do.call(get_params, c(list(Mlist = Mlist, info_list = info_list,
-                                          data = data, mess = mess),
+                                          mess = mess),
                                      monitor_params))
 
   # run JAGS -----------------------------------------------------------------
@@ -548,8 +548,10 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
   object <- structure(
     list(analysis_type = analysis_type,
-         data = data, models = Mlist$models,
-         fixed = Mlist$fixed, random = Mlist$random,
+         data = Mlist$data,
+         models = Mlist$models,
+         fixed = Mlist$fixed,
+         random = Mlist$random,
          Mlist = Mlist,
          K = K,
          K_imp = K_imp,

@@ -8,9 +8,12 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # id's and groups ------------------------------------------------------------
   # extract the id variable from the random effects formula and get groups
   idvar <- extract_id(random, warn = warn)
+
+  data <- reformat_longsurvdata(data, fixed, random, timevar = timevar,
+                                idvar = idvar)
+
   groups <- get_groups(idvar, data)
   group_lvls <- colSums(!identify_level_relations(groups))
-
 
   # outcome --------------------------------------------------------------------
   # extract the outcomes from the fixed effects formulas
@@ -56,7 +59,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
     }
   })
 
-  add_to_aux <- names(av[!av])
+  add_to_aux <- c(timevar, names(av[!av]))
 
   auxvars <- if (is.null(auxvars)) {
     if (length(add_to_aux) > 0)
@@ -184,7 +187,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                            groups[[gsub('M_', '', k)]]), , drop = FALSE]
   }
 
-  list(fixed = fixed, random = random, idvar = idvar,
+  list(data = data, fixed = fixed, random = random, idvar = idvar,
        M = M, Mlvls = Mlvls,
        lp_cols = lp_cols, interactions = interactions,
        trafos = fcts_mis, #hc_list = hc_list,

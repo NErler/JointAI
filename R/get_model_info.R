@@ -1,5 +1,5 @@
 
-get_model_info <- function(Mlist, data, K, K_imp, trunc = NULL, assoc_type = NULL) {
+get_model_info <- function(Mlist, K, K_imp, trunc = NULL, assoc_type = NULL) {
   args <- as.list(match.call())[-1L]
 
   sapply(names(Mlist$lp_cols), function(k) {
@@ -7,7 +7,7 @@ get_model_info <- function(Mlist, data, K, K_imp, trunc = NULL, assoc_type = NUL
   },  simplify = FALSE)
 }
 
-get_model1_info <- function(k, Mlist, data, K, K_imp, trunc = NULL, assoc_type = NULL,
+get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
                             isgk = FALSE) {
   arglist <- as.list(match.call())[-1L]
 
@@ -158,7 +158,7 @@ get_model1_info <- function(k, Mlist, data, K, K_imp, trunc = NULL, assoc_type =
   # Hierarchical centering -----------------------------------------------------
   hc_list <- get_hc_info(varname = k,
                          lvl = gsub("M_", "", resp_mat[length(resp_mat)]),
-                         Mlist, data, parelmts, lp)
+                         Mlist, parelmts, lp)
   nranef <- sapply(hc_list$hcvars, function(x)
     as.numeric(attr(x, 'rd_intercept')) +
       ifelse(any(!sapply(x$rd_slope_coefs, is.null)),

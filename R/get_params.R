@@ -1,4 +1,4 @@
-get_params <- function(Mlist, info_list, data,
+get_params <- function(Mlist, info_list,
                        analysis_main = TRUE,
                        analysis_random = FALSE,
                        imp_pars = FALSE,
@@ -183,7 +183,7 @@ get_params <- function(Mlist, info_list, data,
       unlist(unname(
         sapply(names(Mlist$M), function(k) {
         if (any(is.na(Mlist$M[[k]]))) {
-          M_NA <- which(is.na(Mlist$M[[k]][, colnames(Mlist$M[[k]]) %in% names(data), drop = FALSE]),
+          M_NA <- which(is.na(Mlist$M[[k]][, colnames(Mlist$M[[k]]) %in% names(Mlist$data), drop = FALSE]),
                         arr.ind = TRUE)
 
           apply(M_NA, 1, function(x) {

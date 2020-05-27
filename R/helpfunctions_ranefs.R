@@ -172,7 +172,7 @@
 #   - directly goes into linear predictor ("Z part")
 
 
-get_hc_info <- function(varname, lvl, Mlist, data, parelmts, lp) {
+get_hc_info <- function(varname, lvl, Mlist, parelmts, lp) {
   lvls <- Mlist$group_lvls
 
   # identify relevant levels (all higher levels)
@@ -192,7 +192,7 @@ get_hc_info <- function(varname, lvl, Mlist, data, parelmts, lp) {
   }
 
   if (length(newrandom) > 0) {
-    hc_list <- sapply(clus, get_hc_list, newrandom = newrandom, data = data,
+    hc_list <- sapply(clus, get_hc_list, newrandom = newrandom,
                       Mlist = Mlist, simplify = FALSE)
 
     orga_hc_parelmts(lvl, lvls, hc_list, parelmts, lp)
@@ -200,11 +200,11 @@ get_hc_info <- function(varname, lvl, Mlist, data, parelmts, lp) {
 }
 
 
-get_hc_list <- function(k, newrandom, data, Mlist) {
+get_hc_list <- function(k, newrandom, Mlist) {
   Mlvls <- Mlist$Mlvls
   Mnam <- sapply(Mlist$M, colnames, simplify = FALSE)
   # column names of random effect design matrices per required level
-  Znam <- colnames(model.matrix(newrandom[[k]], data))
+  Znam <- colnames(model.matrix(newrandom[[k]], Mlist$data))
 
   # check for involvement in interactions
   inters <- Mlist$interactions#[names(Mlist$interactions) %in% names(Mlist$lp_cols[[varname]][[paste0("M_", k)]])]
