@@ -122,6 +122,12 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
     varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev == 0] <- 'lmm'
     varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev == 0] <- 'lm'
 
+    survmods <- sapply(fixed, 'attr', 'type') %in% c('coxph', 'survreg', 'JM')
+    if (any(survmods)) {
+      varinfo$type[varinfo$L1 %in% names(fixed[survmods])] <-
+        sapply(fixed[survmods], 'attr', 'type')
+    }
+
     if (!is.null(attr(fixed[[1]], 'type')))
       varinfo$type[varinfo$L1 %in% names(fixed)[1]] <- attr(fixed[[1]], 'type')
 

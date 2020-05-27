@@ -87,13 +87,6 @@ get_data_list <- function(Mlist, info_list) {
 
   # coxph & JM -----------------------------------------------------------------
   if (any(modeltypes %in% c('coxph', 'JM'))) {
-    x <- info_list[[which(modeltypes %in% c('coxph', 'JM'))]]
-
-    timevariable <- Mlist$M[[x$resp_mat[1]]][, x$resp_col[1]]
-    eventvariable <- Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]
-    timevar <- colnames(Mlist$M[[x$resp_mat[1]]])[x$resp_col[1]]
-
-
     # spline specification for the baseline hazard
     gkw <- gauss_kronrod()$gkw
     gkx <- gauss_kronrod()$gkx
@@ -103,19 +96,53 @@ get_data_list <- function(Mlist, info_list) {
 
     l$gkw <- gkw[ordgkx]
 
+    survinfo <- sapply(names(info_list[modeltypes %in% c('coxph', 'JM')]), function(k) {
+      x <- info_list[[k]]
 
-    if (Mlist$group_lvls[gsub('M_', '', x$resp_mat[2])] > 1) {
-      # find row with largest time (= row for survival analysis)
-      l$survrow <- sapply(
-        split(data.frame(nr = 1:nrow(Mlist$M[[x$resp_mat[1]]]),
-                         timevar = timevariable),
-              Mlist$groups[[gsub("M_", "", x$resp_mat[2])]]),
-        function(k) {
-          k$nr[which.max(k$timevar)]
-        })
+      surv_lvl = gsub("M_", "" , x$resp_mat[2])
+      longlvls <- names(Mlist$group_lvls)[Mlist$group_lvls < Mlist$group_lvls[surv_lvl]]
 
-      if (length(l$survrow) != length(unique(Mlist$groups[[gsub("M_", "", x$resp_mat[2])]])))
-        stop("The number of observations for survival differs from the number of subjects.")
+      if (any(longlvls != "levelone"))
+        stop("There can be only one level of observations below the level on which survival is measured.")
+
+
+      covars <- all_vars(remove_LHS(Mlist$fixed[[k]]))
+      covar_lvls <- sapply(Mlist$data[, covars], check_varlevel, groups = Mlist$groups,
+                           group_lvls = identify_level_relations(Mlist$groups))
+      longvars <- names(covar_lvls)[covar_lvls %in% longlvls]
+
+
+      list(varname = x$varname,
+           modeltype = x$modeltype,
+           surv_lvl = surv_lvl,
+           longlvls = longlvls,
+           longvars = longvars,
+           haslong = isTRUE(!is.null(unlist(x$lp[paste0('M_', longlvls)]))),
+           tv_vars = names(x$tv_vars),
+           # name of the variable containing the time of the repeated measurements:
+           time_name = Mlist$outcomes$outnams[[k]][1],
+           survtime = Mlist$M[[x$resp_mat[1]]][, x$resp_col[1]],
+           survevent = Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]
+
+      )
+    }, simplify = FALSE)
+
+
+#
+#     surv_lvl <- unique(sapply(info_list[modeltypes %in% c('coxph', 'JM')], function(x) {
+#       gsub("M_", "" , x$resp_mat[2])
+#     }))
+#     longlvls <- names(Mlist$group_lvls)[Mlist$group_lvls < Mlist$group_lvls[surv_lvl]]
+#
+#     haslong <- sapply(info_list[modeltypes %in% c('coxph', 'JM')], function(x) {
+#       !is.null(x$lp[paste0('M_', longlvls)])
+#     })
+#
+#     survtimevars <-  sapply(info_list[modeltypes %in% c('coxph', 'JM')], function(x) {
+#       names(x$resp_mat[1])
+#     })
+
+
     for (x in survinfo) {
       if (x$haslong) {
         survrow <- which(Mlist$M$M_levelone[, Mlist$timevar] ==
@@ -141,19 +168,69 @@ get_data_list <- function(Mlist, info_list) {
       l[[paste0("zeros_", x$varname)]] <- numeric(length(x$survtime))
     }
 
-      gk_data <- data[rep(l$survrow, each = length(gkx)), ]
-      gk_data[, gsub("M_", "", x$resp_mat[2])] <-
-        rep(unique(data[, gsub("M_", "", x$resp_mat[2])]), each = length(gkx))
-      gk_data[, timevar] <- c(t(outer(Mlist$M[[x$resp_mat[1]]][l$survrow, timevar]/2, gkx + 1)))
+
+    # for (x in info_list[which(modeltypes %in% c('coxph', 'JM'))]) {
+    #
+    #   timevariable <- Mlist$M[[x$resp_mat[1]]][, x$resp_col[1]]
+    #   eventvariable <- Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]
+    #
+    #   if (Mlist$group_lvls[gsub('M_', '', x$resp_mat[2])] > 1) {
+    #     survrow <- which(Mlist$M$M_levelone[, Mlist$timevar] ==
+    #                        Mlist$M[[x$resp_mat[1]]][
+    #                          l[[paste0('group', gsub("M", "", x$resp_mat[1]))]], x$resp_col[1]])
+    #
+    #
+    #     if (length(survrow) != length(unique(Mlist$groups[[gsub("M_", "", x$resp_mat[2])]])))
+    #       stop("The number of observations for survival differs from the number of subjects.")
+    #
+    #     l[[paste0('survrow_', x$varname)]] <- survrow
+    #     timevariable <- timevariable[survrow]
+    #   }
+    #
+    #
+    #     h0knots <- get_knots_h0(nkn = Mlist$df_basehaz - 4, Time = timevariable,
+    #                             event = eventvariable, gkx = gkx)
+    #
+    #
+    #     l[[paste0("Bh0_", x$varname)]] <- splines::splineDesign(h0knots, timevariable, ord = 4)
+    #     l[[paste0("Bsh0_", x$varname)]] <- splines::splineDesign(h0knots,
+    #                                                              c(t(outer(timevariable/2, gkx + 1))),
+    #                                                              ord = 4)
+    #
+    #     l[[paste0("zeros_", x$varname)]] <- numeric(length(timevariable))
+    #
+    #
+    # }
 
 
-      if (x$modeltype %in% 'coxph') {
-        gk_data <- get_locf(fixed = Mlist$fixed, newdata = data, data = data,
-                            idvar = gsub("M_", "", x$resp_mat[2]),
+    if (any(sapply(survinfo, "[[", "haslong"))) {
+      surv_lvl <- unique(sapply(survinfo, "[[", "surv_lvl"))
+
+      if (length(surv_lvl) > 1)
+        stop("It is not possible to fit survival models on different levels of the data.")
+
+      rows <- match(unique(Mlist$data[, surv_lvl]), Mlist$data[, surv_lvl])
+
+      gk_data <- Mlist$data[rep(rows, each = length(gkx)), ]
+      gk_data[, surv_lvl] <- rep(unique(Mlist$data[, surv_lvl]), each = length(gkx))
+
+      for (k in unique(sapply(survinfo, "[[", "time_name"))) {
+        gk_data[, k] <- c(t(outer(Mlist$M[[Mlist$Mlvls[k]]][, k]/2, gkx + 1)))
+      }
+
+      if (length(unique(sapply(survinfo, "[[", "modeltype"))) > 1)
+        stop("It is not possible to simultaneously fit coxph and JM models.")
+
+
+      if (unique(sapply(survinfo, "[[", "modeltype")) == 'coxph') {
+        gk_data <- get_locf(fixed = Mlist$fixed, newdata = Mlist$data,
+                            data = Mlist$data, idvar = surv_lvl,
                             group_lvls = Mlist$group_lvls, groups = Mlist$groups,
-                            timevar, gk_data)
-      } else if (x$modeltype %in% 'JM') {
-        for (k in names(x$tv_vars)) {
+                            timevar = Mlist$timevar,
+                            longvars = unique(unlist(lapply(survinfo, "[[", 'longvars'))),
+                            gk_data)
+      } else if (unique(sapply(survinfo, "[[", "modeltype")) == 'JM') {
+        for (k in unique(unlist(lapply(survinfo, "[[", "tv_vars")))) {
           gk_data[, k] <- if (is.factor(gk_data[, k])) {
             factor(NA, levels = levels(gk_data[, k]))
           } else NA * gk_data[, k]
@@ -165,23 +242,22 @@ get_data_list <- function(Mlist, info_list) {
                               data = gk_data,
                               terms_list = Mlist$terms_list)
 
-      Xnew <- matrix(nrow = length(l$survrow) * length(gkx),
-                     ncol = ncol(Mlist$M[[x$resp_mat[1]]]),
-                     dimnames = list(c(), colnames(Mlist$M[[x$resp_mat[1]]])))
+      Xnew <- matrix(nrow = Mlist$N[surv_lvl] * length(gkx),
+                     ncol = ncol(Mlist$M$M_levelone),
+                     dimnames = list(c(), colnames(Mlist$M$M_levelone)))
 
       Xnew[, colnames(X)[colnames(X) %in% colnames(Xnew)]] <-
         X[, colnames(X)[colnames(X) %in% colnames(Xnew)]]
 
       Mgk <- lapply(1:length(gkx), function(k) {
-        Xnew[length(gkx) * ((1:length(l$survrow)) - 1) + k, ]
+        Xnew[length(gkx) * ((1:Mlist$N[surv_lvl]) - 1) + k, ]
       })
 
-      l[[paste0(x$resp_mat[1], "gk")]] <- array(data = unlist(Mgk),
-                                                dim = c(length(l$survrow), ncol(Mgk[[1]]), length(gkx)),
-                                                dimnames = list(c(), colnames(Mlist$M[[x$resp_mat[1]]]), c())
+      l$M_levelonegk <- array(data = unlist(Mgk),
+                              dim = c(length(l$survrow), ncol(Mgk[[1]]), length(gkx)),
+                              dimnames = list(c(), colnames(Xnew), c())
       )
 
-      timevariable <- timevariable[l$survrow]
     }
 
   }

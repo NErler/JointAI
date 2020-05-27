@@ -214,12 +214,13 @@ get_coef_names <- function(info_list) {
 
 
 
-get_locf <- function(fixed, newdata, data, idvar, group_lvls, groups, timevar, gk_data) {
-  covars <- all_vars(remove_LHS(fixed))
-  covar_lvls <- sapply(data[, covars], check_varlevel, groups = groups,
-                       group_lvls = identify_level_relations(groups))
-
-  longvars <- covars[group_lvls[covar_lvls] < group_lvls[idvar]]
+get_locf <- function(fixed, newdata, data, idvar, group_lvls, groups, timevar,
+                     longvars, gk_data) {
+  # covars <- all_vars(remove_LHS(fixed))
+  # covar_lvls <- sapply(data[, covars], check_varlevel, groups = groups,
+  #                      group_lvls = identify_level_relations(groups))
+  #
+  # longvars <- covars[group_lvls[covar_lvls] < group_lvls[idvar]]
 
   ld <- subset(newdata, select = c(idvar, timevar, longvars))
   ld <- ld[order(ld[, idvar]), ]
