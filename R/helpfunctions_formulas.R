@@ -722,11 +722,15 @@ outcomes_to_mat <- function(outcomes) {
 
   outlist <- unlist(unname(lapply(outcomes$outcomes, as.list)), recursive = FALSE)
 
-  if (any(duplicated(outlist))) {
-    d1 <- duplicated(outlist)
-    d2 <- duplicated(outlist, fromLast = TRUE)
+  nosurv <- !sapply(outcomes$fixed, 'attr', 'type') %in% c('coxph', 'JM')
+  outlist_nosurv <- unlist(unname(lapply(outcomes$outcomes[nosurv], as.list)),
+                           recursive = FALSE)
 
-    d <- unique(unlist(outcomes$outnams)[d1 | d2])
+  if (any(duplicated(outlist_nosurv))) {
+    d1 <- duplicated(outlist_nosurv)
+    d2 <- duplicated(outlist_nosurv, fromLast = TRUE)
+
+    d <- unique(unlist(outcomes$outnams[nosurv])[d1 | d2])
     stop(paste0("You can only specify one model per outcome.\n",
                 gettextf(
                   if (length(d) == 1) {
