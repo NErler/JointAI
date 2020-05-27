@@ -58,7 +58,7 @@ predDF.formula <- function(formula, dat, vars, length = 100, ...) {
 # @export
 predDF.list <- function(formulas, dat, vars, length = 100, idvar = NULL, ...) {
 
-  id_vars <- extract_id(vars, allow_multiple = TRUE, warn = FALSE)
+  id_vars <- extract_id(vars, warn = FALSE)
   varying <- all_vars(vars)
 
   if (is.null(idvar))

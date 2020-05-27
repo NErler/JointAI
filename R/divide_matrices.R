@@ -7,7 +7,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # id's and groups ------------------------------------------------------------
   # extract the id variable from the random effects formula and get groups
-  idvar <- extract_id(random, warn = warn, allow_multiple = TRUE)
+  idvar <- extract_id(random, warn = warn)
   groups <- get_groups(idvar, data)
   group_lvls <- colSums(!identify_level_relations(groups))
 

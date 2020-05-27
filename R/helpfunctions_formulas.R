@@ -59,7 +59,7 @@ check_formula_list <- function(formula) {
 
 
 
-extract_id <- function(random, warn = TRUE, allow_multiple = FALSE) {
+extract_id <- function(random, warn = TRUE) {
 
   # if random is not a list, make it one
   random <- check_formula_list(random)
@@ -92,7 +92,6 @@ extract_id <- function(random, warn = TRUE, allow_multiple = FALSE) {
                                 rdmatch, invert = TRUE))
         id <- unique(unlist(strsplit(id[id != ""], split = "[[:space:]]*[+*:/][[:space:]]*")))
 
-        # id <- id[id != ""]
       } else {
         id <- NULL
       }
@@ -104,9 +103,6 @@ extract_id <- function(random, warn = TRUE, allow_multiple = FALSE) {
     if (warn)
       warning('No "id" variable could be identified. I will assume that all observations are independent.',
               call. = FALSE, immediate. = TRUE)
-
-  if (length(unique(unlist(ids))) > 1 & !allow_multiple)
-    stop("Different grouping levels detected. JointAI can not yet handle this.", call. = FALSE)
 
   unique(unlist(ids))
 }
@@ -214,7 +210,7 @@ remove_grouping <- function(fmla) {
                         pattern = '^\\(', replacement =  '~ ' )
         ranef <- lapply(ranef, function(k) as.formula(k[k != ""]))
 
-        nam <- extract_id(x, allow_multiple = TRUE, warn = FALSE)
+        nam <- extract_id(x, warn = FALSE)
 
         if (length(nam) > 1 & length(ranef) == 1) {
           ranef <- rep(ranef, length(nam))
@@ -235,7 +231,7 @@ remove_grouping <- function(fmla) {
       ranef <- sub("[[:space:]]*\\|[[:print:]]*", "",
                    deparse(x, width.cutoff = 500))
 
-      nam <- extract_id(x, allow_multiple = TRUE, warn = FALSE)
+      nam <- extract_id(x, warn = FALSE)
 
       l <- list(as.formula(ranef))
       names(l) <- nam
@@ -569,7 +565,7 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
 
   fixed <- check_formula_list(fixed)
 
-  idvar <- extract_id(random, warn = warn, allow_multiple = TRUE)
+  idvar <- extract_id(random, warn = warn)
   groups <- get_groups(idvar, data)
 
   lvls <- colSums(!identify_level_relations(groups))
@@ -736,7 +732,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   fixed <- check_formula_list(fixed)
 
   # extract the id variable from the random effects formula
-  idvar <- extract_id(random, warn = warn, allow_multiple = TRUE)
+  idvar <- extract_id(random, warn = warn)
   groups <- get_groups(idvar, data)
 
   allvars <- unique(c(all_vars(fixed),
