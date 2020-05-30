@@ -501,7 +501,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
     mcmc <- if (n.iter > 0 & !inherits(adapt, 'try-error')) {
       try(rjags::coda.samples(adapt, n.iter = n.iter, thin = thin,
                               variable.names = var.names,
-                              na.rm = FALSE, progress.bar = progress.bar))
+                              progress.bar = progress.bar))
     }
   }
   t1 <- Sys.time()
