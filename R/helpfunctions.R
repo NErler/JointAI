@@ -298,3 +298,38 @@ get_Mlgk <- function(survrow, gkx, newdata, data, Mlist, lvl, timevar, td_cox = 
   # )
 }
 
+get_survinfo <- function(info_list, Mlist) {
+  modeltypes <- sapply(info_list, "[[", 'modeltype')
+  sapply(names(info_list[modeltypes %in% c('coxph', 'JM')]), function(k) {
+
+    x <- info_list[[k]]
+
+    surv_lvl = gsub("M_", "" , x$resp_mat[2])
+    longlvls <- names(Mlist$group_lvls)[Mlist$group_lvls < Mlist$group_lvls[surv_lvl]]
+
+    if (any(longlvls != "levelone"))
+      stop("There can be only one level of observations below the level on which survival is measured.")
+
+
+    covars <- all_vars(remove_LHS(Mlist$fixed[[k]]))
+    covar_lvls <- sapply(Mlist$data[, covars], check_varlevel, groups = Mlist$groups,
+                         group_lvls = identify_level_relations(Mlist$groups))
+    longvars <- names(covar_lvls)[covar_lvls %in% longlvls]
+
+
+    list(varname = x$varname,
+         modeltype = x$modeltype,
+         surv_lvl = surv_lvl,
+         longlvls = longlvls,
+         longvars = longvars,
+         haslong = isTRUE(!is.null(unlist(x$lp[paste0('M_', longlvls)]))),
+         tv_vars = names(x$tv_vars),
+
+         # name of the variable containing the time of the repeated measurements:
+         time_name = Mlist$outcomes$outnams[[k]][1],
+         survtime = Mlist$M[[x$resp_mat[1]]][, x$resp_col[1]],
+         survevent = Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]
+
+    )
+  }, simplify = FALSE)
+}
