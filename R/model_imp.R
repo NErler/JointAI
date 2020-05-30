@@ -1239,6 +1239,10 @@ JM_imp <- function(formula, data, df_basehaz = 6,
                   must be specified via the argument %s.",
                   dQuote("time"), dQuote("timevar")))
 
+  if (!is.numeric(data[[timevar]]))
+    stop(gettextf("The time variable (specified via the argument %s) must be numeric.",
+                  dQuote('timevar')))
+
 
   thiscall <- as.list(match.call())[-1L]
 
