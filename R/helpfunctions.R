@@ -224,7 +224,8 @@ get_locf <- function(fixed, newdata, data, idvar, group_lvls, groups, timevar,
 
   ld <- subset(newdata, select = c(idvar, timevar, longvars))
   ld <- ld[order(ld[, idvar]), ]
-  ld$obstime <- unlist(lapply(table(droplevels(ld[, idvar, drop = FALSE])), function(k) 1:k))
+  ld$obstime <- unlist(lapply(table(droplevels(ld[, idvar, drop = FALSE])),
+                              function(k) 1:k))
 
   wd <- reshape(ld, direction = 'wide', v.names = c(timevar, longvars),
                 timevar = 'obstime', idvar = idvar)
