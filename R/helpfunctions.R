@@ -235,9 +235,12 @@ get_locf <- function(fixed, newdata, data, idvar, group_lvls, groups, timevar,
 
   locf <- sapply(1:nrow(md), function(i) {
     # identify which visit should be used
-    valcol <-  max(cumsum(
+    # if there is no baseline visit (i.e., the first time with an observed value
+    # is larger than the time in the Gauss-Kronrod version of the time) the
+    # first available mesurement will be used ('first value carried backward')
+    valcol <- max(1, cumsum(
       c(md[i, timevar] > md[i, grep(paste0("^", timevar, "."), colnames(md))])
-    ) + 1, na.rm = TRUE)
+    ), na.rm = TRUE)
 
 
     # identify which columns have the covariate values of the correct visit
