@@ -114,10 +114,10 @@ get_data_list <- function(Mlist, info_list) {
                               event = x$survevent, gkx = gkx)
 
 
-      l[[paste0("Bh0_", x$varname)]] <- splines::splineDesign(h0knots, x$survtime, ord = 4)
-      l[[paste0("Bsh0_", x$varname)]] <- splines::splineDesign(h0knots,
-                                                               c(t(outer(x$survtime/2, gkx + 1))),
-                                                               ord = 4)
+      l[[paste0("Bh0_", x$varname)]] <- splines::splineDesign(h0knots,
+                                                              x$survtime, ord = 4)
+      l[[paste0("Bsh0_", x$varname)]] <-
+        splines::splineDesign(h0knots, c(t(outer(x$survtime/2, gkx + 1))), ord = 4)
 
       l[[paste0("zeros_", x$varname)]] <- numeric(length(x$survtime))
     }
