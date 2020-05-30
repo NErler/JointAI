@@ -233,7 +233,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
 
   DF.mis <- DF
   for (i in seq_along(misvar)) {
-    if (check_tvar(DF[, misvar[i]], DF$id)) {
+    if (check_varlevel(DF[, misvar[i]], DF$id) == 'levelone') {
       DF.mis[sample.int(nrow(DF), nrow(DF) * misperc[i]), misvar[i]] <- NA
     } else {
       DF.mis[DF.mis$id %in% misid[[i]], misvar[i]] <- NA
