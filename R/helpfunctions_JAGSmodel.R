@@ -778,28 +778,38 @@ get_linkindent <- function(link) {
 
 
 # * shrinkage ------------------------------------------------------------------
-get_priordistr <- function(shrinkage, family, link, parname) {
-  priorset <- switch(family,
-                     gaussian = 'norm',
-                     binomial = link,
-                     Gamma = 'gamma',
-                     poisson = 'poisson',
-                     lognorm = 'norm',
-                     beta = 'beta'
-  )
+get_priordistr <- function(shrinkage, type, family = NULL, link = NULL, parname) {
 
-  if (is.null(shrinkage)) {
-    paste0(tab(4), parname, "[k] ~ dnorm(mu_reg_", priorset,
-           ", tau_reg_", priorset, ")", "\n")
+
+  if (type %in% c('glm', 'glmm')) {
+    type <- switch(family,
+                   gaussian = 'norm',
+                   binomial = link,
+                   Gamma = 'gamma',
+                   poisson = 'poisson',
+                   lognorm = 'norm',
+                   beta = 'beta'
+    )
+  }
+
+
+  if (is.null(shrinkage) | isFALSE(shrinkage)) {
+    paste0(tab(4), parname, "[k] ~ dnorm(mu_reg_", type,
+           ", tau_reg_", type, ")", "\n")
+
   } else if (shrinkage == 'ridge') {
-    paste0(tab(4), parname, "[k] ~ dnorm(mu_reg_", priorset,
-           ", tau_reg_", priorset , "_ridge[k])", "\n",
-           tab(4), "tau_reg_", priorset, "_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
+
+    paste0(tab(4), parname, "[k] ~ dnorm(mu_reg_", type,
+           ", tau_reg_", type , "_ridge_", parname, "[k])", "\n",
+           tab(4), "tau_reg_", type, "_ridge_", parname, "[k] ~ dgamma(0.01, 0.01)", "\n")
+
   } else {
     stop(gettextf('Regularization of type %s is not implemented.', dQuote(shrinkage)),
          call. = FALSE)
   }
 }
+
+
 
 
 add_dashes <- function(x, width = 95) {

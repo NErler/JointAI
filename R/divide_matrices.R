@@ -2,7 +2,7 @@
 divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                             auxvars = NULL, scale_vars = NULL, refcats = NULL,
                             models = NULL,  timevar = NULL, no_model = NULL,
-                            ppc = TRUE, ridge = FALSE,
+                            ppc = TRUE, shrinkage = FALSE,
                             warn = TRUE, mess = TRUE, df_basehaz = 6, ...) {
 
   # id's and groups ------------------------------------------------------------
@@ -202,7 +202,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
        auxvars = auxvars, groups = groups,
        group_lvls = group_lvls,
        N = sapply(groups, function(x) length(unique(x))),
-       ppc = ppc, ridge = ridge,
+       ppc = ppc, shrinkage = shrinkage,
        models = models, scale_pars = scale_pars,
        outcomes = outcomes, fcts_all = fcts_all,
        terms_list = terms_list, df_basehaz = df_basehaz

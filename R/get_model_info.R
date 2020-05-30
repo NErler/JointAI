@@ -164,6 +164,14 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
       ifelse(any(!sapply(x$rd_slope_coefs, is.null)),
              nrow(do.call(rbind, x$rd_slope_coefs)), 0))
 
+  # shrinkage
+  shrinkage <- if (k %in% names(Mlist$shrinkage)) {
+    Mlist$shrinkage[k]
+  } else if (k %in% names(Mlist$fixed) & is.null(names(Mlist$shrinkage))) {
+    Mlist$shrinkage
+  }
+
+
   # collect all info ---------------------------------------------------------
   list(
     varname = if (modeltype %in% c('survreg', 'coxph', 'JM')) {
@@ -190,7 +198,7 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
     trafos = trafos,
     trunc = trunc[[k]],
     ppc = FALSE,
-    shrinkage = NULL,
+    shrinkage = shrinkage,
     covnames = covnames,
     assoc_type  = if (modeltype %in% "JM") {
       get_assoc_type(tvars, Mlist$models, assoc_type)

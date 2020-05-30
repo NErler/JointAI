@@ -59,14 +59,6 @@ JAGSmodel_clmm <- function(info) {
   # }
 
 
-  # shrinkage ------------------------------------------------------------------
-  if (info$shrinkage == 'ridge' && !is.null(info$shrinkage)) {
-    priordistr <- paste0(tab(4), info$parname, "[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal_ridge[k])", "\n",
-                    tab(4), "tau_reg_ordinal_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
-  } else {
-    priordistr <- paste0(tab(4), info$parname, "[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal)", "\n")
-  }
-
   # write model ----------------------------------------------------------------
   paste0(tab(), add_dashes(paste0("# Cumulative logit mixed effects model for ", info$varname)), "\n",
          tab(), "for (", index, " in 1:", info$N[gsub("M_", "", info$resp_mat)], ") {", "\n",
@@ -95,7 +87,7 @@ JAGSmodel_clmm <- function(info) {
          if (any(!sapply(info$parelmts, is.null))) {
            paste0(tab(), "for (k in ", min(unlist(info$parelmts)), ":",
                   max(unlist(info$parelmts)), ") {", "\n",
-                  priordistr,
+                  get_priordistr(info$shrinkage, type = 'ordinal', parname = info$parname),
                   tab(), "}")
          },
          paste(deltas, collapse = "\n"), "\n\n",

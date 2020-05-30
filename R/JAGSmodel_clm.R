@@ -77,14 +77,6 @@ JAGSmodel_clm <- function(info) {
 
 
 
-  if (info$shrinkage == 'ridge' && !is.null(info$shrinkage)) {
-    distr <- paste0(tab(4), info$parname, "[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal_ridge[k])", "\n",
-                    tab(4), "tau_reg_ordinal_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
-  } else {
-    distr <- paste0(tab(4), info$parname, "[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal)", "\n")
-  }
-
-
 
   paste0(tab(2), add_dashes(paste0("# Cumulative logit model for ", info$varname)), "\n",
          tab(), "for (", index, " in 1:", info$N[gsub("M_", "", info$resp_mat)], ") {", "\n",
@@ -108,7 +100,7 @@ JAGSmodel_clm <- function(info) {
          if (!is.null(info$lp[[info$resp_mat]])) {
            paste0(
              tab(), "for (k in ", min(unlist(info$parelmts)), ":", max(unlist(info$parelmts)), ") {", "\n",
-             distr,
+             get_priordistr(info$shrinkage, type = 'ordinal', parname = info$parname),
              tab(), "}", "\n\n")
          },
          paste(deltas, collapse = "\n"), "\n\n",

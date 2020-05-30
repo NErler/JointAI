@@ -85,7 +85,7 @@ JAGSmodel_glm <- function(info) {
          tab(), "}", "\n\n",
          tab(), "# Priors for the model for ", info$varname, "\n",
          tab(), "for (k in ", min(unlist(info$parelmts)), ":", max(unlist(info$parelmts)), ") {", "\n",
-         get_priordistr(info$shrinkage, info$family, info$link, info$parname),
+         get_priordistr(info$shrinkage, type = 'glm', info$family, info$link, info$parname),
          tab(), "}",
          secndpar,
          # paste_ppc_prior,

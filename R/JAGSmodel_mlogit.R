@@ -43,16 +43,6 @@ JAGSmodel_mlogit <- function(info) {
                                index = index)), collapse = "\n")
   }
 
-
-  if (info$shrinkage == 'ridge' && !is.null(info$shrinkage)) {
-    distr <- paste0(tab(4), info$parname, "[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial_ridge[k])", "\n",
-                    tab(4), "tau_reg_multinomial_ridge[k] ~ dgamma(0.01, 0.01)", "\n")
-  } else {
-    distr <- paste0(tab(4), info$parname, "[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)", "\n")
-  }
-
-
-
   paste0(tab(2), add_dashes(paste0("# Multinomial logit model for ", info$varname)), "\n",
          tab(2), "for (", index, " in 1:", info$N[[gsub("M_", "", info$resp_mat)]], ") {", "\n",
          tab(4), info$resp_mat, "[", index, ", ", info$resp_col,
@@ -63,6 +53,6 @@ JAGSmodel_mlogit <- function(info) {
          tab(), "}", "\n\n",
          tab(), "# Priors for the model for ", info$varname,"\n",
          tab(), "for (k in ", min(unlist(info$parelmts)), ":", max(unlist(info$parelmts)), ") {", "\n",
-         distr,
+         get_priordistr(info$shrinkage, type = 'multinomial', parname = info$parname),
          tab(), "}", "\n")
 }
