@@ -263,40 +263,98 @@ get_locf <- function(fixed, newdata, data, idvar, group_lvls, groups, timevar,
 
 
 
-get_Mlgk <- function(survrow, gkx, newdata, data, Mlist, lvl, timevar, td_cox = FALSE) {
+get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, newdata, td_cox = FALSE) {
 
-  gk_data <- newdata[rep(survrow, each = length(gkx)), ]
-  gk_data[, lvl] <- rep(newdata[survrow, lvl], each = length(gkx))
-  gk_data[, timevar] <- c(t(outer(newdata[survrow, timevar]/2, gkx + 1)))
+  # rows to replicate when setting up gk_data
+  rows <- match(unique(Mlist$data[, surv_lvl]),
+                Mlist$data[, surv_lvl])
+
+  # base-version of gk_data: one row per unit of the survival outcome level
+  gk_data <- Mlist$data[rep(rows, each = length(gkx)), ]
+
+  # replace the id variable on the survival outcome level
+  gk_data[, surv_lvl] <- rep(unique(Mlist$data[, surv_lvl]), each = length(gkx))
+
+
+  # replace the survival time with the Gauss-Kronrod version of it
+  surv_time_name <- unique(sapply(survinfo, "[[", "time_name"))
+  gk_data[, Mlist$timevar] <- c(t(outer(Mlist$M[[Mlist$Mlvls[surv_time_name]]][, surv_time_name]/2, gkx + 1)))
+
 
 
   if (td_cox) {
-    gk_data <- get_locf(fixed = Mlist$fixed, newdata = newdata, data = data,
-                        idvar = lvl, group_lvls = Mlist$group_lvls,
-                        groups = Mlist$groups, timevar, gk_data)
+    gk_data <- get_locf(fixed = Mlist$fixed, newdata = newdata,
+                        data = Mlist$data, idvar = surv_lvl,
+                        group_lvls = Mlist$group_lvls, groups = Mlist$groups,
+                        timevar = Mlist$timevar,
+                        longvars = unique(unlist(lapply(survinfo, "[[", 'longvars'))),
+                        gk_data)
+  } else {
+
+    for (k in unique(unlist(lapply(survinfo, "[[", "tv_vars")))) {
+      gk_data[, k] <- if (is.factor(gk_data[, k])) {
+        factor(NA, levels = levels(gk_data[, k]))
+      } else NA * gk_data[, k]
+    }
+
   }
 
-  Xgk <- model.matrix_combi(fmla = c(Mlist$fixed, remove_grouping(Mlist$random),
-                                     Mlist$auxvars),
-                            data = gk_data,
-                            terms_list = Mlist$terms_list)
 
-  Xgk_new <- matrix(nrow = length(survrow) * length(gkx),
-                    ncol = ncol(Mlist$M$M_levelone),
-                    dimnames = list(c(), colnames(Mlist$M$M_levelone)))
 
-  Xgk_new[, colnames(Xgk)[colnames(Xgk) %in% colnames(Xgk_new)]] <-
-    Xgk[, colnames(Xgk)[colnames(Xgk) %in% colnames(Xgk_new)]]
+  X <- model.matrix_combi(fmla = c(Mlist$fixed, unlist(remove_grouping(Mlist$random)),
+                                   Mlist$auxvars),
+                          data = gk_data,
+                          terms_list = Mlist$terms_list)
+
+  Xnew <- matrix(nrow = Mlist$N[surv_lvl] * length(gkx),
+                 ncol = ncol(Mlist$M$M_levelone),
+                 dimnames = list(c(), colnames(Mlist$M$M_levelone)))
+
+  Xnew[, colnames(X)[colnames(X) %in% colnames(Xnew)]] <-
+    X[, colnames(X)[colnames(X) %in% colnames(Xnew)]]
 
   lapply(1:length(gkx), function(k) {
-    Xgk_new[length(gkx) * ((1:length(survrow)) - 1) + k, ]
+    Xnew[length(gkx) * ((1:Mlist$N[surv_lvl]) - 1) + k, ]
   })
-
-  # Mlgk <- array(data = unlist(Mlgk),
-  #               dim = c(length(survrow), ncol(Mlgk[[1]]), length(gkx)),
-  #               dimnames = list(c(), colnames(Mlist$Ml), c())
-  # )
 }
+
+
+# get_Mlgk <- function(survrow, gkx, newdata, data, Mlist, surv_lvl, timevar, td_cox = FALSE) {
+#
+#   gk_data <- newdata[rep(survrow, each = length(gkx)), ]
+#   gk_data[, lvl] <- rep(newdata[survrow, lvl], each = length(gkx))
+#   gk_data[, timevar] <- c(t(outer(newdata[survrow, timevar]/2, gkx + 1)))
+#
+#
+#   if (td_cox) {
+#     gk_data <- get_locf(fixed = Mlist$fixed, newdata = newdata, data = data,
+#                         idvar = lvl, group_lvls = Mlist$group_lvls,
+#                         groups = Mlist$groups, timevar, gk_data)
+#   }
+#
+#   Xgk <- model.matrix_combi(fmla = c(Mlist$fixed, remove_grouping(Mlist$random),
+#                                      Mlist$auxvars),
+#                             data = gk_data,
+#                             terms_list = Mlist$terms_list)
+#
+#   Xgk_new <- matrix(nrow = length(survrow) * length(gkx),
+#                     ncol = ncol(Mlist$M$M_levelone),
+#                     dimnames = list(c(), colnames(Mlist$M$M_levelone)))
+#
+#   Xgk_new[, colnames(Xgk)[colnames(Xgk) %in% colnames(Xgk_new)]] <-
+#     Xgk[, colnames(Xgk)[colnames(Xgk) %in% colnames(Xgk_new)]]
+#
+#   lapply(1:length(gkx), function(k) {
+#     Xgk_new[length(gkx) * ((1:length(survrow)) - 1) + k, ]
+#   })
+#
+#   # Mlgk <- array(data = unlist(Mlgk),
+#   #               dim = c(length(survrow), ncol(Mlgk[[1]]), length(gkx)),
+#   #               dimnames = list(c(), colnames(Mlist$Ml), c())
+#   # )
+# }
+
+
 
 get_survinfo <- function(info_list, Mlist) {
   modeltypes <- sapply(info_list, "[[", 'modeltype')

@@ -128,54 +128,19 @@ get_data_list <- function(Mlist, info_list) {
 
       if (length(surv_lvl) > 1)
         stop("It is not possible to fit survival models on different levels of the data.")
-
-      rows <- match(unique(Mlist$data[, surv_lvl]), Mlist$data[, surv_lvl])
-
-      gk_data <- Mlist$data[rep(rows, each = length(gkx)), ]
-      gk_data[, surv_lvl] <- rep(unique(Mlist$data[, surv_lvl]), each = length(gkx))
-
-      for (k in unique(sapply(survinfo, "[[", "time_name"))) {
-        gk_data[, k] <- c(t(outer(Mlist$M[[Mlist$Mlvls[k]]][, k]/2, gkx + 1)))
-      }
-
+      if (length(unique(sapply(survinfo, "[[", "time_name"))) > 1)
+        stop("It is currently not possible to fit multiple survival
+             models with different event time variables.")
       if (length(unique(sapply(survinfo, "[[", "modeltype"))) > 1)
         stop("It is not possible to simultaneously fit coxph and JM models.")
 
 
-      if (unique(sapply(survinfo, "[[", "modeltype")) == 'coxph') {
-        gk_data <- get_locf(fixed = Mlist$fixed, newdata = Mlist$data,
-                            data = Mlist$data, idvar = surv_lvl,
-                            group_lvls = Mlist$group_lvls, groups = Mlist$groups,
-                            timevar = Mlist$timevar,
-                            longvars = unique(unlist(lapply(survinfo, "[[", 'longvars'))),
-                            gk_data)
-      } else if (unique(sapply(survinfo, "[[", "modeltype")) == 'JM') {
-        for (k in unique(unlist(lapply(survinfo, "[[", "tv_vars")))) {
-          gk_data[, k] <- if (is.factor(gk_data[, k])) {
-            factor(NA, levels = levels(gk_data[, k]))
-          } else NA * gk_data[, k]
-        }
-      }
-
-      X <- model.matrix_combi(fmla = c(Mlist$fixed, unlist(remove_grouping(Mlist$random)),
-                                       Mlist$auxvars),
-                              data = gk_data,
-                              terms_list = Mlist$terms_list)
-
-      Xnew <- matrix(nrow = Mlist$N[surv_lvl] * length(gkx),
-                     ncol = ncol(Mlist$M$M_levelone),
-                     dimnames = list(c(), colnames(Mlist$M$M_levelone)))
-
-      Xnew[, colnames(X)[colnames(X) %in% colnames(Xnew)]] <-
-        X[, colnames(X)[colnames(X) %in% colnames(Xnew)]]
-
-      Mgk <- lapply(1:length(gkx), function(k) {
-        Xnew[length(gkx) * ((1:Mlist$N[surv_lvl]) - 1) + k, ]
-      })
+      Mgk <- get_Mgk(Mlist, gkx, surv_lvl, survinfo, newdata = Mlist$data,
+                     td_cox = unique(sapply(survinfo, "[[", "modeltype")) == 'coxph')
 
       l$M_levelonegk <- array(data = unlist(Mgk),
-                              dim = c(length(l$survrow), ncol(Mgk[[1]]), length(gkx)),
-                              dimnames = list(c(), colnames(Xnew), c())
+                              dim = c(nrow(Mgk[[1]]), ncol(Mgk[[1]]), length(gkx)),
+                              dimnames = list(c(), dimnames(Mgk)[[2]], c())
       )
 
     }
