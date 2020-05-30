@@ -97,20 +97,6 @@ get_data_list <- function(Mlist, info_list) {
     l$gkw <- gkw[ordgkx]
 
     survinfo <- get_survinfo(info_list, Mlist)
-#
-#     surv_lvl <- unique(sapply(info_list[modeltypes %in% c('coxph', 'JM')], function(x) {
-#       gsub("M_", "" , x$resp_mat[2])
-#     }))
-#     longlvls <- names(Mlist$group_lvls)[Mlist$group_lvls < Mlist$group_lvls[surv_lvl]]
-#
-#     haslong <- sapply(info_list[modeltypes %in% c('coxph', 'JM')], function(x) {
-#       !is.null(x$lp[paste0('M_', longlvls)])
-#     })
-#
-#     survtimevars <-  sapply(info_list[modeltypes %in% c('coxph', 'JM')], function(x) {
-#       names(x$resp_mat[1])
-#     })
-
 
     for (x in survinfo) {
       if (x$haslong) {
@@ -121,7 +107,6 @@ get_data_list <- function(Mlist, info_list) {
           stop("The number of observations for survival differs from the number of subjects.")
 
         l[[paste0('survrow_', x$varname)]] <- survrow
-        # timevariable <- timevariable[survrow]
       }
 
 
@@ -136,40 +121,6 @@ get_data_list <- function(Mlist, info_list) {
 
       l[[paste0("zeros_", x$varname)]] <- numeric(length(x$survtime))
     }
-
-
-    # for (x in info_list[which(modeltypes %in% c('coxph', 'JM'))]) {
-    #
-    #   timevariable <- Mlist$M[[x$resp_mat[1]]][, x$resp_col[1]]
-    #   eventvariable <- Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]
-    #
-    #   if (Mlist$group_lvls[gsub('M_', '', x$resp_mat[2])] > 1) {
-    #     survrow <- which(Mlist$M$M_levelone[, Mlist$timevar] ==
-    #                        Mlist$M[[x$resp_mat[1]]][
-    #                          l[[paste0('group', gsub("M", "", x$resp_mat[1]))]], x$resp_col[1]])
-    #
-    #
-    #     if (length(survrow) != length(unique(Mlist$groups[[gsub("M_", "", x$resp_mat[2])]])))
-    #       stop("The number of observations for survival differs from the number of subjects.")
-    #
-    #     l[[paste0('survrow_', x$varname)]] <- survrow
-    #     timevariable <- timevariable[survrow]
-    #   }
-    #
-    #
-    #     h0knots <- get_knots_h0(nkn = Mlist$df_basehaz - 4, Time = timevariable,
-    #                             event = eventvariable, gkx = gkx)
-    #
-    #
-    #     l[[paste0("Bh0_", x$varname)]] <- splines::splineDesign(h0knots, timevariable, ord = 4)
-    #     l[[paste0("Bsh0_", x$varname)]] <- splines::splineDesign(h0knots,
-    #                                                              c(t(outer(timevariable/2, gkx + 1))),
-    #                                                              ord = 4)
-    #
-    #     l[[paste0("zeros_", x$varname)]] <- numeric(length(timevariable))
-    #
-    #
-    # }
 
 
     if (any(sapply(survinfo, "[[", "haslong"))) {
