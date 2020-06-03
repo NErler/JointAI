@@ -204,7 +204,7 @@ get_coef_names <- function(info_list) {
       data.frame(outcome = info$varname,
                  varname = names(unlist(unname(info$lp))),
                  coef = paste0(info$parname,
-                               if(length(pars) > 1) paste0("[", unlist(info$parelmts), "]")
+                               if (length(pars) > 1) paste0("[", unlist(info$parelmts), "]")
                  ),
                  stringsAsFactors = FALSE
       )
@@ -214,15 +214,10 @@ get_coef_names <- function(info_list) {
 
 
 
-get_locf <- function(fixed, newdata, data, idvar, group_lvls, groups, timevar,
+get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
                      longvars, gk_data) {
-  # covars <- all_vars(remove_LHS(fixed))
-  # covar_lvls <- sapply(data[, covars], check_varlevel, groups = groups,
-  #                      group_lvls = identify_level_relations(groups))
-  #
-  # longvars <- covars[group_lvls[covar_lvls] < group_lvls[idvar]]
 
-  ld <- subset(newdata, select = c(idvar, timevar, longvars))
+  ld <- subset(data, select = c(idvar, timevar, longvars))
   ld <- ld[order(ld[, idvar]), ]
   ld$obstime <- unlist(lapply(table(droplevels(ld[, idvar, drop = FALSE])),
                               function(k) 1:k))
@@ -238,7 +233,7 @@ get_locf <- function(fixed, newdata, data, idvar, group_lvls, groups, timevar,
     # identify which visit should be used
     # if there is no baseline visit (i.e., the first time with an observed value
     # is larger than the time in the Gauss-Kronrod version of the time) the
-    # first available mesurement will be used ('first value carried backward')
+    # first available measurement will be used ('first value carried backward')
     valcol <- max(1, cumsum(
       c(md[i, timevar] > md[i, grep(paste0("^", timevar, "."), colnames(md))])
     ), na.rm = TRUE)
@@ -264,28 +259,27 @@ get_locf <- function(fixed, newdata, data, idvar, group_lvls, groups, timevar,
 
 
 
-get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, newdata, td_cox = FALSE) {
+get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, td_cox = FALSE) {
 
   # rows to replicate when setting up gk_data
-  rows <- match(unique(Mlist$data[, surv_lvl]),
-                Mlist$data[, surv_lvl])
+  rows <- match(unique(data[, surv_lvl]), data[, surv_lvl])
 
   # base-version of gk_data: one row per unit of the survival outcome level
-  gk_data <- Mlist$data[rep(rows, each = length(gkx)), ]
+  gk_data <- data[rep(rows, each = length(gkx)), ]
 
   # replace the id variable on the survival outcome level
-  gk_data[, surv_lvl] <- rep(unique(Mlist$data[, surv_lvl]), each = length(gkx))
+  gk_data[, surv_lvl] <- rep(unique(data[, surv_lvl]), each = length(gkx))
 
 
   # replace the survival time with the Gauss-Kronrod version of it
   surv_time_name <- unique(sapply(survinfo, "[[", "time_name"))
-  gk_data[, Mlist$timevar] <- c(t(outer(Mlist$M[[Mlist$Mlvls[surv_time_name]]][, surv_time_name]/2, gkx + 1)))
+  gk_data[, Mlist$timevar] <- c(t(outer(data[rows, surv_time_name]/2, gkx + 1)))
 
 
 
   if (td_cox) {
-    gk_data <- get_locf(fixed = Mlist$fixed, newdata = newdata,
-                        data = Mlist$data, idvar = surv_lvl,
+    gk_data <- get_locf(fixed = Mlist$fixed, data = data,
+                        idvar = surv_lvl,
                         group_lvls = Mlist$group_lvls, groups = Mlist$groups,
                         timevar = Mlist$timevar,
                         longvars = unique(unlist(lapply(survinfo, "[[", 'longvars'))),
@@ -307,7 +301,7 @@ get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, newdata, td_cox = FALSE) {
                           data = gk_data,
                           terms_list = Mlist$terms_list)
 
-  Xnew <- matrix(nrow = Mlist$N[surv_lvl] * length(gkx),
+  Xnew <- matrix(nrow = length(rows) * length(gkx),
                  ncol = ncol(Mlist$M$M_levelone),
                  dimnames = list(c(), colnames(Mlist$M$M_levelone)))
 
@@ -315,7 +309,7 @@ get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, newdata, td_cox = FALSE) {
     X[, colnames(X)[colnames(X) %in% colnames(Xnew)]]
 
   lapply(1:length(gkx), function(k) {
-    Xnew[length(gkx) * ((1:Mlist$N[surv_lvl]) - 1) + k, ]
+    Xnew[length(gkx) * ((1:length(rows)) - 1) + k, ]
   })
 }
 
@@ -392,3 +386,7 @@ get_survinfo <- function(info_list, Mlist) {
     )
   }, simplify = FALSE)
 }
+
+
+
+

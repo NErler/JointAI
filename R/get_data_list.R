@@ -135,7 +135,7 @@ get_data_list <- function(Mlist, info_list) {
         stop("It is not possible to simultaneously fit coxph and JM models.")
 
 
-      Mgk <- get_Mgk(Mlist, gkx, surv_lvl, survinfo, newdata = Mlist$data,
+      Mgk <- get_Mgk(Mlist, gkx, surv_lvl, survinfo, data = Mlist$data,
                      td_cox = unique(sapply(survinfo, "[[", "modeltype")) == 'coxph')
 
       l$M_levelonegk <- array(data = unlist(Mgk),

@@ -39,8 +39,12 @@ predDF.JointAI <- function(object, vars, outcome = 1, length = 100, ...) {
 
   predDF(formulas = c(object$fixed[[outcome]],
                       object$random[[outcome]],
-                      object$auxvars), dat = object$data, vars = vars,
-         length = length, idvar = object$Mlist$idvar, ...)
+                      object$auxvars,
+                      if (!is.null(object$Mlist$timevar))
+                          as.formula(paste0("~", object$Mlist$timevar))
+  ),
+  dat = object$data, vars = vars,
+  length = length, idvar = object$Mlist$idvar, ...)
 }
 
 
@@ -407,8 +411,13 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
   coefs <- coef_list[[varname]]
 
-  timevar <- Mlist$outcomes$outnams[[varname]][1]
+  survinfo <- get_survinfo(info_list, Mlist)[varname]
+
+
+  # timevar <- Mlist$outcomes$outnams[[varname]][1]
   resp_mat <- info_list[[varname]]$resp_mat[2]
+  surv_lvl <- survinfo[[1]]$surv_lvl
+  surv_colnames <- names(Mlist$outcomes$outcomes[[varname]])
 
   mf <- model.frame(as.formula(paste(Mlist$fixed[[varname]][-2], collapse = " ")),
                     data, na.action = na.pass)
@@ -468,31 +477,36 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   gkw <- gauss_kronrod()$gkw[ordgkx]
 
 
-  if (is.null(survrow))
-    survrow <- 1:nrow(Mlist$M[[info_list[[varname]]$resp_mat[timevar]]])
-  time_orig <- Mlist$M[[info_list[[varname]]$resp_mat[timevar]]][survrow, timevar]
+  survrow <- if (is.null(Mlist$timevar)) {
+    1:nrow(Mlist$M[[resp_mat]])
+  } else {
+    which(Mlist$M$M_levelone[, Mlist$timevar] ==
+            Mlist$M[[resp_mat]][Mlist$groups[[surv_lvl]], survinfo[[1]]$time_name])
+  }
+
 
   h0knots <- get_knots_h0(nkn = Mlist$df_basehaz - 4,
-                          Time = time_orig,
+                          Time = survinfo[[1]]$survtime,
                           event = NULL, gkx = gkx)
 
   if (type %in% c('expected', 'survival')) {
 
     Bsh0 <- splines::splineDesign(h0knots,
-                                  c(t(outer(newdata[, timevar]/2, gkx + 1))),
+                                  c(t(outer(newdata[, survinfo[[1]]$time_name]/2, gkx + 1))),
                                   ord = 4, outer.ok = TRUE)
 
     logh0s <- lapply(1:nrow(MCMC), function(m) {
-      matrix(Bsh0 %*% MCMC[m, grep('\\bbeta_Bh0\\b', colnames(MCMC))],
+      matrix(Bsh0 %*% MCMC[m, grep(paste0('\\bbeta_Bh0_', clean_survname(varname), '\\b'), colnames(MCMC))],
              ncol = 15, nrow = nrow(newdata), byrow = TRUE)
     })
 
 
     tvpred <- if (any(Mlist$group_lvls < Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
       Mlgk <- do.call(rbind,
-                      get_Mlgk(survrow = 1:nrow(newdata), gkx, newdata = newdata,
-                               data = data, Mlist, lvl = gsub("M_", "", resp_mat),
-                               timevar, td_cox = TRUE))
+                      get_Mgk(Mlist, gkx, surv_lvl = gsub("M_", "", resp_mat),
+                              survinfo = survinfo, data = newdata,
+                              td_cox = unique(sapply(survinfo, "[[", "modeltype")) == 'coxph'))
+
       vars <- coefs$varname[na.omit(match(dimnames(Mlgk)[[2]], coefs$varname))]
 
       lapply(1:nrow(MCMC), function(m) {
@@ -516,11 +530,13 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
       exp(logh0s + tvpred) %*% gkw
     }, logh0s = logh0s, tvpred = tvpred)
 
-    logSurv <- -exp(t(eta_surv)) * Surv * outer(newdata[, timevar], rep(1, nrow(MCMC)))/2
+    logSurv <- -exp(t(eta_surv)) * Surv * outer(newdata[, survinfo[[1]]$time_name],
+                                                rep(1, nrow(MCMC)))/2
 
   } else {
 
-    Bh0 <- splines::splineDesign(h0knots, newdata[, timevar], ord = 4, outer.ok = TRUE)
+    Bh0 <- splines::splineDesign(h0knots, newdata[, survinfo[[1]]$time_name],
+                                 ord = 4, outer.ok = TRUE)
 
     logh0 <- sapply(1:nrow(Bh0), function(i) {
       MCMC[, grep('beta_Bh0', colnames(MCMC))] %*% Bh0[i, ]
