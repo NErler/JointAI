@@ -70,7 +70,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
   Mlvls <- object$Mlist$Mlvls
 
-  vars <- names(object$models)[colSums(is.na(DF[, names(object$models), drop = FALSE])) > 0]
+  vars <- intersect(names(object$models), names(DF)[colSums(is.na(DF)) > 0])
 
   varinfo <- lapply(object$info_list[vars], function(x) {
     data.frame(varname = x$varname,
