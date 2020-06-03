@@ -6,7 +6,7 @@ get_params <- function(Mlist, info_list,
                        ppc = NULL,
                        betas = NULL, tau_main = NULL, sigma_main = NULL,
                        gamma_main = NULL, delta_main = NULL,
-                       ranef_main = NULL, invD_main = NULL, D_main = TRUE, RinvD_main = NULL,
+                       ranef_main = NULL, invD_main = NULL, D_main = NULL, RinvD_main = NULL,
                        alphas = NULL, tau_other = NULL, sigma_other = NULL,
                        gamma_other = NULL, delta_other = NULL,
                        ranef_other = NULL, invD_other = NULL, D_other = NULL, RinvD_other = NULL,
@@ -52,6 +52,9 @@ get_params <- function(Mlist, info_list,
       # for a cox model with no betas, something needs to be monitored to prevent
       # JAGS error "No valid monitors set".
       basehaz <- TRUE
+
+    if (!isFALSE(D_main))
+      D_main <- TRUE
 
 #
 #     if (any(modeltypes_main %in% c("glmm", "clmm", "mlogitmm", "coxph", "survreg", "JM")) &
