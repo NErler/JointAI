@@ -21,3 +21,4 @@ pkgdown
 
 R/old_stuff.R
 R/samplers.R
+R/simLong.R
