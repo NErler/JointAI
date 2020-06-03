@@ -297,7 +297,7 @@ prep_string <- function(x) {
 
 clean_survname <- function(x) {
   x <- gsub(',* *type * = * [[:print:]]*', '', x)
-  x <- gsub(')', '', x)
+  x <- gsub("[)\'\"]", '', x)
   x <- gsub("[[:punct:]]* *I\\(", "_", x)
   x <- gsub(' *== *', '_', x)
   x <- gsub(' *<=* *', '_', x)
