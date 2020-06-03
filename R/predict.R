@@ -431,7 +431,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
   X <- sapply(names(Mlist$M), function(lvl) {
     X0[, colnames(X0) %in% colnames(Mlist$M[[lvl]]), drop = FALSE]
-  })
+  }, simplify = FALSE)
 
   # Xc <- X[, colnames(X) %in% colnames(Mlist$M[[info_list[[varname]]$resp_mat[2]]]), drop = FALSE]
 
