@@ -15,6 +15,10 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   groups <- get_groups(idvar, data)
   group_lvls <- colSums(!identify_level_relations(groups))
 
+
+  if (analysis_type == 'coxph')
+    data <- fill_locf(data, fixed, random, auxvars, timevar, groups)
+
   # outcome --------------------------------------------------------------------
   # extract the outcomes from the fixed effects formulas
   outcomes <- extract_outcome_data(fixed, random = random, data = data,

@@ -178,3 +178,77 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
 }
 
 
+
+
+fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
+
+  allvars <- unique(c(all_vars(fixed),
+                      all_vars(random),
+                      all_vars(auxvars),
+                      timevar))
+
+  # identify survival outcomes and the related variables
+  survout <- extract_outcome(fixed)[grepl("^Surv\\(", fixed)]
+
+  # identify data levels
+  datlvls <- sapply(data[, allvars], check_varlevel, groups = groups)
+  surv_lvl <- unique(datlvls[unlist(survout)])
+
+  # identify covariates in the survival models
+  covars <- unique(
+    unlist(lapply(names(survout), function(k) {
+      all_vars(remove_LHS(fixed[[k]]))
+    })
+    ))
+
+  # identify which of the covariates are time-varying
+  longvars <- intersect(covars, names(datlvls)[datlvls == 'levelone'])
+
+  if (length(longvars) == 0)
+    return(data)
+
+  # add a variable identifying the original ordering of the rows in the data
+  # (needed because otherwise "groups" would not fit any more)
+  # and sort the data by the time variable
+  data$.rowid <- 1:nrow(data)
+  data <- data[order(data[timevar]), ]
+
+  # split the data by patient, and fill in values in the time-varying variables
+  datlist <- lapply(split(data, data[surv_lvl]), function(x) {
+    for (k in longvars) {
+
+      # identify which values are missing and which are observed.
+      isna <- which(is.na(x[k]))
+      isobs <- which(!is.na(x[k]))
+
+      # if there are both missing and observed values, find out which is the last
+      # observed value before a missing value
+      lastobs <- if (any(isna) & any(isobs)) {
+        sapply(isna, function(i) {
+          if (any(isobs < i)) {
+            max(isobs[isobs < i])
+          } else if (any(isobs > i)) {
+            min(isobs[isobs > i])
+          } else {
+            stop(gettextf('There are no observed values of %s for %s. When using
+                        last observation carried forward to model time-varying
+                        covariates at least one value has to be observed.',
+                          dQuote(k), paste(surv_lvl, "==", unique(x[surv_lvl]))))
+          }
+        })
+      }
+
+      if (length(lastobs) > 0)
+        x[isna, k] <- x[lastobs, k]
+    }
+    x
+  })
+
+  datnew <- do.call(rbind, datlist)
+
+  # restore the original order of the rows and return the data without the sorting
+  # column
+  datnew <- datnew[order(datnew$.rowid), ]
+  subset(datnew, select =  -c(.rowid))
+}
+
