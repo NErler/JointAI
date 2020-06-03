@@ -19,7 +19,8 @@ get_subset <- function(object, subset, keep_aux = FALSE, warn = TRUE, mess = TRU
   Mlist_new <- object$Mlist
   Mlist_new$ppc <- as.list(subset)$ppc
 
-  s <- do.call(get_params, c(object, Mlist_new, subset, mess = mess))
+  s <- do.call(get_params, c(list(Mlist = Mlist_new, info_list = object$info_list),
+                             subset, mess = mess))
 
   sub <- unique(unlist(
     c(
