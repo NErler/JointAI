@@ -16,7 +16,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   group_lvls <- colSums(!identify_level_relations(groups))
 
 
-  if (analysis_type == 'coxph')
+  if (analysis_type == 'coxph' & length(groups) > 1)
     data <- fill_locf(data, fixed, random, auxvars, timevar, groups)
 
   # outcome --------------------------------------------------------------------
