@@ -201,7 +201,7 @@ get_coef_names <- function(info_list) {
     })
 
     if (any(!sapply(info$lp, is.null)))
-      data.frame(outcome = info$varname,
+      data.frame(outcome = unname(info$varname),
                  varname = names(unlist(unname(info$lp))),
                  coef = paste0(info$parname,
                                if (length(pars) > 1) paste0("[", unlist(info$parelmts), "]")
