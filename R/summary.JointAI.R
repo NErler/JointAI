@@ -134,6 +134,12 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
               -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
       }
 
+      events <- if (object$info_list[[varname]]$modeltype %in% c('survreg', 'coxph', 'JM')) {
+        mat <- object$info_list[[1]]$resp_mat[2]
+        col <- object$info_list[[1]]$resp_col[2]
+        sum(object$data_list[[mat]][, col])
+      }
+
       other <- setdiff(rownames(stats),
                        c(rownames(regcoef),
                          rownames(sigma),
@@ -148,6 +154,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       list(modeltype = object$info_list[[varname]]$modeltype,
            regcoef = regcoef, sigma = sigma, intercepts = intercepts,
            rd_vcov = rd_vcov, wb_shape = wb_shape, assoc_type = assoc_type,
+           events = events,
            grcrit = grcrit, otherpars = otherpars)
     }
   }, simplify = FALSE)
@@ -192,6 +199,10 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
         '  ', print_type(x$res[[k]]$modeltype), ' for ', dQuote(names(x$res)[k]), '\n',
         '# ', paste0(c(rep('-', 35)), collapse = ' '), ' #\n\n'
       ))
+
+
+      if (!is.null(x$res[[k]]$events))
+        cat("Number of events:", x$res[[k]]$events, "\n\n")
 
 
       if (!is.null(x$res[[k]]$regcoef)) {
