@@ -300,11 +300,12 @@ clean_survname <- function(x) {
   x <- gsub("[)\'\"]", '', x)
   x <- gsub("[[:punct:]]* *I\\(", "_", x)
   x <- gsub(' *== *', '_', x)
+  x <- gsub(' *!= *', '_', x)
   x <- gsub(' *<=* *', '_', x)
   x <- gsub(' *>=* *', '_', x)
   x <- gsub(' *, *', "_", x)
-  gsub("\\(", "_", x)
-
+  x <- gsub("\\(", "_", x)
+  abbreviate(x, minlength = 15, use.classes = TRUE)
 }
 
 # split a list of formulas into a list with fixed effects formulas and a list
