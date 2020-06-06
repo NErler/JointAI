@@ -234,7 +234,7 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
     # if there is no baseline visit (i.e., the first time with an observed value
     # is larger than the time in the Gauss-Kronrod version of the time) the
     # first available measurement will be used ('first value carried backward')
-    valcol <- max(1, cumsum(
+    valcol <- max(1, which(
       c(md[i, timevar] > md[i, grep(paste0("^", timevar, "."), colnames(md))])
     ), na.rm = TRUE)
 
