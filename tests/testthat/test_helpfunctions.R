@@ -13,7 +13,7 @@ test_that('extract_id works', {
   )
 
   for (i in seq_along(runs)) {
-    expect_equal(extract_id(runs[[i]]$random, allow_multiple = TRUE), runs[[i]]$ids)
+    expect_equal(extract_id(runs[[i]]$random), runs[[i]]$ids)
   }
 })
 
