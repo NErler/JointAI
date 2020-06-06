@@ -259,16 +259,17 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
 
 
 
-get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, td_cox = FALSE) {
+get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL, td_cox = FALSE) {
 
   # rows to replicate when setting up gk_data
-  rows <- match(unique(data[, surv_lvl]), data[, surv_lvl])
+  if (is.null(rows))
+      rows <- match(unique(data[, surv_lvl]), data[, surv_lvl])
 
   # base-version of gk_data: one row per unit of the survival outcome level
   gk_data <- data[rep(rows, each = length(gkx)), ]
 
   # replace the id variable on the survival outcome level
-  gk_data[, surv_lvl] <- rep(unique(data[, surv_lvl]), each = length(gkx))
+  gk_data[, surv_lvl] <- rep(data[rows, surv_lvl], each = length(gkx))
 
 
   # replace the survival time with the Gauss-Kronrod version of it
