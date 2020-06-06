@@ -502,22 +502,22 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
 
     tvpred <- if (any(Mlist$group_lvls < Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
-      Mlgk <- do.call(rbind,
+      Mgk <- do.call(rbind,
                       get_Mgk(Mlist, gkx, surv_lvl = gsub("M_", "", resp_mat),
                               survinfo = survinfo, data = newdata, rows = 1:nrow(newdata),
                               td_cox = unique(sapply(survinfo, "[[", "modeltype")) == 'coxph'))
 
-      vars <- coefs$varname[na.omit(match(dimnames(Mlgk)[[2]], coefs$varname))]
+      vars <- coefs$varname[na.omit(match(dimnames(Mgk)[[2]], coefs$varname))]
 
       lapply(1:nrow(MCMC), function(m) {
         if (!is.null(scale_pars)) {
-          matrix((Mlgk[, vars, drop = FALSE] -
-                    outer(rep(1, prod(dim(Mlgk)[-2])),
+          matrix((Mgk[, vars, drop = FALSE] -
+                    outer(rep(1, prod(dim(Mgk)[-2])),
                           scale_pars$center[match(vars, rownames(scale_pars))])) %*%
                    MCMC[m, coefs$coef[match(vars, coefs$varname)]],
                  nrow = nrow(newdata), ncol = length(gkx))
         } else {
-          matrix(Mlgk[, vars, drop = FALSE] %*%
+          matrix(Mgk[, vars, drop = FALSE] %*%
                    MCMC[m, coefs$coef[match(vars, coefs$varname)]],
                  nrow = nrow(newdata), ncol = length(gkx))
         }
