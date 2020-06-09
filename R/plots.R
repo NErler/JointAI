@@ -323,7 +323,7 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 
 
 
-get_plotmain <- function(object, plotnams) {
+get_plotmain <- function(object, plotnams, ylab = FALSE) {
   coefs <- do.call(rbind, object$coef_list)
 
   coef_set <- coefs[na.omit(match(plotnams, coefs$coef)), ]
