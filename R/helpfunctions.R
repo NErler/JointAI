@@ -1,10 +1,11 @@
+# message functions ------------------------------------------------------------
 errormsg <- function(x, ...) {
   stop(strwrap(gettextf(x, ...), prefix = "\n"), call. = FALSE)
 }
 
 
-msg <- function(x, ...) {
-  message(strwrap(gettextf(x, ...), prefix = "\n"))
+msg <- function(x, ..., exdent = 0) {
+  message(strwrap(gettextf(x, ...), prefix = "\n", exdent = exdent))
 }
 
 warnmsg <- function(x, ..., exdent = 0) {
