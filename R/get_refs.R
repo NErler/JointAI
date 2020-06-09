@@ -116,7 +116,7 @@ set_refcat <- function(data, formula, covars, auxvars = NULL) {
   factors <- covars[sapply(data[covars], is.factor)]
 
   msg("The categorical variables are:\n\n%s",
-      paste('-', sapply(factors, dQuote), collapse = "\n\n"))
+      paste0('-', sapply(factors, dQuote), collapse = "\n\n"))
 
   q1 <- menu(c('Use the first category for each variable.',
                'Use the last category for each variabe.',
