@@ -30,10 +30,10 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
                     start = NULL, end = NULL, thin = NULL, warn = TRUE, mess = TRUE, ...) {
 
   if (!inherits(object, "JointAI"))
-    stop('Object must be of class "JointAI".')
+    errormsg('Object must be of class "JointAI".')
 
   if (is.null(object$MCMC))
-    stop("No MCMC sample.")
+    errormsg("No MCMC sample.")
 
 
   if (is.null(start))
@@ -108,13 +108,14 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
                      digits = 2, warn = TRUE, mess = TRUE, ...) {
 
   if (!inherits(x, "JointAI"))
-    stop('x must be of class "JointAI".')
+    errormsg('x must be of class "JointAI".')
 
   if (is.null(x$MCMC))
-    stop("No MCMC sample.")
+    errormsg("No MCMC sample.")
 
   if (!"mcmcse" %in% installed.packages()[, "Package"])
-    stop("The package 'mcmcse' needs to be installed for 'MC_error' to work.")
+    errormsg("The package 'mcmcse' needs to be installed to use the function
+             'MC_error()'.")
 
   if (is.null(start))
     start <- start(x$MCMC)
