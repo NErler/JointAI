@@ -86,8 +86,8 @@
 #' Explanation and demonstration of all parameters that are required or optional
 #' to specify the model structure in \code{\link{lm_imp}}, \code{\link{glm_imp}}
 #' and \code{\link{lme_imp}}.
-#' Among others, the functions \code{\link{parameters}}, \code{\link{list_models}},
-#' \code{\link{get_models}} and \code{\link{set_refcat}} are used.
+#' Among others, the functions \code{\link{parameters}}, \code{\link{list_models}}
+#' and \code{\link{set_refcat}} are used.
 #'
 #' \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{\emph{Parameter Selection}}:\cr
 #' Examples on how to select the parameters/variables/nodes

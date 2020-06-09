@@ -247,7 +247,7 @@
 #' }
 #'
 #'
-#' @seealso \code{\link{set_refcat}}, \code{\link{get_models}},
+#' @seealso \code{\link{set_refcat}},
 #'          \code{\link{traceplot}}, \code{\link{densplot}},
 #'          \code{\link{summary.JointAI}}, \code{\link{MC_error}},
 #'          \code{\link{GR_crit}},

@@ -907,7 +907,7 @@ mod3 <- lme_imp(y ~ C1 + B2 + c1 + time, random = ~ time|id,
 
 }
 \seealso{
-\code{\link{set_refcat}}, \code{\link{get_models}},
+\code{\link{set_refcat}},
          \code{\link{traceplot}}, \code{\link{densplot}},
          \code{\link{summary.JointAI}}, \code{\link{MC_error}},
          \code{\link{GR_crit}},
