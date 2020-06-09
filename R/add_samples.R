@@ -55,9 +55,11 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
 
 
   if (is.null(thin)) {
-    thin <- object$mcmc_settings$thin
+    thin <- object$mcmc_settings$thin[length(object$mcmc_settings$thin)]
   } else {
     if (add & thin != object$mcmc_settings$thin) {
+      thin <- object$mcmc_settings$thin[length(object$mcmc_settings$thin)]
+
       if (mess)
         msg("When adding samples (%s) the thinning interval cannot be
            changed. I will use the setting of the existing object
@@ -154,5 +156,9 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   newobject$time <- ifelse(add, object$time + difftime(t1, t0), difftime(t1, t0))
   newobject$model <- if (object$mcmc_settings$parallel) {adapt} else {object$model}
 
+  # add/set new argument values n.iter and thin to/in JointAI object
+  newobject$mcmc_settings$n.iter <- c(object$mcmc_settings$n.iter, n.iter)
+
+  newobject$mcmc_settings$thin <- c(object$mcmc_settings$thin, coda::thin(newMCMC))
   return(newobject)
 }
