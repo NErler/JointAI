@@ -103,7 +103,8 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #'
 #' MC_error(mod)
 #'
-#' plot(MC_error(mod), ablinepars = list(lty = 2))
+#' plot(MC_error(mod), ablinepars = list(lty = 2),
+#'      plotpars = list(pch = 19, col = 'blue'))
 #'
 #' @export
 MC_error <- function(x, subset = NULL, exclude_chains = NULL,
