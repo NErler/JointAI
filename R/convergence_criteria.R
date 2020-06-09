@@ -53,7 +53,10 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
   }
 
   MCMC <- window(MCMC[chains], start = start, end = end, thin = thin)
+  plotnams <- get_plotmain(object, colnames(MCMC[[1]]), ylab = TRUE)
 
+  for (i in 1:length(MCMC))
+    colnames(MCMC[[i]]) <- plotnams
 
   gelman.diag(x = MCMC, confidence = confidence, transform = transform,
               autoburnin = autoburnin, multivariate = multivariate)
@@ -134,6 +137,8 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
   }
 
   MCMC <- do.call(rbind, window(MCMC[chains], start = start, end = end, thin = thin))
+  plotnams <- get_plotmain(x, colnames(MCMC), ylab = TRUE)
+  colnames(MCMC) <- plotnams
 
   MCE1 <- t(apply(MCMC, 2, function(x) {
     mce <- try(mcmcse::mcse(x, ...), silent = TRUE)
