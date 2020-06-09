@@ -26,7 +26,7 @@ age.
 It contains 2400 observations of 200 mother-child pairs. Children's BMI and
 head circumference was measured repeatedly and their age in months was recorded
 at each measurement. Furthermore, the data contain several baseline variables
-with information on the mothers' demographics and socioeconomic status.
+with information on the mothers' demographics and socio-economic status.
 }
 \section{Baseline covariates}{
  (in \code{simLong} and \code{simWide})

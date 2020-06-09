@@ -86,7 +86,7 @@
 #' It contains 2400 observations of 200 mother-child pairs. Children's BMI and
 #' head circumference was measured repeatedly and their age in months was recorded
 #' at each measurement. Furthermore, the data contain several baseline variables
-#' with information on the mothers' demographics and socioeconomic status.
+#' with information on the mothers' demographics and socio-economic status.
 #'
 #'
 #' @format
@@ -180,7 +180,7 @@ NULL
 #'   \item{id}{case number}
 #'   \item{futime}{number of days between registration and the earlier of death,
 #'                 transplantation, or end of follow-up}
-#'   \item{status}{status at endpoint, 0/1/2 for censored, transplant, dead}
+#'   \item{status}{status at endpoint ("censored", "transplant" or "dead"}
 #'   }
 #'
 #'
@@ -196,19 +196,22 @@ NULL
 #'
 #' @section Time-varying covariates:
 #' \describe{
-#'   \item{day}{number of days between enrollment and this visit date all measurements below refer to this date}
+#'   \item{day}{number of days between enrolment and this visit date; all
+#'              measurements below refer to this date}
 #'   \item{albumin}{serum albumin (mg/dl)}
 #'   \item{alk.phos}{alkaline phosphotase (U/liter)}
 #'   \item{ascites}{presence of ascites}
 #'   \item{ast}{aspartate aminotransferase, once called SGOT (U/ml)}
 #'   \item{bili}{serum bilirunbin (mg/dl)}
 #'   \item{chol}{serum cholesterol (mg/dl)}
-#'   \item{edema}{0 no edema, 0.5 untreated or successfully treated 1 edema despite diuretic therapy}
-#'   \item{hepato}{presence of hepatomegaly or enlarged liver}
+#'   \item{edema}{"no": no oedema,
+#'                "(un)treated": untreated or successfully treated 1 oedema,
+#'                "edema": oedema despite diuretic therapy}
+#'   \item{hepato}{presence of hepatomegaly (enlarged liver)}
 #'   \item{platelet}{platelet count}
 #'   \item{protime}{standardised blood clotting time}
 #'   \item{spiders}{blood vessel malformations in the skin}
-#'   \item{stage}{histologic stage of disease (needs biopsy)}
+#'   \item{stage}{histologic stage of disease (4 levels)}
 #'   }
 #'
 #'
