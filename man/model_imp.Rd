@@ -593,7 +593,7 @@ see also \code{\link[rjags]{coda.samples}})}
 
 \item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
-\item{monitor_params}{named vector specifying which parameters should be
+\item{monitor_params}{named list or vector specifying which parameters should be
 monitored (see details)}
 
 \item{auxvars}{optional one-sided formula of variables that should be used as

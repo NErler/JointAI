@@ -19,7 +19,7 @@
 #'               family function, a family function or the result of a call to
 #'               a family function. (See \code{\link[stats]{family}} and the
 #'               `Details` section below.)
-#' @param monitor_params named vector specifying which parameters should be
+#' @param monitor_params named list or vector specifying which parameters should be
 #'                       monitored (see details)
 #' @param inits optional specification of initial values in the form of a list
 #'              or a function (see \code{\link[rjags]{jags.model}}).

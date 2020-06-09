@@ -1,22 +1,26 @@
 #' Continue sampling from an object of class JointAI
 #'
-#' This function allows to continue sampling from an existing object of class 'JointAI'.\cr
+#' This function continues the sampling from the MCMC chains of an existing
+#' object of class 'JointAI'.\cr
 #' If the original sample was created using parallel computation, the
-#' separate 'jags' objects will be recompiled and sampling will again be
+#' separate 'JAGS' objects will be recompiled and sampling will again be
 #' performed in parallel.
 #'
 #' @inheritParams sharedParams
 #' @inheritParams model_imp
+#' @param n.iter the number of additional iterations of the MCMC chain
 #' @param add logical; should the new MCMC samples be added to the existing
-#'            samples or replace them? If samples are added,
-#'            \code{var.names} is ignored.
+#'            samples (\code{TRUE}; default) or replace them?
+#'            If samples are added the arguments \code{monitor_params} and
+#'            \code{thin} are ignored.
+#' @param monitor_params named list or vector specifying which parameters should
+#'                       be monitored. For details, see
+#'                       \code{\link[JointAI:model_imp]{*_imp}} and the vignette
+#'                        \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}. Ignored when \code{add = TRUE}.
+#' @param thin thinning interval (see \code{\link{coda::window.mcmc}});
+#'             ignored when \code{add = TRUE}.
 #'
-#' @section Note:
-#' When the thinning interval differs between the original model and the added
-#' samples, the resulting, new, 'JointAI' object does not yet record this information.
-#' Moreover, when \code{add_samples()} is used with \code{add = FALSE} the
-#' indices of iterations (for example given in the \code{summary()}) may not be
-#' correct.
+#'
 #'
 #'
 #' @seealso
