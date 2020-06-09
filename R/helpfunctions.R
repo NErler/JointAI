@@ -7,6 +7,10 @@ msg <- function(x, ...) {
   message(strwrap(gettextf(x, ...), prefix = "\n"))
 }
 
+warnmsg <- function(x, ..., exdent = 0) {
+  warning(strwrap(gettextf(x, ...), prefix = "\n", exdent = exdent),
+          call. = FALSE, immediate. = TRUE)
+}
 
 
 
