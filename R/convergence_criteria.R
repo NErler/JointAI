@@ -58,8 +58,9 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
   for (i in 1:length(MCMC))
     colnames(MCMC[[i]]) <- plotnams
 
-  gelman.diag(x = MCMC, confidence = confidence, transform = transform,
-              autoburnin = autoburnin, multivariate = multivariate)
+
+  coda::gelman.diag(x = MCMC, confidence = confidence, transform = transform,
+                    autoburnin = autoburnin, multivariate = multivariate)
 }
 
 
@@ -132,6 +133,7 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
 
   # MC error for MCMC sample scaled back to data scale
   MCMC <- get_subset(object = x, subset = subset, warn = warn, mess = mess)
+
   chains <- seq_along(MCMC)
   if (!is.null(exclude_chains)) {
     chains <- chains[-exclude_chains]
@@ -141,8 +143,8 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
   plotnams <- get_plotmain(x, colnames(MCMC), ylab = TRUE)
   colnames(MCMC) <- plotnams
 
-  MCE1 <- t(apply(MCMC, 2, function(x) {
-    mce <- try(mcmcse::mcse(x, ...), silent = TRUE)
+  MCE1 <- t(apply(MCMC, 2, function(k) {
+    mce <- try(mcmcse::mcse(k, ...), silent = TRUE)
     if (inherits(mce, "try-error")) {
       c(NA, NA)
     } else {
@@ -151,7 +153,6 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
   }))
 
   colnames(MCE1) <- c('est', 'MCSE')
-    # gsub("se", "MCSE", colnames(MCE1))
 
   MCE1 <- cbind(MCE1,
                 SD = apply(MCMC, 2, sd)[match(colnames(MCMC), row.names(MCE1))]
@@ -162,19 +163,16 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
 
   # MC error for scaled MCMC sample
   if (!is.null(x$sample)) {
-  mcmc <- do.call(rbind, window(x$sample[chains], start = start, end = end, thin = thin))
-  mcmc <- mcmc[match(colnames(MCMC), colnames(x$MCMC[[1]])), ]
+    mcmc <- do.call(rbind, window(x$sample[chains], start = start, end = end, thin = thin))
+    mcmc <- mcmc[match(colnames(MCMC), colnames(x$MCMC[[1]])), ]
 
-  MCE2 <- mcmcse::mcse.mat(x = do.call(rbind,
-                                       window(x$sample[chains], start = start,
-                                              end = end,  thin = thin)), ...)
-  colnames(MCE2) <- gsub("se", "MCSE", colnames(MCE2))
+    MCE2 <- mcmcse::mcse.mat(x = do.call(rbind,
+                                         window(x$sample[chains], start = start,
+                                                end = end,  thin = thin)), ...)
+    colnames(MCE2) <- gsub("se", "MCSE", colnames(MCE2))
 
-  MCE2 <- cbind(MCE2,
-                SD = apply(mcmc, 2, sd)
-  )
-  MCE2 <- cbind(MCE2,
-                'MCSE/SD' = MCE2[, "MCSE"]/MCE2[, "SD"])
+    MCE2 <- cbind(MCE2, SD = apply(mcmc, 2, sd) )
+    MCE2 <- cbind(MCE2, 'MCSE/SD' = MCE2[, "MCSE"]/MCE2[, "SD"])
   } else {
     MCE2 <- NULL
   }
