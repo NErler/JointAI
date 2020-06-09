@@ -25,32 +25,39 @@ get_MIdat(
 
 \item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
-\item{minspace}{minimum number of iterations between iterations chosen as imputed values.}
+\item{minspace}{minimum number of iterations between iterations to be chosen
+as imputed values (to prevent strong correlation between
+imputed datasets in the case of high autocorrelation of the
+MCMC chains).}
 
-\item{seed}{optional seed}
+\item{seed}{optional seed value}
 
 \item{export_to_SPSS}{logical; should the completed data be exported to SPSS?}
 
-\item{resdir}{optional directory for results (if unspecified and
-\code{export_to_SPSS = TRUE} the current working directory is used)}
+\item{resdir}{optional; directory for results. If unspecified and
+\code{export_to_SPSS = TRUE} the current working directory is used.}
 
-\item{filename}{optional file name (without ending; if unspecified and
-\code{export_to_SPSS = TRUE} a name is generated automatically)}
+\item{filename}{optional; file name (without ending). If unspecified and
+\code{export_to_SPSS = TRUE} a name is generated automatically.}
 }
 \value{
-A dataframe in which the original data (if \code{include = TRUE}) and
-        the imputed datasets are stacked onto each other.\cr
-       The variable \code{Imputation_} indexes the imputation, while
-       \code{.rownr} links the rows to the rows of the original data.
-       In cross-sectional datasets the
-       variable \code{.id} is added as subject identifier.
+A \code{data.frame} in which the original data (if
+        \code{include = TRUE}) and the imputed datasets are stacked onto
+        each other.\cr
+        The variable \code{Imputation_} indexes the imputation, while
+        \code{.rownr} links the rows to the rows of the original data.
+        In cross-sectional datasets the
+        variable \code{.id} is added as subject identifier.
 }
 \description{
 This function returns a dataset containing multiple imputed datasets stacked
-onto each other (i.e., long format; optionally including the original, incomplete data).\cr
-These data can be automatically exported to SPSS (i.e., a .txt file containing the data and a
-.sps file containing syntax to generate a .sav file). For the export function
-the \href{https://CRAN.R-project.org/package=foreign}{\strong{foreign}} package needs to be installed.
+onto each other (i.e., long format; optionally including the original,
+incomplete data).\cr
+These data can be automatically exported to SPSS (as a .txt file containing
+the data and a .sps file containing syntax to generate a .sav file).
+For the export function the
+\href{https://CRAN.R-project.org/package=foreign}{\strong{foreign}} package
+ needs to be installed.
 }
 \section{Note}{
 

@@ -337,7 +337,8 @@ JAGSmodel_JM <- function(info) {
              tab(), "}", "\n\n")
          },
          tab(), "for (k in 1:", info$df_basehaz, ") {", "\n",
-         tab(4), info$parname, "_Bh0_", info$varname, "[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n",
+         tab(4), info$parname, "_Bh0_", info$varname,
+         "[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n",
          tab(), "}", "\n",
          paste0(
            sapply(names(info$hc_list$hcvars), function(x) {

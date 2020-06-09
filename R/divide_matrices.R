@@ -9,6 +9,10 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # extract the id variable from the random effects formula and get groups
   idvar <- extract_id(random, warn = warn)
 
+  # re-format data for survival with time-varying covariates:
+  # the time variables of the longitudinal measurements and the survival times
+  # are merged. The original column with survival times is retained and used in
+  # the model, but the covariate value at the event time must be imputed.
   data <- reformat_longsurvdata(data, fixed, random, timevar = timevar,
                                 idvar = idvar)
 
@@ -16,8 +20,11 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   group_lvls <- colSums(!identify_level_relations(groups))
 
 
+  # in case of last-observation-carried forward: the value of the time-varying
+  # covariates at the event times is filled in
   if (analysis_type == 'coxph' & length(groups) > 1)
     data <- fill_locf(data, fixed, random, auxvars, timevar, groups)
+
 
   # outcome --------------------------------------------------------------------
   # extract the outcomes from the fixed effects formulas
@@ -36,7 +43,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # * outcomes -------------------------------------------------------------------
   Y <- cbind(outcomes_to_mat(outcomes),
              prep_covoutcomes(data[setdiff(names(models),
-                                           c(outcomes$outnams, names(outcomes$outnams)))])
+                                           c(outcomes$outnams,
+                                             names(outcomes$outnams)))])
   )
 
 
@@ -55,6 +63,9 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                           terms_list = get_terms_list(fmla = c(fixed, auxvars),
                                                       data = data))
 
+  # add auxiliary variables
+  # - dummies for categorical variables
+  # - timevar for survival model with time-varying covariates
   av <- sapply(all_vars(remove_LHS(fixed)), function(i) {
     if (i %in% names(refs)) {
       all(attr(refs[[i]], 'dummies') %in% colnames(X))
@@ -78,17 +89,19 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   X2 <- model.matrix_combi(fmla = c(fixed, unlist(remove_grouping(random)), auxvars), data = data,
                            terms_list = terms_list)
 
+  # combine covariate design matrix with outcome design matrix
   MX <- cbind(Y, X2[, setdiff(colnames(X2), colnames(Y)), drop = FALSE])
   MX <- MX[, unique(colnames(MX))]
 
+  # identify levels of all variables
   Mlvls <- apply(MX, 2, check_varlevel, groups = groups,
                  group_lvls = identify_level_relations(groups))
   Mlvls <- setNames(paste0("M_", Mlvls), names(Mlvls))
 
   if (length(unique(Mlvls)) < length(groups)) {
-    stop(gettextf("It seems some of the specified grouping levels are not necessary.
-                  All variables are from level %s but there are grouping variable(s)
-                  %s.", dQuote(gsub("M_", "", unique(Mlvls))), dQuote(idvar)))
+    errormsg("It seems some of the specified grouping levels are not necessary.
+              All variables are from level %s but there are grouping variable(s)
+              %s.", dQuote(gsub("M_", "", unique(Mlvls))), dQuote(idvar))
   }
 
   # identify interactions -------------------------------------------------------
@@ -103,6 +116,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   }
 
 
+  # split data matrix by variable level
   M <- sapply(unique(Mlvls), function(k)
     MX[ , Mlvls == k, drop = FALSE], simplify = FALSE)
 
@@ -119,8 +133,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
 
   if (any(fcts_mis$type %in% c('ns', 'bs')))
-    stop("Splines are currently not implemented for incomplete variables.",
-         call. = FALSE)
+    errormsg("Splines are currently not implemented for incomplete variables.")
 
   # set columns of trafos that need to be re-calculated in JAGS to NA
   for (k in names(M)) {
@@ -128,23 +141,18 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
       M[[k]][, unique(fcts_mis$colname[fcts_mis$matrix %in% k])] <- NA
   }
 
+
+  # !!! Error message that will be needed when splines are implemented
   # if (any(fcts_mis$type %in% c('ns')))
-  #   stop(paste0("Natural cubic splines are not implemented for incomplete variables. ",
-  #               "Please use B-splines (using ", dQuote("bs()"), ") instead."),
-  #        call. = FALSE)
-
-
-  # trafos <- c(
-  #   match_trafos(fcts_mis, colnams = colnames(Mc), matname = 'Mc'),
-  #   match_trafos(fcts_mis, colnams = colnames(Ml), matname = 'Ml')
-  # )
-
-
+  # errormsg("Natural cubic splines are not implemented for incomplete variables.
+            # Please use B-splines (using %s) instead.", dQuote("bs()"))
 
 
   # * interactions -------------------------------------------------------------
   interactions <- match_interaction(inter, M)
 
+  # set interaction terms that involve incomplete variables to NA
+  # (otherwise error in JAGS)
   if (any(unlist(sapply(M, colnames)) %in% names(interactions)[
     sapply(interactions, 'attr', "has_NAs")]))
     for (k in names(M)) {
@@ -164,7 +172,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
         M[[unique(Mlvls[attr(refs[[k]], 'dummies')])]][, attr(refs[[k]], 'dummies')] <- NA
 
       } else if (any(sapply(fixed, 'attr', 'type') %in% 'JM')) {
-        # dummmy matrix
+        # dummy matrix
         covmat <- unique(Mlvls[attr(refs[[k]], 'dummies')])
         # outcome matrix
         outmat <- unique(Mlvls[colnames(outcomes$outcomes[[1]])[2]])
@@ -183,7 +191,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                         warn = warn)
 
   lp_cols <- lapply(XXnam, function(XX) {
-    Mcols <- if (!is.null(M)) sapply(M, function(x) c(na.omit(match(XX, colnames(x)))), simplify = FALSE)
+    Mcols <- if (!is.null(M))
+      sapply(M, function(x) c(na.omit(match(XX, colnames(x)))), simplify = FALSE)
 
     cml <- sapply(names(Mcols)[sapply(Mcols, length) > 0],
                   function(i)
@@ -201,7 +210,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   list(data = data, fixed = fixed, random = random, idvar = idvar,
        M = M, Mlvls = Mlvls,
        lp_cols = lp_cols, interactions = interactions,
-       trafos = fcts_mis, #hc_list = hc_list,
+       trafos = fcts_mis,
        refs = refs, timevar = timevar,
        auxvars = auxvars, groups = groups,
        group_lvls = group_lvls,
