@@ -343,7 +343,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   opt <- options(contrasts = rep("contr.treatment", 2))
 
   # check all variables are in the data
-  check_vars_in_data(names(data), fixed = fixed, random = random, auxvars = auxvars)
+  check_vars_in_data(names(data), fixed = fixed, random = random,
+                     auxvars = auxvars, timevar = timevar)
 
   # check classes of covariates
   check_classes(data, fixed = fixed, random = random, auxvars = auxvars)

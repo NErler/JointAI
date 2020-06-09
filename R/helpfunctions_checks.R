@@ -1,47 +1,52 @@
 # helper functions ------------------------------------------------------------
+
+# used in this file (in convert_variables()) (2020-06-09)
 clean_names <- function(string) {
   gsub(":", "_", string)
 }
 
 
-# check all variables are in the data ------------------------------------------
-check_vars_in_data <- function(datanames, fixed = NULL, random = NULL, auxvars = NULL) {
+# used in model_imp (2020-06-09)
+check_vars_in_data <- function(datanames, fixed = NULL, random = NULL,
+                               auxvars = NULL, timevar = NULL) {
 
-  # make vector of any variable occuring in the formulas
+  # make vector of any variable occurring in the formulas
   allvars <- unique(c(all_vars(fixed),
                       all_vars(random),
-                      all_vars(auxvars))
+                      all_vars(auxvars),
+                      timevar)
   )
 
-  if (any(!allvars %in% datanames)) {
-    stop(gettextf("Variable(s) %s were not found in the data." ,
-                  paste(dQuote(allvars[!allvars %in% datanames]), collapse = ", ")),
-         call. = FALSE)
-  }
+  if (any(!allvars %in% datanames))
+    errormsg("Variable(s) %s were not found in the data." ,
+             paste(dQuote(allvars[!allvars %in% datanames]), collapse = ", "))
 }
 
 
-
-# check classes of covariates ----------------------------------------------
+# used in model_imp (2020-06-09)
 check_classes <- function(data, fixed = NULL, random = NULL, auxvars = NULL,
-                          mess = TRUE) {
+                          timevar = NULL, mess = TRUE) {
 
+  # check classes of covariates
   vars <- unique(c(all_vars(fixed),
                    all_vars(remove_grouping(random)),
-                   all_vars(auxvars)))
+                   all_vars(auxvars),
+                   timevar))
 
   covars <- unique(c(all_vars(remove_LHS(fixed)),
                      all_vars(remove_grouping(random)),
-                     all_vars(auxvars)))
+                     all_vars(auxvars),
+                     timevar))
 
   classes <- unlist(sapply(data[vars], class))
 
 
-  if (any(unlist(sapply(data[covars], class)) == "ordered") & mess) {
-    message("Note: Ordered factors are included as dummy variables into the
-            linear predictor (not as orthogonal polynomials).")
-  }
+  # message about ordered variables
+  if (any(unlist(sapply(data[covars], class)) == "ordered") & mess)
+    msg("Note: Ordered factors are included as dummy variables into the
+        linear predictor (not as orthogonal polynomials).", exdent = 6)
 
+  # error for variables of unknown classes
   if (any(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))) {
     w <- which(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))
 
@@ -49,17 +54,16 @@ check_classes <- function(data, fixed = NULL, random = NULL, auxvars = NULL,
       paste0(dQuote(unique(x)), ' (variables: ', paste0(names(x), collapse = ", "), ")")
     })
 
-    stop(gettextf("Variables of type %s can not be handled.",
-                  paste(pr, collapse = ', ')), call. = FALSE)
+    errormsg("Variables of type %s can not be handled.",
+             paste(pr, collapse = ', '))
   }
 }
 
 
 
-
-
-# drop empty levels ------------------------------------------------------------
+# used in model_imp (2020-06-09
 drop_levels <- function(data, allvars, mess = TRUE) {
+
   data_orig <- data
   data[allvars] <- droplevels(data[allvars])
 
@@ -67,16 +71,16 @@ drop_levels <- function(data, allvars, mess = TRUE) {
     lvl1 <- sapply(data_orig[allvars], function(x) length(levels(x)))
     lvl2 <- sapply(data[allvars], function(x) length(levels(x)))
 
-    if (any(lvl1 != lvl2)) {
-      message(gettextf('Empty levels were dropped from %s.',
-                       dQuote(names(lvl1)[which(lvl1 != lvl2)])))
-    }
+    if (any(lvl1 != lvl2))
+      msg('Empty levels were dropped from %s.',
+          dQuote(names(lvl1)[which(lvl1 != lvl2)]))
   }
   return(data)
 }
 
 
-# convert variables to factors --------------------------------------------------
+
+# used in model_imp (2020-06-09)
 convert_variables <- function(data, allvars, mess = TRUE) {
 
   converted1 <- c()
@@ -84,171 +88,35 @@ convert_variables <- function(data, allvars, mess = TRUE) {
   # convert binary continuous variable to factor
   for (k in allvars) {
 
+    # replace NaN values with NA
     data[is.nan(data[, k]), k] <- NA
 
+    # set continuous variables with just two values to binary
     if (all(class(data[, k]) != 'factor') & length(unique(na.omit(data[, k]))) == 2) {
       data[, k] <- factor(data[, k])
       converted1 <- c(converted1, k)
     }
 
+    # set logical variables to factors
     if ('logical' %in% class(data[, k])) {
       data[, k] <- factor(data[, k])
       converted1 <- c(converted1, k)
     }
 
+    # clean factor labels
     if (is.factor(data[, k])) {
       levels(data[, k]) <- clean_names(levels(data[, k]))
     }
   }
 
   if (mess & length(c(converted1)) > 0)
-    message(gettextf(
+    msg(
       ifelse(length(c(converted1)) == 1,
              'The variable %s was converted to a factor.',
              'The variables %s were converted to factors.'),
-      paste0(dQuote(converted1), collapse = ", ")))
+      paste0(dQuote(converted1), collapse = ", "))
 
   return(data)
 }
 
-reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
-
-  groups <- get_groups(idvar, data)
-  group_lvls <- colSums(!identify_level_relations(groups))
-
-
-  # survinfo <- lapply(sapply(fixed, extract_LHS)[grepl("^Surv\\(", fixed)], idSurv)
-  survinfo <- extract_outcome(fixed)[grepl("^Surv\\(", fixed)]
-
-  datlvls <- sapply(data, check_varlevel, groups = groups,
-                    group_lvls = identify_level_relations(groups))
-
-  # if there are multiple survival variables and some time-varying variables
-  if (length(survinfo) > 0 & any(datlvls[unlist(survinfo)] != 'levelone')) {
-
-    surv_lvls <- sapply(survinfo, function(x) {
-      lvls <- datlvls[unlist(x)]
-      if (length(unique(lvls)) > 1)
-        stop('The event time and status do not have the same level.')
-
-      unique(lvls)
-    })
-
-    longlvls <- names(group_lvls)[group_lvls < min(group_lvls[surv_lvls])]
-
-    haslong <- sapply(names(survinfo), function(k) {
-      covar_lvls <- datlvls[all_vars(remove_LHS(fixed[[k]]))]
-      any(covar_lvls %in% longlvls)
-    })
-
-    if (any(haslong)) {
-
-      if (is.null(timevar))
-        stop(gettextf("For survival models with time-varying covariates the
-                      argument %s needs to be specified.", dQuote("timevar")))
-
-      survtimes <- sapply(survinfo[haslong], "[[", 1)
-
-      datsurv <- unique(subset(data, select = c(idvar, unique(survtimes))))
-      if (length(unique(survtimes)) > 1) {
-        datsurv <- reshape(datsurv, direction = 'long', varying = unique(survtimes),
-                           v.names = timevar, idvar = unique(surv_lvls),
-                           times = names(survtimes)[duplicated(survtimes)],
-                           timevar = 'eventtime')
-      } else {
-        names(datsurv) <- gsub(unique(survtimes), timevar, names(datsurv))
-      }
-
-
-      datlong <- subset(data, select = c(idvar, names(datlvls)[datlvls %in% longlvls]))
-
-
-      timedat <- merge(datlong, datsurv,
-                       by.y = c(idvar, timevar),
-                       by.x = c(idvar, timevar), all = TRUE)
-
-      datbase <- unique(subset(data, select = names(datlvls)[datlvls %in% idvar]))
-      merge(timedat, datbase)
-    } else {
-      data
-    }
-  } else {
-    data
-  }
-}
-
-
-
-
-fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
-
-  allvars <- unique(c(all_vars(fixed),
-                      all_vars(random),
-                      all_vars(auxvars),
-                      timevar))
-
-  # identify survival outcomes and the related variables
-  survout <- extract_outcome(fixed)[grepl("^Surv\\(", fixed)]
-
-  # identify data levels
-  datlvls <- sapply(data[, allvars], check_varlevel, groups = groups)
-  surv_lvl <- unique(datlvls[unlist(survout)])
-
-  # identify covariates in the survival models
-  covars <- unique(
-    unlist(lapply(names(survout), function(k) {
-      all_vars(remove_LHS(fixed[[k]]))
-    })
-    ))
-
-  # identify which of the covariates are time-varying
-  longvars <- intersect(covars, names(datlvls)[datlvls == 'levelone'])
-
-  if (length(longvars) == 0)
-    return(data)
-
-  # add a variable identifying the original ordering of the rows in the data
-  # (needed because otherwise "groups" would not fit any more)
-  # and sort the data by the time variable
-  data$.rowid <- 1:nrow(data)
-  data <- data[order(data[timevar]), ]
-
-  # split the data by patient, and fill in values in the time-varying variables
-  datlist <- lapply(split(data, data[surv_lvl]), function(x) {
-    for (k in longvars) {
-
-      # identify which values are missing and which are observed.
-      isna <- which(is.na(x[k]))
-      isobs <- which(!is.na(x[k]))
-
-      # if there are both missing and observed values, find out which is the last
-      # observed value before a missing value
-      lastobs <- if (any(isna) & any(isobs)) {
-        sapply(isna, function(i) {
-          if (any(isobs < i)) {
-            max(isobs[isobs < i])
-          } else if (any(isobs > i)) {
-            min(isobs[isobs > i])
-          } else {
-            stop(gettextf('There are no observed values of %s for %s. When using
-                        last observation carried forward to model time-varying
-                        covariates at least one value has to be observed.',
-                          dQuote(k), paste(surv_lvl, "==", unique(x[surv_lvl]))))
-          }
-        })
-      }
-
-      if (length(lastobs) > 0)
-        x[isna, k] <- x[lastobs, k]
-    }
-    x
-  })
-
-  datnew <- do.call(rbind, datlist)
-
-  # restore the original order of the rows and return the data without the sorting
-  # column
-  datnew <- datnew[order(datnew$.rowid), ]
-  subset(datnew, select =  -c(.rowid))
-}
 

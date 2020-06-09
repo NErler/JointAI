@@ -1,4 +1,8 @@
+
+# used in many help functions, get_refs, *_imp, predict (2020-06-09)
 check_formula_list <- function(formula) {
+  # check if a formula is a list, and turn it into a list if it is not.
+
   # if formula is NULL, return NULL
   if (is.null(formula))
     return(NULL)
@@ -9,68 +13,29 @@ check_formula_list <- function(formula) {
 
   # check that all elements of formula are either formulas or NULL
   if (!all(sapply(formula, function(x) inherits(x, "formula") | is.null(x))))
-    stop('At least one element of the provided formula is not of class "formula".',
-         call. = FALSE)
+    errormsg('At least one element of the provided formula is not of class
+             "formula".')
 
   return(formula)
 }
 
 
-# Extract the id variable(s) from a random effects formula ------------------------
-# random: formula object or a list of formulas;
-#         formulas are expected to be in nlme format (random = ~ x | id)
-# warn: logical
-# extract_id <- function(random, warn = TRUE, allow_multiple = FALSE) {
-#
-#   # if random is not a list, make it one
-#   random <- check_formula_list(random)
-#
-#   # check if random is a list of formulas
-#   if (!all(sapply(random, function(x) inherits(x, "formula") | is.null(x))))
-#     stop('At least one element of "random" is not of class "formula".', call. = FALSE)
-#
-#   ids <- lapply(random, function(x) {
-#     # match the pattern "... | "
-#     idmatch <- gregexpr(pattern = "[[:print:]]*\\|[[:space:]]*",
-#                        deparse(x, width.cutoff = 500))
-#
-#     if (any(idmatch > 0)) {
-#       # remove "... | " from the formula
-#       id <- unlist(regmatches(deparse(x, width.cutoff = 500),
-#                               idmatch, invert = TRUE))
-#       id <- strsplit(id[id != ""], split = "[[:space:]]*[+*:/][[:space:]]*")[[1]]
-#     } else {
-#       id <- NULL
-#     }
-#     id
-#   })
-#
-#   if (is.null(unlist(ids)) & !is.null(unlist(random)))
-#     if (warn)
-#       warning('No "id" variable could be identified. I will assume that all observations are independent.',
-#               call. = FALSE, immediate. = TRUE)
-#
-#   if (length(unique(unlist(ids))) > 1 & !allow_multiple)
-#     stop("Different grouping levels detected. JointAI can not yet handle this.", call. = FALSE)
-#
-#   return(unique(unlist(ids)))
-# }
-#
 
-
-
+# used in divide_matrices, get_models, various help functions, predict (2020-06-09)
 extract_id <- function(random, warn = TRUE) {
+  # extract all id variables involved in a random effects formula
 
   # if random is not a list, make it one
   random <- check_formula_list(random)
 
   # check if random is a list of formulas
   if (!all(sapply(random, function(x) inherits(x, "formula") | is.null(x))))
-    stop('At least one element of "random" is not of class "formula".', call. = FALSE)
+    errormsg('At least one element of "random" is not of class "formula".')
 
   ids <- lapply(random, function(x) {
     # match (...|...)
-    rdmatch <- gregexpr(pattern = "\\([^|]*\\|[^)]*\\)", deparse(x, width.cutoff = 500))
+    rdmatch <- gregexpr(pattern = "\\([^|]*\\|[^)]*\\)",
+                        deparse(x, width.cutoff = 500))
 
     if (any(rdmatch[[1]] > 0)) {
       # remove "(... | " from the formula
@@ -82,15 +47,18 @@ extract_id <- function(random, warn = TRUE) {
       id <- gsub(')', '', unlist(regmatches(rd, rdid, invert = TRUE)))
 
       # split by + * : /
-      id <- unique(unlist(strsplit(id[id != ""], split = "[[:space:]]*[+*:/][[:space:]]*")))
+      id <- unique(unlist(strsplit(id[id != ""],
+                                   split = "[[:space:]]*[+*:/][[:space:]]*")))
     } else {
-      rdmatch <- gregexpr(pattern = "[[:print:]]*\\|[ ]*", deparse(x, width.cutoff = 500))
+      rdmatch <- gregexpr(pattern = "[[:print:]]*\\|[ ]*",
+                          deparse(x, width.cutoff = 500))
 
       if (any(rdmatch[[1]] > 0)) {
         # remove "... | " from the formula
         id <- unlist(regmatches(deparse(x, width.cutoff = 500),
                                 rdmatch, invert = TRUE))
-        id <- unique(unlist(strsplit(id[id != ""], split = "[[:space:]]*[+*:/][[:space:]]*")))
+        id <- unique(unlist(strsplit(id[id != ""],
+                                     split = "[[:space:]]*[+*:/][[:space:]]*")))
 
       } else {
         id <- NULL
@@ -101,17 +69,19 @@ extract_id <- function(random, warn = TRUE) {
 
   if (is.null(unlist(ids)) & !is.null(unlist(random)))
     if (warn)
-      warning('No "id" variable could be identified. I will assume that all observations are independent.',
-              call. = FALSE, immediate. = TRUE)
+      warnmsg('No "id" variable could be identified. I will assume that all
+              observations are independent.')
 
   unique(unlist(ids))
 }
 
 
 
-# Extract the names(s) of the outcome variable(s) from (a list of) fixed effects formula(s) ------
-# fixed: a two-sided formula object or a list of such objects
+# used in divide_matrices, get_models, and helpfunctions (2020-06-09)
 extract_outcome <- function(fixed) {
+  # Extract the names(s) of the outcome variable(s) from (a list of) fixed
+  # effects formula(s)
+  # - fixed: a two-sided formula object or a list of such objects
 
   # if fixed is not a list, turn into list
   fixed <- check_formula_list(fixed)
@@ -124,7 +94,7 @@ extract_outcome <- function(fixed) {
     outnam <- all.vars(as.formula(paste0(LHS, "~ 1")))
 
     if (any(length(outnam) == 0, is.na(outnam), is.null(outnam))) {
-      stop("Unable to extract the outcome variable.")
+      errormsg("Unable to extract the outcome variable.")
     }
     outnam
   })
@@ -135,25 +105,24 @@ extract_outcome <- function(fixed) {
 }
 
 
-
-
-# Extract the outcome formula from a formula ------------------
-# (relevant for example for survival formulas, where Surv(...) is a formula)
-# formula: two-sided formula (no list of formulas!!!)
+# used in various help functions (2020-06-09)
 extract_LHS <- function(formula) {
+  # Extract the outcome formula from a formula
+  # (relevant for example for survival formulas, where Surv(...) is a formula)
+  # - formula: two-sided formula (no list of formulas!!!)
 
-  if(is.null(formula))
+  if (is.null(formula))
     return(NULL)
 
   # check that formula is a formula object
-  if (!inherits(formula, "formula")) {
-    stop('The provided formula is not a "formula" object', call. = FALSE)
-  }
+  if (!inherits(formula, "formula"))
+    errormsg('The provided formula is not a "formula" object')
+
 
   # check that the formula has a LHS
-  if (attr(terms(formula), "response") != 1) {
-    stop("Unable to extract response from the formula.", call. = FALSE)
-  }
+  if (attr(terms(formula), "response") != 1)
+    errormsg("Unable to extract response from the formula.")
+
 
   # get the LHS of the formula
   LHS <- sub("[[:space:]]*\\~[[:print:]]*", "",
@@ -163,12 +132,14 @@ extract_LHS <- function(formula) {
 }
 
 
-# Remove the left hand side from a (list of) formula(s) ------------------------
+# used in divide_matrices, get_models and help functions (2020-06-09)
 remove_LHS <- function(fmla) {
+  # Remove the left hand side from a (list of) formula(s)
 
   # if fmla is not a list, turn into list
   fmla <- check_formula_list(fmla)
-  if(is.null(fmla)) return(NULL)
+  if (is.null(fmla)) return(NULL)
+
 
   lapply(fmla, function(x) {
     if (!is.null(x)) {
@@ -185,9 +156,10 @@ remove_LHS <- function(fmla) {
 }
 
 
-# Remove grouping from formula -------------------------------------------------
-# fmla: a formula object or a list of formulas
+# used in divide_matrices, get_models, and help functions (20120-06-09)
 remove_grouping <- function(fmla) {
+  # Remove grouping from formula
+  # - fmla: a formula object or a list of formulas
 
   # if fmla is not a list, turn into list
   fmla <- check_formula_list(fmla)
@@ -215,12 +187,10 @@ remove_grouping <- function(fmla) {
         if (length(nam) > 1 & length(ranef) == 1) {
           ranef <- rep(ranef, length(nam))
         } else if (length(nam) != length(ranef) & length(ranef) != 0) {
-          stop(paste0(strwrap(
-            "The number of grouping variables in the random effects formula
-               does not the number of separate formulas. This may be a problem
-               with the specification of multiple random effects formula parts
-               which include nested grouping.", width = 80, exdent = 7),
-            collapse = "\n"), call. = FALSE)
+          errormsg("The number of grouping variables in the random effects
+                   formula does not match the number of separate formulas.
+                   This may be a problem with the specification of multiple
+                   random effects formula parts which include nested grouping.")
         }
 
         names(ranef) <- nam
@@ -244,19 +214,23 @@ remove_grouping <- function(fmla) {
 }
 
 
+#
+# combi_rd_list <- function(fmlas) {
+#   # combine a list of RHS formulas into one RHS formula
+#   as.formula(paste0("~ ",
+#                     paste0(unique(unlist(
+#                       lapply(fmlas, function(x)
+#                         gsub("~", '', deparse(x, width.cutoff = 500))))),
+#                       collapse = " + ")
+#   ))
+# }
 
-combi_rd_list <- function(fmlas) {
-  as.formula(paste0("~ ",
-                    paste0(unique(unlist(
-                      lapply(fmlas, function(x) gsub("~", '', deparse(x, width.cutoff = 500))))),
-                      collapse = " + ")
-  ))
-}
 
 
-# split fixed and random -------------------------------------------------------
-# split a lmer type formula into fixed and random part
+# used in *_imp and help functions (2020-06-09)
 split_formula <- function(formula) {
+  # split a lme4 type formula into fixed and random part
+
   term_labels <- attr(terms(formula), "term.labels")
   which_ranef <- grepl("|", term_labels, fixed = TRUE)
 
@@ -265,13 +239,6 @@ split_formula <- function(formula) {
   fixed <- paste0(as.character(formula)[2L], " ~ ",
                   ifelse(RHS == '', 1, RHS)
   )
-
-  # random <- if (any(which_ranef)) as.formula(
-  #   paste0("~", paste(term_labels[which_ranef], collapse = ' + ')))
-
-  # random <- gsub(prep_string(fixed), '', RHS) deparse(formula, width.cutoff = 500))
-  # random <- gsub("^ *\\+", "~", random)
-  # random <- if (random != "") as.formula(random)
 
   RHS2 <- paste0("(", term_labels[which_ranef], ")", collapse = " + ")
   random <- if (RHS2 != "()") as.formula(paste0(" ~ ", RHS2))
@@ -282,35 +249,11 @@ split_formula <- function(formula) {
 }
 
 
-prep_string <- function(x) {
-  p <- gsub("\\.", "\\\\.", x)
-  # p <- gsub("\\.", "\\\\.", paste0("^", x, "$"))
-  p <- gsub("\\?", ".", gsub("\\*", ".*", p))
-  p <- gsub("\\+", "\\\\+", p)
-  p <- gsub("([^\\])\\(", "\\1\\\\(", p)
-  p <- gsub("([^\\])\\[", "\\1\\\\[", p)
-  p <- gsub("([^\\])\\{", "\\1\\\\{", p)
-  p
-}
-
-
-
-clean_survname <- function(x) {
-  x <- gsub(',* *type * = * [[:print:]]*', '', x)
-  x <- gsub("[)\'\"]", '', x)
-  x <- gsub("[[:punct:]]* *I\\(", "_", x)
-  x <- gsub(' *== *', '_', x)
-  x <- gsub(' *!= *', '_', x)
-  x <- gsub(' *<=* *', '_', x)
-  x <- gsub(' *>=* *', '_', x)
-  x <- gsub(' *, *', "_", x)
-  x <- gsub("\\(", "_", x)
-  abbreviate(x, minlength = 15, use.classes = TRUE)
-}
-
-# split a list of formulas into a list with fixed effects formulas and a list
-# with random effects formulas
+# used in *_imp() (2020-06-09)
 split_formula_list <- function(formulas) {
+  # split a list of formulas into a list with fixed effects formulas and a list
+  # with random effects formulas
+
   l <- lapply(formulas, split_formula)
   names(l) <- sapply(formulas, function(x) as.character(x)[2L])
 
@@ -320,6 +263,22 @@ split_formula_list <- function(formulas) {
 }
 
 
+
+# prep_string <- function(x) {
+#   p <- gsub("\\.", "\\\\.", x)
+#   # p <- gsub("\\.", "\\\\.", paste0("^", x, "$"))
+#   p <- gsub("\\?", ".", gsub("\\*", ".*", p))
+#   p <- gsub("\\+", "\\\\+", p)
+#   p <- gsub("([^\\])\\(", "\\1\\\\(", p)
+#   p <- gsub("([^\\])\\[", "\\1\\\\[", p)
+#   p <- gsub("([^\\])\\{", "\\1\\\\{", p)
+#   p
+# }
+
+
+
+
+# used in various functions (2020-06-09)
 all_vars <- function(fmla) {
   if (is.list(fmla))
     unique(unlist(lapply(fmla, all.vars)))
@@ -328,10 +287,11 @@ all_vars <- function(fmla) {
 
 
 
-# identify all functions in fixed and random effects formulas ------------------
-# fixed: two-sided formula or list of two-sided formulas
-# random: optional; one-sided formula or list of one-sided formulas
+# used in helpfunction extract_fcts (2020-06-09)
 identify_functions <- function(formula) {
+  # identify all functions in a list of formulas
+  # - formula: a list of formulas, can contain fixed and random effects formulas,
+  #            auxvars formula, ...
 
   formula <- check_formula_list(formula)
 
@@ -341,7 +301,7 @@ identify_functions <- function(formula) {
 
   # get the term.labels from the formula and split by :
   termlabs <- unlist(lapply(formula, function(x)
-    if(!is.null(x)) attr(terms(x), "term.labels")))
+    if (!is.null(x)) attr(terms(x), "term.labels")))
   termlabs <- unique(unlist(strsplit(termlabs, ":")))
 
 
@@ -394,12 +354,20 @@ get_varlist <- function(funlist) {
 }
 
 
-
+#################################################################################
+#################################################################################
+#################################################################################
+#################################################################################
+#################################################################################
+#################################################################################
+#################################################################################
+#################################################################################
+#################################################################################
+#################################################################################
 
 make_fctDF <- function(varlist_elmt, data) {
 
   X_vars <- sapply(names(varlist_elmt), function(k)
-    # colnames(split_outcome(k, data = data)),
     colnames(model.matrix(as.formula(paste0("~", k)), data))[-1],
     simplify = FALSE)
 
