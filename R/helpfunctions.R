@@ -202,6 +202,35 @@ replace_trafo <- function(nam, trafos) {
 }
 
 
+# used in get_model_info and predict (2020-09-06)
+#' Clean Survival Name
+#'
+#' A helper function that converts the "name of a survival model"
+#' (the \code{"Surv(time, status)"} specification) into a valid variable name
+#' so that it can be used in the JAGS model syntax.
+#'
+#' @param x a character string
+#'
+#' @examples
+#' clean_survname("Surv(eventtime, event != 'censored')")
+#'
+#' @export
+
+clean_survname <- function(x) {
+  # replace symbols not allowed in variable names to create a valid variable
+  # name replacing the survival model outcome string in the JAGS model.
+  x <- gsub(',* *type * = * [[:print:]]*', '', x)
+  x <- gsub("[)\'\"]", '', x)
+  x <- gsub("[[:punct:]]* *I\\(", "_", x)
+  x <- gsub(' *== *', '_', x)
+  x <- gsub(' *!= *', '_', x)
+  x <- gsub(' *<=* *', '_', x)
+  x <- gsub(' *>=* *', '_', x)
+  x <- gsub(' *, *', "_", x)
+  x <- gsub("\\(", "_", x)
+
+  abbreviate(x, minlength = 15, use.classes = TRUE)
+}
 
 
 get_coef_names <- function(info_list) {
