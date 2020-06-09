@@ -50,6 +50,7 @@
 
 add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                         monitor_params = NULL, progress.bar = "text", mess = TRUE) {
+
   if (!inherits(object, "JointAI"))
     errormsg("Use only with 'JointAI' objects.")
 
@@ -70,11 +71,13 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   if (is.null(monitor_params)) {
     var.names <- object$mcmc_settings$variable.names
   } else {
-    var.names <- do.call(get_params, c(list(Mlist = object$Mlist,
-                                            info_list = object$info_list,
-                                            data = object$data, mess = mess),
-                                       monitor_params))
+    var.names <- do.call(get_params,
+                         c(list(Mlist = object$Mlist,
+                                info_list = object$info_list,
+                                data = object$data, mess = mess),
+                           monitor_params))
   }
+
 
   if (!identical(var.names, object$mcmc_settings$variable.names) & add)
     errormsg("When %s it is not possible to monitor different parameters than
@@ -102,7 +105,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   } else {
     mcmc <- rjags::coda.samples(object$model, variable.names = var.names,
                                 n.iter = n.iter, thin = thin,
-                                na.rm = FALSE, progress.bar = progress.bar)
+                                progress.bar = progress.bar)
   }
   t1 <- Sys.time()
 
@@ -113,14 +116,15 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   if (!all(sapply(object$Mlist$scale_pars, is.null))) {
     coefs <- try(get_coef_names(object$info_list))
     for (k in 1:length(MCMC)) {
-      MCMC[[k]] <- as.mcmc(rescale(MCMC[[k]], coefs = do.call(rbind, coefs),
-                                   scale_pars = do.call(rbind, unname(object$Mlist$scale_pars)),
-                                   object$info_list))
+      MCMC[[k]] <- as.mcmc(
+        rescale(MCMC[[k]], coefs = do.call(rbind, coefs),
+                scale_pars = do.call(rbind, unname(object$Mlist$scale_pars)),
+                object$info_list))
       attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
     }
   }
 
-  if (add == TRUE) {
+  if (isTRUE(add)) {
     newmcmc <- if (!is.null(object$sample)) {
       as.mcmc.list(lapply(1:length(mcmc),
                           function(x) mcmc(rbind(object$sample[[x]],
@@ -131,14 +135,13 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
       ))
     }
 
-    newMCMC <- as.mcmc.list(lapply(1:length(MCMC),
-                                   function(k) mcmc(rbind(object$MCMC[[k]],
-                                                          MCMC[[k]]),
-                                                    start = start(object$MCMC),
-                                                    end = end(object$MCMC) +
-                                                      niter(mcmc[[k]]) * thin(mcmc[[k]]),
-                                                    thin = thin(mcmc[[k]]))
-    ))
+    newMCMC <- as.mcmc.list(
+      lapply(1:length(MCMC), function(k)
+        mcmc(rbind(object$MCMC[[k]], MCMC[[k]]),
+             start = start(object$MCMC),
+             end = end(object$MCMC) + niter(mcmc[[k]]) * thin(mcmc[[k]]),
+             thin = thin(mcmc[[k]]))
+      ))
   } else {
     newmcmc <- mcmc
     newMCMC <- MCMC
@@ -148,17 +151,16 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   newobject$sample <- newmcmc
   newobject$MCMC <- newMCMC
   newobject$call <- list(object$call, match.call())
-  newobject$mcmc_settings$n.iter <- ifelse(add, c(object$mcmc_settings$n.iter,
-                                                  niter(newMCMC)), niter(newMCMC))
   newobject$mcmc_settings$variable.names <- var.names
-  newobject$mcmc_settings$thin <- ifelse(add, c(object$mcmc_settings$thin,
-                                                coda::thin(newMCMC)), coda::thin(newMCMC))
-  newobject$time <- ifelse(add, object$time + difftime(t1, t0), difftime(t1, t0))
   newobject$model <- if (object$mcmc_settings$parallel) {adapt} else {object$model}
 
   # add/set new argument values n.iter and thin to/in JointAI object
   newobject$mcmc_settings$n.iter <- c(object$mcmc_settings$n.iter, n.iter)
 
   newobject$mcmc_settings$thin <- c(object$mcmc_settings$thin, coda::thin(newMCMC))
+
+  # add computational time to JointAI object
+  newobject$time <- c(object$time, difftime(t1, t0))
+
   return(newobject)
 }
