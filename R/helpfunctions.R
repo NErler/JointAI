@@ -1,3 +1,15 @@
+errormsg <- function(x, ...) {
+  stop(strwrap(gettextf(x, ...), prefix = "\n"), call. = FALSE)
+}
+
+
+msg <- function(x, ...) {
+  message(strwrap(gettextf(x, ...), prefix = "\n"))
+}
+
+
+
+
 # Check if a variable is time-varying ------------------------------------------
 #' Check if a variable is time-varying
 #' @param x a vector, the variable to be tested

@@ -51,14 +51,17 @@
 add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                         monitor_params = NULL, progress.bar = "text", mess = TRUE) {
   if (!inherits(object, "JointAI"))
-    stop("Use only with 'JointAI' objects.\n")
+    errormsg("Use only with 'JointAI' objects.")
+
 
   if (is.null(thin)) {
     thin <- object$mcmc_settings$thin
   } else {
     if (add & thin != object$mcmc_settings$thin) {
-      stop(gettextf("When adding samples (%s) the thinning interval cannot be changed.",
-                     dQuote("add = TRUE")), call. = FALSE)
+      if (mess)
+        msg("When adding samples (%s) the thinning interval cannot be
+           changed. I will use the setting of the existing object
+          (%s).", dQuote("add = TRUE"), dQuote(paste0("thin = ", thin)))
     }
   }
 
@@ -72,8 +75,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   }
 
   if (!identical(var.names, object$mcmc_settings$variable.names) & add)
-    stop(gettextf("When %s it is not possible to monitor different parameters than were monitored in the original model.",
-                  dQuote("add = TRUE")), call. = FALSE)
+    errormsg("When %s it is not possible to monitor different parameters than
+             were monitored in the original model.", dQuote("add = TRUE"))
 
   t0 <- Sys.time()
   if (object$mcmc_settings$parallel) {
@@ -84,8 +87,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
     doParallel::registerDoParallel(cl)
 
     if (mess)
-      message(paste0("Parallel sampling on ", n.cores, " cores started (",
-                     Sys.time(), ")."))
+      msg("Parallel sampling on %s cores started (%s).", n.cores, Sys.time())
+
     res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(object$model)),
                               run_samples(object$model[[i]], n.iter = n.iter,
                                           thin = thin, var.names = var.names)
