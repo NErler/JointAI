@@ -4,7 +4,6 @@ get_refs <- function(fmla, data, refcats = NULL) {
   # check if fmla is a list of formulas, otherwise make it a list
   fmla <- check_formula_list(fmla)
 
-  # covars <- all_vars(remove_LHS(fmla))
   allvars <- all_vars(fmla)
 
 
@@ -47,8 +46,8 @@ get_refs <- function(fmla, data, refcats = NULL) {
     }, simplify = FALSE)
 
     if (any(is.na(out))) {
-      stop(gettextf("\nThe reference category for %s could not be set.",
-                    dQuote(names(out)[is.na(out)])))
+      errormsg("The reference category for %s could not be set.",
+               dQuote(names(out)[is.na(out)]))
     }
 
   } else {
@@ -65,8 +64,13 @@ get_refs <- function(fmla, data, refcats = NULL) {
 #' returns the input for the argument \code{refcats} in the main analysis functions
 #' \code{\link[JointAI:model_imp]{*_imp}}.
 #'
+#' The arguments \code{formula}, \code{covars} and \code{auxvars} can be used
+#' to specify a subset of the \code{data} to be considered. If non of these
+#' arguments is specified, all variables in \code{data} will be considered.
+#'
 #' @param data a \code{data.frame}
-#' @param formula optional; model formula (used to select subset of relevant columns of \code{data})
+#' @param formula optional; model formula or a list of formulas
+#'                (used to select subset of relevant columns of \code{data})
 #' @param covars optional; vector containing the names of relevant columns of \code{data}
 #' @param auxvars optional; formula containing the names of relevant columns of
 #'                \code{data} that should be considered additionally to the columns
@@ -100,6 +104,7 @@ get_refs <- function(fmla, data, refcats = NULL) {
 #' @export
 
 set_refcat <- function(data, formula, covars, auxvars = NULL) {
+
   if (missing(formula) & missing(covars) & is.null(auxvars)) {
     covars <- colnames(data)
   } else  if (missing(covars) & !missing(formula)) {
@@ -110,8 +115,8 @@ set_refcat <- function(data, formula, covars, auxvars = NULL) {
 
   factors <- covars[sapply(data[covars], is.factor)]
 
-  message(gettextf("The categorical variables are:\n%s",
-                   paste('-', sapply(factors, dQuote), collapse = "\n")))
+  msg("The categorical variables are:\n\n%s",
+      paste('-', sapply(factors, dQuote), collapse = "\n\n"))
 
   q1 <- menu(c('Use the first category for each variable.',
                'Use the last category for each variabe.',
@@ -123,12 +128,14 @@ set_refcat <- function(data, formula, covars, auxvars = NULL) {
     q2 <- q3 <- setNames(numeric(length(factors)), factors)
     for (i in seq_along(factors)) {
       q2[i] <- menu(levels(data[factors[i]]),
-                    title = gettextf("The reference category for %s should be", dQuote(factors[i]))
+                    title = gettextf("The reference category for %s should be",
+                                     dQuote(factors[i]))
       )
       q3[i] <- levels(data[factors[i]])[q2[i]]
     }
 
-    out <- paste0("refcats = c(", paste0(names(q3),  " = '", q3, "'", collapse = ", "), ")")
+    out <- paste0("refcats = c(", paste0(names(q3),  " = '", q3, "'",
+                                         collapse = ", "), ")")
   } else {
     q2 <- switch(q1,
                  "1" = 'first',
@@ -138,7 +145,9 @@ set_refcat <- function(data, formula, covars, auxvars = NULL) {
     out <- paste0("refcats = '", q2, "'")
   }
 
-  message(gettextf("In the JointAI model specify:\n %s\n\nor use the output of this function.", out))
+  msg("In the JointAI model specify:\n %s\n\nor use the output of this function.",
+      out)
+
   return(invisible(q2))
 }
 

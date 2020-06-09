@@ -9,7 +9,8 @@ set_refcat(data, formula, covars, auxvars = NULL)
 \arguments{
 \item{data}{a \code{data.frame}}
 
-\item{formula}{optional; model formula (used to select subset of relevant columns of \code{data})}
+\item{formula}{optional; model formula or a list of formulas
+(used to select subset of relevant columns of \code{data})}
 
 \item{covars}{optional; vector containing the names of relevant columns of \code{data}}
 
@@ -22,6 +23,11 @@ The function is a helper function that asks questions and, depending on the
 answers given by the user,
 returns the input for the argument \code{refcats} in the main analysis functions
 \code{\link[JointAI:model_imp]{*_imp}}.
+}
+\details{
+The arguments \code{formula}, \code{covars} and \code{auxvars} can be used
+to specify a subset of the \code{data} to be considered. If non of these
+arguments is specified, all variables in \code{data} will be considered.
 }
 \examples{
 \dontrun{

@@ -24,7 +24,7 @@ samples (\code{TRUE}; default) or replace them?
 If samples are added the arguments \code{monitor_params} and
 \code{thin} are ignored.}
 
-\item{thin}{thinning interval (see \code{\link{coda::window.mcmc}});
+\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}});
 ignored when \code{add = TRUE}.}
 
 \item{monitor_params}{named list or vector specifying which parameters should

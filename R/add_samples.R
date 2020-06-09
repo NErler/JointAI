@@ -17,7 +17,7 @@
 #'                       be monitored. For details, see
 #'                       \code{\link[JointAI:model_imp]{*_imp}} and the vignette
 #'                        \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}. Ignored when \code{add = TRUE}.
-#' @param thin thinning interval (see \code{\link{coda::window.mcmc}});
+#' @param thin thinning interval (see \code{\link[coda]{window.mcmc}});
 #'             ignored when \code{add = TRUE}.
 #'
 #'
