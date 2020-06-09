@@ -41,7 +41,7 @@ potential scale reduction factor should be calculated for multivariate
 chains}
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
-Uses the same logic as the argument \code{monitor_params} in
+Follows the same principle as the argument \code{monitor_params} in
 \code{\link[JointAI:model_imp]{*_imp}}.}
 
 \item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}

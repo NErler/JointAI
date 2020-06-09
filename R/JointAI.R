@@ -175,7 +175,7 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #'                   survival model when using a "JM" model. Impemented options are
 #'                   "underl.value" and "obs.value".
 #' @param subset subset of parameters/variables/nodes (columns in the MCMC sample).
-#'               Uses the same logic as the argument \code{monitor_params} in
+#'               Follows the same principle as the argument \code{monitor_params} in
 #'               \code{\link[JointAI:model_imp]{*_imp}}.
 #' @param exclude_chains optional vector of the index numbers of chains that should be excluded
 #' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})

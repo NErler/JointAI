@@ -24,7 +24,7 @@ MC_error(
 \item{x}{object inheriting from class 'JointAI'}
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
-Uses the same logic as the argument \code{monitor_params} in
+Follows the same principle as the argument \code{monitor_params} in
 \code{\link[JointAI:model_imp]{*_imp}}.}
 
 \item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
@@ -35,7 +35,7 @@ Uses the same logic as the argument \code{monitor_params} in
 
 \item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
 
-\item{digits}{number of digits for output}
+\item{digits}{number of digits for the printed output}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. (Note: this applies only to warnings
@@ -56,9 +56,11 @@ given directly by \strong{JointAI}.)}
     \item{\code{r}}{the lugsail parameter that converts a lag window into its lugsail equivalent. Larger values of \code{``r''} will typically imply less underestimation of \code{``cov''},  but higher variability of the estimator. Default is \code{``r = 3''} and \code{``r = 1,2''} are good choices. \code{``r > 5''} is not recommended. Non-integer values are ok.}
   }}
 
-\item{data_scale}{show the Monte Carlo error of the sample transformed back
-to the scale of the data (\code{TRUE}) or on the sampling scale (this
-requires the argument \code{keep_scaled_mcmc = TRUE} in the JointAI model)}
+\item{data_scale}{logical; show the Monte Carlo error of the sample
+transformed back to the scale of the data (\code{TRUE}) or
+on the sampling scale (this requires the argument
+\code{keep_scaled_mcmc = TRUE} to be set when fitting the
+model)}
 
 \item{plotpars}{optional; list of parameters passed to \code{\link[base]{plot}()}}
 
@@ -72,7 +74,8 @@ An object of class \code{MCElist} with elements \code{unscaled},
         (Monte Carlo error divided by post. standard deviation.)
 }
 \description{
-Calculate, print and plot the Monte Carlo error of the samples from a JointAI model.
+Calculate, print and plot the Monte Carlo error of the samples from a
+'JointAI' model, combining the samples from all MCMC chains.
 }
 \section{Methods (by generic)}{
 \itemize{
@@ -83,13 +86,19 @@ Calculate, print and plot the Monte Carlo error of the samples from a JointAI mo
 Lesaffre & Lawson (2012) [p. 195] suggest the Monte Carlo error of a
       parameter should not be more than 5\% of the posterior standard
       deviation of this parameter (i.e., \eqn{MCSE/SD \le 0.05}).
+
+\strong{Long variable names:}\cr
+The default plot margins may not be wide enough when variable names are longer
+than a few characters. The plot margin can be adjusted (globally) using
+the argument \code{"mar"} in \code{\link[graphics]{par}}.
 }
 \examples{
 mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 
 MC_error(mod)
 
-plot(MC_error(mod), ablinepars = list(lty = 2))
+plot(MC_error(mod), ablinepars = list(lty = 2),
+     plotpars = list(pch = 19, col = 'blue'))
 
 }
 \references{

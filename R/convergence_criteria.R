@@ -63,9 +63,10 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 
 #' Monte Carlo error
 #'
-#' Calculate, print and plot the Monte Carlo error of the samples from a JointAI model.
+#' Calculate, print and plot the Monte Carlo error of the samples from a
+#' 'JointAI' model, combining the samples from all MCMC chains.
 #' @param x object inheriting from class 'JointAI'
-#' @param digits number of digits for output
+#' @param digits number of digits for the printed output
 #' @inheritParams sharedParams
 #' @inheritDotParams mcmcse::mcse.mat -x
 #'
@@ -78,6 +79,11 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #' @note Lesaffre & Lawson (2012) [p. 195] suggest the Monte Carlo error of a
 #'       parameter should not be more than 5\% of the posterior standard
 #'       deviation of this parameter (i.e., \eqn{MCSE/SD \le 0.05}).
+#'
+#' \strong{Long variable names:}\cr
+#' The default plot margins may not be wide enough when variable names are longer
+#' than a few characters. The plot margin can be adjusted (globally) using
+#' the argument \code{"mar"} in \code{\link[graphics]{par}}.
 #'
 #'
 #' @references
@@ -179,9 +185,11 @@ print.MCElist <- function(x, ...) {
 
 
 # Plot Monte Carlo error
-#' @param data_scale show the Monte Carlo error of the sample transformed back
-#' to the scale of the data (\code{TRUE}) or on the sampling scale (this
-#' requires the argument \code{keep_scaled_mcmc = TRUE} in the JointAI model)
+#' @param data_scale logical; show the Monte Carlo error of the sample
+#'                   transformed back to the scale of the data (\code{TRUE}) or
+#'                   on the sampling scale (this requires the argument
+#'                   \code{keep_scaled_mcmc = TRUE} to be set when fitting the
+#'                   model)
 #' @param plotpars optional; list of parameters passed to \code{\link[base]{plot}()}
 #' @param ablinepars optional; list of parameters passed to \code{\link[graphics]{abline}()}
 #' @describeIn MC_error plot Monte Carlo error
