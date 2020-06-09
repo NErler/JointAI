@@ -1,4 +1,4 @@
-
+# get model info for a list of models
 get_model_info <- function(Mlist, K, K_imp, trunc = NULL, assoc_type = NULL) {
   args <- as.list(match.call())[-1L]
 
@@ -7,11 +7,14 @@ get_model_info <- function(Mlist, K, K_imp, trunc = NULL, assoc_type = NULL) {
   },  simplify = FALSE)
 }
 
+
+# get model info for a single model
 get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
                             isgk = FALSE) {
+
   arglist <- as.list(match.call())[-1L]
 
-  # modeltype, family & link -------------------------------------------------
+  # model type, family & link -------------------------------------------------
   modeltype <- get_modeltype(Mlist$models[k])
   family <- get_family(Mlist$models[k])
   link <- get_link(Mlist$models[k])
@@ -19,19 +22,23 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
 
   # response matrix and column(s) --------------------------------------------
   resp_mat <- if (k %in% names(Mlist$Mlvls)) {
+    # if the variable is a column of one of the design matrices, use the level
+    # of that matrix
     Mlist$Mlvls[k]
   } else if (attr(Mlist$fixed[[k]], 'type') %in% c('survreg', 'coxph', 'JM')) {
+    # if the model is a survival model (variable name is the survival expression
+    # and not a single variable name) get the levels of the separate variables
+    # involved in the survival expression
     if (all(names(Mlist$outcomes$outcomes[[k]]) %in% names(Mlist$Mlvls))) {
       Mlist$Mlvls[names(Mlist$outcomes$outcomes[[k]])]
     } else {
-      stop(paste0(strwrap(
-        gettextf("I have identified %s as a survival outcome, but I cannot find
-                 some of its elements in any of the matrices %s.",
-                 dQuote(k), dQuote("M"))), collapse = "\n"), call. = FALSE)
+      errormsg("I have identified %s as a survival outcome, but I cannot find
+               some of its elements in any of the matrices %s.",
+                 dQuote(k), dQuote("M"))
     }
   } else {
-    stop(gettextf("I cannot find the variable %s in any of the matrices %s.",
-                  dQuote(k), dQuote("M")), call. = FALSE)
+    errormsg("I cannot find the variable %s in any of the matrices %s.",
+             dQuote(k), dQuote("M"))
   }
 
   resp_col <- if (k %in% names(Mlist$fixed) &&
@@ -47,6 +54,8 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
 
   # parameter elements ------------------------------------------------------
   parelmts <- if (k %in% names(Mlist$fixed)) {
+    # for variables for which model was specified in fixed, use the
+    # parameters given in the matrix K
     sapply(rownames(K[[k]]), function(i) {
       if (!any(is.na(K[[k]][i, ]))) {
         if (Mlist$models[k] %in% c('mlogit', 'mlogitmm')) {
@@ -59,6 +68,8 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
       }
     }, simplify = FALSE)
   } else {
+    # for variables for which no model was specified in fixed, use the parameters
+    # given in K_imp
     sapply(rownames(K_imp[[k]]), function(i) {
       if (!any(is.na(K_imp[[k]][i, ]))) {
         if (Mlist$models[k] %in% c('mlogit', 'mlogitmm')) {
@@ -86,7 +97,7 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
   # scaling parameter matrices -----------------------------------------------
   scale_pars <- Mlist$scale_pars
 
-  # dummy colums -------------------------------------------------------------
+  # dummy columns -------------------------------------------------------------
   dummy_cols <- if (k %in% names(Mlist$refs) &
                     (any(is.na(Mlist$M[[resp_mat[1]]][, resp_col[1]])) |
                      any(sapply(Mlist$fixed, 'attr', 'type') %in% 'JM'))) {
@@ -99,27 +110,31 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
   categories <- if (k %in% names(Mlist$refs) &
                     (any(is.na(Mlist$M[[resp_mat[1]]][, resp_col[1]])) |
                      any(sapply(Mlist$fixed, 'attr', 'type') %in% 'JM'))) {
-    which(levels(Mlist$refs[[k]]) != Mlist$refs[[k]]) - as.numeric(length(levels(Mlist$refs[[k]])) == 2)
+    which(levels(Mlist$refs[[k]]) != Mlist$refs[[k]]) -
+      as.numeric(length(levels(Mlist$refs[[k]])) == 2)
   }
 
 
-
+  # index name -----------------------------------------------------------------
   index <- setNames(sapply(seq_along(sort(Mlist$group_lvls)),
                            function(k) paste0(rep('i', k), collapse = '')),
                     names(sort(Mlist$group_lvls)))
 
 
 
-  # transformations ----------------------------------------------------------
+  # transformations ------------------------------------------------------------
   trafos <- paste_trafos(Mlist, varname = k,
                          index = index[gsub("M_", "", resp_mat[1])],
                          isgk = isgk)
 
+  # JM settings ----------------------------------------------------------------
+  # * covariate names ----------------------------------------------------------
   covnames = if (modeltype %in% "JM") {
     unique(unlist(sapply(lp, function(x) sapply(names(x), replace_dummy,
                                                 refs = Mlist$refs))))
   }
 
+  # * time-varying covariates --------------------------------------------------
   tv_vars <- if (modeltype %in% "JM") {
 
     # find the (longitudinal) covariates involved in the lp of the survival part
@@ -128,19 +143,21 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
     covars <- covars[covars %in% unlist(sapply(Mlist$M, colnames))]
 
 
-    rep_lvls <- names(which(Mlist$group_lvls < Mlist$group_lvls[gsub("M_", "", resp_mat[2])]))
+    rep_lvls <- names(which(Mlist$group_lvls < Mlist$group_lvls[
+      gsub("M_", "", resp_mat[2])]))
 
     tvars <- unique(unlist(c(sapply(lp[paste0("M_", rep_lvls)], names),
-                             lapply(Mlist$lp_cols[covars],
-                                    function(x) names(unlist(unname(x[paste0("M_", rep_lvls)]))))
+                             lapply(Mlist$lp_cols[covars], function(x)
+                               names(unlist(unname(x[paste0("M_", rep_lvls)]))))
     )))
 
 
-    # get the variables needed to re-fit the models for 'covars' in the Gauss-Kronrod
-    # quadrature
+    # get the variables needed to re-fit the models for 'covars' in the
+    # Gauss-Kronrod quadrature
     tvars <- unlist(sapply(tvars, replace_trafo, Mlist$fcts_all))
 
-    tvars <- unique(sapply(tvars[!tvars %in% Mlist$timevar], replace_dummy, refs = Mlist$refs))
+    tvars <- unique(sapply(tvars[!tvars %in% Mlist$timevar],
+                           replace_dummy, refs = Mlist$refs))
 
     # get the model info for these variables
     sapply(tvars, function(i) {
@@ -164,7 +181,8 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
       ifelse(any(!sapply(x$rd_slope_coefs, is.null)),
              nrow(do.call(rbind, x$rd_slope_coefs)), 0))
 
-  # shrinkage
+
+  # shrinkage ------------------------------------------------------------------
   shrinkage <- if (k %in% names(Mlist$shrinkage)) {
     Mlist$shrinkage[k]
   } else if (k %in% names(Mlist$fixed) & is.null(names(Mlist$shrinkage))) {
@@ -176,8 +194,6 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
   list(
     varname = if (modeltype %in% c('survreg', 'coxph', 'JM')) {
       clean_survname(k)
-      # paste0(c('surv', Mlist$outcomes$outnams[[k]]), collapse = "_")
-      # "surv"
     } else {k},
     modeltype = modeltype,
     family = family,
@@ -190,7 +206,7 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
     lp = lp,
     parelmts = parelmts,
     scale_pars = scale_pars,
-    index = index, #if (resp_mat[1] == 'Ml' && !modeltype %in% c("JM", "coxph")) c('j', 'i') else 'i',
+    index = index,
     parname = ifelse(k %in% names(Mlist$fixed), 'beta', 'alpha'),
     hc_list = if (length(hc_list) > 0) hc_list,
     nranef = nranef,
@@ -261,7 +277,7 @@ get_modeltype <- function(model) {
          JM = 'JM')
 
   if (is.null(modtype)) {
-    stop(gettextf("I do not know the model type %s.", dQuote(model)), call. = FALSE)
+    errormsg("I do not know the model type %s.", dQuote(model))
   }
 
   return(modtype)
