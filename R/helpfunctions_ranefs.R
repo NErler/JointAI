@@ -32,8 +32,8 @@ get_hc_info <- function(varname, lvl, Mlist, parelmts, lp) {
     if (all(clus %in% names(rd))) {
       rd[clus]
     } else {
-      stop(gettextf("Some grouping levels are missing from the random effects structure of %s.",
-                    dQuote(varname)), call. = FALSE)
+      errormsg("Some grouping levels are missing from the random effects
+               structure of %s.", dQuote(varname))
     }
   }
 
@@ -44,6 +44,10 @@ get_hc_info <- function(varname, lvl, Mlist, parelmts, lp) {
     orga_hc_parelmts(lvl, lvls, hc_list, parelmts, lp)
   }
 }
+
+
+
+
 
 
 get_hc_list <- function(k, newrandom, Mlist) {
@@ -71,6 +75,11 @@ get_hc_list <- function(k, newrandom, Mlist) {
     )
   }, simplify = FALSE)
 }
+
+
+
+
+
 
 orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
 

@@ -17,7 +17,7 @@ melt_list <- function(l, varname = "L1", valname = NULL) {
 
 melt_matrix <- function(X, varnames = NULL, valname = 'value') {
   if (!inherits(X, 'matrix'))
-    stop("This function may not work for objects that are not matrices.")
+    errormsg("This function may not work for objects that are not matrices.")
 
   dimnam <- if (is.null(varnames)) {
     if (is.null(names(dimnames(X)))) {
@@ -41,9 +41,14 @@ melt_matrix <- function(X, varnames = NULL, valname = 'value') {
   return(out)
 }
 
+
+
+
+# used in traceplot() and densplot() (2020-06-10)
 melt_matrix_list <- function(X, varnames = NULL) {
   if (!inherits(X, 'list') || !all(sapply(X, inherits, 'matrix')))
-    stop("This function may not work for objects that are not a list of matrices.")
+    errormsg("This function may not work for objects that are not a list
+             of matrices.")
 
   Xnew <- lapply(X, melt_matrix, varnames = varnames)
   Xnew <- lapply(seq_along(Xnew), function(k) {
@@ -57,9 +62,10 @@ melt_matrix_list <- function(X, varnames = NULL) {
 }
 
 
+ # used in get_models(), plot_imp_distr() and melt_data.frame_list() (2020-06-10)
 melt_data.frame <- function(data, id.vars = NULL, varnames = NULL, valname = 'value') {
   if (!inherits(data, 'data.frame'))
-    stop("This function may not work for objects that are not data.frames.")
+    errormsg("This function may not work for objects that are not data.frames.")
 
   data$rowID <- paste0('rowID', 1:nrow(data))
   X <- data[, !names(data) %in% c('rowID', id.vars), drop = FALSE]
@@ -84,9 +90,10 @@ melt_data.frame <- function(data, id.vars = NULL, varnames = NULL, valname = 'va
 }
 
 
+# used in get_models() and extract_fcts() (2020-06-10)
 melt_data.frame_list <- function(X, id.vars = NULL, varnames = NULL, valname = 'value') {
   if (!inherits(X, 'list') || !all(sapply(X, inherits, 'data.frame') | sapply(X, inherits, 'NULL')))
-    stop("This function may not work for objects that are not a list of data frames.")
+    errormsg("This function may not work for objects that are not a list of data frames.")
 
   Xnew <- lapply(X[!sapply(X, is.null)],
                  melt_data.frame, varnames = varnames, id.vars = id.vars)
