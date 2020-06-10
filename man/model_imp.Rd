@@ -624,6 +624,8 @@ the excluded variable and the incomplete variables.}
 distribution of the named incomplete variables (see the vignette
 \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support}{ModelSpecification})}
 
+\item{shrinkage}{should shrinkage be used?}
+
 \item{ppc}{logical: should monitors for posterior predictive checks be set? (not yet used)}
 
 \item{seed}{optional seed value for reproducibility}
@@ -644,17 +646,17 @@ continuous variables that are not transformed by a function
 (e.g. \code{log(), ns()}) will be scaled. Variables
 for which a log-normal model is used are
 only scaled with regards to the standard deviation, but not
-centered. Variables modeled with a Gamma or beta distribution
+centred. Variables modelled with a Gamma or beta distribution
 are not scaled.
 If set to \code{FALSE} no scaling will be done.}
 
-\item{scale_pars}{optional matrix of parameters used for centering and
+\item{scale_pars}{optional matrix of parameters used for centring and
 scaling of continuous covariates. If not specified, this will
 be calculated automatically. If \code{FALSE}, no scaling
 will be done.}
 
-\item{hyperpars}{list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
-only needs to be supplied if hyperparameters other than the
+\item{hyperpars}{list of hyper-parameters, as obtained by \code{\link{default_hyperpars}()};
+only needs to be supplied if hyper-parameters other than the
 default should be used}
 
 \item{modelname}{optional; character string specifying the name of the model file

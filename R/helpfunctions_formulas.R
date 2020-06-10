@@ -287,6 +287,8 @@ all_vars <- function(fmla) {
 
 
 
+# functions in formulas --------------------------------------------------------
+
 # used in helpfunction extract_fcts (2020-06-09)
 identify_functions <- function(formula) {
   # identify all functions in a list of formulas
@@ -345,26 +347,18 @@ identify_functions <- function(formula) {
 }
 
 
-# make a list per function type, listing all functions and their element variables
-# funlist: a list of all functions by type (result of identify_functions())
+
+# used in extract_fcts() (2020-06-10)
 get_varlist <- function(funlist) {
+  # make a list per function type, listing all functions and their element variables
+  # - funlist: a list of all functions by type (result of identify_functions())
   lapply(funlist, function(x) {
     sapply(x, function(z) all.vars(as.formula(paste("~", z))), simplify = FALSE)
   })
 }
 
 
-#################################################################################
-#################################################################################
-#################################################################################
-#################################################################################
-#################################################################################
-#################################################################################
-#################################################################################
-#################################################################################
-#################################################################################
-#################################################################################
-
+# used in extract_fcts() (2020-06-10)
 make_fctDF <- function(varlist_elmt, data) {
 
   X_vars <- sapply(names(varlist_elmt), function(k)
@@ -378,18 +372,18 @@ make_fctDF <- function(varlist_elmt, data) {
     df <- df[match(rep(names(X_vars), sapply(X_vars, length)), df$fct), ]
 
   df$colname <- unlist(X_vars)
-    # df$X_var <- rep(unlist(X_vars), sapply(varlist_elmt, length))
 
   df[, c("var", "colname", 'fct')]
 }
 
 
-
-# get data.frames per function type with infor for transformations
-# varlist: list with an element for each type of function; these elements are lists
-#          with an element per expressions using the function, which contains a
-#          vector of all variable names involved in the function, output from get_varlist()
+# used in extract_fcts() (2020-06-10)
 get_fctDFList <- function(varlist, data) {
+  # get data.frames per function type with info for transformations
+  # - varlist: list with an element for each type of function; these elements
+  #            are lists with an element per expressions using the function,
+  #            which contains a vector of all variable names involved in the
+  #            function, output from get_varlist()
 
   if (!unique(sapply(varlist, is.list)))
     varlist <- list(varlist)
@@ -398,6 +392,7 @@ get_fctDFList <- function(varlist, data) {
 }
 
 
+# used in divide_matrices (2020-06-10)
 extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
 
   fixed <- check_formula_list(fixed)
@@ -414,7 +409,7 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
     as.formula(paste("~", paste0(unique(unlist(LHSs)), collapse = " + ")))
 
   if (any(names(identify_functions(fmla_outcomes)) != 'identity'))
-      stop('Functions in the outcome are not allowed.')
+      errormsg('Functions in the outcome are not allowed.')
 
   funlist <- list(covars = identify_functions(remove_LHS(fixed)),
                   ranef = identify_functions(unlist(remove_grouping(random)))
@@ -457,14 +452,16 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
       fctDF$matrix <- Mlvls[fctDF$var]
 
       # look for functions that involve several variables and occur multiple times in fctDF
-      dupl <- duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl', 'matrix'))]) |
-        duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl', 'matrix'))], fromLast = TRUE)
+      dupl <-
+        duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl', 'matrix'))]) |
+        duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl', 'matrix'))],
+                   fromLast = TRUE)
 
       fctDF$dupl <- FALSE
 
       # identify which rows relate to the same expression in the formula
-      p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'compl', 'matrix'))], 1,
-                 paste, collapse = "")
+      p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'compl', 'matrix'))],
+                 1, paste, collapse = "")
 
       for (k in which(dupl)) {
         eq <- which(p == p[k])
@@ -477,7 +474,8 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
 
       # fctDF$dupl <- duplicated(fctDF[, -which(names(fctDF) == 'var')])
 
-      p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'dupl', 'compl', 'matrix'))],
+      p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'dupl', 'compl',
+                                                    'matrix'))],
                  1, paste, collapse = "")
       fctDF$dupl_rows <- NA
       fctDF$dupl_rows[which(dupl)] <- lapply(which(dupl), function(i) {
@@ -494,8 +492,9 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
 
 # extract the outcome data from the fixed effects formula ----------------------
 
+# used in extract_outcome_data() (2020-06-10)
 split_outcome <- function(LHS, data) {
-  if(missing(data))
+  if (missing(data))
     stop("No data provided")
 
 
@@ -509,13 +508,15 @@ split_outcome <- function(LHS, data) {
       end <- splitpos[1] - 1
       i <- 1
       outlist <- list()
-      while(start <= splitpos[length(splitpos)]) {
+
+      while (start <= splitpos[length(splitpos)]) {
         fct <- substr(LHS2, start, end)
         fct <- gsub(" $", '', gsub("^ ", '', fct))
         var <- try(eval(parse(text = fct), envir = data), silent = TRUE)
+
         if (!inherits(var, 'try-error')) {
           var <- data.frame(var)
-          names(var) <- if(ncol(var) > 1) {
+          names(var) <- if (ncol(var) > 1) {
             paste0(fct, 1:ncol(var))
           } else fct
           outlist <- c(outlist, var)
@@ -523,7 +524,7 @@ split_outcome <- function(LHS, data) {
           end <- splitpos[i + 1] - ifelse(splitpos[i + 1] == nchar(LHS2), 0, 1)
           i <- i + 1
         } else {
-          end <- splitpos[i + 1] - 1#ifelse(splitpos[i + 1] == nchar(LHS2), 0, 1)
+          end <- splitpos[i + 1] - 1
           i <- i + 1
         }
       }
@@ -541,8 +542,9 @@ split_outcome <- function(LHS, data) {
 
 
 
-
-extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NULL, warn = TRUE) {
+# used in divide_matrices and get_models (2020-06-10)
+extract_outcome_data <- function(fixed, random = NULL, data,
+                                 analysis_type = NULL, warn = TRUE) {
 
   fixed <- check_formula_list(fixed)
 
@@ -561,7 +563,7 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
                                                  envir = data))
 
       if (any(is.na(outcomes[[i]])))
-        stop("There are invalid values in the survival status.")
+        errormsg("There are invalid values in the survival status.")
 
       names(outcomes[[i]]) <- idSurv(names(outnams[i]))[c('time', 'status')]
       nlev <- sapply(outcomes[[i]], function(x) length(levels(x)))
@@ -608,12 +610,6 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
           paste(gsub("^[g]*lme$", "glmm", analysis_type),
                 tolower(attr(analysis_type, 'family')$family),
                 attr(analysis_type, 'family')$link, sep = "_")
-        # } else if (analysis_type %in% 'betareg') {
-        #   'beta'
-        # } else if (analysis_type %in% 'betamm') {
-        #   'glmm_beta'
-        # } else if (analysis_type %in% 'lognormal') {
-        #   'lognorm'
         } else {
           analysis_type
         }
@@ -626,7 +622,7 @@ extract_outcome_data <- function(fixed, random = NULL, data, analysis_type = NUL
 
 
 
-
+# used in divide_matrices (2020-06-10)
 get_terms_list <- function(fmla, data) {
   fmla <- fmla[!sapply(fmla, is.null)]
 
@@ -641,6 +637,7 @@ get_terms_list <- function(fmla, data) {
 }
 
 
+# used in divide_matrices and get_Mgk (2020-06-10)
 model.matrix_combi <- function(fmla, data, terms_list) {
   # list of model.frames
   mf_list <- lapply(terms_list, model.frame, data = data, na.action = na.pass)
