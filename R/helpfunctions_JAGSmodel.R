@@ -464,6 +464,39 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
 
 
 
+# used in JAGSmodels that use random effects (2020-06-10)
+ranef_priors <- function(nranef, varname) {
+  # write prior distribution part for random effects variance parameters
+  # - nranef: number/dimension of the random effects
+  # - varname: name of the outcome of the sub-model
+
+
+  # based on number of random effects, use Gamma or Wishart distribution
+  # (Truncation in Gamma to prevent JAGS error when values get too small or
+  # too large)
+  invD_distr <- if (nranef == 1) {
+    "dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)"
+  } else {
+    paste0("dwish(RinvD_", varname, "[ , ], KinvD_", varname, ")")
+  }
+
+
+  paste0("\n",
+         if (nranef > 1) {
+           paste0(
+             tab(), "for (k in 1:", nranef, ") {", "\n",
+             tab(4), "RinvD_", varname,
+             "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)", "\n",
+             tab(), "}", "\n")
+         },
+         tab(), "invD_", varname, "[1:", nranef, ", 1:", nranef,"] ~ ",
+         invD_distr, "\n",
+         tab(), "D_", varname, "[1:", nranef,", 1:", nranef,
+         "] <- inverse(invD_", varname, "[ , ])"
+  )
+}
+
+
 # Joint model ------------------------------------------------------------------
 
 paste_linpred_JM <- function(varname, parname, parelmts, matnam, index, cols,
@@ -575,34 +608,21 @@ paste_underlvalue <- function(varname, covname, index, isgk, ...) {
 
 
 
-
-
-# * random effects specifications ------------------------------------------------
-ranef_priors <- function(nranef, varname) {
-  invD_distr <- if (nranef == 1) {
-    "dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)"
-  } else {
-    paste0("dwish(RinvD_", varname, "[ , ], KinvD_", varname, ")")
-  }
-
-  paste0("\n",
-         if (nranef > 1) {
-           paste0(
-             tab(), "for (k in 1:", nranef, ") {", "\n",
-             tab(4), "RinvD_", varname, "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)", "\n",
-             tab(), "}", "\n")
-         },
-         tab(), "invD_", varname, "[1:", nranef, ", 1:", nranef,"] ~ ", invD_distr, "\n",
-         tab(), "D_", varname, "[1:", nranef,", 1:", nranef, "] <- inverse(invD_", varname, "[ , ])"
-  )
-}
-
 # paste other model parts ------------------------------------------------------
-paste_dummies <- function(categories, dest_mat, dest_col, dummy_cols, index, ...){
+
+# used in JAGSmodels with categorical outcomes (2020-06-10)
+paste_dummies <- function(categories, dest_mat, dest_col, dummy_cols, index, ...) {
+  # write the syntax assigning values to the dummies based on the values of a
+  # categorical variable
+  # - categories: "names" (should be numeric) of the categories of the variable
+  # - dest_mat: name of the design matrix containing the variable and dummies
+  # - dest_col: column number of the categorical variable
+  # - dummy_cols: column numbers of the dummy variables
+  # - index: the index to be used, e.g. "i" or "ii"
+
   mapply(function(dummy_cols, categories) {
-    paste0(tab(4), dest_mat, "[", index, ", ", dummy_cols, "] <- ifelse(", dest_mat,
-           "[", index, ", ",
-           dest_col, "] == ", categories, ", 1, 0)")
+    paste0(tab(4), dest_mat, "[", index, ", ", dummy_cols, "] <- ifelse(",
+           dest_mat, "[", index, ", ", dest_col, "] == ", categories, ", 1, 0)")
   }, dummy_cols, categories)
 }
 
@@ -610,6 +630,7 @@ paste_dummies <- function(categories, dest_mat, dest_col, dummy_cols, index, ...
 
 
 paste_interactions <- function(interactions, group_lvls, N) {
+
 
   index <- setNames(sapply(seq_along(sort(group_lvls)),
                            function(k) paste0(rep('i', k), collapse = '')),
