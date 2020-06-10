@@ -656,10 +656,11 @@ model.matrix_combi <- function(fmla, data, terms_list) {
 }
 
 
-# make a design matrix from the outcomes of a list of formulas
-# (used in divide_matrices.R)
-# outcomes: list produced by extract_outcome_data()
+
+# used in divide_matrices (2020-06-09)
 outcomes_to_mat <- function(outcomes) {
+  # make a design matrix from the outcomes of a list of formulas
+  # - outcomes: list produced by extract_outcome_data()
 
   outlist <- unlist(unname(lapply(outcomes$outcomes, as.list)), recursive = FALSE)
 
@@ -672,14 +673,15 @@ outcomes_to_mat <- function(outcomes) {
     d2 <- duplicated(outlist_nosurv, fromLast = TRUE)
 
     d <- unique(unlist(outcomes$outnams[nosurv])[d1 | d2])
-    stop(paste0("You can only specify one model per outcome.\n",
-                gettextf(
-                  if (length(d) == 1) {
-                    "The variable %s is used on the left hand side of more than one of the model formulas."
-                  } else {
-                    "The variables %s are used on the left hand side of more than one of the model formulas."
-                  }, paste0(dQuote(d), collapse = ", "))),
-         call. = FALSE)
+    if (length(d) == 1) {
+      errormsg("You can only specify one model per outcome.
+               The variable %s is used on the left hand side of more than one
+               of the model formulas.", paste0(dQuote(d), collapse = ", "))
+    } else {
+      errormsg("You can only specify one model per outcome.
+               The variables %s are used on the left hand side of more than
+               one of the model formulas.", paste0(dQuote(d), collapse = ", "))
+    }
   }
 
   return(data.matrix(as.data.frame(outlist, check.names = FALSE)))
@@ -687,29 +689,47 @@ outcomes_to_mat <- function(outcomes) {
 
 
 
+# used in divide_matrices (2020-06-10)
 get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
                          analysis_type = NULL, warn = TRUE) {
+  # obtain the linear predictor columns and variable names for all models involved
+  # - fixed: list of fixed effects formulas
+  # - random: list of random effects formulas
+  # - data: a data.frame with the pre-processed data
+  # - models: named vector of all model types
+  # - auxvars: optional formula of auxiliary variables
+  # - analysis_type: type of anlaysis, including family as attribute if glm(m)
+  # - warn: logical; should warning messages be given
 
+  # check if fixed is a list and otherwise convert it to a list
   fixed <- check_formula_list(fixed)
 
-  # extract the id variable from the random effects formula
+  # extract the id variable and clustering structure from the random effects
+  # formula and data
   idvar <- extract_id(random, warn = warn)
   groups <- get_groups(idvar, data)
 
+  # identify all variables involved and those variables that are covariates
   allvars <- unique(c(all_vars(fixed),
                       all_vars(remove_grouping(random)),
                       all_vars(auxvars)))
 
   covars <- allvars[!allvars %in% unlist(extract_outcome(fixed))]
 
+  # identify the levels of all variables
   lvl <- sapply(data[, allvars, drop = FALSE], check_varlevel, groups = groups,
                 group_lvls = identify_level_relations(groups))
   group_lvls <- colSums(!identify_level_relations(groups))
 
+  # make a subset containing only covariates
   subdat <- subset(data, select = covars)
 
+
+  # for each fixed effects (main model) formula, get the column names of the
+  # design matrix of the fixed effects
   lp <- sapply(fixed, function(fmla) {
     if (attr(fmla, 'type') %in% c('clm', 'clmm', 'coxph', "JM")) {
+      # for ordinal and cox models, exclude the intercept
       colnam <- colnames(model.matrix(fmla, data))[-1]
       if (length(colnam) > 0) colnam
     } else {
@@ -718,23 +738,32 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   }, simplify = FALSE)
 
 
-
+  #  for all models that are not specified in fixed
+  #  - identify if an intercept is needed (no intercept for ordinal and cox)
+  #  - generate a RHS formula
   for (out in names(models)[!names(models) %in% names(fixed)]) {
     nointercept <- models[out] %in% c('clmm', 'clm', 'coxph')
     fmla <- as.formula(paste0(out, " ~ .", if (nointercept) '-1'))
 
-    lp[[out]] <- colnames(
-      model.matrix(fmla, subset(subdat,
-                                select = group_lvls[lvl[colnames(subdat)]] > group_lvls[lvl[out]] |
-                                  lvl[colnames(subdat)] == lvl[out]
-                                ))
-    )
 
-    if (is.null(lp[[out]])) {
-      lp <- c(lp, setNames(list(NULL), out))
-    }
+    # identify variables that have
+    # - level higher than the level of the outcome, or
+    # - the same level (note: the same level name, not just the same value in
+    #   the hierarchy. This is important in case of crossed random effects
+    #   where two levels may have the same value in the hierarchy, but then
+    #   the model should only include covariates from the same level, but not
+    #   from the crossed level).
+    relvars <- group_lvls[lvl[colnames(subdat)]] > group_lvls[lvl[out]] |
+      lvl[colnames(subdat)] == lvl[out]
 
-    subdat <- subset(subdat, select = - c(get(out)))
+    # get the names of the columns of the corresponding design matrix
+    lp[[out]] <- colnames(model.matrix(fmla, subset(subdat, select = relvars)))
+
+    # if the linear predictor is empty, create an empty object, to make the
+    # subsequent code work in any case
+    if (is.null(lp[[out]])) lp <- c(lp, setNames(list(NULL), out))
+
+    subdat <- subset(subdat, select = -c(get(out)))
   }
   lp
 }
