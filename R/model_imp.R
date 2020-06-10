@@ -64,8 +64,8 @@
 #' @param trunc optional named list specifying the limits of truncation for the
 #'              distribution of the named incomplete variables (see the vignette
 #'              \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support}{ModelSpecification})
-#' @param hyperpars list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
-#'                  only needs to be supplied if hyperparameters other than the
+#' @param hyperpars list of hyper-parameters, as obtained by \code{\link{default_hyperpars}()};
+#'                  only needs to be supplied if hyper-parameters other than the
 #'                  default should be used
 #' @param scale_vars optional; named vector of (continuous) variables that will
 #'                   be scaled (such that mean = 0 and sd = 1) to improve
@@ -74,10 +74,10 @@
 #'                   (e.g. \code{log(), ns()}) will be scaled. Variables
 #'                   for which a log-normal model is used are
 #'                   only scaled with regards to the standard deviation, but not
-#'                   centered. Variables modeled with a Gamma or beta distribution
+#'                   centred. Variables modelled with a Gamma or beta distribution
 #'                   are not scaled.
 #'                   If set to \code{FALSE} no scaling will be done.
-#' @param scale_pars optional matrix of parameters used for centering and
+#' @param scale_pars optional matrix of parameters used for centring and
 #'                   scaling of continuous covariates. If not specified, this will
 #'                   be calculated automatically. If \code{FALSE}, no scaling
 #'                   will be done.
@@ -86,6 +86,7 @@
 #'                         (The MCMC sample that is re-scaled to the scale of the
 #'                         data is always kept.)
 #' @param df_basehaz degrees of freedom for the B-spline used to model the baseline hazard
+#' @param shrinkage should shrinkage be used?
 #' @param ... additional, optional arguments
 #' @importFrom foreach foreach %dopar%
 #'
