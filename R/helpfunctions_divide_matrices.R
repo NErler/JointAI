@@ -1,0 +1,520 @@
+# survival data ----------------------------------------------------------------
+
+# used in divide_matrices (2020-06-09)
+reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
+  # merge the event times into the observation times of a time-varying covariate
+  # - data: the original data, with separate columns for the survival event,
+  #         survival time, longitudinal follow-up time ("timevar") and
+  #         longitudinal covariates
+  # - fixed: list of fixed effects formulas
+  # - random: list of random effects formulas
+  # - timevar: name of the time variable for the time-varying covariates
+  # - idvar: vector of id (grouping) variables
+
+
+  # identify groups and group levels
+  groups <- get_groups(idvar, data)
+  group_lvls <- colSums(!identify_level_relations(groups))
+
+  # gather names of outcomes of survival models
+  survinfo <- extract_outcome(fixed)[grepl("^Surv\\(", fixed)]
+
+  # identify levels of all variables in the data
+  datlvls <- sapply(data, check_varlevel, groups = groups,
+                    group_lvls = identify_level_relations(groups))
+
+  # if there are multiple survival variables and some time-varying variables
+  if (length(survinfo) > 0 & any(datlvls[unlist(survinfo)] != 'levelone')) {
+
+    surv_lvls <- sapply(survinfo, function(x) {
+      lvls <- datlvls[unlist(x)]
+      if (length(unique(lvls)) > 1)
+        errormsg('The event time and status do not have the same level.')
+
+      unique(lvls)
+    })
+
+    longlvls <- names(group_lvls)[group_lvls < min(group_lvls[surv_lvls])]
+
+    # check if there are time-varying covariates in the survival models
+    haslong <- sapply(names(survinfo), function(k) {
+      covar_lvls <- datlvls[all_vars(remove_LHS(fixed[[k]]))]
+      any(covar_lvls %in% longlvls)
+    })
+
+    if (any(haslong)) {
+
+      # error message if timevar is missing (there is an additional error
+      # message in JM_imp, but not for coxph_imp)
+      if (is.null(timevar))
+        errormsg("For survival models with time-varying covariates the
+                 argument %s needs to be specified.", dQuote("timevar"))
+
+      survtimes <- sapply(survinfo[haslong], "[[", 1)
+
+      datsurv <- unique(subset(data, select = c(idvar, unique(survtimes))))
+      if (length(unique(survtimes)) > 1) {
+        datsurv <- reshape(datsurv, direction = 'long', varying = unique(survtimes),
+                           v.names = timevar, idvar = unique(surv_lvls),
+                           times = names(survtimes)[duplicated(survtimes)],
+                           timevar = 'eventtime')
+      } else {
+        names(datsurv) <- gsub(unique(survtimes), timevar, names(datsurv))
+      }
+
+
+      datlong <- subset(data, select = c(idvar, names(datlvls)[datlvls %in% longlvls]))
+
+
+      timedat <- merge(datlong, datsurv,
+                       by.y = c(idvar, timevar),
+                       by.x = c(idvar, timevar), all = TRUE)
+
+      datbase <- unique(subset(data, select = names(datlvls)[datlvls %in% idvar]))
+      merge(timedat, datbase)
+    } else {
+      data
+    }
+  } else {
+    data
+  }
+}
+
+
+# used in divide_matrices (2020-06-09)
+fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
+  # fill in values of missing values in time-varying covariates in cox models
+  # following the last-observation-carried-forward principle. If there are no
+  # observed values before the first missing value, the first observation is
+  # carried backwards.
+  # - data: the re-formatted (using reformat_longsurvdata()) data
+  # - fixed: list of fixed effects formulas
+  # - random: list of random effects formulas (can be NULL)
+  # - auxvars: formula of auxiliary variables (can be NULL)
+  # - timevar: name of the time variable of the time-varying covariates
+  # - groups: list of grouping information (as in Mlist)
+
+  allvars <- unique(c(all_vars(fixed),
+                      all_vars(random),
+                      all_vars(auxvars),
+                      timevar))
+
+  # identify survival outcomes and the related variables
+  survout <- extract_outcome(fixed)[grepl("^Surv\\(", fixed)]
+
+  # identify data levels
+  datlvls <- sapply(data[, allvars], check_varlevel, groups = groups)
+  surv_lvl <- unique(datlvls[unlist(survout)])
+
+  # identify covariates in the survival models
+  covars <- unique(
+    unlist(lapply(names(survout), function(k) {
+      all_vars(remove_LHS(fixed[[k]]))
+    })
+    ))
+
+  # identify which of the covariates are time-varying
+  longvars <- intersect(covars, names(datlvls)[datlvls == 'levelone'])
+
+  if (length(longvars) == 0)
+    return(data)
+
+  # add a variable identifying the original ordering of the rows in the data
+  # (needed because otherwise "groups" would not fit any more after sorting)
+  # and sort the data by the time variable
+  data$rowiddd <- 1:nrow(data)
+  data <- data[order(data[timevar]), ]
+
+  # split the data by patient, and fill in values in the time-varying variables
+  datlist <- lapply(split(data, data[surv_lvl]), function(x) {
+    for (k in longvars) {
+
+      # identify which values are missing and which are observed.
+      isna <- which(is.na(x[k]))
+      isobs <- which(!is.na(x[k]))
+
+      # if there are both missing and observed values, find out which is the last
+      # observed value before a missing value
+      lastobs <- if (any(isna) & any(isobs)) {
+        sapply(isna, function(i) {
+          if (any(isobs < i)) {
+            max(isobs[isobs < i])
+          } else if (any(isobs > i)) {
+            min(isobs[isobs > i])
+          } else {
+            errormsg('There are no observed values of %s for %s. When using
+                     last observation carried forward to model time-varying
+                     covariates at least one value has to be observed.',
+                     dQuote(k), paste(surv_lvl, "==", unique(x[surv_lvl])))
+          }
+        })
+      }
+
+      if (length(lastobs) > 0) x[isna, k] <- x[lastobs, k]
+    }
+    x
+  })
+
+  datnew <- do.call(rbind, datlist)
+
+  # restore the original order of the rows and return the data without the
+  # sorting column
+  datnew <- datnew[order(datnew$rowiddd), ]
+  subset(datnew, select =  setdiff(names(datnew), "rowiddd"))
+}
+
+
+
+# outcome and covariate data ---------------------------------------------------
+# * extract outcome data -------------------------------------------------------
+
+# used in divide_matrices and get_models (2020-06-10)
+extract_outcome_data <- function(fixed, random = NULL, data,
+                                 analysis_type = NULL, warn = TRUE) {
+
+  fixed <- check_formula_list(fixed)
+
+  idvar <- extract_id(random, warn = warn)
+  groups <- get_groups(idvar, data)
+
+  lvls <- colSums(!identify_level_relations(groups))
+
+  outcomes <- outnams <- extract_outcome(fixed)
+
+  # set attribute "type" to identify survival outcomes
+  for (i in seq_along(fixed)) {
+    if (survival::is.Surv(eval(parse(text = names(outnams[i])), envir = data))) {
+
+      outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnams[i])),
+                                                 envir = data))
+
+      if (any(is.na(outcomes[[i]])))
+        errormsg("There are invalid values in the survival status.")
+
+      names(outcomes[[i]]) <- idSurv(names(outnams[i]))[c('time', 'status')]
+      nlev <- sapply(outcomes[[i]], function(x) length(levels(x)))
+      if (any(nlev > 2)) {
+        # ordinal variables have values 1, 2, 3, ...
+        outcomes[[i]][which(nlev > 2)] <- lapply(outcomes[[i]][which(nlev > 2)],
+                                                 function(x) as.numeric(x))
+      } else if (any(nlev == 2)) {
+        # binary variables have values 0, 1
+        outcomes[[i]][nlev == 2] <- lapply(outcomes[[i]][nlev == 2],
+                                           function(x) as.numeric(x) - 1)
+      }
+
+      attr(fixed[[i]], "type") <- if (analysis_type == 'coxph') 'coxph'
+      else if (analysis_type == 'JM') "JM" else "survreg"
+      names(fixed)[i] <- names(outnams[i])
+    } else {
+      outcomes[[i]] <- split_outcome(LHS = extract_LHS(fixed[[i]]), data = data)
+      nlev <- sapply(outcomes[[i]], function(x) length(levels(x)))
+      varlvl <- sapply(outcomes[[i]], check_varlevel, groups = groups)
+
+      if (any(nlev > 2)) {
+        # ordinal variables have values 1, 2, 3, ...
+        outcomes[[i]][which(nlev > 2)] <- lapply(outcomes[[i]][which(nlev > 2)],
+                                                 function(x) as.numeric(x))
+        attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls), 'clmm', 'clm')
+      } else if (any(nlev == 2)) {
+        # binary variables have values 0, 1
+        outcomes[[i]][nlev == 2] <- lapply(outcomes[[i]][nlev == 2],
+                                           function(x) as.numeric(x) - 1)
+
+        attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls),
+                                           'glmm_binomial_logit', 'glm_binomial_logit')
+      } else if (any(nlev == 0)) {
+        # continuous variables
+        attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls), 'lmm', 'lm')
+      }
+      if (i == 1) {
+        attr(fixed[[i]], 'type') <- if (isTRUE(analysis_type %in% c('glm', 'lm'))) {
+          paste(gsub("^lm$", "glm", analysis_type),
+                tolower(attr(analysis_type, 'family')$family),
+                attr(analysis_type, 'family')$link, sep = "_")
+        } else if (isTRUE(analysis_type %in% c('glme', 'lme'))) {
+          paste(gsub("^[g]*lme$", "glmm", analysis_type),
+                tolower(attr(analysis_type, 'family')$family),
+                attr(analysis_type, 'family')$link, sep = "_")
+        } else {
+          analysis_type
+        }
+      }
+      names(fixed)[i] <- outnams[i]
+    }
+  }
+  return(list(fixed = fixed, outcomes = outcomes, outnams = outnams))
+}
+
+
+
+# used in extract_outcome_data() (2020-06-10)
+split_outcome <- function(LHS, data) {
+  if (missing(data))
+    stop("No data provided")
+
+
+  if (grepl("^cbind\\(", LHS)) {
+    LHS2 <- gsub("\\)$", '', gsub('^cbind\\(', '', LHS))
+
+    splitpos <- c(gregexpr(',', text = LHS2)[[1]], nchar(LHS2) + 1)
+
+    if (splitpos[1] > 0) {
+      start <- 1
+      end <- splitpos[1] - 1
+      i <- 1
+      outlist <- list()
+
+      while (start <= splitpos[length(splitpos)]) {
+        fct <- substr(LHS2, start, end)
+        fct <- gsub(" $", '', gsub("^ ", '', fct))
+        var <- try(eval(parse(text = fct), envir = data), silent = TRUE)
+
+        if (!inherits(var, 'try-error')) {
+          var <- data.frame(var)
+          names(var) <- if (ncol(var) > 1) {
+            paste0(fct, 1:ncol(var))
+          } else fct
+          outlist <- c(outlist, var)
+          start <- splitpos[i] + 1
+          end <- splitpos[i + 1] - ifelse(splitpos[i + 1] == nchar(LHS2), 0, 1)
+          i <- i + 1
+        } else {
+          end <- splitpos[i + 1] - 1
+          i <- i + 1
+        }
+      }
+      outdat <- as.data.frame(outlist)
+      names(outdat) <- names(outlist)
+
+    }} else {
+      outdat <- as.data.frame(eval(parse(text = LHS), envir = data))
+      names(outdat) <- LHS
+    }
+
+  return(outdat)
+}
+
+
+# * prep outcome data ----------------------------------------------------------
+# used in divide_matrices (2020-06-09)
+outcomes_to_mat <- function(outcomes) {
+  # make a design matrix from the outcomes of a list of formulas
+  # - outcomes: list produced by extract_outcome_data()
+
+  outlist <- unlist(unname(lapply(outcomes$outcomes, as.list)), recursive = FALSE)
+
+  nosurv <- !sapply(outcomes$fixed, 'attr', 'type') %in% c('coxph', 'JM')
+  outlist_nosurv <- unlist(unname(lapply(outcomes$outcomes[nosurv], as.list)),
+                           recursive = FALSE)
+
+  if (any(duplicated(outlist_nosurv))) {
+    d1 <- duplicated(outlist_nosurv)
+    d2 <- duplicated(outlist_nosurv, fromLast = TRUE)
+
+    d <- unique(unlist(outcomes$outnams[nosurv])[d1 | d2])
+    if (length(d) == 1) {
+      errormsg("You can only specify one model per outcome.
+               The variable %s is used on the left hand side of more than one
+               of the model formulas.", paste0(dQuote(d), collapse = ", "))
+    } else {
+      errormsg("You can only specify one model per outcome.
+               The variables %s are used on the left hand side of more than
+               one of the model formulas.", paste0(dQuote(d), collapse = ", "))
+    }
+  }
+
+  return(data.matrix(as.data.frame(outlist, check.names = FALSE)))
+}
+
+
+# used in divide_matrices (2020-06-09)
+prep_covoutcomes <- function(dat) {
+  # re-code data to a data.matrix, turning factors to numeric values in the
+  # manner required by JAGS (binary: 0,1, multivariate/ordinal: 1,2,3,...)
+  # - dat: a data.frame containing the relevant variables
+
+  nlev <- sapply(dat, function(x) length(levels(x)))
+
+  if (any(nlev > 2))
+    # ordinal/multinomial variables have values 1, 2, 3, ...
+    dat[nlev > 2] <- sapply(dat[nlev > 2], as.numeric)
+
+  if (any(nlev == 2))
+    # binary variables have values 0, 1
+    dat[nlev == 2] <- sapply(dat[nlev == 2], as.numeric) - 1
+
+  data.matrix(dat)
+}
+
+
+
+# * model matrix combi ---------------------------------------------------------
+
+# used in divide_matrices and get_Mgk (2020-06-10)
+model.matrix_combi <- function(fmla, data, terms_list) {
+  # list of model.frames
+  mf_list <- lapply(terms_list, model.frame, data = data, na.action = na.pass)
+
+  mats <- mapply(model.matrix, object = fmla, data = mf_list, SIMPLIFY = FALSE)
+
+  X <- mats[[1]]
+
+  if (length(mats) > 1) {
+    for (i in seq_along(mats)[-1]) {
+      X <- cbind(X, mats[[i]][, setdiff(colnames(mats[[i]]), colnames(X)), drop = FALSE])
+    }
+  }
+
+  return(X)
+}
+
+
+# used in divide_matrices (2020-06-10)
+get_terms_list <- function(fmla, data) {
+  fmla <- fmla[!sapply(fmla, is.null)]
+
+  fmla <- check_formula_list(fmla)
+
+  # list of model.frames
+  mf_list <- lapply(fmla, model.frame, data = data, na.action = na.pass)
+  # list of term objects
+  terms_list <- lapply(mf_list, terms)
+
+  return(terms_list)
+}
+
+
+
+
+
+
+
+# interactions -----------------------------------------------------------------
+
+# used in divide_matrices (2020-03-04)
+match_interaction <- function(inter, M) {
+  # match interaction terms to their separate elements and check if any of these
+  # elements have missing values
+  # - inter: character vector of interaction terms
+  # - M: list of design matrices of different levels
+
+  Mnam <- sapply(M, colnames, simplify = FALSE)
+
+  out <- sapply(inter, function(i) {
+    elmts <- strsplit(i, ":")[[1]]
+
+    if (!any(is.na(c(match(i, unlist(Mnam)),
+                     sapply(elmts, match, unlist(Mnam)))))) {
+
+      # find matrix and column containing the interaction term
+      inter_match <- sapply(names(M), function(k) {
+        if (!is.na(match(i, Mnam[[k]]))) match(i, Mnam[[k]])
+      })
+
+
+      # find matrices and columns of the elements
+      elmt_match <- lapply(elmts, function(j) {
+        sapply(names(M), function(k) {
+          if (!is.na(match(j, Mnam[[k]]))) match(j, Mnam[[k]])
+        })
+      })
+
+
+      structure(
+        list(
+          interterm = unlist(inter_match),
+          elmts = unlist(elmt_match)
+        ),
+        interaction = i, elements = elmts,
+        has_NAs = ifelse(any(sapply(M, function(x)
+          any(is.na(x[, elmts[elmts %in% colnames(x)]])))
+        ), TRUE, FALSE)
+      )
+    }}, simplify = FALSE)
+
+  if (any(!sapply(out, is.null))) out[!sapply(out, is.null)]
+}
+
+
+
+# linear predictor -------------------------------------------------------------
+
+# used in divide_matrices (2020-06-10)
+get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
+                         analysis_type = NULL, warn = TRUE) {
+  # obtain the linear predictor columns and variable names for all models involved
+  # - fixed: list of fixed effects formulas
+  # - random: list of random effects formulas
+  # - data: a data.frame with the pre-processed data
+  # - models: named vector of all model types
+  # - auxvars: optional formula of auxiliary variables
+  # - analysis_type: type of anlaysis, including family as attribute if glm(m)
+  # - warn: logical; should warning messages be given
+
+  # check if fixed is a list and otherwise convert it to a list
+  fixed <- check_formula_list(fixed)
+
+  # extract the id variable and clustering structure from the random effects
+  # formula and data
+  idvar <- extract_id(random, warn = warn)
+  groups <- get_groups(idvar, data)
+
+  # identify all variables involved and those variables that are covariates
+  allvars <- unique(c(all_vars(fixed),
+                      all_vars(remove_grouping(random)),
+                      all_vars(auxvars)))
+
+  covars <- allvars[!allvars %in% unlist(extract_outcome(fixed))]
+
+  # identify the levels of all variables
+  lvl <- sapply(data[, allvars, drop = FALSE], check_varlevel, groups = groups,
+                group_lvls = identify_level_relations(groups))
+  group_lvls <- colSums(!identify_level_relations(groups))
+
+  # make a subset containing only covariates
+  subdat <- subset(data, select = covars)
+
+
+  # for each fixed effects (main model) formula, get the column names of the
+  # design matrix of the fixed effects
+  lp <- sapply(fixed, function(fmla) {
+    if (attr(fmla, 'type') %in% c('clm', 'clmm', 'coxph', "JM")) {
+      # for ordinal and cox models, exclude the intercept
+      colnam <- colnames(model.matrix(fmla, data))[-1]
+      if (length(colnam) > 0) colnam
+    } else {
+      colnames(model.matrix(fmla, data))
+    }
+  }, simplify = FALSE)
+
+
+  #  for all models that are not specified in fixed
+  #  - identify if an intercept is needed (no intercept for ordinal and cox)
+  #  - generate a RHS formula
+  for (out in names(models)[!names(models) %in% names(fixed)]) {
+    nointercept <- models[out] %in% c('clmm', 'clm', 'coxph')
+    fmla <- as.formula(paste0(out, " ~ .", if (nointercept) '-1'))
+
+
+    # identify variables that have
+    # - level higher than the level of the outcome, or
+    # - the same level (note: the same level name, not just the same value in
+    #   the hierarchy. This is important in case of crossed random effects
+    #   where two levels may have the same value in the hierarchy, but then
+    #   the model should only include covariates from the same level, but not
+    #   from the crossed level).
+    relvars <- group_lvls[lvl[colnames(subdat)]] > group_lvls[lvl[out]] |
+      lvl[colnames(subdat)] == lvl[out]
+
+    # get the names of the columns of the corresponding design matrix
+    lp[[out]] <- colnames(model.matrix(fmla, subset(subdat, select = relvars)))
+
+    # if the linear predictor is empty, create an empty object, to make the
+    # subsequent code work in any case
+    if (is.null(lp[[out]])) lp <- c(lp, setNames(list(NULL), out))
+
+    subdat <- subset(subdat, select = -c(get(out)))
+  }
+  lp
+}
