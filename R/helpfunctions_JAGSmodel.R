@@ -6,6 +6,15 @@ tab <- function(times = 2) {
   paste(rep(tb, times), collapse = "")
 }
 
+
+add_dashes <- function(x, width = 95) {
+  # add separation lines between sub-models in JAGS model for readability
+  # - x: name of the sub-model
+
+  paste(x, paste0(rep('-', 80 - nchar(x)), collapse = ''))
+}
+
+
 add_linebreaks <- function(string, indent, width = 90) {
   # add linebreaks to a string, breaking it after a "+" sign
   # - string: the linear predictor string to be broken
@@ -130,32 +139,56 @@ paste_scale <- function(x, row, scalemat) {
 
 
 
-# pasting random effects -------------------------------------------------------
+# paste rd. effects into JAGSmodel ---------------------------------------------
 
+# used in JAGSmodels that use random effects (2020-06-10)
 paste_rdslope_lp <- function(info, isgk = FALSE) {
-  if (is.null(info$hc_list))
-    return(NULL)
+  # Create a list of lists containing the linear predictors of the random
+  # effects (slopes + interactions with slopes, no random intercept here).
+  # The list has an element per grouping level, which contains a list per
+  # variable for which a random slope is specified.
+  # - info: element of info_list, containing all the info necessary to write
+  #         the JAGS sub-model for a given variable
 
+  # if there are no random effects in this model (hc_list is NULL), return NULL
+  if (is.null(info$hc_list)) return(NULL)
+
+
+  # for each of the grouping levels for which there are random effects do:
   sapply(names(info$hc_list$hcvars), function(lvl) {
+
+    # name of the corresponding data matrix
     mat <- paste0("M_", lvl)
 
+    # identify variables for which a random slope needs to be specified on the
+    # current grouping level and variables which have an interaction with one
+    # of these random slope variables
     rds <- info$hc_list$hcvars[[lvl]]$rd_slope_coefs
     rdsi <- info$hc_list$hcvars[[lvl]]$rd_slope_interact_coefs
 
+
     sapply(unique(names(rds), names(rdsi)), function(x) {
-      paste(c(
-        # random slope coefficients
-        if (!is.null(rds[[x]]))
+
+      rds_rdsi_vec <- c(
+        # random slope coefficients (if rds[[x]] == NULL there are no random slope
+        # coefficients on this level)
+        if (!is.null(rds[[x]])) {
+          # If there are no coefficients (= no fixed effect, only random effect),
+          # the mean of the random effect is 0, otherwise it is a linear predictor
           ifelse(is.na(rds[[x]]$parelmts),
                  "0",
                  paste_coef(parname = info$parname,
-                            parelmts = rds[[x]]$parelmts)
-          ),
+                            parelmts = rds[[x]]$parelmts))
+        },
 
-        # interactions with random slope
+        # interactions with random slope (if rdsi[[x]] == NULL there are no
+        # variables that have an interaction with a random slope variable)
         if (!is.null(rdsi[[x]]))
+          # write the product from the scaled data part and the corresponding
+          # regression coefficients
           paste(
-            paste_scaling(x = paste_data(matnam = rdsi[[x]]$matrix, index = info$index[lvl],
+            paste_scaling(x = paste_data(matnam = rdsi[[x]]$matrix,
+                                         index = info$index[lvl],
                                          col = rdsi[[x]]$cols, isgk),
                           rows = rdsi[[x]]$cols,
                           scale_pars = info$scale_pars[[mat]],
@@ -164,23 +197,40 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
             paste_coef(parname = info$parname,
                        parelmts = rdsi[[x]]$parelmts),
             sep = " * ")
-      ), collapse = " + ")
+      )
+
+      # combine the random slope and random slope interaction part into a
+      # linear predictor
+      paste(rds_rdsi_vec, collapse = " + ")
 
     }, simplify = FALSE)
   }, simplify = FALSE)
 }
 
 
-
+# used in JAGSmodels that use random effects (2020-06-10)
 paste_rdintercept_lp <- function(info) {
-  if (is.null(info$hc_list))
-    return(NULL)
+  # returns a list with an element per grouping level, containing the linear
+  # predictor (or 0) which is the mean of the random intercept distribution
+  # - info: element of info_list, containing all the info necessary to write
+  #         the JAGS sub-model for a given variable
 
+  # if there are no random effects in this model (hc_list = NULL), return NULL
+  if (is.null(info$hc_list)) return(NULL)
+
+  # for each of the grouping levels for which there are random effects do:
   sapply(names(info$hc_list$hcvars), function(lvl) {
+
+    # name of the corresponding data matrix
     mat <- paste0("M_", lvl)
 
+    # identify variables that should be part of the linear predictor for the
+    # random intercept on this level
     x <- info$hc_list$hcvars[[lvl]]$rd_intercept_coefs
 
+    # if there are parameter elements in this linear predictor, create a
+    # linear predictor, otherwise the mean of the random effect distribution
+    # should be 0
     if (length(x$parelmts) > 0) {
       paste_linpred(parname = info$parname,
                     parelmts = x$parelmts,
@@ -196,105 +246,130 @@ paste_rdintercept_lp <- function(info) {
 
 
 
-paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
-  paste0(c(
-    # random intercept
-    paste0(tab(4),
-           paste_data(matnam = paste0("mu_b_", varname), index = index, col = 1),
-           " <- ",
-           add_linebreaks(rdintercept,
-                          indent = 4 + 5 + nchar(varname) + 1 + nchar(index) + 8)
-    ),
-    if (length(rdslopes) > 0) {
-      # random slopes
-      paste0(
-        tab(4),
-        paste_data(matnam = paste0("mu_b_", varname), index = index,
-                   col = seq_along(rdslopes) + 1),
-        " <- ",
-        sapply(rdslopes, add_linebreaks,
-               indent = 4 + 5 + nchar(varname) + 1 + nchar(index) + 8)
-      )
-    }), collapse = "\n"
-  )
-}
+
 
 
 
 paste_lp_Zpart <- function(info, isgk = FALSE) {
+  # write the random effects part of the linear predictor of the analysis
+  # model
+  # - info: element of info_list, containing all the info necessary to write
+  #         the JAGS sub-model for a given variable
+  # - isgk: logical indicator whether the output is in the Gaus-Kronrod quadrature
 
-  if (is.null(info$hc_list))
-    return(NULL)
+
+  # if there are no random effects (hc_list = NULL), return NULL
+  if (is.null(info$hc_list)) return(NULL)
 
 
+  # identify grouping level of the outcome
   lvl <- gsub("M_", "", info$resp_mat[length(info$resp_mat)])
 
-  Zlp <- sapply(names(info$group_lvls)[info$group_lvls >= info$group_lvls[lvl]],
-                function(k) {
-                  index <- if (!isgk & lvl == 'levelone') {
-                    if (k == lvl) {
-                      info$index[lvl]
-                    } else {
-                      paste0('group_', k, "[", info$index[lvl], "]")
-                    }
-                  } else if (!isgk & k == lvl) {
-                    info$index[[lvl]]
-                  } else if (!isgk) {
-                    paste0('group_', k, "[",
-                           "pos_", lvl, "[", info$index[lvl], "]]")
-                  } else if (isgk & (k == info$surv_lvl | k == 'levelone')) {
-                    info$index[info$surv_lvl]
-                  } else if (isgk) {
-                    # info$index[info$surv_lvl]
-                    paste0('group_', k, "[",
-                           "pos_", info$surv_lvl, "[", info$index[info$surv_lvl], "]]")
-                  }
 
-                  rdi <- if (isTRUE(attr(info$hc_list$hcvars[[k]], "rd_intercept"))) {
-                    paste_data(matnam = paste0("b_", info$varname, "_", k),
-                               index = index,
-                               col = 1)
-                  }
+  # for all grouping levels above or equal to the outcome level do:
+  Zlp <- sapply(
+    names(info$group_lvls)[info$group_lvls >= info$group_lvls[lvl]],
+    function(k) {
+      # find the correct specification of the index. This depends on the level
+      # of the outcome, but also on the current grouping level, whether the
+      # outcome is on the lowest level (levelone) or not, and if the output is
+      # used in the GK-quadrature
+      index <- if (!isgk & lvl == 'levelone') {
+        # if the outcome is the lowest level and not in GK, use
+        # - the index of the outcome level if the random effect is on the same
+        #   level
+        # - the element of "group" of the random effects level at the index
+        #   position if the random effect is on a higher level
+        if (k == lvl) {
+          info$index[lvl]
+        } else {
+          paste0('group_', k, "[", info$index[lvl], "]")
+        }
+      } else if (!isgk & k == lvl) {
+        # if the outcome is not on the lowest level, but the  random effect has
+        # the same level as the outcome and we're not in the quadrature part,
+        #  use the index of the outcome level
+        info$index[[lvl]]
+      } else if (!isgk) {
+        # if the outcome is not on the lowest level and the random effect is on
+        # a different level, and we're not in the quadrature part, use group
+        # (relating rd. effect level to levelone), indexed by the position of
+        # the outcome level (position in levelone that corresponds to the
+        # current index value)
+        paste0('group_', k, "[",
+               "pos_", lvl, "[", info$index[lvl], "]]")
+      } else if (isgk & (k == info$surv_lvl | k == 'levelone')) {
+        # if we are in the quadrature part, and the random effects
+        # level is either the same as the outcome level or the lowest
+        # level, use the index of the level of the survival outcome
+        info$index[info$surv_lvl]
+      } else if (isgk) {
+        # if we are in the quadrature part and the random effects level is not
+        # the same as the outcome level and not the lowest level, use group and
+        # pos to relate the level of the survival outcome and the level of the
+        # random effect, via levelone
+        paste0('group_', k, "[",
+               "pos_", info$surv_lvl, "[", info$index[info$surv_lvl], "]]")
+      }
 
-                  rds <- if (any(!sapply(info$hc_list$hcvars[[k]]$rd_slope_coefs, is.null))) {
-                    sapply(seq_along(info$hc_list$hcvars[[k]]$rd_slope_coefs), function(q) {
 
-                      var <- names(info$hc_list$hcvars[[k]]$rd_slope_coefs)[q]
 
-                      rdsc <- info$hc_list$hcvars[[k]]$rd_slope_coefs[[var]]
+      # generate the random intercept part to enter the linear predictor of
+      # the outcome.
+      rdi <- if (isTRUE(attr(info$hc_list$hcvars[[k]], "rd_intercept"))) {
+        paste_data(matnam = paste0("b_", info$varname, "_", k),
+                   index = index,
+                   col = 1)
+      }
 
-                      paste(
-                        paste_data(matnam = paste0("b_", info$varname, "_", k),
-                                   index = index,
-                                   col = q + 1),
+      # generate the random slope part to enter the linear predictor of the outcome
+      rds <- if (any(!sapply(info$hc_list$hcvars[[k]]$rd_slope_coefs,
+                             is.null))) {
+        # if there are any random slope variables for this random effect level, do:
+        sapply(seq_along(info$hc_list$hcvars[[k]]$rd_slope_coefs), function(q) {
 
-                        paste_scaling(
-                          paste_data(
-                            matnam = rdsc$matrix,
-                            index = if (!isgk) info$index[[lvl]] else index,
-                            col = rdsc$cols, isgk = isgk),
-                          rows = rdsc$cols,
-                          scale_pars = info$scale_pars[[unique(rdsc$matrix)]],
-                          scalemat = paste0("sp", unique(rdsc$matrix))), sep = ' * ')
-                    })
-                  }
+          # get the variable name
+          var <- names(info$hc_list$hcvars[[k]]$rd_slope_coefs)[q]
 
-                  other <- if (!is.null(info$hc_list$othervars[[k]]))
-                    paste(
-                      paste_coef(parname = info$parname,
-                                 parelmts = info$hc_list$othervars[[k]]$parelmts),
-                      paste_scaling(
-                        paste_data(matnam = info$hc_list$othervars[[k]]$matrix,
-                                   index = index, #info$index[[lvl]],
-                                   col = info$hc_list$othervars[[k]]$cols,
-                                   isgk = isgk),
-                        rows = info$hc_list$othervars[[k]]$cols,
-                        scale_pars = info$scale_pars[[paste0("M_", k)]],
-                        scalemat = paste0("spM_", k)), sep = " * "
-                    )
+          # get the coefficient numbers
+          rdsc <- info$hc_list$hcvars[[k]]$rd_slope_coefs[[var]]
 
-                  c(rdi, rds, other)
-                }, simplify = FALSE)
+          # write the multiplication of the random slope with the corresponding
+          # longitudinal variable ("b[i, 2] * M[i, 4]")
+          paste(
+            paste_data(matnam = paste0("b_", info$varname, "_", k),
+                       index = index,
+                       col = q + 1),
+
+            paste_scaling(
+              paste_data(
+                matnam = rdsc$matrix,
+                index = if (!isgk) info$index[[lvl]] else index,
+                col = rdsc$cols, isgk = isgk),
+              rows = rdsc$cols,
+              scale_pars = info$scale_pars[[unique(rdsc$matrix)]],
+              scalemat = paste0("sp", unique(rdsc$matrix))),
+            sep = ' * ')
+        })
+      }
+
+      # write the syntax for other longitudinal variables
+      other <- if (!is.null(info$hc_list$othervars[[k]]))
+        paste(
+          paste_coef(parname = info$parname,
+                     parelmts = info$hc_list$othervars[[k]]$parelmts),
+          paste_scaling(
+            paste_data(matnam = info$hc_list$othervars[[k]]$matrix,
+                       index = index,
+                       col = info$hc_list$othervars[[k]]$cols,
+                       isgk = isgk),
+            rows = info$hc_list$othervars[[k]]$cols,
+            scale_pars = info$scale_pars[[paste0("M_", k)]],
+            scalemat = paste0("spM_", k)), sep = " * "
+        )
+
+      c(rdi, rds, other)
+    }, simplify = FALSE)
 
   if (any(!sapply(Zlp, is.null))) {
     paste0(unlist(Zlp), collapse = " + ")
@@ -304,15 +379,30 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
 }
 
 
-
+# used in JAGSmodels that use random effects (2020-06-10)
 write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
+  # This function writes the JAGSmodel part for the random effects
+  # distribution (b ~ N(..., ...))
+  # - lvl: the grouping level for the random effects
+  # - info: element of info_list, containing all necessary information to
+  #         write a JAGS sub-model for a given variable
+  # - rdintercept: list of random intercept linear predictors as strings
+  # - rdslopes: list of list of random slope linear predictors as strings
+
+  # specify distribution for the random effects, based on their dimension
   norm.distr  <- if (info$nranef[lvl] < 2) {"dnorm"} else {"dmnorm"}
+
+  # write the model part for the random effects distribution
   paste0(
     tab(), "for (", info$index[lvl], " in 1:", info$N[lvl], ") {", "\n",
+
+    # distribution specification
     tab(4), "b_", info$varname, "_", lvl, "[", info$index[lvl], ", 1:",
     info$nranef[lvl], "] ~ ", norm.distr,
     "(mu_b_", info$varname, "_", lvl, "[", info$index[lvl], ", ], invD_",
     info$varname, "_", lvl, "[ , ])", "\n",
+
+    # specification of the means structure of the random effects
     paste_mu_b(rdintercept[[lvl]], rdslopes[[lvl]],
                paste(info$varname, lvl, sep = "_"), info$index[lvl]),
     "\n",
@@ -320,52 +410,83 @@ write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
 }
 
 
+# used in write_ranefs() (2020-06-10)
+paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
+  # write the mean structure of the random effects specification, i.e.
+  # mu_b[i, 1] <- ...
+  # mu_b[i, 2] <- ... etc.
+
+  # - rdintercept: string of random intercept linear predictor (one string)
+  # - rdslopes: list of random slope linear predictors (as strings)
+  # - varname: name of the outcome variable of the current sub-model
+  # - index: character string of the index, e.g. "i"
+
+  # paste the random intercept part "mu_b_varname[i, 1] <- lin.predictor"
+  #
+  # The linear predictor part is indented by
+  # - 4 general indent because inside for-loop
+  # - 5 "mu_b_"
+  # - the number of characters of the variable name
+  # - 1 underscore
+  # - the number of characters of the index
+  # - 8 ", 1] <- "
+  rdi <- paste0(tab(4),
+                paste_data(matnam = paste0("mu_b_", varname), index = index, col = 1),
+                " <- ",
+                add_linebreaks(rdintercept,
+                               indent = 4 + 5 + nchar(varname) + 1 + nchar(index) + 8)
+  )
+
+  # paste the random slope part, a vector of "mu_b_varname[i, k] <- lin.predictor"
+  # or NULL if there are no random slopes
+  #
+  # The linear predictor part is indented by
+  # - 4 general indent because inside for-loop
+  # - 5 "mu_b_"
+  # - the number of characters of the variable name
+  # - 1 underscore
+  # - the number of characters of the index
+  # - 8 ", 1] <- "
+  rds <- if (length(rdslopes) > 0) {
+    paste0(
+      tab(4),
+      paste_data(matnam = paste0("mu_b_", varname), index = index,
+                 col = seq_along(rdslopes) + 1),
+      " <- ",
+      sapply(rdslopes, add_linebreaks,
+             indent = 4 + 5 + nchar(varname) + 1 + nchar(index) + 8)
+    )
+  }
+
+  # combine the random intercept and random slope part
+  paste0(c(rdi, rds), collapse = "\n")
+}
+
+
+
 # Joint model ------------------------------------------------------------------
 
-paste_obsvalue <- function(varname, matname, index, column, isgk, ...) {
-  if (isgk)
-    paste0(matname, "gk[", index, ", ", column, ", k]")
-  else
-    paste0(matname, "[survrow_", varname, "[", index, "], ", column, "]")
-}
-
-paste_underlvalue <- function(varname, covname, index, isgk, ...) {
-  if (isgk)
-    paste0("mugk_", covname, "[", index, ", k]")
-  else
-    paste0('mu_', covname, "[survrow_", varname, "[", index, "]]")
-}
-
-paste_association <- function(varname, covnames, matname, index, columns, assoc_type, isgk) {
-  mapply(function(varname, assoc_type, covname, matname, column, index, isgk) {
-    paste_ass <- switch(assoc_type,
-                        "obs.value" = paste_obsvalue,
-                        "underl.value" = paste_underlvalue)
-    paste_ass(varname = varname,
-              covname = covname,
-              matname = matname,
-              index = index,
-              column = column,
-              isgk = isgk)
-  }, varname = varname, assoc_type = assoc_type, covname = covnames, matname = matname, column = columns,
-  MoreArgs = list(index = index, isgk = isgk)
-  )
-}
+paste_linpred_JM <- function(varname, parname, parelmts, matnam, index, cols,
+                             scale_pars, assoc_type, covnames, isgk = FALSE) {
+  # - varname: name of the survival outcome
+  # - parname: name of the parameter, e.g. "beta"
+  # - parelmts: vector specifying which elements of the parameter vector are to be
+  #             used, e.g. c(1,2,3,6,8,4)
+  # - matnam: name or the design matrix, e.g. "M_levelone
+  # - index: character sting specifying the index to be used, e.g. "i" or "j"
+  # - cols: index of the columns of the design matrix to be used, e.g. c(1, 4, 2, 10)
+  # - scale_pars: a matrix with rownames according to the columns of the design
+  #               matrix and columns 'center' and 'scale'.
+  #               Contains NA if a variable should not be scaled (could also be
+  #               NULL instead of a matrix)
+  # - assoc_type: vector of association types to be used for the time_varying
+  #               covariates
+  # - covnames: names of the time-varying covariates
+  # - isgk: logical; indicating if the output is used inside the GK-quadrature
+  #         part
 
 
-paste_linpred_JM <- function(varname, parname, parelmts, matnam, index, cols, scale_pars,
-                             assoc_type, covnames, isgk = FALSE) {
-  # parname: name of the parameter, e.g. "beta"
-  # parelmts: vector specifying which elements of the parameter vector are to be
-  #           used, e.g. c(1,2,3,6,8,4)
-  # matnam: name or the design matrix, e.g. "Ml" or "Mc"
-  # index: character sting specifying the index to be used, e.g. "i" or "j"
-  # cols: index of the columns of the design matrix to be used, e.g. c(1, 4, 2, 10)
-  # scale_pars: a matrix with rownames according to the columns of the design matrix
-  #             and columns 'center' and 'scale'. Contains NA if a variable should
-  #             not be scaled (could also be NULL instead of a matrix)
-
-
+  # get vector of association structure strings
   pastedat <- paste_association(varname = varname,
                                 covnames = covnames, matname = matnam,
                                 index = index, columns = cols,
@@ -380,6 +501,77 @@ paste_linpred_JM <- function(varname, parname, parelmts, matnam, index, cols, sc
     paste_coef(parname, parelmts),
     sep = " * ", collapse = " + ")
 }
+
+
+# used in paste_linpred_JM() (2020-06-10)
+paste_association <- function(varname, covnames, matname, index, columns,
+                              assoc_type, isgk) {
+
+  # for each time-varying variable, paste the association structure
+  # - varname: name of the survival outcome
+  # - covnames: vector of names of the time-varying covariates
+  # - matname: vector of names of the design matrix containing the time-varying covariate
+  # - index: string specifying the index to be used, e.g. "i",
+  # - columns: column numbers of the time-varying covariates in the design matrix
+  # - assoc_type: vector of association types
+  # - isgk: logical: is the output for within the quadrature part?
+
+  mapply(function(varname, assoc_type, covname, matname, column, index, isgk) {
+    paste_assoc <- switch(assoc_type,
+                          "obs.value" = paste_obsvalue,
+                          "underl.value" = paste_underlvalue)
+    paste_assoc(varname = varname,
+                covname = covname,
+                matname = matname,
+                index = index,
+                column = column,
+                isgk = isgk)
+  }, varname = varname, assoc_type = assoc_type, covname = covnames,
+  matname = matname, column = columns,
+  MoreArgs = list(index = index, isgk = isgk)
+  )
+}
+
+
+# used in paste_association() (2020-06-10)
+paste_obsvalue <- function(varname, matname, index, column, isgk, ...) {
+  # create the string referring to the observed value of a time-varying
+  # variable in the linear predictor of the survival model
+  # - varname: name of the survival outcome
+  # - matname: name of the design matrix containing the time-varying covariate
+  # - index: string specifying the index to be used, e.g. "i",
+  # - column: column number of the time-varying covariate in the design matrix,
+  # - isgk: logical: is the output for within the quadrature part?
+  # - ...: for compatibility of syntax with other association structure type
+  #        functions
+
+  if (isgk) # "M_levelonegk[i, 4, k]" in the GK-quadrature
+    paste0(matname, "gk[", index, ", ", column, ", k]")
+  else # "M_levelone[survrow_varname[i, k]" outside the quadrature
+    paste0(matname, "[survrow_", varname, "[", index, "], ", column, "]")
+}
+
+
+# used in paste_association() (2020-06-10)
+paste_underlvalue <- function(varname, covname, index, isgk, ...) {
+  # create the string referring to the underlying value of a time-varying
+  # variable in the linear predictor of the survival model
+  # - varname: name of the survival outcome
+  # - covname: name of the time-varying covariates
+  # - index: string specifying the index to be used, e.g. "i",
+  # - isgk: logical: is the output for within the quadrature part?
+  # - ...: for compatibility of syntax with other association structure type
+  #        functions
+
+  if (isgk) # "mugk_covname[i, k]"
+    paste0("mugk_", covname, "[", index, ", k]")
+  else # "mu_covname[survrow_varname[i]]"
+    paste0('mu_', covname, "[survrow_", varname, "[", index, "]]")
+}
+
+
+
+
 
 
 
@@ -676,9 +868,3 @@ get_priordistr <- function(shrinkage, type, family = NULL, link = NULL, parname)
   }
 }
 
-
-
-
-add_dashes <- function(x, width = 95) {
-  paste(x, paste0(rep('-', 80 - nchar(x)), collapse = ''))
-}
