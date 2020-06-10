@@ -656,31 +656,6 @@ model.matrix_combi <- function(fmla, data, terms_list) {
 }
 
 
-# make a design matrix from a list of formulas
-# model.matrix_combi <- function(fmla, data) {
-#   fmla <- fmla[!sapply(fmla, is.null)]
-#
-#   fmla <- check_formula_list(fmla)
-#
-#   # list of model.frames
-#   mf_list <- lapply(fmla, model.frame, data = data, na.action = na.pass)
-#   # list of term objects
-#   # terms_list <- lapply(mf_list, terms)
-#
-#   mats <- mapply(model.matrix, object = fmla, data = mf_list, SIMPLIFY = FALSE)
-#
-#   X <- mats[[1]]
-#
-#   if (length(mats) > 1) {
-#     for (i in seq_along(mats)[-1]) {
-#       X <- cbind(X, mats[[i]][, setdiff(colnames(mats[[i]]), colnames(X)), drop = FALSE])
-#     }
-#   }
-#
-#   return(X)
-# }
-
-
 # make a design matrix from the outcomes of a list of formulas
 # (used in divide_matrices.R)
 # outcomes: list produced by extract_outcome_data()
