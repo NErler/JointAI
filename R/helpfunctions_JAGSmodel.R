@@ -1,23 +1,34 @@
 # help functions ---------------------------------------------------------------
 tab <- function(times = 2) {
+  # creates a vector of spaces to facilitate indentation
+
   tb <- " "
   paste(rep(tb, times), collapse = "")
 }
 
 add_linebreaks <- function(string, indent, width = 90) {
-  # string: the linear predictor string to be broken
-  # indent: in case of a linebreak, how much should the new line be indented?
-  # width: output width
+  # add linebreaks to a string, breaking it after a "+" sign
+  # - string: the linear predictor string to be broken
+  # - indent: in case of a linebreak, how much should the new line be indented?
+  # - width: output width
 
   if (is.null(string))
     return(NULL)
 
+  # identify position of "+"
   m <- gregexpr(" \\+ ", string)[[1]]
-  if (all(m < 0))
-    return(string)
 
+  # if there is no "+", return the original string
+  if (all(m < 0)) return(string)
+
+  # calculate the lengths of the sub-strings
   len <- c(as.numeric(m)[1], diff(c(as.numeric(m), nchar(string))))
 
+
+  # check how many sub-strings (and the indent) can be combined until reaching
+  # the maximal width, and create a string of ' + ' (no break) and ' +\n' (break)
+  # to be pasted in afterward
+  # (there is probably a more elegant way to do this)
   i <- 1
   br <- c()
   while (i < length(len)) {
@@ -32,17 +43,22 @@ add_linebreaks <- function(string, indent, width = 90) {
 }
 
 
-# pasting linear predictors ----------------------------------------------------
-paste_linpred <- function(parname, parelmts, matnam, index, cols, scale_pars, isgk = FALSE) {
-  # parname: name of the parameter, e.g. "beta"
-  # parelmts: vector specifying which elements of the parameter vector are to be
-  #           used, e.g. c(1,2,3,6,8,4)
-  # matnam: name or the design matrix, e.g. "Ml" or "Mc"
-  # index: character sting specifying the index to be used, e.g. "i" or "j"
-  # cols: index of the columns of the design matrix to be used, e.g. c(1, 4, 2, 10)
-  # scale_pars: a matrix with rownames according to the columns of the design matrix
-  #             and columns 'center' and 'scale'. Contains NA if a variable should
-  #             not be scaled (could also be NULL instead of a matrix)
+
+# linear predictors ------------------------------------------------------------
+paste_linpred <- function(parname, parelmts, matnam, index, cols, scale_pars,
+                          isgk = FALSE) {
+  # paste a regular linear predictor
+  # - parname: name of the parameter, e.g. "beta"
+  # - parelmts: vector specifying which elements of the parameter vector are
+  #             to be used, e.g. c(1,2,3,6,8,4)
+  # - matnam: name of the design matrix, e.g. "M_levelone" or "M_ID"
+  # - index: character sting specifying the index to be used, e.g. "i" or "ii"
+  # - cols: index of the columns of the design matrix to be used, e.g. c(1, 4, 2, 10)
+  # - scale_pars: a matrix with row names according to the columns of the
+  #               design matrix and columns 'center' and 'scale'.
+  #               Contains NA if a variable should not be scaled
+  #               (could also be NULL instead of a matrix)
+  # - isgk: logical indicator of this is for within the Gauss-Kronrod quadrature
 
   paste(
     paste_scaling(x = paste_data(matnam, index, cols, isgk),
@@ -54,18 +70,37 @@ paste_linpred <- function(parname, parelmts, matnam, index, cols, scale_pars, is
     sep = " * ", collapse = " + ")
 }
 
-paste_scale <- function(x, row, scalemat) {
-  # x: term that will be scaled (or vector of terms)
-  # row: the row number(s) of the matrix containing the scaling parameters
-  # scalemat: the name of the matrix containing the scaling parameters, e.g. "spMl" or "spMc"
-  paste0("(", x, " - ", scalemat, "[", row, ", 1])/", scalemat, "[", row, ", 2]")
+# * linpred help functions -----------------------------------------------------
+paste_data <- function(matnam, index, col, isgk = FALSE) {
+  # create a (vector of) data element(s) of a linear predictor, e.g. "X[i, 3]"
+  # if isgk = TRUE, the suffix "gk" will be added to "matname"
+  # - matnam: the name of the design matrix
+  # - index: the index to be used, e.g. "i" or "ii"
+  # - col: the column (or vector of columns) of the design matrix
+  # - isgk: is this whithin the Gauss-Kronrod quadrature?
+
+  paste0(matnam, ifelse(isgk, "gk", ''), "[", index, ", ", col,
+         ifelse(isgk, ", k]", "]"))
 }
 
+
+paste_coef <- function(parname, parelmts) {
+  # create a (vector of) coefficient element(s) of a linear predictor, e.g. beta[3]
+  # - parname: the name of the parameter, e.g. "alpha" or "beta"
+  # - parelmts: vector of integers giving the elements of the parameter to be used
+
+  paste0(parname, '[', parelmts, ']')
+}
+
+
 paste_scaling <- function(x, rows, scale_pars, scalemat) {
-  # x: vector of expressions to scale
-  # row: the row number(s) of the matrix containing the scaling parameters
-  # scale_pars: scaling matrix
-  # scalemat: name of the scaling matrix in JAGS
+  # identify if a data element of a linear predictor should be scaled (based
+  # on whether scaling parameters are given) and obtain the scaling trafo
+  # string
+  # - x: vector of expressions to scale
+  # - row: the row number(s) of the matrix containing the scaling parameters
+  # - scale_pars: scaling matrix
+  # - scalemat: name of the scaling matrix in JAGS, e.g. "spM_ID"
 
   if (is.null(scale_pars)) {
     x
@@ -77,20 +112,22 @@ paste_scaling <- function(x, rows, scale_pars, scalemat) {
   }
 }
 
-paste_data <- function(matnam, index, col, isgk = FALSE) {
-  # matnam: the name of the design matrix
-  # index: the index to be used, e.g. "i" or "j"
-  # col: the column (or vector of columns) of the design matrix
-  # isgk: is this whithin the Gauss-Kronrod quadrature?
-  paste0(matnam, ifelse(isgk, "gk", ''), "[", index, ", ", col,
-         ifelse(isgk, ", k]", "]"))
+
+paste_scale <- function(x, row, scalemat) {
+  # create a (vector of) scaling transformation(s) for the data element(s) of a
+  # linear predictor
+  # - x: term that will be scaled (or vector of terms)
+  # - row: the row number(s) of the matrix containing the scaling parameters
+  # - scalemat: the name of the matrix containing the scaling parameters,
+  #             e.g. "spM_levelone" or "spM_ID"
+  #             The matrix is assumed to have columns "center" and "scale".
+
+  paste0("(", x, " - ", scalemat, "[", row, ", 1])/", scalemat, "[", row, ", 2]")
 }
 
-paste_coef <- function(parname, parelmts) {
-  # parname: the name of the parameter, e.g. "alpha" or "beta"
-  # parelmts: vector of integers giving the elements of the parameter to be used
-  paste0(parname, '[', parelmts, ']')
-}
+
+
+
 
 
 # pasting random effects -------------------------------------------------------
