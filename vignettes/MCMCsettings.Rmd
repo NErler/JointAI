@@ -6,7 +6,7 @@ output:
     toc: true
     toc_depth: 4
 vignette: >
-  %\VignetteIndexEntry{MCMC settings}
+  %\VignetteIndexEntry{MCMC Settings}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---

@@ -597,9 +597,9 @@ which finds and assigns the default covariate model types, can also be called di
 * `models`: and optional vector of (non-default) model types chosen by the user
 
 ```{r}
-mod8b_models <- get_models(bmi ~ GESTBIR + ETHN + HEIGHT_M + SMOKE + hc + MARITAL + ns(age, df = 2),
-                           random = ~ns(age, df = 2) | ID, data = simLong)
-mod8b_models
+# mod8b_models <- get_models(bmi ~ GESTBIR + ETHN + HEIGHT_M + SMOKE + hc + MARITAL + ns(age, df = 2),
+                           # random = ~ns(age, df = 2) | ID, data = simLong)
+# mod8b_models
 ```
 
 `get_models()` returns a list of two vectors:
@@ -618,9 +618,9 @@ The argument `no_model` (in `get_models()` as well as in the main functions
 [`*_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html))
 allows us to exclude models for such variables (as long as they are completely observed):
 ```{r}
-mod8c_models <- get_models(bmi ~ GESTBIR + ETHN + HEIGHT_M + SMOKE + hc + MARITAL + ns(age, df = 2),
-                           random = ~ns(age, df = 2) | ID, data = simLong, no_model = "age")
-mod8c_models
+# mod8c_models <- get_models(bmi ~ GESTBIR + ETHN + HEIGHT_M + SMOKE + hc + MARITAL + ns(age, df = 2),
+                           # random = ~ns(age, df = 2) | ID, data = simLong, no_model = "age")
+# mod8c_models
 ```
 
 By excluding the model for `age` we implicitly assume that incomplete
