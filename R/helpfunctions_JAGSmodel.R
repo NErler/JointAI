@@ -132,65 +132,6 @@ paste_scale <- function(x, row, scalemat) {
 
 # pasting random effects -------------------------------------------------------
 
-# paste_rdslope_lp <- function(hc_info, info) {
-#   if (is.null(hc_info))
-#     return(NULL)
-#
-#   lapply(hc_info, function(x) {
-#   lapply(x, function(k) {
-#
-#     if (is.na(k$main_effect$coef_nr) || is.null(k$main_effect$coef_nr)) {
-#       # if there is no corresponding fixed effect, the mean of the
-#       # random effect distribution is 0:
-#       "0"
-#     } else {
-#       paste0(
-#         c(# main effects part: only coefficient
-#           paste_coef(info$parname, k$main_effect$coef_nr),
-#
-#           if (!is.null(k$interact_effect) && #################################################
-#               any(sapply(k$interact_effect, "[[", "matrix") %in% 'Mc')) {
-#             # interaction part (baseline covs): coefficient * variable
-#             cols <- Filter(Negate(is.null),
-#                            lapply(k$interact_effect, function(x) {
-#                              if (any(x$matrix %in% 'Mc'))
-#                                x$column[x$matrix %in% 'Mc']
-#                            }))
-#
-#             matnam <- Filter(Negate(is.null),
-#                              lapply(k$interact_effect, function(x) {
-#                                if (any(x$matrix %in% 'Mc'))
-#                                  x$matrix[x$matrix %in% 'Mc']
-#                              }))
-#
-#             coefnrs <- Filter(Negate(is.null),
-#                               lapply(k$interact_effect, function(x) {
-#                                 if (any(x$matrix %in% 'Mc'))
-#                                   x$coef_nr
-#                               }))
-#
-#             paste(
-#               paste_coef(info$parname, coefnrs),
-#               mapply(function(x, col) {
-#                 paste0(
-#                   paste_scaling(x = x,
-#                                 scale_pars = info$scale_pars$Mc,
-#                                 rows = col,
-#                                 scalemat = 'spMc'
-#                   ), collapse = " * ")
-#               }, x = sapply(cols, paste_data, matnam = "Mc", index = "i"),
-#               col = cols),
-#               sep = " * ")
-#
-#           }
-#         ), collapse = " + ") # add up main * interaction
-#     }
-#   })
-#   })
-# }
-#
-
-
 paste_rdslope_lp <- function(info, isgk = FALSE) {
   if (is.null(info$hc_list))
     return(NULL)
@@ -230,25 +171,6 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
 }
 
 
-
-
-
-# paste_rdintercept_lp <- function(info, in_b0) {
-#   sapply(names(in_b0), function(k) {
-#
-#     if (length(in_b0[[k]]) > 0) {
-#       paste_linpred(parname = info$parname,
-#                     parelmts = info$parelmts[[paste0("M_", k)]][in_b0[[k]]],
-#                     matnam = paste0("M_", k),
-#                     index = info$index[gsub("M_", "", k)],
-#                     cols = info$lp[[paste0("M_", k)]][in_b0[[k]]],
-#                     scale_pars = info$scale_pars[[k]][in_b0[[k]], ],
-#                     isgk = FALSE)
-#     } else {
-#       "0"
-#     }
-#   }, simplify = FALSE)
-# }
 
 paste_rdintercept_lp <- function(info) {
   if (is.null(info$hc_list))
@@ -296,59 +218,6 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
     }), collapse = "\n"
   )
 }
-
-# paste_Zpart <- function(info, index, hc_info, notin_b, isgk = FALSE) {
-#
-#   if (is.null(hc_info))
-#       return(NULL)
-#
-#
-#   sapply(names(info$parelmts), function(Mk) {
-#     k <- gsub("M_", "", Mk)
-#
-#     matnam <- unlist(lapply(lapply(hc_info[[k]], "[[", 'main_effect'), "[[", 'matrix'))
-#     cols <- unlist(lapply(lapply(hc_info[[k]], "[[", 'main_effect'), "[[", 'column'))
-#
-#     rdindex <- if (isgk) index else paste0("group_", k, "[", index, "]")
-#
-#     rd_intercept <- if (length(matnam) > 0) {
-#       # random intercept
-#       paste_data(matnam = paste0("b_", info$varname, "_", k),
-#                  index = rdindex, col = 1)
-#     }
-#
-#     rd_slope <- if (length(matnam) > 0) {
-#       pastedat <- paste_data(matnam = paste0(matnam, if (isgk) "gk"),
-#                              index = index,
-#                              col = paste0(cols, if (isgk) ", k"))
-#       paste(
-#         paste_data(matnam = paste0("b_", info$varname, "_", k), index = rdindex,
-#                    col = seq_along(matnam) + 1),
-#         mapply(function(x, rows, scale_pars, scalemat) {
-#           paste_scaling(
-#             x = x,
-#             rows = rows,
-#             scale_pars = scale_pars,
-#             scalemat = scalemat
-#           )
-#         }, x = pastedat, rows = cols, scale_pars = info$scale_pars[matnam],
-#         scalemat = paste0('sp', matnam)),
-#         sep = " * "
-#       )}
-#
-#     not_in_rd <- if (length(info$parelmts[[Mk]][notin_b[[Mk]]]) > 0)
-#         paste_linpred(parname = info$parname,
-#                       parelmts = info$parelmts[[Mk]][notin_b[[Mk]]],
-#                       matnam = Mk,
-#                       index = index,
-#                       cols = info$lp[[Mk]][notin_b[[Mk]]],
-#                       scale_pars = info$scale_pars[[Mk]],
-#                       isgk = isgk)
-#
-#     if (any(!sapply(list(rd_intercept, rd_slope, not_in_rd), is.null)))
-#       paste0(rd_intercept, rd_slope, not_in_rd, collapse = " + ")
-#   }, simplify = FALSE)
-# }
 
 
 
@@ -545,46 +414,7 @@ paste_dummies <- function(categories, dest_mat, dest_col, dummy_cols, index, ...
   }, dummy_cols, categories)
 }
 
-# paste_interactions <- function(interactions, N) {
-#
-#   interactions <- interactions[sapply(interactions, "attr", "has_NAs")]
-#
-#   interlong <- sapply(interactions, function(x)
-#     any(names(unlist(unname(x))) %in% 'Ml'))
-#
-#   paste0(
-#     if (any(interlong)) {
-#       paste0(
-#         tab(),
-#         "for (j in 1:", Ntot, ") {\n",
-#         paste0(
-#           sapply(interactions[interlong], function(x) {
-#             paste0(tab(4),
-#                    paste_data(names(x$interterm), index = "j", col = x$interterm),
-#                    " <- ",
-#                    paste0(paste_data(names(x$elmts),
-#                                      index = ifelse(names(x$elmts) == 'Ml', 'j', 'group[j]'),
-#                                      x$elmts), collapse = " * ")
-#             )
-#           }), collapse = "\n"),
-#         "\n", tab(), "}\n")
-#     },
-#     if (any(!interlong)) {
-#       paste0(tab(),
-#              "for (i in 1:", N, ") {\n",
-#              paste0(
-#                sapply(interactions[!interlong], function(x) {
-#                  paste0(tab(4),
-#                         paste_data(names(x$interterm), index = "i", x$interterm),
-#                         " <- ",
-#                         paste0(paste_data(names(x$elmts), index = "i", x$elmts),
-#                                collapse = " * ")
-#                  )
-#                }), collapse = "\n"),
-#              "\n", tab(), "}\n")
-#     }
-#   )
-# }
+
 
 
 paste_interactions <- function(interactions, group_lvls, N) {
