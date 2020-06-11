@@ -346,8 +346,8 @@ This also works when a subset of the imputed values should be displayed:
 # re-fit the model and monitor the imputed values
 mod13d <- update(mod13a, monitor_params = c(imps = TRUE))
 
-# select all imputed values for 'WC' (4th column of M_levelone)
-sub3 <- grep('M_levelone\\[[[:digit:]]+,4\\]', parameters(mod13d), value = TRUE)
+# select all imputed values for 'WC' (4th column of M_lvlone)
+sub3 <- grep('M_lvlone\\[[[:digit:]]+,4\\]', parameters(mod13d), value = TRUE)
 sub3
 
 # pass "sub3" to "subset" via "other", for example in a traceplot:

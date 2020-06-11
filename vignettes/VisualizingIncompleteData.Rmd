@@ -94,7 +94,7 @@ plot_all(simLong, allNA = TRUE, fill = '#e30f41', border = '#34111b',
          ncol = 3, breaks = 30, use_level = TRUE, idvars = "ID")
 ```
 The information to which level a variable belongs is added to
-the title of each plot ("levelone" refers to the first level, for which there is
+the title of each plot ("lvlone" refers to the first level, for which there is
 no grouping variable).
 Variables belonging to lower levels are summarized on their respective level, 
 i.e., the counts of `ETHN`, for instance, will sum up to the number of subjects
