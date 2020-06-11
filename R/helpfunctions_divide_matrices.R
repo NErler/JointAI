@@ -94,9 +94,7 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
   # - timevar: name of the time variable of the time-varying covariates
   # - groups: list of grouping information (as in Mlist)
 
-  allvars <- unique(c(all_vars(fixed),
-                      all_vars(random),
-                      all_vars(auxvars),
+  allvars <- unique(c(all_vars(c(fixed, random, auxvars)),
                       timevar))
 
   # identify survival outcomes and the related variables
@@ -461,9 +459,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   groups <- get_groups(idvar, data)
 
   # identify all variables involved and those variables that are covariates
-  allvars <- unique(c(all_vars(fixed),
-                      all_vars(remove_grouping(random)),
-                      all_vars(auxvars)))
+  allvars <- all_vars(c(fixed, remove_grouping(random), auxvars))
 
   covars <- allvars[!allvars %in% unlist(extract_outcome(fixed))]
 

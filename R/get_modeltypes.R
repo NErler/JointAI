@@ -25,9 +25,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
   }
 
   # check that all variables are found in the data
-  allvars <- unique(c(all_vars(fixed),
-                      all_vars(random),
-                      all_vars(auxvars),
+  allvars <- unique(c(all_vars(c(fixed, random, auxvars)),
                       names(models)))
 
   if (any(!allvars %in% names(data))) {
@@ -52,12 +50,9 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
 
   # new version of allvars, without the grouping variable
-  allvars <- unique(c(
-    names(fixed),
-    all_vars(remove_LHS(fixed)),
-    all_vars(random2),
-    all_vars(auxvars),
-    names(models)))
+  allvars <- unique(c(names(fixed),
+                      all_vars(c(remove_LHS(fixed), random2, auxvars)),
+                      names(models)))
 
   group_lvls <- colSums(!identify_level_relations(groups))
   max_lvl <- max(group_lvls)

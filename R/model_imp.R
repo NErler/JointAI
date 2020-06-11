@@ -352,16 +352,13 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
   # drop empty levels
   data <- drop_levels(data = data,
-                      allvars = unique(c(all_vars(fixed),
-                                         all_vars(random),
-                                         all_vars(auxvars))), mess = mess)
+                      allvars = all_vars(c(fixed, random, auxvars)), mess = mess)
 
 
   # convert continuous variable with 2 different values and logical variables to factors
   data <- convert_variables(data = data,
-                            allvars = unique(c(all_vars(fixed),
-                                               all_vars(random),
-                                               all_vars(auxvars))), mess = mess)
+                            allvars = all_vars(c(fixed, random, auxvars)),
+                            mess = mess)
 
 
   # * divide matrices ------------------------------------------------------------

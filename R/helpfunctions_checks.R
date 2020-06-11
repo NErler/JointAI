@@ -11,9 +11,7 @@ check_vars_in_data <- function(datanames, fixed = NULL, random = NULL,
                                auxvars = NULL, timevar = NULL) {
 
   # make vector of any variable occurring in the formulas
-  allvars <- unique(c(all_vars(fixed),
-                      all_vars(random),
-                      all_vars(auxvars),
+  allvars <- unique(c(all_vars(c(fixed, random, auxvars)),
                       timevar)
   )
 
@@ -28,14 +26,11 @@ check_classes <- function(data, fixed = NULL, random = NULL, auxvars = NULL,
                           timevar = NULL, mess = TRUE) {
 
   # check classes of covariates
-  vars <- unique(c(all_vars(fixed),
-                   all_vars(remove_grouping(random)),
-                   all_vars(auxvars),
+  vars <- unique(c(all_vars(c(fixed, remove_grouping(random), auxvars)),
                    timevar))
 
-  covars <- unique(c(all_vars(remove_LHS(fixed)),
-                     all_vars(remove_grouping(random)),
-                     all_vars(auxvars),
+  covars <- unique(c(all_vars(c(remove_LHS(fixed), remove_grouping(random),
+                                auxvars)),
                      timevar))
 
   classes <- unlist(sapply(data[vars], class))
