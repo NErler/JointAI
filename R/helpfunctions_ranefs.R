@@ -18,11 +18,23 @@
 #   - directly goes into linear predictor ("Z part")
 
 
+# used in get_model1_info() (2020-06-11)
 get_hc_info <- function(varname, lvl, Mlist, parelmts, lp) {
+
+  # - varname: variable name (unabbreviated form) of the outcome of the current
+  #            sub-model
+  # - lvl: level of the outcome variable of the current sub-model
+  # - Mlist: list of design matrices etc. (obtained from divide_matrices())
+  # - parelmts: vector of parameter elements used in the current sub-model
+  #             (from info_list)
+  # - lp: linear predictor of the current sub-model (from info_list)
+
+
   lvls <- Mlist$group_lvls
 
   # identify relevant levels (all higher levels)
   clus <- names(lvls)[lvls > lvls[lvl]]
+
   # if there is no random effects structure specified, assume random intercepts
   # at the appropriate levels
   newrandom <- if (is.null(Mlist$random[[varname]])) {
@@ -49,15 +61,20 @@ get_hc_info <- function(varname, lvl, Mlist, parelmts, lp) {
 
 
 
-
+# used in get_hc_info() (2020-06-11)
 get_hc_list <- function(k, newrandom, Mlist) {
+  # - k: vector with names of grouping levels used for the current sub-model
+  # - newrandom: list of random effects formulas in the current sub-model
+  # - Mlist: list of design matrices etc. (obtained from divide_matrices())
+
   Mlvls <- Mlist$Mlvls
   Mnam <- sapply(Mlist$M, colnames, simplify = FALSE)
+
   # column names of random effect design matrices per required level
   Znam <- colnames(model.matrix(newrandom[[k]], Mlist$data))
 
   # check for involvement in interactions
-  inters <- Mlist$interactions#[names(Mlist$interactions) %in% names(Mlist$lp_cols[[varname]][[paste0("M_", k)]])]
+  inters <- Mlist$interactions
 
   # identify if there are elements of interaction in Z
   inZ <- if (length(inters) > 0)
@@ -80,8 +97,13 @@ get_hc_list <- function(k, newrandom, Mlist) {
 
 
 
-
+# used in get_hc_info() (2020-06-11)
 orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
+  # - lvl: level of the outcome variable of the current sub-model
+  # - lvls: grouping levels in the current sub-model
+  # - hc_list: obtained from get_hc_list()
+  # - parelmts: vector of parameter elements (from info_list)
+  # - lp: linear predictor (from info_list)
 
   clus <- names(lvls)[lvls > lvls[lvl]]
 

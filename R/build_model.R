@@ -12,10 +12,10 @@ write_model <- function(info_list, Mlist, modelfile = '') {
       if (any(sapply(Mlist$interactions, "attr", "has_NAs"))) {
         paste0("\n", tab(), "# Re-calculate interaction terms\n",
                paste_interactions(Mlist$interactions, group_lvls = Mlist$group_lvls,
-                                  N = Mlist$N)
+                                  N = Mlist$N), "\n"
         )
       },
-      "\n}", file = modelfile
+      "\r}", file = modelfile
   )
 }
 

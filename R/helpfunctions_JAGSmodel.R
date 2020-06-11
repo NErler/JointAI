@@ -681,14 +681,50 @@ paste_interactions <- function(interactions, group_lvls, N) {
 }
 
 
+# used in JAGSmodels (2020-06-11)
+get_priordistr <- function(shrinkage, type, family = NULL, link = NULL, parname) {
+  # write specification fo the prior distribution for the regression parameters,
+  # using the specified type of shrinkage (or no shrinkage)
+
+  if (type %in% c('glm', 'glmm')) {
+    type <- switch(family,
+                   gaussian = 'norm',
+                   binomial = link,
+                   Gamma = 'gamma',
+                   poisson = 'poisson',
+                   lognorm = 'norm',
+                   beta = 'beta'
+    )
+  }
+
+
+  if (is.null(shrinkage) | isFALSE(shrinkage)) {
+    # no shrinkage
+    paste0(tab(4), parname, "[k] ~ dnorm(mu_reg_", type,
+           ", tau_reg_", type, ")", "\n")
+
+  } else if (shrinkage == 'ridge') {
+    # ridge shrinkage
+    paste0(tab(4), parname, "[k] ~ dnorm(mu_reg_", type,
+           ", tau_reg_", type , "_ridge_", parname, "[k])", "\n",
+           tab(4), "tau_reg_", type, "_ridge_", parname, "[k] ~ dgamma(0.01, 0.01)", "\n")
+
+  } else {
+    errormsg('Regularization of type %s is not implemented.', dQuote(shrinkage))
+  }
+}
 
 
 
 # specifications for GLMs (and GLMMs) ------------------------------------------
+
 # * distribution ---------------------------------------------------------------
+
+# used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
 get_distr <- function(family, varname, index, isgk = FALSE) {
-  if (is.null(family))
-    return(NULL)
+  # write the outcome distribution model (right hand side) for a GLM(M) JAGS model
+
+  if (is.null(family))   return(NULL)
 
   switch(family,
          "gaussian" = paste0("dnorm(mu", if (isgk) "gk", "_", varname,
@@ -710,9 +746,12 @@ get_distr <- function(family, varname, index, isgk = FALSE) {
 }
 
 # * link -----------------------------------------------------------------------
+
+# used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
 get_linkfun <- function(link) {
-  if (is.null(link))
-    return(NULL)
+  # write the link function string for a GLM(M) JAGS model
+
+  if (is.null(link)) return(NULL)
 
   switch(link,
          "identity" = function(x) x,
@@ -728,10 +767,13 @@ get_linkfun <- function(link) {
   )
 }
 
-# * reparametrization ----------------------------------------------------------
+# * re-parametrization ----------------------------------------------------------
+
+# used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
 get_repar <- function(family, varname, index, isgk = FALSE) {
-  if (is.null(family))
-    return(NULL)
+  # write the syntax to calculate the re-parametrization in GLM(M) JAGS model
+
+  if (is.null(family)) return(NULL)
 
   switch(family,
          "gaussian" = NULL,
@@ -759,9 +801,13 @@ get_repar <- function(family, varname, index, isgk = FALSE) {
 }
 
 # * prior for a second parameter -----------------------------------------------
+
+# used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
 get_secndpar <- function(family, varname) {
-  if (is.null(family))
-    return(NULL)
+  # write syntax for second parameter (typically precision or variance) in
+  # GLM(M) JAGS model
+
+  if (is.null(family)) return(NULL)
 
   switch(family,
          "gaussian" = paste0("\n",
@@ -781,10 +827,11 @@ get_secndpar <- function(family, varname) {
 }
 
 
-
+# used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
 get_GLM_modelname <- function(family) {
-  if (is.null(family))
-    return(NULL)
+  # obtain model name to be printed in JAGSmodel for GLM(M)
+
+  if (is.null(family)) return(NULL)
 
   switch(family,
          "gaussian" = 'Normal',
@@ -797,7 +844,11 @@ get_GLM_modelname <- function(family) {
 }
 
 
+# used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
 get_linkindent <- function(link) {
+  # get number of characters that lines after a line break in the  linear
+  # predictor of a GLM(M) JAGS model should be indented
+
   if (is.null(link)) 0
   else
     switch(link,
@@ -809,37 +860,4 @@ get_linkindent <- function(link) {
            inverse = 4)
 }
 
-
-
-# * shrinkage ------------------------------------------------------------------
-get_priordistr <- function(shrinkage, type, family = NULL, link = NULL, parname) {
-
-
-  if (type %in% c('glm', 'glmm')) {
-    type <- switch(family,
-                   gaussian = 'norm',
-                   binomial = link,
-                   Gamma = 'gamma',
-                   poisson = 'poisson',
-                   lognorm = 'norm',
-                   beta = 'beta'
-    )
-  }
-
-
-  if (is.null(shrinkage) | isFALSE(shrinkage)) {
-    paste0(tab(4), parname, "[k] ~ dnorm(mu_reg_", type,
-           ", tau_reg_", type, ")", "\n")
-
-  } else if (shrinkage == 'ridge') {
-
-    paste0(tab(4), parname, "[k] ~ dnorm(mu_reg_", type,
-           ", tau_reg_", type , "_ridge_", parname, "[k])", "\n",
-           tab(4), "tau_reg_", type, "_ridge_", parname, "[k] ~ dgamma(0.01, 0.01)", "\n")
-
-  } else {
-    stop(gettextf('Regularization of type %s is not implemented.', dQuote(shrinkage)),
-         call. = FALSE)
-  }
-}
 

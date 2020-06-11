@@ -1,4 +1,5 @@
 
+# used in extract_fcts() and make_fctDF() (2020-06-11)
 melt_list <- function(l, varname = "L1", valname = NULL) {
 
   do.call(rbind,
@@ -15,7 +16,10 @@ melt_list <- function(l, varname = "L1", valname = NULL) {
 }
 
 
+# used in melt_matrix_list(), md_pattern(), traceplot(), densplot(),
+#  plot_imp_distr() (2020-06-11)
 melt_matrix <- function(X, varnames = NULL, valname = 'value') {
+
   if (!inherits(X, 'matrix'))
     errormsg("This function may not work for objects that are not matrices.")
 

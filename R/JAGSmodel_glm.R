@@ -1,9 +1,9 @@
 JAGSmodel_glm <- function(info) {
-  # * settings for families & links -------------------------------------------
 
   index <- info$index[gsub('M_', '', info$resp_mat)]
   N <- info$N[gsub("M_", '', info$resp_mat)]
 
+  # * settings for families & links -------------------------------------------
   distr <- get_distr(family = info$family, varname = info$varname,
                      index = index)
 
@@ -32,13 +32,13 @@ JAGSmodel_glm <- function(info) {
     paste0("T(", paste0(info$trunc, collapse = ", "), ")")
 
 
-  # * lin. predictor of baseline covariates (including interaction terms) ------
-  Mc_predictor <- paste_linpred(info$parname,
-                                info$parelmts[[info$resp_mat]],
-                                matnam = info$resp_mat,
-                                index = index,
-                                cols = info$lp[[info$resp_mat]],
-                                scale_pars = info$scale_pars[[info$resp_mat]])
+  # * linear predictor of baseline covariates (including interaction terms) ------
+  linpred <- paste_linpred(info$parname,
+                           info$parelmts[[info$resp_mat]],
+                           matnam = info$resp_mat,
+                           index = index,
+                           cols = info$lp[[info$resp_mat]],
+                           scale_pars = info$scale_pars[[info$resp_mat]])
 
 
   # * dummy variables ----------------------------------------------------------
@@ -71,14 +71,15 @@ JAGSmodel_glm <- function(info) {
   }
 
   # * paste model --------------------------------------------------------------
-  paste0(tab(), add_dashes(paste0("# ", modelname, " model for ", info$varname)), "\n",
+  paste0('\r',
+         tab(), add_dashes(paste0("# ", modelname, " model for ", info$varname)), "\n",
          tab(), "for (", index, " in 1:", N, ") {", "\n",
          tab(4), info$resp_mat, "[", index,", ", info$resp_col,
          "] ~ ", distr, trunc, "\n",
          paste_ppc,
          repar,
          tab(4), linkfun(paste0("mu_", info$varname, "[", index, "]")), " <- ",
-         add_linebreaks(Mc_predictor, indent = indent),
+         add_linebreaks(linpred, indent = indent),
          dummies,
          info$trafos,
          "\n",
