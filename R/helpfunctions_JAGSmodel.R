@@ -628,22 +628,35 @@ paste_dummies <- function(categories, dest_mat, dest_col, dummy_cols, index, ...
 
 
 
-
+# used in write_model() (2020-06-11)
 paste_interactions <- function(interactions, group_lvls, N) {
+  #
+  # - interactions: list with interaction information (names of matrices and
+  #                 column numbers of the  interaction term and the elements
+  #                 of the interaction, and the info if missing values are
+  #                 infolved; obtained from Mlist)
+  # - group_lvls: vector of order of the grouping levels
+  # - N: vector of the number of observations per grouping level
 
 
+  # determine which index should be used for each of the levels
   index <- setNames(sapply(seq_along(sort(group_lvls)),
                            function(k) paste0(rep('i', k), collapse = '')),
                     names(sort(group_lvls)))
 
+  # select only those interactions in which incomplete variables are involved
   interactions <- interactions[sapply(interactions, "attr", "has_NAs")]
 
+  # determine the minimal level for each interaction (this is the level on which
+  # the interaction has to be calculated; observations from higher level
+  # variables are then repeated to obtain a fitting vector)
   minlvl <- sapply(interactions, function(x) {
     lvls <- gsub("M_", "", unique(names(unlist(unname(x)))))
     lvls[which.min(group_lvls[lvls])]
   })
 
   paste0(
+    # for each of the levels on which interactions have to be written:
     sapply(unique(minlvl), function(lvl) {
       paste0(
         tab(),
@@ -669,32 +682,55 @@ paste_interactions <- function(interactions, group_lvls, N) {
 
 
 
+# used in get_model_info()
 paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
+  # generate the strings that re-calculates trafos in the JAGS models
+  # - Mlist: info on design matrices etc., obtained from divide_matrices()
+  # - varname: name of the variabel for which the transformation syntax is being
+  #            determined
+  # - index: character string determining the index, i.e., 'i" or "ii"
+  # - isgk: is this syntax part of the Gauss-Kronrod quadrature part?
 
+  # if the output is being written in the Gauss-Kronrod quadrature part,
+  # use "fcts_all" (i.e., all trafos, also those who only involve completely
+  # observed variables), otherwise use "trafos" (i.e. only trafos that involve
+  # incomplete variables)
   trafos <- if (isgk) Mlist$fcts_all else Mlist$trafos
 
-  if (!any(trafos$var %in% varname))
-    return(NULL)
+  if (!any(trafos$var %in% varname)) return(NULL)
+
 
   trafolist <- sapply(which(trafos$var == varname), function(i) {
+    # for each row in trafos that uses the current variable:
     x <- trafos[i, , drop = FALSE]
 
     if (!x$dupl) {
+      # if this row is not a duplicate, determine the matrix and column the
+      # transformed version of the variable is stored in
       dest_mat <- x$matrix
       dest_col <- match(x$colname, colnames(Mlist$M[[dest_mat]]))
 
+      # if there is a duplicate version of the currently used row of trafo,
+      # consider the current row and these duplicate rows, otherwise only the
+      # current row
       if (!is.na(x$dupl_rows)) {
         xx <- trafos[c(i, unlist(x$dupl_rows)), ]
       } else {
         xx <- x
       }
+
+      # identify the name of the original variable and the matrix containing it
       vars <- xx$var
       vars_mat <- xx$matrix
+      # obtain the numbers of the columns containing the original variables
       vars_cols <- sapply(seq_along(vars), function(k)
-        match(xx$var[k], colnames(Mlist$M[[vars_mat[k]]]))
+        match(vars[k], colnames(Mlist$M[[vars_mat[k]]]))
       )
 
       fct <- x$fct
+
+      # if the function is wrapped in the indicator function, remove this
+      # indicator function
       if (x$type == "I") {
         fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))
       }

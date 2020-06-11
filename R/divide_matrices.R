@@ -209,14 +209,14 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   list(data = data, fixed = fixed, random = random, idvar = idvar,
        M = M, Mlvls = Mlvls,
        lp_cols = lp_cols, interactions = interactions,
-       trafos = fcts_mis,
+       trafos = fcts_mis, fcts_all = fcts_all,
        refs = refs, timevar = timevar,
        auxvars = auxvars, groups = groups,
        group_lvls = group_lvls,
        N = sapply(groups, function(x) length(unique(x))),
        ppc = ppc, shrinkage = shrinkage,
        models = models, scale_pars = scale_pars,
-       outcomes = outcomes, fcts_all = fcts_all,
+       outcomes = outcomes,
        terms_list = terms_list, df_basehaz = df_basehaz
   )
 }
