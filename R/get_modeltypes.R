@@ -26,7 +26,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
   # check that all variables are found in the data
   allvars <- unique(c(all_vars(c(fixed, random, auxvars)),
-                      names(models)))
+                      names(models), timevar))
 
   if (any(!allvars %in% names(data))) {
     errormsg("Variable(s) %s were not found in the data." ,
@@ -52,7 +52,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
   # new version of allvars, without the grouping variable
   allvars <- unique(c(names(fixed),
                       all_vars(c(remove_LHS(fixed), random2, auxvars)),
-                      names(models)))
+                      names(models), timevar))
 
   group_lvls <- colSums(!identify_level_relations(groups))
   max_lvl <- max(group_lvls)
@@ -95,13 +95,13 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
     varinfo <- varinfo[which(!varinfo$L1 %in% no_model), , drop = FALSE]
 
+
     types <- split(varinfo,
                    ifelse(varinfo$out, 'outcome',
                           ifelse(varinfo$nmis > 0,
-                                 ifelse(!varinfo$lvl %in% max_lvl, 'incomplete_tvar',
-                                        'incomplete_baseline'),
-                                 ifelse(!varinfo$lvl %in% max_lvl, 'complete_tvar',
-                                        'complete_baseline'))))
+                                 paste0('incomplete_lvl', varinfo$lvl),
+                                 paste0('complete_lvl', varinfo$lvl)
+                          )))
 
 
     types[which(names(types) != 'outcome')] <-
@@ -110,10 +110,18 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
       )
 
 
-    models <- rbind(types$outcome, types$incomplete_tvar,
-                if (!is.null(types$incomplete_baseline))
-                  types$complete_tvar,
-                types$incomplete_baseline)
+
+    NA_lvls <- unique(varinfo$lvl[varinfo$nmis > 0])
+
+
+    models <- do.call(rbind,
+                      c(types['outcome'],
+                        lapply(1:max(NA_lvls), function(k) {
+                          do.call(rbind,
+                                  types[paste0(c('incomplete_lvl', 'complete_lvl'), k)]
+                          )
+                        })
+                      ))
 
     models <- unlist(setNames(models$type, models$L1))
 
