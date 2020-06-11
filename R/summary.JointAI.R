@@ -384,7 +384,7 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
         print(coefs[[k]], digits = digits)
 
         cat("\n\nRandom effects covariance matrix:\n")
-        print(get_Dmat(x, varname = varname), digits = digits)
+        print(get_Dmat(object = x, varname = varname), digits = digits)
 
       } else {
         if (length(coefs[[k]] > 0)) {

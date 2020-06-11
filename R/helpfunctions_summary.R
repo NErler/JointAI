@@ -34,24 +34,48 @@ prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 }
 
 
-# @param x object of class JointAI
-get_Dmat <- function(x, varname) {
-  MCMC <- prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL,
-                    exclude_chains = NULL, warn = TRUE, mess = TRUE)
 
-  Ds <- grep(paste0("^D\\_", varname, "\\[[[:digit:]]*,[[:digit:]]*\\]"), colnames(MCMC), value = TRUE)
-  Dpos <- t(sapply(strsplit(gsub(paste0('D_', varname, '|\\[|\\]'), '', Ds), ","), as.numeric))
+# used in print.JointAI() (2020-06-10)
+get_Dmat <- function(object, varname) {
+  # Return the posterior mean of the random effects variance matrices in
+  # matrix form (one matrix per grouping level)
+  # - object: object of class JointAI
+  # - varname: name of the outcome of the sub-model
 
-  term <- terms(remove_grouping(x$random[[varname]]))
+    MCMC <- prep_MCMC(object, start = NULL, end = NULL, thin = NULL,
+                      subset = NULL, exclude_chains = NULL, warn = TRUE,
+                      mess = TRUE)
 
-  dimnam <- c(if (attr(term, 'intercept') == 1) "(Intercept)",
-              attr(term, 'term.labels'))
 
-  Dmat <- matrix(nrow = length(dimnam), ncol = length(dimnam),
-                 dimnames = list(dimnam, dimnam))
-  for (k in seq_along(Ds)) {
-    Dmat[Dpos[k, 1], Dpos[k, 2]] <- mean(MCMC[, Ds[k]])
-  }
+    pat <- sapply(names(object$Mlist$group_lvls), function(lvl)
+      paste0("^D_", varname, "_", lvl))
+
+    # find the right column names in the MCMC sample matrix
+    Ds <- sapply(pat, function(p)
+      grep(paste0(p, "\\[[[:digit:]]+,[[:digit:]]+\\]"),
+           colnames(MCMC), value = TRUE),
+      simplify = FALSE)
+
+    Dpos <- mapply(function(pat, Ds) {
+      t(sapply(strsplit(gsub(paste0(pat, '|\\[|\\]'), '', Ds), ","), as.numeric))
+    }, pat = pat, Ds = Ds)
+
+    Dmat <- lapply(remove_grouping(object$random[[varname]]), function(r) {
+      term <- terms(r)
+      dimnam <- c(if (attr(term, 'intercept') == 1) "(Intercept)",
+                  attr(term, 'term.labels'))
+
+      matrix(nrow = length(dimnam), ncol = length(dimnam),
+             dimnames = list(dimnam, dimnam))
+    })
+
+    for (i in names(Dmat)) {
+      for (k in seq_along(Ds[[i]])) {
+        Dmat[[i]][Dpos[[i]][k, 1], Dpos[[i]][k, 2]] <- mean(MCMC[, Ds[[i]][k]])
+      }
+      Dmat[[i]][is.na(Dmat[[i]])] <- t(Dmat[[i]])[is.na(Dmat[[i]])]
+    }
+
 
   Dmat
 }
