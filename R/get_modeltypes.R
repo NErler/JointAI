@@ -116,10 +116,12 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
     models <- do.call(rbind,
                       c(types['outcome'],
+                        if (any(!varinfo$out) & length(NA_lvls) > 0)
                         lapply(1:max(NA_lvls), function(k) {
-                          do.call(rbind,
-                                  types[paste0(c('incomplete_lvl', 'complete_lvl'), k)]
-                          )
+                          set <- ifelse(k == max_lvl,
+                                        c('incomplete_lvl'),
+                                        c('incomplete_lvl', 'complete_lvl'))
+                          do.call(rbind, types[paste0(set, k)])
                         })
                       ))
 
