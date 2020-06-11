@@ -135,7 +135,7 @@ JAGSmodel_coxph <- function(info) {
 
   survtime_col <- paste0(info$resp_mat[1] , "[",
                          if (info$resp_mat[1] != info$resp_mat[2]) {
-                           paste0("survrow_", info$varname, "[", index, "]")
+                           paste0("srow_", info$varname, "[", index, "]")
                          } else {
                            index
                          }, ", ", info$resp_col[1], "]")
@@ -251,7 +251,7 @@ JAGSmodel_JM <- function(info) {
 
   survtime_col <- paste0(info$resp_mat[1] , "[",
                          if (info$resp_mat[1] != info$resp_mat[2]) {
-                           paste0("survrow_", info$varname, "[", index, "]")
+                           paste0("srow_", info$varname, "[", index, "]")
                          } else {
                            index
                          }, ", ", info$resp_col[1], "]")

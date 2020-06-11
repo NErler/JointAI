@@ -242,7 +242,7 @@ predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0
       predict_fun(formula = object$fixed[[varname]],
                   newdata = newdata, type = types[varname], data = object$data,
                   MCMC = MCMC, varname = varname,
-                  Mlist = object$Mlist, survrow = object$data_list$survrow,
+                  Mlist = object$Mlist, srow = object$data_list$srow,
                   coef_list = object$coef_list, info_list = object$info_list,
                   quantiles = quantiles, mess = mess)
     } else {
@@ -405,7 +405,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp"
 predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                           type = c("lp", "risk", "expected", "survival"),
                           varname, quantiles = c(0.025, 0.975),
-                          survrow = NULL,
+                          srow = NULL,
                           mess = TRUE, ...) {
   type <- match.arg(type)
 
@@ -477,7 +477,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   gkw <- gauss_kronrod()$gkw[ordgkx]
 
 
-  survrow <- if (is.null(Mlist$timevar)) {
+  srow <- if (is.null(Mlist$timevar)) {
     1:nrow(Mlist$M[[resp_mat]])
   } else {
     which(Mlist$M$M_lvlone[, Mlist$timevar] ==

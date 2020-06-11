@@ -598,8 +598,8 @@ paste_underlvalue <- function(varname, covname, index, isgk, ...) {
 
   if (isgk) # "mugk_covname[i, k]"
     paste0("mugk_", covname, "[", index, ", k]")
-  else # "mu_covname[survrow_varname[i]]"
-    paste0('mu_', covname, "[survrow_", varname, "[", index, "]]")
+  else # "mu_covname[srow_varname[i]]"
+    paste0('mu_', covname, "[srow_", varname, "[", index, "]]")
 }
 
 

@@ -131,14 +131,14 @@ get_data_list <- function(Mlist, info_list) {
     # if there are time-varying covariates, identify the rows of the longitudinal
     # variable that correspond to the event times
       if (x$haslong) {
-        survrow <- which(Mlist$M$M_levelone[, Mlist$timevar] ==
+        srow <- which(Mlist$M$M_lvlone[, Mlist$timevar] ==
                            x$survtime[l[[paste0('group_', x$surv_lvl)]]])
 
-        if (length(survrow) != length(unique(Mlist$groups[[x$surv_lvl]])))
+        if (length(srow) != length(unique(Mlist$groups[[x$surv_lvl]])))
           errormsg("The number of observations for survival differs from the
                    number of subjects.")
 
-        l[[paste0('survrow_', x$varname)]] <- survrow
+        l[[paste0('srow_', x$varname)]] <- srow
       }
 
 
