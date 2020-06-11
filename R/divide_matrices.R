@@ -137,8 +137,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # set columns of trafos that need to be re-calculated in JAGS to NA
   for (k in names(M)) {
-    if (any(k %in% fcts_mis$matrix))
-      M[[k]][, unique(fcts_mis$colname[fcts_mis$matrix %in% k])] <- NA
+    M[[k]][, intersect(colnames(M[[k]]), fcts_mis$colname)] <- NA
   }
 
 
