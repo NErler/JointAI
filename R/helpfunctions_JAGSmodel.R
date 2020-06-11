@@ -60,7 +60,7 @@ paste_linpred <- function(parname, parelmts, matnam, index, cols, scale_pars,
   # - parname: name of the parameter, e.g. "beta"
   # - parelmts: vector specifying which elements of the parameter vector are
   #             to be used, e.g. c(1,2,3,6,8,4)
-  # - matnam: name of the design matrix, e.g. "M_levelone" or "M_ID"
+  # - matnam: name of the design matrix, e.g. "M_lvlone" or "M_ID"
   # - index: character sting specifying the index to be used, e.g. "i" or "ii"
   # - cols: index of the columns of the design matrix to be used, e.g. c(1, 4, 2, 10)
   # - scale_pars: a matrix with row names according to the columns of the
@@ -128,7 +128,7 @@ paste_scale <- function(x, row, scalemat) {
   # - x: term that will be scaled (or vector of terms)
   # - row: the row number(s) of the matrix containing the scaling parameters
   # - scalemat: the name of the matrix containing the scaling parameters,
-  #             e.g. "spM_levelone" or "spM_ID"
+  #             e.g. "spM_lvlone" or "spM_ID"
   #             The matrix is assumed to have columns "center" and "scale".
 
   paste0("(", x, " - ", scalemat, "[", row, ", 1])/", scalemat, "[", row, ", 2]")
@@ -272,9 +272,9 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
     function(k) {
       # find the correct specification of the index. This depends on the level
       # of the outcome, but also on the current grouping level, whether the
-      # outcome is on the lowest level (levelone) or not, and if the output is
+      # outcome is on the lowest level (lvlone) or not, and if the output is
       # used in the GK-quadrature
-      index <- if (!isgk & lvl == 'levelone') {
+      index <- if (!isgk & lvl == 'lvlone') {
         # if the outcome is the lowest level and not in GK, use
         # - the index of the outcome level if the random effect is on the same
         #   level
@@ -293,12 +293,12 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
       } else if (!isgk) {
         # if the outcome is not on the lowest level and the random effect is on
         # a different level, and we're not in the quadrature part, use group
-        # (relating rd. effect level to levelone), indexed by the position of
-        # the outcome level (position in levelone that corresponds to the
+        # (relating rd. effect level to lvlone), indexed by the position of
+        # the outcome level (position in lvlone that corresponds to the
         # current index value)
         paste0('group_', k, "[",
                "pos_", lvl, "[", info$index[lvl], "]]")
-      } else if (isgk & (k == info$surv_lvl | k == 'levelone')) {
+      } else if (isgk & (k == info$surv_lvl | k == 'lvlone')) {
         # if we are in the quadrature part, and the random effects
         # level is either the same as the outcome level or the lowest
         # level, use the index of the level of the survival outcome
@@ -307,7 +307,7 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
         # if we are in the quadrature part and the random effects level is not
         # the same as the outcome level and not the lowest level, use group and
         # pos to relate the level of the survival outcome and the level of the
-        # random effect, via levelone
+        # random effect, via lvlone
         paste0('group_', k, "[",
                "pos_", info$surv_lvl, "[", info$index[info$surv_lvl], "]]")
       }
@@ -505,7 +505,7 @@ paste_linpred_JM <- function(varname, parname, parelmts, matnam, index, cols,
   # - parname: name of the parameter, e.g. "beta"
   # - parelmts: vector specifying which elements of the parameter vector are to be
   #             used, e.g. c(1,2,3,6,8,4)
-  # - matnam: name or the design matrix, e.g. "M_levelone
+  # - matnam: name or the design matrix, e.g. "M_lvlone
   # - index: character sting specifying the index to be used, e.g. "i" or "j"
   # - cols: index of the columns of the design matrix to be used, e.g. c(1, 4, 2, 10)
   # - scale_pars: a matrix with rownames according to the columns of the design
@@ -578,7 +578,7 @@ paste_obsvalue <- function(varname, matname, index, column, isgk, ...) {
   # - ...: for compatibility of syntax with other association structure type
   #        functions
 
-  if (isgk) # "M_levelonegk[i, 4, k]" in the GK-quadrature
+  if (isgk) # "M_lvlonegk[i, 4, k]" in the GK-quadrature
     paste0(matname, "gk[", index, ", ", column, ", k]")
   else # "M_levelone[survrow_varname[i, k]" outside the quadrature
     paste0(matname, "[survrow_", varname, "[", index, "], ", column, "]")

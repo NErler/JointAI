@@ -56,10 +56,10 @@ get_data_list <- function(Mlist, info_list) {
   # random effects groupings ---------------------------------------------------
   if (length(Mlist$groups) > 1) {
 
-    # Obtain groups from Mlist, except for the group 'levelone' (never used).
+    # Obtain groups from Mlist, except for the group 'lvlone' (never used).
     # The groups are vectors of length nrow(data) that indicate which rows
     # belong together on a given grouping level.
-    groups <- Mlist$groups[!names(Mlist$groups) %in% 'levelone']
+    groups <- Mlist$groups[!names(Mlist$groups) %in% 'lvlone']
 
     # get the position (row) of a given observation
     # - to identify the correct rows between different sub-levels
@@ -182,7 +182,7 @@ get_data_list <- function(Mlist, info_list) {
       # for survival models, there can only be one level below the level of the
       # survival outcome (i.e., time-varying variables have level 1, survival
       # outcome has level 2)
-      l$M_levelonegk <- array(data = unlist(Mgk),
+      l$M_lvlonegk <- array(data = unlist(Mgk),
                               dim = c(nrow(Mgk[[1]]), ncol(Mgk[[1]]), length(gkx)),
                               dimnames = list(c(), dimnames(Mgk)[[2]], c())
       )

@@ -41,7 +41,7 @@ get_groups <- function(idvar, data) {
       }
     }
 
-    groups$levelone <- 1:nrow(data)
+    groups$lvlone <- 1:nrow(data)
 
     # check for duplicate levels
     gr_dupl <- duplicated(groups)
@@ -51,7 +51,7 @@ get_groups <- function(idvar, data) {
                unique(names(groups)[gr_dupl], names(groups)[gr_dupl2]))
     }
   } else {
-    groups = list(levelone = 1:nrow(data))
+    groups = list(lvlone = 1:nrow(data))
   }
 
   groups
@@ -135,7 +135,7 @@ check_varlevel <- function(x, groups, group_lvls = NULL) {
     names(clus)[!clus]
   } else {
     # if the variable varies in all levels, it is from level one
-    'levelone'
+    'lvlone'
   }
 }
 
@@ -387,8 +387,8 @@ get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL, td_cox = 
                           terms_list = Mlist$terms_list)
 
   Xnew <- matrix(nrow = length(rows) * length(gkx),
-                 ncol = ncol(Mlist$M$M_levelone),
-                 dimnames = list(c(), colnames(Mlist$M$M_levelone)))
+                 ncol = ncol(Mlist$M$M_lvlone),
+                 dimnames = list(c(), colnames(Mlist$M$M_lvlone)))
 
   Xnew[, colnames(X)[colnames(X) %in% colnames(Xnew)]] <-
     X[, colnames(X)[colnames(X) %in% colnames(Xnew)]]
@@ -485,7 +485,7 @@ get_survinfo <- function(info_list, Mlist) {
     surv_lvl = gsub("M_", "" , x$resp_mat[2])
     longlvls <- names(Mlist$group_lvls)[Mlist$group_lvls < Mlist$group_lvls[surv_lvl]]
 
-    if (any(longlvls != "levelone"))
+    if (any(longlvls != "lvlone"))
       errormsg("There can be only one level of observations below the level
                on which survival is measured.")
 

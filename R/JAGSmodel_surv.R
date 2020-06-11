@@ -100,32 +100,32 @@ JAGSmodel_coxph <- function(info) {
 
   logh_pred <- paste(
     c(paste0("logh0_", info$varname, "[", index, "] + eta_surv_", info$varname, "[", index, "]"),
-    if (info$resp_mat[2] != 'M_levelone') {
+    if (info$resp_mat[2] != 'M_lvlone') {
       paste_linpred_JM(varname = info$varname,
                        parname = info$parname,
-                       parelmts = info$parelmts[['M_levelone']],
-                       matnam = "M_levelone",
+                       parelmts = info$parelmts[['M_lvlone']],
+                       matnam = "M_lvlone",
                        index = index,
-                       cols = info$lp[['M_levelone']],
-                       scale_pars = info$scale_pars[['M_levelone']],
+                       cols = info$lp[['M_lvlone']],
+                       scale_pars = info$scale_pars[['M_lvlone']],
                        assoc_type = info$assoc_type,
-                       covnames = vector(mode = "list", length = length(info$lp[['M_levelone']])),
+                       covnames = vector(mode = "list", length = length(info$lp[['M_lvlone']])),
                        isgk = FALSE)
       }), collapse = " + ")
 
   Surv_predictor <- paste0(
     paste0(
       c(paste0("gkw[k] * exp(logh0s_", info$varname, "[", index, ", k]"),
-        if (info$resp_mat[2] != 'M_levelone') {
+        if (info$resp_mat[2] != 'M_lvlone') {
           paste_linpred_JM(varname = info$varname,
                            parname = info$parname,
-                           parelmts = info$parelmts[['M_levelone']],
-                           matnam = "M_levelone",
+                           parelmts = info$parelmts[['M_lvlone']],
+                           matnam = "M_lvlone",
                            index = index,
-                           cols = info$lp[['M_levelone']],
-                           scale_pars = info$scale_pars[['M_levelone']],
+                           cols = info$lp[['M_lvlone']],
+                           scale_pars = info$scale_pars[['M_lvlone']],
                            assoc_type = info$assoc_type,
-                           covnames = vector(mode = "list", length = length(info$lp[['M_levelone']])),
+                           covnames = vector(mode = "list", length = length(info$lp[['M_lvlone']])),
                            isgk = TRUE)
         }
       ), collapse = " + "),
@@ -215,33 +215,33 @@ JAGSmodel_JM <- function(info) {
 
   logh_pred <- paste(
     c(paste0("logh0_", info$varname, "[", index, "] + eta_surv_", info$varname, "[", index, "]"),
-      if (info$resp_mat[2] != 'M_levelone') {
+      if (info$resp_mat[2] != 'M_lvlone') {
         paste_linpred_JM(varname = info$varname,
                          parname = info$parname,
-                         parelmts = info$parelmts[['M_levelone']],
-                         matnam = "M_levelone",
+                         parelmts = info$parelmts[['M_lvlone']],
+                         matnam = "M_lvlone",
                          index = index,
-                         cols = info$lp[['M_levelone']],
-                         scale_pars = info$scale_pars[['M_levelone']],
+                         cols = info$lp[['M_lvlone']],
+                         scale_pars = info$scale_pars[['M_lvlone']],
                          assoc_type = info$assoc_type,
-                         covnames = names(info$lp[['M_levelone']]),
-                         #vector(mode = "list", length = length(info$lp[['M_levelone']])),
+                         covnames = names(info$lp[['M_lvlone']]),
+                         #vector(mode = "list", length = length(info$lp[['M_lvlone']])),
                          isgk = FALSE)
       }), collapse = " + ")
 
   Surv_predictor <- paste0(
     paste0(
       c(paste0("gkw[k] * exp(logh0s_", info$varname, "[", index, ", k]"),
-        if (info$resp_mat[2] != 'M_levelone') {
+        if (info$resp_mat[2] != 'M_lvlone') {
           paste_linpred_JM(varname = info$varname,
                            parname = info$parname,
-                           parelmts = info$parelmts[['M_levelone']],
-                           matnam = "M_levelone",
+                           parelmts = info$parelmts[['M_lvlone']],
+                           matnam = "M_lvlone",
                            index = index,
-                           cols = info$lp[['M_levelone']],
-                           scale_pars = info$scale_pars[['M_levelone']],
+                           cols = info$lp[['M_lvlone']],
+                           scale_pars = info$scale_pars[['M_lvlone']],
                            assoc_type = info$assoc_type,
-                           covnames = names(info$lp[['M_levelone']]), #vector(mode = "list", length = length(info$lp[['M_levelone']])),
+                           covnames = names(info$lp[['M_lvlone']]), #vector(mode = "list", length = length(info$lp[['M_lvlone']])),
                            isgk = TRUE)
         }
       ), collapse = " + "),

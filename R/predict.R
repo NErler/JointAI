@@ -480,7 +480,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   survrow <- if (is.null(Mlist$timevar)) {
     1:nrow(Mlist$M[[resp_mat]])
   } else {
-    which(Mlist$M$M_levelone[, Mlist$timevar] ==
+    which(Mlist$M$M_lvlone[, Mlist$timevar] ==
             Mlist$M[[resp_mat]][Mlist$groups[[surv_lvl]], survinfo[[1]]$time_name])
   }
 

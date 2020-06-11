@@ -24,7 +24,7 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
                     group_lvls = identify_level_relations(groups))
 
   # if there are multiple survival variables and some time-varying variables
-  if (length(survinfo) > 0 & any(datlvls[unlist(survinfo)] != 'levelone')) {
+  if (length(survinfo) > 0 & any(datlvls[unlist(survinfo)] != 'lvlone')) {
 
     surv_lvls <- sapply(survinfo, function(x) {
       lvls <- datlvls[unlist(x)]
@@ -112,7 +112,7 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
     ))
 
   # identify which of the covariates are time-varying
-  longvars <- intersect(covars, names(datlvls)[datlvls == 'levelone'])
+  longvars <- intersect(covars, names(datlvls)[datlvls == 'lvlone'])
 
   if (length(longvars) == 0)
     return(data)

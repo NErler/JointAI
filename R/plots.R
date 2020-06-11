@@ -398,7 +398,7 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
   op <- par(mfrow = dims)
   if (!is.null(idvars)) {
     groups <- data[, idvars, drop = FALSE]
-    groups$levelone <- 1:nrow(groups)
+    groups$lvlone <- 1:nrow(groups)
     varlvls <- sapply(data, check_varlevel, groups = groups)
   }
 

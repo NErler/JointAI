@@ -36,7 +36,7 @@ JAGSmodel_clm <- function(info) {
 
 
   # syntax to set values of dummy variables,
-  # e.g. "M_levelone[i, 8] <- ifelse(M_levelone[i, 4] == 2, 1, 0)"
+  # e.g. "M_lvlone[i, 8] <- ifelse(M_lvlone[i, 4] == 2, 1, 0)"
   dummies <- if (!is.null(info$dummy_cols)) {
     paste0('\n', paste0(paste_dummies(categories = info$categories,
                                       dest_mat = info$resp_mat,
