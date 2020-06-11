@@ -338,7 +338,7 @@ summary(mod13c, subset = c(analysis_main = FALSE, imp_pars = TRUE))
 To select only some of the parameters, they can be specified directly by
 name via the `other` element of `subset`.
 ```{r message = FALSE, eval = FALSE}
-densplot(mod13c, subset = list(other = c('creat', 'alc>=1')))
+# densplot(mod13c, subset = list(other = c('creat', 'alc>=1')))
 ```
 
 This also works when a subset of the imputed values should be displayed:

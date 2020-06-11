@@ -308,7 +308,7 @@ GR_crit(lm5, subset = c(analysis_main = FALSE, imp_pars = TRUE))
 To select only some of the parameters, they can be specified directly by
 name via the `other` element of `subset`:
 ```{r trace_lm5, fig.width = 5, fig.height = 2, out.width = "60%"}
-summary(lm5, subset = list(other = c('creat', 'alc>=1')))
+# summary(lm5, subset = list(other = c('creat', 'alc>=1')))
 ```
 
 
