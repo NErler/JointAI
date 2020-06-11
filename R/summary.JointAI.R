@@ -49,7 +49,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                                        colnames(MCMC), value = TRUE),
                                   grep(paste0('_', object$info_list[[varname]]$varname, '_'),
                                        colnames(MCMC), value = TRUE)
-                                  ))]
+                                  )), drop = FALSE]
 
 
 
@@ -91,7 +91,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
           stats[, "MC error"] <- mcerror$data_scale[, 'MCSE/SD']
       }
 
-      regcoef <- stats[object$coef_list[[varname]]$varname, ]
+      regcoef <- stats[object$coef_list[[varname]]$varname, , drop = FALSE]
 
       sigma <- if (object$info_list[[varname]]$family %in% c('gaussian', 'Gamma', 'lognorm') &&
                    !is.null(object$info_list[[varname]]$family)) {
@@ -149,7 +149,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       )
 
       otherpars <- if (length(other) > 0)
-        stats[other, ]
+        stats[other, , drop = FALSE]
 
       list(modeltype = object$info_list[[varname]]$modeltype,
            regcoef = regcoef, sigma = sigma, intercepts = intercepts,
