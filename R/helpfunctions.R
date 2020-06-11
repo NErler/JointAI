@@ -149,7 +149,7 @@ check_varlevel <- function(x, groups, group_lvls = NULL) {
 replace_dummy <- function(nam, refs) {
   # replace a variable name with the names of the corresponding dummy variables
   # if the variable is a factor
-  # - nam: vector of variable names
+  # - nam: one variable name
   # - refs: list of reference category information (part of Mlist)
 
   if (is.null(refs))
