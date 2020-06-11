@@ -735,15 +735,20 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
         fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))
       }
 
-      for (k in seq_along(vars)) {
+      lvls <- Mlist$group_lvls[gsub('M_', '', Mlist$Mlvls[vars])]
 
-        if (any(vars_mat %in% "Ml") & vars_mat[k] %in% "Mc" & !isgk) {
-          theindex <- paste0("group[", index, "]")
-        } else {
+      for (k in seq_along(vars)) {
+        if (lvls[k] == min(lvls)) {
           theindex <- index
+        } else if (min(lvls) == 1) {
+          theindex <- paste0('group_', names(lvls)[k], '[', index, ']')
+        } else {
+          theindex <- paste0('group_', names(lvls)[k], '[',
+                             'pos_', names(lvls)[which.min(lvls)], "[",
+                                                 index, ']]')
         }
 
-        fct <- if (vars_mat[k] %in% "Ml" & isgk) {
+        fct <- if (isgk) {
           gsub(paste0('\\b', vars[k], '\\b'),
                paste0(vars_mat[k], "gk[", theindex, ", ",
                       vars_cols[k], ", k]"), fct)
