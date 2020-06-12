@@ -3,6 +3,9 @@
 #' @param x object inheriting from class 'JointAI'
 #' @param ... currently not used
 #'
+#' @note
+#' Currently, \code{plot()} can only be used with (generalized) linear (mixed) models.
+#'
 #' @examples
 #' mod <- lm_imp(y ~ C1 + C2 + B1, data = wideDF, n.iter = 100)
 #' plot(mod)
@@ -10,11 +13,11 @@
 #' @export
 plot.JointAI <- function(x, ...) {
   if (!inherits(x, "JointAI"))
-    stop("Use only with objects of class JointAI.")
+    errormsg("Use only with objects of class JointAI.")
 
   if (!x$analysis_type %in% c('lm', 'lme', 'glm', 'glme'))
-    stop(gettextf('At the moment there is not plotting method implemented for a %s model of type %s.',
-         dQuote("JointAI"), dQuote(x$analysis_type)), call. = FALSE)
+    errormsg('At the moment there is not plotting method implemented for a %s
+             model of type %s.', dQuote("JointAI"), dQuote(x$analysis_type))
 
   l.fit <- if (x$analysis_type %in% c('glm', 'glme'))  {
     "Predicted values"
@@ -40,62 +43,4 @@ family.JointAI <- function(object, ...) {
 }
 
 
-#
-# residuals.JointAI <- function(object,
-#                               type = c('deviance', 'response', 'working'), ...) {
-#   type <- match.arg(type)
-#
-#   if (object$analysis_type %in% c('survreg') & type %in% c('working', 'deviance'))
-#     stop(gettextf("Residuals of type %s are not implemented for a JointAI model of type %s. Currently only residuals of type %s are available for parametric survival models.",
-#                   dQuote(type), dQuote(object$analysis_type), dQuote('response')),
-#          call. = FALSE)
-#
-#   if (object$analysis_type %in% c('coxph', 'clm', 'clmm', 'JM'))
-#     stop(gettextf("Residuals are not yet implemented for a JointAI model of type %s.",
-#                   dQuote(object$analysis_type)), call. = FALSE)
-#
-#   # r <- object$residuals
-#   y <- object$data_list[[names(object$Mlist$y)]]
-#   mu <- object$fitted.values
-#   wts <- rep(1, length(mu))
-#
-#   if (object$analysis_type == 'survreg') {
-#     MCMC <- prep_MCMC(object, ...)
-#   }
-#
-#   res <- switch(type,
-#                 working = (y - mu)/family(object)$mu.eta(predict(object, type = 'link')$fit),
-#                 response = y - mu,
-#                 deviance = sqrt(pmax((family(object)$dev.resids)(y, mu, wts), 0)) * ifelse(y > mu, 1, -1)
-#   )
-#   return(res)
-# }
-#
-#
-# residuals1 <- function(modeltype, type, y, fitted.values) {
-#
-#   if (modeltype %in% c('survreg') & type %in% c('working', 'deviance'))
-#     stop(gettextf("Residuals of type %s are not implemented for a JointAI model of type %s. Currently only residuals of type %s are available for parametric survival models.",
-#                   dQuote(type), dQuote(modeltype), dQuote('response')),
-#          call. = FALSE)
-#
-#   if (modeltype %in% c('coxph', 'clm', 'clmm', 'JM'))
-#     stop(gettextf("Residuals are not yet implemented for a JointAI model of type %s.",
-#                   dQuote(modeltype)), call. = FALSE)
-#
-#   # y <- object$data_list[[names(object$Mlist$y)]]
-#   mu <- fitted.values
-#   wts <- rep(1, length(mu))
-#
-#   # if (modeltype == 'survreg') {
-#   #   MCMC <- prep_MCMC(object, ...)
-#   # }
-#
-#   res <- switch(type,
-#                 working = (y - mu)/family$mu.eta(predict(object, type = 'link')$fit),
-#                 response = y - mu,
-#                 deviance = sqrt(pmax((family$dev.resids)(y, mu, wts), 0)) * ifelse(y > mu, 1, -1)
-#   )
-#   return(res)
-# }
 
