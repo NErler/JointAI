@@ -778,7 +778,8 @@ get_repar <- function(family, varname, index, isgk = FALSE) {
   switch(family,
          "gaussian" = NULL,
          "binomial" = NULL,
-         "Gamma" = paste0(tab(4), "shape", if (isgk) "gk", "_", varname,
+         "Gamma" = paste0('\n',
+                          tab(4), "shape", if (isgk) "gk", "_", varname,
                           "[", index, if (isgk) ", k", "] <- pow(mu",
                           if (isgk) "gk", "_", varname, "[", index,
                           if (isgk) ", k", "], 2) / pow(sigma_", varname, ", 2)",
@@ -786,17 +787,20 @@ get_repar <- function(family, varname, index, isgk = FALSE) {
                           tab(4), "rate", if (isgk) "gk", "_", varname,
                           "[", index, if (isgk) ", k", "] <- mu",
                           if (isgk) "gk", "_", varname, "[", index,
-                          if (isgk) ", k", "] / pow(sigma_", varname, ", 2)", "\n"),
+                          if (isgk) ", k", "] / pow(sigma_", varname, ", 2)",
+                          "\n\n"),
          "Poisson" = NULL,
          'lognorm' = NULL,
-         'beta' = paste0(tab(4), "shape1", if (isgk) "gk", "_", varname,
+         'beta' = paste0('\n',
+                         tab(4), "shape1", if (isgk) "gk", "_", varname,
                          "[", index, if (isgk) ", k", "] <- mu",
                          if (isgk) "gk", "_", varname, "[", index,
                          if (isgk) ", k", "] * tau_",
                          varname, "\n",
                          tab(4), "shape2", if (isgk) "gk", "_", varname,
                          "[", index, if (isgk) ", k", "] <- (1 - mu", if (isgk) "gk", "_",
-                         varname, "[", index, if (isgk) ", k", "]) * tau_", varname, "\n")
+                         varname, "[", index, if (isgk) ", k", "]) * tau_",
+                         varname, "\n\n")
   )
 }
 
