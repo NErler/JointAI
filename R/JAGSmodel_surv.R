@@ -120,7 +120,7 @@ JAGSmodel_coxph <- function(info) {
 
   # log-hazard
   logh_pred <- paste(
-    c(paste0("logh0_", info$varname, "[", index, "] + eta_surv_", info$varname, "[", index, "]"),
+    c(paste0("logh0_", info$varname, "[", index, "] + eta_", info$varname, "[", index, "]"),
     if (info$resp_mat[2] != 'M_lvlone') {
       paste_linpred_JM(varname = info$varname,
                        parname = info$parname,
@@ -243,7 +243,7 @@ JAGSmodel_JM <- function(info) {
 
   # log-hazard
   logh_pred <- paste(
-    c(paste0("logh0_", info$varname, "[", index, "] + eta_surv_", info$varname, "[", index, "]"),
+    c(paste0("logh0_", info$varname, "[", index, "] + eta_", info$varname, "[", index, "]"),
       if (info$resp_mat[2] != 'M_lvlone') {
         paste_linpred_JM(varname = info$varname,
                          parname = info$parname,
