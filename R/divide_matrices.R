@@ -22,7 +22,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # in case of last-observation-carried forward: the value of the time-varying
   # covariates at the event times is filled in
-  if (analysis_type == 'coxph' & length(groups) > 1)
+  if (analysis_type == 'coxph' & length(groups) > 1 & !is.null(timevar))
     data <- fill_locf(data, fixed, random, auxvars, timevar, groups)
 
 
