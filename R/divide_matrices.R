@@ -206,18 +206,28 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                            groups[[gsub('M_', '', k)]]), , drop = FALSE]
   }
 
-  list(data = data, fixed = fixed, random = random, idvar = idvar,
+  list(data = data,
+       fixed = fixed, random = random, models = models,
+
        M = M, Mlvls = Mlvls,
-       lp_cols = lp_cols, interactions = interactions,
-       trafos = fcts_mis, fcts_all = fcts_all,
-       refs = refs, timevar = timevar,
-       auxvars = auxvars, groups = groups,
-       group_lvls = group_lvls,
+       idvar = idvar, groups = groups, group_lvls = group_lvls,
        N = sapply(groups, function(x) length(unique(x))),
-       ppc = ppc, shrinkage = shrinkage,
-       models = models, scale_pars = scale_pars,
+
+       timevar = timevar,
+       auxvars = auxvars,
+       refs = refs,
+
+       lp_cols = lp_cols,
+       interactions = interactions,
+       trafos = fcts_mis, fcts_all = fcts_all,
+
+       ppc = ppc,
+       shrinkage = shrinkage,
+       df_basehaz = df_basehaz,
+
+       scale_pars = scale_pars,
        outcomes = outcomes,
-       terms_list = terms_list, df_basehaz = df_basehaz
+       terms_list = terms_list
   )
 }
 
