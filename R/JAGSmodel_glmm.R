@@ -24,7 +24,7 @@ JAGSmodel_glmm <- function(info) {
                    Gamma = nchar(info$varname) + 14 + linkindent,
                    poisson = nchar(info$varname) + 14 + linkindent,
                    lognorm = nchar(info$varname) + 14 + linkindent,
-                   beta = 4 + 9 + nchar(info$varname) + 8 + linkindent
+                   beta = nchar(info$varname) + 14 + linkindent
   )
 
 
@@ -34,9 +34,10 @@ JAGSmodel_glmm <- function(info) {
   Z_predictor <- paste_lp_Zpart(info)
 
   dummies <- if (!is.null(info$dummy_cols)) {
-    paste0('\n', paste_dummies(categories = info$categories, dest_mat = info$resp_mat,
-                               dest_col = info$resp_col, dummy_cols = info$dummy_cols,
-                               index = index), collapse = "\n")
+    paste0('\n\n', paste0(
+      paste_dummies(categories = info$categories, dest_mat = info$resp_mat,
+                    dest_col = info$resp_col, dummy_cols = info$dummy_cols,
+                    index = index), collapse = "\n"), "\n")
   }
 
 
@@ -78,7 +79,6 @@ JAGSmodel_glmm <- function(info) {
          paste_ppc,
          dummies,
          info$trafos,
-         "\n",
          tab(), "}", "\n",
          "\n",
          paste0(sapply(names(rdintercept), write_ranefs, info = info,

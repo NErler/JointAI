@@ -22,7 +22,7 @@ JAGSmodel_glm <- function(info) {
                    Gamma = nchar(info$varname) + 14 + linkindent,
                    poisson = nchar(info$varname) + 14 + linkindent,
                    lognorm = nchar(info$varname) + 14 + linkindent,
-                   beta = 4 + 3 + nchar(info$varname) + 7 + linkindent
+                   beta = nchar(info$varname) + 14 + linkindent
   )
 
   modelname <- get_GLM_modelname(info$family)
@@ -43,11 +43,12 @@ JAGSmodel_glm <- function(info) {
 
   # * dummy variables ----------------------------------------------------------
   dummies <- if (!is.null(info$dummy_cols)) {
-    paste0('\n',
+    paste0('\n\n', paste0(
            paste_dummies(categories = info$categories, dest_mat = info$resp_mat,
                          dest_col = info$resp_col, dummy_cols = info$dummy_cols,
-                         index = index), collapse = "\n")
+                         index = index), collapse = "\n"), "\n")
   }
+
 
   # * posterior predictive check -----------------------------------------------
   paste_ppc <- if (info$ppc) {
