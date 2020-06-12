@@ -50,8 +50,8 @@ get_params <- function(Mlist, info_list,
     }
 
     # tau
-    if (any(sapply(list_main, "[[", 'family') %in% c("gaussian", "Gamma", "lognorm")) &
-        is.null(sigma_main)) {
+    if (any(sapply(list_main, "[[", 'family') %in% c("gaussian", "Gamma",
+                                                     "lognorm", "beta"))) {
       tau_main <- TRUE
     }
 
