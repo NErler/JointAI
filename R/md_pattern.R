@@ -2,11 +2,13 @@
 #'
 #' Obtain a plot of the pattern of missing data and/or return the pattern as a matrix.
 #' @param data data frame
-#' @param color vector of length two, that specifies the color used to indicate
+#' @param color vector of length two, that specifies the colour used to indicate
 #'              observed and missing values (in that order)
-#' @param border color of the grid
-#' @param plot logical; should the missing data pattern be plotted? (default is \code{TRUE})
-#' @param pattern logical; should the missing data pattern be returned as matrix? (default is \code{FALSE})
+#' @param border colour of the grid
+#' @param plot logical; should the missing data pattern be plotted?
+#'             (default is \code{TRUE})
+#' @param pattern logical; should the missing data pattern be returned as matrix?
+#'                (default is \code{FALSE})
 #' @param print_xaxis,print_yaxis logical; should the x-axis (below the plot) and
 #'                              y-axis (on the right) be printed?
 #' @param ylab y-axis label
@@ -17,7 +19,9 @@
 #' @seealso See the vignette \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
 #' for more examples.
 #'
-#' @note This function requires the \href{https://CRAN.R-project.org/package=ggplot2}{\strong{ggplot2}} package to be installed.
+#' @note This function requires the
+#' \href{https://CRAN.R-project.org/package=ggplot2}{\strong{ggplot2}} package
+#' to be installed.
 #' @export
 #'
 #' @examples
@@ -54,7 +58,7 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
 
   if (plot) {
     if (!requireNamespace('ggplot2', quietly = TRUE))
-      stop("This function requires the 'ggplot2' package to be installed.")
+      errormsg("This function requires the 'ggplot2' package to be installed.")
 
     if (print_yaxis == FALSE) {
       ylab <- ''

@@ -20,14 +20,16 @@ md_pattern(
 \arguments{
 \item{data}{data frame}
 
-\item{color}{vector of length two, that specifies the color used to indicate
+\item{color}{vector of length two, that specifies the colour used to indicate
 observed and missing values (in that order)}
 
-\item{border}{color of the grid}
+\item{border}{colour of the grid}
 
-\item{plot}{logical; should the missing data pattern be plotted? (default is \code{TRUE})}
+\item{plot}{logical; should the missing data pattern be plotted?
+(default is \code{TRUE})}
 
-\item{pattern}{logical; should the missing data pattern be returned as matrix? (default is \code{FALSE})}
+\item{pattern}{logical; should the missing data pattern be returned as matrix?
+(default is \code{FALSE})}
 
 \item{print_xaxis, print_yaxis}{logical; should the x-axis (below the plot) and
 y-axis (on the right) be printed?}
@@ -43,7 +45,9 @@ y-axis (on the right) be printed?}
 Obtain a plot of the pattern of missing data and/or return the pattern as a matrix.
 }
 \note{
-This function requires the \href{https://CRAN.R-project.org/package=ggplot2}{\strong{ggplot2}} package to be installed.
+This function requires the
+\href{https://CRAN.R-project.org/package=ggplot2}{\strong{ggplot2}} package
+to be installed.
 }
 \examples{
 op <- par(mar = c(3, 1, 1.5, 1.5), mgp = c(2, 0.6, 0))
