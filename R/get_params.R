@@ -124,14 +124,15 @@ get_params <- function(Mlist, info_list,
     # tau_main
     if (isTRUE(tau_main))
       paste0("tau_", names(list_main)[
-        sapply(list_main, '[[', 'family') %in% c('gaussian', 'Gamma', 'lognorm')]),
+        sapply(list_main, '[[', 'family') %in% c('gaussian', 'Gamma', 'lognorm',
+                                                 'beta')]),
 
     # sigma_main
     if (isTRUE(sigma_main)) {
       c(if (any(sapply(list_main, '[[', 'family') %in%
                 c('gaussian', 'Gamma', 'lognorm', 'beta')))
         paste0('sigma_', names(list_main)[sapply(list_main, '[[', 'family') %in%
-                                            c('gaussian', 'Gamma', 'lognorm', 'beta')]),
+                                            c('gaussian', 'Gamma', 'lognorm')]),
 
         if (any(modeltypes_main %in% c('survreg')))
           paste0("shape_", sapply(list_main[modeltypes_main %in% c('survreg')],
