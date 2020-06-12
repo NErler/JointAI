@@ -1,16 +1,21 @@
 # parametric survival model ---------------------------------------------------
 JAGSmodel_survreg <- function(info) {
-  indent <- 4 + 9 + nchar(info$varname) + 8
+
+  # specify indent width and index
+  indent <- 4 + 9 + nchar(info$varname) + 10
   index <- info$index[gsub("M_", "", info$resp_mat[2])]
-  N <- info$N[gsub("M_", "", info$resp_mat[2])]
 
+  # main model elements --------------------------------------------------------
 
+  # random effects
   rdintercept <- paste_rdintercept_lp(info)
   rdslopes <- paste_rdslope_lp(info)
   Z_predictor <- paste_lp_Zpart(info)
 
+
+  # linear predictor
   eta <- if (!is.null(Z_predictor)) {
-    add_linebreaks(paste0(Z_predictor, collapse = " + "), indent = indent + 2)
+    paste0(Z_predictor, collapse = " + ")
   } else if (!is.null(info$lp[[info$resp_mat[2]]])) {
     paste_linpred(parname = info$parname,
                   parelmts = info$parelmts[[info$resp_mat[2]]],
@@ -23,6 +28,8 @@ JAGSmodel_survreg <- function(info) {
 
 
 
+  # posterior predictive check -------------------------------------------------
+  # currently not used !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   paste_ppc <- if (info$ppc) {
     paste0(
       tab(4), info$varname, "_ppc[", index, "] ~ dgen.gamma(1, rate_",
@@ -47,7 +54,8 @@ JAGSmodel_survreg <- function(info) {
 
 
   paste0(tab(2), add_dashes(paste0("# Weibull survival model for ", info$varname)), "\n",
-         tab(), "for (", index, " in 1:", N, ") {", "\n",
+         tab(), "for (", index, " in 1:", info$N[gsub("M_", "", info$resp_mat[2])],
+         ") {", "\n",
          tab(4), info$varname, "[", index,
          "] ~ dgen.gamma(1, rate_", info$varname, "[", index,
          "], shape_", info$varname, ")", "\n",
@@ -55,9 +63,13 @@ JAGSmodel_survreg <- function(info) {
          tab(4), "cens_", info$varname, "[", index, "] ~ dinterval(", info$varname, "[",
          index, "], ", info$resp_mat[1], "[", index, ", ", info$resp_col[1],
          "])", "\n",
-         tab(4), "log(rate_", info$varname, "[", index, "]) <- -1 * (",
-         add_linebreaks(eta, indent = 20), ")", "\n",
+         tab(4), "log(rate_", info$varname, "[", index, "]) <- -(",
+         add_linebreaks(eta, indent = indent), ")", "\n",
          tab(), "}\n\n",
+         paste0(sapply(names(rdintercept), write_ranefs, info = info,
+                       rdintercept = rdintercept, rdslopes = rdslopes), collapse = ''), "\n",
+
+         # priors
          tab(), "# Priors for the model for ", info$varname, "\n",
          if (any(!sapply(info$lp, is.null))) {
            paste0(
@@ -67,7 +79,13 @@ JAGSmodel_survreg <- function(info) {
              tab(), "}", "\n\n")
          },
          tab(), "shape_", info$varname ," ~ dexp(0.01)", "\n",
-         paste_ppc_prior
+         paste_ppc_prior,
+
+         # random effects covariance matrix
+         paste0(
+           sapply(names(info$hc_list$hcvars), function(x) {
+             ranef_priors(info$nranef[x], paste0(info$varname, "_", x))
+           }), collapse = "\n")
   )
 }
 
