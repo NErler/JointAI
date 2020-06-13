@@ -91,7 +91,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
           stats[, "MC error"] <- mcerror$data_scale[, 'MCSE/SD']
       }
 
-      regcoef <- stats[object$coef_list[[varname]]$varname, , drop = FALSE]
+      regcoef <- stats[intersect(rownames(stats),
+                                 object$coef_list[[varname]]$varname), , drop = FALSE]
 
       sigma <- if (object$info_list[[varname]]$family %in% c('gaussian', 'Gamma', 'lognorm') &&
                    !is.null(object$info_list[[varname]]$family)) {
