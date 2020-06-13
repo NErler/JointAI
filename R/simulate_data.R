@@ -127,7 +127,8 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   DF <- DF[rep(1:N, times = nrep), ]
 
   if (is.list(longnorm)) {
-    stop("Not yet implemented")
+    errormsg("Not yet implemented")
+
   } else {
     if (is.character(longnorm)) {
       longnorm.names <- longnorm
@@ -145,7 +146,8 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   }
 
   if (is.list(longbin)) {
-    stop("Not yet implemented")
+    errormsg("Not yet implemented")
+
   } else {
     if (is.character(longbin)) {
       longbin.names <- longbin
@@ -162,7 +164,8 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   }
 
   if (is.list(longord)) {
-    stop("Not yet implemented")
+    errormsg("Not yet implemented")
+
   } else {
     if (is.character(longord)) {
       longord.names <- longord
