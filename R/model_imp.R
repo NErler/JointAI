@@ -94,7 +94,7 @@
 #'
 #' @return An object of class \link[=JointAIObject]{JointAI}.
 #'
-#' \cr
+#'
 #'
 #' @details # Model formulas
 #' ## Random effects
@@ -150,7 +150,7 @@
 #' additional grouping levels.
 #'
 #'
-#' \cr
+#'
 #'
 #' @details # Data structure
 #' For multi-level settings, the data must be in long format, so that repeated
@@ -171,7 +171,7 @@
 #' \code{timevar}.
 #'
 #'
-#' \cr
+#'
 #'
 #' @details # Distribution families and link functions for `glm_imp()` and `glme_imp()`/`glmer_imp()`
 #' \tabular{ll}{
@@ -183,7 +183,7 @@
 #' }
 #'
 #'
-#' \cr
+#'
 #'
 #' @details # Imputation methods / model types
 #' Implemented model types that can be chosen in the argument \code{models}
@@ -249,7 +249,7 @@
 #' are used for the unspecified variables.
 #'
 #'
-#' \cr
+#'
 #'
 #' @details # Parameters to follow (`monitor_params`)
 #' See also the vignette:
@@ -313,7 +313,7 @@
 #'
 #'
 #'
-#' \cr
+#'
 #'
 #' @section Note:
 #' ## Coding of variables:
@@ -337,7 +337,7 @@
 #' variables are coded as such.
 #'
 #'
-#' \cr
+#'
 #'
 #' ## Non-linear effects and transformation of variables:
 #' \strong{JointAI} handles non-linear effects, transformation of covariates and
@@ -370,7 +370,7 @@
 #' The same applies to interactions involving incomplete variables.
 #'
 #'
-#' \cr
+#'
 #'
 #' ## Sequence of models:
 #' Models generated automatically (i.e., not mentioned in `formula` or `fixed`
@@ -384,7 +384,7 @@
 #' variables in its linear predictor.
 #'
 #'
-#' \cr
+#'
 #'
 #' ## Not (yet) possible:
 #' \itemize{
@@ -396,7 +396,7 @@
 #' }
 #'
 #'
-#' \cr
+#'
 #'
 #' @seealso \code{\link{set_refcat}},
 #'          \code{\link{traceplot}}, \code{\link{densplot}},
@@ -413,7 +413,7 @@
 #' * \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{MCMC Settings}
 #' * \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{After Fitting}
 #'
-#' \cr
+#'
 #'
 #' @examples
 #' # Example 1: Linear regression with incomplete covariates

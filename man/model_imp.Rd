@@ -331,8 +331,6 @@ default for covariates modelled using other distributions).}
 }
 \value{
 An object of class \link[=JointAIObject]{JointAI}.
-
-\cr
 }
 \description{
 Main analysis functions to estimate different types of models using MCMC
@@ -394,8 +392,6 @@ multicentre setting, where patients are from multiple hospitals.
 It also allows to model time-dependent covariates in a proportional
 hazards survival model (using \code{coxph_imp}), also in combination with
 additional grouping levels.
-
-\cr
 }
 }
 
@@ -416,8 +412,6 @@ covariates (which must be supplied via the argument \code{timevar}).
 It is possible to have multiple time-varying covariates, which do not
 have to be measured at the same time points, but there can only be one
 \code{timevar}.
-
-\cr
 }
 
 \section{Distribution families and link functions for \code{glm_imp()} and \code{glme_imp()}/\code{glmer_imp()}}{
@@ -427,8 +421,6 @@ have to be measured at the same time points, but there can only be one
 \code{Gamma}    \tab with links: \code{inverse}, \code{identity}, \code{log}\cr
 \code{poisson}  \tab with links: \code{log}, \code{identity}
 }
-
-\cr
 }
 
 \section{Imputation methods / model types}{
@@ -493,8 +485,6 @@ default for ordered factors
 When models are specified for only a subset of the variables for which a
 model is needed, the default model choices (as indicated in the tables)
 are used for the unspecified variables.
-
-\cr
 }
 
 \section{Parameters to follow (\code{monitor_params})}{
@@ -553,8 +543,6 @@ deviation \code{sigma_main}.
 \code{monitor_params = c(imps = TRUE)} would monitor \code{betas}, \code{tau_main},
 and \code{sigma_main} (because \code{analysis_main = TRUE} by default) as well as
 the imputed values.
-
-\cr
 }
 
 \section{Note}{
@@ -579,8 +567,6 @@ It is not possible to overwrite this behaviour using the base R contrasts specif
 However, since the order of levels in an ordered factor contains information relevant
 to the imputation of missing values, it is important that incomplete ordinal
 variables are coded as such.
-
-\cr
 }
 
 \subsection{Non-linear effects and transformation of variables:}{
@@ -613,8 +599,6 @@ Then only \code{x} is imputed and \code{x^2} is calculated from the imputed
 values of \code{x} internally.
 
 The same applies to interactions involving incomplete variables.
-
-\cr
 }
 
 \subsection{Sequence of models:}{
@@ -628,8 +612,6 @@ in their linear predictor, and variables on the highest level only have
 variables from the same level in their linear predictor.
 Within each level, the variable with the most missing values has the most
 variables in its linear predictor.
-
-\cr
 }
 
 \subsection{Not (yet) possible:}{
@@ -641,8 +623,6 @@ variables in its linear predictor.
 or \code{\link[survival]{strata}} in survival models
 \item left censored or interval censored data
 }
-
-\cr
 }
 }
 
@@ -679,6 +659,4 @@ Vignettes
 \item \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{MCMC Settings}
 \item \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{After Fitting}
 }
-
-\cr
 }
