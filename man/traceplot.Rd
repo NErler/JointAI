@@ -82,8 +82,6 @@ automatically chosen if unspecified}
 \item{ncol}{optional number of rows and columns in the plot layout;
 automatically chosen if unspecified}
 
-\item{keep_aux}{logical; Should constant effects of auxiliary variables be kept in the output?}
-
 \item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
 
 \item{warn}{logical; should warnings be given? Default is

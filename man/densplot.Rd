@@ -65,8 +65,6 @@ automatically chosen if unspecified}
 
 \item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
 
-\item{keep_aux}{logical; Should constant effects of auxiliary variables be kept in the output?}
-
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. (Note: this applies only to warnings
 given directly by \strong{JointAI}.)}

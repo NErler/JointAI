@@ -1,5 +1,5 @@
 
-get_subset <- function(object, subset, keep_aux = FALSE, warn = TRUE, mess = TRUE) {
+get_subset <- function(object, subset, warn = TRUE, mess = TRUE) {
 
   if (identical(subset, FALSE))
     return(object$MCMC)
@@ -30,11 +30,7 @@ get_subset <- function(object, subset, keep_aux = FALSE, warn = TRUE, mess = TRU
   ))
 
 
-  if (!keep_aux)
-    sub <- sub[!sub %in% get_aux(object)]
-
-  if (length(sub) == 0)
-    sub <- colnames(object$MCMC[[1]])
+  if (length(sub) == 0) sub <- colnames(object$MCMC[[1]])
 
   return(object$MCMC[, sub, drop = FALSE])
 }

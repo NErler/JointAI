@@ -224,7 +224,6 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #'             given directly by \strong{JointAI}.)
 #' @param xlab,ylab labels for the x- and y-axis
 #' @param idvars name of the column that specifies the multi-level grouping structure
-#' @param keep_aux logical; Should constant effects of auxiliary variables be kept in the output?
 #' @param ridge logical; should the parameters of the main model be penalized using ridge regression? Default is \code{FALSE}
 #' @param parallel logical; should the chains be sampled using parallel computation? Default is \code{FALSE}
 #' @param n.cores number of cores to use for parallel computation; if left empty all except two cores will be used

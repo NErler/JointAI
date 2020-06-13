@@ -97,24 +97,6 @@ get_Dmat <- function(object, varname) {
 }
 
 
-# used in get_subset() (2020-06-10)
-get_aux <- function(object) {
-  # obtain names of auxiliary variables from a JointAI object and replace
-  # facors with the corresponding dummy variables
-  # - object: object of class JointAI
-
-  aux <- object$Mlist$auxvars
-
-  unlist(sapply(if (!is.null(object$Mlist$auxvars))
-    attr(terms(aux), 'term.labels'),
-    function(x)
-      if (x %in% names(object$Mlist$refs))
-        attr(object$Mlist$refs[[x]], 'dummies')
-    else x
-  ))
-}
-
-
 
 # used in print.summary.JointAI(), print.JointAI() and list_models() (2020-06-11)
 print_type <- function(x) {

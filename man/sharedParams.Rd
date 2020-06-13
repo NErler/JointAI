@@ -70,8 +70,6 @@ given directly by \strong{JointAI}.)}
 
 \item{idvars}{name of the column that specifies the multi-level grouping structure}
 
-\item{keep_aux}{logical; Should constant effects of auxiliary variables be kept in the output?}
-
 \item{ridge}{logical; should the parameters of the main model be penalized using ridge regression? Default is \code{FALSE}}
 
 \item{parallel}{logical; should the chains be sampled using parallel computation? Default is \code{FALSE}}
