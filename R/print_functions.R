@@ -62,8 +62,9 @@
 
 list_models <- function(object, predvars = TRUE, regcoef = TRUE,
                         otherpars = TRUE, priors = TRUE, refcat = TRUE) {
+
   if (!inherits(object, "JointAI"))
-    stop("Use only with 'JointAI' objects.\n")
+    errormsg("Use only with 'JointAI' objects.\n")
 
   for (i in object$info_list) {
     cat(print_type(i$modeltype), "for", dQuote(i$varname), '\n')
@@ -143,12 +144,6 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
       }
     }
 
-    # if (priors) {
-    #   paste0("(normal prior(s) with mean ",
-    #          object$data_list[[paste0("mu_reg_", pars$pars)]],
-    #          " and precision ",
-    #          object$data_list[[paste0("tau_reg_", pars$pars)]], ")")
-    # }, "\n")
     # * opar -------------------------------------------------------------------
     if (otherpars) {
       if (i$family %in% c('gaussian', 'lognorm', 'Gamma') && !is.null(i$family)) {
@@ -188,6 +183,28 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
                      paste0("(normal prior(s) with mean ",  object$data_list$mu_delta_ordinal,
                             " and precision ", object$data_list$tau_delta_ordinal, ")")
                    }, "\n"))
+      }
+      if (i$modeltype %in% c('survreg')) {
+        cat(paste0('* Shape parameter:\n',
+                   tab(), 'shape_', i$varname,
+                   if (priors) {
+                     ' (exponential prior with rate 0.01)'
+                     }, "\n"))
+      }
+      if (i$modeltype %in% c('coxph', 'JM')) {
+        cat(paste0('* Regression coefficients of the baseline hazard:\n',
+                   tab(), 'beta_Bh0_', i$varname, "[", print_seq(1, i$df_basehaz),
+                   "]",
+            if (priors) {
+              paste0(" (normal priors with mean ", object$data_list$mu_reg_surv,
+                     " and precision ", object$data_list$tau_reg_surv, ")")
+            }, "\n"))
+        if (i$modeltype %in% 'JM') {
+          cat(paste0("* association types:\n",
+                     paste0(tab(), "- ", names(i$assoc_type), ": ",
+                            i$assoc_type, collapse = "\n")
+          ))
+        }
       }
     }
     cat("\n\n")
