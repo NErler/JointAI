@@ -18,7 +18,7 @@
 \alias{survreg_imp}
 \alias{coxph_imp}
 \alias{JM_imp}
-\title{Joint analysis and imputation of incomplete data}
+\title{Joint Analysis and Imputation of incomplete data}
 \usage{
 lm_imp(
   formula,
@@ -579,17 +579,18 @@ JM_imp(
 )
 }
 \arguments{
-\item{formula}{a two sided model formula (see \code{\link[stats]{formula}})}
+\item{formula}{a two sided model formula (see \code{\link[stats]{formula}})
+or a list of such formulas; see the `Details` section below.}
 
-\item{data}{a \code{data.frame}}
+\item{data}{a \code{data.frame} containing the original data (see `Details`)}
 
-\item{n.chains}{the number of MCMC chains to be used}
+\item{n.chains}{number of MCMC chains}
 
-\item{n.adapt}{the number of iterations for adaptation of the MCMC samplers
-(see also \code{\link[rjags]{adapt}})}
+\item{n.adapt}{number of iterations for adaptation of the MCMC samplers
+(see \code{\link[rjags]{adapt}})}
 
-\item{n.iter}{the number of iterations of the MCMC chain (after adaptation;
-see also \code{\link[rjags]{coda.samples}})}
+\item{n.iter}{number of iterations of the MCMC chain (after adaptation;
+see \code{\link[rjags]{coda.samples}})}
 
 \item{thin}{thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
 For example, \code{thin = 1} (default) will keep the MCMC samples
@@ -597,45 +598,53 @@ from all iterations; \code{thin = 5} would only keep every 5th
 iteration.}
 
 \item{monitor_params}{named list or vector specifying which parameters should be
-monitored (see details)}
+monitored (see the `Details` section below)}
 
-\item{auxvars}{optional one-sided formula of variables that should be used as
+\item{auxvars}{optional; one-sided formula of variables that should be used as
 predictors in the imputation procedure (and will be imputed
-if necessary) but are not part of the analysis model}
+if necessary) but are not part of the analysis model(s)}
 
 \item{refcats}{optional; either one of \code{"first"}, \code{"last"}, \code{"largest"}
 (which sets the category for all categorical variables)
 or a named list specifying which category should be
-used as reference category for each of the categorical variables.
+used as reference category per categorical variable.
 Options are the category label, the category number, or one of
 "first" (the first category), "last" (the last category)
 or "largest" (chooses the category with the most observations).
-Default is "first". (See also \code{\link{set_refcat}})}
+Default is "first". If reference categories are specified for
+a subset of the categorical variables the default will be used
+for the remaining variables. (See also \code{\link{set_refcat}})}
 
-\item{models}{optional named vector specifying the types of models for
+\item{models}{optional; named vector specifying the types of models for
   (incomplete) covariates.
   This arguments replaces the argument \code{meth} used in earlier versions.
   If \code{NULL} (default) models will be determined
 automatically based on the class of the respective columns of \code{data}.}
 
-\item{no_model}{names of variables for which no model should be specified.
+\item{no_model}{optional; vector of names of variables for which no model
+should be specified.
 Note that this is only possible for completely observed
 variables and implies the assumptions of independence between
 the excluded variable and the incomplete variables.}
 
-\item{trunc}{optional named list specifying the limits of truncation for the
+\item{trunc}{optional; named list specifying limits of truncation for the
 distribution of the named incomplete variables (see the vignette
 \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support}{ModelSpecification})}
 
-\item{shrinkage}{should shrinkage be used?}
+\item{shrinkage}{optional; either a character string naming the shrinkage
+method to be used for regression coefficients in all models
+or a named vector specifying the type of shrinkage to be
+used in the models given as names.}
 
 \item{ppc}{logical: should monitors for posterior predictive checks be set? (not yet used)}
 
-\item{seed}{optional seed value for reproducibility}
+\item{seed}{optional; seed value (for reproducibility)}
 
-\item{inits}{optional specification of initial values in the form of a list
+\item{inits}{optional; specification of initial values in the form of a list
 or a function (see \code{\link[rjags]{jags.model}}).
-If omitted, initial values will be generated automatically by JAGS.
+If omitted, starting values for the random number generator are
+created by \strong{JointAI}, initial values are then generated
+by JAGS.
 It is an error to supply an initial value for an observed node.}
 
 \item{parallel}{logical; should the chains be sampled using parallel computation? Default is \code{FALSE}}
@@ -643,35 +652,26 @@ It is an error to supply an initial value for an observed node.}
 \item{n.cores}{number of cores to use for parallel computation; if left empty all except two cores will be used}
 
 \item{scale_vars}{optional; named vector of (continuous) variables that will
-be scaled (such that mean = 0 and sd = 1) to improve
+be centred and scaled (such that mean = 0 and sd = 1)
+when they enter a linear predictor to improve
 convergence of the MCMC sampling. Default is that all
-continuous variables that are not transformed by a function
-(e.g. \code{log(), ns()}) will be scaled. Variables
-for which a log-normal model is used are
-only scaled with regards to the standard deviation, but not
-centred. Variables modelled with a Gamma or beta distribution
-are not scaled.
+numeric variables and integer variables with >20 different
+values will be scaled.
 If set to \code{FALSE} no scaling will be done.}
 
-\item{scale_pars}{optional matrix of parameters used for centring and
-scaling of continuous covariates. If not specified, this will
-be calculated automatically. If \code{FALSE}, no scaling
-will be done.}
+\item{hyperpars}{optional; list of hyper-parameters, as obtained by
+\code{\link{default_hyperpars}()}}
 
-\item{hyperpars}{list of hyper-parameters, as obtained by \code{\link{default_hyperpars}()};
-only needs to be supplied if hyper-parameters other than the
-default should be used}
-
-\item{modelname}{optional; character string specifying the name of the model file
-(including the ending, either .R or .txt).
+\item{modelname}{optional; character string specifying the name of the model
+file (including the ending, either .R or .txt).
 If unspecified a random name will be generated.}
 
-\item{modeldir}{optional; directory containing the model file or directory in which
-the model file should be written. If unspecified a
+\item{modeldir}{optional; directory containing the model file or directory in
+which the model file should be written. If unspecified a
 temporary directory will be created.}
 
-\item{keep_model}{logical; whether the created JAGS model should be saved
-or removed from the disk (\code{FALSE}; default) when the
+\item{keep_model}{logical; whether the created JAGS model file should be saved
+or removed from (\code{FALSE}; default) when the
 sampling has finished.}
 
 \item{overwrite}{logical; whether an existing model file with the specified
@@ -680,15 +680,16 @@ sampling has finished.}
 If unspecified (\code{NULL}) and a file exists, the user is
 asked for input on how to proceed.}
 
-\item{quiet}{if \code{TRUE} then messages generated during compilation
-will be suppressed, as well as the progress bar during adaptation
+\item{quiet}{logical; if \code{TRUE} then messages generated by \strong{rjags}
+during compilation as well as the progress bar for the adaptive
+phase will be suppressed,
 (see \code{\link[rjags]{jags.model}})}
 
 \item{progress.bar}{character string specifying the type of progress bar.
 Possible values are "text", "gui", and "none" (see
-\code{\link[rjags]{update}}). Note: when sampling is performed
-in parallel it is currently not possible to display a
-progress bar.}
+\code{\link[rjags]{update}}).
+Note: when sampling is performed in parallel it is
+currently not possible to display a progress bar.}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. (Note: this applies only to warnings
@@ -703,9 +704,9 @@ given directly by \strong{JointAI}.)}
 (The MCMC sample that is re-scaled to the scale of the
 data is always kept.)}
 
-\item{...}{additional, optional arguments}
+\item{...}{additional, optional arguments (not used)}
 
-\item{family}{only for \code{glm_imp} and \code{glmm_imp}:
+\item{family}{only for \code{glm_imp} and \code{glmm_imp}/\code{glmer_imp}:
 a description of the distribution and link function to
 be used in the model. This can be a character string naming a
 family function, a family function or the result of a call to
@@ -720,7 +721,9 @@ a one-sided formula of the form \code{~x1 + ... + xn | g},
 where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}
 
-\item{df_basehaz}{degrees of freedom for the B-spline used to model the baseline hazard}
+\item{df_basehaz}{degrees of freedom for the B-spline used to model the
+ baseline hazard in proportional hazards models
+(\code{coxph_imp} and \code{JM_imp})}
 
 \item{timevar}{name of the "time" variable in mixed models.
 Only required in "JM" models. The variable specified in "timevar"
@@ -728,17 +731,19 @@ will automatically be added to "no_model".}
 
 \item{assoc_type}{named vector specifying the type of the association usded
 for a time-varying covariate in the linear predictor of the
-survival model when using a "JM" model. Impemented options are
-"underl.value" and "obs.value".}
+survival model when using a "JM" model.
+Implemented options are "underl.value"
+(linear predictor; default for covariates modelled using a
+Gaussian, Gamma, beta or log-normal distribution)
+covariates) and "obs.value" (the observed/imputed value;
+default for covariates modelled using other distributions).}
 }
 \value{
 An object of class \link[=JointAIObject]{JointAI}.
 }
 \description{
-Functions to estimate (generalized) linear and (generalized) linear mixed models,
-ordinal and ordinal mixed models,
-and parametric (Weibull) as well as Cox proportional hazards
-survival models using MCMC sampling, while imputing missing values.
+Main analysis functions to estimate different types of models using MCMC
+sampling, while imputing missing values.
 }
 \section{Details}{
 

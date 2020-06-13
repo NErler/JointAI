@@ -1,54 +1,55 @@
-#' Joint analysis and imputation of incomplete data
+#' Joint Analysis and Imputation of incomplete data
 #'
-#' Functions to estimate (generalized) linear and (generalized) linear mixed models,
-#' ordinal and ordinal mixed models,
-#' and parametric (Weibull) as well as Cox proportional hazards
-#' survival models using MCMC sampling, while imputing missing values.
+#' Main analysis functions to estimate different types of models using MCMC
+#' sampling, while imputing missing values.
 #'
 #' @param formula a two sided model formula (see \code{\link[stats]{formula}})
+#'                or a list of such formulas; see the `Details` section below.
 #' @param fixed a two sided formula describing the fixed-effects part of the
 #'              model (see \code{\link[stats]{formula}})
 #' @param random only for multi-level models:
 #'               a one-sided formula of the form \code{~x1 + ... + xn | g},
 #'               where \code{x1 + ... + xn} specifies the model for the random
 #'               effects and \code{g} the grouping variable
-#' @param data a \code{data.frame}
-#' @param family only for \code{glm_imp} and \code{glmm_imp}:
+#' @param data a \code{data.frame} containing the original data (see `Details`)
+#' @param family only for \code{glm_imp} and \code{glmm_imp}/\code{glmer_imp}:
 #'               a description of the distribution and link function to
 #'               be used in the model. This can be a character string naming a
 #'               family function, a family function or the result of a call to
 #'               a family function. (See \code{\link[stats]{family}} and the
 #'               `Details` section below.)
 #' @param monitor_params named list or vector specifying which parameters should be
-#'                       monitored (see details)
-#' @param inits optional specification of initial values in the form of a list
+#'                       monitored (see the `Details` section below)
+#' @param inits optional; specification of initial values in the form of a list
 #'              or a function (see \code{\link[rjags]{jags.model}}).
-#'              If omitted, initial values will be generated automatically by JAGS.
+#'              If omitted, starting values for the random number generator are
+#'              created by \strong{JointAI}, initial values are then generated
+#'              by JAGS.
 #'              It is an error to supply an initial value for an observed node.
 #' @param progress.bar character string specifying the type of progress bar.
 #'                     Possible values are "text", "gui", and "none" (see
-#'                     \code{\link[rjags]{update}}). Note: when sampling is performed
-#'                     in parallel it is currently not possible to display a
-#'                     progress bar.
+#'                     \code{\link[rjags]{update}}).
+#'                     Note: when sampling is performed in parallel it is
+#'                     currently not possible to display a progress bar.
 #' @inheritParams sharedParams
-#' @param modelname optional; character string specifying the name of the model file
-#'                  (including the ending, either .R or .txt).
+#' @param modelname optional; character string specifying the name of the model
+#'                  file (including the ending, either .R or .txt).
 #'                  If unspecified a random name will be generated.
-#' @param modeldir optional; directory containing the model file or directory in which
-#'                 the model file should be written. If unspecified a
+#' @param modeldir optional; directory containing the model file or directory in
+#'                 which the model file should be written. If unspecified a
 #'                 temporary directory will be created.
 #' @param overwrite logical; whether an existing model file with the specified
 #'                  \code{<modeldir>/<modelname>} should be overwritten. If set to
 #'                  \code{FALSE} and a model already exists, that model will be used.
 #'                  If unspecified (\code{NULL}) and a file exists, the user is
 #'                  asked for input on how to proceed.
-#' @param keep_model logical; whether the created JAGS model should be saved
-#'                   or removed from the disk (\code{FALSE}; default) when the
+#' @param keep_model logical; whether the created JAGS model file should be saved
+#'                   or removed from (\code{FALSE}; default) when the
 #'                   sampling has finished.
-#' @param auxvars optional one-sided formula of variables that should be used as
+#' @param auxvars optional; one-sided formula of variables that should be used as
 #'                predictors in the imputation procedure (and will be imputed
-#'                if necessary) but are not part of the analysis model
-#' @param models optional named vector specifying the types of models for
+#'                if necessary) but are not part of the analysis model(s)
+#' @param models optional; named vector specifying the types of models for
 #'               (incomplete) covariates.
 #'               This arguments replaces the argument \code{meth} used in earlier versions.
 #'               If \code{NULL} (default) models will be determined
@@ -56,28 +57,26 @@
 #' @param refcats optional; either one of \code{"first"}, \code{"last"}, \code{"largest"}
 #'                (which sets the category for all categorical variables)
 #'                or a named list specifying which category should be
-#'                used as reference category for each of the categorical variables.
+#'                used as reference category per categorical variable.
 #'                Options are the category label, the category number, or one of
 #'                "first" (the first category), "last" (the last category)
 #'                or "largest" (chooses the category with the most observations).
-#'                Default is "first". (See also \code{\link{set_refcat}})
-#' @param trunc optional named list specifying the limits of truncation for the
+#'                Default is "first". If reference categories are specified for
+#'                a subset of the categorical variables the default will be used
+#'                for the remaining variables. (See also \code{\link{set_refcat}})
+#' @param trunc optional; named list specifying limits of truncation for the
 #'              distribution of the named incomplete variables (see the vignette
 #'              \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support}{ModelSpecification})
-#' @param hyperpars list of hyper-parameters, as obtained by \code{\link{default_hyperpars}()};
-#'                  only needs to be supplied if hyper-parameters other than the
-#'                  default should be used
+#' @param hyperpars optional; list of hyper-parameters, as obtained by
+#'                  \code{\link{default_hyperpars}()}
 #' @param scale_vars optional; named vector of (continuous) variables that will
-#'                   be scaled (such that mean = 0 and sd = 1) to improve
+#'                   be centred and scaled (such that mean = 0 and sd = 1)
+#'                   when they enter a linear predictor to improve
 #'                   convergence of the MCMC sampling. Default is that all
-#'                   continuous variables that are not transformed by a function
-#'                   (e.g. \code{log(), ns()}) will be scaled. Variables
-#'                   for which a log-normal model is used are
-#'                   only scaled with regards to the standard deviation, but not
-#'                   centred. Variables modelled with a Gamma or beta distribution
-#'                   are not scaled.
+#'                   numeric variables and integer variables with >20 different
+#'                   values will be scaled.
 #'                   If set to \code{FALSE} no scaling will be done.
-#' @param scale_pars optional matrix of parameters used for centring and
+#' @param scale_pars optional; matrix of parameters used for centring and
 #'                   scaling of continuous covariates. If not specified, this will
 #'                   be calculated automatically. If \code{FALSE}, no scaling
 #'                   will be done.
@@ -85,9 +84,14 @@
 #'                         (i.e., the scaled version returned by \code{coda.samples()}) be kept?
 #'                         (The MCMC sample that is re-scaled to the scale of the
 #'                         data is always kept.)
-#' @param df_basehaz degrees of freedom for the B-spline used to model the baseline hazard
-#' @param shrinkage should shrinkage be used?
-#' @param ... additional, optional arguments
+#' @param df_basehaz degrees of freedom for the B-spline used to model the
+#'                   baseline hazard in proportional hazards models
+#'                  (\code{coxph_imp} and \code{JM_imp})
+#' @param shrinkage optional; either a character string naming the shrinkage
+#'                  method to be used for regression coefficients in all models
+#'                  or a named vector specifying the type of shrinkage to be
+#'                  used in the models given as names.
+#' @param ... additional, optional arguments (not used)
 #' @importFrom foreach foreach %dopar%
 #'
 #'

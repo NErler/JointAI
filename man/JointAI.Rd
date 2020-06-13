@@ -6,7 +6,7 @@
 \title{JointAI: Joint Analysis and Imputation of Incomplete Data}
 \description{
 The \strong{JointAI} package performs simultaneous imputation and inference for
-incomplete data under the Bayesian framework.
+incomplete or complete data under the Bayesian framework.
 Models for incomplete covariates, conditional on other covariates,
 are specified automatically and modeled jointly with the analysis model.
 MCMC sampling is performed in \href{http://mcmc-jags.sourceforge.net}{'JAGS'}

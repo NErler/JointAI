@@ -3,7 +3,8 @@
 \name{Surv}
 \alias{Surv}
 \title{Create a Survival Object
-This function just calls \code{Surv()} from the \href{https://CRAN.R-project.org/package=survival}{\strong{survival}} package.}
+This function just calls \code{Surv()} from the
+\href{https://CRAN.R-project.org/package=survival}{\strong{survival}} package.}
 \usage{
 Surv(
   time,
@@ -53,5 +54,6 @@ Surv(
 }
 \description{
 Create a Survival Object
-This function just calls \code{Surv()} from the \href{https://CRAN.R-project.org/package=survival}{\strong{survival}} package.
+This function just calls \code{Surv()} from the
+\href{https://CRAN.R-project.org/package=survival}{\strong{survival}} package.
 }

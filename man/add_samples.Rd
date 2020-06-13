@@ -34,9 +34,9 @@ be monitored. For details, see
 
 \item{progress.bar}{character string specifying the type of progress bar.
 Possible values are "text", "gui", and "none" (see
-\code{\link[rjags]{update}}). Note: when sampling is performed
-in parallel it is currently not possible to display a
-progress bar.}
+\code{\link[rjags]{update}}).
+Note: when sampling is performed in parallel it is
+currently not possible to display a progress bar.}
 
 \item{mess}{logical; should messages be given? Default is
 \code{TRUE}. (Note: this applies only to messages
