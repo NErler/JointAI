@@ -38,7 +38,7 @@
 #'
 #' @export
 traceplot <- function(object, ...) {
-  UseMethod("traceplot")
+  UseMethod("traceplot", object)
 }
 
 
@@ -163,7 +163,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #'
 #' @export
 densplot <- function(object, ...) {
-  UseMethod("densplot")
+  UseMethod("densplot", object)
 }
 
 
