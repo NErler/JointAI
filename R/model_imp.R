@@ -453,9 +453,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   # checks & warnings -------------------------------------------------------
   # if only "formula" is provided, split it into fixed and random parts
   if (!is.null(formula) & any(!is.null(fixed), !is.null(random))) {
-    stop(paste("When the argument", dQuote("formula"),
-               "is provided, the arguments", dQuote("fixed"), "and",
-               dQuote("random"), "should not be used."), call. = FALSE)
+    errormsg("When the argument %s is provided, the arguments %s and %s should
+             not be used.", dQuote("formula"), dQuote("fixed"), dQuote("random"))
   }
 
   if (!is.null(formula) & is.null(fixed) & is.null(random)) {
@@ -475,17 +474,15 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
   # Message if no MCMC sample will be produced.
   if (n.iter == 0) {
-    if (mess)
-      message("Note: No MCMC sample will be created when n.iter is set to 0.")
+    if (mess) msg("Note: No MCMC sample will be created when n.iter is set to 0.")
   }
 
 
   # check if the argument meth is provided (no longer used)
   args <- as.list(match.call())
   if (!is.null(args$meth))
-      warning('The argument "meth" has been changed to "models". Please use "models".',
-              call. = FALSE, immediate. = TRUE)
-
+      warnmsg('The argument "meth" has been changed to "models".
+              Please use "models".')
 
 
   # data pre-processing --------------------------------------------------------
@@ -549,22 +546,19 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   if (file.exists(modelfile) & is.null(overwrite)) {
     question_asked <- TRUE
     # This warning can not be switched off by warn = FALSE, because an input is required.
-    warning(gettextf("\nThe file %s already exists in %s.",
-                     dQuote(modelname), dQuote(modeldir)),
-              call. = FALSE, immediate. = TRUE)
+    warnmsg("The file %s already exists in %s.", dQuote(modelname), dQuote(modeldir))
     reply <- menu(c('yes', 'no'),
                   title = "\nDo you want me to overwrite this file?")
     if (reply == 1) {
-      if (mess)
-        message('The modelfile was overwritten.')
+      if (mess) msg('The modelfile was overwritten.')
     overwrite = TRUE
     } else {
       overwrite = FALSE
-      if (mess)
-        message('The old model will be used.')
+      if (mess) msg('The old model will be used.')
     }
     if (mess)
-    message("To skip this question in the future, set 'overwrite = TRUE' or 'overwrite = FALSE'.")
+    msg("To skip this question in the future, set 'overwrite = TRUE' or
+        'overwrite = FALSE'.")
   }
 
   if (!file.exists(modelfile) || (file.exists(modelfile) & overwrite == TRUE)) {
@@ -576,8 +570,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   # * check if initial values are supplied or should be generated
   if (!(is.null(inits) | inherits(inits, c("function", "list")))) {
     if (warn)
-      warning("The object supplied to 'inits' could not be recognized.
-            Initial values are set by JAGS.")
+      warnmsg("The object supplied to 'inits' could not be recognized.
+              Initial values are set by JAGS.")
     inits <- NULL
   }
 
@@ -608,7 +602,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
         else x}, simplify = F),
         analysis_main = TRUE)
       if (mess)
-        message('Note: Main model parameter were added to the list of parameters to follow.')
+        msg('Note: Main model parameter were added to the
+            list of parameters to follow.')
     }}
   var.names <- do.call(get_params, c(list(Mlist = Mlist, info_list = info_list,
                                           mess = mess),
@@ -618,18 +613,17 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   t0 <- Sys.time()
   if (parallel == TRUE) {
     if (!requireNamespace('foreach', quietly = TRUE))
-      stop("Parallel sampling requires the 'foreach' package to be installed.")
+      errormsg("Parallel sampling requires the 'foreach' package to be installed.")
 
     if (!requireNamespace('doParallel', quietly = TRUE))
-      stop("Parallel sampling requires the 'doParallel' package to be installed.")
+      errormsg("Parallel sampling requires the 'doParallel' package to be installed.")
 
     if (any(n.adapt > 0, n.iter > 0)) {
       if (is.null(n.cores)) n.cores <- min(parallel::detectCores() - 2, n.chains)
 
       doParallel::registerDoParallel(cores = n.cores)
       if (mess)
-        message(paste0("Parallel sampling on ", n.cores, " cores started (",
-                       Sys.time(), ")."))
+        msg("Parallel sampling on %s cores started (%s).", n.cores, Sys.time())
 
       res <- foreach(i = seq_along(inits)) %dopar% {
         run_jags(inits[[i]], data_list = data_list,
@@ -655,8 +649,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   t1 <- Sys.time()
 
   if (n.iter > 0 & class(mcmc) != 'mcmc.list')
-    warning('There is no mcmc sample. Something went wrong.',
-            call. = FALSE, immediate. = TRUE)
+    warnmsg('There is no mcmc sample. Something went wrong.')
 
   # post processing ------------------------------------------------------------
   if (n.iter > 0 & !is.null(mcmc)) {
@@ -722,11 +715,6 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   object$residuals <- try(residuals(object, type = 'working', warn = FALSE),
                           silent = TRUE)
 
-  # if (!inherits(object$residuals, 'try-error')) {
-  #   if (!object$analysis_type %in% c('clm', 'clmm'))
-  #     names(object$fitted.values) <- names(object$residuals) <- rownames(object$Mlist$y)
-  # }
-
   if (inherits(object$fitted.values, 'try-error'))
     object$fitted.values <- NULL
   if (inherits(object$residuals, 'try-error'))
@@ -756,11 +744,9 @@ lm_imp <- function(formula, data,
                    warn = TRUE, mess = TRUE,
                    keep_scaled_mcmc = FALSE, ...){
 
-  if (missing(formula))
-    stop("No model formula specified.")
 
-  if (missing(data))
-    stop("No dataset given.")
+  if (missing(formula)) errormsg("No model formula specified.")
+  if (missing(data)) errormsg("No dataset given.")
 
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
@@ -796,12 +782,9 @@ glm_imp <- function(formula, family, data,
                     warn = TRUE, mess = TRUE,
                     keep_scaled_mcmc = FALSE, ...){
 
-  if (missing(formula))
-    stop("No model formula specified.")
-  if (missing(data))
-    stop("No dataset given.")
-  if (missing(family))
-    stop("The family needs to be specified.")
+  if (missing(formula)) errormsg("No model formula specified.")
+  if (missing(data)) errormsg("No dataset given.")
+  if (missing(family)) errormsg("The family needs to be specified.")
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   arglist$formula <- check_formula_list(arglist$formula)
@@ -824,10 +807,9 @@ glm_imp <- function(formula, family, data,
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
 
-  if (!attr(arglist$analysis_type, 'family')$link %in% c("identity", "log", "logit", "probit", "log",
-                           "cloglog", "inverse"))
-    stop(gettextf("%s is not an allowed link function.",
-                  dQuote(arglist$family$link)))
+  if (!attr(arglist$analysis_type, 'family')$link %in%
+      c("identity", "log", "logit", "probit", "log", "cloglog", "inverse"))
+    errormsg("%s is not an allowed link function.", dQuote(arglist$family$link))
 
   res <- do.call(model_imp, arglist)
   res$call <- match.call()
@@ -850,10 +832,8 @@ clm_imp <- function(formula, data,
                     warn = TRUE, mess = TRUE,
                     keep_scaled_mcmc = FALSE, ...){
 
-  if (missing(formula))
-    stop("No fixed effects structure specified.")
-  if (missing(data))
-    stop("No dataset given.")
+  if (missing(formula)) errormsg("No fixed effects structure specified.")
+  if (missing(data)) errormsg("No dataset given.")
 
   thiscall <- as.list(match.call())[-1L]
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
@@ -887,11 +867,8 @@ lognormal_imp <- function(formula, data,
                    warn = TRUE, mess = TRUE,
                    keep_scaled_mcmc = FALSE, ...){
 
-  if (missing(formula))
-    stop("No model formula specified.")
-
-  if (missing(data))
-    stop("No dataset given.")
+  if (missing(formula)) errormsg("No model formula specified.")
+  if (missing(data)) errormsg("No dataset given.")
 
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
@@ -926,11 +903,8 @@ betareg_imp <- function(formula, data,
                    warn = TRUE, mess = TRUE,
                    keep_scaled_mcmc = FALSE, ...){
 
-  if (missing(formula))
-    stop("No model formula specified.")
-
-  if (missing(data))
-    stop("No dataset given.")
+  if (missing(formula)) errormsg("No model formula specified.")
+  if (missing(data)) errormsg("No dataset given.")
 
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
@@ -964,11 +938,8 @@ mlogit_imp <- function(formula, data,
                        warn = TRUE, mess = TRUE,
                        keep_scaled_mcmc = FALSE, ...){
 
-  if (missing(formula))
-    stop("No model formula specified.")
-
-  if (missing(data))
-    stop("No dataset given.")
+  if (missing(formula)) errormsg("No model formula specified.")
+  if (missing(data)) errormsg("No dataset given.")
 
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
@@ -1019,11 +990,10 @@ lme_imp <- function(fixed, data, random,
   }
 
   if (missing(fixed) & is.null(arglist$formula))
-    stop("No fixed effects structure specified.")
+    errormsg("No fixed effects structure specified.")
   if (missing(random) & is.null(arglist$formula))
-    stop("No random effects structure specified.")
-  if (missing(data))
-    stop("No dataset given.")
+    errormsg("No random effects structure specified.")
+  if (missing(data)) errormsg("No dataset given.")
 
   arglist$analysis_type <- "lme"
   attr(arglist$analysis_type, "family") <- gaussian()
@@ -1083,11 +1053,10 @@ glme_imp <- function(fixed, data, random, family,
   }
 
   if (missing(fixed) & is.null(arglist$formula))
-    stop("No fixed effects structure specified.")
+    errormsg("No fixed effects structure specified.")
   if (missing(random) & is.null(arglist$formula))
-    stop("No random effects structure specified.")
-  if (missing(data))
-    stop("No dataset given.")
+    errormsg("No random effects structure specified.")
+  if (missing(data)) errormsg("No dataset given.")
 
   arglist$analysis_type <- "glme"
 
@@ -1110,10 +1079,9 @@ glme_imp <- function(fixed, data, random, family,
   attr(arglist$analysis_type, "family") <- thefamily
 
 
-  if (!attr(arglist$analysis_type, 'family')$link %in% c("identity", "log", "logit", "probit", "log",
-                                                         "cloglog", "inverse"))
-    stop(gettextf("%s is not an allowed link function.",
-                  dQuote(arglist$family$link)))
+  if (!attr(arglist$analysis_type, 'family')$link %in%
+      c("identity", "log", "logit", "probit", "log", "cloglog", "inverse"))
+    errormsg("%s is not an allowed link function.", dQuote(arglist$family$link))
 
   res <- do.call(model_imp, arglist)
   res$call <- match.call()
@@ -1162,11 +1130,10 @@ betamm_imp <- function(fixed, random, data,
   }
 
   if (missing(fixed) & is.null(arglist$formula))
-    stop("No fixed effects structure specified.")
+    errormsg("No fixed effects structure specified.")
   if (missing(random) & is.null(arglist$formula))
-    stop("No random effects structure specified.")
-  if (missing(data))
-    stop("No dataset given.")
+    errormsg("No random effects structure specified.")
+  if (missing(data)) errormsg("No dataset given.")
 
   arglist$analysis_type <- "glmm_beta"
 
@@ -1210,13 +1177,12 @@ lognormmm_imp <- function(fixed, random, data,
   }
 
   if (missing(fixed) & is.null(arglist$formula))
-    stop("No fixed effects structure specified.")
+    errormsg("No fixed effects structure specified.")
   if (missing(random) & is.null(arglist$formula))
-    stop("No random effects structure specified.")
-  if (missing(data))
-    stop("No dataset given.")
-  arglist$analysis_type <- "glmm_lognorm"
+    errormsg("No random effects structure specified.")
+  if (missing(data)) errormsg("No dataset given.")
 
+  arglist$analysis_type <- "glmm_lognorm"
 
   res <- do.call(model_imp, arglist)
   res$call <- match.call()
@@ -1256,11 +1222,10 @@ clmm_imp <- function(fixed, data, random,
   }
 
   if (missing(fixed) & is.null(arglist$formula))
-    stop("No fixed effects structure specified.")
+    errormsg("No fixed effects structure specified.")
   if (missing(random) & is.null(arglist$formula))
-    stop("No random effects structure specified.")
-  if (missing(data))
-    stop("No dataset given.")
+    errormsg("No random effects structure specified.")
+  if (missing(data)) errormsg("No dataset given.")
 
 arglist$analysis_type <- "clmm"
 
@@ -1301,11 +1266,8 @@ survreg_imp <- function(formula, data,
                thiscall[!names(thiscall) %in% names(arglist)])
 
 
-  if (missing(formula))
-    stop("No model formula specified.")
-
-  if (missing(data))
-    stop("No dataset given.")
+  if (missing(formula)) errormsg("No model formula specified.")
+  if (missing(data)) errormsg("No dataset given.")
 
 
   arglist$formula <- check_formula_list(arglist$formula)
@@ -1335,11 +1297,8 @@ coxph_imp <- function(formula, data, df_basehaz = 6,
                       keep_scaled_mcmc = FALSE, ...){
 
 
-  if (missing(formula))
-    stop("No model formula specified.")
-
-  if (missing(data))
-    stop("No dataset given.")
+  if (missing(formula)) errormsg("No model formula specified.")
+  if (missing(data)) errormsg("No dataset given.")
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   thiscall <- as.list(match.call())[-1L]
@@ -1376,20 +1335,17 @@ JM_imp <- function(formula, data, df_basehaz = 6,
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
 
-  if (missing(formula))
-    stop("No model formulas specified.")
-
-  if (missing(data))
-    stop("No dataset given.")
+  if (missing(formula)) errormsg("No model formulas specified.")
+  if (missing(data)) errormsg("No dataset given.")
 
   if (missing(timevar))
-    stop(gettextf("The name of the %s variable of the longitudinal outcome(s)
-                  must be specified via the argument %s.",
-                  dQuote("time"), dQuote("timevar")))
+    errormsg("The name of the %s variable of the longitudinal outcome(s) must
+             be specified via the argument %s.",
+             dQuote("time"), dQuote("timevar"))
 
   if (!is.numeric(data[[timevar]]))
-    stop(gettextf("The time variable (specified via the argument %s) must be numeric.",
-                  dQuote('timevar')))
+    errormsg("The time variable (specified via the argument %s) must be numeric.",
+             dQuote('timevar'))
 
 
   thiscall <- as.list(match.call())[-1L]
