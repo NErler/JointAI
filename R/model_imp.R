@@ -258,34 +258,53 @@
 #' of the key words selecting a set of parameters. Except for \code{other},
 #' in which parameter names are specified directly, parameter (groups) are just
 #' set as \code{TRUE} or \code{FALSE}.
+#'
+#' Models are divided into two groups, the main models, which are the models
+#' for which the user has explicitly specified a formula (via \code{formula}
+#' or \code{fixed}), and all other models, for which models were specified
+#' automatically.
+#'
+#'
 #' If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)} will be used.
+#'
+#'
 #' \tabular{ll}{
 #' \strong{name/key word} \tab \strong{what is monitored}\cr
-#' \code{analysis_main} \tab \code{betas} and \code{sigma_y} (and \code{D} in multi-level models)\cr
-#' \code{analysis_random} \tab \code{ranef}, \code{D}, \code{invD}, \code{RinvD}\cr
-#' \code{imp_pars} \tab \code{alphas}, \code{tau_imp}, \code{gamma_imp}, \code{delta_imp}\cr
+#' \code{analysis_main} \tab \code{betas} and \code{sigma_y}
+#'                           (also \code{D} in multi-level models and
+#'                           \code{basehaz} in proportional hazards models)\cr
+#' \code{analysis_random} \tab \code{ranef_main}, \code{D_main},
+#'                             \code{invD_main}, \code{RinvD_main}\cr
+#' \code{imp_pars} \tab \code{alphas}, \code{tau_other}, \code{gamma_other},
+#'                      \code{delta_other}\cr
 #' \code{imps} \tab imputed values\cr
-#' \code{betas} \tab regression coefficients of the analysis model\cr
-#' \code{tau_y} \tab precision of the residuals from the analysis model\cr
-#' \code{sigma_y} \tab standard deviation of the residuals from the analysis model\cr
-#' \code{ranef} \tab random effects \code{b}\cr
-#' \code{D} \tab covariance matrix of the random effects\cr
-#' \code{invD} \tab inverse of \code{D}\cr
-#' \code{RinvD} \tab matrix in the prior for \code{invD}\cr
+#' \code{betas} \tab regression coefficients of the main analysis model\cr
+#' \code{tau_main} \tab precision of the residuals from the main analysis models\cr
+#' \code{sigma_main} \tab standard deviation of the residuals from the main analysis models\cr
+#' \code{gamma_main} \tab intercepts in ordinal main models\cr
+#' \code{delta_main} \tab increments of ordinal main models\cr
+#' \code{ranef_main} \tab random effects from the main analysis models \code{b}\cr
+#' \code{D_main} \tab covariance matrix of the random effects from the main models\cr
+#' \code{invD_main} \tab inverses of \code{D_main}\cr
+#' \code{RinvD_main} \tab matrices in the priors for \code{invD_main}\cr
 #' \code{alphas} \tab regression coefficients in the covariate models\cr
-#' \code{tau_imp} \tab precision parameters of the residuals from covariate models\cr
-#' \code{gamma_imp} \tab intercepts in ordinal covariate models\cr
-#' \code{delta_imp} \tab increments of ordinal intercepts\cr
+#' \code{tau_other} \tab precision parameters of the residuals from covariate models\cr
+#' \code{gamma_other} \tab intercepts in ordinal covariate models\cr
+#' \code{delta_other} \tab increments of ordinal intercepts\cr
+#' \code{ranef_other} \tab random effects from the other  models \code{b}\cr
+#' \code{D_other} \tab covariance matrix of the random effects from the other models\cr
+#' \code{invD_other} \tab inverses of \code{D_other}\cr
+#' \code{RinvD_other} \tab matrices in the priors for \code{invD_other}\cr
 #' \code{other} \tab additional parameters
 #' }
 #' \strong{For example:}\cr
-#' \code{monitor_params = c(analysis_main = TRUE, tau_y = TRUE, sigma_y = FALSE)}
+#' \code{monitor_params = c(analysis_main = TRUE, tau_main = TRUE, sigma_main = FALSE)}
 #' would monitor the regression parameters \code{betas} and the
-#' residual precision \code{tau_y} instead of the residual standard
-#' deviation \code{sigma_y}.
+#' residual precision \code{tau_main} instead of the residual standard
+#' deviation \code{sigma_main}.
 #'
-#' \code{monitor_params = c(imps = TRUE)} would monitor \code{betas}, \code{tau_y},
-#' and \code{sigma_y} (because \code{analysis_main = TRUE} by default) as well as
+#' \code{monitor_params = c(imps = TRUE)} would monitor \code{betas}, \code{tau_main},
+#' and \code{sigma_main} (because \code{analysis_main = TRUE} by default) as well as
 #' the imputed values.
 #'}
 #'
