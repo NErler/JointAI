@@ -953,38 +953,41 @@ the imputed values.
 \section{Note}{
 
 \subsection{Coding of variables:}{
-The default imputation methods are chosen based on the \code{class} of each
-of the incomplete variables, distinguishing between \code{numeric},
+The default covariate (imputation) models are chosen based on the \code{class}
+of each of the variables, distinguishing between \code{numeric},
 \code{factor} with two levels, unordered \code{factor} with >2 levels and
 ordered \code{factor} with >2 levels.\cr
 
 When a continuous variable has only two different values it is
 assumed to be binary and its coding and default (imputation) model will be
-changed accordingly. This behavior can be overwritten specifying a model type
+changed accordingly. This behaviour can be overwritten specifying a model type
 via the argument \code{models}.\cr
 
 Variables of type \code{logical} are automatically converted to unordered factors.\cr
 
-Contrary to base R behavior, dummy coding (i.e., \code{contr.treatment} contrasts)
+Contrary to base R behaviour, dummy coding (i.e., \code{contr.treatment} contrasts)
 are used for ordered factors in any linear predictor.
-It is not possible to overwrite this behavior using the base R contrasts specification.
+It is not possible to overwrite this behaviour using the base R contrasts specification.
 However, since the order of levels in an ordered factor contains information relevant
 to the imputation of missing values, it is important that incomplete ordinal
 variables are coded as such.
 }
 
+\cr
+
 \subsection{Non-linear effects and transformation of variables:}{
 \strong{JointAI} handles non-linear effects, transformation of covariates and
 interactions the following way:\cr
-When, for instance, the model formula contains the function \code{log(x)} and
+When, for instance, a model formula contains the function \code{log(x)} and
 \code{x} has missing values, \code{x} will be imputed and used in the linear
-predictor of models for covariates, i.e., it is assumed that
-the other variables have a linear association with \code{x} but not with
-\code{log(x)}. The \code{log()} of the observed and imputed values of
-\code{x} is calculated and used in the linear predictor of the analysis model.\cr
+predictor of models for which no formula was specified,
+i.e., it is assumed that the other variables have a linear association with
+\code{x}. The \code{log()} of the observed and imputed values of
+\code{x} is calculated and used in the linear predictor of the main
+analysis model.\cr
 
 If, instead of using \code{log(x)} in the model formula, a pre-calculated
-variable \code{logx} is used instead, this variable is imputed directly
+variable \code{logx} is used, this variable is imputed directly
 and used in the linear predictors of all models, implying that
 variables that have \code{logx} in their linear predictors have a linear
 association with \code{logx} but not with \code{x}.\cr
@@ -996,28 +999,35 @@ If, for example, a model formula contains both \code{x} and \code{x2} (where
 \code{x2} = \code{x^2}), they are treated as separate variables and imputed
 with separate models. Imputed values of \code{x2} are thus not equal to the
 square of imputed values of \code{x}.
-Instead, \code{x} and \code{I(x^2)} should be used in the model formula. Then only
-\code{x} is imputed and used in the linear predictor of models for other
-incomplete variables, and \code{x^2} is calculated from the imputed values
-of \code{x} internally.
+Instead, \code{x} and \code{I(x^2)} should be used in the model formula.
+Then only \code{x} is imputed and \code{x^2} is calculated from the imputed
+values of \code{x} internally.
 
 The same applies to interactions involving incomplete variables.
 }
 
-\subsection{Sequence of covariate models:}{
-            The default order is incomplete baseline covariates, complete
-            longitudinal covariates, incomplete longitudinal covariates,
-            and within each group variables are ordered according to the
-            proportion of missing values (increasing).
+\cr
+
+\subsection{Sequence of models:}{
+            Models generated automatically (i.e., not mentioned in
+            \code{formula} or \code{fixed} are specified in a sequence based
+            on the level of the outcome of the respective model
+            in the multi-level hierarchy and within each level according to
+            the number of missing values.
+            This means that level-1 variables have all level-2, level-3, ...
+            variables in their linear predictor, and variables on the highest
+            level only have variables from the same level in their linear
+            predictor. Within each level, the variable with the most missing
+            values has the most variables in its linear predictor.
 }
+
+\cr
 
 \subsection{Not (yet) possible:}{
 \itemize{
-\item multiple nesting levels of random effects (nested or crossed)
 \item prediction (using \code{predict}) conditional on random effects
 \item the use of splines for incomplete variables
 \item the use of \code{\link[survival]{pspline}},
-      \code{\link[survival]{frailty}}, \code{\link[survival]{cluster}}
       or \code{\link[survival]{strata}} in survival models
 \item left censored or interval censored data
 }
