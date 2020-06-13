@@ -2,9 +2,7 @@
 % Please edit documentation in R/JointAI.R
 \name{Surv}
 \alias{Surv}
-\title{Create a Survival Object
-This function just calls \code{Surv()} from the
-\href{https://CRAN.R-project.org/package=survival}{\strong{survival}} package.}
+\title{Create a Survival Object}
 \usage{
 Surv(time, time2, event, type = c("right", "left", "interval", "counting",
   "interval2", "mstate"), origin = 0)
@@ -48,7 +46,6 @@ Surv(time, time2, event, type = c("right", "left", "interval", "counting",
     from one strata to another, but it has rarely proven useful.}
 }
 \description{
-Create a Survival Object
 This function just calls \code{Surv()} from the
 \href{https://CRAN.R-project.org/package=survival}{\strong{survival}} package.
 }

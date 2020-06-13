@@ -23,7 +23,7 @@ LazyData: TRUE
 RoxygenNote: 7.1.0
 Roxygen: list(old_usage = TRUE)
 Depends: rjags (>= 4-6), R (>=  4.0.0)
-Imports: MASS, mcmcse, coda, rlang, foreach, doParallel, survival
+Imports: MASS, mcmcse, coda, rlang, foreach, doParallel, survival, mathjaxr
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
 Suggests: 
     knitr,
@@ -35,4 +35,5 @@ Suggests:
     testthat
 VignetteBuilder: knitr
 Encoding: UTF-8
+RdMacros: mathjaxr
 Language: en-UK

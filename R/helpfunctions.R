@@ -268,7 +268,7 @@ replace_trafo <- function(nam, trafos) {
 
 
 # used in get_model_info and predict (2020-09-06)
-#' Clean Survival Name
+#' Convert a survival outcome to a model name
 #'
 #' A helper function that converts the "name of a survival model"
 #' (the \code{"Surv(time, status)"} specification) into a valid variable name

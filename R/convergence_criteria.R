@@ -65,7 +65,7 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 
 
 
-#' Monte Carlo error
+#' Calculate and plot the Monte Carlo error
 #'
 #' Calculate, print and plot the Monte Carlo error of the samples from a
 #' 'JointAI' model, combining the samples from all MCMC chains.

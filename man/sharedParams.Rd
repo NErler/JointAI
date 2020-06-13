@@ -2,7 +2,7 @@
 % Please edit documentation in R/JointAI.R
 \name{sharedParams}
 \alias{sharedParams}
-\title{Parameters used by several functions in JointAI.}
+\title{Parameters used by several functions in JointAI}
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
@@ -84,5 +84,5 @@ given directly by \strong{JointAI}.)}
 \item{ppc}{logical: should monitors for posterior predictive checks be set? (not yet used)}
 }
 \description{
-Parameters used by several functions in JointAI.
+Parameters used by several functions in JointAI
 }

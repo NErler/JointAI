@@ -1,9 +1,10 @@
-#' List covariate models
+#' List model details
 #'
-#' This function prints information on models specified for (incomplete)
-#' covariates in a JointAI object, including the model type, names of the
-#' parameters used and hyperparameters.
+#' This function prints information on all models, those explicitly specified
+#' by the user and those specified automatically by JointAI for (incomplete)
+#' covariates in a JointAI object.
 #'
+#' @md
 #' @inheritParams sharedParams
 #' @param predvars logical; should information on the predictor variables be
 #'                 printed? (default is \code{TRUE})
@@ -11,7 +12,7 @@
 #'                be printed? (default is \code{TRUE})
 #' @param otherpars logical; should information on other parameters be printed?
 #'                  (default is \code{TRUE})
-#' @param priors logical; should information on the priors (and hyperparameters)
+#' @param priors logical; should information on the priors (and hyper-parameters)
 #'               be printed? (default is \code{TRUE})
 #' @param refcat logical; should information on the reference category be
 #'               printed? (default is \code{TRUE})
@@ -22,9 +23,13 @@
 #' distribution.
 #' Briefly, the joint distribution is specified as a sequence of conditional
 #' models
-#' \deqn{p(y | x_1, x_2, x_3, ..., \theta) p(x_1|x_2, x_3, ..., \theta) p(x_2|x_3, ..., \theta) ...}
+#'
+#' \loadmathjax
+#'
+#' \mjdeqn{p(y | x_1, x_2, x_3, ..., \theta) p(x_1|x_2, x_3, ..., \theta)
+#' p(x_2|x_3, ..., \theta) ...}{ascii}
 #' The actual imputation models are the full conditional distributions
-#' \eqn{p(x_1 | \cdot)} derived from this joint distribution.
+#' \mjeqn{p(x_1 | \cdot)}{ascii} derived from this joint distribution.
 #' Even though the conditional distributions do not contain the outcome and all
 #' other covariates in their linear predictor, outcome and other covariates are
 #' taken into account implicitly, since imputations are sampled
@@ -53,7 +58,8 @@
 #'
 #' @examples
 #' # (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save time)
-#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0, mess = FALSE)
+#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0,
+#'                n.iter = 0, mess = FALSE)
 #'
 #' list_models(mod1)
 #'
@@ -101,7 +107,8 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
     if (predvars) {
       cat("* Predictor variables:\n")
       if (length(unlist(i$lp)) > 0)
-        cat(' ', add_breaks(paste0(names(unlist(unname(i$lp))), collapse = ", ")),
+        cat(strwrap(paste0(names(unlist(unname(i$lp))), collapse = ", "),
+                    prefix = "\n", initial = '', exdent = 2, indent = 2),
           "\n")
       else
         cat(' (no predictor variables)', '\n')
@@ -222,8 +229,8 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 #' @param ... currently not used
 #'
 #' @examples
-#' # (does not need MCMC samples to work, so we will set n.adapt = 0 and
-#' # n.iter = 0 to reduce computational time)
+#' # (This function does not need MCMC samples to work, so we will set
+#' n.adapt = 0 and n.iter = 0 to reduce computational time)
 #' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0, mess = FALSE)
 #'
 #' parameters(mod1)
@@ -231,15 +238,14 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 #' @export
 #'
 parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
+
   if (!inherits(object, "JointAI"))
-    stop("Use only with 'JointAI' objects.\n")
+    errormsg("Use only with 'JointAI' objects.")
 
   args <- as.list(match.call())
 
-  if (is.null(object$MCMC)) {
-    if (mess)
-    message(paste0("Note: '", args$object, "' does not contain MCMC samples."))
-  }
+  if (is.null(object$MCMC) & mess)
+    msg("Note: %s does not contain MCMC samples.", dQuote(args$object))
 
   vnam <- object$mcmc_settings$variable.names
   if ('beta' %in% vnam) {
@@ -262,9 +268,9 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
 }
 
 
-# helpfunctions ---------------------------------------------------------------
+# help functions ---------------------------------------------------------------
 
-# used in print_functions.R
+# used in print_functions.R (2020-06-12)
 print_seq <- function(min, max) {
   if (min == max)
     max
@@ -272,13 +278,6 @@ print_seq <- function(min, max) {
     paste0(min, ":", max)
 }
 
-
-# add linebreaks when printing a string
-add_breaks <- function(string) {
-  m <- gregexpr(", ", string)[[1]]
-  br <- ifelse(c(0, diff(as.numeric(m) %/% getOption('width'))) > 0, "\n", "")
-  gsub("\n, ", ",\n  ", paste0(strsplit(string, ", ")[[1]], br, collapse = ", "))
-}
 
 
 # used in print_functions.R

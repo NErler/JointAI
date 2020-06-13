@@ -6,7 +6,7 @@
 \alias{coef.JointAI}
 \alias{confint.JointAI}
 \alias{print.JointAI}
-\title{Summary of an object of class JointAI}
+\title{Summarize the results from an object of class JointAI}
 \usage{
 \method{summary}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
   quantiles = c(0.025, 0.975), subset = NULL, exclude_chains = NULL,

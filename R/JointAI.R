@@ -3,7 +3,7 @@
 #' The \strong{JointAI} package performs simultaneous imputation and inference for
 #' incomplete or complete data under the Bayesian framework.
 #' Models for incomplete covariates, conditional on other covariates,
-#' are specified automatically and modeled jointly with the analysis model.
+#' are specified automatically and modelled jointly with the analysis model.
 #' MCMC sampling is performed in \href{http://mcmc-jags.sourceforge.net}{'JAGS'}
 #' via the R package \href{https://CRAN.R-project.org/package=rjags}{\strong{rjags}}.
 #'
@@ -155,6 +155,7 @@ NULL
 
 
 #' Create a Survival Object
+#'
 #' This function just calls \code{Surv()} from the
 #' \href{https://CRAN.R-project.org/package=survival}{\strong{survival}} package.
 #'
@@ -168,7 +169,7 @@ Surv <- survival::Surv
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage(
-    "This is new software. Please report any bugs to the package maintainer (https://github.com/NErler/JointAI/issues)."
+    "Please report any bugs to the package maintainer (https://github.com/NErler/JointAI/issues)."
   )
 }
 
@@ -176,7 +177,7 @@ Surv <- survival::Surv
 utils::globalVariables(c("i", "value", "chain", "iteration"))
 
 
-#' Parameters used by several functions in JointAI.
+#' Parameters used by several functions in JointAI
 #' @param object object inheriting from class 'JointAI'
 #' @param no_model optional; vector of names of variables for which no model
 #'                 should be specified.

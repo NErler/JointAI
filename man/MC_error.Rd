@@ -3,7 +3,7 @@
 \name{MC_error}
 \alias{MC_error}
 \alias{plot.MCElist}
-\title{Monte Carlo error}
+\title{Calculate and plot the Monte Carlo error}
 \usage{
 MC_error(x, subset = NULL, exclude_chains = NULL, start = NULL,
   end = NULL, thin = NULL, digits = 2, warn = TRUE, mess = TRUE, ...)

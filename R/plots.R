@@ -1,4 +1,4 @@
-#' Traceplot of the MCMC sample from a JointAI model
+#' Create traceplots for a MCMC sample
 #'
 #' Creates a set of traceplots from the MCMC sample of an object of class 'JointAI'.
 #'
@@ -42,8 +42,8 @@ traceplot <- function(object, ...) {
 }
 
 
-#' @rdname traceplot
 #' @export
+#' @keywords internal
 traceplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, ...) {
 
   if (is.null(start)) start <- start(object)
@@ -167,8 +167,8 @@ densplot <- function(object, ...) {
 }
 
 
-#' @rdname densplot
 #' @export
+#' @keywords internal
 densplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, ...) {
 
   if (is.null(start)) start <- start(object)

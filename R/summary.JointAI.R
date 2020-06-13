@@ -1,4 +1,4 @@
-#' Summary of an object of class JointAI
+#' Summarize the results from an object of class JointAI
 #'
 #' Obtain and print the \code{summary}, (fixed effects) coefficients (\code{coef})
 #' and credible interval (\code{confint}) for an object of class 'JointAI'.
@@ -171,7 +171,6 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
   out$analysis_type <- object$analysis_type
   out$size <- object$Mlist$N
-  # out$groups <- length(unique(object$Mlist$groups))
 
   class(out) <- "summary.JointAI"
   return(out)
@@ -182,8 +181,9 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' @param x an object of class \code{summary.JointAI} or \code{JointAI}
 #' @export
 print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) {
+
   if (!inherits(x, "summary.JointAI"))
-    stop("Use only with 'summary.JointAI' objects.\n")
+    errormsg("Use only with 'summary.JointAI' objects.")
 
   cat("\n")
   cat(print_type(x$analysis_type), 'fitted with JointAI', "\n")
@@ -196,7 +196,8 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
       if (sum(!sapply(x$res, is.null)) > 1)
       cat(paste0(
         '# ', paste0(c(rep('-', 69)), collapse = ''), ' #\n',
-        '  ', print_type(x$res[[k]]$modeltype), ' for ', dQuote(names(x$res)[k]), '\n',
+        '  ', print_type(x$res[[k]]$modeltype), ' for ',
+        dQuote(names(x$res)[k]), '\n',
         '# ', paste0(c(rep('-', 35)), collapse = ' '), ' #\n\n'
       ))
 
@@ -279,15 +280,13 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                          subset = NULL, exclude_chains = NULL,
                          warn = TRUE, mess = TRUE, ...) {
 
-  if (!inherits(object, "JointAI"))
-    stop("Use only with 'JointAI' objects.\n")
+  if (!inherits(object, "JointAI")) errormsg("Use only with 'JointAI' objects.")
 
-  if (is.null(object$MCMC)) {
-    stop("There is no MCMC sample.\n")
-  }
+  if (is.null(object$MCMC)) errormsg("There is no MCMC sample.")
 
-  MCMC <- prep_MCMC(object, start, end, thin, subset, exclude_chains = exclude_chains,
-                    mess = mess, warn = warn)
+
+  MCMC <- prep_MCMC(object, start, end, thin, subset,
+                    exclude_chains = exclude_chains, mess = mess, warn = warn)
 
 
   coefs <- sapply(names(object$fixed), function(k) {
@@ -314,8 +313,9 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 coef.summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                          subset = NULL, exclude_chains = NULL,
                          warn = TRUE, mess = TRUE, ...) {
+
   if (!inherits(object, "summary.JointAI"))
-    stop("Use only with 'summary.JointAI' objects.\n")
+    errormsg("Use only with 'summary.JointAI' objects.")
 
   return(object$stats)
 }
@@ -331,18 +331,16 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
                             start = NULL, end = NULL, thin = NULL,
                             subset = NULL, exclude_chains = NULL,
                             warn = TRUE, mess = TRUE, ...) {
-  if (!inherits(object, "JointAI"))
-    stop("Use only with 'JointAI' objects.\n")
 
-  if (is.null(object$MCMC)) {
-    stop("There is no MCMC sample.\n")
-  }
+  if (!inherits(object, "JointAI")) errormsg("Use only with 'JointAI' objects.")
 
-  if (is.null(subset) & !is.null(parm))
-    subset <- parm
+  if (is.null(object$MCMC)) errormsg("There is no MCMC sample.")
+
+
+  if (is.null(subset) & !is.null(parm)) subset <- parm
 
   if (!is.null(subset) & !is.null(parm))
-    stop('At least one of "parm" and "subset" should be NULL.')
+    errormsg('At least one of "parm" and "subset" should be NULL.')
 
   if (is.null(quantiles) & !is.null(level))
     quantiles <- c((1 - level)/2, 1 - (1 - level)/2)
@@ -359,8 +357,8 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
 #' @rdname summary.JointAI
 #' @export
 print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
-  if (!inherits(x, "JointAI"))
-    stop("Use only with 'JointAI' objects.\n")
+
+  if (!inherits(x, "JointAI")) errormsg("Use only with 'JointAI' objects.")
 
 
   MCMC <- if (!is.null(x$MCMC))
@@ -409,8 +407,9 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
 
 #' @export
 print.modelstring <- function(x, ...) {
+
   if (!inherits(x, "modelstring"))
-    stop("Use only with 'modelstring' objects.\n")
+    errormsg("Use only with 'modelstring' objects.")
 
   cat(x)
 }

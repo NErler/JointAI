@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpfunctions.R
 \name{clean_survname}
 \alias{clean_survname}
-\title{Clean Survival Name}
+\title{Convert a survival outcome to a model name}
 \usage{
 clean_survname(x)
 }
