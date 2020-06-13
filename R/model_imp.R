@@ -172,7 +172,7 @@
 #' \cr\cr
 #'
 #' \subsection{Implemented distribution families and link functions for \code{glm_imp()}
-#' and \code{glme_imp()}}{
+#' and \code{glme_imp()}/\code{glmer_imp()}}{
 #' \tabular{ll}{
 # \emph{family} \tab \emph{link}\cr
 #' \code{gaussian} \tab with links: \code{identity}, \code{log}\cr
@@ -182,29 +182,73 @@
 #' }
 #' }
 #'
+#' \cr\cr
 #'
-#'
-#' \subsection{Imputation methods}{
-#' Implemented imputation models that can be chosen in the argument \code{models} are:
+#' \subsection{Imputation methods / model types}{
+#' Implemented model types that can be chosen in the argument \code{models}
+#' for baseline covariates (not repeatedly measured) are:
 #' \tabular{ll}{
-#' \code{norm} \tab linear model\cr
+#' \code{lm} \tab linear (normal) model with identity link
+#'                (alternatively: \code{glm_gaussian_identity}); default for
+#'                continuous variables\cr
+#' \code{glm_gaussian_log} \tab linear (normal) model with log link\cr
+#' \code{glm_gaussian_inverse} \tab linear (normal) model with inverse link\cr
+#' \code{glm_logit} \tab logistic model for binary data
+#'                       (alternatively: \code{glm_binomial_logit});
+#'                       default for binary variables\cr
+#' \code{glm_probit} \tab probit model for binary data
+#'                       (alternatively: \code{glm_binomial_probit})\cr
+#' \code{glm_binomial_log} \tab binomial model with log link\cr
+#' \code{glm_binomial_cloglog} \tab binomial model with complementary log-log link\cr
+#' \code{glm_gamma_inverse} \tab gamma model with inverse link for skewed continuous data\cr
+#' \code{glm_gamma_identity} \tab gamma model with identity link for skewed continuous data\cr
+#' \code{glm_gamma_log} \tab gamma model with log link for skewed continuous data\cr
+#' \code{glm_poisson_log} \tab Poisson model with log link for count data\cr
+#' \code{glm_poisson_identity} \tab Poisson model with identity link for count data\cr
 #' \code{lognorm} \tab log-normal model for skewed continuous data\cr
-#' \code{gamma} \tab gamma model (with log-link) for skewed continuous data\cr
-#' \code{beta} \tab beta model (with logit-link) for skewed continuous data in (0, 1)\cr
-#' \code{logit} \tab logistic model for binary data\cr
-#' \code{multilogit} \tab multinomial logit model for unordered categorical variables\cr
-#' \code{cumlogit} \tab cumulative logit model for ordered categorical variables\cr
-#' \code{lmm} \tab linear mixed model for continuous longitudinal covariates\cr
-#' \code{glmm_lognorm} \tab log-normal mixed model for skewed longitudinal covariates\cr
-#' \code{glmm_gamma} \tab Gamma mixed model for skewed longitudinal covariates\cr
-#' \code{glmm_logit} \tab logit mixed model for binary longitudinal covariates\cr
-#' \code{glmm_poisson} \tab Poisson mixed model for longitudinal count covariates\cr
-#' \code{clmm} \tab cumulative logit mixed model for longitudinal ordered factors
+#' \code{beta} \tab beta model (with logit link) for skewed continuous data in (0, 1)\cr
+#' \code{mlogit} \tab multinomial logit model for unordered categorical variables;
+#'                    default for unordered factors with >2 levels\cr
+#' \code{clm} \tab cumulative logit model for ordered categorical variables;
+#'                 default for ordered factors\cr
 #' }
-#' When models are specified for only a subset of the incomplete or longitudinal
-#' covariates involved in a model, the default choices are used for the unspecified
-#' variables.
+#'
+#' For repeatedly measured variables the following model types are available:
+#' \tabular{ll}{
+#' \code{lmm} \tab linear (normal) mixed model with identity link
+#'                (alternatively: \code{glmm_gaussian_identity});
+#'                default for continuous variables\cr
+#' \code{glmm_gaussian_log} \tab linear (normal) mixed model with log link\cr
+#' \code{glmm_gaussian_inverse} \tab linear (normal) mixed model with inverse link\cr
+#' \code{glmm_logit} \tab logistic mixed model for binary data
+#'                       (alternatively: \code{glmm_binomial_logit});
+#'                       default for binary variables\cr
+#' \code{glmm_probit} \tab probit model for binary data
+#'                       (alternatively: \code{glmm_binomial_probit})\cr
+#' \code{glmm_binomial_log} \tab binomial mixed model with log link\cr
+#' \code{glmm_binomial_cloglog} \tab binomial mixed model with complementary
+#'                                   log-log link\cr
+#' \code{glmm_gamma_inverse} \tab gamma mixed model with inverse link for
+#'                                skewed continuous data\cr
+#' \code{glmm_gamma_identity} \tab gamma mixed model with identity link for
+#'                                 skewed continuous data\cr
+#' \code{glmm_gamma_log} \tab gamma mixed model with log link for skewed
+#'                            continuous data\cr
+#' \code{glmm_poisson_log} \tab Poisson mixed model with log link for count data\cr
+#' \code{glmm_poisson_identity} \tab Poisson mixed model with identity link for
+#'                                   count data\cr
+#' \code{glmm_lognorm} \tab log-normal mixed model for skewed covariates\cr
+#' \code{glmm_beta} \tab beta mixed model for continuous data in (0, 1)\cr
+#' \code{clmm} \tab cumulative logit mixed model for ordered factors;
+#'                  default for ordered factors
 #' }
+#'
+#' When models are specified for only a subset of the variables for which a
+#' model is needed, the default model choices (as indicated in the tables)
+#' are used for the unspecified variables.
+#' }
+#'
+#' \cr\cr
 #'
 #' \subsection{Parameters to follow (\code{monitor_params})}{
 #' See also the vignette: \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}\cr
