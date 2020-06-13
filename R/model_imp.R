@@ -76,10 +76,6 @@
 #'                   numeric variables and integer variables with >20 different
 #'                   values will be scaled.
 #'                   If set to \code{FALSE} no scaling will be done.
-#' @param scale_pars optional; matrix of parameters used for centring and
-#'                   scaling of continuous covariates. If not specified, this will
-#'                   be calculated automatically. If \code{FALSE}, no scaling
-#'                   will be done.
 #' @param keep_scaled_mcmc should the "original" MCMC sample
 #'                         (i.e., the scaled version returned by \code{coda.samples()}) be kept?
 #'                         (The MCMC sample that is re-scaled to the scale of the
