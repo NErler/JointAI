@@ -3,23 +3,24 @@
 #' Main analysis functions to estimate different types of models using MCMC
 #' sampling, while imputing missing values.
 #'
+#' @md
 #' @param formula a two sided model formula (see \code{\link[stats]{formula}})
-#'                or a list of such formulas; see the `Details` section below.
+#'                or a list of such formulas; (more details below).
 #' @param fixed a two sided formula describing the fixed-effects part of the
 #'              model (see \code{\link[stats]{formula}})
 #' @param random only for multi-level models:
 #'               a one-sided formula of the form \code{~x1 + ... + xn | g},
 #'               where \code{x1 + ... + xn} specifies the model for the random
 #'               effects and \code{g} the grouping variable
-#' @param data a \code{data.frame} containing the original data (see `Details`)
+#' @param data a \code{data.frame} containing the original data (more details below)
 #' @param family only for \code{glm_imp} and \code{glmm_imp}/\code{glmer_imp}:
 #'               a description of the distribution and link function to
 #'               be used in the model. This can be a character string naming a
 #'               family function, a family function or the result of a call to
-#'               a family function. (See \code{\link[stats]{family}} and the
-#'               `Details` section below.)
+#'               a family function. (For more details see below and
+#'               \code{\link[stats]{family}}.)
 #' @param monitor_params named list or vector specifying which parameters should be
-#'                       monitored (see the `Details` section below)
+#'                       monitored (more details below)
 #' @param inits optional; specification of initial values in the form of a list
 #'              or a function (see \code{\link[rjags]{jags.model}}).
 #'              If omitted, starting values for the random number generator are
@@ -89,51 +90,49 @@
 #'                  used in the models given as names.
 #' @param ... additional, optional arguments (not used)
 #' @importFrom foreach foreach %dopar%
+#' @name model_imp
 #'
+#' @return An object of class \link[=JointAIObject]{JointAI}.
 #'
+#' \cr
 #'
-#' @section Details:
-#' See also the vignettes
-#' \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification},
-#' \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{MCMC Settings} and
-#' \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}.
-#'
-#'
-#'
-#' \subsection{Model formulas}{
-#' \strong{Random effects}\cr
+#' @details # Model formulas
+#' ## Random effects
 #' It is possible to specify multi-level models as it is done in the package
-#' \href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}},
-#' using \code{fixed} and \code{random}, or as it is done in the
-#' package
-#' \href{https://CRAN.R-project.org/package=lme4}{\strong{lme4}},
-#' using \code{formula}, and specifying the random effects
-#' in brackets.
+#' \href{https://CRAN.R-project.org/package=nlme}{\pkg{nlme}},
+#' using `fixed` and `random`, or as it is done in the package
+#' \href{https://CRAN.R-project.org/package=lme4}{\pkg{lme4}},
+#' using `formula` and specifying the random effects in brackets:
+#' ```{r}
+#' formula = y ~ x1 + x2 + x3 + (1 | id)
+#' ```
+#' is equivalent to
+#' ```{r, eval = FALSE}
+#' fixed = y ~ x1 + x2 + x3, random = ~ 1|id
+#' ```
 #'
-#' I.e., \code{formula = y ~ x1 + x2 + x3 + (1 | id)} is equivalent to
-#' \code{fixed = y ~ x1 + x2 + x3, random = ~ 1|id}.
-#'
-#' \strong{Multiple levels of grouping}\cr
-#' For multiple levels of grouping the specification using \code{formula}
+#' ## Multiple levels of grouping
+#' For multiple levels of grouping the specification using `formula`
 #' should be used. There is no distinction between nested and crossed random
-#' effects, i.e., \code{... + (1 | id) + (1 | center)} is treated the same as
-#' \code{... + (1 | center/id)}.
+#' effects, i.e., `... + (1 | id) + (1 | center)` is treated the same as
+#' `... + (1 | center/id)`.
 #'
-#' \strong{Nested vs crossed random effects}\cr
+#' ## Nested vs crossed random effects
 #' The distinction between nested and crossed random effects should come from
 #' the levels of the grouping variables, i.e., if \code{id} is nested in
 #' \code{center}, then there cannot be observations with the same \code{id}
 #' but different values for \code{center}.
 #'
-#' \strong{Modelling multiple models simultaneously & joint models}\cr
+#' ## Modelling multiple models simultaneously & joint models
 #' To fit multiple main models at the same time, a \code{list} of \code{fomula}
 #' objects can be passed to the argument \code{formula}.
 #' Outcomes of one model may be contained as covariates in another model and
 #' it is possible to combine models for variables on different levels,
-#' for example
-#'
-#' \code{formula = list(y ~ x1 + x2 + x3 + x4 + time + (time | id),
-#'                      x2 ~ x3 + x4 + x5)}
+#' for example:
+#' ```{r}
+#' formula = list(y ~ x1 + x2 + x3 + x4 + time + (time | id),
+#'                      x2 ~ x3 + x4 + x5)
+#' ```
 #'
 #' This principle is also used for the specification of a joint model for
 #' longitudinal and survival data.
@@ -141,7 +140,7 @@
 #' Note that it is not possible to specify multiple models for the same outcome
 #' variable.
 #'
-#' \strong{Survival models with frailties or time-varying covariates}\cr
+#' ## Survival models with frailties or time-varying covariates
 #' Random effects specified in brackets can also be used to indicate a multi-level
 #' structure in survival models, as would, for instance be needed in a
 #' multicentre setting, where patients are from multiple hospitals.
@@ -149,11 +148,11 @@
 #' It also allows to model time-dependent covariates in a proportional
 #' hazards survival model (using \code{coxph_imp}), also in combination with
 #' additional grouping levels.
-#' }
 #'
-#' \cr\cr
 #'
-#' \subsection{Data structure}{
+#' \cr
+#'
+#' @details # Data structure
 #' For multi-level settings, the data must be in long format, so that repeated
 #' measurements are recorded in separate rows.
 #'
@@ -170,12 +169,11 @@
 #' It is possible to have multiple time-varying covariates, which do not
 #' have to be measured at the same time points, but there can only be one
 #' \code{timevar}.
-#' }
 #'
-#' \cr\cr
 #'
-#' \subsection{Implemented distribution families and link functions for \code{glm_imp()}
-#' and \code{glme_imp()}/\code{glmer_imp()}}{
+#' \cr
+#'
+#' @details # Distribution families and link functions for `glm_imp()` and `glme_imp()`/`glmer_imp()`
 #' \tabular{ll}{
 # \emph{family} \tab \emph{link}\cr
 #' \code{gaussian} \tab with links: \code{identity}, \code{log}\cr
@@ -183,11 +181,11 @@
 #' \code{Gamma}    \tab with links: \code{inverse}, \code{identity}, \code{log}\cr
 #' \code{poisson}  \tab with links: \code{log}, \code{identity}
 #' }
-#' }
 #'
-#' \cr\cr
 #'
-#' \subsection{Imputation methods / model types}{
+#' \cr
+#'
+#' @details # Imputation methods / model types
 #' Implemented model types that can be chosen in the argument \code{models}
 #' for baseline covariates (not repeatedly measured) are:
 #' \tabular{ll}{
@@ -249,12 +247,13 @@
 #' When models are specified for only a subset of the variables for which a
 #' model is needed, the default model choices (as indicated in the tables)
 #' are used for the unspecified variables.
-#' }
 #'
-#' \cr\cr
 #'
-#' \subsection{Parameters to follow (\code{monitor_params})}{
-#' See also the vignette: \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}\cr
+#' \cr
+#'
+#' @details # Parameters to follow (`monitor_params`)
+#' See also the vignette:
+#' \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}\cr
 #'
 #' Named vector specifying which parameters should be monitored. This can be done
 #' either directly by specifying the name of the parameter or indirectly by one
@@ -300,7 +299,8 @@
 #' \code{RinvD_other} \tab matrices in the priors for \code{invD_other}\cr
 #' \code{other} \tab additional parameters
 #' }
-#' \strong{For example:}\cr
+#'
+#' **For example:**\cr
 #' \code{monitor_params = c(analysis_main = TRUE, tau_main = TRUE, sigma_main = FALSE)}
 #' would monitor the regression parameters \code{betas} and the
 #' residual precision \code{tau_main} instead of the residual standard
@@ -309,14 +309,14 @@
 #' \code{monitor_params = c(imps = TRUE)} would monitor \code{betas}, \code{tau_main},
 #' and \code{sigma_main} (because \code{analysis_main = TRUE} by default) as well as
 #' the imputed values.
-#'}
 #'
 #'
 #'
-#' \cr\cr
+#'
+#' \cr
 #'
 #' @section Note:
-#' \subsection{Coding of variables:}{
+#' ## Coding of variables:
 #' The default covariate (imputation) models are chosen based on the \code{class}
 #' of each of the variables, distinguishing between \code{numeric},
 #' \code{factor} with two levels, unordered \code{factor} with >2 levels and
@@ -335,11 +335,11 @@
 #' However, since the order of levels in an ordered factor contains information relevant
 #' to the imputation of missing values, it is important that incomplete ordinal
 #' variables are coded as such.
-#' }
+#'
 #'
 #' \cr
 #'
-#' \subsection{Non-linear effects and transformation of variables:}{
+#' ## Non-linear effects and transformation of variables:
 #' \strong{JointAI} handles non-linear effects, transformation of covariates and
 #' interactions the following way:\cr
 #' When, for instance, a model formula contains the function \code{log(x)} and
@@ -368,37 +368,35 @@
 #' values of \code{x} internally.
 #'
 #' The same applies to interactions involving incomplete variables.
-#' }
+#'
 #'
 #' \cr
 #'
-#' \subsection{Sequence of models:}{
-#'             Models generated automatically (i.e., not mentioned in
-#'             \code{formula} or \code{fixed} are specified in a sequence based
-#'             on the level of the outcome of the respective model
-#'             in the multi-level hierarchy and within each level according to
-#'             the number of missing values.
-#'             This means that level-1 variables have all level-2, level-3, ...
-#'             variables in their linear predictor, and variables on the highest
-#'             level only have variables from the same level in their linear
-#'             predictor. Within each level, the variable with the most missing
-#'             values has the most variables in its linear predictor.
-#' }
+#' ## Sequence of models:
+#' Models generated automatically (i.e., not mentioned in `formula` or `fixed`
+#' are specified in a sequence based on the level of the outcome of the
+#' respective model in the multi-level hierarchy and within each level
+#' according to the number of missing values.
+#' This means that level-1 variables have all level-2, level-3, ... variables
+#' in their linear predictor, and variables on the highest level only have
+#' variables from the same level in their linear predictor.
+#' Within each level, the variable with the most missing values has the most
+#' variables in its linear predictor.
+#'
 #'
 #' \cr
 #'
-#' \subsection{Not (yet) possible:}{
+#' ## Not (yet) possible:
 #' \itemize{
 #' \item prediction (using \code{predict}) conditional on random effects
 #' \item the use of splines for incomplete variables
-#' \item the use of \code{\link[survival]{pspline}},
+#' \item the use of (or equivalents for) \code{\link[survival]{pspline}},
 #'       or \code{\link[survival]{strata}} in survival models
 #' \item left censored or interval censored data
 #' }
-#' }
 #'
-#' @return An object of class \link[=JointAIObject]{JointAI}.
 #'
+#' \cr
 #'
 #' @seealso \code{\link{set_refcat}},
 #'          \code{\link{traceplot}}, \code{\link{densplot}},
@@ -409,13 +407,13 @@
 #'          \code{\link{parameters}}, \code{\link{list_models}}
 #'
 #' Vignettes
-#' \itemize{
-#'   \item \href{https://nerler.github.io/JointAI/articles/MinimalExample.html}{Minimal Example}
-#'   \item \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification}
-#'   \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
-#'   \item \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{After Fitting}
-#'}
+#' * \href{https://nerler.github.io/JointAI/articles/MinimalExample.html}{Minimal Example}
+#' * \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification}
+#' * \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#' * \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{MCMC Settings}
+#' * \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{After Fitting}
 #'
+#' \cr
 #'
 #' @examples
 #' # Example 1: Linear regression with incomplete covariates
@@ -432,7 +430,6 @@
 #'                 data = longDF, n.iter = 300)
 #'
 #'
-#' @name model_imp
 NULL
 
 model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
@@ -598,7 +595,10 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   if (is.null(monitor_params)) {
     monitor_params <- c("analysis_main" = TRUE)
   } else {
-    if (!is.null(scale_pars) & any(grepl('beta[', unlist(monitor_params), fixed = T))) {
+    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    # needs to be checked
+    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    if (any(grepl('beta[', unlist(monitor_params), fixed = T))) {
       monitor_params <- c(sapply(monitor_params, function(x) {
         if (any(grepl('beta[', x, fixed = TRUE)))
           x[-grep('beta[', x, fixed = TRUE)]
