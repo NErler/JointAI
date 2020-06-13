@@ -50,7 +50,10 @@ Follows the same principle as the argument \code{monitor_params} in
 
 \item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
-\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
+\item{thin}{thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
+For example, \code{thin = 1} (default) will keep the MCMC samples
+from all iterations; \code{thin = 5} would only keep every 5th
+iteration.}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. (Note: this applies only to warnings

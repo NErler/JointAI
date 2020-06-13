@@ -202,7 +202,10 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #' @param quiet if \code{TRUE} then messages generated during compilation
 #'                      will be suppressed, as well as the progress bar during adaptation
 #'                      (see \code{\link[rjags]{jags.model}})
-#' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
+#' @param thin thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
+#'             For example, \code{thin = 1} (default) will keep the MCMC samples
+#'             from all iterations; \code{thin = 5} would only keep every 5th
+#'             iteration.
 #' @param nrow,ncol optional number of rows and columns in the plot layout;
 #'                  automatically chosen if unspecified
 #' @param use_ggplot logical; Should ggplot be used instead of the base graphics?

@@ -42,7 +42,10 @@ see also \code{\link[rjags]{coda.samples}})}
 will be suppressed, as well as the progress bar during adaptation
 (see \code{\link[rjags]{jags.model}})}
 
-\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
+\item{thin}{thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
+For example, \code{thin = 1} (default) will keep the MCMC samples
+from all iterations; \code{thin = 5} would only keep every 5th
+iteration.}
 
 \item{nrow, ncol}{optional number of rows and columns in the plot layout;
 automatically chosen if unspecified}

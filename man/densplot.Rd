@@ -37,7 +37,10 @@ densplot(object, ...)
 
 \item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
 
-\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
+\item{thin}{thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
+For example, \code{thin = 1} (default) will keep the MCMC samples
+from all iterations; \code{thin = 5} would only keep every 5th
+iteration.}
 
 \item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
 Follows the same principle as the argument \code{monitor_params} in

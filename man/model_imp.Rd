@@ -591,7 +591,10 @@ JM_imp(
 \item{n.iter}{the number of iterations of the MCMC chain (after adaptation;
 see also \code{\link[rjags]{coda.samples}})}
 
-\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
+\item{thin}{thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
+For example, \code{thin = 1} (default) will keep the MCMC samples
+from all iterations; \code{thin = 5} would only keep every 5th
+iteration.}
 
 \item{monitor_params}{named list or vector specifying which parameters should be
 monitored (see details)}
