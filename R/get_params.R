@@ -55,6 +55,25 @@ get_params <- function(Mlist, info_list,
       tau_main <- TRUE
     }
 
+
+
+    # sigma_main
+    sigvars <- if (isTRUE(sigma_main)) {
+      names(list_main)[sapply(list_main, '[[', 'family') %in%
+                         c('gaussian', 'Gamma', 'lognorm')]
+    }
+
+    # tau_main
+    tauvars <- if (isTRUE(tau_main)) {
+      setdiff(sigvars,
+              names(list_main)[
+                sapply(list_main, '[[', 'family') %in%
+                  c('gaussian', 'Gamma', 'lognorm', 'beta')]
+      )
+    }
+
+
+
     # gamma
     gamma_main <- any(modeltypes_main %in% c('clmm', 'clm')) & !isFALSE(gamma_main)
 
@@ -106,7 +125,7 @@ get_params <- function(Mlist, info_list,
   # params ---------------------------------------------------------------------
   params <- c(
     # beta
-    if (betas &
+    if (isTRUE(betas) &
         any(grepl("^beta\\b", do.call(rbind, get_coef_names(info_list))$coef))) "beta",
 
     # basehaz
@@ -121,24 +140,21 @@ get_params <- function(Mlist, info_list,
     if (isTRUE(delta_main))
       paste0("delta_", names(list_main)[modeltypes_main %in% c('clm', 'clmm')]),
 
-    # tau_main
-    if (isTRUE(tau_main))
-      paste0("tau_", names(list_main)[
-        sapply(list_main, '[[', 'family') %in% c('gaussian', 'Gamma', 'lognorm',
-                                                 'beta')]),
-
     # sigma_main
     if (isTRUE(sigma_main)) {
-      c(if (any(sapply(list_main, '[[', 'family') %in%
-                c('gaussian', 'Gamma', 'lognorm', 'beta')))
-        paste0('sigma_', names(list_main)[sapply(list_main, '[[', 'family') %in%
-                                            c('gaussian', 'Gamma', 'lognorm')]),
+      c(if (length(sigvars) > 0) paste0('sigma_', sigvars),
 
         if (any(modeltypes_main %in% c('survreg')))
           paste0("shape_", sapply(list_main[modeltypes_main %in% c('survreg')],
                                   "[[", 'varname'))
       )
     },
+
+    # tau_main
+    if (isTRUE(tau_main & length(tauvars) > 0))
+      paste0("tau_", tauvars),
+
+
 
     # random effects parameters
     if (any(!sapply(ranef_info_main, is.null))) {
