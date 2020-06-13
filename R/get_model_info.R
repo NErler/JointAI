@@ -185,7 +185,7 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
   # shrinkage ------------------------------------------------------------------
   shrinkage <- if (k %in% names(Mlist$shrinkage)) {
     Mlist$shrinkage[k]
-  } else if (k %in% names(Mlist$fixed) & is.null(names(Mlist$shrinkage))) {
+  } else if (is.null(names(Mlist$shrinkage))) {
     Mlist$shrinkage
   }
 
