@@ -186,7 +186,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
     errormsg("Use only with 'summary.JointAI' objects.")
 
   cat("\n")
-  cat(print_type(x$analysis_type), 'fitted with JointAI', "\n")
+  cat("Bayesian", if (length(x$res) > 1) 'joint', 'model fitted with JointAI', "\n")
   cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
       "\n", sep = "")
 
