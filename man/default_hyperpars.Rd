@@ -97,7 +97,7 @@ the prior on the correlation between the random effects is concentrated
 around 0, so that larger values of \code{KinvD} indicate stronger prior
 belief that the elements of the multivariate normal distribution are independent.
 For \code{KinvD} equal to the number of random effects the Wishart prior
-puts most weight on the extreme values (correlation 1 or −1).
+puts most weight on the extreme values (correlation 1 or -1).
 }
 \examples{
 default_hyperpars()
