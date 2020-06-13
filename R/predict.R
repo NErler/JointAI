@@ -242,7 +242,7 @@ predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0
       predict_fun(formula = object$fixed[[varname]],
                   newdata = newdata, type = types[varname], data = object$data,
                   MCMC = MCMC, varname = varname,
-                  Mlist = object$Mlist, srow = object$data_list$srow,
+                  Mlist = get_Mlist(object), srow = object$data_list$srow,
                   coef_list = object$coef_list, info_list = object$info_list,
                   quantiles = quantiles, mess = mess)
     } else {

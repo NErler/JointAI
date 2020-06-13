@@ -72,7 +72,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
     var.names <- object$mcmc_settings$variable.names
   } else {
     var.names <- do.call(get_params,
-                         c(list(Mlist = object$Mlist,
+                         c(list(Mlist = get_Mlist(object),
                                 info_list = object$info_list,
                                 data = object$data, mess = mess),
                            monitor_params))

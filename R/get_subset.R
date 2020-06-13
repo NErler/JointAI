@@ -16,7 +16,7 @@ get_subset <- function(object, subset, warn = TRUE, mess = TRUE) {
     subset$analysis_main <- FALSE
 
 
-  Mlist_new <- object$Mlist
+  Mlist_new <- get_Mlist(object)
   Mlist_new$ppc <- as.list(subset)$ppc
 
   s <- do.call(get_params, c(list(Mlist = Mlist_new, info_list = object$info_list),
