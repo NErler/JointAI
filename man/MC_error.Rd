@@ -5,18 +5,8 @@
 \alias{plot.MCElist}
 \title{Monte Carlo error}
 \usage{
-MC_error(
-  x,
-  subset = NULL,
-  exclude_chains = NULL,
-  start = NULL,
-  end = NULL,
-  thin = NULL,
-  digits = 2,
-  warn = TRUE,
-  mess = TRUE,
-  ...
-)
+MC_error(x, subset = NULL, exclude_chains = NULL, start = NULL,
+  end = NULL, thin = NULL, digits = 2, warn = TRUE, mess = TRUE, ...)
 
 \method{plot}{MCElist}(x, data_scale = TRUE, plotpars = NULL, ablinepars = list(v = 0.05), ...)
 }

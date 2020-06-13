@@ -1,14 +1,15 @@
-#' Traceplot of a JointAI model
+#' Traceplot of the MCMC sample from a JointAI model
 #'
-#' Creates a set of traceplots from the MCMC sample of an object of class "JointAI".
+#' Creates a set of traceplots from the MCMC sample of an object of class 'JointAI'.
 #'
 #' @inheritParams sharedParams
 #' @inheritDotParams graphics::matplot -x -y -type -xlab -ylab -pch -log -xlim -ylim
 #' @inheritParams base::plot
 #' @name traceplot
 #'
-#' @seealso \code{\link{summary.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
-#'          \code{\link{lm_imp}}, \code{\link{densplot}}
+#' @seealso \code{\link{summary.JointAI}},
+#'          \code{\link[JointAI:model_imp]{*_imp}},
+#'          \code{\link{densplot}}\cr
 #'          The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 #'          contains some examples how to specify the parameter \code{subset}.
 #'
@@ -45,14 +46,9 @@ traceplot <- function(object, ...) {
 #' @export
 traceplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, ...) {
 
-  if (is.null(start))
-    start <- start(object)
-
-  if (is.null(end))
-    end <- end(object)
-
-  if (is.null(thin))
-    thin <- thin(object)
+  if (is.null(start)) start <- start(object)
+  if (is.null(end)) end <- end(object)
+  if (is.null(thin)) thin <- thin(object)
 
   coda::traceplot(window(object, start = start, end = end, thin = thin), ...)
 }
@@ -63,18 +59,21 @@ traceplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, .
 traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                               subset = c(analysis_main = TRUE),
                               exclude_chains = NULL,
-                              nrow = NULL, ncol = NULL, keep_aux = FALSE,
-                              use_ggplot = FALSE, warn = TRUE, mess = TRUE,
-                              ...) {
+                              nrow = NULL, ncol = NULL, use_ggplot = FALSE,
+                              warn = TRUE, mess = TRUE, ...) {
 
-  prep <- plot_prep(object, start = start, end = end, thin = thin, subset = subset,
-                    exclude_chains = exclude_chains,
-                    nrow = nrow, ncol = ncol, warn = warn, mess = mess,
-                    keep_aux = keep_aux)
 
+  # prepare the MCMC sample and obtain plotting parameters
+  prep <- plot_prep(object, start = start, end = end, thin = thin,
+                    subset = subset, exclude_chains = exclude_chains,
+                    nrow = nrow, ncol = ncol, warn = warn, mess = mess)
+
+  # get the variable names to use for each sub-plot
   plotnams <- get_plotmain(object, colnames(prep$MCMC[[1]]))
 
 
+  # if ggplot is used, the data needs to be converted to long format and
+  # variable names are used as facet labels
   if (use_ggplot) {
     meltMCMC <- melt_matrix_list(lapply(prep$MCMC, as.matrix),
                                  varnames = c('iteration', 'variable'))
@@ -89,6 +88,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                           ncol = prep$ncol, nrow = prep$nrow,
                           labeller = ggplot2::as_labeller(labels))
   } else {
+    # for base plots, set graphics parameters
     op <- par(mfrow = c(prep$nrow, prep$ncol),
               mar = c(3.2, 2.5, ifelse(length(object$fixed) == 1, 2, 3), 1),
               mgp = c(2, 0.6, 0))
@@ -171,14 +171,9 @@ densplot <- function(object, ...) {
 #' @export
 densplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, ...) {
 
-  if (is.null(start))
-    start <- start(object)
-
-  if (is.null(end))
-    end <- end(object)
-
-  if (is.null(thin))
-    thin <- thin(object)
+  if (is.null(start)) start <- start(object)
+  if (is.null(end)) end <- end(object)
+  if (is.null(thin)) thin <- thin(object)
 
   coda::densplot(window(object, start = start, end = end, thin = thin), ...)
 }
@@ -198,13 +193,22 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                     nrow = nrow, ncol = ncol, warn = warn,
                     mess = mess)
 
+  # if MCMC chains should be combined, combine the samples of the chains.
+  # Set the resulting object as mcmc.list so that the rest of the syntax
+  # works for either case
   if (joined)
     prep$MCMC <- as.mcmc.list(as.mcmc(do.call(rbind, prep$MCMC)))
 
 
+  # obtain the variable names to be used as names for the sub-plots
   plotnams <- get_plotmain(object, colnames(prep$MCMC[[1]]))
 
+
+
   if (use_ggplot) {
+    # if ggplot is used, the data needs to be converted to long format and
+    # variable names are used as facet labels
+
     meltMCMC <- melt_matrix_list(lapply(prep$MCMC, as.matrix),
                                  varnames = c('iteration', 'variable'))
     meltMCMC$chain <- factor(meltMCMC$L1)
@@ -222,6 +226,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                           labeller = ggplot2::as_labeller(labels))
   } else {
     args <- as.list(match.call())
+
     if (!is.null(args$col)) {
       col <- eval(args$col)
       args <- args[-which(names(args) == "col")]
@@ -230,8 +235,10 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     }
 
 
-    op <- par(mfrow = c(prep$nrow, prep$ncol), mar = c(2, 3, ifelse(length(object$fixed) == 1, 2, 3), 1),
+    op <- par(mfrow = c(prep$nrow, prep$ncol),
+              mar = c(2, 3, ifelse(length(object$fixed) == 1, 2, 3), 1),
               mgp = c(2, 0.6, 0))
+
     for (i in 1:ncol(prep$MCMC[[1]])) {
       dens <- lapply(prep$MCMC[, i], density)
       vline_range <- if (is.list(vlines[[1]])) {
@@ -239,6 +246,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       }else{
         vlines$v
       }
+
       plot(NULL,
            xlim = range(lapply(dens, "[[", "x"), vline_range, na.rm = TRUE),
            ylim = range(lapply(dens, "[[", "y"), na.rm = TRUE),
@@ -271,42 +279,45 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 }
 
 
-# Helpfunction for densityplot and traceplot
-plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NULL,
-                      exclude_chains = NULL,
-                      nrow = NULL, ncol = NULL, warn = TRUE, mess = TRUE,
-  if (is.null(object$MCMC))
-    stop("There is no MCMC sample.")
+# used in traceplot and densplot (2020-06-13)
+plot_prep <- function(object, start = NULL, end = NULL, thin = NULL,
+                      subset = NULL, exclude_chains = NULL, nrow = NULL,
                       ncol = NULL, warn = TRUE, mess = TRUE, ...) {
 
-  if (is.null(start))
-    start <- start(object$MCMC)
+  # Help function for densityplot and traceplot
 
-  if (is.null(end))
-    end <- end(object$MCMC)
 
-  if (is.null(thin))
-    thin <- thin(object$MCMC)
+  if (is.null(object$MCMC)) errormsg("There is no MCMC sample.")
 
-  MCMC <- get_subset(object, subset, keep_aux = keep_aux,
-                     warn = warn, mess = mess)
+  # set first and last iteration to be used and thinning interval
+  if (is.null(start)) start <- start(object$MCMC)
+  if (is.null(end)) end <- end(object$MCMC)
+  if (is.null(thin)) thin <- thin(object$MCMC)
 
+  # create a subset of the MCMC sample based on the user-selected set of
+  # parameters
+  MCMC <- get_subset(object, subset, warn = warn, mess = mess)
+
+  # set MCMC chains to be excluded from the output
   chains <- seq_along(MCMC)
   if (!is.null(exclude_chains)) {
     chains <- chains[-exclude_chains]
   }
 
-  MCMC <- window(MCMC[chains],
-                 start = start,
-                 end = end,
-                 thin = thin)
+  # reduce the MCMC sample to the selected chains and iterations
+  MCMC <- window(MCMC[chains], start = start, end = end, thin = thin)
 
+  # obtain the iteration numbers from the MCMC sample to use as x-axis in
+  # the traceplot
   time <- time(MCMC)
 
-  # get number of rows and columns of plots
+  # get number of rows and columns of plots.
+  # If there are more than 36 plots and the number of rows and columns is
+  # determined automatically, create multiple pages of plots with max. 36
+  # plots per page
   if (is.null(nrow) & is.null(ncol)) {
-    dims <- if (ncol(MCMC[[1]]) > 64) {
-      grDevices::n2mfrow(49)
+    dims <- if (ncol(MCMC[[1]]) > 36) {
+      grDevices::n2mfrow(36)
     } else {
       grDevices::n2mfrow(ncol(MCMC[[1]]))
     }
@@ -325,9 +336,17 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL, subset = NU
 
 
 get_plotmain <- function(object, plotnams, ylab = FALSE) {
+  # match variable names with the column names to get the titles of the sub-plots
+  # - object: an object of class JointAI
+  # - plotnams: names of the columns of the subset of the MCMC sample
+  # - ylab: logical; if TRUE, names are outcome: variable, otherwise they use
+  #         two rows variable\n(outcome)
+
+  # get the list of coefficient names from the JointAI object
   coefs <- do.call(rbind, object$coef_list)
 
   coef_set <- coefs[na.omit(match(plotnams, coefs$coef)), ]
+
 
   if (length(unique(coef_set$outcome)) == 1) {
     plotnams[na.omit(match(coefs$coef, plotnams))] <-
@@ -350,12 +369,12 @@ get_plotmain <- function(object, plotnams, ylab = FALSE) {
 
 #' Visualize the distribution of all variables in the dataset
 #'
-#' This function plots a grid of histograms (for continuous variables) and barplots (for
-#' categorical variables) and labels it with the proportion of missing values in
-#' each variable.
+#' This function plots a grid of histograms (for continuous variables) and
+#' bar plots (for categorical variables) and labels it with the proportion of
+#' missing values in each variable.
 #' @param data a \code{data.frame} (or a \code{matrix})
-#' @param fill color the histograms and bars are filled with
-#' @param border color of the borders of the histograms and bars
+#' @param fill colour the histograms and bars are filled with
+#' @param border colour of the borders of the histograms and bars
 #' @param allNA logical; if \code{FALSE} (default) the proportion of missing
 #'              values is only given for variables that have missing values,
 #'              if \code{TRUE} it is given for all variables
@@ -364,6 +383,7 @@ get_plotmain <- function(object, plotnams, ylab = FALSE) {
 #'            and \code{\link[graphics]{hist}}
 #'
 #' @seealso Vignette: \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
+#'
 #' @examples
 #' op <- par(mar = c(2,2,3,1), mgp = c(2, 0.6, 0))
 #' plot_all(wideDF)
@@ -435,7 +455,9 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
     } else if (is.character(x)) {
       plot(0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "",
            main = main, bty = 'n')
-      text(1, 0, paste0(names(data)[i], " \nis coded as character\nand cannot be plotted."), xpd = TRUE)
+      text(1, 0, paste0(names(data)[i],
+                        " \nis coded as character\nand cannot be plotted."),
+           xpd = TRUE)
     } else if (class(x) %in% c('Date', 'POSIXt')) {
       if (is.null(args_hist)) {
         breaks <-  seq(min(x, na.rm  = TRUE), max(x, na.rm = TRUE),

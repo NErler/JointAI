@@ -4,20 +4,9 @@
 \alias{predict.JointAI}
 \title{Predict values from an object of class JointAI}
 \usage{
-\method{predict}{JointAI}(
-  object,
-  outcome = 1,
-  newdata,
-  quantiles = c(0.025, 0.975),
-  type = "lp",
-  start = NULL,
-  end = NULL,
-  thin = NULL,
-  exclude_chains = NULL,
-  mess = TRUE,
-  warn = TRUE,
-  ...
-)
+\method{predict}{JointAI}(object, outcome = 1, newdata,
+  quantiles = c(0.025, 0.975), type = "lp", start = NULL, end = NULL,
+  thin = NULL, exclude_chains = NULL, mess = TRUE, warn = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}

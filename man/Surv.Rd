@@ -6,13 +6,8 @@
 This function just calls \code{Surv()} from the
 \href{https://CRAN.R-project.org/package=survival}{\strong{survival}} package.}
 \usage{
-Surv(
-  time,
-  time2,
-  event,
-  type = c("right", "left", "interval", "counting", "interval2", "mstate"),
-  origin = 0
-)
+Surv(time, time2, event, type = c("right", "left", "interval", "counting",
+  "interval2", "mstate"), origin = 0)
 }
 \arguments{
 \item{time}{

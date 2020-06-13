@@ -10,23 +10,10 @@ densplot(object, ...)
 
 \method{densplot}{mcmc.list}(object, start = NULL, end = NULL, thin = NULL, ...)
 
-\method{densplot}{JointAI}(
-  object,
-  start = NULL,
-  end = NULL,
-  thin = NULL,
-  subset = c(analysis_main = TRUE),
-  exclude_chains = NULL,
-  vlines = NULL,
-  nrow = NULL,
-  ncol = NULL,
-  joined = FALSE,
-  use_ggplot = FALSE,
-  keep_aux = FALSE,
-  warn = TRUE,
-  mess = TRUE,
-  ...
-)
+\method{densplot}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
+  subset = c(analysis_main = TRUE), exclude_chains = NULL, vlines = NULL,
+  nrow = NULL, ncol = NULL, joined = FALSE, use_ggplot = FALSE,
+  warn = TRUE, mess = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -55,10 +42,10 @@ Each of the list elements needs to contain at least
 \code{v = <x location>}, where <x location> is a vector of the
 same length as the number of plots (see examples).}
 
-\item{nrow}{optional number of rows and columns in the plot layout;
+\item{nrow}{optional; number of rows in the plot layout;
 automatically chosen if unspecified}
 
-\item{ncol}{optional number of rows and columns in the plot layout;
+\item{ncol}{optional; number of columns in the plot layout;
 automatically chosen if unspecified}
 
 \item{joined}{logical; should the chains be combined before plotting?}

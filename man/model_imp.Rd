@@ -20,553 +20,160 @@
 \alias{JM_imp}
 \title{Joint Analysis and Imputation of incomplete data}
 \usage{
-lm_imp(
-  formula,
-  data,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
+  modelname = NULL, modeldir = NULL, keep_model = FALSE,
+  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
+  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
 
-glm_imp(
-  formula,
-  family,
-  data,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+glm_imp(formula, family, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
+  modelname = NULL, modeldir = NULL, keep_model = FALSE,
+  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
+  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
 
-clm_imp(
-  formula,
-  data,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+clm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
+  modelname = NULL, modeldir = NULL, keep_model = FALSE,
+  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
+  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
 
-lognormal_imp(
-  formula,
-  data,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+lognormal_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
+  modelname = NULL, modeldir = NULL, keep_model = FALSE,
+  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
+  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
 
-betareg_imp(
-  formula,
-  data,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+betareg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
+  modelname = NULL, modeldir = NULL, keep_model = FALSE,
+  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
+  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
 
-mlogit_imp(
-  formula,
-  data,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+mlogit_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
+  modelname = NULL, modeldir = NULL, keep_model = FALSE,
+  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
+  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
 
-lme_imp(
-  fixed,
-  data,
-  random,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
+  modelname = NULL, modeldir = NULL, keep_model = FALSE,
+  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
+  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
 
-lmer_imp(
-  fixed,
-  data,
-  random,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+lmer_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
+  modelname = NULL, modeldir = NULL, keep_model = FALSE,
+  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
+  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
 
-glme_imp(
-  fixed,
-  data,
-  random,
-  family,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 
-glmer_imp(
-  fixed,
-  data,
-  random,
-  family,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+glmer_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 
-betamm_imp(
-  fixed,
-  random,
-  data,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+betamm_imp(fixed, random, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
+  modelname = NULL, modeldir = NULL, keep_model = FALSE,
+  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
+  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
 
-lognormmm_imp(
-  fixed,
-  random,
-  data,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+lognormmm_imp(fixed, random, data, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 
-clmm_imp(
-  fixed,
-  data,
-  random,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
+  modelname = NULL, modeldir = NULL, keep_model = FALSE,
+  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
+  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
 
-survreg_imp(
-  formula,
-  data,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
+  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
+  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
+  modelname = NULL, modeldir = NULL, keep_model = FALSE,
+  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
+  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
 
-coxph_imp(
-  formula,
-  data,
-  df_basehaz = 6,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+coxph_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 
-JM_imp(
-  formula,
-  data,
-  df_basehaz = 6,
-  n.chains = 3,
-  n.adapt = 100,
-  n.iter = 0,
-  thin = 1,
-  monitor_params = NULL,
-  auxvars = NULL,
-  timevar = NULL,
-  refcats = NULL,
-  models = NULL,
-  no_model = timevar,
-  assoc_type = NULL,
-  trunc = NULL,
-  shrinkage = FALSE,
-  ppc = TRUE,
-  seed = NULL,
-  inits = NULL,
-  parallel = FALSE,
-  n.cores = NULL,
-  scale_vars = NULL,
-  hyperpars = NULL,
-  modelname = NULL,
-  modeldir = NULL,
-  keep_model = FALSE,
-  overwrite = NULL,
-  quiet = TRUE,
-  progress.bar = "text",
-  warn = TRUE,
-  mess = TRUE,
-  keep_scaled_mcmc = FALSE,
-  ...
-)
+JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  timevar = NULL, refcats = NULL, models = NULL, no_model = timevar,
+  assoc_type = NULL, trunc = NULL, shrinkage = FALSE, ppc = TRUE,
+  seed = NULL, inits = NULL, parallel = FALSE, n.cores = NULL,
+  scale_vars = NULL, hyperpars = NULL, modelname = NULL,
+  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
 }
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})
-or a list of such formulas; see the `Details` section below.}
+or a list of such formulas; (more details below).}
 
-\item{data}{a \code{data.frame} containing the original data (see `Details`)}
+\item{data}{a \code{data.frame} containing the original data (more details below)}
 
 \item{n.chains}{number of MCMC chains}
 
@@ -582,7 +189,7 @@ from all iterations; \code{thin = 5} would only keep every 5th
 iteration.}
 
 \item{monitor_params}{named list or vector specifying which parameters should be
-monitored (see the `Details` section below)}
+monitored (more details below)}
 
 \item{auxvars}{optional; one-sided formula of variables that should be used as
 predictors in the imputation procedure (and will be imputed
@@ -600,9 +207,9 @@ a subset of the categorical variables the default will be used
 for the remaining variables. (See also \code{\link{set_refcat}})}
 
 \item{models}{optional; named vector specifying the types of models for
-  (incomplete) covariates.
-  This arguments replaces the argument \code{meth} used in earlier versions.
-  If \code{NULL} (default) models will be determined
+(incomplete) covariates.
+This arguments replaces the argument \code{meth} used in earlier versions.
+If \code{NULL} (default) models will be determined
 automatically based on the class of the respective columns of \code{data}.}
 
 \item{no_model}{optional; vector of names of variables for which no model
@@ -694,8 +301,8 @@ data is always kept.)}
 a description of the distribution and link function to
 be used in the model. This can be a character string naming a
 family function, a family function or the result of a call to
-a family function. (See \code{\link[stats]{family}} and the
-`Details` section below.)}
+a family function. (For more details see below and
+\code{\link[stats]{family}}.)}
 
 \item{fixed}{a two sided formula describing the fixed-effects part of the
 model (see \code{\link[stats]{formula}})}
@@ -706,7 +313,7 @@ where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}
 
 \item{df_basehaz}{degrees of freedom for the B-spline used to model the
- baseline hazard in proportional hazards models
+baseline hazard in proportional hazards models
 (\code{coxph_imp} and \code{JM_imp})}
 
 \item{timevar}{name of the "time" variable in mixed models.
@@ -724,62 +331,62 @@ default for covariates modelled using other distributions).}
 }
 \value{
 An object of class \link[=JointAIObject]{JointAI}.
+
+\cr
 }
 \description{
 Main analysis functions to estimate different types of models using MCMC
 sampling, while imputing missing values.
 }
-\section{Details}{
+\section{Model formulas}{
+\subsection{Random effects}{
 
-See also the vignettes
-\href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification},
-\href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{MCMC Settings} and
-\href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}.
-
-
-
-\subsection{Model formulas}{
-\strong{Random effects}\cr
 It is possible to specify multi-level models as it is done in the package
-\href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}},
-using \code{fixed} and \code{random}, or as it is done in the
-package
-\href{https://CRAN.R-project.org/package=lme4}{\strong{lme4}},
-using \code{formula}, and specifying the random effects
-in brackets.
+\href{https://CRAN.R-project.org/package=nlme}{\pkg{nlme}},
+using \code{fixed} and \code{random}, or as it is done in the package
+\href{https://CRAN.R-project.org/package=lme4}{\pkg{lme4}},
+using \code{formula} and specifying the random effects in brackets:\if{html}{\out{<div class="r">}}\preformatted{formula = y ~ x1 + x2 + x3 + (1 | id)
+}\if{html}{\out{</div>}}
 
-I.e., \code{formula = y ~ x1 + x2 + x3 + (1 | id)} is equivalent to
-\code{fixed = y ~ x1 + x2 + x3, random = ~ 1|id}.
+is equivalent to\if{html}{\out{<div class="r">}}\preformatted{fixed = y ~ x1 + x2 + x3, random = ~ 1|id
+}\if{html}{\out{</div>}}
+}
 
-\strong{Multiple levels of grouping}\cr
+\subsection{Multiple levels of grouping}{
+
 For multiple levels of grouping the specification using \code{formula}
 should be used. There is no distinction between nested and crossed random
 effects, i.e., \code{... + (1 | id) + (1 | center)} is treated the same as
 \code{... + (1 | center/id)}.
+}
 
-\strong{Nested vs crossed random effects}\cr
+\subsection{Nested vs crossed random effects}{
+
 The distinction between nested and crossed random effects should come from
 the levels of the grouping variables, i.e., if \code{id} is nested in
 \code{center}, then there cannot be observations with the same \code{id}
 but different values for \code{center}.
+}
 
-\strong{Modelling multiple models simultaneously & joint models}\cr
+\subsection{Modelling multiple models simultaneously & joint models}{
+
 To fit multiple main models at the same time, a \code{list} of \code{fomula}
 objects can be passed to the argument \code{formula}.
 Outcomes of one model may be contained as covariates in another model and
 it is possible to combine models for variables on different levels,
-for example
-
-\code{formula = list(y ~ x1 + x2 + x3 + x4 + time + (time | id),
-                     x2 ~ x3 + x4 + x5)}
+for example:\if{html}{\out{<div class="r">}}\preformatted{formula = list(y ~ x1 + x2 + x3 + x4 + time + (time | id),
+                     x2 ~ x3 + x4 + x5)
+}\if{html}{\out{</div>}}
 
 This principle is also used for the specification of a joint model for
 longitudinal and survival data.
 
 Note that it is not possible to specify multiple models for the same outcome
 variable.
+}
 
-\strong{Survival models with frailties or time-varying covariates}\cr
+\subsection{Survival models with frailties or time-varying covariates}{
+
 Random effects specified in brackets can also be used to indicate a multi-level
 structure in survival models, as would, for instance be needed in a
 multicentre setting, where patients are from multiple hospitals.
@@ -787,11 +394,12 @@ multicentre setting, where patients are from multiple hospitals.
 It also allows to model time-dependent covariates in a proportional
 hazards survival model (using \code{coxph_imp}), also in combination with
 additional grouping levels.
+
+\cr
+}
 }
 
-\cr\cr
-
-\subsection{Data structure}{
+\section{Data structure}{
 For multi-level settings, the data must be in long format, so that repeated
 measurements are recorded in separate rows.
 
@@ -808,36 +416,35 @@ covariates (which must be supplied via the argument \code{timevar}).
 It is possible to have multiple time-varying covariates, which do not
 have to be measured at the same time points, but there can only be one
 \code{timevar}.
+
+\cr
 }
 
-\cr\cr
-
-\subsection{Implemented distribution families and link functions for \code{glm_imp()}
-and \code{glme_imp()}/\code{glmer_imp()}}{
+\section{Distribution families and link functions for \code{glm_imp()} and \code{glme_imp()}/\code{glmer_imp()}}{
 \tabular{ll}{
 \code{gaussian} \tab with links: \code{identity}, \code{log}\cr
 \code{binomial} \tab with links: \code{logit}, \code{probit}, \code{log}, \code{cloglog}\cr
 \code{Gamma}    \tab with links: \code{inverse}, \code{identity}, \code{log}\cr
 \code{poisson}  \tab with links: \code{log}, \code{identity}
 }
+
+\cr
 }
 
-\cr\cr
-
-\subsection{Imputation methods / model types}{
+\section{Imputation methods / model types}{
 Implemented model types that can be chosen in the argument \code{models}
 for baseline covariates (not repeatedly measured) are:
 \tabular{ll}{
 \code{lm} \tab linear (normal) model with identity link
-               (alternatively: \code{glm_gaussian_identity}); default for
-               continuous variables\cr
+(alternatively: \code{glm_gaussian_identity}); default for
+continuous variables\cr
 \code{glm_gaussian_log} \tab linear (normal) model with log link\cr
 \code{glm_gaussian_inverse} \tab linear (normal) model with inverse link\cr
 \code{glm_logit} \tab logistic model for binary data
-                      (alternatively: \code{glm_binomial_logit});
-                      default for binary variables\cr
+(alternatively: \code{glm_binomial_logit});
+default for binary variables\cr
 \code{glm_probit} \tab probit model for binary data
-                      (alternatively: \code{glm_binomial_probit})\cr
+(alternatively: \code{glm_binomial_probit})\cr
 \code{glm_binomial_log} \tab binomial model with log link\cr
 \code{glm_binomial_cloglog} \tab binomial model with complementary log-log link\cr
 \code{glm_gamma_inverse} \tab gamma model with inverse link for skewed continuous data\cr
@@ -848,50 +455,51 @@ for baseline covariates (not repeatedly measured) are:
 \code{lognorm} \tab log-normal model for skewed continuous data\cr
 \code{beta} \tab beta model (with logit link) for skewed continuous data in (0, 1)\cr
 \code{mlogit} \tab multinomial logit model for unordered categorical variables;
-                   default for unordered factors with >2 levels\cr
+default for unordered factors with >2 levels\cr
 \code{clm} \tab cumulative logit model for ordered categorical variables;
-                default for ordered factors\cr
+default for ordered factors\cr
 }
 
 For repeatedly measured variables the following model types are available:
 \tabular{ll}{
 \code{lmm} \tab linear (normal) mixed model with identity link
-               (alternatively: \code{glmm_gaussian_identity});
-               default for continuous variables\cr
+(alternatively: \code{glmm_gaussian_identity});
+default for continuous variables\cr
 \code{glmm_gaussian_log} \tab linear (normal) mixed model with log link\cr
 \code{glmm_gaussian_inverse} \tab linear (normal) mixed model with inverse link\cr
 \code{glmm_logit} \tab logistic mixed model for binary data
-                      (alternatively: \code{glmm_binomial_logit});
-                      default for binary variables\cr
+(alternatively: \code{glmm_binomial_logit});
+default for binary variables\cr
 \code{glmm_probit} \tab probit model for binary data
-                      (alternatively: \code{glmm_binomial_probit})\cr
+(alternatively: \code{glmm_binomial_probit})\cr
 \code{glmm_binomial_log} \tab binomial mixed model with log link\cr
 \code{glmm_binomial_cloglog} \tab binomial mixed model with complementary
-                                  log-log link\cr
+log-log link\cr
 \code{glmm_gamma_inverse} \tab gamma mixed model with inverse link for
-                               skewed continuous data\cr
+skewed continuous data\cr
 \code{glmm_gamma_identity} \tab gamma mixed model with identity link for
-                                skewed continuous data\cr
+skewed continuous data\cr
 \code{glmm_gamma_log} \tab gamma mixed model with log link for skewed
-                           continuous data\cr
+continuous data\cr
 \code{glmm_poisson_log} \tab Poisson mixed model with log link for count data\cr
 \code{glmm_poisson_identity} \tab Poisson mixed model with identity link for
-                                  count data\cr
+count data\cr
 \code{glmm_lognorm} \tab log-normal mixed model for skewed covariates\cr
 \code{glmm_beta} \tab beta mixed model for continuous data in (0, 1)\cr
 \code{clmm} \tab cumulative logit mixed model for ordered factors;
-                 default for ordered factors
+default for ordered factors
 }
 
 When models are specified for only a subset of the variables for which a
 model is needed, the default model choices (as indicated in the tables)
 are used for the unspecified variables.
+
+\cr
 }
 
-\cr\cr
-
-\subsection{Parameters to follow (\code{monitor_params})}{
-See also the vignette: \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}\cr
+\section{Parameters to follow (\code{monitor_params})}{
+See also the vignette:
+\href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}\cr
 
 Named vector specifying which parameters should be monitored. This can be done
 either directly by specifying the name of the parameter or indirectly by one
@@ -904,19 +512,17 @@ for which the user has explicitly specified a formula (via \code{formula}
 or \code{fixed}), and all other models, for which models were specified
 automatically.
 
-
 If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)} will be used.
-
 
 \tabular{ll}{
 \strong{name/key word} \tab \strong{what is monitored}\cr
 \code{analysis_main} \tab \code{betas} and \code{sigma_y}
-                          (also \code{D} in multi-level models and
-                          \code{basehaz} in proportional hazards models)\cr
+(also \code{D} in multi-level models and
+\code{basehaz} in proportional hazards models)\cr
 \code{analysis_random} \tab \code{ranef_main}, \code{D_main},
-                            \code{invD_main}, \code{RinvD_main}\cr
+\code{invD_main}, \code{RinvD_main}\cr
 \code{imp_pars} \tab \code{alphas}, \code{tau_other}, \code{gamma_other},
-                     \code{delta_other}\cr
+\code{delta_other}\cr
 \code{imps} \tab imputed values\cr
 \code{betas} \tab regression coefficients of the main analysis model\cr
 \code{tau_main} \tab precision of the residuals from the main analysis models\cr
@@ -937,6 +543,7 @@ If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)} will be u
 \code{RinvD_other} \tab matrices in the priors for \code{invD_other}\cr
 \code{other} \tab additional parameters
 }
+
 \strong{For example:}\cr
 \code{monitor_params = c(analysis_main = TRUE, tau_main = TRUE, sigma_main = FALSE)}
 would monitor the regression parameters \code{betas} and the
@@ -946,16 +553,14 @@ deviation \code{sigma_main}.
 \code{monitor_params = c(imps = TRUE)} would monitor \code{betas}, \code{tau_main},
 and \code{sigma_main} (because \code{analysis_main = TRUE} by default) as well as
 the imputed values.
-}
 
-
-
-\cr\cr
+\cr
 }
 
 \section{Note}{
 
 \subsection{Coding of variables:}{
+
 The default covariate (imputation) models are chosen based on the \code{class}
 of each of the variables, distinguishing between \code{numeric},
 \code{factor} with two levels, unordered \code{factor} with >2 levels and
@@ -974,11 +579,12 @@ It is not possible to overwrite this behaviour using the base R contrasts specif
 However, since the order of levels in an ordered factor contains information relevant
 to the imputation of missing values, it is important that incomplete ordinal
 variables are coded as such.
-}
 
 \cr
+}
 
 \subsection{Non-linear effects and transformation of variables:}{
+
 \strong{JointAI} handles non-linear effects, transformation of covariates and
 interactions the following way:\cr
 When, for instance, a model formula contains the function \code{log(x)} and
@@ -1007,33 +613,36 @@ Then only \code{x} is imputed and \code{x^2} is calculated from the imputed
 values of \code{x} internally.
 
 The same applies to interactions involving incomplete variables.
-}
 
 \cr
+}
 
 \subsection{Sequence of models:}{
-            Models generated automatically (i.e., not mentioned in
-            \code{formula} or \code{fixed} are specified in a sequence based
-            on the level of the outcome of the respective model
-            in the multi-level hierarchy and within each level according to
-            the number of missing values.
-            This means that level-1 variables have all level-2, level-3, ...
-            variables in their linear predictor, and variables on the highest
-            level only have variables from the same level in their linear
-            predictor. Within each level, the variable with the most missing
-            values has the most variables in its linear predictor.
-}
+
+Models generated automatically (i.e., not mentioned in \code{formula} or \code{fixed}
+are specified in a sequence based on the level of the outcome of the
+respective model in the multi-level hierarchy and within each level
+according to the number of missing values.
+This means that level-1 variables have all level-2, level-3, ... variables
+in their linear predictor, and variables on the highest level only have
+variables from the same level in their linear predictor.
+Within each level, the variable with the most missing values has the most
+variables in its linear predictor.
 
 \cr
+}
 
 \subsection{Not (yet) possible:}{
+
 \itemize{
 \item prediction (using \code{predict}) conditional on random effects
 \item the use of splines for incomplete variables
-\item the use of \code{\link[survival]{pspline}},
-      or \code{\link[survival]{strata}} in survival models
+\item the use of (or equivalents for) \code{\link[survival]{pspline}},
+or \code{\link[survival]{strata}} in survival models
 \item left censored or interval censored data
 }
+
+\cr
 }
 }
 
@@ -1055,18 +664,21 @@ mod3 <- lme_imp(y ~ C1 + B2 + c1 + time, random = ~ time|id,
 }
 \seealso{
 \code{\link{set_refcat}},
-         \code{\link{traceplot}}, \code{\link{densplot}},
-         \code{\link{summary.JointAI}}, \code{\link{MC_error}},
-         \code{\link{GR_crit}},
-         \code{\link{predict.JointAI}}, \code{\link{add_samples}},
-         \code{\link{JointAIObject}}, \code{\link{add_samples}},
-         \code{\link{parameters}}, \code{\link{list_models}}
+\code{\link{traceplot}}, \code{\link{densplot}},
+\code{\link{summary.JointAI}}, \code{\link{MC_error}},
+\code{\link{GR_crit}},
+\code{\link{predict.JointAI}}, \code{\link{add_samples}},
+\code{\link{JointAIObject}}, \code{\link{add_samples}},
+\code{\link{parameters}}, \code{\link{list_models}}
 
 Vignettes
 \itemize{
-  \item \href{https://nerler.github.io/JointAI/articles/MinimalExample.html}{Minimal Example}
-  \item \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification}
-  \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
-  \item \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{After Fitting}
+\item \href{https://nerler.github.io/JointAI/articles/MinimalExample.html}{Minimal Example}
+\item \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification}
+\item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+\item \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{MCMC Settings}
+\item \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{After Fitting}
 }
+
+\cr
 }

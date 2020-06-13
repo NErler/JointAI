@@ -53,7 +53,10 @@ For example, \code{thin = 1} (default) will keep the MCMC samples
 from all iterations; \code{thin = 5} would only keep every 5th
 iteration.}
 
-\item{nrow, ncol}{optional number of rows and columns in the plot layout;
+\item{nrow}{optional; number of rows in the plot layout;
+automatically chosen if unspecified}
+
+\item{ncol}{optional; number of columns in the plot layout;
 automatically chosen if unspecified}
 
 \item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}

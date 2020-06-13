@@ -213,7 +213,9 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #'             For example, \code{thin = 1} (default) will keep the MCMC samples
 #'             from all iterations; \code{thin = 5} would only keep every 5th
 #'             iteration.
-#' @param nrow,ncol optional number of rows and columns in the plot layout;
+#' @param nrow optional; number of rows in the plot layout;
+#'                  automatically chosen if unspecified
+#' @param ncol optional; number of columns in the plot layout;
 #'                  automatically chosen if unspecified
 #' @param use_ggplot logical; Should ggplot be used instead of the base graphics?
 #' @param warn logical; should warnings be given? Default is

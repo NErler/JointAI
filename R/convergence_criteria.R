@@ -113,10 +113,9 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
                      digits = 2, warn = TRUE, mess = TRUE, ...) {
 
   if (!inherits(x, "JointAI"))
-    errormsg('x must be of class "JointAI".')
+    errormsg('%s must be of class "JointAI".', dQuote('x'))
 
-  if (is.null(x$MCMC))
-    errormsg("No MCMC sample.")
+  if (is.null(x$MCMC)) errormsg("No MCMC sample.")
 
   if (!"mcmcse" %in% installed.packages()[, "Package"])
     errormsg("The package 'mcmcse' needs to be installed to use the function

@@ -1,6 +1,6 @@
 #' Plot the distribution of observed and imputed values
 #'
-#' Plots densities and barplots of the observed and imputed values in a
+#' Plots densities and bar plots of the observed and imputed values in a
 #' long-format dataset (multiple imputed datasets stacked onto each other).
 #'
 #' @param data a \code{data.frame} containing multiple imputations
@@ -8,8 +8,9 @@
 #' @param imp the name of the variable specifying the imputation indicator
 #' @param id the name of the variable specifying the subject indicator
 #' @param rownr the name of a variable identifying which rows correspond to the
-#'              same observation in the original (unimputed) data
-#' @param labeller optional labeller to be passed to \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}
+#'              same observation in the original (un-imputed) data
+#' @param labeller optional labeller to be passed to
+#'                 \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}
 #'                 to change the facet labels
 #' @inheritParams sharedParams
 #' @export
@@ -25,10 +26,10 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id', rownr = '.rown
                            ncol = NULL, nrow = NULL, labeller = NULL) {
 
   if (!requireNamespace('ggplot2', quietly = TRUE))
-    stop("This function requires the package ggplot2 to be installed.")
+    errormsg("This function requires the package ggplot2 to be installed.")
 
   if (!requireNamespace('ggpubr', quietly = TRUE))
-    stop("This function requires the package ggpubr to be installed.")
+    errormsg("This function requires the package ggpubr to be installed.")
 
   subDF <- data[, (colSums(is.na(data[data[, imp] == 0, ])) > 0 &
                    colSums(is.na(data[data[, imp] != 0, ])) == 0) |
@@ -47,7 +48,8 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id', rownr = '.rown
   wlong <- unique(wlong)
 
 
-  DFlong <- merge(DFlong, wlong, by = c(id, 'variable', rownr), suffixes = c("",".y"))
+  DFlong <- merge(DFlong, wlong, by = c(id, 'variable', rownr),
+                  suffixes = c("",".y"))
   DFlong$type <- ifelse(type[as.character(DFlong$variable)], 'factor', 'numeric')
 
   plotDF <- DFlong[(DFlong[, imp] == 0 & !DFlong$mis) |

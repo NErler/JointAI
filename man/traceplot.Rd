@@ -4,27 +4,16 @@
 \alias{traceplot}
 \alias{traceplot.mcmc.list}
 \alias{traceplot.JointAI}
-\title{Traceplot of a JointAI model}
+\title{Traceplot of the MCMC sample from a JointAI model}
 \usage{
 traceplot(object, ...)
 
 \method{traceplot}{mcmc.list}(object, start = NULL, end = NULL, thin = NULL, ...)
 
-\method{traceplot}{JointAI}(
-  object,
-  start = NULL,
-  end = NULL,
-  thin = NULL,
-  subset = c(analysis_main = TRUE),
-  exclude_chains = NULL,
-  nrow = NULL,
-  ncol = NULL,
-  keep_aux = FALSE,
-  use_ggplot = FALSE,
-  warn = TRUE,
-  mess = TRUE,
-  ...
-)
+\method{traceplot}{JointAI}(object, start = NULL, end = NULL,
+  thin = NULL, subset = c(analysis_main = TRUE), exclude_chains = NULL,
+  nrow = NULL, ncol = NULL, use_ggplot = FALSE, warn = TRUE,
+  mess = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -76,10 +65,10 @@ Follows the same principle as the argument \code{monitor_params} in
 
 \item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
 
-\item{nrow}{optional number of rows and columns in the plot layout;
+\item{nrow}{optional; number of rows in the plot layout;
 automatically chosen if unspecified}
 
-\item{ncol}{optional number of rows and columns in the plot layout;
+\item{ncol}{optional; number of columns in the plot layout;
 automatically chosen if unspecified}
 
 \item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
@@ -93,7 +82,7 @@ given directly by \strong{JointAI}.)}
 given directly by \strong{JointAI}.)}
 }
 \description{
-Creates a set of traceplots from the MCMC sample of an object of class "JointAI".
+Creates a set of traceplots from the MCMC sample of an object of class 'JointAI'.
 }
 \examples{
 # fit a JointAI model
@@ -120,8 +109,9 @@ traceplot(mod, use_ggplot = TRUE) +
 
 }
 \seealso{
-\code{\link{summary.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
-         \code{\link{lm_imp}}, \code{\link{densplot}}
+\code{\link{summary.JointAI}},
+         \code{\link[JointAI:model_imp]{*_imp}},
+         \code{\link{densplot}}\cr
          The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
          contains some examples how to specify the parameter \code{subset}.
 }
