@@ -98,6 +98,79 @@
 #' \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{MCMC Settings} and
 #' \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}.
 #'
+#'
+#'
+#' \subsection{Model formulas}{
+#' \strong{Random effects}\cr
+#' It is possible to specify multi-level models as it is done in the package
+#' \strong{nlme}, using \code{fixed} and \code{random}, or as it is done in the
+#' package \strong{lme4}, using \code{formula}, and specifying the random effects
+#' in brackets.
+#'
+#' I.e., \code{formula = y ~ x1 + x2 + x3 + (1 | id)} is equivalent to
+#' \code{fixed = y ~ x1 + x2 + x3, random = ~ 1|id}.
+#'
+#' \strong{Multiple levels of grouping}\cr
+#' For multiple levels of grouping the specification using \code{formula}
+#' should be used. There is no distinction between nested and crossed random
+#' effects, i.e., \code{... + (1 | id) + (1 | center)} is treated the same as
+#' \code{... + (1 | center/id)}.
+#'
+#' \strong{Nested vs crossed random effects}\cr
+#' The distinction between nested and crossed random effects should come from
+#' the levels of the grouping variables, i.e., if \code{id} is nested in
+#' \code{center}, then there cannot be observations with the same \code{id}
+#' but different values for \code{center}.
+#'
+#' \strong{Modelling multiple models simultaneously & joint models}\cr
+#' To fit multiple main models at the same time, a \code{list} of \code{fomula}
+#' objects can be passed to the argument \code{formula}.
+#' Outcomes of one model may be contained as covariates in another model and
+#' it is possible to combine models for variables on different levels,
+#' for example
+#'
+#' \code{formula = list(y ~ x1 + x2 + x3 + x4 + time + (time | id),
+#'                      x2 ~ x3 + x4 + x5)}
+#'
+#' This principle is also used for the specification of a joint model for
+#' longitudinal and survival data.
+#'
+#' Note that it is not possible to specify multiple models for the same outcome
+#' variable.
+#'
+#' \strong{Survival models with frailties or time-varying covariates}\cr
+#' Random effects specified in brackets can also be used to indicate a multi-level
+#' structure in survival models, as would, for instance be needed in a
+#' multicentre setting, where patients are from multiple hospitals.
+#'
+#' It also allows to model time-dependent covariates in a proportional
+#' hazards survival model (using \code{coxph_imp}), also in combination with
+#' additional grouping levels.
+#' }
+#'
+#' \cr\cr
+#'
+#' \subsection{Data structure}{
+#' For multi-level settings, the data must be in long format, so that repeated
+#' measurements are recorded in separate rows.
+#'
+#' For survival data with time-varying covariates (\code{coxph_imp} and
+#' \code{JM_imp}) the data should also be in long format. The
+#' survival/censoring times and event indicator variables must be stored in
+#' separate variables in the same data and should be constant across all rows
+#' referring to the same subject.
+#'
+#' During the pre-processing of the data the survival/censoring times will
+#' automatically be merged with the observation times of the  time-varying
+#' covariates (which must be supplied via the argument \code{timevar}).
+#'
+#' It is possible to have multiple time-varying covariates, which do not
+#' have to be measured at the same time points, but there can only be one
+#' \code{timevar}.
+#' }
+#'
+#' \cr\cr
+#'
 #' \subsection{Implemented distribution families and link functions for \code{glm_imp()}
 #' and \code{glme_imp()}}{
 #' \tabular{ll}{
