@@ -233,3 +233,11 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
 
 
+get_Mlist <- function(object) {
+
+  if (!inherits(object, "JointAI") | inherits(object, "JointAI_errored"))
+    errormsg('%s must be of class "JointAI" or "JointAI_errored".',
+             dQuote('object'))
+
+  c(object[c('data', 'models', 'fixed', 'random')], object$Mlist)
+}
