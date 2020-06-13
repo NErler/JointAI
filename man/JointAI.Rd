@@ -20,13 +20,13 @@ analysis with different models:
 \item \code{\link{lm_imp}} for linear regression
 \item \code{\link{glm_imp}} for generalized linear regression
 \item \code{\link{betareg_imp}} for regression using a beta distribution
-\item \code{\link{lognorm_imp}} for regression using a log-normal distribution
+\item \code{\link{lognormal_imp}} for regression using a log-normal distribution
 \item \code{\link{clm_imp}} for (ordinal) cumulative logit models
 \item \code{\link{mlogit_imp}} for multinomial models
 
 \item \code{\link{lme_imp}} or \code{\link{lmer_imp}} for linear mixed models
 \item \code{\link{glme_imp}} or \code{\link{glmer_imp}} for generalized linear mixed models
-\item \code{\link{betgamm_imp}} for mixed models using a beta distribution
+\item \code{\link{betamm_imp}} for mixed models using a beta distribution
 \item \code{\link{lognormmm_imp}} for mixed models using a log-normal distribution
 \item \code{\link{clmm_imp}} for (ordinal) cumulative logit mixed models
 
