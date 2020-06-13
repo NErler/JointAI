@@ -103,8 +103,11 @@
 #' \subsection{Model formulas}{
 #' \strong{Random effects}\cr
 #' It is possible to specify multi-level models as it is done in the package
-#' \strong{nlme}, using \code{fixed} and \code{random}, or as it is done in the
-#' package \strong{lme4}, using \code{formula}, and specifying the random effects
+#' \href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}},
+#' using \code{fixed} and \code{random}, or as it is done in the
+#' package
+#' \href{https://CRAN.R-project.org/package=lme4}{\strong{lme4}},
+#' using \code{formula}, and specifying the random effects
 #' in brackets.
 #'
 #' I.e., \code{formula = y ~ x1 + x2 + x3 + (1 | id)} is equivalent to
