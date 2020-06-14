@@ -151,7 +151,7 @@ get_params <- function(Mlist, info_list,
     },
 
     # tau_main
-    if (isTRUE(tau_main & length(tauvars) > 0))
+    if (isTRUE(tau_main && length(tauvars) > 0))
       paste0("tau_", tauvars),
 
 
