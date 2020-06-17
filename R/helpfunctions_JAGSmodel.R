@@ -434,12 +434,13 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
   # - 1 underscore
   # - the number of characters of the index
   # - 8 ", 1] <- "
-  rdi <- paste0(tab(4),
-                paste_data(matnam = paste0("mu_b_", varname), index = index, col = 1),
-                " <- ",
-                add_linebreaks(rdintercept,
-                               indent = 4 + 5 + nchar(varname) + 1 + nchar(index) + 8)
-  )
+  rdi <- if (length(rdintercept) > 0)
+    paste0(tab(4),
+           paste_data(matnam = paste0("mu_b_", varname), index = index, col = 1),
+           " <- ",
+           add_linebreaks(rdintercept,
+                          indent = 4 + 5 + nchar(varname) + 1 + nchar(index) + 8)
+    )
 
   # paste the random slope part, a vector of "mu_b_varname[i, k] <- lin.predictor"
   # or NULL if there are no random slopes
@@ -708,7 +709,7 @@ get_priordistr <- function(shrinkage, type, family = NULL, link = NULL, parname)
   if (type %in% c('glm', 'glmm')) {
     type <- switch(family,
                    gaussian = 'norm',
-                   binomial = link,
+                   binomial = 'binom',
                    Gamma = 'gamma',
                    poisson = 'poisson',
                    lognorm = 'norm',
