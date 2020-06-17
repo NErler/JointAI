@@ -65,10 +65,10 @@ get_params <- function(Mlist, info_list,
 
     # tau_main
     tauvars <- if (isTRUE(tau_main)) {
-      setdiff(sigvars,
-              names(list_main)[
+      setdiff(names(list_main)[
                 sapply(list_main, '[[', 'family') %in%
-                  c('gaussian', 'Gamma', 'lognorm', 'beta')]
+                  c('gaussian', 'Gamma', 'lognorm', 'beta')],
+              sigvars
       )
     }
 
