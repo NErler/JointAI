@@ -30,7 +30,8 @@ residuals.JointAI <- function(object,
 
   if (!inherits(object, "JointAI")) errormsg("Use only with 'JointAI' objects.")
 
-  type <- match.arg(type)
+
+  # type <- match.arg(type)
 
   # Error for survreg models because not all types of residuals are available!
   if (object$analysis_type %in% c('survreg') & type %in% c('working', 'deviance'))
