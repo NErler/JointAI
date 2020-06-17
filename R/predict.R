@@ -284,8 +284,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
                     data, na.action = na.pass)
   mt <- attr(mf, "terms")
 
-  op <- options(contrasts = rep("contr.treatment", 2),
-                na.action = na.pass)
+  op <- options(na.action = na.pass)
   X <- model.matrix(mt, data = newdata)
 
 
@@ -357,8 +356,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp"
                     data, na.action = na.pass)
   mt <- attr(mf, "terms")
 
-  op <- options(contrasts = rep("contr.treatment", 2),
-                na.action = na.pass)
+  op <- options(na.action = na.pass)
   X <- model.matrix(mt, data = newdata)
 
 
@@ -424,8 +422,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   mt <- attr(mf, "terms")
 
 
-  op <- options(contrasts = rep("contr.treatment", 2),
-                na.action = na.pass)
+  op <- options(na.action = na.pass)
 
   X0 <- model.matrix(mt, data = newdata)[, -1, drop = FALSE]
 
@@ -597,8 +594,7 @@ predict_clm <- function(formula, newdata, type = c("lp", "prob", "class", "respo
                     data, na.action = na.pass)
   mt <- attr(mf, "terms")
 
-  op <- options(contrasts = rep("contr.treatment", 2),
-                na.action = na.pass)
+  op <- options(na.action = na.pass)
   X <- model.matrix(mt, data = newdata)[, -1, drop = FALSE]
 
   if (mess & any(is.na(X)))

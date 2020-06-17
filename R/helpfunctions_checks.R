@@ -36,11 +36,6 @@ check_classes <- function(data, fixed = NULL, random = NULL, auxvars = NULL,
   classes <- unlist(sapply(data[vars], class))
 
 
-  # message about ordered variables
-  if (any(unlist(sapply(data[covars], class)) == "ordered") & mess)
-    msg("Note: Ordered factors are included as dummy variables into the
-        linear predictor (not as orthogonal polynomials).", exdent = 6)
-
   # error for variables of unknown classes
   if (any(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))) {
     w <- which(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))

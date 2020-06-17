@@ -486,9 +486,6 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
 
   # data pre-processing --------------------------------------------------------
-  # set contrasts to dummies
-  opt <- options(contrasts = rep("contr.treatment", 2))
-
   # check all variables are in the data
   check_vars_in_data(names(data), fixed = fixed, random = random,
                      auxvars = auxvars, timevar = timevar)
@@ -682,9 +679,6 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                         parallel = parallel,
                         n.cores = if (parallel) n.cores)
 
-
-  # set contrasts back to what they were
-  on.exit(options(opt))
 
   object <- structure(
     list(analysis_type = analysis_type,
