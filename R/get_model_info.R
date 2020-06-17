@@ -107,13 +107,6 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
   if (all(is.na(dummy_cols)))
     dummy_cols <- NULL
 
-  categories <- if (k %in% names(Mlist$refs) &
-                    (any(is.na(Mlist$M[[resp_mat[1]]][, resp_col[1]])) |
-                     any(sapply(Mlist$fixed, 'attr', 'type') %in% 'JM'))) {
-    which(levels(Mlist$refs[[k]]) != Mlist$refs[[k]]) -
-      as.numeric(length(levels(Mlist$refs[[k]])) == 2)
-  }
-
 
   # index name -----------------------------------------------------------------
   index <- setNames(sapply(seq_along(sort(Mlist$group_lvls)),
@@ -201,7 +194,6 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
     resp_mat = resp_mat,
     resp_col = resp_col,
     dummy_cols = dummy_cols,
-    categories = categories,
     ncat = length(levels(Mlist$refs[[k]])),
     lp = lp,
     parelmts = parelmts,
@@ -215,6 +207,7 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
     trunc = trunc[[k]],
     ppc = FALSE,
     shrinkage = shrinkage,
+    refs = Mlist$refs[[k]],
     covnames = covnames,
     assoc_type  = if (modeltype %in% "JM") {
       get_assoc_type(tvars, Mlist$models, assoc_type)
