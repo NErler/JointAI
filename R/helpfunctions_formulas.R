@@ -239,7 +239,9 @@ split_formula <- function(formula) {
 
   # build fixed effects formula by combining all non-random effects terms with
   # a "+", and combine with the LHS
-  RHS <- paste(term_labels[!which_ranef], collapse = " + ")
+  RHS <- paste(c(term_labels[!which_ranef],
+                 if (attr(terms(formula), 'intercept') == 0) "0"),
+               collapse = " + ")
 
   fixed <- paste0(as.character(formula)[2L], " ~ ",
                   ifelse(RHS == '', 1, RHS)
