@@ -329,12 +329,15 @@
 #'
 #' Variables of type \code{logical} are automatically converted to unordered factors.\cr
 #'
-#' Contrary to base R behaviour, dummy coding (i.e., \code{contr.treatment} contrasts)
-#' are used for ordered factors in any linear predictor.
-#' It is not possible to overwrite this behaviour using the base R contrasts specification.
-#' However, since the order of levels in an ordered factor contains information relevant
-#' to the imputation of missing values, it is important that incomplete ordinal
-#' variables are coded as such.
+#' #### Contrasts
+#' **JointAI** now uses the globally (via `options("contrasts")`) specified
+#' contrasts. However, for incomplete categorical variables, for which the
+#' contrasts need to be re-calculated within the JAGS model, currently only
+#' `contr.treatment` and `contr.sum` are possible.
+#' Therefore, when an in complete ordinal covariate is used and the default
+#' contrasts (`contr.poly()`) are set to be used for ordered factors, a
+#' warning message is printed and dummy coding (`contr.treatment()`) is used
+#' for that variable instead.
 #'
 #'
 #'
