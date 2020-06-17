@@ -244,7 +244,8 @@ predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0
                   MCMC = MCMC, varname = varname,
                   Mlist = get_Mlist(object), srow = object$data_list$srow,
                   coef_list = object$coef_list, info_list = object$info_list,
-                  quantiles = quantiles, mess = mess)
+                  quantiles = quantiles, mess = mess,
+                  contr_list = lapply(object$Mlist$refs, attr, 'contr_matrix'))
     } else {
       if (warn)
         warning(gettextf("Prediction is not yet implemented for a model of type %s.",
@@ -264,7 +265,8 @@ predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0
 
 predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
                         data, MCMC, varname, coef_list, info_list,
-                        quantiles = c(0.025, 0.975), mess = TRUE, ...) {
+                        quantiles = c(0.025, 0.975), mess = TRUE,
+                        contr_list, ...) {
 
   type <- match.arg(type)
 
@@ -285,7 +287,10 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   mt <- attr(mf, "terms")
 
   op <- options(na.action = na.pass)
-  X <- model.matrix(mt, data = newdata)
+
+  X <- model.matrix(mt, data = newdata,
+                    contrasts.arg = contr_list[intersect(names(contr_list),
+                                                         all_vars(mt))])
 
 
   if (mess & any(is.na(X)))
@@ -340,7 +345,8 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp",
                                                        "linear"),
                             data, MCMC, varname, coef_list, info_list,
-                            quantiles = c(0.025, 0.975), mess = TRUE, ...) {
+                            quantiles = c(0.025, 0.975), mess = TRUE,
+                            contr_list, ...) {
 
   type <- match.arg(type)
 
@@ -357,7 +363,9 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp"
   mt <- attr(mf, "terms")
 
   op <- options(na.action = na.pass)
-  X <- model.matrix(mt, data = newdata)
+  X <- model.matrix(mt, data = newdata,
+                    contrasts.arg = contr_list[intersect(names(contr_list),
+                                                         all_vars(mt))])
 
 
   if (mess & any(is.na(X)))
@@ -403,8 +411,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp"
 predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                           type = c("lp", "risk", "expected", "survival"),
                           varname, quantiles = c(0.025, 0.975),
-                          srow = NULL,
-                          mess = TRUE, ...) {
+                          srow = NULL, mess = TRUE, contr_list,  ...) {
   type <- match.arg(type)
 
   coefs <- coef_list[[varname]]
@@ -424,7 +431,10 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
   op <- options(na.action = na.pass)
 
-  X0 <- model.matrix(mt, data = newdata)[, -1, drop = FALSE]
+  X0 <- model.matrix(mt, data = newdata,
+                     contrasts.arg = contr_list[intersect(names(contr_list),
+                                                          all_vars(mt))]
+  )[, -1, drop = FALSE]
 
   X <- sapply(names(Mlist$M), function(lvl) {
     X0[, colnames(X0) %in% colnames(Mlist$M[[lvl]]), drop = FALSE]
@@ -582,7 +592,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
 predict_clm <- function(formula, newdata, type = c("lp", "prob", "class", "response"),
                         data, MCMC, varname, coef_list, info_list,
-                        quantiles = c(0.025, 0.975), mess = TRUE, ...) {
+                        quantiles = c(0.025, 0.975), mess = TRUE,
+                        contr_list, ...) {
 
   type <- match.arg(type)
   if (type == 'response')
@@ -595,7 +606,10 @@ predict_clm <- function(formula, newdata, type = c("lp", "prob", "class", "respo
   mt <- attr(mf, "terms")
 
   op <- options(na.action = na.pass)
-  X <- model.matrix(mt, data = newdata)[, -1, drop = FALSE]
+  X <- model.matrix(mt, data = newdata,
+                    contrasts.arg = contr_list[intersect(names(contr_list),
+                                                         all_vars(mt))]
+  )[, -1, drop = FALSE]
 
   if (mess & any(is.na(X)))
     message('Prediction for cases with missing covariates is not implemented.')

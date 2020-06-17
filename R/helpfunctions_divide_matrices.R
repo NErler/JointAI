@@ -452,14 +452,14 @@ match_interaction <- function(inter, M) {
 
 # used in divide_matrices (2020-06-10)
 get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
-                         analysis_type = NULL, warn = TRUE) {
+                         analysis_type = NULL, warn = TRUE, refs) {
   # obtain the linear predictor columns and variable names for all models involved
   # - fixed: list of fixed effects formulas
   # - random: list of random effects formulas
   # - data: a data.frame with the pre-processed data
   # - models: named vector of all model types
   # - auxvars: optional formula of auxiliary variables
-  # - analysis_type: type of anlaysis, including family as attribute if glm(m)
+  # - analysis_type: type of analysis, including family as attribute if glm(m)
   # - warn: logical; should warning messages be given
 
   # check if fixed is a list and otherwise convert it to a list
@@ -483,16 +483,22 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   # make a subset containing only covariates
   subdat <- subset(data, select = covars)
 
+  contr_list <- lapply(refs, attr, 'contr_matrix')
 
   # for each fixed effects (main model) formula, get the column names of the
   # design matrix of the fixed effects
   lp <- sapply(fixed, function(fmla) {
     if (attr(fmla, 'type') %in% c('clm', 'clmm', 'coxph', "JM")) {
       # for ordinal and cox models, exclude the intercept
-      colnam <- colnames(model.matrix(fmla, data))[-1]
+      colnam <- colnames(
+        model.matrix(fmla, data,
+                     contrasts.arg = contr_list[intersect(all_vars(fmla),
+                                                          names(contr_list))]))[-1]
       if (length(colnam) > 0) colnam
     } else {
-      colnames(model.matrix(fmla, data))
+      colnames(model.matrix(fmla, data,
+                            contrasts.arg = contr_list[intersect(all_vars(fmla),
+                                                                 names(contr_list))]))
     }
   }, simplify = FALSE)
 
@@ -516,7 +522,9 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
       lvl[colnames(subdat)] == lvl[out]
 
     # get the names of the columns of the corresponding design matrix
-    lp[[out]] <- colnames(model.matrix(fmla, subset(subdat, select = relvars)))
+    lp[[out]] <- colnames(model.matrix(fmla, subset(subdat, select = relvars),
+                                       contrasts.arg = contr_list[intersect(all_vars(fmla),
+                                                                            names(contr_list))]))
 
     # if the linear predictor is empty, create an empty object, to make the
     # subsequent code work in any case

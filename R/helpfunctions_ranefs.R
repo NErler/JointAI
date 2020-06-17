@@ -70,8 +70,13 @@ get_hc_list <- function(k, newrandom, Mlist) {
   Mlvls <- Mlist$Mlvls
   Mnam <- sapply(Mlist$M, colnames, simplify = FALSE)
 
+  contr_list <- lapply(Mlist$refs, attr, "contr_matrix")
+
   # column names of random effect design matrices per required level
-  Znam <- colnames(model.matrix(newrandom[[k]], Mlist$data))
+  Znam <- colnames(
+    model.matrix(newrandom[[k]], Mlist$data,
+                 contrasts.arg = contr_list[intersect(all_vars(newrandom[[k]]),
+                                                      names(contr_list))]))
 
   # check for involvement in interactions
   inters <- Mlist$interactions
