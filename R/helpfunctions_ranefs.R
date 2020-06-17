@@ -86,16 +86,19 @@ get_hc_list <- function(k, newrandom, Mlist) {
     sapply(Znam, function(x)
       lapply(lapply(inters, attr, 'elements'), `%in%`, x), simplify = FALSE)
 
-  sapply(Znam, function(x) {
-    list(# if the ranom effect is in the fixed effects, find the column of the design matrix
-      main = if (x %in% names(Mlvls)) setNames(match(x, Mnam[[Mlvls[x]]]), Mlvls[x]),
+  structure(
+    sapply(Znam, function(x) {
+      list(# if the random effect is in the fixed effects, find the column of the design matrix
+        main = if (x %in% names(Mlvls)) setNames(match(x, Mnam[[Mlvls[x]]]), Mlvls[x]),
 
-      interact = if (any(unlist(inZ[[x]]))) {
-        w <- sapply(inZ[[x]], any)
-        inters[w]
-      }
-    )
-  }, simplify = FALSE)
+        interact = if (any(unlist(inZ[[x]]))) {
+          w <- sapply(inZ[[x]], any)
+          inters[w]
+        }
+      )
+    }, simplify = FALSE),
+    intercept = attr(terms(newrandom[[k]]), 'intercept')
+  )
 }
 
 
@@ -142,7 +145,7 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
         !parelmts[[paste0("M_", k)]] %in% rbind(do.call(rbind, rd_slope_coefs),
                                                 do.call(rbind, rd_slope_interact_coefs))$parelmts]
 
-      rd_intercept_coefs <- if (!is.null(elmts))
+      rd_intercept_coefs <- if (!is.null(elmts) & attr(hc_list[[k]], 'intercept') == 1)
         data.frame(
           term = names(elmts),
           matrix = paste0("M_", k),
@@ -161,7 +164,8 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
   }, simplify = FALSE)
 
 
-  othervars <- sapply(names(lvls)[lvls < min(lvls[clus])], function(k) {
+  # othervars <- sapply(names(lvls)[lvls < min(lvls[clus])], function(k) {
+  othervars <- sapply(names(lvls)[lvls <= min(lvls[clus])], function(k) {
 
     othervars <- data.frame(term = names(parelmts[[paste0("M_", k)]]),
                             matrix = if (!is.null(lp[[paste0("M_", k)]])) paste0("M_", k),

@@ -239,7 +239,11 @@ paste_rdintercept_lp <- function(info) {
                     cols = x$cols,
                     scale_pars = info$scale_pars[[mat]],
                     isgk = FALSE)
-    } else {"0"}
+    } else if (attr(info$hc_list$hcvars[[lvl]], 'rd_intercept')) {
+      "0"
+    } else {
+      NULL
+    }
   }, simplify = FALSE)
 }
 
@@ -339,7 +343,7 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
           paste(
             paste_data(matnam = paste0("b_", info$varname, "_", k),
                        index = index,
-                       col = q + 1),
+                       col = q + attr(info$hc_list$hcvars[[k]], 'rd_intercept')),
 
             paste_scaling(
               paste_data(
@@ -451,7 +455,7 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
     paste0(
       tab(4),
       paste_data(matnam = paste0("mu_b_", varname), index = index,
-                 col = seq_along(rdslopes) + 1),
+                 col = seq_along(rdslopes) + as.numeric(length(rdi) > 0)),
       " <- ",
       sapply(rdslopes, add_linebreaks,
              indent = 4 + 5 + nchar(varname) + 1 + nchar(index) + 8)
