@@ -278,6 +278,8 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
     get(info_list[[varname]]$family)(link = info_list[[varname]]$link)$linkinv
   } else if (info_list[[varname]]$family %in% 'lognorm') {
     gaussian(link = 'log')$linkinv
+  } else if (info_list[[varname]]$family %in% 'beta') {
+    plogis
   }
 
   coefs <- coef_list[[varname]]
