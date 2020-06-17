@@ -350,13 +350,25 @@ prep_covoutcomes <- function(dat) {
 # * model matrix combi ---------------------------------------------------------
 
 # used in divide_matrices and get_Mgk (2020-06-10)
-model.matrix_combi <- function(fmla, data, terms_list) {
+model.matrix_combi <- function(fmla, data, terms_list, refs) {
   # list of model.frames
   mf_list <- lapply(terms_list, model.frame, data = data, na.action = na.pass)
 
-  mats <- mapply(model.matrix, object = fmla, data = mf_list, SIMPLIFY = FALSE)
+
+  mats <- mapply(function(object, data, contr) {
+    # get the subset of contrast matrices corresponding to the current formula
+    # to avoid warning messages
+    contr_list <- contr[intersect(all_vars(object), names(contr))]
+
+    # obtain the model matrix using the pre-specified contrast matrices
+    model.matrix(object, data, contrasts.arg = contr_list)
+  }, object = fmla, data = mf_list,
+  MoreArgs = list(contr = lapply(refs, attr, "contr_matrix")),
+  SIMPLIFY = FALSE)
+
 
   X <- mats[[1]]
+
 
   if (length(mats) > 1) {
     for (i in seq_along(mats)[-1]) {

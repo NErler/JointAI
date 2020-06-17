@@ -383,7 +383,7 @@ get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL, td_cox = 
 
   X <- model.matrix_combi(fmla = c(Mlist$fixed, unlist(remove_grouping(Mlist$random)),
                                    Mlist$auxvars),
-                          data = gk_data,
+                          data = gk_data, refs = Mlist$refs,
                           terms_list = Mlist$terms_list)
 
   Xnew <- matrix(nrow = length(rows) * length(gkx),

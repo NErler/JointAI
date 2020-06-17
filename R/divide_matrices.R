@@ -59,7 +59,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # covariates -----------------------------------------------------------------
   # * preliminary design matrix ------------------------------------------------
-  X <- model.matrix_combi(fmla = c(fixed, auxvars), data = data,
+  X <- model.matrix_combi(fmla = c(fixed, auxvars), data = data, refs = refs,
                           terms_list = get_terms_list(fmla = c(fixed, auxvars),
                                                       data = data))
 
@@ -85,9 +85,11 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   }
 
   # design matrix with updated auxiliary variables
-  terms_list <- get_terms_list(fmla = c(fixed, unlist(remove_grouping(random)), auxvars), data = data)
-  X2 <- model.matrix_combi(fmla = c(fixed, unlist(remove_grouping(random)), auxvars), data = data,
-                           terms_list = terms_list)
+  terms_list <- get_terms_list(fmla = c(fixed,
+                                        unlist(remove_grouping(random)), auxvars),
+                               data = data)
+  X2 <- model.matrix_combi(fmla = c(fixed, unlist(remove_grouping(random)), auxvars),
+                           data = data, refs = refs, terms_list = terms_list)
 
   # combine covariate design matrix with outcome design matrix
   MX <- cbind(Y, X2[, setdiff(colnames(X2), colnames(Y)), drop = FALSE])
