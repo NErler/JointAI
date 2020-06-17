@@ -4,8 +4,7 @@
 \alias{residuals.JointAI}
 \title{Extract residuals from an object of class JointAI}
 \usage{
-\method{residuals}{JointAI}(object, type = c("working", "deviance",
-  "response"), warn = TRUE, ...)
+\method{residuals}{JointAI}(object, type, warn = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -25,8 +24,10 @@ Extract residuals from an object of class JointAI
 \section{Note}{
 
 \itemize{
-\item For mixed models residuals are currently calculated using the fixed effects only.
-\item For ordinal (mixed) models and parametric survival models only \code{type = "response"} is available.
+\item For mixed models residuals are currently calculated using the fixed
+      effects only.
+\item For ordinal (mixed) models and parametric survival models only
+      \code{type = "response"} is available.
 \item For Cox proportional hazards models residuals are not yet implemented.
 }
 }
