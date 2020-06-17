@@ -40,9 +40,9 @@ JAGSmodel_mlogit <- function(info) {
   # e.g. "M_lvlone[i, 8] <- ifelse(M_lvlone[i, 4] == 2, 1, 0)"
   dummies <- if (!is.null(info$dummy_cols)) {
     paste0('\n\n', paste0(
-      paste_dummies(categories = info$categories, dest_mat = info$resp_mat,
-                    dest_col = info$resp_col, dummy_cols = info$dummy_cols,
-                    index = index), collapse = "\n"), "\n")
+      paste_dummies(resp_mat = info$resp_mat,
+                    resp_col = info$resp_col, dummy_cols = info$dummy_cols,
+                    index = index, refs = info$refs), collapse = "\n"), "\n")
   }
 
   paste0(tab(2), add_dashes(paste0("# Multinomial logit model for ", info$varname)), "\n",

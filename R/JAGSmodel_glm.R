@@ -44,9 +44,9 @@ JAGSmodel_glm <- function(info) {
   # * dummy variables ----------------------------------------------------------
   dummies <- if (!is.null(info$dummy_cols)) {
     paste0('\n\n', paste0(
-           paste_dummies(categories = info$categories, dest_mat = info$resp_mat,
-                         dest_col = info$resp_col, dummy_cols = info$dummy_cols,
-                         index = index), collapse = "\n"), "\n")
+           paste_dummies(resp_mat = info$resp_mat,
+                         resp_col = info$resp_col, dummy_cols = info$dummy_cols,
+                         index = index, refs = info$refs), collapse = "\n"), "\n")
   }
 
 
@@ -85,6 +85,8 @@ JAGSmodel_glm <- function(info) {
          info$trafos,
          "\n",
          tab(), "}", "\n\n",
+
+         # priors
          tab(), "# Priors for the model for ", info$varname, "\n",
          tab(), "for (k in ", min(unlist(info$parelmts)), ":", max(unlist(info$parelmts)), ") {", "\n",
          get_priordistr(info$shrinkage, type = 'glm', info$family, info$link, info$parname),

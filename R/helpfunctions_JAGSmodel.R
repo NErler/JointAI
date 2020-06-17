@@ -610,21 +610,36 @@ paste_underlvalue <- function(varname, covname, index, isgk, ...) {
 
 # paste other model parts ------------------------------------------------------
 
-# used in JAGSmodels with categorical outcomes (2020-06-10)
-paste_dummies <- function(categories, dest_mat, dest_col, dummy_cols, index, ...) {
+# used in JAGSmodels with categorical outcomes (2020-06-16)
+paste_dummies <- function(resp_mat, resp_col, dummy_cols, index, refs, ...) {
   # write the syntax assigning values to the dummies based on the values of a
   # categorical variable
-  # - categories: "names" (should be numeric) of the categories of the variable
-  # - dest_mat: name of the design matrix containing the variable and dummies
-  # - dest_col: column number of the categorical variable
+  # - resp_mat: name of the design matrix containing the variable and dummies
+  # - resp_col: column number of the categorical variable
   # - dummy_cols: column numbers of the dummy variables
   # - index: the index to be used, e.g. "i" or "ii"
+  # - refs: reference level information (including contrasts matrix) obtained
+  #         originally from Mlist$refs
 
-  mapply(function(dummy_cols, categories) {
-    paste0(tab(4), dest_mat, "[", index, ", ", dummy_cols, "] <- ifelse(",
-           dest_mat, "[", index, ", ", dest_col, "] == ", categories, ", 1, 0)")
-  }, dummy_cols, categories)
+  cmat <- attr(refs, "contr_matrix")
+  categories <- seq_along(levels(refs)) - as.numeric(length(levels(refs)) == 2)
+
+  paste0(tab(4), resp_mat, "[", index, ", ", dummy_cols, "] <- ifelse(",
+         resp_mat, "[", index, ", ", resp_col, "] == ",
+         categories[apply(cmat == 1, 2, which)], ", 1",
+         if (attr(refs, 'contrasts') == 'contr.treatment') {
+           ", 0)"
+         } else if (attr(refs, 'contrasts') == 'contr.sum') {
+           paste0(", ifelse(", resp_mat, "[", index, ", ", resp_col, "] == ",
+                  refs, ", -1, 0))")
+         } else {
+           errormsg("It is currently not possible to use contrasts of type
+                      %s for incomplete variables.",
+                    dQuote(attr(refs, 'contrasts')))
+         })
 }
+
+
 
 
 
