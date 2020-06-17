@@ -189,7 +189,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # column names of the linear predictors for all models -----------------------
   XXnam <- get_linpreds(fixed, random, data, models, auxvars, analysis_type,
-                        warn = warn)
+                        warn = warn, refs = refs)
 
   lp_cols <- lapply(XXnam, function(XX) {
     Mcols <- if (!is.null(M))
