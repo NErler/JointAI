@@ -1,5 +1,5 @@
 
-get_refs <- function(fmla, data, refcats = NULL) {
+get_refs <- function(fmla, data, refcats = NULL, warn = TRUE) {
 
   # check if fmla is a list of formulas, otherwise make it a list
   fmla <- check_formula_list(fmla)
@@ -42,6 +42,37 @@ get_refs <- function(fmla, data, refcats = NULL) {
       }
       res <- factor(levels(data[, x])[as.numeric(refcats[x])], levels(data[, x]))
       attr(res, "dummies") <- paste0(x, levels(res)[levels(res) != res])
+      attr(res, "ordered") <- inherits(data[, x], 'ordered')
+
+      attr(res, "contrasts") <- if (inherits(data[, x], 'ordered'))
+        options()$contrasts[2] else options()$contrasts[1]
+
+      # check that contrasts specified for incomplete covariates are of a type
+      # for which the conversion to "dummy" variables is implemented
+      if (!attr(res, "contrasts") %in% c('contr.treatment', 'contr.sum') &
+          any(is.na(data[, x])) & warn) {
+        warnmsg("It is currently not possible to use %s for incomplete
+                categorical covariates. I will use %s instead.
+                You can specify (globally) which types of contrasts are
+                used by changing %s.", dQuote(attr(res, "contrasts")),
+                dQuote('contr.treatment'), dQuote("options('contrasts')"))
+
+        attr(res, "contrasts") <- 'contr.treatment'
+      }
+
+      contr_matrix <- if (attr(res, "contrasts") == 'contr.treatment') {
+        contr.treatment(levels(res), base = which(levels(res) == res))
+      } else if (attr(res, 'contrasts') == 'contr.sum') {
+        contr_matrix <- contr.sum(levels(res))
+        contr_matrix[match(levels(res),
+                           c(setdiff(levels(res), res), as.character(res))),
+        drop = FALSE]
+      } else {
+        get(attr(res, "contrasts"))(levels(res))
+      }
+
+      attr(res, "contr_matrix") <- contr_matrix
+
       res
     }, simplify = FALSE)
 

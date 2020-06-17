@@ -49,13 +49,13 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
 
   # reference categories -----------------------------------------------------
-  refs <- get_refs(c(fixed, auxvars), data, refcats)
+  refs <- get_refs(c(fixed, auxvars), data, refcats, warn = warn)
 
-  for (i in names(refs)) {
-    data[, i] <- relevel(factor(data[, i], ordered = FALSE),
-                         as.character(refs[[i]]))
-  }
-
+  # for (i in names(refs)) {
+  #   data[, i] <- relevel(factor(data[, i], ordered = FALSE),
+  #                        as.character(refs[[i]]))
+  # }
+  #
 
   # covariates -----------------------------------------------------------------
   # * preliminary design matrix ------------------------------------------------
