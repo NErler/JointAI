@@ -33,10 +33,8 @@ get_data_list <- function(Mlist, info_list) {
       if (any(sapply(info_list, "[[", 'family') %in% c('gaussian', 'lognorm'))) 'norm',
       if (any(sapply(info_list, "[[", 'family') %in% c('Gamma'))) 'gamma',
       if (any(sapply(info_list, "[[", 'family') %in% c('beta'))) 'beta',
-      if (any(sapply(info_list, "[[", 'family') %in% c('binomial') &
-              sapply(info_list, "[[", 'link') %in% c('logit'))) 'logit',
+      if (any(sapply(info_list, "[[", 'family') %in% c('binomial'))) 'binom',
       if (any(sapply(info_list, "[[", 'family') %in% c('poisson'))) 'poisson',
-      if (any(sapply(info_list, "[[", 'link') %in% c('probit'))) 'probit',
       if (any(modeltypes %in% c('mlogit', 'mlogitmm'))) 'multinomial',
       if (any(modeltypes %in% c('clm', 'clmm'))) 'ordinal',
       if (any(modeltypes %in% c('survreg', 'coxph', 'JM'))) 'surv'
@@ -324,20 +322,17 @@ default_hyperpars <- function() {
       rate_tau_beta = 0.01
     ),
 
-    logit = c(
-      mu_reg_logit = 0,
-      tau_reg_logit = 0.0001
+    binom = c(
+      mu_reg_binom = 0,
+      tau_reg_binom = 0.0001
     ),
+
 
     poisson = c(
       mu_reg_poisson = 0,
       tau_reg_poisson = 0.0001
     ),
 
-    probit = c(
-      mu_reg_probit = 0,
-      tau_reg_probit = 0.0001
-    ),
 
     multinomial = c(
       mu_reg_multinomial = 0,

@@ -128,10 +128,10 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
           if (priors) {
             paste0("(normal prior(s) with mean ",
                    object$data_list[[paste0('mu_reg_',
-                                            get_priortype(i$modeltype, i$family, i$link))]],
+                                            get_priortype(i$modeltype, i$family))]],
                    " and precision ",
                    object$data_list[[paste0('tau_reg_',
-                                            get_priortype(i$modeltype, i$family, i$link))]],
+                                            get_priortype(i$modeltype, i$family))]],
                    ")")
           }, "\n")
       } else {
@@ -142,10 +142,10 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
             if (priors) {
               paste0("(normal prior(s) with mean ",
                      object$data_list[[paste0('mu_reg_',
-                                              get_priortype(i$modeltype, i$family, i$link))]],
+                                              get_priortype(i$modeltype, i$family))]],
                      " and precision ",
                      object$data_list[[paste0('tau_reg_',
-                                              get_priortype(i$modeltype, i$family, i$link))]],
+                                              get_priortype(i$modeltype, i$family))]],
                      ")")
             }, "\n")
       }
@@ -160,10 +160,10 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
             if (priors) {
               paste0("(Gamma prior with shape parameter ",
                      object$data_list[[paste0("shape_tau_",
-                                              get_priortype(i$modeltype, i$family, i$link))]],
+                                              get_priortype(i$modeltype, i$family))]],
                     " and rate parameter ",
                     object$data_list[[paste0("rate_tau_",
-                                             get_priortype(i$modeltype, i$family, i$link))]],
+                                             get_priortype(i$modeltype, i$family))]],
                     ")")
            }, "\n"))
       }
@@ -291,7 +291,7 @@ print_refcat <- function(rc) {
 }
 
 
-get_priortype <- function(modeltype, family, link) {
+get_priortype <- function(modeltype, family) {
   switch(modeltype,
          'glm' = switch(family,
                         'gaussian' = 'norm',
@@ -299,14 +299,14 @@ get_priortype <- function(modeltype, family, link) {
                         'Gamma' = 'gamma',
                         'beta' = 'beta',
                         'poisson' = 'poisson',
-                        'binomial' = link),
+                        'binomial' = 'binom'),
          'glmm' = switch(family,
                          'gaussian' = 'norm',
                          'lognorm' = 'norm',
                          'Gamma' = 'gamma',
                          'beta' = 'beta',
                          'poisson' = 'poisson',
-                         'binomial' = link),
+                         'binomial' = 'binom'),
          'clm' = 'ordinal',
          'clmm' = 'ordinal',
          'mlogit' = 'multinomial',
