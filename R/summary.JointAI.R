@@ -29,8 +29,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                             exclude_chains = NULL,
                             warn = TRUE, mess = TRUE, ...) {
 
-  if (is.null(object$MCMC))
-    stop("There is no MCMC sample.")
+  if (is.null(object$MCMC)) errormsg("There is no MCMC sample.")
 
   cl <- as.list(match.call())[-1]
   autoburnin <- if (is.null(cl$autoburnin)) FALSE else eval(cl$autoburnin)
