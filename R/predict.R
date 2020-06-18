@@ -187,14 +187,12 @@ predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0
                             exclude_chains = NULL, mess = TRUE, warn = TRUE, ...) {
 
 
-  if (!inherits(object, "JointAI"))
-    stop("Use only with 'JointAI' objects.\n")
+  if (!inherits(object, "JointAI")) errormsg("Use only with 'JointAI' objects.")
 
-  if (any(sapply(object$info_list, "[[", "modeltype") %in% c('glmm', 'clmm', 'mlogitmm')) & warn) {
-    warning("Prediction for multi-level models is currently only possible on the population level (not using random effects).",
-            call. = FALSE)
-    # stop("Prediction is currently only available for (generalized) linear
-    #      and (generalized) linear mixed models.")
+  if (any(sapply(object$info_list, "[[", "modeltype") %in%
+          c('glmm', 'clmm', 'mlogitmm')) & warn) {
+    warnmsg("Prediction for multi-level models is currently only possible on
+            the population level (not using random effects).")
   }
 
   if (missing(newdata)) {
@@ -219,10 +217,11 @@ predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0
                       names(object$fixed))
   } else {
     if (any(!names(type) %in% names(object$fixed))) {
-      stop(paste0('When ', dQuote('type'), ' is a named vector, the names must',
-                  'match outcome variables, ',
-                  gettextf('i.e., %s.', dQuote(names(object$fixed)))
-      ))
+      errormsg('When %s is a named vector, the names must match outcome
+               variables, i.e., %s.', dQuote('type'),
+               dQuote(names(object$fixed)))
+
+
     }
     types <- setNames(rep(type, length(object$fixed)),
                       names(object$fixed))
@@ -249,9 +248,8 @@ predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0
                   contr_list = lapply(object$Mlist$refs, attr, 'contr_matrix'))
     } else {
       if (warn)
-        warning(gettextf("Prediction is not yet implemented for a model of type %s.",
-                         dQuote(object$info_list[[varname]]$modeltype)),
-                call. = FALSE)
+        warnmsg("Prediction is not yet implemented for a model of type %s.",
+                dQuote(object$info_list[[varname]]$modeltype))
     }
   },  simplify = FALSE)
 
@@ -297,7 +295,9 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
 
   if (mess & any(is.na(X)))
-    message('Prediction for cases with missing covariates is not implemented.')
+    msg('Note: Prediction for cases with missing covariates is not yet implemented.
+        I will report %s instead of predicted values for those cases.',
+        dQuote('NA'), exdent = 6)
 
 
   # linear predictor values for the selected iterations of the MCMC sample
@@ -307,10 +307,6 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
   # fitted values: mean over the (transformed) predicted values
   fit <- if (type == 'response') {
-    # if (info_list[[varname]]$family %in% c('beta'))
-    #   errormsg('Prediction for beta models is currently only possible with type %s.',
-    #               dQuote('link'))
-
     if (info_list[[varname]]$family == 'poisson') {
       round(colMeans(linkinv(pred)))
     } else {
