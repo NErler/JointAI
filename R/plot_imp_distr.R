@@ -92,7 +92,7 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id', rownr = '.rown
                                 ggplot2::aes(x = as.numeric(.data$value),
                                              y = 0, color = get(imp) == 0,
                                              shape = get(imp) == 0),
-                                alpha = 0.5)
+                                alpha = 0.5, show.legend = FALSE)
         } else {
           pl + ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
                                              size = get(imp) == 0,
