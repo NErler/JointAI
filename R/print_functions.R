@@ -73,7 +73,7 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
     errormsg("Use only with 'JointAI' objects.\n")
 
   for (i in object$info_list) {
-    cat(print_type(i$modeltype), "for", dQuote(i$varname), '\n')
+    cat(print_type(i$modeltype, i$family), "for", dQuote(i$varname), '\n')
     if (!is.null(i$family))
       cat(tab(), "family:", i$family, "\n")
     if (!is.null(i$link))

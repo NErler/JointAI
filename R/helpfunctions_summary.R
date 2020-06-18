@@ -98,19 +98,34 @@ get_Dmat <- function(object, varname) {
 
 
 
-# used in print.summary.JointAI(), print.JointAI() and list_models() (2020-06-11)
-print_type <- function(x) {
+# used in print.summary.JointAI(), print.JointAI() and list_models() (2020-06-18)
+print_type <- function(type, family = NULL) {
   # collection of model titles to be printed at the start of the summary of
   # each sub-model
-  # - x: model type
+  # - type: model type
+  # - family: family in case of a (extended) exponential family model
 
-  a <- switch(x,
-              lm = "Linear model",
-              glm = "Generalized linear model",
-              lme = "Linear mixed model",
-              glmm = 'Generalized linear mixed model',
-              glme = 'Generalized linear mixed model',
-              coxph = 'Cox proportional hazards model',
+  a <- switch(type,
+              # lm = "Linear model",
+              glm = switch(family,
+                           gaussian = 'Linear model',
+                           binomial = 'Binomial model',
+                           Gamma = 'Gamma model',
+                           poisson = 'Poisson model',
+                           lognorm = 'Log-normal model',
+                           beta = 'Beta model'
+              ),
+              # lme = "Linear mixed model",
+              glmm = switch(family,
+                            gaussian = 'Linear mixed model',
+                            binomial = 'Binomial mixed model',
+                            Gamma = 'Gamma mixed model',
+                            poisson = 'Poisson mixed model',
+                            lognorm = 'Log-normal mixed model',
+                            beta = 'Beta mixed model'
+                            ),
+              # glme = 'Generalized linear mixed model',
+              coxph = 'Proportional hazards model',
               survreg = 'Weibull survival model',
               clm = 'Cumulative logit model',
               clmm = 'Cumulative logit mixed model',

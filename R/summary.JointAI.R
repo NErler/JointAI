@@ -152,6 +152,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
         stats[other, , drop = FALSE]
 
       list(modeltype = object$info_list[[varname]]$modeltype,
+           family = object$info_list[[varname]]$family,
            regcoef = regcoef, sigma = sigma, intercepts = intercepts,
            rd_vcov = rd_vcov, wb_shape = wb_shape, assoc_type = assoc_type,
            events = events,
@@ -194,12 +195,12 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
     if (!is.null(x$res[[k]])) {
       cat("\n\n")
       if (sum(!sapply(x$res, is.null)) > 1)
-      cat(paste0(
-        '# ', paste0(c(rep('-', 69)), collapse = ''), ' #\n',
-        '  ', print_type(x$res[[k]]$modeltype), ' for ',
-        dQuote(names(x$res)[k]), '\n',
-        '# ', paste0(c(rep('-', 35)), collapse = ' '), ' #\n\n'
-      ))
+        cat(paste0(
+          '# ', paste0(c(rep('-', 69)), collapse = ''), ' #\n',
+          '  ', print_type(x$res[[k]]$modeltype, x$res[[k]]$family), ' for ',
+          dQuote(names(x$res)[k]), '\n',
+          '# ', paste0(c(rep('-', 35)), collapse = ' '), ' #\n\n'
+        ))
 
 
       if (!is.null(x$res[[k]]$events))
@@ -376,7 +377,8 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
     for (k in seq_along(coefs)) {
       varname <- names(coefs)[k]
       cat("\n",
-          print_type(x$info_list[[varname]]$modeltype), "for", dQuote(varname), '\n')
+          print_type(x$info_list[[varname]]$modeltype,
+                     x$info_list[[varname]]$family), "for", dQuote(varname), '\n')
       if (x$info_list[[names(coefs)[k]]]$modeltype %in% c('glmm', 'clmm', 'mlogitmm')) {
         cat("\nFixed effects:\n")
         print(coefs[[k]], digits = digits)
