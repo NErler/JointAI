@@ -254,11 +254,11 @@ predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0
   },  simplify = FALSE)
 
 
-  return(list(
-      newdata = if (length(outcome == 1)) cbind(newdata, preds)
-      else cbind(newdata, unlist(preds, recursive = FALSE)),
-    fitted = preds
-  ))
+  list(
+    newdata = if (length(preds) == 1) cbind(newdata, preds[[1]])
+    else cbind(newdata, unlist(preds, recursive = FALSE)),
+    fitted = if (length(preds) == 1) preds[[1]] else preds
+  )
 }
 
 
