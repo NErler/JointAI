@@ -94,9 +94,8 @@ newDF <- predDF(mod, vars = ~ C2)
 pred <- predict(mod, newdata = newDF)
 
 # plot predicted values and 95\% confidence band
-plot(newDF$C2, pred$fit[[1]]$fit, type = "l", ylim = range(pred$fitted[[1]]),
-     xlab = "C2", ylab = "predicted values")
-matplot(newDF$C2, pred$fitted[[1]][, 2:3], lty = 2, add = TRUE, type = "l", col = 1)
+matplot(newDF$C2, pred$fitted, lty = c(1, 2, 2), type = "l", col = 1,
+xlab = 'C2', ylab = 'predicted values')
 
 }
 \seealso{
