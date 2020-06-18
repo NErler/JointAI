@@ -358,7 +358,7 @@ model.matrix_combi <- function(fmla, data, terms_list, refs) {
   mats <- mapply(function(object, data, contr) {
     # get the subset of contrast matrices corresponding to the current formula
     # to avoid warning messages
-    contr_list <- contr[intersect(all_vars(object), names(contr))]
+    contr_list <- contr[intersect(all_vars(remove_LHS(object)), names(contr))]
 
     # obtain the model matrix using the pre-specified contrast matrices
     model.matrix(object, data, contrasts.arg = contr_list)
@@ -488,17 +488,16 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   # for each fixed effects (main model) formula, get the column names of the
   # design matrix of the fixed effects
   lp <- sapply(fixed, function(fmla) {
+    contr_list0 <- contr_list[intersect(all_vars(remove_LHS(fmla)),
+                                        names(contr_list))]
+
     if (attr(fmla, 'type') %in% c('clm', 'clmm', 'coxph', "JM")) {
       # for ordinal and cox models, exclude the intercept
       colnam <- colnames(
-        model.matrix(fmla, data,
-                     contrasts.arg = contr_list[intersect(all_vars(fmla),
-                                                          names(contr_list))]))[-1]
+        model.matrix(fmla, data, contrasts.arg = contr_list0))[-1]
       if (length(colnam) > 0) colnam
     } else {
-      colnames(model.matrix(fmla, data,
-                            contrasts.arg = contr_list[intersect(all_vars(fmla),
-                                                                 names(contr_list))]))
+      colnames(model.matrix(fmla, data, contrasts.arg = contr_list0))
     }
   }, simplify = FALSE)
 
