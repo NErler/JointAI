@@ -263,5 +263,5 @@ get_params <- function(Mlist, info_list,
       ))
     }
   )
-  return(params)
+  unname(params)
 }
