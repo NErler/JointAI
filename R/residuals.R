@@ -77,7 +77,7 @@ residuals.JointAI <- function(object,
     if (!is.null(resid_fun)) {
       resid_fun(varname = varname,
                 mu = if (is.data.frame(object$fitted.values))
-                  object$fitted.values else object$fitted.values[[varname]][, 1],
+                  object$fitted.values$fit else object$fitted.values[[varname]]$fit,
                 type = types[varname], data = object$data,
                 MCMC = object$MCMC, info = object$info_list[[varname]],
                 warn = warn)
