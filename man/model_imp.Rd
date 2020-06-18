@@ -646,6 +646,29 @@ mod3 <- lme_imp(y ~ C1 + B2 + c1 + time, random = ~ time|id,
                 data = longDF, n.iter = 300)
 
 
+# Example 4: Parametric Weibull survival model
+mod4 <- survreg_imp(Surv(time, status) ~ age + sex + meal.cal + wt.loss,
+                    data = survival::lung, n.iter = 200)
+
+
+\dontrun{
+# Example 5: Proportional hazards survival model
+mod5 <- coxph_imp(Surv(time, status) ~ age + sex + meal.cal + wt.loss,
+                    data = survival::lung, n.iter = 200)
+
+# Example 6: Joint model for longitudinal and survival data
+mod6 <- JM_imp(list(Surv(futime, status != 'censored') ~ age + sex + albumin +
+                    copper + trig + (1 | id),
+                    albumin ~ day + age + sex + (day | id)),
+                    timevar = 'day', data = pbc, n.iter = 100)
+
+# Example 7: Proportional hazards survival model with a time-dependent covariate
+mod7 <- coxph_imp(Surv(futime, status != 'censored') ~ age + sex + copper +
+                  trig + stage + (1 | id),
+                  timevar = 'day', data = pbc, n.iter = 100)
+
+}
+
 }
 \seealso{
 \code{\link{set_refcat}},
