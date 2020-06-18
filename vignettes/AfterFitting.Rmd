@@ -448,7 +448,7 @@ newDF <- predDF(mod13b, var = ~ age)
 pred <- predict(mod13b, newdata = newDF)
 
 # plot predicted values and credible interval
-matplot(pred$newdata$age, pred$newdat[, c('bmi.fit', 'bmi.2.5%', 'bmi.97.5%')],
+matplot(pred$newdata$age, pred$fitted,
         lty = c(1,2,2), type = 'l', col = 1,
         xlab = 'age in months', ylab = 'predicted value')
 
