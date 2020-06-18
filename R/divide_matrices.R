@@ -19,6 +19,11 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   groups <- get_groups(idvar, data)
   group_lvls <- colSums(!identify_level_relations(groups))
 
+  # sort group levels and groups (so that higher levels, which contain the
+  # ("Intercept") appear first in the linear predictor)
+  group_lvls <- sort(group_lvls, decreasing = TRUE)
+  groups <- groups[names(group_lvls)]
+
 
   # in case of last-observation-carried forward: the value of the time-varying
   # covariates at the event times is filled in
@@ -118,8 +123,12 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   }
 
 
-  # split data matrix by variable level
-  M <- sapply(unique(Mlvls), function(k)
+  # Split data matrix by variable level
+  # This split has to be done by names(groups) since they are sorted by level.
+  # As a consequence, higher levels (which contain the "(Intercept)" will
+  # appear first in the linear predictor, and also in the output. Just looks
+  # nicer this way.
+  M <- sapply(paste0('M_', names(groups)), function(k)
     MX[ , Mlvls == k, drop = FALSE], simplify = FALSE)
 
   fcts_mis <- extract_fcts(fixed = fixed, data, random = random, complete = FALSE,
