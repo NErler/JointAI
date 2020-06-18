@@ -10,7 +10,7 @@
 \usage{
 \method{summary}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
   quantiles = c(0.025, 0.975), subset = NULL, exclude_chains = NULL,
-  warn = TRUE, mess = TRUE, ...)
+  missinfo = TRUE, warn = TRUE, mess = TRUE, ...)
 
 \method{print}{summary.JointAI}(x, digits = max(3, .Options$digits - 4), ...)
 
@@ -42,6 +42,9 @@ Follows the same principle as the argument \code{monitor_params} in
 \code{\link[JointAI:model_imp]{*_imp}}.}
 
 \item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
+
+\item{missinfo}{logical; should information on the number and proportion of
+missing values be included in the summary?}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. (Note: this applies only to warnings

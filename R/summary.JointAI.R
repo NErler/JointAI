@@ -6,6 +6,8 @@
 #' @inheritParams base::print
 #' @param quantiles posterior quantiles
 #' @inheritParams sharedParams
+#' @param missinfo logical; should information on the number and proportion of
+#'                 missing values be included in the summary?
 #' @param \dots currently not used
 #'
 #' @examples
@@ -26,7 +28,7 @@
 #' @export
 summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                             quantiles = c(0.025, 0.975), subset = NULL,
-                            exclude_chains = NULL,
+                            exclude_chains = NULL, missinfo = TRUE,
                             warn = TRUE, mess = TRUE, ...) {
 
   if (is.null(object$MCMC)) errormsg("There is no MCMC sample.")
@@ -48,7 +50,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                                        colnames(MCMC), value = TRUE),
                                   grep(paste0('_', object$info_list[[varname]]$varname, '_'),
                                        colnames(MCMC), value = TRUE)
-                                  )), drop = FALSE]
+                                )), drop = FALSE]
 
 
 
@@ -64,9 +66,9 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
       mcerror <- if (length(object$MCMC) - length(exclude_chains) > 1) {
         try(MC_error(object, subset = list(other = colnames(MCMCsub)),
-                 exclude_chains = exclude_chains,
-                 start = start, end = end, thin = thin,
-                 digits = 2, warn = FALSE, mess = FALSE))
+                     exclude_chains = exclude_chains,
+                     start = start, end = end, thin = thin,
+                     digits = 2, warn = FALSE, mess = FALSE))
       }
 
       colnames(MCMCsub)[na.omit(match(object$coef_list[[varname]]$coef,
@@ -151,6 +153,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       otherpars <- if (length(other) > 0)
         stats[other, , drop = FALSE]
 
+
       list(modeltype = object$info_list[[varname]]$modeltype,
            family = object$info_list[[varname]]$family,
            regcoef = regcoef, sigma = sigma, intercepts = intercepts,
@@ -168,6 +171,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$thin <- thin(object$MCMC)
   out$nchain <- nchain(object$MCMC) - sum(exclude_chains %in% seq_along(object$MCMC))
   out$res <- res_list
+  out$missinfo <- if (missinfo) get_missinfo(object)
 
 
   out$analysis_type <- object$analysis_type
@@ -235,11 +239,11 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
       if (!is.null(x$res[[k]]$assoc_type)) {
         cat("\nAssociation types:\n")
         cat(paste0(names(x$res[[k]]$assoc_type), ": ",
-               sapply(x$res[[k]]$assoc_type, function(i)
-                 switch(i,
-                      'underl.value' = "underlying value",
-                      'obs.value' = 'observed value')
-               ), collapse = "\n"))
+                   sapply(x$res[[k]]$assoc_type, function(i)
+                     switch(i,
+                            'underl.value' = "underlying value",
+                            'obs.value' = 'observed value')
+                   ), collapse = "\n"), "\n")
 
       }
 
@@ -268,6 +272,12 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
         paste0('- ', names(x$size)[i], ": ", x$size[i], "\n")
     )
   }
+
+  if (!is.null(x$missinfo)) {
+    cat('\n\n')
+    print(x$missinfo)
+  }
+
   invisible(x)
 }
 
@@ -312,8 +322,8 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 #' @export
 coef.summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
-                         subset = NULL, exclude_chains = NULL,
-                         warn = TRUE, mess = TRUE, ...) {
+                                 subset = NULL, exclude_chains = NULL,
+                                 warn = TRUE, mess = TRUE, ...) {
 
   if (!inherits(object, "summary.JointAI"))
     errormsg("Use only with 'summary.JointAI' objects.")
@@ -414,4 +424,64 @@ print.modelstring <- function(x, ...) {
     errormsg("Use only with 'modelstring' objects.")
 
   cat(x)
+}
+
+
+
+
+
+
+get_missinfo <- function(object) {
+
+  if (!(inherits(object, "JointAI") | inherits(object, "JointAI_errored")))
+    errormsg("Use only with 'JointAI' objects.")
+
+
+  allvars <- all_vars(c(object$fixed, object$random, object$Mlist$auxvars,
+                        object$Mlist$timevar))
+
+  dat_lvls <- sapply(object$data[allvars], check_varlevel,
+                     groups = object$Mlist$groups)
+
+  structure(
+    sapply(unique(dat_lvls), function(lvl) {
+      subdat <- object$data[match(unique(object$Mlist$groups[[lvl]]),
+                                  object$Mlist$groups[[lvl]]),
+                            names(dat_lvls)[dat_lvls == lvl]]
+      missinfo <- data.frame(
+        '#' = colSums(is.na(subdat)),
+        '%' = colMeans(is.na(subdat)),
+        check.names = FALSE
+      )
+      missinfo[order(missinfo[, 1]), ]
+    }, simplify = FALSE),
+    class = 'missinfo')
+}
+
+print.missinfo <- function(x) {
+  cat('Number and proportion of missing values:')
+
+  indent <- ifelse(length(x) > 1, 2, 0)
+
+  for (k in names(x)) {
+    xx <- x[[k]]
+
+    xx$string <- paste0(tab(), '- ', rownames(xx), ': ', xx$`#`,
+                        ' (', sprintf("%.2f", xx$`%` * 100), '%)')
+
+    if (length(x) > 1) cat('\n\nLevel:', k)
+
+    cat(paste0('\n', paste0(tab(indent), 'Completely observed:\n'),
+               if (any(x[[k]]$`#` == 0))
+                 strwrap(paste0(rownames(xx)[xx$`#` == 0], collapse = ", "),
+                         indent = 2, exdent = 2)
+               else '(none)'
+    ))
+
+    cat(paste0('\n\n', paste0(tab(indent), 'Incomplete:\n'),
+               if (any(x[[k]]$`#` > 0))
+                 paste0(xx$string[xx$`#` > 0], collapse = "\n")
+               else '(none)'
+    ))
+  }
 }
