@@ -198,14 +198,16 @@ predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0
     #      and (generalized) linear mixed models.")
   }
 
-  if (missing(newdata))
+  if (missing(newdata)) {
     newdata <- object$data
-
-  # newdata <- convert_variables(data = newdata,
-  #                              allvars = unique(c(all_vars(object$fixed),
-  #                                                 all_vars(object$random),
-  #                                                 all_vars(object$auxvars))),
-  #                              mess = FALSE)
+  } else {
+    newdata <- convert_variables(data = newdata,
+                                 allvars = unique(c(all_vars(object$fixed),
+                                                    all_vars(object$random),
+                                                    all_vars(object$auxvars))),
+                                 mess = FALSE,
+                                 data_orig = object$data)
+  }
 
 
   MCMC <- prep_MCMC(object, start = start, end = end, thin = thin,

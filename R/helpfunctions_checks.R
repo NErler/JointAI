@@ -71,7 +71,12 @@ drop_levels <- function(data, allvars, mess = TRUE) {
 
 
 # used in model_imp (2020-06-09)
-convert_variables <- function(data, allvars, mess = TRUE) {
+convert_variables <- function(data, allvars, mess = TRUE, data_orig = NULL) {
+# clean up data:
+# * change NaN to NA
+# * convert continuous variables with just two values to factor
+# * convert logical variables to a factor
+# * convert factor labels (exclude special characters)
 
   converted1 <- c()
 
@@ -82,9 +87,15 @@ convert_variables <- function(data, allvars, mess = TRUE) {
     data[is.nan(data[, k]), k] <- NA
 
     # set continuous variables with just two values to binary
-    if (all(class(data[, k]) != 'factor') & length(unique(na.omit(data[, k]))) == 2) {
+    if (all(class(data[, k]) != 'factor') &
+        length(unique(na.omit(data[, k]))) == 2 & is.null(data_orig)) {
       data[, k] <- factor(data[, k])
       converted1 <- c(converted1, k)
+    } else if (!is.null(data_orig)) {
+      if (class(data_orig[, k]) == 'factor' & all(class(data[, k]) != 'factor')) {
+        data[, k] <- factor(data[, k], levels = levels(data_orig[, k]))
+        converted1 <- c(converted1, k)
+      }
     }
 
     # set logical variables to factors
