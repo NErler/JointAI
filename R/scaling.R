@@ -69,8 +69,8 @@ rescale <- function(MCMC, coefs, scale_pars, info_list) {
 
         if (length(covnames) > 0) {
           scaled_covs <- sapply(covnames, function(j) {
-            MCMC[, coefs$coef[match(j, coefs$varname)], drop = FALSE] *
-              scale_pars[j, 'center']/scale_pars[j, 'scale']
+            MCMC[, coefs$coef[which(j == coefs$varname & outcome == coefs$outcome)],
+                 drop = FALSE] * scale_pars[j, 'center']/scale_pars[j, 'scale']
           })
 
           MCMC[, k] - rowSums(scaled_covs)
