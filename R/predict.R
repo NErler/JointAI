@@ -671,7 +671,8 @@ fitted_values <- function(object, ...) {
   })
 
 
-  predict(object, quantiles = NULL, type = types, ...)$fitted
+  predict(object, outcome = seq_along(object$fixed), quantiles = NULL,
+          type = types, ...)$fitted
 }
 
 
