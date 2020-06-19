@@ -73,7 +73,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
       colnames(MCMCsub)[na.omit(match(object$coef_list[[varname]]$coef,
                                       colnames(MCMCsub)))] <-
-        object$coef_list[[varname]]$varname
+        object$coef_list[[varname]]$varnam_print
 
       stats <- matrix(nrow = length(colnames(MCMCsub)),
                       ncol = length(statnames),
@@ -93,7 +93,9 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       }
 
       regcoef <- stats[intersect(rownames(stats),
-                                 object$coef_list[[varname]]$varname), , drop = FALSE]
+                                 object$coef_list[[varname]]$varnam_print), ,
+                       drop = FALSE]
+
 
       sigma <- if (object$info_list[[varname]]$family %in% c('gaussian', 'Gamma', 'lognorm') &&
                    !is.null(object$info_list[[varname]]$family)) {
