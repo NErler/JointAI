@@ -130,10 +130,10 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
     models[names(models_user)] <- models_user
 
-    if (any(models %in% c('mlogitmm'))) {
-      errormsg("JointAI can't yet handle unordered longitudinal categorical
-                covariates (>2 levels). This feature is planned for the future.")
-    }
+    # if (any(models %in% c('mlogitmm'))) {
+    #   errormsg("JointAI can't yet handle unordered longitudinal categorical
+    #             covariates (>2 levels). This feature is planned for the future.")
+    # }
   } else {
     models <- NULL
   }

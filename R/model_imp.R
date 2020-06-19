@@ -1267,6 +1267,59 @@ arglist$analysis_type <- "clmm"
 }
 
 
+#' @rdname model_imp
+#' @export
+mlogitmm_imp <- function(fixed, data, random,
+                         n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                         monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                         models = NULL, no_model = NULL, trunc = NULL,
+                         shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                         parallel = FALSE, n.cores = NULL,
+                         scale_vars = NULL, hyperpars = NULL,
+                         modelname = NULL, modeldir = NULL,
+                         keep_model = FALSE, overwrite = NULL,
+                         quiet = TRUE, progress.bar = "text",
+                         warn = TRUE, mess = TRUE,
+                         keep_scaled_mcmc = FALSE, ...){
+
+  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
+  thiscall <- as.list(match.call())[-1L]
+
+  arglist <- c(arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+
+
+  if (!missing(fixed) & missing(random)) {
+    can_split <- try(split_formula_list(check_formula_list(fixed)))
+
+    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
+      arglist$formula <- check_formula_list(arglist$fixed)
+      arglist$fixed <- NULL
+    }
+  }
+
+  if (missing(fixed) & is.null(arglist$formula))
+    errormsg("No fixed effects structure specified.")
+  if (missing(random) & is.null(arglist$formula))
+    errormsg("No random effects structure specified.")
+  if (missing(data)) errormsg("No dataset given.")
+
+  arglist$analysis_type <- "mlogitmm"
+
+  if (!is.null(arglist$formula)) {
+    arglist$formula <- check_formula_list(arglist$formula)
+  } else {
+    arglist$fixed <- check_formula_list(arglist$fixed)
+    arglist$random <- check_formula_list(arglist$random)
+  }
+
+
+  res <- do.call(model_imp, arglist)
+  res$call <- match.call()
+
+  return(res)
+}
+
 
 #' @rdname model_imp
 #' @export
