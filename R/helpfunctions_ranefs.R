@@ -145,14 +145,22 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
         !parelmts[[paste0("M_", k)]] %in% rbind(do.call(rbind, rd_slope_coefs),
                                                 do.call(rbind, rd_slope_interact_coefs))$parelmts]
 
-      rd_intercept_coefs <- if (!is.null(elmts) & attr(hc_list[[k]], 'intercept') == 1)
-        data.frame(
-          term = names(elmts),
-          matrix = paste0("M_", k),
-          cols = lp[[paste0("M_", k)]][names(elmts)],
-          parelmts = elmts,
-          stringsAsFactors = FALSE
-      )
+      rd_intercept_coefs <- if (!is.null(elmts) & attr(hc_list[[k]], 'intercept') == 1) {
+        if (is.list(elmts)) {
+          # in case of a multinomial mixed model, there should not be hierarchical
+          # centering of the random intercept. If we don't have any parameters
+          # in here (by setting NULL), they will end up in "othervars".
+          NULL
+        } else {
+          data.frame(
+            term = names(elmts),
+            matrix = paste0("M_", k),
+            cols = lp[[paste0("M_", k)]][names(elmts)],
+            parelmts = elmts,
+            stringsAsFactors = FALSE
+          )
+        }
+      }
 
       structure(
         list(rd_intercept_coefs = rd_intercept_coefs,
@@ -167,12 +175,21 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
   # othervars <- sapply(names(lvls)[lvls < min(lvls[clus])], function(k) {
   othervars <- sapply(names(lvls)[lvls <= min(lvls[clus])], function(k) {
 
-    othervars <- data.frame(term = names(parelmts[[paste0("M_", k)]]),
-                            matrix = if (!is.null(lp[[paste0("M_", k)]])) paste0("M_", k),
-                            cols = lp[[paste0("M_", k)]],
-                            parelmts = parelmts[[paste0("M_", k)]],
-                            stringsAsFactors = FALSE)
-
+    othervars <- if (is.list(parelmts[[paste0("M_", k)]])) {
+      lapply(parelmts[[paste0("M_", k)]], function(p) {
+        data.frame(term = names(p),
+                   matrix = if (!is.null(lp[[paste0("M_", k)]])) paste0("M_", k),
+                   cols = lp[[paste0("M_", k)]][names(p)],
+                   parelmts = p,
+                   stringsAsFactors = FALSE)
+      })
+    } else {
+      data.frame(term = names(parelmts[[paste0("M_", k)]]),
+                 matrix = if (!is.null(lp[[paste0("M_", k)]])) paste0("M_", k),
+                 cols = lp[[paste0("M_", k)]],
+                 parelmts = parelmts[[paste0("M_", k)]],
+                 stringsAsFactors = FALSE)
+    }
 
     collapsed <- lapply(lapply(hcvars, function(i) {
       lapply(i, function(j) {
@@ -185,7 +202,8 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
 
     used <- lapply(collapsed, "[[", "parelmts")
 
-    othervars <- othervars[!othervars$parelmts %in% unlist(used), ]
+    if (!is.list(othervars))
+      othervars <- othervars[!othervars$parelmts %in% unlist(used), ]
 
     if (all(dim(othervars) > 0))
       othervars
