@@ -157,7 +157,7 @@ get_data_list <- function(Mlist, info_list) {
 
     if (any(sapply(survinfo, "[[", "haslong"))) {
 
-      # what is the level of the survival outome?
+      # what is the level of the survival outcome?
       surv_lvl <- unique(sapply(survinfo, "[[", "surv_lvl"))
 
       if (length(surv_lvl) > 1)
