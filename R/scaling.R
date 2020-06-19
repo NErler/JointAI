@@ -64,13 +64,31 @@ rescale <- function(MCMC, coefs, scale_pars, info_list) {
 
       if (varnam == "(Intercept)") {
         outcome <- coefs$outcome[which(coefs$coef == k)]
-        covnames <- names(unlist(unname(info_list[[outcome]]$lp)))
-        covnames <- covnames[which(!covnames %in% "(Intercept)")]
+        k_nr <- gsub("[[:alpha:]]+\\[|\\]", "", k)
 
-        if (length(covnames) > 0) {
-          scaled_covs <- sapply(covnames, function(j) {
-            MCMC[, coefs$coef[which(j == coefs$varname & outcome == coefs$outcome)],
-                 drop = FALSE] * scale_pars[j, 'center']/scale_pars[j, 'scale']
+        parelmts <- info_list[[outcome]]$parelmts
+
+        parelmts <- if (any(sapply(parelmts, is.list))) {
+          lapply(1:max(sapply(parelmts, length)), function(j) {
+            pe <- unlist(unname(lapply(parelmts, "[[", j)))
+            if (k_nr %in% pe)
+              pe
+          })
+        } else {
+          unlist(unname(parelmts))
+        }
+
+        parnames <- sapply(unlist(parelmts), gsub, pattern = k_nr, x = k)
+        parnames <- parnames[which(!parnames %in% k)]
+
+        # covnames <- names(unlist(unname(info_list[[outcome]]$lp)))
+        # covnames <- covnames[which(!covnames %in% "(Intercept)")]
+
+        if (length(parnames) > 0) {
+          scaled_covs <- sapply(parnames, function(j) {
+            covname <- coefs$varname[coefs$coef == j]
+            MCMC[, j, drop = FALSE] * scale_pars[covname, 'center'] /
+              scale_pars[covname, 'scale']
           })
 
           MCMC[, k] - rowSums(scaled_covs)
