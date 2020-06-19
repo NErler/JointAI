@@ -277,6 +277,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
 
   if (!is.null(x$missinfo)) {
     cat('\n\n')
+    cat('Number and proportion of missing values:\n')
     print(x$missinfo)
   }
 
@@ -445,45 +446,26 @@ get_missinfo <- function(object) {
   dat_lvls <- sapply(object$data[allvars], check_varlevel,
                      groups = object$Mlist$groups)
 
-  structure(
-    sapply(unique(dat_lvls), function(lvl) {
-      subdat <- object$data[match(unique(object$Mlist$groups[[lvl]]),
-                                  object$Mlist$groups[[lvl]]),
-                            names(dat_lvls)[dat_lvls == lvl]]
-      missinfo <- data.frame(
-        '#' = colSums(is.na(subdat)),
-        '%' = colMeans(is.na(subdat)),
-        check.names = FALSE
-      )
-      missinfo[order(missinfo[, 1]), ]
-    }, simplify = FALSE),
-    class = 'missinfo')
-}
+  miss_list <- sapply(unique(dat_lvls), function(lvl) {
+    subdat <- object$data[match(unique(object$Mlist$groups[[lvl]]),
+                                object$Mlist$groups[[lvl]]),
+                          names(dat_lvls)[dat_lvls == lvl]]
+    missinfo <- as.data.frame(
+      Filter(Negate(is.null),
+             list(
+               variable = names(subdat),
+               level = if (length(unique(dat_lvls)) > 1) lvl,
+               '# NA' = colSums(is.na(subdat)),
+               '% NA' = colMeans(is.na(subdat))
+             )
+      ),
+      check.names = FALSE
+    )
+    missinfo[order(missinfo$`# NA`), ]
+  }, simplify = FALSE)
 
-print.missinfo <- function(x) {
-  cat('Number and proportion of missing values:')
-
-  indent <- ifelse(length(x) > 1, 2, 0)
-
-  for (k in names(x)) {
-    xx <- x[[k]]
-
-    xx$string <- paste0(tab(), '- ', rownames(xx), ': ', xx$`#`,
-                        ' (', sprintf("%.2f", xx$`%` * 100), '%)')
-
-    if (length(x) > 1) cat('\n\nLevel:', k)
-
-    cat(paste0('\n', paste0(tab(indent), 'Completely observed:\n'),
-               if (any(x[[k]]$`#` == 0))
-                 strwrap(paste0(rownames(xx)[xx$`#` == 0], collapse = ", "),
-                         indent = 2, exdent = 2)
-               else '(none)'
-    ))
-
-    cat(paste0('\n\n', paste0(tab(indent), 'Incomplete:\n'),
-               if (any(x[[k]]$`#` > 0))
-                 paste0(xx$string[xx$`#` > 0], collapse = "\n")
-               else '(none)'
-    ))
-  }
+  if (length(miss_list) == 1)
+    miss_list[[1]]
+  else
+    miss_list
 }
