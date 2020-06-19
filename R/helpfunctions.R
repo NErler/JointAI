@@ -308,19 +308,34 @@ get_coef_names <- function(info_list) {
 
   sapply(info_list, function(info) {
 
+    # find all parameter elements with the same parameter name to find
+    # out if this parameter needs to get indexed or not
     pars <- sapply(info_list, function(k) {
       if (k$parname %in% info$parname) unlist(k$parelmts)
     })
 
-    if (any(!sapply(info$lp, is.null)))
-      data.frame(outcome = unname(info$varname),
-                 varname = names(unlist(unname(info$lp))),
-                 coef = paste0(info$parname,
-                               if (length(pars) > 1)
-                                 paste0("[", unlist(info$parelmts), "]")
-                 ),
-                 stringsAsFactors = FALSE
+
+    parelmts <- unlist(unname(info$parelmts), recursive = FALSE)
+    if (!is.list(parelmts)) {
+      parelmts <- list(parelmts)
+      names(parelmts) <- NA
+    }
+
+    if (any(!sapply(info$lp, is.null))) {
+      out <- data.frame(outcome = unname(info$varname),
+                        outcat = rep(names(parelmts), sapply(parelmts, length)),
+                        varname = names(unlist(unname(parelmts))),
+                        coef = paste0(info$parname,
+                                      if (length(unlist(pars)) > 1)
+                                        paste0("[", unlist(parelmts), "]")
+                        ),
+                        stringsAsFactors = FALSE
       )
+      out$varnam_print <- ifelse(is.na(out$outcat), out$varname,
+                                 paste0(out$outcat, ": ", out$varname))
+      out
+    }
+
   }, simplify = FALSE)
 }
 
