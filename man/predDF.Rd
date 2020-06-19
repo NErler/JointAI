@@ -7,7 +7,7 @@
 \usage{
 predDF(object, ...)
 
-\method{predDF}{JointAI}(object, vars, outcome = 1, length = 100, ...)
+\method{predDF}{JointAI}(object, vars, length = 100, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -16,10 +16,10 @@ predDF(object, ...)
 
 \item{vars}{name of variable that should be varying}
 
+\item{length}{number of values used in the sequence when \code{vars} is continuous}
+
 \item{outcome}{vector of variable names or numbers identifying for which
 outcome(s) the prediction should be performed.}
-
-\item{length}{number of values used in the sequence when \code{vars} is continuous}
 }
 \description{
 Build a \code{data.frame} for prediction, where one variable
