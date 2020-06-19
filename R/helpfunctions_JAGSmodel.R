@@ -358,25 +358,48 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
       }
 
       # write the syntax for other longitudinal variables
-      other <- if (!is.null(info$hc_list$othervars[[k]]))
-        paste(
-          paste_coef(parname = info$parname,
-                     parelmts = info$hc_list$othervars[[k]]$parelmts),
-          paste_scaling(
-            paste_data(matnam = info$hc_list$othervars[[k]]$matrix,
-                       index = index,
-                       col = info$hc_list$othervars[[k]]$cols,
-                       isgk = isgk),
-            rows = info$hc_list$othervars[[k]]$cols,
-            scale_pars = info$scale_pars[[paste0("M_", k)]],
-            scalemat = paste0("spM_", k)), sep = " * "
-        )
+      other <- if (!is.null(info$hc_list$othervars[[k]])) {
+        if (!is.data.frame(info$hc_list$othervars[[k]])) {
+          sapply(info$hc_list$othervars[[k]], function(x) {
+            paste0(
+              paste(
+              paste_coef(parname = info$parname,
+                         parelmts = x$parelmts),
+              paste_scaling(
+                paste_data(matnam = x$matrix,
+                           index = index,
+                           col = x$cols,
+                           isgk = isgk),
+                rows = x$cols,
+                scale_pars = info$scale_pars[[paste0("M_", k)]],
+                scalemat = paste0("spM_", k)), sep = " * "
+            ), collapse = " + ")
+          })
+        } else {
+          paste0(
+          paste(
+            paste_coef(parname = info$parname,
+                       parelmts = info$hc_list$othervars[[k]]$parelmts),
+            paste_scaling(
+              paste_data(matnam = info$hc_list$othervars[[k]]$matrix,
+                         index = index,
+                         col = info$hc_list$othervars[[k]]$cols,
+                         isgk = isgk),
+              rows = info$hc_list$othervars[[k]]$cols,
+              scale_pars = info$scale_pars[[paste0("M_", k)]],
+              scalemat = paste0("spM_", k)), sep = " * "
+          ), collapse = " + ")
+        }
+      }
 
-      c(rdi, rds, other)
+      Filter(Negate(is.null),
+                           list(rdi = rdi, rds = rds, other = other)
+      )
     }, simplify = FALSE)
 
   if (any(!sapply(Zlp, is.null))) {
-    paste0(unlist(Zlp), collapse = " + ")
+    apply(as.data.frame(unlist(Zlp, recursive = FALSE)),
+          1, paste0, collapse = " + ")
   } else {
     "0"
   }
