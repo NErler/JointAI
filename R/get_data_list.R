@@ -200,6 +200,37 @@ get_data_list <- function(Mlist, info_list) {
 
   }  # end of if (any(modeltypes %in% c('coxph', 'JM')))
 
+
+
+  # splines --------------------------------------------------------------------
+
+  # if (any(Mlist$fcts_all$type %in% c('bs', 'ps'))) {
+  #   trafo_sub <-
+  #     unique(Mlist$fcts_all[which(Mlist$fcts_all$type %in% c('bs', 'ps')),
+  #                           c('var', 'fct', 'type', 'dupl')])
+  #
+  #   for (k in seq_len(nrow(trafo_sub))) {
+  #     sB <- eval(parse(text = trafo_sub$fct[k]), envir = Mlist$data)
+  #
+  #     l[[paste0("kn_", trafo_sub$var[k])]] <- attr(sB, 'knots')
+  #
+  #     sD <- diff(diag(length(attr(sB, 'knots'))),
+  #                diff = attr(sB, 'degree') + 1) /
+  #       (gamma(attr(sB, 'degree') + 1) * attr(sB, 'dx')^attr(sB, 'degree'))
+  #
+  #     l[[paste0("sD_", trafo_sub$var[k])]] <- sD
+  #
+  #     if (trafo_sub$type == 'ps') {
+  #       DDal <- diag(ncol(sB))
+  #       l[[paste0("priorTau_", trafo_sub$var[k])]] <-
+  #         crossprod(diff(DDal, diff = 2)) + 1e-06 * DDal
+  #       l[[paste0("priorMean_", trafo_sub$var[k])]] <- rep(0, ncol(sB))
+  #
+  #       l <- c(l,  shape_ps = 1, rate_ps = 0.0005)
+  #     }
+  #   }
+  # }
+
   return(l[!sapply(l, is.null)])
 }
 
