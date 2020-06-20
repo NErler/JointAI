@@ -452,7 +452,6 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     X0[, colnames(X0) %in% colnames(Mlist$M[[lvl]]), drop = FALSE]
   }, simplify = FALSE)
 
-  # Xc <- X[, colnames(X) %in% colnames(Mlist$M[[info_list[[varname]]$resp_mat[2]]]), drop = FALSE]
 
   if (mess & any(is.na(X)))
     msg('Prediction for cases with missing covariates is not yet
@@ -577,7 +576,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     })
 
 
-    logh <- logh0 + eta_surv + eta_surv_long# <- eta_surv - mean(c(eta_surv))
+    logh <- logh0 + eta_surv + eta_surv_long
   }
 
 
@@ -705,94 +704,4 @@ fitted_values <- function(object, ...) {
 }
 
 
-# predict1 <- function(formula, data, newdata, coefs, family = NULL, type, varname,
-#                      quantiles = c(0.025, 0.975), MCMC, ...) {
-#   mf <- model.frame(as.formula(paste(formula)[-2]),
-#                     data, na.action = na.pass)
-#   mt <- attr(mf, "terms")
-#
-#   op <- options(contrasts = rep("contr.treatment", 2),
-#                 na.action = na.pass)
-#   X <- model.matrix(mt, data = newdata)
-#
-#
-#
-#   if (attr(formula, "type") %in% c('clm', 'clmm')) {
-#     X <- X[, -1, drop = FALSE]
-#     eta <- sapply(1:nrow(X), function(i)
-#       MCMC[, coefs$coef[match(colnames(X), coefs$varname)], drop = FALSE] %*% X[i, ])
-#     pred <- sapply(grep(paste0('gamma_', varname), colnames(MCMC), value = TRUE),
-#                    function(k)
-#                      eta + matrix(nrow = nrow(eta), ncol = ncol(eta),
-#                                   data = rep(MCMC[, k], ncol(eta)),
-#                                   byrow = FALSE),
-#                    simplify = 'array'
-#     )
-#
-#     fit <- apply(pred, 2:3, function(k) mean(plogis(k)))
-#     fit <- cbind(fit[, 1], t(apply(cbind(fit, 1), 1, diff)))
-#     colnames(fit) <- paste0("P(", varname, "=",
-#                             levels(data[, varname]),
-#                             ")")
-#     if (type == 'class') {
-#       fit <- apply(fit, 1, which.max)
-#     }
-#
-#     quants <- if (type == 'prob') {
-#       aperm(apply(pred, 2:3, function(q) {
-#         quantile(plogis(q), probs = quantiles, na.rm  = TRUE)
-#       }), c(2, 1, 3))
-#     }
-#   } else {
-#     if (attr(formula, "type") %in% c('coxph', 'JM')) {
-#       X <- X[, -1, drop = FALSE]
-#     }
-#
-#     if (ncol(X) == 0)
-#       stop('Prediction without covariates is not possible.',
-#            call. = FALSE)
-#
-#     pred <- sapply(1:nrow(X), function(i)
-#       MCMC[, coefs$coef[match(colnames(X), coefs$varname)],
-#            drop = FALSE] %*% X[i, ])
-#
-#     if (attr(formula, "type") %in% 'coxph') {
-#       pred <- pred - mean(c(pred))
-#     }
-#
-#     fit <- if (type == 'response' | type == 'risk' & attr(formula, "type") == 'coxph') {
-#       if (attr(formula, "type") == 'survreg') {
-#         colMeans(family$linkinv(pred, MCMC[, 'shape_time']))
-#       } else if (family$family == 'poisson') {
-#         round(colMeans(family$linkinv(pred)))
-#       } else {
-#         colMeans(family$linkinv(pred))
-#       }
-#     } else {
-#       colMeans(pred)
-#     }
-#
-#     quants <- if (type == 'response' | type == 'risk' & attr(formula, "type") == 'coxph') {
-#       if (attr(formula, "type") == 'survreg') {
-#         t(apply(pred, 2, function(q) {
-#           quantile(family$linkinv(q, MCMC[, 'shape_time']),
-#                    probs = quantiles, na.rm  = TRUE)
-#         }))
-#       } else {
-#         t(apply(pred, 2, function(q) {
-#           quantile(family$linkinv(q), probs = quantiles, na.rm  = TRUE)
-#         }))
-#       }
-#     } else {
-#       t(apply(pred, 2, quantile, quantiles, na.rm  = TRUE))
-#     }
-#   }
-#
-#   dat <- as.data.frame(cbind(newdata, fit))
-#   if (length(dim(quants)) <= 2 & !is.null(quants))
-#     dat <- cbind(dat, quants)
-#
-#   on.exit(options(op))
-#   return(list(dat = dat, fit = fit, quantiles = quants))
-#
-# }
+
