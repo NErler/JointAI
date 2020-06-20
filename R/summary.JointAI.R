@@ -336,6 +336,7 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
         lvl <- levels(object$Mlist$refs[[k]])
         names(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
+        interc
       },
       if (length(intersect(colnames(MCMC), x$coef)))
         setNames(colMeans(MCMC[, intersect(colnames(MCMC), x$coef),
