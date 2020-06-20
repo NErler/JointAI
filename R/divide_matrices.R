@@ -1,4 +1,5 @@
-# split the data into matrices and obtain other relevant info for the further steps
+# split the data into matrices and obtain other relevant info for the further
+# steps
 divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                             auxvars = NULL, scale_vars = NULL, refcats = NULL,
                             models = NULL,  timevar = NULL, no_model = NULL,
@@ -41,11 +42,12 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   names(random) <- names(fixed)
 
   # * model types --------------------------------------------------------------
-  models <- get_models(fixed = fixed, random = random, data = data, timevar = timevar,
+  models <- get_models(fixed = fixed, random = random, data = data,
+                       timevar = timevar,
                        auxvars = auxvars, no_model = no_model, models = models,
                        warn = warn)
 
-  # * outcomes -------------------------------------------------------------------
+  # * outcomes -----------------------------------------------------------------
   Y <- cbind(outcomes_to_mat(outcomes),
              prep_covoutcomes(data[setdiff(names(models),
                                            c(outcomes$outnams,
@@ -90,11 +92,11 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   }
 
   # design matrix with updated auxiliary variables
-  terms_list <- get_terms_list(fmla = c(fixed,
-                                        unlist(remove_grouping(random)), auxvars),
-                               data = data)
-  X2 <- model.matrix_combi(fmla = c(fixed, unlist(remove_grouping(random)), auxvars),
-                           data = data, refs = refs, terms_list = terms_list)
+  terms_list <- get_terms_list(
+    fmla = c(fixed, unlist(remove_grouping(random)), auxvars), data = data)
+  X2 <- model.matrix_combi(
+    fmla = c(fixed, unlist(remove_grouping(random)), auxvars),
+    data = data, refs = refs, terms_list = terms_list)
 
   # combine covariate design matrix with outcome design matrix
   MX <- cbind(Y, X2[, setdiff(colnames(X2), colnames(Y)), drop = FALSE])
@@ -111,10 +113,11 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
               %s.", dQuote(gsub("M_", "", unique(Mlvls))), dQuote(idvar))
   }
 
-  # identify interactions -------------------------------------------------------
+  # identify interactions ------------------------------------------------------
   inter <- grep(":", colnames(MX), fixed = TRUE, value = TRUE)
 
-  # if one element in an interaction is time-varying the interaction is time-varying
+  # if one element in an interaction is time-varying the interaction is
+  # time-varying
   if (length(inter) > 0) {
     minlvl <- sapply(strsplit(inter, ':'), function(k)
       names(which.min(group_lvls[gsub('M_', '', Mlvls[k])]))
@@ -131,10 +134,10 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   M <- sapply(paste0('M_', names(groups)), function(k)
     MX[ , Mlvls == k, drop = FALSE], simplify = FALSE)
 
-  fcts_mis <- extract_fcts(fixed = fixed, data, random = random, complete = FALSE,
-                           Mlvls = Mlvls)
-  fcts_all <- extract_fcts(fixed = fixed, data, random = random, complete = TRUE,
-                           Mlvls = Mlvls)
+  fcts_mis <- extract_fcts(fixed = fixed, data, random = random,
+                           complete = FALSE, Mlvls = Mlvls)
+  fcts_all <- extract_fcts(fixed = fixed, data, random = random,
+                           complete = TRUE, Mlvls = Mlvls)
 
   # scaling --------------------------------------------------------------------
   scale_pars <- mapply(get_scale_pars,
@@ -154,7 +157,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # !!! Error message that will be needed when splines are implemented
   # if (any(fcts_mis$type %in% c('ns')))
-  # errormsg("Natural cubic splines are not implemented for incomplete variables.
+  # errormsg("Natural cubic splines are not implemented for incomplete
+  #           variables.
             # Please use B-splines (using %s) instead.", dQuote("bs()"))
 
 
@@ -172,24 +176,30 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
 
   # categorical variables ------------------------------------------------------
-  # set dummies of incomplete variables to NA because they need to be re-calculated
+  # set dummies of incomplete variables to NA because they need to be
+  # re-calculated
   # also set dummies of complete long. variables to NA if there is a JM
   # because they need to be re-calculated in the quadrature part
   for (k in names(refs)) {
     if (all(attr(refs[[k]], 'dummies') %in% colnames(MX))) {
 
       if (any(is.na(data[, k]))) {
-        M[[unique(Mlvls[attr(refs[[k]], 'dummies')])]][, attr(refs[[k]], 'dummies')] <- NA
-
+        M[[unique(Mlvls[attr(refs[[k]], "dummies")])]][, attr(
+          refs[[k]],
+          "dummies"
+        )] <- NA
       } else if (any(sapply(fixed, 'attr', 'type') %in% 'JM')) {
         # dummy matrix
         covmat <- unique(Mlvls[attr(refs[[k]], 'dummies')])
         # outcome matrix
         outmat <- unique(Mlvls[colnames(outcomes$outcomes[[1]])[2]])
-        if (colSums(!identify_level_relations(groups))[gsub('M_', '', outmat)] <
-            colSums(!identify_level_relations(groups))[gsub('M_', '', covmat)]) {
+        if (colSums(!identify_level_relations(groups))[
+          gsub('M_', '', outmat)] <
+          colSums(!identify_level_relations(groups))[
+            gsub('M_', '', covmat)]) {
 
-          M[[unique(Mlvls[attr(refs[[k]], 'dummies')])]][, attr(refs[[k]], 'dummies')] <- NA
+          M[[unique(Mlvls[
+            attr(refs[[k]], 'dummies')])]][, attr(refs[[k]], 'dummies')] <- NA
         }
       }
     }
@@ -202,7 +212,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   lp_cols <- lapply(XXnam, function(XX) {
     Mcols <- if (!is.null(M))
-      sapply(M, function(x) c(na.omit(match(XX, colnames(x)))), simplify = FALSE)
+      sapply(M, function(x) c(na.omit(match(XX, colnames(x)))),
+             simplify = FALSE)
 
     cml <- sapply(names(Mcols)[sapply(Mcols, length) > 0],
                   function(i)

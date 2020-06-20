@@ -66,8 +66,9 @@ melt_matrix_list <- function(X, varnames = NULL) {
 }
 
 
- # used in get_models(), plot_imp_distr() and melt_data.frame_list() (2020-06-10)
-melt_data.frame <- function(data, id.vars = NULL, varnames = NULL, valname = 'value') {
+ # used in get_models(), plot_imp_distr(), melt_data.frame_list() (2020-06-10)
+melt_data.frame <- function(data, id.vars = NULL, varnames = NULL,
+                            valname = 'value') {
   if (!inherits(data, 'data.frame'))
     errormsg("This function may not work for objects that are not data.frames.")
 
@@ -95,9 +96,12 @@ melt_data.frame <- function(data, id.vars = NULL, varnames = NULL, valname = 'va
 
 
 # used in get_models() and extract_fcts() (2020-06-10)
-melt_data.frame_list <- function(X, id.vars = NULL, varnames = NULL, valname = 'value') {
-  if (!inherits(X, 'list') || !all(sapply(X, inherits, 'data.frame') | sapply(X, inherits, 'NULL')))
-    errormsg("This function may not work for objects that are not a list of data frames.")
+melt_data.frame_list <- function(X, id.vars = NULL, varnames = NULL,
+                                 valname = 'value') {
+  if (!inherits(X, 'list') || !all(sapply(X, inherits, 'data.frame') |
+                                   sapply(X, inherits, 'NULL')))
+    errormsg("This function may not work for objects that are not a
+             list of data frames.")
 
   Xnew <- lapply(X[!sapply(X, is.null)],
                  melt_data.frame, varnames = varnames, id.vars = id.vars)

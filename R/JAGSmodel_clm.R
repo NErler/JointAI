@@ -75,25 +75,29 @@ JAGSmodel_clm <- function(info) {
 
 
   paste_ppc_prior <- if (info$ppc) {
-    paste0("\n\n",
-           tab(), "# Posterior predictive check for the model for ", info$varname, "\n",
-           tab(), "for (", index, " in 1:", info$N[gsub("M_", "", info$resp_mat)], ") {", "\n",
-           tab(4), "for (k in 1:", info$ncat, ") {", "\n",
-           tab(6), info$varname, "_dummies[", index, ", k] <- ifelse(",
-           info$varname, "[", index, "] == k, 1, 0)", "\n",
-           tab(6), info$varname, "_ppc_dummies[", index, ", k] <- ifelse(",
-           info$varname, "_ppc[", index, "] == k, 1, 0)", "\n",
-           tab(4), "}", "\n",
-           tab(4), "ppc_", info$varname, "_o[", index, "] <- sum(pow(",
-           info$varname, "_dummies[", index, ", ] - p_", info$varname, "[",
-           index, ", ], 2))", "\n",
-           tab(4), "ppc_", info$varname, "_e[", index, "] <- sum(pow(",
-           info$varname, "_ppc_dummies[", index, ", ] - p_", info$varname,
-           "[", index, ", ], 2))", "\n",
-           tab(), "}", "\n",
-           tab(), "ppc_", info$varname, " <- mean(ifelse(ppc_", info$varname,
-           "_o > ppc_", info$varname, "_e, 1, 0) + ",
-           "ifelse(ppc_", info$varname, "_o == ppc_", info$varname, "_e, 0.5, 0)) - 0.5", "\n"
+    paste0(
+      "\n\n",
+      tab(), "# Posterior predictive check for the model for ",
+      info$varname, "\n",
+      tab(), "for (", index, " in 1:",
+      info$N[gsub("M_", "", info$resp_mat)], ") {", "\n",
+      tab(4), "for (k in 1:", info$ncat, ") {", "\n",
+      tab(6), info$varname, "_dummies[", index, ", k] <- ifelse(",
+      info$varname, "[", index, "] == k, 1, 0)", "\n",
+      tab(6), info$varname, "_ppc_dummies[", index, ", k] <- ifelse(",
+      info$varname, "_ppc[", index, "] == k, 1, 0)", "\n",
+      tab(4), "}", "\n",
+      tab(4), "ppc_", info$varname, "_o[", index, "] <- sum(pow(",
+      info$varname, "_dummies[", index, ", ] - p_", info$varname, "[",
+      index, ", ], 2))", "\n",
+      tab(4), "ppc_", info$varname, "_e[", index, "] <- sum(pow(",
+      info$varname, "_ppc_dummies[", index, ", ] - p_", info$varname,
+      "[", index, ", ], 2))", "\n",
+      tab(), "}", "\n",
+      tab(), "ppc_", info$varname, " <- mean(ifelse(ppc_", info$varname,
+      "_o > ppc_", info$varname, "_e, 1, 0) + ",
+      "ifelse(ppc_", info$varname, "_o == ppc_", info$varname,
+      "_e, 0.5, 0)) - 0.5", "\n"
     )
   }
 
@@ -102,37 +106,44 @@ JAGSmodel_clm <- function(info) {
 
 
 
-  paste0('\r',
-         tab(), add_dashes(paste0("# Cumulative logit model for ", info$varname)), "\n",
-         tab(), "for (", index, " in 1:", info$N[gsub("M_", "", info$resp_mat)], ") {", "\n",
-         tab(4), info$resp_mat, "[", index, ", ", info$resp_col,
-         "] ~ dcat(p_", info$varname, "[", index, ", 1:", info$ncat, "])", "\n",
-         paste_ppc,
-         tab(4), 'eta_', info$varname, "[", index, "] <- ",
-         add_linebreaks(linpred, indent = indent),
-         "\n\n",
-         tab(4), "p_", info$varname, "[", index, ", 1] <- max(1e-10, min(1-1e-7, psum_",
-         info$varname, "[", index, ", 1]))", "\n",
-         paste(probs, collapse = "\n"), "\n",
-         tab(4), "p_", info$varname, "[", index, ", ", info$ncat,
-         "] <- 1 - max(1e-10, min(1-1e-7, sum(p_",
-         info$varname, "[", index, ", 1:", info$ncat - 1,"])))", "\n\n",
-         paste0(logits, collapse = "\n"), "\n",
-         dummies,
-         info$trafos,
-         tab(), "}", "\n\n",
+  paste0(
+    "\r", tab(),
+    add_dashes(paste0("# Cumulative logit model for ", info$varname)),
+    "\n",
+    tab(), "for (", index, " in 1:", info$N[gsub("M_", "",
+                                                 info$resp_mat)], ") {", "\n",
+    tab(4), info$resp_mat, "[", index, ", ", info$resp_col,
+    "] ~ dcat(p_", info$varname, "[", index, ", 1:", info$ncat, "])", "\n",
+    paste_ppc,
+    tab(4), "eta_", info$varname, "[", index, "] <- ",
+    add_linebreaks(linpred, indent = indent),
+    "\n\n",
+    tab(4), "p_", info$varname, "[", index,
+    ", 1] <- max(1e-10, min(1-1e-7, psum_",
+    info$varname, "[", index, ", 1]))", "\n",
+    paste(probs, collapse = "\n"), "\n",
+    tab(4), "p_", info$varname, "[", index, ", ", info$ncat,
+    "] <- 1 - max(1e-10, min(1-1e-7, sum(p_",
+    info$varname, "[", index, ", 1:", info$ncat - 1, "])))", "\n\n",
+    paste0(logits, collapse = "\n"), "\n",
+    dummies,
+    info$trafos,
+    tab(), "}", "\n\n",
 
-         # Priors
-         tab(), "# Priors for the model for ", info$varname, "\n",
-         if (!is.null(info$lp[[info$resp_mat]])) {
-           paste0(
-             tab(), "for (k in ", min(unlist(info$parelmts)), ":", max(unlist(info$parelmts)), ") {", "\n",
-             get_priordistr(info$shrinkage, type = 'ordinal', parname = info$parname),
-             tab(), "}", "\n\n")
-         },
-         paste(deltas, collapse = "\n"), "\n\n",
-         paste(gammas, collapse = "\n"),
-         paste_ppc_prior
+    # Priors
+    tab(), "# Priors for the model for ", info$varname, "\n",
+    if (!is.null(info$lp[[info$resp_mat]])) {
+      paste0(
+        tab(), "for (k in ", min(unlist(info$parelmts)), ":",
+        max(unlist(info$parelmts)), ") {", "\n",
+        get_priordistr(info$shrinkage, type = "ordinal",
+                       parname = info$parname),
+        tab(), "}", "\n\n"
+      )
+    },
+    paste(deltas, collapse = "\n"), "\n\n",
+    paste(gammas, collapse = "\n"),
+    paste_ppc_prior
   )
 }
 

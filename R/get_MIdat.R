@@ -11,7 +11,8 @@
 #'
 #' @inheritParams sharedParams
 #' @param m number of imputed datasets
-#' @param include should the original, incomplete data be included? Default is \code{TRUE}.
+#' @param include should the original, incomplete data be included? Default is
+#'                \code{TRUE}.
 #' @param minspace minimum number of iterations between iterations to be chosen
 #'                 as imputed values (to prevent strong correlation between
 #'                 imputed datasets in the case of high autocorrelation of the
@@ -19,9 +20,11 @@
 #' @param seed optional seed value
 #' @param export_to_SPSS logical; should the completed data be exported to SPSS?
 #' @param resdir optional; directory for results. If unspecified and
-#'               \code{export_to_SPSS = TRUE} the current working directory is used.
+#'               \code{export_to_SPSS = TRUE} the current working directory is
+#'               used.
 #' @param filename optional; file name (without ending). If unspecified and
-#'                 \code{export_to_SPSS = TRUE} a name is generated automatically.
+#'                 \code{export_to_SPSS = TRUE} a name is generated
+#'                 automatically.
 #'
 #' @return A \code{data.frame} in which the original data (if
 #'         \code{include = TRUE}) and the imputed datasets are stacked onto
@@ -39,15 +42,20 @@
 #' @seealso \code{\link{plot_imp_distr}}
 #'
 #' @examples
-#' # fit a model and monitor the imputed values with monitor_params = c(imps = TRUE)
-#' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, monitor_params = c(imps = TRUE), n.iter = 100)
+#' # fit a model and monitor the imputed values with
+#' # monitor_params = c(imps = TRUE)
+#'
+#' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF,
+#'               monitor_params = c(imps = TRUE), n.iter = 100)
 #'
 #' # Example 1: without export to SPSS
 #' MIs <- get_MIdat(mod, m = 3, seed = 123)
 #'
 #'
 #' \dontrun{
-#' # Example 2: with export for SPSS (here: to the temporary directory "temp_dir")
+#' # Example 2: with export for SPSS
+#' # (here: to the temporary directory "temp_dir")
+#'
 #' temp_dir <- tempdir()
 #' MIs <- get_MIdat(mod, m = 3, seed = 123, resdir = temp_dir,
 #'                  filename = "example_imputation",
@@ -106,7 +114,8 @@ get_MIdat <- function(object, m = 10, include = TRUE,
     errormsg('The total number of iterations (%s) is too small to select %s
              iterations with spacing of >= %s.', nrow(MCMC), m, minspace)
 
-  cand_iters <- seq(from = sample.int(minspace, size = 1), to = nrow(MCMC), by = minspace)
+  cand_iters <- seq(from = sample.int(minspace, size = 1), to = nrow(MCMC),
+                    by = minspace)
   imp_iters <- sort(sample(cand_iters, size = m))
 
 
@@ -135,8 +144,10 @@ get_MIdat <- function(object, m = 10, include = TRUE,
                      gsub("^[[:print:]]*\\[", "", colnames(impval)))
 
       for (j in (1:m) + 1) {
-        iv <- impval[j - 1, na.omit(match(object$Mlist$groups[[gsub("M_", "", Mlvls[i])]],
-                                          as.numeric(rownrs)))]
+        iv <- impval[j - 1, na.omit(match(
+          object$Mlist$groups[[gsub("M_", "", Mlvls[i])]],
+          as.numeric(rownrs)
+        ))]
 
         if (is.factor(DF_list[[j]][, i])) {
           DF_list[[j]][is.na(DF_list[[j]][, i]), i] <-

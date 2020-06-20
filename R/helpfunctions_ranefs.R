@@ -88,8 +88,11 @@ get_hc_list <- function(k, newrandom, Mlist) {
 
   structure(
     sapply(Znam, function(x) {
-      list(# if the random effect is in the fixed effects, find the column of the design matrix
-        main = if (x %in% names(Mlvls)) setNames(match(x, Mnam[[Mlvls[x]]]), Mlvls[x]),
+      list(
+        # if the random effect is in the fixed effects, find the column of
+        # the design matrix
+        main = if (x %in% names(Mlvls))
+          setNames(match(x, Mnam[[Mlvls[x]]]), Mlvls[x]),
 
         interact = if (any(unlist(inZ[[x]]))) {
           w <- sapply(inZ[[x]], any)
@@ -118,7 +121,7 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
   hcvars <- sapply(clus, function(k) {
       i <- names(hc_list[[k]])[names(hc_list[[k]]) != "(Intercept)"]
 
-      rd_slope_coefs = sapply(i, function(ii) {
+      rd_slope_coefs <- sapply(i, function(ii) {
 
         pe <- unname(parelmts[[names(hc_list[[k]][[ii]]$main)]][ii])
 
@@ -135,21 +138,25 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
           data.frame(term = attr(x, 'interaction'),
                      matrix = names(x$elmts[attr(x, 'elements') != ii]),
                      cols = x$elmts[attr(x, 'elements') != ii],
-                     parelmts = unname(parelmts[[names(x$interterm)]][attr(x, 'interaction')]),
+                     parelmts = unname(parelmts[[names(x$interterm)]][
+                       attr(x, 'interaction')]),
                      stringsAsFactors = FALSE
           )
         }, simplify = FALSE))
       }, simplify = FALSE)
 
       elmts <- parelmts[[paste0("M_", k)]][
-        !parelmts[[paste0("M_", k)]] %in% rbind(do.call(rbind, rd_slope_coefs),
-                                                do.call(rbind, rd_slope_interact_coefs))$parelmts]
+        !parelmts[[paste0("M_", k)]] %in%
+          rbind(do.call(rbind, rd_slope_coefs),
+                do.call(rbind, rd_slope_interact_coefs))$parelmts]
 
-      rd_intercept_coefs <- if (!is.null(elmts) & attr(hc_list[[k]], 'intercept') == 1) {
+      rd_intercept_coefs <- if (!is.null(elmts) &
+                                attr(hc_list[[k]], 'intercept') == 1) {
         if (is.list(elmts)) {
-          # in case of a multinomial mixed model, there should not be hierarchical
-          # centering of the random intercept. If we don't have any parameters
-          # in here (by setting NULL), they will end up in "othervars".
+          # in case of a multinomial mixed model, there should not be
+          # hierarchical centring of the random intercept.
+          # If we don't have any parameters in here (by setting NULL), they
+          # will end up in "othervars".
           NULL
         } else {
           data.frame(
@@ -172,7 +179,6 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
   }, simplify = FALSE)
 
 
-  # othervars <- sapply(names(lvls)[lvls < min(lvls[clus])], function(k) {
   othervars <- sapply(names(lvls)[lvls <= min(lvls[clus])], function(k) {
 
     othervars <- if (is.list(parelmts[[paste0("M_", k)]])) {

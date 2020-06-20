@@ -37,11 +37,14 @@ check_classes <- function(data, fixed = NULL, random = NULL, auxvars = NULL,
 
 
   # error for variables of unknown classes
-  if (any(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))) {
-    w <- which(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))
+  if (any(!classes %in% c('numeric', 'ordered', 'factor', 'logical',
+                          'integer'))) {
+    w <- which(!classes %in% c('numeric', 'ordered', 'factor', 'logical',
+                               'integer'))
 
     pr <- sapply(split(classes[w], classes[w]), function(x) {
-      paste0(dQuote(unique(x)), ' (variables: ', paste0(names(x), collapse = ", "), ")")
+      paste0(dQuote(unique(x)), ' (variables: ',
+             paste0(names(x), collapse = ", "), ")")
     })
 
     errormsg("Variables of type %s can not be handled.",
@@ -92,7 +95,8 @@ convert_variables <- function(data, allvars, mess = TRUE, data_orig = NULL) {
       data[, k] <- factor(data[, k])
       converted1 <- c(converted1, k)
     } else if (!is.null(data_orig)) {
-      if (class(data_orig[, k]) == 'factor' & all(class(data[, k]) != 'factor')) {
+      if (class(data_orig[, k]) == 'factor' &
+          all(class(data[, k]) != 'factor')) {
         data[, k] <- factor(data[, k], levels = levels(data_orig[, k]))
         converted1 <- c(converted1, k)
       }

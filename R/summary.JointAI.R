@@ -1,7 +1,8 @@
 #' Summarize the results from an object of class JointAI
 #'
-#' Obtain and print the \code{summary}, (fixed effects) coefficients (\code{coef})
-#' and credible interval (\code{confint}) for an object of class 'JointAI'.
+#' Obtain and print the \code{summary}, (fixed effects) coefficients
+#' (\code{coef}) and credible interval (\code{confint}) for an object of
+#' class 'JointAI'.
 #'
 #' @inheritParams base::print
 #' @param quantiles posterior quantiles
@@ -20,7 +21,8 @@
 #'
 #' @seealso The model fitting functions \code{\link{lm_imp}},
 #'          \code{\link{glm_imp}}, \code{\link{clm_imp}}, \code{\link{lme_imp}},
-#'          \code{\link{glme_imp}}, \code{\link{survreg_imp}} and \code{\link{coxph_imp}},
+#'          \code{\link{glme_imp}}, \code{\link{survreg_imp}} and
+#'          \code{\link{coxph_imp}},
 #'          and the vignette
 #'          \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 #'          for examples how to specify the parameter \code{subset}.
@@ -41,16 +43,24 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                     warn = warn, mess = mess, ...)
 
   # create results matrices
-  statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.", "GR-crit", "MC error")
+  statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.",
+                 "GR-crit", "MC error")
 
   res_list <- sapply(names(object$coef_list), function(varname) {
-    MCMCsub <- MCMC[, intersect(colnames(MCMC),
-                                c(object$coef_list[[varname]]$coef,
-                                  grep(paste0('_', object$info_list[[varname]]$varname, '\\b'),
-                                       colnames(MCMC), value = TRUE),
-                                  grep(paste0('_', object$info_list[[varname]]$varname, '_'),
-                                       colnames(MCMC), value = TRUE)
-                                )), drop = FALSE]
+    MCMCsub <- MCMC[, intersect(
+      colnames(MCMC),
+      c(
+        object$coef_list[[varname]]$coef,
+        grep(paste0("_", object$info_list[[varname]]$varname, "\\b"),
+             colnames(MCMC),
+             value = TRUE
+        ),
+        grep(paste0("_", object$info_list[[varname]]$varname, "_"),
+             colnames(MCMC),
+             value = TRUE
+        )
+      )
+    ), drop = FALSE]
 
 
 
@@ -81,7 +91,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
       stats[, "Mean"] <- apply(MCMCsub, 2, mean)
       stats[, "SD"] <- apply(MCMCsub, 2, sd)
-      stats[, paste0(quantiles * 100, "%")] <- t(apply(MCMCsub, 2, quantile, quantiles))
+      stats[, paste0(quantiles * 100, "%")] <- t(apply(MCMCsub, 2,
+                                                       quantile, quantiles))
       stats[, "tail-prob."] <- apply(MCMCsub, 2, computeP)
 
       if (length(object$MCMC) - length(exclude_chains) > 1)
@@ -97,23 +108,25 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                        drop = FALSE]
 
 
-      sigma <- if (object$info_list[[varname]]$family %in% c('gaussian', 'Gamma', 'lognorm') &&
+      sigma <- if (object$info_list[[varname]]$family %in%
+                   c("gaussian", "Gamma", "lognorm") &&
                    !is.null(object$info_list[[varname]]$family)) {
-
         sig <- grep(paste0("sigma_", varname), rownames(stats))
 
-        if (length(sig) > 0)
-          stats[sig, -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
+        if (length(sig) > 0) {
+          stats[sig, -which(colnames(stats) == "tail-prob."), drop = FALSE]
+        }
       }
 
-
-      intercepts <- if (object$info_list[[varname]]$modeltype %in% c('clm', 'clmm'))
+      intercepts <- if (object$info_list[[varname]]$modeltype %in%
+                        c('clm', 'clmm'))
         get_intercepts(stats, varname, levels(object$Mlist$refs[[varname]]))
 
 
       rd_vcov <- if (!is.null(object$info_list[[varname]]$hc_list)) {
         Ds <- stats[grep(paste0("^D_", object$info_list[[varname]]$varname, "_",
-                                paste0(names(object$Mlist$group_lvls), collapse = "|"),
+                                paste0(names(object$Mlist$group_lvls),
+                                       collapse = "|"),
                                 "\\[[[:digit:]]+,[[:digit:]]+\\]"),
                          rownames(stats), value = TRUE), , drop = FALSE]
 
@@ -138,7 +151,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
               -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
       }
 
-      events <- if (object$info_list[[varname]]$modeltype %in% c('survreg', 'coxph', 'JM')) {
+      events <- if (object$info_list[[varname]]$modeltype %in%
+                    c('survreg', 'coxph', 'JM')) {
         mat <- object$info_list[[1]]$resp_mat[2]
         col <- object$info_list[[1]]$resp_col[2]
         sum(object$data_list[[mat]][, col])
@@ -168,10 +182,12 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
   out <- list()
   out$call <- object$call
-  out$start <- ifelse(is.null(start), start(object$MCMC), max(start, start(object$MCMC)))
+  out$start <- ifelse(is.null(start), start(object$MCMC),
+                      max(start, start(object$MCMC)))
   out$end <- ifelse(is.null(end), end(object$MCMC), min(end, end(object$MCMC)))
   out$thin <- thin(object$MCMC)
-  out$nchain <- nchain(object$MCMC) - sum(exclude_chains %in% seq_along(object$MCMC))
+  out$nchain <- nchain(object$MCMC) - sum(exclude_chains %in%
+                                            seq_along(object$MCMC))
   out$res <- res_list
   out$missinfo <- if (missinfo) get_missinfo(object)
 
@@ -187,7 +203,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' @rdname summary.JointAI
 #' @param x an object of class \code{summary.JointAI} or \code{JointAI}
 #' @export
-print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) {
+print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
+                                  ...) {
 
   if (!inherits(x, "summary.JointAI"))
     errormsg("Use only with 'summary.JointAI' objects.")
@@ -197,7 +214,8 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4), ...) 
   if (sum(!sapply(x$res, is.null)) > 1)
     cat("Bayesian joint model fitted with JointAI", "\n")
   else
-    cat(print_type(x$res[[1]]$modeltype, x$res[[1]]$family), 'fitted with JointAI\n')
+    cat(print_type(x$res[[1]]$modeltype, x$res[[1]]$family),
+        'fitted with JointAI\n')
 
   cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
       "\n", sep = "")
@@ -313,13 +331,15 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
     c(
       if (object$info_list[[k]]$modeltype %in% c('clm', 'clmm')) {
-        interc <- colMeans(MCMC)[grep(paste0('gamma_', k, "\\["), colnames(MCMC))]
+        interc <- colMeans(MCMC)[grep(paste0('gamma_', k, "\\["),
+                                      colnames(MCMC))]
 
         lvl <- levels(object$Mlist$refs[[k]])
         names(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
       },
       if (length(intersect(colnames(MCMC), x$coef)))
-        setNames(colMeans(MCMC[, intersect(colnames(MCMC), x$coef), drop = FALSE]),
+        setNames(colMeans(MCMC[, intersect(colnames(MCMC), x$coef),
+                               drop = FALSE]),
                  x$varname[match(x$coef, intersect(colnames(MCMC), x$coef))]
         )
     )
@@ -364,7 +384,8 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
   if (is.null(quantiles) & !is.null(level))
     quantiles <- c((1 - level)/2, 1 - (1 - level)/2)
 
-  MCMC <- prep_MCMC(object, start, end, thin, subset, exclude_chains = exclude_chains,
+  MCMC <- prep_MCMC(object, start, end, thin, subset,
+                    exclude_chains = exclude_chains,
                     mess = mess, warn = warn)
 
   cis <- t(apply(MCMC, 2, quantile, quantiles))
@@ -380,10 +401,13 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
   if (!inherits(x, "JointAI")) errormsg("Use only with 'JointAI' objects.")
 
 
-  MCMC <- if (!is.null(x$MCMC))
-    prep_MCMC(x, start = NULL, end = NULL, thin = NULL, subset = NULL,
+  MCMC <- if (!is.null(x$MCMC)) {
+    prep_MCMC(x,
+              start = NULL, end = NULL, thin = NULL, subset = NULL,
               exclude_chains = NULL,
-              mess = TRUE, warn = TRUE, ...)
+              mess = TRUE, warn = TRUE, ...
+    )
+  }
 
 
   cat("\nCall:\n")
@@ -396,8 +420,10 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
       varname <- names(coefs)[k]
       cat("\n",
           print_type(x$info_list[[varname]]$modeltype,
-                     x$info_list[[varname]]$family), "for", dQuote(varname), '\n')
-      if (x$info_list[[names(coefs)[k]]]$modeltype %in% c('glmm', 'clmm', 'mlogitmm')) {
+                     x$info_list[[varname]]$family), "for",
+          dQuote(varname), '\n')
+      if (x$info_list[[names(coefs)[k]]]$modeltype %in%
+          c('glmm', 'clmm', 'mlogitmm')) {
         cat("\nFixed effects:\n")
         print(coefs[[k]], digits = digits)
 
@@ -413,7 +439,8 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
 
       if (paste0("sigma_", varname) %in% colnames(MCMC)) {
         cat("\n\nResidual standard deviation:\n")
-        print(colMeans(MCMC[, paste0("sigma_", names(coefs)[k]), drop = FALSE]),
+        print(colMeans(MCMC[, paste0("sigma_", names(coefs)[k]),
+                            drop = FALSE]),
               digits = digits)
       }
     }
@@ -454,7 +481,7 @@ get_missinfo <- function(object) {
   miss_list <- sapply(unique(dat_lvls), function(lvl) {
     subdat <- object$data[match(unique(object$Mlist$groups[[lvl]]),
                                 object$Mlist$groups[[lvl]]),
-                          names(dat_lvls)[dat_lvls == lvl]]
+                          names(dat_lvls)[dat_lvls == lvl], drop = FALSE]
     missinfo <- as.data.frame(
       Filter(Negate(is.null),
              list(

@@ -51,7 +51,7 @@ get_groups <- function(idvar, data) {
                unique(names(groups)[gr_dupl], names(groups)[gr_dupl2]))
     }
   } else {
-    groups = list(lvlone = 1:nrow(data))
+    groups <- list(lvlone = 1:nrow(data))
   }
 
   groups
@@ -218,6 +218,17 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
         fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))
       }
 
+      if (x$type %in% c('ps', 'bs')) {
+        sB <- eval(parse(text = fct), envir = Mlist$data)
+        fct <- splineBas(x$var, degree = attr(sB, 'degree'), index = index,
+                         nkn = length(attr(sB, 'knots')))
+
+        dcols <- grep(gsub("[[:digit:]]+$", "", x$colname),
+                      colnames(Mlist$M[[dest_mat]]), fixed = TRUE)
+        dest_col <- print_seq(min(dcols), max(dcols))
+      }
+
+
       lvls <- Mlist$group_lvls[gsub('M_', '', Mlist$Mlvls[vars])]
 
       for (k in seq_along(vars)) {
@@ -249,7 +260,7 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
   })
 
   paste0('\n\n',
-         paste0(Filter(Negate(is.null), trafolist), collapse = ''),
+         paste0(Filter(Negate(is.null), unique(trafolist)), collapse = ''),
          '\n')
 }
 
@@ -344,7 +355,8 @@ get_coef_names <- function(info_list) {
 # data_list helpers --------------------------------------------------------
 
 # used in get_data_list and predict (2020-06-09)
-get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL, td_cox = FALSE) {
+get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
+                    td_cox = FALSE) {
   # get the Gauss-Kronrod quadrature version of the level one design matrix,
   # needed for a JM and coxph with time-varying covariates
   # - Mlist: the output of divide_matrices()
@@ -382,7 +394,8 @@ get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL, td_cox = 
                         idvar = surv_lvl,
                         group_lvls = Mlist$group_lvls, groups = Mlist$groups,
                         timevar = Mlist$timevar,
-                        longvars = unique(unlist(lapply(survinfo, "[[", 'longvars'))),
+                        longvars = unique(unlist(lapply(survinfo, "[[",
+                                                        'longvars'))),
                         gk_data)
   } else {
 
@@ -396,7 +409,8 @@ get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL, td_cox = 
 
 
 
-  X <- model.matrix_combi(fmla = c(Mlist$fixed, unlist(remove_grouping(Mlist$random)),
+  X <- model.matrix_combi(fmla = c(Mlist$fixed,
+                                   unlist(remove_grouping(Mlist$random)),
                                    Mlist$auxvars),
                           data = gk_data, refs = Mlist$refs,
                           terms_list = Mlist$terms_list)
@@ -469,7 +483,7 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
     })
 
     out <- md[i, covcols, drop = FALSE]
-    names(out) = longvars
+    names(out) <- longvars
     out
   }, simplify = FALSE)
 
@@ -497,8 +511,9 @@ get_survinfo <- function(info_list, Mlist) {
 
     x <- info_list[[k]]
 
-    surv_lvl = gsub("M_", "" , x$resp_mat[2])
-    longlvls <- names(Mlist$group_lvls)[Mlist$group_lvls < Mlist$group_lvls[surv_lvl]]
+    surv_lvl <- gsub("M_", "" , x$resp_mat[2])
+    longlvls <- names(Mlist$group_lvls)[Mlist$group_lvls <
+                                          Mlist$group_lvls[surv_lvl]]
 
     if (any(longlvls != "lvlone"))
       errormsg("There can be only one level of observations below the level
@@ -506,7 +521,8 @@ get_survinfo <- function(info_list, Mlist) {
 
 
     covars <- all_vars(remove_LHS(Mlist$fixed[[k]]))
-    covar_lvls <- sapply(Mlist$data[, covars], check_varlevel, groups = Mlist$groups,
+    covar_lvls <- sapply(Mlist$data[, covars], check_varlevel,
+                         groups = Mlist$groups,
                          group_lvls = identify_level_relations(Mlist$groups))
     longvars <- names(covar_lvls)[covar_lvls %in% longlvls]
 
@@ -519,7 +535,7 @@ get_survinfo <- function(info_list, Mlist) {
          haslong = isTRUE(!is.null(unlist(x$lp[paste0('M_', longlvls)]))),
          tv_vars = names(x$tv_vars),
 
-         # name of the variable containing the time of the repeated measurements:
+         # name of the variable containing time of the repeated measurements:
          time_name = Mlist$outcomes$outnams[[k]][1],
          survtime = Mlist$M[[x$resp_mat[1]]][, x$resp_col[1]],
          survevent = Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]

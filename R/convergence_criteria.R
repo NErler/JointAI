@@ -14,7 +14,8 @@
 #' \emph{Journal of Computational and Graphical Statistics}, \strong{7}, 434-455.
 #'
 #' @seealso
-#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#' The vignette
+#' \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 #' contains some examples how to specify the argument \code{subset}.
 #'
 #'
@@ -25,9 +26,10 @@
 #'
 #'
 #' @export
-GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = TRUE,
-                    multivariate = TRUE, subset = NULL, exclude_chains = NULL,
-                    start = NULL, end = NULL, thin = NULL, warn = TRUE, mess = TRUE, ...) {
+GR_crit <- function(object, confidence = 0.95, transform = FALSE,
+                    autoburnin = TRUE, multivariate = TRUE, subset = NULL,
+                    exclude_chains = NULL, start = NULL, end = NULL,
+                    thin = NULL, warn = TRUE, mess = TRUE, ...) {
 
   if (!inherits(object, "JointAI"))
     errormsg('Object must be of class "JointAI".')
@@ -85,9 +87,9 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #'       deviation of this parameter (i.e., \eqn{MCSE/SD \le 0.05}).
 #'
 #' \strong{Long variable names:}\cr
-#' The default plot margins may not be wide enough when variable names are longer
-#' than a few characters. The plot margin can be adjusted (globally) using
-#' the argument \code{"mar"} in \code{\link[graphics]{par}}.
+#' The default plot margins may not be wide enough when variable names are
+#' longer than a few characters. The plot margin can be adjusted (globally)
+#' using the argument \code{"mar"} in \code{\link[graphics]{par}}.
 #'
 #'
 #' @references
@@ -96,7 +98,8 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #' John Wiley & Sons.
 #'
 #' @seealso
-#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#' The vignette
+#' \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 #' provides some examples how to specify the argument \code{subset}.
 #'
 #' @examples
@@ -138,7 +141,8 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
     chains <- chains[-exclude_chains]
   }
 
-  MCMC <- do.call(rbind, window(MCMC[chains], start = start, end = end, thin = thin))
+  MCMC <- do.call(rbind, window(MCMC[chains],
+                                start = start, end = end, thin = thin))
   plotnams <- get_plotmain(x, colnames(MCMC), ylab = TRUE)
   colnames(MCMC) <- plotnams
 
@@ -162,7 +166,8 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
 
   # MC error for scaled MCMC sample
   if (!is.null(x$sample)) {
-    mcmc <- do.call(rbind, window(x$sample[chains], start = start, end = end, thin = thin))
+    mcmc <- do.call(rbind, window(x$sample[chains],
+                                  start = start, end = end, thin = thin))
     mcmc <- mcmc[match(colnames(MCMC), colnames(x$MCMC[[1]])), ]
 
     MCE2 <- mcmcse::mcse.mat(x = do.call(rbind,
@@ -194,8 +199,10 @@ print.MCElist <- function(x, ...) {
 #'                   on the sampling scale (this requires the argument
 #'                   \code{keep_scaled_mcmc = TRUE} to be set when fitting the
 #'                   model)
-#' @param plotpars optional; list of parameters passed to \code{\link[base]{plot}()}
-#' @param ablinepars optional; list of parameters passed to \code{\link[graphics]{abline}()}
+#' @param plotpars optional; list of parameters passed to
+#'                 \code{\link[base]{plot}()}
+#' @param ablinepars optional; list of parameters passed to
+#'                   \code{\link[graphics]{abline}()}
 #' @describeIn MC_error plot Monte Carlo error
 #' @export
 

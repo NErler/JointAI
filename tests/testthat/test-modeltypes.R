@@ -55,7 +55,8 @@ test_that("Univariate glmm like models work", {
   expect_equal(mod$models, c(y = 'glmm_gaussian_identity'))
 
 
-  mod <- glme_imp(b1 ~ c1, random = ~ 1 | id, data = longDF, family = binomial())
+  mod <- glme_imp(b1 ~ c1, random = ~ 1 | id, data = longDF,
+                  family = binomial())
   expect_s3_class(mod, "JointAI")
   expect_equal(mod$models, c(b1 = 'glmm_binomial_logit'))
 

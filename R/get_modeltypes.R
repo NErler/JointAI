@@ -16,7 +16,8 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
   if (is.null(attr(fixed[[1]], 'type')))
     fixed <- extract_outcome_data(fixed, random = random, data = data,
-                                  analysis_type = analysis_type, warn = FALSE)$fixed
+                                  analysis_type = analysis_type,
+                                  warn = FALSE)$fixed
 
 
   # if there is a time variable, add it to no_model
@@ -34,10 +35,12 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
   }
 
 
-  if (!is.null(no_model) && any(colSums(is.na(data[, no_model, drop = FALSE])) > 0)) {
+  if (!is.null(no_model) &&
+      any(colSums(is.na(data[, no_model, drop = FALSE])) > 0)) {
     errormsg("Variable(s) %s have missing values and imputation models are
              needed for these variables." ,
-             paste(dQuote(no_model[colSums(is.na(data[, no_model, drop = FALSE])) > 0]),
+             paste(dQuote(no_model[colSums(is.na(data[, no_model,
+                                                      drop = FALSE])) > 0]),
                    collapse = ", "))
   }
 
@@ -64,7 +67,8 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
       out <- k %in% names(fixed)
       lvl <- group_lvls[
         check_varlevel(x, groups,group_lvls = identify_level_relations(groups))]
-      nmis <- sum(is.na(x[match(unique(groups[[names(lvl)]]), groups[[names(lvl)]])]))
+      nmis <- sum(is.na(x[match(unique(groups[[names(lvl)]]),
+                                groups[[names(lvl)]])]))
       nlev <- length(levels(x))
       ordered <- is.ordered(x)
       data.frame(out = out, lvl = lvl, nmis = nmis, nlev = nlev,
@@ -75,14 +79,20 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
 
 
-    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev > 2 & varinfo$ordered] <- 'clmm'
-    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev > 2 & varinfo$ordered] <- 'clm'
-    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev > 2 & !varinfo$ordered] <- 'mlogitmm'
-    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev > 2 & !varinfo$ordered] <- 'mlogit'
-    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev == 2] <- 'glmm_binomial_logit'
-    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev == 2] <- 'glm_binomial_logit'
-    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev == 0] <- 'lmm'
-    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev == 0] <- 'lm'
+    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev > 2 &
+                   varinfo$ordered] <- "clmm"
+    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev > 2 &
+                   varinfo$ordered] <- "clm"
+    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev > 2 &
+                   !varinfo$ordered] <- "mlogitmm"
+    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev > 2 &
+                   !varinfo$ordered] <- "mlogit"
+    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev == 2] <-
+      "glmm_binomial_logit"
+    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev == 2] <-
+      "glm_binomial_logit"
+    varinfo$type[!varinfo$lvl %in% max_lvl & varinfo$nlev == 0] <- "lmm"
+    varinfo$type[varinfo$lvl %in% max_lvl & varinfo$nlev == 0] <- "lm"
 
     survmods <- sapply(fixed, 'attr', 'type') %in% c('coxph', 'survreg', 'JM')
     if (any(survmods)) {

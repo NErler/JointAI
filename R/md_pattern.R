@@ -1,22 +1,24 @@
 #' Missing data pattern
 #'
-#' Obtain a plot of the pattern of missing data and/or return the pattern as a matrix.
+#' Obtain a plot of the pattern of missing data and/or return the pattern as a
+#' matrix.
 #' @param data data frame
 #' @param color vector of length two, that specifies the colour used to indicate
 #'              observed and missing values (in that order)
 #' @param border colour of the grid
 #' @param plot logical; should the missing data pattern be plotted?
 #'             (default is \code{TRUE})
-#' @param pattern logical; should the missing data pattern be returned as matrix?
-#'                (default is \code{FALSE})
-#' @param print_xaxis,print_yaxis logical; should the x-axis (below the plot) and
-#'                              y-axis (on the right) be printed?
+#' @param pattern logical; should the missing data pattern be returned as
+#'                matrix? (default is \code{FALSE})
+#' @param print_xaxis,print_yaxis logical; should the x-axis (below the plot)
+#'                                and y-axis (on the right) be printed?
 #' @param ylab y-axis label
 #' @inheritParams ggplot2::theme
 #' @importFrom rlang .data
 #' @param ... optional additional parameters, currently not used
 #'
-#' @seealso See the vignette \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
+#' @seealso See the vignette
+#' \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
 #' for more examples.
 #'
 #' @note This function requires the
@@ -65,12 +67,14 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
     }
 
     p <- ggplot2::ggplot(melt_matrix(unaX),
-                         ggplot2::aes(as.numeric(.data$V2), as.numeric(.data$V1),
+                         ggplot2::aes(as.numeric(.data$V2),
+                                      as.numeric(.data$V1),
                                       fill = as.character(.data$value))) +
       ggplot2::geom_tile(color = border) +
       ggplot2::scale_y_continuous(position = 'right',
                          breaks = length(Npat):1,
-                         labels = if (print_yaxis) Npat else rep('', length(Npat)),
+                         labels = if (print_yaxis)
+                           Npat else rep('', length(Npat)),
                          expand = c(0,0)) +
       ggplot2::scale_x_continuous(position = 'top',
                          breaks = 1:ncol(unaX),

@@ -6,7 +6,8 @@
 #'
 #' @usage data(longDF)
 #'
-#' @format A simulated data frame with 329 rows and 21 variables with data from 100 subjects:
+#' @format A simulated data frame with 329 rows and 21 variables with data from
+#'         100 subjects:
 #' \describe{
 #'   \item{C1}{continuous, complete baseline variable}
 #'   \item{C2}{continuous, incomplete baseline variable}
@@ -41,7 +42,8 @@
 #                    count = c('P1', 'P2'),
 #                    longnorm = c('c1', "c2"), longbin = c("b1", 'b2'),
 #                    longord = c('o1', 'o2'), longcount = c('p1', 'p2'),
-#                    misvar = c('C2', 'B2', "M2", 'O2', 'P2', 'c2', "b2", 'o2', 'p2'),
+#                    misvar = c('C2', 'B2', "M2", 'O2', 'P2', 'c2', "b2",
+#                               'o2', 'p2'),
 #                    seed = 2019)[[2]]
 
 #' Cross-sectional example dataset
@@ -84,9 +86,10 @@
 #' following mothers and their child from birth until approximately 4 years of
 #' age.
 #' It contains 2400 observations of 200 mother-child pairs. Children's BMI and
-#' head circumference was measured repeatedly and their age in months was recorded
-#' at each measurement. Furthermore, the data contain several baseline variables
-#' with information on the mothers' demographics and socio-economic status.
+#' head circumference was measured repeatedly and their age in months was
+#' recorded at each measurement. Furthermore, the data contain several baseline
+#' variables with information on the mothers' demographics and socio-economic
+#' status.
 #'
 #'
 #' @format
@@ -100,11 +103,14 @@
 #'   \item{ETHN}{ethnicity (binary: European vs. other)}
 #'   \item{AGE_M}{age of the mother at intake}
 #'   \item{HEIGHT_M}{height of the mother (in cm)}
-#'   \item{PARITY}{number of times the mother has given birth (binary: 0 vs. >=1)}
+#'   \item{PARITY}{number of times the mother has given birth
+#'                 (binary: 0 vs. >=1)}
 #'   \item{SMOKE}{smoking status of the mother during pregnancy
 #'                (3 ordered categories: never smoked during pregnancy,
-#'                 smoked until pregnancy was known, continued smoking in pregnancy)}
-#'   \item{EDUC}{educational level of the mother (3 ordered categories: low, mid, high)}
+#'                 smoked until pregnancy was known, continued smoking in
+#'                 pregnancy)}
+#'   \item{EDUC}{educational level of the mother (3 ordered categories: low,
+#'              mid, high)}
 #'   \item{MARITAL}{marital status (3 categories)}
 #'   \item{ID}{subject identifier}
 #'   }
@@ -181,7 +187,8 @@ NULL
 #'   \item{age}{in years}
 #'   \item{race}{race / Hispanic origin (5 categories)}
 #'   \item{WC}{waist circumference in cm}
-#'   \item{alc}{alcohol consumption (binary: <1 drink per week vs. >= 1 drink per week)}
+#'   \item{alc}{alcohol consumption (binary: <1 drink per week vs. >= 1 drink
+#'              per week)}
 #'   \item{educ}{educational level (binary: low vs. high)}
 #'   \item{creat}{creatinine concentration in mg/dL}
 #'   \item{albu}{albumin concentration in g/dL}

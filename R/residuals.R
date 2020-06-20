@@ -34,7 +34,8 @@ residuals.JointAI <- function(object,
   # type <- match.arg(type)
 
   # Error for survreg models because not all types of residuals are available!
-  if (object$analysis_type %in% c('survreg') & type %in% c('working', 'deviance'))
+  if (object$analysis_type %in% c('survreg') & type %in% c('working',
+                                                           'deviance'))
     errormsg("Residuals of type %s are not implemented for a JointAI model of
             type %s. Currently only residuals of type %s are available for
              parametric survival models.",
@@ -77,7 +78,8 @@ residuals.JointAI <- function(object,
     if (!is.null(resid_fun)) {
       resid_fun(varname = varname,
                 mu = if (is.data.frame(object$fitted.values))
-                  object$fitted.values$fit else object$fitted.values[[varname]]$fit,
+                  object$fitted.values$fit
+                else object$fitted.values[[varname]]$fit,
                 type = types[varname], data = object$data,
                 MCMC = object$MCMC, info = object$info_list[[varname]],
                 warn = warn)
@@ -97,7 +99,8 @@ residuals.JointAI <- function(object,
 resid_glm <- function(varname, type = c("working", "pearson", "response"),
                       data, info, mu, warn = TRUE, ...) {
 
-  # Implemented types for GLM in JointAI are 'working', 'pearson' and 'response'.
+  # Implemented types for GLM in JointAI are 'working', 'pearson' and
+  # 'response'.
   # In stats::residuals.glm() there are also "deviance" and "partial" residuals.
   # For deviance residuals the rank of the design matrix must be known, which
   # is not straightforward in missing data settings.
@@ -116,7 +119,8 @@ resid_glm <- function(varname, type = c("working", "pearson", "response"),
 
 
   # obtain the link function
-  family <- if (info$family %in% c('gaussian', 'binomial', 'Gamma', 'poisson')) {
+  family <- if (info$family %in% c('gaussian', 'binomial', 'Gamma',
+                                   'poisson')) {
     get(info$family)(link = info$link)
   } else if (info$family %in% c('lognorm')) {
     gaussian(link = 'log')

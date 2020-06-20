@@ -26,7 +26,8 @@
 #' @seealso
 #' \code{\link[JointAI:model_imp]{*_imp}}
 #'
-#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#' The vignette
+#' \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 #' contains some examples on how to specify the argument \code{monitor_params}.
 #'
 #' @export
@@ -49,7 +50,8 @@
 #'
 
 add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
-                        monitor_params = NULL, progress.bar = "text", mess = TRUE) {
+                        monitor_params = NULL, progress.bar = "text",
+                        mess = TRUE) {
 
   if (!inherits(object, "JointAI"))
     errormsg("Use only with 'JointAI' objects.")
@@ -87,7 +89,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   if (object$mcmc_settings$parallel) {
     n.cores <- object$mcmc_settings$n.cores
     cl <- parallel::makeCluster(n.cores,
-                                type = ifelse(grepl('linux', R.Version()$platform),
+                                type = ifelse(grepl('linux',
+                                                    R.Version()$platform),
                                               'FORK', 'PSOCK'))
     doParallel::registerDoParallel(cl)
 
@@ -130,7 +133,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                           function(x) mcmc(rbind(object$sample[[x]],
                                                  mcmc[[x]]),
                                            start = start(object$sample),
-                                           end = end(object$sample) + niter(mcmc[[x]])
+                                           end = end(object$sample) +
+                                             niter(mcmc[[x]])
                           )
       ))
     }
@@ -152,12 +156,15 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   newobject$MCMC <- newMCMC
   newobject$call <- list(object$call, match.call())
   newobject$mcmc_settings$variable.names <- var.names
-  newobject$model <- if (object$mcmc_settings$parallel) {adapt} else {object$model}
+  newobject$model <- if (object$mcmc_settings$parallel) {
+    adapt
+    } else {object$model}
 
   # add/set new argument values n.iter and thin to/in JointAI object
   newobject$mcmc_settings$n.iter <- c(object$mcmc_settings$n.iter, n.iter)
 
-  newobject$mcmc_settings$thin <- c(object$mcmc_settings$thin, coda::thin(newMCMC))
+  newobject$mcmc_settings$thin <- c(object$mcmc_settings$thin,
+                                    coda::thin(newMCMC))
 
   # add computational time to JointAI object
   newobject$time <- c(object$time, difftime(t1, t0))

@@ -12,8 +12,8 @@
 #'                be printed? (default is \code{TRUE})
 #' @param otherpars logical; should information on other parameters be printed?
 #'                  (default is \code{TRUE})
-#' @param priors logical; should information on the priors (and hyper-parameters)
-#'               be printed? (default is \code{TRUE})
+#' @param priors logical; should information on the priors
+#'               (and hyper-parameters) be printed? (default is \code{TRUE})
 #' @param refcat logical; should information on the reference category be
 #'               printed? (default is \code{TRUE})
 #'
@@ -128,10 +128,12 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
           if (priors) {
             paste0("(normal prior(s) with mean ",
                    object$data_list[[paste0('mu_reg_',
-                                            get_priortype(i$modeltype, i$family))]],
+                                            get_priortype(i$modeltype,
+                                                          i$family))]],
                    " and precision ",
                    object$data_list[[paste0('tau_reg_',
-                                            get_priortype(i$modeltype, i$family))]],
+                                            get_priortype(i$modeltype,
+                                                          i$family))]],
                    ")")
           }, "\n")
       } else {
@@ -142,10 +144,12 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
             if (priors) {
               paste0("(normal prior(s) with mean ",
                      object$data_list[[paste0('mu_reg_',
-                                              get_priortype(i$modeltype, i$family))]],
+                                              get_priortype(i$modeltype,
+                                                            i$family))]],
                      " and precision ",
                      object$data_list[[paste0('tau_reg_',
-                                              get_priortype(i$modeltype, i$family))]],
+                                              get_priortype(i$modeltype,
+                                                            i$family))]],
                      ")")
             }, "\n")
       }
@@ -153,17 +157,20 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 
     # * opar -------------------------------------------------------------------
     if (otherpars) {
-      if (i$family %in% c('gaussian', 'lognorm', 'Gamma') && !is.null(i$family)) {
+      if (i$family %in% c('gaussian', 'lognorm', 'Gamma') &&
+          !is.null(i$family)) {
         cat("* Precision of ", dQuote(i$varname), ":\n")
         cat(paste0(tab(), "tau_", i$varname, " ",
 
             if (priors) {
               paste0("(Gamma prior with shape parameter ",
                      object$data_list[[paste0("shape_tau_",
-                                              get_priortype(i$modeltype, i$family))]],
+                                              get_priortype(i$modeltype,
+                                                            i$family))]],
                     " and rate parameter ",
                     object$data_list[[paste0("rate_tau_",
-                                             get_priortype(i$modeltype, i$family))]],
+                                             get_priortype(i$modeltype,
+                                                           i$family))]],
                     ")")
            }, "\n"))
       }
@@ -173,8 +180,10 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
                    ": gamma_", i$varname,
                    "[1] ",
                    if (priors) {
-                     paste0("(normal prior with mean ",  object$data_list$mu_delta_ordinal,
-                            " and precision ", object$data_list$tau_delta_ordinal, ")")
+                     paste0("(normal prior with mean ",
+                            object$data_list$mu_delta_ordinal,
+                            " and precision ",
+                            object$data_list$tau_delta_ordinal, ")")
                    }, "\n"))
         for (j in 2:length(attr(object$Mlist$refs[[i$varname]], "dummies"))) {
           cat(paste0(tab(), "- ", levels(object$Mlist$refs[[i$varname]])[j],
@@ -184,11 +193,15 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
           }
         cat(paste0("* Increments:\n",
                    tab(), "delta_", i$varname,
-                   "[",print_seq(1, length(levels(object$Mlist$refs[[i$varname]])) - 2),
+                   "[",print_seq(1,
+                                 length(
+                                   levels(object$Mlist$refs[[i$varname]])) - 2),
                    "] ",
                    if (priors) {
-                     paste0("(normal prior(s) with mean ",  object$data_list$mu_delta_ordinal,
-                            " and precision ", object$data_list$tau_delta_ordinal, ")")
+                     paste0("(normal prior(s) with mean ",
+                            object$data_list$mu_delta_ordinal,
+                            " and precision ",
+                            object$data_list$tau_delta_ordinal, ")")
                    }, "\n"))
       }
       if (i$modeltype %in% c('survreg')) {
@@ -200,7 +213,8 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
       }
       if (i$modeltype %in% c('coxph', 'JM')) {
         cat(paste0('* Regression coefficients of the baseline hazard:\n',
-                   tab(), 'beta_Bh0_', i$varname, "[", print_seq(1, i$df_basehaz),
+                   tab(), 'beta_Bh0_', i$varname, "[",
+                   print_seq(1, i$df_basehaz),
                    "]",
             if (priors) {
               paste0(" (normal priors with mean ", object$data_list$mu_reg_surv,
@@ -231,7 +245,8 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 #' @examples
 #' # (This function does not need MCMC samples to work, so we will set
 #' # n.adapt = 0 and n.iter = 0 to reduce computational time)
-#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0, mess = FALSE)
+#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0,
+#'                n.iter = 0, mess = FALSE)
 #'
 #' parameters(mod1)
 #'

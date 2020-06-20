@@ -1,11 +1,12 @@
 #' JointAI: Joint Analysis and Imputation of Incomplete Data
 #'
-#' The \strong{JointAI} package performs simultaneous imputation and inference for
-#' incomplete or complete data under the Bayesian framework.
+#' The \strong{JointAI} package performs simultaneous imputation and inference
+#' for incomplete or complete data under the Bayesian framework.
 #' Models for incomplete covariates, conditional on other covariates,
 #' are specified automatically and modelled jointly with the analysis model.
 #' MCMC sampling is performed in \href{http://mcmc-jags.sourceforge.net}{'JAGS'}
-#' via the R package \href{https://CRAN.R-project.org/package=rjags}{\strong{rjags}}.
+#' via the R package
+#' \href{https://CRAN.R-project.org/package=rjags}{\strong{rjags}}.
 #'
 #'
 #' @section Main functions:
@@ -15,14 +16,17 @@
 #' \item \code{\link{lm_imp}} for linear regression
 #' \item \code{\link{glm_imp}} for generalized linear regression
 #' \item \code{\link{betareg_imp}} for regression using a beta distribution
-#' \item \code{\link{lognormal_imp}} for regression using a log-normal distribution
+#' \item \code{\link{lognormal_imp}} for regression using a log-normal
+#'                                   distribution
 #' \item \code{\link{clm_imp}} for (ordinal) cumulative logit models
 #' \item \code{\link{mlogit_imp}} for multinomial models
 #'
 #' \item \code{\link{lme_imp}} or \code{\link{lmer_imp}} for linear mixed models
-#' \item \code{\link{glme_imp}} or \code{\link{glmer_imp}} for generalized linear mixed models
+#' \item \code{\link{glme_imp}} or \code{\link{glmer_imp}} for generalized
+#'                                 linear mixed models
 #' \item \code{\link{betamm_imp}} for mixed models using a beta distribution
-#' \item \code{\link{lognormmm_imp}} for mixed models using a log-normal distribution
+#' \item \code{\link{lognormmm_imp}} for mixed models using a log-normal
+#'                                   distribution
 #' \item \code{\link{clmm_imp}} for (ordinal) cumulative logit mixed models
 #'
 #' \item \code{\link{survreg_imp}} for parametric (Weibull) survival models
@@ -34,11 +38,16 @@
 #' specification of widely used functions for the analysis of complete data,
 #' such as
 #' \code{\link[stats]{lm}}, \code{\link[stats]{glm}},
-#' \code{\link[ordinal]{clm}} (from the package \href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
-#' \code{\link[nlme]{lme}} (from the package \href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}}),
-#' \code{\link[ordinal:clmmOld]{clmm2}} (from the package \href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
-#' \code{\link[survival]{survreg}} (from the package \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}) and
-#' \code{\link[survival]{coxph}} (from the package \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}).
+#' \code{\link[ordinal]{clm}} (from the package
+#' \href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
+#' \code{\link[nlme]{lme}} (from the package
+#' \href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}}),
+#' \code{\link[ordinal:clmmOld]{clmm2}} (from the package
+#' \href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
+#' \code{\link[survival]{survreg}} (from the package
+#' \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}) and
+#' \code{\link[survival]{coxph}} (from the package
+#' \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}).
 #'
 #' Computations can be performed in parallel to reduce computational time,
 #' using the argument \code{parallel = TRUE},
@@ -185,9 +194,9 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #'                 variables and implies the assumptions of independence between
 #'                 the excluded variable and the incomplete variables.
 #' @param timevar name of the "time" variable in mixed models.
-#'                Only required in "JM" models. The variable specified in "timevar"
-#'                will automatically be added to "no_model".
-#' @param assoc_type named vector specifying the type of the association usded
+#'                Only required in "JM" models. The variable specified in
+#'                "timevar" will automatically be added to "no_model".
+#' @param assoc_type named vector specifying the type of the association used
 #'                   for a time-varying covariate in the linear predictor of the
 #'                   survival model when using a "JM" model.
 #'                   Implemented options are "underl.value"
@@ -195,20 +204,24 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #'                   Gaussian, Gamma, beta or log-normal distribution)
 #'                   covariates) and "obs.value" (the observed/imputed value;
 #'                   default for covariates modelled using other distributions).
-#' @param subset subset of parameters/variables/nodes (columns in the MCMC sample).
-#'               Follows the same principle as the argument \code{monitor_params} in
+#' @param subset subset of parameters/variables/nodes (columns in the MCMC
+#'               sample). Follows the same principle as the argument
+#'               \code{monitor_params} in
 #'               \code{\link[JointAI:model_imp]{*_imp}}.
-#' @param exclude_chains optional vector of the index numbers of chains that should be excluded
-#' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
-#' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
+#' @param exclude_chains optional vector of the index numbers of chains that
+#'                       should be excluded
+#' @param start the first iteration of interest
+#'              (see \code{\link[coda]{window.mcmc}})
+#' @param end the last iteration of interest
+#'            (see \code{\link[coda]{window.mcmc}})
 #' @param n.adapt number of iterations for adaptation of the MCMC samplers
 #'                (see \code{\link[rjags]{adapt}})
 #' @param n.iter number of iterations of the MCMC chain (after adaptation;
 #'               see \code{\link[rjags]{coda.samples}})
 #' @param n.chains number of MCMC chains
-#' @param quiet logical; if \code{TRUE} then messages generated by \strong{rjags}
-#'              during compilation as well as the progress bar for the adaptive
-#'              phase will be suppressed,
+#' @param quiet logical; if \code{TRUE} then messages generated by
+#'              \strong{rjags} during compilation as well as the progress bar
+#'              for the adaptive phase will be suppressed,
 #'              (see \code{\link[rjags]{jags.model}})
 #' @param thin thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
 #'             For example, \code{thin = 1} (default) will keep the MCMC samples
@@ -218,7 +231,8 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #'                  automatically chosen if unspecified
 #' @param ncol optional; number of columns in the plot layout;
 #'                  automatically chosen if unspecified
-#' @param use_ggplot logical; Should ggplot be used instead of the base graphics?
+#' @param use_ggplot logical; Should ggplot be used instead of the base
+#'                   graphics?
 #' @param warn logical; should warnings be given? Default is
 #'             \code{TRUE}. (Note: this applies only to warnings
 #'             given directly by \strong{JointAI}.)
@@ -226,12 +240,17 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #'             \code{TRUE}. (Note: this applies only to messages
 #'             given directly by \strong{JointAI}.)
 #' @param xlab,ylab labels for the x- and y-axis
-#' @param idvars name of the column that specifies the multi-level grouping structure
-#' @param ridge logical; should the parameters of the main model be penalized using ridge regression? Default is \code{FALSE}
-#' @param parallel logical; should the chains be sampled using parallel computation? Default is \code{FALSE}
-#' @param n.cores number of cores to use for parallel computation; if left empty all except two cores will be used
+#' @param idvars name of the column that specifies the multi-level grouping
+#'               structure
+#' @param ridge logical; should the parameters of the main model be penalized
+#'              using ridge regression? Default is \code{FALSE}
+#' @param parallel logical; should the chains be sampled using parallel
+#'                 computation? Default is \code{FALSE}
+#' @param n.cores number of cores to use for parallel computation; if left
+#'                empty all except two cores will be used
 #' @param seed optional; seed value (for reproducibility)
-#' @param ppc logical: should monitors for posterior predictive checks be set? (not yet used)
+#' @param ppc logical: should monitors for posterior predictive checks be
+#'                     set? (not yet used)
 #' @name sharedParams
 NULL
 

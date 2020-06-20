@@ -50,16 +50,19 @@ JAGSmodel_glmm <- function(info) {
   paste_ppc <- if (info$ppc) {
     paste0("\n",
            tab(4), "# For posterior predictive check:", "\n",
-           tab(4), info$varname, "_ppc[", index, "] ~ ", distr(info$varname), trunc, "\n"
+           tab(4), info$varname, "_ppc[", index, "] ~ ", distr(info$varname),
+           trunc, "\n"
     )
   }
 
   paste_ppc_prior <- if (info$ppc) {
     paste0('\n',
-           tab(), '# Posterior predictive check for the model for ', info$varname, '\n',
+           tab(), '# Posterior predictive check for the model for ',
+           info$varname, '\n',
            tab(), 'ppc_', info$varname, "_o <- pow(", info$varname, "[] - mu_",
            info$varname, "[], 2)", "\n",
-           tab(), 'ppc_', info$varname, "_e <- pow(", info$varname, "_ppc[] - mu_",
+           tab(), 'ppc_', info$varname, "_e <- pow(", info$varname,
+           "_ppc[] - mu_",
            info$varname, "[], 2)", "\n",
            tab(), 'ppc_', info$varname, " <- mean(step(ppc_", info$varname,
            "_o - ppc_", info$varname, "_e)) - 0.5", "\n"
@@ -68,8 +71,10 @@ JAGSmodel_glmm <- function(info) {
 
 
   # write model ----------------------------------------------------------------
-  paste0(tab(), add_dashes(paste0("# ", modelname, " mixed effects model for ", info$varname)), "\n",
-         tab(), "for (", index, " in 1:", info$N[gsub("M_", "", info$resp_mat)], ") {", "\n",
+  paste0(tab(), add_dashes(paste0("# ", modelname, " mixed effects model for ",
+                                  info$varname)), "\n",
+         tab(), "for (", index, " in 1:", info$N[gsub("M_", "", info$resp_mat)],
+         ") {", "\n",
          tab(4), info$resp_mat, "[", index, ", ", info$resp_col, "] ~ ",
          distr, trunc, "\n",
          repar,
@@ -82,11 +87,13 @@ JAGSmodel_glmm <- function(info) {
          tab(), "}", "\n",
          "\n",
          paste0(sapply(names(rdintercept), write_ranefs, info = info,
-                       rdintercept = rdintercept, rdslopes = rdslopes), collapse = ''),
+                       rdintercept = rdintercept, rdslopes = rdslopes),
+                collapse = ''),
          tab(), "# Priors for the model for ", info$varname, "\n",
          tab(), "for (k in ", min(unlist(info$parelmts)), ":",
          max(unlist(info$parelmts)), ") {", "\n",
-         get_priordistr(info$shrinkage, type = 'glmm', info$family, info$link, info$parname),
+         get_priordistr(info$shrinkage, type = 'glmm', info$family,
+                        info$link, info$parname),
          tab(), "}",
          secndpar,
          paste_ppc_prior,
@@ -138,8 +145,10 @@ glmm_in_JM <- function(info) {
   paste0(tab(6), info$resp_mat, "gk[", index, ", ", info$resp_col, ", k] ~ ",
          distr, trunc, "\n",
          repar,
-         tab(6), linkfun(paste0("mugk_", info$varname, "[", index, ", k]")), " <- ",
-         add_linebreaks(Z_predictor, indent = linkindent + 11 + nchar(info$varname) + 9 + nchar(index)),
+         tab(6), linkfun(paste0("mugk_", info$varname, "[", index, ", k]")),
+         " <- ",
+         add_linebreaks(Z_predictor, indent = linkindent + 11 +
+                          nchar(info$varname) + 9 + nchar(index)),
          "\n",
          dummies,
          info$trafos,

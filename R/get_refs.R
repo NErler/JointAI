@@ -26,7 +26,8 @@ get_refs <- function(fmla, data, refcats = NULL, warn = TRUE) {
     }
 
     out <- sapply(factors, function(x){
-      if (is.character(refcats[[x]]) & !refcats[[x]] %in% c("first", "last", "largest")) {
+      if (is.character(refcats[[x]]) & !refcats[[x]] %in%
+          c("first", "last", "largest")) {
         newrefcats <- match(refcats[[x]], levels(data[, x]))
         if (is.na(newrefcats) & regexpr("^[[:digit:]]*$", refcats[[x]]) > 0) {
           refcats[[x]] <- as.numeric(refcats[[x]])
@@ -40,7 +41,8 @@ get_refs <- function(fmla, data, refcats = NULL, warn = TRUE) {
       } else if (refcats[[x]] == 'largest') {
         refcats[[x]] <- which.max(table(data[, x]))
       }
-      res <- factor(levels(data[, x])[as.numeric(refcats[x])], levels(data[, x]))
+      res <- factor(levels(data[, x])[as.numeric(refcats[x])],
+                    levels(data[, x]))
       attr(res, "dummies") <- paste0(x, levels(res)[levels(res) != res])
       attr(res, "ordered") <- inherits(data[, x], 'ordered')
 
@@ -92,7 +94,8 @@ get_refs <- function(fmla, data, refcats = NULL, warn = TRUE) {
 #'
 #' The function is a helper function that asks questions and, depending on the
 #' answers given by the user,
-#' returns the input for the argument \code{refcats} in the main analysis functions
+#' returns the input for the argument \code{refcats} in the main analysis
+#' functions
 #' \code{\link[JointAI:model_imp]{*_imp}}.
 #'
 #' The arguments \code{formula}, \code{covars} and \code{auxvars} can be used
@@ -102,19 +105,22 @@ get_refs <- function(fmla, data, refcats = NULL, warn = TRUE) {
 #' @param data a \code{data.frame}
 #' @param formula optional; model formula or a list of formulas
 #'                (used to select subset of relevant columns of \code{data})
-#' @param covars optional; vector containing the names of relevant columns of \code{data}
+#' @param covars optional; vector containing the names of relevant columns of
+#'               \code{data}
 #' @param auxvars optional; formula containing the names of relevant columns of
-#'                \code{data} that should be considered additionally to the columns
-#'                occurring in the \code{formula}
+#'                \code{data} that should be considered additionally to the
+#'                columns occurring in the \code{formula}
 #'
 #' @examples
 #' \dontrun{
-#' # Example 1: set reference categories for the whole dataset and choose answer option 3:
+#' # Example 1: set reference categories for the whole dataset and choose
+#' # answer option 3:
 #' set_refcat(data = NHANES)
 #' 3
 #'
 #' # insert the returned string as argument refcats
-#' mod1 <- lm_imp(SBP ~ age + race + creat + educ, data = NHANES, refcats = 'largest')
+#' mod1 <- lm_imp(SBP ~ age + race + creat + educ, data = NHANES,
+#'                refcats = 'largest')
 #'
 #' # Example 2:
 #' # specify a model formula
@@ -129,7 +135,8 @@ get_refs <- function(fmla, data, refcats = NULL, warn = TRUE) {
 #' 1
 #'
 #' # enter the output in the model specification
-#' mod2 <- lm_imp(formula = fmla, data = NHANES, refcats = ref_mod2, n.adapt = 0)
+#' mod2 <- lm_imp(formula = fmla, data = NHANES, refcats = ref_mod2,
+#'                n.adapt = 0)
 #'}
 #'
 #' @export
@@ -176,8 +183,8 @@ set_refcat <- function(data, formula, covars, auxvars = NULL) {
     out <- paste0("refcats = '", q2, "'")
   }
 
-  msg("In the JointAI model specify:\n %s\n\nor use the output of this function.",
-      out)
+  msg("In the JointAI model specify:\n %s\n\nor use the output of this
+      function.", out)
 
   return(invisible(q2))
 }

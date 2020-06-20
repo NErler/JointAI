@@ -22,7 +22,8 @@
 #' plot_imp_distr(impDF, id = "id", ncol = 3)
 #'
 
-plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id', rownr = '.rownr',
+plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id',
+                           rownr = '.rownr',
                            ncol = NULL, nrow = NULL, labeller = NULL) {
 
   if (!requireNamespace('ggplot2', quietly = TRUE))
@@ -50,7 +51,8 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id', rownr = '.rown
 
   DFlong <- merge(DFlong, wlong, by = c(id, 'variable', rownr),
                   suffixes = c("",".y"))
-  DFlong$type <- ifelse(type[as.character(DFlong$variable)], 'factor', 'numeric')
+  DFlong$type <- ifelse(type[as.character(DFlong$variable)], 'factor',
+                        'numeric')
 
   plotDF <- DFlong[(DFlong[, imp] == 0 & !DFlong$mis) |
                      (DFlong[, imp] != 0 & DFlong$mis), ]
@@ -68,8 +70,11 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id', rownr = '.rown
     }
 
     pl <- ggplot2::ggplot(dat) +
-      ggplot2::facet_wrap('variable', scales = 'free',
-                          labeller = if (!is.null(labeller)) labeller else "label_value") +
+      ggplot2::facet_wrap("variable",
+                          scales = "free",
+                          labeller = if (!is.null(labeller))
+                            labeller else "label_value"
+      ) +
       ggplot2::scale_color_manual(name = '',
                          limits = c(FALSE, TRUE),
                          values = c('dodgerblue3', 'midnightblue'),
@@ -86,7 +91,8 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id', rownr = '.rown
         if (min(table(dat[, imp])) == 1) {
           pl + ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
                                              color = get(imp) == 0,
-                                             size = get(imp) == 0), geom = 'line',
+                                             size = get(imp) == 0),
+                                     geom = 'line',
                                 position = 'identity', na.rm = TRUE) +
             ggplot2::geom_point(data = subset(dat, get(imp) > 0),
                                 ggplot2::aes(x = as.numeric(.data$value),
@@ -101,7 +107,8 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id', rownr = '.rown
                                 position = 'identity', na.rm = TRUE)
         }
       } else {
-        pl + ggplot2::geom_bar(ggplot2::aes(x = .data$value, y = .data$proportion,
+        pl + ggplot2::geom_bar(ggplot2::aes(x = .data$value,
+                                            y = .data$proportion,
                                        group = get(imp), fill = get(imp) == 0),
                           position = "dodge", stat = 'identity',
                           color = 'midnightblue') +

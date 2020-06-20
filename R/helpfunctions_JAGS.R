@@ -26,14 +26,19 @@ get_RNG <- function(seed, n.chains) {
 
 
 # functions for parallel computation -------------------------------------------
-run_jags <- function(i, data_list, modelfile, n.adapt, n.iter, var.names, thin) {
+run_jags <- function(i, data_list, modelfile, n.adapt, n.iter, var.names,
+                     thin) {
+  adapt <- rjags::jags.model(
+    file = modelfile, n.adapt = n.adapt,
+    n.chains = 1, inits = i, data = data_list,
+    quiet = TRUE
+  )
 
-  adapt <- rjags::jags.model(file = modelfile, n.adapt = n.adapt,
-                             n.chains = 1, inits = i, data = data_list,
-                             quiet = TRUE)
-
-  mcmc <- rjags::coda.samples(adapt, n.iter = n.iter, variable.names = var.names,
-                              thin = thin, progress.bar = 'none')
+  mcmc <- rjags::coda.samples(adapt,
+    n.iter = n.iter,
+    variable.names = var.names,
+    thin = thin, progress.bar = "none"
+  )
 
   return(list(adapt = adapt, mcmc = mcmc))
 }
@@ -42,8 +47,11 @@ run_jags <- function(i, data_list, modelfile, n.adapt, n.iter, var.names, thin) 
 
 run_samples <- function(adapt, n.iter, var.names, thin) {
   adapt$recompile()
-  mcmc <- rjags::coda.samples(adapt, n.iter = n.iter, variable.names = var.names,
-                              progress.bar = 'none', thin = thin)
+  mcmc <- rjags::coda.samples(adapt,
+    n.iter = n.iter,
+    variable.names = var.names,
+    progress.bar = "none", thin = thin
+  )
 
   return(list(adapt = adapt, mcmc = mcmc))
 }

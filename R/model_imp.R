@@ -12,15 +12,16 @@
 #'               a one-sided formula of the form \code{~x1 + ... + xn | g},
 #'               where \code{x1 + ... + xn} specifies the model for the random
 #'               effects and \code{g} the grouping variable
-#' @param data a \code{data.frame} containing the original data (more details below)
+#' @param data a \code{data.frame} containing the original data
+#'             (more details below)
 #' @param family only for \code{glm_imp} and \code{glmm_imp}/\code{glmer_imp}:
 #'               a description of the distribution and link function to
 #'               be used in the model. This can be a character string naming a
 #'               family function, a family function or the result of a call to
 #'               a family function. (For more details see below and
 #'               \code{\link[stats]{family}}.)
-#' @param monitor_params named list or vector specifying which parameters should be
-#'                       monitored (more details below)
+#' @param monitor_params named list or vector specifying which parameters
+#'                       should be monitored (more details below)
 #' @param inits optional; specification of initial values in the form of a list
 #'              or a function (see \code{\link[rjags]{jags.model}}).
 #'              If omitted, starting values for the random number generator are
@@ -36,35 +37,40 @@
 #' @param modelname optional; character string specifying the name of the model
 #'                  file (including the ending, either .R or .txt).
 #'                  If unspecified a random name will be generated.
-#' @param modeldir optional; directory containing the model file or directory in
-#'                 which the model file should be written. If unspecified a
+#' @param modeldir optional; directory containing the model file or directory
+#'                 in which the model file should be written. If unspecified a
 #'                 temporary directory will be created.
 #' @param overwrite logical; whether an existing model file with the specified
-#'                  \code{<modeldir>/<modelname>} should be overwritten. If set to
-#'                  \code{FALSE} and a model already exists, that model will be used.
+#'                  \code{<modeldir>/<modelname>} should be overwritten.
+#'                  If set to \code{FALSE} and a model already exists, that
+#'                  model will be used.
 #'                  If unspecified (\code{NULL}) and a file exists, the user is
 #'                  asked for input on how to proceed.
-#' @param keep_model logical; whether the created JAGS model file should be saved
-#'                   or removed from (\code{FALSE}; default) when the
+#' @param keep_model logical; whether the created JAGS model file should be
+#'                   saved or removed from (\code{FALSE}; default) when the
 #'                   sampling has finished.
-#' @param auxvars optional; one-sided formula of variables that should be used as
-#'                predictors in the imputation procedure (and will be imputed
+#' @param auxvars optional; one-sided formula of variables that should be used
+#'                as predictors in the imputation procedure (and will be imputed
 #'                if necessary) but are not part of the analysis model(s)
 #' @param models optional; named vector specifying the types of models for
 #'               (incomplete) covariates.
-#'               This arguments replaces the argument \code{meth} used in earlier versions.
+#'               This arguments replaces the argument \code{meth} used in
+#'               earlier versions.
 #'               If \code{NULL} (default) models will be determined
-#'             automatically based on the class of the respective columns of \code{data}.
-#' @param refcats optional; either one of \code{"first"}, \code{"last"}, \code{"largest"}
-#'                (which sets the category for all categorical variables)
-#'                or a named list specifying which category should be
-#'                used as reference category per categorical variable.
-#'                Options are the category label, the category number, or one of
-#'                "first" (the first category), "last" (the last category)
-#'                or "largest" (chooses the category with the most observations).
+#'               automatically based on the class of the respective columns of
+#'               \code{data}.
+#' @param refcats optional; either one of \code{"first"}, \code{"last"},
+#'                \code{"largest"} (which sets the category for all categorical
+#'                variables) or a named list specifying which category should
+#'                be used as reference category per categorical variable.
+#'                Options are the category label, the category number,
+#'                or one of "first" (the first category),
+#'                "last" (the last category) or "largest" (chooses the category
+#'                with the most observations).
 #'                Default is "first". If reference categories are specified for
-#'                a subset of the categorical variables the default will be used
-#'                for the remaining variables. (See also \code{\link{set_refcat}})
+#'                a subset of the categorical variables the default will be
+#'                used for the remaining variables.
+#'                (See also \code{\link{set_refcat}})
 #' @param trunc optional; named list specifying limits of truncation for the
 #'              distribution of the named incomplete variables (see the vignette
 #'              \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support}{ModelSpecification})
@@ -78,9 +84,10 @@
 #'                   values will be scaled.
 #'                   If set to \code{FALSE} no scaling will be done.
 #' @param keep_scaled_mcmc should the "original" MCMC sample
-#'                         (i.e., the scaled version returned by \code{coda.samples()}) be kept?
-#'                         (The MCMC sample that is re-scaled to the scale of the
-#'                         data is always kept.)
+#'                         (i.e., the scaled version returned by
+#'                         \code{coda.samples()}) be kept?
+#'                         (The MCMC sample that is re-scaled to the scale of
+#'                         the data is always kept.)
 #' @param df_basehaz degrees of freedom for the B-spline used to model the
 #'                   baseline hazard in proportional hazards models
 #'                  (\code{coxph_imp} and \code{JM_imp})
@@ -141,9 +148,9 @@
 #' variable.
 #'
 #' ## Survival models with frailties or time-varying covariates
-#' Random effects specified in brackets can also be used to indicate a multi-level
-#' structure in survival models, as would, for instance be needed in a
-#' multicentre setting, where patients are from multiple hospitals.
+#' Random effects specified in brackets can also be used to indicate a
+#' multi-level structure in survival models, as would, for instance be needed
+#' in a multicentre setting, where patients are from multiple hospitals.
 #'
 #' It also allows to model time-dependent covariates in a proportional
 #' hazards survival model (using \code{coxph_imp}), also in combination with
@@ -173,12 +180,14 @@
 #'
 #'
 #'
-#' @details # Distribution families and link functions for `glm_imp()` and `glme_imp()`/`glmer_imp()`
+#' @details # Distribution families and link functions
 #' \tabular{ll}{
 # \emph{family} \tab \emph{link}\cr
 #' \code{gaussian} \tab with links: \code{identity}, \code{log}\cr
-#' \code{binomial} \tab with links: \code{logit}, \code{probit}, \code{log}, \code{cloglog}\cr
-#' \code{Gamma}    \tab with links: \code{inverse}, \code{identity}, \code{log}\cr
+#' \code{binomial} \tab with links: \code{logit}, \code{probit}, \code{log},
+#'                                  \code{cloglog}\cr
+#' \code{Gamma}    \tab with links: \code{inverse}, \code{identity},
+#'                                  \code{log}\cr
 #' \code{poisson}  \tab with links: \code{log}, \code{identity}
 #' }
 #'
@@ -200,15 +209,22 @@
 #' \code{glm_probit} \tab probit model for binary data
 #'                       (alternatively: \code{glm_binomial_probit})\cr
 #' \code{glm_binomial_log} \tab binomial model with log link\cr
-#' \code{glm_binomial_cloglog} \tab binomial model with complementary log-log link\cr
-#' \code{glm_gamma_inverse} \tab gamma model with inverse link for skewed continuous data\cr
-#' \code{glm_gamma_identity} \tab gamma model with identity link for skewed continuous data\cr
-#' \code{glm_gamma_log} \tab gamma model with log link for skewed continuous data\cr
+#' \code{glm_binomial_cloglog} \tab binomial model with complementary
+#'                                  log-log link\cr
+#' \code{glm_gamma_inverse} \tab gamma model with inverse link for skewed
+#'                               continuous data\cr
+#' \code{glm_gamma_identity} \tab gamma model with identity link for skewed
+#'                                continuous data\cr
+#' \code{glm_gamma_log} \tab gamma model with log link for skewed continuous
+#'                           data\cr
 #' \code{glm_poisson_log} \tab Poisson model with log link for count data\cr
-#' \code{glm_poisson_identity} \tab Poisson model with identity link for count data\cr
+#' \code{glm_poisson_identity} \tab Poisson model with identity link for count
+#'                                  data\cr
 #' \code{lognorm} \tab log-normal model for skewed continuous data\cr
-#' \code{beta} \tab beta model (with logit link) for skewed continuous data in (0, 1)\cr
-#' \code{mlogit} \tab multinomial logit model for unordered categorical variables;
+#' \code{beta} \tab beta model (with logit link) for skewed continuous
+#'                  data in (0, 1)\cr
+#' \code{mlogit} \tab multinomial logit model for unordered categorical
+#'                    variables;
 #'                    default for unordered factors with >2 levels\cr
 #' \code{clm} \tab cumulative logit model for ordered categorical variables;
 #'                 default for ordered factors\cr
@@ -220,7 +236,8 @@
 #'                (alternatively: \code{glmm_gaussian_identity});
 #'                default for continuous variables\cr
 #' \code{glmm_gaussian_log} \tab linear (normal) mixed model with log link\cr
-#' \code{glmm_gaussian_inverse} \tab linear (normal) mixed model with inverse link\cr
+#' \code{glmm_gaussian_inverse} \tab linear (normal) mixed model with
+#'                                   inverse link\cr
 #' \code{glmm_logit} \tab logistic mixed model for binary data
 #'                       (alternatively: \code{glmm_binomial_logit});
 #'                       default for binary variables\cr
@@ -235,7 +252,8 @@
 #'                                 skewed continuous data\cr
 #' \code{glmm_gamma_log} \tab gamma mixed model with log link for skewed
 #'                            continuous data\cr
-#' \code{glmm_poisson_log} \tab Poisson mixed model with log link for count data\cr
+#' \code{glmm_poisson_log} \tab Poisson mixed model with log link for
+#'                              count data\cr
 #' \code{glmm_poisson_identity} \tab Poisson mixed model with identity link for
 #'                                   count data\cr
 #' \code{glmm_lognorm} \tab log-normal mixed model for skewed covariates\cr
@@ -255,11 +273,11 @@
 #' See also the vignette:
 #' \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}\cr
 #'
-#' Named vector specifying which parameters should be monitored. This can be done
-#' either directly by specifying the name of the parameter or indirectly by one
-#' of the key words selecting a set of parameters. Except for \code{other},
-#' in which parameter names are specified directly, parameter (groups) are just
-#' set as \code{TRUE} or \code{FALSE}.
+#' Named vector specifying which parameters should be monitored. This can be
+#' done either directly by specifying the name of the parameter or indirectly
+#' by one of the key words selecting a set of parameters.
+#' Except for \code{other}, in which parameter names are specified directly,
+#' parameter (groups) are just set as \code{TRUE} or \code{FALSE}.
 #'
 #' Models are divided into two groups, the main models, which are the models
 #' for which the user has explicitly specified a formula (via \code{formula}
@@ -267,7 +285,8 @@
 #' automatically.
 #'
 #'
-#' If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)} will be used.
+#' If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)}
+#' will be used.
 #'
 #'
 #' \tabular{ll}{
@@ -281,34 +300,41 @@
 #'                      \code{delta_other}\cr
 #' \code{imps} \tab imputed values\cr
 #' \code{betas} \tab regression coefficients of the main analysis model\cr
-#' \code{tau_main} \tab precision of the residuals from the main analysis models\cr
-#' \code{sigma_main} \tab standard deviation of the residuals from the main analysis models\cr
+#' \code{tau_main} \tab precision of the residuals from the main analysis
+#'                      models\cr
+#' \code{sigma_main} \tab standard deviation of the residuals from the main
+#'                        analysis models\cr
 #' \code{gamma_main} \tab intercepts in ordinal main models\cr
 #' \code{delta_main} \tab increments of ordinal main models\cr
-#' \code{ranef_main} \tab random effects from the main analysis models \code{b}\cr
-#' \code{D_main} \tab covariance matrix of the random effects from the main models\cr
+#' \code{ranef_main} \tab random effects from the main analysis models
+#'                        \code{b}\cr
+#' \code{D_main} \tab covariance matrix of the random effects from the
+#'                    main models\cr
 #' \code{invD_main} \tab inverses of \code{D_main}\cr
 #' \code{RinvD_main} \tab matrices in the priors for \code{invD_main}\cr
 #' \code{alphas} \tab regression coefficients in the covariate models\cr
-#' \code{tau_other} \tab precision parameters of the residuals from covariate models\cr
+#' \code{tau_other} \tab precision parameters of the residuals from
+#'                       covariate models\cr
 #' \code{gamma_other} \tab intercepts in ordinal covariate models\cr
 #' \code{delta_other} \tab increments of ordinal intercepts\cr
 #' \code{ranef_other} \tab random effects from the other  models \code{b}\cr
-#' \code{D_other} \tab covariance matrix of the random effects from the other models\cr
+#' \code{D_other} \tab covariance matrix of the random effects from the
+#'                     other models\cr
 #' \code{invD_other} \tab inverses of \code{D_other}\cr
 #' \code{RinvD_other} \tab matrices in the priors for \code{invD_other}\cr
 #' \code{other} \tab additional parameters
 #' }
 #'
 #' **For example:**\cr
-#' \code{monitor_params = c(analysis_main = TRUE, tau_main = TRUE, sigma_main = FALSE)}
+#' \code{monitor_params = c(analysis_main = TRUE, tau_main = TRUE,
+#' sigma_main = FALSE)}
 #' would monitor the regression parameters \code{betas} and the
 #' residual precision \code{tau_main} instead of the residual standard
 #' deviation \code{sigma_main}.
 #'
-#' \code{monitor_params = c(imps = TRUE)} would monitor \code{betas}, \code{tau_main},
-#' and \code{sigma_main} (because \code{analysis_main = TRUE} by default) as well as
-#' the imputed values.
+#' \code{monitor_params = c(imps = TRUE)} would monitor \code{betas},
+#' \code{tau_main}, and \code{sigma_main} (because \code{analysis_main = TRUE}
+#' by default) as well as the imputed values.
 #'
 #'
 #'
@@ -317,17 +343,18 @@
 #'
 #' @section Note:
 #' ## Coding of variables:
-#' The default covariate (imputation) models are chosen based on the \code{class}
-#' of each of the variables, distinguishing between \code{numeric},
+#' The default covariate (imputation) models are chosen based on the
+#' \code{class} of each of the variables, distinguishing between \code{numeric},
 #' \code{factor} with two levels, unordered \code{factor} with >2 levels and
 #' ordered \code{factor} with >2 levels.\cr
 #'
 #' When a continuous variable has only two different values it is
 #' assumed to be binary and its coding and default (imputation) model will be
-#' changed accordingly. This behaviour can be overwritten specifying a model type
-#' via the argument \code{models}.\cr
+#' changed accordingly. This behaviour can be overwritten specifying a model
+#' type via the argument \code{models}.\cr
 #'
-#' Variables of type \code{logical} are automatically converted to unordered factors.\cr
+#' Variables of type \code{logical} are automatically converted to unordered
+#' factors.\cr
 #'
 #' #### Contrasts
 #' **JointAI** now uses the globally (via `options("contrasts")`) specified
@@ -343,8 +370,8 @@
 #'
 #'
 #' ## Non-linear effects and transformation of variables:
-#' \strong{JointAI} handles non-linear effects, transformation of covariates and
-#' interactions the following way:\cr
+#' \strong{JointAI} handles non-linear effects, transformation of covariates
+#' and interactions the following way:\cr
 #' When, for instance, a model formula contains the function \code{log(x)} and
 #' \code{x} has missing values, \code{x} will be imputed and used in the linear
 #' predictor of models for which no formula was specified,
@@ -360,8 +387,8 @@
 #' association with \code{logx} but not with \code{x}.\cr
 #'
 #' When different transformations of the same incomplete variable are used in
-#' one model it is strongly discouraged to calculate these transformations beforehand
-#' and supply them as different variables.
+#' one model it is strongly discouraged to calculate these transformations
+#' beforehand and supply them as different variables.
 #' If, for example, a model formula contains both \code{x} and \code{x2} (where
 #' \code{x2} = \code{x^2}), they are treated as separate variables and imputed
 #' with separate models. Imputed values of \code{x2} are thus not equal to the
@@ -444,12 +471,12 @@
 #'                     data = survival::lung, n.iter = 200)
 #'
 #' # Example 6: Joint model for longitudinal and survival data
-#' mod6 <- JM_imp(list(Surv(futime, status != 'censored') ~ age + sex + albumin +
-#'                     copper + trig + (1 | id),
+#' mod6 <- JM_imp(list(Surv(futime, status != 'censored') ~ age + sex +
+#'                     albumin + copper + trig + (1 | id),
 #'                     albumin ~ day + age + sex + (day | id)),
 #'                     timevar = 'day', data = pbc, n.iter = 100)
 #'
-#' # Example 7: Proportional hazards survival model with a time-dependent covariate
+#' # Example 7: Proportional hazards  model with a time-dependent covariate
 #' mod7 <- coxph_imp(Surv(futime, status != 'censored') ~ age + sex + copper +
 #'                   trig + stage + (1 | id),
 #'                   timevar = 'day', data = pbc, n.iter = 100)
@@ -480,7 +507,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   # if only "formula" is provided, split it into fixed and random parts
   if (!is.null(formula) & any(!is.null(fixed), !is.null(random))) {
     errormsg("When the argument %s is provided, the arguments %s and %s should
-             not be used.", dQuote("formula"), dQuote("fixed"), dQuote("random"))
+             not be used.", dQuote("formula"), dQuote("fixed"),
+             dQuote("random"))
   }
 
   if (!is.null(formula) & is.null(fixed) & is.null(random)) {
@@ -489,18 +517,10 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   }
 
 
-  # # Warning if random is provided in a model where it is not used (and set random = NULL)
-  # if (!analysis_type %in% c("lme", "glme", "clmm", "JM") & !is.null(random)) {
-  #   if (warn)
-  #     warning(gettextf("Random effects structure not used in a model of type %s.",
-  #                      sQuote(analysis_type)), immediate. = TRUE, call. = FALSE)
-  #   random <- NULL
-  # }
-
-
   # Message if no MCMC sample will be produced.
   if (n.iter == 0) {
-    if (mess) msg("Note: No MCMC sample will be created when n.iter is set to 0.")
+    if (mess)
+      msg("Note: No MCMC sample will be created when n.iter is set to 0.")
   }
 
 
@@ -521,16 +541,18 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
   # drop empty levels
   data <- drop_levels(data = data,
-                      allvars = all_vars(c(fixed, random, auxvars)), mess = mess)
+                      allvars = all_vars(c(fixed, random, auxvars)),
+                      mess = mess)
 
 
-  # convert continuous variable with 2 different values and logical variables to factors
+  # convert continuous variable with 2 different values and logical variables
+  # to factors
   data <- convert_variables(data = data,
                             allvars = all_vars(c(fixed, random, auxvars)),
                             mess = mess)
 
 
-  # * divide matrices ------------------------------------------------------------
+  # * divide matrices ----------------------------------------------------------
   Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
                            random = random, models = models, auxvars = auxvars,
                            timevar = timevar, no_model = no_model,
@@ -539,9 +561,11 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                            shrinkage = shrinkage, df_basehaz = df_basehaz)
 
   # * model dimensions ---------------------------------------------------------
-  K <- get_model_dim(Mlist$lp_cols[names(Mlist$lp_cols) %in% names(Mlist$fixed)],
+  K <- get_model_dim(Mlist$lp_cols[names(Mlist$lp_cols) %in%
+                                     names(Mlist$fixed)],
                      Mlist = Mlist)
-  K_imp <- get_model_dim(Mlist$lp_cols[!names(Mlist$lp_cols) %in% names(Mlist$fixed)],
+  K_imp <- get_model_dim(Mlist$lp_cols[!names(Mlist$lp_cols) %in%
+                                         names(Mlist$fixed)],
                          Mlist = Mlist)
 
   # * model info ---------------------------------------------------------------
@@ -568,15 +592,17 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
   if (file.exists(modelfile) & is.null(overwrite)) {
     question_asked <- TRUE
-    # This warning can not be switched off by warn = FALSE, because an input is required.
-    warnmsg("The file %s already exists in %s.", dQuote(modelname), dQuote(modeldir))
+    # This warning can not be switched off by warn = FALSE, because an input
+    # is required.
+    warnmsg("The file %s already exists in %s.",
+            dQuote(modelname), dQuote(modeldir))
     reply <- menu(c('yes', 'no'),
                   title = "\nDo you want me to overwrite this file?")
     if (reply == 1) {
       if (mess) msg('The modelfile was overwritten.')
-    overwrite = TRUE
+    overwrite <- TRUE
     } else {
-      overwrite = FALSE
+      overwrite <- FALSE
       if (mess) msg('The old model will be used.')
     }
     if (mess)
@@ -639,13 +665,16 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   t0 <- Sys.time()
   if (parallel == TRUE) {
     if (!requireNamespace('foreach', quietly = TRUE))
-      errormsg("Parallel sampling requires the 'foreach' package to be installed.")
+      errormsg("Parallel sampling requires the 'foreach' package to
+               be installed.")
 
     if (!requireNamespace('doParallel', quietly = TRUE))
-      errormsg("Parallel sampling requires the 'doParallel' package to be installed.")
+      errormsg("Parallel sampling requires the 'doParallel' package
+               to be installed.")
 
     if (any(n.adapt > 0, n.iter > 0)) {
-      if (is.null(n.cores)) n.cores <- min(parallel::detectCores() - 2, n.chains)
+      if (is.null(n.cores)) n.cores <- min(parallel::detectCores() - 2,
+                                           n.chains)
 
       doParallel::registerDoParallel(cores = n.cores)
       if (mess)
@@ -685,9 +714,11 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
       coefs <- try(get_coef_names(info_list))
 
       for (k in 1:length(MCMC)) {
-        MCMC[[k]] <- as.mcmc(rescale(MCMC[[k]], coefs = do.call(rbind, coefs),
-                                     scale_pars = do.call(rbind, unname(Mlist$scale_pars)),
-                                     info_list))
+        MCMC[[k]] <- as.mcmc(
+          rescale(MCMC[[k]],
+                  coefs = do.call(rbind, coefs),
+                  scale_pars = do.call(rbind, unname(Mlist$scale_pars)),
+                  info_list))
         attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
       }
     }
@@ -712,7 +743,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
          models = Mlist$models,
          fixed = Mlist$fixed,
          random = Mlist$random,
-         Mlist = Mlist[setdiff(names(Mlist), c('data', 'models', 'fixed', 'random'))],
+         Mlist = Mlist[setdiff(names(Mlist), c('data', 'models',
+                                               'fixed', 'random'))],
          K = K,
          K_imp = K_imp,
          JAGSmodel = structure(readChar(modelfile,
@@ -733,7 +765,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
     ), class = "JointAI")
 
 
-  object$fitted.values <- try(fitted_values(object, mess = FALSE, warn = FALSE), silent = TRUE)
+  object$fitted.values <- try(fitted_values(object, mess = FALSE, warn = FALSE),
+                              silent = TRUE)
 
   object$residuals <- try(residuals(object, type = 'working', warn = FALSE),
                           silent = TRUE)
@@ -1172,9 +1205,11 @@ betamm_imp <- function(fixed, random, data,
 #' @export
 lognormmm_imp <- function(fixed, random, data,
                           n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                          monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                          monitor_params = NULL,  auxvars = NULL,
+                          refcats = NULL,
                           models = NULL, no_model = NULL, trunc = NULL,
-                          shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                          shrinkage = FALSE, ppc = TRUE, seed = NULL,
+                          inits = NULL,
                           parallel = FALSE, n.cores = NULL,
                           scale_vars = NULL, hyperpars = NULL,
                           modelname = NULL, modeldir = NULL,
@@ -1271,9 +1306,11 @@ arglist$analysis_type <- "clmm"
 #' @export
 mlogitmm_imp <- function(fixed, data, random,
                          n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                         monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                         monitor_params = NULL,  auxvars = NULL,
+                         refcats = NULL,
                          models = NULL, no_model = NULL, trunc = NULL,
-                         shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                         shrinkage = FALSE, ppc = TRUE, seed = NULL,
+                         inits = NULL,
                          parallel = FALSE, n.cores = NULL,
                          scale_vars = NULL, hyperpars = NULL,
                          modelname = NULL, modeldir = NULL,
@@ -1325,9 +1362,11 @@ mlogitmm_imp <- function(fixed, data, random,
 #' @export
 survreg_imp <- function(formula, data,
                         n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                        monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                        monitor_params = NULL,  auxvars = NULL,
+                        refcats = NULL,
                         models = NULL, no_model = NULL, trunc = NULL,
-                        shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                        shrinkage = FALSE, ppc = TRUE, seed = NULL,
+                        inits = NULL,
                         parallel = FALSE, n.cores = NULL,
                         scale_vars = NULL, hyperpars = NULL,
                         modelname = NULL, modeldir = NULL,
@@ -1420,7 +1459,8 @@ JM_imp <- function(formula, data, df_basehaz = 6,
              dQuote("time"), dQuote("timevar"))
 
   if (!is.numeric(data[[timevar]]))
-    errormsg("The time variable (specified via the argument %s) must be numeric.",
+    errormsg("The time variable (specified via the argument %s) must
+             be numeric.",
              dQuote('timevar'))
 
 

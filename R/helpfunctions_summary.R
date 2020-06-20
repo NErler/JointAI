@@ -73,7 +73,8 @@ get_Dmat <- function(object, varname) {
       simplify = FALSE)
 
     Dpos <- mapply(function(pat, Ds) {
-      t(sapply(strsplit(gsub(paste0(pat, '|\\[|\\]'), '', Ds), ","), as.numeric))
+      t(sapply(strsplit(gsub(paste0(pat, "|\\[|\\]"), "", Ds), ","),
+               as.numeric))
     }, pat = pat, Ds = Ds)
 
     Dmat <- lapply(remove_grouping(object$random[[varname]]), function(r) {
@@ -98,7 +99,7 @@ get_Dmat <- function(object, varname) {
 
 
 
-# used in print.summary.JointAI(), print.JointAI() and list_models() (2020-06-18)
+# used in print.summary.JointAI(), print.JointAI(), list_models() (2020-06-18)
 print_type <- function(type, family = NULL) {
   # collection of model titles to be printed at the start of the summary of
   # each sub-model

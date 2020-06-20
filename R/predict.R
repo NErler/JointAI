@@ -7,18 +7,20 @@
 #' @inheritParams model_imp
 #' @inheritParams sharedParams
 #' @param vars name of variable that should be varying
-#' @param length number of values used in the sequence when \code{vars} is continuous
+#' @param length number of values used in the sequence when \code{vars} is
+#'               continuous
 #' @param outcome vector of variable names or numbers identifying for which
 #'                outcome(s) the prediction should be performed.
 #' @param ... optional, additional arguments (currently not used)
 #'
-#' @seealso \code{\link{predict.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
-#'           \code{\link{lm_imp}}
+#' @seealso \code{\link{predict.JointAI}}, \code{\link{lme_imp}},
+#'          \code{\link{glm_imp}}, \code{\link{lm_imp}}
 #' @examples
 #' # fit a JointAI model
 #' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
-#' # generate a data frame with varying "C2" and reference values for all other variables in the model
+#' # generate a data frame with varying "C2" and reference values for all other
+#' # variables in the model
 #' newDF <- predDF(mod, vars = ~ C2)
 #'
 #' head(newDF)
@@ -120,45 +122,53 @@ predDF.list <- function(formulas, dat, vars, length = 100, idvar = NULL, ...) {
 
 #' Predict values from an object of class JointAI
 #'
-#' Obtains predictions and corresponding credible intervals from an object of class 'JointAI'.
+#' Obtains predictions and corresponding credible intervals from an object of
+#' class 'JointAI'.
 #' @inheritParams summary.JointAI
-#' @param newdata optional new dataset for prediction. If left empty, the original data is used.
+#' @param newdata optional new dataset for prediction. If left empty, the
+#'                original data is used.
 #' @param quantiles quantiles of the predicted distribution of the outcome
 #' @param type the type of prediction. The default is on the scale of the
 #'         linear predictor (\code{"link"} or \code{"lp"}). For generalized
 #'         linear (mixed) models \code{type = "response"} transforms the
 #'         predicted values to the scale of the response. For ordinal (mixed)
 #'         models \code{type} may be \code{"prob"} (to obtain probabilities per
-#'         class) or \code{"class"} to obtain the class with the highest posterior
-#'         probability.
+#'         class) or \code{"class"} to obtain the class with the highest
+#'         posterior probability.
 #' @param outcome vector of variable names or numbers identifying for which
 #'        outcome(s) the prediction should be performed.
 #'
-#' @details A \code{model.matrix} \eqn{X} is created from the model formula (currently fixed
-#'          effects only) and \code{newdata}. \eqn{X\beta} is then calculated for
-#'          each iteration of the MCMC sample in \code{object}, i.e., \eqn{X\beta}
-#'          has \code{n.iter} rows and \code{nrow(newdata)} columns.
+#' @details A \code{model.matrix} \eqn{X} is created from the model formula
+#'          (currently fixed effects only) and \code{newdata}. \eqn{X\beta}
+#'          is then calculated for
+#'          each iteration of the MCMC sample in \code{object}, i.e.,
+#'          \eqn{X\beta} has \code{n.iter} rows and \code{nrow(newdata)}
+#'          columns.
 #'          A subset of the MCMC sample can be selected using \code{start},
 #'          \code{end} and  \code{thin}.
 #'
 #' @return A list with entries \code{dat}, \code{fit} and \code{quantiles},
 #'         where
-#'         \code{fit} contains the predicted values (mean over the values calculated
-#'         from the iterations of the MCMC sample),
+#'         \code{fit} contains the predicted values (mean over the values
+#'         calculated from the iterations of the MCMC sample),
 #'         \code{quantiles} contain the specified quantiles (by default 2.5\%
 #'         and 97.5\%),
-#'         and \code{dat} is \code{newdata}, extended with \code{fit} and \code{quantiles}
-#'         (unless prediction for an ordinal outcome is done with \code{type = "prob"},
-#'         in which case the quantiles are an array with three dimensions and are
-#'         therefore not included in \code{dat}).
+#'         and \code{dat} is \code{newdata}, extended with \code{fit} and
+#'         \code{quantiles}
+#'         (unless prediction for an ordinal outcome is done with
+#'         \code{type = "prob"},
+#'         in which case the quantiles are an array with three dimensions and
+#'         are therefore not included in \code{dat}).
 #'
 #' @seealso \code{\link{predDF.JointAI}}, \code{\link[JointAI:model_imp]{*_imp}}
 #'
 #' @section Note:
 #' \itemize{
-#' \item So far, \code{predict} cannot calculate predicted values for cases with
-#'       missing values in covariates. Predicted values for such cases are \code{NA}.
-#' \item For repeated measures models prediction currently only uses fixed effects.
+#' \item So far, \code{predict} cannot calculate predicted values for cases
+#'       with missing values in covariates. Predicted values for such cases are
+#'       \code{NA}.
+#' \item For repeated measures models prediction currently only uses fixed
+#'       effects.
 #' }
 #' Functionality will be extended in the future.
 #'
@@ -295,7 +305,8 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
 
   if (mess & any(is.na(X)))
-    msg('Note: Prediction for cases with missing covariates is not yet implemented.
+    msg('Note: Prediction for cases with missing covariates is not yet
+        implemented.
         I will report %s instead of predicted values for those cases.',
         dQuote('NA'), exdent = 6)
 
@@ -341,7 +352,8 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
 
 
-predict_survreg <- function(formula, newdata, type = c("response", "link",  "lp",
+predict_survreg <- function(formula, newdata, type = c("response", "link",
+                                                       "lp",
                                                        "linear"),
                             data, MCMC, varname, coef_list, info_list,
                             quantiles = c(0.025, 0.975), mess = TRUE,
@@ -423,7 +435,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   surv_lvl <- survinfo[[1]]$surv_lvl
   surv_colnames <- names(Mlist$outcomes$outcomes[[varname]])
 
-  mf <- model.frame(as.formula(paste(Mlist$fixed[[varname]][-2], collapse = " ")),
+  mf <- model.frame(as.formula(paste(Mlist$fixed[[varname]][-2],
+                                     collapse = " ")),
                     data, na.action = na.pass)
   mt <- attr(mf, "terms")
 
@@ -455,7 +468,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
         MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*%
           (x[i, ] - scale_pars$center[match(colnames(x), rownames(scale_pars))])
       } else {
-        MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*% x[i, ]
+        MCMC[, coefs$coef[match(colnames(x),
+                                coefs$varname)], drop = FALSE] %*% x[i, ]
       }
     )
   }, simplify = FALSE)
@@ -466,13 +480,15 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                dimnames = list(c(), c(), gsub("M_", "", names(lp_list))))
 
 
-  eta_surv <- if (any(Mlist$group_lvls >= Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
+  eta_surv <- if (any(Mlist$group_lvls >=
+                      Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
     apply(lps[, , names(which(Mlist$group_lvls >=
-                                          Mlist$group_lvls[gsub("M_", "", resp_mat)]))],
+                                Mlist$group_lvls[gsub("M_", "", resp_mat)]))],
         c(1,2), sum)
   } else {0}
 
-  eta_surv_long <- if (any(Mlist$group_lvls < Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
+  eta_surv_long <- if (any(Mlist$group_lvls <
+                           Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
     apply(lps[, , names(which(Mlist$group_lvls <
                               Mlist$group_lvls[gsub("M_", "", resp_mat)]))],
           c(1,2), sum)
@@ -487,7 +503,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     1:nrow(Mlist$M[[resp_mat]])
   } else {
     which(Mlist$M$M_lvlone[, Mlist$timevar] ==
-            Mlist$M[[resp_mat]][Mlist$groups[[surv_lvl]], survinfo[[1]]$time_name])
+            Mlist$M[[resp_mat]][Mlist$groups[[surv_lvl]],
+                                survinfo[[1]]$time_name])
   }
 
 
@@ -497,21 +514,29 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
   if (type %in% c('expected', 'survival')) {
 
-    Bsh0 <- splines::splineDesign(h0knots,
-                                  c(t(outer(newdata[, survinfo[[1]]$time_name]/2, gkx + 1))),
-                                  ord = 4, outer.ok = TRUE)
+    Bsh0 <-
+      splines::splineDesign(h0knots,
+                            c(t(outer(newdata[, survinfo[[1]]$time_name]/2,
+                                      gkx + 1))),
+                            ord = 4, outer.ok = TRUE)
 
     logh0s <- lapply(1:nrow(MCMC), function(m) {
-      matrix(Bsh0 %*% MCMC[m, grep(paste0('\\bbeta_Bh0_', clean_survname(varname), '\\b'), colnames(MCMC))],
+      matrix(Bsh0 %*% MCMC[m, grep(paste0('\\bbeta_Bh0_',
+                                          clean_survname(varname), '\\b'),
+                                   colnames(MCMC))],
              ncol = 15, nrow = nrow(newdata), byrow = TRUE)
     })
 
 
-    tvpred <- if (any(Mlist$group_lvls < Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
+    tvpred <- if (any(Mlist$group_lvls <
+                      Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
       Mgk <- do.call(rbind,
                       get_Mgk(Mlist, gkx, surv_lvl = gsub("M_", "", resp_mat),
-                              survinfo = survinfo, data = newdata, rows = 1:nrow(newdata),
-                              td_cox = unique(sapply(survinfo, "[[", "modeltype")) == 'coxph'))
+                              survinfo = survinfo, data = newdata,
+                              rows = 1:nrow(newdata),
+                              td_cox = unique(
+                                sapply(survinfo,
+                                       "[[", "modeltype")) == 'coxph'))
 
       vars <- coefs$varname[na.omit(match(dimnames(Mgk)[[2]], coefs$varname))]
 
@@ -519,7 +544,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
         if (!is.null(scale_pars)) {
           matrix((Mgk[, vars, drop = FALSE] -
                     outer(rep(1, prod(dim(Mgk)[-2])),
-                          scale_pars$center[match(vars, rownames(scale_pars))])) %*%
+                          scale_pars$center[match(vars,
+                                                  rownames(scale_pars))])) %*%
                    MCMC[m, coefs$coef[match(vars, coefs$varname)]],
                  nrow = nrow(newdata), ncol = length(gkx))
         } else {
@@ -536,8 +562,9 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
       exp(logh0s + tvpred) %*% gkw
     }, logh0s = logh0s, tvpred = tvpred)
 
-    logSurv <- -exp(t(eta_surv)) * Surv * outer(newdata[, survinfo[[1]]$time_name],
-                                                rep(1, nrow(MCMC)))/2
+    logSurv <- -exp(t(eta_surv)) * Surv *
+      outer(newdata[, survinfo[[1]]$time_name],
+            rep(1, nrow(MCMC)))/2
 
   } else {
 
@@ -589,7 +616,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 }
 
 
-predict_clm <- function(formula, newdata, type = c("lp", "prob", "class", "response"),
+predict_clm <- function(formula, newdata, type = c("lp", "prob",
+                                                   "class", "response"),
                         data, MCMC, varname, coef_list, info_list,
                         quantiles = c(0.025, 0.975), mess = TRUE,
                         contr_list, ...) {

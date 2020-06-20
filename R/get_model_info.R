@@ -42,9 +42,11 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
   }
 
   resp_col <- if (k %in% names(Mlist$fixed) &&
-                  attr(Mlist$fixed[[k]], 'type') %in% c('survreg', 'coxph', 'JM')) {
-    sapply(names(Mlist$outcomes$outcomes[[k]]), function(x)
-      match(x, colnames(Mlist$M[[resp_mat[x]]])))
+                  attr(Mlist$fixed[[k]], "type") %in%
+                  c("survreg", "coxph", "JM")) {
+    sapply(names(Mlist$outcomes$outcomes[[k]]), function(x) {
+      match(x, colnames(Mlist$M[[resp_mat[x]]]))
+    })
   } else {
     match(k, colnames(Mlist$M[[resp_mat[1]]]))
   }
@@ -68,8 +70,8 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
       }
     }, simplify = FALSE)
   } else {
-    # for variables for which no model was specified in fixed, use the parameters
-    # given in K_imp
+    # for variables for which no model was specified in fixed, use the
+    # parameters given in K_imp
     sapply(rownames(K_imp[[k]]), function(i) {
       if (!any(is.na(K_imp[[k]][i, ]))) {
         if (Mlist$models[k] %in% c('mlogit', 'mlogitmm')) {
@@ -122,7 +124,7 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
 
   # JM settings ----------------------------------------------------------------
   # * covariate names ----------------------------------------------------------
-  covnames = if (modeltype %in% "JM") {
+  covnames <- if (modeltype %in% "JM") {
     unique(unlist(sapply(lp, function(x) sapply(names(x), replace_dummy,
                                                 refs = Mlist$refs))))
   }
@@ -131,7 +133,8 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
   tv_vars <- if (modeltype %in% "JM") {
 
     # find the (longitudinal) covariates involved in the lp of the survival part
-    covars <- unlist(sapply(unlist(sapply(lp, names)), replace_trafo, Mlist$fcts_all))
+    covars <- unlist(sapply(unlist(sapply(lp, names)),
+                            replace_trafo, Mlist$fcts_all))
     covars <- sapply(covars, replace_dummy, refs = Mlist$refs)
     covars <- covars[covars %in% unlist(sapply(Mlist$M, colnames))]
 
@@ -382,7 +385,8 @@ get_assoc_type <- function(covnames, models, assoc_type) {
 
   assoc_type <- setNames(rep('obs.value', length(covnames)),
                          covnames)
-  assoc_type[fmlys %in% c('gaussian', 'Gamma', 'lognorm', 'beta')] <- 'underl.value'
+  assoc_type[fmlys %in% c('gaussian', 'Gamma', 'lognorm', 'beta')] <-
+    'underl.value'
 
   if (!is.null(assoc_type_user)) {
     assoc_type[intersect(names(assoc_type_user), names(assoc_type))] <-

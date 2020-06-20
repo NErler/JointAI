@@ -54,7 +54,8 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
 
       datsurv <- unique(subset(data, select = c(idvar, unique(survtimes))))
       if (length(unique(survtimes)) > 1) {
-        datsurv <- reshape(datsurv, direction = 'long', varying = unique(survtimes),
+        datsurv <- reshape(datsurv, direction = 'long',
+                           varying = unique(survtimes),
                            v.names = timevar, idvar = unique(surv_lvls),
                            times = names(survtimes)[duplicated(survtimes)],
                            timevar = 'eventtime')
@@ -63,14 +64,17 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
       }
 
 
-      datlong <- subset(data, select = c(idvar, names(datlvls)[datlvls %in% longlvls]))
+      datlong <- subset(data,
+                        select = c(idvar,
+                                   names(datlvls)[datlvls %in% longlvls]))
 
 
       timedat <- merge(datlong, datsurv,
                        by.y = c(idvar, timevar),
                        by.x = c(idvar, timevar), all = TRUE)
 
-      datbase <- unique(subset(data, select = names(datlvls)[datlvls %in% idvar]))
+      datbase <- unique(subset(data,
+                               select = names(datlvls)[datlvls %in% idvar]))
       merge(timedat, datbase)
     } else {
       data
@@ -131,8 +135,8 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
       isna <- which(is.na(x[k]))
       isobs <- which(!is.na(x[k]))
 
-      # if there are both missing and observed values, find out which is the last
-      # observed value before a missing value
+      # if there are both missing and observed values, find out which is the
+      # last observed value before a missing value
       lastobs <- if (any(isna) & any(isobs)) {
         sapply(isna, function(i) {
           if (any(isobs < i)) {
@@ -169,7 +173,6 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
 # used in divide_matrices and get_models (2020-06-10)
 extract_outcome_data <- function(fixed, random = NULL, data,
                                  analysis_type = NULL, warn = TRUE) {
-
   fixed <- check_formula_list(fixed)
 
   idvar <- extract_id(random, warn = warn)
@@ -181,28 +184,36 @@ extract_outcome_data <- function(fixed, random = NULL, data,
 
   # set attribute "type" to identify survival outcomes
   for (i in seq_along(fixed)) {
-    if (survival::is.Surv(eval(parse(text = names(outnams[i])), envir = data))) {
+    if (survival::is.Surv(eval(parse(text = names(outnams[i])),
+                               envir = data))) {
+      outcomes[[i]] <- as.data.frame.matrix(
+        eval(parse(text = names(outnams[i])),
+        envir = data
+      ))
 
-      outcomes[[i]] <- as.data.frame.matrix(eval(parse(text = names(outnams[i])),
-                                                 envir = data))
-
-      if (any(is.na(outcomes[[i]])))
+      if (any(is.na(outcomes[[i]]))) {
         errormsg("There are invalid values in the survival status.")
+      }
 
-      names(outcomes[[i]]) <- idSurv(names(outnams[i]))[c('time', 'status')]
+      names(outcomes[[i]]) <- idSurv(names(outnams[i]))[c("time", "status")]
       nlev <- sapply(outcomes[[i]], function(x) length(levels(x)))
       if (any(nlev > 2)) {
         # ordinal variables have values 1, 2, 3, ...
-        outcomes[[i]][which(nlev > 2)] <- lapply(outcomes[[i]][which(nlev > 2)],
-                                                 function(x) as.numeric(x))
+        outcomes[[i]][which(nlev > 2)] <- lapply(
+          outcomes[[i]][which(nlev > 2)],
+          function(x) as.numeric(x)
+        )
       } else if (any(nlev == 2)) {
         # binary variables have values 0, 1
-        outcomes[[i]][nlev == 2] <- lapply(outcomes[[i]][nlev == 2],
-                                           function(x) as.numeric(x) - 1)
+        outcomes[[i]][nlev == 2] <- lapply(
+          outcomes[[i]][nlev == 2],
+          function(x) as.numeric(x) - 1
+        )
       }
 
-      attr(fixed[[i]], "type") <- if (analysis_type == 'coxph') 'coxph'
-      else if (analysis_type == 'JM') "JM" else "survreg"
+      attr(fixed[[i]], "type") <- if (analysis_type == "coxph") {
+        "coxph"
+      } else if (analysis_type == "JM") "JM" else "survreg"
       names(fixed)[i] <- names(outnams[i])
     } else {
       outcomes[[i]] <- split_outcome(LHS = extract_LHS(fixed[[i]]), data = data)
@@ -211,29 +222,41 @@ extract_outcome_data <- function(fixed, random = NULL, data,
 
       if (any(nlev > 2)) {
         # ordinal variables have values 1, 2, 3, ...
-        outcomes[[i]][which(nlev > 2)] <- lapply(outcomes[[i]][which(nlev > 2)],
-                                                 function(x) as.numeric(x))
-        attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls), 'clmm', 'clm')
+        outcomes[[i]][which(nlev > 2)] <- lapply(
+          outcomes[[i]][which(nlev > 2)],
+          function(x) as.numeric(x)
+        )
+        attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls),
+                                           "clmm", "clm")
       } else if (any(nlev == 2)) {
         # binary variables have values 0, 1
-        outcomes[[i]][nlev == 2] <- lapply(outcomes[[i]][nlev == 2],
-                                           function(x) as.numeric(x) - 1)
+        outcomes[[i]][nlev == 2] <- lapply(
+          outcomes[[i]][nlev == 2],
+          function(x) as.numeric(x) - 1
+        )
 
         attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls),
-                                           'glmm_binomial_logit', 'glm_binomial_logit')
+          "glmm_binomial_logit", "glm_binomial_logit"
+        )
       } else if (any(nlev == 0)) {
         # continuous variables
-        attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls), 'lmm', 'lm')
+        attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls),
+                                           "lmm", "lm")
       }
       if (i == 1) {
-        attr(fixed[[i]], 'type') <- if (isTRUE(analysis_type %in% c('glm', 'lm'))) {
+        attr(fixed[[i]], "type") <- if (
+          isTRUE(analysis_type %in% c("glm", "lm"))) {
           paste(gsub("^lm$", "glm", analysis_type),
-                tolower(attr(analysis_type, 'family')$family),
-                attr(analysis_type, 'family')$link, sep = "_")
-        } else if (isTRUE(analysis_type %in% c('glme', 'lme'))) {
+            tolower(attr(analysis_type, "family")$family),
+            attr(analysis_type, "family")$link,
+            sep = "_"
+          )
+        } else if (isTRUE(analysis_type %in% c("glme", "lme"))) {
           paste(gsub("^[g]*lme$", "glmm", analysis_type),
-                tolower(attr(analysis_type, 'family')$family),
-                attr(analysis_type, 'family')$link, sep = "_")
+            tolower(attr(analysis_type, "family")$family),
+            attr(analysis_type, "family")$link,
+            sep = "_"
+          )
         } else {
           analysis_type
         }

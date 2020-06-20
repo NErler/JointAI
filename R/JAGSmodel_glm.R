@@ -32,7 +32,7 @@ JAGSmodel_glm <- function(info) {
     paste0("T(", paste0(info$trunc, collapse = ", "), ")")
 
 
-  # * linear predictor of baseline covariates (including interaction terms) ------
+  # * linear predictor of baseline covariates (including interaction terms) ----
   linpred <- paste_linpred(info$parname,
                            info$parelmts[[info$resp_mat]],
                            matnam = info$resp_mat,
@@ -46,7 +46,8 @@ JAGSmodel_glm <- function(info) {
     paste0('\n\n', paste0(
            paste_dummies(resp_mat = info$resp_mat,
                          resp_col = info$resp_col, dummy_cols = info$dummy_cols,
-                         index = index, refs = info$refs), collapse = "\n"), "\n")
+                         index = index, refs = info$refs), collapse = "\n"),
+           "\n")
   }
 
 
@@ -64,7 +65,8 @@ JAGSmodel_glm <- function(info) {
       )
     } else if (info$family == 'beta') {
       paste0(tab(4), '# Posterior predictive check for ', info$varname, '\n',
-        tab(4),  info$varname, "_ppc[", index, "]] ~ dbeta(shape1_", info$varname,
+        tab(4),  info$varname, "_ppc[", index, "]] ~ dbeta(shape1_",
+        info$varname,
         "[", index, "], shape2_",
         info$varname, "[", index, "])T(1e-15, 1 - 1e-15)", "\n"
       )
@@ -73,7 +75,8 @@ JAGSmodel_glm <- function(info) {
 
   # * paste model --------------------------------------------------------------
   paste0('\r',
-         tab(), add_dashes(paste0("# ", modelname, " model for ", info$varname)), "\n",
+         tab(), add_dashes(paste0("# ", modelname, " model for ",
+                                  info$varname)), "\n",
          tab(), "for (", index, " in 1:", N, ") {", "\n",
          tab(4), info$resp_mat, "[", index,", ", info$resp_col,
          "] ~ ", distr, trunc, "\n",
@@ -88,8 +91,10 @@ JAGSmodel_glm <- function(info) {
 
          # priors
          tab(), "# Priors for the model for ", info$varname, "\n",
-         tab(), "for (k in ", min(unlist(info$parelmts)), ":", max(unlist(info$parelmts)), ") {", "\n",
-         get_priordistr(info$shrinkage, type = 'glm', info$family, info$link, info$parname),
+         tab(), "for (k in ", min(unlist(info$parelmts)), ":",
+         max(unlist(info$parelmts)), ") {", "\n",
+         get_priordistr(info$shrinkage, type = 'glm', info$family, info$link,
+                        info$parname),
          tab(), "}",
          secndpar,
          # paste_ppc_prior,

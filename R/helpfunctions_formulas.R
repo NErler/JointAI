@@ -21,7 +21,8 @@ check_formula_list <- function(formula) {
 
 
 
-# used in divide_matrices, get_models, various help functions, predict (2020-06-09)
+# used in divide_matrices, get_models, various help functions,
+# predict (2020-06-09)
 extract_id <- function(random, warn = TRUE) {
   # extract all id variables involved in a random effects formula
 
@@ -320,9 +321,12 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
   random <- check_formula_list(random)
 
   # identify all left hand sides of the non-survival fixed effects formulas
-  LHSs <- if (any(unlist(sapply(fixed, attr, 'type')) %in% c('survreg', 'coxph'))) {
-    lapply(fixed[!sapply(fixed, attr, 'type') %in% c('survreg', 'coxph')],
-           extract_LHS)
+  LHSs <- if (any(unlist(sapply(fixed, attr, "type")) %in%
+                  c("survreg", "coxph"))) {
+    lapply(
+      fixed[!sapply(fixed, attr, "type") %in% c("survreg", "coxph")],
+      extract_LHS
+    )
   } else {
     lapply(fixed, extract_LHS)
   }
@@ -368,7 +372,8 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
     # if chosen, remove functions only involving complete variables
     compl <- colSums(is.na(data[, fctDF$var, drop = FALSE])) == 0
     partners <- sapply(fctDF$colname,
-                       function(x) which(fctDF$colname %in% x), simplify = FALSE)
+                       function(x) which(fctDF$colname %in% x),
+                       simplify = FALSE)
     anymis <- sapply(partners, function(x) any(!compl[x]))
 
     fctDF$compl <- !anymis
@@ -383,8 +388,10 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
       # look for functions that involve several variables and occur multiple
       # times in fctDF
       dupl <-
-        duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl', 'matrix'))]) |
-        duplicated(fctDF[, -which(names(fctDF) %in% c('var', 'compl', 'matrix'))],
+        duplicated(fctDF[, -which(names(fctDF) %in%
+                                    c('var', 'compl', 'matrix'))]) |
+        duplicated(fctDF[, -which(names(fctDF) %in%
+                                    c('var', 'compl', 'matrix'))],
                    fromLast = TRUE)
 
       fctDF$dupl <- FALSE
@@ -422,8 +429,8 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
 # used in help function extract_fcts() (2020-06-09)
 identify_functions <- function(formula) {
   # identify all functions in a list of formulas
-  # - formula: a list of formulas, can contain fixed and random effects formulas,
-  #            auxvars formula, ...
+  # - formula: a list of formulas, can contain fixed and random effects
+  #            formulas, auxvars formula, ...
 
   formula <- check_formula_list(formula)
 
@@ -448,7 +455,8 @@ identify_functions <- function(formula) {
 
 
   # select only functions that are not operators or variable names
-  funs <- isfun[!names(isfun) %in% c("~", "+", "-", ":", "*", "(", "^", "/", "Surv",
+  funs <- isfun[!names(isfun) %in% c("~", "+", "-", ":", "*", "(", "^",
+                                     "/", "Surv",
                                      all_vars(formula)) & isfun]
 
   if (length(funs) > 0) {
@@ -480,11 +488,13 @@ identify_functions <- function(formula) {
 
 # used in extract_fcts() (2020-06-10)
 get_varlist <- function(funlist) {
-  # make a list per function type, listing all functions and their element variables
+  # make a list per function type, listing all functions and their element
+  # variables
   # - funlist: a list of all functions by type (result of identify_functions())
 
   lapply(funlist, function(x) {
-    sapply(x, function(z) all.vars(as.formula(paste("~", z))), simplify = FALSE)
+    sapply(x, function(z) all.vars(as.formula(paste("~", z))),
+           simplify = FALSE)
   })
 }
 

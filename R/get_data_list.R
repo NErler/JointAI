@@ -14,7 +14,8 @@ get_data_list <- function(Mlist, info_list) {
     predvars <- unique(c(unlist(sapply(Mlist$lp_cols, sapply, names)),
                          all_vars(remove_grouping(Mlist$random))))
 
-    # check if there are scaling parameters available for these predictor variables
+    # check if there are scaling parameters available for these predictor
+    # variables
     any(!is.na(x[rownames(x) %in% predvars, ]))
   })
 
@@ -30,7 +31,8 @@ get_data_list <- function(Mlist, info_list) {
   # hyperpars ------------------------------------------------------------------
   l <- c(l, unlist(unname(default_hyperpars()[
     c(
-      if (any(sapply(info_list, "[[", 'family') %in% c('gaussian', 'lognorm'))) 'norm',
+      if (any(sapply(info_list, "[[", 'family') %in% c('gaussian', 'lognorm')))
+        'norm',
       if (any(sapply(info_list, "[[", 'family') %in% c('Gamma'))) 'gamma',
       if (any(sapply(info_list, "[[", 'family') %in% c('beta'))) 'beta',
       if (any(sapply(info_list, "[[", 'family') %in% c('binomial'))) 'binom',
@@ -62,7 +64,8 @@ get_data_list <- function(Mlist, info_list) {
     # get the position (row) of a given observation
     # - to identify the correct rows between different sub-levels
     # - pos is only needed when there are multiple grouping levels
-    pos <- sapply(groups[!names(groups) %in% names(which.max(Mlist$group_lvls))],
+    pos <- sapply(groups[!names(groups) %in%
+                           names(which.max(Mlist$group_lvls))],
                   function(x) {
                     match(unique(x), x)
                   }, simplify = FALSE)
@@ -83,13 +86,16 @@ get_data_list <- function(Mlist, info_list) {
     # model, so it does not be mentioned in the list of models separately.
     l <- c(l,
            unlist(unname(
-             lapply(info_list[modeltypes %in% c('coxph', 'glmm', 'clmm', 'mlogitmm')],
+             lapply(info_list[modeltypes %in%
+                                c('coxph', 'glmm', 'clmm', 'mlogitmm')],
                     function(x) {
                       unlist(unname(
                         lapply(names(x$hc_list$hcvars), function(k) {
-                          nranef = x$nranef[k]
-                          setNames(default_hyperpars()$ranef$wish(nranef = nranef),
-                                   paste(c("RinvD", "KinvD"), x$varname, k, sep = "_")
+                          nranef <- x$nranef[k]
+                          setNames(default_hyperpars()$ranef$wish(
+                            nranef = nranef),
+                            paste(c("RinvD", "KinvD"), x$varname,
+                                  k, sep = "_")
                           )
                         })), recursive = FALSE)
                     })
@@ -99,12 +105,14 @@ get_data_list <- function(Mlist, info_list) {
 
 
   # survreg models -------------------------------------------------------------
-  if (any(modeltypes %in% c('survreg'))) {
-    for (x in info_list[modeltypes %in% c('survreg')]) {
-      l[[paste0('cens_', x$varname)]] <- 1 - Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]
+  if (any(modeltypes %in% c("survreg"))) {
+    for (x in info_list[modeltypes %in% c("survreg")]) {
+      l[[paste0("cens_", x$varname)]] <-
+        1 - Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]
       l[[x$varname]] <- ifelse(Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]] == 1,
                                Mlist$M[[x$resp_mat[1]]][, x$resp_col[1]],
-                               NA)
+                               NA
+      )
     }
   }
 
@@ -126,8 +134,8 @@ get_data_list <- function(Mlist, info_list) {
     survinfo <- get_survinfo(info_list, Mlist)
 
     for (x in survinfo) {
-    # if there are time-varying covariates, identify the rows of the longitudinal
-    # variable that correspond to the event times
+    # if there are time-varying covariates, identify the rows of the
+    # longitudinal variable that correspond to the event times
       if (x$haslong) {
         srow <- which(Mlist$M$M_lvlone[, Mlist$timevar] ==
                            x$survtime[l[[paste0('group_', x$surv_lvl)]]])
@@ -145,10 +153,11 @@ get_data_list <- function(Mlist, info_list) {
                               event = x$survevent, gkx = gkx)
 
 
-      l[[paste0("Bh0_", x$varname)]] <- splines::splineDesign(h0knots,
-                                                              x$survtime, ord = 4)
+      l[[paste0("Bh0_", x$varname)]] <-
+        splines::splineDesign(h0knots, x$survtime, ord = 4)
       l[[paste0("Bsh0_", x$varname)]] <-
-        splines::splineDesign(h0knots, c(t(outer(x$survtime/2, gkx + 1))), ord = 4)
+        splines::splineDesign(h0knots, c(t(outer(x$survtime/2, gkx + 1))),
+                              ord = 4)
 
       # vector of zeros for the "zeros trick" in JAGS
       l[[paste0("zeros_", x$varname)]] <- numeric(length(x$survtime))
@@ -169,19 +178,22 @@ get_data_list <- function(Mlist, info_list) {
                   models with different event time variables.")
 
       if (length(unique(sapply(survinfo, "[[", "modeltype"))) > 1)
-        errormsg("It is not possible to simultaneously fit coxph and JM models.")
+        errormsg("It is not possible to simultaneously fit coxph and JM
+                 models.")
 
 
       # create the design matrix of time-varying data using the Gauss-Kronrod
       # quadrature points for time
       Mgk <- get_Mgk(Mlist, gkx, surv_lvl, survinfo, data = Mlist$data,
-                     td_cox = unique(sapply(survinfo, "[[", "modeltype")) == 'coxph')
+                     td_cox = unique(sapply(survinfo, "[[", "modeltype")) ==
+                       'coxph')
 
       # for survival models, there can only be one level below the level of the
       # survival outcome (i.e., time-varying variables have level 1, survival
       # outcome has level 2)
       l$M_lvlonegk <- array(data = unlist(Mgk),
-                              dim = c(nrow(Mgk[[1]]), ncol(Mgk[[1]]), length(gkx)),
+                              dim = c(nrow(Mgk[[1]]), ncol(Mgk[[1]]),
+                                      length(gkx)),
                               dimnames = list(c(), dimnames(Mgk)[[2]], c())
       )
     }
@@ -201,7 +213,8 @@ get_data_list <- function(Mlist, info_list) {
 #' \strong{norm:} hyper-parameters for normal and log-normal models
 #' \tabular{ll}{
 #' \code{mu_reg_norm} \tab mean in the priors for regression coefficients\cr
-#' \code{tau_reg_norm} \tab precision in the priors for regression coefficients\cr
+#' \code{tau_reg_norm} \tab precision in the priors for regression
+#'                          coefficients\cr
 #' \code{shape_tau_norm} \tab shape parameter in Gamma prior for the precision
 #'                            of the (log-)normal distribution\cr
 #' \code{rate_tau_norm} \tab rate parameter in Gamma prior for the precision
@@ -211,7 +224,8 @@ get_data_list <- function(Mlist, info_list) {
 #' \strong{gamma:} hyper-parameters for Gamma models
 #' \tabular{ll}{
 #' \code{mu_reg_gamma} \tab mean in the priors for regression coefficients\cr
-#' \code{tau_reg_gamma} \tab precision in the priors for regression coefficients\cr
+#' \code{tau_reg_gamma} \tab precision in the priors for regression
+#'                           coefficients\cr
 #' \code{shape_tau_gamma} \tab shape parameter in Gamma prior for the precision
 #'                             of the Gamma distribution\cr
 #' \code{rate_tau_gamma} \tab rate parameter in Gamma prior for the precision
@@ -221,7 +235,8 @@ get_data_list <- function(Mlist, info_list) {
 #' \strong{beta:} hyper-parameters for beta models
 #' \tabular{ll}{
 #' \code{mu_reg_beta} \tab mean in the priors for regression coefficients\cr
-#' \code{tau_reg_beta} \tab precision in the priors for regression coefficients\cr
+#' \code{tau_reg_beta} \tab precision in the priors for regression
+#'                          coefficients\cr
 #' \code{shape_tau_beta} \tab shape parameter in Gamma prior for the precision
 #'                            of the beta distribution\cr
 #' \code{rate_tau_beta} \tab rate parameter in Gamma prior for precision of the
@@ -242,14 +257,17 @@ get_data_list <- function(Mlist, info_list) {
 #'
 #' \strong{multinomial:} hyper-parameters for multinomial models
 #' \tabular{ll}{
-#' \code{mu_reg_multinomial} \tab mean in the priors for regression coefficients\cr
-#' \code{tau_reg_multinomial} \tab precision in the priors for regression coefficients
+#' \code{mu_reg_multinomial} \tab mean in the priors for regression
+#'                                coefficients\cr
+#' \code{tau_reg_multinomial} \tab precision in the priors for regression
+#'                                 coefficients
 #' }
 #'
 #' \strong{ordinal:} hyper-parameters for ordinal models
 #' \tabular{ll}{
 #' \code{mu_reg_ordinal} \tab mean in the priors for regression coefficients\cr
-#' \code{tau_reg_ordinal} \tab precision in the priors for regression coefficients\cr
+#' \code{tau_reg_ordinal} \tab precision in the priors for regression
+#'                             coefficients\cr
 #' \code{mu_delta_ordinal} \tab mean in the prior for the intercepts\cr
 #' \code{tau_delta_ordinal} \tab precision in the priors for the intercepts
 #' }

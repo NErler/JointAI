@@ -21,34 +21,39 @@ add_linebreaks <- function(string, indent, width = 90) {
   # - indent: in case of a linebreak, how much should the new line be indented?
   # - width: output width
 
-  if (is.null(string))
+  if (is.null(string)) {
     return(NULL)
+  }
 
   # identify position of "+"
   m <- gregexpr(" \\+ ", string)[[1]]
 
   # if there is no "+", return the original string
-  if (all(m < 0)) return(string)
+  if (all(m < 0)) {
+    return(string)
+  }
 
   # calculate the lengths of the sub-strings
   len <- c(as.numeric(m)[1], diff(c(as.numeric(m), nchar(string))))
 
 
   # check how many sub-strings (and the indent) can be combined until reaching
-  # the maximal width, and create a string of ' + ' (no break) and ' +\n' (break)
-  # to be pasted in afterward
+  # the maximal width, and create a string of ' + ' (no break) and
+  # ' +\n' (break) to be pasted in afterwards
   # (there is probably a more elegant way to do this)
   i <- 1
   br <- c()
   while (i < length(len)) {
     cs <- cumsum(len[i:length(len)])
     nfit <- max(1, which(cs <= (width - indent)))
-    br <- c(br, rep(' + ', nfit - 1),
-            if ((i + nfit - 1) < length(len)) paste0(' +\n', tab(indent)))
+    br <- c(
+      br, rep(" + ", nfit - 1),
+      if ((i + nfit - 1) < length(len)) paste0(" +\n", tab(indent))
+    )
     i <- i + nfit
   }
 
-  paste0(strsplit(string, " \\+ ")[[1]], c(br, ''), collapse = '')
+  paste0(strsplit(string, " \\+ ")[[1]], c(br, ""), collapse = "")
 }
 
 
@@ -62,7 +67,8 @@ paste_linpred <- function(parname, parelmts, matnam, index, cols, scale_pars,
   #             to be used, e.g. c(1,2,3,6,8,4)
   # - matnam: name of the design matrix, e.g. "M_lvlone" or "M_ID"
   # - index: character sting specifying the index to be used, e.g. "i" or "ii"
-  # - cols: index of the columns of the design matrix to be used, e.g. c(1, 4, 2, 10)
+  # - cols: index of the columns of the design matrix to be used,
+  #         e.g. c(1, 4, 2, 10)
   # - scale_pars: a matrix with row names according to the columns of the
   #               design matrix and columns 'center' and 'scale'.
   #               Contains NA if a variable should not be scaled
@@ -94,9 +100,11 @@ paste_data <- function(matnam, index, col, isgk = FALSE) {
 
 
 paste_coef <- function(parname, parelmts) {
-  # create a (vector of) coefficient element(s) of a linear predictor, e.g. beta[3]
+  # create a (vector of) coefficient element(s) of a linear predictor,
+  # e.g. beta[3]
   # - parname: the name of the parameter, e.g. "alpha" or "beta"
-  # - parelmts: vector of integers giving the elements of the parameter to be used
+  # - parelmts: vector of integers giving the elements of the parameter to be
+  #             used
 
   paste0(parname, '[', parelmts, ']')
 }
@@ -131,7 +139,8 @@ paste_scale <- function(x, row, scalemat) {
   #             e.g. "spM_lvlone" or "spM_ID"
   #             The matrix is assumed to have columns "center" and "scale".
 
-  paste0("(", x, " - ", scalemat, "[", row, ", 1])/", scalemat, "[", row, ", 2]")
+  paste0("(", x, " - ", scalemat, "[", row, ", 1])/", scalemat,
+         "[", row, ", 2]")
 }
 
 
@@ -170,11 +179,12 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
     sapply(unique(names(rds), names(rdsi)), function(x) {
 
       rds_rdsi_vec <- c(
-        # random slope coefficients (if rds[[x]] == NULL there are no random slope
-        # coefficients on this level)
+        # random slope coefficients (if rds[[x]] == NULL there are no random
+        # slope coefficients on this level)
         if (!is.null(rds[[x]])) {
-          # If there are no coefficients (= no fixed effect, only random effect),
-          # the mean of the random effect is 0, otherwise it is a linear predictor
+          # If there are no coefficients (= no fixed effect, only random
+          # effect), the mean of the random effect is 0, otherwise it is a
+          # linear predictor
           ifelse(is.na(rds[[x]]$parelmts),
                  "0",
                  paste_coef(parname = info$parname,
@@ -259,7 +269,8 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
   # model
   # - info: element of info_list, containing all the info necessary to write
   #         the JAGS sub-model for a given variable
-  # - isgk: logical indicator whether the output is in the Gaus-Kronrod quadrature
+  # - isgk: logical indicator whether the output is in the Gaus-Kronrod
+  #         quadrature
 
 
   # if there are no random effects (hc_list = NULL), return NULL
@@ -326,11 +337,14 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
                    col = 1)
       }
 
-      # generate the random slope part to enter the linear predictor of the outcome
+      # generate the random slope part to enter the linear predictor of
+      # the outcome
       rds <- if (any(!sapply(info$hc_list$hcvars[[k]]$rd_slope_coefs,
                              is.null))) {
-        # if there are any random slope variables for this random effect level, do:
-        sapply(seq_along(info$hc_list$hcvars[[k]]$rd_slope_coefs), function(q) {
+        # if there are any random slope variables for this random effect level,
+        # do:
+        sapply(seq_along(info$hc_list$hcvars[[k]]$rd_slope_coefs),
+               function(q) {
 
           # get the variable name
           var <- names(info$hc_list$hcvars[[k]]$rd_slope_coefs)[q]
@@ -343,7 +357,8 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
           paste(
             paste_data(matnam = paste0("b_", info$varname, "_", k),
                        index = index,
-                       col = q + attr(info$hc_list$hcvars[[k]], 'rd_intercept')),
+                       col = q + attr(info$hc_list$hcvars[[k]],
+                                      'rd_intercept')),
 
             paste_scaling(
               paste_data(
@@ -459,13 +474,15 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
   # - 8 ", 1] <- "
   rdi <- if (length(rdintercept) > 0)
     paste0(tab(4),
-           paste_data(matnam = paste0("mu_b_", varname), index = index, col = 1),
+           paste_data(matnam = paste0("mu_b_", varname), index = index,
+                      col = 1),
            " <- ",
            add_linebreaks(rdintercept,
-                          indent = 4 + 5 + nchar(varname) + 1 + nchar(index) + 8)
+                          indent = 4 + 5 + nchar(varname) + 1 +
+                            nchar(index) + 8)
     )
 
-  # paste the random slope part, a vector of "mu_b_varname[i, k] <- lin.predictor"
+  # paste the rd. slope part, a vector of "mu_b_varname[i, k] <- lin.predictor"
   # or NULL if there are no random slopes
   #
   # The linear predictor part is indented by
@@ -531,11 +548,12 @@ paste_linpred_JM <- function(varname, parname, parelmts, matnam, index, cols,
                              scale_pars, assoc_type, covnames, isgk = FALSE) {
   # - varname: name of the survival outcome
   # - parname: name of the parameter, e.g. "beta"
-  # - parelmts: vector specifying which elements of the parameter vector are to be
-  #             used, e.g. c(1,2,3,6,8,4)
+  # - parelmts: vector specifying which elements of the parameter vector are
+  #             to be used, e.g. c(1,2,3,6,8,4)
   # - matnam: name or the design matrix, e.g. "M_lvlone
   # - index: character sting specifying the index to be used, e.g. "i" or "j"
-  # - cols: index of the columns of the design matrix to be used, e.g. c(1, 4, 2, 10)
+  # - cols: index of the columns of the design matrix to be used,
+  #         e.g. c(1, 4, 2, 10)
   # - scale_pars: a matrix with rownames according to the columns of the design
   #               matrix and columns 'center' and 'scale'.
   #               Contains NA if a variable should not be scaled (could also be
@@ -571,9 +589,11 @@ paste_association <- function(varname, covnames, matname, index, columns,
   # for each time-varying variable, paste the association structure
   # - varname: name of the survival outcome
   # - covnames: vector of names of the time-varying covariates
-  # - matname: vector of names of the design matrix containing the time-varying covariate
+  # - matname: vector of names of the design matrix containing the time-varying
+  #            covariate
   # - index: string specifying the index to be used, e.g. "i",
-  # - columns: column numbers of the time-varying covariates in the design matrix
+  # - columns: column numbers of the time-varying covariates in the design
+  #            matrix
   # - assoc_type: vector of association types
   # - isgk: logical: is the output for within the quadrature part?
 
@@ -690,8 +710,8 @@ paste_interactions <- function(interactions, group_lvls, N) {
   # select only those interactions in which incomplete variables are involved
   interactions <- interactions[sapply(interactions, "attr", "has_NAs")]
 
-  # determine the minimal level for each interaction (this is the level on which
-  # the interaction has to be calculated; observations from higher level
+  # determine the minimal level for each interaction (this is the level on
+  # which the interaction has to be calculated; observations from higher level
   # variables are then repeated to obtain a fitting vector)
   minlvl <- sapply(interactions, function(x) {
     lvls <- gsub("M_", "", unique(names(unlist(unname(x)))))
@@ -706,19 +726,29 @@ paste_interactions <- function(interactions, group_lvls, N) {
         "for (", index[lvl], " in 1:", N[lvl], ") {\n",
         paste0(
           sapply(interactions[which(minlvl == lvl)], function(x) {
-            paste0(tab(4),
-                   paste_data(names(x$interterm), index = index[lvl], col = x$interterm),
-                   " <- ",
-                   paste0(paste_data(names(x$elmts),
-                                     index = ifelse(names(x$elmts) == paste0("M_", lvl),
-                                                    index[lvl],
-                                                    paste0('group_',
-                                                           gsub("M_", "", names(x$elmts)),
-                                                           '[', index[lvl], ']')),
-                                     x$elmts), collapse = " * ")
+            paste0(
+              tab(4),
+              paste_data(names(x$interterm), index = index[lvl],
+                         col = x$interterm),
+              " <- ",
+              paste0(paste_data(
+                names(x$elmts),
+                index = ifelse(names(x$elmts) == paste0("M_", lvl),
+                               index[lvl],
+                               paste0(
+                                 "group_",
+                                 gsub("M_", "", names(x$elmts)),
+                                 "[", index[lvl], "]"
+                               )
+                ),
+                x$elmts
+              ), collapse = " * ")
             )
-          }), collapse = "\n"),
-        "\n", tab(), "}\n")
+          }),
+          collapse = "\n"
+        ),
+        "\n", tab(), "}\n"
+      )
     })
   )
 }
@@ -743,17 +773,20 @@ get_priordistr <- function(shrinkage, type, family = NULL, link = NULL, parname)
 
   if (is.null(shrinkage) | isFALSE(shrinkage)) {
     # no shrinkage
-    paste0(tab(4), parname, "[k] ~ dnorm(mu_reg_", type,
-           ", tau_reg_", type, ")", "\n")
-
-  } else if (shrinkage == 'ridge') {
+    paste0(
+      tab(4), parname, "[k] ~ dnorm(mu_reg_", type,
+      ", tau_reg_", type, ")", "\n"
+    )
+  } else if (shrinkage == "ridge") {
     # ridge shrinkage
-    paste0(tab(4), parname, "[k] ~ dnorm(mu_reg_", type,
-           ", tau_reg_", type , "_ridge_", parname, "[k])", "\n",
-           tab(4), "tau_reg_", type, "_ridge_", parname, "[k] ~ dgamma(0.01, 0.01)", "\n")
-
+    paste0(
+      tab(4), parname, "[k] ~ dnorm(mu_reg_", type,
+      ", tau_reg_", type, "_ridge_", parname, "[k])", "\n",
+      tab(4), "tau_reg_", type, "_ridge_", parname, "[k] ~ dgamma(0.01, 0.01)",
+      "\n"
+    )
   } else {
-    errormsg('Regularization of type %s is not implemented.', dQuote(shrinkage))
+    errormsg("Regularization of type %s is not implemented.", dQuote(shrinkage))
   }
 }
 
@@ -770,21 +803,33 @@ get_distr <- function(family, varname, index, isgk = FALSE) {
   if (is.null(family))   return(NULL)
 
   switch(family,
-         "gaussian" = paste0("dnorm(mu", if (isgk) "gk", "_", varname,
-                             "[", index, if (isgk) ", k", "], tau_", varname, ")"),
-         "binomial" = paste0("dbern(max(1e-16, min(1 - 1e-16, mu",
-                             if (isgk) "gk", "_", varname,
-                             "[", index, if (isgk) ", k", "])))"),
-         "Gamma" = paste0("dgamma(shape", if (isgk) "gk", "_", varname,
-                          "[", index, if (isgk) ", k", "], rate", if (isgk) "gk", "_",
-                          varname, "[", index, if (isgk) ", k", "])"),
-         "poisson" = paste0("dpois(max(1e-10, mu", if (isgk) "gk", "_", varname,
-                            "[", index, if (isgk) ", k", "]))"),
-         "lognorm" = paste0("dlnorm(mu", if (isgk) "gk", "_", varname, "[",
-                            index, if (isgk) ", k", "], tau_", varname, ")"),
-         "beta" = paste0("dbeta(shape1", if (isgk) "gk", "_", varname,
-                         "[", index, if (isgk) ", k", "], shape2", if (isgk) "gk",
-                         "_", varname, "[", index, if (isgk) ", k", "])T(1e-15, 1 - 1e-15)")
+         "gaussian" = paste0(
+           "dnorm(mu", if (isgk) "gk", "_", varname,
+           "[", index, if (isgk) ", k", "], tau_", varname, ")"
+         ),
+         "binomial" = paste0(
+           "dbern(max(1e-16, min(1 - 1e-16, mu",
+           if (isgk) "gk", "_", varname,
+           "[", index, if (isgk) ", k", "])))"
+         ),
+         "Gamma" = paste0(
+           "dgamma(shape", if (isgk) "gk", "_", varname,
+           "[", index, if (isgk) ", k", "], rate", if (isgk) "gk", "_",
+           varname, "[", index, if (isgk) ", k", "])"
+         ),
+         "poisson" = paste0(
+           "dpois(max(1e-10, mu", if (isgk) "gk", "_", varname,
+           "[", index, if (isgk) ", k", "]))"
+         ),
+         "lognorm" = paste0(
+           "dlnorm(mu", if (isgk) "gk", "_", varname, "[",
+           index, if (isgk) ", k", "], tau_", varname, ")"
+         ),
+         "beta" = paste0(
+           "dbeta(shape1", if (isgk) "gk", "_", varname,
+           "[", index, if (isgk) ", k", "], shape2", if (isgk) "gk",
+           "_", varname, "[", index, if (isgk) ", k", "])T(1e-15, 1 - 1e-15)"
+         )
   )
 }
 
@@ -834,16 +879,18 @@ get_repar <- function(family, varname, index, isgk = FALSE) {
                           "\n\n"),
          "Poisson" = NULL,
          'lognorm' = NULL,
-         'beta' = paste0('\n',
-                         tab(4), "shape1", if (isgk) "gk", "_", varname,
-                         "[", index, if (isgk) ", k", "] <- mu",
-                         if (isgk) "gk", "_", varname, "[", index,
-                         if (isgk) ", k", "] * tau_",
-                         varname, "\n",
-                         tab(4), "shape2", if (isgk) "gk", "_", varname,
-                         "[", index, if (isgk) ", k", "] <- (1 - mu", if (isgk) "gk", "_",
-                         varname, "[", index, if (isgk) ", k", "]) * tau_",
-                         varname, "\n\n")
+         "beta" <- paste0(
+           "\n",
+           tab(4), "shape1", if (isgk) "gk", "_", varname,
+           "[", index, if (isgk) ", k", "] <- mu",
+           if (isgk) "gk", "_", varname, "[", index,
+           if (isgk) ", k", "] * tau_",
+           varname, "\n",
+           tab(4), "shape2", if (isgk) "gk", "_", varname,
+           "[", index, if (isgk) ", k", "] <- (1 - mu", if (isgk) "gk", "_",
+           varname, "[", index, if (isgk) ", k", "]) * tau_",
+           varname, "\n\n"
+         )
   )
 }
 
@@ -854,22 +901,33 @@ get_secndpar <- function(family, varname) {
   # write syntax for second parameter (typically precision or variance) in
   # GLM(M) JAGS model
 
-  if (is.null(family)) return(NULL)
+  if (is.null(family)) {
+    return(NULL)
+  }
 
   switch(family,
-         "gaussian" = paste0("\n",
-                             tab(), "tau_", varname ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
-                             tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")"),
-         "binomial" = NULL,
-         "Gamma" = paste0("\n",
-                          tab(), "tau_", varname ," ~ dgamma(shape_tau_gamma, rate_tau_gamma)", "\n",
-                          tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")"),
-         "poisson" = NULL,
-         "lognorm" = paste0("\n",
-                            tab(), "tau_", varname ," ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
-                            tab(), "sigma_", varname," <- sqrt(1/tau_", varname, ")"),
-         "beta" = paste0("\n",
-                         tab(), "tau_", varname, " ~ dgamma(shape_tau_beta, rate_tau_beta)", "\n")
+    "gaussian" = paste0(
+      "\n",
+      tab(), "tau_", varname, " ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
+      tab(), "sigma_", varname, " <- sqrt(1/tau_", varname, ")"
+    ),
+    "binomial" = NULL,
+    "Gamma" = paste0(
+      "\n",
+      tab(), "tau_", varname, " ~ dgamma(shape_tau_gamma, rate_tau_gamma)",
+      "\n",
+      tab(), "sigma_", varname, " <- sqrt(1/tau_", varname, ")"
+    ),
+    "poisson" = NULL,
+    "lognorm" = paste0(
+      "\n",
+      tab(), "tau_", varname, " ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
+      tab(), "sigma_", varname, " <- sqrt(1/tau_", varname, ")"
+    ),
+    "beta" = paste0(
+      "\n",
+      tab(), "tau_", varname, " ~ dgamma(shape_tau_beta, rate_tau_beta)", "\n"
+    )
   )
 }
 

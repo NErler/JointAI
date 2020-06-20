@@ -37,13 +37,14 @@ get_params <- function(Mlist, info_list,
   )
 
 
-  # analysis_main  --------------------------------------------------------------
+  # analysis_main  -------------------------------------------------------------
   if (analysis_main) {
     # betas
     if (is.null(betas)) betas <- TRUE
 
     # sigma
-    if ((any(sapply(list_main, "[[", 'family') %in% c("gaussian", "Gamma", "lognorm")) |
+    if ((any(sapply(list_main, "[[", 'family') %in% c("gaussian", "Gamma",
+                                                      "lognorm")) |
          any(modeltypes_main %in% c('survreg'))) &
         is.null(sigma_main)) {
       sigma_main <- TRUE
@@ -75,13 +76,14 @@ get_params <- function(Mlist, info_list,
 
 
     # gamma
-    gamma_main <- any(modeltypes_main %in% c('clmm', 'clm')) & !isFALSE(gamma_main)
+    gamma_main <- any(modeltypes_main %in% c('clmm', 'clm')) &
+      !isFALSE(gamma_main)
 
 
     # basehaz
     if (any(modeltypes_main %in% c('coxph', "JM")) & !isFALSE(basehaz))
-      # for a cox model with no betas, something needs to be monitored to prevent
-      # JAGS error "No valid monitors set".
+      # for a cox model with no betas, something needs to be monitored to
+      # prevent JAGS error "No valid monitors set".
       basehaz <- TRUE
 
     # D
@@ -92,7 +94,8 @@ get_params <- function(Mlist, info_list,
 
   # analysis_random ------------------------------------------------------------
   if (analysis_random &
-      any(modeltypes_main %in% c("glmm", "clmm", "mlogitmm", "coxph", "survreg", "JM"))) {
+      any(modeltypes_main %in% c("glmm", "clmm", "mlogitmm", "coxph",
+                                 "survreg", "JM"))) {
     if (is.null(ranef_main)) ranef_main <- TRUE
     if (is.null(invD_main)) invD_main <- TRUE
     if (is.null(D_main)) D_main <- TRUE
@@ -126,12 +129,14 @@ get_params <- function(Mlist, info_list,
   params <- c(
     # beta
     if (isTRUE(betas) &
-        any(grepl("^beta\\b", do.call(rbind, get_coef_names(info_list))$coef))) "beta",
+        any(grepl("^beta\\b", do.call(rbind, get_coef_names(info_list))$coef)))
+      "beta",
 
     # basehaz
     if (isTRUE(basehaz))
-      paste0("beta_Bh0_", sapply(list_main[modeltypes_main %in% c('coxph', 'JM')],
-                                 "[[", 'varname')),
+      paste0("beta_Bh0_",
+             sapply(list_main[modeltypes_main %in% c('coxph', 'JM')],
+                    "[[", 'varname')),
     # gamma_main
     if (isTRUE(gamma_main))
       paste0("gamma_", names(list_main)[modeltypes_main %in% c('clm', 'clmm')]),
@@ -161,7 +166,8 @@ get_params <- function(Mlist, info_list,
       c(
         # ranef_main
         if (isTRUE(ranef_main))
-          sapply(ranef_info_main, function(k) paste0('b_', k$varname, "_", k$lvls)),
+          sapply(ranef_info_main, function(k)
+            paste0('b_', k$varname, "_", k$lvls)),
 
         # invD_main
         if (isTRUE(invD_main))
@@ -216,7 +222,8 @@ get_params <- function(Mlist, info_list,
       c(
         # ranef_other
         if (isTRUE(ranef_other))
-          sapply(ranef_info_other, function(k) paste0('b_', k$varname, "_", k$lvls)),
+          sapply(ranef_info_other, function(k)
+            paste0('b_', k$varname, "_", k$lvls)),
 
         # invD_other
         if (isTRUE(invD_other))
@@ -238,8 +245,8 @@ get_params <- function(Mlist, info_list,
         if (isTRUE(RinvD_other))
           unlist(sapply(ranef_info_other, function(x)
             sapply(x$lvls, function(lvl) {
-              paste0("RinvD_", x$varname, "_", lvl, "[", 1:max(1, x$nranef[lvl]),
-                     ",", 1:max(1, x$nranef[lvl]), "]")
+              paste0("RinvD_", x$varname, "_", lvl, "[",
+                     1:max(1, x$nranef[lvl]), ",", 1:max(1, x$nranef[lvl]), "]")
             })))
       )
     },
@@ -252,7 +259,8 @@ get_params <- function(Mlist, info_list,
       unlist(unname(
         sapply(names(Mlist$M), function(k) {
         if (any(is.na(Mlist$M[[k]]))) {
-          M_NA <- which(is.na(Mlist$M[[k]][, colnames(Mlist$M[[k]]) %in% names(Mlist$data), drop = FALSE]),
+          M_NA <- which(is.na(Mlist$M[[k]][, colnames(Mlist$M[[k]]) %in%
+                                             names(Mlist$data), drop = FALSE]),
                         arr.ind = TRUE)
 
           apply(M_NA, 1, function(x) {

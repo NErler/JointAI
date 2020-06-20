@@ -77,15 +77,18 @@ JAGSmodel_clmm <- function(info) {
 
   # write model ----------------------------------------------------------------
   paste0('\r',
-         tab(), add_dashes(paste0("# Cumulative logit mixed effects model for ", info$varname)), "\n",
-         tab(), "for (", index, " in 1:", info$N[gsub("M_", "", info$resp_mat)], ") {", "\n",
+         tab(), add_dashes(paste0("# Cumulative logit mixed effects model for ",
+                                  info$varname)), "\n",
+         tab(), "for (", index, " in 1:", info$N[gsub("M_", "", info$resp_mat)],
+         ") {", "\n",
          tab(4), info$resp_mat, "[", index, ", ", info$resp_col,
          "] ~ dcat(p_", info$varname, "[", index, ", 1:", info$ncat, "])", "\n",
 
          tab(4), 'eta_', info$varname, "[", index, "] <- ",
          add_linebreaks(Z_predictor, indent = indent),
          "\n\n",
-         tab(4), "p_", info$varname, "[", index, ", 1] <- max(1e-10, min(1-1e-7, psum_",
+         tab(4), "p_", info$varname, "[", index,
+         ", 1] <- max(1e-10, min(1-1e-7, psum_",
          info$varname, "[", index, ", 1]))", "\n",
          paste(probs, collapse = "\n"), "\n",
          tab(4), "p_", info$varname, "[", index, ", ", info$ncat,
@@ -99,7 +102,8 @@ JAGSmodel_clmm <- function(info) {
          tab(), "}", "\n",
          "\n",
          paste0(sapply(names(rdintercept), write_ranefs, info = info,
-                       rdintercept = rdintercept, rdslopes = rdslopes), collapse = ''),
+                       rdintercept = rdintercept, rdslopes = rdslopes),
+                collapse = ''),
          "\n\n",
 
          # priors
@@ -107,7 +111,8 @@ JAGSmodel_clmm <- function(info) {
          if (any(!sapply(info$parelmts, is.null))) {
            paste0(tab(), "for (k in ", min(unlist(info$parelmts)), ":",
                   max(unlist(info$parelmts)), ") {", "\n",
-                  get_priordistr(info$shrinkage, type = 'ordinal', parname = info$parname),
+                  get_priordistr(info$shrinkage, type = 'ordinal',
+                                 parname = info$parname),
                   tab(), "}")
          },
          paste(deltas, collapse = "\n"), "\n\n",
@@ -159,12 +164,14 @@ clmm_in_JM <- function(info) {
 
   # write model ----------------------------------------------------------------
   paste0(tab(6), info$resp_mat, "gk[", index, ", ", info$resp_col,
-         ", k] ~ dcat(pgk_", info$varname, "[", index, ", 1:", info$ncat, ", k])", "\n",
+         ", k] ~ dcat(pgk_", info$varname, "[", index, ", 1:", info$ncat,
+         ", k])", "\n",
 
          tab(6), 'etagk_', info$varname, "[", index, ", k] <- ",
          add_linebreaks(Z_predictor, indent = 12 + nchar(info$varname) + 10),
          "\n\n",
-         tab(6), "pgk_", info$varname, "[", index, ", 1, k] <- max(1e-10, min(1-1e-7, psumgk_",
+         tab(6), "pgk_", info$varname, "[", index,
+         ", 1, k] <- max(1e-10, min(1-1e-7, psumgk_",
          info$varname, "[", index, ", 1, k]))", "\n",
          paste(probs, collapse = "\n"), "\n",
          tab(6), "pgk_", info$varname, "[", index, ", ", info$ncat,

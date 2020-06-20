@@ -47,9 +47,12 @@ test_that('extract_id results in warning', {
 test_that('extract_outcome works', {
   ys <- list(list(fixed = y ~ a + b, out = list(y = 'y')),
              list(fixed = y ~ 1, out = list(y = 'y')),
-             list(fixed = Surv(a, b) ~ 1, out = list('Surv(a, b)' = c('a', 'b'))),
-             list(fixed = Surv(a, b, d) ~ x + z, out = list('Surv(a, b, d)' = c('a', 'b', 'd'))),
-             list(fixed = cbind(a, b, d) ~ x + z, out = list('cbind(a, b, d)' = c('a', 'b', 'd')))
+             list(fixed = Surv(a, b) ~ 1,
+                  out = list('Surv(a, b)' = c('a', 'b'))),
+             list(fixed = Surv(a, b, d) ~ x + z,
+                  out = list('Surv(a, b, d)' = c('a', 'b', 'd'))),
+             list(fixed = cbind(a, b, d) ~ x + z,
+                  out = list('cbind(a, b, d)' = c('a', 'b', 'd')))
              # list(fixed = y + x ~ a + b, out = c("y + x"))
   )
 

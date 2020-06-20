@@ -1,6 +1,7 @@
 #' Create traceplots for a MCMC sample
 #'
-#' Creates a set of traceplots from the MCMC sample of an object of class 'JointAI'.
+#' Creates a set of traceplots from the MCMC sample of an object of class
+#' 'JointAI'.
 #'
 #' @inheritParams sharedParams
 #' @inheritDotParams graphics::matplot -x -y -type -xlab -ylab -pch -log -xlim -ylim
@@ -10,7 +11,8 @@
 #' @seealso \code{\link{summary.JointAI}},
 #'          \code{\link[JointAI:model_imp]{*_imp}},
 #'          \code{\link{densplot}}\cr
-#'          The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#'          The vignette
+#'          \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 #'          contains some examples how to specify the parameter \code{subset}.
 #'
 #' @examples
@@ -26,7 +28,7 @@
 #' traceplot(mod, use_ggplot = TRUE)
 #'
 #'
-#' # Example 5: changing how the ggplot version looks (using standard ggplot syntax)
+#' # Example 5: changing how the ggplot version looks (using ggplot syntax)
 #' library(ggplot2)
 #'
 #' traceplot(mod, use_ggplot = TRUE) +
@@ -44,7 +46,8 @@ traceplot <- function(object, ...) {
 
 #' @export
 #' @keywords internal
-traceplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, ...) {
+traceplot.mcmc.list <- function(object, start = NULL, end = NULL,
+                                thin = NULL, ...) {
 
   if (is.null(start)) start <- start(object)
   if (is.null(end)) end <- end(object)
@@ -134,9 +137,10 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #'                             col = grey(0.8))))
 #'
 #'
-#' # Example 3: use vlines to visualize the posterior mean and 2.5% and 97.5% quantiles
+#' # Example 3: use vlines to visualize posterior mean and 2.5%/97.5% quantiles
 #' res <- rbind(summary(mod)$res$y$regcoef[, c('Mean', '2.5%', '97.5%')],
-#'              summary(mod)$res$y$sigma[, c('Mean', '2.5%', '97.5%'), drop = FALSE]
+#'              summary(mod)$res$y$sigma[, c('Mean', '2.5%', '97.5%'),
+#'              drop = FALSE]
 #'              )
 #' densplot(mod, vlines = list(list(v = res[, "Mean"], lty = 1, lwd = 2),
 #'                             list(v = res[, "2.5%"], lty = 2),
@@ -147,7 +151,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' densplot(mod, use_ggplot = TRUE)
 #'
 #'
-#' # Example 5: changing how the ggplot version looks (using standard ggplot syntax)
+#' # Example 5: change how the ggplot version looks
 #' library(ggplot2)
 #'
 #' densplot(mod, use_ggplot = TRUE) +
@@ -157,7 +161,8 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #'
 #'
 #' @seealso
-#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#' The vignette
+#' \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 #' contains some examples how to specify the argument \code{subset}.
 #'
 #'
@@ -169,7 +174,8 @@ densplot <- function(object, ...) {
 
 #' @export
 #' @keywords internal
-densplot.mcmc.list <- function(object, start = NULL, end = NULL, thin = NULL, ...) {
+densplot.mcmc.list <- function(object, start = NULL, end = NULL,
+                               thin = NULL, ...) {
 
   if (is.null(start)) start <- start(object)
   if (is.null(end)) end <- end(object)
@@ -336,7 +342,8 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
 get_plotmain <- function(object, plotnams, ylab = FALSE) {
-  # match variable names with the column names to get the titles of the sub-plots
+  # match variable names with the column names to get the titles of the
+  # sub-plots
   # - object: an object of class JointAI
   # - plotnams: names of the columns of the subset of the MCMC sample
   # - ylab: logical; if TRUE, names are outcome: variable, otherwise they use
@@ -358,8 +365,10 @@ get_plotmain <- function(object, plotnams, ylab = FALSE) {
                coefs$varnam_print[sort(na.omit(match(plotnams, coefs$coef)))])
     } else {
       plotnams[na.omit(match(coefs$coef, plotnams))] <-
-        paste0(coefs$varnam_print[sort(na.omit(match(plotnams, coefs$coef)))], "\n",
-               "(", coefs$outcome[sort(na.omit(match(plotnams, coefs$coef)))], ")")
+        paste0(coefs$varnam_print[sort(na.omit(match(plotnams, coefs$coef)))],
+               "\n",
+               "(", coefs$outcome[sort(na.omit(match(plotnams, coefs$coef)))],
+               ")")
     }
   }
   plotnams
