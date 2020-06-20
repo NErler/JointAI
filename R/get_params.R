@@ -20,6 +20,11 @@ get_params <- function(Mlist, info_list,
   list_other <- info_list[!names(info_list) %in% names(Mlist$fixed)]
 
   modeltypes_main <- sapply(list_main, "[[", 'modeltype')
+  modeltypes_other <- sapply(list_other, "[[", 'modeltype')
+
+  families_main <- sapply(list_main, "[[", 'family')
+  families_other <- sapply(list_other, "[[", 'family')
+
 
   # get random effects info for the main models and other models
   ranef_info_main <- lapply(list_main, function(x)
@@ -43,16 +48,14 @@ get_params <- function(Mlist, info_list,
     if (is.null(betas)) betas <- TRUE
 
     # sigma
-    if ((any(sapply(list_main, "[[", 'family') %in% c("gaussian", "Gamma",
-                                                      "lognorm")) |
+    if ((any(families_main %in% c("gaussian", "Gamma", "lognorm")) |
          any(modeltypes_main %in% c('survreg'))) &
         is.null(sigma_main)) {
       sigma_main <- TRUE
     }
 
     # tau
-    if (any(sapply(list_main, "[[", 'family') %in% c("gaussian", "Gamma",
-                                                     "lognorm", "beta"))) {
+    if (any(families_main %in% c("gaussian", "Gamma", "lognorm", "beta"))) {
       tau_main <- TRUE
     }
 
@@ -60,16 +63,15 @@ get_params <- function(Mlist, info_list,
 
     # sigma_main
     sigvars <- if (isTRUE(sigma_main)) {
-      names(list_main)[sapply(list_main, '[[', 'family') %in%
-                         c('gaussian', 'Gamma', 'lognorm')]
+      names(list_main)[families_main %in% c('gaussian', 'Gamma', 'lognorm')]
     }
 
     # tau_main
     tauvars <- if (isTRUE(tau_main)) {
-      setdiff(names(list_main)[
-                sapply(list_main, '[[', 'family') %in%
-                  c('gaussian', 'Gamma', 'lognorm', 'beta')],
-              sigvars
+      setdiff(
+        names(list_main)[families_main %in% c('gaussian', 'Gamma',
+                                              'lognorm', 'beta')],
+        sigvars
       )
     }
 
@@ -199,23 +201,21 @@ get_params <- function(Mlist, info_list,
     if (isTRUE(alphas)) "alpha",
 
     # tau_other
-    if (isTRUE(tau_other) & any(sapply(list_other, "[[", 'family') %in%
-                        c("gaussian", "lognorm", "gamma", "beta")))
+    if (isTRUE(tau_other) & any(families_other %in%
+                                c("gaussian", "lognorm", "gamma", "beta")))
       paste0("tau_", names(list_other)[
-        sapply(list_other, "[[", 'family') %in% c("gaussian", "lognorm",
-                                                  "gamma", "beta")]),
+        families_other %in% c("gaussian", "lognorm", "gamma", "beta")]),
 
     # gamma_other
     if (isTRUE(gamma_other) &
-        any(sapply(list_other, "[[", 'modeltype') %in% c("clm", "clmm")))
+        any(modeltypes_other %in% c("clm", "clmm")))
       paste0("gamma_", names(list_other)[
-        sapply(list_other, "[[", 'modeltype') %in% c("clm", "clmm")]),
+        modeltypes_other %in% c("clm", "clmm")]),
 
     # delta_other
-    if (isTRUE(delta_other) &
-        any(sapply(list_other, "[[", 'modeltype') %in% c("clm", "clmm")))
+    if (isTRUE(delta_other) & any(modeltypes_other %in% c("clm", "clmm")))
       paste0("delta_", names(list_other)[
-        sapply(list_other, "[[", 'modeltype') %in% c("clm", "clmm")]),
+        modeltypes_other %in% c("clm", "clmm")]),
 
     # random effects in other models
     if (any(!sapply(ranef_info_other, is.null))) {
