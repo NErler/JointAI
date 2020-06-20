@@ -118,7 +118,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
 
   if (!all(sapply(object$Mlist$scale_pars, is.null))) {
     coefs <- try(get_coef_names(object$info_list))
-    for (k in 1:length(MCMC)) {
+    for (k in seq_len(length(MCMC))) {
       MCMC[[k]] <- as.mcmc(
         rescale(MCMC[[k]], coefs = do.call(rbind, coefs),
                 scale_pars = do.call(rbind, unname(object$Mlist$scale_pars)),
@@ -129,7 +129,6 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
 
   if (isTRUE(add)) {
     newmcmc <- if (!is.null(object$sample)) {
-      as.mcmc.list(lapply(1:length(mcmc),
                           function(x) mcmc(rbind(object$sample[[x]],
                                                  mcmc[[x]]),
                                            start = start(object$sample),
@@ -137,10 +136,11 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                              niter(mcmc[[x]])
                           )
       ))
+        lapply(seq_len(length(mcmc)),
     }
 
     newMCMC <- as.mcmc.list(
-      lapply(1:length(MCMC), function(k)
+      lapply(seq_len(length(MCMC)), function(k)
         mcmc(rbind(object$MCMC[[k]], MCMC[[k]]),
              start = start(object$MCMC),
              end = end(object$MCMC) + niter(mcmc[[k]]) * thin(mcmc[[k]]),

@@ -76,7 +76,7 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
       if (!any(is.na(K_imp[[k]][i, ]))) {
         if (Mlist$models[k] %in% c('mlogit', 'mlogitmm')) {
           split(K_imp[[k]][i, 1]:K_imp[[k]][i, 2],
-                rep(1:length(levels(Mlist$refs[[k]])[-1]),
+                rep(seq_len(length(levels(Mlist$refs[[k]])[-1])),
                     each = length(lp[[i]])))
         } else {
           K_imp[[k]][i, 1]:K_imp[[k]][i, 2]

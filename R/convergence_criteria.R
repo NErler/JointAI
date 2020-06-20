@@ -57,7 +57,7 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE,
   MCMC <- window(MCMC[chains], start = start, end = end, thin = thin)
   plotnams <- get_plotmain(object, colnames(MCMC[[1]]), ylab = TRUE)
 
-  for (i in 1:length(MCMC))
+  for (i in seq_len(length(MCMC)))
     colnames(MCMC[[i]]) <- plotnams
 
 
@@ -220,7 +220,7 @@ plot.MCElist <- function(x, data_scale = TRUE, plotpars = NULL,
   names <- abbreviate(names, minlength = 12)
 
   plotpars$x <- mce[, 4]
-  plotpars$y <- nrow(mce):1
+  plotpars$y <- rev(seq_len(nrow(mce)))
 
   if (is.null(plotpars$xlim))
     plotpars$xlim <- range(0, plotpars$x)
@@ -230,7 +230,8 @@ plot.MCElist <- function(x, data_scale = TRUE, plotpars = NULL,
     plotpars$ylab <- ""
   if (is.null(plotpars$yaxt)) {
     plotpars$yaxt <- "n"
-    theaxis <- expression(axis(side = 2, at = nrow(mce):1, labels = names,
+    theaxis <- expression(axis(side = 2, at = rev(seq_len(nrow(mce))),
+                               labels = names,
                                las = 2, cex.axis = 0.8))
   }
   if (is.null(ablinepars$v))

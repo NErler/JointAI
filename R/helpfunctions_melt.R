@@ -25,7 +25,7 @@ melt_matrix <- function(X, varnames = NULL, valname = 'value') {
 
   dimnam <- if (is.null(varnames)) {
     if (is.null(names(dimnames(X)))) {
-      paste0('V', 1:length(dim(X)))
+      paste0('V', seq_len(length(dim(X))))
     } else {
       names(dimnames(X))
     }
@@ -72,7 +72,7 @@ melt_data.frame <- function(data, id.vars = NULL, varnames = NULL,
   if (!inherits(data, 'data.frame'))
     errormsg("This function may not work for objects that are not data.frames.")
 
-  data$rowID <- paste0('rowID', 1:nrow(data))
+  data$rowID <- paste0('rowID', seq_len(nrow(data)))
   X <- data[, !names(data) %in% c('rowID', id.vars), drop = FALSE]
 
   g <- list(rowID = data$rowID,

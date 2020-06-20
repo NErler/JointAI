@@ -237,7 +237,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       col <- eval(args$col)
       args <- args[-which(names(args) == "col")]
     } else {
-      col <- 1:length(prep$MCMC)
+      col <- seq_len(length(prep$MCMC))
     }
 
 
@@ -245,7 +245,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
               mar = c(2, 3, ifelse(length(object$fixed) == 1, 2, 3), 1),
               mgp = c(2, 0.6, 0))
 
-    for (i in 1:ncol(prep$MCMC[[1]])) {
+    for (i in seq_len(ncol(prep$MCMC[[1]]))) {
       dens <- lapply(prep$MCMC[, i], density)
       vline_range <- if (is.list(vlines[[1]])) {
         lapply(lapply(vlines, "[[", "v"), "[", i)
@@ -260,7 +260,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
            xlab = "", ylab = "density", ...
       )
 
-      for (j in 1:length(prep$MCMC)) {
+      for (j in seq_len(length(prep$MCMC))) {
         args_lines <- c(list(x = dens[[j]]$x,
                              y = dens[[j]]$y,
                              type = 'l',
@@ -271,7 +271,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       }
 
       if (!is.null(vlines)) {
-        for (l in 1:length(vlines)) {
+        for (l in seq_len(length(vlines))) {
           args_vline <- if (is.list(vlines[[l]])) vlines[[l]] else vlines
           if (length(args_vline$v) > 1) {
             args_vline$v <- args_vline$v[i]
@@ -429,7 +429,7 @@ plot_all <- function(data, nrow = NULL, ncol = NULL,
   op <- par(mfrow = dims)
   if (!is.null(idvars)) {
     groups <- data[, idvars, drop = FALSE]
-    groups$lvlone <- 1:nrow(groups)
+    groups$lvlone <- seq_len(nrow(groups))
     varlvls <- sapply(data, check_varlevel, groups = groups)
   }
 

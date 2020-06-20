@@ -51,11 +51,11 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
 
   unaX <- unaX[order(Npat, decreasing = TRUE), ]
   Npat <- sort(Npat, decreasing = TRUE)
-  rownames(unaX) <- nrow(unaX):1
+  rownames(unaX) <- rev(seq_len(nrow(unaX)))
 
   vars <- colnames(unaX)[order(Nmis)]
   unaX <- unaX[, order(Nmis)]
-  colnames(unaX) <- 1:ncol(unaX)
+  colnames(unaX) <- seq_len(ncol(unaX))
   Nmis <- sort(Nmis)
 
   if (plot) {
@@ -72,17 +72,17 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
                                       fill = as.character(.data$value))) +
       ggplot2::geom_tile(color = border) +
       ggplot2::scale_y_continuous(position = 'right',
-                         breaks = length(Npat):1,
+                         breaks = rev(seq_len(length(Npat))),
                          labels = if (print_yaxis)
                            Npat else rep('', length(Npat)),
                          expand = c(0,0)) +
       ggplot2::scale_x_continuous(position = 'top',
-                         breaks = 1:ncol(unaX),
+                         breaks = seq_len(ncol(unaX)),
                          labels = vars,
                          sec.axis = if (print_xaxis)
                            ggplot2::sec_axis(~.,
                                     name = 'Number of missing values',
-                                    breaks = 1:ncol(unaX),
+                                    breaks = seq_len(ncol(unaX)),
                                     labels = Nmis) else ggplot2::waiver(),
                          expand = c(0, 0)) +
       ggplot2::scale_fill_manual(name = '',
@@ -100,7 +100,7 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
   }
 
   if (pattern) {
-    rownames(unaX) <- 1:nrow(unaX)
+    rownames(unaX) <- seq_len(nrow(unaX))
     colnames(unaX) <- vars
     rbind(cbind(unaX, Npat = Npat),
           Nmis = c(Nmis, sum(Nmis)))

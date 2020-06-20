@@ -12,7 +12,7 @@ test_that("bugfix in model with ordinal longitudinal covariate", {
   newlongDF <- longDF
   newlongDF$x <- factor(sample(1:4, nrow(longDF), replace = TRUE),
                         ordered = TRUE)
-  newlongDF$x[sample(1:nrow(longDF), 50)] <- NA
+  newlongDF$x[sample(seq_len(nrow(longDF)), 50)] <- NA
   expect_s3_class(lme_imp(y ~ C1 + o1 + o2 + x + time, random = ~ 1|id,
                           data = newlongDF), 'JointAI')
 })

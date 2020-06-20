@@ -108,7 +108,7 @@ predDF.list <- function(formulas, dat, vars, length = 100, idvar = NULL, ...) {
 
   if (!is.null(id_vars)) {
     id_df <- unique(subset(ndf, select = id_vars))
-    id_df[, idvar] <- 1:nrow(id_df)
+    id_df[, idvar] <- seq_len(nrow(id_df))
     ndf <- merge(subset(ndf, select = !names(ndf) %in% idvar),
                  id_df)
   }
@@ -314,7 +314,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
 
   # linear predictor values for the selected iterations of the MCMC sample
-  pred <- sapply(1:nrow(X), function(i)
+  pred <- sapply(seq_len(nrow(X)), function(i)
     MCMC[, coefs$coef[match(colnames(X), coefs$varname)],
          drop = FALSE] %*% X[i, ])
 
@@ -386,7 +386,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
 
 
   # linear predictor values for the selected iterations of the MCMC sample
-  pred <- sapply(1:nrow(X), function(i)
+  pred <- sapply(seq_len(nrow(X)), function(i)
     MCMC[, coefs$coef[match(colnames(X), coefs$varname)],
          drop = FALSE] %*% X[i, ])
 
@@ -465,7 +465,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   }
 
   lp_list <- sapply(X, function(x) {
-    sapply(1:nrow(x), function(i)
+    sapply(seq_len(nrow(x)), function(i)
       if (!is.null(scale_pars)) {
         MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*%
           (x[i, ] - scale_pars$center[match(colnames(x), rownames(scale_pars))])
@@ -502,7 +502,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
 
   srow <- if (is.null(Mlist$timevar)) {
-    1:nrow(Mlist$M[[resp_mat]])
+    seq_len(nrow(Mlist$M[[resp_mat]]))
   } else {
     which(Mlist$M$M_lvlone[, Mlist$timevar] ==
             Mlist$M[[resp_mat]][Mlist$groups[[surv_lvl]],
@@ -522,7 +522,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                                       gkx + 1))),
                             ord = 4, outer.ok = TRUE)
 
-    logh0s <- lapply(1:nrow(MCMC), function(m) {
+    logh0s <- lapply(seq_len(nrow(MCMC)), function(m) {
       matrix(Bsh0 %*% MCMC[m, grep(paste0('\\bbeta_Bh0_',
                                           clean_survname(varname), '\\b'),
                                    colnames(MCMC))],
@@ -535,14 +535,14 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
       Mgk <- do.call(rbind,
                       get_Mgk(Mlist, gkx, surv_lvl = gsub("M_", "", resp_mat),
                               survinfo = survinfo, data = newdata,
-                              rows = 1:nrow(newdata),
+                              rows = seq_len(nrow(newdata)),
                               td_cox = unique(
                                 sapply(survinfo,
                                        "[[", "modeltype")) == 'coxph'))
 
       vars <- coefs$varname[na.omit(match(dimnames(Mgk)[[2]], coefs$varname))]
 
-      lapply(1:nrow(MCMC), function(m) {
+      lapply(seq_len(nrow(MCMC)), function(m) {
         if (!is.null(scale_pars)) {
           matrix((Mgk[, vars, drop = FALSE] -
                     outer(rep(1, prod(dim(Mgk)[-2])),
@@ -573,7 +573,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     Bh0 <- splines::splineDesign(h0knots, newdata[, survinfo[[1]]$time_name],
                                  ord = 4, outer.ok = TRUE)
 
-    logh0 <- sapply(1:nrow(Bh0), function(i) {
+    logh0 <- sapply(seq_len(nrow(Bh0)), function(i) {
       MCMC[, grep('beta_Bh0', colnames(MCMC))] %*% Bh0[i, ]
     })
 
@@ -643,7 +643,7 @@ predict_clm <- function(formula, newdata, type = c("lp", "prob",
   if (mess & any(is.na(X)))
     message('Prediction for cases with missing covariates is not implemented.')
 
-  eta <- sapply(1:nrow(X), function(i)
+  eta <- sapply(seq_len(nrow(X)), function(i)
     MCMC[, coefs$coef[match(colnames(X), coefs$varname)],
          drop = FALSE] %*% X[i, ])
 

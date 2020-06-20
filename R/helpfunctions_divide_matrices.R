@@ -124,7 +124,7 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
   # add a variable identifying the original ordering of the rows in the data
   # (needed because otherwise "groups" would not fit any more after sorting)
   # and sort the data by the time variable
-  data$rowiddd <- 1:nrow(data)
+  data$rowiddd <- seq_len(nrow(data))
   data <- data[order(data[timevar]), ]
 
   # split the data by patient, and fill in values in the time-varying variables
@@ -294,7 +294,7 @@ split_outcome <- function(LHS, data) {
         if (!inherits(var, 'try-error')) {
           var <- data.frame(var)
           names(var) <- if (ncol(var) > 1) {
-            paste0(fct, 1:ncol(var))
+            paste0(fct, seq_len(ncol(var)))
           } else fct
           outlist <- c(outlist, var)
           start <- splitpos[i] + 1

@@ -713,7 +713,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
     if (!all(sapply(Mlist$scale_pars, is.null))) {
       coefs <- try(get_coef_names(info_list))
 
-      for (k in 1:length(MCMC)) {
+      for (k in seq_len(length(MCMC))) {
         MCMC[[k]] <- as.mcmc(
           rescale(MCMC[[k]],
                   coefs = do.call(rbind, coefs),

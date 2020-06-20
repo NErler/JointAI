@@ -239,7 +239,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   }
   misperc <- runif(n = length(misvar), max = 0.5)
 
-  misid <- lapply(1:length(misvar),
+  misid <- lapply(seq_len(length(misvar)),
                   function(i) sample(unique(DF$id), size = N * misperc[i])
   )
 

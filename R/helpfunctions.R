@@ -41,7 +41,7 @@ get_groups <- function(idvar, data) {
       }
     }
 
-    groups$lvlone <- 1:nrow(data)
+    groups$lvlone <- seq_len(nrow(data))
 
     # check for duplicate levels
     gr_dupl <- duplicated(groups)
@@ -51,7 +51,7 @@ get_groups <- function(idvar, data) {
                unique(names(groups)[gr_dupl], names(groups)[gr_dupl2]))
     }
   } else {
-    groups <- list(lvlone = 1:nrow(data))
+    groups <- list(lvlone = seq_len(nrow(data)))
   }
 
   groups
@@ -422,8 +422,8 @@ get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
   Xnew[, colnames(X)[colnames(X) %in% colnames(Xnew)]] <-
     X[, colnames(X)[colnames(X) %in% colnames(Xnew)]]
 
-  lapply(1:length(gkx), function(k) {
-    Xnew[length(gkx) * ((1:length(rows)) - 1) + k, ]
+  lapply(seq_len(length(gkx)), function(k) {
+    Xnew[length(gkx) * ((seq_len(length(rows))) - 1) + k, ]
   })
 }
 
@@ -460,13 +460,13 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
                 timevar = 'obstime', idvar = idvar)
 
   # add a colum identifying the original ordering of the rows to gk_data
-  gk_data$rowid <- 1:nrow(gk_data)
+  gk_data$rowid <- seq_len(nrow(gk_data))
 
   # merge gk_data with wide format version of the time-varying covariates
   md <- merge(subset(gk_data, select = c(idvar, timevar, 'rowid')), wd)
 
 
-  locf <- sapply(1:nrow(md), function(i) {
+  locf <- sapply(seq_len(nrow(md)), function(i) {
     # identify which visit should be used
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # if there is no baseline visit (i.e., the first time with an observed value

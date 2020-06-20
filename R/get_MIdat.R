@@ -82,8 +82,8 @@ get_MIdat <- function(object, m = 10, include = TRUE,
   # - column with row numbers (needed for plot_imp_distr())
   # - an id variable if there is none
   DF <- object$data
-  DF$.rownr <- 1:nrow(DF)
-  if (length(object$Mlist$groups) < 2) DF$.id <- 1:nrow(DF)
+  DF$.rownr <- seq_len(nrow(DF))
+  if (length(object$Mlist$groups) < 2) DF$.id <- seq_len(nrow(DF))
 
 
   # extract variable levels
