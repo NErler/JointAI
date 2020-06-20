@@ -37,11 +37,11 @@ predDF.JointAI <- function(object, vars, length = 100, ...) {
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
-  predDF(formulas = c(object$fixed,
-                      object$random,
-                      object$auxvars,
-                      if (!is.null(object$Mlist$timevar))
-                          as.formula(paste0("~", object$Mlist$timevar))
+  predDF.list(formulas = c(object$fixed,
+                           object$random,
+                           object$auxvars,
+                           if (!is.null(object$Mlist$timevar))
+                             as.formula(paste0("~", object$Mlist$timevar))
   ),
   dat = object$data, vars = vars,
   length = length, idvar = object$Mlist$idvar, ...)
