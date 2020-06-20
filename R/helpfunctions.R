@@ -218,15 +218,15 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
         fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))
       }
 
-      if (x$type %in% c('ps', 'bs')) {
-        sB <- eval(parse(text = fct), envir = Mlist$data)
-        fct <- splineBas(x$var, degree = attr(sB, 'degree'), index = index,
-                         nkn = length(attr(sB, 'knots')))
-
-        dcols <- grep(gsub("[[:digit:]]+$", "", x$colname),
-                      colnames(Mlist$M[[dest_mat]]), fixed = TRUE)
-        dest_col <- print_seq(min(dcols), max(dcols))
-      }
+      # if (x$type %in% c('ps', 'bs')) {
+      #   sB <- eval(parse(text = fct), envir = Mlist$data)
+      #   fct <- splineBas(x$var, degree = attr(sB, 'degree'), index = index,
+      #                    nkn = length(attr(sB, 'knots')))
+      #
+      #   dcols <- grep(gsub("[[:digit:]]+$", "", x$colname),
+      #                 colnames(Mlist$M[[dest_mat]]), fixed = TRUE)
+      #   dest_col <- print_seq(min(dcols), max(dcols))
+      # }
 
 
       lvls <- Mlist$group_lvls[gsub('M_', '', Mlist$Mlvls[vars])]
