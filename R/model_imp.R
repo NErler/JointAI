@@ -714,7 +714,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
       coefs <- try(get_coef_names(info_list))
 
       for (k in seq_len(length(MCMC))) {
-        MCMC[[k]] <- as.mcmc(
+        MCMC[[k]] <- coda::as.mcmc(
           rescale(MCMC[[k]],
                   coefs = do.call(rbind, coefs),
                   scale_pars = do.call(rbind, unname(Mlist$scale_pars)),

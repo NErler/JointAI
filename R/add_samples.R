@@ -16,7 +16,8 @@
 #' @param monitor_params named list or vector specifying which parameters should
 #'                       be monitored. For details, see
 #'                       \code{\link[JointAI:model_imp]{*_imp}} and the vignette
-#'                        \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}. Ignored when \code{add = TRUE}.
+#'                        \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}.
+#'                        Ignored when \code{add = TRUE}.
 #' @param thin thinning interval (see \code{\link[coda]{window.mcmc}});
 #'             ignored when \code{add = TRUE}.
 #'
@@ -103,7 +104,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
     )
 
     parallel::stopCluster(cl)
-    mcmc <- as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
+    mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
     adapt <- lapply(res, function(x) x$adapt)
   } else {
     mcmc <- rjags::coda.samples(object$model, variable.names = var.names,
@@ -119,7 +120,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   if (!all(sapply(object$Mlist$scale_pars, is.null))) {
     coefs <- try(get_coef_names(object$info_list))
     for (k in seq_len(length(MCMC))) {
-      MCMC[[k]] <- as.mcmc(
+      MCMC[[k]] <- coda::as.mcmc(
         rescale(MCMC[[k]], coefs = do.call(rbind, coefs),
                 scale_pars = do.call(rbind, unname(object$Mlist$scale_pars)),
                 object$info_list))
@@ -129,21 +130,22 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
 
   if (isTRUE(add)) {
     newmcmc <- if (!is.null(object$sample)) {
-                          function(x) mcmc(rbind(object$sample[[x]],
-                                                 mcmc[[x]]),
-                                           start = start(object$sample),
-                                           end = end(object$sample) +
-                                             niter(mcmc[[x]])
-                          )
-      ))
+      coda::as.mcmc.list(
         lapply(seq_len(length(mcmc)),
+               function(x) mcmc(rbind(object$sample[[x]],
+                                      mcmc[[x]]),
+                                start = start(object$sample),
+                                end = end(object$sample) +
+                                  coda::niter(mcmc[[x]])
+               )
+        ))
     }
 
-    newMCMC <- as.mcmc.list(
+    newMCMC <- coda::as.mcmc.list(
       lapply(seq_len(length(MCMC)), function(k)
         mcmc(rbind(object$MCMC[[k]], MCMC[[k]]),
              start = start(object$MCMC),
-             end = end(object$MCMC) + niter(mcmc[[k]]) * thin(mcmc[[k]]),
+             end = end(object$MCMC) + coda::niter(mcmc[[k]]) * thin(mcmc[[k]]),
              thin = thin(mcmc[[k]]))
       ))
   } else {
