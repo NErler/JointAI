@@ -28,7 +28,7 @@
 #' @export
 
 predDF <- function(object, ...) {
-  UseMethod("predDF")
+  UseMethod("predDF", object)
 }
 
 
