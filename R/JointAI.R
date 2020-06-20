@@ -155,8 +155,8 @@
 #'
 #' @import graphics
 #' @import utils
-#' @import rjags
 #' @import stats
+#' @importFrom rjags coda.samples jags.model
 #'
 #'
 #' @docType package
