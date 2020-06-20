@@ -690,10 +690,10 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
       adapt <- lapply(res, function(x) x$adapt)
     }
   } else {
-    if (any(n.adapt > 0, n.iter > 0)) {
-      adapt <- try(rjags::jags.model(file = modelfile, data = data_list,
-                                     inits = inits, quiet = quiet,
-                                     n.chains = n.chains, n.adapt = n.adapt))
+    adapt <- if (any(n.adapt > 0, n.iter > 0)) {
+      try(rjags::jags.model(file = modelfile, data = data_list,
+                            inits = inits, quiet = quiet,
+                            n.chains = n.chains, n.adapt = n.adapt))
     }
     mcmc <- if (n.iter > 0 & !inherits(adapt, 'try-error')) {
       try(rjags::coda.samples(adapt, n.iter = n.iter, thin = thin,
