@@ -5,12 +5,13 @@
 \alias{JointAI}
 \title{JointAI: Joint Analysis and Imputation of Incomplete Data}
 \description{
-The \strong{JointAI} package performs simultaneous imputation and inference for
-incomplete or complete data under the Bayesian framework.
+The \strong{JointAI} package performs simultaneous imputation and inference
+for incomplete or complete data under the Bayesian framework.
 Models for incomplete covariates, conditional on other covariates,
 are specified automatically and modelled jointly with the analysis model.
 MCMC sampling is performed in \href{http://mcmc-jags.sourceforge.net}{'JAGS'}
-via the R package \href{https://CRAN.R-project.org/package=rjags}{\strong{rjags}}.
+via the R package
+\href{https://CRAN.R-project.org/package=rjags}{\strong{rjags}}.
 }
 \section{Main functions}{
 
@@ -20,14 +21,17 @@ analysis with different models:
 \item \code{\link{lm_imp}} for linear regression
 \item \code{\link{glm_imp}} for generalized linear regression
 \item \code{\link{betareg_imp}} for regression using a beta distribution
-\item \code{\link{lognormal_imp}} for regression using a log-normal distribution
+\item \code{\link{lognormal_imp}} for regression using a log-normal
+                                  distribution
 \item \code{\link{clm_imp}} for (ordinal) cumulative logit models
 \item \code{\link{mlogit_imp}} for multinomial models
 
 \item \code{\link{lme_imp}} or \code{\link{lmer_imp}} for linear mixed models
-\item \code{\link{glme_imp}} or \code{\link{glmer_imp}} for generalized linear mixed models
+\item \code{\link{glme_imp}} or \code{\link{glmer_imp}} for generalized
+                                linear mixed models
 \item \code{\link{betamm_imp}} for mixed models using a beta distribution
-\item \code{\link{lognormmm_imp}} for mixed models using a log-normal distribution
+\item \code{\link{lognormmm_imp}} for mixed models using a log-normal
+                                  distribution
 \item \code{\link{clmm_imp}} for (ordinal) cumulative logit mixed models
 
 \item \code{\link{survreg_imp}} for parametric (Weibull) survival models
@@ -39,11 +43,16 @@ As far as possible, the specification of these functions is analogous to the
 specification of widely used functions for the analysis of complete data,
 such as
 \code{\link[stats]{lm}}, \code{\link[stats]{glm}},
-\code{\link[ordinal]{clm}} (from the package \href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
-\code{\link[nlme]{lme}} (from the package \href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}}),
-\code{\link[ordinal:clmmOld]{clmm2}} (from the package \href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
-\code{\link[survival]{survreg}} (from the package \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}) and
-\code{\link[survival]{coxph}} (from the package \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}).
+\code{\link[ordinal]{clm}} (from the package
+\href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
+\code{\link[nlme]{lme}} (from the package
+\href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}}),
+\code{\link[ordinal:clmmOld]{clmm2}} (from the package
+\href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
+\code{\link[survival]{survreg}} (from the package
+\href{https://CRAN.R-project.org/package=survival}{\strong{survival}}) and
+\code{\link[survival]{coxph}} (from the package
+\href{https://CRAN.R-project.org/package=survival}{\strong{survival}}).
 
 Computations can be performed in parallel to reduce computational time,
 using the argument \code{parallel = TRUE},
@@ -103,36 +112,38 @@ A minimal example demonstrating the use of
                            and \code{\link{densplot}}.
 \item \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{\emph{Visualizing Incomplete Data}}:\cr
 Demonstrations of the options in \code{\link{plot_all}} (plotting histograms
-     and barplots for all variables in the data)  and \code{\link{md_pattern}}
-     (plotting or printing the missing data pattern).
+and bar plots for all variables in the data)  and \code{\link{md_pattern}}
+(plotting or printing the missing data pattern).
 
 \item \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{\emph{Model Specification}}:\cr
 Explanation and demonstration of all parameters that are required or optional
-to specify the model structure in \code{\link{lm_imp}}, \code{\link{glm_imp}}
-and \code{\link{lme_imp}}.
-Among others, the functions \code{\link{parameters}}, \code{\link{list_models}}
-and \code{\link{set_refcat}} are used.
+to specify the model structure in \code{\link{lm_imp}},
+\code{\link{glm_imp}} and \code{\link{lme_imp}}.
+Among others, the functions \code{\link{parameters}},
+\code{\link{list_models}} and \code{\link{set_refcat}} are used.
 
 \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{\emph{Parameter Selection}}:\cr
-Examples on how to select the parameters/variables/nodes
-                                to follow using the argument \code{monitor_params}
-                                and the parameters/variables/nodes displayed
-                                in the \code{\link{summary}}, \code{\link{traceplot}},
-                                \code{\link{densplot}} or when using
-                                \code{\link{GR_crit}} or \code{\link{MC_error}}.
+      Examples on how to select the parameters/variables/nodes
+      to follow using the argument \code{monitor_params} and the
+      parameters/variables/nodes displayed in the \code{\link{summary}},
+      \code{\link{traceplot}}, \code{\link{densplot}} or when using
+      \code{\link{GR_crit}} or \code{\link{MC_error}}.
 
 \item \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{\emph{MCMC Settings}}:\cr
-Examples demonstrating how to set the arguments controlling settings of the MCMC sampling,
-i.e., \code{n.adapt}, \code{n.iter}, \code{n.chains}, \code{thin}, \code{inits}.
+      Examples demonstrating how to set the arguments controlling settings
+      of the MCMC sampling,
+      i.e., \code{n.adapt}, \code{n.iter}, \code{n.chains}, \code{thin},
+       \code{inits}.
 
 \item \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{\emph{After Fitting}}:\cr
-Examples on the use of functions to be applied after the model has been fitted,
-including \code{\link{traceplot}}, \code{\link{densplot}}, \code{\link{summary}},
-\code{\link{GR_crit}}, \code{\link{MC_error}}, \code{\link{predict}},
-\code{\link{predDF}} and \code{\link{get_MIdat}}.
+      Examples on the use of functions to be applied after the model has
+      been fitted, including \code{\link{traceplot}}, \code{\link{densplot}},
+      \code{\link{summary}}, \code{\link{GR_crit}}, \code{\link{MC_error}},
+      \code{\link{predict}}, \code{\link{predDF}} and
+      \code{\link{get_MIdat}}.
 
 \item \href{https://nerler.github.io/JointAI/articles/TheoreticalBackground.html}{\emph{Theoretical Background}}:\cr
-Explanation of the statistical method implemented in \strong{JointAI}.
+      Explanation of the statistical method implemented in \strong{JointAI}.
 }
 }
 

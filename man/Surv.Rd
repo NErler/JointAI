@@ -47,5 +47,6 @@ Surv(time, time2, event, type = c("right", "left", "interval", "counting",
 }
 \description{
 This function just calls \code{Surv()} from the
-\href{https://CRAN.R-project.org/package=survival}{\strong{survival}} package.
+\href{https://CRAN.R-project.org/package=survival}{\strong{survival}}
+package.
 }

@@ -19,8 +19,8 @@ be printed? (default is \code{TRUE})}
 \item{otherpars}{logical; should information on other parameters be printed?
 (default is \code{TRUE})}
 
-\item{priors}{logical; should information on the priors (and hyper-parameters)
-be printed? (default is \code{TRUE})}
+\item{priors}{logical; should information on the priors
+(and hyper-parameters) be printed? (default is \code{TRUE})}
 
 \item{refcat}{logical; should information on the reference category be
 printed? (default is \code{TRUE})}

@@ -47,20 +47,24 @@ traceplot(object, ...)
     done.}
   }}
 
-\item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{start}{the first iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
-\item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{end}{the last iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
 \item{thin}{thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
 For example, \code{thin = 1} (default) will keep the MCMC samples
 from all iterations; \code{thin = 5} would only keep every 5th
 iteration.}
 
-\item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
-Follows the same principle as the argument \code{monitor_params} in
+\item{subset}{subset of parameters/variables/nodes (columns in the MCMC
+sample). Follows the same principle as the argument
+\code{monitor_params} in
 \code{\link[JointAI:model_imp]{*_imp}}.}
 
-\item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
+\item{exclude_chains}{optional vector of the index numbers of chains that
+should be excluded}
 
 \item{nrow}{optional; number of rows in the plot layout;
 automatically chosen if unspecified}
@@ -68,7 +72,8 @@ automatically chosen if unspecified}
 \item{ncol}{optional; number of columns in the plot layout;
 automatically chosen if unspecified}
 
-\item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
+\item{use_ggplot}{logical; Should ggplot be used instead of the base
+graphics?}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. (Note: this applies only to warnings
@@ -79,7 +84,8 @@ given directly by \strong{JointAI}.)}
 given directly by \strong{JointAI}.)}
 }
 \description{
-Creates a set of traceplots from the MCMC sample of an object of class 'JointAI'.
+Creates a set of traceplots from the MCMC sample of an object of class
+'JointAI'.
 }
 \examples{
 # fit a JointAI model
@@ -94,7 +100,7 @@ traceplot(mod)
 traceplot(mod, use_ggplot = TRUE)
 
 
-# Example 5: changing how the ggplot version looks (using standard ggplot syntax)
+# Example 5: changing how the ggplot version looks (using ggplot syntax)
 library(ggplot2)
 
 traceplot(mod, use_ggplot = TRUE) +
@@ -109,6 +115,7 @@ traceplot(mod, use_ggplot = TRUE) +
 \code{\link{summary.JointAI}},
          \code{\link[JointAI:model_imp]{*_imp}},
          \code{\link{densplot}}\cr
-         The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+         The vignette
+         \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
          contains some examples how to specify the parameter \code{subset}.
 }

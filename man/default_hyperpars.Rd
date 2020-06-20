@@ -13,7 +13,8 @@ This function returns a list of default values for the hyper-parameters.
 \strong{norm:} hyper-parameters for normal and log-normal models
 \tabular{ll}{
 \code{mu_reg_norm} \tab mean in the priors for regression coefficients\cr
-\code{tau_reg_norm} \tab precision in the priors for regression coefficients\cr
+\code{tau_reg_norm} \tab precision in the priors for regression
+                         coefficients\cr
 \code{shape_tau_norm} \tab shape parameter in Gamma prior for the precision
                            of the (log-)normal distribution\cr
 \code{rate_tau_norm} \tab rate parameter in Gamma prior for the precision
@@ -23,7 +24,8 @@ This function returns a list of default values for the hyper-parameters.
 \strong{gamma:} hyper-parameters for Gamma models
 \tabular{ll}{
 \code{mu_reg_gamma} \tab mean in the priors for regression coefficients\cr
-\code{tau_reg_gamma} \tab precision in the priors for regression coefficients\cr
+\code{tau_reg_gamma} \tab precision in the priors for regression
+                          coefficients\cr
 \code{shape_tau_gamma} \tab shape parameter in Gamma prior for the precision
                             of the Gamma distribution\cr
 \code{rate_tau_gamma} \tab rate parameter in Gamma prior for the precision
@@ -33,7 +35,8 @@ This function returns a list of default values for the hyper-parameters.
 \strong{beta:} hyper-parameters for beta models
 \tabular{ll}{
 \code{mu_reg_beta} \tab mean in the priors for regression coefficients\cr
-\code{tau_reg_beta} \tab precision in the priors for regression coefficients\cr
+\code{tau_reg_beta} \tab precision in the priors for regression
+                         coefficients\cr
 \code{shape_tau_beta} \tab shape parameter in Gamma prior for the precision
                            of the beta distribution\cr
 \code{rate_tau_beta} \tab rate parameter in Gamma prior for precision of the
@@ -54,14 +57,17 @@ This function returns a list of default values for the hyper-parameters.
 
 \strong{multinomial:} hyper-parameters for multinomial models
 \tabular{ll}{
-\code{mu_reg_multinomial} \tab mean in the priors for regression coefficients\cr
-\code{tau_reg_multinomial} \tab precision in the priors for regression coefficients
+\code{mu_reg_multinomial} \tab mean in the priors for regression
+                               coefficients\cr
+\code{tau_reg_multinomial} \tab precision in the priors for regression
+                                coefficients
 }
 
 \strong{ordinal:} hyper-parameters for ordinal models
 \tabular{ll}{
 \code{mu_reg_ordinal} \tab mean in the priors for regression coefficients\cr
-\code{tau_reg_ordinal} \tab precision in the priors for regression coefficients\cr
+\code{tau_reg_ordinal} \tab precision in the priors for regression
+                            coefficients\cr
 \code{mu_delta_ordinal} \tab mean in the prior for the intercepts\cr
 \code{tau_delta_ordinal} \tab precision in the priors for the intercepts
 }
@@ -95,7 +101,8 @@ on the specification of the Wishart distribution:}\cr
 For \code{KinvD} larger than the dimension of the variance-covariance matrix
 the prior on the correlation between the random effects is concentrated
 around 0, so that larger values of \code{KinvD} indicate stronger prior
-belief that the elements of the multivariate normal distribution are independent.
+belief that the elements of the multivariate normal distribution are
+independent.
 For \code{KinvD} equal to the number of random effects the Wishart prior
 puts most weight on the extreme values (correlation 1 or -1).
 }

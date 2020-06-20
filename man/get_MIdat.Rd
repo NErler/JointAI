@@ -12,9 +12,11 @@ get_MIdat(object, m = 10, include = TRUE, start = NULL, minspace = 50,
 
 \item{m}{number of imputed datasets}
 
-\item{include}{should the original, incomplete data be included? Default is \code{TRUE}.}
+\item{include}{should the original, incomplete data be included? Default is
+\code{TRUE}.}
 
-\item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{start}{the first iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
 \item{minspace}{minimum number of iterations between iterations to be chosen
 as imputed values (to prevent strong correlation between
@@ -26,10 +28,12 @@ MCMC chains).}
 \item{export_to_SPSS}{logical; should the completed data be exported to SPSS?}
 
 \item{resdir}{optional; directory for results. If unspecified and
-\code{export_to_SPSS = TRUE} the current working directory is used.}
+\code{export_to_SPSS = TRUE} the current working directory is
+used.}
 
 \item{filename}{optional; file name (without ending). If unspecified and
-\code{export_to_SPSS = TRUE} a name is generated automatically.}
+\code{export_to_SPSS = TRUE} a name is generated
+automatically.}
 }
 \value{
 A \code{data.frame} in which the original data (if
@@ -58,15 +62,20 @@ argument \code{monitor_params} in \code{\link[JointAI:model_imp]{*_imp}}.
 }
 
 \examples{
-# fit a model and monitor the imputed values with monitor_params = c(imps = TRUE)
-mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, monitor_params = c(imps = TRUE), n.iter = 100)
+# fit a model and monitor the imputed values with
+# monitor_params = c(imps = TRUE)
+
+mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF,
+              monitor_params = c(imps = TRUE), n.iter = 100)
 
 # Example 1: without export to SPSS
 MIs <- get_MIdat(mod, m = 3, seed = 123)
 
 
 \dontrun{
-# Example 2: with export for SPSS (here: to the temporary directory "temp_dir")
+# Example 2: with export for SPSS
+# (here: to the temporary directory "temp_dir")
+
 temp_dir <- tempdir()
 MIs <- get_MIdat(mod, m = 3, seed = 123, resdir = temp_dir,
                  filename = "example_imputation",

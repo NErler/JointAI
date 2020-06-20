@@ -23,7 +23,8 @@ ignored when \code{add = TRUE}.}
 \item{monitor_params}{named list or vector specifying which parameters should
 be monitored. For details, see
 \code{\link[JointAI:model_imp]{*_imp}} and the vignette
- \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}. Ignored when \code{add = TRUE}.}
+ \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}.
+ Ignored when \code{add = TRUE}.}
 
 \item{progress.bar}{character string specifying the type of progress bar.
 Possible values are "text", "gui", and "none" (see
@@ -62,6 +63,7 @@ imps <- add_samples(mod, n.iter = 200, monitor_params = c("imps" = TRUE),
 \seealso{
 \code{\link[JointAI:model_imp]{*_imp}}
 
-The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+The vignette
+\href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 contains some examples on how to specify the argument \code{monitor_params}.
 }

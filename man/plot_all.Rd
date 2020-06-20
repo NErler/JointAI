@@ -25,7 +25,8 @@ automatically chosen if unspecified}
 values is only given for variables that have missing values,
 if \code{TRUE} it is given for all variables}
 
-\item{idvars}{name of the column that specifies the multi-level grouping structure}
+\item{idvars}{name of the column that specifies the multi-level grouping
+structure}
 
 \item{xlab}{labels for the x- and y-axis}
 

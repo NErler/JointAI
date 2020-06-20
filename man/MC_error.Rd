@@ -13,15 +13,19 @@ MC_error(x, subset = NULL, exclude_chains = NULL, start = NULL,
 \arguments{
 \item{x}{object inheriting from class 'JointAI'}
 
-\item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
-Follows the same principle as the argument \code{monitor_params} in
+\item{subset}{subset of parameters/variables/nodes (columns in the MCMC
+sample). Follows the same principle as the argument
+\code{monitor_params} in
 \code{\link[JointAI:model_imp]{*_imp}}.}
 
-\item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
+\item{exclude_chains}{optional vector of the index numbers of chains that
+should be excluded}
 
-\item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{start}{the first iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
-\item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{end}{the last iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
 \item{thin}{thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
 For example, \code{thin = 1} (default) will keep the MCMC samples
@@ -55,9 +59,11 @@ on the sampling scale (this requires the argument
 \code{keep_scaled_mcmc = TRUE} to be set when fitting the
 model)}
 
-\item{plotpars}{optional; list of parameters passed to \code{\link[base]{plot}()}}
+\item{plotpars}{optional; list of parameters passed to
+\code{\link[base]{plot}()}}
 
-\item{ablinepars}{optional; list of parameters passed to \code{\link[graphics]{abline}()}}
+\item{ablinepars}{optional; list of parameters passed to
+\code{\link[graphics]{abline}()}}
 }
 \value{
 An object of class \code{MCElist} with elements \code{unscaled},
@@ -81,9 +87,9 @@ Lesaffre & Lawson (2012) [p. 195] suggest the Monte Carlo error of a
       deviation of this parameter (i.e., \eqn{MCSE/SD \le 0.05}).
 
 \strong{Long variable names:}\cr
-The default plot margins may not be wide enough when variable names are longer
-than a few characters. The plot margin can be adjusted (globally) using
-the argument \code{"mar"} in \code{\link[graphics]{par}}.
+The default plot margins may not be wide enough when variable names are
+longer than a few characters. The plot margin can be adjusted (globally)
+using the argument \code{"mar"} in \code{\link[graphics]{par}}.
 }
 \examples{
 mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
@@ -100,6 +106,7 @@ Lesaffre, E., & Lawson, A. B. (2012).
 John Wiley & Sons.
 }
 \seealso{
-The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+The vignette
+\href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 provides some examples how to specify the argument \code{subset}.
 }

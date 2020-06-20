@@ -12,7 +12,8 @@ A data frame with 186 rows and 13 variables:
   \item{age}{in years}
   \item{race}{race / Hispanic origin (5 categories)}
   \item{WC}{waist circumference in cm}
-  \item{alc}{alcohol consumption (binary: <1 drink per week vs. >= 1 drink per week)}
+  \item{alc}{alcohol consumption (binary: <1 drink per week vs. >= 1 drink
+             per week)}
   \item{educ}{educational level (binary: low vs. high)}
   \item{creat}{creatinine concentration in mg/dL}
   \item{albu}{albumin concentration in g/dL}

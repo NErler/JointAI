@@ -17,20 +17,24 @@ densplot(object, ...)
 
 \item{...}{additional parameters passed to \code{\link[base]{plot}}}
 
-\item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{start}{the first iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
-\item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{end}{the last iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
 \item{thin}{thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
 For example, \code{thin = 1} (default) will keep the MCMC samples
 from all iterations; \code{thin = 5} would only keep every 5th
 iteration.}
 
-\item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
-Follows the same principle as the argument \code{monitor_params} in
+\item{subset}{subset of parameters/variables/nodes (columns in the MCMC
+sample). Follows the same principle as the argument
+\code{monitor_params} in
 \code{\link[JointAI:model_imp]{*_imp}}.}
 
-\item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
+\item{exclude_chains}{optional vector of the index numbers of chains that
+should be excluded}
 
 \item{vlines}{list, where each element is a named list of parameters that
 can be passed to \code{\link[graphics]{abline}} to create
@@ -47,7 +51,8 @@ automatically chosen if unspecified}
 
 \item{joined}{logical; should the chains be combined before plotting?}
 
-\item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
+\item{use_ggplot}{logical; Should ggplot be used instead of the base
+graphics?}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}. (Note: this applies only to warnings
@@ -77,9 +82,10 @@ densplot(mod, col = c("darkred", "darkblue", "darkgreen"),
                             col = grey(0.8))))
 
 
-# Example 3: use vlines to visualize the posterior mean and 2.5\% and 97.5\% quantiles
+# Example 3: use vlines to visualize posterior mean and 2.5\%/97.5\% quantiles
 res <- rbind(summary(mod)$res$y$regcoef[, c('Mean', '2.5\%', '97.5\%')],
-             summary(mod)$res$y$sigma[, c('Mean', '2.5\%', '97.5\%'), drop = FALSE]
+             summary(mod)$res$y$sigma[, c('Mean', '2.5\%', '97.5\%'),
+             drop = FALSE]
              )
 densplot(mod, vlines = list(list(v = res[, "Mean"], lty = 1, lwd = 2),
                             list(v = res[, "2.5\%"], lty = 2),
@@ -90,7 +96,7 @@ densplot(mod, vlines = list(list(v = res[, "Mean"], lty = 1, lwd = 2),
 densplot(mod, use_ggplot = TRUE)
 
 
-# Example 5: changing how the ggplot version looks (using standard ggplot syntax)
+# Example 5: change how the ggplot version looks
 library(ggplot2)
 
 densplot(mod, use_ggplot = TRUE) +
@@ -101,6 +107,7 @@ densplot(mod, use_ggplot = TRUE) +
 
 }
 \seealso{
-The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+The vignette
+\href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 contains some examples how to specify the argument \code{subset}.
 }

@@ -7,18 +7,20 @@
 \item{\code{analysis_type}}{\code{lm}, \code{glm}, \code{clm}, \code{lme},
                             \code{glme}, \code{clmm}, \code{survreg} or
                             \code{coxph} (with attributes
-                            \code{family} and \code{link} for GLM-type models}
+                            \code{family} and \code{link} for GLM-type
+                            models}
 \item{\code{data}}{original (incomplete, but pre-processed) data}
 \item{\code{models}}{named vector specifying the the types of all sub-models}
 \item{\code{fixed}}{a list of the fixed effects formulas of the sub-model(s)
                     for which the use had specified a formula}
-\item{\code{random}}{a list of the random effects formulas of the sub-model(s)
-                    for which the use had specified a formula}
+\item{\code{random}}{a list of the random effects formulas of the
+                     sub-model(s) for which the use had specified a formula}
 \item{\code{Mlist}}{a list (for internal use) containing the data and
                     information extracted from the data and model formulas,
                     split up into
       \itemize{
-        \item a list of design matrices, one for each level of the data (\code{M})
+        \item a list of design matrices, one for each level of the data
+              (\code{M})
         \item a named vector identifying the levels (in the hierarchy)
               of all variables (\code{Mlvls})
         \item a vector of the id variables that were extracted from the
@@ -51,7 +53,8 @@
               specification of the baseline hazard in proportional hazards
               survival models (\code{df_basehaz})
         \item a list of matrices, one per level of the data, specifying
-              centring and scaling parameters for the data (\code{scale_pars})
+              centring and scaling parameters for the data
+              (\code{scale_pars})
         \item a list containing information on the outcomes (mostly relevant
               for survival outcomes; \code{outcomes})
         \item a list of terms objects, needed to be able to build correct
@@ -64,8 +67,8 @@
 \item{\code{K_imp}}{a list of matrices specifying the indices of regression
       coefficients for each covariate model per design matrix}
 \item{\code{JAGSmodel}}{The JAGS model as character string.}
-\item{\code{mcmc_settings}}{a list containing MCMC sampling related information
-                            with elements
+\item{\code{mcmc_settings}}{a list containing MCMC sampling related
+                            information with elements
      \itemize{
      \item{\code{modelfile}: }{path and name of the JAGS model file}
      \item{\code{n.chains}: }{number of MCMC chains}
@@ -73,26 +76,34 @@
      \item{\code{n.iter}: }{number of iterations in the MCMC sample}
      \item{\code{variable.names}: }{monitored nodes}
      \item{\code{thin}: }{thinning interval of the MCMC sample}
-     \item{\code{inits}: }{a list containing the initial values that were passed to \strong{rjags}}
-     \item{\code{parallel}: }{a logical indicator whether parallel sampling was used}
+     \item{\code{inits}: }{a list containing the initial values that were
+                           passed to \strong{rjags}}
+     \item{\code{parallel}: }{a logical indicator whether parallel sampling
+                              was used}
      \item{\code{n.cores}: }{the number of cores used in parallel sampling}
      }}
-\item{\code{monitor_params}}{the named list of parameter groups to be monitored}
+\item{\code{monitor_params}}{the named list of parameter groups to be
+                             monitored}
 \item{\code{data_list}}{list with data that was passed to \strong{rjags}}
-\item{\code{hyperpars}}{a list containing the values of the hyperparameters used}
-\item{\code{info_list}}{a list with information used to write the imputation model syntax}
+\item{\code{hyperpars}}{a list containing the values of the hyper-parameters
+                        used}
+\item{\code{info_list}}{a list with information used to write the imputation
+                        model syntax}
 \item{\code{coef_list}}{a list relating the regression coefficient vectors
-                        used in the JAGS model to the names of the corresponding
-                        covariates}
+                        used in the JAGS model to the names of the
+                        corresponding covariates}
 \item{\code{model}}{the JAGS model (an object of class 'jags', created by
                     \bold{rjags})}
-\item{\code{sample}}{MCMC sample on the sampling scale (included only if \code{keep_scaled_sample = TRUE})}
+\item{\code{sample}}{MCMC sample on the sampling scale (included only if
+                     \code{keep_scaled_sample = TRUE})}
 \item{\code{MCMC}}{MCMC sample, scaled back to the scale of the data}
-\item{\code{time}}{the computational time used for the sampling (adaptive phase + sampling)}
+\item{\code{time}}{the computational time used for the sampling
+                   (adaptive phase + sampling)}
 \item{\code{fitted.values}}{fitted/predicted values (if available)}
 \item{\code{residuals}}{residuals (if available)}
 \item{\code{call}}{the original call}
 }
 \description{
-An object returned by one of the main functions \code{\link[JointAI:model_imp]{*_imp}}.
+An object returned by one of the main functions
+\code{\link[JointAI:model_imp]{*_imp}}.
 }

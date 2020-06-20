@@ -24,9 +24,10 @@ This data was simulated to mimic data from a longitudinal cohort study
 following mothers and their child from birth until approximately 4 years of
 age.
 It contains 2400 observations of 200 mother-child pairs. Children's BMI and
-head circumference was measured repeatedly and their age in months was recorded
-at each measurement. Furthermore, the data contain several baseline variables
-with information on the mothers' demographics and socio-economic status.
+head circumference was measured repeatedly and their age in months was
+recorded at each measurement. Furthermore, the data contain several baseline
+variables with information on the mothers' demographics and socio-economic
+status.
 }
 \section{Baseline covariates}{
  (in \code{simLong} and \code{simWide})
@@ -35,11 +36,14 @@ with information on the mothers' demographics and socio-economic status.
   \item{ETHN}{ethnicity (binary: European vs. other)}
   \item{AGE_M}{age of the mother at intake}
   \item{HEIGHT_M}{height of the mother (in cm)}
-  \item{PARITY}{number of times the mother has given birth (binary: 0 vs. >=1)}
+  \item{PARITY}{number of times the mother has given birth
+                (binary: 0 vs. >=1)}
   \item{SMOKE}{smoking status of the mother during pregnancy
                (3 ordered categories: never smoked during pregnancy,
-                smoked until pregnancy was known, continued smoking in pregnancy)}
-  \item{EDUC}{educational level of the mother (3 ordered categories: low, mid, high)}
+                smoked until pregnancy was known, continued smoking in
+                pregnancy)}
+  \item{EDUC}{educational level of the mother (3 ordered categories: low,
+             mid, high)}
   \item{MARITAL}{marital status (3 categories)}
   \item{ID}{subject identifier}
   }

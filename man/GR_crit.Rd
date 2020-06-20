@@ -29,15 +29,19 @@ appropriate, will be applied.}
 potential scale reduction factor should be calculated for multivariate
 chains}
 
-\item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
-Follows the same principle as the argument \code{monitor_params} in
+\item{subset}{subset of parameters/variables/nodes (columns in the MCMC
+sample). Follows the same principle as the argument
+\code{monitor_params} in
 \code{\link[JointAI:model_imp]{*_imp}}.}
 
-\item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
+\item{exclude_chains}{optional vector of the index numbers of chains that
+should be excluded}
 
-\item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{start}{the first iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
-\item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{end}{the last iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
 \item{thin}{thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
 For example, \code{thin = 1} (default) will keep the MCMC samples
@@ -74,6 +78,7 @@ of iterative simulations.
 \emph{Journal of Computational and Graphical Statistics}, \strong{7}, 434-455.
 }
 \seealso{
-The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+The vignette
+\href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 contains some examples how to specify the argument \code{subset}.
 }

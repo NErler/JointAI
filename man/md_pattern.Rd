@@ -20,11 +20,11 @@ observed and missing values (in that order)}
 \item{plot}{logical; should the missing data pattern be plotted?
 (default is \code{TRUE})}
 
-\item{pattern}{logical; should the missing data pattern be returned as matrix?
-(default is \code{FALSE})}
+\item{pattern}{logical; should the missing data pattern be returned as
+matrix? (default is \code{FALSE})}
 
-\item{print_xaxis, print_yaxis}{logical; should the x-axis (below the plot) and
-y-axis (on the right) be printed?}
+\item{print_xaxis, print_yaxis}{logical; should the x-axis (below the plot)
+and y-axis (on the right) be printed?}
 
 \item{ylab}{y-axis label}
 
@@ -34,7 +34,8 @@ y-axis (on the right) be printed?}
 \item{...}{optional additional parameters, currently not used}
 }
 \description{
-Obtain a plot of the pattern of missing data and/or return the pattern as a matrix.
+Obtain a plot of the pattern of missing data and/or return the pattern as a
+matrix.
 }
 \note{
 This function requires the
@@ -48,6 +49,7 @@ par(op)
 
 }
 \seealso{
-See the vignette \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
+See the vignette
+\href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{Visualizing Incomplete Data}
 for more examples.
 }
