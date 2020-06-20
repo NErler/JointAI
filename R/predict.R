@@ -455,7 +455,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   # Xc <- X[, colnames(X) %in% colnames(Mlist$M[[info_list[[varname]]$resp_mat[2]]]), drop = FALSE]
 
   if (mess & any(is.na(X)))
-    message('Prediction for cases with missing covariates is not yet implemented.')
+    msg('Prediction for cases with missing covariates is not yet
+            implemented.')
 
   scale_pars <- do.call(rbind, unname(Mlist$scale_pars))
   if (!is.null(scale_pars)) {
