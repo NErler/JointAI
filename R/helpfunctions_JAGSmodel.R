@@ -880,7 +880,7 @@ get_repar <- function(family, varname, index, isgk = FALSE) {
                           if (isgk) "gk", "_", varname, "[", index,
                           if (isgk) ", k", "] / pow(sigma_", varname, ", 2)",
                           "\n\n"),
-         "Poisson" = NULL,
+         "poisson" = NULL,
          'lognorm' = NULL,
          "beta" <- paste0(
            "\n",
