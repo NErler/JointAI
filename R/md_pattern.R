@@ -49,8 +49,8 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
   tab <- table(NApat)
   Npat <- tab[match(NAupat, names(tab))]
 
-  unaX <- unaX[order(Npat, decreasing = T), ]
-  Npat <- sort(Npat, decreasing = T)
+  unaX <- unaX[order(Npat, decreasing = TRUE), ]
+  Npat <- sort(Npat, decreasing = TRUE)
   rownames(unaX) <- nrow(unaX):1
 
   vars <- colnames(unaX)[order(Nmis)]

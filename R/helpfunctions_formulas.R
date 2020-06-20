@@ -404,7 +404,7 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
         eq <- which(p == p[k])
         ord <- order(fctDF$matrix[eq],
                      sapply(data[fctDF$var[eq]],
-                            function(x) any(is.na(x))), decreasing = T)
+                            function(x) any(is.na(x))), decreasing = TRUE)
 
         fctDF$dupl[eq[ord]] <- duplicated(p[eq[ord]])
       }

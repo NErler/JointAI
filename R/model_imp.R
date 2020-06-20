@@ -647,11 +647,11 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # needs to be checked
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    if (any(grepl('beta[', unlist(monitor_params), fixed = T))) {
+    if (any(grepl('beta[', unlist(monitor_params), fixed = TRUE))) {
       monitor_params <- c(sapply(monitor_params, function(x) {
         if (any(grepl('beta[', x, fixed = TRUE)))
           x[-grep('beta[', x, fixed = TRUE)]
-        else x}, simplify = F),
+        else x}, simplify = FALSE),
         analysis_main = TRUE)
       if (mess)
         msg('Note: Main model parameter were added to the

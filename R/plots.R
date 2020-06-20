@@ -451,7 +451,7 @@ plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8)
 
     if (is.factor(x) | is.logical(x)) {
       if (any(is.na(x))) {
-        x <- factor(x, levels = c(levels(x), "NA"), ordered = T)
+        x <- factor(x, levels = c(levels(x), "NA"), ordered = TRUE)
         x[is.na(x)] <- "NA"
       }
       if (is.null(args_barplot)) {
