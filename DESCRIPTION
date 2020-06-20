@@ -17,7 +17,6 @@ Description: Provides joint analysis and imputation of (generalized)
     the user to export imputed values.
 URL: https://nerler.github.io/JointAI
 License: GPL (>= 2)
-Date: 2020-06-17
 BugReports: https://github.com/nerler/JointAI/issues
 LazyData: TRUE
 RoxygenNote: 7.1.0
