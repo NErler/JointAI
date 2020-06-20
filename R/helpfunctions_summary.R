@@ -29,7 +29,7 @@ prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL,
   }
 
   if (is.null(thin))
-    thin <- thin(object$MCMC)
+    thin <- coda::thin(object$MCMC)
 
   # obtain subset of parameters of the MCMC samples
   MCMC <- get_subset(object, subset, warn = warn, mess = mess)

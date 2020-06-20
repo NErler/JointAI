@@ -132,21 +132,21 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
     newmcmc <- if (!is.null(object$sample)) {
       coda::as.mcmc.list(
         lapply(seq_len(length(mcmc)),
-               function(x) mcmc(rbind(object$sample[[x]],
-                                      mcmc[[x]]),
-                                start = start(object$sample),
-                                end = end(object$sample) +
-                                  coda::niter(mcmc[[x]])
+               function(x) coda::mcmc(rbind(object$sample[[x]],
+                                            mcmc[[x]]),
+                                      start = start(object$sample),
+                                      end = end(object$sample) +
+                                        coda::niter(mcmc[[x]])
                )
         ))
     }
 
     newMCMC <- coda::as.mcmc.list(
       lapply(seq_len(length(MCMC)), function(k)
-        mcmc(rbind(object$MCMC[[k]], MCMC[[k]]),
+        coda::mcmc(rbind(object$MCMC[[k]], MCMC[[k]]),
              start = start(object$MCMC),
-             end = end(object$MCMC) + coda::niter(mcmc[[k]]) * thin(mcmc[[k]]),
-             thin = thin(mcmc[[k]]))
+             end = end(object$MCMC) + coda::niter(mcmc[[k]]) * coda::thin(mcmc[[k]]),
+             thin = coda::thin(mcmc[[k]]))
       ))
   } else {
     newmcmc <- mcmc

@@ -154,7 +154,6 @@
 #' doi: \href{https://doi.org/10.1177/0962280217730851}{10.1177/0962280217730851}
 #'
 #' @import graphics
-#' @import coda
 #' @import utils
 #' @import rjags
 #' @import stats

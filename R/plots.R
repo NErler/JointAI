@@ -51,9 +51,10 @@ traceplot.mcmc.list <- function(object, start = NULL, end = NULL,
 
   if (is.null(start)) start <- start(object)
   if (is.null(end)) end <- end(object)
-  if (is.null(thin)) thin <- thin(object)
+  if (is.null(thin)) thin <- coda::thin(object)
 
-  coda::traceplot(window(object, start = start, end = end, thin = thin), ...)
+  coda::traceplot(window(object, start = start, end = end,
+                         thin = thin), ...)
 }
 
 
@@ -96,7 +97,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
               mar = c(3.2, 2.5, ifelse(length(object$fixed) == 1, 2, 3), 1),
               mgp = c(2, 0.6, 0))
 
-    for (i in 1:nvar(prep$MCMC)) {
+    for (i in seq_len(coda::nvar(prep$MCMC))) {
       matplot(x = as.numeric(prep$time),
               y = as.array(prep$MCMC, drop = FALSE)[, i, ], type = "l",
               xlab = "Iterations", ylab = "",
@@ -179,9 +180,10 @@ densplot.mcmc.list <- function(object, start = NULL, end = NULL,
 
   if (is.null(start)) start <- start(object)
   if (is.null(end)) end <- end(object)
-  if (is.null(thin)) thin <- thin(object)
+  if (is.null(thin)) thin <- coda::thin(object)
 
-  coda::densplot(window(object, start = start, end = end, thin = thin), ...)
+  coda::densplot(window(object, start = start, end = end,
+                        thin = thin), ...)
 }
 
 
@@ -203,7 +205,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   # Set the resulting object as mcmc.list so that the rest of the syntax
   # works for either case
   if (joined)
-    prep$MCMC <- as.mcmc.list(as.mcmc(do.call(rbind, prep$MCMC)))
+    prep$MCMC <- coda::as.mcmc.list(coda::as.mcmc(do.call(rbind, prep$MCMC)))
 
 
   # obtain the variable names to be used as names for the sub-plots
@@ -298,7 +300,7 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL,
   # set first and last iteration to be used and thinning interval
   if (is.null(start)) start <- start(object$MCMC)
   if (is.null(end)) end <- end(object$MCMC)
-  if (is.null(thin)) thin <- thin(object$MCMC)
+  if (is.null(thin)) thin <- coda::thin(object$MCMC)
 
   # create a subset of the MCMC sample based on the user-selected set of
   # parameters

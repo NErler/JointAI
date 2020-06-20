@@ -45,7 +45,7 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE,
     end <- end(object$MCMC)
 
   if (is.null(thin))
-    thin <- thin(object$MCMC)
+    thin <- coda::thin(object$MCMC)
 
   MCMC <- get_subset(object, subset, warn = warn, mess = mess)
 
@@ -131,7 +131,7 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
     end <- end(x$MCMC)
 
   if (is.null(thin))
-    thin <- thin(x$MCMC)
+    thin <- coda::thin(x$MCMC)
 
   # MC error for MCMC sample scaled back to data scale
   MCMC <- get_subset(object = x, subset = subset, warn = warn, mess = mess)
@@ -171,8 +171,10 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
     mcmc <- mcmc[match(colnames(MCMC), colnames(x$MCMC[[1]])), ]
 
     MCE2 <- mcmcse::mcse.mat(x = do.call(rbind,
-                                         window(x$sample[chains], start = start,
-                                                end = end,  thin = thin)), ...)
+                                         window(x$sample[chains],
+                                                start = start,
+                                                end = end,
+                                                thin = thin)), ...)
     colnames(MCE2) <- gsub("se", "MCSE", colnames(MCE2))
 
     MCE2 <- cbind(MCE2, SD = apply(mcmc, 2, sd) )

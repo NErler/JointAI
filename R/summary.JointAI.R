@@ -185,9 +185,9 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$start <- ifelse(is.null(start), start(object$MCMC),
                       max(start, start(object$MCMC)))
   out$end <- ifelse(is.null(end), end(object$MCMC), min(end, end(object$MCMC)))
-  out$thin <- thin(object$MCMC)
-  out$nchain <- nchain(object$MCMC) - sum(exclude_chains %in%
-                                            seq_along(object$MCMC))
+  out$thin <- coda::thin(object$MCMC)
+  out$nchain <- coda::nchain(object$MCMC) - sum(exclude_chains %in%
+                                                  seq_along(object$MCMC))
   out$res <- res_list
   out$missinfo <- if (missinfo) get_missinfo(object)
 

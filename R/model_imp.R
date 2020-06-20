@@ -686,7 +686,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                           n.adapt = n.adapt, n.iter = n.iter, thin = thin,
                           var.names = var.names)}
       doParallel::stopImplicitCluster()
-      mcmc <- as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
+      mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
       adapt <- lapply(res, function(x) x$adapt)
     }
   } else {
@@ -760,7 +760,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
          coef_list = get_coef_names(info_list),
          model = if (n.adapt > 0) adapt,
          sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
-         MCMC = if (n.iter > 0 & !is.null(mcmc)) as.mcmc.list(MCMC),
+         MCMC = if (n.iter > 0 & !is.null(mcmc)) coda::as.mcmc.list(MCMC),
          time = t1 - t0
     ), class = "JointAI")
 
