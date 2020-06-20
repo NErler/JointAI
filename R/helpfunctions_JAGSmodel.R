@@ -755,7 +755,8 @@ paste_interactions <- function(interactions, group_lvls, N) {
 
 
 # used in JAGSmodels (2020-06-11)
-get_priordistr <- function(shrinkage, type, family = NULL, link = NULL, parname) {
+get_priordistr <- function(shrinkage, type, family = NULL, link = NULL,
+                           parname) {
   # write specification fo the prior distribution for the regression parameters,
   # using the specified type of shrinkage (or no shrinkage)
 
@@ -798,7 +799,8 @@ get_priordistr <- function(shrinkage, type, family = NULL, link = NULL, parname)
 
 # used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
 get_distr <- function(family, varname, index, isgk = FALSE) {
-  # write the outcome distribution model (right hand side) for a GLM(M) JAGS model
+  # write the outcome distribution model (right hand side) for a GLM(M)
+  # JAGS model
 
   if (is.null(family))   return(NULL)
 
@@ -855,7 +857,7 @@ get_linkfun <- function(link) {
   )
 }
 
-# * re-parametrization ----------------------------------------------------------
+# * re-parametrization ---------------------------------------------------------
 
 # used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
 get_repar <- function(family, varname, index, isgk = FALSE) {
@@ -870,7 +872,8 @@ get_repar <- function(family, varname, index, isgk = FALSE) {
                           tab(4), "shape", if (isgk) "gk", "_", varname,
                           "[", index, if (isgk) ", k", "] <- pow(mu",
                           if (isgk) "gk", "_", varname, "[", index,
-                          if (isgk) ", k", "], 2) / pow(sigma_", varname, ", 2)",
+                          if (isgk) ", k", "], 2) / pow(sigma_", varname,
+                          ", 2)",
                           "\n",
                           tab(4), "rate", if (isgk) "gk", "_", varname,
                           "[", index, if (isgk) ", k", "] <- mu",

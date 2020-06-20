@@ -184,7 +184,8 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
     othervars <- if (is.list(parelmts[[paste0("M_", k)]])) {
       lapply(parelmts[[paste0("M_", k)]], function(p) {
         data.frame(term = names(p),
-                   matrix = if (!is.null(lp[[paste0("M_", k)]])) paste0("M_", k),
+                   matrix = if (!is.null(lp[[paste0("M_", k)]]))
+                     paste0("M_", k),
                    cols = lp[[paste0("M_", k)]][names(p)],
                    parelmts = p,
                    stringsAsFactors = FALSE)

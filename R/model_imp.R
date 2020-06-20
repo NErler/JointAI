@@ -1157,17 +1157,18 @@ glmer_imp <- glme_imp
 #' @rdname model_imp
 #' @export
 betamm_imp <- function(fixed, random, data,
-                        n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                        monitor_params = NULL,  auxvars = NULL, refcats = NULL,
-                        models = NULL, no_model = NULL, trunc = NULL,
-                        shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                        parallel = FALSE, n.cores = NULL,
-                        scale_vars = NULL, hyperpars = NULL,
-                        modelname = NULL, modeldir = NULL,
-                        keep_model = FALSE, overwrite = NULL,
-                        quiet = TRUE, progress.bar = "text",
-                        warn = TRUE, mess = TRUE,
-                        keep_scaled_mcmc = FALSE, ...){
+                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                       monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                       models = NULL, no_model = NULL, trunc = NULL,
+                       shrinkage = FALSE, ppc = TRUE, seed = NULL,
+                       inits = NULL,
+                       parallel = FALSE, n.cores = NULL,
+                       scale_vars = NULL, hyperpars = NULL,
+                       modelname = NULL, modeldir = NULL,
+                       keep_model = FALSE, overwrite = NULL,
+                       quiet = TRUE, progress.bar = "text",
+                       warn = TRUE, mess = TRUE,
+                       keep_scaled_mcmc = FALSE, ...){
 
   arglist <- mget(names(formals()), sys.frame(sys.nframe()))
   thiscall <- as.list(match.call())[-1L]

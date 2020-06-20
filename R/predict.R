@@ -191,10 +191,12 @@ predDF.list <- function(formulas, dat, vars, length = 100, idvar = NULL, ...) {
 #'
 
 #' @export
-predict.JointAI <- function(object, outcome = 1, newdata, quantiles = c(0.025, 0.975),
+predict.JointAI <- function(object, outcome = 1, newdata,
+                            quantiles = c(0.025, 0.975),
                             type = 'lp',
                             start = NULL, end = NULL, thin = NULL,
-                            exclude_chains = NULL, mess = TRUE, warn = TRUE, ...) {
+                            exclude_chains = NULL, mess = TRUE,
+                            warn = TRUE, ...) {
 
 
   if (!inherits(object, "JointAI")) errormsg("Use only with 'JointAI' objects.")

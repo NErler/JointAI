@@ -102,36 +102,38 @@
 #'                            and \code{\link{densplot}}.
 #' \item \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{\emph{Visualizing Incomplete Data}}:\cr
 #' Demonstrations of the options in \code{\link{plot_all}} (plotting histograms
-#'      and barplots for all variables in the data)  and \code{\link{md_pattern}}
-#'      (plotting or printing the missing data pattern).
+#' and bar plots for all variables in the data)  and \code{\link{md_pattern}}
+#' (plotting or printing the missing data pattern).
 #'
 #' \item \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{\emph{Model Specification}}:\cr
 #' Explanation and demonstration of all parameters that are required or optional
-#' to specify the model structure in \code{\link{lm_imp}}, \code{\link{glm_imp}}
-#' and \code{\link{lme_imp}}.
-#' Among others, the functions \code{\link{parameters}}, \code{\link{list_models}}
-#' and \code{\link{set_refcat}} are used.
+#' to specify the model structure in \code{\link{lm_imp}},
+#' \code{\link{glm_imp}} and \code{\link{lme_imp}}.
+#' Among others, the functions \code{\link{parameters}},
+#' \code{\link{list_models}} and \code{\link{set_refcat}} are used.
 #'
 #' \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{\emph{Parameter Selection}}:\cr
-#' Examples on how to select the parameters/variables/nodes
-#'                                 to follow using the argument \code{monitor_params}
-#'                                 and the parameters/variables/nodes displayed
-#'                                 in the \code{\link{summary}}, \code{\link{traceplot}},
-#'                                 \code{\link{densplot}} or when using
-#'                                 \code{\link{GR_crit}} or \code{\link{MC_error}}.
+#'       Examples on how to select the parameters/variables/nodes
+#'       to follow using the argument \code{monitor_params} and the
+#'       parameters/variables/nodes displayed in the \code{\link{summary}},
+#'       \code{\link{traceplot}}, \code{\link{densplot}} or when using
+#'       \code{\link{GR_crit}} or \code{\link{MC_error}}.
 #'
 #' \item \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{\emph{MCMC Settings}}:\cr
-#' Examples demonstrating how to set the arguments controlling settings of the MCMC sampling,
-#' i.e., \code{n.adapt}, \code{n.iter}, \code{n.chains}, \code{thin}, \code{inits}.
+#'       Examples demonstrating how to set the arguments controlling settings
+#'       of the MCMC sampling,
+#'       i.e., \code{n.adapt}, \code{n.iter}, \code{n.chains}, \code{thin},
+#'        \code{inits}.
 #'
 #' \item \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{\emph{After Fitting}}:\cr
-#' Examples on the use of functions to be applied after the model has been fitted,
-#' including \code{\link{traceplot}}, \code{\link{densplot}}, \code{\link{summary}},
-#' \code{\link{GR_crit}}, \code{\link{MC_error}}, \code{\link{predict}},
-#' \code{\link{predDF}} and \code{\link{get_MIdat}}.
+#'       Examples on the use of functions to be applied after the model has
+#'       been fitted, including \code{\link{traceplot}}, \code{\link{densplot}},
+#'       \code{\link{summary}}, \code{\link{GR_crit}}, \code{\link{MC_error}},
+#'       \code{\link{predict}}, \code{\link{predDF}} and
+#'       \code{\link{get_MIdat}}.
 #'
 #' \item \href{https://nerler.github.io/JointAI/articles/TheoreticalBackground.html}{\emph{Theoretical Background}}:\cr
-#' Explanation of the statistical method implemented in \strong{JointAI}.
+#'       Explanation of the statistical method implemented in \strong{JointAI}.
 #'}
 #' @references
 #' Nicole S. Erler, Dimitris Rizopoulos and Emmanuel M.E.H. Lesaffre (2019).
@@ -166,7 +168,8 @@ NULL
 #' Create a Survival Object
 #'
 #' This function just calls \code{Surv()} from the
-#' \href{https://CRAN.R-project.org/package=survival}{\strong{survival}} package.
+#' \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}
+#' package.
 #'
 #' @inheritParams survival::Surv
 #' @export

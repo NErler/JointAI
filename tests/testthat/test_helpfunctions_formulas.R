@@ -184,7 +184,7 @@ test_that('split_formula_list works', {
 })
 
 
-# identify_functions ------------------------------------------------------------
+# identify_functions -----------------------------------------------------------
 library(splines)
 fmls <- list(list(formula = y ~ I(a^2) + b + log(a),
                   fcts = list(I = "I(a^2)", log = "log(a)")),
@@ -305,10 +305,11 @@ test_that("extract_outcome_data works", {
 test_that("outcomes_to_mat works", {
   mat <- data.matrix(do.call(cbind, unname(lapply(fmla, "[[", "outcome"))))
   dimnames(mat) <- list(c(), dimnames(mat)[[2]])
-  expect_equal(outcomes_to_mat(extract_outcome_data(lapply(fmla, "[[", "fixed"),
-                                                    data = longDF,
-                                                    analysis_type = 'something')),
-               mat)
+  expect_equal(outcomes_to_mat(
+    extract_outcome_data(lapply(fmla, "[[", "fixed"),
+                         data = longDF,
+                         analysis_type = 'something')),
+    mat)
 })
 
 test_that("outcomes_to_mat gives error with duplicate outcome", {

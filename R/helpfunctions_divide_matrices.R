@@ -323,7 +323,8 @@ outcomes_to_mat <- function(outcomes) {
   # make a design matrix from the outcomes of a list of formulas
   # - outcomes: list produced by extract_outcome_data()
 
-  outlist <- unlist(unname(lapply(outcomes$outcomes, as.list)), recursive = FALSE)
+  outlist <- unlist(unname(lapply(outcomes$outcomes, as.list)),
+                    recursive = FALSE)
 
   nosurv <- !sapply(outcomes$fixed, 'attr', 'type') %in% c('coxph', 'JM')
   outlist_nosurv <- unlist(unname(lapply(outcomes$outcomes[nosurv], as.list)),
@@ -395,7 +396,8 @@ model.matrix_combi <- function(fmla, data, terms_list, refs) {
 
   if (length(mats) > 1) {
     for (i in seq_along(mats)[-1]) {
-      X <- cbind(X, mats[[i]][, setdiff(colnames(mats[[i]]), colnames(X)), drop = FALSE])
+      X <- cbind(X, mats[[i]][, setdiff(colnames(mats[[i]]), colnames(X)),
+                              drop = FALSE])
     }
   }
 
@@ -476,7 +478,8 @@ match_interaction <- function(inter, M) {
 # used in divide_matrices (2020-06-10)
 get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
                          analysis_type = NULL, warn = TRUE, refs) {
-  # obtain the linear predictor columns and variable names for all models involved
+  # obtain the linear predictor columns and variable names for all models
+  # involved
   # - fixed: list of fixed effects formulas
   # - random: list of random effects formulas
   # - data: a data.frame with the pre-processed data
@@ -544,9 +547,10 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
       lvl[colnames(subdat)] == lvl[out]
 
     # get the names of the columns of the corresponding design matrix
-    lp[[out]] <- colnames(model.matrix(fmla, subset(subdat, select = relvars),
-                                       contrasts.arg = contr_list[intersect(all_vars(fmla),
-                                                                            names(contr_list))]))
+    lp[[out]] <- colnames(
+      model.matrix(fmla, subset(subdat, select = relvars),
+                   contrasts.arg = contr_list[intersect(all_vars(fmla),
+                                                        names(contr_list))]))
 
     # if the linear predictor is empty, create an empty object, to make the
     # subsequent code work in any case

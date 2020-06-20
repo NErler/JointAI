@@ -67,10 +67,14 @@ JAGSmodel_clmm <- function(info) {
 
   # paste_ppc_prior <- if (info$ppc) {
   #   paste0('\n',
-  #          tab(), '# Posterior predictive check for the model for ', info$varname, '\n',
-  #          tab(), 'ppc_', info$varname, "_o <- pow(", info$varname, "[] - mu_", info$varname, "[], 2)", "\n",
-  #          tab(), 'ppc_', info$varname, "_e <- pow(", info$varname, "_ppc[] - mu_", info$varname, "[], 2)", "\n",
-  #          tab(), 'ppc_', info$varname, " <- mean(step(ppc_", info$varname, "_o - ppc_", info$varname, "_e)) - 0.5", "\n"
+  #          tab(), '# Posterior predictive check for the model for
+  #           ', info$varname, '\n',
+  #          tab(), 'ppc_', info$varname, "_o <- pow(", info$varname,
+  #           "[] - mu_", info$varname, "[], 2)", "\n",
+  #          tab(), 'ppc_', info$varname, "_e <- pow(", info$varname,
+  #           "_ppc[] - mu_", info$varname, "[], 2)", "\n",
+  #          tab(), 'ppc_', info$varname, " <- mean(step(ppc_",
+  #          info$varname, "_o - ppc_", info$varname, "_e)) - 0.5", "\n"
   #   )
   # }
 

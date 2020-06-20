@@ -400,7 +400,8 @@ get_plotmain <- function(object, plotnams, ylab = FALSE) {
 #'
 #' @export
 
-plot_all <- function(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8),
+plot_all <- function(data, nrow = NULL, ncol = NULL,
+                     fill = grDevices::grey(0.8),
                      border = 'black', allNA = FALSE, idvars = NULL,
                      xlab = '', ylab = 'frequency', ...) {
 
