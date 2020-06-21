@@ -26,7 +26,7 @@ test_that("Univariate GLM like models work", {
   expect_s3_class(mod, "JointAI")
   expect_equal(mod$models, c(xbeta = 'beta'))
 
-  mod <- lognormal_imp(C1 ~ 1, data = wideDF)
+  mod <- lognorm_imp(C1 ~ 1, data = wideDF)
   expect_s3_class(mod, "JointAI")
   expect_equal(mod$models, c(C1 = 'lognorm'))
 

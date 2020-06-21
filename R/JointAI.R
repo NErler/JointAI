@@ -16,7 +16,7 @@
 #' \item \code{\link{lm_imp}} for linear regression
 #' \item \code{\link{glm_imp}} for generalized linear regression
 #' \item \code{\link{betareg_imp}} for regression using a beta distribution
-#' \item \code{\link{lognormal_imp}} for regression using a log-normal
+#' \item \code{\link{lognorm_imp}} for regression using a log-normal
 #'                                   distribution
 #' \item \code{\link{clm_imp}} for (ordinal) cumulative logit models
 #' \item \code{\link{mlogit_imp}} for multinomial models

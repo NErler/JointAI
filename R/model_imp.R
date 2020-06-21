@@ -910,7 +910,7 @@ clm_imp <- function(formula, data,
 
 #' @rdname model_imp
 #' @export
-lognormal_imp <- function(formula, data,
+lognorm_imp <- function(formula, data,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                    monitor_params = NULL,  auxvars = NULL, refcats = NULL,
                    models = NULL, no_model = NULL, trunc = NULL,

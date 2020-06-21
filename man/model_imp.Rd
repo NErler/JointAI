@@ -5,7 +5,7 @@
 \alias{lm_imp}
 \alias{glm_imp}
 \alias{clm_imp}
-\alias{lognormal_imp}
+\alias{lognorm_imp}
 \alias{betareg_imp}
 \alias{mlogit_imp}
 \alias{lme_imp}
@@ -48,7 +48,7 @@ clm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
   mess = TRUE, keep_scaled_mcmc = FALSE, ...)
 
-lognormal_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+lognorm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
   models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
   ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
