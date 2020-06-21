@@ -1,6 +1,6 @@
 ---
 title: "Visualizing Incomplete Data"
-date: "2020-04-03"
+date: "2020-06-20"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -34,14 +34,14 @@ incomplete data.
 In this vignette, we use the `NHANES` data and the `simLong` data, that are part of
 the **JointAI** package.
 For more info on these datasets, check the help files
-[for the NHANES](https://nerler.github.io/JointAI/reference/NHANES.html) and
-[for the simLong](https://nerler.github.io/JointAI/reference/simLong.html) data or
+[for the `NHANES`](https://nerler.github.io/JointAI/reference/NHANES.html) and
+[for the `simLong`](https://nerler.github.io/JointAI/reference/simLong.html) data or
 go to the [web page of the National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/index.htm).
 
 
 ## Visualize the distribution of each variable
 Using `plot_all()`, an array of histograms (for continuous variables and dates)
-and barplots (for categorical variables) can be obtained.
+and bar plots (for categorical variables) can be obtained.
 
 ```{r, fig.height = 8, collapse=TRUE}
 op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
@@ -91,12 +91,14 @@ the names of the grouping variables ("id" variables) via the argument
 ```{r, fig.width = 8, fig.height = 10}
 par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
 plot_all(simLong, allNA = TRUE, fill = '#e30f41', border = '#34111b',
-         ncol = 3, breaks = 30, use_level = TRUE, idvars = "ID")
+         ncol = 3, breaks = 30, idvars = "ID")
 ```
 The information to which level a variable belongs is added to
 the title of each plot ("lvlone" refers to the first level, for which there is
 no grouping variable).
-Variables belonging to lower levels are summarized on their respective level, 
+Variables belonging to higher levels (e.g., center-specific variables in a 
+multi-center setting, or patient-specific variables in a setting with repeated
+measurements for each patient) are summarized on their respective level, 
 i.e., the counts of `ETHN`, for instance, will sum up to the number of subjects
 in the `simLong` data.
 
@@ -154,7 +156,7 @@ md_pattern(NHANES, color = c('#34111b', '#e30f41'), border = 'white',
 
 <br>
 
-For the simLong data, the missing data pattern is:
-```{r, fig.height = 11}
+For the `simLong` data, the missing data pattern is:
+```{r, fig.height = 18}
 md_pattern(simLong, color = c('#34111b', '#e30f41'))
 ```

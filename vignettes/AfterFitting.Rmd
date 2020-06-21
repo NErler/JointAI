@@ -347,15 +347,15 @@ This also works when a subset of the imputed values should be displayed:
 mod13d <- update(mod13a, monitor_params = c(imps = TRUE))
 
 # select all imputed values for 'WC' (4th column of M_lvlone)
-sub3 <- grep('M_lvlone\\[[[:digit:]]+,4\\]', parameters(mod13d), value = TRUE)
-sub3
+# sub3 <- grep('M_lvlone\\[[[:digit:]]+,4\\]', parameters(mod13d), value = TRUE)
+# sub3
 
 # pass "sub3" to "subset" via "other", for example in a traceplot:
-traceplot(mod13d, subset = list(other = sub3), ncol = 2)
+# traceplot(mod13d, subset = list(other = sub3), ncol = 2)
 ```
 
 When the number of imputed values is large or in order to check convergence
-of random effects, it may not be feasible to plot and inspect all traceplots.
+of random effects, it may not be feasible to plot and inspect all trace plots.
 In that case a random subset of, for instance the random effects, can be selected
 (output not shown):
 ```{r}

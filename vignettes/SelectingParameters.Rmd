@@ -96,7 +96,7 @@ The function [`parameters()`](https://nerler.github.io/JointAI/reference/paramet
 
 For example: 
 ```{r lm1_1, message = FALSE}
-lm1 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES,  n.adpat = 0)
+lm1 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES,  n.adapt = 0)
 
 parameters(lm1)
 ```
@@ -321,7 +321,7 @@ lm2 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
 )
 
 # select only imputed values for 'WC' (4th column of Wc)
-sub3 <- grep('M_lvlone\\[[[:digit:]]+,5\\]', parameters(lm2), value = TRUE)
+sub3 <- grep('M_lvlone\\[[[:digit:]]+,5\\]', parameters(lm2)$coef, value = TRUE)
 sub3
 
 traceplot(lm2, subset = list(other = sub3), ncol = 2)

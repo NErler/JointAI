@@ -1,6 +1,6 @@
 ---
 title: "Theoretical Background"
-date: "2019-08-29"
+date: "2020-06-20"
 output: 
   bookdown::html_document2:
     toc: true
@@ -105,19 +105,23 @@ options(width = 100)
 
 
 Consider the general setting of a regression model where interest lies in a set
-of parameters $\boldsymbol\theta$ that describe the association between a univariate outcome
-$\mathbf y$ and a set of covariates $\mathbf X = (\mathbf x_1, \ldots, \mathbf x_p)$.
+of parameters $\boldsymbol\theta$ that describe the association between a 
+univariate outcome $\mathbf y$ and a set of covariates
+$\mathbf X = (\mathbf x_1, \ldots, \mathbf x_p)$.
 In the Bayesian framework, inference over $\boldsymbol\theta$ is obtained
-by estimation of the posterior distribution of $\boldsymbol\theta$, which is proportional
-to the product of the likelihood of the data $(\mathbf y, \mathbf X)$
+by estimation of the posterior distribution of $\boldsymbol\theta$,
+which is proportional to the product of the likelihood of the data 
+$(\mathbf y, \mathbf X)$
 and the prior distribution of $\boldsymbol\theta$,
 $$ p(\boldsymbol\theta\mid \mathbf y, \mathbf X) \propto
 p(\mathbf y, \mathbf X \mid \boldsymbol\theta)\,p(\boldsymbol\theta).$$
 
 
 When some of the covariates are incomplete, $\mathbf X$ consists of two parts,
-the completely observed variables $\mathbf X_{obs}$ and those variables
-that are incomplete, $\mathbf X_{mis}$.
+the completely observed variables $\mathbf X_{obs}$ (i.e., those columns of
+$\mathbf X$ that do not have any missing values) and those variables
+that are incomplete, $\mathbf X_{mis}$ (i.e., those columns of $\mathbf X$
+that do have missing values).
 If $\mathbf y$ had missing values (and this missingness was ignorable),
 the only necessary change in the formulas below
 would be to replace $\mathbf y$ by $\mathbf y_{mis}$.
@@ -133,53 +137,71 @@ p(\mathbf y \mid \mathbf X_{obs}, \mathbf X_{mis}, \boldsymbol\theta_{y\mid x})\
 p(\mathbf X_{mis} \mid \mathbf X_{obs}, \boldsymbol\theta_x),
 \]
 where the first factor constitutes the analysis model of interest,
-described by a vector of parameters $\boldsymbol\theta_{y\mid x}$, and the second 
-factor is the joint distribution of the incomplete variables,
+described by a vector of parameters $\boldsymbol\theta_{y\mid x}$, 
+and the second factor is the joint distribution of the incomplete variables,
 i.e., the imputation part of the model,
 described by parameters $\boldsymbol\theta_x$, and
-$\boldsymbol\theta = (\boldsymbol\theta_{y\mid x}^\top, \boldsymbol\theta_x^\top)^\top$.
+$\boldsymbol\theta = (\boldsymbol\theta_{y\mid x}^\top,
+\boldsymbol\theta_x^\top)^\top$.
 
 Explicitly specifying the joint distribution of all
 data is one of the major advantages of the Bayesian approach,
 since this facilitates the use of all available information
 of the outcome in the imputation of the incomplete covariates [@Erler2016],
 which becomes especially relevant for more complex outcomes like repeatedly
-measured variables (see section on [imputation with longitudinal outcomes](#sec:impLong)).
+measured variables (see the section on 
+[imputation with longitudinal outcomes](#sec:impLong)).
 
 
 In complex models the posterior distribution can usually not be derived
-analytically but MCMC methods are used to obtain samples
-from the posterior distribution.
+analytically. Therefore, MCMC methods are used to obtain samples from the 
+posterior distribution.
 The MCMC sampling in **JointAI** is done using Gibbs sampling,
 which iteratively samples from the full conditional distributions of the unknown
 parameters and missing values.
 
-In the following sections we describe each of the three parts of the model,
-the analysis model, the imputation part and the prior distributions, in detail.
+In the following sections each of the three parts of the model,
+the analysis model, the imputation part and the prior distributions,
+are described in more in detail.
 
 
 ## Analysis model {#sec:AnalysisModel}
 The analysis model of interest is described by the probability density function 
 \(p(\mathbf y \mid \mathbf X, \boldsymbol\theta_{y\mid x})\).
+
 The R package **JointAI** can currently handle analysis models that are 
-either generalized linear regression models (GLM),
-generalized linear mixed models (GLMM),
-cumulative logit (mixed) models, parametric (Weibull) survival models or Cox proportional hazards models.
+
+* generalized linear regression models (GLM),
+* generalized linear mixed models (GLMM),
+* cumulative logit (mixed) models, 
+* multinomial (mixed) models,
+* beta (mixed) models,
+* log-normal (mixed) models,
+* parametric (Weibull) survival models,  or 
+* proportional hazards models.
+
+Moreover, it is possible to fit joint models of longitudinal and survival 
+data, where the survival model is a proportional hazards model and the
+longitudinal variables are modelled using generalized, ordinal, beta or
+log-normal mixed models.
 
 ### Generalized linear (mixed) models
 For a GLM the probability density function is chosen from the exponential family
 and has the linear predictor
-$$g\{E(y_i\mid \mathbf X, \boldsymbol\theta_{y\mid x})\} = \mathbf x_i^\top\boldsymbol\beta,$$
+$$g\{E(y_i\mid \mathbf X, \boldsymbol\theta_{y\mid x})\} = 
+\mathbf x_i^\top\boldsymbol\beta,$$
 where $g(\cdot)$ is a link function, $y_i$ the value of the outcome variable
 for subject $i$, and $\mathbf x_i$ is a column vector containing the row of 
 $\mathbf X$ that contains the covariate information for $i$.
 
 For a GLMM the linear predictor is of the form
-$$g\{E(y_{ij}\mid \mathbf X, \mathbf b_i, \boldsymbol\theta_{y\mid x})\} = \mathbf x_{ij}^\top\boldsymbol\beta + \mathbf z_{ij}^\top\mathbf b_i,$$
+$$g\{E(y_{ij}\mid \mathbf X, \mathbf b_i, \boldsymbol\theta_{y\mid x})\} =
+\mathbf x_{ij}^\top\boldsymbol\beta + \mathbf z_{ij}^\top\mathbf b_i,$$
 where $y_{ij}$ is the $j$-th outcome of subject $i$, $\mathbf x_{ij}$ is the
-corresponding vector of covariate values, $\mathbf b_i$ a vector of random effects
-pertaining to subject $i$,
-and $\mathbf z_{ij}$ a column vector containing  the row of the design matrix of the random effects, $\mathbf Z$,
+corresponding vector of covariate values, $\mathbf b_i$ a vector of random
+effects pertaining to subject $i$,
+and $\mathbf z_{ij}$ a column vector containing  the row of the design matrix of
+the random effects, $\mathbf Z$,
 that corresponds to the $j$-th measurement of subject $i$.
 $\mathbf Z$ typically contains a subset of the variables in $\mathbf X$, and
 $\mathbf b_i$ follows a normal distribution with mean zero and covariance matrix
@@ -190,6 +212,12 @@ regression coefficients $\boldsymbol\beta$, and potentially additional variance
 parameters (e.g., for linear (mixed) models), for which prior distributions
 will be specified in the section on [prior distributions](#sec:priors).
 
+In **JointAI** most standard link functions are available (for details see
+the documentation of 
+[glm_imp()](https://nerler.github.io/JointAI/reference/model_imp.html)).
+One exception is the square-root link, which is not available since it is not
+implemented as a link in
+[JAGS](https://sourceforge.net/projects/mcmc-jags/files/Manuals/4.x/).
 
 ### Cumulative logit (mixed) models
 Cumulative logit mixed models are of the form
@@ -229,14 +257,15 @@ D_i &\sim& \unicode{x1D7D9}(T_i^* \geq C_i),\\
 \log(r_j) &=& - \mathbf x_i^\top\boldsymbol\beta,\\
 s &\sim& \text{Exp}(0.01),
 \end{eqnarray*}
-where $\unicode{x1D7D9}$ is the indicator function which is one if $T_i^*\geq C_i$, and zero otherwise.
+where $\unicode{x1D7D9}$ is the indicator function which is one if $T_i^*\geq C_i$,
+and zero otherwise.
 
 The Cox proportional hazards model can be written as
 $$h_i(t) = h_0(t)\exp(\mathbf X_i \boldsymbol\beta),$$
 where $h_0(t)$ is the baseline hazard function, which, in **JointAI**,
-we model using a B-spline approach with six degrees of freedom, i.e.,
-$h_0(t) = \sum_{q = 1}^6 \gamma_{Bq} B_q(t),$ where $B_q$ denotes the $q$-th basis
-function.
+is model using a B-spline approach, i.e.,
+$h_0(t) = \sum_{q = 1}^{d} \gamma_{Bq} B_q(t),$ where $B_q$ denotes the $q$-th
+basis function.
 
 The survival function of the Cox model is
 $$S(t\mid \boldsymbol\theta) = \exp\left\{-\int_0^th_0(s)\exp\left(\mathbf X_i\boldsymbol\beta\right)ds\right\} = \exp\left\{-\exp\left(\mathbf X_i\boldsymbol\beta\right)\int_0^th_0(s)ds\right\},$$
@@ -247,7 +276,7 @@ Since the integral over the baseline hazard does not have a closed-form solution
 in **JointAI** it is approximated using Gauss-Kronrod quadrature with 15 
 evaluation points.
 
-## Imputation part
+## Imputation / covariate part
 A convenient way to specify the joint distribution of the incomplete covariates
 \(\mathbf X_{mis} = (\mathbf x_{mis_1}, \ldots, \mathbf x_{mis_q})\) is to use
 a sequence of conditional univariate distributions [@Ibrahim2002; @Erler2016]
@@ -258,7 +287,8 @@ p(\mathbf x_{mis_1}, \ldots, \mathbf x_{mis_q} \mid \mathbf X_{obs}, \boldsymbol
 &   & \prod_{\ell=2}^q p(\mathbf x_{mis_{\ell}} \mid \mathbf X_{obs}, \mathbf x_{mis_1},
 \ldots, \mathbf x_{mis_{\ell-1}}, \boldsymbol\theta_{x_\ell}),(\#eq:factorization)
 \end{eqnarray}
-with $\boldsymbol\theta_{x} = (\boldsymbol\theta_{x_1}^\top, \ldots, \boldsymbol\theta_{x_q}^\top)^\top$.
+with $\boldsymbol\theta_{x} = (\boldsymbol\theta_{x_1}^\top, \ldots, 
+\boldsymbol\theta_{x_q}^\top)^\top$.
 
 Each of the conditional distributions is a member of the exponential family,
 extended with distributions for ordinal categorical variables,
@@ -315,14 +345,14 @@ The product of distributions enclosed by curly brackets represents the
 distributions of those covariates that have $x_{mis_\ell}$ as a predictive
 variable in the specification of the sequence in \@ref(eq:factorization).
 
-Even though \@ref(eq:fullcond) describes the actual imputation model,
-i.e., the distribution the imputed values for $x_{i, mis_{\ell}}$ are sampled from,
-we will use the term ``imputation model'' for the conditional distribution
-of $x_{i, mis_{\ell}}$ from \@ref(eq:factorization), since the latter is 
-the distribution that is explicitly specified by the user and, hence, of more
-relevance when using **JointAI**.
+Note that \@ref(eq:fullcond) describes the actual imputation model,
+i.e., the distribution the imputed values for $x_{i, mis_{\ell}}$ are sampled
+from, but the sequence of covariates models \@ref(eq:factorization) is 
+used to describe the joint distribution.
+\@ref(eq:fullcond) is derived from that joint distribution.
 
-### Imputation with longitudinal outcomes {#sec:impLong}
+
+### Imputation in settings with longitudinal outcomes {#sec:impLong}
 Factorizing the joint distribution into analysis model and imputation part
 also facilitates extensions to settings with more complex outcomes,
 such as repeatedly measured outcomes.
@@ -343,10 +373,11 @@ for the outcome at hand, the thereby specified full conditional distribution
 of $x_{i, mis_\ell}$ allows us to draw valid imputations that use all available
 information on the outcome.
 
-This is an important difference to standard FCS, where the full conditional
+This is an important difference to multiple imputation using a fully 
+conditional specification (FCS, a.k.a. MICE), where the full conditional
 distributions used to impute missing values are specified directly, usually
-as regression models, and require the outcome to be explicitly included into
-the linear predictor of the imputation model. In settings with complex outcomes
+as regression models, and require the outcome to be explicitly included in
+the linear predictor of each imputation model. In settings with complex outcomes
 it is not clear how this should be done and simplifications may lead to biased
 results [@Erler2016].
 The joint model specification utilized in **JointAI** overcomes this difficulty.
