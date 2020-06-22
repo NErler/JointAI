@@ -554,16 +554,16 @@ will be used.
 \code{imps} \tab imputed values\cr
 \code{betas} \tab regression coefficients of the main analysis model\cr
 \code{tau_main} \tab precision of the residuals from the main analysis
-models\cr
+model(s)\cr
 \code{sigma_main} \tab standard deviation of the residuals from the main
-analysis models\cr
-\code{gamma_main} \tab intercepts in ordinal main models\cr
-\code{delta_main} \tab increments of ordinal main models\cr
-\code{ranef_main} \tab random effects from the main analysis models
+analysis model(s)\cr
+\code{gamma_main} \tab intercepts in ordinal main model(s)\cr
+\code{delta_main} \tab increments of ordinal main model(s)\cr
+\code{ranef_main} \tab random effects from the main analysis model(s)
 \code{b}\cr
 \code{D_main} \tab covariance matrix of the random effects from the
-main models\cr
-\code{invD_main} \tab inverses of \code{D_main}\cr
+main model(s)\cr
+\code{invD_main} \tab inverse(s) of \code{D_main}\cr
 \code{RinvD_main} \tab matrices in the priors for \code{invD_main}\cr
 \code{alphas} \tab regression coefficients in the covariate models\cr
 \code{tau_other} \tab precision parameters of the residuals from
