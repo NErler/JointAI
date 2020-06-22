@@ -1,10 +1,11 @@
 ---
 title: "Parameter Selection"
-subtitle: "How to specify which parameters to monitor and display in the results."
+subtitle: "How to specify which parameters to monitor and display in the results"
 date: "2019-08-29"
 output: 
   rmarkdown::html_vignette:
     toc: true
+    depth: 4
 vignette: >
   %\VignetteIndexEntry{Parameter Selection}
   %\VignetteEncoding{UTF-8}
@@ -57,21 +58,28 @@ the following possible entries:
 
 ```{r, echo = F}
 tab <- rbind(
-c("`analysis_main`", "`betas` and `sigma_y` (and `D` in mixed models)"),
-c("`analysis_random`", "`ranef`, `D`, `invD`, `RinvD`"),
-c('`imp_pars`', '`alphas`, `tau_imp`, `gamma_imp`, `delta_imp`'),
+c("`analysis_main`", "`betas` and `sigma_main`, `tau_main` (in beta regression) or `shape_main` (in parametric survival models)
+  (also `D_main` in multi-level models and `basehaz` in proportional hazards models)"),
+c("`analysis_random`", "`ranef_main`, `D_main`, `invD_main`, `RinvD_main`"),
+c('`imp_pars`', '`alphas`, `tau_other`, `gamma_other`, `delta_other`'),
 c('`imps`', 'imputed values'),
-c('`betas`', 'regression coefficients of the analysis model'),
-c('`tau_y`', 'precision of the residuals from the analysis model'),
-c('`sigma_y`', 'standard deviation of the residuals from the analysis model'),
-c('`ranef`', 'random effects'),
-c('`D`', 'covariance matrix of the random effects'),
-c('`invD`', 'inverse of `D`'),
-c('`RinvD`', 'scale matrix in Wishart prior for `invD`'),
-c('`alphas`', 'regression coefficients in the imputation models'),
-c('`tau_imp`', 'precision parameters of the residuals from imputation models'),
-c('`gamma_imp`', 'intercepts in ordinal imputation models'),
-c('`delta_imp`', 'increments of ordinal intercepts'),
+c('`betas`', 'regression coefficients of the main analysis model(s)'),
+c('`tau_main`', 'precision of the residuals from the analysis model(s)'),
+c('`sigma_main`', 'standard deviation of the residuals from the analysis model(s)'),
+c('`gamma_main`', 'intercepts in ordinal main model'),
+c('`delta_main`', 'increments of ordinal intercepts in main model(s)'),
+c('`ranef_main`', 'random effects of the analysis model(s)'),
+c('`D_main`', 'covariance matrix of the random effects of the main model(s)'),
+c('`invD_main`', 'inverse of `D_main`'),
+c('`RinvD_main`', 'scale matrix in Wishart prior for `invD_main`'),
+c('`alphas`', 'regression coefficients in the covariate models'),
+c('`tau_other`', 'precision parameters of the residuals from covariate models'),
+c('`gamma_other`', 'intercepts in ordinal covariate models'),
+c('`delta_other`', 'increments of ordinal intercepts in covariate models'),
+c('`ranef_other`', 'random effects of the covariate model(s)'),
+c('`D_other`', 'covariance matrix of the random effects of the covariate model(s)'),
+c('`invD_other`', 'inverse of `D_other`'),
+c('`RinvD_other`', 'scale matrix in Wishart prior for `invD_other`'),
 c('`other`', 'additional parameters')
 )
 colnames(tab) = c('name/key word', 'what is monitored')
@@ -87,8 +95,11 @@ only the main parameters of the analysis model are monitored, and
 monitoring is switched off for all other parameters.
 
 The main parameters are the regression coefficients of the analysis model
-(`beta`) and potentially the residual standard deviation (`sigma_y`), for example
-in linear models.
+(`beta`) and potentially the residual standard deviation (`sigma_main`),
+for example in linear or Gamma models. For models that do have a second 
+parameter which is not the standard deviation, that other second parameter
+is monitored (the shape parameter for parametric survival models and the
+parameter `tau` in beta regression models).
 
 The function [`parameters()`](https://nerler.github.io/JointAI/reference/parameters.html) returns the parameters that are specified to be followed
 (even for models where no MCMC sampling was performed, i.e. when `n.iter = 0` and

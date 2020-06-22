@@ -4,7 +4,7 @@ date: "2019-08-29"
 output: 
   rmarkdown::html_vignette:
     toc: true
-    toc_depth: 4
+    depth: 4
 vignette: >
   %\VignetteIndexEntry{MCMC Settings}
   %\VignetteEncoding{UTF-8}
@@ -33,7 +33,7 @@ passed to JAGS and writes the JAGS model. The R package
 [**rjags**](https://CRAN.R-project.org/package=rjags) is used as an interface
 to JAGS.
 
-Here, we describe how to specify the arguments in the main functions that
+This vignette describes how to specify the arguments in the main functions that
 control MCMC related settings.
 To learn more about how to specify the other arguments in **JointAI** models
 or the theoretical background of the statistical approach,
@@ -157,7 +157,7 @@ posterior sample. Thinning was set to 1 and there are 3 chains.
 ```{r, echo = FALSE}
 a1 <- capture.output(print(summary(mod1)))
 cat(paste0('[...]', '\n',
-    paste(a1[17:21], collapse = "\n")))
+    paste(a1[18:22], collapse = "\n")))
 ```
 
 #### Insufficient adaptation phase
@@ -169,7 +169,7 @@ model summary from the resulting model is:
 ```{r, echo = FALSE}
 a2 <- capture.output(print(summary(mod2)))
 cat(paste0('[...]', '\n',
-    paste(a2[18:22], collapse = "\n")))
+    paste(a2[19:23], collapse = "\n")))
 ```
 
 
@@ -186,15 +186,15 @@ chains contain only 50 samples instead of 500, that is, the samples from iterati
 ```{r, echo = FALSE}
 a3 <- capture.output(print(summary(mod3)))
 cat(paste0('[...]', '\n',
-    paste(a3[18:22], collapse = "\n")))
+    paste(a3[19:23], collapse = "\n")))
 ```
 
 ## Parameters to follow
-JAGS only saves the values of MCMC chains for those nodes for
+JAGS only saves the values of MCMC chains for those nodes/parameters for
 which the user has specified that they should be monitored. This is also the
 case in **JointAI**.
 
-### What are nodes?
+#### What are nodes?
 Nodes are variables in the Bayesian framework, i.e., everything observed
 or unobserved.
 This includes the data and parameters that are estimated, but also missing values in the
@@ -303,78 +303,38 @@ have the same structure as the elements in this list.
 
 **Example:<br>**
 We are using a longitudinal model and the `simLong` data in this example. 
-The output is abbreviated to show the relevant characteristics.
+The output is abbreviated to show the relevant parts.
 
-```{r, eval = FALSE}
+```{r, message = FALSE, warning = FALSE}
 mod4c <- lme_imp(bmi ~ time + HEIGHT_M + hc + SMOKE, random = ~ time | ID,
                  data = simLong, no_model = 'time', progress.bar = 'none')
 
-coef(mod4c$model)
+str(coef(mod4c$model))
 ```
 
-```{r echo = FALSE, message = FALSE}
+```{r echo = FALSE, message = FALSE, warning = FALSE}
 mod4c <- lme_imp(bmi ~ time + HEIGHT_M + hc + SMOKE, random = ~ time | ID,
                  data = simLong, no_model = 'time', progress.bar = 'none')
 
 options(max.print = 1e5)
 a4 <- capture.output(coef(mod4c$model))
-cat(
-  paste0(paste(a4[1:14], collapse = "\n"), # start & begin Xc
-         '\n\n[...]\n\n',
-         paste(a4[94:96], collapse = "\n"), # values in Xc
-         '\n\n[...]\n\n',
-         paste(a4[211:217], collapse = "\n"), # end Xc
-         '\n\n[...]\n\n',
-         paste(a4[354:358], collapse = "\n"), # values Xcat
-         '\n\n[...]\n\n',
-         paste(a4[414:425], collapse = "\n"), # end Xcat; begin Xl
-         '\n\n[...]\n\n',
-         paste(a4[2817:2826], collapse = "\n"), # end Xl; alpha; begin b
-         '\n\n[...]\n\n',
-         paste(a4[3024:3029], collapse = "\n"), # end b; start b_hc
-         '\n\n[...]\n\n',
-         paste(a4[3226:3233], collapse = "\n"), # end b_hc; betas, begin bmi
-         '\n\n[...]\n\n',
-         paste(a4[3310:3331], collapse = "\n"), # end bmi, delta, gamma, invD, invD_hc, begin mu_b
-         '\n\n[...]\n\n',
-         paste(a4[3528:3534], collapse = "\n"), # end mu_b; begin mu_b_hc
-         '\n\n[...]\n\n',
-         paste(a4[3732:3742], collapse = "\n")
-  )
-)
-
-a4mod <- capture.output(mod4c$model)
+a4mod <- capture.output(mod4c$JAGSmodel)
 ```
 
-`RinvD` is the scale matrix in the Wishart prior for the inverse of the
-random effects design matrix `D`.
-In the data that is passed JAGS (which is stored in the element `data_list` 
-in a JointAI object), this matrix is specified as diagonal matrix,
-with unknown diagonal elements:
-```{r}
-mod4c$data_list['RinvD']
-```
-
-These diagonal elements are estimated in the model and have a Gamma prior.
-The corresponding part of the JAGS model is:
-```{r, echo = FALSE}
-cat(paste0('[...]\n', paste(a4mod[28:33], collapse = '\n'), '\n[...]\n'))
-```
-
-The element `RinvD` in the initial values has to be a 2 $\times$ 2 matrix,
-with positive values on the diagonal and `NA` as off-diagonal elements, 
-since these are fixed in the data.
+`M_ID` and `M_lvlone` are design matrices containing the the parts of the
+variables that belong to a given level of the hierarchy. In this example,
+`M_ID` contains all the subject specific variables, `M_lvlone` the time-varying 
+variables. Design matrices are always named `M_<level>`.
 
 
-The following element in the output of `coef(mod4c$model)` is `Xc`, 
-the fixed effects design matrix containing baseline covariates.
-The corresponding matrix in the data is
+The first eight rows of `M_ID` in the data dat is passed to JAGS (which is stored
+in `data_list` in a JointAI object) are:
 ```{r, eval = FALSE}
-mod4c$data_list$M_ID[81:85, ]
+head(mod4c$data_list$M_ID, 8)
 ```
 
 ```{r, echo = FALSE}
-mat <- mod4c$data_list$M_ID[81:85, ]
+mat <- mod4c$data_list$M_ID[1:8, ]
 colnames(mat) <- gsub("SMOKEsmoked until pregnancy was known",
                       "SMOKEsmoked until[...]",
                       gsub("SMOKEcontinued smoking in pregnancy",
@@ -382,32 +342,64 @@ colnames(mat) <- gsub("SMOKEsmoked until pregnancy was known",
 mat
 ```
 
-Again, the matrix `Xc` in the initial values has the same dimension as `Xc` in the
-data, and values where there are missing values in `Xc`, e.g., `Xc[83, 2]` and
-`NA` elsewhere.
-There are no initial values specified for the third and fourth column, since
-these columns contain the dummy variables corresponding to the categorical 
-variable `SMOKE` and are calculated from a column in the matrix `Xcat`, 
-which contains the original version of `SMOKE`:
+If we wanted to specify initial values for the incomplete subject specific
+variables we would have to specify a matrix that had to look like this:
 ```{r}
-head(mod4c$data_list$M_ID)
+head(coef(mod4c$model)$M_ID, 8)
 ```
 
-The relevant part of the JAGS model is:
+The matrix for the initial values has to have the same dimension as the matrix
+containing the data, but has `NA` wherever the value in the data is observed
+(e.g., the first 5 elements of the first column) and a numeric value where
+data is missing (e.g., the 6th value of the first column).
+
+Since `SMOKE` is a categorical covariate and coded using dummy coding, there
+are columns containing the dummy variables (columns 4 and 5) as well as the
+original version of `SMOKE` (first column).
+The dummy variables are calculated (not sampled) in the JAGS model and are thus
+completely empty in the data matrix and the matrix of initial values.
+
+The corresponding part of the JAGS model is:
+```{r}
+cat(paste0('[...]\n', 
+           paste0(a4mod[64:65], collapse = "\n"),
+           '\n\n[...]\n',
+           paste0(a4mod[74:77], collapse = "\n"),
+           '\n\n[...]'))
+```
+
+
+
+`RinvD_bmi_ID` refers to the scale matrix in the Wishart prior for the 
+inverse of the random effects design matrix `D_bmi_ID`. 
+To distinguish random effects of different models and grouping levels, the
+names always end with `..._<response>_<level>`.
+
+In the data that is passed to JAGS this matrix is specified as diagonal matrix,
+with unknown diagonal elements:
+```{r}
+mod4c$data_list['RinvD_bmi_ID']
+```
+
+These diagonal elements are estimated in the model and have a Gamma prior.
+The corresponding part of the JAGS model is:
 ```{r, echo = FALSE}
-cat(paste0('[...]\n',
-           paste(a4mod[54:55], collapse = '\n'),
-           '\n\n[...]\n\n',
-           paste(a4mod[65:66], collapse = '\n'),
-           '\n[...]\n'))
+cat(paste0('[...]\n', paste(a4mod[28:34], collapse = '\n'), '\n[...]\n'))
 ```
 
-Where `Xcat` in the data has missing values (e.g., rows 37 and 39), initial
-values need to be specified.
+The element `RinvD_bmi_ID` in the initial values has to be a 2 $\times$ 2 
+matrix, with positive values on the diagonal and `NA` as off-diagonal elements, 
+since these are fixed in the data:
+```{r}
+coef(mod4c$model)$RinvD_bmi_ID
+```
+
+
 
 Elements that are completely unobserved, like the parameter vectors `alpha`
-and `beta`, the random effects `b` or scalar parameters `delta_SMOKE` and 
-`gamma_SMOKE` are entirely specified in the initial values.
+and `beta`, the random effects `b_<response>_<level>` (e.g. `b_bmi_ID` and 
+`b_hc_ID`) or scalar parameters `delta_<response>` or 
+`tau_<response>` are entirely specified in the initial values.
 
 
 ## Parallel sampling

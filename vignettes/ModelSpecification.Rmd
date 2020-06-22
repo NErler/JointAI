@@ -4,7 +4,7 @@ date: "2020-06-20"
 output: 
   rmarkdown::html_vignette:
     toc: true
-    toc_depth: 4
+    depth: 4
 vignette: >
   %\VignetteIndexEntry{Model Specification}
   %\VignetteEncoding{UTF-8}
