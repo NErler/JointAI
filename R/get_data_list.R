@@ -280,16 +280,16 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 #'                           of the beta distribution
 #' }
 #'
-#' \strong{logit:} hyper-parameters for logistic models
+#' \strong{binom:} hyper-parameters for binomial models
 #' \tabular{ll}{
-#' \code{mu_reg_logit} \tab mean in the priors for regression coefficients\cr
-#' \code{tau_reg_logit} \tab precision in the priors for regression coefficients
+#' \code{mu_reg_binom} \tab mean in the priors for regression coefficients\cr
+#' \code{tau_reg_binom} \tab precision in the priors for regression coefficients
 #' }
 #'
-#' \strong{probit:} hyper-parameters for probit models
+#' \strong{poisson:} hyper-parameters for poisson models
 #' \tabular{ll}{
-#' \code{mu_reg_logit} \tab mean in the priors for regression coefficients\cr
-#' \code{tau_reg_logit} \tab precision in the priors for regression coefficients
+#' \code{mu_reg_poisson} \tab mean in the priors for regression coefficients\cr
+#' \code{tau_reg_poisson} \tab precision in the priors for regression coefficients
 #' }
 #'
 #' \strong{multinomial:} hyper-parameters for multinomial models
@@ -309,20 +309,22 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 #' \code{tau_delta_ordinal} \tab precision in the priors for the intercepts
 #' }
 #'
-#' \strong{Z:} function creating hyper-parameters for the random effects in
-#'             mixed models, with output elements
+#' \strong{ranef:} hyper-parameters for the random effects variance-covariance
+#'                 matrices (*)
 #' \tabular{ll}{
-#' \code{RinvD} \tab scale matrix in the Wishart prior (*) for the random
-#'                   effects covariance matrix\cr
-#' \code{KinvD} \tab degrees of freedom in the Wishart prior for random
-#'                   effects covariance matrix\cr
 #' \code{shape_diag_RinvD} \tab shape parameter in Gamma prior for the diagonal
 #'                              elements of \code{RinvD}\cr
 #' \code{rate_diag_RinvD} \tab rate parameter in Gamma prior for the diagonal
-#'                             elements of \code{RinvD}
+#'                             elements of \code{RinvD}\cr
+#' \code{KinvD_expr} \tab a character string that can be evaluated to calculate
+#'                        the number of degrees of freedom in the Wishart
+#'                        distribution used for the inverse of the
+#'                        variance-covariance matrix for random effects,
+#'                        depending on the number of random effects
+#'                        \code{nranef}
 #' }
 #' (*) when there is only one random effect a Gamma distribution is used instead
-#'     of the Wishart and \code{RinvD} and \code{KinvD} are \code{NULL}
+#'     of the Wishart distribution
 #'
 #' \strong{surv:} parameters for survival models (\code{survreg}, \code{coxph}
 #'                and \code{JM})
@@ -346,7 +348,7 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 #' @examples
 #' default_hyperpars()
 #'
-#' # To change the hyperparameters:
+#' # To change the hyper-parameters:
 #' hyp <- default_hyperpars()
 #' hyp$norm['rate_tau_norm'] <- 1e-3
 #' mod <- lm_imp(y ~ C1 + C2 + B1, data = wideDF, hyperpars = hyp, mess = FALSE)
@@ -404,24 +406,26 @@ default_hyperpars <- function() {
 
 
 
-    ranef = list(shape_diag_RinvD = 0.01,
-                 rate_diag_RinvD = 0.001,
-                 wish = function(nranef) {
-                   if (nranef > 1) {
-                     RinvD <- diag(as.numeric(rep(NA, nranef)))
-                     KinvD <- nranef + 1
-                   } else {
-                     RinvD <- KinvD <- NULL
-                   }
-
-                   list(
-                     RinvD = RinvD,
-                     KinvD = KinvD
-                   )
-                 }),
+    ranef = c(shape_diag_RinvD = 0.01,
+              rate_diag_RinvD = 0.001,
+              KinvD_expr = "nranef + 1"
+    ),
 
     surv = c(mu_reg_surv = 0,
              tau_reg_surv = 0.001)
   )
 }
 
+
+get_RinvD <- function(nranef, KinvD_expr = "nranef + 1") {
+  if (nranef > 1) {
+    RinvD <- diag(as.numeric(rep(NA, nranef)))
+    KinvD <- eval(parse(text = KinvD_expr))
+  } else {
+    RinvD <- KinvD <- NULL
+  }
+  list(
+    RinvD = RinvD,
+    KinvD = KinvD
+  )
+}
