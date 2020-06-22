@@ -12,12 +12,10 @@ get_scale_pars <- function(mat, groups, scale_vars, refs, fcts_all, data) {
   if (!is.null(scale_vars))
     vars <- intersect(vars, scale_vars)
 
+  rows <- match(unique(groups), groups)
 
-  do.call(rbind, sapply(names(vars), function(k) {
-
-    rows <- match(unique(groups), groups)
-
-    if (vars[k]) {
+  do.call(rbind, sapply(colnames(mat), function(k) {
+  if (k %in% vars) {
       scaled <- scale(mat[rows, k])
       data.frame(center = attr(scaled, 'scaled:center'),
                  scale = attr(scaled, 'scaled:scale')
@@ -41,7 +39,12 @@ find_scalevars <- function(mat, refs, fcts_all, data) {
       if (is.numeric(data[, k])) k
     } else {
       if (k %in% fcts_all$colname) {
-        if (is.numeric(eval(parse(text = k), envir = data))) k
+        # When splines are used, "k" can't be evaluated, so we use the column
+        # 'fct' instead. The result of "eval" for splines is then a matrix,
+        # but since this is also numeric the test "is.numeric()" works.
+        # This might not work though for some other functions....
+        fct <- unique(fcts_all$fct[fcts_all$colname == k])
+        if (is.numeric(eval(parse(text = fct), envir = data))) k
       }
     }
   })
