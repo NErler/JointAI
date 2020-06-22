@@ -27,44 +27,51 @@ the help of the R package
 
 ## Installation
 
-You can install **JointAI** from GitHub with:
+**JointAI** can be installed from [CRAN](https://cran.r-project.org/):
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("NErler/JointAI")
+install.packages('JointAI')
+```
+
+Alternatively, you can install **JointAI** from GitHub:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("NErler/JointAI")
 ```
 
 ## Main functions
 
-Currently, there are the following main functions:
+**JointAI** provides the following main functions:
 
 ``` r
-lm_imp()      # linear regression
-glm_imp()     # generalized linear regression 
-clm_imp()     # cumulative logit model
-lme_imp()     # linear mixed model
-glme_imp()    # generalized linear mixed model
-clmm_imp()    # cumulative logit mixed model
-survreg_imp() # parametric (Weibull) survival model
-coxph_imp()   # Cox proportional hazards survival model
+lm_imp()                 # linear regression
+glm_imp()                # generalized linear regression
+clm_imp()                # cumulative logit model
+mlogit_imp()             # multinomial logit model
+lognorm_imp()            # log-normal regression
+betareg_imp()            # beta regression
+lme_imp() / lmer_imp()   # linear mixed model
+glme_imp() / glmer_imp() # generalized linear mixed model
+clmm_imp()               # cumulative logit mixed model
+mlogitmm_imp()           # multinomial logit model
+lognormmm_imp()          # log-normal regression
+betamm_imp()             # beta regression
+survreg_imp()            # parametric (Weibull) survival model
+coxph_imp()              # proportional hazards survival model
+JM_imp()                 # joint model for longitudinal and survival data
 ```
 
-The functions `lm_imp()`, `glm_imp()` and `clm_imp()` use specification
-similar to their complete data counterparts `lm()` and `glm()` from base
-R and `clm()` from the package
-[**ordinal**](https://CRAN.R-project.org/package=ordinal).
+The functions use specification similar to that of well known standard
+functions like `lm()` and `glm()` from base R, `lme()` (from the package
+[**nlme**](https://CRAN.R-project.org/package=nlme)) , `lmer()` or
+`glmer()` (from the package
+[**lme4**](https://CRAN.R-project.org/package=lme4)) and `survreg()` and
+`coxph()` (from the package
+[**survival**](https://CRAN.R-project.org/package=survival)).
 
-The functions for mixed models, `lme_imp()`, `glme_imp()` and
-`clmm_imp()` use similar specification as `lme()` from the package
-[**nlme**](https://CRAN.R-project.org/package=nlme) (and `clmm2()` from
-[**ordinal**](https://CRAN.R-project.org/package=nlme)).
-
-`survreg_imp()` and `coxph_imp()` are missing data versions of
-`survreg()` and `coxph()` from the package
-[**survival**](https://CRAN.R-project.org/package=survival).
-
-Functions `summary()`, `coef()`, `traceplot()` and `densityplot()`
-provide a summary of the posterior distribution and its visualization.
+Functions `summary()`, `coef()`, `traceplot()` and `densplot()` provide
+a summary of the posterior distribution and its visualization.
 
 `GR_crit()` and `MC_error()` provide the Gelman-Rubin diagnostic for
 convergence and the Monte Carlo error of the MCMC sample, respectively.
@@ -99,7 +106,7 @@ md_pattern(NHANES, color = c('#34111b', '#e30f41'))
 
 ``` r
 lm1 <- lm_imp(SBP ~ gender + age + WC + alc + educ + bili,
-              data = NHANES, n.iter = 500, progress.bar = 'none')
+              data = NHANES, n.iter = 500, progress.bar = 'none', seed = 2020)
 ```
 
 ### Visualize the MCMC sample
@@ -121,25 +128,26 @@ densplot(lm1, col = c('#d4af37', '#34111b', '#e30f41'), ncol = 4, lwd = 2)
 ``` r
 summary(lm1)
 #> 
-#>  Linear model fitted with JointAI 
+#> Linear model fitted with JointAI
 #> 
 #> Call:
 #> lm_imp(formula = SBP ~ gender + age + WC + alc + educ + bili, 
-#>     data = NHANES, n.iter = 500, progress.bar = "none")
+#>     data = NHANES, n.iter = 500, seed = 2020, progress.bar = "none")
+#> 
 #> 
 #> Posterior summary:
-#>                Mean     SD     2.5%   97.5% tail-prob. GR-crit
-#> (Intercept)  88.025 8.6968  70.8670 105.632      0.000    1.02
-#> genderfemale -3.381 2.2125  -7.6129   0.773      0.132    1.00
-#> age           0.331 0.0684   0.1964   0.467      0.000    1.00
-#> WC            0.226 0.0719   0.0785   0.367      0.000    1.01
-#> alc>=1        6.511 2.3366   1.8639  11.069      0.004    1.02
-#> educhigh     -2.879 2.1689  -7.1914   1.259      0.180    1.00
-#> bili         -5.204 4.9315 -14.6288   4.363      0.285    1.01
+#>                Mean     SD     2.5%   97.5% tail-prob. GR-crit MC error
+#> (Intercept)  87.662 8.6088  70.3830 104.899    0.00000    1.00   0.0271
+#> genderfemale -3.487 2.2407  -7.9563   0.818    0.10533    1.01   0.0258
+#> age           0.334 0.0683   0.1986   0.468    0.00000    1.01   0.0258
+#> WC            0.230 0.0721   0.0876   0.376    0.00133    1.00   0.0258
+#> alc>=1        6.419 2.3862   1.6656  11.112    0.00667    1.03   0.0358
+#> educhigh     -2.805 2.0681  -6.9371   1.339    0.17067    1.00   0.0258
+#> bili         -5.277 4.7332 -14.7727   3.596    0.25333    1.01   0.0290
 #> 
 #> Posterior summary of residual std. deviation:
-#>           Mean    SD 2.5% 97.5% GR-crit
-#> sigma_SBP 13.5 0.719 12.2    15       1
+#>           Mean    SD 2.5% 97.5% GR-crit MC error
+#> sigma_SBP 13.5 0.725 12.2    15    1.01   0.0258
 #> 
 #> 
 #> MCMC settings:
@@ -148,24 +156,36 @@ summary(lm1)
 #> Thinning interval = 1 
 #> Number of chains = 3 
 #> 
-#> Number of observations: 186
+#> Number of observations: 186 
+#> 
+#> 
+#> Number and proportion of missing values:
+#>        variable # NA  % NA
+#> SBP         SBP    0  0.00
+#> gender   gender    0  0.00
+#> age         age    0  0.00
+#> educ       educ    0  0.00
+#> WC           WC    2  1.08
+#> bili       bili    8  4.30
+#> alc         alc   34 18.28
 ```
 
 ``` r
 coef(lm1)
-#>  (Intercept) genderfemale          age           WC       alc>=1 
-#>   88.0248471   -3.3813839    0.3311555    0.2262784    6.5108742 
-#>     educhigh         bili 
-#>   -2.8786675   -5.2036401
+#> $SBP
+#>  (Intercept) genderfemale          age           WC       alc>=1     educhigh 
+#>   87.6622381   -3.4873104    0.3335133    0.2302755    6.4194926   -2.8054874 
+#>         bili 
+#>   -5.2768560
 
 confint(lm1)
-#>                      2.5%       97.5%
-#> (Intercept)   70.86702410 105.6319683
-#> genderfemale  -7.61290048   0.7729665
-#> age            0.19635287   0.4666932
-#> WC             0.07848737   0.3665819
-#> alc>=1         1.86385015  11.0693444
-#> educhigh      -7.19135991   1.2594576
-#> bili         -14.62875674   4.3625267
-#> sigma_SBP     12.19691645  14.9589424
+#>                   2.5%       97.5%
+#> beta[1]    70.38301720 104.8986161
+#> beta[2]    -7.95631510   0.8182921
+#> beta[3]     0.19857014   0.4678630
+#> beta[4]     0.08761699   0.3756334
+#> beta[5]     1.66562640  11.1121370
+#> beta[6]    -6.93714769   1.3389344
+#> beta[7]   -14.77269911   3.5955383
+#> sigma_SBP  12.16165429  15.0367180
 ```
