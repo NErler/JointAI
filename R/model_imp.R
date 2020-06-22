@@ -51,7 +51,10 @@
 #'                   sampling has finished.
 #' @param auxvars optional; one-sided formula of variables that should be used
 #'                as predictors in the imputation procedure (and will be imputed
-#'                if necessary) but are not part of the analysis model(s)
+#'                if necessary) but are not part of the analysis model(s).
+#'                For more details with regards to the behaviour with
+#'                non-linear effects see the vignette on
+#'                [Model Specification](https://nerler.github.io/JointAI/articles/ModelSpecification.html#auxvars)
 #' @param models optional; named vector specifying the types of models for
 #'               (incomplete) covariates.
 #'               This arguments replaces the argument \code{meth} used in
