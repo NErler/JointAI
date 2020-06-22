@@ -263,23 +263,47 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
     msg("Note: %s does not contain MCMC samples.", dQuote(args$object))
 
   vnam <- object$mcmc_settings$variable.names
-  if ('beta' %in% vnam) {
-    pos <- grep('\\bbeta\\b', vnam)
-    vnam <- append(vnam,
-                   unlist(sapply(object$coef_list, function(x)
-                     grep("^beta\\b", x$coef, value = TRUE)
-                   )),
-                   after = pos)[-pos]
+  coefs <- do.call(rbind, object$coef_list)
+
+  rows <- unlist(sapply(paste0('\\b', vnam, '\\b'), grep, x = coefs$coef))
+  add <- sapply(vnam, function(x) {
+    !any(grepl(paste0('\\b', x, '\\b'), coefs$coef))
+  })
+
+  add_pars <- as.list(setNames(rep(NA, ncol(coefs)), names(coefs)))
+  add_pars$coef <- vnam[add]
+
+
+  params <- if (any(add)) {
+    rbind(coefs[rows, , drop = FALSE],
+          as.data.frame(add_pars))
+  } else {
+    coefs[rows, setdiff(names(coefs), 'varnam_print'), drop = FALSE]
   }
-  if ('alpha' %in% vnam) {
-    pos <- grep('\\balpha\\b', vnam)
-    vnam <- append(vnam,
-                   unlist(sapply(object$coef_list, function(x)
-                     grep("^alpha\\b", x$coef, value = TRUE)
-                   )),
-                   after = pos)[-pos]
-  }
-  return(unname(vnam))
+
+  rownames(params) <- NULL
+
+  params[, setdiff(names(coefs), 'varnam_print')]
+
+
+
+  # if ('beta' %in% vnam) {
+  #   pos <- grep('\\bbeta\\b', vnam)
+  #   vnam <- append(vnam,
+  #                  unlist(sapply(object$coef_list, function(x)
+  #                    grep("^beta\\b", x$coef, value = TRUE)
+  #                  )),
+  #                  after = pos)[-pos]
+  # }
+  # if ('alpha' %in% vnam) {
+  #   pos <- grep('\\balpha\\b', vnam)
+  #   vnam <- append(vnam,
+  #                  unlist(sapply(object$coef_list, function(x)
+  #                    grep("^alpha\\b", x$coef, value = TRUE)
+  #                  )),
+  #                  after = pos)[-pos]
+  # }
+  # return(unname(vnam))
 }
 
 
