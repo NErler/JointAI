@@ -301,7 +301,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
   if (!is.null(x$missinfo)) {
     cat('\n\n')
     cat('Number and proportion of missing values:\n')
-    print(x$missinfo)
+    print(x$missinfo, digits = digits)
   }
 
   invisible(x)
@@ -466,7 +466,22 @@ print.modelstring <- function(x, ...) {
 
 
 
-
+#' Obtain a summary of the missing values involved in an object of class JointAI
+#'
+#' This function returns a \code{data.frame} or a \code{list} of
+#' \code{data.frame}s per grouping level. Each of the \code{data.frames}
+#' has columns \code{variable}, \code{#NA} (number of missing values) and
+#' \code{\%NA} (proportion of missing values in percent).
+#'
+#' @param object object inheriting from class JointAI
+#'
+#' @export
+#'
+#' @examples
+#' mod <-  lm_imp(y ~ C1 + B2 + C2, data = wideDF, n.iter = 100)
+#' get_missinfo(mod)
+#'
+#'
 get_missinfo <- function(object) {
 
   if (!(inherits(object, "JointAI") | inherits(object, "JointAI_errored")))
@@ -489,7 +504,7 @@ get_missinfo <- function(object) {
                variable = names(subdat),
                level = if (length(unique(dat_lvls)) > 1) lvl,
                '# NA' = colSums(is.na(subdat)),
-               '% NA' = colMeans(is.na(subdat))
+               '% NA' = colMeans(is.na(subdat)) * 100
              )
       ),
       check.names = FALSE
