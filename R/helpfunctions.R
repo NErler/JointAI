@@ -147,7 +147,8 @@ check_varlevel <- function(x, groups, group_lvls = NULL) {
 
 # used in get_model_info (2020-06-09)
 replace_dummy <- function(nam, refs) {
-  # replace a variable name with the names of the corresponding dummy variables
+  # check if a variable name is a dummy variable and replace it with the name
+  # of the original variable
   # if the variable is a factor
   # - nam: one variable name
   # - refs: list of reference category information (part of Mlist)
