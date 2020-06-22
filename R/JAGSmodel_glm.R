@@ -28,9 +28,10 @@ JAGSmodel_glm <- function(info) {
   modelname <- get_GLM_modelname(info$family)
 
   # * truncation ---------------------------------------------------------------
-  trunc <- if (!is.null(info$trunc))
-    paste0("T(", paste0(info$trunc, collapse = ", "), ")")
-
+  trunc <- if (!is.null(info$trunc)) {
+    paste0('T(', if (!is.na(info$trunc[1])) info$trunc[1], ', ',
+           if (!is.na(info$trunc[2])) info$trunc[2], ")")
+  }
 
   # * linear predictor of baseline covariates (including interaction terms) ----
   linpred <- paste_linpred(info$parname,

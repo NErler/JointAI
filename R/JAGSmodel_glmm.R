@@ -41,8 +41,10 @@ JAGSmodel_glmm <- function(info) {
   }
 
 
-  trunc <- if (!is.null(info$trunc))
-    paste0("T(", paste0(info$trunc, collapse = ", "), ")")
+  trunc <- if (!is.null(info$trunc)) {
+    paste0('T(', if (!is.na(info$trunc[1])) info$trunc[1], ', ',
+           if (!is.na(info$trunc[2])) info$trunc[2], ")")
+  }
 
 
 
@@ -129,8 +131,10 @@ glmm_in_JM <- function(info) {
   # model parts ----------------------------------------------------------------
   Z_predictor <- paste_lp_Zpart(info, isgk = TRUE)
 
-  trunc <- if (!is.null(info$trunc))
-    paste0("T(", paste0(info$trunc, collapse = ", "), ")")
+  trunc <- if (!is.null(info$trunc)) {
+    paste0('T(', if (!is.na(info$trunc[1])) info$trunc[1], ', ',
+           if (!is.na(info$trunc[2])) info$trunc[2], ")")
+  }
 
   dummies <- if (!is.null(info$dummy_cols)) {
     paste0('\n',tab(),
