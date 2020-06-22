@@ -62,7 +62,7 @@ residuals.JointAI <- function(object,
 
 
   # select the correct function calculating residuals for each model
-  sapply(names(object$fixed), function(varname) {
+  resids <- sapply(names(object$fixed), function(varname) {
     resid_fun <- switch(object$info_list[[varname]]$modeltype,
                         glm = resid_glm,
                         glmm = resid_glm,
@@ -77,9 +77,9 @@ residuals.JointAI <- function(object,
     # warning message
     if (!is.null(resid_fun)) {
       resid_fun(varname = varname,
-                mu = if (is.data.frame(object$fitted.values)) {
-                  object$fitted.values$fit
-                } else {object$fitted.values[[varname]]$fit},
+                mu = if (is.list(object$fitted.values)) {
+                  object$fitted.values[[varname]]
+                } else {object$fitted.values},
                 type = types[varname], data = object$data,
                 MCMC = object$MCMC, info = object$info_list[[varname]],
                 warn = warn)
@@ -90,6 +90,12 @@ residuals.JointAI <- function(object,
                 dQuote(object$info_list[[varname]]$modeltype))
     }
   },  simplify = FALSE)
+
+  if (length(resids) == 1) {
+    resids[[1]]
+  } else {
+    resids
+  }
 }
 
 

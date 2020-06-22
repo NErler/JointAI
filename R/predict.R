@@ -702,10 +702,10 @@ fitted_values <- function(object, ...) {
   fit <- predict(object, outcome = seq_along(object$fixed), quantiles = NULL,
                  type = types, ...)$fitted
 
-  if (ncol(fit) == 1) {
-    c(fit)
+  if (length(fit) == 1) {
+    c(fit$fit)
   } else {
-    fit
+    lapply(fit, "[[", 'fit')
   }
 }
 

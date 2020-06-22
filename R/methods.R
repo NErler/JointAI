@@ -20,12 +20,16 @@ plot.JointAI <- function(x, ...) {
     errormsg('At the moment there is not plotting method implemented for a %s
              model of type %s.', dQuote("JointAI"), dQuote(x$analysis_type))
 
+  if (length(x$fixed) > 1)
+    errormsg("At the moment there is no plotting method implemented for models
+             with multiple model formulas.")
+
   l.fit <- if (x$analysis_type %in% c('glm', 'glme'))  {
     "Predicted values"
   } else {"Fitted values"}
 
-  fit <- unlist(x$fitted.values)
-  r <- unlist(x$residuals[[1]])
+  fit <- x$fitted.values
+  r <- x$residuals
 
   plot(fit, r, xlab = l.fit,
        ylab = "Residuals", main = 'Residuals vs Fitted'
