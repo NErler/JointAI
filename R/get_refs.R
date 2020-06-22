@@ -43,7 +43,6 @@ get_refs <- function(fmla, data, refcats = NULL, warn = TRUE) {
       }
       res <- factor(levels(data[, x])[as.numeric(refcats[x])],
                     levels(data[, x]))
-      attr(res, "dummies") <- paste0(x, levels(res)[levels(res) != res])
       attr(res, "ordered") <- inherits(data[, x], 'ordered')
 
       attr(res, "contrasts") <- if (inherits(data[, x], 'ordered'))
@@ -74,6 +73,9 @@ get_refs <- function(fmla, data, refcats = NULL, warn = TRUE) {
       }
 
       attr(res, "contr_matrix") <- contr_matrix
+
+      attr(res, "dummies") <- paste0(x, colnames(contr_matrix))
+
 
       res
     }, simplify = FALSE)
