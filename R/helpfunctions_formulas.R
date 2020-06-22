@@ -306,12 +306,14 @@ all_vars <- function(fmla) {
 # functions in formulas --------------------------------------------------------
 
 # used in divide_matrices (2020-06-10)
-extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
+extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
+                         complete = FALSE, Mlvls) {
   # create a data.frame of all functions of variables used in the linear
   # predictors of the models
   # - fixed: list of fixed effects formulas or fixed effects formula
   # - data: data.frame containing the original (pre-processed) data
   # - random: optional list of random effects formulas or random effects formula
+  # - auxvars: optional formula of auxiliary variables
   # - complete: should the output consider functions of variables that do not
   #             have missing values?
   # - Mlvls: vector identifying the levels of all variables in the different
@@ -343,7 +345,7 @@ extract_fcts <- function(fixed, data, random = NULL, complete = FALSE, Mlvls) {
 
 
   # list of functions in covariates and random effects variables
-  funlist <- list(covars = identify_functions(remove_LHS(fixed)),
+  funlist <- list(covars = identify_functions(remove_LHS(c(fixed, auxvars))),
                   ranef = identify_functions(unlist(remove_grouping(random)))
   )
 

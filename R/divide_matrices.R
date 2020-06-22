@@ -135,9 +135,9 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
     MX[ , Mlvls == k, drop = FALSE], simplify = FALSE)
 
   fcts_mis <- extract_fcts(fixed = fixed, data, random = random,
-                           complete = FALSE, Mlvls = Mlvls)
+                           auxvars = auxvars, complete = FALSE, Mlvls = Mlvls)
   fcts_all <- extract_fcts(fixed = fixed, data, random = random,
-                           complete = TRUE, Mlvls = Mlvls)
+                           auxvars = auxvars, complete = TRUE, Mlvls = Mlvls)
 
   # scaling --------------------------------------------------------------------
   scale_pars <- mapply(get_scale_pars,

@@ -499,7 +499,17 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   # identify all variables involved and those variables that are covariates
   allvars <- all_vars(c(fixed, remove_grouping(random), auxvars))
 
-  covars <- allvars[!allvars %in% unlist(extract_outcome(fixed))]
+  # in order to be able to include functions in the auxiliary variables,
+  # extract the term labels from auxvars and build the formula used
+  # to create the design matrices for the covariate models using these
+  # term labels.
+  auxterms <- if (!is.null(auxvars)) attr(terms(auxvars), 'term.labels')
+
+  covar_terms <- c(all_vars(c(remove_LHS(fixed),
+                              remove_grouping(random))),
+                   auxterms)
+
+
 
   # identify the levels of all variables
   lvl <- sapply(data[, allvars, drop = FALSE], check_varlevel, groups = groups,
@@ -507,7 +517,8 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   group_lvls <- colSums(!identify_level_relations(groups))
 
   # make a subset containing only covariates
-  subdat <- subset(data, select = covars)
+  subdat <- subset(data,
+                   select = setdiff(allvars, unlist(extract_outcome(fixed))))
 
   contr_list <- lapply(refs, attr, 'contr_matrix')
 
@@ -532,9 +543,8 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   #  - identify if an intercept is needed (no intercept for ordinal and cox)
   #  - generate a RHS formula
   for (out in names(models)[!names(models) %in% names(fixed)]) {
-    nointercept <- models[out] %in% c('clmm', 'clm', 'coxph')
-    fmla <- as.formula(paste0(out, " ~ .", if (nointercept) '-1'))
 
+    nointercept <- models[out] %in% c('clmm', 'clm', 'coxph')
 
     # identify variables that have
     # - level higher than the level of the outcome, or
@@ -546,10 +556,26 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
     relvars <- group_lvls[lvl[colnames(subdat)]] > group_lvls[lvl[out]] |
       lvl[colnames(subdat)] == lvl[out]
 
+
+    testdat <- subset(subdat, select = relvars & (colnames(subdat) != out))
+
+    keep_terms <- sapply(covar_terms, function(k) {
+      check_effect <- try(model.frame(paste0("~", k), testdat), silent = TRUE)
+      !inherits(check_effect, 'try-error')
+    })
+
+    covar_terms <- covar_terms[keep_terms]
+
+    fmla <- as.formula(paste0(out, " ~ ",
+                              ifelse(length(covar_terms) == 0, '1',
+                                     paste0(covar_terms, collapse = " + ")),
+                              if (nointercept) '-1'))
+
+
     # get the names of the columns of the corresponding design matrix
     lp[[out]] <- colnames(
-      model.matrix(fmla, subset(subdat, select = relvars),
-                   contrasts.arg = contr_list[intersect(all_vars(fmla),
+      model.matrix(fmla, subdat,
+                   contrasts.arg = contr_list[intersect(all_vars(remove_LHS(fmla)),
                                                         names(contr_list))]))
 
     # if the linear predictor is empty, create an empty object, to make the
