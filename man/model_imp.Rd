@@ -205,7 +205,10 @@ should be monitored (more details below)}
 
 \item{auxvars}{optional; one-sided formula of variables that should be used
 as predictors in the imputation procedure (and will be imputed
-if necessary) but are not part of the analysis model(s)}
+if necessary) but are not part of the analysis model(s).
+For more details with regards to the behaviour with
+non-linear effects see the vignette on
+\href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#auxvars}{Model Specification}}
 
 \item{refcats}{optional; either one of \code{"first"}, \code{"last"},
 \code{"largest"} (which sets the category for all categorical
