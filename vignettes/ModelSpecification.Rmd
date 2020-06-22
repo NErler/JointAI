@@ -654,7 +654,7 @@ the remaining variables.
 ```{r, message = FALSE, warning = FALSE}
 mod8a <- lm_imp(SBP ~ age + gender + WC + alc + bili + occup + smoke,
                 models = c(bili = 'glm_gamma_log', WC = 'lognorm'),
-                data = NHANES, n.iter = 100, progress.bar = 'none')
+                data = NHANES, n.adapt = 0, progress.bar = 'none')
 
 mod8a$models
 ```
@@ -761,25 +761,49 @@ If this is not true, the model is  mis-specified which may lead to biased result
 (similar to leaving a confounding variable out of a model).
 
 
-## Reference values for categorical covariates
-In **JointAI**, dummy coding is used when categorical variables enter a linear
-predictor, i.e., a binary variables is created for each category, except the 
+## Categorical covariates: coding and reference categories
+### Coding
+In practice, most often, dummy coding is used for categorical predictor
+variables, i.e., a binary variables is created for each category, except the
 reference category.
-These binary variables have value one when that category
-was observed and zero otherwise.
-Contrary to the behavior in base R, this is also done for
-ordered factors. Note that it is not possible to overwrite this behavior using 
-the base R contrasts specification.
+These binary variables have value one when that category was observed and zero
+otherwise.
 
-By default, the first category of a categorical variable (ordered or unordered)
-is used as reference, however, this may not always allow the desired interpretation
-of the regression coefficients. Moreover, when categories are unbalanced, setting
-the largest group as reference may result in better mixing of the MCMC chains.
+This is the default behaviour for unordered factors in R (`contr.treatment()`).
+For ordered factors orthogonal polynomials (`contr.poly()`) are used. The
+type of contrasts (i.e. "coding") to be used for unordered and ordered
+factors can be checked and set in the global options:
+
+```{r}
+options('contrasts')
+```
+
+Since the imputation of incomplete factors is done in the original variable,
+the re-coding from the original categorical variable into dummy variables or
+other contrasts needs to be done within the JAGS model.
+Currently, only dummy coding and reference coding (`contr.sum()`) are possible
+for factors with missing values. This means that, if the default `contr.poly`
+is set for ordinal factors, a warning message is printed and dummy coding
+is used for these variables instead.
+
+### Reference categories
+In **JointAI**, the first category of a categorical variable is set to be the
+reference category when using for dummy or reference coding.
+However, this may not always allow the desired interpretation
+of the regression coefficients. Moreover, when categories are unbalanced,
+setting the largest group as reference may result in better mixing of the MCMC
+chains.
+
+For unordered factors, it is possible to change the reference category directly
+in the data, for example using the base R function `relevel()`. For ordinal
+variables, however, this is not possible, and especially when the ordinal
+variable needs imputation it is desirable to maintain the ordering in the
+categories.
 
 Therefore, **JointAI** allows specification of the reference category separately
 for each variable, via the argument `refcats`.
 
-### Setting reference categories for all variables
+#### Setting reference categories for all variables
 To specify the choice of reference category globally for all variables in the
 model, `refcats` can be set as
 
@@ -793,7 +817,7 @@ mod10a <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
                  refcats = "largest", data = NHANES, n.adapt = 0)
 ```
 
-### Setting reference categories for individual variables
+#### Setting reference categories for individual variables
 Alternatively, `refcats` takes a named vector, in which the reference category
 for each variable can be specified either by its number or its name, or one of 
 the three global types: "first", "last" or "largest". 
@@ -883,19 +907,7 @@ mod10c <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
 ```
 
 
-### Some notes
-Contrary to base R behavior, dummy coding (i.e., `contr.treatment` contrasts)
-are used for ordered factors in any linear predictor.
-Since the order of levels in an ordered factor contains information relevant
-to the imputation of missing values, it is important that incomplete ordinal
-variables are coded as such.
-
-For unordered factors, the reference category could be changed in the dataset directly,
-outside of **JointAI**, e.g., using [`relevel()`](https://stat.ethz.ch/R-manual/R-patched/library/stats/html/relevel.html).
-For ordered factors, however, this is not possible without loosing or changing the
-order of the levels. In this case, the `refcats` argument in **JointAI** has to
-be used.
-
+**Note:**<br>
 Changing a reference category via the argument `refcats` does not change the
 order of levels in the dataset or any of the data matrices inside **JointAI**.
 Only when, in the JAGS model, the categorical variables is converted into 
@@ -903,10 +915,10 @@ dummy variables, the reference category is used to determine for which levels
 the dummies are created.
 
 
-## Hyperparameters
+## Hyper-parameters
 In the Bayesian framework, parameters are random variables for which a 
 distribution needs to be specified. These distributions depend on parameters
-themselves, i.e., on hyperparameters.
+themselves, i.e., on hyper-parameters.
 
 The function `default_hyperpars()` returns a list containing the default hyper
 parameters used in a `JointAI` model.
@@ -915,46 +927,70 @@ parameters used in a `JointAI` model.
 default_hyperpars()
 ```
 
-To change the hyperparameters in a **JointAI** model, the list obtained from 
+To change the hyper-parameters in a **JointAI** model, the list obtained from 
 `default_hyperpars()` can be edited and passed to the argument `hyperpars` 
 in the main functions `*_imp()`.
 
-`mu_reg_*` and `tau_reg_*` refer to the mean and precision in the distribution
-for regression coefficients.
-`shape_tau_*` and `rate_tau_*` are the shape and rate parameters of a Gamma distribution
-that is used has prior for precision parameters.
-`RinvD` is the scale matrix in the Wishart prior for the inverse of the random
-effects design matrix `D`, and `KinvD` the number of degrees of freedom in that
-distribution. `shape_diag_RinvD` and `rate_diag_RinvD` are the scale and rate parameters
-of the Gamma prior of the diagonal elements of `RinvD`.
+* `mu_reg_*` and `tau_reg_*` refer to the mean and precision in the
+  distribution for regression coefficients.
+* `shape_tau_*` and `rate_tau_*` are the shape and rate parameters of a Gamma
+  distribution that is used has prior for precision parameters.
+* `KinvD` refers to the degrees of freedom in the Wishart prior used for the
+  inverse of the random effects design matrix `D`.
+  `KinvD_exp` should be a string that can be evaluated to calculate the number
+  of degrees of freedom depending on the number of random effects `nranef`
+  (dimension of `D`).
+  By default, `KinvD` will be set to the number of random effects plus one.
+* `shape_diag_RinvD` and `rate_diag_RinvD` are the scale and rate parameters 
+  of the Gamma prior of the diagonal elements of `RinvD`.
+
 In random effects models with only one random effect, instead of the Wishart
 distribution a Gamma prior is used for the inverse of `D`.
 
 
 ## Scaling
-When variables are measured on very different scales this can result in slow convergence
-and bad mixing. Therefore, **JointAI** automatically scales continuous
-variables to have mean zero and standard deviation one. Results (parameters
-and imputed values) are transformed back to the original scale.
+When variables are measured on very different scales this can result in slow
+convergence and bad mixing. 
+Therefore, **JointAI** includes scaling of continuous covariates in the
+JAGS model (i.e., instead of writing `... + covar + ...` in the linear
+predictor, `... + (covar - mean)/sd) + ...` is written).
+The scaling parameters (mean and standard deviation) are calculated based on the
+design matrices containing the original data.
+Results are transformed back to the original scale.
 
-In some settings, however, it is not possible to scale continuous variables. This
-is the case for incomplete variables that enter a linear predictor in a 
-function and variables that are imputed with models that are defined
-on a subset of the real line (i.e., with a Gamma or a Beta distribution). Variables
-that are imputed with a log-normal distribution are scaled, but not centered.
-To prevent scaling, the argument `scale_vars` can be set to `FALSE`.
-When a vector of variable names is supplied to `scale_vars`, only those 
-variables are scaled.
+By setting the argument `scale_vars = FALSE` the scaling can be prevented.
+If `scale_vars` is a vector of variable names, scaling will only be done
+for those variables.
 
 By default, only the MCMC samples that is scaled back to the scale of the data
-is stored in a `JointAI` object. When the argument `keep_scaled_mcmc = TRUE` also
-the scaled sample is kept.
+is stored in a `JointAI` object. When the argument `keep_scaled_mcmc = TRUE` 
+also the scaled sample is kept. This is mainly for de-bugging purposes.
 
 
-## Ridge regression
-Using the argument `ridge = TRUE` it is possible to impose a ridge penalty 
-on the parameters of the analysis model, shrinking these parameters towards
-zero.
-This is done by specification of a $\text{Ga}(0.01, 0.01)$ prior for the precision
-of the regression coefficients $\beta$ instead of setting it to a fixed (small)
-value.
+## Shrinkage
+It is possible to use shrinkage priors to penalize large regression
+coefficients. This can be specified via the argument `shrinkage`.
+At the moment, only ridge regression is implemented.
+
+Setting `shrinkage = 'ridge'` will impose ridge priors on all regression 
+coefficients. To only use shrinkage for some of the sub-models (main analysis
+model and covariate models), a vector can be provided that contains the
+names of the response variables of the models in which shrinkage should be
+applied, and the type of shrinkage for each of them.
+
+For example, in `mod11a` ridge regression is used for all models, and in 
+`modd11b` only in the models for `SBP` and `educ`:
+```{r, warning = FALSE}
+mod11a <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
+                data = NHANES, shrinkage = 'ridge',
+                n.adapt = 0)
+
+mod11b <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
+                data = NHANES, shrinkage = c(SBP = 'ridge', educ = 'ridge'),
+                n.adapt = 0)
+
+```
+
+Ridge regression is implemented as a $\text{Ga}(0.01, 0.01)$ prior for the
+precision of the regression coefficients $\beta$ instead of setting this 
+precision to a fixed (small) value.
