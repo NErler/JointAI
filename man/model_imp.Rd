@@ -542,8 +542,10 @@ will be used.
 
 \tabular{ll}{
 \strong{name/key word} \tab \strong{what is monitored}\cr
-\code{analysis_main} \tab \code{betas} and \code{sigma_y}
-(also \code{D} in multi-level models and
+\code{analysis_main} \tab \code{betas} and \code{sigma_main}, \code{tau_main}
+(for beta regression) or \code{shape_main}
+(for parametric survival models)
+(also \code{D_main} in multi-level models and
 \code{basehaz} in proportional hazards models)\cr
 \code{analysis_random} \tab \code{ranef_main}, \code{D_main},
 \code{invD_main}, \code{RinvD_main}\cr
