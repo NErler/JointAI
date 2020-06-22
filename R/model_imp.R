@@ -577,7 +577,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
 
   # * data list ----------------------------------------------------------------
-  data_list <- get_data_list(Mlist, info_list)
+  data_list <- get_data_list(Mlist, info_list, hyperpars)
 
 
   # write model ----------------------------------------------------------------

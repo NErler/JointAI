@@ -2,7 +2,7 @@
 # get list of data to be passed to JAGS #
 # # # # # # # # # # # # # # # # # # # # #
 
-get_data_list <- function(Mlist, info_list) {
+get_data_list <- function(Mlist, info_list, hyperpars) {
   modeltypes <- sapply(info_list, "[[", 'modeltype')
 
   # data matrices --------------------------------------------------------------
@@ -29,7 +29,14 @@ get_data_list <- function(Mlist, info_list) {
 
 
   # hyperpars ------------------------------------------------------------------
-  l <- c(l, unlist(unname(default_hyperpars()[
+
+  hyp <- if (is.null(hyperpars)) {
+    default_hyperpars()
+  } else {
+    hyperpars
+  }
+
+  l <- c(l, unlist(unname(hyp[
     c(
       if (any(sapply(info_list, "[[", 'family') %in% c('gaussian', 'lognorm')))
         'norm',
@@ -76,7 +83,7 @@ get_data_list <- function(Mlist, info_list) {
     l <- c(l,
            groups,
            if (length(pos)) pos,
-           default_hyperpars()$ranef[c('shape_diag_RinvD', 'rate_diag_RinvD')]
+           hyp$ranef[c('shape_diag_RinvD', 'rate_diag_RinvD')]
     )
 
 
@@ -92,8 +99,7 @@ get_data_list <- function(Mlist, info_list) {
                       unlist(unname(
                         lapply(names(x$hc_list$hcvars), function(k) {
                           nranef <- x$nranef[k]
-                          setNames(default_hyperpars()$ranef$wish(
-                            nranef = nranef),
+                          setNames(get_RinvD(nranef, hyp$ranef['KinvD_expr']),
                             paste(c("RinvD", "KinvD"), x$varname,
                                   k, sep = "_")
                           )
