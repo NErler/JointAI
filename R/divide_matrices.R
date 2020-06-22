@@ -142,7 +142,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # scaling --------------------------------------------------------------------
   scale_pars <- mapply(get_scale_pars,
                        mat = M, groups = groups[gsub('M_', '', names(M))],
-                       MoreArgs = list(scale_vars = scale_vars),
+                       MoreArgs = list(scale_vars = scale_vars, refs = refs,
+                                       fcts_all = fcts_all, data = data),
                        SIMPLIFY  = FALSE)
 
 

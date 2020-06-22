@@ -1,16 +1,16 @@
 
 # used in divide_matrices() (2020-06-13)
-get_scale_pars <- function(mat, groups, scale_vars) {
+get_scale_pars <- function(mat, groups, scale_vars, refs, fcts_all, data) {
   # create a list of matrices containing the scaling parameters corresponding
   # to each of the design matrices
 
   if (is.null(mat) | (!is.null(scale_vars) && !scale_vars))
     return(NULL)
 
-  vars <- find_scalevars(mat)
+  vars <- find_scalevars(mat, refs, fcts_all, data)
 
   if (!is.null(scale_vars))
-    vars[vars %in% scale_vars]
+    vars <- intersect(vars, scale_vars)
 
 
   do.call(rbind, sapply(names(vars), function(k) {
@@ -30,14 +30,23 @@ get_scale_pars <- function(mat, groups, scale_vars) {
 
 
 # used in get_scale_pars() (2020-06-13)
-find_scalevars <- function(mat) {
+find_scalevars <- function(mat, refs, fcts_all, data) {
   # Find the names of columns in the model matrix that are not integers
   # or have many different values
 
-  intgr <- apply(mat, 2, function(x) all(na.omit(as.integer(x) == x)))
-  lvls <- apply(mat, 2, function(x) length(unique(na.omit(x))))
+  vars <- lapply(colnames(mat), function(k) {
+    x <- replace_dummy(k, refs)
 
-  return(!intgr | lvls > 20)
+    if (k %in% names(data)) {
+      if (is.numeric(data[, k])) k
+    } else {
+      if (k %in% fcts_all$colname) {
+        if (is.numeric(eval(parse(text = k), envir = data))) k
+      }
+    }
+  })
+
+  unlist(vars)
 }
 
 
