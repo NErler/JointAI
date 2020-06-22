@@ -95,12 +95,12 @@ sample, which consists of all chains combined.
 
 By default, [`summary()`](https://nerler.github.io/JointAI/reference/summary.JointAI.html)
 will only print the posterior summary for the main
-model parameters of the analysis model. How one can select which parameters are shown
-is described in the vignette 
+model parameters of the analysis model. How one can select which parameters are
+shown is described in the vignette
 [*Selecting Parameters*](https://nerler.github.io/JointAI/articles/SelectingParameters.html).
 
-The summary consists of the posterior mean, the standard deviation,  
-2.5% and 97.5% quantiles of the MCMC sample, the tail probability, the 
+The summary consists of the posterior mean, the standard deviation, 2.5% and
+97.5% quantiles of the MCMC sample, the tail probability, the
 Gelman-Rubin criterion for convergence and the ratio of the Monte Carlo error
 to the standard deviation of the posterior sample.
 
@@ -151,8 +151,8 @@ compares the within and between chain variation. When it is close enough to
 can be assumed to have converged.
 
 #### Monte Carlo error
-The Monte Carlo error is a measure of the error that is made because the estimate
-is based on a finite sample. It can also be obtained using the function
+The Monte Carlo error is a measure of the error that is made because the
+estimate is based on a finite sample. It can also be obtained using the function
 [`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html).
 Ideally, the Monte Carlo error should be small compared to the standard error 
 of the posterior sample. The values shown in the model summary are the Monte 
@@ -173,6 +173,11 @@ For example:<br>
 When the traceplot shows that the chains only converged after
 1500 iterations, `start = 1500` should be specified in
 [`summary()`](https://nerler.github.io/JointAI/reference/summary.JointAI.html).
+
+
+At the end of the output, a summary of the missing values in all variables
+involved in the model is given. To avoid lengthy output, this part can be
+omitted by setting `missinfo = FALSE`.
 
 ## Plot of the posterior distributions
 The posterior distributions can be visualized using the function `densplot()`:
