@@ -699,8 +699,14 @@ fitted_values <- function(object, ...) {
   })
 
 
-  predict(object, outcome = seq_along(object$fixed), quantiles = NULL,
-          type = types, ...)$fitted
+  fit <- predict(object, outcome = seq_along(object$fixed), quantiles = NULL,
+                 type = types, ...)$fitted
+
+  if (ncol(fit) == 1) {
+    c(fit)
+  } else {
+    fit
+  }
 }
 
 
