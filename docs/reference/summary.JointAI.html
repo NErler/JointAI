@@ -314,16 +314,16 @@ given directly by <strong>JointAI</strong>.)</p></td>
 #&gt; 
 #&gt; Posterior summary:
 #&gt;                 Mean     SD    2.5%  97.5% tail-prob. GR-crit MC error
-#&gt; (Intercept)  36.0895 23.493  -8.839 82.845     0.1200   1.051   0.0611
-#&gt; C1          -27.1805 16.404 -59.812  3.864     0.0867   1.051   0.0612
-#&gt; C2            0.9577  0.706  -0.405  2.412     0.1933   1.014   0.0577
-#&gt; M22          -0.3804  0.648  -1.662  0.874     0.6067   0.998   0.0577
-#&gt; M23           0.0868  0.634  -1.172  1.316     0.8467   1.003   0.0577
-#&gt; M24          -1.1530  0.669  -2.572  0.105     0.0667   0.996   0.0577
+#&gt; (Intercept)  35.0343 26.549 -19.397 85.696     0.1800   0.998   0.0577
+#&gt; C1          -26.4450 18.556 -62.067 11.780     0.1400   0.998   0.0577
+#&gt; C2            0.8795  0.720  -0.556  2.257     0.2067   1.059   0.0879
+#&gt; M22          -0.3968  0.661  -1.680  0.800     0.5467   1.001   0.0577
+#&gt; M23           0.0745  0.641  -1.267  1.289     0.8267   1.016   0.0577
+#&gt; M24          -1.1891  0.669  -2.530  0.107     0.0667   1.031   0.0577
 #&gt; 
 #&gt; Posterior summary of residual std. deviation:
 #&gt;         Mean    SD 2.5% 97.5% GR-crit MC error
-#&gt; sigma_y 2.23 0.157 1.94  2.56    1.01   0.0577
+#&gt; sigma_y 2.23 0.166 1.93  2.62    1.08   0.0654
 #&gt; 
 #&gt; 
 #&gt; MCMC settings:
@@ -342,15 +342,15 @@ given directly by <strong>JointAI</strong>.)</p></td>
 #&gt; M2       M2    3    3
 #&gt; C2       C2    4    4</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; $y
 #&gt;  (Intercept)           C1           C2          M22          M23          M24 
-#&gt;  36.08954848 -27.18046089   0.95770681  -0.38039890   0.08675979  -1.15300214 
+#&gt;  35.03429258 -26.44500038   0.87951544  -0.39676499   0.07451322  -1.18905432 
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt;                2.5%      97.5%
-#&gt; beta[1]  -8.8388389 82.8447677
-#&gt; beta[2] -59.8115909  3.8640669
-#&gt; beta[3]  -0.4052532  2.4123271
-#&gt; beta[4]  -1.6624128  0.8738674
-#&gt; beta[5]  -1.1724061  1.3163783
-#&gt; beta[6]  -2.5723260  0.1045001
-#&gt; sigma_y   1.9351177  2.5595119</div><div class='input'>
+#&gt; beta[1] -19.3967594 85.6955885
+#&gt; beta[2] -62.0669920 11.7798036
+#&gt; beta[3]  -0.5564529  2.2569678
+#&gt; beta[4]  -1.6802701  0.8004708
+#&gt; beta[5]  -1.2671384  1.2888063
+#&gt; beta[6]  -2.5301716  0.1068645
+#&gt; sigma_y   1.9297131  2.6242061</div><div class='input'>
 
 </div></pre>
   </div>

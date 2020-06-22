@@ -317,13 +317,13 @@ provides some examples how to specify the argument <code>subset</code>.</p></div
     <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 
 <span class='fu'>MC_error</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt;                est   MCSE    SD MCSE/SD
-#&gt; (Intercept)  37.25 1.5055 26.10   0.058
-#&gt; C1          -28.01 1.0462 18.19   0.058
-#&gt; C2            0.94 0.0364  0.69   0.052
-#&gt; M22          -0.38 0.0416  0.64   0.065
-#&gt; M23           0.13 0.0389  0.67   0.058
-#&gt; M24          -1.12 0.0371  0.64   0.058
-#&gt; sigma_y       2.22 0.0091  0.16   0.058</div><div class='input'>
+#&gt; (Intercept)  38.03 1.4843 25.71   0.058
+#&gt; C1          -28.58 1.0342 17.91   0.058
+#&gt; C2            0.91 0.0402  0.70   0.058
+#&gt; M22          -0.32 0.0363  0.63   0.058
+#&gt; M23           0.13 0.0385  0.67   0.058
+#&gt; M24          -1.04 0.0366  0.63   0.058
+#&gt; sigma_y       2.24 0.0092  0.16   0.058</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>MC_error</span>(<span class='no'>mod</span>), <span class='kw'>ablinepars</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>lty</span> <span class='kw'>=</span> <span class='fl'>2</span>),
      <span class='kw'>plotpars</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>19</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>'blue'</span>))</div><div class='img'><img src='MC_error-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>

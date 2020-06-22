@@ -217,7 +217,7 @@ sampling, while imputing missing values.</p>
   <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
-<span class='fu'>lognormal_imp</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+<span class='fu'>lognorm_imp</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -392,7 +392,10 @@ should be monitored (more details below)</p></td>
       <th>auxvars</th>
       <td><p>optional; one-sided formula of variables that should be used
 as predictors in the imputation procedure (and will be imputed
-if necessary) but are not part of the analysis model(s)</p></td>
+if necessary) but are not part of the analysis model(s).
+For more details with regards to the behaviour with
+non-linear effects see the vignette on
+<a href='https://nerler.github.io/JointAI/articles/ModelSpecification.html#auxvars'>Model Specification</a></p></td>
     </tr>
     <tr>
       <th>refcats</th>
@@ -769,8 +772,10 @@ automatically.</p>
 will be used.</p>
 <table class='table'>
 <tr><td><strong>name/key word</strong></td><td><strong>what is monitored</strong></td></tr>
-<tr><td><code>analysis_main</code></td><td><code>betas</code> and <code>sigma_y</code>
-(also <code>D</code> in multi-level models and
+<tr><td><code>analysis_main</code></td><td><code>betas</code> and <code>sigma_main</code>, <code>tau_main</code>
+(for beta regression) or <code>shape_main</code>
+(for parametric survival models)
+(also <code>D_main</code> in multi-level models and
 <code>basehaz</code> in proportional hazards models)</td></tr>
 <tr><td><code>analysis_random</code></td><td><code>ranef_main</code>, <code>D_main</code>,
 <code>invD_main</code>, <code>RinvD_main</code></td></tr>

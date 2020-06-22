@@ -148,26 +148,33 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install <strong>JointAI</strong> from GitHub with:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"NErler/JointAI"</span>)</pre></div>
+<p><strong>JointAI</strong> can be installed from <a href="https://cran.r-project.org/">CRAN</a>:</p>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'JointAI'</span>)</pre></div>
+<p>Alternatively, you can install <strong>JointAI</strong> from GitHub:</p>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="co"># install.packages("remotes")</span>
+<span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"NErler/JointAI"</span>)</pre></div>
 </div>
 <div id="main-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#main-functions" class="anchor"></a>Main functions</h2>
-<p>Currently, there are the following main functions:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="reference/model_imp.html">lm_imp</a></span>()      <span class="co"># linear regression</span>
-<span class="fu"><a href="reference/model_imp.html">glm_imp</a></span>()     <span class="co"># generalized linear regression </span>
-<span class="fu"><a href="reference/model_imp.html">clm_imp</a></span>()     <span class="co"># cumulative logit model</span>
-<span class="fu"><a href="reference/model_imp.html">lme_imp</a></span>()     <span class="co"># linear mixed model</span>
-<span class="fu"><a href="reference/model_imp.html">glme_imp</a></span>()    <span class="co"># generalized linear mixed model</span>
-<span class="fu"><a href="reference/model_imp.html">clmm_imp</a></span>()    <span class="co"># cumulative logit mixed model</span>
-<span class="fu"><a href="reference/model_imp.html">survreg_imp</a></span>() <span class="co"># parametric (Weibull) survival model</span>
-<span class="fu"><a href="reference/model_imp.html">coxph_imp</a></span>()   <span class="co"># Cox proportional hazards survival model</span></pre></div>
-<p>The functions <code><a href="reference/model_imp.html">lm_imp()</a></code>, <code><a href="reference/model_imp.html">glm_imp()</a></code> and <code><a href="reference/model_imp.html">clm_imp()</a></code> use specification similar to their complete data counterparts <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> from base R and <code>clm()</code> from the package <a href="https://CRAN.R-project.org/package=ordinal"><strong>ordinal</strong></a>.</p>
-<p>The functions for mixed models, <code><a href="reference/model_imp.html">lme_imp()</a></code>, <code><a href="reference/model_imp.html">glme_imp()</a></code> and <code><a href="reference/model_imp.html">clmm_imp()</a></code> use similar specification as <code>lme()</code> from the package <a href="https://CRAN.R-project.org/package=nlme"><strong>nlme</strong></a> (and <code>clmm2()</code> from <a href="https://CRAN.R-project.org/package=nlme"><strong>ordinal</strong></a>).</p>
-<p><code><a href="reference/model_imp.html">survreg_imp()</a></code> and <code><a href="reference/model_imp.html">coxph_imp()</a></code> are missing data versions of <code>survreg()</code> and <code>coxph()</code> from the package <a href="https://CRAN.R-project.org/package=survival"><strong>survival</strong></a>.</p>
-<p>Functions <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, <code><a href="https://rdrr.io/r/stats/coef.html">coef()</a></code>, <code><a href="reference/traceplot.html">traceplot()</a></code> and <code>densityplot()</code> provide a summary of the posterior distribution and its visualization.</p>
+<p><strong>JointAI</strong> provides the following main functions:</p>
+<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="reference/model_imp.html">lm_imp</a></span>()                 <span class="co"># linear regression</span>
+<span class="fu"><a href="reference/model_imp.html">glm_imp</a></span>()                <span class="co"># generalized linear regression</span>
+<span class="fu"><a href="reference/model_imp.html">clm_imp</a></span>()                <span class="co"># cumulative logit model</span>
+<span class="fu"><a href="reference/model_imp.html">mlogit_imp</a></span>()             <span class="co"># multinomial logit model</span>
+<span class="fu"><a href="reference/model_imp.html">lognorm_imp</a></span>()            <span class="co"># log-normal regression</span>
+<span class="fu"><a href="reference/model_imp.html">betareg_imp</a></span>()            <span class="co"># beta regression</span>
+<span class="fu"><a href="reference/model_imp.html">lme_imp</a></span>() / <span class="fu"><a href="reference/model_imp.html">lmer_imp</a></span>()   <span class="co"># linear mixed model</span>
+<span class="fu"><a href="reference/model_imp.html">glme_imp</a></span>() / <span class="fu"><a href="reference/model_imp.html">glmer_imp</a></span>() <span class="co"># generalized linear mixed model</span>
+<span class="fu"><a href="reference/model_imp.html">clmm_imp</a></span>()               <span class="co"># cumulative logit mixed model</span>
+<span class="fu"><a href="reference/model_imp.html">mlogitmm_imp</a></span>()           <span class="co"># multinomial logit model</span>
+<span class="fu"><a href="reference/model_imp.html">lognormmm_imp</a></span>()          <span class="co"># log-normal regression</span>
+<span class="fu"><a href="reference/model_imp.html">betamm_imp</a></span>()             <span class="co"># beta regression</span>
+<span class="fu"><a href="reference/model_imp.html">survreg_imp</a></span>()            <span class="co"># parametric (Weibull) survival model</span>
+<span class="fu"><a href="reference/model_imp.html">coxph_imp</a></span>()              <span class="co"># proportional hazards survival model</span>
+<span class="fu"><a href="reference/model_imp.html">JM_imp</a></span>()                 <span class="co"># joint model for longitudinal and survival data</span></pre></div>
+<p>The functions use specification similar to that of well known standard functions like <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> from base R, <code>lme()</code> (from the package <a href="https://CRAN.R-project.org/package=nlme"><strong>nlme</strong></a>) , <code>lmer()</code> or <code>glmer()</code> (from the package <a href="https://CRAN.R-project.org/package=lme4"><strong>lme4</strong></a>) and <code>survreg()</code> and <code>coxph()</code> (from the package <a href="https://CRAN.R-project.org/package=survival"><strong>survival</strong></a>).</p>
+<p>Functions <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, <code><a href="https://rdrr.io/r/stats/coef.html">coef()</a></code>, <code><a href="reference/traceplot.html">traceplot()</a></code> and <code><a href="reference/densplot.html">densplot()</a></code> provide a summary of the posterior distribution and its visualization.</p>
 <p><code><a href="reference/GR_crit.html">GR_crit()</a></code> and <code><a href="reference/MC_error.html">MC_error()</a></code> provide the Gelman-Rubin diagnostic for convergence and the Monte Carlo error of the MCMC sample, respectively.</p>
 <p><strong>JointAI</strong> also provides functions for exploration of the distribution of the data and missing values, export of imputed values and prediction.</p>
 </div>
@@ -177,53 +184,54 @@
 <div id="visualize-the-observed-data-and-missing-data-pattern" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visualize-the-observed-data-and-missing-data-pattern" class="anchor"></a>Visualize the observed data and missing data pattern</h3>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">JointAI</span>)
+<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">JointAI</span>)
 
 <span class="no">op</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="kw">mar</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2.5</span>, <span class="fl">3</span>, <span class="fl">2.5</span>, <span class="fl">1</span>), <span class="kw">mgp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">0.8</span>, <span class="fl">0</span>))
 <span class="fu"><a href="reference/plot_all.html">plot_all</a></span>(<span class="no">NHANES</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">5</span>:<span class="fl">6</span>, <span class="fl">8</span>:<span class="fl">12</span>)], <span class="kw">fill</span> <span class="kw">=</span> <span class="st">'#e30f41'</span>, <span class="kw">border</span> <span class="kw">=</span> <span class="st">'#34111b'</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="kw">nclass</span> <span class="kw">=</span> <span class="fl">30</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-2-1.png" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="no">op</span>)</pre></div>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="fu"><a href="reference/md_pattern.html">md_pattern</a></span>(<span class="no">NHANES</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span>))</pre></div>
+<div class="sourceCode" id="cb5"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="no">op</span>)</pre></div>
+<div class="sourceCode" id="cb6"><pre class="r"><span class="fu"><a href="reference/md_pattern.html">md_pattern</a></span>(<span class="no">NHANES</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span>))</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-3-1.png" style="display: block; margin: auto;"></p>
 </div>
 <div id="fit-a-linear-regression-model-with-incomplete-covariates" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fit-a-linear-regression-model-with-incomplete-covariates" class="anchor"></a>Fit a linear regression model with incomplete covariates</h3>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="no">lm1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">age</span> + <span class="no">WC</span> + <span class="no">alc</span> + <span class="no">educ</span> + <span class="no">bili</span>,
-              <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>, <span class="kw">n.iter</span> <span class="kw">=</span> <span class="fl">500</span>, <span class="kw">progress.bar</span> <span class="kw">=</span> <span class="st">'none'</span>)</pre></div>
+<div class="sourceCode" id="cb7"><pre class="r"><span class="no">lm1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">age</span> + <span class="no">WC</span> + <span class="no">alc</span> + <span class="no">educ</span> + <span class="no">bili</span>,
+              <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>, <span class="kw">n.iter</span> <span class="kw">=</span> <span class="fl">500</span>, <span class="kw">progress.bar</span> <span class="kw">=</span> <span class="st">'none'</span>, <span class="kw">seed</span> <span class="kw">=</span> <span class="fl">2020</span>)</pre></div>
 </div>
 <div id="visualize-the-mcmc-sample" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visualize-the-mcmc-sample" class="anchor"></a>Visualize the MCMC sample</h3>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="fu"><a href="reference/traceplot.html">traceplot</a></span>(<span class="no">lm1</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#d4af37'</span>, <span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span>), <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span>)</pre></div>
+<div class="sourceCode" id="cb8"><pre class="r"><span class="fu"><a href="reference/traceplot.html">traceplot</a></span>(<span class="no">lm1</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#d4af37'</span>, <span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span>), <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb8"><pre class="r"><span class="fu"><a href="reference/densplot.html">densplot</a></span>(<span class="no">lm1</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#d4af37'</span>, <span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span>), <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></div>
+<div class="sourceCode" id="cb9"><pre class="r"><span class="fu"><a href="reference/densplot.html">densplot</a></span>(<span class="no">lm1</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#d4af37'</span>, <span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span>), <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div id="summarize-the-result" class="section level3">
 <h3 class="hasAnchor">
 <a href="#summarize-the-result" class="anchor"></a>Summarize the Result</h3>
-<div class="sourceCode" id="cb9"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">lm1</span>)
+<div class="sourceCode" id="cb10"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">lm1</span>)
 <span class="co">#&gt; </span>
-<span class="co">#&gt;  Linear model fitted with JointAI </span>
+<span class="co">#&gt; Linear model fitted with JointAI</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm_imp(formula = SBP ~ gender + age + WC + alc + educ + bili, </span>
-<span class="co">#&gt;     data = NHANES, n.iter = 500, progress.bar = "none")</span>
+<span class="co">#&gt;     data = NHANES, n.iter = 500, seed = 2020, progress.bar = "none")</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
-<span class="co">#&gt;                Mean     SD     2.5%   97.5% tail-prob. GR-crit</span>
-<span class="co">#&gt; (Intercept)  88.025 8.6968  70.8670 105.632      0.000    1.02</span>
-<span class="co">#&gt; genderfemale -3.381 2.2125  -7.6129   0.773      0.132    1.00</span>
-<span class="co">#&gt; age           0.331 0.0684   0.1964   0.467      0.000    1.00</span>
-<span class="co">#&gt; WC            0.226 0.0719   0.0785   0.367      0.000    1.01</span>
-<span class="co">#&gt; alc&gt;=1        6.511 2.3366   1.8639  11.069      0.004    1.02</span>
-<span class="co">#&gt; educhigh     -2.879 2.1689  -7.1914   1.259      0.180    1.00</span>
-<span class="co">#&gt; bili         -5.204 4.9315 -14.6288   4.363      0.285    1.01</span>
+<span class="co">#&gt;                Mean     SD     2.5%   97.5% tail-prob. GR-crit MC error</span>
+<span class="co">#&gt; (Intercept)  87.662 8.6088  70.3830 104.899    0.00000    1.00   0.0271</span>
+<span class="co">#&gt; genderfemale -3.487 2.2407  -7.9563   0.818    0.10533    1.01   0.0258</span>
+<span class="co">#&gt; age           0.334 0.0683   0.1986   0.468    0.00000    1.01   0.0258</span>
+<span class="co">#&gt; WC            0.230 0.0721   0.0876   0.376    0.00133    1.00   0.0258</span>
+<span class="co">#&gt; alc&gt;=1        6.419 2.3862   1.6656  11.112    0.00667    1.03   0.0358</span>
+<span class="co">#&gt; educhigh     -2.805 2.0681  -6.9371   1.339    0.17067    1.00   0.0258</span>
+<span class="co">#&gt; bili         -5.277 4.7332 -14.7727   3.596    0.25333    1.01   0.0290</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary of residual std. deviation:</span>
-<span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit</span>
-<span class="co">#&gt; sigma_SBP 13.5 0.719 12.2    15       1</span>
+<span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MC error</span>
+<span class="co">#&gt; sigma_SBP 13.5 0.725 12.2    15    1.01   0.0258</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; MCMC settings:</span>
@@ -232,23 +240,35 @@
 <span class="co">#&gt; Thinning interval = 1 </span>
 <span class="co">#&gt; Number of chains = 3 </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Number of observations: 186</span></pre></div>
-<div class="sourceCode" id="cb10"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span>(<span class="no">lm1</span>)
-<span class="co">#&gt;  (Intercept) genderfemale          age           WC       alc&gt;=1 </span>
-<span class="co">#&gt;   88.0248471   -3.3813839    0.3311555    0.2262784    6.5108742 </span>
-<span class="co">#&gt;     educhigh         bili </span>
-<span class="co">#&gt;   -2.8786675   -5.2036401</span>
+<span class="co">#&gt; Number of observations: 186 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Number and proportion of missing values:</span>
+<span class="co">#&gt;        variable # NA  % NA</span>
+<span class="co">#&gt; SBP         SBP    0  0.00</span>
+<span class="co">#&gt; gender   gender    0  0.00</span>
+<span class="co">#&gt; age         age    0  0.00</span>
+<span class="co">#&gt; educ       educ    0  0.00</span>
+<span class="co">#&gt; WC           WC    2  1.08</span>
+<span class="co">#&gt; bili       bili    8  4.30</span>
+<span class="co">#&gt; alc         alc   34 18.28</span></pre></div>
+<div class="sourceCode" id="cb11"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span>(<span class="no">lm1</span>)
+<span class="co">#&gt; $SBP</span>
+<span class="co">#&gt;  (Intercept) genderfemale          age           WC       alc&gt;=1     educhigh </span>
+<span class="co">#&gt;   87.6622381   -3.4873104    0.3335133    0.2302755    6.4194926   -2.8054874 </span>
+<span class="co">#&gt;         bili </span>
+<span class="co">#&gt;   -5.2768560</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span>(<span class="no">lm1</span>)
-<span class="co">#&gt;                      2.5%       97.5%</span>
-<span class="co">#&gt; (Intercept)   70.86702410 105.6319683</span>
-<span class="co">#&gt; genderfemale  -7.61290048   0.7729665</span>
-<span class="co">#&gt; age            0.19635287   0.4666932</span>
-<span class="co">#&gt; WC             0.07848737   0.3665819</span>
-<span class="co">#&gt; alc&gt;=1         1.86385015  11.0693444</span>
-<span class="co">#&gt; educhigh      -7.19135991   1.2594576</span>
-<span class="co">#&gt; bili         -14.62875674   4.3625267</span>
-<span class="co">#&gt; sigma_SBP     12.19691645  14.9589424</span></pre></div>
+<span class="co">#&gt;                   2.5%       97.5%</span>
+<span class="co">#&gt; beta[1]    70.38301720 104.8986161</span>
+<span class="co">#&gt; beta[2]    -7.95631510   0.8182921</span>
+<span class="co">#&gt; beta[3]     0.19857014   0.4678630</span>
+<span class="co">#&gt; beta[4]     0.08761699   0.3756334</span>
+<span class="co">#&gt; beta[5]     1.66562640  11.1121370</span>
+<span class="co">#&gt; beta[6]    -6.93714769   1.3389344</span>
+<span class="co">#&gt; beta[7]   -14.77269911   3.5955383</span>
+<span class="co">#&gt; sigma_SBP  12.16165429  15.0367180</span></pre></div>
 </div>
 </div>
 </div>

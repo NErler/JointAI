@@ -226,15 +226,15 @@
 </table>
 
 
-<p><strong>logit:</strong> hyper-parameters for logistic models</p><table class='table'>
-<tr><td><code>mu_reg_logit</code></td><td>mean in the priors for regression coefficients</td></tr>
-<tr><td><code>tau_reg_logit</code></td><td>precision in the priors for regression coefficients</td></tr>
+<p><strong>binom:</strong> hyper-parameters for binomial models</p><table class='table'>
+<tr><td><code>mu_reg_binom</code></td><td>mean in the priors for regression coefficients</td></tr>
+<tr><td><code>tau_reg_binom</code></td><td>precision in the priors for regression coefficients</td></tr>
 </table>
 
 
-<p><strong>probit:</strong> hyper-parameters for probit models</p><table class='table'>
-<tr><td><code>mu_reg_logit</code></td><td>mean in the priors for regression coefficients</td></tr>
-<tr><td><code>tau_reg_logit</code></td><td>precision in the priors for regression coefficients</td></tr>
+<p><strong>poisson:</strong> hyper-parameters for poisson models</p><table class='table'>
+<tr><td><code>mu_reg_poisson</code></td><td>mean in the priors for regression coefficients</td></tr>
+<tr><td><code>tau_reg_poisson</code></td><td>precision in the priors for regression coefficients</td></tr>
 </table>
 
 
@@ -255,19 +255,21 @@
 </table>
 
 
-<p><strong>Z:</strong> function creating hyper-parameters for the random effects in
-            mixed models, with output elements</p><table class='table'>
-<tr><td><code>RinvD</code></td><td>scale matrix in the Wishart prior (*) for the random
-                  effects covariance matrix</td></tr>
-<tr><td><code>KinvD</code></td><td>degrees of freedom in the Wishart prior for random
-                  effects covariance matrix</td></tr>
+<p><strong>ranef:</strong> hyper-parameters for the random effects variance-covariance
+                matrices (*)</p><table class='table'>
 <tr><td><code>shape_diag_RinvD</code></td><td>shape parameter in Gamma prior for the diagonal
                              elements of <code>RinvD</code></td></tr>
 <tr><td><code>rate_diag_RinvD</code></td><td>rate parameter in Gamma prior for the diagonal
                             elements of <code>RinvD</code></td></tr>
+<tr><td><code>KinvD_expr</code></td><td>a character string that can be evaluated to calculate
+                       the number of degrees of freedom in the Wishart
+                       distribution used for the inverse of the
+                       variance-covariance matrix for random effects,
+                       depending on the number of random effects
+                       <code>nranef</code></td></tr>
 </table>
 <p>(*) when there is only one random effect a Gamma distribution is used instead
-    of the Wishart and <code>RinvD</code> and <code>KinvD</code> are <code>NULL</code></p>
+    of the Wishart distribution</p>
 <p><strong>surv:</strong> parameters for survival models (<code>survreg</code>, <code>coxph</code>
                and <code>JM</code>)</p><table class='table'>
 <tr><td><code>mu_reg_surv</code></td><td>mean in the priors for regression coefficients</td></tr>
@@ -318,33 +320,14 @@ puts most weight on the extreme values (correlation 1 or -1).</p>
 #&gt;             0e+00             1e-04             0e+00             1e-04 
 #&gt; 
 #&gt; $ranef
-#&gt; $ranef$shape_diag_RinvD
-#&gt; [1] 0.01
-#&gt; 
-#&gt; $ranef$rate_diag_RinvD
-#&gt; [1] 0.001
-#&gt; 
-#&gt; $ranef$wish
-#&gt; function (nranef) 
-#&gt; {
-#&gt;     if (nranef &gt; 1) {
-#&gt;         RinvD &lt;- diag(as.numeric(rep(NA, nranef)))
-#&gt;         KinvD &lt;- nranef + 1
-#&gt;     }
-#&gt;     else {
-#&gt;         RinvD &lt;- KinvD &lt;- NULL
-#&gt;     }
-#&gt;     list(RinvD = RinvD, KinvD = KinvD)
-#&gt; }
-#&gt; &lt;bytecode: 0x000000002f271968&gt;
-#&gt; &lt;environment: 0x00000000307ccc40&gt;
-#&gt; 
+#&gt; shape_diag_RinvD  rate_diag_RinvD       KinvD_expr 
+#&gt;           "0.01"          "0.001"     "nranef + 1" 
 #&gt; 
 #&gt; $surv
 #&gt;  mu_reg_surv tau_reg_surv 
 #&gt;        0.000        0.001 
 #&gt; </div><div class='input'>
-<span class='co'># To change the hyperparameters:</span>
+<span class='co'># To change the hyper-parameters:</span>
 <span class='no'>hyp</span> <span class='kw'>&lt;-</span> <span class='fu'>default_hyperpars</span>()
 <span class='no'>hyp</span>$<span class='no'>norm</span>[<span class='st'>'rate_tau_norm'</span>] <span class='kw'>&lt;-</span> <span class='fl'>1e-3</span>
 <span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>B1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='no'>hyp</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div></pre>
