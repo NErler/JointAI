@@ -300,8 +300,13 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
 
   if (!is.null(x$missinfo)) {
     cat('\n\n')
-    cat('Number and proportion of missing values:\n')
-    print(x$missinfo, digits = digits)
+    cat('Number and proportion of complete cases:\n')
+    print(x$missinfo$complete_cases, digits = digits)
+    cat('\nNumber and proportion of missing values:\n')
+    for (k in seq_along(x$missinfo$miss_list)) {
+      print(x$missinfo$miss_list[[k]], digits = digits)
+      cat('\n')
+    }
   }
 
   invisible(x)
@@ -357,7 +362,9 @@ coef.summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   if (!inherits(object, "summary.JointAI"))
     errormsg("Use only with 'summary.JointAI' objects.")
 
-  return(object$stats)
+  Filter(Negate(is.null),
+         lapply(summary(mod)$res, "[[", 'regcoef')
+  )
 }
 
 
@@ -512,6 +519,24 @@ get_missinfo <- function(object) {
   allvars <- all_vars(c(object$fixed, object$random, object$Mlist$auxvars,
                         object$Mlist$timevar))
 
+  cc <- complete.cases(object$data[, allvars])
+
+  groups <- object$Mlist$groups
+
+
+  complcases <- lapply(names(groups), function(k) {
+    cc0 <- cc[match(unique(groups[[k]]), groups[[k]])]
+
+    as.data.frame(
+      Filter(Negate(is.null),
+             list(
+               level = if (length(object$Mlist$groups) > 1) k,
+               '#' = sum(cc0),
+               '%' = mean(cc0) * 100
+             )
+      ), check.names = FALSE, row.names = k)
+  })
+
   dat_lvls <- sapply(object$data[allvars], check_varlevel,
                      groups = object$Mlist$groups)
 
@@ -522,7 +547,7 @@ get_missinfo <- function(object) {
     missinfo <- as.data.frame(
       Filter(Negate(is.null),
              list(
-               variable = names(subdat),
+               # variable = names(subdat),
                level = if (length(unique(dat_lvls)) > 1) lvl,
                '# NA' = colSums(is.na(subdat)),
                '% NA' = colMeans(is.na(subdat)) * 100
@@ -533,8 +558,7 @@ get_missinfo <- function(object) {
     missinfo[order(missinfo$`# NA`), ]
   }, simplify = FALSE)
 
-  if (length(miss_list) == 1)
-    miss_list[[1]]
-  else
-    miss_list
+  list('complete_cases' = do.call(rbind, complcases),
+       miss_list = miss_list
+  )
 }
