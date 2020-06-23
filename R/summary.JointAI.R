@@ -389,9 +389,30 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
                     exclude_chains = exclude_chains,
                     mess = mess, warn = warn)
 
-  cis <- t(apply(MCMC, 2, quantile, quantiles))
 
-  return(cis)
+
+  sapply(names(object$fixed), function(k) {
+    x <- object$coef_list[[k]]
+
+    rbind(
+      if (object$info_list[[k]]$modeltype %in% c('clm', 'clmm')) {
+        interc <- apply(MCMC[grep(paste0('gamma_', k, "\\["),
+                                      colnames(MCMC))], 2, quantile, quantiles)
+
+        lvl <- levels(object$Mlist$refs[[k]])
+        names(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
+        interc
+      },
+      if (length(intersect(colnames(MCMC), x$coef))) {
+        quants <- t(apply(MCMC[, intersect(colnames(MCMC), x$coef),
+                               drop = FALSE], 2, quantile, quantiles))
+
+        rownames(quants) <- x$varname[match(x$coef,
+                                            intersect(colnames(MCMC), x$coef))]
+        quants
+      }
+    )
+  }, simplify = FALSE)
 }
 
 
