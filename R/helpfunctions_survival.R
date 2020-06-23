@@ -62,7 +62,7 @@ get_knots_h0 <- function(nkn, Time, event, gkx, obs_kn = TRUE) {
   }
   kn <- quantile(tt, pp, names = FALSE)
 
-  kn <- kn[kn < max(Time)]
+  kn <- kn[kn <= max(Time)]
   sort(c(rep(range(Time, outer(Time/2, gkx + 1)), 4), kn))
 }
 
