@@ -1,13 +1,14 @@
 
 # used in divide_matrices() (2020-06-13)
-get_scale_pars <- function(mat, groups, scale_vars, refs, fcts_all, data) {
+get_scale_pars <- function(mat, groups, scale_vars, refs, fcts_all,
+                           interactions, data) {
   # create a list of matrices containing the scaling parameters corresponding
   # to each of the design matrices
 
   if (is.null(mat) | (!is.null(scale_vars) && !scale_vars))
     return(NULL)
 
-  vars <- find_scalevars(mat, refs, fcts_all, data)
+  vars <- find_scalevars(mat, refs, fcts_all, interactions, data)
 
   if (!is.null(scale_vars))
     vars <- intersect(vars, scale_vars)
@@ -28,24 +29,37 @@ get_scale_pars <- function(mat, groups, scale_vars, refs, fcts_all, data) {
 
 
 # used in get_scale_pars() (2020-06-13)
-find_scalevars <- function(mat, refs, fcts_all, data) {
+find_scalevars <- function(mat, refs, fcts_all, interactions, data) {
   # Find the names of columns in the model matrix that are not integers
   # or have many different values
 
   vars <- lapply(colnames(mat), function(k) {
-    x <- replace_dummy(k, refs)
+
+    k <- replace_dummy(k, refs)
 
     if (k %in% names(data)) {
       if (is.numeric(data[, k])) k
-    } else {
-      if (k %in% fcts_all$colname) {
-        # When splines are used, "k" can't be evaluated, so we use the column
-        # 'fct' instead. The result of "eval" for splines is then a matrix,
-        # but since this is also numeric the test "is.numeric()" works.
-        # This might not work though for some other functions....
-        fct <- unique(fcts_all$fct[fcts_all$colname == k])
-        if (is.numeric(eval(parse(text = fct), envir = data))) k
-      }
+    } else if (k %in% fcts_all$colname) {
+      # When splines are used, "k" can't be evaluated, so we use the column
+      # 'fct' instead. The result of "eval" for splines is then a matrix,
+      # but since this is also numeric the test "is.numeric()" works.
+      # This might not work though for some other functions....
+      fct <- unique(fcts_all$fct[fcts_all$colname == k])
+      if (is.numeric(eval(parse(text = fct), envir = data))) k
+    } else if (k %in% names(interactions)) {
+      elmts <- sapply(attr(interactions[[k]], 'elements'), replace_dummy, refs)
+
+      isnum <- sapply(elmts, function(x) {
+        if (x %in% names(data)) {
+          is.numeric(data[, x])
+        } else {
+          if (x %in% fcts_all$colname) {
+            fct <- unique(fcts_all$fct[fcts_all$colname == x])
+            is.numeric(eval(parse(text = fct), envir = data))
+          }
+        }
+      })
+      if (any(isnum)) k
     }
   })
 

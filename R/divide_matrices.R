@@ -139,21 +139,9 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   fcts_all <- extract_fcts(fixed = fixed, data, random = random,
                            auxvars = auxvars, complete = TRUE, Mlvls = Mlvls)
 
-  # scaling --------------------------------------------------------------------
-  scale_pars <- mapply(get_scale_pars,
-                       mat = M, groups = groups[gsub('M_', '', names(M))],
-                       MoreArgs = list(scale_vars = scale_vars, refs = refs,
-                                       fcts_all = fcts_all, data = data),
-                       SIMPLIFY  = FALSE)
-
 
   if (any(fcts_mis$type %in% c('ns', 'bs')))
     errormsg("Splines are currently not implemented for incomplete variables.")
-
-  # set columns of trafos that need to be re-calculated in JAGS to NA
-  for (k in names(M)) {
-    M[[k]][, intersect(colnames(M[[k]]), fcts_mis$colname)] <- NA
-  }
 
 
   # !!! Error message that will be needed when splines are implemented
@@ -166,6 +154,17 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # * interactions -------------------------------------------------------------
   interactions <- match_interaction(inter, M)
 
+  # scaling --------------------------------------------------------------------
+  scale_pars <- mapply(get_scale_pars,
+                       mat = M, groups = groups[gsub('M_', '', names(M))],
+                       MoreArgs = list(scale_vars = scale_vars, refs = refs,
+                                       fcts_all = fcts_all,
+                                       interactions = interactions,
+                                       data = data),
+                       SIMPLIFY  = FALSE)
+
+
+  # * set columns NA -----------------------------------------------------------
   # set interaction terms that involve incomplete variables to NA
   # (otherwise error in JAGS)
   if (any(unlist(sapply(M, colnames)) %in% names(interactions)[
@@ -174,6 +173,12 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
       M[[k]][, which(colnames(M[[k]]) %in% names(interactions)[
         sapply(interactions, 'attr', "has_NAs")])] <- NA
     }
+
+
+  # set columns of trafos that need to be re-calculated in JAGS to NA
+  for (k in names(M)) {
+    M[[k]][, intersect(colnames(M[[k]]), fcts_mis$colname)] <- NA
+  }
 
 
   # categorical variables ------------------------------------------------------
