@@ -209,7 +209,7 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
 
     used <- lapply(collapsed, "[[", "parelmts")
 
-    if (!is.list(othervars))
+    if (!inherits(othervars, 'list'))
       othervars <- othervars[!othervars$parelmts %in% unlist(used), ]
 
     if (all(dim(othervars) > 0))
