@@ -363,7 +363,7 @@ coef.summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     errormsg("Use only with 'summary.JointAI' objects.")
 
   Filter(Negate(is.null),
-         lapply(summary(mod)$res, "[[", 'regcoef')
+         lapply(object$res, "[[", 'regcoef')
   )
 }
 
