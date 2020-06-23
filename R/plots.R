@@ -210,7 +210,9 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
   # obtain the variable names to be used as names for the sub-plots
   plotnams <- get_plotmain(object, colnames(prep$MCMC[[1]]))
-
+  for (k in seq_along(prep$MCMC)) {
+    colnames(prep$MCMC[[k]]) <- plotnams
+  }
 
 
   if (use_ggplot) {
@@ -221,8 +223,6 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                                  varnames = c('iteration', 'variable'))
     meltMCMC$chain <- factor(meltMCMC$L1)
 
-    labels <- setNames(plotnams, colnames(prep$MCMC[[1]]))
-
     if (joined)
       p <- ggplot2::ggplot(meltMCMC, ggplot2::aes(value))
     else
@@ -230,8 +230,7 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
     p + ggplot2::geom_density() +
       ggplot2::facet_wrap('variable', scales = 'free', ncol = prep$ncol,
-                          nrow = prep$nrow,
-                          labeller = ggplot2::as_labeller(labels))
+                          nrow = prep$nrow)
   } else {
     args <- as.list(match.call())
 
