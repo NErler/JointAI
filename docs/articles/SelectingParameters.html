@@ -125,13 +125,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="SelectingParameters_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Parameter Selection</h1>
             <h3 class="subtitle">How to specify which parameters to monitor and display in the results</h3>
             
-            <h4 class="date">2019-08-29</h4>
+            <h4 class="date">2020-06-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/SelectingParameters.Rmd"><code>vignettes/SelectingParameters.Rmd</code></a></small>
       <div class="hidden name"><code>SelectingParameters.Rmd</code></div>
@@ -149,6 +149,10 @@
 <p>For this purpose, the main functions <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code>*_imp()</code></a> have an argument <code>monitor_params</code>.</p>
 <p><code>monitor_params</code> takes a named list (often a named vector also works) with the following possible entries:</p>
 <table class="table">
+<colgroup>
+<col width="8%">
+<col width="91%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">name/key word</th>
 <th align="left">what is monitored</th>
@@ -157,101 +161,97 @@
 <tr class="odd">
 <td align="left"><code>analysis_main</code></td>
 <td align="left">
-<code>betas</code> and <code>sigma_main</code>, <code>tau_main</code> (in beta regression) or <code>shape_main</code> (in parametric survival models)</td>
+<code>betas</code> and <code>sigma_main</code>, <code>tau_main</code> (in beta regression) or <code>shape_main</code> (in parametric survival models), <code>D_main</code> (in multi-level models) and <code>basehaz</code> (in proportional hazards models)</td>
 </tr>
 <tr class="even">
-<td align="left">(also <code>D_main</code> in</td>
-<td align="left">multi-level models and <code>basehaz</code> in proportional hazards models)</td>
-</tr>
-<tr class="odd">
 <td align="left"><code>analysis_random</code></td>
 <td align="left">
 <code>ranef_main</code>, <code>D_main</code>, <code>invD_main</code>, <code>RinvD_main</code>
 </td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>imp_pars</code></td>
 <td align="left">
 <code>alphas</code>, <code>tau_other</code>, <code>gamma_other</code>, <code>delta_other</code>
 </td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>imps</code></td>
 <td align="left">imputed values</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>betas</code></td>
 <td align="left">regression coefficients of the main analysis model(s)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>tau_main</code></td>
 <td align="left">precision of the residuals from the analysis model(s)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>sigma_main</code></td>
 <td align="left">standard deviation of the residuals from the analysis model(s)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>gamma_main</code></td>
 <td align="left">intercepts in ordinal main model</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>delta_main</code></td>
 <td align="left">increments of ordinal intercepts in main model(s)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>ranef_main</code></td>
 <td align="left">random effects of the analysis model(s)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>D_main</code></td>
 <td align="left">covariance matrix of the random effects of the main model(s)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>invD_main</code></td>
 <td align="left">inverse of <code>D_main</code>
 </td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>RinvD_main</code></td>
 <td align="left">scale matrix in Wishart prior for <code>invD_main</code>
 </td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>alphas</code></td>
 <td align="left">regression coefficients in the covariate models</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>tau_other</code></td>
 <td align="left">precision parameters of the residuals from covariate models</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>gamma_other</code></td>
 <td align="left">intercepts in ordinal covariate models</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>delta_other</code></td>
 <td align="left">increments of ordinal intercepts in covariate models</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>ranef_other</code></td>
 <td align="left">random effects of the covariate model(s)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>D_other</code></td>
 <td align="left">covariance matrix of the random effects of the covariate model(s)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>invD_other</code></td>
 <td align="left">inverse of <code>D_other</code>
 </td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>RinvD_other</code></td>
 <td align="left">scale matrix in Wishart prior for <code>invD_other</code>
 </td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>other</code></td>
 <td align="left">additional parameters</td>
 </tr>
@@ -468,6 +468,10 @@
 <p><code><a href="../reference/get_MIdat.html">get_MIdat()</a></code> returns a long-format <code>data.frame</code> containing the imputed datasets (and possibly the original data) stacked onto each other. The imputation number is given in the variable <code>Imputation_</code>, column <code>.id</code> contains a newly created id variable for each observation in cross-sectional data (multi-level data should already contain an id variable).</p>
 <p><code><a href="../reference/get_MIdat.html">get_MIdat()</a></code> takes the arguments:</p>
 <table class="table">
+<colgroup>
+<col width="8%">
+<col width="91%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">argument</th>
 <th align="left">explanation</th>
@@ -644,15 +648,15 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
 <span class="co">#&gt;                Mean     SD   2.5%   97.5% tail-prob. GR-crit MC error</span>
-<span class="co">#&gt; (Intercept)  81.321 9.9680 63.635 100.132      0.000   1.001   0.0616</span>
-<span class="co">#&gt; genderfemale  0.660 2.5272 -4.034   5.222      0.767   1.035   0.0585</span>
-<span class="co">#&gt; WC            0.302 0.0784  0.133   0.449      0.000   0.997   0.0576</span>
-<span class="co">#&gt; alc&gt;=1        6.610 2.7435  1.209  11.840      0.020   1.013   0.0726</span>
-<span class="co">#&gt; creat         7.678 7.7500 -7.246  20.640      0.333   1.002   0.0750</span>
+<span class="co">#&gt; (Intercept)  81.040 9.6017 63.367 100.194     0.0000    1.00   0.0397</span>
+<span class="co">#&gt; genderfemale  0.391 2.5660 -4.471   5.460     0.8867    1.00   0.0538</span>
+<span class="co">#&gt; WC            0.312 0.0695  0.186   0.449     0.0000    1.00   0.0577</span>
+<span class="co">#&gt; alc&gt;=1        6.219 2.4834  1.090  10.992     0.0133    1.01   0.0596</span>
+<span class="co">#&gt; creat         7.120 7.4126 -6.512  20.742     0.3867    1.00   0.0600</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary of residual std. deviation:</span>
-<span class="co">#&gt;           Mean   SD 2.5% 97.5% GR-crit MC error</span>
-<span class="co">#&gt; sigma_SBP 14.4 0.78   13    16    1.06   0.0577</span>
+<span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MC error</span>
+<span class="co">#&gt; sigma_SBP 14.4 0.702 12.9  15.7    1.07   0.0577</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; MCMC settings:</span>
@@ -685,26 +689,26 @@
 <span class="co">#&gt; Potential scale reduction factors:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;              Point est. Upper C.I.</span>
-<span class="co">#&gt; (Intercept)       0.998      1.001</span>
-<span class="co">#&gt; genderfemale      1.015      1.035</span>
-<span class="co">#&gt; WC                0.996      0.997</span>
-<span class="co">#&gt; alc&gt;=1            1.000      1.013</span>
-<span class="co">#&gt; creat             0.999      1.002</span>
-<span class="co">#&gt; sigma_SBP         1.015      1.063</span>
+<span class="co">#&gt; (Intercept)       0.998       1.00</span>
+<span class="co">#&gt; genderfemale      1.000       1.00</span>
+<span class="co">#&gt; WC                0.999       1.00</span>
+<span class="co">#&gt; alc&gt;=1            1.000       1.01</span>
+<span class="co">#&gt; creat             0.997       1.00</span>
+<span class="co">#&gt; sigma_SBP         1.020       1.07</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Multivariate psrf</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; 1.01</span>
+<span class="co">#&gt; 1.03</span>
 
 <span class="co"># Monte Carlo Error of the MCMC sample</span>
 <span class="fu"><a href="../reference/MC_error.html">MC_error</a></span>(<span class="no">lm5</span>)
-<span class="co">#&gt;                est   MCSE     SD MCSE/SD</span>
-<span class="co">#&gt; (Intercept)  81.32 0.6144  9.968   0.062</span>
-<span class="co">#&gt; genderfemale  0.66 0.1479  2.527   0.059</span>
-<span class="co">#&gt; WC            0.30 0.0045  0.078   0.058</span>
-<span class="co">#&gt; alc&gt;=1        6.61 0.1991  2.744   0.073</span>
-<span class="co">#&gt; creat         7.68 0.5814  7.750   0.075</span>
-<span class="co">#&gt; sigma_SBP    14.44 0.0450  0.780   0.058</span></pre></body></html></div>
+<span class="co">#&gt;                est  MCSE    SD MCSE/SD</span>
+<span class="co">#&gt; (Intercept)  81.04 0.381 9.602   0.040</span>
+<span class="co">#&gt; genderfemale  0.39 0.138 2.566   0.054</span>
+<span class="co">#&gt; WC            0.31 0.004 0.069   0.058</span>
+<span class="co">#&gt; alc&gt;=1        6.22 0.148 2.483   0.060</span>
+<span class="co">#&gt; creat         7.12 0.445 7.413   0.060</span>
+<span class="co">#&gt; sigma_SBP    14.36 0.041 0.702   0.058</span></pre></body></html></div>
 <p>When <code>analysis_main</code> was not switched on the default behavior is that all parameters are displayed:</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># Re-run the model from above, now creating MCMC samples</span>
 <span class="no">lm4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">WC</span> + <span class="no">alc</span> + <span class="no">creat</span>,
@@ -723,21 +727,21 @@
 <span class="co">#&gt; Potential scale reduction factors:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                     Point est. Upper C.I.</span>
-<span class="co">#&gt; alc: (Intercept)          1.02       1.08</span>
-<span class="co">#&gt; alc: genderfemale         1.01       1.02</span>
-<span class="co">#&gt; alc: WC                   1.00       1.02</span>
-<span class="co">#&gt; alc: creat                1.03       1.07</span>
-<span class="co">#&gt; creat: (Intercept)        1.00       1.01</span>
-<span class="co">#&gt; creat: genderfemale       1.01       1.04</span>
-<span class="co">#&gt; creat: WC                 1.00       1.01</span>
-<span class="co">#&gt; WC: (Intercept)           1.00       1.02</span>
-<span class="co">#&gt; WC: genderfemale          1.01       1.02</span>
-<span class="co">#&gt; tau_creat                 1.02       1.07</span>
-<span class="co">#&gt; tau_WC                    1.00       1.01</span>
+<span class="co">#&gt; alc: (Intercept)         0.999       1.01</span>
+<span class="co">#&gt; alc: genderfemale        1.029       1.09</span>
+<span class="co">#&gt; alc: WC                  1.002       1.01</span>
+<span class="co">#&gt; alc: creat               1.005       1.01</span>
+<span class="co">#&gt; creat: (Intercept)       1.005       1.03</span>
+<span class="co">#&gt; creat: genderfemale      0.997       1.00</span>
+<span class="co">#&gt; creat: WC                1.004       1.02</span>
+<span class="co">#&gt; WC: (Intercept)          0.998       1.00</span>
+<span class="co">#&gt; WC: genderfemale         1.003       1.01</span>
+<span class="co">#&gt; tau_creat                0.998       1.00</span>
+<span class="co">#&gt; tau_WC                   1.008       1.03</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Multivariate psrf</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; 1.05</span></pre></body></html></div>
+<span class="co">#&gt; 1.02</span></pre></body></html></div>
 <p>To select only some of the parameters, they can be specified directly by name via the <code>other</code> element of <code>subset</code>:</p>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"># summary(lm5, subset = list(other = c('creat', 'alc&gt;=1')))</pre></body></html></div>
 <p>This also works when a subset of the imputed values should be displayed:</p>

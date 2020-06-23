@@ -125,12 +125,12 @@
 
       
 
-      </header><div class="row">
+      </header><script src="MCMCsettings_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>MCMC Settings</h1>
             
-            <h4 class="date">2019-08-29</h4>
+            <h4 class="date">2020-06-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/MCMCsettings.Rmd"><code>vignettes/MCMCsettings.Rmd</code></a></small>
       <div class="hidden name"><code>MCMCsettings.Rmd</code></div>
@@ -302,26 +302,26 @@
 <span class="no">init_list</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; [[1]]$beta</span>
-<span class="co">#&gt; [1] -0.4690643  0.1588315  1.3594988 -0.8379110</span>
+<span class="co">#&gt; [1] -1.1164647  0.1595777 -1.1247984  0.7215602</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$tau_SBP</span>
-<span class="co">#&gt; [1] 0.1346371</span>
+<span class="co">#&gt; [1] 0.1049858</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
 <span class="co">#&gt; [[2]]$beta</span>
-<span class="co">#&gt; [1] -0.4747363  0.6052683 -0.3631747 -0.7109477</span>
+<span class="co">#&gt; [1] -0.5580013 -0.3195287  0.9113108  1.1266653</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$tau_SBP</span>
-<span class="co">#&gt; [1] 1.225689</span>
+<span class="co">#&gt; [1] 1.095929</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
 <span class="co">#&gt; [[3]]$beta</span>
-<span class="co">#&gt; [1]  0.5487712  0.4314232 -0.3015750  0.3016242</span>
+<span class="co">#&gt; [1] -0.4697919 -1.0193218 -0.7317143  0.4042597</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$tau_SBP</span>
-<span class="co">#&gt; [1] 0.1788889</span></pre></body></html></div>
+<span class="co">#&gt; [1] 0.2738797</span></pre></body></html></div>
 <p>The list is then passed to the argument <code>inits</code>. The amended version of the user provided lists of initial values are stored in the JointAI object:</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">mod4a</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">age</span> + <span class="no">WC</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>, <span class="kw">progress.bar</span> <span class="kw">=</span> <span class="st">'none'</span>,
                 <span class="kw">inits</span> <span class="kw">=</span> <span class="no">init_list</span>)
@@ -329,44 +329,44 @@
 <span class="no">mod4a</span>$<span class="no">mcmc_settings</span>$<span class="no">inits</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; [[1]]$beta</span>
-<span class="co">#&gt; [1] -0.4690643  0.1588315  1.3594988 -0.8379110</span>
+<span class="co">#&gt; [1] -1.1164647  0.1595777 -1.1247984  0.7215602</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$tau_SBP</span>
-<span class="co">#&gt; [1] 0.1346371</span>
+<span class="co">#&gt; [1] 0.1049858</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$.RNG.name</span>
-<span class="co">#&gt; [1] "base::Mersenne-Twister"</span>
+<span class="co">#&gt; [1] "base::Wichmann-Hill"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$.RNG.seed</span>
-<span class="co">#&gt; [1] 1756</span>
+<span class="co">#&gt; [1] 6589</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
 <span class="co">#&gt; [[2]]$beta</span>
-<span class="co">#&gt; [1] -0.4747363  0.6052683 -0.3631747 -0.7109477</span>
+<span class="co">#&gt; [1] -0.5580013 -0.3195287  0.9113108  1.1266653</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$tau_SBP</span>
-<span class="co">#&gt; [1] 1.225689</span>
+<span class="co">#&gt; [1] 1.095929</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$.RNG.name</span>
 <span class="co">#&gt; [1] "base::Mersenne-Twister"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$.RNG.seed</span>
-<span class="co">#&gt; [1] 48696</span>
+<span class="co">#&gt; [1] 61494</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
 <span class="co">#&gt; [[3]]$beta</span>
-<span class="co">#&gt; [1]  0.5487712  0.4314232 -0.3015750  0.3016242</span>
+<span class="co">#&gt; [1] -0.4697919 -1.0193218 -0.7317143  0.4042597</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$tau_SBP</span>
-<span class="co">#&gt; [1] 0.1788889</span>
+<span class="co">#&gt; [1] 0.2738797</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$.RNG.name</span>
 <span class="co">#&gt; [1] "base::Mersenne-Twister"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$.RNG.seed</span>
-<span class="co">#&gt; [1] 43892</span></pre></body></html></div>
+<span class="co">#&gt; [1] 77504</span></pre></body></html></div>
 </div>
 <div id="initial-values-as-a-function" class="section level4">
 <h4 class="hasAnchor">
@@ -380,10 +380,10 @@
 
 <span class="fu">inits_fun</span>()
 <span class="co">#&gt; $beta</span>
-<span class="co">#&gt; [1]  1.45006616  0.03242194 -0.78015247  0.82759779</span>
+<span class="co">#&gt; [1]  1.0295347 -0.2765178  0.6468158  0.2959733</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $alpha</span>
-<span class="co">#&gt; [1]  1.6855663  0.9809167 -0.7115510</span>
+<span class="co">#&gt; [1] -1.5976846 -0.1521853  0.7629373</span>
 
 
 <span class="no">mod4b</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">age</span> + <span class="no">WC</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>, <span class="kw">progress.bar</span> <span class="kw">=</span> <span class="st">'none'</span>,
@@ -392,44 +392,44 @@
 <span class="no">mod4b</span>$<span class="no">mcmc_settings</span>$<span class="no">inits</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; [[1]]$beta</span>
-<span class="co">#&gt; [1]  1.0086943 -0.2637066  0.3674935  0.6466759</span>
+<span class="co">#&gt; [1]  0.2596344  0.4828792 -0.5145930 -0.7947573</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$alpha</span>
-<span class="co">#&gt; [1]  0.6625361  1.0545254 -0.1567495</span>
+<span class="co">#&gt; [1]  1.1462418  3.1440573 -0.3726979</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$.RNG.name</span>
-<span class="co">#&gt; [1] "base::Wichmann-Hill"</span>
+<span class="co">#&gt; [1] "base::Mersenne-Twister"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$.RNG.seed</span>
-<span class="co">#&gt; [1] 72069</span>
+<span class="co">#&gt; [1] 46322</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
 <span class="co">#&gt; [[2]]$beta</span>
-<span class="co">#&gt; [1]  0.4810622  0.8143934  0.7763930 -0.7813621</span>
+<span class="co">#&gt; [1]  0.7054892  0.7376773 -1.0084660  0.5759300</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$alpha</span>
-<span class="co">#&gt; [1] -0.3889031  0.2838407  0.9674535</span>
+<span class="co">#&gt; [1]  0.6467831 -1.0262679 -1.5054575</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$.RNG.name</span>
-<span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span>
+<span class="co">#&gt; [1] "base::Wichmann-Hill"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$.RNG.seed</span>
-<span class="co">#&gt; [1] 8723</span>
+<span class="co">#&gt; [1] 92308</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
 <span class="co">#&gt; [[3]]$beta</span>
-<span class="co">#&gt; [1]  1.64083771 -0.03112157  0.13583503  1.08922491</span>
+<span class="co">#&gt; [1] -0.5139154  1.1257211  0.9030047  1.5997922</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$alpha</span>
-<span class="co">#&gt; [1]  1.15488719  0.06984181 -0.32359989</span>
+<span class="co">#&gt; [1] 0.72127197 1.62307142 0.09913973</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$.RNG.name</span>
-<span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span>
+<span class="co">#&gt; [1] "base::Mersenne-Twister"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$.RNG.seed</span>
-<span class="co">#&gt; [1] 48924</span></pre></body></html></div>
+<span class="co">#&gt; [1] 15584</span></pre></body></html></div>
 <p>When a function is supplied, the function will be evaluated once per chain and the resulting list is stored.</p>
 </div>
 </div>
@@ -445,23 +445,23 @@
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span>(<span class="no">mod4c</span>$<span class="no">model</span>))
 <span class="co">#&gt; List of 15</span>
-<span class="co">#&gt;  $ M_ID        : num [1:200, 1:5] NA NA NA NA NA 2 NA NA NA NA ...</span>
+<span class="co">#&gt;  $ M_ID        : num [1:200, 1:5] NA NA NA NA NA 1 NA NA NA NA ...</span>
 <span class="co">#&gt;  $ M_lvlone    : num [1:2400, 1:3] NA NA 0 0 NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ RinvD_bmi_ID: num [1:2, 1:2] 6.79e+02 NA NA 4.68e-03</span>
-<span class="co">#&gt;  $ alpha       : num [1:7] -0.7673 -0.0922 6.7214 1.0813 0.244 ...</span>
-<span class="co">#&gt;  $ b_bmi_ID    : num [1:200, 1:2] 16.5 16.8 14.9 16.2 17.1 ...</span>
-<span class="co">#&gt;  $ b_hc_ID     : num [1:200, 1] 40.3 41.2 45 43.7 42.6 ...</span>
-<span class="co">#&gt;  $ beta        : num [1:6] 1.36359 -0.00675 2.18268 1.33121 -0.03458 ...</span>
-<span class="co">#&gt;  $ delta_SMOKE : num -0.936</span>
-<span class="co">#&gt;  $ gamma_SMOKE : num [1:2] 1.13 NA</span>
-<span class="co">#&gt;  $ invD_bmi_ID : num [1:2, 1:2] 6.75e-03 1.87 1.87 1.47e+03</span>
-<span class="co">#&gt;  $ invD_hc_ID  : num [1, 1] 0.000471</span>
+<span class="co">#&gt;  $ RinvD_bmi_ID: num [1:2, 1:2] 216.63 NA NA 0.54</span>
+<span class="co">#&gt;  $ alpha       : num [1:7] 2.44 -0.58 4.05 2.04 3.78 ...</span>
+<span class="co">#&gt;  $ b_bmi_ID    : num [1:200, 1:2] 15.6 16.4 13.6 15.2 16.9 ...</span>
+<span class="co">#&gt;  $ b_hc_ID     : num [1:200, 1] 41.3 43.5 44.1 45.6 43.2 ...</span>
+<span class="co">#&gt;  $ beta        : num [1:6] 0.469 0.147 1.689 0.897 -0.859 ...</span>
+<span class="co">#&gt;  $ delta_SMOKE : num -1.29</span>
+<span class="co">#&gt;  $ gamma_SMOKE : num [1:2] 1.27 NA</span>
+<span class="co">#&gt;  $ invD_bmi_ID : num [1:2, 1:2] 0.00761 -0.14552 -0.14552 7.09028</span>
+<span class="co">#&gt;  $ invD_hc_ID  : num [1, 1] 0.000669</span>
 <span class="co">#&gt;  $ mu_b_bmi_ID : num [1:200, 1:2] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ tau_HEIGHT_M: num 0.0176</span>
-<span class="co">#&gt;  $ tau_bmi     : num 4.78</span>
-<span class="co">#&gt;  $ tau_hc      : num 0.253</span></pre></body></html></div>
-<p><code>M_ID</code> and <code>M_lvlone</code> are design matrices containing the the parts of the variables that belong to a given level of the hierarchy. In this example, <code>M_ID</code> contains all the subject specific variables, <code>M_lvlone</code> the time-varying variables. Design matrices are always named <code>M_&lt;level&gt;</code>.</p>
-<p>The first eight rows of <code>M_ID</code> in the data dat is passed to JAGS (which is stored in <code>data_list</code> in a JointAI object) are:</p>
+<span class="co">#&gt;  $ tau_HEIGHT_M: num 0.0162</span>
+<span class="co">#&gt;  $ tau_bmi     : num 4.51</span>
+<span class="co">#&gt;  $ tau_hc      : num 0.232</span></pre></body></html></div>
+<p><code>M_ID</code> and <code>M_lvlone</code> are design matrices containing the the parts of the variables that belong to a given level of the hierarchy. In this example, <code>M_ID</code> contains all the subject specific variables, <code>M_lvlone</code> the time-varying variables. In <strong>JointAI</strong>, design matrices are always named <code>M_&lt;level&gt;</code>, and <code>lvlone</code> refers to the lowest level, the level for which there is no grouping variable.</p>
+<p>The first eight rows of <code>M_ID</code> in the data that is passed to JAGS (which is stored in <code>data_list</code> in a JointAI object) are:</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">mod4c</span>$<span class="no">data_list</span>$<span class="no">M_ID</span>, <span class="fl">8</span>)</pre></body></html></div>
 <pre><code>#&gt;       SMOKE HEIGHT_M (Intercept) SMOKEsmoked until[...] SMOKEcontin[...]
 #&gt; 1.1       1 172.2782           1                     NA               NA
@@ -472,7 +472,7 @@
 #&gt; 103.1    NA 163.9138           1                     NA               NA
 #&gt; 104.1     3 174.1171           1                     NA               NA
 #&gt; 105.1     1 154.9146           1                     NA               NA</code></pre>
-<p>If we wanted to specify initial values for the incomplete subject specific variables we would have to specify a matrix that had to look like this:</p>
+<p>If we wanted to specify initial values for the incomplete subject specific variables we would have to specify a full matrix of initial values corresponding to <code>M_ID</code>. That matrix would have to look like this:</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span>(<span class="no">mod4c</span>$<span class="no">model</span>)$<span class="no">M_ID</span>, <span class="fl">8</span>)
 <span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5]</span>
 <span class="co">#&gt; [1,]   NA   NA   NA   NA   NA</span>
@@ -484,24 +484,17 @@
 <span class="co">#&gt; [7,]   NA   NA   NA   NA   NA</span>
 <span class="co">#&gt; [8,]   NA   NA   NA   NA   NA</span></pre></body></html></div>
 <p>The matrix for the initial values has to have the same dimension as the matrix containing the data, but has <code>NA</code> wherever the value in the data is observed (e.g., the first 5 elements of the first column) and a numeric value where data is missing (e.g., the 6th value of the first column).</p>
-<p>Since <code>SMOKE</code> is a categorical covariate and coded using dummy coding, there are columns containing the dummy variables (columns 4 and 5) as well as the original version of <code>SMOKE</code> (first column). The dummy variables are calculated (not sampled) in the JAGS model and are thus completely empty in the data matrix and the matrix of initial values.</p>
+<p>Since <code>SMOKE</code> is a categorical covariate and coded using dummy coding, there are columns containing the dummy variables (columns 4 and 5) as well as a column containing the original version of <code>SMOKE</code> (first column). The dummy variables are calculated (not sampled) in the JAGS model and are thus completely empty in the data matrix (otherwise <strong>JAGS</strong> would throw an error) and the matrix of initial values.</p>
 <p>The corresponding part of the JAGS model is:</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">'[...]\n'</span>,
-           <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="no">a4mod</span>[<span class="fl">64</span>:<span class="fl">65</span>], <span class="kw">collapse</span> <span class="kw">=</span> <span class="st">"\n"</span>),
-           <span class="st">'\n\n[...]\n'</span>,
-           <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="no">a4mod</span>[<span class="fl">74</span>:<span class="fl">77</span>], <span class="kw">collapse</span> <span class="kw">=</span> <span class="st">"\n"</span>),
-           <span class="st">'\n\n[...]'</span>))
-<span class="co">#&gt; [...]</span>
-<span class="co">#&gt;   for (ii in 1:200) {</span>
-<span class="co">#&gt;     M_ID[ii, 1] ~ dcat(p_SMOKE[ii, 1:3])</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [...]</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     M_ID[ii, 4] &lt;- ifelse(M_ID[ii, 1] == 2, 1, 0)</span>
-<span class="co">#&gt;     M_ID[ii, 5] &lt;- ifelse(M_ID[ii, 1] == 3, 1, 0)</span>
-<span class="co">#&gt;   }</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [...]</span></pre></body></html></div>
+<pre><code>#&gt; [...]
+#&gt;     M_ID[ii, 1] ~ dcat(p_SMOKE[ii, 1:3])
+#&gt; 
+#&gt; [...]
+#&gt; 
+#&gt;     M_ID[ii, 4] &lt;- ifelse(M_ID[ii, 1] == 2, 1, 0)
+#&gt;     M_ID[ii, 5] &lt;- ifelse(M_ID[ii, 1] == 3, 1, 0)
+#&gt; 
+#&gt; [...]</code></pre>
 <p><code>RinvD_bmi_ID</code> refers to the scale matrix in the Wishart prior for the inverse of the random effects design matrix <code>D_bmi_ID</code>. To distinguish random effects of different models and grouping levels, the names always end with <code>..._&lt;response&gt;_&lt;level&gt;</code>.</p>
 <p>In the data that is passed to JAGS this matrix is specified as diagonal matrix, with unknown diagonal elements:</p>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">mod4c</span>$<span class="no">data_list</span>[<span class="st">'RinvD_bmi_ID'</span>]
@@ -521,9 +514,9 @@
 #&gt; [...]</code></pre>
 <p>The element <code>RinvD_bmi_ID</code> in the initial values has to be a 2 <span class="math inline">\(\times\)</span> 2 matrix, with positive values on the diagonal and <code>NA</code> as off-diagonal elements, since these are fixed in the data:</p>
 <div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span>(<span class="no">mod4c</span>$<span class="no">model</span>)$<span class="no">RinvD_bmi_ID</span>
-<span class="co">#&gt;          [,1]        [,2]</span>
-<span class="co">#&gt; [1,] 101.6444          NA</span>
-<span class="co">#&gt; [2,]       NA 0.003624945</span></pre></body></html></div>
+<span class="co">#&gt;          [,1]      [,2]</span>
+<span class="co">#&gt; [1,] 168.8836        NA</span>
+<span class="co">#&gt; [2,]       NA 0.7982496</span></pre></body></html></div>
 <p>Elements that are completely unobserved, like the parameter vectors <code>alpha</code> and <code>beta</code>, the random effects <code>b_&lt;response&gt;_&lt;level&gt;</code> (e.g. <code>b_bmi_ID</code> and <code>b_hc_ID</code>) or scalar parameters <code>delta_&lt;response&gt;</code> or <code>tau_&lt;response&gt;</code> are entirely specified in the initial values.</p>
 </div>
 </div>

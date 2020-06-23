@@ -125,13 +125,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="AfterFitting_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>After Fitting</h1>
             <h3 class="subtitle">Summary, visualization and evaluation of the results</h3>
             
-            <h4 class="date">2019-08-29</h4>
+            <h4 class="date">2020-06-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/AfterFitting.Rmd"><code>vignettes/AfterFitting.Rmd</code></a></small>
       <div class="hidden name"><code>AfterFitting.Rmd</code></div>
@@ -145,17 +145,18 @@
 <div id="visualizing-the-posterior-sample" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualizing-the-posterior-sample" class="anchor"></a>Visualizing the posterior sample</h2>
-<p>The posterior sample can be visualized by two commonly used plots: a traceplot, showing samples across iterations, or a plot of the empirical density of the posterior sample.</p>
-<div id="traceplot" class="section level3">
+<p>The posterior sample can be visualized by two commonly used plots: a trace plot, showing samples across iterations, or a plot of the empirical density of the posterior sample.</p>
+<div id="trace-plot" class="section level3">
 <h3 class="hasAnchor">
-<a href="#traceplot" class="anchor"></a>Traceplot</h3>
-<p>A traceplot shows the sampled values per chain and node throughout iterations. It allows us to visually evaluate convergence and mixing of the chains, and can be obtained with the function <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code><a href="../reference/traceplot.html">traceplot()</a></code></a>:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">mod13a</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">WC</span> + <span class="no">alc</span> + <span class="no">creat</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>, <span class="kw">n.iter</span> <span class="kw">=</span> <span class="fl">500</span>)
+<a href="#trace-plot" class="anchor"></a>Trace plot</h3>
+<p>A trace plot shows the sampled values per chain and node throughout iterations. It allows us to evaluate convergence and mixing of the chains visually, and can be obtained with the function <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code><a href="../reference/traceplot.html">traceplot()</a></code></a>:</p>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">mod13a</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">WC</span> + <span class="no">alc</span> + <span class="no">creat</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>, <span class="kw">n.iter</span> <span class="kw">=</span> <span class="fl">500</span>,
+                 <span class="kw">seed</span> <span class="kw">=</span> <span class="fl">2020</span>)
 
 <span class="fu"><a href="../reference/traceplot.html">traceplot</a></span>(<span class="no">mod13a</span>)</pre></body></html></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-1-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p>When the sampler has converged the chains show one horizontal band, as in the above figure. Consequently, when traces show a trend convergence has not been reached and more iterations are necessary (e.g., using <a href="https://nerler.github.io/JointAI/reference/add_samples.html"><code><a href="../reference/add_samples.html">add_samples()</a></code></a>).</p>
-<p>Graphical aspects of the traceplot can be controlled by specifying standard graphical arguments via the dots argument <code>"..."</code>, which are passed to <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/matplot.html"><code><a href="https://rdrr.io/r/graphics/matplot.html">matplot()</a></code></a>. This allows changing color, linetype and -width, limits, etc. Arguments <code>nrow</code> and/or <code>ncol</code> can be supplied to set specific numbers of rows and columns for the layout of the grid of plots.</p>
+<p>Graphical aspects of the traceplot can be controlled by specifying standard graphical arguments via the dots argument <code>"..."</code>, which are passed to <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/matplot.html"><code><a href="https://rdrr.io/r/graphics/matplot.html">matplot()</a></code></a>. This allows changing colour, line type and -width, limits, etc. Arguments <code>nrow</code> and/or <code>ncol</code> can be supplied to set specific numbers of rows and columns for the layout of the grid of plots.</p>
 <p>With the argument <code>use_ggplot</code> it is possible to get a <a href="https://CRAN.R-project.org/package=ggplot2"><strong>ggplot2</strong></a> version of the traceplot. It can be extended using standard <strong>ggplot2</strong> syntax.</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
 <span class="fu"><a href="../reference/traceplot.html">traceplot</a></span>(<span class="no">mod13a</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">use_ggplot</span> <span class="kw">=</span> <span class="fl">TRUE</span>) +
@@ -185,7 +186,7 @@
 <p><img src="AfterFitting_files/figure-html/densplot15a-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p>Like with <code><a href="../reference/traceplot.html">traceplot()</a></code> it is possible to use the <strong>ggplot2</strong> version of <code><a href="../reference/densplot.html">densplot()</a></code> when setting <code>use_ggplot = TRUE</code>. Here, vertical lines can be added as additional layers:</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># fit the complete-case version of the model</span>
-<span class="no">mod13a_cc</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/formula.html">formula</a></span>(<span class="no">mod13a</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>)
+<span class="no">mod13a_cc</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/formula.html">formula</a></span>(<span class="no">mod13a</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>, <span class="kw">na.action</span> <span class="kw">=</span> <span class="no">na.omit</span>)
 
 
 <span class="co"># make a dataset containing the quantiles of the posterior sample and</span>
@@ -221,41 +222,42 @@
 <span class="co"># add vertical lines for the:</span>
 <span class="co"># - confidence intervals from the complete case analysis</span>
 <span class="co"># - quantiles of the posterior distribution</span>
-<span class="co"># p13a +</span>
-  <span class="co"># geom_vline(data = quantDF, aes(xintercept = value, color = model),</span>
-  <span class="co">#            lty = 2) +</span>
-  <span class="co"># scale_color_manual(name = 'CI from model: ',</span>
-                     <span class="co"># limits = c('JointAI', 'cc'),</span>
-                     <span class="co"># values = c('blue', 'red'),</span>
-                     <span class="co"># labels = c('JointAI', 'compl.case'))</span></pre></body></html></div>
+<span class="no">p13a</span> +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">quantDF</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">xintercept</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="no">model</span>),
+             <span class="kw">lty</span> <span class="kw">=</span> <span class="fl">2</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">'CI from model: '</span>,
+                     <span class="kw">limits</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'JointAI'</span>, <span class="st">'cc'</span>),
+                     <span class="kw">values</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'blue'</span>, <span class="st">'red'</span>),
+                     <span class="kw">labels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'JointAI'</span>, <span class="st">'compl.case'</span>))</pre></body></html></div>
+<p><img src="AfterFitting_files/figure-html/ggdens15a-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="model-summary" class="section level2">
 <h2 class="hasAnchor">
 <a href="#model-summary" class="anchor"></a>Model Summary</h2>
 <p>A summary of the posterior distribution estimated in a <code>JointAI</code> model can be obtained using the function <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>.</p>
-<p>The posterior summary consists of the mean, standard deviation and quantiles (by default the 2.5% and 97.5% quantiles) of the MCMC samples from all chains combined, as well as the tail probability (see below) and Gelman-Rubin criterion (see <a href="#sec:grcrit">section below</a>).</p>
-<p>Additionally, some important characteristics of the MCMC samples on which the summary is based is given. This includes the range and number of iterations (“Sample size per chain”), thinning interval and number of chains. Furthermore, the number of observations (number of rows in the data) is given.</p>
+<p>The posterior summary consists of the mean, standard deviation and quantiles (by default, the 2.5% and 97.5% quantiles) of the MCMC samples from all chains combined. Moreover, the tail probability (see below), Gelman-Rubin criterion (see <a href="#sec:grcrit">section below</a>) and the ratio of the Monte Carlo error to the posterior standard deviation (see <a href="#sec:mcerror">section below</a>) are given.</p>
+<p>Additionally, some essential characteristics of the MCMC samples on which the summary is based is given. This includes the range and number of iterations (“Sample size per chain”), thinning interval, and number of chains. Furthermore, the number of observations (number of rows in the data) is given.</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod13a</span>)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Linear model fitted with JointAI</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm_imp(formula = SBP ~ gender + WC + alc + creat, data = NHANES, </span>
-<span class="co">#&gt;     n.iter = 500)</span>
+<span class="co">#&gt;     n.iter = 500, seed = 2020)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
-<span class="co">#&gt;                Mean      SD   2.5%   97.5% tail-prob. GR-crit MC error</span>
-<span class="co">#&gt; (Intercept)  81.286 10.0392 61.601 100.065     0.0000   1.003   0.0271</span>
-<span class="co">#&gt; genderfemale  0.343  2.6281 -4.896   5.653     0.9120   1.003   0.0267</span>
-<span class="co">#&gt; WC            0.305  0.0757  0.155   0.447     0.0000   0.999   0.0264</span>
-<span class="co">#&gt; alc&gt;=1        6.283  2.4165  1.450  10.962     0.0107   1.000   0.0321</span>
-<span class="co">#&gt; creat         7.688  7.8754 -7.739  23.267     0.3147   1.007   0.0187</span>
+<span class="co">#&gt;                Mean     SD  2.5%  97.5% tail-prob. GR-crit MCE/SD</span>
+<span class="co">#&gt; (Intercept)  81.077 9.6921 61.66 99.602      0.000   1.011 0.0261</span>
+<span class="co">#&gt; genderfemale  0.368 2.6138 -4.74  5.594      0.871   0.999 0.0258</span>
+<span class="co">#&gt; WC            0.306 0.0736  0.16  0.448      0.000   1.012 0.0259</span>
+<span class="co">#&gt; alc&gt;=1        6.365 2.4692  1.38 10.897      0.016   1.006 0.0320</span>
+<span class="co">#&gt; creat         7.747 7.5949 -7.19 22.496      0.299   1.003 0.0313</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary of residual std. deviation:</span>
-<span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MC error</span>
-<span class="co">#&gt; sigma_SBP 14.4 0.768 13.1    16    1.01   0.0258</span>
+<span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span>
+<span class="co">#&gt; sigma_SBP 14.4 0.779   13    16    1.02 0.0297</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; MCMC settings:</span>
@@ -267,13 +269,17 @@
 <span class="co">#&gt; Number of observations: 186 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
+<span class="co">#&gt; Number and proportion of complete cases:</span>
+<span class="co">#&gt;          #    %</span>
+<span class="co">#&gt; lvlone 146 78.5</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; Number and proportion of missing values:</span>
-<span class="co">#&gt;        variable # NA  % NA</span>
-<span class="co">#&gt; SBP         SBP    0  0.00</span>
-<span class="co">#&gt; gender   gender    0  0.00</span>
-<span class="co">#&gt; WC           WC    2  1.08</span>
-<span class="co">#&gt; creat     creat    8  4.30</span>
-<span class="co">#&gt; alc         alc   34 18.28</span></pre></body></html></div>
+<span class="co">#&gt;        # NA  % NA</span>
+<span class="co">#&gt; SBP       0  0.00</span>
+<span class="co">#&gt; gender    0  0.00</span>
+<span class="co">#&gt; WC        2  1.08</span>
+<span class="co">#&gt; creat     8  4.30</span>
+<span class="co">#&gt; alc      34 18.28</span></pre></body></html></div>
 <p>For mixed models, <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> also returns the posterior summary of the random effects covariance matrix <code>D</code> and the number of groups:</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">splines</span>)
 <span class="no">mod13b</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lme_imp</a></span>(<span class="no">bmi</span> ~ <span class="no">GESTBIR</span> + <span class="no">ETHN</span> + <span class="no">HEIGHT_M</span> + <span class="fu"><a href="https://rdrr.io/r/splines/ns.html">ns</a></span>(<span class="no">age</span>, <span class="kw">df</span> <span class="kw">=</span> <span class="fl">3</span>),
@@ -292,24 +298,24 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
-<span class="co">#&gt;                     Mean     SD    2.5%   97.5% tail-prob. GR-crit MC error</span>
-<span class="co">#&gt; (Intercept)       4.0068 9.3529 -16.724 17.5519     0.6160    4.90    0.440</span>
-<span class="co">#&gt; GESTBIR           0.0345 0.2992  -0.409  0.6579     0.9920    6.93    0.892</span>
-<span class="co">#&gt; ETHNother         0.2946 0.3196  -0.342  0.8735     0.3480    2.12    0.397</span>
-<span class="co">#&gt; HEIGHT_M         -0.0232 0.0316  -0.076  0.0454     0.4880    4.39    0.378</span>
-<span class="co">#&gt; ns(age, df = 3)1 -0.5756 0.3426  -1.115  0.1073     0.1240    1.55    0.385</span>
-<span class="co">#&gt; ns(age, df = 3)2  1.2662 0.7114   0.198  2.7028     0.0147    1.55    0.422</span>
-<span class="co">#&gt; ns(age, df = 3)3 -1.8211 0.6230  -2.756 -0.5797     0.0000    1.57    0.486</span>
+<span class="co">#&gt;                     Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
+<span class="co">#&gt; (Intercept)       4.0068 9.3529 -16.724 17.5519     0.6160    4.90  0.440</span>
+<span class="co">#&gt; GESTBIR           0.0345 0.2992  -0.409  0.6579     0.9920    6.93  0.892</span>
+<span class="co">#&gt; ETHNother         0.2946 0.3196  -0.342  0.8735     0.3480    2.12  0.397</span>
+<span class="co">#&gt; HEIGHT_M         -0.0232 0.0316  -0.076  0.0454     0.4880    4.39  0.378</span>
+<span class="co">#&gt; ns(age, df = 3)1 -0.5756 0.3426  -1.115  0.1073     0.1240    1.55  0.385</span>
+<span class="co">#&gt; ns(age, df = 3)2  1.2662 0.7114   0.198  2.7028     0.0147    1.55  0.422</span>
+<span class="co">#&gt; ns(age, df = 3)3 -1.8211 0.6230  -2.756 -0.5797     0.0000    1.57  0.486</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary of random effects covariance matrix:</span>
-<span class="co">#&gt;                  Mean      SD   2.5%   97.5% tail-prob. GR-crit MC error</span>
-<span class="co">#&gt; D_bmi_ID[1,1] 158.672 39.5654 90.334 233.531               1.11    0.340</span>
-<span class="co">#&gt; D_bmi_ID[1,2]   2.269  2.4878 -3.248   6.060      0.364    1.74    0.452</span>
-<span class="co">#&gt; D_bmi_ID[2,2]   0.213  0.0875  0.112   0.413               1.43    0.237</span>
+<span class="co">#&gt;                  Mean      SD   2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
+<span class="co">#&gt; D_bmi_ID[1,1] 158.672 39.5654 90.334 233.531               1.11  0.340</span>
+<span class="co">#&gt; D_bmi_ID[1,2]   2.269  2.4878 -3.248   6.060      0.364    1.74  0.452</span>
+<span class="co">#&gt; D_bmi_ID[2,2]   0.213  0.0875  0.112   0.413               1.43  0.237</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary of residual std. deviation:</span>
-<span class="co">#&gt;           Mean     SD 2.5% 97.5% GR-crit MC error</span>
-<span class="co">#&gt; sigma_bmi 0.57 0.0106 0.55 0.591       1   0.0356</span>
+<span class="co">#&gt;           Mean     SD 2.5% 97.5% GR-crit MCE/SD</span>
+<span class="co">#&gt; sigma_bmi 0.57 0.0106 0.55 0.591       1 0.0356</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; MCMC settings:</span>
@@ -323,30 +329,26 @@
 <span class="co">#&gt;  - ID: 200</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Number and proportion of missing values:</span>
-<span class="co">#&gt; $lvlone</span>
-<span class="co">#&gt;     variable  level # NA % NA</span>
-<span class="co">#&gt; bmi      bmi lvlone    0    0</span>
-<span class="co">#&gt; age      age lvlone    0    0</span>
+<span class="co">#&gt; Number and proportion of complete cases:</span>
+<span class="co">#&gt;         level    #    %</span>
+<span class="co">#&gt; ID         ID  190 95.0</span>
+<span class="co">#&gt; lvlone lvlone 1785 94.9</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; $ID</span>
-<span class="co">#&gt;          variable level # NA % NA</span>
-<span class="co">#&gt; GESTBIR   GESTBIR    ID    0    0</span>
-<span class="co">#&gt; ID             ID    ID    0    0</span>
-<span class="co">#&gt; HEIGHT_M HEIGHT_M    ID    4    2</span>
-<span class="co">#&gt; ETHN         ETHN    ID    6    3</span></pre></body></html></div>
+<span class="co">#&gt; Number and proportion of missing values:</span>
+<span class="co">#&gt;      level # NA % NA</span>
+<span class="co">#&gt; bmi lvlone    0    0</span>
+<span class="co">#&gt; age lvlone    0    0</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;          level # NA % NA</span>
+<span class="co">#&gt; GESTBIR     ID    0    0</span>
+<span class="co">#&gt; ID          ID    0    0</span>
+<span class="co">#&gt; HEIGHT_M    ID    4    2</span>
+<span class="co">#&gt; ETHN        ID    6    3</span></pre></body></html></div>
+<p>At the end of the summary output, a summary of the number and proportion of missing values per variable is printed</p>
 <div id="tail-probability" class="section level3">
 <h3 class="hasAnchor">
 <a href="#tail-probability" class="anchor"></a>Tail probability</h3>
 <p>The tail probability, calculated as <span class="math inline">\(2\times\min\left\{Pr(\theta &gt; 0), Pr(\theta &lt; 0)\right\},\)</span> where <span class="math inline">\(\theta\)</span> is the parameter of interest, is a measure of how likely the value 0 is under the estimated posterior distribution. The figure visualizes three examples of posterior distributions and the corresponding minimum of <span class="math inline">\(Pr(\theta &gt; 0)\)</span> and <span class="math inline">\(Pr(\theta &lt; 0)\)</span> (shaded area): <img src="AfterFitting_files/figure-html/tailprob-1.png" width="100%" style="display: block; margin: auto;"></p>
-<!-- By default, `summary()` will only print the posterior summary for the main -->
-<!-- model parameters of the analysis model and use the whole MCMC sample. -->
-<!-- The argument `subset` allows to control -->
-<!-- which part of the MCMC sample is returned and follows the same logic as -->
-<!-- the argument `monitor_params` in `*_imp()`. -->
-<!-- Arguments `start`, `end` and `thin` are available to select a subset of the MCMC -->
-<!-- samples that is used to calculate the summary. -->
-<!-- The use of these arguments is further explained [below](#sec:subset)). -->
 </div>
 </div>
 <div id="evaluation-criteria" class="section level2">
@@ -361,30 +363,30 @@
 <span class="co">#&gt; Potential scale reduction factors:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;              Point est. Upper C.I.</span>
-<span class="co">#&gt; (Intercept)       1.000       1.00</span>
-<span class="co">#&gt; genderfemale      1.004       1.01</span>
-<span class="co">#&gt; WC                0.999       1.00</span>
-<span class="co">#&gt; alc&gt;=1            1.001       1.01</span>
-<span class="co">#&gt; creat             1.001       1.00</span>
-<span class="co">#&gt; sigma_SBP         1.008       1.03</span>
+<span class="co">#&gt; (Intercept)        1.01       1.02</span>
+<span class="co">#&gt; genderfemale       1.00       1.01</span>
+<span class="co">#&gt; WC                 1.00       1.01</span>
+<span class="co">#&gt; alc&gt;=1             1.00       1.01</span>
+<span class="co">#&gt; creat              1.00       1.00</span>
+<span class="co">#&gt; sigma_SBP          1.02       1.05</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Multivariate psrf</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; 1.02</span></pre></body></html></div>
+<span class="co">#&gt; 1.01</span></pre></body></html></div>
 <p>Besides the arguments <code>start</code>, <code>end</code>, <code>thin</code>, and <code>subset</code>, which are explained <a href="#sec:subset">below</a>, <code><a href="../reference/GR_crit.html">GR_crit()</a></code> also takes the arguments of <code>gelman.diag()</code>.</p>
 </div>
 <div id="sec:mcerror" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sec:mcerror" class="anchor"></a>Monte Carlo Error</h3>
-<p>The precision of the MCMC sample can be checked with the function <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code><a href="../reference/MC_error.html">MC_error()</a></code></a>. It uses the function <code>mcmcse.mat()</code> from the package <a href="https://CRAN.R-project.org/package=mcmcse"><strong>mcmcse</strong></a> to calculate the Monte Carlo error (the error that is made since the sample is finite) and compares it to the standard deviation of the posterior sample. A rule of thumb is that the Monte Carlo error should not be more than 5% of the standard deviation<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Besides the arguments explained <a href="#sec:subset">below</a>, <code><a href="../reference/MC_error.html">MC_error()</a></code> takes the arguments of <code>mcmcse.mat()</code>.</p>
+<p>The precision of the MCMC sample can be checked with the function <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code><a href="../reference/MC_error.html">MC_error()</a></code></a>. It uses the function <code>mcmcse::mcmcse.mat()</code> from the package <a href="https://CRAN.R-project.org/package=mcmcse"><strong>mcmcse</strong></a> to calculate the Monte Carlo error (the error that is made since the sample is finite) and compares it to the standard deviation of the posterior sample. A rule of thumb is that the Monte Carlo error should not be more than 5% of the standard deviation<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Besides the arguments explained <a href="#sec:subset">below</a>, <code><a href="../reference/MC_error.html">MC_error()</a></code> takes the arguments of <code>mcmcse.mat()</code>.</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/MC_error.html">MC_error</a></span>(<span class="no">mod13a</span>)
-<span class="co">#&gt;                est  MCSE     SD MCSE/SD</span>
-<span class="co">#&gt; (Intercept)  81.29 0.272 10.039   0.027</span>
-<span class="co">#&gt; genderfemale  0.34 0.070  2.628   0.027</span>
-<span class="co">#&gt; WC            0.31 0.002  0.076   0.026</span>
-<span class="co">#&gt; alc&gt;=1        6.28 0.077  2.416   0.032</span>
-<span class="co">#&gt; creat         7.69 0.147  7.875   0.019</span>
-<span class="co">#&gt; sigma_SBP    14.43 0.020  0.768   0.026</span></pre></body></html></div>
+<span class="co">#&gt;                est   MCSE    SD MCSE/SD</span>
+<span class="co">#&gt; (Intercept)  81.08 0.2533 9.692   0.026</span>
+<span class="co">#&gt; genderfemale  0.37 0.0675 2.614   0.026</span>
+<span class="co">#&gt; WC            0.31 0.0019 0.074   0.026</span>
+<span class="co">#&gt; alc&gt;=1        6.37 0.0790 2.469   0.032</span>
+<span class="co">#&gt; creat         7.75 0.2380 7.595   0.031</span>
+<span class="co">#&gt; sigma_SBP    14.40 0.0232 0.779   0.030</span></pre></body></html></div>
 <p><code><a href="../reference/MC_error.html">MC_error()</a></code> returns an object of class <code>MCElist</code>, which is a list containing matrices with the posterior mean, estimated Monte Carlo error, posterior standard deviation and the ratio of the Monte Carlo error to the posterior standard deviation, for the scaled (if they are part of the <code>JointAI</code> object) and unscaled (transformed back to the scale of the data) posterior samples. The associated print method prints only the latter.</p>
 <p>To facilitate quick evaluation of the Monte Carlo error to posterior standard deviation ratio, plotting of an object of class <code>MCElist</code> using <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> shows this ratio for each (selected) node and automatically adds a vertical line at the desired cut-off (by default 5%).</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="kw">mar</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="kw">mgp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">0.6</span>, <span class="fl">0</span>), <span class="kw">mfrow</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>))
@@ -413,7 +415,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm_imp(formula = SBP ~ gender + WC + alc + creat, data = NHANES, </span>
-<span class="co">#&gt;     n.iter = 500, monitor_params = c(imp_pars = TRUE))</span>
+<span class="co">#&gt;     n.iter = 500, monitor_params = c(imp_pars = TRUE), seed = 2020)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # --------------------------------------------------------------------- #</span>
@@ -421,11 +423,11 @@
 <span class="co">#&gt; # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
-<span class="co">#&gt;                  Mean     SD    2.5%   97.5% tail-prob. GR-crit MC error</span>
-<span class="co">#&gt; (Intercept)   0.71210 1.6342 -2.5771  3.9092     0.6387    1.06   0.0663</span>
-<span class="co">#&gt; genderfemale -0.96090 0.4410 -1.8534 -0.1296     0.0293    1.05   0.0851</span>
-<span class="co">#&gt; WC            0.00602 0.0118 -0.0171  0.0287     0.6160    1.05   0.0369</span>
-<span class="co">#&gt; creat        -1.64067 1.2787 -4.1253  0.8589     0.2067    1.03   0.0680</span>
+<span class="co">#&gt;                  Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
+<span class="co">#&gt; (Intercept)   0.51390 1.5325 -2.6068  3.4078     0.7080    1.01 0.0567</span>
+<span class="co">#&gt; genderfemale -0.88236 0.3995 -1.6322 -0.0498     0.0373    1.04 0.0738</span>
+<span class="co">#&gt; WC            0.00632 0.0115 -0.0169  0.0298     0.5627    1.01 0.0375</span>
+<span class="co">#&gt; creat        -1.48151 1.2238 -3.9056  0.9785     0.2213    1.00 0.0584</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # --------------------------------------------------------------------- #</span>
@@ -433,14 +435,14 @@
 <span class="co">#&gt; # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
-<span class="co">#&gt;                   Mean       SD      2.5%    97.5% tail-prob. GR-crit MC error</span>
-<span class="co">#&gt; (Intercept)   0.838101 0.073961  0.693031  0.98387      0.000   1.000   0.0258</span>
-<span class="co">#&gt; genderfemale -0.177016 0.021606 -0.218519 -0.13499      0.000   1.001   0.0260</span>
-<span class="co">#&gt; WC            0.000948 0.000753 -0.000503  0.00241      0.209   0.999   0.0258</span>
+<span class="co">#&gt;                   Mean       SD      2.5%    97.5% tail-prob. GR-crit MCE/SD</span>
+<span class="co">#&gt; (Intercept)   0.844704 0.076409  0.694938  0.99127      0.000       1 0.0258</span>
+<span class="co">#&gt; genderfemale -0.178815 0.022122 -0.223627 -0.13699      0.000       1 0.0258</span>
+<span class="co">#&gt; WC            0.000877 0.000772 -0.000612  0.00243      0.256       1 0.0258</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary of other parameters:</span>
-<span class="co">#&gt;           Mean   SD 2.5% 97.5% tail-prob. GR-crit MC error</span>
-<span class="co">#&gt; tau_creat 47.5 4.97 38.1  57.7          0       1   0.0258</span>
+<span class="co">#&gt;           Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD</span>
+<span class="co">#&gt; tau_creat 47.7 4.98 38.6  57.6          0    1.01       </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # --------------------------------------------------------------------- #</span>
@@ -448,13 +450,13 @@
 <span class="co">#&gt; # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
-<span class="co">#&gt;               Mean   SD  2.5%  97.5% tail-prob. GR-crit MC error</span>
-<span class="co">#&gt; (Intercept)  97.47 1.42 94.81 100.30      0.000    1.01   0.0258</span>
-<span class="co">#&gt; genderfemale -5.28 2.11 -9.45  -1.38      0.008    1.00   0.0258</span>
+<span class="co">#&gt;               Mean   SD  2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
+<span class="co">#&gt; (Intercept)  97.41 1.52 94.48 100.469     0.0000    1.00 0.0258</span>
+<span class="co">#&gt; genderfemale -5.16 2.21 -9.38  -0.971     0.0147    1.01 0.0258</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary of other parameters:</span>
-<span class="co">#&gt;          Mean       SD    2.5%   97.5% tail-prob. GR-crit MC error</span>
-<span class="co">#&gt; tau_WC 0.0048 0.000519 0.00385 0.00589          0       1   0.0265</span>
+<span class="co">#&gt;           Mean      SD    2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
+<span class="co">#&gt; tau_WC 0.00478 0.00051 0.00376 0.00575          0       1 0.0258</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # ----------------------------------------------------------- #</span>
@@ -468,13 +470,17 @@
 <span class="co">#&gt; Number of observations: 186 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
+<span class="co">#&gt; Number and proportion of complete cases:</span>
+<span class="co">#&gt;          #    %</span>
+<span class="co">#&gt; lvlone 146 78.5</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; Number and proportion of missing values:</span>
-<span class="co">#&gt;        variable # NA  % NA</span>
-<span class="co">#&gt; SBP         SBP    0  0.00</span>
-<span class="co">#&gt; gender   gender    0  0.00</span>
-<span class="co">#&gt; WC           WC    2  1.08</span>
-<span class="co">#&gt; creat     creat    8  4.30</span>
-<span class="co">#&gt; alc         alc   34 18.28</span></pre></body></html></div>
+<span class="co">#&gt;        # NA  % NA</span>
+<span class="co">#&gt; SBP       0  0.00</span>
+<span class="co">#&gt; gender    0  0.00</span>
+<span class="co">#&gt; WC        2  1.08</span>
+<span class="co">#&gt; creat     8  4.30</span>
+<span class="co">#&gt; alc      34 18.28</span></pre></body></html></div>
 <p>To select only some of the parameters, they can be specified directly by name via the <code>other</code> element of <code>subset</code>.</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"># densplot(mod13c, subset = list(other = c('creat', 'alc&gt;=1')))</pre></body></html></div>
 <p>This also works when a subset of the imputed values should be displayed:</p>
@@ -533,11 +539,11 @@
 <span class="co">#&gt;          SBP gender age             race   WC alc educ creat albu</span>
 <span class="co">#&gt; 392 126.6667   male  32 Mexican American 94.1  &lt;1  low  0.83  4.2</span>
 <span class="co">#&gt;     uricacid bili occup  smoke      fit     2.5%    97.5%</span>
-<span class="co">#&gt; 392      8.7    1  &lt;NA&gt; former 116.3889 112.5179 120.4794</span>
+<span class="co">#&gt; 392      8.7    1  &lt;NA&gt; former 116.3273 112.4343 120.1817</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $fitted</span>
 <span class="co">#&gt;        fit     2.5%    97.5%</span>
-<span class="co">#&gt; 1 116.3889 112.5179 120.4794</span></pre></body></html></div>
+<span class="co">#&gt; 1 116.3273 112.4343 120.1817</span></pre></body></html></div>
 <p><code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> returns a list with elements <code>dat</code>, <code>fit</code> and <code>quantiles</code>, containing <code>newdata</code> with the predicted values and quantiles appended, the predicted values and quantiles that form the credible interval.</p>
 <div id="prediction-to-visualize-non-linear-effects" class="section level3">
 <h3 class="hasAnchor">

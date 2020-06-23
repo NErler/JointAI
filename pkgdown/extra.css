@@ -31,13 +31,15 @@ code a, pre a {
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
+
 body {
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
   line-height: 1.42857143;
-  color: #502c2c; /* This is the color of the normal text!!! */
+  color: #502c2c;
   background-color: #ffffff;
 }
+
 
 a {
   color: var(--light-red);
@@ -336,6 +338,7 @@ caption {
 .table-hover > tbody > tr.danger:hover > th {
   background-color: #e43725;
 }
+
 @media screen and (max-width: 767px) {
   .table-responsive {
     width: 100%;
@@ -649,6 +652,7 @@ select[multiple].input-lg {
   height: 35px;
   line-height: 35px;
 }
+
 .has-success .help-block,
 .has-success .control-label,
 .has-success .radio,
@@ -964,6 +968,7 @@ fieldset[disabled] .btn-default.focus {
   background-image: none;
   border-color: #161f29;
 }
+
 .btn-primary:active:hover,
 .btn-primary.active:hover,
 .open > .dropdown-toggle.btn-primary:hover,
@@ -2219,6 +2224,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: var(--light-red);
   border-color: transparent;
 }
+
 .navbar-default .navbar-brand {
   color: #ffffff;
 }
@@ -2242,7 +2248,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #ffffff;
-  background-color: #1a242f;
+  background-color: var(--dark-red);
 }
 .navbar-default .navbar-nav > .disabled > a,
 .navbar-default .navbar-nav > .disabled > a:hover,
@@ -2254,7 +2260,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
   color: #ffffff;
-  background-color: #1a242f;
+  background-color: var(--dark-red);
 }
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
@@ -2285,6 +2291,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-toggle:focus {
   background-color: #1a242f;
 }
+
 .navbar-default .navbar-toggle .icon-bar {
   background-color: #ffffff;
 }
@@ -2352,6 +2359,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #ffffff;
   background-color: #15a589;
 }
+
 @media (max-width: 767px) {
   .navbar-inverse .navbar-nav .open .dropdown-menu > .dropdown-header {
     border-color: transparent;
@@ -2413,6 +2421,7 @@ fieldset[disabled] .navbar-inverse .btn-link:hover,
 fieldset[disabled] .navbar-inverse .btn-link:focus {
   color: #cccccc;
 }
+
 .breadcrumb {
   padding: 8px 15px;
   margin-bottom: 21px;
@@ -2440,6 +2449,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination > li {
   display: inline;
 }
+
 .pagination > li > a,
 .pagination > li > span {
   position: relative;
