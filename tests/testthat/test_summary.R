@@ -10,7 +10,7 @@ test_that("main summary functions", {
   expect_type(coef(mod), 'list')
   expect_type(confint(mod), 'list')
   expect_type(coef(summary(mod)), 'list')
-  expect_output(mod)
+  expect_output(print(mod))
 })
 
 
