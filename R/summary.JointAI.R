@@ -44,7 +44,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
   # create results matrices
   statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.",
-                 "GR-crit", "MC error")
+                 "GR-crit", "MCE/SD")
 
   res_list <- sapply(names(object$coef_list), function(varname) {
     MCMCsub <- MCMC[, intersect(
@@ -100,7 +100,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
       if (length(object$MCMC) - length(exclude_chains) > 1) {
         if (!inherits(mcerror, 'try-error'))
-          stats[, "MC error"] <- mcerror$data_scale[, 'MCSE/SD']
+          stats[, "MCE/SD"] <- mcerror$data_scale[, 'MCSE/SD']
       }
 
       regcoef <- stats[intersect(rownames(stats),
