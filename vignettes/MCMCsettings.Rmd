@@ -1,6 +1,6 @@
 ---
 title: "MCMC Settings"
-date: "2019-08-29"
+date: "2020-06-22"
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -324,10 +324,12 @@ a4mod <- capture.output(mod4c$JAGSmodel)
 `M_ID` and `M_lvlone` are design matrices containing the the parts of the
 variables that belong to a given level of the hierarchy. In this example,
 `M_ID` contains all the subject specific variables, `M_lvlone` the time-varying 
-variables. Design matrices are always named `M_<level>`.
+variables. In **JointAI**, design matrices are always named `M_<level>`, and
+`lvlone` refers to the lowest level, the level for which there is no grouping
+variable.
 
 
-The first eight rows of `M_ID` in the data dat is passed to JAGS (which is stored
+The first eight rows of `M_ID` in the data that is passed to JAGS (which is stored
 in `data_list` in a JointAI object) are:
 ```{r, eval = FALSE}
 head(mod4c$data_list$M_ID, 8)
@@ -343,7 +345,8 @@ mat
 ```
 
 If we wanted to specify initial values for the incomplete subject specific
-variables we would have to specify a matrix that had to look like this:
+variables we would have to specify a full matrix of initial values corresponding
+to `M_ID`. That matrix would have to look like this:
 ```{r}
 head(coef(mod4c$model)$M_ID, 8)
 ```
@@ -354,17 +357,18 @@ containing the data, but has `NA` wherever the value in the data is observed
 data is missing (e.g., the 6th value of the first column).
 
 Since `SMOKE` is a categorical covariate and coded using dummy coding, there
-are columns containing the dummy variables (columns 4 and 5) as well as the
-original version of `SMOKE` (first column).
+are columns containing the dummy variables (columns 4 and 5) as well as a
+column containing the original version of `SMOKE` (first column).
 The dummy variables are calculated (not sampled) in the JAGS model and are thus
-completely empty in the data matrix and the matrix of initial values.
+completely empty in the data matrix (otherwise **JAGS** would throw an error)
+and the matrix of initial values.
 
 The corresponding part of the JAGS model is:
-```{r}
+```{r, echo = FALSE}
 cat(paste0('[...]\n', 
-           paste0(a4mod[64:65], collapse = "\n"),
+           paste0(a4mod[66:66], collapse = "\n"),
            '\n\n[...]\n',
-           paste0(a4mod[74:77], collapse = "\n"),
+           paste0(a4mod[75:77], collapse = "\n"),
            '\n\n[...]'))
 ```
 
@@ -384,7 +388,7 @@ mod4c$data_list['RinvD_bmi_ID']
 These diagonal elements are estimated in the model and have a Gamma prior.
 The corresponding part of the JAGS model is:
 ```{r, echo = FALSE}
-cat(paste0('[...]\n', paste(a4mod[28:34], collapse = '\n'), '\n[...]\n'))
+cat(paste0('[...]\n', paste(a4mod[29:35], collapse = '\n'), '\n[...]\n'))
 ```
 
 The element `RinvD_bmi_ID` in the initial values has to be a 2 $\times$ 2 

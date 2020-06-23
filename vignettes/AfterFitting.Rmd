@@ -1,7 +1,7 @@
 ---
 title: "After Fitting"
 subtitle: "Summary, visualization and evaluation of the results"
-date: "2019-08-29"
+date: "2020-06-22"
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -47,14 +47,14 @@ The use of these arguments is further explained [below](#sec:subset).
 
 ## Visualizing the posterior sample
 The posterior sample can be visualized by two commonly used plots: a
-traceplot, showing samples across iterations, or a plot of the empirical
+trace plot, showing samples across iterations, or a plot of the empirical
 density of the posterior sample.
 
 
-### Traceplot
-A traceplot shows the sampled values per chain and node throughout
-iterations. It allows us to visually evaluate convergence and mixing of the chains,
-and can be obtained with the function 
+### Trace plot
+A trace plot shows the sampled values per chain and node throughout
+iterations. It allows us to evaluate convergence and mixing of the chains
+visually, and can be obtained with the function 
 [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html):
 ```{r, message = FALSE, fig.width = 7, fig.height = 4, out.width = '100%'}
 mod13a <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 500,
@@ -70,7 +70,7 @@ reached and more iterations are necessary (e.g., using [`add_samples()`](https:/
 
 Graphical aspects of the traceplot can be controlled by specifying 
 standard graphical arguments via the dots argument `"..."`, which are passed to [`matplot()`](https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/matplot.html).
-This allows changing color, linetype and -width, limits, etc.
+This allows changing colour, line type and -width, limits, etc.
 Arguments `nrow` and/or `ncol` can be supplied to set specific numbers of 
 rows and columns for the layout of the grid of plots.
 
@@ -119,9 +119,9 @@ densplot(mod13a, ncol = 3,
 Like with `traceplot()` it is possible to use the **ggplot2** version of `densplot()`
 when setting `use_ggplot = TRUE`. Here, vertical lines can be added as additional
 layers:
-```{r ggdens15a, fig.width = 7, fig.height = 3.5, out.width = '100%'}
+```{r ggdens15a, fig.width = 7, fig.height = 4.5, out.width = '100%'}
 # fit the complete-case version of the model
-mod13a_cc <- lm(formula(mod13a), data = NHANES)
+mod13a_cc <- lm(formula(mod13a), data = NHANES, na.action = na.omit)
 
 
 # make a dataset containing the quantiles of the posterior sample and
@@ -157,13 +157,13 @@ p13a <- densplot(mod13a, use_ggplot = TRUE, joined = TRUE) +
 # add vertical lines for the:
 # - confidence intervals from the complete case analysis
 # - quantiles of the posterior distribution
-# p13a +
-  # geom_vline(data = quantDF, aes(xintercept = value, color = model),
-  #            lty = 2) +
-  # scale_color_manual(name = 'CI from model: ',
-                     # limits = c('JointAI', 'cc'),
-                     # values = c('blue', 'red'),
-                     # labels = c('JointAI', 'compl.case'))
+p13a +
+  geom_vline(data = quantDF, aes(xintercept = value, color = model),
+             lty = 2) +
+  scale_color_manual(name = 'CI from model: ',
+                     limits = c('JointAI', 'cc'),
+                     values = c('blue', 'red'),
+                     labels = c('JointAI', 'compl.case'))
 ```
 
 
@@ -172,13 +172,15 @@ A summary of the posterior distribution estimated in a `JointAI` model can be
 obtained using the function `summary()`.
 
 The posterior summary consists of the mean, standard deviation and 
-quantiles (by default the 2.5% and 97.5% quantiles) of the MCMC samples from all
-chains combined, as well as the tail probability (see below) and Gelman-Rubin
-criterion (see [section below](#sec:grcrit)).
+quantiles (by default, the 2.5% and 97.5% quantiles) of the MCMC samples from all
+chains combined. Moreover, the tail probability (see below), Gelman-Rubin
+criterion (see [section below](#sec:grcrit)) and the ratio of the Monte Carlo
+error to the posterior standard deviation (see [section below](#sec:mcerror))
+are given.
 
-Additionally, some important characteristics of the MCMC samples on which the
+Additionally, some essential characteristics of the MCMC samples on which the
 summary is based is given. This includes the range and number of iterations
-("Sample size per chain"), thinning interval and number of chains.
+("Sample size per chain"), thinning interval, and number of chains.
 Furthermore, the number of observations (number of rows in the data) is given.
 
 ```{r, message = FALSE}
@@ -190,13 +192,14 @@ random effects covariance matrix `D` and the number of groups:
 ```{r, message = FALSE}
 library(splines)
 mod13b <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 3),
-                  random = ~ ns(age, df = 1) | ID,
+                  random = ~ 1 | ID,
                   data = subset(simLong, !is.na(bmi)),
-                  n.iter = 500, no_model = 'age', seed = 2019)
+                  n.iter = 500, no_model = 'age', seed = 2020)
 
 summary(mod13b)
 ```
-
+At the end of the summary output, a summary of the number and proportion
+of missing values per variable is printed
 
 ### Tail probability
 The tail probability, calculated as
@@ -234,16 +237,6 @@ par(op)
 ```
 
 
-<!-- By default, `summary()` will only print the posterior summary for the main -->
-<!-- model parameters of the analysis model and use the whole MCMC sample. -->
-<!-- The argument `subset` allows to control -->
-<!-- which part of the MCMC sample is returned and follows the same logic as -->
-<!-- the argument `monitor_params` in `*_imp()`. -->
-<!-- Arguments `start`, `end` and `thin` are available to select a subset of the MCMC -->
-<!-- samples that is used to calculate the summary. -->
-<!-- The use of these arguments is further explained [below](#sec:subset)). -->
-
-
 ## Evaluation criteria
 The convergence of the MCMC chains and precision of the posterior sample can also
 be evaluated more formally. Implemented in **JointAI** are 
@@ -277,7 +270,7 @@ Besides the arguments `start`, `end`, `thin`, and `subset`, which are explained
 ### Monte Carlo Error {#sec:mcerror}
 The precision of the MCMC sample can be checked with the function
 [`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html).
-It uses the function `mcmcse.mat()` from the package [**mcmcse**](https://CRAN.R-project.org/package=mcmcse)
+It uses the function `mcmcse::mcmcse.mat()` from the package [**mcmcse**](https://CRAN.R-project.org/package=mcmcse)
 to calculate the Monte Carlo error (the error that is made since the sample
 is finite) and compares it to the standard deviation of the posterior sample.
 A rule of thumb is that the Monte Carlo error should not be more than 5% of the
@@ -338,8 +331,8 @@ summary(mod13c, subset = c(analysis_main = FALSE, imp_pars = TRUE))
 
 To select only some of the parameters, they can be specified directly by
 name via the `other` element of `subset`.
-```{r message = FALSE, eval = FALSE}
-# densplot(mod13c, subset = list(other = c('creat', 'alc>=1')))
+```{r message = FALSE}
+densplot(mod13c, subset = list(other = c('beta[4]', 'beta[5]')), nrow = 1)
 ```
 
 This also works when a subset of the imputed values should be displayed:
@@ -348,11 +341,11 @@ This also works when a subset of the imputed values should be displayed:
 mod13d <- update(mod13a, monitor_params = c(imps = TRUE))
 
 # select all imputed values for 'WC' (4th column of M_lvlone)
-# sub3 <- grep('M_lvlone\\[[[:digit:]]+,4\\]', parameters(mod13d), value = TRUE)
-# sub3
+sub3 <- grep('M_lvlone\\[[[:digit:]]+,4\\]', parameters(mod13d)$coef, value = TRUE)
+sub3
 
 # pass "sub3" to "subset" via "other", for example in a traceplot:
-# traceplot(mod13d, subset = list(other = sub3), ncol = 2)
+traceplot(mod13d, subset = list(other = sub3), ncol = 2)
 ```
 
 When the number of imputed values is large or in order to check convergence
@@ -363,13 +356,11 @@ In that case a random subset of, for instance the random effects, can be selecte
 # re-fit the model monitoring the random effects
 mod13e <- update(mod13b, monitor_params = c(ranef_main = TRUE))
 
-# extract random intercepts and random slopes
+# extract random intercepts
 ri <- grep('^b_bmi_ID\\[[[:digit:]]+,1\\]$', colnames(mod13e$MCMC[[1]]), value = T)
-rs <- grep('^b_bmi_ID\\[[[:digit:]]+,2\\]$', colnames(mod13e$MCMC[[1]]), value = T)
 
 # to plot the chains of 12 randomly selected random intercepts and slopes:
 traceplot(mod13e, subset = list(other = sample(ri, size = 12)), ncol = 4)
-traceplot(mod13e, subset = list(other = sample(rs, size = 12)), ncol = 4)
 ```
 
 
@@ -380,9 +371,9 @@ select which iterations from the MCMC sample are included in the summary.
 `thin` the thinning interval. Specification of `start`, thus, allows discarding
 a "burn-in", i.e., the iterations before the MCMC chain had converged.
 
-If a particular chain does not have converged it can be excluded from the result
-summary or plot using the argument `exclude_chains` which takes a numeric
-vector identifying chains to be excluded, for example:
+If a particular chain does not have converged it can be excluded from the
+summary or plot using the argument `exclude_chains`. This argument takes a 
+numeric vector identifying chains to be excluded, for example:
 
 ```{r}
 mod14 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
@@ -393,7 +384,7 @@ densplot(mod14, exclude_chains = c(2,4), ncol = 3)
 ```
 
 ```{r}
-traceplot(mod14, thin = 5, ncol = 3)
+traceplot(mod14, thin = 10, ncol = 3)
 traceplot(mod14, start = 150, ncol = 3)
 traceplot(mod14, end = 120, ncol = 3)
 ```
@@ -432,12 +423,12 @@ the predicted values and quantiles that form the credible interval.
 
 ### Prediction to visualize non-linear effects
 Another reason to obtain predicted values is the visualization of non-linear
-effects. 
+effects, i.e., to create an effect plot.
 To facilitate the generation of a dataset for such a prediction,
 the function [`predDF()`](https://nerler.github.io/JointAI/reference/predDF.html)
 can be used. It generates a `data.frame`
 that contains a sequence of values through the range of observed values for a
-covariate specified by the argument `var`, and the median or reference value for
+covariate specified by the argument `vars`, and the median or reference value for
 all other continuous and categorical variables.
 
 
@@ -454,6 +445,33 @@ matplot(pred$newdata$age, pred$fitted,
         xlab = 'age in months', ylab = 'predicted value')
 
 ```
+
+It is possible to have multiple variables vary and to set values for these
+variables:
+
+```{r, fig.width = 7, fig.height = 4.5, out.width = '90%'}
+# create dataset for prediction
+newDF <- predDF(mod13b, var = ~ age + HEIGHT_M + ETHN, HEIGHT_M = c(150, 180))
+
+# obtain predicted values
+pred <- predict(mod13b, newdata = newDF)
+
+
+# plot predicted values and credible interval
+library(ggplot2)
+ggplot(pred$newdata, aes(x = age, y = fit, color = factor(HEIGHT_M),
+                         fill = factor(HEIGHT_M))) +
+  geom_ribbon(aes(ymin = `2.5%`, ymax = `97.5%`), alpha = 0.3) +
+  geom_line(size = 1) +
+  facet_wrap('ETHN') +
+  theme(legend.position = 'top',
+        panel.grid = element_blank()) +
+  scale_fill_viridis_d(name = 'maternal height',
+                       aesthetics = c('colour', 'fill')) +
+  scale_y_continuous(name = 'Expected BMI', breaks = seq(15, 18, 0.5))
+```
+
+
 
 
 ## Export of imputed values
@@ -493,7 +511,7 @@ impDF <- get_MIdat(mod13d, m = 10, seed = 2018)
 
 The function `plot_imp_distr()` allows us to visually compare the distribution
 of the observed and imputed values.
-```{r, fig.width = 7, fig.height = 2.5}
+```{r, fig.width = 7, fig.height = 2.5, out.width = '100%'}
 plot_imp_distr(impDF, nrow = 1)
 ```
 
