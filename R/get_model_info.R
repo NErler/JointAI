@@ -213,7 +213,7 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
     refs = Mlist$refs[[k]],
     covnames = covnames,
     assoc_type  = if (modeltype %in% "JM") {
-      get_assoc_type(tvars, Mlist$models, assoc_type)
+      get_assoc_type(tvars, Mlist$models, assoc_type, Mlist$refs)
     } else if (modeltype %in% "coxph") {
       "obs.value"
     },
@@ -378,7 +378,7 @@ get_link <- function(model) {
 
 
 
-get_assoc_type <- function(covnames, models, assoc_type) {
+get_assoc_type <- function(covnames, models, assoc_type, refs) {
   assoc_type_user <- assoc_type
 
   fmlys <- sapply(models[covnames], get_family)
@@ -393,5 +393,14 @@ get_assoc_type <- function(covnames, models, assoc_type) {
       assoc_type_user[intersect(names(assoc_type_user), names(assoc_type))]
   }
 
-  return(assoc_type)
+  unlist(lapply(seq_along(assoc_type), function(k) {
+    if (names(assoc_type)[k] %in% names(refs)) {
+      setNames(rep(assoc_type[k],
+                   length(attr(refs[[names(assoc_type)[k]]], 'dummies'))),
+               attr(refs[[names(assoc_type)[k]]], 'dummies'))
+    } else {
+      assoc_type[k]
+    }
+  }))
+
 }
