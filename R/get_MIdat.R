@@ -74,6 +74,9 @@ get_MIdat <- function(object, m = 10, include = TRUE,
   if (!"foreign" %in% rownames(installed.packages()))
     errormsg("This function requires the 'foreign' package to be installed.")
 
+  if (is.null(object$MCMC))
+    errormsg("The object does not contain any MCMC samples.")
+
   # set seed value if provided
   if (!is.null(seed)) set.seed(seed)
 
@@ -136,6 +139,10 @@ get_MIdat <- function(object, m = 10, include = TRUE,
     pat <- paste0(Mlvls[i], "\\[[[:digit:]]*,",
                   match(i, colnames(object$data_list[[Mlvls[i]]])),
                   "\\]")
+
+    if (!any(grepl(pat, colnames(MCMC))))
+      errormsg('I cannot find imputed values for %s. Did you monitor them?',
+               dQuote(i))
 
     impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
 
