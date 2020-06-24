@@ -185,28 +185,33 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
           # If there are no coefficients (= no fixed effect, only random
           # effect), the mean of the random effect is 0, otherwise it is a
           # linear predictor
-          ifelse(is.na(rds[[x]]$parelmts),
-                 "0",
-                 paste_coef(parname = info$parname,
-                            parelmts = rds[[x]]$parelmts))
+          if (!is.na(rds[[x]]$parelmts)) {
+            paste_coef(parname = info$parname,
+                       parelmts = rds[[x]]$parelmts)
+          } else {
+            '0'
+          }
         },
 
         # interactions with random slope (if rdsi[[x]] == NULL there are no
         # variables that have an interaction with a random slope variable)
-        if (!is.null(rdsi[[x]]))
-          # write the product from the scaled data part and the corresponding
-          # regression coefficients
-          paste(
-            paste_scaling(x = paste_data(matnam = rdsi[[x]]$matrix,
-                                         index = info$index[lvl],
-                                         col = rdsi[[x]]$cols, isgk),
-                          rows = rdsi[[x]]$cols,
-                          scale_pars = info$scale_pars[[mat]],
-                          scalemat = paste0('sp', mat)
-            ),
-            paste_coef(parname = info$parname,
-                       parelmts = rdsi[[x]]$parelmts),
-            sep = " * ")
+        if (!is.null(rdsi[[x]])) {
+          if (!is.na(rdsi[[x]]$parelmts)) {
+            # write the product from the scaled data part and the corresponding
+            # regression coefficients
+            paste(
+              paste_scaling(x = paste_data(matnam = rdsi[[x]]$matrix,
+                                           index = info$index[lvl],
+                                           col = rdsi[[x]]$cols, isgk),
+                            rows = rdsi[[x]]$cols,
+                            scale_pars = info$scale_pars[[mat]],
+                            scalemat = paste0('sp', mat)
+              ),
+              paste_coef(parname = info$parname,
+                         parelmts = rdsi[[x]]$parelmts),
+              sep = " * ")
+          }
+        }
       )
 
       # combine the random slope and random slope interaction part into a

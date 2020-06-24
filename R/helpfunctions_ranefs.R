@@ -119,30 +119,51 @@ orga_hc_parelmts <- function(lvl, lvls, hc_list, parelmts, lp) {
   clus <- names(lvls)[lvls > lvls[lvl]]
 
   hcvars <- sapply(clus, function(k) {
+    # names of random slope variables
       i <- names(hc_list[[k]])[names(hc_list[[k]]) != "(Intercept)"]
 
       rd_slope_coefs <- sapply(i, function(ii) {
+        elmts <- parelmts[[names(hc_list[[k]][[ii]]$main)]]
 
-        pe <- unname(parelmts[[names(hc_list[[k]][[ii]]$main)]][ii])
-
-        data.frame(term = ii,
-                   matrix = names(hc_list[[k]][[ii]]$main),
-                   cols = hc_list[[k]][[ii]]$main,
-                   parelmts = ifelse(is.null(pe), NA, pe),
-                   stringsAsFactors = FALSE
-        )
-      }, simplify = FALSE)
-
-      rd_slope_interact_coefs <- sapply(i, function(ii) {
-        do.call(rbind, sapply(hc_list[[k]][[ii]]$interact, function(x) {
-          data.frame(term = attr(x, 'interaction'),
-                     matrix = names(x$elmts[attr(x, 'elements') != ii]),
-                     cols = x$elmts[attr(x, 'elements') != ii],
-                     parelmts = unname(parelmts[[names(x$interterm)]][
-                       attr(x, 'interaction')]),
+        if (is.list(elmts)) {
+          data.frame(term = ii,
+                     matrix = names(hc_list[[k]][[ii]]$main),
+                     cols = hc_list[[k]][[ii]]$main,
+                     parelmts = NA,
                      stringsAsFactors = FALSE
           )
-        }, simplify = FALSE))
+        } else {
+          data.frame(term = ii,
+                     matrix = names(hc_list[[k]][[ii]]$main),
+                     cols = hc_list[[k]][[ii]]$main,
+                     parelmts = ifelse(is.null(elmts[ii]), NA, unname(elmts[ii])),
+                     stringsAsFactors = FALSE
+          )
+        }
+      }, simplify = FALSE)
+
+      # variables interacting with a random slope variable
+      rd_slope_interact_coefs <- sapply(i, function(ii) {
+        if (any(sapply(parelmts, is.list))) {
+          do.call(rbind, sapply(hc_list[[k]][[ii]]$interact, function(x) {
+            data.frame(term = attr(x, 'interaction'),
+                       matrix = names(x$elmts[attr(x, 'elements') != ii]),
+                       cols = x$elmts[attr(x, 'elements') != ii],
+                       parelmts = NA,
+                       stringsAsFactors = FALSE
+            )
+          }, simplify = FALSE))
+        } else {
+          do.call(rbind, sapply(hc_list[[k]][[ii]]$interact, function(x) {
+            data.frame(term = attr(x, 'interaction'),
+                       matrix = names(x$elmts[attr(x, 'elements') != ii]),
+                       cols = x$elmts[attr(x, 'elements') != ii],
+                       parelmts = unname(parelmts[[names(x$interterm)]][
+                         attr(x, 'interaction')]),
+                       stringsAsFactors = FALSE
+            )
+          }, simplify = FALSE))
+        }
       }, simplify = FALSE)
 
       elmts <- parelmts[[paste0("M_", k)]][
