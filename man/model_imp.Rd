@@ -416,6 +416,29 @@ in a multicentre setting, where patients are from multiple hospitals.
 It also allows to model time-dependent covariates in a proportional
 hazards survival model (using \code{coxph_imp}), also in combination with
 additional grouping levels.
+
+In time-dependent proportional hazards models,
+last-observation-carried-forward is used to fill in missing values in
+the time-varying covariates, and to determine the value of the covariate
+at the event time.
+Preferably, all time-varying covariates should be
+measured at baseline (\code{timevar = 0}). If a value for a time-varying covariate
+needs to be filled in and there is no previous observation, the next
+observation will be carried backward.
+}
+
+\subsection{Differences to basic regression models}{
+
+It is not possible to specify transformations of outcome variables, i.e.,
+it is not possible to use a model formula like\if{html}{\out{<div class="r">}}\preformatted{log(y) ~ x1 + x2 + ...
+}\if{html}{\out{</div>}}
+
+In the specific case of a transformation with the natural logarithm,
+a log-normal model can be used instead of a normal model.
+
+Moreover, it is not possible to use \code{.} to indicate that all variables in a
+\code{data.frame} other than the outcome variable should be used as covariates.
+I.e., a formula \code{y ~ .} is valid in \strong{JointAI}.
 }
 }
 
@@ -608,8 +631,9 @@ Variables of type \code{logical} are automatically converted to unordered
 factors.\cr
 \subsection{Contrasts}{
 
-\strong{JointAI} now uses the globally (via \code{options("contrasts")}) specified
-contrasts. However, for incomplete categorical variables, for which the
+\strong{JointAI} version >= 1.0.0 uses the globally (via \code{options("contrasts")})
+specified contrasts.
+However, for incomplete categorical variables, for which the
 contrasts need to be re-calculated within the JAGS model, currently only
 \code{contr.treatment} and \code{contr.sum} are possible.
 Therefore, when an in complete ordinal covariate is used and the default

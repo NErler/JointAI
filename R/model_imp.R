@@ -159,7 +159,28 @@
 #' hazards survival model (using \code{coxph_imp}), also in combination with
 #' additional grouping levels.
 #'
+#' In time-dependent proportional hazards models,
+#' last-observation-carried-forward is used to fill in missing values in
+#' the time-varying covariates, and to determine the value of the covariate
+#' at the event time.
+#' Preferably, all time-varying covariates should be
+#' measured at baseline (`timevar = 0`). If a value for a time-varying covariate
+#' needs to be filled in and there is no previous observation, the next
+#' observation will be carried backward.
 #'
+#'
+#' ## Differences to basic regression models
+#' It is not possible to specify transformations of outcome variables, i.e.,
+#' it is not possible to use a model formula like
+#' ```{r, eval = FALSE}
+#' log(y) ~ x1 + x2 + ...
+#' ```
+#' In the specific case of a transformation with the natural logarithm,
+#' a log-normal model can be used instead of a normal model.
+#'
+#' Moreover, it is not possible to use `.` to indicate that all variables in a
+#' `data.frame` other than the outcome variable should be used as covariates.
+#' I.e., a formula `y ~ .` is valid in **JointAI**.
 #'
 #'
 #' @details # Data structure
@@ -362,8 +383,9 @@
 #' factors.\cr
 #'
 #' #### Contrasts
-#' **JointAI** now uses the globally (via `options("contrasts")`) specified
-#' contrasts. However, for incomplete categorical variables, for which the
+#' **JointAI** version >= 1.0.0 uses the globally (via `options("contrasts")`)
+#' specified contrasts.
+#' However, for incomplete categorical variables, for which the
 #' contrasts need to be re-calculated within the JAGS model, currently only
 #' `contr.treatment` and `contr.sum` are possible.
 #' Therefore, when an in complete ordinal covariate is used and the default
