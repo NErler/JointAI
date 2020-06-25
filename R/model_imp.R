@@ -529,6 +529,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                       analysis_type, assoc_type = NULL,
                       data_list = NULL, ...) {
 
+  modimpcall <- as.list(match.call())[-1L]
+
 
   # checks & warnings -------------------------------------------------------
   # if only "formula" is provided, split it into fixed and random parts
@@ -539,6 +541,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   }
 
   if (!is.null(formula) & is.null(fixed) & is.null(random)) {
+    formula <- check_formula_list(formula)
     fixed <- split_formula_list(formula)$fixed
     random <- split_formula_list(formula)$random
   }
@@ -554,7 +557,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   # check if the argument meth is provided (no longer used)
   args <- as.list(match.call())
   if (!is.null(args$meth))
-      warnmsg('The argument "meth" has been changed to "models".
+    warnmsg('The argument "meth" has been changed to "models".
               Please use "models".')
 
 
@@ -627,13 +630,13 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                   title = "\nDo you want me to overwrite this file?")
     if (reply == 1) {
       if (mess) msg('The modelfile was overwritten.')
-    overwrite <- TRUE
+      overwrite <- TRUE
     } else {
       overwrite <- FALSE
       if (mess) msg('The old model will be used.')
     }
     if (mess)
-    msg("To skip this question in the future, set 'overwrite = TRUE' or
+      msg("To skip this question in the future, set 'overwrite = TRUE' or
         'overwrite = FALSE'.")
   }
 
@@ -709,9 +712,9 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
       res <- foreach(i = seq_along(inits)) %dopar% {
         run_jags(inits[[i]], data_list = data_list,
-                          modelfile = modelfile,
-                          n.adapt = n.adapt, n.iter = n.iter, thin = thin,
-                          var.names = var.names)}
+                 modelfile = modelfile,
+                 n.adapt = n.adapt, n.iter = n.iter, thin = thin,
+                 var.names = var.names)}
       doParallel::stopImplicitCluster()
       mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
       adapt <- lapply(res, function(x) x$adapt)
@@ -788,7 +791,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
          model = if (n.adapt > 0) adapt,
          sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
          MCMC = if (n.iter > 0 & !is.null(mcmc)) coda::as.mcmc.list(MCMC),
-         time = t1 - t0
+         time = t1 - t0,
+         call = modimpcall$thecall
     ), class = "JointAI")
 
 
@@ -829,23 +833,14 @@ lm_imp <- function(formula, data,
 
 
   if (missing(formula)) errormsg("No model formula specified.")
-  if (missing(data)) errormsg("No dataset given.")
+
+  arglist <- prep_arglist(analysis_type = 'lm',
+                          family = gaussian(),
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$formula <- check_formula_list(arglist$formula)
-  arglist$analysis_type <- "lm"
-  attr(arglist$analysis_type, "family") <- gaussian()
-
-  thiscall <- as.list(match.call())[-1L]
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
-
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
@@ -866,37 +861,15 @@ glm_imp <- function(formula, family, data,
                     keep_scaled_mcmc = FALSE, ...){
 
   if (missing(formula)) errormsg("No model formula specified.")
-  if (missing(data)) errormsg("No dataset given.")
-  if (missing(family)) errormsg("The family needs to be specified.")
+  if (missing(family))
+    errormsg("The argument %s needs to be specified.", dQuote(family))
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$formula <- check_formula_list(arglist$formula)
-  arglist$analysis_type <- "glm"
+  arglist <- prep_arglist(analysis_type = 'glm',
+                          family = family,
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-
-  if (is.character(family)) {
-    family <- get(family, mode = "function", envir = parent.frame())
-    thefamily <- family()
-  } else if (is.function(family)) {
-    thefamily <- family()
-  } else if (inherits(family, "family")) {
-    thefamily <- family
-  }
-
-  attr(arglist$analysis_type, "family") <- thefamily
-
-  thiscall <- as.list(match.call())[-1L]
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
-
-  if (!attr(arglist$analysis_type, 'family')$link %in%
-      c("identity", "log", "logit", "probit", "log", "cloglog", "inverse"))
-    errormsg("%s is not an allowed link function.", dQuote(arglist$family$link))
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
@@ -915,58 +888,40 @@ clm_imp <- function(formula, data,
                     warn = TRUE, mess = TRUE,
                     keep_scaled_mcmc = FALSE, ...){
 
-  if (missing(formula)) errormsg("No fixed effects structure specified.")
-  if (missing(data)) errormsg("No dataset given.")
+  if (missing(formula)) errormsg("No model formula specified.")
 
-  thiscall <- as.list(match.call())[-1L]
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+  arglist <- prep_arglist(analysis_type = 'clm',
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
 
-  arglist$formula <- check_formula_list(arglist$formula)
-  arglist$analysis_type <- "clm"
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
 #' @rdname model_imp
 #' @export
 lognorm_imp <- function(formula, data,
-                   n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                   monitor_params = NULL,  auxvars = NULL, refcats = NULL,
-                   models = NULL, no_model = NULL, trunc = NULL,
-                   shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                   parallel = FALSE, n.cores = NULL,
-                   scale_vars = NULL, hyperpars = NULL,
-                   modelname = NULL, modeldir = NULL,
-                   keep_model = FALSE, overwrite = NULL,
-                   quiet = TRUE, progress.bar = "text",
-                   warn = TRUE, mess = TRUE,
-                   keep_scaled_mcmc = FALSE, ...){
+                        n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                        monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                        models = NULL, no_model = NULL, trunc = NULL,
+                        shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                        parallel = FALSE, n.cores = NULL,
+                        scale_vars = NULL, hyperpars = NULL,
+                        modelname = NULL, modeldir = NULL,
+                        keep_model = FALSE, overwrite = NULL,
+                        quiet = TRUE, progress.bar = "text",
+                        warn = TRUE, mess = TRUE,
+                        keep_scaled_mcmc = FALSE, ...){
 
   if (missing(formula)) errormsg("No model formula specified.")
-  if (missing(data)) errormsg("No dataset given.")
+
+  arglist <- prep_arglist(analysis_type = 'lognorm',
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$formula <- check_formula_list(arglist$formula)
-  arglist$analysis_type <- "lognorm"
-
-  thiscall <- as.list(match.call())[-1L]
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
-
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
@@ -974,35 +929,25 @@ lognorm_imp <- function(formula, data,
 #' @rdname model_imp
 #' @export
 betareg_imp <- function(formula, data,
-                   n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                   monitor_params = NULL,  auxvars = NULL, refcats = NULL,
-                   models = NULL, no_model = NULL, trunc = NULL,
-                   shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                   parallel = FALSE, n.cores = NULL,
-                   scale_vars = NULL, hyperpars = NULL,
-                   modelname = NULL, modeldir = NULL,
-                   keep_model = FALSE, overwrite = NULL,
-                   quiet = TRUE, progress.bar = "text",
-                   warn = TRUE, mess = TRUE,
-                   keep_scaled_mcmc = FALSE, ...){
+                        n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                        monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                        models = NULL, no_model = NULL, trunc = NULL,
+                        shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                        parallel = FALSE, n.cores = NULL,
+                        scale_vars = NULL, hyperpars = NULL,
+                        modelname = NULL, modeldir = NULL,
+                        keep_model = FALSE, overwrite = NULL,
+                        quiet = TRUE, progress.bar = "text",
+                        warn = TRUE, mess = TRUE,
+                        keep_scaled_mcmc = FALSE, ...){
 
   if (missing(formula)) errormsg("No model formula specified.")
-  if (missing(data)) errormsg("No dataset given.")
 
+  arglist <- prep_arglist(analysis_type = 'beta',
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$formula <- check_formula_list(arglist$formula)
-  arglist$analysis_type <- "beta"
-
-  thiscall <- as.list(match.call())[-1L]
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
-
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
@@ -1022,22 +967,12 @@ mlogit_imp <- function(formula, data,
                        keep_scaled_mcmc = FALSE, ...){
 
   if (missing(formula)) errormsg("No model formula specified.")
-  if (missing(data)) errormsg("No dataset given.")
 
+  arglist <- prep_arglist(analysis_type = 'mlogit',
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$formula <- check_formula_list(arglist$formula)
-  arglist$analysis_type <- "mlogit"
-
-  thiscall <- as.list(match.call())[-1L]
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
-
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
@@ -1056,43 +991,14 @@ lme_imp <- function(fixed, data, random,
                     warn = TRUE, mess = TRUE,
                     keep_scaled_mcmc = FALSE, ...){
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  thiscall <- as.list(match.call())[-1L]
+  arglist <- prep_arglist(analysis_type = 'lme',
+                          family = gaussian(),
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+  arglist <- check_fixed_random(arglist)
 
-
-  if (!missing(fixed) & missing(random)) {
-    can_split <- try(split_formula_list(check_formula_list(fixed)))
-
-    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
-      arglist$formula <- check_formula_list(arglist$fixed)
-      arglist$fixed <- NULL
-    }
-  }
-
-  if (missing(fixed) & is.null(arglist$formula))
-    errormsg("No fixed effects structure specified.")
-  if (missing(random) & is.null(arglist$formula))
-    errormsg("No random effects structure specified.")
-  if (missing(data)) errormsg("No dataset given.")
-
-  arglist$analysis_type <- "lme"
-  attr(arglist$analysis_type, "family") <- gaussian()
-
-
-  if (!is.null(arglist$formula)) {
-    arglist$formula <- check_formula_list(eval(arglist$formula))
-  } else {
-    arglist$fixed <- check_formula_list(arglist$fixed)
-    arglist$random <- check_formula_list(arglist$random)
-  }
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
@@ -1119,57 +1025,18 @@ glme_imp <- function(fixed, data, random, family,
                      warn = TRUE, mess = TRUE,
                      keep_scaled_mcmc = FALSE, ...){
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  thiscall <- as.list(match.call())[-1L]
+  if (missing(family))
+    errormsg("The argument %s needs to be specified.", dQuote(family))
 
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+  arglist <- prep_arglist(analysis_type = 'glme',
+                          family = family,
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
+  arglist <- check_fixed_random(arglist)
 
-  if (!missing(fixed) & missing(random)) {
-    can_split <- try(split_formula_list(check_formula_list(fixed)))
+  do.call(model_imp, arglist)
 
-    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
-      arglist$formula <- check_formula_list(arglist$fixed)
-      arglist$fixed <- NULL
-    }
-  }
-
-  if (missing(fixed) & is.null(arglist$formula))
-    errormsg("No fixed effects structure specified.")
-  if (missing(random) & is.null(arglist$formula))
-    errormsg("No random effects structure specified.")
-  if (missing(data)) errormsg("No dataset given.")
-
-  arglist$analysis_type <- "glme"
-
-  if (!is.null(arglist$formula)) {
-    arglist$formula <- check_formula_list(arglist$formula)
-  } else {
-    arglist$fixed <- check_formula_list(arglist$fixed)
-    arglist$random <- check_formula_list(arglist$random)
-  }
-
-  if (is.character(family)) {
-    family <- get(family, mode = "function", envir = parent.frame())
-    thefamily <- family()
-  } else if (is.function(family)) {
-    thefamily <- family()
-  } else if (inherits(family, "family")) {
-    thefamily <- family
-  }
-
-  attr(arglist$analysis_type, "family") <- thefamily
-
-
-  if (!attr(arglist$analysis_type, 'family')$link %in%
-      c("identity", "log", "logit", "probit", "log", "cloglog", "inverse"))
-    errormsg("%s is not an allowed link function.", dQuote(arglist$family$link))
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-
-  return(res)
 }
 
 
@@ -1197,33 +1064,13 @@ betamm_imp <- function(fixed, random, data,
                        warn = TRUE, mess = TRUE,
                        keep_scaled_mcmc = FALSE, ...){
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  thiscall <- as.list(match.call())[-1L]
+  arglist <- prep_arglist(analysis_type = 'glmm_beta',
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+  arglist <- check_fixed_random(arglist)
 
-
-  if (!missing(fixed) & missing(random)) {
-    can_split <- try(split_formula_list(check_formula_list(fixed)))
-
-    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
-      arglist$formula <- check_formula_list(arglist$fixed)
-      arglist$fixed <- NULL
-    }
-  }
-
-  if (missing(fixed) & is.null(arglist$formula))
-    errormsg("No fixed effects structure specified.")
-  if (missing(random) & is.null(arglist$formula))
-    errormsg("No random effects structure specified.")
-  if (missing(data)) errormsg("No dataset given.")
-
-  arglist$analysis_type <- "glmm_beta"
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
@@ -1246,33 +1093,13 @@ lognormmm_imp <- function(fixed, random, data,
                           warn = TRUE, mess = TRUE,
                           keep_scaled_mcmc = FALSE, ...){
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  thiscall <- as.list(match.call())[-1L]
+  arglist <- prep_arglist(analysis_type = 'glmm_lognorm',
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+  arglist <- check_fixed_random(arglist)
 
-
-  if (!missing(fixed) & missing(random)) {
-    can_split <- try(split_formula_list(check_formula_list(fixed)))
-
-    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
-      arglist$formula <- check_formula_list(arglist$fixed)
-      arglist$fixed <- NULL
-    }
-  }
-
-  if (missing(fixed) & is.null(arglist$formula))
-    errormsg("No fixed effects structure specified.")
-  if (missing(random) & is.null(arglist$formula))
-    errormsg("No random effects structure specified.")
-  if (missing(data)) errormsg("No dataset given.")
-
-  arglist$analysis_type <- "glmm_lognorm"
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
@@ -1291,42 +1118,13 @@ clmm_imp <- function(fixed, data, random,
                      warn = TRUE, mess = TRUE,
                      keep_scaled_mcmc = FALSE, ...){
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  thiscall <- as.list(match.call())[-1L]
+  arglist <- prep_arglist(analysis_type = 'clmm',
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+  arglist <- check_fixed_random(arglist)
 
-
-  if (!missing(fixed) & missing(random)) {
-    can_split <- try(split_formula_list(check_formula_list(fixed)))
-
-    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
-      arglist$formula <- check_formula_list(arglist$fixed)
-      arglist$fixed <- NULL
-    }
-  }
-
-  if (missing(fixed) & is.null(arglist$formula))
-    errormsg("No fixed effects structure specified.")
-  if (missing(random) & is.null(arglist$formula))
-    errormsg("No random effects structure specified.")
-  if (missing(data)) errormsg("No dataset given.")
-
-arglist$analysis_type <- "clmm"
-
-  if (!is.null(arglist$formula)) {
-    arglist$formula <- check_formula_list(arglist$formula)
-  } else {
-    arglist$fixed <- check_formula_list(arglist$fixed)
-    arglist$random <- check_formula_list(arglist$random)
-  }
-
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
@@ -1347,42 +1145,13 @@ mlogitmm_imp <- function(fixed, data, random,
                          warn = TRUE, mess = TRUE,
                          keep_scaled_mcmc = FALSE, ...){
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  thiscall <- as.list(match.call())[-1L]
+  arglist <- prep_arglist(analysis_type = 'mlogitmm',
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+  arglist <- check_fixed_random(arglist)
 
-
-  if (!missing(fixed) & missing(random)) {
-    can_split <- try(split_formula_list(check_formula_list(fixed)))
-
-    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
-      arglist$formula <- check_formula_list(arglist$fixed)
-      arglist$fixed <- NULL
-    }
-  }
-
-  if (missing(fixed) & is.null(arglist$formula))
-    errormsg("No fixed effects structure specified.")
-  if (missing(random) & is.null(arglist$formula))
-    errormsg("No random effects structure specified.")
-  if (missing(data)) errormsg("No dataset given.")
-
-  arglist$analysis_type <- "mlogitmm"
-
-  if (!is.null(arglist$formula)) {
-    arglist$formula <- check_formula_list(arglist$formula)
-  } else {
-    arglist$fixed <- check_formula_list(arglist$fixed)
-    arglist$random <- check_formula_list(arglist$random)
-  }
-
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
@@ -1403,24 +1172,15 @@ survreg_imp <- function(formula, data,
                         warn = TRUE, mess = TRUE,
                         keep_scaled_mcmc = FALSE, ...){
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  thiscall <- as.list(match.call())[-1L]
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
-
 
   if (missing(formula)) errormsg("No model formula specified.")
-  if (missing(data)) errormsg("No dataset given.")
 
+  arglist <- prep_arglist(analysis_type = 'survreg',
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-  arglist$formula <- check_formula_list(arglist$formula)
-  arglist$analysis_type <- "survreg"
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  do.call(model_imp, arglist)
 }
-
 
 
 
@@ -1441,20 +1201,13 @@ coxph_imp <- function(formula, data, df_basehaz = 6,
 
 
   if (missing(formula)) errormsg("No model formula specified.")
-  if (missing(data)) errormsg("No dataset given.")
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  thiscall <- as.list(match.call())[-1L]
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+  arglist <- prep_arglist(analysis_type = 'coxph',
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
 
-  arglist$formula <- check_formula_list(arglist$formula)
-  arglist$analysis_type <- "coxph"
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
@@ -1476,10 +1229,6 @@ JM_imp <- function(formula, data, df_basehaz = 6,
                    warn = TRUE, mess = TRUE,
                    keep_scaled_mcmc = FALSE, ...){
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-
-  if (missing(formula)) errormsg("No model formulas specified.")
-  if (missing(data)) errormsg("No dataset given.")
 
   if (missing(timevar))
     errormsg("The name of the %s variable of the longitudinal outcome(s) must
@@ -1492,16 +1241,12 @@ JM_imp <- function(formula, data, df_basehaz = 6,
              dQuote('timevar'))
 
 
-  thiscall <- as.list(match.call())[-1L]
+  if (missing(formula)) errormsg("No model formula specified.")
 
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+  arglist <- prep_arglist(analysis_type = 'JM',
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-  arglist$formula <- check_formula_list(arglist$formula)
 
-  arglist$analysis_type <- "JM"
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  do.call(model_imp, arglist)
 }
