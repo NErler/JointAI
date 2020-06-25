@@ -25,17 +25,24 @@ knitr::opts_chunk$set(
 [![](https://codecov.io/gh/NErler/JointAI/branch/master/graph/badge.svg)](https://codecov.io/gh/NErler/JointAI)
 
 
-The package **JointAI** provides joint analysis and imputation of 
-(generalized) linear regression models, (generalized) linear mixed models 
-and parametric (Weibull) survival models with incomplete (covariate) data in 
-the Bayesian framework.
+The package **JointAI** provides functionality to perform joint analysis and
+imputation of a range of model types in the Bayesian framework.
+Implemented are (generalized) linear regression models and extensions thereof,
+models for (un-/ordered) categorical data, as well as multi-level (mixed)
+versions of these model types.
 
-The package performs some preprocessing of the data and creates a 
-[JAGS](http://mcmc-jags.sourceforge.net) model, which will then automatically 
+Moreover, survival models and joint models for longitudinal and survival data
+are available. It is also possible to fit multiple models of mixed types
+simultaneously.
+Missing values in (if present) will be imputed automatically.
+
+**JointAI** performs some preprocessing of the data and creates a
+[JAGS](http://mcmc-jags.sourceforge.net) model, which will then automatically
 be passed to [JAGS](http://mcmc-jags.sourceforge.net)
 with the help of the R package [**rjags**](https://CRAN.R-project.org/package=rjags).
 
-**JointAI** also provides summary and plotting functions for the output.
+Besides the main modelling functions, **JointAI** also provides a number of
+functions to summarize and visualize results and incomplete data.
 
     
 ## Installation
@@ -84,7 +91,7 @@ functions like `lm()` and `glm()` from base R,
 Functions `summary()`, `coef()`, `traceplot()` and `densplot()` provide a
 summary of the posterior distribution and its visualization.
 
-`GR_crit()` and `MC_error()` provide the Gelman-Rubin diagnostic for
+`GR_crit()` and `MC_error()` implement the Gelman-Rubin diagnostic for
 convergence and the Monte Carlo error of the MCMC sample, respectively.
 
 **JointAI** also provides functions for exploration of the distribution of the
@@ -93,11 +100,11 @@ data and missing values, export of imputed values and prediction.
 
 ## Minimal Example
 ### Visualize the observed data and missing data pattern
-```{r, fig.width = 8, fig.height = 4, message = FALSE}
+```{r, fig.width = 8, fig.height = 4, message = FALSE, collapse=TRUE}
 library(JointAI)
 
 op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
-plot_all(NHANES[c(1, 5:6, 8:12)], fill = '#e30f41', border = '#34111b', ncol = 4, nclass = 30)
+plot_all(NHANES[c(1, 5:6, 8:12)], fill = '#e30f41', border = '#34111b', ncol = 4, breaks = 30)
 par(op)
 ```
 
