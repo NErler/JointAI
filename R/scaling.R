@@ -90,7 +90,7 @@ rescale <- function(MCMC, coefs, scale_pars, info_list) {
 
       if (varnam == "(Intercept)") {
         outcome <- coefs$outcome[which(coefs$coef == k)]
-        k_nr <- gsub("[[:alpha:]]+\\[|\\]", "", k)
+        k_nr <- gsub("[[:alpha:]]+\\[*|\\]*", "", k)
 
         parelmts <- info_list[[outcome]]$parelmts
 
@@ -104,8 +104,10 @@ rescale <- function(MCMC, coefs, scale_pars, info_list) {
           unlist(unname(parelmts))
         }
 
-        parnames <- sapply(unlist(parelmts), gsub, pattern = k_nr, x = k)
-        parnames <- parnames[which(!parnames %in% k)]
+        parnames <- if (length(parelmts) > 1) {
+          parnames <- sapply(unlist(parelmts), gsub, pattern = k_nr, x = k)
+          parnames[which(!parnames %in% k)]
+        }
 
         # covnames <- names(unlist(unname(info_list[[outcome]]$lp)))
         # covnames <- covnames[which(!covnames %in% "(Intercept)")]
