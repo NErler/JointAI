@@ -110,7 +110,7 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
 
   # identify covariates in the survival models
   covars <- unique(
-    unlist(lapply(names(survout), function(k) {
+    unlist(lapply(seq_along(survout), function(k) {
       all_vars(remove_LHS(fixed[[k]]))
     })
     ))
