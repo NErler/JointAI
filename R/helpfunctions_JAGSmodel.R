@@ -185,7 +185,7 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
           # If there are no coefficients (= no fixed effect, only random
           # effect), the mean of the random effect is 0, otherwise it is a
           # linear predictor
-          if (!is.na(rds[[x]]$parelmts)) {
+          if (!all(is.na(rds[[x]]$parelmts))) {
             paste_coef(parname = info$parname,
                        parelmts = rds[[x]]$parelmts)
           } else {
@@ -196,7 +196,7 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
         # interactions with random slope (if rdsi[[x]] == NULL there are no
         # variables that have an interaction with a random slope variable)
         if (!is.null(rdsi[[x]])) {
-          if (!is.na(rdsi[[x]]$parelmts)) {
+          if (!all(is.na(rdsi[[x]]$parelmts))) {
             # write the product from the scaled data part and the corresponding
             # regression coefficients
             paste(
