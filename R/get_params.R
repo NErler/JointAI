@@ -55,11 +55,10 @@ get_params <- function(Mlist, info_list,
     }
 
     # tau
-    if (any(families_main %in% c("gaussian", "Gamma", "lognorm", "beta"))) {
+    if (any(families_main %in% c("gaussian", "Gamma", "lognorm", "beta")) &
+        !isFALSE(tau_main)) {
       tau_main <- TRUE
     }
-
-
 
     # sigma_main
     sigvars <- if (isTRUE(sigma_main)) {
