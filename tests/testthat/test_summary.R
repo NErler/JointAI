@@ -3,7 +3,8 @@ library("JointAI")
 
 mymod <- lme_imp(y ~ C1 + c1 + B2 + c2 + O2 + time + (time  | id), data = longDF,
                  n.adapt = 10, n.iter = 10, monitor_parms = c(imp_pars = TRUE),
-                 parallel = TRUE, keep_scaled_mcmc = TRUE, seed = 2020)
+                 parallel = TRUE, n.cores = 2, n.chains = 2,
+                 keep_scaled_mcmc = TRUE, seed = 2020)
 
 
 test_that("main summary functions", {
@@ -50,7 +51,7 @@ test_that('longmodel', {
                        data = longDF,
                        n.adapt = 10, n.iter = 10,
                        monitor_parms = c(imp_pars = TRUE),
-                       parallel = TRUE,
+                       parallel = TRUE, n.cores = 2, n.chains = 2,
                        models = c(p1 = 'glmm_poisson_log'),
                        refcats = c(O2 = 3))
   expect_s3_class(mmod, 'JointAI')
