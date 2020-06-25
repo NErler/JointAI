@@ -6,6 +6,76 @@ clean_names <- function(string) {
 }
 
 
+# other functions --------------------------------------------------------------
+prep_arglist <- function(analysis_type, family = NULL, formals = formals(),
+                         call = match.call(), sframe = sys.frame(sys.nframe())) {
+  arglist <- mget(names(formals), sframe)
+  thiscall <- as.list(call)[-1L]
+  arglist <- c(arglist,
+               thiscall[!names(thiscall) %in% names(arglist)])
+  arglist$thecall <- call
+
+  if (!inherits(arglist$data, 'data.frame'))
+    errormsg("Please provide a %s to the argument %s.",
+             sQuote('data.frame'), dQuote('data'))
+
+  # analysis type
+  arglist$analysis_type <- analysis_type
+
+  # family
+  if (!is.null(family)) {
+    if (is.character(family)) {
+      family <- get(family, mode = "function", envir = parent.frame())
+      thefamily <- family()
+    } else if (is.function(family)) {
+      thefamily <- family()
+    } else if (inherits(family, "family")) {
+      thefamily <- family
+    }
+
+    if (!thefamily$link %in%
+        c("identity", "log", "logit", "probit", "log", "cloglog", "inverse"))
+      errormsg("%s is not an allowed link function.", dQuote(thefamily$link))
+
+    attr(arglist$analysis_type, "family") <- thefamily
+  }
+
+  # convert formulas (formula, fixed, random) to lists
+  for (arg in c('formula', 'fixed', 'random')) {
+    if (is.symbol(arglist[[arg]])) {
+      arglist[[arg]] <- NULL
+    } else {
+      arglist[[arg]] <- check_formula_list(arglist[[arg]])
+    }
+  }
+
+  arglist
+}
+
+
+
+check_fixed_random <- function(arglist) {
+
+  if (!is.null(arglist$fixed) & is.null(arglist$random)) {
+    can_split <- try(split_formula_list(check_formula_list(arglist$fixed)))
+
+    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
+      arglist$formula <- check_formula_list(arglist$fixed)
+      arglist$fixed <- NULL
+    }
+  }
+
+  if (is.null(arglist$fixed) & is.null(arglist$formula))
+    errormsg("No fixed effects structure specified.")
+
+  if (is.null(arglist$random) & is.null(arglist$formula))
+    errormsg("No random effects structure specified.")
+
+  arglist
+}
+
+
+
 # used in model_imp (2020-06-09)
 check_vars_in_data <- function(datanames, fixed = NULL, random = NULL,
                                auxvars = NULL, timevar = NULL) {
