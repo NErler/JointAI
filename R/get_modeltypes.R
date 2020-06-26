@@ -128,7 +128,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
                       c(types['outcome'],
                         if (any(!varinfo$out) & length(NA_lvls) > 0)
                         lapply(1:max(NA_lvls), function(k) {
-                          set <- if (k == max_lvl) {
+                          set <- if (k == max(NA_lvls)) {
                             c('incomplete_lvl')
                           } else {
                             c('incomplete_lvl', 'complete_lvl')
