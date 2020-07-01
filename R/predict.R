@@ -246,7 +246,7 @@ predict.JointAI <- function(object, outcome = 1, newdata,
                           clmm = predict_clm,
                           survreg = predict_survreg,
                           coxph = predict_coxph,
-                          JM = predict_coxph
+                          JM = predict_JM
     )
     if (!is.null(predict_fun)) {
       predict_fun(formula = object$fixed[[varname]],
@@ -682,6 +682,13 @@ predict_clm <- function(formula, newdata, type = c("lp", "prob",
 
   on.exit(options(op))
   return(resDF)
+}
+
+
+
+predict_JM <- function(...) {
+  errormsg("Prediction is not yet implemented for models for joint models for
+           longitudinal and survival data.")
 }
 
 
