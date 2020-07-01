@@ -344,38 +344,16 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
 
       # generate the random slope part to enter the linear predictor of
       # the outcome
-      rds <- if (any(!sapply(info$hc_list$hcvars[[k]]$rd_slope_coefs,
-                             is.null))) {
-        # if there are any random slope variables for this random effect level,
-        # do:
-        sapply(seq_along(info$hc_list$hcvars[[k]]$rd_slope_coefs),
-               function(q) {
+      rds <- get_rds(info$hc_list$hcvars[[k]]$rd_slope_coefs,
+                     lvl = k,
+                     varname = info$varname,
+                     index = index,
+                     out_index = if (!isgk) info$index[[lvl]] else index,
+                     has_rdintercept = attr(info$hc_list$hcvars[[k]],
+                                            'rd_intercept'),
+                     scale_pars = info$scale_pars,
+                     isgk = isgk)
 
-          # get the variable name
-          var <- names(info$hc_list$hcvars[[k]]$rd_slope_coefs)[q]
-
-          # get the coefficient numbers
-          rdsc <- info$hc_list$hcvars[[k]]$rd_slope_coefs[[var]]
-
-          # write the multiplication of the random slope with the corresponding
-          # longitudinal variable ("b[i, 2] * M[i, 4]")
-          paste(
-            paste_data(matnam = paste0("b_", info$varname, "_", k),
-                       index = index,
-                       col = q + attr(info$hc_list$hcvars[[k]],
-                                      'rd_intercept')),
-
-            paste_scaling(
-              paste_data(
-                matnam = rdsc$matrix,
-                index = if (!isgk) info$index[[lvl]] else index,
-                col = rdsc$cols, isgk = isgk),
-              rows = rdsc$cols,
-              scale_pars = info$scale_pars[[unique(rdsc$matrix)]],
-              scalemat = paste0("sp", unique(rdsc$matrix))),
-            sep = ' * ')
-        })
-      }
 
       # write the syntax for other longitudinal variables
       other <- if (!is.null(info$hc_list$othervars[[k]])) {
@@ -412,8 +390,15 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
         }
       }
 
+      # combine random intercept and slope
+      rdis <- if (any(!is.null(rdi), !is.null(rds))) {
+        paste0(unlist(Filter(Negate(is.null),
+                             list(rdi = rdi, rds = rds))),
+               collapse = ' + ')
+      }
+
       Filter(Negate(is.null),
-                           list(rdi = rdi, rds = rds, other = other)
+             list(rdis = rdis, other = other)
       )
     }, simplify = FALSE)
 
@@ -424,6 +409,50 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
     "0"
   }
 }
+
+
+
+
+get_rds <- function(rd_slope_coefs, lvl, varname, index, out_index,
+                    has_rdintercept = TRUE,
+                    scale_pars, isgk = FALSE) {
+  if (any(!sapply(rd_slope_coefs, is.null))) {
+    # if there are any random slope variables for this random effect level,
+    # do:
+    sapply(seq_along(rd_slope_coefs), function(q) {
+
+      rdsc <- rd_slope_coefs[[q]]
+
+      # write the multiplication of the random slope with the corresponding
+      # longitudinal variable ("b[i, 2] * M[i, 4]")
+      paste(
+        paste_data(matnam = paste0("b_", varname, "_", lvl),
+                   index = index,
+                   col = q + has_rdintercept),
+
+        paste_scaling(
+          paste_data(
+            matnam = rdsc$matrix,
+            index = out_index,
+            col = rdsc$cols, isgk = isgk),
+          rows = rdsc$cols,
+          scale_pars = scale_pars[[unique(rdsc$matrix)]],
+          scalemat = paste0("sp", unique(rdsc$matrix))),
+        sep = ' * ')
+    })
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 # used in JAGSmodels that use random effects (2020-06-10)
