@@ -598,25 +598,23 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   inits <- get_initial_values(inits = inits, seed = seed, n.chains = n.chains,
                               warn = warn)
 
-
-
   # parameters to monitor ------------------------------------------------------
-  if (is.null(monitor_params)) {
-    monitor_params <- c("analysis_main" = TRUE)
-  } else {
-    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    # needs to be checked
-    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    if (any(grepl('beta[', unlist(monitor_params), fixed = TRUE))) {
-      monitor_params <- c(sapply(monitor_params, function(x) {
-        if (any(grepl('beta[', x, fixed = TRUE)))
-          x[-grep('beta[', x, fixed = TRUE)]
-        else x}, simplify = FALSE),
-        analysis_main = TRUE)
-      if (mess)
-        msg('Note: Main model parameter were added to the
-            list of parameters to follow.')
-    }}
+  if (any(grepl('^beta\\[', unlist(monitor_params))) &
+      any(!is.na(unlist(Mlist$scale_pars)))) {
+
+    monitor_params <- c(sapply(monitor_params, function(x) {
+      if (any(grepl('^beta[', x, fixed = TRUE)))
+        x[-grep('^beta[', x, fixed = TRUE)]
+      else x}, simplify = FALSE),
+      betas = TRUE)
+
+    if (mess)
+      msg('Note: %s was set in %s because re-scaling of the effects of
+             the regression coefficients in the main model(s) requires all
+             of them to be monitored.',
+          dQuote("betas = TRUE"), dQuote("monitor_params"))
+  }
+
   var.names <- do.call(get_params, c(list(Mlist = Mlist, info_list = info_list,
                                           mess = mess),
                                      monitor_params))
@@ -677,7 +675,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   if (n.iter > 0 & !is.null(mcmc)) {
     MCMC <- mcmc
 
-    if (!all(sapply(Mlist$scale_pars, is.null))) {
+    if (any(!sapply(Mlist$scale_pars, is.null),
+            !is.na(unlist(Mlist$scale_pars)))) {
       coefs <- try(get_coef_names(info_list))
 
       for (k in seq_len(length(MCMC))) {
