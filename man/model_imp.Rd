@@ -22,146 +22,147 @@
 \title{Joint Analysis and Imputation of incomplete data}
 \usage{
 lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
-  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
-  modelname = NULL, modeldir = NULL, keep_model = FALSE,
-  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
-  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
-
-glm_imp(formula, family, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
-  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
-  modelname = NULL, modeldir = NULL, keep_model = FALSE,
-  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
-  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
-
-clm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
-  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
-  modelname = NULL, modeldir = NULL, keep_model = FALSE,
-  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
-  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
-
-lognorm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
-  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
-  modelname = NULL, modeldir = NULL, keep_model = FALSE,
-  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
-  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
-
-betareg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
-  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
-  modelname = NULL, modeldir = NULL, keep_model = FALSE,
-  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
-  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
-
-mlogit_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
-  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
-  modelname = NULL, modeldir = NULL, keep_model = FALSE,
-  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
-  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
-
-lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
-  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
-  modelname = NULL, modeldir = NULL, keep_model = FALSE,
-  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
-  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
-
-lmer_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
-  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
-  modelname = NULL, modeldir = NULL, keep_model = FALSE,
-  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
-  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
-
-glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
   refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
   shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
   parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
+
+glm_imp(formula, family, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
+
+clm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
+
+lognorm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
+
+betareg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
+
+mlogit_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
+
+lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
+
+lmer_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
+
+glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
+  trunc = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, parallel = FALSE, n.cores = NULL, scale_vars = NULL,
   hyperpars = NULL, modelname = NULL, modeldir = NULL,
   keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
   keep_scaled_mcmc = FALSE, ...)
 
 glmer_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
+  trunc = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, parallel = FALSE, n.cores = NULL, scale_vars = NULL,
   hyperpars = NULL, modelname = NULL, modeldir = NULL,
   keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
   keep_scaled_mcmc = FALSE, ...)
 
 betamm_imp(fixed, random, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
-  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
-  modelname = NULL, modeldir = NULL, keep_model = FALSE,
-  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
-  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
-
-lognormmm_imp(fixed, random, data, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
   refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
   shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
   parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
+
+lognormmm_imp(fixed, random, data, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
+  trunc = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, parallel = FALSE, n.cores = NULL, scale_vars = NULL,
   hyperpars = NULL, modelname = NULL, modeldir = NULL,
   keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
   keep_scaled_mcmc = FALSE, ...)
 
 clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
-  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
-  modelname = NULL, modeldir = NULL, keep_model = FALSE,
-  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
-  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
-
-mlogitmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
   refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
   shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
   parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
+
+mlogitmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
+  trunc = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, parallel = FALSE, n.cores = NULL, scale_vars = NULL,
   hyperpars = NULL, modelname = NULL, modeldir = NULL,
   keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
   keep_scaled_mcmc = FALSE, ...)
 
 survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = NULL, auxvars = NULL, refcats = NULL,
-  models = NULL, no_model = NULL, trunc = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, parallel = FALSE,
-  n.cores = NULL, scale_vars = NULL, hyperpars = NULL,
-  modelname = NULL, modeldir = NULL, keep_model = FALSE,
-  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
-  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
-
-coxph_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
   refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
   shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
   parallel = FALSE, n.cores = NULL, scale_vars = NULL,
@@ -170,13 +171,24 @@ coxph_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
   progress.bar = "text", warn = TRUE, mess = TRUE,
   keep_scaled_mcmc = FALSE, ...)
 
+coxph_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
+  trunc = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  progress.bar = "text", warn = TRUE, mess = TRUE,
+  keep_scaled_mcmc = FALSE, ...)
+
 JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = NULL, auxvars = NULL,
-  timevar = NULL, refcats = NULL, models = NULL, no_model = timevar,
-  assoc_type = NULL, trunc = NULL, shrinkage = FALSE, ppc = TRUE,
-  seed = NULL, inits = NULL, parallel = FALSE, n.cores = NULL,
-  scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL, timevar = NULL, refcats = NULL, models = NULL,
+  no_model = timevar, assoc_type = NULL, trunc = NULL,
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
+  hyperpars = NULL, modelname = NULL, modeldir = NULL,
+  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
   keep_scaled_mcmc = FALSE, ...)
 }
@@ -572,7 +584,7 @@ will be used.
 \code{basehaz} in proportional hazards models)\cr
 \code{analysis_random} \tab \code{ranef_main}, \code{D_main},
 \code{invD_main}, \code{RinvD_main}\cr
-\code{imp_pars} \tab \code{alphas}, \code{tau_other}, \code{gamma_other},
+\code{other_models} \tab \code{alphas}, \code{tau_other}, \code{gamma_other},
 \code{delta_other}\cr
 \code{imps} \tab imputed values\cr
 \code{betas} \tab regression coefficients of the main analysis model\cr
