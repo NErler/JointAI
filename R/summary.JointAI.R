@@ -214,7 +214,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
   if (sum(!sapply(x$res, is.null)) > 1)
     cat("Bayesian joint model fitted with JointAI", "\n")
   else
-    cat(print_type(x$res[[1]]$modeltype, x$res[[1]]$family),
+    cat('Bayesian', print_type(x$res[[1]]$modeltype, x$res[[1]]$family),
         'fitted with JointAI\n')
 
   cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
@@ -226,7 +226,8 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
       if (sum(!sapply(x$res, is.null)) > 1)
         cat(paste0(
           '# ', paste0(c(rep('-', 69)), collapse = ''), ' #\n',
-          '  ', print_type(x$res[[k]]$modeltype, x$res[[k]]$family), ' for ',
+          '  ', 'Bayesian ',
+          print_type(x$res[[k]]$modeltype, x$res[[k]]$family), ' for ',
           dQuote(names(x$res)[k]), '\n',
           '# ', paste0(c(rep('-', 35)), collapse = ' '), ' #\n\n'
         ))
@@ -447,7 +448,7 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
 
     for (k in seq_along(coefs)) {
       varname <- names(coefs)[k]
-      cat("\n",
+      cat("\n", "Bayesian",
           print_type(x$info_list[[varname]]$modeltype,
                      x$info_list[[varname]]$family), "for",
           dQuote(varname), '\n')
