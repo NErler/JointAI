@@ -702,7 +702,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                         thin = thin,
                         inits = inits,
                         parallel = parallel,
-                        n.cores = if (parallel) n.cores)
+                        n.cores = if (parallel) n.cores,
+                        seed = seed)
 
 
   object <- structure(
