@@ -1,5 +1,5 @@
 Package: JointAI
-Version: 0.7.1
+Version: 0.7.1.9999
 Title: Joint Analysis and Imputation of Incomplete Data
 Authors@R: c(person("Nicole S.", "Erler", email = "n.erler@erasmusmc.nl",
                   role = c("aut", "cre"),
