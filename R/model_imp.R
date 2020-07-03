@@ -730,7 +730,10 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
          model = if (n.adapt > 0) adapt,
          sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
          MCMC = if (n.iter > 0 & !is.null(mcmc)) coda::as.mcmc.list(MCMC),
-         time = t1 - t0,
+         run_settings = list(start_time = t0,
+                             duration = t1 - t0,
+                             JointAI_version = packageVersion("JointAI"),
+                             sessionInfo = sessionInfo()),
          call = modimpcall$thecall
     ), class = "JointAI")
 
