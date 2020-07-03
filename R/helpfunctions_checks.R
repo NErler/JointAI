@@ -195,3 +195,28 @@ convert_variables <- function(data, allvars, mess = TRUE, data_orig = NULL) {
 }
 
 
+
+# used in model_imp() (2020-07-02)
+check_data <- function(data, fixed, random, auxvars, timevar, mess) {
+  # run all data related checks
+
+  check_vars_in_data(names(data), fixed = fixed, random = random,
+                     auxvars = auxvars, timevar = timevar)
+
+  # check classes of covariates
+  check_classes(data, fixed = fixed, random = random, auxvars = auxvars)
+
+  # drop empty levels
+  data <- drop_levels(data = data,
+                      allvars = all_vars(c(fixed, random, auxvars)),
+                      mess = mess)
+
+
+  # convert continuous variable with 2 different values and logical variables
+  # to factors
+  data <- convert_variables(data = data,
+                            allvars = all_vars(c(fixed, random, auxvars)),
+                            mess = mess)
+
+  data
+}

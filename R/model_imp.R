@@ -546,14 +546,6 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
     random <- split_formula_list(formula)$random
   }
 
-
-  # Message if no MCMC sample will be produced.
-  if (n.iter == 0) {
-    if (mess)
-      msg("Note: No MCMC sample will be created when n.iter is set to 0.")
-  }
-
-
   # check if the argument meth is provided (no longer used)
   args <- as.list(match.call())
   if (!is.null(args$meth))
@@ -562,24 +554,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
 
   # data pre-processing --------------------------------------------------------
-  # check all variables are in the data
-  check_vars_in_data(names(data), fixed = fixed, random = random,
-                     auxvars = auxvars, timevar = timevar)
-
-  # check classes of covariates
-  check_classes(data, fixed = fixed, random = random, auxvars = auxvars)
-
-  # drop empty levels
-  data <- drop_levels(data = data,
-                      allvars = all_vars(c(fixed, random, auxvars)),
-                      mess = mess)
-
-
-  # convert continuous variable with 2 different values and logical variables
-  # to factors
-  data <- convert_variables(data = data,
-                            allvars = all_vars(c(fixed, random, auxvars)),
-                            mess = mess)
+  data <- check_data(data, fixed, random, auxvars, timevar, mess)
 
 
   # * divide matrices ----------------------------------------------------------
@@ -608,66 +583,21 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
 
   # write model ----------------------------------------------------------------
-  # generate default name for model file if not specified
-  if (is.null(modeldir)) modeldir <- tempdir()
-  if (is.null(modelname)) {
-    modelname <- paste0("JointAI_JAGSmodel_",
-                        format(Sys.time(), "%Y-%m-%d_%H-%M"),
-                        "_", sample.int(1e6, 1), ".R")
-  } else {
-    keep_model <- TRUE
-  }
-  modelfile <- file.path(modeldir, modelname)
+  modelfile <- make_filename(modeldir = modeldir, modelname = modelname,
+                             keep_model = keep_model, overwrite = overwrite,
+                             mess = mess)
 
 
-  if (file.exists(modelfile) & is.null(overwrite)) {
-    question_asked <- TRUE
-    # This warning can not be switched off by warn = FALSE, because an input
-    # is required.
-    warnmsg("The file %s already exists in %s.",
-            dQuote(modelname), dQuote(modeldir))
-    reply <- menu(c('yes', 'no'),
-                  title = "\nDo you want me to overwrite this file?")
-    if (reply == 1) {
-      if (mess) msg('The modelfile was overwritten.')
-      overwrite <- TRUE
-    } else {
-      overwrite <- FALSE
-      if (mess) msg('The old model will be used.')
-    }
-    if (mess)
-      msg("To skip this question in the future, set 'overwrite = TRUE' or
-        'overwrite = FALSE'.")
-  }
-
-  if (!file.exists(modelfile) || (file.exists(modelfile) & overwrite == TRUE)) {
+  if (!file.exists(modelfile) || (file.exists(modelfile) &
+                                  attr(modelfile, "overwrite") == TRUE)) {
     write_model(info_list = info_list, Mlist = Mlist, modelfile = modelfile)
   }
 
 
   # initial values -------------------------------------------------------------
-  # * check if initial values are supplied or should be generated
-  if (!(is.null(inits) | inherits(inits, c("function", "list")))) {
-    if (warn)
-      warnmsg("The object supplied to 'inits' could not be recognized.
-              Initial values are set by JAGS.")
-    inits <- NULL
-  }
+  inits <- get_initial_values(inits = inits, seed = seed, n.chains = n.chains,
+                              warn = warn)
 
-  if (!is.null(inits)) {
-    if (inherits(inits, 'function')) {
-      if (!is.null(seed)) set.seed(seed)
-      inits <- replicate(n.chains, inits(), simplify = FALSE)
-    }
-    if (inherits(inits, "list")) {
-      if (!any(c('.RNG.name', '.RNG.seed') %in% unlist(lapply(inits, names))))
-        inits <- mapply(function(inits, rng) c(inits, rng), inits = inits,
-                        rng = get_RNG(seed, n.chains),
-                        SIMPLIFY = FALSE)
-    }
-  } else {
-    inits <- get_RNG(seed, n.chains)
-  }
 
 
   # parameters to monitor ------------------------------------------------------
@@ -692,6 +622,13 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                                      monitor_params))
 
   # run JAGS -----------------------------------------------------------------
+  # Message if no MCMC sample will be produced.
+  if (n.iter == 0) {
+    if (mess)
+      msg("Note: No MCMC sample will be created when n.iter is set to 0.")
+  }
+
+
   t0 <- Sys.time()
   if (parallel == TRUE) {
     if (!requireNamespace('foreach', quietly = TRUE))
@@ -810,7 +747,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   if (inherits(adapt, 'try-error'))
     class(object) <- "JointAI_errored"
 
-  if (!keep_model) {file.remove(modelfile)}
+  if (!attr(modelfile, "keep_model")) {file.remove(modelfile)}
 
   return(object)
 }
