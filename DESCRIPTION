@@ -1,5 +1,5 @@
 Package: JointAI
-Version: 0.6.9000
+Version: 0.7.1
 Title: Joint Analysis and Imputation of Incomplete Data
 Authors@R: c(person("Nicole S.", "Erler", email = "n.erler@erasmusmc.nl",
                   role = c("aut", "cre"),
@@ -21,7 +21,7 @@ URL: https://nerler.github.io/JointAI
 License: GPL (>= 2)
 BugReports: https://github.com/nerler/JointAI/issues
 LazyData: TRUE
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Roxygen: list(old_usage = TRUE)
 Depends: R (>= 3.5.0)
 Imports: rjags, MASS, mcmcse, coda, rlang, foreach, doParallel, survival, mathjaxr
