@@ -188,7 +188,9 @@ summary(mod13a)
 ```
 
 For mixed models, `summary()` also returns the posterior summary of the
-random effects covariance matrix `D` and the number of groups:
+random effects covariance matrix `D` and the number of groups. The argument
+`missinfo = TRUE` will add information on the missing values in the variables
+involved in the model:
 ```{r, message = FALSE}
 library(splines)
 mod13b <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 3),
@@ -196,7 +198,7 @@ mod13b <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 3),
                   data = subset(simLong, !is.na(bmi)),
                   n.iter = 500, no_model = 'age', seed = 2020)
 
-summary(mod13b)
+summary(mod13b, missinfo = TRUE)
 ```
 At the end of the summary output, a summary of the number and proportion
 of missing values per variable is printed

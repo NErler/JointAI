@@ -14,7 +14,7 @@
 #' @examples
 #' mod1 <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
-#' summary(mod1)
+#' summary(mod1, missinfo = TRUE)
 #' coef(mod1)
 #' confint(mod1)
 #'
@@ -30,7 +30,7 @@
 #' @export
 summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                             quantiles = c(0.025, 0.975), subset = NULL,
-                            exclude_chains = NULL, missinfo = TRUE,
+                            exclude_chains = NULL, missinfo = FALSE,
                             warn = TRUE, mess = TRUE, ...) {
 
   if (is.null(object$MCMC)) errormsg("There is no MCMC sample.")
