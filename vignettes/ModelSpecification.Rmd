@@ -486,7 +486,7 @@ mod7a <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + ns(age, df = 2),
 ```
 
 Since **JointAI** version 1.0.0 it is possible to model multi-level data
-with multiple levels of nesting. In that setting, the `formula` specification
+with multiple levels of grouping In that setting, the `formula` specification
 needs to be used:
 ```{r, eval = FALSE}
 <fixed effects> + (1 | id) + (1 | center)
