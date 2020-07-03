@@ -322,7 +322,7 @@
 #'                           \code{basehaz} in proportional hazards models)\cr
 #' \code{analysis_random} \tab \code{ranef_main}, \code{D_main},
 #'                             \code{invD_main}, \code{RinvD_main}\cr
-#' \code{imp_pars} \tab \code{alphas}, \code{tau_other}, \code{gamma_other},
+#' \code{other_models} \tab \code{alphas}, \code{tau_other}, \code{gamma_other},
 #'                      \code{delta_other}\cr
 #' \code{imps} \tab imputed values\cr
 #' \code{betas} \tab regression coefficients of the main analysis model\cr
@@ -670,6 +670,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
   if (n.iter > 0 & class(mcmc) != 'mcmc.list')
     warnmsg('There is no mcmc sample. Something went wrong.')
+
+
 
   # post processing ------------------------------------------------------------
   if (n.iter > 0 & !is.null(mcmc)) {
