@@ -77,7 +77,7 @@ test_that('JM', {
                      hepato ~ day + (1 | id),
                      chol ~ day + (1 | id),
                      stage ~ age + (1 | id)),
-                timevar = 'day', data = JointAI::pbc, n.iter = 5, n.adapt = 2)
+                timevar = 'day', data = JointAI::PBC, n.iter = 5, n.adapt = 2)
   expect_s3_class(mod, 'JointAI')
   expect_output(list_models(mod))
   expect_s3_class(parameters(mod), 'data.frame')
@@ -91,13 +91,13 @@ test_that('md_pattern', {
 
 
 test_that("fill_locf works", {
-  locfdat <- JointAI:::fill_locf(data = JointAI::pbc,
+  locfdat <- JointAI:::fill_locf(data = JointAI::PBC,
                                  fixed = list(Surv(futime, status) ~
                                                 age + sex + hepato + platelet),
                                  auxvars = NULL,
                                  random = ~ 1 | id, timevar = 'day',
                                  groups = JointAI:::get_groups('id',
-                                                               JointAI::pbc))
+                                                               JointAI::PBC))
 
   expect_s3_class(locfdat, 'data.frame')
   expect_equal(colSums(is.na(locfdat[, c('hepato', 'platelet')])),
