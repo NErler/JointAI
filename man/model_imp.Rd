@@ -352,8 +352,10 @@ effects and \code{g} the grouping variable}
 baseline hazard in proportional hazards models
 (\code{coxph_imp} and \code{JM_imp})}
 
-\item{timevar}{name of the "time" variable in mixed models.
-Only required in "JM" models. The variable specified in
+\item{timevar}{name of the variable indicating the time of the measurement of
+a time-varying covariate in a proportional hazards survival
+model (also in a joint model).
+The variable specified in
 "timevar" will automatically be added to "no_model".}
 
 \item{assoc_type}{named vector specifying the type of the association used
