@@ -106,11 +106,8 @@ rescale <- function(MCMC, coefs, scale_pars, info_list) {
 
         parnames <- if (length(parelmts) > 1) {
           parnames <- sapply(unlist(parelmts), gsub, pattern = k_nr, x = k)
-          parnames[which(!parnames %in% k)]
+          setdiff(parnames, k)
         }
-
-        # covnames <- names(unlist(unname(info_list[[outcome]]$lp)))
-        # covnames <- covnames[which(!covnames %in% "(Intercept)")]
 
         if (length(parnames) > 0) {
           scaled_covs <- sapply(parnames, function(j) {
