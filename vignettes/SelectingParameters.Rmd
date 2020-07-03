@@ -60,7 +60,7 @@ the following possible entries:
 tab <- rbind(
 c("`analysis_main`", "`betas` and `sigma_main`, `tau_main` (in beta regression) or `shape_main` (in parametric survival models), `D_main` (in multi-level models) and `basehaz` (in proportional hazards models)"),
 c("`analysis_random`", "`ranef_main`, `D_main`, `invD_main`, `RinvD_main`"),
-c('`imp_pars`', '`alphas`, `tau_other`, `gamma_other`, `delta_other`'),
+c('`other_models`', '`alphas`, `tau_other`, `gamma_other`, `delta_other`'),
 c('`imps`', 'imputed values'),
 c('`betas`', 'regression coefficients of the main analysis model(s)'),
 c('`tau_main`', 'precision of the residuals from the analysis model(s)'),
@@ -148,14 +148,14 @@ head(lm2$data_list$M_lvlone)
 
 
 The parameters of the models for the incomplete variables can be selected with
-`monitor_params = c(imp_pars = TRUE)`. This will set monitors for the
+`monitor_params = c(other_models = TRUE)`. This will set monitors for the
 regression coefficients (`alpha`) and other parameters, such as precision
 (`tau_*`) and intercepts & increments (`gamma_*` and `delta_*`) in cumulative
 logit models.
 
 ```{r lm3_1, message = FALSE, warning=FALSE}
 lm3 <- lm_imp(SBP ~ age + WC + alc + smoke + occup, data = NHANES, n.adapt = 0,
-              monitor_params = c(imp_pars = TRUE, analysis_main = FALSE)
+              monitor_params = c(other_models = TRUE, analysis_main = FALSE)
 )
 
 parameters(lm3)
@@ -289,7 +289,7 @@ were monitored:
 ```{r, fig.width = 7, fig.height = 6, warning = FALSE}
 # Run a model monitoring analysis parameters and imputation parameters
 lm5 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
-              progress.bar = 'none', monitor_params = c(imp_pars = TRUE))
+              progress.bar = 'none', monitor_params = c(other_models = TRUE))
 
 # model summary
 summary(lm5)
@@ -323,7 +323,7 @@ traceplot(lm4, ncol = 4)
 To display other parts of the MCMC sample, `subset` needs to be specified:
 ```{r GRcrit_lm5}
 # we use lm5 from above
-GR_crit(lm5, subset = c(analysis_main = FALSE, imp_pars = TRUE))
+GR_crit(lm5, subset = c(analysis_main = FALSE, other_models = TRUE))
 ```
 
 To select only some of the parameters, they can be specified directly by

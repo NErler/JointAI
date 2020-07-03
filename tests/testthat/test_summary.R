@@ -2,7 +2,7 @@ context("Summaries")
 library("JointAI")
 
 mymod <- lme_imp(y ~ C1 + c1 + B2 + c2 + O2 + time + (time  | id), data = longDF,
-                 n.adapt = 10, n.iter = 10, monitor_parms = c(imp_pars = TRUE),
+                 n.adapt = 10, n.iter = 10, monitor_parms = c(other_models = TRUE),
                  parallel = TRUE, n.cores = 2, n.chains = 2,
                  keep_scaled_mcmc = TRUE, seed = 2020)
 
@@ -39,7 +39,7 @@ test_that('print functions', {
 
 
 test_that('subset', {
-  expect_s3_class(summary(mymod, subset = c(imp_pars = TRUE,
+  expect_s3_class(summary(mymod, subset = c(other_models = TRUE,
                                             analysis_main = FALSE)),
                   'summary.JointAI')
   expect_output(print(summary(mymod)))
@@ -50,7 +50,7 @@ test_that('longmodel', {
   mmod <- mlogitmm_imp(x ~ C1 + p1 + B2 + O2 + c2 + y * time + (time | id),
                        data = longDF,
                        n.adapt = 10, n.iter = 10,
-                       monitor_parms = c(imp_pars = TRUE),
+                       monitor_parms = c(other_models = TRUE),
                        parallel = TRUE, n.cores = 2, n.chains = 2,
                        models = c(p1 = 'glmm_poisson_log'),
                        refcats = c(O2 = 3))

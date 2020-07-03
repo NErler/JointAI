@@ -322,11 +322,11 @@ or for a subset of nodes, the argument `subset` needs to be specified.
 
 #### Examples
 To display only the parameters of the imputation models, we
-set `subset = c(analysis_main = FALSE, imp_pars = TRUE)` (after re-estimating
+set `subset = c(analysis_main = FALSE, other_models = TRUE)` (after re-estimating
 the model with the monitor for these parameters switched on):
 ```{r, message = FALSE}
-mod13c <- update(mod13a, monitor_params = c(imp_pars = TRUE))
-summary(mod13c, subset = c(analysis_main = FALSE, imp_pars = TRUE))
+mod13c <- update(mod13a, monitor_params = c(other_models = TRUE))
+summary(mod13c, subset = c(analysis_main = FALSE, other_models = TRUE))
 ```
 
 To select only some of the parameters, they can be specified directly by
