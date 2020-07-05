@@ -160,13 +160,12 @@
 #' additional grouping levels.
 #'
 #' In time-dependent proportional hazards models,
-#' last-observation-carried-forward is used to fill in missing values in
-#' the time-varying covariates, and to determine the value of the covariate
-#' at the event time.
-#' Preferably, all time-varying covariates should be
-#' measured at baseline (`timevar = 0`). If a value for a time-varying covariate
-#' needs to be filled in and there is no previous observation, the next
-#' observation will be carried backward.
+#' last-observation-carried-forward is used to fill in missing values in the
+#' time-varying covariates, and to determine the value of the covariate at the
+#' event time. Preferably, all time-varying covariates should be measured at
+#' baseline (`timevar = 0`). If a value for a time-varying covariate needs to be
+#' filled in and there is no previous observation, the next observation will be
+#' carried backward.
 #'
 #'
 #' ## Differences to basic regression models
@@ -501,12 +500,12 @@
 #' mod6 <- JM_imp(list(Surv(futime, status != 'censored') ~ age + sex +
 #'                     albumin + copper + trig + (1 | id),
 #'                     albumin ~ day + age + sex + (day | id)),
-#'                     timevar = 'day', data = pbc, n.iter = 100)
+#'                     timevar = 'day', data = PBC, n.iter = 100)
 #'
 #' # Example 7: Proportional hazards  model with a time-dependent covariate
 #' mod7 <- coxph_imp(Surv(futime, status != 'censored') ~ age + sex + copper +
 #'                   trig + stage + (1 | id),
-#'                   timevar = 'day', data = pbc, n.iter = 100)
+#'                   timevar = 'day', data = PBC, n.iter = 100)
 #'
 #' }
 #'
@@ -515,8 +514,8 @@ NULL
 model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                       family = NULL, df_basehaz = NULL,
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                      monitor_params = c(analysis_main = TRUE), auxvars = NULL, timevar = NULL,
-                      refcats = NULL,
+                      monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+                      timevar = NULL, refcats = NULL,
                       models = NULL, no_model = NULL, trunc = NULL,
                       shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
                       parallel = FALSE, n.cores = NULL,
@@ -702,7 +701,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                         thin = thin,
                         inits = inits,
                         parallel = parallel,
-                        n.cores = if (parallel) n.cores)
+                        n.cores = if (parallel) n.cores,
+                        seed = seed)
 
 
   object <- structure(
@@ -729,7 +729,10 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
          model = if (n.adapt > 0) adapt,
          sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
          MCMC = if (n.iter > 0 & !is.null(mcmc)) coda::as.mcmc.list(MCMC),
-         time = t1 - t0,
+         run_settings = list(start_time = t0,
+                             duration = t1 - t0,
+                             JointAI_version = packageVersion("JointAI"),
+                             sessionInfo = sessionInfo()),
          call = modimpcall$thecall
     ), class = "JointAI")
 

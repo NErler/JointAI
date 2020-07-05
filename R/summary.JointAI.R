@@ -14,7 +14,7 @@
 #' @examples
 #' mod1 <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
-#' summary(mod1)
+#' summary(mod1, missinfo = TRUE)
 #' coef(mod1)
 #' confint(mod1)
 #'
@@ -30,7 +30,7 @@
 #' @export
 summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                             quantiles = c(0.025, 0.975), subset = NULL,
-                            exclude_chains = NULL, missinfo = TRUE,
+                            exclude_chains = NULL, missinfo = FALSE,
                             warn = TRUE, mess = TRUE, ...) {
 
   if (is.null(object$MCMC)) errormsg("There is no MCMC sample.")
@@ -214,7 +214,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
   if (sum(!sapply(x$res, is.null)) > 1)
     cat("Bayesian joint model fitted with JointAI", "\n")
   else
-    cat(print_type(x$res[[1]]$modeltype, x$res[[1]]$family),
+    cat('Bayesian', print_type(x$res[[1]]$modeltype, x$res[[1]]$family),
         'fitted with JointAI\n')
 
   cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
@@ -226,7 +226,8 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
       if (sum(!sapply(x$res, is.null)) > 1)
         cat(paste0(
           '# ', paste0(c(rep('-', 69)), collapse = ''), ' #\n',
-          '  ', print_type(x$res[[k]]$modeltype, x$res[[k]]$family), ' for ',
+          '  ', 'Bayesian ',
+          print_type(x$res[[k]]$modeltype, x$res[[k]]$family), ' for ',
           dQuote(names(x$res)[k]), '\n',
           '# ', paste0(c(rep('-', 35)), collapse = ' '), ' #\n\n'
         ))
@@ -447,7 +448,7 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
 
     for (k in seq_along(coefs)) {
       varname <- names(coefs)[k]
-      cat("\n",
+      cat("\n", "Bayesian",
           print_type(x$info_list[[varname]]$modeltype,
                      x$info_list[[varname]]$family), "for",
           dQuote(varname), '\n')

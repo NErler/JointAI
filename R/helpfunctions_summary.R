@@ -100,7 +100,7 @@ get_Dmat <- function(object, varname) {
 
 
 # used in print.summary.JointAI(), print.JointAI(), list_models() (2020-06-18)
-print_type <- function(type, family = NULL) {
+print_type <- function(type, family = NULL, upper = FALSE) {
   # collection of model titles to be printed at the start of the summary of
   # each sub-model
   # - type: model type
@@ -109,32 +109,35 @@ print_type <- function(type, family = NULL) {
   a <- switch(type,
               # lm = "Linear model",
               glm = switch(family,
-                           gaussian = 'Linear model',
-                           binomial = 'Binomial model',
+                           gaussian = 'linear model',
+                           binomial = 'binomial model',
                            Gamma = 'Gamma model',
-                           poisson = 'Poisson model',
-                           lognorm = 'Log-normal model',
-                           beta = 'Beta model'
+                           poisson = 'poisson model',
+                           lognorm = 'log-normal model',
+                           beta = 'beta model'
               ),
               # lme = "Linear mixed model",
               glmm = switch(family,
-                            gaussian = 'Linear mixed model',
-                            binomial = 'Binomial mixed model',
+                            gaussian = 'linear mixed model',
+                            binomial = 'binomial mixed model',
                             Gamma = 'Gamma mixed model',
-                            poisson = 'Poisson mixed model',
-                            lognorm = 'Log-normal mixed model',
-                            beta = 'Beta mixed model'
+                            poisson = 'poisson mixed model',
+                            lognorm = 'log-normal mixed model',
+                            beta = 'beta mixed model'
                             ),
               # glme = 'Generalized linear mixed model',
-              coxph = 'Proportional hazards model',
-              survreg = 'Weibull survival model',
-              clm = 'Cumulative logit model',
-              clmm = 'Cumulative logit mixed model',
-              mlogit = "Multinomial logit model",
-              mlogitmm = "Multinomial logit mixed model",
-              JM = "Joint survival and longitudinal model"
+              coxph = 'proportional hazards model',
+              survreg = 'weibull survival model',
+              clm = 'cumulative logit model',
+              clmm = 'cumulative logit mixed model',
+              mlogit = "multinomial logit model",
+              mlogitmm = "multinomial logit mixed model",
+              JM = "joint survival and longitudinal model"
   )
-  return(a)
+
+  if (upper)
+    substr(a, 1, 1) <- toupper(substr(a, 1, 1))
+  a
 }
 
 

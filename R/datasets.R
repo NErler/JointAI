@@ -221,7 +221,7 @@ NULL
 #'
 #'
 #' @format
-#' \code{pbc}: A data frame of 312 individuals in long format with 1945 rows
+#' \code{PBC}: A data frame of 312 individuals in long format with 1945 rows
 #'             and 21 variables.
 #'
 #' @section Survival outcome and id:
@@ -229,16 +229,16 @@ NULL
 #'   \item{id}{case number}
 #'   \item{futime}{number of days between registration and the earlier of death,
 #'                 transplantation, or end of follow-up}
-#'   \item{status}{status at endpoint ("censored", "transplant" or "dead"}
+#'   \item{status}{status at endpoint ("censored", "transplant" or "dead")}
 #'   }
 #'
 #'
 #' @section Baseline covariates:
 #' \describe{
-#'   \item{trt}{D-pen (D-penicillmain) vs  placebo}
+#'   \item{trt}{D-pen (D-penicillamine) vs  placebo}
 #'   \item{age}{in years}
 #'   \item{sex}{male or female}
-#'   \item{copper}{urine copper (ug/day)}
+#'   \item{copper}{urine copper (μg/day)}
 #'   \item{trig}{triglycerides (mg/dl)}
 #'   }
 #'
@@ -248,10 +248,10 @@ NULL
 #'   \item{day}{number of days between enrolment and this visit date; all
 #'              measurements below refer to this date}
 #'   \item{albumin}{serum albumin (mg/dl)}
-#'   \item{alk.phos}{alkaline phosphotase (U/liter)}
+#'   \item{alk.phos}{alkaline phosphatase (U/liter)}
 #'   \item{ascites}{presence of ascites}
-#'   \item{ast}{aspartate aminotransferase, once called SGOT (U/ml)}
-#'   \item{bili}{serum bilirunbin (mg/dl)}
+#'   \item{ast}{aspartate aminotransferase (U/ml)}
+#'   \item{bili}{serum bilirubin (mg/dl)}
 #'   \item{chol}{serum cholesterol (mg/dl)}
 #'   \item{edema}{"no": no oedema,
 #'                "(un)treated": untreated or successfully treated 1 oedema,
@@ -267,26 +267,26 @@ NULL
 #' @keywords datasets
 #' @docType data
 #' @examples
-#'  summary(pbc)
+#'  summary(PBC)
 #'
-#' @name pbc
+#' @name PBC
 NULL
 
 
-# pbc <- merge(survival::pbcseq,
+# PBC <- merge(survival::pbcseq,
 #              subset(survival::pbc, select = c(id, copper, trig))
 # )
-# pbc$trt <- factor(pbc$trt, levels = 0:1, labels = c('D-pen', 'placebo'))
-# pbc$ascites <- factor(pbc$ascites, levels = 0:1, labels = c('no', 'yes'))
-# pbc$hepato <- factor(pbc$hepato, levels = 0:1, labels = c('no', 'yes'))
-# pbc$spiders <- factor(pbc$spiders, levels = 0:1, labels = c('no', 'yes'))
-# pbc$edema <- factor(pbc$edema, levels = c(0, 0.5, 1),
+# PBC$trt <- factor(PBC$trt, levels = 0:1, labels = c('D-pen', 'placebo'))
+# PBC$ascites <- factor(PBC$ascites, levels = 0:1, labels = c('no', 'yes'))
+# PBC$hepato <- factor(PBC$hepato, levels = 0:1, labels = c('no', 'yes'))
+# PBC$spiders <- factor(PBC$spiders, levels = 0:1, labels = c('no', 'yes'))
+# PBC$edema <- factor(PBC$edema, levels = c(0, 0.5, 1),
 #                     labels = c('no', '(un)treated', 'edema'))
-# pbc$stage <- factor(pbc$stage, levels = 1:4, labels = 1:4, ordered = TRUE)
-# pbc$sex <- factor(pbc$sex, levels = c('m','f'), labels = c('male', 'female'))
-# pbc$status <- factor(pbc$status, levels = 0:2,
+# PBC$stage <- factor(PBC$stage, levels = 1:4, labels = 1:4, ordered = TRUE)
+# PBC$sex <- factor(PBC$sex, levels = c('m','f'), labels = c('male', 'female'))
+# PBC$status <- factor(PBC$status, levels = 0:2,
 #                      labels = c('censored', 'transplant', 'dead'))
 #
-# save(pbc, file = 'data/pbc.RData')
+# save(PBC, file = 'data/PBC.RData')
 
 

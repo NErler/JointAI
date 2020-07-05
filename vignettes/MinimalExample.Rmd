@@ -174,10 +174,8 @@ When the traceplot shows that the chains only converged after
 1500 iterations, `start = 1500` should be specified in
 [`summary()`](https://nerler.github.io/JointAI/reference/summary.JointAI.html).
 
-
-At the end of the output, a summary of the missing values in all variables
-involved in the model is given. To avoid lengthy output, this part can be
-omitted by setting `missinfo = FALSE`.
+A summary of the missing values in all variables involved in the model can
+be added to the summary by setting `missinfo = TRUE`.
 
 ## Plot of the posterior distributions
 The posterior distributions can be visualized using the function `densplot()`:

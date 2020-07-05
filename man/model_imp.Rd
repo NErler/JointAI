@@ -352,8 +352,10 @@ effects and \code{g} the grouping variable}
 baseline hazard in proportional hazards models
 (\code{coxph_imp} and \code{JM_imp})}
 
-\item{timevar}{name of the "time" variable in mixed models.
-Only required in "JM" models. The variable specified in
+\item{timevar}{name of the variable indicating the time of the measurement of
+a time-varying covariate in a proportional hazards survival
+model (also in a joint model).
+The variable specified in
 "timevar" will automatically be added to "no_model".}
 
 \item{assoc_type}{named vector specifying the type of the association used
@@ -430,13 +432,12 @@ hazards survival model (using \code{coxph_imp}), also in combination with
 additional grouping levels.
 
 In time-dependent proportional hazards models,
-last-observation-carried-forward is used to fill in missing values in
-the time-varying covariates, and to determine the value of the covariate
-at the event time.
-Preferably, all time-varying covariates should be
-measured at baseline (\code{timevar = 0}). If a value for a time-varying covariate
-needs to be filled in and there is no previous observation, the next
-observation will be carried backward.
+last-observation-carried-forward is used to fill in missing values in the
+time-varying covariates, and to determine the value of the covariate at the
+event time. Preferably, all time-varying covariates should be measured at
+baseline (\code{timevar = 0}). If a value for a time-varying covariate needs to be
+filled in and there is no previous observation, the next observation will be
+carried backward.
 }
 
 \subsection{Differences to basic regression models}{
@@ -742,12 +743,12 @@ mod5 <- coxph_imp(Surv(time, status) ~ age + sex + meal.cal + wt.loss,
 mod6 <- JM_imp(list(Surv(futime, status != 'censored') ~ age + sex +
                     albumin + copper + trig + (1 | id),
                     albumin ~ day + age + sex + (day | id)),
-                    timevar = 'day', data = pbc, n.iter = 100)
+                    timevar = 'day', data = PBC, n.iter = 100)
 
 # Example 7: Proportional hazards  model with a time-dependent covariate
 mod7 <- coxph_imp(Surv(futime, status != 'censored') ~ age + sex + copper +
                   trig + stage + (1 | id),
-                  timevar = 'day', data = pbc, n.iter = 100)
+                  timevar = 'day', data = PBC, n.iter = 100)
 
 }
 
