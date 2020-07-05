@@ -1,4 +1,4 @@
-get_params <- function(analysis_main = NULL,
+get_params <- function(analysis_main = TRUE,
                        analysis_random = FALSE,
                        other_models = FALSE,
                        imps = NULL,
