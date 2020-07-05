@@ -12,8 +12,10 @@ Note that this is only possible for completely observed
 variables and implies the assumptions of independence between
 the excluded variable and the incomplete variables.}
 
-\item{timevar}{name of the "time" variable in mixed models.
-Only required in "JM" models. The variable specified in
+\item{timevar}{name of the variable indicating the time of the measurement of
+a time-varying covariate in a proportional hazards survival
+model (also in a joint model).
+The variable specified in
 "timevar" will automatically be added to "no_model".}
 
 \item{assoc_type}{named vector specifying the type of the association used
