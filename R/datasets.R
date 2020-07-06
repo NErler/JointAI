@@ -238,7 +238,7 @@ NULL
 #'   \item{trt}{D-pen (D-penicillamine) vs  placebo}
 #'   \item{age}{in years}
 #'   \item{sex}{male or female}
-#'   \item{copper}{urine copper (μg/day)}
+#'   \item{copper}{urine copper (\eqn{\mu}g/day)}
 #'   \item{trig}{triglycerides (mg/dl)}
 #'   }
 #'
