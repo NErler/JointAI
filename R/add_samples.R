@@ -149,7 +149,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
              thin = coda::thin(mcmc[[k]]))
       ))
   } else {
-    newmcmc <- !is.null(object$sample) mcmc
+    newmcmc <- if (!is.null(object$sample)) mcmc
     newMCMC <- MCMC
   }
 
