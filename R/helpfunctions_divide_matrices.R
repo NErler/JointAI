@@ -586,3 +586,21 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   }
   lp
 }
+
+
+
+
+get_nonprop_lp <- function(nonprop, Mlvls, data, refs) {
+
+  if (is.null(nonprop)) return(NULL)
+
+  contr_list <- lapply(refs, attr, 'contr_matrix')
+
+  sapply(nonprop, function(fmla) {
+    contr_list0 <- contr_list[intersect(all_vars(fmla), names(contr_list))]
+    nam <- colnames(model.matrix(fmla, data,contrasts.arg = contr_list0))[-1]
+    sapply(unique(Mlvls), function(k) {
+      intersect(nam, names(Mlvls)[Mlvls == k])
+    }, simplify = FALSE)
+  }, simplify = FALSE)
+}
