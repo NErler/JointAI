@@ -162,7 +162,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       other <- setdiff(rownames(stats),
                        c(rownames(regcoef),
                          rownames(sigma),
-                         rownames(intercepts),
+                         attr(intercepts, 'rownames_orig'),
                          rownames(rd_vcov),
                          rownames(wb_shape))
       )
@@ -244,6 +244,9 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
       }
 
       if (!is.null(x$res[[k]]$intercepts)) {
+        # remove the attributes to avoid printing them
+        attr(x$res[[k]]$intercepts, 'rownames_orig') <- NULL
+
         cat("\nPosterior summary of the intercepts:\n")
         print(x$res[[k]]$intercepts, digits = digits, na.print = "")
       }
