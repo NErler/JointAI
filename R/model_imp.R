@@ -98,6 +98,9 @@
 #'                  method to be used for regression coefficients in all models
 #'                  or a named vector specifying the type of shrinkage to be
 #'                  used in the models given as names.
+#' @param rev optional character vector; vector of ordinal outcome variable
+#'   names for which the odds should be reversed, i.e., logit(y <= k) instead
+#'   of logit(y > k).
 #' @param ... additional, optional arguments (not used)
 #' @importFrom foreach foreach %dopar%
 #' @name model_imp
@@ -363,8 +366,20 @@
 #'
 #'
 #'
+#' \loadmathjax
 #'
+#' @section Cumulative logit (mixed) models:
+#' In the default setting for cumulative logit models, i.e, `rev = NULL`, the
+#' odds for a variable \mjeqn{y}{ascii} with \mjeqn{K}{ascii} ordered categories
+#' are defined as \mjdeqn{\log\left(\frac{P(y_i > k)}{P(y_i \leq k)}\right) =
+#' \gamma_k + \eta_i, \quad k = 1, \ldots, K-1,}{ascii} where
+#' \mjeqn{\gamma_k}{ascii} is a category specific intercept and
+#' \mjeqn{\eta_i}{ascii} the subject specific linear predictor.
 #'
+#' To reverse the odds to \mjdeqn{\log\left(\frac{P(y_i \leq k)}{P(y_i >
+#' k)}\right) = \gamma_k + \eta_i, \quad k = 1, \ldots, K-1,}{ascii} the name of
+#' the response variable has to be specified in the argument `rev`, e.g., `rev =
+#' c("y")`.
 #'
 #' @section Note:
 #' ## Coding of variables:
@@ -518,7 +533,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                       timevar = NULL, refcats = NULL,
                       models = NULL, no_model = NULL, trunc = NULL,
                       shrinkage = FALSE,
-                      nonprop = NULL,
+                      nonprop = NULL, rev = NULL,
                       ppc = TRUE, seed = NULL, inits = NULL,
                       parallel = FALSE, n.cores = NULL,
                       scale_vars = NULL, hyperpars = NULL,
@@ -563,7 +578,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                            random = random, models = models, auxvars = auxvars,
                            timevar = timevar, no_model = no_model,
                            scale_vars = scale_vars, refcats = refcats,
-                           nonprop = nonprop,
+                           nonprop = nonprop, rev = rev,
                            warn = warn, mess = mess, ppc = ppc,
                            shrinkage = shrinkage, df_basehaz = df_basehaz)
 
@@ -824,7 +839,7 @@ glm_imp <- function(formula, family, data,
 clm_imp <- function(formula, data,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                     monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-                    refcats = NULL, nonprop = NULL,
+                    refcats = NULL, nonprop = NULL, rev = NULL,
                     models = NULL, no_model = NULL, trunc = NULL,
                     shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
                     parallel = FALSE, n.cores = NULL,
@@ -1063,7 +1078,7 @@ lognormmm_imp <- function(fixed, random, data,
 clmm_imp <- function(fixed, data, random,
                      n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                      monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-                     refcats = NULL, nonprop = NULL,
+                     refcats = NULL, nonprop = NULL, rev = NULL,
                      models = NULL, no_model = NULL, trunc = NULL,
                      shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
                      parallel = FALSE, n.cores = NULL,

@@ -143,14 +143,20 @@ print_type <- function(type, family = NULL, upper = FALSE) {
 
 
 # used in summary() (2020-06-10)
-get_intercepts <- function(stats, varname, lvls) {
+get_intercepts <- function(stats, varname, lvls, rev = FALSE) {
   # format the output for the intercepts in ordinal models
   # - stats: matrix of posterior summaries
   # - varname: name of the ordinal outcome variable
   # - lvls: levels of the ordinal factor
 
-  interc <-   stats[grep(paste0("gamma_", varname), rownames(stats)), ]
-  rownames(interc) <- paste(varname, "\u2264", lvls[-length(lvls)])
+  interc <- stats[grep(paste0("gamma_", varname), rownames(stats)), ]
+  attr(interc, "rownames_orig") <- rownames(interc)
+
+  if (isTRUE(rev)) {
+    rownames(interc) <- paste(varname, "\u2264", lvls[-length(lvls)])
+  } else {
+    rownames(interc) <- paste(varname, ">", lvls[-length(lvls)])
+  }
   interc
 }
 

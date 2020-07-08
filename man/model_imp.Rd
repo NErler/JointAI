@@ -43,11 +43,11 @@ glm_imp(formula, family, data, n.chains = 3, n.adapt = 100, n.iter = 0,
 
 clm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
-  hyperpars = NULL, modelname = NULL, modeldir = NULL,
-  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  refcats = NULL, nonprop = NULL, rev = NULL, models = NULL,
+  no_model = NULL, trunc = NULL, shrinkage = FALSE, ppc = TRUE,
+  seed = NULL, inits = NULL, parallel = FALSE, n.cores = NULL,
+  scale_vars = NULL, hyperpars = NULL, modelname = NULL,
+  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
   keep_scaled_mcmc = FALSE, ...)
 
@@ -143,11 +143,11 @@ lognormmm_imp(fixed, random, data, n.chains = 3, n.adapt = 100,
 
 clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  parallel = FALSE, n.cores = NULL, scale_vars = NULL,
-  hyperpars = NULL, modelname = NULL, modeldir = NULL,
-  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
+  refcats = NULL, nonprop = NULL, rev = NULL, models = NULL,
+  no_model = NULL, trunc = NULL, shrinkage = FALSE, ppc = TRUE,
+  seed = NULL, inits = NULL, parallel = FALSE, n.cores = NULL,
+  scale_vars = NULL, hyperpars = NULL, modelname = NULL,
+  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
   progress.bar = "text", warn = TRUE, mess = TRUE,
   keep_scaled_mcmc = FALSE, ...)
 
@@ -339,6 +339,10 @@ be used in the model. This can be a character string naming a
 family function, a family function or the result of a call to
 a family function. (For more details see below and
 \code{\link[stats]{family}}.)}
+
+\item{rev}{optional character vector; vector of ordinal outcome variable
+names for which the odds should be reversed, i.e., logit(y <= k) instead
+of logit(y > k).}
 
 \item{fixed}{a two sided formula describing the fixed-effects part of the
 model (see \code{\link[stats]{formula}})}
@@ -624,6 +628,22 @@ deviation \code{sigma_main}.
 \code{monitor_params = c(imps = TRUE)} would monitor \code{betas},
 \code{tau_main}, and \code{sigma_main} (because \code{analysis_main = TRUE}
 by default) as well as the imputed values.
+
+\loadmathjax
+}
+
+\section{Cumulative logit (mixed) models}{
+
+In the default setting for cumulative logit models, i.e, \code{rev = NULL}, the
+odds for a variable \mjeqn{y}{ascii} with \mjeqn{K}{ascii} ordered categories
+are defined as \mjdeqn{\log\left(\frac{P(y_i > k)}{P(y_i \leq k)}\right) =
+\gamma_k + \eta_i, \quad k = 1, \ldots, K-1,}{ascii} where
+\mjeqn{\gamma_k}{ascii} is a category specific intercept and
+\mjeqn{\eta_i}{ascii} the subject specific linear predictor.
+
+To reverse the odds to \mjdeqn{\log\left(\frac{P(y_i \leq k)}{P(y_i >
+k)}\right) = \gamma_k + \eta_i, \quad k = 1, \ldots, K-1,}{ascii} the name of
+the response variable has to be specified in the argument \code{rev}, e.g., \code{rev = c("y")}.
 }
 
 \section{Note}{

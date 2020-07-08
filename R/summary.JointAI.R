@@ -120,7 +120,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
       intercepts <- if (object$info_list[[varname]]$modeltype %in%
                         c('clm', 'clmm'))
-        get_intercepts(stats, varname, levels(object$Mlist$refs[[varname]]))
+        get_intercepts(stats, varname, levels(object$Mlist$refs[[varname]]),
+                       rev = object$info_list[[varname]]$rev)
 
 
       rd_vcov <- if (!is.null(object$info_list[[varname]]$hc_list)) {
@@ -334,6 +335,7 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
   coefs <- sapply(names(object$fixed), function(k) {
     x <- object$coef_list[[k]]
+    rev <- object$info_list[[k]]$rev
 
     c(
       if (object$info_list[[k]]$modeltype %in% c('clm', 'clmm')) {
@@ -341,7 +343,11 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                                       colnames(MCMC))]
 
         lvl <- levels(object$Mlist$refs[[k]])
-        names(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
+        if (isTRUE(rev)) {
+          names(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
+        } else {
+          names(interc) <- paste(k, ">", lvl[-length(lvl)])
+        }
         interc
       },
       if (length(intersect(colnames(MCMC), x$coef)))
@@ -404,12 +410,12 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
 
     rbind(
       if (object$info_list[[k]]$modeltype %in% c('clm', 'clmm')) {
-        interc <- apply(MCMC[grep(paste0('gamma_', k, "\\["),
+        interc <- apply(MCMC[, grep(paste0('gamma_', k, "\\["),
                                       colnames(MCMC))], 2, quantile, quantiles)
 
         lvl <- levels(object$Mlist$refs[[k]])
-        names(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
-        interc
+        colnames(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
+        t(interc)
       },
       if (length(intersect(colnames(MCMC), x$coef))) {
         quants <- t(apply(MCMC[, intersect(colnames(MCMC), x$coef),

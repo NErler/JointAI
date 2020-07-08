@@ -3,7 +3,7 @@
 divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                             auxvars = NULL, scale_vars = NULL, refcats = NULL,
                             models = NULL,  timevar = NULL, no_model = NULL,
-                            nonprop = NULL,
+                            nonprop = NULL, rev = NULL,
                             ppc = TRUE, shrinkage = FALSE,
                             warn = TRUE, mess = TRUE, df_basehaz = 6, ...) {
 
@@ -254,6 +254,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
        lp_cols = lp_cols,
        lp_nonprop = lp_nonprop,
+       rev = rev,
        interactions = interactions,
        trafos = fcts_mis, fcts_all = fcts_all,
 
