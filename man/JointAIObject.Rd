@@ -97,8 +97,13 @@
 \item{\code{sample}}{MCMC sample on the sampling scale (included only if
                      \code{keep_scaled_sample = TRUE})}
 \item{\code{MCMC}}{MCMC sample, scaled back to the scale of the data}
-\item{\code{time}}{the computational time used for the sampling
-                   (adaptive phase + sampling)}
+\item{\code{comp_info}}{a list with information on the computational setting
+                        (\code{start_ime}: date and time the calculation was
+                        started, \code{duration}: computational time of the
+                        model (adaptive + sampling phase),
+                        \code{JointAI_version}: package version,
+                        \code{sessionInfo}: session information obtained with
+                        \code{sessionInfo()})}
 \item{\code{fitted.values}}{fitted/predicted values (if available)}
 \item{\code{residuals}}{residuals (if available)}
 \item{\code{call}}{the original call}
