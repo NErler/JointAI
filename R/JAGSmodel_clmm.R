@@ -91,14 +91,8 @@ JAGSmodel_clmm <- function(info) {
          tab(4), 'eta_', info$varname, "[", index, "] <- ",
          add_linebreaks(Z_predictor, indent = indent),
          "\n\n",
-         tab(4), "p_", info$varname, "[", index,
-         ", 1] <- max(1e-10, min(1-1e-7, psum_",
-         info$varname, "[", index, ", 1]))", "\n",
-         paste(probs, collapse = "\n"), "\n",
-         tab(4), "p_", info$varname, "[", index, ", ", info$ncat,
-         "] <- 1 - max(1e-10, min(1-1e-7, sum(p_",
-         info$varname, "[", index, ", 1:", info$ncat - 1,"])))", "\n\n",
-         paste0(logits, collapse = "\n"),
+         write_probs(info, index), "\n\n",
+         write_logits(info, index), "\n",
          dummies,
          info$trafos,
          "\n",
@@ -119,8 +113,7 @@ JAGSmodel_clmm <- function(info) {
                                  parname = info$parname),
                   tab(), "}")
          },
-         paste(deltas, collapse = "\n"), "\n\n",
-         paste(gammas, collapse = "\n"),
+         write_priors_clm(info),
          # paste_ppc_prior,
          "\n",
          paste0(
@@ -139,21 +132,6 @@ clmm_in_JM <- function(info) {
 
   # main model parts -----------------------------------------------------------
   Z_predictor <- paste_lp_Zpart(info, isgk = TRUE)
-
-  probs <- sapply(2:(info$ncat - 1), function(k) {
-    paste0(tab(6), "pgk_", info$varname, "[", index, ", ", k,
-           ", k] <- max(1e-7, min(1-1e-10, psumgk_",
-           info$varname, "[", index, ", ", k,", k] - psumgk_",
-           info$varname, "[", index, ", ", k - 1, ", k]))"
-           )
-    })
-
-  logits <- sapply(1:(info$ncat - 1), function(k) {
-    paste0(tab(6), "logit(psumgk_", info$varname, "[", index, ", ", k,
-           ", k])  <- gamma_", info$varname,
-           "[", k, "]", " + etagk_", info$varname,"[", index, ", k]")
-  })
-
 
   # syntax to set values of dummy variables,
   # e.g. "M_lvlone[i, 8] <- ifelse(M_lvlone[i, 4] == 2, 1, 0)"
@@ -174,15 +152,8 @@ clmm_in_JM <- function(info) {
          tab(6), 'etagk_', info$varname, "[", index, ", k] <- ",
          add_linebreaks(Z_predictor, indent = 12 + nchar(info$varname) + 10),
          "\n\n",
-         tab(6), "pgk_", info$varname, "[", index,
-         ", 1, k] <- max(1e-10, min(1-1e-7, psumgk_",
-         info$varname, "[", index, ", 1, k]))", "\n",
-         paste(probs, collapse = "\n"), "\n",
-         tab(6), "pgk_", info$varname, "[", index, ", ", info$ncat,
-         ", k] <- 1 - max(1e-10, min(1-1e-7, sum(pgk_",
-         info$varname, "[", index, ", 1:", info$ncat - 1,", k])))", "\n\n",
-         paste0(logits, collapse = "\n"),
-         "\n\n",
+         write_probs(info, index, isgk = TRUE, indent = 6), "\n\n",
+         write_logits(info, index, isgk = TRUE, indent = 6), "\n\n",
          dummies,
          "\n"
   )

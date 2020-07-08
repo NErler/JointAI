@@ -1003,3 +1003,109 @@ get_linkindent <- function(link) {
 }
 
 
+# functions for ordinal models -------------------------------------------------
+write_probs <- function(info, index, isgk = FALSE, indent = 4) {
+  # syntax for probabilities, using min-max-trick for numeric stability
+  # i.e., "p_O2[i, 2] <- psum_O2[i, 2] - psum_O2[i, 1]"
+
+  .info = info
+  .index = index
+  .isgk = isgk
+
+  probs <- sapply(2:(info$ncat - 1),
+                  function(k, .info = info, .index = index, .isgk = isgk) {
+                    paste0(tab(indent), paste_p(k), " <- ",
+                           minmax(
+                             if (isTRUE(.info$rev)) {
+                               paste0(paste_ps(k), " - ", paste_ps(k - 1))
+                             } else {
+                               paste0(paste_ps(k - 1), " - ", paste_ps(k))
+                             })
+                    )
+                  })
+
+
+  paste0(tab(indent),
+         paste_p(1), " <- ",
+         if (isTRUE(info$rev)) {
+           minmax(paste_ps(1))
+         } else {
+           paste0("1 - ", minmax(paste0("sum(", paste_p(2:info$ncat), ")")))
+         },
+         "\n",
+         paste(probs, collapse = "\n"), "\n",
+         tab(indent), paste_p(info$ncat), " <- ",
+         if (isTRUE(info$rev)) {
+           paste0("1 - ", minmax(paste0("sum(", paste_p(1:(info$ncat - 1)), ")")
+                                 ))
+         } else {
+           minmax(paste_ps(info$ncat - 1))
+         }
+  )
+}
+
+
+
+write_logits <- function(info, index, isgk = FALSE, indent = 4) {
+  # syntax for logits, e.g., "logit(psum_O2[i, 1]) <- gamma_O2[1] + eta_O2[i]"
+  logits <- sapply(1:(info$ncat - 1),
+                   function(k,
+                            .info = info,
+                            .index = index,
+                            .isgk = isgk) {
+                     paste0(tab(indent), "logit(", paste_ps(k),
+                            ") <- gamma_", info$varname, "[", k, "]",
+                            " + eta_", info$varname,"[", index, "]")
+                   })
+
+  paste0(logits, collapse = "\n")
+}
+
+
+write_priors_clm <- function(info) {
+
+  deltas <- sapply(1:(info$ncat - 2), function(k) {
+    paste0(tab(), "delta_", info$varname, "[", k,
+           "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
+  })
+
+  sign <- ifelse(isTRUE(info$rev), " + ", " - ")
+
+
+  gammas <- sapply(1:(info$ncat - 1), function(k) {
+    if (k == 1) {
+      paste0(tab(), "gamma_", info$varname, "[", k,
+             "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
+    } else {
+      paste0(tab(), "gamma_", info$varname, "[", k, "] <- gamma_",
+             info$varname, "[", k - 1, "]", sign, "exp(delta_", info$varname,
+             "[", k - 1, "])")
+    }
+  })
+
+  paste0(c(deltas, '', gammas), collapse = "\n")
+}
+
+
+# * helpfunctions --------------------------------------------------------------
+paste_p <- function(nr, env = parent.frame()) {
+  vn = env$.info$varname
+  ind = env$.index
+  gk = env$.isgk
+
+  if (length(nr) > 1)
+    nr <- paste0(min(nr), ":", max(nr))
+  paste0("p", if (gk) "gk", "_", vn, "[", ind, ", ", nr, if (gk) ", k", "]")
+}
+
+paste_ps <- function(nr, env = parent.frame()) {
+  vn = env$.info$varname
+  ind = env$.index
+  gk = env$.isgk
+
+  paste0("psum", if (gk) "gk", "_", vn, "[", ind, ", ", nr, if (gk) ", k", "]")
+}
+
+minmax <- function(x, max = "1-1e-10", min = "1e-10") {
+  paste0("max(", min, ", min(", max, ", ", x, "))")
+}

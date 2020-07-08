@@ -18,21 +18,6 @@ JAGSmodel_clm <- function(info) {
                   scale_pars = info$scale_pars[[info$resp_mat]])
   } else {"0"}
 
-  # syntax for probabilities, using min-max-trick for numeric stability
-  # i.e., "p_O2[i, 2] <- psum_O2[i, 2] - psum_O2[i, 1]"
-  probs <- sapply(2:(info$ncat - 1), function(k) {
-    paste0(tab(4), "p_", info$varname, "[", index, ", ", k,
-           "] <- max(1e-7, min(1-1e-10, psum_",
-           info$varname, "[", index, ", ", k,"] - psum_", info$varname,
-           "[", index, ", ", k - 1, "]))")})
-
-
-  # syntax for logits, e.g., "logit(psum_O2[i, 1]) <- gamma_O2[1] + eta_O2[i]"
-  logits <- sapply(1:(info$ncat - 1), function(k) {
-    paste0(tab(4), "logit(psum_", info$varname, "[", index, ", ", k,
-           "]) <- gamma_", info$varname,
-           "[", k, "]", " + eta_", info$varname,"[", index, "]")
-  })
 
 
   # syntax to set values of dummy variables,
@@ -43,25 +28,6 @@ JAGSmodel_clm <- function(info) {
                     resp_col = info$resp_col, dummy_cols = info$dummy_cols,
                     index = index, refs = info$refs), collapse = "\n"), "\n")
   }
-
-
-  # priors ---------------------------------------------------------------------
-
-  deltas <- sapply(1:(info$ncat - 2), function(k) {
-    paste0(tab(), "delta_", info$varname, "[", k,
-           "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
-  })
-
-  gammas <- sapply(1:(info$ncat - 1), function(k) {
-    if (k == 1) {
-      paste0(tab(), "gamma_", info$varname, "[", k,
-             "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
-    } else {
-      paste0(tab(), "gamma_", info$varname, "[", k, "] <- gamma_",
-             info$varname, "[", k - 1, "] + exp(delta_", info$varname,
-             "[", k - 1, "])")
-    }
-  })
 
 
   # posterior predictive check -------------------------------------------------
@@ -118,14 +84,8 @@ JAGSmodel_clm <- function(info) {
     tab(4), "eta_", info$varname, "[", index, "] <- ",
     add_linebreaks(linpred, indent = indent),
     "\n\n",
-    tab(4), "p_", info$varname, "[", index,
-    ", 1] <- max(1e-10, min(1-1e-7, psum_",
-    info$varname, "[", index, ", 1]))", "\n",
-    paste(probs, collapse = "\n"), "\n",
-    tab(4), "p_", info$varname, "[", index, ", ", info$ncat,
-    "] <- 1 - max(1e-10, min(1-1e-7, sum(p_",
-    info$varname, "[", index, ", 1:", info$ncat - 1, "])))", "\n\n",
-    paste0(logits, collapse = "\n"), "\n",
+    write_probs(info, index), "\n\n",
+    write_logits(info, index), "\n",
     dummies,
     info$trafos,
     tab(), "}", "\n\n",
@@ -141,8 +101,7 @@ JAGSmodel_clm <- function(info) {
         tab(), "}", "\n\n"
       )
     },
-    paste(deltas, collapse = "\n"), "\n\n",
-    paste(gammas, collapse = "\n"),
+    write_priors_clm(info),
     paste_ppc_prior
   )
 }
