@@ -665,15 +665,14 @@ Variables of type \code{logical} are automatically converted to unordered
 factors.\cr
 \subsection{Contrasts}{
 
-\strong{JointAI} version >= 1.0.0 uses the globally (via \code{options("contrasts")})
-specified contrasts.
-However, for incomplete categorical variables, for which the
-contrasts need to be re-calculated within the JAGS model, currently only
-\code{contr.treatment} and \code{contr.sum} are possible.
-Therefore, when an in complete ordinal covariate is used and the default
-contrasts (\code{contr.poly()}) are set to be used for ordered factors, a
-warning message is printed and dummy coding (\code{contr.treatment()}) is used
-for that variable instead.
+\strong{JointAI} version \mjeqn{\geq}{ascii} 1.0.0 uses the globally (via
+\code{options("contrasts")}) specified contrasts. However, for incomplete
+categorical variables, for which the contrasts need to be re-calculated
+within the JAGS model, currently only \code{contr.treatment} and \code{contr.sum} are
+possible. Therefore, when an in complete ordinal covariate is used and the
+default contrasts (\code{contr.poly()}) are set to be used for ordered factors, a
+warning message is printed and dummy coding (\code{contr.treatment()}) is used for
+that variable instead.
 }
 
 }

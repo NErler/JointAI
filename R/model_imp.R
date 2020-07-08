@@ -397,15 +397,14 @@
 #' factors.\cr
 #'
 #' #### Contrasts
-#' **JointAI** version >= 1.0.0 uses the globally (via `options("contrasts")`)
-#' specified contrasts.
-#' However, for incomplete categorical variables, for which the
-#' contrasts need to be re-calculated within the JAGS model, currently only
-#' `contr.treatment` and `contr.sum` are possible.
-#' Therefore, when an in complete ordinal covariate is used and the default
-#' contrasts (`contr.poly()`) are set to be used for ordered factors, a
-#' warning message is printed and dummy coding (`contr.treatment()`) is used
-#' for that variable instead.
+#' **JointAI** version \mjeqn{\geq}{ascii} 1.0.0 uses the globally (via
+#' `options("contrasts")`) specified contrasts. However, for incomplete
+#' categorical variables, for which the contrasts need to be re-calculated
+#' within the JAGS model, currently only `contr.treatment` and `contr.sum` are
+#' possible. Therefore, when an in complete ordinal covariate is used and the
+#' default contrasts (`contr.poly()`) are set to be used for ordered factors, a
+#' warning message is printed and dummy coding (`contr.treatment()`) is used for
+#' that variable instead.
 #'
 #'
 #'
