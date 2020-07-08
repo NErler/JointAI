@@ -208,11 +208,12 @@ print.MCElist <- function(x, ...) {
 #'                 \code{\link[base]{plot}()}
 #' @param ablinepars optional; list of parameters passed to
 #'                   \code{\link[graphics]{abline}()}
+#' @param minlength number of characters the variable names are abbreviated to
 #' @describeIn MC_error plot Monte Carlo error
 #' @export
 
 plot.MCElist <- function(x, data_scale = TRUE, plotpars = NULL,
-                         ablinepars = list(v = 0.05), ...) {
+                         ablinepars = list(v = 0.05), minlength = 20, ...) {
 
   mce <- if (data_scale == TRUE) {
     x$data_scale
@@ -222,7 +223,7 @@ plot.MCElist <- function(x, data_scale = TRUE, plotpars = NULL,
 
   theaxis <- NULL
   names <- rownames(x$data_scale)
-  names <- abbreviate(names, minlength = 12)
+  names <- abbreviate(names, minlength = minlength)
 
   plotpars$x <- mce[, 4]
   plotpars$y <- rev(seq_len(nrow(mce)))

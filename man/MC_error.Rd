@@ -8,7 +8,8 @@
 MC_error(x, subset = NULL, exclude_chains = NULL, start = NULL,
   end = NULL, thin = NULL, digits = 2, warn = TRUE, mess = TRUE, ...)
 
-\method{plot}{MCElist}(x, data_scale = TRUE, plotpars = NULL, ablinepars = list(v = 0.05), ...)
+\method{plot}{MCElist}(x, data_scale = TRUE, plotpars = NULL,
+  ablinepars = list(v = 0.05), minlength = 20, ...)
 }
 \arguments{
 \item{x}{object inheriting from class 'JointAI'}
@@ -64,6 +65,8 @@ model)}
 
 \item{ablinepars}{optional; list of parameters passed to
 \code{\link[graphics]{abline}()}}
+
+\item{minlength}{number of characters the variable names are abbreviated to}
 }
 \value{
 An object of class \code{MCElist} with elements \code{unscaled},
