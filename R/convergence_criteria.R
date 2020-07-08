@@ -168,16 +168,19 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
   if (!is.null(x$sample)) {
     mcmc <- do.call(rbind, window(x$sample[chains],
                                   start = start, end = end, thin = thin))
-    mcmc <- mcmc[match(colnames(MCMC), colnames(x$MCMC[[1]])), ]
 
-    MCE2 <- mcmcse::mcse.mat(x = do.call(rbind,
-                                         window(x$sample[chains],
-                                                start = start,
-                                                end = end,
-                                                thin = thin)), ...)
-    colnames(MCE2) <- gsub("se", "MCSE", colnames(MCE2))
+    MCE2 <- t(apply(mcmc, 2, function(k) {
+      mce <- try(mcmcse::mcse(k, ...), silent = TRUE)
+      if (inherits(mce, "try-error")) {
+        c(NA, NA)
+      } else {
+        unlist(mce)
+      }
+    }))
+    colnames(MCE2) <- c('est', 'MCSE')
 
-    MCE2 <- cbind(MCE2, SD = apply(mcmc, 2, sd) )
+
+    MCE2 <- cbind(MCE2, SD = apply(mcmc, 2, sd))
     MCE2 <- cbind(MCE2, 'MCSE/SD' = MCE2[, "MCSE"]/MCE2[, "SD"])
   } else {
     MCE2 <- NULL
