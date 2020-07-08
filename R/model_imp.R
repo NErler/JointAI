@@ -319,8 +319,9 @@
 #' \strong{name/key word} \tab \strong{what is monitored}\cr
 #' \code{analysis_main} \tab \code{betas} and \code{sigma_main}, \code{tau_main}
 #'                           (for beta regression) or \code{shape_main}
-#'                           (for parametric survival models)
-#'                           (also \code{D_main} in multi-level models and
+#'                           (for parametric survival models), \code{gamma_main}
+#'                           (for cumulative logit models),
+#'                           code{D_main} (for multi-level models) and
 #'                           \code{basehaz} in proportional hazards models)\cr
 #' \code{analysis_random} \tab \code{ranef_main}, \code{D_main},
 #'                             \code{invD_main}, \code{RinvD_main}\cr
@@ -360,10 +361,9 @@
 #' residual precision \code{tau_main} instead of the residual standard
 #' deviation \code{sigma_main}.
 #'
-#' \code{monitor_params = c(imps = TRUE)} would monitor \code{betas},
-#' \code{tau_main}, and \code{sigma_main} (because \code{analysis_main = TRUE}
-#' by default) as well as the imputed values.
-#'
+#' For a linear model, \code{monitor_params = c(imps = TRUE)} would monitor
+#' \code{betas}, and \code{sigma_main} (because \code{analysis_main = TRUE} by
+#' default) as well as the imputed values.
 #'
 #'
 #' \loadmathjax
