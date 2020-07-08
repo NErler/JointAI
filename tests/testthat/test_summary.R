@@ -1,8 +1,9 @@
 context("Summaries")
 library("JointAI")
 
-mymod <- lme_imp(y ~ C1 + c1 + B2 + c2 + O2 + time + (time  | id), data = longDF,
-                 n.adapt = 10, n.iter = 10, monitor_parms = c(other_models = TRUE),
+mymod <- lme_imp(y ~ C1 + c1 + B2 + c2 + O2 + time + (time  | id),
+                 data = longDF, n.adapt = 10, n.iter = 10,
+                 monitor_parms = c(other_models = TRUE),
                  parallel = TRUE, n.cores = 2, n.chains = 2,
                  keep_scaled_mcmc = TRUE, seed = 2020)
 
@@ -25,7 +26,8 @@ test_that('plots', {
   expect_silent(traceplot(mymod, thin = 2))
   expect_silent(densplot(mymod))
   expect_s3_class(traceplot(mymod, use_ggplot = TRUE), 'ggplot')
-  expect_s3_class(densplot(mymod, use_ggplot = TRUE, start = 11, end = 19), 'ggplot')
+  expect_s3_class(densplot(mymod, use_ggplot = TRUE, start = 11, end = 19),
+                  'ggplot')
   expect_s3_class(densplot(mymod, use_ggplot = TRUE, joined = TRUE), 'ggplot')
   expect_silent({par(mar = c(2,2,1,0.1));
                 plot_all(newDF, idvars = 'id', breaks = 50, ncol = 5)})
