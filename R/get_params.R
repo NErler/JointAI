@@ -38,7 +38,6 @@ get_params <- function(analysis_main = TRUE,
     'sigma_main',
     'tau_main',
     'gamma_main',
-    'delta_main',
     'shape_main',
     'D_main',
     'basehaz'
@@ -59,7 +58,6 @@ get_params <- function(analysis_main = TRUE,
     'sigma_other',
     'tau_other',
     'gamma_other',
-    'delta_other',
     'shape_other',
     'D_other'
   )) {
@@ -135,8 +133,9 @@ get_modelpars <- function(info_list, Mlist, args, set = 'main') {
   if (any(modeltypes %in% c('clm', 'clmm'))) {
     ord_mods <- names(sublist)[modeltypes %in% c('clm', 'clmm')]
     params <- c(params,
-                if (args$gamma_main) paste0("gamma_", ord_mods),
-                if (args$delta_main) paste0("delta_", ord_mods)
+                if (args[[paste0("gamma_", set)]]) paste0("gamma_", ord_mods),
+                if (isTRUE(args[[paste0("delta_", set)]]))
+                  paste0("delta_", ord_mods)
     )
   }
 
