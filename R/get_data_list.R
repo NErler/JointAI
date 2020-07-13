@@ -61,7 +61,7 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 
 
   # random effects groupings ---------------------------------------------------
-  if (length(Mlist$groups) > 1) {
+  if (sum(unlist(lapply(info_list, "[[", "nranef"))) > 0) {
 
     # Obtain groups from Mlist, except for the group "lvlone" (never used).
     # The groups are vectors of length nrow(data) that indicate which rows
@@ -154,7 +154,7 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
     # longitudinal variable that correspond to the event times
       if (x$haslong) {
         srow <- which(Mlist$M$M_lvlone[, Mlist$timevar] ==
-                           x$survtime[l[[paste0('group_', x$surv_lvl)]]])
+                           x$survtime[Mlist$groups[[x$surv_lvl]]])
 
         if (length(srow) != length(unique(Mlist$groups[[x$surv_lvl]])))
           errormsg("The number of observations for survival differs from the
