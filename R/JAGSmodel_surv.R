@@ -29,6 +29,21 @@ JAGSmodel_survreg <- function(info) {
   }
 
 
+  # Check that all levels present in info$lp are also used in the linear
+  # predictor. This is necessary to detect if a time-varying covariate is
+  # used. This is not implemented for parametric survival models, but there is
+  # currently no other check for this.
+  check_lp_in_eta <- sapply(names(info$lp), function(k) {
+    (grepl(k, eta) |
+       grepl(paste0("\\bb_", info$varname, "_", gsub("M_", "", k), "\\b"), eta))
+  })
+  if (any(!check_lp_in_eta)) {
+    errormsg(
+      "It seems that you are trying to fit a parametric survival model
+             with time-varying covariates (%s). This is not implemented. Please
+             consider using a proportional hazards model instead.",
+      paste_and(dQuote(names(info$lp[[
+        names(check_lp_in_eta)[!check_lp_in_eta]]])))
     )
   }
 
