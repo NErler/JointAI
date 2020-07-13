@@ -643,45 +643,18 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   }
 
 
+  runJAGS <- ifelse(isTRUE(parallel), run_parallel, run_seq)
+
   t0 <- Sys.time()
-  if (parallel == TRUE) {
-    if (!requireNamespace('foreach', quietly = TRUE))
-      errormsg("Parallel sampling requires the 'foreach' package to
-               be installed.")
+  jags_res <- runJAGS(n.adapt = n.adapt, n.iter = n.iter,
+                      n.cores = n.cores, n.chains = n.chains,
+                      inits = inits, thin = thin,
+                      data_list = data_list, var.names = var.names,
+                      modelfile = modelfile, quiet = quiet,
+                      progress.bar = progress.bar, mess = TRUE)
+  adapt <- jags_res$adapt
+  mcmc <- jags_res$mcmc
 
-    if (!requireNamespace('doParallel', quietly = TRUE))
-      errormsg("Parallel sampling requires the 'doParallel' package
-               to be installed.")
-
-    if (any(n.adapt > 0, n.iter > 0)) {
-      if (is.null(n.cores)) n.cores <- min(parallel::detectCores() - 2,
-                                           n.chains)
-
-      doParallel::registerDoParallel(cores = n.cores)
-      if (mess)
-        msg("Parallel sampling on %s cores started (%s).", n.cores, Sys.time())
-
-      res <- foreach(i = seq_along(inits)) %dopar% {
-        run_jags(inits[[i]], data_list = data_list,
-                 modelfile = modelfile,
-                 n.adapt = n.adapt, n.iter = n.iter, thin = thin,
-                 var.names = var.names)}
-      doParallel::stopImplicitCluster()
-      mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
-      adapt <- lapply(res, function(x) x$adapt)
-    }
-  } else {
-    adapt <- if (any(n.adapt > 0, n.iter > 0)) {
-      try(rjags::jags.model(file = modelfile, data = data_list,
-                            inits = inits, quiet = quiet,
-                            n.chains = n.chains, n.adapt = n.adapt))
-    }
-    mcmc <- if (n.iter > 0 & !inherits(adapt, 'try-error')) {
-      try(rjags::coda.samples(adapt, n.iter = n.iter, thin = thin,
-                              variable.names = var.names,
-                              progress.bar = progress.bar))
-    }
-  }
   t1 <- Sys.time()
 
   if (n.iter > 0 & class(mcmc) != 'mcmc.list')
