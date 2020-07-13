@@ -28,6 +28,29 @@ JAGSmodel_clm <- function(info) {
                   cols = info$lp[[info$resp_mat]],
                   scale_pars = info$scale_pars[[info$resp_mat]])
   } else {"0"}
+  linpred_nonprop <- if (!is.null(attr(info$parelmts[[info$resp_mat]],
+                                       "nonprop"))) {
+    RHS <- sapply(
+      attr(info$parelmts[[info$resp_mat]], "nonprop"),
+      function(par_elmts) {
+        add_linebreaks(
+          paste_linpred(info$parname,
+                        par_elmts,
+                        matnam = info$resp_mat,
+                        index = index,
+                        cols = attr(info$lp, "nonprop")[[info$resp_mat]],
+                        scale_pars = info$scale_pars[[info$resp_mat]]
+          ),
+          indent = indent
+        )
+      }
+    )
+
+    paste0("\n\n",
+           paste0(tab(4), "eta_", info$varname, "_", seq_along(RHS),
+                  "[", index, "] <- ", RHS, collapse = "\n")
+    )
+  }
 
 
 
@@ -94,9 +117,10 @@ JAGSmodel_clm <- function(info) {
     paste_ppc,
     tab(4), "eta_", info$varname, "[", index, "] <- ",
     add_linebreaks(linpred, indent = indent),
+    linpred_nonprop,
     "\n\n",
     write_probs(info, index), "\n\n",
-    write_logits(info, index), "\n",
+    write_logits(info, index, nonprop = !is.null(linpred_nonprop)), "\n",
     dummies,
     info$trafos,
     tab(), "}", "\n\n",
@@ -105,8 +129,11 @@ JAGSmodel_clm <- function(info) {
     tab(), "# Priors for the model for ", info$varname, "\n",
     if (!is.null(info$lp[[info$resp_mat]])) {
       paste0(
-        tab(), "for (k in ", min(unlist(info$parelmts)), ":",
-        max(unlist(info$parelmts)), ") {", "\n",
+        tab(), "for (k in ",
+        min(unlist(c(info$parelmts, lapply(info$parelmts, attr, "nonprop")))),
+        ":",
+        max(unlist(c(info$parelmts, lapply(info$parelmts, attr, "nonprop")))),
+        ") {", "\n",
         get_priordistr(info$shrinkage, type = "ordinal",
                        parname = info$parname),
         tab(), "}", "\n\n"

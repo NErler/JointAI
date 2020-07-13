@@ -17,6 +17,15 @@ JAGSmodel_clmm <- function(info) {
   rdslopes <- paste_rdslope_lp(info)
   Z_predictor <- paste_lp_Zpart(info)
 
+  linpred_nonprop <- if (!is.null(attr(info$parelmts[[info$resp_mat]],
+                                       'nonprop'))) {
+    nonprop <- write_nonprop(info)
+
+    paste0("\n\n",
+         paste0(tab(4), "eta_", info$varname, "_", seq_along(nonprop),
+                "[", index, "] <- ", nonprop, collapse = "\n")
+  )}
+
   # syntax for probabilities, using min-max-trick for numeric stability
   # i.e., "p_O2[i, 2] <- psum_O2[i, 2] - psum_O2[i, 1]"
   probs <- sapply(2:(info$ncat - 1), function(k) {
@@ -96,9 +105,10 @@ JAGSmodel_clmm <- function(info) {
 
          tab(4), 'eta_', info$varname, "[", index, "] <- ",
          add_linebreaks(Z_predictor, indent = indent),
+         linpred_nonprop,
          "\n\n",
          write_probs(info, index), "\n\n",
-         write_logits(info, index), "\n",
+         write_logits(info, index, nonprop = !is.null(linpred_nonprop)), "\n",
          dummies,
          info$trafos,
          "\n",
@@ -113,8 +123,13 @@ JAGSmodel_clmm <- function(info) {
          # priors
          tab(), "# Priors for the model for ", info$varname, "\n",
          if (any(!sapply(info$parelmts, is.null))) {
-           paste0(tab(), "for (k in ", min(unlist(info$parelmts)), ":",
-                  max(unlist(info$parelmts)), ") {", "\n",
+           paste0(tab(), "for (k in ",
+                  min(unlist(c(info$parelmts,
+                               lapply(info$parelmts, attr, 'nonprop')))),
+                  ":",
+                  max(unlist(c(info$parelmts,
+                               lapply(info$parelmts, attr, 'nonprop')))),
+                  ") {", "\n",
                   get_priordistr(info$shrinkage, type = 'ordinal',
                                  parname = info$parname),
                   tab(), "}")
