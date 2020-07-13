@@ -52,48 +52,10 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
   }
 
   # linear predictor columns -------------------------------------------------
-  lp <- Mlist$lp_cols[[k]]
+  lp <- get_lp(k, Mlist)
 
   # parameter elements ------------------------------------------------------
-  parelmts <- if (k %in% names(Mlist$fixed)) {
-    # for variables for which model was specified in fixed, use the
-    # parameters given in the matrix K
-    sapply(rownames(K[[k]]), function(i) {
-      if (!any(is.na(K[[k]][i, ]))) {
-        if (Mlist$models[k] %in% c('mlogit', 'mlogitmm')) {
-          split(K[[k]][i, 1]:K[[k]][i, 2],
-                rep(attr(Mlist$refs[[k]], 'dummies'),
-                    each = length(lp[[i]])))
-        } else {
-          K[[k]][i, 1]:K[[k]][i, 2]
-        }
-      }
-    }, simplify = FALSE)
-  } else {
-    # for variables for which no model was specified in fixed, use the
-    # parameters given in K_imp
-    sapply(rownames(K_imp[[k]]), function(i) {
-      if (!any(is.na(K_imp[[k]][i, ]))) {
-        if (Mlist$models[k] %in% c('mlogit', 'mlogitmm')) {
-          split(K_imp[[k]][i, 1]:K_imp[[k]][i, 2],
-                rep(seq_len(length(levels(Mlist$refs[[k]])[-1])),
-                    each = length(lp[[i]])))
-        } else {
-          K_imp[[k]][i, 1]:K_imp[[k]][i, 2]
-        }
-      }
-    }, simplify = FALSE)
-  }
-
-  parelmts <- mapply(function(pe, linpred) {
-    if (is.list(pe)) {
-      for (i in seq_along(pe))
-        names(pe[[i]]) <- names(linpred)
-      pe
-    } else {
-      setNames(pe, names(linpred))
-    }
-  }, pe = parelmts, linpred = lp, SIMPLIFY = FALSE)
+  parelmts <- get_parelmts(k, Mlist, K, K_imp, lp)
 
 
   # scaling parameter matrices -----------------------------------------------
@@ -406,4 +368,74 @@ get_assoc_type <- function(covnames, models, assoc_type, refs) {
     }
   }))
 
+}
+
+
+
+# used in get_model_info() (2020-07-08)
+get_lp <- function(k, Mlist) {
+  # obtain the linear predictor for a given response variable for all levels
+  # k: the name of the response
+  # Mlist: obtained from divide_matrices()
+
+  lplist <- sapply(names(Mlist$lp_cols[[k]]), function(lvl) {
+    lpc <- Mlist$lp_cols[[k]][[lvl]]
+    list(prop = lpc[!names(lpc) %in% Mlist$lp_nonprop[[k]][[lvl]]],
+         nonprop = lpc[names(lpc) %in% Mlist$lp_nonprop[[k]][[lvl]]]
+    )
+  }, simplify = FALSE)
+
+  lp <- lapply(lplist, "[[", "prop")
+
+  if (!is.null(Mlist$lp_nonprop[[k]])) {
+    attr(lp, "nonprop") <- lapply(lplist, "[[", "nonprop")
+  }
+  lp
+}
+
+
+
+get_parelmts <- function(k, Mlist, K, K_imp, lp) {
+
+  Kmat <- if (k %in% names(Mlist$fixed)) K else K_imp
+
+  if (any(is.na(Kmat)))
+    errormsg("There are missing values in the matrix %s.",
+             if (k %in% names(Mlist$fixed)) "K" else "K_imp")
+
+  sapply(rownames(Kmat[[k]]), function(lvl) {
+    parnums <- Kmat[[k]][lvl, 1]:Kmat[[k]][lvl, 2]
+
+    if (Mlist$models[k] %in% c("mlogit", "mlogitmm")) {
+      parnums <- setNames(Kmat[[k]][lvl, 1]:Kmat[[k]][lvl, 2],
+                          rep(names(lp[[lvl]]),
+                              length(levels(Mlist$refs[[k]])) - 1)
+      )
+
+      split(parnums,
+            rep(paste0(k, levels(Mlist$refs[[k]])[-1]),
+                each = length(lp[[lvl]])))
+
+    } else if (Mlist$models[[k]] %in% c("clm", "clmm")) {
+      # parameter elements for covariates with proportional effects
+      parnums_prop <- setNames(parnums[seq_along(lp[[lvl]])], names(lp[[lvl]]))
+
+      # parameter elements for covariates with non-proportional effects
+      parnums_nonprop <- setNames(setdiff(parnums, parnums_prop),
+                                  rep(names(attr(lp, "nonprop")[[lvl]]),
+                                      length(attr(Mlist$refs[[k]], "dummies")))
+      )
+
+      parnums_nonprop <- split(parnums_nonprop,
+                               rep(paste0(k, levels(Mlist$refs[[k]])[-1]),
+                                   each = length(attr(lp, "nonprop")[[lvl]])))
+
+      if (length(parnums_nonprop) > 0) {
+        attr(parnums_prop, "nonprop") <- parnums_nonprop
+      }
+      parnums_prop
+    } else {
+      setNames(parnums, names(lp[[lvl]]))
+    }
+  }, simplify = FALSE)
 }
