@@ -132,7 +132,7 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
 
   # Hierarchical centering -----------------------------------------------------
   hc_list <- get_hc_info(varname = k,
-                         lvl = gsub("M_", "", resp_mat[length(resp_mat)]),
+                         resplvl = gsub("M_", "", resp_mat[length(resp_mat)]),
                          Mlist, parelmts, lp)
   nranef <- sapply(hc_list$hcvars, function(x)
     as.numeric(attr(x, "rd_intercept")) +
