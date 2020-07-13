@@ -593,22 +593,18 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   info_list <- get_model_info(Mlist, K = K, K_imp = K_imp,
                               trunc = trunc, assoc_type = assoc_type)
 
-
   # * data list ----------------------------------------------------------------
   data_list <- get_data_list(Mlist, info_list, hyperpars)
-
 
   # write model ----------------------------------------------------------------
   modelfile <- make_filename(modeldir = modeldir, modelname = modelname,
                              keep_model = keep_model, overwrite = overwrite,
                              mess = mess)
 
-
   if (!file.exists(modelfile) || (file.exists(modelfile) &
                                   attr(modelfile, "overwrite") == TRUE)) {
     write_model(info_list = info_list, Mlist = Mlist, modelfile = modelfile)
   }
-
 
   # initial values -------------------------------------------------------------
   inits <- get_initial_values(inits = inits, seed = seed, n.chains = n.chains,
@@ -659,8 +655,6 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
   if (n.iter > 0 & class(mcmc) != 'mcmc.list')
     warnmsg('There is no mcmc sample. Something went wrong.')
-
-
 
   # post processing ------------------------------------------------------------
   if (n.iter > 0 & !is.null(mcmc)) {
@@ -1118,7 +1112,18 @@ survreg_imp <- function(formula, data,
 
   if (missing(formula)) errormsg("No model formula specified.")
 
-  arglist <- prep_arglist(analysis_type = 'survreg',
+
+  fmla <- if (is.list(formula)) {
+    deparse(formula[[1]], width.cutoff = 500)
+  } else {
+    deparse(formula, width.cutoff = 500)
+  }
+  if (!grepl("^Surv\\(", fmla)) {
+    errormsg("For a survival model, the left hand side of the model formula
+             should be a survival object (using %s).", dQuote("Surv()"))
+  }
+
+  arglist <- prep_arglist(analysis_type = "survreg",
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
 
@@ -1145,6 +1150,17 @@ coxph_imp <- function(formula, data, df_basehaz = 6,
 
 
   if (missing(formula)) errormsg("No model formula specified.")
+
+  fmla <- if (is.list(formula)) {
+    deparse(formula[[1]], width.cutoff = 500)
+  } else {
+    deparse(formula, width.cutoff = 500)
+  }
+  if (!grepl("^Surv\\(", fmla)) {
+    errormsg("For a survival model, the left hand side of the model formula
+             should be a survival object (using %s).", dQuote("Surv()"))
+  }
+
 
   arglist <- prep_arglist(analysis_type = 'coxph',
                           formals = formals(), call = match.call(),
@@ -1186,6 +1202,17 @@ JM_imp <- function(formula, data, df_basehaz = 6,
 
 
   if (missing(formula)) errormsg("No model formula specified.")
+
+  fmla <- if (is.list(formula)) {
+    deparse(formula[[1]], width.cutoff = 500)
+  } else {
+    deparse(formula, width.cutoff = 500)
+  }
+  if (!grepl("^Surv\\(", fmla)) {
+    errormsg("For a survival model, the left hand side of the model formula
+             should be a survival object (using %s).", dQuote("Surv()"))
+  }
+
 
   arglist <- prep_arglist(analysis_type = 'JM',
                           formals = formals(), call = match.call(),
