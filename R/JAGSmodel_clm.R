@@ -70,40 +70,40 @@ JAGSmodel_clm <- function(info) {
 
   # posterior predictive check -------------------------------------------------
   # currently not used !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  paste_ppc <- if (info$ppc) {
-    paste0(
-      tab(4), info$varname, "_ppc[", index, "] ~ dcat(p_", info$varname,
-      "[", index, ", 1:", info$ncat, "])", "\n"
-    )
-  }
-
-
-  paste_ppc_prior <- if (info$ppc) {
-    paste0(
-      "\n\n",
-      tab(), "# Posterior predictive check for the model for ",
-      info$varname, "\n",
-      tab(), "for (", index, " in 1:",
-      info$N[gsub("M_", "", info$resp_mat)], ") {", "\n",
-      tab(4), "for (k in 1:", info$ncat, ") {", "\n",
-      tab(6), info$varname, "_dummies[", index, ", k] <- ifelse(",
-      info$varname, "[", index, "] == k, 1, 0)", "\n",
-      tab(6), info$varname, "_ppc_dummies[", index, ", k] <- ifelse(",
-      info$varname, "_ppc[", index, "] == k, 1, 0)", "\n",
-      tab(4), "}", "\n",
-      tab(4), "ppc_", info$varname, "_o[", index, "] <- sum(pow(",
-      info$varname, "_dummies[", index, ", ] - p_", info$varname, "[",
-      index, ", ], 2))", "\n",
-      tab(4), "ppc_", info$varname, "_e[", index, "] <- sum(pow(",
-      info$varname, "_ppc_dummies[", index, ", ] - p_", info$varname,
-      "[", index, ", ], 2))", "\n",
-      tab(), "}", "\n",
-      tab(), "ppc_", info$varname, " <- mean(ifelse(ppc_", info$varname,
-      "_o > ppc_", info$varname, "_e, 1, 0) + ",
-      "ifelse(ppc_", info$varname, "_o == ppc_", info$varname,
-      "_e, 0.5, 0)) - 0.5", "\n"
-    )
-  }
+  # paste_ppc <- if (info$ppc) {
+  #   paste0(
+  #     tab(4), info$varname, "_ppc[", index, "] ~ dcat(p_", info$varname,
+  #     "[", index, ", 1:", info$ncat, "])", "\n"
+  #   )
+  # }
+  #
+  #
+  # paste_ppc_prior <- if (info$ppc) {
+  #   paste0(
+  #     "\n\n",
+  #     tab(), "# Posterior predictive check for the model for ",
+  #     info$varname, "\n",
+  #     tab(), "for (", index, " in 1:",
+  #     info$N[gsub("M_", "", info$resp_mat)], ") {", "\n",
+  #     tab(4), "for (k in 1:", info$ncat, ") {", "\n",
+  #     tab(6), info$varname, "_dummies[", index, ", k] <- ifelse(",
+  #     info$varname, "[", index, "] == k, 1, 0)", "\n",
+  #     tab(6), info$varname, "_ppc_dummies[", index, ", k] <- ifelse(",
+  #     info$varname, "_ppc[", index, "] == k, 1, 0)", "\n",
+  #     tab(4), "}", "\n",
+  #     tab(4), "ppc_", info$varname, "_o[", index, "] <- sum(pow(",
+  #     info$varname, "_dummies[", index, ", ] - p_", info$varname, "[",
+  #     index, ", ], 2))", "\n",
+  #     tab(4), "ppc_", info$varname, "_e[", index, "] <- sum(pow(",
+  #     info$varname, "_ppc_dummies[", index, ", ] - p_", info$varname,
+  #     "[", index, ", ], 2))", "\n",
+  #     tab(), "}", "\n",
+  #     tab(), "ppc_", info$varname, " <- mean(ifelse(ppc_", info$varname,
+  #     "_o > ppc_", info$varname, "_e, 1, 0) + ",
+  #     "ifelse(ppc_", info$varname, "_o == ppc_", info$varname,
+  #     "_e, 0.5, 0)) - 0.5", "\n"
+  #   )
+  # }
 
 
 
@@ -118,7 +118,7 @@ JAGSmodel_clm <- function(info) {
                                                  info$resp_mat)], ") {", "\n",
     tab(4), info$resp_mat, "[", index, ", ", info$resp_col,
     "] ~ dcat(p_", info$varname, "[", index, ", 1:", info$ncat, "])", "\n",
-    paste_ppc,
+    # paste_ppc,
     tab(4), "eta_", info$varname, "[", index, "] <- ",
     add_linebreaks(linpred, indent = indent),
     linpred_nonprop,
@@ -143,8 +143,7 @@ JAGSmodel_clm <- function(info) {
         tab(), "}", "\n\n"
       )
     },
-    write_priors_clm(info),
-    paste_ppc_prior
+    write_priors_clm(info)
+    # paste_ppc_prior
   )
 }
-

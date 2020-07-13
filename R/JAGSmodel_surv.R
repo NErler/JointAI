@@ -29,31 +29,36 @@ JAGSmodel_survreg <- function(info) {
   }
 
 
+    )
+  }
+
+
   # posterior predictive check -------------------------------------------------
   # currently not used !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  paste_ppc <- if (info$ppc) {
-    paste0(
-      tab(4), info$varname, "_ppc[", index, "] ~ dgen.gamma(1, rate_",
-      info$varname, "[", index, "], shape_", info$vaname, ")", "\n",
-      tab(4), "mu_", info$varname, "[", index, "] <- 1/rate_", info$varname,
-      "[", index, "] * exp(loggam(1 + 1/shape_", info$varname, "))", "\n"
-    )
-  }
-
-
-  paste_ppc_prior <- if (info$ppc) {
-    paste0('\n',
-           tab(), '# Posterior predictive check for the model for ',
-           info$varname, '\n',
-           tab(), 'ppc_', info$varname, "_o <- pow(", info$varname, "[] - mu_",
-           info$varname, "[], 2)", "\n",
-           tab(), 'ppc_', info$varname, "_e <- pow(", info$varname,
-           "_ppc[] - mu_",
-           info$varname, "[], 2)", "\n",
-           tab(), 'ppc_', info$varname, " <- mean(step(ppc_", info$varname,
-           "_o - ppc_", info$varname, "_e)) - 0.5", "\n"
-    )
-  }
+  # paste_ppc <- if (info$ppc) {
+  #   paste0(
+  #     tab(4), info$varname, "_ppc[", index, "] ~ dgen.gamma(1, rate_",
+  #     info$varname, "[", index, "], shape_", info$vaname, ")", "\n",
+  #     tab(4), "mu_", info$varname, "[", index, "] <- 1/rate_", info$varname,
+  #     "[", index, "] * exp(loggam(1 + 1/shape_", info$varname, "))", "\n"
+  #   )
+  # }
+  #
+  #
+  # paste_ppc_prior <- if (info$ppc) {
+  #   paste0("\n",
+  #          tab(), "# Posterior predictive check for the model for ",
+  #          info$varname, "\n",
+  #          tab(), "ppc_", info$varname, "_o <-
+  #          pow(", info$varname, "[] - mu_",
+  #          info$varname, "[], 2)", "\n",
+  #          tab(), "ppc_", info$varname, "_e <- pow(", info$varname,
+  #          "_ppc[] - mu_",
+  #          info$varname, "[], 2)", "\n",
+  #          tab(), "ppc_", info$varname, " <- mean(step(ppc_", info$varname,
+  #          "_o - ppc_", info$varname, "_e)) - 0.5", "\n"
+  #   )
+  # }
 
 
   paste0(tab(2), add_dashes(paste0("# Weibull survival model for ",
@@ -64,7 +69,7 @@ JAGSmodel_survreg <- function(info) {
          tab(4), info$varname, "[", index,
          "] ~ dgen.gamma(1, rate_", info$varname, "[", index,
          "], shape_", info$varname, ")", "\n",
-         paste_ppc,
+         # paste_ppc,
          tab(4), "cens_", info$varname, "[", index, "] ~ dinterval(",
          info$varname, "[",
          index, "], ", info$resp_mat[1], "[", index, ", ", info$resp_col[1],
@@ -86,8 +91,8 @@ JAGSmodel_survreg <- function(info) {
                             parname = info$parname),
              tab(), "}", "\n\n")
          },
-         tab(), "shape_", info$varname ," ~ dexp(0.01)", "\n",
-         paste_ppc_prior,
+         tab(), "shape_", info$varname, " ~ dexp(0.01)", "\n",
+         # paste_ppc_prior,
 
          # random effects covariance matrix
          paste0(
