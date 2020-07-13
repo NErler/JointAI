@@ -398,6 +398,25 @@ model.matrix_combi <- function(fmla, data, terms_list, refs) {
     for (i in seq_along(mats)[-1]) {
       X <- cbind(X, mats[[i]][, setdiff(colnames(mats[[i]]), colnames(X)),
                               drop = FALSE])
+
+      if (length(setdiff(colnames(mf_list[[i]]), colnames(X))) > 0) {
+        # need to create matrix and check number of columns, because a spline
+        # is one variable in the mf_list, but consists of multiple columns.
+        # This gives an error when used in data.matrix(), and, moreover, is not
+        # the point. We want to include the main effects (specifically for
+        # factors) to enable the use some more unusual transformations.
+
+
+        mf_mat <- mf_list[[i]][, setdiff(colnames(mf_list[[i]]),
+                                         colnames(X)),
+                               drop = FALSE]
+        mf_mat <- mf_mat[, sapply(mf_mat, function(k) !inherits(k, "matrix")),
+                         drop = FALSE]
+
+        if (ncol(mf_mat) > 0) {
+          X <- cbind(X, data.matrix(mf_mat))
+        }
+      }
     }
   }
 
