@@ -192,7 +192,7 @@ extract_outcome_data <- function(fixed, random = NULL, data,
       ))
 
       if (any(is.na(outcomes[[i]]))) {
-        errormsg("There are invalid values in the survival status.")
+        errormsg("There are invalid values in the survival time status.")
       }
 
       names(outcomes[[i]]) <- idSurv(names(outnams[i]))[c("time", "status")]
