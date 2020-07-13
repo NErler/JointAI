@@ -66,7 +66,7 @@ get_params <- function(analysis_main = TRUE,
   }
 
   # imps
-  impvals <- if (isTRUE(imps)) {
+  impvals <- if (isTRUE(args$imps)) {
     unlist(unname(sapply(names(Mlist$M), function(k) {
       if (any(is.na(Mlist$M[[k]]))) {
         M_NA <- which(is.na(Mlist$M[[k]][, colnames(Mlist$M[[k]]) %in%
