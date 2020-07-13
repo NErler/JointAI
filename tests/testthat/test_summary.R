@@ -5,12 +5,12 @@ mymod <- lme_imp(y ~ C1 + c1 + B2 + c2 + O2 + time + (time  | id),
                  data = longDF, n.adapt = 10, n.iter = 10,
                  monitor_parms = c(other_models = TRUE),
                  parallel = TRUE, n.cores = 2, n.chains = 2,
-                 keep_scaled_mcmc = TRUE, seed = 2020)
+                 keep_scaled_mcmc = TRUE, seed = 2020, warn = FALSE)
 
 
 test_that("main summary functions", {
 
-  expect_s3_class(summary(mymod), 'summary.JointAI')
+  expect_s3_class(summary(mymod, missinfo = TRUE), 'summary.JointAI')
   expect_type(coef(mymod), 'list')
   expect_type(confint(mymod), 'list')
   expect_output(print(mymod))
@@ -55,7 +55,7 @@ test_that('longmodel', {
                        monitor_parms = c(other_models = TRUE),
                        parallel = TRUE, n.cores = 2, n.chains = 2,
                        models = c(p1 = 'glmm_poisson_log'),
-                       refcats = c(O2 = 3))
+                       refcats = c(O2 = 3), warn = FALSE)
   expect_s3_class(mmod, 'JointAI')
   expect_output(list_models(mmod))
   expect_s3_class(parameters(mmod), 'data.frame')
@@ -66,7 +66,7 @@ test_that('longmodel', {
 test_that('plot_imp_distr', {
   mod <- lme_imp(y ~ C1 + c2 + B2 + C2, random = ~ 1 | id, data = longDF,
                  n.iter = 100, monitor_params = c(imps = TRUE),
-                 mess = FALSE)
+                 mess = FALSE, seed = 200)
   impDF <- get_MIdat(mod, m = 5, minspace = 1)
 
   expect_s3_class(get_MIdat(mod, m = 5, minspace = 1), 'data.frame')

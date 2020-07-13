@@ -17,25 +17,29 @@ context("Longitudinal Models standard rd effects")
 test_that("models with standard random effects structure work", {
   testthat::skip_on_cran()
   expect_equal(class(lme_imp(y ~ c1 + c2 + C1 + C2 + O2 + M2,
-                             random = ~1|id, data = longDF)), "JointAI")
+                             random = ~1|id, data = longDF, warn = FALSE)),
+               "JointAI")
 
   expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1),
-                             random = ~ 1|id, data = longDF)), "JointAI")
+                             random = ~ 1|id, data = longDF, warn = FALSE)),
+               "JointAI")
 
   expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1),
-                             random = ~ time|id, data = longDF)), "JointAI")
+                             random = ~ time|id, data = longDF, warn = FALSE)),
+               "JointAI")
 
   expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1) + time,
-                             random = ~ time|id, data = longDF)), "JointAI")
-
-  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1) + time +
-                               I(time^2),
-                             random = ~ time|id, data = longDF,
-                             no_model = 'time')),
+                             random = ~ time|id, data = longDF, warn = FALSE)),
                "JointAI")
 
   expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1) + time +
                                I(time^2),
+                             random = ~ time|id, data = longDF, warn = FALSE,
+                             no_model = 'time')),
+               "JointAI")
+
+  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1) + time +
+                               I(time^2), warn = FALSE,
                              random = ~ time|id, data = longDF)),
                "JointAI")
 
@@ -45,6 +49,7 @@ test_that("models with standard random effects structure work", {
                "JointAI")
 
   expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 -C2) + log(C1) + time,
+                             warn = FALSE,
                              random = ~ time + I(time^2)|id, data = longDF)),
                "JointAI")
 })
@@ -206,7 +211,7 @@ test_that('glme_imp', {
                               family = 'binomial')), 'JointAI')
 
   expect_equal(class(glme_imp(b1 ~ C2 + B1 + time + c2 + c1 + o2,
-                              random = ~time | id, data = longDF,
+                              random = ~time | id, data = longDF, warn = FALSE,
                               family = 'binomial')), 'JointAI')
 
   expect_error(glme_imp(b1 ~ C2 + B1 + time + c2 + c1 + m2,
@@ -216,7 +221,6 @@ test_that('glme_imp', {
 })
 
 
-context("Longitudinal Models poisson")
 test_that('poisson imputation', {
   testthat::skip_on_cran()
   expect_equal(class(lme_imp(y ~ C1 + C2 + p2 + time, random = ~time|id,
@@ -226,19 +230,3 @@ test_that('poisson imputation', {
                "JointAI")
 })
 
-
-context("Longitudinal Models ordinal")
-test_that('ordinal mixed models', {
-  expect_s3_class(clmm_imp(o1 ~ C1 * time + I(time^2) + b2 * c1,
-                           random = ~ time | id,
-                           data = longDF, n.iter = 10), class = "JointAI")
-
-  expect_s3_class(clmm_imp(o1 ~ 1, random = ~ 1|id, data = longDF, n.iter = 10),
-                  class = "JointAI")
-
-  expect_s3_class(clmm_imp(o1 ~ C1 + log(time) + I(time^2) + p1,
-                           random = ~ 1 | id,
-                           data = longDF, n.iter = 10, ridge = TRUE,
-                           parallel = TRUE, n.cores = 2),
-                  class = "JointAI")
-})

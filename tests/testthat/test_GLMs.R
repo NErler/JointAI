@@ -8,7 +8,6 @@ test_that("intercept only GLMs", {
   expect_equal(class(glm_imp(C1 ~ 1, data = wideDF,
                              family = Gamma(link = 'log'))),
                "JointAI")
-  expect_equal(class(clm_imp(O1 ~ 1, data = wideDF)), "JointAI")
 })
 
 
@@ -24,9 +23,6 @@ test_that("models work", {
   expect_equal(class(glm_imp(C1 ~ M2 + O2 * abs(y - C2), data = wideDF,
                              family = Gamma(link = 'log'))),
                "JointAI")
-
-  expect_equal(class(clm_imp(O1 ~ M2 + O2 * abs(C1 -C2) + log(C1),
-                             data = wideDF)), "JointAI")
 })
 
 
