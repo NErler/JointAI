@@ -152,20 +152,18 @@ resid_glm <- function(varname, type = c("working", "pearson", "response"),
 }
 
 
-resid_clm <- function(..., warn = TRUE) {
-  if (warn)
-  warnmsg('It is currently not possible to obtain residuals for clm and clmm
-          modes.')
+resid_clm <- function(...) {
+  errormsg("It is currently not possible to obtain residuals for clm and clmm
+          models.")
 }
 
-resid_survreg <- function(..., warn = TRUE) {
-  if (warn)
-  warnmsg('It is currently not possible to obtain residuals for survreg modes.')
+resid_survreg <- function(...) {
+  errormsg('It is currently not possible to obtain residuals for parametric
+           survival models.')
 }
 
-resid_coxph <- function(..., warn = TRUE) {
-  if (warn)
-  warnmsg('It is currently not possible to obtain residuals for coxph modes.')
+resid_coxph <- function(...) {
+  errormsg('It is currently not possible to obtain residuals for coxph modes.')
   # martingale residuals
   # mresid <- lung$status - 1 + logsurv
 }
