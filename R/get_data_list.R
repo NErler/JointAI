@@ -3,7 +3,7 @@
 # # # # # # # # # # # # # # # # # # # # #
 
 get_data_list <- function(Mlist, info_list, hyperpars) {
-  modeltypes <- sapply(info_list, "[[", 'modeltype')
+  modeltypes <- sapply(info_list, "[[", "modeltype")
 
   # data matrices --------------------------------------------------------------
   l <- Mlist$M
@@ -22,9 +22,9 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
   # include only those scaling matrices that contain scaling parameters that are
   # actually used, to prevent warning message from JAGS
   if (any(incl_sp)) {
-    spM <- Mlist$scale_pars[incl_sp]
-    names(spM) <- paste0("sp", names(spM))
-    l <- c(l, spM)
+    sp <- Mlist$scale_pars[incl_sp]
+    names(sp) <- paste0("sp", names(sp))
+    l <- c(l, sp)
   }
 
 
@@ -38,15 +38,15 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 
   l <- c(l, unlist(unname(hyp[
     c(
-      if (any(sapply(info_list, "[[", 'family') %in% c('gaussian', 'lognorm')))
-        'norm',
-      if (any(sapply(info_list, "[[", 'family') %in% c('Gamma'))) 'gamma',
-      if (any(sapply(info_list, "[[", 'family') %in% c('beta'))) 'beta',
-      if (any(sapply(info_list, "[[", 'family') %in% c('binomial'))) 'binom',
-      if (any(sapply(info_list, "[[", 'family') %in% c('poisson'))) 'poisson',
-      if (any(modeltypes %in% c('mlogit', 'mlogitmm'))) 'multinomial',
-      if (any(modeltypes %in% c('clm', 'clmm'))) 'ordinal',
-      if (any(modeltypes %in% c('survreg', 'coxph', 'JM'))) 'surv'
+      if (any(sapply(info_list, "[[", "family") %in% c("gaussian", "lognorm")))
+        "norm",
+      if (any(sapply(info_list, "[[", "family") %in% c("Gamma"))) "gamma",
+      if (any(sapply(info_list, "[[", "family") %in% c("beta"))) "beta",
+      if (any(sapply(info_list, "[[", "family") %in% c("binomial"))) "binom",
+      if (any(sapply(info_list, "[[", "family") %in% c("poisson"))) "poisson",
+      if (any(modeltypes %in% c("mlogit", "mlogitmm"))) "multinomial",
+      if (any(modeltypes %in% c("clm", "clmm"))) "ordinal",
+      if (any(modeltypes %in% c("survreg", "coxph", "JM"))) "surv"
     )
   ])))
 
@@ -54,19 +54,19 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
   # if there are no regression coefficients in the ordinal models, remove the
   # hyperpars for regression coefficients in ordinal models to prevent warning
   # message from JAGS
-  if (length(unlist(sapply(info_list[modeltypes %in% c('clm', 'clmm')],
-                           "[[", 'parelmts'))) == 0) {
-    l[c('mu_reg_ordinal', 'tau_reg_ordinal')] <- NULL
+  if (length(unlist(sapply(info_list[modeltypes %in% c("clm", "clmm")],
+                           "[[", "parelmts"))) == 0) {
+    l[c("mu_reg_ordinal", "tau_reg_ordinal")] <- NULL
   }
 
 
   # random effects groupings ---------------------------------------------------
   if (length(Mlist$groups) > 1) {
 
-    # Obtain groups from Mlist, except for the group 'lvlone' (never used).
+    # Obtain groups from Mlist, except for the group "lvlone" (never used).
     # The groups are vectors of length nrow(data) that indicate which rows
     # belong together on a given grouping level.
-    groups <- Mlist$groups[!names(Mlist$groups) %in% 'lvlone']
+    groups <- Mlist$groups[!names(Mlist$groups) %in% "lvlone"]
 
     # get the position (row) of a given observation
     # - to identify the correct rows between different sub-levels
@@ -78,12 +78,12 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
                   }, simplify = FALSE)
 
     names(groups) <- paste0("group_", names(groups))
-    names(pos) <- if (length(pos) > 0) paste0('pos_', names(pos))
+    names(pos) <- if (length(pos) > 0) paste0("pos_", names(pos))
 
     l <- c(l,
            groups,
            if (length(pos)) pos,
-           hyp$ranef[c('shape_diag_RinvD', 'rate_diag_RinvD')]
+           hyp$ranef[c("shape_diag_RinvD", "rate_diag_RinvD")]
     )
 
 
@@ -94,12 +94,12 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
     l <- c(l,
            unlist(unname(
              lapply(info_list[modeltypes %in%
-                                c('coxph', 'glmm', 'clmm', 'mlogitmm')],
+                                c("coxph", "glmm", "clmm", "mlogitmm")],
                     function(x) {
                       unlist(unname(
                         lapply(names(x$hc_list$hcvars), function(k) {
                           nranef <- x$nranef[k]
-                          setNames(get_RinvD(nranef, hyp$ranef['KinvD_expr']),
+                          setNames(get_RinvD(nranef, hyp$ranef["KinvD_expr"]),
                             paste(c("RinvD", "KinvD"), x$varname,
                                   k, sep = "_")
                           )
@@ -123,7 +123,7 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
   }
 
   # coxph & JM -----------------------------------------------------------------
-  if (any(modeltypes %in% c('coxph', 'JM'))) {
+  if (any(modeltypes %in% c("coxph", "JM"))) {
 
     # Gauss-Kronrod quadrature points
     gkw <- gauss_kronrod()$gkw
@@ -150,7 +150,7 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
           errormsg("The number of observations for survival differs from the
                    number of subjects.")
 
-        l[[paste0('srow_', x$varname)]] <- srow
+        l[[paste0("srow_", x$varname)]] <- srow
       }
 
 
@@ -162,7 +162,7 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
       l[[paste0("Bh0_", x$varname)]] <-
         splines::splineDesign(h0knots, x$survtime, ord = 4)
       l[[paste0("Bsh0_", x$varname)]] <-
-        splines::splineDesign(h0knots, c(t(outer(x$survtime/2, gkx + 1))),
+        splines::splineDesign(h0knots, c(t(outer(x$survtime / 2, gkx + 1))),
                               ord = 4)
 
       # vector of zeros for the "zeros trick" in JAGS
@@ -192,7 +192,7 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
       # quadrature points for time
       Mgk <- get_Mgk(Mlist, gkx, surv_lvl, survinfo, data = Mlist$data,
                      td_cox = unique(sapply(survinfo, "[[", "modeltype")) ==
-                       'coxph')
+                       "coxph")
 
       # for survival models, there can only be one level below the level of the
       # survival outcome (i.e., time-varying variables have level 1, survival
@@ -204,29 +204,29 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
       )
     }
 
-  }  # end of if (any(modeltypes %in% c('coxph', 'JM')))
+  }  # end of if (any(modeltypes %in% c("coxph", "JM")))
 
 
 
   # splines --------------------------------------------------------------------
 
-  # if (any(Mlist$fcts_all$type %in% c('bs', 'ps'))) {
+  # if (any(Mlist$fcts_all$type %in% c("bs", "ps"))) {
   #   trafo_sub <-
-  #     unique(Mlist$fcts_all[which(Mlist$fcts_all$type %in% c('bs', 'ps')),
-  #                           c('var', 'fct', 'type', 'dupl')])
+  #     unique(Mlist$fcts_all[which(Mlist$fcts_all$type %in% c("bs", "ps")),
+  #                           c("var", "fct", "type", "dupl")])
   #
   #   for (k in seq_len(nrow(trafo_sub))) {
   #     sB <- eval(parse(text = trafo_sub$fct[k]), envir = Mlist$data)
   #
-  #     l[[paste0("kn_", trafo_sub$var[k])]] <- attr(sB, 'knots')
+  #     l[[paste0("kn_", trafo_sub$var[k])]] <- attr(sB, "knots")
   #
-  #     sD <- diff(diag(length(attr(sB, 'knots'))),
-  #                diff = attr(sB, 'degree') + 1) /
-  #       (gamma(attr(sB, 'degree') + 1) * attr(sB, 'dx')^attr(sB, 'degree'))
+  #     sD <- diff(diag(length(attr(sB, "knots"))),
+  #                diff = attr(sB, "degree") + 1) /
+  #       (gamma(attr(sB, "degree") + 1) * attr(sB, "dx")^attr(sB, "degree"))
   #
   #     l[[paste0("sD_", trafo_sub$var[k])]] <- sD
   #
-  #     if (trafo_sub$type == 'ps') {
+  #     if (trafo_sub$type == "ps") {
   #       DDal <- diag(ncol(sB))
   #       l[[paste0("priorTau_", trafo_sub$var[k])]] <-
   #         crossprod(diff(DDal, diff = 2)) + 1e-06 * DDal

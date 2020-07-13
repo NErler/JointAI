@@ -26,20 +26,6 @@ JAGSmodel_clmm <- function(info) {
                 "[", index, "] <- ", nonprop, collapse = "\n")
   )}
 
-  # syntax for probabilities, using min-max-trick for numeric stability
-  # i.e., "p_O2[i, 2] <- psum_O2[i, 2] - psum_O2[i, 1]"
-  probs <- sapply(2:(info$ncat - 1), function(k) {
-    paste0(tab(4), "p_", info$varname, "[", index, ", ", k,
-           "] <- max(1e-7, min(1-1e-10, psum_",
-           info$varname, "[", index, ", ", k,"] - psum_", info$varname, "[",
-           index, ", ", k - 1, "]))")})
-
-  # syntax for logits, e.g., "logit(psum_O2[i, 1]) <- gamma_O2[1] + eta_O2[i]"
-  logits <- sapply(1:(info$ncat - 1), function(k) {
-    paste0(tab(4), "logit(psum_", info$varname, "[", index, ", ", k,
-           "]) <- gamma_", info$varname,
-           "[", k, "]", " + eta_", info$varname,"[", index, "]")
-  })
 
   # syntax to set values of dummy variables,
   # e.g. "M_lvlone[i, 8] <- ifelse(M_lvlone[i, 4] == 2, 1, 0)"

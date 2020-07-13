@@ -1,7 +1,7 @@
 # Function to write the JAGS model
 # info_list contains the info per model that needs to be written
 # Mlist contains the info on the interactions that is needed here
-write_model <- function(info_list, Mlist, modelfile = '') {
+write_model <- function(info_list, Mlist, modelfile = "") {
 
     cat("model {", "\n\n",
       paste0(lapply(info_list, function(k) {
@@ -19,4 +19,3 @@ write_model <- function(info_list, Mlist, modelfile = '') {
       "\r}", file = modelfile
   )
 }
-

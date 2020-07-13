@@ -1,5 +1,5 @@
 
-get_RNG <- function(seed, n.chains) {
+get_rng <- function(seed, n.chains) {
   # get starting values for the random number generator
   # - seed: an optional seed value
   # - n.chains: the number of MCMC chains for which starting values need to be

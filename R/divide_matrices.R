@@ -29,7 +29,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # in case of last-observation-carried forward: the value of the time-varying
   # covariates at the event times is filled in
-  if (analysis_type == 'coxph' & length(groups) > 1 & !is.null(timevar))
+  if (analysis_type == "coxph" & length(groups) > 1 & !is.null(timevar))
     data <- fill_locf(data, fixed, random, auxvars, timevar, groups)
 
 
@@ -76,7 +76,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # - timevar for survival model with time-varying covariates
   av <- sapply(all_vars(remove_LHS(fixed)), function(i) {
     if (i %in% names(refs)) {
-      all(attr(refs[[i]], 'dummies') %in% colnames(X))
+      all(attr(refs[[i]], "dummies") %in% colnames(X))
     } else {
       i %in% colnames(X)
     }
@@ -86,7 +86,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   auxvars <- if (is.null(auxvars)) {
     if (length(add_to_aux) > 0)
-      as.formula(paste("~", paste0(add_to_aux, collapse = ' + ')))
+      as.formula(paste("~", paste0(add_to_aux, collapse = " + ")))
   } else {
     as.formula(paste0(c(deparse(auxvars, width.cutoff = 500), add_to_aux),
                       collapse = " + "))
@@ -120,8 +120,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # if one element in an interaction is time-varying the interaction is
   # time-varying
   if (length(inter) > 0) {
-    minlvl <- sapply(strsplit(inter, ':'), function(k)
-      names(which.min(group_lvls[gsub('M_', '', Mlvls[k])]))
+    minlvl <- sapply(strsplit(inter, ":"), function(k)
+      names(which.min(group_lvls[gsub("M_", "", Mlvls[k])]))
     )
     Mlvls[inter] <- paste0("M_", minlvl)
   }
@@ -132,8 +132,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # As a consequence, higher levels (which contain the "(Intercept)" will
   # appear first in the linear predictor, and also in the output. Just looks
   # nicer this way.
-  M <- sapply(paste0('M_', names(groups)), function(k)
-    MX[ , Mlvls == k, drop = FALSE], simplify = FALSE)
+  M <- sapply(paste0("M_", names(groups)), function(k)
+    MX[, Mlvls == k, drop = FALSE], simplify = FALSE)
 
   fcts_mis <- extract_fcts(fixed = fixed, data, random = random,
                            auxvars = auxvars, complete = FALSE, Mlvls = Mlvls)
@@ -141,12 +141,12 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                            auxvars = auxvars, complete = TRUE, Mlvls = Mlvls)
 
 
-  if (any(fcts_mis$type %in% c('ns', 'bs')))
+  if (any(fcts_mis$type %in% c("ns", "bs")))
     errormsg("Splines are currently not implemented for incomplete variables.")
 
 
   # !!! Error message that will be needed when splines are implemented
-  # if (any(fcts_mis$type %in% c('ns')))
+  # if (any(fcts_mis$type %in% c("ns")))
   # errormsg("Natural cubic splines are not implemented for incomplete
   #           variables.
             # Please use B-splines (using %s) instead.", dQuote("bs()"))
@@ -157,7 +157,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # scaling --------------------------------------------------------------------
   scale_pars <- mapply(get_scale_pars,
-                       mat = M, groups = groups[gsub('M_', '', names(M))],
+                       mat = M, groups = groups[gsub("M_", "", names(M))],
                        MoreArgs = list(scale_vars = scale_vars, refs = refs,
                                        fcts_all = fcts_all,
                                        interactions = interactions,
@@ -169,10 +169,10 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # set interaction terms that involve incomplete variables to NA
   # (otherwise error in JAGS)
   if (any(unlist(sapply(M, colnames)) %in% names(interactions)[
-    sapply(interactions, 'attr', "has_NAs")]))
+    sapply(interactions, "attr", "has_NAs")]))
     for (k in names(M)) {
       M[[k]][, which(colnames(M[[k]]) %in% names(interactions)[
-        sapply(interactions, 'attr', "has_NAs")])] <- NA
+        sapply(interactions, "attr", "has_NAs")])] <- NA
     }
 
 
@@ -188,25 +188,25 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # also set dummies of complete long. variables to NA if there is a JM
   # because they need to be re-calculated in the quadrature part
   for (k in names(refs)) {
-    if (all(attr(refs[[k]], 'dummies') %in% colnames(MX))) {
+    if (all(attr(refs[[k]], "dummies") %in% colnames(MX))) {
 
       if (any(is.na(data[, k]))) {
         M[[unique(Mlvls[attr(refs[[k]], "dummies")])]][, attr(
           refs[[k]],
           "dummies"
         )] <- NA
-      } else if (any(sapply(fixed, 'attr', 'type') %in% 'JM')) {
+      } else if (any(sapply(fixed, "attr", "type") %in% "JM")) {
         # dummy matrix
-        covmat <- unique(Mlvls[attr(refs[[k]], 'dummies')])
+        covmat <- unique(Mlvls[attr(refs[[k]], "dummies")])
         # outcome matrix
         outmat <- unique(Mlvls[colnames(outcomes$outcomes[[1]])[2]])
         if (colSums(!identify_level_relations(groups))[
-          gsub('M_', '', outmat)] <
+          gsub("M_", "", outmat)] <
           colSums(!identify_level_relations(groups))[
-            gsub('M_', '', covmat)]) {
+            gsub("M_", "", covmat)]) {
 
           M[[unique(Mlvls[
-            attr(refs[[k]], 'dummies')])]][, attr(refs[[k]], 'dummies')] <- NA
+            attr(refs[[k]], "dummies")])]][, attr(refs[[k]], "dummies")] <- NA
         }
       }
     }
@@ -237,8 +237,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # reduce the design matrices to the correct rows, according to their levels
   for (k in names(M)) {
-    M[[k]] <- M[[k]][match(unique(groups[[gsub('M_', '', k)]]),
-                           groups[[gsub('M_', '', k)]]), , drop = FALSE]
+    M[[k]] <- M[[k]][match(unique(groups[[gsub("M_", "", k)]]),
+                           groups[[gsub("M_", "", k)]]), , drop = FALSE]
   }
 
   list(data = data,
@@ -273,8 +273,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 get_Mlist <- function(object) {
 
   if (!(inherits(object, "JointAI") | inherits(object, "JointAI_errored")))
-    errormsg('%s must be of class "JointAI" or "JointAI_errored".',
-             dQuote('object'))
+    errormsg("%s must be of class %s or %s.",
+             dQuote("object"), dQuote("JointAI"), dQuote("JointAI_errored"))
 
-  c(object[c('data', 'models', 'fixed', 'random')], object$Mlist)
+  c(object[c("data", "models", "fixed", "random")], object$Mlist)
 }

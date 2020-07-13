@@ -288,5 +288,3 @@ NULL
 #                      labels = c('censored', 'transplant', 'dead'))
 #
 # save(PBC, file = 'data/PBC.RData')
-
-

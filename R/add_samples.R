@@ -90,9 +90,9 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   if (object$mcmc_settings$parallel) {
     n.cores <- object$mcmc_settings$n.cores
     cl <- parallel::makeCluster(n.cores,
-                                type = ifelse(grepl('linux',
+                                type = ifelse(grepl("linux",
                                                     R.Version()$platform),
-                                              'FORK', 'PSOCK'))
+                                              "FORK", "PSOCK"))
     doParallel::registerDoParallel(cl)
 
     if (mess)
@@ -124,7 +124,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
         rescale(MCMC[[k]], coefs = do.call(rbind, coefs),
                 scale_pars = do.call(rbind, unname(object$Mlist$scale_pars)),
                 object$info_list))
-      attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
+      attr(MCMC[[k]], "mcpar") <- attr(mcmc[[k]], "mcpar")
     }
   }
 
@@ -145,7 +145,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
       lapply(seq_len(length(MCMC)), function(k)
         coda::mcmc(rbind(object$MCMC[[k]], MCMC[[k]]),
              start = start(object$MCMC),
-             end = end(object$MCMC) + coda::niter(mcmc[[k]]) * coda::thin(mcmc[[k]]),
+             end = end(object$MCMC) + coda::niter(mcmc[[k]]) *
+               coda::thin(mcmc[[k]]),
              thin = coda::thin(mcmc[[k]]))
       ))
   } else {
@@ -160,7 +161,9 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   newobject$mcmc_settings$variable.names <- var.names
   newobject$model <- if (object$mcmc_settings$parallel) {
     adapt
-    } else {object$model}
+  } else {
+    object$model
+  }
 
   # add/set new argument values n.iter and thin to/in JointAI object
   newobject$mcmc_settings$n.iter <- c(object$mcmc_settings$n.iter, n.iter)

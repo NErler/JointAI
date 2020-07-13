@@ -27,24 +27,24 @@ make_filename <- function(modeldir, modelname, keep_model, overwrite, mess) {
     warnmsg("The file %s already exists in %s.",
             dQuote(modelname), dQuote(modeldir))
 
-    reply <- menu(c('yes', 'no'),
+    reply <- menu(c("yes", "no"),
                   title = "\nDo you want me to overwrite this file?")
 
     if (reply == 1) {
-      if (mess) msg('The modelfile was overwritten.')
+      if (mess) msg("The modelfile was overwritten.")
       overwrite <- TRUE
     } else {
       overwrite <- FALSE
-      if (mess) msg('The old model will be used.')
+      if (mess) msg("The old model will be used.")
     }
 
     if (mess)
-      msg("To skip this question in the future, set 'overwrite = TRUE' or
-          'overwrite = FALSE'.")
+      msg("To skip this question in the future, set %s or %s.",
+          dQuote("overwrite = TRUE"), dQuote("overwrite = FALSE"))
   }
 
-  attr(modelfile, 'overwrite') <- overwrite
-  attr(modelfile, 'keep_model') <- keep_model
+  attr(modelfile, "overwrite") <- overwrite
+  attr(modelfile, "keep_model") <- keep_model
 
   modelfile
 }
@@ -57,20 +57,20 @@ get_initial_values <- function(inits, seed, n.chains, warn) {
 
 
   if (is.null(inits)) {
-    inits <- get_RNG(seed, n.chains)
+    inits <- get_rng(seed, n.chains)
 
   } else {
     # if initial values are supplied, but they are not a function nor a list,
     # give a warning and do not use them
     if (!(is.null(inits) | inherits(inits, c("function", "list")))) {
       if (warn)
-        warnmsg("The object supplied to 'inits' could not be recognized.
-              Initial values are set by JAGS.")
-      inits <- get_RNG(seed, n.chains)
+        warnmsg("The object supplied to %s could not be recognized.
+              Initial values are set by JAGS.", sQuote("inits"))
+      inits <- get_rng(seed, n.chains)
 
     } else {
 
-      if (inherits(inits, 'function')) {
+      if (inherits(inits, "function")) {
         # if the initial values are supplied as a function, evaluate the
         # function
         if (!is.null(seed)) set.seed(seed)
@@ -81,9 +81,9 @@ get_initial_values <- function(inits, seed, n.chains, warn) {
       # function to a list, check if there are random number generator values
       # specified
       if (inherits(inits, "list")) {
-        if (!any(c('.RNG.name', '.RNG.seed') %in% unlist(lapply(inits, names))))
+        if (!any(c(".RNG.name", ".RNG.seed") %in% unlist(lapply(inits, names))))
           inits <- mapply(function(inits, rng) c(inits, rng), inits = inits,
-                          rng = get_RNG(seed, n.chains),
+                          rng = get_rng(seed, n.chains),
                           SIMPLIFY = FALSE)
       }
     }

@@ -69,7 +69,7 @@
 get_MIdat <- function(object, m = 10, include = TRUE,
                       start = NULL, minspace = 50, seed = NULL,
                       export_to_SPSS = FALSE,
-                      resdir = NULL, filename = NULL){
+                      resdir = NULL, filename = NULL) {
 
   if (!"foreign" %in% rownames(installed.packages()))
     errormsg("This function requires the 'foreign' package to be installed.")
@@ -113,9 +113,9 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
 
   # randomly draw which iterations should be used as imputation
-  if (nrow(MCMC)/minspace < m)
-    errormsg('The total number of iterations (%s) is too small to select %s
-             iterations with spacing of >= %s.', nrow(MCMC), m, minspace)
+  if (nrow(MCMC) / minspace < m)
+    errormsg("The total number of iterations (%s) is too small to select %s
+             iterations with spacing of >= %s.", nrow(MCMC), m, minspace)
 
   cand_iters <- seq(from = sample.int(minspace, size = 1), to = nrow(MCMC),
                     by = minspace)
@@ -126,9 +126,9 @@ get_MIdat <- function(object, m = 10, include = TRUE,
   MCMC <- MCMC[imp_iters, , drop = FALSE]
 
   # prepare a list of copies of the original data
-  DF_list <- list()
+  df_list <- list()
   for (i in 1:(m + 1)) {
-    DF_list[[i]] <- cbind("Imputation_" = i - 1, DF)
+    df_list[[i]] <- cbind("Imputation_" = i - 1, DF)
   }
 
 
@@ -141,7 +141,7 @@ get_MIdat <- function(object, m = 10, include = TRUE,
                   "\\]")
 
     if (!any(grepl(pat, colnames(MCMC))))
-      errormsg('I cannot find imputed values for %s. Did you monitor them?',
+      errormsg("I cannot find imputed values for %s. Did you monitor them?",
                dQuote(i))
 
     impval <- MCMC[, grep(pat, colnames(MCMC), value = TRUE), drop = FALSE]
@@ -156,14 +156,14 @@ get_MIdat <- function(object, m = 10, include = TRUE,
           as.numeric(rownrs)
         ))]
 
-        if (is.factor(DF_list[[j]][, i])) {
-          DF_list[[j]][is.na(DF_list[[j]][, i]), i] <-
-            factor(iv, labels = levels(DF_list[[j]][, i]),
-                   levels = seq_along(levels(DF_list[[j]][, i])) -
-                     as.numeric(length(levels(DF_list[[j]][, i])) == 2)
+        if (is.factor(df_list[[j]][, i])) {
+          df_list[[j]][is.na(df_list[[j]][, i]), i] <-
+            factor(iv, labels = levels(df_list[[j]][, i]),
+                   levels = seq_along(levels(df_list[[j]][, i])) -
+                     as.numeric(length(levels(df_list[[j]][, i])) == 2)
                    )
         } else {
-          DF_list[[j]][is.na(DF_list[[j]][, i]), i] <- iv
+          df_list[[j]][is.na(df_list[[j]][, i]), i] <- iv
         }
       }
     }
@@ -171,10 +171,10 @@ get_MIdat <- function(object, m = 10, include = TRUE,
 
 
   if (!include)
-    DF_list <- DF_list[-1]
+    df_list <- df_list[-1]
 
   # build dataset --------------------------------------------------------------
-  impDF <- do.call(rbind, DF_list)
+  imp_df <- do.call(rbind, df_list)
 
   if (is.null(resdir))
     resdir <- getwd()
@@ -183,12 +183,12 @@ get_MIdat <- function(object, m = 10, include = TRUE,
     filename <- paste0("JointAI-imputation_", Sys.Date())
 
   if (export_to_SPSS == TRUE) {
-    foreign::write.foreign(impDF,
+    foreign::write.foreign(imp_df,
                            file.path(resdir, paste0(filename, ".txt")),
                            file.path(resdir, paste0(filename, ".sps")),
-                           package = 'SPSS'
+                           package = "SPSS"
     )
   }
 
-  return(impDF)
+  return(imp_df)
 }

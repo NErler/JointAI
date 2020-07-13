@@ -1,4 +1,4 @@
-#' Create a new dataframe for prediction
+#' Create a new data frame for prediction
 #'
 #' Build a \code{data.frame} for prediction, where one variable
 #' varies and all other variables are set to the reference value (median for
@@ -66,12 +66,12 @@ predDF.list <- function(formulas, dat, vars, length = 100, idvar = NULL, ...) {
   varying <- all_vars(vars)
 
   if (is.null(idvar))
-    idvar <- 'id'
+    idvar <- "id"
 
   allvars <- all_vars(formulas)
 
   if (any(!varying %in% allvars)) {
-    errormsg('%s was not used in the model formula.', varying)
+    errormsg("%s was not used in the model formula.", varying)
   }
 
   vals <- sapply(allvars, function(k) {
@@ -191,7 +191,7 @@ predDF.list <- function(formulas, dat, vars, length = 100, idvar = NULL, ...) {
 #' @export
 predict.JointAI <- function(object, outcome = 1, newdata,
                             quantiles = c(0.025, 0.975),
-                            type = 'lp',
+                            type = "lp",
                             start = NULL, end = NULL, thin = NULL,
                             exclude_chains = NULL, mess = TRUE,
                             warn = TRUE, ...) {
@@ -305,10 +305,10 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
 
   if (mess & any(is.na(X)))
-    msg('Note: Prediction for cases with missing covariates is not yet
+    msg("Note: Prediction for cases with missing covariates is not yet
         implemented.
-        I will report %s instead of predicted values for those cases.',
-        dQuote('NA'), exdent = 6)
+        I will report %s instead of predicted values for those cases.",
+        dQuote("NA"), exdent = 6)
 
 
   # linear predictor values for the selected iterations of the MCMC sample
@@ -317,8 +317,8 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
          drop = FALSE] %*% X[i, ])
 
   # fitted values: mean over the (transformed) predicted values
-  fit <- if (type == 'response') {
-    if (info_list[[varname]]$family == 'poisson') {
+  fit <- if (type == "response") {
+    if (info_list[[varname]]$family == "poisson") {
       round(colMeans(linkinv(pred)))
     } else {
       colMeans(linkinv(pred))
@@ -329,7 +329,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
   # qunatiles
   quants <- if (!is.null(quantiles)) {
-    if (type == 'response') {
+    if (type == "response") {
       t(apply(pred, 2, function(q) {
         quantile(linkinv(q), probs = quantiles, na.rm  = TRUE)
       }))
@@ -340,14 +340,14 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
   on.exit(options(op))
 
-  resDF <- if (!is.null(quantiles)) {
+  res_df <- if (!is.null(quantiles)) {
     cbind(data.frame(fit = fit),
           as.data.frame(quants))
   } else {
     data.frame(fit = fit)
   }
 
-  return(resDF)
+  return(res_df)
 }
 
 

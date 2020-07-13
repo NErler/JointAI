@@ -274,7 +274,7 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
   # model
   # - info: element of info_list, containing all the info necessary to write
   #         the JAGS sub-model for a given variable
-  # - isgk: logical indicator whether the output is in the Gaus-Kronrod
+  # - isgk: logical indicator whether the output is in the Gauss-Kronrod
   #         quadrature
 
 

@@ -27,7 +27,11 @@ JAGSmodel_clm <- function(info) {
                   index = index,
                   cols = info$lp[[info$resp_mat]],
                   scale_pars = info$scale_pars[[info$resp_mat]])
-  } else {"0"}
+  } else {
+    "0"
+  }
+
+
   linpred_nonprop <- if (!is.null(attr(info$parelmts[[info$resp_mat]],
                                        "nonprop"))) {
     RHS <- sapply(
@@ -57,7 +61,7 @@ JAGSmodel_clm <- function(info) {
   # syntax to set values of dummy variables,
   # e.g. "M_lvlone[i, 8] <- ifelse(M_lvlone[i, 4] == 2, 1, 0)"
   dummies <- if (!is.null(info$dummy_cols)) {
-    paste0('\n', paste0(
+    paste0("\n", paste0(
       paste_dummies(resp_mat = info$resp_mat,
                     resp_col = info$resp_col, dummy_cols = info$dummy_cols,
                     index = index, refs = info$refs), collapse = "\n"), "\n")

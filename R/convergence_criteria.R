@@ -116,13 +116,13 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
                      digits = 2, warn = TRUE, mess = TRUE, ...) {
 
   if (!inherits(x, "JointAI"))
-    errormsg('%s must be of class "JointAI".', dQuote('x'))
+    errormsg("%s must be of class %s.", dQuote("x"), sQuote("JointAI"))
 
   if (is.null(x$MCMC)) errormsg("No MCMC sample.")
 
   if (!"mcmcse" %in% installed.packages()[, "Package"])
     errormsg("The package 'mcmcse' needs to be installed to use the function
-             'MC_error()'.")
+             %s.", dQuote("MC_error()"))
 
   if (is.null(start))
     start <- start(x$MCMC)
@@ -155,13 +155,13 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
     }
   }))
 
-  colnames(MCE1) <- c('est', 'MCSE')
+  colnames(MCE1) <- c("est", "MCSE")
 
   MCE1 <- cbind(MCE1,
                 SD = apply(MCMC, 2, sd)[match(colnames(MCMC), row.names(MCE1))]
   )
   MCE1 <- cbind(MCE1,
-                'MCSE/SD' = MCE1[, "MCSE"]/MCE1[, "SD"])
+                "MCSE/SD" = MCE1[, "MCSE"] / MCE1[, "SD"])
 
 
   # MC error for scaled MCMC sample
@@ -177,11 +177,11 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
         unlist(mce)
       }
     }))
-    colnames(MCE2) <- c('est', 'MCSE')
+    colnames(MCE2) <- c("est", "MCSE")
 
 
     MCE2 <- cbind(MCE2, SD = apply(mcmc, 2, sd))
-    MCE2 <- cbind(MCE2, 'MCSE/SD' = MCE2[, "MCSE"]/MCE2[, "SD"])
+    MCE2 <- cbind(MCE2, "MCSE/SD" = MCE2[, "MCSE"] / MCE2[, "SD"])
   } else {
     MCE2 <- NULL
   }
