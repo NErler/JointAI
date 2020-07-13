@@ -1,5 +1,11 @@
 JAGSmodel_clmm <- function(info) {
 
+  if (info$ncat < 3)
+    errormsg("A cumulative logit mixed model is supposed to be fitted for the
+             variable %s but %s has %s categories.",
+             dQuote(info$varname), dQuote(info$varname), info$ncat)
+
+
   # specify indent width and index character to be used
   indent <- 4 + 4 + nchar(info$varname) + 7
   index <- info$index[gsub("M_", "", info$resp_mat)]

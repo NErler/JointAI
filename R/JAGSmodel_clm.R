@@ -1,6 +1,17 @@
 # Cumulative logit model
 JAGSmodel_clm <- function(info) {
 
+  if (info$ncat < 3) {
+    errormsg("A cumulative logit mixed model is supposed to be fitted for the
+             variable %s but %s only has %s categories.",
+             dQuote(info$varname), dQuote(info$varname), info$ncat)
+  }
+
+  if (!is.null(info$hc_list)) {
+    errormsg("I found a random effects structure. Did you mean to use %s
+             instead of %s?", dQuote("clmm"), dQuote("clm"))
+  }
+
   # specify indent width and index character to be used
   indent <- 4 + 4 + nchar(info$varname) + 7
   index <- info$index[gsub("M_", "", info$resp_mat)]
