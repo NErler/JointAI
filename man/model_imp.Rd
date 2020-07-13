@@ -340,6 +340,12 @@ family function, a family function or the result of a call to
 a family function. (For more details see below and
 \code{\link[stats]{family}}.)}
 
+\item{nonprop}{optional named list of one-sided formulas specifying
+covariates that have non-proportional effects in cumulative
+logit models. These covariates should also be part of the
+regular model formula, and the names of the list should be
+the names of the ordinal response variables.}
+
 \item{rev}{optional character vector; vector of ordinal outcome variable
 names for which the odds should be reversed, i.e., logit(y <= k) instead
 of logit(y > k).}

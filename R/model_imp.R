@@ -101,6 +101,11 @@
 #' @param rev optional character vector; vector of ordinal outcome variable
 #'   names for which the odds should be reversed, i.e., logit(y <= k) instead
 #'   of logit(y > k).
+#' @param nonprop optional named list of one-sided formulas specifying
+#'                covariates that have non-proportional effects in cumulative
+#'                logit models. These covariates should also be part of the
+#'                regular model formula, and the names of the list should be
+#'                the names of the ordinal response variables.
 #' @param ... additional, optional arguments (not used)
 #' @importFrom foreach foreach %dopar%
 #' @name model_imp
