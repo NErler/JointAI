@@ -127,15 +127,7 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
                  }),
                  "]", collapse = "\n"),
           if (priors) {
-            paste0("(normal prior(s) with mean ",
-                   object$data_list[[paste0('mu_reg_',
-                                            get_priortype(i$modeltype,
-                                                          i$family))]],
-                   " and precision ",
-                   object$data_list[[paste0('tau_reg_',
-                                            get_priortype(i$modeltype,
-                                                          i$family))]],
-                   ")")
+            paste_regcoef_prior(object$data_list, i$modeltype, i$family)
           }, "\n")
       } else {
         cat(paste0(tab(),
@@ -143,15 +135,7 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
                                              max(unlist(i$parelmts))),
                    "]"),
             if (priors) {
-              paste0("(normal prior(s) with mean ",
-                     object$data_list[[paste0('mu_reg_',
-                                              get_priortype(i$modeltype,
-                                                            i$family))]],
-                     " and precision ",
-                     object$data_list[[paste0('tau_reg_',
-                                              get_priortype(i$modeltype,
-                                                            i$family))]],
-                     ")")
+              paste_regcoef_prior(object$data_list, i$modeltype, i$family)
             }, "\n")
       }
     }
@@ -354,4 +338,14 @@ get_priortype <- function(modeltype, family) {
         'survreg' = 'surv',
         'coxph' = 'surv',
         'JM' = 'surv')
+}
+
+
+
+paste_regcoef_prior <- function(data_list, modeltype, family) {
+  paste0("(normal prior(s) with mean ",
+         data_list[[paste0('mu_reg_', get_priortype(modeltype, family))]],
+         " and precision ",
+         data_list[[paste0('tau_reg_', get_priortype(modeltype, family))]],
+         ")")
 }
