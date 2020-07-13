@@ -590,17 +590,43 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
 
 
 
-get_nonprop_lp <- function(nonprop, Mlvls, data, refs) {
+get_nonprop_lp <- function(nonprop, Mlvls, data, refs, fixed) {
+  # get the linear predictors of covariates with non-proportional effects in
+  # cumulative logit (mixed) models
 
+  # if there are no non-proportional effects (default, and always the case for
+  # all other model types)
   if (is.null(nonprop)) return(NULL)
 
+  sapply(names(nonprop), function(k) {
+    if (any(!all_vars(nonprop[[k]]) %in% all_vars(fixed[[k]]))) {
+      errormsg(
+        'All variables that have non-proportional effect (specified via the
+        argument %s need to be part of the main model formula as well.',
+        dQuote("nonprop")
+      )
+    }
+  })
+
+  # get the list of contrast matrices from refs
   contr_list <- lapply(refs, attr, 'contr_matrix')
 
+  # for each element of nonprop (i.e., per ordinal outcome):
   sapply(nonprop, function(fmla) {
+
+    if (!inherits(fmla, "formula"))
+      errormsg("Covariates with non-proportional effects should be specified as
+               one-sided formula.")
+
+    # select the correct subset of the contrast matrices
     contr_list0 <- contr_list[intersect(all_vars(fmla), names(contr_list))]
+    # get the column names of the design matrix
     nam <- colnames(model.matrix(fmla, data,contrasts.arg = contr_list0))[-1]
+
+    # divide the names by the hierarchical level of the variable
     sapply(unique(Mlvls), function(k) {
       intersect(nam, names(Mlvls)[Mlvls == k])
     }, simplify = FALSE)
+
   }, simplify = FALSE)
 }

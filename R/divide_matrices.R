@@ -232,7 +232,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # get the linear predictor variables that have non-proportional effects in
   # cumulative logit models
-  lp_nonprop <- get_nonprop_lp(nonprop, Mlvls, data, refs)
+  lp_nonprop <- get_nonprop_lp(nonprop, Mlvls, data, refs, fixed)
 
 
   # reduce the design matrices to the correct rows, according to their levels
