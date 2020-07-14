@@ -227,6 +227,9 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
         fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))
       }
 
+      # remove the "as.numeric" used for comparing factors
+      fct <- gsub('\\bas.numeric\\(', '(', fct)
+
       # if (x$type %in% c('ps', 'bs')) {
       #   sB <- eval(parse(text = fct), envir = Mlist$data)
       #   fct <- splineBas(x$var, degree = attr(sB, 'degree'), index = index,
