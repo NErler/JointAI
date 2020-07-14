@@ -553,13 +553,6 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
 
   # checks & warnings -------------------------------------------------------
-  # if only "formula" is provided, split it into fixed and random parts
-  if (!is.null(formula) & any(!is.null(fixed), !is.null(random))) {
-    errormsg("When the argument %s is provided, the arguments %s and %s should
-             not be used.", dQuote("formula"), dQuote("fixed"),
-             dQuote("random"))
-  }
-
   if (!is.null(formula) & is.null(fixed) & is.null(random)) {
     formula <- check_formula_list(formula)
     fixed <- split_formula_list(formula)$fixed
