@@ -199,11 +199,11 @@ predict.JointAI <- function(object, outcome = 1, newdata,
 
   if (!inherits(object, "JointAI")) errormsg("Use only with 'JointAI' objects.")
 
-  if (any(sapply(object$info_list, "[[", "modeltype") %in%
-          c('glmm', 'clmm', 'mlogitmm')) & warn) {
-    warnmsg("Prediction for multi-level models is currently only possible on
-            the population level (not using random effects).")
-  }
+  # if (any(sapply(object$info_list, "[[", "modeltype") %in%
+  #         c("glmm", "clmm", "mlogitmm")) & warn) {
+  #   warnmsg("Prediction for multi-level models is currently only possible on
+  #           the population level (not using random effects).")
+  # }
 
   if (missing(newdata)) {
     newdata <- object$data
