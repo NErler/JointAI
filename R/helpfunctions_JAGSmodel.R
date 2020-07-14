@@ -294,44 +294,8 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
       # of the outcome, but also on the current grouping level, whether the
       # outcome is on the lowest level (lvlone) or not, and if the output is
       # used in the GK-quadrature
-      index <- if (!isgk & lvl == 'lvlone') {
-        # if the outcome is the lowest level and not in GK, use
-        # - the index of the outcome level if the random effect is on the same
-        #   level
-        # - the element of "group" of the random effects level at the index
-        #   position if the random effect is on a higher level
-        if (k == lvl) {
-          info$index[lvl]
-        } else {
-          paste0('group_', k, "[", info$index[lvl], "]")
-        }
-      } else if (!isgk & k == lvl) {
-        # if the outcome is not on the lowest level, but the  random effect has
-        # the same level as the outcome and we're not in the quadrature part,
-        #  use the index of the outcome level
-        info$index[[lvl]]
-      } else if (!isgk) {
-        # if the outcome is not on the lowest level and the random effect is on
-        # a different level, and we're not in the quadrature part, use group
-        # (relating rd. effect level to lvlone), indexed by the position of
-        # the outcome level (position in lvlone that corresponds to the
-        # current index value)
-        paste0('group_', k, "[",
-               "pos_", lvl, "[", info$index[lvl], "]]")
-      } else if (isgk & (k == info$surv_lvl | k == 'lvlone')) {
-        # if we are in the quadrature part, and the random effects
-        # level is either the same as the outcome level or the lowest
-        # level, use the index of the level of the survival outcome
-        info$index[info$surv_lvl]
-      } else if (isgk) {
-        # if we are in the quadrature part and the random effects level is not
-        # the same as the outcome level and not the lowest level, use group and
-        # pos to relate the level of the survival outcome and the level of the
-        # random effect, via lvlone
-        paste0('group_', k, "[",
-               "pos_", info$surv_lvl, "[", info$index[info$surv_lvl], "]]")
-      }
-
+      index <- get_index(lvl, resplvl, indices = info$index,
+                         surv_lvl = info$surv_lvl, isgk = isgk)
 
 
       # generate the random intercept part to enter the linear predictor of
@@ -410,6 +374,59 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
   }
 }
 
+
+
+
+get_index <- function(lvl, resplvl, indices, surv_lvl, isgk = FALSE) {
+  # Find the correct specification of the index. This depends on the level of
+  # the response of the sub-model (resplvl), but also on the current grouping
+  # level (lvl), whether the response is on the lowest level (lvlone) or not,
+  # and if the output is used in the GK-quadrature.
+  # - lvl: the current level
+  # - resplvl: level of the response variable
+  # - indices: vector of indices per level
+  # - surv_lvl: level of the survival outcome; relevant for a survival model
+  #             with time-dependent covariate
+  # - isgk: is the output used within the Gauss-Kronrod quadrature?
+
+  if (!isgk & resplvl == 'lvlone') {
+    # if the outcome is the lowest level and not in GK, use
+    # - the index of the outcome level if the random effect is on the same
+    #   level
+    # - the element of "group" of the random effects level at the index
+    #   position if the random effect is on a higher level
+    if (lvl == resplvl) {
+      indices[resplvl]
+    } else {
+      paste0('group_', lvl, "[", indices[resplvl], "]")
+    }
+  } else if (!isgk & lvl == resplvl) {
+    # if the outcome is not on the lowest level, but the  random effect has
+    # the same level as the outcome and we're not in the quadrature part,
+    # use the index of the outcome level
+    indices[[resplvl]]
+  } else if (!isgk) {
+    # if the outcome is not on the lowest level and the random effect is on
+    # a different level, and we're not in the quadrature part, use group
+    # (relating rd. effect level to lvlone), indexed by the position of
+    # the outcome level (position in lvlone that corresponds to the
+    # current index value)
+    paste0('group_', lvl, "[",
+           "pos_", resplvl, "[", indices[resplvl], "]]")
+  } else if (isgk & (lvl == surv_lvl | lvl == 'lvlone')) {
+    # if we are in the quadrature part, and the random effects
+    # level is either the same as the outcome level or the lowest
+    # level, use the index of the level of the survival outcome
+    indices[surv_lvl]
+  } else if (isgk) {
+    # if we are in the quadrature part and the random effects level is not
+    # the same as the outcome level and not the lowest level, use group and
+    # pos to relate the level of the survival outcome and the level of the
+    # random effect, via lvlone
+    paste0('group_', lvl, "[",
+           "pos_", surv_lvl, "[", indices[surv_lvl], "]]")
+  }
+}
 
 
 
