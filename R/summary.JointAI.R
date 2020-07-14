@@ -413,11 +413,15 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
 
     rbind(
       if (object$info_list[[k]]$modeltype %in% c('clm', 'clmm')) {
-        interc <- apply(MCMC[, grep(paste0('gamma_', k, "\\["),
-                                      colnames(MCMC))], 2, quantile, quantiles)
-
         lvl <- levels(object$Mlist$refs[[k]])
-        colnames(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
+        interc <- apply(MCMC[, grep(paste0('gamma_', k, "\\["),
+                                    colnames(MCMC))], 2, quantile, quantiles)
+
+        if (isTRUE(rev)) {
+          colnames(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
+        } else {
+          colnames(interc) <- paste(k, ">", lvl[-length(lvl)])
+        }
         t(interc)
       },
       if (length(intersect(colnames(MCMC), x$coef))) {
