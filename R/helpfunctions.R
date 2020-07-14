@@ -339,10 +339,12 @@ get_coef_names <- function(info_list) {
 
 
     parelmts <- unlist(unname(info$parelmts), recursive = FALSE)
+
     if (!is.list(parelmts)) {
       parelmts <- list(parelmts)
       names(parelmts) <- NA
     }
+
 
     if (any(!sapply(info$lp, is.null))) {
       out <- data.frame(outcome = unname(info$varname),
@@ -354,8 +356,26 @@ get_coef_names <- function(info_list) {
                         ),
                         stringsAsFactors = FALSE
       )
+
+      nonprop <- unlist(unname(lapply(info$parelmts, attr, 'nonprop')),
+                        recursive = FALSE)
+
+      if (!is.null(unlist(nonprop))) {
+        out <- rbind(out,
+                     data.frame(outcome = unname(info$varname),
+                                outcat = rep(names(nonprop),
+                                             sapply(nonprop, length)),
+                                varname = unlist(lapply(nonprop, names)),
+                                coef = paste0(info$parname,
+                                              paste0("[", unlist(nonprop), "]")),
+                                stringsAsFactors = FALSE)
+        )
+      }
+
       out$varnam_print <- ifelse(is.na(out$outcat), out$varname,
                                  paste0(out$outcat, ": ", out$varname))
+
+      rownames(out) <- NULL
       out
     }
 
