@@ -51,12 +51,14 @@ get_refs <- function(fmla, data, refcats = NULL, warn = TRUE) {
       # check that contrasts specified for incomplete covariates are of a type
       # for which the conversion to "dummy" variables is implemented
       if (!attr(res, "contrasts") %in% c('contr.treatment', 'contr.sum') &
-          any(is.na(data[, x])) & warn) {
-        warnmsg("It is currently not possible to use %s for incomplete
+          any(is.na(data[, x]))) {
+
+        if (warn)
+          warnmsg("It is currently not possible to use %s for incomplete
                 categorical covariates. I will use %s instead.
                 You can specify (globally) which types of contrasts are
                 used by changing %s.", dQuote(attr(res, "contrasts")),
-                dQuote('contr.treatment'), dQuote("options('contrasts')"))
+                  dQuote('contr.treatment'), dQuote("options('contrasts')"))
 
         attr(res, "contrasts") <- 'contr.treatment'
       }
