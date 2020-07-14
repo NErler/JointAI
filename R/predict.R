@@ -621,10 +621,10 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 }
 
 
-predict_clm <- function(formula, newdata, type = c("lp", "prob",
-                                                   "class", "response"),
+predict_clm <- function(formula, newdata,
+                        type = c("prob", "lp", "class", "response"),
                         data, MCMC, varname, coef_list, info_list,
-                        quantiles = c(0.025, 0.975), mess = TRUE,
+                        quantiles = c(0.025, 0.975), warn = TRUE,
                         contr_list, ...) {
 
   type <- match.arg(type)
@@ -639,52 +639,96 @@ predict_clm <- function(formula, newdata, type = c("lp", "prob",
   mt <- attr(mf, "terms")
 
   op <- options(na.action = na.pass)
-  X <- model.matrix(mt, data = newdata,
-                    contrasts.arg = contr_list[intersect(names(contr_list),
-                                                         all_vars(mt))]
+  X <- model.matrix(mt,
+                    data = newdata,
+                    contrasts.arg = contr_list[intersect(
+                      names(contr_list),
+                      sapply(attr(mt, "variables")[-1], deparse)
+                    )]
   )[, -1, drop = FALSE]
 
   if (warn & any(is.na(X)))
     warnmsg("Prediction for cases with missing covariates is not yet
             implemented.")
 
-  eta <- sapply(seq_len(nrow(X)), function(i)
-    MCMC[, coefs$coef[match(colnames(X), coefs$varname)],
-         drop = FALSE] %*% X[i, ])
+  # multiply MCMC sample with design matrix to get linear predictor
+  coefs_prop <- coefs[is.na(coefs$outcat) & coefs$varname %in% colnames(X), ]
+  coefs_nonprop <- coefs[!is.na(coefs$outcat) &
+                           coefs$varname %in% colnames(X), ]
+  coefs_nonprop <- split(coefs_nonprop, coefs_nonprop$outcat)
 
-  pred <- sapply(grep(paste0('gamma_', varname), colnames(MCMC), value = TRUE),
-                 function(k)
-                   eta + matrix(nrow = nrow(eta), ncol = ncol(eta),
-                                data = rep(MCMC[, k], ncol(eta)),
-                                byrow = FALSE),
-                 simplify = 'array'
+  eta <- sapply(seq_len(nrow(X)), function(i) {
+    MCMC[, coefs_prop$coef, drop = FALSE] %*% X[i, coefs_prop$varname]
+  })
+
+  eta_nonprop <- if (length(coefs_nonprop) > 0) {
+    lapply(coefs_nonprop, function(c_np_k) {
+      sapply(seq_len(nrow(X)), function(i) {
+        MCMC[, c_np_k$coef, drop = FALSE] %*% X[i, c_np_k$varname]
+      })
+    })
+  }
+
+
+  gammas <- lapply(
+    grep(paste0("gamma_", varname), colnames(MCMC), value = TRUE),
+    function(k)
+      matrix(nrow = nrow(eta), ncol = ncol(eta),
+             data = rep(MCMC[, k], ncol(eta)),
+             byrow = FALSE)
   )
 
 
-  probs <- sapply(1:dim(pred)[1], function(k) {
-    cbind(plogis(pred[k, , 1]),
-          t(apply(cbind(plogis(pred[k, , ]), 1), 1, diff)))
-  }, simplify = 'array')
+  # add the category specific intercepts to the linear predictor
+  lp <- sapply(seq_along(gammas), function(k) {
+                   gammas[[k]] + eta +
+      if (is.null(eta_nonprop)) 0 else eta_nonprop[[k]]
+  }, simplify = FALSE)
 
-  dimnames(probs)[[2]] <- paste0("P(", varname, "=",
-                                 levels(data[, varname]),
-                                 ")")
-  fit <- apply(probs, 1:2, mean, na.rm = TRUE)
+  names(lp) <- paste0("logOdds(", varname, ">", seq_along(lp), ")")
 
-  if (type == 'class') {
-    fit <- apply(fit, 1, function(x) if (all(is.na(x))) NA else which.max(x))
+  mat1 <- matrix(nrow = nrow(eta), ncol = ncol(eta), data = 1)
+  mat0 <- mat1 * 0
+
+  pred <- c(list(mat1), lapply(lp, plogis), list(mat0))
+
+  probs <- lapply(seq_along(pred)[-1], function(k) {
+    pred[[k - 1]] - pred[[k]]
+  })
+
+  names(probs) <- paste0("P(", varname, "=",
+                         levels(data[, varname]),
+                         ")")
+
+  if (type == "lp") {
+    fit <- lapply(lp, colMeans)
+    quants <- if (!is.null(quantiles)) {
+      sapply(lp, function(x) {
+        t(apply(x, 2, quantile, probs = quantiles, na.rm = TRUE))
+      }, simplify = FALSE)
+    }
+  } else if (type == "prob") {
+    fit <- lapply(probs, colMeans)
+    quants <- if (!is.null(quantiles)) {
+      sapply(probs, function(x) {
+        t(apply(x, 2, quantile, probs = quantiles, na.rm = TRUE))
+      }, simplify = FALSE)
+    }
+  } else if (type == "class") {
+    fit <- apply(do.call(cbind, lapply(probs, colMeans)), 1,
+                 function(x) if (all(is.na(x))) NA else which.max(x))
+    quants <- NULL
   }
 
-  quants <- if (type == 'prob' & !is.null(quantiles)) {
-    aperm(apply(probs, 1:2, quantile, probs = quantiles, na.rm = TRUE),
-          c(2,1,3))
-  }
+  res_df <- if (!is.null(quants)) {
+    res <- mapply(function(f, q) {
+      cbind(fit = f, q)
+    }, f = fit, q = quants, SIMPLIFY = FALSE)
 
-  resDF <- if (type == 'prob' & !is.null(quants)) {
-    cbind(as.data.frame(fit),
-          as.data.frame(quants))
+    array(dim = c(dim(res[[1]]), length(res)), unlist(res),
+          dimnames = list(c(), colnames(res[[1]]), names(res)))
   } else {
-    as.data.frame(fit)
+    data.frame(fit, check.names = FALSE)
   }
 
   on.exit(options(op))
