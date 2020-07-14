@@ -320,38 +320,11 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
 
 
       # write the syntax for other longitudinal variables
-      other <- if (!is.null(info$hc_list$othervars[[k]])) {
-        if (!is.data.frame(info$hc_list$othervars[[k]])) {
-          sapply(info$hc_list$othervars[[k]], function(x) {
-            paste0(
-              paste(
-              paste_coef(parname = info$parname,
-                         parelmts = x$parelmts),
-              paste_scaling(
-                paste_data(matnam = x$matrix,
-                           index = index,
-                           col = x$cols,
-                           isgk = isgk),
-                rows = x$cols,
-                scale_pars = info$scale_pars[[paste0("M_", k)]],
-                scalemat = paste0("spM_", k)), sep = " * "
-            ), collapse = " + ")
-          })
-        } else {
-          paste0(
-          paste(
-            paste_coef(parname = info$parname,
-                       parelmts = info$hc_list$othervars[[k]]$parelmts),
-            paste_scaling(
-              paste_data(matnam = info$hc_list$othervars[[k]]$matrix,
-                         index = index,
-                         col = info$hc_list$othervars[[k]]$cols,
-                         isgk = isgk),
-              rows = info$hc_list$othervars[[k]]$cols,
-              scale_pars = info$scale_pars[[paste0("M_", k)]],
-              scalemat = paste0("spM_", k)), sep = " * "
-          ), collapse = " + ")
-        }
+      other <- if (!is.null(info$hc_list$othervars[[lvl]])) {
+          paste_other(othervars = info$hc_list$othervars[[lvl]],
+                      parname = info$parname, index = index,
+                      scale_pars = info$scale_pars[[paste0("M_", lvl)]],
+                      scale_mat = paste0("spM_", lvl), isgk = isgk)
       }
 
       # combine random intercept and slope
@@ -461,13 +434,50 @@ get_rds <- function(rd_slope_coefs, lvl, varname, index, out_index,
 }
 
 
+# used in write_nonprop() (2020-07-09)
+paste_other <- function(othervars, parname, index, scale_pars, scale_mat,
+                        isgk = FALSE) {
+  # write the syntax for other longitudinal variables
+  #
+  if (!is.data.frame(othervars)) {
+    sapply(othervars, paste_o,
+           parname = parname, index = index, scale_pars = scale_pars,
+           scale_mat = scale_mat, isgk = isgk)
+  } else {
+    paste_o(othervars,
+            parname = parname, index = index, scale_pars = scale_pars,
+            scale_mat = scale_mat, isgk = isgk)
+  }
+}
 
 
 
 
+# used in paste_other() (2020-07-09)
+paste_o <- function(x, parname, index, scale_pars, scale_mat, isgk = FALSE) {
+  # -x: a matrix with columns 'term', 'matrix', 'cols', 'parelmts',
+  # - parname: characters string, e.g. "beta"
+  # - index: character string, e.g., "i"
+  # - scale_pars: a matrix of scaling parameters
+  # - scale_mat: character string with the name of the scaling matrix that will
+  #             be passed to JAGS
+  # - isgk: logical: is the output being used inside the Gauss-Kronrod
+  #         quadrature
 
-
-
+  paste0(
+    paste(
+      paste_coef(parname = parname, parelmts = x$parelmts),
+      paste_scaling(
+        paste_data(matnam = x$matrix,
+                   index = index,
+                   col = x$cols,
+                   isgk = isgk),
+        rows = x$cols,
+        scale_pars = scale_pars,
+        scalemat = scale_mat),
+      sep = " * " ),
+    collapse = " + ")
+}
 
 
 
