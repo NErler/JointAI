@@ -356,7 +356,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
                                                        "lp",
                                                        "linear"),
                             data, MCMC, varname, coef_list, info_list,
-                            quantiles = c(0.025, 0.975), mess = TRUE,
+                            quantiles = c(0.025, 0.975), warn = TRUE,
                             contr_list, ...) {
 
   type <- match.arg(type)
@@ -375,8 +375,11 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
 
   op <- options(na.action = na.pass)
   X <- model.matrix(mt, data = newdata,
-                    contrasts.arg = contr_list[intersect(names(contr_list),
-                                                         all_vars(mt))])
+                    contr_list[intersect(
+                      names(contr_list),
+                      sapply(attr(mt, "variables")[-1], deparse)
+                    )]
+  )
 
 
   if (warn & any(is.na(X)))
@@ -431,10 +434,9 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   survinfo <- get_survinfo(info_list, Mlist)[varname]
 
 
-  # timevar <- Mlist$outcomes$outnams[[varname]][1]
   resp_mat <- info_list[[varname]]$resp_mat[2]
   surv_lvl <- survinfo[[1]]$surv_lvl
-  surv_colnames <- names(Mlist$outcomes$outcomes[[varname]])
+  # surv_colnames <- names(Mlist$outcomes$outcomes[[varname]])
 
   mf <- model.frame(as.formula(paste(Mlist$fixed[[varname]][-2],
                                      collapse = " ")),
@@ -445,8 +447,10 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   op <- options(na.action = na.pass)
 
   X0 <- model.matrix(mt, data = newdata,
-                     contrasts.arg = contr_list[intersect(names(contr_list),
-                                                          all_vars(mt))]
+                     contr_list[intersect(
+                       names(contr_list),
+                       sapply(attr(mt, "variables")[-1], deparse)
+                     )]
   )[, -1, drop = FALSE]
 
   X <- sapply(names(Mlist$M), function(lvl) {
