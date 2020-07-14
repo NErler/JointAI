@@ -1100,8 +1100,10 @@ write_probs <- function(info, index, isgk = FALSE, indent = 4) {
 
 
 
-write_logits <- function(info, index, isgk = FALSE, indent = 4) {
+write_logits <- function(info, index, nonprop = FALSE, isgk = FALSE,
+                         indent = 4) {
   # syntax for logits, e.g., "logit(psum_O2[i, 1]) <- gamma_O2[1] + eta_O2[i]"
+
   logits <- sapply(1:(info$ncat - 1),
                    function(k,
                             .info = info,
@@ -1109,7 +1111,11 @@ write_logits <- function(info, index, isgk = FALSE, indent = 4) {
                             .isgk = isgk) {
                      paste0(tab(indent), "logit(", paste_ps(k),
                             ") <- gamma_", info$varname, "[", k, "]",
-                            " + eta_", info$varname,"[", index, "]")
+                            " + eta_", info$varname,"[", index, "]",
+                            if (nonprop) {
+                              paste0(" + eta_", info$varname, "_", k,
+                                     "[", index, "]")
+                            })
                    })
 
   paste0(logits, collapse = "\n")
