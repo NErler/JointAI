@@ -239,6 +239,13 @@ predict.JointAI <- function(object, outcome = 1, newdata,
   }
 
   preds <- sapply(names(object$fixed)[outcome], function(varname) {
+
+    if (!is.null(object$info_list[[varname]]$hc_list) & warn) {
+      warnmsg("Prediction in multi-level settings currently only takes into
+               account the fixed effects, i.e., assumes that the random effect
+               realizations are equal to zero.")
+    }
+
     predict_fun <- switch(object$info_list[[varname]]$modeltype,
                           glm = predict_glm,
                           glmm = predict_glm,
