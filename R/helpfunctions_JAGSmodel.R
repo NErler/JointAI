@@ -349,6 +349,38 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
 
 
 
+write_nonprop <- function(info, isgk = FALSE) {
+  # if there are no random effects (hc_list = NULL), return NULL
+  if (is.null(info$hc_list)) return(NULL)
+
+  # identify grouping level of the outcome
+  resplvl <- gsub("M_", "", info$resp_mat[length(info$resp_mat)])
+
+
+  # for all grouping levels above or equal to the outcome level do:
+  nonprop <- sapply(
+    names(info$group_lvls)[info$group_lvls >= info$group_lvls[resplvl]],
+    function(lvl) {
+      # find the correct specification of the index. This depends on the level
+      # of the outcome, but also on the current grouping level, whether the
+      # outcome is on the lowest level (lvlone) or not, and if the output is
+      # used in the GK-quadrature
+      index <- get_index(lvl, resplvl, indices = info$index,
+                         surv_lvl = info$surv_lvl, isgk = isgk)
+
+
+      if (!is.null(info$hc_list$nonprop[[lvl]])) {
+        paste_other(othervars = info$hc_list$nonprop[[lvl]],
+                    parname = info$parname, index = index,
+                    scale_pars = info$scale_pars[[paste0("M_", lvl)]],
+                    scale_mat = paste0("spM_", lvl), isgk = isgk)
+      }
+  }, simplify = FALSE)
+
+
+  apply(as.data.frame(nonprop), 1, paste0, collapse = " + ")
+}
+
 
 get_index <- function(lvl, resplvl, indices, surv_lvl, isgk = FALSE) {
   # Find the correct specification of the index. This depends on the level of
