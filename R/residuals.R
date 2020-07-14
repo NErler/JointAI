@@ -30,9 +30,6 @@ residuals.JointAI <- function(object,
 
   if (!inherits(object, "JointAI")) errormsg("Use only with 'JointAI' objects.")
 
-
-  # type <- match.arg(type)
-
   # set type of residuals
   # - if type is one character string, apply it to all models
   # - if type is a vector it must have names matching the names of (some of)
