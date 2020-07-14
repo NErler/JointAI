@@ -24,14 +24,6 @@ copper                -0.0078 0.00055 0.0017    0.32
 shape_Srv_ftm_stts_cn  0.7949 0.11803 0.2588    0.46
 
 [[5]]
-               est  MCSE   SD MCSE/SD
-gamma_o2[1]   1.28 0.030 0.16    0.18
-gamma_o2[2]   0.21 0.038 0.18    0.21
-gamma_o2[3]  -1.17 0.038 0.21    0.18
-C2            0.26 0.074 0.29    0.26
-D_o2_id[1,1]  1.78 0.546 1.08    0.50
-
-[[6]]
                           est   MCSE    SD MCSE/SD
 (Intercept)            6.9217 0.7679 1.396   0.550
 copper                -0.0053 0.0122 0.014   0.854
@@ -41,7 +33,7 @@ abs(age - copper)     -0.0015 0.0120 0.014   0.871
 log(trig)              0.3262 0.1011 0.315   0.321
 shape_Srv_ftm_stts_cn      NA     NA 0.206      NA
 
-[[7]]
+[[6]]
                                   est   MCSE    SD MCSE/SD
 (Intercept)                        NA     NA 0.651      NA
 copper                        -0.0025 0.0115 0.021    0.54

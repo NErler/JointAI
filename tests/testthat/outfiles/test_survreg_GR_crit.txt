@@ -50,20 +50,6 @@ Multivariate psrf
 [[5]]
 Potential scale reduction factors:
 
-             Point est. Upper C.I.
-gamma_o2[1]        1.18       1.73
-gamma_o2[2]        1.08       1.39
-gamma_o2[3]        1.00       1.17
-C2                 1.47       2.75
-D_o2_id[1,1]       1.41       3.48
-
-Multivariate psrf
-
-1.95
-
-[[6]]
-Potential scale reduction factors:
-
                       Point est. Upper C.I.
 (Intercept)                 2.78       5.41
 copper                      8.82      23.68
@@ -77,7 +63,7 @@ Multivariate psrf
 
 17.6
 
-[[7]]
+[[6]]
 Potential scale reduction factors:
 
                               Point est. Upper C.I.

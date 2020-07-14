@@ -53,7 +53,7 @@ m4d <- clmm_imp(o1 ~ C1 * time + I(time^2) + b2 * c1,
 m4e <- clmm_imp(o1 ~ C1 + log(time) + I(time^2) + p1,
                 random = ~ 1 | id, data = longDF,
                 n.adapt = 5, n.iter = 10, shrinkage = "ridge",
-                parallel = TRUE, n.cores = 2)
+                parallel = TRUE, n.cores = 2, seed = 2020)
 
 
 

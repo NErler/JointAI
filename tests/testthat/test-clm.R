@@ -1,6 +1,11 @@
 context("CLM Models")
 library("JointAI")
 
+if (!dir.exists('outfiles')) {
+  dir.create('outfiles')
+}
+
+
 # no covariates
 m0a <- clm_imp(O1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
 m0b <- clm_imp(O2 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)

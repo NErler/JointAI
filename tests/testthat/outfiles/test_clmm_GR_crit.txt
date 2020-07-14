@@ -257,17 +257,17 @@ Multivariate psrf
 Potential scale reduction factors:
 
              Point est. Upper C.I.
-C1                0.996       1.10
-log(time)         0.972       1.05
-I(time^2)         1.051       1.31
-p1                1.071       1.40
-gamma_o1[1]       0.996       1.02
-gamma_o1[2]       1.231       1.85
-D_o1_id[1,1]      2.595       5.47
+C1                1.627       2.96
+log(time)         1.268       1.87
+I(time^2)         1.416       2.35
+p1                1.037       1.23
+gamma_o1[1]       0.990       0.99
+gamma_o1[2]       0.964       1.05
+D_o1_id[1,1]      3.097       7.94
 
 Multivariate psrf
 
-2.44
+2.98
 
 [[18]]
 Potential scale reduction factors:

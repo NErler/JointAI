@@ -1,6 +1,10 @@
 context("survreg models")
 library("JointAI")
 
+if (!dir.exists('outfiles')) {
+  dir.create('outfiles')
+}
+
 PBC2 <- PBC[match(unique(PBC$id), PBC$id), ]
 PBC2$center <- cut(as.numeric(PBC2$id), c(-Inf, seq(30, 270, 30), Inf))
 PBC$center <- cut(as.numeric(PBC$id), c(-Inf, seq(30, 270, 30), Inf))
