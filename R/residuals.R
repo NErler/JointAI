@@ -33,15 +33,6 @@ residuals.JointAI <- function(object,
 
   # type <- match.arg(type)
 
-  # Error for survreg models because not all types of residuals are available!
-  if (object$analysis_type %in% c('survreg') & type %in% c('working',
-                                                           'deviance'))
-    errormsg("Residuals of type %s are not implemented for a JointAI model of
-            type %s. Currently only residuals of type %s are available for
-             parametric survival models.",
-             dQuote(type), dQuote(object$analysis_type), dQuote('response'))
-
-
   # set type of residuals
   # - if type is one character string, apply it to all models
   # - if type is a vector it must have names matching the names of (some of)
