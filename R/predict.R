@@ -307,8 +307,11 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   op <- options(na.action = na.pass)
 
   X <- model.matrix(mt, data = newdata,
-                    contrasts.arg = contr_list[intersect(names(contr_list),
-                                                         all_vars(mt))])
+                    contrasts.arg = contr_list[intersect(
+                      names(contr_list),
+                      sapply(attr(mt, "variables")[-1], deparse)
+                    )]
+  )
 
 
   if (mess & any(is.na(X)))
