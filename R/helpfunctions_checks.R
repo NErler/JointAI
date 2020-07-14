@@ -10,9 +10,11 @@ clean_names <- function(string) {
 prep_arglist <- function(analysis_type, family = NULL, formals = formals(),
                          call = match.call(), sframe = sys.frame(sys.nframe())) {
   arglist <- mget(names(formals), sframe)
+
   thiscall <- as.list(call)[-1L]
   arglist <- c(arglist,
                thiscall[!names(thiscall) %in% names(arglist)])
+
   arglist$thecall <- call
 
   if (!inherits(arglist$data, 'data.frame'))
@@ -42,10 +44,12 @@ prep_arglist <- function(analysis_type, family = NULL, formals = formals(),
 
   # convert formulas (formula, fixed, random) to lists
   for (arg in c('formula', 'fixed', 'random')) {
-    if (is.symbol(arglist[[arg]])) {
+    if (is.null(arglist[[arg]]) | is.list(arglist[[arg]])) {
+
+    } else if (is.symbol(arglist[[arg]])) {
       arglist[[arg]] <- NULL
     } else {
-      arglist[[arg]] <- check_formula_list(arglist[[arg]])
+      arglist[[arg]] <- check_formula_list(as.formula(arglist[[arg]]))
     }
   }
 
@@ -56,19 +60,34 @@ prep_arglist <- function(analysis_type, family = NULL, formals = formals(),
 
 check_fixed_random <- function(arglist) {
 
+  # if there is a "fixed" effects formula, but no "random" , check if "fixed"
+  # contains the fixed and random effects
   if (!is.null(arglist$fixed) & is.null(arglist$random)) {
     can_split <- try(split_formula_list(check_formula_list(arglist$fixed)))
 
-    if (!inherits(can_split, 'try-error') || !is.null(can_split$random[[1]])) {
-      arglist$formula <- check_formula_list(arglist$fixed)
+    if (!inherits(can_split, 'try-error') & !is.null(can_split$random[[1]])) {
+      arglist$formula <- arglist$fixed
       arglist$fixed <- NULL
+      arglist$random <- NULL
+    }
+  } else if (!is.null(arglist$formula) & is.null(arglist$random)) {
+    can_split <- try(split_formula_list(check_formula_list(arglist$formula)))
+    print(can_split)
+
+    if (inherits(can_split, 'try-error')) {
+      errormsg("I cannot split the %s into a fixed and random effects part.",
+               dQuote("formula"))
+    } else if (is.null(can_split$random[[1]])) {
+      errormsg("I cannot extract a random effects formula from %s.",
+               dQuote("formula"))
     }
   }
 
-  if (is.null(arglist$fixed) & is.null(arglist$formula))
+
+  if (is.null(arglist$fixed) & length(arglist$formula) == 0)
     errormsg("No fixed effects structure specified.")
 
-  if (is.null(arglist$random) & is.null(arglist$formula))
+  if (is.null(arglist$random) & length(arglist$formula) == 0)
     errormsg("No random effects structure specified.")
 
   arglist
