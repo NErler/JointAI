@@ -264,11 +264,6 @@ paste_rdintercept_lp <- function(info) {
 
 
 
-
-
-
-
-
 paste_lp_Zpart <- function(info, isgk = FALSE) {
   # write the random effects part of the linear predictor of the analysis
   # model
@@ -283,13 +278,13 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
 
 
   # identify grouping level of the outcome
-  lvl <- gsub("M_", "", info$resp_mat[length(info$resp_mat)])
+  resplvl <- gsub("M_", "", info$resp_mat[length(info$resp_mat)])
 
 
   # for all grouping levels above or equal to the outcome level do:
   Zlp <- sapply(
-    names(info$group_lvls)[info$group_lvls >= info$group_lvls[lvl]],
-    function(k) {
+    names(info$group_lvls)[info$group_lvls >= info$group_lvls[resplvl]],
+    function(lvl) {
       # find the correct specification of the index. This depends on the level
       # of the outcome, but also on the current grouping level, whether the
       # outcome is on the lowest level (lvlone) or not, and if the output is
@@ -300,20 +295,20 @@ paste_lp_Zpart <- function(info, isgk = FALSE) {
 
       # generate the random intercept part to enter the linear predictor of
       # the outcome.
-      rdi <- if (isTRUE(attr(info$hc_list$hcvars[[k]], "rd_intercept"))) {
-        paste_data(matnam = paste0("b_", info$varname, "_", k),
+      rdi <- if (isTRUE(attr(info$hc_list$hcvars[[lvl]], "rd_intercept"))) {
+        paste_data(matnam = paste0("b_", info$varname, "_", lvl),
                    index = index,
                    col = 1)
       }
 
       # generate the random slope part to enter the linear predictor of
       # the outcome
-      rds <- get_rds(info$hc_list$hcvars[[k]]$rd_slope_coefs,
-                     lvl = k,
+      rds <- get_rds(info$hc_list$hcvars[[lvl]]$rd_slope_coefs,
+                     lvl = lvl,
                      varname = info$varname,
                      index = index,
-                     out_index = if (!isgk) info$index[[lvl]] else index,
-                     has_rdintercept = attr(info$hc_list$hcvars[[k]],
+                     out_index = if (!isgk) info$index[[resplvl]] else index,
+                     has_rdintercept = attr(info$hc_list$hcvars[[lvl]],
                                             'rd_intercept'),
                      scale_pars = info$scale_pars,
                      isgk = isgk)
