@@ -55,6 +55,10 @@ make_filename <- function(modeldir, modelname, keep_model, overwrite, mess) {
 get_initial_values <- function(inits, seed, n.chains, warn) {
   # check if initial values are supplied or should be generated
 
+  old <- .Random.seed
+  on.exit({
+    .Random.seed <<- old
+  })
 
   if (is.null(inits)) {
     inits <- get_rng(seed, n.chains)
