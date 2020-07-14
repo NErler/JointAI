@@ -13,7 +13,15 @@ warnmsg <- function(x, ..., exdent = 0) {
           call. = FALSE, immediate. = TRUE)
 }
 
+paste_and <- function(x) {
+  x1 <- paste0(x[-length(x)], collapse = ", ")
 
+  if (length(x) > 1) {
+    paste(x1, x[length(x)], sep = " and ")
+  } else {
+    x
+  }
+}
 
 # variable levels and grouping -------------------------------------------------
 
