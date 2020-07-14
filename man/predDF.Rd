@@ -3,7 +3,7 @@
 \name{predDF}
 \alias{predDF}
 \alias{predDF.JointAI}
-\title{Create a new dataframe for prediction}
+\title{Create a new data frame for prediction}
 \usage{
 predDF(object, ...)
 
