@@ -53,26 +53,26 @@ JAGSmodel_glm <- function(info) {
 
 
   # * posterior predictive check -----------------------------------------------
-  paste_ppc <- if (info$ppc) {
-    if (info$family == 'gaussian') {
-      paste0(tab(4), '# Posterior predictive check for ', info$varname, '\n',
-        tab(4), info$varname, "_ppc[", index, "] ~ dnorm(mu_", info$varname,
-        "[", index, "], tau_", info$varname,")", info$trunc, "\n"
-      )
-    } else if (info$family == 'lognorm') {
-      paste0(tab(4), '# Posterior predictive check for ', info$varname, '\n',
-        tab(4), info$varname, "_ppc[", index, "] ~ dlnorm(mu_", info$varname,
-        "[", index, "], tau_", info$varname,")", "\n"
-      )
-    } else if (info$family == 'beta') {
-      paste0(tab(4), '# Posterior predictive check for ', info$varname, '\n',
-        tab(4),  info$varname, "_ppc[", index, "]] ~ dbeta(shape1_",
-        info$varname,
-        "[", index, "], shape2_",
-        info$varname, "[", index, "])T(1e-15, 1 - 1e-15)", "\n"
-      )
-    }
-  }
+  # paste_ppc <- if (info$ppc) {
+  #   if (info$family == 'gaussian') {
+  #     paste0(tab(4), '# Posterior predictive check for ', info$varname, '\n',
+  #       tab(4), info$varname, "_ppc[", index, "] ~ dnorm(mu_", info$varname,
+  #       "[", index, "], tau_", info$varname,")", info$trunc, "\n"
+  #     )
+  #   } else if (info$family == 'lognorm') {
+  #     paste0(tab(4), '# Posterior predictive check for ', info$varname, '\n',
+  #       tab(4), info$varname, "_ppc[", index, "] ~ dlnorm(mu_", info$varname,
+  #       "[", index, "], tau_", info$varname,")", "\n"
+  #     )
+  #   } else if (info$family == 'beta') {
+  #     paste0(tab(4), '# Posterior predictive check for ', info$varname, '\n',
+  #       tab(4),  info$varname, "_ppc[", index, "]] ~ dbeta(shape1_",
+  #       info$varname,
+  #       "[", index, "], shape2_",
+  #       info$varname, "[", index, "])T(1e-15, 1 - 1e-15)", "\n"
+  #     )
+  #   }
+  # }
 
   # * paste model --------------------------------------------------------------
   paste0('\r',
@@ -81,7 +81,7 @@ JAGSmodel_glm <- function(info) {
          tab(), "for (", index, " in 1:", N, ") {", "\n",
          tab(4), info$resp_mat, "[", index,", ", info$resp_col,
          "] ~ ", distr, trunc, "\n",
-         paste_ppc,
+         # paste_ppc,
          repar,
          tab(4), linkfun(paste0("mu_", info$varname, "[", index, "]")), " <- ",
          add_linebreaks(linpred, indent = indent),
