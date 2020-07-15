@@ -1,0 +1,116 @@
+[[1]]
+                              est MCSE  SD MCSE/SD
+beta_Bh0_Srv_ftm_stts_cn[1]  -8.8 2.24 4.1    0.54
+beta_Bh0_Srv_ftm_stts_cn[2]  -4.6 0.91 3.2    0.29
+beta_Bh0_Srv_ftm_stts_cn[3]  -7.7 0.66 2.8    0.24
+beta_Bh0_Srv_ftm_stts_cn[4]  -5.1 0.72 2.5    0.29
+beta_Bh0_Srv_ftm_stts_cn[5] -11.1 1.93 6.7    0.29
+beta_Bh0_Srv_ftm_stts_cn[6]  -8.1 1.53 3.1    0.49
+
+[[2]]
+                                est   MCSE    SD MCSE/SD
+age                         -0.0036 0.0099 0.034    0.29
+sexfemale                   -5.4358 1.6103 2.526    0.64
+beta_Bh0_Srv_ftm_stts_cn[1] -8.1420 0.4405 1.097    0.40
+beta_Bh0_Srv_ftm_stts_cn[2] -5.9882 1.0107 3.053    0.33
+beta_Bh0_Srv_ftm_stts_cn[3] -6.4792 2.2832 2.576    0.89
+beta_Bh0_Srv_ftm_stts_cn[4] -6.0422 1.9935 1.771    1.13
+beta_Bh0_Srv_ftm_stts_cn[5] -5.7662 0.9474 3.282    0.29
+beta_Bh0_Srv_ftm_stts_cn[6] -6.5122 3.0271 3.540    0.86
+
+[[3]]
+                                est   MCSE    SD MCSE/SD
+age                         -0.0036 0.0099 0.034    0.29
+sexfemale                   -5.4358 1.6103 2.526    0.64
+beta_Bh0_Srv_ftm_stts_cn[1] -8.1420 0.4405 1.097    0.40
+beta_Bh0_Srv_ftm_stts_cn[2] -5.9882 1.0107 3.053    0.33
+beta_Bh0_Srv_ftm_stts_cn[3] -6.4792 2.2832 2.576    0.89
+beta_Bh0_Srv_ftm_stts_cn[4] -6.0422 1.9935 1.771    1.13
+beta_Bh0_Srv_ftm_stts_cn[5] -5.7662 0.9474 3.282    0.29
+beta_Bh0_Srv_ftm_stts_cn[6] -6.5122 3.0271 3.540    0.86
+
+[[4]]
+                                est    MCSE     SD MCSE/SD
+beta_Bh0_Srv_ftm_stts_cn[1] -8.4164 1.05577 1.5661    0.67
+beta_Bh0_Srv_ftm_stts_cn[2] -9.3433 1.83941 3.0006    0.61
+beta_Bh0_Srv_ftm_stts_cn[3] -6.3503 0.73587 2.5491    0.29
+beta_Bh0_Srv_ftm_stts_cn[4] -9.3274 0.74449 2.5790    0.29
+beta_Bh0_Srv_ftm_stts_cn[5] -8.6422 1.05837 3.3005    0.32
+beta_Bh0_Srv_ftm_stts_cn[6] -9.3905 1.60814 3.9055    0.41
+copper                       0.0042 0.00086 0.0021    0.40
+
+[[5]]
+                                est    MCSE     SD MCSE/SD
+copper                      -0.0039 0.00058 0.0022    0.26
+sexfemale                   -1.0941 0.31405 1.2830    0.24
+age                          0.0116 0.00355 0.0194    0.18
+abs(age - copper)            0.0086 0.00034 0.0018    0.18
+log(trig)                   -0.0429 0.08257 0.2000    0.41
+beta_Bh0_Srv_ftm_stts_cn[1] -8.9671 0.20801 0.6143    0.34
+beta_Bh0_Srv_ftm_stts_cn[2] -6.6160 0.34557 1.8928    0.18
+beta_Bh0_Srv_ftm_stts_cn[3] -9.2337 1.03144 2.0443    0.50
+beta_Bh0_Srv_ftm_stts_cn[4] -6.7849 0.89594 1.9406    0.46
+beta_Bh0_Srv_ftm_stts_cn[5] -8.3679 1.01948 2.4006    0.42
+beta_Bh0_Srv_ftm_stts_cn[6] -9.9114 0.49902 2.9032    0.17
+
+[[6]]
+                                   est   MCSE     SD MCSE/SD
+copper                        -0.00088 0.0021 0.0055    0.38
+sexfemale                     -1.00705 0.3809 0.7680    0.50
+age                            0.01063 0.0031 0.0139    0.23
+abs(age - copper)              0.00593 0.0024 0.0050    0.49
+log(trig)                      0.03042 0.0395 0.2166    0.18
+beta_Bh0_Srv_ftm_stts_cn[1]   -6.14632 0.8641 1.5687    0.55
+beta_Bh0_Srv_ftm_stts_cn[2]   -4.77545 0.9153 1.7538    0.52
+beta_Bh0_Srv_ftm_stts_cn[3]   -5.28172 1.7151 1.7404    0.99
+beta_Bh0_Srv_ftm_stts_cn[4]   -5.04614 0.7598 2.1807    0.35
+beta_Bh0_Srv_ftm_stts_cn[5]   -3.95410 1.3085 2.5976    0.50
+beta_Bh0_Srv_ftm_stts_cn[6]   -7.54422 1.4896 3.3057    0.45
+D_Srv_ftm_stts_cn_center[1,1] 12.13135 1.8324 8.6814    0.21
+
+$tvar
+                                 est   MCSE    SD MCSE/SD
+age                         -1.6e-02 0.0112 0.026    0.42
+sexfemale                   -2.7e+00 1.0056 1.961    0.51
+trtplacebo                  -5.7e-01 0.2621 1.072    0.24
+albumin                     -2.0e+00 0.0899 0.302    0.30
+platelet                     5.6e-04 0.0015 0.005    0.30
+stage.L                      2.6e-01 0.3473 1.307    0.27
+stage.Q                      1.1e+00 0.1105 0.605    0.18
+stage.C                           NA     NA 0.863      NA
+beta_Bh0_Srv_ftm_stts_cn[1] -7.2e+00 0.8863 2.233    0.40
+beta_Bh0_Srv_ftm_stts_cn[2] -8.6e+00 0.4370 1.194    0.37
+beta_Bh0_Srv_ftm_stts_cn[3] -6.1e+00 1.3078 2.297    0.57
+beta_Bh0_Srv_ftm_stts_cn[4] -1.0e+01 1.0857 2.629    0.41
+beta_Bh0_Srv_ftm_stts_cn[5] -4.8e+00 0.8194 3.041    0.27
+beta_Bh0_Srv_ftm_stts_cn[6] -1.2e+01 2.1363 5.551    0.38
+
+$tvar
+                               est   MCSE    SD MCSE/SD
+age                         -0.019 0.0049 0.019    0.26
+sexfemale                   -3.998 0.8987 1.585    0.57
+trtplacebo                  -2.998 0.6650 1.414    0.47
+sexfemale:trtplacebo         4.509 0.9076 1.846    0.49
+albumin                     -2.032    Inf 0.549     Inf
+log(platelet)               -0.074 0.0976 0.534    0.18
+beta_Bh0_Srv_ftm_stts_cn[1] -6.067 0.7264 1.415    0.51
+beta_Bh0_Srv_ftm_stts_cn[2] -7.933 0.3850 1.487    0.26
+beta_Bh0_Srv_ftm_stts_cn[3] -5.586 0.5727 1.672    0.34
+beta_Bh0_Srv_ftm_stts_cn[4] -8.261 1.4018 2.541    0.55
+beta_Bh0_Srv_ftm_stts_cn[5] -6.046 2.8157 3.988    0.71
+beta_Bh0_Srv_ftm_stts_cn[6] -9.002 0.9245 5.064    0.18
+
+$tvar
+                                  est   MCSE     SD MCSE/SD
+age                            -0.011 0.0033  0.018    0.18
+sexfemale                      -1.434 0.2130  0.810    0.26
+albumin                        -2.096 0.2379  0.576    0.41
+log(platelet)                  -0.675 0.1023  0.324    0.32
+beta_Bh0_Srv_ftm_stts_cn[1]    -4.880 0.1009  0.673    0.15
+beta_Bh0_Srv_ftm_stts_cn[2]    -5.653 0.6292  1.321    0.48
+beta_Bh0_Srv_ftm_stts_cn[3]    -3.606 0.1461  0.800    0.18
+beta_Bh0_Srv_ftm_stts_cn[4]    -8.342 0.5867  1.302    0.45
+beta_Bh0_Srv_ftm_stts_cn[5]    -1.439 0.4495  1.299    0.35
+beta_Bh0_Srv_ftm_stts_cn[6]   -10.367    Inf  3.951     Inf
+D_Srv_ftm_stts_cn_center[1,1]  16.941 5.0741 27.792    0.18
+

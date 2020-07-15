@@ -122,6 +122,21 @@ test_that("GRcrit and MCerror give same result", {
     "outfiles/test_clmm_MC_error.txt")
 })
 
+
+test_that("summary output remained the same", {
+  expect_known_value(lapply(models, print),
+                     file = "outfiles/test_clmm_print.rds")
+  expect_known_value(lapply(models, coef),
+                     file = "outfiles/test_clmm_coef.rds")
+  expect_known_value(lapply(models, confint),
+                     file = "outfiles/test_clmm_confint.rds")
+  expect_known_value(lapply(models, summary),
+                     file = "outfiles/test_clmm_summary.rds")
+  expect_known_value(lapply(models, function(x) coef(summary(x))),
+                     file = "outfiles/test_clmm_coefsummary.rds")
+})
+
+
 test_that("prediction works", {
   expect_is(predict(m4a, type = "lp")$fitted, "array")
   expect_is(predict(m4a, type = "prob", warn = FALSE)$fitted, "array")

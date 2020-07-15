@@ -81,6 +81,21 @@ test_that("GRcrit and MCerror give same result", {
     "outfiles/test_survreg_MC_error.txt")
 })
 
+
+test_that("summary output remained the same", {
+  expect_known_value(lapply(models, print),
+                     file = "outfiles/test_survreg_print.rds")
+  expect_known_value(lapply(models, coef),
+                     file = "outfiles/test_survreg_coef.rds")
+  expect_known_value(lapply(models, confint),
+                     file = "outfiles/test_survreg_confint.rds")
+  expect_known_value(lapply(models, summary),
+                     file = "outfiles/test_survreg_summary.rds")
+  expect_known_value(lapply(models, function(x) coef(summary(x))),
+                     file = "outfiles/test_survreg_coefsummary.rds")
+})
+
+
 test_that("prediction works", {
   expect_s3_class(predict(m3b, type = "lp")$fitted, "data.frame")
   expect_s3_class(predict(m3b, type = "response", warn = FALSE)$fitted,
