@@ -787,7 +787,7 @@ glm_imp <- function(formula, family, data,
 
   if (missing(formula)) errormsg("No model formula specified.")
   if (missing(family))
-    errormsg("The argument %s needs to be specified.", dQuote(family))
+    errormsg("The argument %s needs to be specified.", dQuote("family"))
 
   arglist <- prep_arglist(analysis_type = 'glm',
                           family = family,
