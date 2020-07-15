@@ -54,6 +54,25 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
   # linear predictor columns -------------------------------------------------
   lp <- get_lp(k, Mlist)
 
+  # check and error message for time-dependent cox with interaction between
+  # time-varying covariate with incomplete baseline covariate
+  if (modeltype == "coxph" &
+      !is.null(Mlist$interactions) &
+      !is.null(lp$M_lvlone)) {
+
+    sapply(Mlist$interactions[intersect(names(Mlist$interactions),
+                                        names(lp$M_lvlone))], function(x) {
+      if (any(names(x$elmts) == "M_lvlone") &
+          any(names(x$elmts) != "M_lvlone") &
+          attr(x, "has_NAs")) {
+        errormsg("It seems that there is an interaction between a time-varying
+                 covariate and a incomplete baseline covariate. This is not
+                 yet implemented for proportional hazards models.")
+      }
+    })
+  }
+
+
   # parameter elements ------------------------------------------------------
   parelmts <- get_parelmts(k, Mlist, K, K_imp, lp)
 
