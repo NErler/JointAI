@@ -75,7 +75,8 @@ test_that('plot_imp_distr', {
 
 
 test_that('JM', {
-  mod <- JM_imp(list(Surv(futime, status) ~ age + sex + chol + stage + hepato + (1 | id),
+  mod <- JM_imp(list(Surv(futime, status != "censored") ~ age + sex + chol +
+                       stage + hepato + (1 | id),
                      hepato ~ day + (1 | id),
                      chol ~ day + (1 | id),
                      stage ~ age + (1 | id)),
@@ -94,7 +95,7 @@ test_that('md_pattern', {
 
 test_that("fill_locf works", {
   locfdat <- JointAI:::fill_locf(data = JointAI::PBC,
-                                 fixed = list(Surv(futime, status) ~
+                                 fixed = list(Surv(futime, status != "censored") ~
                                                 age + sex + hepato + platelet),
                                  auxvars = NULL,
                                  random = ~ 1 | id, timevar = 'day',
