@@ -570,6 +570,15 @@ get_survinfo <- function(info_list, Mlist) {
                          group_lvls = identify_level_relations(Mlist$groups))
     longvars <- names(covar_lvls)[covar_lvls %in% longlvls]
 
+    survevent = Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]
+
+    if (any(!survevent %in% c(0, 1))) {
+      errormsg("The event indicator should only contain 2 distinct values
+                 but I found %s. Note that it is currently not possible to fit
+                 survival models with competing risks.",
+               length(unique(survevent))
+      )
+    }
 
     list(varname = x$varname,
          modeltype = x$modeltype,
