@@ -23,3 +23,6 @@ R/samplers.R
 R/plots_ppc.R
 ^_pkgdown\.yml$
 ^pkgdown$
+
+^\.lintr$
+codecov.yml
