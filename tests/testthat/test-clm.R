@@ -97,16 +97,21 @@ test_that("GRcrit and MCerror give same result", {
 
 
 test_that("summary output remained the same", {
-  expect_known_value(lapply(models, print),
-                     file = "outfiles/test_clm_print.rds")
-  expect_known_value(lapply(models, coef),
-                     file = "outfiles/test_clm_coef.rds")
-  expect_known_value(lapply(models, confint),
-                     file = "outfiles/test_clm_confint.rds")
-  expect_known_value(lapply(models, summary),
-                     file = "outfiles/test_clm_summary.rds")
-  expect_known_value(lapply(models, function(x) coef(summary(x))),
-                     file = "outfiles/test_clm_coefsummary.rds")
+  expect_known_output(
+    print(lapply(models, print)),
+    file = "outfiles/test_clm_print.txt")
+  expect_known_output(
+    print(lapply(models, coef)),
+    file = "outfiles/test_clm_coef.txt")
+  expect_known_output(
+    print(lapply(models, confint)),
+    file = "outfiles/test_clm_confint.txt")
+  expect_known_output(
+    print(lapply(models, summary)),
+    file = "outfiles/test_clm_summary.txt")
+  expect_known_output(
+    print(lapply(models, function(x) coef(summary(x)))),
+    file = "outfiles/test_clm_coefsummary.txt")
 })
 
 
@@ -161,7 +166,7 @@ test_that("wrong models give errors", {
   expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = longDF))
   expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = wideDF))
   expect_s3_class(clm_imp(O2 ~ I(O1^2) + C1 + C2, data = wideDF)$model,
-                   "try-error")
+                  "try-error")
   expect_error(clm_imp(O2 ~ O1 + C1, data = wideDF,
                        nonprop = list(O2 = ~ C2)))
 })

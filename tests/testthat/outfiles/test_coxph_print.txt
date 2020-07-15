@@ -1,0 +1,234 @@
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ 1, data = PBC2, 
+    n.adapt = 1, n.iter = 4, seed = 2020)
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+    sex, data = PBC2, n.adapt = 2, n.iter = 4, seed = 2020)
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+      age sexfemale 
+-0.003563 -5.435757 
+
+Call:
+coxph_imp(formula = Surv(futime, I(status != "censored")) ~ age + 
+    sex, data = PBC2, n.adapt = 2, n.iter = 4, seed = 2020)
+
+ Bayesian proportional hazards model for "Surv(futime, I(status != "censored"))" 
+
+
+Coefficients:
+      age sexfemale 
+-0.003563 -5.435757 
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ copper, 
+    data = PBC2, n.adapt = 2, n.iter = 4, seed = 2020)
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+  copper 
+0.004169 
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ copper + 
+    sex + age + abs(age - copper) + log(trig), data = PBC2, n.adapt = 2, 
+    n.iter = 10, trunc = list(trig = c(1e-04, NA)), seed = 2020)
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+           copper         sexfemale               age abs(age - copper) 
+        -0.003853         -1.094111          0.011558          0.008556 
+        log(trig) 
+        -0.042871 
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ copper + 
+    sex + age + abs(age - copper) + log(trig) + (1 | center), 
+    data = PBC2, n.adapt = 2, n.iter = 10, trunc = list(trig = c(1e-04, 
+        NA)), seed = 2020)
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+           copper         sexfemale               age abs(age - copper) 
+         -0.00088          -1.00705           0.01063           0.00593 
+        log(trig) 
+          0.03042 
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+    sex + trt + albumin + platelet + stage + (1 | id), data = PBC, 
+    n.adapt = 2, n.iter = 10, seed = 2020, timevar = "day")
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+       age  sexfemale trtplacebo    albumin   platelet    stage.L    stage.Q 
+-0.0158880 -2.7215731 -0.5676230 -2.0141786  0.0005587  0.2637735  1.1187499 
+   stage.C 
+-0.8902576 
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+    sex * trt + albumin + log(platelet) + (1 | id), data = PBC, 
+    n.adapt = 2, n.iter = 10, seed = 2020, timevar = "day")
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+                 age            sexfemale           trtplacebo 
+            -0.01946             -3.99837             -2.99795 
+sexfemale:trtplacebo              albumin        log(platelet) 
+             4.50936             -2.03212             -0.07386 
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+    sex + albumin + log(platelet) + (1 | id) + (1 | center), 
+    data = PBC, n.adapt = 2, n.iter = 10, seed = 2020, timevar = "day")
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+          age     sexfemale       albumin log(platelet) 
+     -0.01064      -1.43379      -2.09582      -0.67477 
+[[1]]
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ 1, data = PBC2, 
+    n.adapt = 1, n.iter = 4, seed = 2020)
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+[[2]]
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+    sex, data = PBC2, n.adapt = 2, n.iter = 4, seed = 2020)
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+      age sexfemale 
+-0.003563 -5.435757 
+
+[[3]]
+
+Call:
+coxph_imp(formula = Surv(futime, I(status != "censored")) ~ age + 
+    sex, data = PBC2, n.adapt = 2, n.iter = 4, seed = 2020)
+
+ Bayesian proportional hazards model for "Surv(futime, I(status != "censored"))" 
+
+
+Coefficients:
+      age sexfemale 
+-0.003563 -5.435757 
+
+[[4]]
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ copper, 
+    data = PBC2, n.adapt = 2, n.iter = 4, seed = 2020)
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+  copper 
+0.004169 
+
+[[5]]
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ copper + 
+    sex + age + abs(age - copper) + log(trig), data = PBC2, n.adapt = 2, 
+    n.iter = 10, trunc = list(trig = c(1e-04, NA)), seed = 2020)
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+           copper         sexfemale               age abs(age - copper) 
+        -0.003853         -1.094111          0.011558          0.008556 
+        log(trig) 
+        -0.042871 
+
+[[6]]
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ copper + 
+    sex + age + abs(age - copper) + log(trig) + (1 | center), 
+    data = PBC2, n.adapt = 2, n.iter = 10, trunc = list(trig = c(1e-04, 
+        NA)), seed = 2020)
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+           copper         sexfemale               age abs(age - copper) 
+         -0.00088          -1.00705           0.01063           0.00593 
+        log(trig) 
+          0.03042 
+
+$tvar
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+    sex + trt + albumin + platelet + stage + (1 | id), data = PBC, 
+    n.adapt = 2, n.iter = 10, seed = 2020, timevar = "day")
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+       age  sexfemale trtplacebo    albumin   platelet    stage.L    stage.Q 
+-0.0158880 -2.7215731 -0.5676230 -2.0141786  0.0005587  0.2637735  1.1187499 
+   stage.C 
+-0.8902576 
+
+$tvar
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+    sex * trt + albumin + log(platelet) + (1 | id), data = PBC, 
+    n.adapt = 2, n.iter = 10, seed = 2020, timevar = "day")
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+                 age            sexfemale           trtplacebo 
+            -0.01946             -3.99837             -2.99795 
+sexfemale:trtplacebo              albumin        log(platelet) 
+             4.50936             -2.03212             -0.07386 
+
+$tvar
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+    sex + albumin + log(platelet) + (1 | id) + (1 | center), 
+    data = PBC, n.adapt = 2, n.iter = 10, seed = 2020, timevar = "day")
+
+ Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+          age     sexfemale       albumin log(platelet) 
+     -0.01064      -1.43379      -2.09582      -0.67477 
+

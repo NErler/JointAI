@@ -121,16 +121,21 @@ test_that("GRcrit and MCerror give same result", {
 
 
 test_that("summary output remained the same", {
-  expect_known_value(lapply(models, print),
-                     file = "outfiles/test_coxph_print.rds")
-  expect_known_value(lapply(models, coef),
-                     file = "outfiles/test_coxph_coef.rds")
-  expect_known_value(lapply(models, confint),
-                     file = "outfiles/test_coxph_confint.rds")
-  expect_known_value(lapply(models, summary),
-                     file = "outfiles/test_coxph_summary.rds")
-  expect_known_value(lapply(models, function(x) coef(summary(x))),
-                     file = "outfiles/test_coxph_coefsummary.rds")
+  expect_known_output(
+    print(lapply(models, print)),
+    file = "outfiles/test_coxph_print.txt")
+  expect_known_output(
+    print(lapply(models, coef)),
+    file = "outfiles/test_coxph_coef.txt")
+  expect_known_output(
+    print(lapply(models, confint)),
+    file = "outfiles/test_coxph_confint.txt")
+  expect_known_output(
+    print(lapply(models, summary)),
+    file = "outfiles/test_coxph_summary.txt")
+  expect_known_output(
+    print(lapply(models, function(x) coef(summary(x)))),
+    file = "outfiles/test_coxph_coefsummary.txt")
 })
 
 

@@ -1,0 +1,358 @@
+[[1]]
+
+Bayesian proportional hazards model fitted with JointAI
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ 1, data = PBC2, 
+    n.adapt = 1, n.iter = 4, seed = 2020)
+
+
+Number of events: 169 
+
+Posterior summary:
+     Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+
+Posterior summary of other parameters:
+                              Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+beta_Bh0_Srv_ftm_stts_cn[1]  -8.83 4.11 -14.51 -3.05          0   10.43  0.543
+beta_Bh0_Srv_ftm_stts_cn[2]  -4.58 3.16  -9.84 -1.72          0    2.33  0.289
+beta_Bh0_Srv_ftm_stts_cn[3]  -7.67 2.82 -12.48 -4.30          0    1.02  0.235
+beta_Bh0_Srv_ftm_stts_cn[4]  -5.09 2.49  -8.80 -1.73          0    2.05  0.289
+beta_Bh0_Srv_ftm_stts_cn[5] -11.14 6.69 -23.98 -2.37          0    6.53  0.289
+beta_Bh0_Srv_ftm_stts_cn[6]  -8.09 3.14 -13.67 -3.59          0    1.05  0.486
+
+
+MCMC settings:
+Iterations = 2:5
+Sample size per chain = 4 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 312 
+
+[[2]]
+
+Bayesian proportional hazards model fitted with JointAI
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+    sex, data = PBC2, n.adapt = 2, n.iter = 4, seed = 2020)
+
+
+Number of events: 169 
+
+Posterior summary:
+              Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+age       -0.00356 0.0344 -0.0463  0.0579      0.667    3.44  0.289
+sexfemale -5.43576 2.5259 -8.9431 -1.6843      0.000    6.25  0.638
+
+Posterior summary of other parameters:
+                             Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+beta_Bh0_Srv_ftm_stts_cn[1] -8.14 1.10  -9.49 -6.56          0    2.12  0.402
+beta_Bh0_Srv_ftm_stts_cn[2] -5.99 3.05 -12.20 -3.66          0    8.66  0.331
+beta_Bh0_Srv_ftm_stts_cn[3] -6.48 2.58  -9.52 -2.87          0   16.01  0.886
+beta_Bh0_Srv_ftm_stts_cn[4] -6.04 1.77  -8.91 -4.44          0    9.38  1.125
+beta_Bh0_Srv_ftm_stts_cn[5] -5.77 3.28 -12.16 -2.37          0    4.72  0.289
+beta_Bh0_Srv_ftm_stts_cn[6] -6.51 3.54 -11.44 -1.16          0   10.28  0.855
+
+
+MCMC settings:
+Iterations = 3:6
+Sample size per chain = 4 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 312 
+
+[[3]]
+
+Bayesian proportional hazards model fitted with JointAI
+
+Call:
+coxph_imp(formula = Surv(futime, I(status != "censored")) ~ age + 
+    sex, data = PBC2, n.adapt = 2, n.iter = 4, seed = 2020)
+
+
+Number of events: 169 
+
+Posterior summary:
+              Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+age       -0.00356 0.0344 -0.0463  0.0579      0.667    3.44  0.289
+sexfemale -5.43576 2.5259 -8.9431 -1.6843      0.000    6.25  0.638
+
+Posterior summary of other parameters:
+                             Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+beta_Bh0_Srv_ftm_stts_cn[1] -8.14 1.10  -9.49 -6.56          0    2.12  0.402
+beta_Bh0_Srv_ftm_stts_cn[2] -5.99 3.05 -12.20 -3.66          0    8.66  0.331
+beta_Bh0_Srv_ftm_stts_cn[3] -6.48 2.58  -9.52 -2.87          0   16.01  0.886
+beta_Bh0_Srv_ftm_stts_cn[4] -6.04 1.77  -8.91 -4.44          0    9.38  1.125
+beta_Bh0_Srv_ftm_stts_cn[5] -5.77 3.28 -12.16 -2.37          0    4.72  0.289
+beta_Bh0_Srv_ftm_stts_cn[6] -6.51 3.54 -11.44 -1.16          0   10.28  0.855
+
+
+MCMC settings:
+Iterations = 3:6
+Sample size per chain = 4 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 312 
+
+[[4]]
+
+Bayesian proportional hazards model fitted with JointAI
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ copper, 
+    data = PBC2, n.adapt = 2, n.iter = 4, seed = 2020)
+
+
+Number of events: 169 
+
+Posterior summary:
+          Mean      SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+copper 0.00417 0.00214 0.00185 0.00795          0    4.23  0.404
+
+Posterior summary of other parameters:
+                             Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+beta_Bh0_Srv_ftm_stts_cn[1] -8.42 1.57 -10.85 -6.38          0    3.42  0.674
+beta_Bh0_Srv_ftm_stts_cn[2] -9.34 3.00 -13.03 -3.88          0    9.15  0.613
+beta_Bh0_Srv_ftm_stts_cn[3] -6.35 2.55  -9.85 -2.97          0    8.01  0.289
+beta_Bh0_Srv_ftm_stts_cn[4] -9.33 2.58 -14.36 -6.46          0    1.26  0.289
+beta_Bh0_Srv_ftm_stts_cn[5] -8.64 3.30 -13.51 -4.22          0    3.03  0.321
+beta_Bh0_Srv_ftm_stts_cn[6] -9.39 3.91 -15.59 -4.21          0    1.65  0.412
+
+
+MCMC settings:
+Iterations = 3:6
+Sample size per chain = 4 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 312 
+
+[[5]]
+
+Bayesian proportional hazards model fitted with JointAI
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ copper + 
+    sex + age + abs(age - copper) + log(trig), data = PBC2, n.adapt = 2, 
+    n.iter = 10, trunc = list(trig = c(1e-04, NA)), seed = 2020)
+
+
+Number of events: 169 
+
+Posterior summary:
+                      Mean      SD     2.5%     97.5% tail-prob. GR-crit MCE/SD
+copper            -0.00385 0.00224 -0.00802 -0.000465     0.0667    2.13  0.259
+sexfemale         -1.09411 1.28297 -4.13453  0.107955     0.1333    1.17  0.245
+age                0.01156 0.01942 -0.03148  0.037769     0.4667    1.31  0.183
+abs(age - copper)  0.00856 0.00184  0.00514  0.012603     0.0000    2.74  0.183
+log(trig)         -0.04287 0.20002 -0.43611  0.168213     0.8000    1.94  0.413
+
+Posterior summary of other parameters:
+                             Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+beta_Bh0_Srv_ftm_stts_cn[1] -8.97 0.614  -9.86 -7.72          0    2.26  0.339
+beta_Bh0_Srv_ftm_stts_cn[2] -6.62 1.893  -9.04 -2.77          0    2.52  0.183
+beta_Bh0_Srv_ftm_stts_cn[3] -9.23 2.044 -14.59 -6.95          0    7.59  0.505
+beta_Bh0_Srv_ftm_stts_cn[4] -6.78 1.941 -10.01 -3.74          0    4.43  0.462
+beta_Bh0_Srv_ftm_stts_cn[5] -8.37 2.401 -13.44 -4.95          0    4.48  0.425
+beta_Bh0_Srv_ftm_stts_cn[6] -9.91 2.903 -13.74 -2.08          0    2.29  0.172
+
+
+MCMC settings:
+Iterations = 3:12
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 312 
+
+[[6]]
+
+Bayesian proportional hazards model fitted with JointAI
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ copper + 
+    sex + age + abs(age - copper) + log(trig) + (1 | center), 
+    data = PBC2, n.adapt = 2, n.iter = 10, trunc = list(trig = c(1e-04, 
+        NA)), seed = 2020)
+
+
+Number of events: 169 
+
+Posterior summary:
+                      Mean      SD     2.5%    97.5% tail-prob. GR-crit MCE/SD
+copper            -0.00088 0.00548 -0.01241  0.00639      0.867    6.33  0.378
+sexfemale         -1.00705 0.76804 -2.69054 -0.20998      0.000    2.01  0.496
+age                0.01063 0.01391 -0.02146  0.03013      0.267    1.63  0.226
+abs(age - copper)  0.00593 0.00497 -0.00159  0.01408      0.267    6.87  0.491
+log(trig)          0.03042 0.21657 -0.24484  0.42672      0.733    1.55  0.183
+
+Posterior summary of random effects covariance matrix:
+                              Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+D_Srv_ftm_stts_cn_center[1,1] 12.1 8.68  1.9  29.9               3.09  0.211
+
+Posterior summary of other parameters:
+                             Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+beta_Bh0_Srv_ftm_stts_cn[1] -6.15 1.57  -8.71 -3.97      0.000    6.35  0.551
+beta_Bh0_Srv_ftm_stts_cn[2] -4.78 1.75  -7.88 -1.44      0.000    2.19  0.522
+beta_Bh0_Srv_ftm_stts_cn[3] -5.28 1.74  -7.05 -2.39      0.000   13.49  0.985
+beta_Bh0_Srv_ftm_stts_cn[4] -5.05 2.18  -9.14 -1.49      0.000    4.95  0.348
+beta_Bh0_Srv_ftm_stts_cn[5] -3.95 2.60  -8.39  1.08      0.133    2.79  0.504
+beta_Bh0_Srv_ftm_stts_cn[6] -7.54 3.31 -13.52 -2.73      0.000    2.35  0.451
+
+
+MCMC settings:
+Iterations = 3:12
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 312 
+Number of groups:
+ - center: 10
+
+$tvar
+
+Bayesian proportional hazards model fitted with JointAI
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+    sex + trt + albumin + platelet + stage + (1 | id), data = PBC, 
+    n.adapt = 2, n.iter = 10, seed = 2020, timevar = "day")
+
+
+Number of events: 169 
+
+Posterior summary:
+                Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
+age        -0.015888 0.02630 -0.07315  0.0247      0.400    1.92  0.424
+sexfemale  -2.721573 1.96131 -7.14618 -0.7654      0.000    2.48  0.513
+trtplacebo -0.567623 1.07217 -3.22307  0.3105      0.867    1.43  0.244
+albumin    -2.014179 0.30243 -2.28230 -1.2963      0.000    1.90  0.297
+platelet    0.000559 0.00501 -0.00534  0.0123      0.667    1.73  0.297
+stage.L     0.263774 1.30739 -1.94718  2.8937      0.933    2.71  0.266
+stage.Q     1.118750 0.60546 -0.05880  2.0134      0.133    1.47  0.183
+stage.C    -0.890258 0.86266 -2.93599  0.4631      0.133    1.83       
+
+Posterior summary of other parameters:
+                              Mean   SD   2.5%   97.5% tail-prob. GR-crit
+beta_Bh0_Srv_ftm_stts_cn[1]  -7.21 2.23 -10.31 -2.1346     0.0000    1.58
+beta_Bh0_Srv_ftm_stts_cn[2]  -8.60 1.19 -10.15 -6.5299     0.0000    8.49
+beta_Bh0_Srv_ftm_stts_cn[3]  -6.06 2.30  -9.81 -1.9983     0.0000    3.06
+beta_Bh0_Srv_ftm_stts_cn[4] -10.34 2.63 -14.03 -5.7018     0.0000    1.89
+beta_Bh0_Srv_ftm_stts_cn[5]  -4.84 3.04  -8.42  0.0568     0.0667    4.38
+beta_Bh0_Srv_ftm_stts_cn[6] -12.44 5.55 -24.55 -6.3814     0.0000    5.37
+                            MCE/SD
+beta_Bh0_Srv_ftm_stts_cn[1]  0.397
+beta_Bh0_Srv_ftm_stts_cn[2]  0.366
+beta_Bh0_Srv_ftm_stts_cn[3]  0.569
+beta_Bh0_Srv_ftm_stts_cn[4]  0.413
+beta_Bh0_Srv_ftm_stts_cn[5]  0.269
+beta_Bh0_Srv_ftm_stts_cn[6]  0.385
+
+
+MCMC settings:
+Iterations = 3:12
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 2257 
+Number of groups:
+ - id: 312
+
+$tvar
+
+Bayesian proportional hazards model fitted with JointAI
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+    sex * trt + albumin + log(platelet) + (1 | id), data = PBC, 
+    n.adapt = 2, n.iter = 10, seed = 2020, timevar = "day")
+
+
+Number of events: 169 
+
+Posterior summary:
+                        Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+age                  -0.0195 0.0187 -0.0498  0.0148      0.267    3.04  0.262
+sexfemale            -3.9984 1.5847 -6.4788 -0.9761      0.000    4.71  0.567
+trtplacebo           -2.9980 1.4145 -5.4978 -1.1735      0.000    6.11  0.470
+sexfemale:trtplacebo  4.5094 1.8457  2.0946  7.8960      0.000    6.26  0.492
+albumin              -2.0321 0.5486 -2.5690 -0.5759      0.000    1.30    Inf
+log(platelet)        -0.0739 0.5345 -0.6960  1.3545      0.600    1.52  0.183
+
+Posterior summary of other parameters:
+                             Mean   SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+beta_Bh0_Srv_ftm_stts_cn[1] -6.07 1.42  -7.83 -2.231      0.000    4.04  0.513
+beta_Bh0_Srv_ftm_stts_cn[2] -7.93 1.49 -11.53 -4.987      0.000    2.02  0.259
+beta_Bh0_Srv_ftm_stts_cn[3] -5.59 1.67  -7.61 -2.160      0.000    8.73  0.343
+beta_Bh0_Srv_ftm_stts_cn[4] -8.26 2.54 -12.60 -4.015      0.000    4.06  0.552
+beta_Bh0_Srv_ftm_stts_cn[5] -6.05 3.99 -13.51  0.268      0.133    7.41  0.706
+beta_Bh0_Srv_ftm_stts_cn[6] -9.00 5.06 -18.58 -2.278      0.000    3.31  0.183
+
+
+MCMC settings:
+Iterations = 3:12
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 2257 
+Number of groups:
+ - id: 312
+
+$tvar
+
+Bayesian proportional hazards model fitted with JointAI
+
+Call:
+coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+    sex + albumin + log(platelet) + (1 | id) + (1 | center), 
+    data = PBC, n.adapt = 2, n.iter = 10, seed = 2020, timevar = "day")
+
+
+Number of events: 169 
+
+Posterior summary:
+                 Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+age           -0.0106 0.0183 -0.0484  0.0136      0.667    1.11  0.183
+sexfemale     -1.4338 0.8101 -3.1197 -0.6243      0.000    1.26  0.263
+albumin       -2.0958 0.5756 -2.7164 -0.6463      0.000    2.55  0.413
+log(platelet) -0.6748 0.3240 -1.4071 -0.2538      0.000    1.09  0.316
+
+Posterior summary of random effects covariance matrix:
+                              Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+D_Srv_ftm_stts_cn_center[1,1] 16.9 27.8 3.25  64.6               2.26  0.183
+
+Posterior summary of other parameters:
+                              Mean    SD   2.5%  97.5% tail-prob. GR-crit
+beta_Bh0_Srv_ftm_stts_cn[1]  -4.88 0.673  -6.35 -3.896      0.000   1.549
+beta_Bh0_Srv_ftm_stts_cn[2]  -5.65 1.321  -7.59 -3.104      0.000   3.264
+beta_Bh0_Srv_ftm_stts_cn[3]  -3.61 0.800  -4.63 -1.942      0.000   0.978
+beta_Bh0_Srv_ftm_stts_cn[4]  -8.34 1.302 -11.28 -6.626      0.000   6.819
+beta_Bh0_Srv_ftm_stts_cn[5]  -1.44 1.299  -3.87  0.649      0.333   1.492
+beta_Bh0_Srv_ftm_stts_cn[6] -10.37 3.951 -15.73 -2.906      0.000   1.370
+                            MCE/SD
+beta_Bh0_Srv_ftm_stts_cn[1]  0.150
+beta_Bh0_Srv_ftm_stts_cn[2]  0.476
+beta_Bh0_Srv_ftm_stts_cn[3]  0.183
+beta_Bh0_Srv_ftm_stts_cn[4]  0.451
+beta_Bh0_Srv_ftm_stts_cn[5]  0.346
+beta_Bh0_Srv_ftm_stts_cn[6]    Inf
+
+
+MCMC settings:
+Iterations = 3:12
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 2257 
+Number of groups:
+ - center: 10
+ - id: 312
+

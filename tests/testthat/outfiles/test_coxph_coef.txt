@@ -1,0 +1,61 @@
+[[1]]
+[[1]]$`Surv(futime, status != "censored")`
+NULL
+
+
+[[2]]
+[[2]]$`Surv(futime, status != "censored")`
+         age    sexfemale 
+-0.003563391 -5.435757187 
+
+
+[[3]]
+[[3]]$`Surv(futime, I(status != "censored"))`
+         age    sexfemale 
+-0.003563391 -5.435757187 
+
+
+[[4]]
+[[4]]$`Surv(futime, status != "censored")`
+     copper 
+0.004169068 
+
+
+[[5]]
+[[5]]$`Surv(futime, status != "censored")`
+           copper         sexfemale               age abs(age - copper) 
+     -0.003852868      -1.094111220       0.011558178       0.008555954 
+        log(trig) 
+     -0.042871021 
+
+
+[[6]]
+[[6]]$`Surv(futime, status != "censored")`
+           copper         sexfemale               age abs(age - copper) 
+    -0.0008800484     -1.0070498760      0.0106285732      0.0059298340 
+        log(trig) 
+     0.0304234372 
+
+
+$tvar
+$tvar$`Surv(futime, status != "censored")`
+          age     sexfemale    trtplacebo       albumin      platelet 
+-0.0158880368 -2.7215731304 -0.5676230074 -2.0141786082  0.0005587242 
+      stage.L       stage.Q       stage.C 
+ 0.2637735366  1.1187498930 -0.8902576262 
+
+
+$tvar
+$tvar$`Surv(futime, status != "censored")`
+                 age            sexfemale           trtplacebo 
+         -0.01946302          -3.99837393          -2.99795411 
+sexfemale:trtplacebo              albumin        log(platelet) 
+          4.50936103          -2.03211978          -0.07385869 
+
+
+$tvar
+$tvar$`Surv(futime, status != "censored")`
+          age     sexfemale       albumin log(platelet) 
+  -0.01063719   -1.43378996   -2.09582152   -0.67476804 
+
+

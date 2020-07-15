@@ -1,0 +1,51 @@
+[[1]]
+[[1]]$`Surv(futime, status != "censored")`
+                2.5%    97.5%
+(Intercept) 8.191309 11.72205
+
+
+[[2]]
+[[2]]$`Surv(futime, status != "censored")`
+                  2.5%       97.5%
+(Intercept)  8.0563136 13.89016833
+age         -0.1186986 -0.01229382
+sexfemale   -1.2807896  4.16901423
+
+
+[[3]]
+[[3]]$`Surv(futime, I(status != "censored"))`
+                  2.5%       97.5%
+(Intercept)  8.0563136 13.89016833
+age         -0.1186986 -0.01229382
+sexfemale   -1.2807896  4.16901423
+
+
+[[4]]
+[[4]]$`Surv(futime, status != "censored")`
+                   2.5%        97.5%
+(Intercept)  7.71204705  9.655883466
+copper      -0.01086081 -0.004823294
+
+
+[[5]]
+[[5]]$`Surv(futime, status != "censored")`
+                         2.5%      97.5%
+(Intercept)        4.32207013 9.35677718
+copper            -0.02510163 0.01620712
+sexfemale         -0.23532143 8.60849978
+age               -0.05427373 0.03173331
+abs(age - copper) -0.02297363 0.01850717
+log(trig)         -0.25705076 0.96361285
+
+
+[[6]]
+[[6]]$`Surv(futime, status != "censored")`
+                         2.5%      97.5%
+(Intercept)        6.45865995 8.52092785
+copper            -0.04098652 0.02390099
+sexfemale          2.12993733 6.33321114
+age               -0.13617834 0.04799307
+abs(age - copper) -0.03605017 0.03531677
+log(trig)         -0.60099587 0.81400637
+
+
