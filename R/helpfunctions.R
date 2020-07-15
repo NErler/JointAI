@@ -491,7 +491,19 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
   wd <- reshape(ld, direction = 'wide', v.names = c(timevar, longvars),
                 timevar = 'obstime', idvar = idvar)
 
-  # add a colum identifying the original ordering of the rows to gk_data
+  # check if there are variables for which some subjects have no observation
+  anymis <- sapply(longvars, function(v) {
+    obs <- rowSums(!is.na(wd[, grep(paste0("^", v, ".[[:digit:]]*$"),
+                                    names(wd))]))
+    any(obs == 0)
+  })
+
+  if (any(anymis)) {
+    errormsg('There are subjects without any observations in the time-varying
+             variable(s) %s.', paste_and(dQuote(names(anymis)[anymis])))
+  }
+
+  # add a column identifying the original ordering of the rows to gk_data
   gk_data$rowid <- seq_len(nrow(gk_data))
 
   # merge gk_data with wide format version of the time-varying covariates
