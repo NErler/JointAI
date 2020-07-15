@@ -1,6 +1,8 @@
 context("coxph models")
 library("JointAI")
 
+skip_on_cran()
+
 if (!dir.exists('outfiles')) {
   dir.create('outfiles')
 }
