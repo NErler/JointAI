@@ -179,13 +179,13 @@ convert_variables <- function(data, allvars, mess = TRUE, data_orig = NULL) {
     data[is.nan(data[, k]), k] <- NA
 
     # set continuous variables with just two values to binary
-    if (all(class(data[, k]) != 'factor') &
+    if (!inherits(data[, k], 'factor') &
         length(unique(na.omit(data[, k]))) == 2 & is.null(data_orig)) {
       data[, k] <- factor(data[, k])
       converted1 <- c(converted1, k)
     } else if (!is.null(data_orig)) {
-      if (class(data_orig[, k]) == 'factor' &
-          all(class(data[, k]) != 'factor')) {
+      if (inherits(data_orig[, k], 'factor') &
+          !inherits(data[, k], 'factor')) {
         data[, k] <- factor(data[, k], levels = levels(data_orig[, k]))
         converted1 <- c(converted1, k)
       }
