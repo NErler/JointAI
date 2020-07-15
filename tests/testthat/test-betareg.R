@@ -7,17 +7,14 @@ longDF$x <- plogis(longDF$y)
 
 test_that('minimal models work', {
   # no covariates
-  expect_s3_class(betareg_imp(x ~ 1, data = wideDF, n.adapt = 1), 'JointAI')
   expect_s3_class(betamm_imp(x ~ 1 + (1 | id), data = longDF, n.adapt = 1),
                   'JointAI')
 
   # one complete covariate
-  expect_s3_class(betareg_imp(x ~ C1, data = wideDF, n.adapt = 1), 'JointAI')
   expect_s3_class(betamm_imp(x ~ C1 + (1 | id), data = longDF, n.adapt = 1),
                   'JointAI')
 
   # one incomplete covariate
-  expect_s3_class(betareg_imp(x ~ C2, data = wideDF, n.adapt = 1), 'JointAI')
   expect_s3_class(betamm_imp(x ~ C2 + (1 | id), data = longDF, n.adapt = 1),
                   'JointAI')
 
