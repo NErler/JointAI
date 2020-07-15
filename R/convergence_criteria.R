@@ -229,7 +229,8 @@ plot.MCElist <- function(x, data_scale = TRUE, plotpars = NULL,
   plotpars$y <- rev(seq_len(nrow(mce)))
 
   if (is.null(plotpars$xlim))
-    plotpars$xlim <- range(0, plotpars$x, na.rm = TRUE)
+    plotpars$xlim <- range(0, plotpars$x[!is.infinite(plotpars$x)],
+                           na.rm = TRUE)
   if (is.null(plotpars$xlab))
     plotpars$xlab <- "MCE/SD"
   if (is.null(plotpars$ylab))
