@@ -119,7 +119,9 @@ resid_glm <- function(varname, type = c("working", "pearson", "response"),
   } else if (info$family %in% c('lognorm')) {
     gaussian(link = 'log')
   } else if (info$family %in% c('beta') & type %in% c('response')) {
-    function(x){log(x/(1 - x))}
+    list(linkfun = function(x){
+      log(x/(1 - x))
+    })
   } else {
     errormsg('Residuals of type %s for %s models are currently not available.',
              dQuote(type), dQuote(info$family))
@@ -129,7 +131,7 @@ resid_glm <- function(varname, type = c("working", "pearson", "response"),
   eta <- family$linkfun(mu)
 
   # working residuals
-  r <- (y - mu)/family$mu.eta(eta)
+  r <- try((y - mu)/family$mu.eta(eta), silent = TRUE)
 
   resid <- switch(type,
                   working = r,
