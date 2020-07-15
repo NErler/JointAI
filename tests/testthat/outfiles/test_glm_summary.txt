@@ -1,0 +1,1128 @@
+[[1]]
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = y ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020)
+
+
+Posterior summary:
+             Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) -3.28 0.158 -3.55 -2.98          0    1.14  0.183
+
+Posterior summary of residual std. deviation:
+        Mean    SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y 2.29 0.174 2.01  2.61    1.28  0.183
+
+
+MCMC settings:
+Iterations = 1:10
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[2]]
+
+Bayesian linear model fitted with JointAI
+
+Call:
+glm_imp(formula = y ~ 1, family = gaussian(link = "identity"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+             Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) -3.28 0.158 -3.55 -2.98          0    1.14  0.183
+
+Posterior summary of residual std. deviation:
+        Mean    SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y 2.29 0.174 2.01  2.61    1.28  0.183
+
+
+MCMC settings:
+Iterations = 1:10
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[3]]
+
+Bayesian linear model fitted with JointAI
+
+Call:
+glm_imp(formula = y ~ 1, family = gaussian(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+             Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) -8.01 3.82 -16.2 -3.56          0    3.22  0.394
+
+Posterior summary of residual std. deviation:
+        Mean    SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y 4.06 0.262 3.68  4.54    1.22  0.161
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[4]]
+
+Bayesian linear model fitted with JointAI
+
+Call:
+glm_imp(formula = y ~ 1, family = gaussian(link = "inverse"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+            Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) 22.3 5.04 14.7  30.7          0    1.98  0.285
+
+Posterior summary of residual std. deviation:
+        Mean    SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y 4.12 0.259 3.72   4.6    1.48  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[5]]
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "logit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+            Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) 1.26 0.265 0.79  1.69          0    1.22  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[6]]
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "probit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+            Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) 0.78 0.11  0.6 0.957          0     1.2  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[7]]
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+            Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) 3.34 5.73 -0.388  16.3      0.667    22.7  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[8]]
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "cloglog"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+            Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) 0.39 0.114  0.2 0.572          0    1.19  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[9]]
+
+Bayesian Gamma model fitted with JointAI
+
+Call:
+glm_imp(formula = L1 ~ 1, family = Gamma(link = "inverse"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+            Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) 1.21 0.224 0.608  1.43          0    2.52  0.253
+
+Posterior summary of residual std. deviation:
+          Mean    SD  2.5% 97.5% GR-crit MCE/SD
+sigma_L1 0.331 0.286 0.152  1.13    5.44  0.223
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[10]]
+
+Bayesian Gamma model fitted with JointAI
+
+Call:
+glm_imp(formula = L1 ~ 1, family = Gamma(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+              Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+(Intercept) -0.284 0.0435 -0.349 -0.208          0    2.67  0.347
+
+Posterior summary of residual std. deviation:
+          Mean     SD  2.5% 97.5% GR-crit MCE/SD
+sigma_L1 0.226 0.0376 0.185 0.309    2.95  0.488
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[11]]
+
+Bayesian poisson model fitted with JointAI
+
+Call:
+glm_imp(formula = P1 ~ 1, family = poisson(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+             Mean     SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) 0.941 0.0725 0.808  1.06          0    3.79    0.7
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[12]]
+
+Bayesian poisson model fitted with JointAI
+
+Call:
+glm_imp(formula = P1 ~ 1, family = poisson(link = "identity"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+            Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) 1.51 3.32 -7.58  2.84      0.267    5.45  0.242
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[13]]
+
+Bayesian log-normal model fitted with JointAI
+
+Call:
+lognorm_imp(formula = L1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020)
+
+
+Posterior summary:
+              Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+(Intercept) -0.335 0.0246 -0.378 -0.294          0    1.44  0.183
+
+Posterior summary of residual std. deviation:
+          Mean     SD  2.5% 97.5% GR-crit MCE/SD
+sigma_L1 0.236 0.0133 0.221 0.264    1.06  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[14]]
+
+Bayesian beta model fitted with JointAI
+
+Call:
+betareg_imp(formula = Be1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020)
+
+
+Posterior summary:
+              Mean     SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) 0.0377 0.0717 -0.11 0.133      0.467    1.08  0.183
+
+Posterior summary of other parameters:
+        Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+tau_Be1 5.37 0.578 4.57  6.45          0    1.19  0.355
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[15]]
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = y ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020)
+
+
+Posterior summary:
+             Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  36.4 18.9   3.62 74.49          0    1.09  0.183
+C1          -27.7 13.1 -54.29 -4.94          0    1.08  0.183
+
+Posterior summary of residual std. deviation:
+        Mean    SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y 2.24 0.166 1.93  2.54   0.969  0.183
+
+
+MCMC settings:
+Iterations = 1:10
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[16]]
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ C1, family = binomial(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+             Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  45.5 25.2   3.95 97.98          0    1.05  0.183
+C1          -30.8 17.6 -67.45 -1.72          0    1.05  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[17]]
+
+Bayesian Gamma model fitted with JointAI
+
+Call:
+glm_imp(formula = L1 ~ C1, family = Gamma(), data = wideDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+              Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  3.260 102.5 -165   151        0.8    12.5   1.05
+C1          -0.225  71.2 -102   118        0.8    12.3   1.05
+
+Posterior summary of residual std. deviation:
+          Mean   SD  2.5% 97.5% GR-crit MCE/SD
+sigma_L1 0.476 1.02 0.181  2.07    3.57  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[18]]
+
+Bayesian poisson model fitted with JointAI
+
+Call:
+glm_imp(formula = P1 ~ C1, family = poisson(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+             Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  2.50 5.34 -7.97 12.50      0.600    1.38  0.183
+C1          -1.07 3.73 -8.07  6.27      0.667    1.38  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[19]]
+
+Bayesian log-normal model fitted with JointAI
+
+Call:
+lognorm_imp(formula = L1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020)
+
+
+Posterior summary:
+             Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) -1.88 2.72 -6.61  2.62      0.467    1.05  0.183
+C1           1.07 1.90 -2.08  4.37      0.467    1.05  0.183
+
+Posterior summary of residual std. deviation:
+          Mean     SD  2.5% 97.5% GR-crit MCE/SD
+sigma_L1 0.235 0.0143 0.202 0.257    1.05  0.115
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[20]]
+
+Bayesian beta model fitted with JointAI
+
+Call:
+betareg_imp(formula = Be1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020)
+
+
+Posterior summary:
+             Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  5.59 7.21  -6.55 19.49      0.333    1.60  0.183
+C1          -3.89 5.02 -13.59  4.57      0.333    1.59  0.183
+
+Posterior summary of other parameters:
+        Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+tau_Be1 5.15 0.78 3.34  6.28          0     1.9       
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[21]]
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = y ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020)
+
+
+Posterior summary:
+              Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) -3.279 0.192 -3.595 -2.94      0.000    1.08  0.183
+C2           0.916 0.595 -0.248  1.71      0.133    1.31  0.183
+
+Posterior summary of residual std. deviation:
+        Mean    SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y 2.28 0.139 2.02  2.51    1.64  0.183
+
+
+MCMC settings:
+Iterations = 1:10
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[22]]
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B2 ~ C2, family = binomial(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+             Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  2.86 0.631  1.80  4.06      0.000    2.97 0.2188
+C2          -1.09 1.262 -3.09  1.67      0.333    1.01 0.0834
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[23]]
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF, 
+    n.adapt = 5, n.iter = 10, models = c(P2 = "glm_poisson_log", 
+        L1mis = "glm_gamma_inverse", Be2 = "beta"), seed = 2020)
+
+
+Posterior summary:
+                 Mean       SD      2.5%    97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  1.43e+00 1.08e-02  1.41e+00 1.45e+00      0.000    1.19  0.148
+C2          -2.74e-03 5.44e-03 -1.08e-02 8.20e-03      0.467    1.05  0.101
+B21          2.81e-03 9.13e-03 -1.13e-02 1.64e-02      0.800    1.52  0.183
+P2          -9.57e-04 1.29e-03 -2.95e-03 1.46e-03      0.467    1.06  0.183
+L1mis       -3.96e-14 4.71e-13 -7.23e-13 9.07e-13      0.867    1.22  0.183
+Be2          7.68e-03 9.22e-03 -8.59e-03 2.26e-02      0.400    1.05  0.183
+
+Posterior summary of residual std. deviation:
+           Mean      SD   2.5%  97.5% GR-crit MCE/SD
+sigma_C1 0.0192 0.00158 0.0168 0.0222     1.1  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[24]]
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis, data = wideDF, n.adapt = 5, 
+    n.iter = 10, models = c(C2 = "glm_gaussian_inverse", P2 = "glm_poisson_identity", 
+        B2 = "glm_binomial_probit", L1mis = "lognorm"), seed = 2020)
+
+
+Posterior summary:
+                 Mean       SD      2.5%    97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  1.42e+00 9.98e-03  1.40e+00 1.44e+00      0.000    1.85  0.183
+C2          -3.81e-14 9.53e-13 -1.79e-12 1.49e-12      0.933    1.14  0.183
+B21          3.47e-03 6.20e-03 -6.08e-03 1.46e-02      0.667    1.92  0.183
+P2          -9.60e-04 1.33e-03 -3.27e-03 1.01e-03      0.400    1.51  0.217
+L1mis        1.42e-02 1.28e-02 -6.43e-03 4.14e-02      0.200    1.59  0.183
+
+Posterior summary of residual std. deviation:
+           Mean      SD  2.5%  97.5% GR-crit MCE/SD
+sigma_C1 0.0191 0.00133 0.017 0.0215    1.07  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[25]]
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis, data = wideDF, n.adapt = 5, 
+    n.iter = 10, models = c(C2 = "glm_gaussian_log", P2 = "glm_poisson_identity", 
+        L1mis = "glm_gamma_log", B2 = "glm_binomial_log"), seed = 2020)
+
+
+Posterior summary:
+                 Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  1.420420 0.01440  1.39919 1.44881      0.000    2.51  0.214
+C2           0.000290 0.00660 -0.01178 0.01116      0.933    1.01  0.183
+B21          0.008583 0.00863 -0.00722 0.02258      0.333    1.53  0.183
+P2          -0.000564 0.00118 -0.00278 0.00132      0.667    1.48  0.183
+L1mis        0.010284 0.01143 -0.00994 0.03244      0.467    1.74  0.183
+
+Posterior summary of residual std. deviation:
+           Mean      SD  2.5%  97.5% GR-crit MCE/SD
+sigma_C1 0.0197 0.00117 0.018 0.0219    1.15  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[26]]
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF, 
+    n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
+        P2 = "glm_poisson_identity", L1mis = "glm_gamma_log", 
+        B2 = "glm_binomial_log"), trunc = list(Be2 = c(0, 1)), 
+    seed = 2020)
+
+
+Posterior summary:
+                 Mean      SD      2.5%   97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  1.413724 0.01611  1.384655 1.44011     0.0000    1.42  0.183
+C2          -0.000966 0.00695 -0.014497 0.00857     0.8667    1.36  0.183
+B21          0.007107 0.00884 -0.012586 0.02248     0.3333    1.08  0.183
+P2          -0.000967 0.00101 -0.002975 0.00032     0.4000    1.28  0.208
+L1mis        0.013578 0.01361 -0.003748 0.03874     0.3333    1.34  0.183
+Be2          0.011236 0.00855 -0.000784 0.02598     0.0667    1.06  0.183
+
+Posterior summary of residual std. deviation:
+           Mean      SD   2.5%  97.5% GR-crit MCE/SD
+sigma_C1 0.0194 0.00136 0.0172 0.0218    1.05  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[27]]
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = y ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+                      Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+(Intercept)       11.68950  8.095  -5.11 26.024      0.133    1.51  0.183
+M22               -0.51157  0.820  -2.17  0.806      0.533    1.10  0.183
+M23                0.00892  0.672  -1.13  1.129      1.000    1.38  0.183
+M24               -1.05750  0.868  -2.61  0.779      0.200    1.41  0.183
+O22                0.44760  2.963  -4.14  5.900      1.000    1.41  0.183
+O23               -2.11696  3.855  -9.42  3.827      0.733    1.38  0.183
+O24               -1.81320  3.367  -7.78  3.508      0.600    1.26  0.183
+abs(C1 - C2)      -1.85883  2.012  -5.51  2.134      0.267    1.66  0.183
+log(C1)          -33.88136 20.639 -74.50  5.223      0.133    1.45  0.183
+O22:abs(C1 - C2)  -0.21000  2.250  -4.32  3.208      1.000    1.36  0.183
+O23:abs(C1 - C2)   1.54317  2.611  -2.38  6.745      0.600    1.42  0.183
+O24:abs(C1 - C2)   1.85350  2.280  -1.83  5.802      0.467    1.25  0.183
+
+Posterior summary of residual std. deviation:
+        Mean    SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y 2.28 0.167 2.03   2.6    1.58  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+[[28]]
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ L1mis + abs(C1 - C2) + log(Be2), family = binomial(), 
+    data = wideDF, n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
+        L1mis = "glm_gamma_inverse", Be2 = "beta"), seed = 2020, 
+    warn = FALSE)
+
+
+Posterior summary:
+                  Mean       SD      2.5%    97.5% tail-prob. GR-crit MCE/SD
+(Intercept)   1.43e+00 9.72e-01 -3.53e-01 2.84e+00      0.200    1.11  0.183
+L1mis        -5.30e-11 6.38e-11 -1.72e-10 5.63e-11      0.467    1.42  0.292
+abs(C1 - C2)  4.70e-02 6.21e-01 -7.13e-01 1.35e+00      0.800    1.38  0.183
+log(Be2)      9.46e-02 4.03e-01 -5.04e-01 8.56e-01      0.867    1.20  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$pred
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = y ~ C2 + B2 + B1 + O1, data = wideDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+               Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+(Intercept) -3.9255 0.549 -4.862 -3.121      0.000   1.403  0.183
+C2           0.9890 0.513  0.097  1.725      0.000   1.173  0.183
+B21          0.6988 0.700 -0.318  1.829      0.400   1.184  0.183
+B11         -0.0714 0.462 -0.886  0.804      0.933   1.163  0.179
+O1.L         1.3235 0.290  0.957  1.870      0.000   1.389  0.183
+O1.Q         0.8279 0.290  0.292  1.342      0.000   1.298  0.183
+O1.C        -2.0938 0.293 -2.677 -1.753      0.000   0.983  0.183
+
+Posterior summary of residual std. deviation:
+        Mean    SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y 1.87 0.174 1.59  2.22    1.24  0.239
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$pred
+
+Bayesian linear model fitted with JointAI
+
+Call:
+glm_imp(formula = y ~ C2 + B2 + B1 + O1, family = gaussian(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+               Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+(Intercept) -23.218 10.90 -39.68 -7.420     0.0000    2.50  0.341
+C2           -4.293 15.34 -29.67 19.434     0.9333    3.67  0.480
+B21         -12.008  7.87 -24.62  1.829     0.2000    4.31  0.517
+B11          -9.579  6.99 -22.54  0.544     0.1333    3.33  0.544
+O1.L          0.401  8.53 -15.83 11.466     0.7333    6.17  0.495
+O1.Q         11.064  6.83   1.03 24.643     0.0667    2.93  0.454
+O1.C         -3.213  7.32 -16.59  6.716     0.8667    5.71  0.488
+
+Posterior summary of residual std. deviation:
+        Mean    SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y 4.08 0.319 3.59  4.71    1.64  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$pred
+
+Bayesian linear model fitted with JointAI
+
+Call:
+glm_imp(formula = y ~ C2 + B2 + B1 + O1, family = gaussian(link = "inverse"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+             Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept) 19.27  5.69  10.840  30.5      0.000    2.75  0.427
+C2           4.38 12.51 -18.999  25.2      0.867    1.71  0.211
+B21          5.66  5.51  -6.299  13.7      0.267    2.46  0.451
+B11          2.24  6.83 -10.106  11.8      0.733    7.66  0.846
+O1.L         5.98 10.64  -8.579  20.7      0.667   10.18  0.671
+O1.Q         4.85  2.97  -0.738  10.5      0.133    2.66  0.295
+O1.C         3.87  4.32  -3.268  11.0      0.467    2.51  0.335
+
+Posterior summary of residual std. deviation:
+        Mean    SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y 4.12 0.321  3.5  4.62    1.42  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$pred
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "logit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+                Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  47.6484 22.226   9.966 81.072      0.000    1.22  0.148
+C2            0.0972  0.645  -1.021  1.306      0.933    1.54  0.183
+B21           0.4863  1.030  -1.292  2.029      0.667   10.64  0.461
+C1          -32.5533 15.604 -55.537 -6.410      0.000    1.26  0.253
+O1.L         -0.1634  0.602  -1.451  0.558      0.933    1.16  0.183
+O1.Q          0.2733  0.566  -0.564  1.433      0.733    1.33  0.183
+O1.C         -0.3511  0.431  -1.146  0.323      0.467    1.28  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$pred
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "probit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+               Mean     SD      2.5%  97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  29.958 11.737   8.87124 52.289     0.0000    1.04  0.183
+C2           -0.180  0.508  -1.07236  0.660     0.6667    1.95  0.222
+B21           0.478  0.274   0.00981  0.936     0.0667    2.27  0.430
+C1          -20.606  8.170 -36.19945 -5.825     0.0000    1.05  0.183
+O1.L         -0.268  0.287  -0.80154  0.130     0.3333    1.29  0.183
+O1.Q          0.238  0.267  -0.21955  0.750     0.3333    1.77  0.213
+O1.C         -0.243  0.271  -0.74127  0.201     0.4000    1.43  0.158
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$pred
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+               Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  27.825 43.505   -2.18 149.331      0.133    4.93  0.253
+C2           -0.586  0.958   -2.50   0.348      0.667    9.58  0.640
+B21          -0.161  0.982   -2.37   0.512      0.533   13.33  0.561
+C1          -19.273 30.431 -104.54   1.678      0.133    4.95  0.253
+O1.L         -0.257  0.929   -1.96   1.066      0.800   13.23  0.469
+O1.Q         -1.299  0.930   -2.17   0.276      0.333   18.77  0.695
+O1.C         -0.189  2.268   -3.24   2.643      0.867   30.24  0.968
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$pred
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "cloglog"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+               Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  29.788 16.737   1.055 60.1960     0.0667    1.75  0.181
+C2            0.128  0.474  -0.916  0.7128     0.7333    1.78  0.241
+B21           0.608  0.366   0.190  1.3866     0.0000    6.92  0.532
+C1          -20.875 11.786 -42.544 -0.6437     0.0667    1.80  0.183
+O1.L         -0.190  0.257  -0.715  0.1313     0.6000    1.73  0.183
+O1.Q          0.182  0.212  -0.159  0.5353     0.4667    1.63  0.183
+O1.C         -0.310  0.214  -0.744  0.0228     0.1333    1.22  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$pred
+
+Bayesian Gamma model fitted with JointAI
+
+Call:
+glm_imp(formula = L1 ~ C2 + B2 + B1 + O1, family = Gamma(link = "inverse"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+              Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  4.319 2.990   0.349  8.65      0.000   10.97  0.666
+C2          -5.839 7.154 -16.759  1.42      0.400   35.18  0.459
+B21          0.492 0.879  -0.804  2.06      0.667   11.11  1.161
+B11          1.025 1.697  -2.148  3.51      0.533    7.55  0.442
+O1.L         0.409 0.972  -1.107  2.39      0.733    4.49  0.518
+O1.Q         2.628 4.819  -5.706  7.87      0.667   26.95  0.314
+O1.C         0.748 4.488  -7.769  6.67      0.667   25.03  0.909
+
+Posterior summary of residual std. deviation:
+         Mean  SD 2.5% 97.5% GR-crit MCE/SD
+sigma_L1  309 611 0.25  2044    2.66  0.213
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$pred
+
+Bayesian Gamma model fitted with JointAI
+
+Call:
+glm_imp(formula = L1 ~ C2 + B2 + B1 + O1, family = Gamma(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+               Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
+(Intercept) -0.0556 0.1251 -0.323  0.1185     0.6667    4.00  0.549
+C2          -0.1390 0.0935 -0.314  0.0170     0.1333    1.41  0.183
+B21         -0.2233 0.1046 -0.350 -0.0390     0.0667    3.38  0.505
+B11         -0.0721 0.1155 -0.347  0.0958     0.6667    4.22  0.488
+O1.L        -0.1069 0.0666 -0.226  0.0120     0.1333    1.06  0.183
+O1.Q        -0.0610 0.0628 -0.194  0.0172     0.3333    1.26  0.183
+O1.C        -0.0031 0.0526 -0.100  0.0890     1.0000    1.64  0.183
+
+Posterior summary of residual std. deviation:
+          Mean     SD  2.5% 97.5% GR-crit MCE/SD
+sigma_L1 0.221 0.0232 0.185 0.256    1.84  0.421
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$pred
+
+Bayesian poisson model fitted with JointAI
+
+Call:
+glm_imp(formula = P1 ~ C2 + B2 + B1 + O1, family = poisson(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+               Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  0.7515 0.217  0.3601 1.125      0.000   2.527  0.255
+C2          -0.2487 0.212 -0.5658 0.139      0.200   1.056  0.183
+B21         -0.1034 0.301 -0.6121 0.361      0.933   7.401  0.437
+B11          0.3540 0.280 -0.0217 0.911      0.200   4.574  0.549
+O1.L        -0.0141 0.118 -0.2209 0.158      0.933   1.022  0.208
+O1.Q         0.0970 0.135 -0.0966 0.324      0.600   0.954  0.238
+O1.C        -0.0263 0.121 -0.2342 0.223      0.667   1.754  0.195
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$pred
+
+Bayesian poisson model fitted with JointAI
+
+Call:
+glm_imp(formula = P1 ~ C2 + B2 + B1 + O1, family = poisson(link = "identity"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+              Mean    SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
+(Intercept)  4.537 3.094  0.668  8.9958     0.0000  47.205  0.928
+C2          -0.758 0.487 -1.565 -0.0235     0.0667   0.984  0.183
+B21         -1.309 1.416 -4.178  1.3100     0.2667   5.764  0.507
+B11         -1.452 1.653 -4.191  0.6331     0.6000  13.053  0.423
+O1.L         0.504 1.226 -0.981  2.4582     0.9333  10.331  0.889
+O1.Q         1.752 2.591 -0.823  5.8638     0.7333  19.746  0.605
+O1.C        -2.272 3.286 -7.202  2.5357     0.4000  13.782  0.934
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$pred
+
+Bayesian log-normal model fitted with JointAI
+
+Call:
+lognorm_imp(formula = L1 ~ C2 + B2 + B1 + O1, data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+                Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+(Intercept) -0.29115 0.0791 -0.4127 -0.1720     0.0000    4.58  0.448
+C2          -0.12964 0.0835 -0.2733 -0.0101     0.0667    1.04  0.183
+B21         -0.11700 0.1141 -0.2848  0.0425     0.6000   10.52  0.522
+B11          0.04101 0.0722 -0.0901  0.1333     0.4667    4.33  0.331
+O1.L        -0.11467 0.0366 -0.1674 -0.0448     0.0000    1.28  0.183
+O1.Q        -0.06634 0.0475 -0.1233  0.0387     0.2667    1.37  0.183
+O1.C         0.00352 0.0556 -0.0925  0.1083     0.9333    1.00  0.183
+
+Posterior summary of residual std. deviation:
+          Mean    SD  2.5% 97.5% GR-crit MCE/SD
+sigma_L1 0.234 0.018 0.208 0.263    1.29  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$pred
+
+Bayesian beta model fitted with JointAI
+
+Call:
+betareg_imp(formula = Be1 ~ C2 + B2 + B1 + O1, data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020)
+
+
+Posterior summary:
+               Mean    SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
+(Intercept) -0.3963 0.366 -1.0344 0.0507      0.200    8.47  0.850
+C2           0.2514 0.209 -0.0617 0.5932      0.267    1.08  0.183
+B21          0.2248 0.474 -0.4096 1.1189      0.867    8.55  0.850
+B11          0.2906 0.219 -0.0908 0.6673      0.133    2.94  0.412
+O1.L         0.1314 0.179 -0.2073 0.4109      0.467    1.00  0.183
+O1.Q         0.1073 0.156 -0.1592 0.3743      0.400    1.41  0.183
+O1.C        -0.0158 0.166 -0.2668 0.2811      0.933    1.38  0.183
+
+Posterior summary of other parameters:
+        Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+tau_Be1 4.97 0.717 3.89  6.33          0    1.18  0.183
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
