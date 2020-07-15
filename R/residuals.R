@@ -24,7 +24,7 @@
 #' @export
 
 residuals.JointAI <- function(object,
-                              type, # = c('working', 'deviance', 'response'),
+                              type = c('working', 'pearson', 'response'),
                               warn = TRUE, ...) {
 
 
