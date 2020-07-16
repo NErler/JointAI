@@ -699,12 +699,17 @@ predict_clm <- function(formula, newdata,
       if (is.null(eta_nonprop)) 0 else eta_nonprop[[k]]
   }, simplify = FALSE)
 
-  names(lp) <- paste0("logOdds(", varname, ">", seq_along(lp), ")")
-
   mat1 <- matrix(nrow = nrow(eta), ncol = ncol(eta), data = 1)
   mat0 <- mat1 * 0
 
-  pred <- c(list(mat1), lapply(lp, plogis), list(mat0))
+
+  if (info_list[[varname]]$rev) {
+
+  } else {
+    names(lp) <- paste0("logOdds(", varname, ">", seq_along(lp), ")")
+
+    pred <- c(list(mat1), lapply(lp, plogis), list(mat0))
+  }
 
   probs <- lapply(seq_along(pred)[-1], function(k) {
     pred[[k - 1]] - pred[[k]]
