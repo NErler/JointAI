@@ -334,7 +334,8 @@ get_coef_names <- function(info_list) {
     # find all parameter elements with the same parameter name to find
     # out if this parameter needs to get indexed or not
     pars <- sapply(info_list, function(k) {
-      if (k$parname %in% info$parname) unlist(k$parelmts)
+      if (k$parname %in% info$parname)
+        unlist(c(k$parelmts, lapply(k$parelmts, "attr", "nonprop")))
     })
 
 
