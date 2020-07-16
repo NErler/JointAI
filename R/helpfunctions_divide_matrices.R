@@ -412,8 +412,9 @@ model.matrix_combi <- function(fmla, data, terms_list, refs) {
         mf_mat <- mf_list[[i]][, setdiff(colnames(mf_list[[i]]),
                                          colnames(X)),
                                drop = FALSE]
-        mf_mat <- mf_mat[, sapply(mf_mat, function(k) !inherits(k, "matrix")),
-                         drop = FALSE]
+        mf_mat <- mf_mat[, sapply(mf_mat, function(k)
+          !inherits(k, c("matrix", "Surv"))),
+          drop = FALSE]
 
         if (ncol(mf_mat) > 0) {
           X <- cbind(X, data.matrix(mf_mat))
