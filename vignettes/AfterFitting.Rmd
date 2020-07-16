@@ -313,9 +313,9 @@ set of iterations and parameters to display can be changed using the
 arguments `subset`, `start`, `end`, `thin` and `exclude_chains`.
 
 ### Subset of parameters
-As long as the main parameters have been monitored in a `JointAI` object, 
-only these parameters are returned in the model summary, plots and criteria shown above.
-When the main parameters of the analysis model were not monitored, i.e.,
+As long as the main parameters have been monitored in a `JointAI` object, only
+these parameters are returned in the model summary, plots and criteria shown
+above. When the main parameters of the analysis model were not monitored, i.e.,
 `monitor_params = c(analysis_main = FALSE)`, and the argument `subset` is not
 specified, all parameters that were monitored are displayed.
 
@@ -323,9 +323,9 @@ To display output for nodes other than the main parameters of the analysis model
 or for a subset of nodes, the argument `subset` needs to be specified.
 
 #### Examples
-To display only the parameters of the imputation models, we
-set `subset = c(analysis_main = FALSE, other_models = TRUE)` (after re-estimating
-the model with the monitor for these parameters switched on):
+To display only the parameters of the imputation models, we set `subset =
+c(analysis_main = FALSE, other_models = TRUE)` (after re-estimating the model
+with the monitor for these parameters switched on):
 ```{r, message = FALSE}
 mod13c <- update(mod13a, monitor_params = c(other_models = TRUE))
 summary(mod13c, subset = c(analysis_main = FALSE, other_models = TRUE))
@@ -334,7 +334,8 @@ summary(mod13c, subset = c(analysis_main = FALSE, other_models = TRUE))
 To select only some of the parameters, they can be specified directly by
 name via the `other` element of `subset`.
 ```{r message = FALSE}
-densplot(mod13c, subset = list(other = c('beta[4]', 'beta[5]')), nrow = 1)
+densplot(mod13c, subset = list(analysis_main = FALSE,
+                               other = c('beta[4]', 'beta[5]')), nrow = 1)
 ```
 
 This also works when a subset of the imputed values should be displayed:
@@ -347,7 +348,7 @@ sub3 <- grep('M_lvlone\\[[[:digit:]]+,4\\]', parameters(mod13d)$coef, value = TR
 sub3
 
 # pass "sub3" to "subset" via "other", for example in a traceplot:
-traceplot(mod13d, subset = list(other = sub3), ncol = 2)
+traceplot(mod13d, subset = list(analysis_main = FALSE, other = sub3), ncol = 2)
 ```
 
 When the number of imputed values is large or in order to check convergence
@@ -362,7 +363,8 @@ mod13e <- update(mod13b, monitor_params = c(ranef_main = TRUE))
 ri <- grep('^b_bmi_ID\\[[[:digit:]]+,1\\]$', colnames(mod13e$MCMC[[1]]), value = T)
 
 # to plot the chains of 12 randomly selected random intercepts and slopes:
-traceplot(mod13e, subset = list(other = sample(ri, size = 12)), ncol = 4)
+traceplot(mod13e, subset = list(analysis_main = FALSE, 
+                                other = sample(ri, size = 12)), ncol = 4)
 ```
 
 

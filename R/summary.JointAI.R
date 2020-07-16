@@ -70,12 +70,14 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
         GR_crit(object = object, start = start, end = end, thin = thin,
                 warn = warn, mess = FALSE, multivariate = FALSE,
                 exclude_chains = exclude_chains,
-                subset = list(other = colnames(MCMCsub)),
+                subset = list(other = colnames(MCMCsub), analysis_main = FALSE),
                 autoburnin = autoburnin)[[1]][, "Upper C.I."]
       }
 
       mcerror <- if (length(object$MCMC) - length(exclude_chains) > 1) {
-        try(MC_error(object, subset = list(other = colnames(MCMCsub)),
+        try(MC_error(object,
+                     subset = list(other = colnames(MCMCsub),
+                                   analysis_main = FALSE),
                      exclude_chains = exclude_chains,
                      start = start, end = end, thin = thin,
                      digits = 2, warn = FALSE, mess = FALSE))

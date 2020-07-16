@@ -1,7 +1,7 @@
 
 get_subset <- function(object, subset, warn = TRUE, mess = TRUE) {
 
-  if (identical(subset, FALSE))
+  if (isFALSE(subset))
     return(object$MCMC)
 
   subset <- as.list(subset)
@@ -14,8 +14,8 @@ get_subset <- function(object, subset, warn = TRUE, mess = TRUE) {
       as.logical(as.list(object$monitor_params)$analysis_main))
     subset <- c(analysis_main = TRUE)
 
-  if (!length(subset) == 0 && is.null(as.list(subset)$analysis_main))
-    subset$analysis_main <- FALSE
+  # if (!length(subset) == 0 && is.null(as.list(subset)$analysis_main))
+  #   subset$analysis_main <- FALSE
 
 
   Mlist_new <- get_Mlist(object)
@@ -41,4 +41,3 @@ sub <- unique(unlist(
 
   return(object$MCMC[, sub, drop = FALSE])
 }
-
