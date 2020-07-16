@@ -282,7 +282,7 @@ predict.JointAI <- function(object, outcome = 1, newdata,
 predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
                         data, MCMC, varname, coef_list, info_list,
                         quantiles = c(0.025, 0.975), mess = TRUE,
-                        contr_list, ...) {
+                        contr_list, Mlist, ...) {
 
   type <- match.arg(type)
 
@@ -299,6 +299,15 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   }
 
   coefs <- coef_list[[varname]]
+
+  scale_pars <- if (attr(terms(formula), 'intercept') == 0) {
+    scale_pars <- do.call(rbind, unname(Mlist$scale_pars))
+    if (!is.null(scale_pars)) {
+      scale_pars$center[is.na(scale_pars$center)] <- 0
+    }
+    scale_pars
+  }
+
 
   mf <- model.frame(as.formula(paste(formula[-2], collapse = " ")),
                     data, na.action = na.pass)
@@ -322,9 +331,11 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
 
   # linear predictor values for the selected iterations of the MCMC sample
-  pred <- sapply(seq_len(nrow(X)), function(i)
-    MCMC[, coefs$coef[match(colnames(X), coefs$varname)],
-         drop = FALSE] %*% X[i, ])
+  pred <- calc_lp(
+    regcoefs = MCMC[, coefs$coef[match(colnames(X),
+                                       coefs$varname)], drop = FALSE],
+    design_mat = X,
+    scale_pars)
 
   # fitted values: mean over the (transformed) predicted values
   fit <- if (type == "response") {
