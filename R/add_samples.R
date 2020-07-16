@@ -172,7 +172,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                     coda::thin(newMCMC))
 
   # add computational time to JointAI object
-  newobject$time <- c(object$time, difftime(t1, t0))
+  newobject$comp_info$duration <- c(object$comp_info$duration, difftime(t1, t0))
 
   return(newobject)
 }
