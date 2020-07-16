@@ -650,14 +650,20 @@ predict_clm <- function(formula, newdata,
                         type = c("prob", "lp", "class", "response"),
                         data, MCMC, varname, coef_list, info_list,
                         quantiles = c(0.025, 0.975), warn = TRUE,
-                        contr_list, ...) {
+                        contr_list, Mlist, ...) {
 
   type <- match.arg(type)
 
   if (type == "response")
     type <- "class"
 
+
   coefs <- coef_list[[varname]]
+
+  scale_pars <- do.call(rbind, unname(Mlist$scale_pars))
+  if (!is.null(scale_pars)) {
+    scale_pars$center[is.na(scale_pars$center)] <- 0
+  }
 
   mf <- model.frame(as.formula(paste(formula[-2], collapse = " ")),
                     data, na.action = na.pass)
@@ -682,15 +688,16 @@ predict_clm <- function(formula, newdata,
                            coefs$varname %in% colnames(X), ]
   coefs_nonprop <- split(coefs_nonprop, coefs_nonprop$outcat)
 
-  eta <- sapply(seq_len(nrow(X)), function(i) {
-    MCMC[, coefs_prop$coef, drop = FALSE] %*% X[i, coefs_prop$varname]
-  })
+
+  eta <- calc_lp(regcoefs = MCMC[, coefs_prop$coef, drop = FALSE],
+                 design_mat = X[, coefs_prop$varname, drop = FALSE],
+                 scale_pars)
 
   eta_nonprop <- if (length(coefs_nonprop) > 0) {
     lapply(coefs_nonprop, function(c_np_k) {
-      sapply(seq_len(nrow(X)), function(i) {
-        MCMC[, c_np_k$coef, drop = FALSE] %*% X[i, c_np_k$varname]
-      })
+      calc_lp(regcoefs = MCMC[, c_np_k$coef, drop = FALSE],
+              design_mat = X[, c_np_k$varname, drop = FALSE],
+              scale_pars = scale_pars)
     })
   }
 
@@ -715,17 +722,21 @@ predict_clm <- function(formula, newdata,
 
 
   if (info_list[[varname]]$rev) {
+    names(lp) <- paste0("logOdds(", varname, "<=", seq_along(lp), ")")
+    pred <- rev(c(list(mat1), lapply(rev(lp), plogis), list(mat0)))
 
+    probs <- lapply(seq_along(pred)[-1], function(k) {
+      pred[[k]] - pred[[k - 1]]
+    })
   } else {
     names(lp) <- paste0("logOdds(", varname, ">", seq_along(lp), ")")
-
     pred <- c(list(mat1), lapply(lp, plogis), list(mat0))
+
+    probs <- lapply(seq_along(pred)[-1], function(k) {
+      pred[[k - 1]] - pred[[k]]
+    })
+
   }
-
-  probs <- lapply(seq_along(pred)[-1], function(k) {
-    pred[[k - 1]] - pred[[k]]
-  })
-
   names(probs) <- paste0("P(", varname, "=",
                          levels(data[, varname]),
                          ")")
@@ -755,8 +766,9 @@ predict_clm <- function(formula, newdata,
       cbind(fit = f, q)
     }, f = fit, q = quants, SIMPLIFY = FALSE)
 
-    array(dim = c(dim(res[[1]]), length(res)), unlist(res),
-          dimnames = list(c(), colnames(res[[1]]), names(res)))
+    array(dim = c(dim(res[[1]]), length(res)),
+          dimnames = list(c(), colnames(res[[1]]), names(res)),
+          unlist(res))
   } else {
     data.frame(fit, check.names = FALSE)
   }
