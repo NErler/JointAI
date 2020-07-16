@@ -624,11 +624,25 @@ get_nonprop_lp <- function(nonprop, Mlvls, data, refs, fixed) {
   # all other model types)
   if (is.null(nonprop)) return(NULL)
 
+  if (is.null(names(nonprop))) {
+    if (length(fixed) == 1 & inherits(nonprop, 'formula')) {
+      nonprop <- list(nonprop)
+      names(nonprop) <- names(fixed)
+    } else if (length(fixed) == 1 & inherits(nonprop, 'list')) {
+      names(nonprop) <- names(fixed)
+    }
+     errormsg("Please provide a named list of formulas to the argument %s,
+              where the names refer to the response variables of the ordinal
+              models to which the provided formulas correspond.",
+              dQuote("nonprop"))
+  }
+
+
   sapply(names(nonprop), function(k) {
     if (any(!all_vars(nonprop[[k]]) %in% all_vars(fixed[[k]]))) {
       errormsg(
         'All variables that have non-proportional effect (specified via the
-        argument %s need to be part of the main model formula as well.',
+        argument %s also need to be part of the main model formula.',
         dQuote("nonprop")
       )
     }
