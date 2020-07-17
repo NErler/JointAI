@@ -140,7 +140,8 @@ ifelse(as.numeric(O2) > as.numeric(M1), 1, 0):abs(C1 - C2)
 
 Call:
 clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5, 
-    n.iter = 10, nonprop = list(O1 = ~C1 + C2), seed = 2020)
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), seed = 2020)
 
  Bayesian cumulative logit model for "O1" 
 
@@ -153,7 +154,8 @@ Coefficients:
 
 Call:
 clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
-    n.iter = 10, nonprop = list(O1 = ~C1 + C2), seed = 2020)
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), seed = 2020)
 
  Bayesian cumulative logit model for "O1" 
 
@@ -166,7 +168,8 @@ Coefficients:
 
 Call:
 clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
-    n.iter = 10, nonprop = list(O1 = ~C1 * C2), seed = 2020)
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 * 
+        C2), seed = 2020)
 
  Bayesian cumulative logit model for "O1" 
 
@@ -179,7 +182,8 @@ Coefficients:
 
 Call:
 clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
-    n.iter = 10, nonprop = list(O1 = ~C1 + C2), seed = 2020)
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), seed = 2020)
 
  Bayesian cumulative logit model for "O1" 
 
@@ -191,6 +195,106 @@ Coefficients:
  0.242101 -1.070787 -0.305063  1.318800 -2.083259  0.341205 -0.016068 -0.019604 
        C1        C2 
  2.392597 -0.122124 
+
+Call:
+clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = ~C1 + 
+        M2 * C2 + O2, seed = 2020)
+
+ Bayesian cumulative logit model for "O1" 
+
+
+Coefficients:
+  O1 > 1   O1 > 2   O1 > 3       C1      M22      M23      M24       C2 
+-0.03833 -0.19302 -0.55681 10.15277  1.78719 -2.10997 -0.28280  0.14936 
+     O22      O23      O24   M22:C2   M23:C2   M24:C2       C1      M22 
+ 1.12031  3.02734 -0.19410  4.45264 -5.05792 10.02218 -9.36847 -0.41193 
+     M23      M24       C2      O22      O23      O24   M22:C2   M23:C2 
+-0.18149 -0.47106  0.94221  0.41649  0.91210  0.45552 -2.38564  0.39499 
+  M24:C2       C1      M22      M23      M24       C2      O22      O23 
+-1.52970 -1.22110 -1.59156 -1.10269 -1.51378  0.19151 -0.21056  0.60429 
+     O24   M22:C2   M23:C2   M24:C2 
+-1.05296 -3.35372 -0.55727  0.74090 
+
+Call:
+clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), rev = "O1", seed = 2020)
+
+ Bayesian cumulative logit model for "O1" 
+
+
+Coefficients:
+ O1 = 1  O1 = 2  O1 = 3     M22     M23     M24     O22     O23     O24      C1 
+-0.9502  0.1264  1.4339  0.3378  0.2726  0.6155 -0.3994 -0.9443 -0.2451  0.7229 
+     C2      C1      C2      C1      C2 
+-0.7053 -1.5777 -0.4314 -8.1197 -0.2882 
+
+Call:
+clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), rev = "O1", seed = 2020)
+
+ Bayesian cumulative logit model for "O1" 
+
+
+Coefficients:
+  O1 = 1   O1 = 2   O1 = 3      M22      M23      M24      O22      O23 
+-0.68759  0.23284  1.57292 -0.10881 -0.10927  0.02061 -0.09762 -0.73151 
+     O24    C1:C2       C1       C2       C1       C2       C1       C2 
+-0.07349  0.99378  4.77759 -1.83546  1.08339 -1.53971 -3.48467 -1.43317 
+
+Call:
+clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 * 
+        C2), rev = "O1", seed = 2020)
+
+ Bayesian cumulative logit model for "O1" 
+
+
+Coefficients:
+   O1 = 1    O1 = 2    O1 = 3       M22       M23       M24       O22       O23 
+-0.781242  0.329337  1.715791 -0.005194  0.101309  0.248258 -0.370494 -0.955430 
+      O24        C1        C2     C1:C2        C1        C2     C1:C2        C1 
+-0.190733  8.723644 -0.120519 -0.251492  4.666810 -1.852785  1.184580  4.273071 
+       C2     C1:C2 
+-1.794086  1.274817 
+
+Call:
+clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), rev = "O1", seed = 2020)
+
+ Bayesian cumulative logit model for "O1" 
+
+
+Coefficients:
+  O1 = 1   O1 = 2   O1 = 3      M22      M23      M24      O22      O23 
+-0.66674  0.39611  1.76156  0.26639  0.07506  0.37774 -0.63239 -1.16581 
+     O24   M22:C2   M23:C2   M24:C2       C1       C2       C1       C2 
+-0.46687  1.04114  0.11947 -0.49123  4.43320 -0.22265  7.60510 -0.11510 
+      C1       C2 
+ 5.75481  0.04606 
+
+Call:
+clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = ~C1 + 
+        M2 * C2 + O2, rev = "O1", seed = 2020)
+
+ Bayesian cumulative logit model for "O1" 
+
+
+Coefficients:
+   O1 = 1    O1 = 2    O1 = 3        C1       M22       M23       M24        C2 
+ -0.51108  -0.06168   0.28830  -9.39019  -0.41485   0.60325   0.33996   0.32606 
+      O22       O23       O24    M22:C2    M23:C2    M24:C2        C1       M22 
+ -1.29506  -1.99539  -0.27085  -1.79294   0.12770  -5.17868  -2.42869   0.82803 
+      M23       M24        C2       O22       O23       O24    M22:C2    M23:C2 
+ -0.31066   0.39494  -0.81565  -0.53876  -0.80518  -0.17880   1.98117  -1.58028 
+   M24:C2        C1       M22       M23       M24        C2       O22       O23 
+  0.80628 -23.48042   2.07668   0.80541   1.75353  -0.55572  -0.31040  -0.89309 
+      O24    M22:C2    M23:C2    M24:C2 
+  1.17061   3.58232  -0.08683   0.08451 
 [[1]]
 
 Call:
@@ -354,7 +458,8 @@ ifelse(as.numeric(O2) > as.numeric(M1), 1, 0):abs(C1 - C2)
 
 Call:
 clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5, 
-    n.iter = 10, nonprop = list(O1 = ~C1 + C2), seed = 2020)
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), seed = 2020)
 
  Bayesian cumulative logit model for "O1" 
 
@@ -369,7 +474,8 @@ Coefficients:
 
 Call:
 clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
-    n.iter = 10, nonprop = list(O1 = ~C1 + C2), seed = 2020)
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), seed = 2020)
 
  Bayesian cumulative logit model for "O1" 
 
@@ -384,7 +490,8 @@ Coefficients:
 
 Call:
 clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
-    n.iter = 10, nonprop = list(O1 = ~C1 * C2), seed = 2020)
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 * 
+        C2), seed = 2020)
 
  Bayesian cumulative logit model for "O1" 
 
@@ -399,7 +506,8 @@ Coefficients:
 
 Call:
 clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
-    n.iter = 10, nonprop = list(O1 = ~C1 + C2), seed = 2020)
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), seed = 2020)
 
  Bayesian cumulative logit model for "O1" 
 
@@ -411,4 +519,116 @@ Coefficients:
  0.242101 -1.070787 -0.305063  1.318800 -2.083259  0.341205 -0.016068 -0.019604 
        C1        C2 
  2.392597 -0.122124 
+
+[[15]]
+
+Call:
+clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = ~C1 + 
+        M2 * C2 + O2, seed = 2020)
+
+ Bayesian cumulative logit model for "O1" 
+
+
+Coefficients:
+  O1 > 1   O1 > 2   O1 > 3       C1      M22      M23      M24       C2 
+-0.03833 -0.19302 -0.55681 10.15277  1.78719 -2.10997 -0.28280  0.14936 
+     O22      O23      O24   M22:C2   M23:C2   M24:C2       C1      M22 
+ 1.12031  3.02734 -0.19410  4.45264 -5.05792 10.02218 -9.36847 -0.41193 
+     M23      M24       C2      O22      O23      O24   M22:C2   M23:C2 
+-0.18149 -0.47106  0.94221  0.41649  0.91210  0.45552 -2.38564  0.39499 
+  M24:C2       C1      M22      M23      M24       C2      O22      O23 
+-1.52970 -1.22110 -1.59156 -1.10269 -1.51378  0.19151 -0.21056  0.60429 
+     O24   M22:C2   M23:C2   M24:C2 
+-1.05296 -3.35372 -0.55727  0.74090 
+
+[[16]]
+
+Call:
+clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), rev = "O1", seed = 2020)
+
+ Bayesian cumulative logit model for "O1" 
+
+
+Coefficients:
+ O1 = 1  O1 = 2  O1 = 3     M22     M23     M24     O22     O23     O24      C1 
+-0.9502  0.1264  1.4339  0.3378  0.2726  0.6155 -0.3994 -0.9443 -0.2451  0.7229 
+     C2      C1      C2      C1      C2 
+-0.7053 -1.5777 -0.4314 -8.1197 -0.2882 
+
+[[17]]
+
+Call:
+clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), rev = "O1", seed = 2020)
+
+ Bayesian cumulative logit model for "O1" 
+
+
+Coefficients:
+  O1 = 1   O1 = 2   O1 = 3      M22      M23      M24      O22      O23 
+-0.68759  0.23284  1.57292 -0.10881 -0.10927  0.02061 -0.09762 -0.73151 
+     O24    C1:C2       C1       C2       C1       C2       C1       C2 
+-0.07349  0.99378  4.77759 -1.83546  1.08339 -1.53971 -3.48467 -1.43317 
+
+[[18]]
+
+Call:
+clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 * 
+        C2), rev = "O1", seed = 2020)
+
+ Bayesian cumulative logit model for "O1" 
+
+
+Coefficients:
+   O1 = 1    O1 = 2    O1 = 3       M22       M23       M24       O22       O23 
+-0.781242  0.329337  1.715791 -0.005194  0.101309  0.248258 -0.370494 -0.955430 
+      O24        C1        C2     C1:C2        C1        C2     C1:C2        C1 
+-0.190733  8.723644 -0.120519 -0.251492  4.666810 -1.852785  1.184580  4.273071 
+       C2     C1:C2 
+-1.794086  1.274817 
+
+[[19]]
+
+Call:
+clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), rev = "O1", seed = 2020)
+
+ Bayesian cumulative logit model for "O1" 
+
+
+Coefficients:
+  O1 = 1   O1 = 2   O1 = 3      M22      M23      M24      O22      O23 
+-0.66674  0.39611  1.76156  0.26639  0.07506  0.37774 -0.63239 -1.16581 
+     O24   M22:C2   M23:C2   M24:C2       C1       C2       C1       C2 
+-0.46687  1.04114  0.11947 -0.49123  4.43320 -0.22265  7.60510 -0.11510 
+      C1       C2 
+ 5.75481  0.04606 
+
+[[20]]
+
+Call:
+clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = ~C1 + 
+        M2 * C2 + O2, rev = "O1", seed = 2020)
+
+ Bayesian cumulative logit model for "O1" 
+
+
+Coefficients:
+   O1 = 1    O1 = 2    O1 = 3        C1       M22       M23       M24        C2 
+ -0.51108  -0.06168   0.28830  -9.39019  -0.41485   0.60325   0.33996   0.32606 
+      O22       O23       O24    M22:C2    M23:C2    M24:C2        C1       M22 
+ -1.29506  -1.99539  -0.27085  -1.79294   0.12770  -5.17868  -2.42869   0.82803 
+      M23       M24        C2       O22       O23       O24    M22:C2    M23:C2 
+ -0.31066   0.39494  -0.81565  -0.53876  -0.80518  -0.17880   1.98117  -1.58028 
+   M24:C2        C1       M22       M23       M24        C2       O22       O23 
+  0.80628 -23.48042   2.07668   0.80541   1.75353  -0.55572  -0.31040  -0.89309 
+      O24    M22:C2    M23:C2    M24:C2 
+  1.17061   3.58232  -0.08683   0.08451 
 

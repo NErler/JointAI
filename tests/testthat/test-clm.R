@@ -103,7 +103,7 @@ test_that("MCMC samples can be plottet", {
 
 test_that("GRcrit and MCerror give same result", {
   expect_known_output(
-    print(lapply(models, GR_crit)),
+    print(lapply(models, GR_crit, multivariate = FALSE)),
     "outfiles/test_clm_GR_crit.txt")
   expect_known_output(
     print(lapply(models, MC_error)),
@@ -162,7 +162,7 @@ test_that("prediction works", {
                   "data.frame")
 
 
-  expect_s3_class(predict(m5e, type = "prob", warn = FALSE)$fit,
+  expect_s3_class(predict(m5e, type = "prob", warn = FALSE)$newdata,
                   "data.frame")
 
   expect_equal(check_predprob(m5a), 0)
@@ -196,8 +196,8 @@ test_that("wrong models give errors", {
   expect_error(clm_imp(y ~ O1 + C1 + C2, data = wideDF))
   expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = longDF))
   expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = wideDF))
-  expect_s3_class(clm_imp(O2 ~ I(O1^2) + C1 + C2, data = wideDF)$model,
-                  "try-error")
+  expect_s3_class(clm_imp(O2 ~ I(O1^2) + C1 + C2, data = wideDF),
+                  "JointAI_errored")
   expect_error(clm_imp(O2 ~ O1 + C1, data = wideDF,
                        nonprop = list(O2 = ~ C2)))
 })
