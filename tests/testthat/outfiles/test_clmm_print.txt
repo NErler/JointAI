@@ -324,8 +324,8 @@ $id
 
 Call:
 clmm_imp(fixed = o1 ~ C1 + C2 + b2 + O2 + (1 | id), data = longDF, 
-    n.adapt = 5, n.iter = 10, nonprop = list(o1 = ~C1 + C2 + 
-        b2), seed = 2020)
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~C1 + C2 + b2), seed = 2020)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -344,8 +344,8 @@ $id
 
 Call:
 clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
-    n.adapt = 5, n.iter = 10, nonprop = list(o1 = ~c1 + C2), 
-    seed = 2020)
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~c1 + C2), seed = 2020)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -364,8 +364,8 @@ $id
 
 Call:
 clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
-    n.adapt = 5, n.iter = 10, nonprop = list(o1 = ~c1 * C2), 
-    seed = 2020)
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~c1 * C2), seed = 2020)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -384,8 +384,8 @@ $id
 
 Call:
 clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
-    n.adapt = 5, n.iter = 10, nonprop = list(o1 = ~c1 + C2), 
-    seed = 2020)
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~c1 + C2), seed = 2020)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -400,6 +400,128 @@ Random effects covariance matrix:
 $id
             (Intercept)
 (Intercept)       3.621
+
+
+Call:
+clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = ~c1 + M2 * C2 + O2, seed = 2020)
+
+ Bayesian cumulative logit mixed model for "o1" 
+
+Fixed effects:
+  o1 > 1   o1 > 2      M22      M23      M24       C2      O22      O23 
+ 0.17661 -0.58391 -0.10767  1.04315  0.14130 -0.07027  0.40584  0.40623 
+  M22:C2   M23:C2   M24:C2      M22      M23      M24       C2      O22 
+-0.21853  0.43156  0.06859 -1.36648  0.38626 -0.28373  0.46839 -0.67836 
+     O23   M22:C2   M23:C2   M24:C2       c1       c1 
+-0.06247 -1.58615 -0.98570 -0.57879 -0.17857  0.15796 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)       1.186
+
+
+Call:
+clmm_imp(fixed = o1 ~ C1 + C2 + b2 + O2 + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~C1 + C2 + b2), rev = "o1", seed = 2020)
+
+ Bayesian cumulative logit mixed model for "o1" 
+
+Fixed effects:
+ o1 = 1  o1 = 2     O22     O23      C1      C2      C1      C2     b21     b21 
+-0.3704  1.8865 -0.4161 -0.5572  7.2638  0.1223  1.4125  0.4304 -0.7647 -1.0330 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)       2.428
+
+
+Call:
+clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~c1 + C2), rev = "o1", seed = 2020)
+
+ Bayesian cumulative logit mixed model for "o1" 
+
+Fixed effects:
+ o1 = 1  o1 = 2     M22     M23     M24     O22     O23      C2   c1:C2      C2 
+-0.8402  1.4122  0.8364 -0.2639  0.5442 -0.2213 -0.6420  0.2959  0.7696 -0.7321 
+     c1      c1 
+-0.2507 -0.7241 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)       3.082
+
+
+Call:
+clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~c1 * C2), rev = "o1", seed = 2020)
+
+ Bayesian cumulative logit mixed model for "o1" 
+
+Fixed effects:
+  o1 = 1   o1 = 2      M22      M23      M24      O22      O23       C2 
+-0.18940  2.09791 -0.67947 -1.50088 -0.54458  0.20507 -0.13053 -0.05929 
+      C2       c1    c1:C2       c1    c1:C2 
+ 0.33128 -0.27379 -0.56823 -0.74530 -0.56233 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)       3.575
+
+
+Call:
+clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~c1 + C2), rev = "o1", seed = 2020)
+
+ Bayesian cumulative logit mixed model for "o1" 
+
+Fixed effects:
+   o1 = 1    o1 = 2       M22       M23       M24       O22       O23    M22:C2 
+-0.847796  1.488107  0.559481 -2.108465 -0.342857  0.533834 -0.008488  0.658544 
+   M23:C2    M24:C2        C2        C2        c1        c1 
+-0.700700 -0.654119  0.309555  0.504960  0.107984 -0.428338 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)       4.388
+
+
+Call:
+clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = ~c1 + M2 * C2 + O2, rev = "o1", seed = 2020)
+
+ Bayesian cumulative logit mixed model for "o1" 
+
+Fixed effects:
+  o1 = 1   o1 = 2      M22      M23      M24       C2      O22      O23 
+-0.18987  1.05796 -0.47383 -0.87264 -0.20392  0.01790 -0.43393 -0.39316 
+  M22:C2   M23:C2   M24:C2      M22      M23      M24       C2      O22 
+ 0.08460 -0.34287 -0.15012  0.83802 -0.21290 -0.26745 -0.24928  0.09219 
+     O23   M22:C2   M23:C2   M24:C2       c1       c1 
+-0.16224  1.08611  0.76320  0.11786  0.14916 -0.25657 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)       1.325
 
 [[1]]
 
@@ -762,8 +884,8 @@ $id
 
 Call:
 clmm_imp(fixed = o1 ~ C1 + C2 + b2 + O2 + (1 | id), data = longDF, 
-    n.adapt = 5, n.iter = 10, nonprop = list(o1 = ~C1 + C2 + 
-        b2), seed = 2020)
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~C1 + C2 + b2), seed = 2020)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -784,8 +906,8 @@ $id
 
 Call:
 clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
-    n.adapt = 5, n.iter = 10, nonprop = list(o1 = ~c1 + C2), 
-    seed = 2020)
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~c1 + C2), seed = 2020)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -806,8 +928,8 @@ $id
 
 Call:
 clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
-    n.adapt = 5, n.iter = 10, nonprop = list(o1 = ~c1 * C2), 
-    seed = 2020)
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~c1 * C2), seed = 2020)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -828,8 +950,8 @@ $id
 
 Call:
 clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
-    n.adapt = 5, n.iter = 10, nonprop = list(o1 = ~c1 + C2), 
-    seed = 2020)
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~c1 + C2), seed = 2020)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -844,5 +966,139 @@ Random effects covariance matrix:
 $id
             (Intercept)
 (Intercept)       3.621
+
+
+[[22]]
+
+Call:
+clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = ~c1 + M2 * C2 + O2, seed = 2020)
+
+ Bayesian cumulative logit mixed model for "o1" 
+
+Fixed effects:
+  o1 > 1   o1 > 2      M22      M23      M24       C2      O22      O23 
+ 0.17661 -0.58391 -0.10767  1.04315  0.14130 -0.07027  0.40584  0.40623 
+  M22:C2   M23:C2   M24:C2      M22      M23      M24       C2      O22 
+-0.21853  0.43156  0.06859 -1.36648  0.38626 -0.28373  0.46839 -0.67836 
+     O23   M22:C2   M23:C2   M24:C2       c1       c1 
+-0.06247 -1.58615 -0.98570 -0.57879 -0.17857  0.15796 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)       1.186
+
+
+[[23]]
+
+Call:
+clmm_imp(fixed = o1 ~ C1 + C2 + b2 + O2 + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~C1 + C2 + b2), rev = "o1", seed = 2020)
+
+ Bayesian cumulative logit mixed model for "o1" 
+
+Fixed effects:
+ o1 = 1  o1 = 2     O22     O23      C1      C2      C1      C2     b21     b21 
+-0.3704  1.8865 -0.4161 -0.5572  7.2638  0.1223  1.4125  0.4304 -0.7647 -1.0330 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)       2.428
+
+
+[[24]]
+
+Call:
+clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~c1 + C2), rev = "o1", seed = 2020)
+
+ Bayesian cumulative logit mixed model for "o1" 
+
+Fixed effects:
+ o1 = 1  o1 = 2     M22     M23     M24     O22     O23      C2   c1:C2      C2 
+-0.8402  1.4122  0.8364 -0.2639  0.5442 -0.2213 -0.6420  0.2959  0.7696 -0.7321 
+     c1      c1 
+-0.2507 -0.7241 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)       3.082
+
+
+[[25]]
+
+Call:
+clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~c1 * C2), rev = "o1", seed = 2020)
+
+ Bayesian cumulative logit mixed model for "o1" 
+
+Fixed effects:
+  o1 = 1   o1 = 2      M22      M23      M24      O22      O23       C2 
+-0.18940  2.09791 -0.67947 -1.50088 -0.54458  0.20507 -0.13053 -0.05929 
+      C2       c1    c1:C2       c1    c1:C2 
+ 0.33128 -0.27379 -0.56823 -0.74530 -0.56233 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)       3.575
+
+
+[[26]]
+
+Call:
+clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = list(o1 = ~c1 + C2), rev = "o1", seed = 2020)
+
+ Bayesian cumulative logit mixed model for "o1" 
+
+Fixed effects:
+   o1 = 1    o1 = 2       M22       M23       M24       O22       O23    M22:C2 
+-0.847796  1.488107  0.559481 -2.108465 -0.342857  0.533834 -0.008488  0.658544 
+   M23:C2    M24:C2        C2        C2        c1        c1 
+-0.700700 -0.654119  0.309555  0.504960  0.107984 -0.428338 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)       4.388
+
+
+[[27]]
+
+Call:
+clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
+    nonprop = ~c1 + M2 * C2 + O2, rev = "o1", seed = 2020)
+
+ Bayesian cumulative logit mixed model for "o1" 
+
+Fixed effects:
+  o1 = 1   o1 = 2      M22      M23      M24       C2      O22      O23 
+-0.18987  1.05796 -0.47383 -0.87264 -0.20392  0.01790 -0.43393 -0.39316 
+  M22:C2   M23:C2   M24:C2      M22      M23      M24       C2      O22 
+ 0.08460 -0.34287 -0.15012  0.83802 -0.21290 -0.26745 -0.24928  0.09219 
+     O23   M22:C2   M23:C2   M24:C2       c1       c1 
+-0.16224  1.08611  0.76320  0.11786  0.14916 -0.25657 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)       1.325
 
 

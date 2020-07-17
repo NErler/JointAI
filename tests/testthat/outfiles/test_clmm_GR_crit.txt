@@ -6,9 +6,6 @@ gamma_o1[1]        3.43       6.42
 gamma_o1[2]        1.17       1.66
 D_o1_id[1,1]       1.54       2.79
 
-Multivariate psrf
-
-2.76
 
 [[2]]
 Potential scale reduction factors:
@@ -19,9 +16,6 @@ gamma_o2[2]       0.983       1.10
 gamma_o2[3]       1.010       1.15
 D_o2_id[1,1]      1.152       1.55
 
-Multivariate psrf
-
-1.3
 
 [[3]]
 Potential scale reduction factors:
@@ -32,9 +26,6 @@ gamma_o1[2]        1.51       2.40
 C1                 1.61       2.79
 D_o1_id[1,1]       1.38       2.58
 
-Multivariate psrf
-
-1.55
 
 [[4]]
 Potential scale reduction factors:
@@ -46,9 +37,6 @@ gamma_o2[3]        1.34       2.22
 C1                 1.11       1.59
 D_o2_id[1,1]       2.05       4.28
 
-Multivariate psrf
-
-2.51
 
 [[5]]
 Potential scale reduction factors:
@@ -59,9 +47,6 @@ gamma_o1[2]        1.04       1.27
 c1                 1.06       1.32
 D_o1_id[1,1]       2.12       3.69
 
-Multivariate psrf
-
-2.37
 
 [[6]]
 Potential scale reduction factors:
@@ -73,9 +58,6 @@ gamma_o2[3]       1.041      1.267
 c1                0.971      0.998
 D_o2_id[1,1]      1.679      3.110
 
-Multivariate psrf
-
-1.49
 
 [[7]]
 Potential scale reduction factors:
@@ -86,9 +68,6 @@ gamma_o1[2]        1.79       3.73
 C2                 1.48       2.40
 D_o1_id[1,1]       1.34       1.98
 
-Multivariate psrf
-
-4.03
 
 [[8]]
 Potential scale reduction factors:
@@ -100,9 +79,6 @@ gamma_o2[3]        1.00       1.17
 C2                 1.47       2.75
 D_o2_id[1,1]       1.41       3.48
 
-Multivariate psrf
-
-1.95
 
 [[9]]
 Potential scale reduction factors:
@@ -113,9 +89,6 @@ gamma_o1[2]        2.55       4.86
 c2                 1.07       1.35
 D_o1_id[1,1]       1.97       4.01
 
-Multivariate psrf
-
-2.49
 
 [[10]]
 Potential scale reduction factors:
@@ -127,9 +100,6 @@ gamma_o2[3]        1.18       1.63
 c2                 1.20       1.82
 D_o2_id[1,1]       3.48       6.50
 
-Multivariate psrf
-
-3.35
 
 $cov1
 Potential scale reduction factors:
@@ -141,9 +111,6 @@ o1.Q              1.059       1.46
 sigma_c1          0.994       1.18
 D_c1_id[1,1]      1.334       2.08
 
-Multivariate psrf
-
-2.27
 
 $cov2
 Potential scale reduction factors:
@@ -156,9 +123,6 @@ o24                1.73       3.16
 sigma_c1           1.10       1.44
 D_c1_id[1,1]       1.01       1.06
 
-Multivariate psrf
-
-2.05
 
 [[13]]
 Potential scale reduction factors:
@@ -179,9 +143,6 @@ gamma_o1[1]           2.689       5.90
 gamma_o1[2]           2.966       6.99
 D_o1_id[1,1]          0.986       1.07
 
-Multivariate psrf
-
-17.8
 
 [[14]]
 Potential scale reduction factors:
@@ -203,9 +164,6 @@ gamma_o1[1]                                                      3.29
 gamma_o1[2]                                                      4.13
 D_o1_id[1,1]                                                     7.40
 
-Multivariate psrf
-
-3.36
 
 [[15]]
 Potential scale reduction factors:
@@ -228,9 +186,6 @@ D_o1_id[2,4]       2.20       4.23
 D_o1_id[3,4]       3.40       6.52
 D_o1_id[4,4]       3.51       6.99
 
-Multivariate psrf
-
-16.7
 
 [[16]]
 Potential scale reduction factors:
@@ -249,9 +204,6 @@ D_o1_id[1,1]       1.81       3.20
 D_o1_id[1,2]       2.51       4.79
 D_o1_id[2,2]       1.42       2.35
 
-Multivariate psrf
-
-5
 
 [[17]]
 Potential scale reduction factors:
@@ -265,9 +217,6 @@ gamma_o1[1]       0.990       0.99
 gamma_o1[2]       0.964       1.05
 D_o1_id[1,1]      3.097       7.94
 
-Multivariate psrf
-
-2.98
 
 [[18]]
 Potential scale reduction factors:
@@ -285,9 +234,6 @@ gamma_o1[1]        4.74      13.02
 gamma_o1[2]        4.19       8.62
 D_o1_id[1,1]       1.94       4.07
 
-Multivariate psrf
-
-6.95
 
 [[19]]
 Potential scale reduction factors:
@@ -307,9 +253,6 @@ gamma_o1[1]        5.87      18.13
 gamma_o1[2]        4.65       8.88
 D_o1_id[1,1]       1.63       4.01
 
-Multivariate psrf
-
-17.7
 
 [[20]]
 Potential scale reduction factors:
@@ -330,9 +273,6 @@ gamma_o1[1]        3.90      11.67
 gamma_o1[2]        5.62      11.83
 D_o1_id[1,1]       1.12       1.51
 
-Multivariate psrf
-
-13.6
 
 [[21]]
 Potential scale reduction factors:
@@ -354,7 +294,139 @@ gamma_o1[1]       3.686       7.03
 gamma_o1[2]       1.570       2.56
 D_o1_id[1,1]      2.096       3.62
 
-Multivariate psrf
 
-15
+[[22]]
+Potential scale reduction factors:
+
+             Point est. Upper C.I.
+o12: M22           1.76       3.35
+o12: M23           1.08       1.45
+o12: M24           1.24       2.25
+o12: C2            4.72      11.22
+o12: O22           3.14       6.83
+o12: O23           2.04       3.66
+o12: M22:C2        5.37      14.33
+o12: M23:C2        3.69       8.07
+o12: M24:C2        7.50      14.54
+o13: M22           4.27       8.14
+o13: M23           4.60      10.56
+o13: M24           2.62       5.66
+o13: C2            5.29      13.75
+o13: O22           2.85       6.75
+o13: O23           2.32       4.52
+o13: M22:C2        1.54       2.67
+o13: M23:C2        2.68       5.83
+o13: M24:C2        5.35      11.27
+o12: c1            1.24       1.89
+o13: c1            0.98       1.10
+gamma_o1[1]        4.18       9.27
+gamma_o1[2]        2.04       3.50
+D_o1_id[1,1]       4.42       8.33
+
+
+[[23]]
+Potential scale reduction factors:
+
+             Point est. Upper C.I.
+O22                2.93       5.80
+O23                5.54      11.17
+o12: C1            1.02       1.10
+o12: C2            3.94      10.95
+o13: C1            1.20       1.80
+o13: C2            2.38       4.73
+o12: b21           1.02       1.22
+o13: b21           1.50       3.01
+gamma_o1[1]        4.33       8.69
+gamma_o1[2]        4.09       7.87
+D_o1_id[1,1]       1.25       2.27
+
+
+[[24]]
+Potential scale reduction factors:
+
+             Point est. Upper C.I.
+M22                1.13       1.50
+M23                1.04       1.26
+M24                1.94       3.77
+O22                1.03       1.26
+O23                1.07       1.36
+o13: C2            4.25       8.07
+c1:C2              2.35       4.13
+o12: C2            2.11       4.24
+o12: c1            1.95       3.36
+o13: c1            2.08       3.62
+gamma_o1[1]        2.10       4.31
+gamma_o1[2]        2.66       4.97
+D_o1_id[1,1]       1.59       3.01
+
+
+[[25]]
+Potential scale reduction factors:
+
+             Point est. Upper C.I.
+M22               1.178       1.63
+M23               0.968       1.04
+M24               1.027       1.22
+O22               2.697       4.99
+O23               1.123       1.53
+o12: C2           3.449       6.52
+o13: C2           3.563       6.60
+o12: c1           2.316       4.93
+o12: c1:C2        3.744       9.57
+o13: c1           1.506       2.70
+o13: c1:C2        2.304       4.23
+gamma_o1[1]       3.528       6.64
+gamma_o1[2]       3.002       6.23
+D_o1_id[1,1]      1.916       8.45
+
+
+[[26]]
+Potential scale reduction factors:
+
+             Point est. Upper C.I.
+M22                1.50       2.38
+M23                1.28       2.16
+M24                1.19       1.78
+O22                1.13       1.74
+O23                1.47       3.24
+M22:C2             1.04       1.28
+M23:C2             1.73       3.37
+M24:C2             1.05       1.29
+o12: C2            2.88       6.73
+o13: C2            1.69       3.14
+o12: c1            1.69       2.80
+o13: c1            1.90       3.37
+gamma_o1[1]        5.08      10.71
+gamma_o1[2]        5.10      10.24
+D_o1_id[1,1]       1.43       2.21
+
+
+[[27]]
+Potential scale reduction factors:
+
+             Point est. Upper C.I.
+o12: M22           7.67      15.40
+o12: M23           1.61       3.07
+o12: M24           1.28       2.01
+o12: C2            2.90       5.35
+o12: O22           1.22       2.01
+o12: O23           2.80       6.55
+o12: M22:C2        2.17       3.93
+o12: M23:C2        2.43       6.04
+o12: M24:C2        5.30      11.64
+o13: M22           1.39       2.77
+o13: M23           3.41       8.71
+o13: M24           2.69       4.93
+o13: C2            3.88       7.86
+o13: O22           1.72       3.20
+o13: O23           4.26       8.56
+o13: M22:C2        4.22       7.90
+o13: M23:C2        1.08       1.42
+o13: M24:C2        5.48      14.07
+o12: c1            1.60       3.85
+o13: c1            1.33       2.17
+gamma_o1[1]        3.52       6.96
+gamma_o1[2]        3.38       7.34
+D_o1_id[1,1]       1.29       2.26
+
 

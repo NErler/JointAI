@@ -130,7 +130,7 @@ test_that("MCMC samples can be plottet", {
 
 test_that("GRcrit and MCerror give same result", {
   expect_known_output(
-    print(lapply(models, GR_crit)),
+    print(lapply(models, GR_crit, multivariate = FALSE)),
     "outfiles/test_clmm_GR_crit.txt")
   expect_known_output(
     print(lapply(models, MC_error)),
@@ -188,7 +188,7 @@ test_that("prediction works", {
   expect_s3_class(predict(m5d, type = "response", warn = FALSE)$newdata,
                   "data.frame")
 
-  expect_s3_class(predict(m5e, type = "prob", warn = FALSE)$fit,
+  expect_s3_class(predict(m5e, type = "prob", warn = FALSE)$newdata,
                   "data.frame")
 
   # expect_equal(check_predprob(m5a), 0)
