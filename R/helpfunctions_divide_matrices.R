@@ -662,7 +662,8 @@ get_nonprop_lp <- function(nonprop, Mlvls, data, refs, fixed) {
     # select the correct subset of the contrast matrices
     contr_list0 <- contr_list[intersect(all_vars(fmla), names(contr_list))]
     # get the column names of the design matrix
-    nam <- colnames(model.matrix(fmla, data,contrasts.arg = contr_list0))[-1]
+    nam <- colnames(model.matrix(fmla, data = data,
+                                 contrasts.arg = contr_list0))[-1]
 
     # divide the names by the hierarchical level of the variable
     sapply(unique(Mlvls), function(k) {
