@@ -25,4 +25,4 @@ R/plots_ppc.R
 ^pkgdown$
 
 ^\.lintr$
-^\.covignore$
+^\.covrignore$
