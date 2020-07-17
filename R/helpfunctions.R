@@ -347,39 +347,38 @@ get_coef_names <- function(info_list) {
     }
 
 
-    if (any(!sapply(info$lp, is.null))) {
-      out <- data.frame(outcome = unname(info$varname),
-                        outcat = rep(names(parelmts), sapply(parelmts, length)),
-                        varname = names(unlist(unname(parelmts))),
-                        coef = paste0(info$parname,
-                                      if (length(unlist(pars)) > 1)
-                                        paste0("[", unlist(parelmts), "]")
-                        ),
-                        stringsAsFactors = FALSE
+    out <- if (any(sapply(info$lp, length) > 0)) {
+      data.frame(outcome = unname(info$varname),
+                 outcat = rep(names(parelmts), sapply(parelmts, length)),
+                 varname = names(unlist(unname(parelmts))),
+                 coef = paste0(info$parname,
+                               if (length(unlist(pars)) > 1)
+                                 paste0("[", unlist(parelmts), "]")
+                 ),
+                 stringsAsFactors = FALSE
       )
-
-      nonprop <- unlist(unname(lapply(info$parelmts, attr, 'nonprop')),
-                        recursive = FALSE)
-
-      if (!is.null(unlist(nonprop))) {
-        out <- rbind(out,
-                     data.frame(outcome = unname(info$varname),
-                                outcat = rep(names(nonprop),
-                                             sapply(nonprop, length)),
-                                varname = unlist(lapply(nonprop, names)),
-                                coef = paste0(info$parname,
-                                              paste0("[", unlist(nonprop), "]")),
-                                stringsAsFactors = FALSE)
-        )
-      }
-
-      out$varnam_print <- ifelse(is.na(out$outcat), out$varname,
-                                 paste0(out$outcat, ": ", out$varname))
-
-      rownames(out) <- NULL
-      out
     }
 
+    nonprop <- unlist(unname(lapply(info$parelmts, attr, 'nonprop')),
+                      recursive = FALSE)
+
+    if (!is.null(unlist(nonprop))) {
+      out <- rbind(out,
+                   data.frame(outcome = unname(info$varname),
+                              outcat = rep(names(nonprop),
+                                           sapply(nonprop, length)),
+                              varname = unlist(lapply(nonprop, names)),
+                              coef = paste0(info$parname,
+                                            paste0("[", unlist(nonprop), "]")),
+                              stringsAsFactors = FALSE)
+      )
+    }
+
+    out$varnam_print <- ifelse(is.na(out$outcat), out$varname,
+                               paste0(out$outcat, ": ", out$varname))
+
+    rownames(out) <- NULL
+    out
   }, simplify = FALSE)
 }
 

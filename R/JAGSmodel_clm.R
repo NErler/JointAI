@@ -20,7 +20,7 @@ JAGSmodel_clm <- function(info) {
   # main model elements --------------------------------------------------------
 
   # linear predictor of baseline covariates (including interaction terms)
-  linpred <- if (!is.null(info$lp[[info$resp_mat]])) {
+  linpred <- if (length(info$lp[[info$resp_mat]]) > 0) {
     paste_linpred(info$parname,
                   info$parelmts[[info$resp_mat]],
                   matnam = info$resp_mat,
