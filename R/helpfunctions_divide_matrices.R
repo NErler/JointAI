@@ -383,7 +383,7 @@ model.matrix_combi <- function(fmla, data, terms_list, refs) {
     # get the subset of contrast matrices corresponding to the current formula
     # to avoid warning messages
     covars <- sapply(attr(terms(as.formula(remove_LHS(object)[[1]])),
-                          "variables")[-1], deparse)
+                          "variables")[-1], deparse, width.cutoff = 500)
     contr_list <- contr[intersect(covars, names(contr))]
 
     # obtain the model matrix using the pre-specified contrast matrices
@@ -548,7 +548,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   # design matrix of the fixed effects
   lp <- sapply(fixed, function(fmla) {
     covars <- sapply(attr(terms(as.formula(remove_LHS(fmla)[[1]])),
-                          "variables")[-1], deparse)
+                          "variables")[-1], deparse, width.cutoff = 500)
 
 
     contr_list0 <- contr_list[intersect(covars, names(contr_list))]
@@ -630,11 +630,12 @@ get_nonprop_lp <- function(nonprop, Mlvls, data, refs, fixed) {
       names(nonprop) <- names(fixed)
     } else if (length(fixed) == 1 & inherits(nonprop, 'list')) {
       names(nonprop) <- names(fixed)
-    }
-     errormsg("Please provide a named list of formulas to the argument %s,
+    } else {
+      errormsg("Please provide a named list of formulas to the argument %s,
               where the names refer to the response variables of the ordinal
               models to which the provided formulas correspond.",
-              dQuote("nonprop"))
+               dQuote("nonprop"))
+    }
   }
 
 

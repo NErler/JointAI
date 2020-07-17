@@ -318,7 +318,8 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   X <- model.matrix(mt, data = newdata,
                     contrasts.arg = contr_list[intersect(
                       names(contr_list),
-                      sapply(attr(mt, "variables")[-1], deparse)
+                      sapply(attr(mt, "variables")[-1], deparse,
+                             width.cutoff = 500)
                     )]
   )
 
@@ -398,7 +399,8 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
   X <- model.matrix(mt, data = newdata,
                     contr_list[intersect(
                       names(contr_list),
-                      sapply(attr(mt, "variables")[-1], deparse)
+                      sapply(attr(mt, "variables")[-1], deparse,
+                             width.cutoff = 500)
                     )]
   )
 
@@ -470,7 +472,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   X0 <- model.matrix(mt, data = newdata,
                      contr_list[intersect(
                        names(contr_list),
-                       sapply(attr(mt, "variables")[-1], deparse)
+                       sapply(attr(mt, "variables")[-1], deparse,
+                              width.cutoff = 500)
                      )]
   )[, -1, drop = FALSE]
 
@@ -674,7 +677,8 @@ predict_clm <- function(formula, newdata,
                     data = newdata,
                     contrasts.arg = contr_list[intersect(
                       names(contr_list),
-                      sapply(attr(mt, "variables")[-1], deparse)
+                      sapply(attr(mt, "variables")[-1], deparse,
+                             width.cutoff = 500)
                     )]
   )[, -1, drop = FALSE]
 

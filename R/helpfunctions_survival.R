@@ -5,7 +5,7 @@ idfun <- function(time, status, ...) {
   # (used together with idSurv())
 
   args <- as.list(match.call())[-1]
-  return(lapply(args, deparse))
+  return(lapply(args, deparse, width.cutoff = 500))
 }
 
 # used in extract_outcome_data() (2020-06-11)
