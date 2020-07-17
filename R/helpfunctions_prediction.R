@@ -16,3 +16,10 @@ calc_lp <- function(design_mat, regcoefs, scale_pars) {
     }
   })
 }
+
+
+minmax_mat <- function(mat, minval = 1e-10, maxval = 1 - 1e-10) {
+  apply(mat, 2, function(x) {
+    pmax(minval, pmin(maxval, x))
+  })
+}

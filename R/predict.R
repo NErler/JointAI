@@ -730,14 +730,14 @@ predict_clm <- function(formula, newdata,
     pred <- rev(c(list(mat1), lapply(rev(lp), plogis), list(mat0)))
 
     probs <- lapply(seq_along(pred)[-1], function(k) {
-      pred[[k]] - pred[[k - 1]]
+      minmax_mat(pred[[k]] - pred[[k - 1]])
     })
   } else {
     names(lp) <- paste0("logOdds(", varname, ">", seq_along(lp), ")")
     pred <- c(list(mat1), lapply(lp, plogis), list(mat0))
 
     probs <- lapply(seq_along(pred)[-1], function(k) {
-      pred[[k - 1]] - pred[[k]]
+      minmax_mat(pred[[k - 1]] - pred[[k]])
     })
 
   }
