@@ -54,8 +54,12 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
   # if there are no regression coefficients in the ordinal models, remove the
   # hyperpars for regression coefficients in ordinal models to prevent warning
   # message from JAGS
-  if (length(unlist(sapply(info_list[modeltypes %in% c("clm", "clmm")],
-                           "[[", "parelmts"))) == 0) {
+  clm_parelmts <- sapply(info_list[modeltypes %in% c("clm", "clmm")],
+                         "[[", "parelmts")
+
+  if (length(
+    unlist(c(clm_parelmts, sapply(clm_parelmts, lapply, "attr", "nonprop")))
+  ) == 0) {
     l[c("mu_reg_ordinal", "tau_reg_ordinal")] <- NULL
   }
 
