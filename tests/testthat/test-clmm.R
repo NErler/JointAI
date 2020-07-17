@@ -84,9 +84,9 @@ m5d <- clmm_imp(o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF,
 
 # - all effects non-proportional
 m5e <- clmm_imp(o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF,
-               n.adapt = 5, n.iter = 10, seed = 2020,
-               nonprop = ~ o1 ~ c1 + M2 * C2 + O2,
-               monitor_params = list(other = "p_o1"))
+                n.adapt = 5, n.iter = 10, seed = 2020,
+                nonprop = ~ c1 + M2 * C2 + O2,
+                monitor_params = list(other = "p_o1"))
 
 m6a <- update(m5a, rev = "o1")
 m6b <- update(m5b, rev = "o1")
