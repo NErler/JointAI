@@ -172,6 +172,17 @@ test_that("prediction works", {
                   "data.frame")
   expect_s3_class(predict(m5d, type = "response", warn = FALSE)$newdata,
                   "data.frame")
+  # expect_equal(check_predprob(m5a), 0)
+  # expect_equal(check_predprob(m5b), 0)
+  # expect_equal(check_predprob(m5c), 0)
+  # expect_equal(check_predprob(m5d), 0)
+  # expect_equal(check_predprob(m5e), 0)
+  #
+  # expect_equal(check_predprob(m6a), 0)
+  # expect_equal(check_predprob(m6b), 0)
+  # expect_equal(check_predprob(m6c), 0)
+  # expect_equal(check_predprob(m6d), 0)
+  # expect_equal(check_predprob(m6e), 0)
 })
 
 
