@@ -61,29 +61,44 @@ m4e <- clmm_imp(o1 ~ C1 + log(time) + I(time^2) + p1,
 # - basic model
 m5a <- clmm_imp(o1 ~ C1 + C2 + b2 + O2 + (1 | id), data = longDF,
                 n.adapt = 5, n.iter = 10, seed = 2020,
-                nonprop = list(o1 = ~ C1 + C2 + b2))
+                nonprop = list(o1 = ~ C1 + C2 + b2),
+                monitor_params = list(other = "p_o1"))
 
 # - interaction in prop. effects
 m5b <- clmm_imp(o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF,
                n.adapt = 5, n.iter = 10, seed = 2020,
-               nonprop = list(o1 = ~ c1 + C2))
+               nonprop = list(o1 = ~ c1 + C2),
+               monitor_params = list(other = "p_o1"))
 
 # - interaction in non-prop effects
 m5c <- clmm_imp(o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF,
                n.adapt = 5, n.iter = 10, seed = 2020,
-               nonprop = list(o1 = ~ c1 * C2))
+               nonprop = list(o1 = ~ c1 * C2),
+               monitor_params = list(other = "p_o1"))
 
 # - interaction between non-prop and prop effects
 m5d <- clmm_imp(o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF,
                n.adapt = 5, n.iter = 10, seed = 2020,
-               nonprop = list(o1 = ~ c1 + C2))
+               nonprop = list(o1 = ~ c1 + C2),
+               monitor_params = list(other = "p_o1"))
 
+# - all effects non-proportional
+m5e <- clmm_imp(o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF,
+               n.adapt = 5, n.iter = 10, seed = 2020,
+               nonprop = ~ o1 ~ c1 + M2 * C2 + O2,
+               monitor_params = list(other = "p_o1"))
 
+m6a <- update(m5a, rev = "o1")
+m6b <- update(m5b, rev = "o1")
+m6c <- update(m5c, rev = "o1")
+m6d <- update(m5d, rev = "o1")
+m6e <- update(m5e, rev = "o1")
 
 
 models <- list(m0a, m0b, m1a, m1b, m1c, m1d, m2a, m2b, m2c, m2d,
                cov1 = m3a, cov2 = m3b, m4a, m4b, m4c, m4d, m4e,
-               m5a, m5b, m5c, m5d)
+               m5a, m5b, m5c, m5d, m5e,
+               m6a, m6b, m6c, m6d, m6e)
 
 
 test_that("models run", {
@@ -172,6 +187,10 @@ test_that("prediction works", {
                   "data.frame")
   expect_s3_class(predict(m5d, type = "response", warn = FALSE)$newdata,
                   "data.frame")
+
+  expect_s3_class(predict(m5e, type = "prob", warn = FALSE)$fit,
+                  "data.frame")
+
   # expect_equal(check_predprob(m5a), 0)
   # expect_equal(check_predprob(m5b), 0)
   # expect_equal(check_predprob(m5c), 0)
