@@ -19,7 +19,7 @@ JAGSmodel_clmm <- function(info) {
 
   linpred_nonprop <- if (!is.null(attr(info$parelmts[[info$resp_mat]],
                                        'nonprop'))) {
-    nonprop <- write_nonprop(info)
+    nonprop <- lapply(write_nonprop(info), add_linebreaks, indent = indent + 2)
 
     paste0("\n\n",
          paste0(tab(4), "eta_", info$varname, "_", seq_along(nonprop),
