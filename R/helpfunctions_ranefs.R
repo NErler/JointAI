@@ -176,7 +176,7 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_list, parelmts, lp) {
 
     rd_intercept_coefs <- if (!is.null(elmts) &
                               attr(hc_list[[k]], 'intercept') == 1) {
-      if (is.list(elmts)) {
+      if (is.list(elmts) | length(elmts) == 0) {
         # in case of a multinomial mixed model, there should not be
         # hierarchical centring of the random intercept.
         # If we don't have any parameters in here (by setting NULL), they
