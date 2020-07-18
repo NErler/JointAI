@@ -26,3 +26,5 @@ R/plots_ppc.R
 
 ^\.lintr$
 ^\.covrignore$
+^\.github$
+^codecov\.yml$
