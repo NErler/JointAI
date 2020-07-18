@@ -1,9 +1,6 @@
 context("survreg models")
 library("JointAI")
 
-if (!dir.exists('outfiles')) {
-  dir.create('outfiles')
-}
 
 PBC2 <- PBC[match(unique(PBC$id), PBC$id), ]
 PBC2$center <- cut(as.numeric(PBC2$id), c(-Inf, seq(30, 270, 30), Inf))
@@ -15,34 +12,48 @@ PBC2$futime2[1:10] <- NA
 PBC2$status2[11:20] <- NA
 
 
-# no covariates
-m0a <- survreg_imp(Surv(futime, status != "censored") ~ 1, data = PBC2,
-                   n.adapt = 5, n.iter = 10, seed = 2020)
+run_survreg_models <- function() {
+  cat('\nRunning survreg models...\n')
 
-# only complete
-m1a <- survreg_imp(Surv(futime, status != "censored") ~ age + sex,
-                   data = PBC2, n.adapt = 5, n.iter = 10, seed = 2020)
-m1b <- survreg_imp(Surv(futime, I(status != "censored")) ~ age + sex,
-                   data = PBC2, n.adapt = 5, n.iter = 10, seed = 2020)
+  sink(tempfile())
+  on.exit(sink())
+  invisible(force(suppressWarnings({
 
-# only incomplete
-m2a <- survreg_imp(Surv(futime, status != "censored") ~ copper, data = PBC2,
-                   n.adapt = 5, n.iter = 10, seed = 2020)
+    models <- list(
 
+      # no covariates
+      m0a = survreg_imp(Surv(futime, status != "censored") ~ 1, data = PBC2,
+                        n.adapt = 5, n.iter = 10, seed = 2020),
 
-# complex structures
-m3a <- survreg_imp(Surv(futime, status != "censored") ~ copper + sex + age +
-                     abs(age - copper) + log(trig),
-                   data = PBC2, trunc = list(trig = c(0.0001, NA)),
-                   n.adapt = 5, n.iter = 10, seed = 2020)
+      # only complete
+      m1a = survreg_imp(Surv(futime, status != "censored") ~ age + sex,
+                        data = PBC2, n.adapt = 5, n.iter = 10, seed = 2020),
+      m1b = survreg_imp(Surv(futime, I(status != "censored")) ~ age + sex,
+                        data = PBC2, n.adapt = 5, n.iter = 10, seed = 2020),
 
-m3b <- survreg_imp(Surv(futime, status != "censored") ~ copper + sex + age +
-                     abs(age - copper) + log(trig) + (1 | center),
-                   data = PBC2, trunc = list(trig = c(0.0001, NA)),
-                   n.adapt = 5, n.iter = 10, seed = 2020)
+      # only incomplete
+      m2a = survreg_imp(Surv(futime, status != "censored") ~ copper, data = PBC2,
+                        n.adapt = 5, n.iter = 10, seed = 2020),
 
 
-models <- list(m0a, m1a, m1b, m2a, m3a, m3b)
+      # complex structures
+      m3a = survreg_imp(Surv(futime, status != "censored") ~ copper + sex + age +
+                          abs(age - copper) + log(trig),
+                        data = PBC2, trunc = list(trig = c(0.0001, NA)),
+                        n.adapt = 5, n.iter = 10, seed = 2020),
+
+      m3b = survreg_imp(Surv(futime, status != "censored") ~ copper + sex + age +
+                          abs(age - copper) + log(trig) + (1 | center),
+                        data = PBC2, trunc = list(trig = c(0.0001, NA)),
+                        n.adapt = 5, n.iter = 10, seed = 2020)
+    )
+  }
+  )
+  ))
+  models
+}
+
+models <- run_survreg_models()
 
 
 test_that("models run", {
@@ -57,12 +68,11 @@ test_that("there are no duplicate betas/alphas in the JAGSmodel", {
 })
 
 
-test_that("models give same result as before", {
-  expect_known_output(
-    print(lapply(models, "[[", "MCMC")),
-    "outfiles/test_survreg_MCMC.txt")
+test_that("MCMC is mcmc.list", {
+  for (i in seq_along(models)) {
+    expect_s3_class(models[[i]]$MCMC, "mcmc.list")
+  }
 })
-
 
 test_that("MCMC samples can be plottet", {
   for (k in seq_along(models)) {
@@ -73,45 +83,32 @@ test_that("MCMC samples can be plottet", {
 })
 
 test_that("GRcrit and MCerror give same result", {
-  expect_known_output(
-    print(lapply(models, GR_crit)),
-    "outfiles/test_survreg_GR_crit.txt")
-  expect_known_output(
-    print(lapply(models, MC_error)),
-    "outfiles/test_survreg_MC_error.txt")
+  expect_snapshot_output(lapply(models, GR_crit, multivariate = FALSE))
+  expect_snapshot_output(lapply(models, MC_error))
 })
 
 
 test_that("summary output remained the same", {
-  expect_known_output(
-    print(lapply(models, print)),
-    file = "outfiles/test_survreg_print.txt")
-  expect_known_output(
-    print(lapply(models, coef)),
-    file = "outfiles/test_survreg_coef.txt")
-  expect_known_output(
-    print(lapply(models, confint)),
-    file = "outfiles/test_survreg_confint.txt")
-  expect_known_output(
-    print(lapply(models, summary)),
-    file = "outfiles/test_survreg_summary.txt")
-  expect_known_output(
-    print(lapply(models, function(x) coef(summary(x)))),
-    file = "outfiles/test_survreg_coefsummary.txt")
+  expect_snapshot_output(lapply(models, print))
+  expect_snapshot_output(lapply(models, coef))
+  expect_snapshot_output(lapply(models, confint))
+  expect_snapshot_output(lapply(models, summary))
+  expect_snapshot_output(lapply(models, function(x) coef(summary(x))))
 })
 
 
+
 test_that("prediction works", {
-  expect_s3_class(predict(m3b, type = "lp")$fitted, "data.frame")
-  expect_s3_class(predict(m3b, type = "response", warn = FALSE)$fitted,
+  expect_s3_class(predict(models$m3b, type = "lp")$fitted, "data.frame")
+  expect_s3_class(predict(models$m3b, type = "response", warn = FALSE)$fitted,
                   "data.frame")
 })
 
 
 test_that("residuals", {
   # residuals are not yet implemented
-  expect_error(residuals(m3b, type = "working"))
-  expect_error(residuals(m3b, type = "response"))
+  expect_error(residuals(models$m3b, type = "working"))
+  expect_error(residuals(models$m3b, type = "response"))
 })
 
 

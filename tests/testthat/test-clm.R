@@ -77,12 +77,6 @@ run_clm_models <- function() {
 }
 
 models <- run_clm_models()
-# models <- list(m0a, m0b, m1a, m1b, m2a, m2b
-#                # cov1 = m3a, cov2 = m3b,
-#                # m4a, m4b,
-#                # m5a, m5b, m5c, m5d, m5e,
-#                # m6a, m6b, m6c, m6d, m6e
-#                )
 
 
 test_that("models run", {
@@ -194,12 +188,12 @@ test_that("model can be plottet", {
 })
 
 
-# test_that("wrong models give errors", {
-#   expect_error(clm_imp(y ~ O1 + C1 + C2, data = wideDF))
-#   expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = longDF))
-#   expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = wideDF))
-#   expect_s3_class(clm_imp(O2 ~ I(O1^2) + C1 + C2, data = wideDF),
-#                   "JointAI_errored")
-#   expect_error(clm_imp(O2 ~ O1 + C1, data = wideDF,
-#                        nonprop = list(O2 = ~ C2)))
-# })
+test_that("wrong models give errors", {
+  expect_error(clm_imp(y ~ O1 + C1 + C2, data = wideDF))
+  expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = longDF))
+  expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = wideDF))
+  expect_s3_class(clm_imp(O2 ~ I(O1^2) + C1 + C2, data = wideDF),
+                  "JointAI_errored")
+  expect_error(clm_imp(O2 ~ O1 + C1, data = wideDF,
+                       nonprop = list(O2 = ~ C2)))
+})
