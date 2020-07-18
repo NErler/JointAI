@@ -412,6 +412,7 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
 
   sapply(names(object$fixed), function(k) {
     x <- object$coef_list[[k]]
+    rev <- object$info_list[[k]]$rev
 
     rbind(
       if (object$info_list[[k]]$modeltype %in% c('clm', 'clmm')) {
