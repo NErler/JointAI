@@ -252,6 +252,7 @@ predict.JointAI <- function(object, outcome = 1, newdata,
                           clm = predict_clm,
                           mlogit = predict_mlogit,
                           clmm = predict_clm,
+                          mlogitmm = predict_mlogit,
                           survreg = predict_survreg,
                           coxph = predict_coxph,
                           JM = predict_JM
