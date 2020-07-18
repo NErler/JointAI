@@ -250,6 +250,7 @@ predict.JointAI <- function(object, outcome = 1, newdata,
                           glm = predict_glm,
                           glmm = predict_glm,
                           clm = predict_clm,
+                          mlogit = predict_mlogit,
                           clmm = predict_clm,
                           survreg = predict_survreg,
                           coxph = predict_coxph,
@@ -736,7 +737,7 @@ predict_clm <- function(formula, newdata,
                list(
                  1 - minmax_mat(
                    apply(array(dim = c(dim(probs[[1]]), length(probs)),
-                               unlist(probs)), c(1,2), sum)
+                               unlist(probs)), c(1, 2), sum)
                  ))
     )
   } else {
@@ -750,10 +751,111 @@ predict_clm <- function(formula, newdata,
     probs <- c(list(
       1 - minmax_mat(
         apply(array(dim = c(dim(probs[[1]]), length(probs)),
-                    unlist(probs)), c(1,2), sum)
+                    unlist(probs)), c(1, 2), sum)
       )),
       probs)
   }
+  names(probs) <- paste0("P(", varname, "=",
+                         levels(data[, varname]),
+                         ")")
+
+  if (type == "lp") {
+    fit <- lapply(lp, colMeans)
+    quants <- if (!is.null(quantiles)) {
+      sapply(lp, function(x) {
+        t(apply(x, 2, quantile, probs = quantiles, na.rm = TRUE))
+      }, simplify = FALSE)
+    }
+  } else if (type == "prob") {
+    fit <- lapply(probs, colMeans)
+    quants <- if (!is.null(quantiles)) {
+      sapply(probs, function(x) {
+        t(apply(x, 2, quantile, probs = quantiles, na.rm = TRUE))
+      }, simplify = FALSE)
+    }
+  } else if (type == "class") {
+    fit <- apply(do.call(cbind, lapply(probs, colMeans)), 1,
+                 function(x) if (all(is.na(x))) NA else which.max(x))
+    quants <- NULL
+  }
+
+  res_df <- if (!is.null(quants)) {
+    res <- mapply(function(f, q) {
+      cbind(fit = f, q)
+    }, f = fit, q = quants, SIMPLIFY = FALSE)
+
+    array(dim = c(dim(res[[1]]), length(res)),
+          dimnames = list(c(), colnames(res[[1]]), names(res)),
+          unlist(res))
+  } else {
+    data.frame(fit, check.names = FALSE)
+  }
+
+  on.exit(options(op))
+  res_df
+}
+
+
+
+
+predict_mlogit <- function(formula, newdata,
+                           type = c("prob", "lp", "class", "response"),
+                           data, MCMC, varname, coef_list, info_list,
+                           quantiles = c(0.025, 0.975), warn = TRUE,
+                           contr_list, Mlist, ...) {
+
+  type <- match.arg(type)
+
+  if (type == "response")
+    type <- "class"
+
+
+  coefs <- coef_list[[varname]]
+
+  scale_pars <- do.call(rbind, unname(Mlist$scale_pars))
+  if (!is.null(scale_pars)) {
+    scale_pars$center[is.na(scale_pars$center)] <- 0
+  }
+
+  mf <- model.frame(as.formula(paste(formula[-2], collapse = " ")),
+                    data, na.action = na.pass)
+  mt <- attr(mf, "terms")
+
+  op <- options(na.action = na.pass)
+  X <- model.matrix(mt,
+                    data = newdata,
+                    contrasts.arg = contr_list[intersect(
+                      names(contr_list),
+                      sapply(attr(mt, "variables")[-1], deparse,
+                             width.cutoff = 500)
+                    )]
+  )
+
+  if (warn & any(is.na(X)))
+    warnmsg("Prediction for cases with missing covariates is not yet
+            implemented.")
+
+  # multiply MCMC sample with design matrix to get linear predictor
+  coefs_nonprop <- split(coefs, coefs$outcat)
+
+  etas <- lapply(coefs_nonprop, function(c_np_k) {
+    calc_lp(regcoefs = MCMC[, c_np_k$coef, drop = FALSE],
+            design_mat = X[, c_np_k$varname, drop = FALSE],
+            scale_pars = NULL)
+  })
+
+
+  mat0 <- matrix(nrow = nrow(etas[[1]]), ncol = ncol(etas[[1]]), data = 0)
+  lp <- c(list(mat0), etas)
+
+  phis <- lapply(lp, exp)
+  sum_phis <- apply(array(dim = c(dim(phis[[1]]), length(phis)),
+                    unlist(phis)), c(1, 2), sum)
+
+  probs <- lapply(seq_along(phis), function(k) {
+    minmax_mat(phis[[k]] / sum_phis)
+  })
+
   names(probs) <- paste0("P(", varname, "=",
                          levels(data[, varname]),
                          ")")
