@@ -73,9 +73,8 @@ residuals.JointAI <- function(object,
                 warn = warn)
 
     } else {
-      if (warn)
-        warnmsg("Prediction is not yet implemented for a model of type %s.",
-                dQuote(object$info_list[[varname]]$modeltype))
+      errormsg("Prediction is not yet implemented for a model of type %s.",
+               dQuote(object$info_list[[varname]]$modeltype))
     }
   },  simplify = FALSE)
 
