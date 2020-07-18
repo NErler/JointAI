@@ -426,6 +426,16 @@ get_parelmts <- function(k, Mlist, K, K_imp, lp) {
     parnums <- Kmat[[k]][lvl, 1]:Kmat[[k]][lvl, 2]
 
     if (Mlist$models[k] %in% c("mlogit", "mlogitmm")) {
+      if (length(levels(Mlist$refs[[k]])) == 0) {
+        errormsg("It seems the variable %s is numeric, but to fit a multinomial
+                 logit model the response variable must be a factor with at
+                 least three levels.", dQuote(k))
+      } else if (length(levels(Mlist$refs[[k]])) < 3) {
+        errormsg("The variable %s has less than three levels. You should use
+                 a binomial model for this variable instead of a multinomial
+                 model.", dQuote(k))
+      }
+
       parnums <- setNames(Kmat[[k]][lvl, 1]:Kmat[[k]][lvl, 2],
                           rep(names(lp[[lvl]]),
                               length(levels(Mlist$refs[[k]])) - 1)
