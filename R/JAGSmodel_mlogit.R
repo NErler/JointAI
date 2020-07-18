@@ -57,6 +57,7 @@ JAGSmodel_mlogit <- function(info) {
          paste(probs, collapse = "\n"), "\n\n",
          paste0(logs, collapse = "\n"),
          dummies, "\n",
+         info$trafos,
          tab(), "}", "\n\n",
 
          # priors

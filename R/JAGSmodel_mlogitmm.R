@@ -51,6 +51,7 @@ JAGSmodel_mlogitmm <- function(info) {
          paste(probs, collapse = "\n"), "\n\n",
          paste0(sapply(logs, add_linebreaks, indent = indent), collapse = "\n"),
          dummies, "\n",
+         info$trafos,
          tab(), "}", "\n\n",
 
          paste0(sapply(names(rdintercept), write_ranefs, info = info,
