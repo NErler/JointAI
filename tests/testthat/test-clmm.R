@@ -158,14 +158,14 @@ test_that("summary output remained the same on Windows", {
   expect_snapshot_output(lapply(models, function(x) coef(summary(x))))
 })
 
-test_that("summary output remained the same on non-Windows", {
-  skip_on_os(c("windows"))
-  expect_snapshot_output(lapply(models, print))
-  expect_snapshot_output(lapply(models, coef))
-  expect_snapshot_output(lapply(models, confint))
-  expect_snapshot_output(lapply(models, summary))
-  expect_snapshot_output(lapply(models, function(x) coef(summary(x))))
-})
+# test_that("summary output remained the same on non-Windows", {
+#   skip_on_os(c("windows"))
+#   expect_snapshot_output(lapply(models, print))
+#   expect_snapshot_output(lapply(models, coef))
+#   expect_snapshot_output(lapply(models, confint))
+#   expect_snapshot_output(lapply(models, summary))
+#   expect_snapshot_output(lapply(models, function(x) coef(summary(x))))
+# })
 
 
 test_that("prediction works", {
