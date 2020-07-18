@@ -1,3 +1,5 @@
+# JointAI (development version)
+
 # JointAI 0.6.9000
 
 ## New features

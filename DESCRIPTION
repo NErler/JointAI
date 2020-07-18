@@ -1,5 +1,5 @@
 Package: JointAI
-Version: 0.6.1
+Version: 0.6.1.9000
 Title: Joint Analysis and Imputation of Incomplete Data
 Authors@R: c(person("Nicole S.", "Erler", email = "n.erler@erasmusmc.nl",
                   role = c("aut", "cre"),
@@ -35,7 +35,7 @@ Suggests:
     ggpubr,
     testthat,
     covr
-Remotes:  
+Remotes: 
     r-lib/testthat
 VignetteBuilder: knitr
 Encoding: UTF-8
