@@ -134,37 +134,37 @@
     Potential scale reduction factors:
     
                                                                     Point est.
-    M12: (Intercept)                                                      1.09
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                    3.27
-    M12: abs(C1 - C2)                                                     1.58
-    M12: log(C1)                                                          1.08
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)       3.24
-    M13: (Intercept)                                                      1.25
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                    7.01
-    M13: abs(C1 - C2)                                                     1.34
-    M13: log(C1)                                                          1.32
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)       6.28
-    M14: (Intercept)                                                      1.67
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                    4.99
-    M14: abs(C1 - C2)                                                     3.82
-    M14: log(C1)                                                          1.45
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)       5.55
+    M12: (Intercept)                                                     1.040
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   6.196
+    M12: abs(C1 - C2)                                                    1.472
+    M12: log(C1)                                                         1.056
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      8.441
+    M13: (Intercept)                                                     1.156
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   5.083
+    M13: abs(C1 - C2)                                                    1.224
+    M13: log(C1)                                                         1.143
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      6.740
+    M14: (Intercept)                                                     0.992
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   2.481
+    M14: abs(C1 - C2)                                                    1.041
+    M14: log(C1)                                                         1.013
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      3.766
                                                                     Upper C.I.
-    M12: (Intercept)                                                      1.45
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                    6.57
-    M12: abs(C1 - C2)                                                     2.65
-    M12: log(C1)                                                          1.28
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)       6.56
-    M13: (Intercept)                                                      1.83
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                   15.67
-    M13: abs(C1 - C2)                                                     2.20
-    M13: log(C1)                                                          1.97
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)      12.49
-    M14: (Intercept)                                                      3.23
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                    9.64
-    M14: abs(C1 - C2)                                                     7.26
-    M14: log(C1)                                                          2.56
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)      10.71
+    M12: (Intercept)                                                      1.26
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   17.14
+    M12: abs(C1 - C2)                                                     2.48
+    M12: log(C1)                                                          1.32
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      28.81
+    M13: (Intercept)                                                      1.75
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   10.79
+    M13: abs(C1 - C2)                                                     1.80
+    M13: log(C1)                                                          1.71
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      15.93
+    M14: (Intercept)                                                      1.14
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                    8.34
+    M14: abs(C1 - C2)                                                     1.20
+    M14: log(C1)                                                          1.19
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)       9.85
     
     
 
@@ -275,37 +275,37 @@
     
     $m4b
                                                                         est MCSE
-    M12: (Intercept)                                                -15.419 2.32
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -0.080 0.45
-    M12: abs(C1 - C2)                                                -0.358 0.31
-    M12: log(C1)                                                     43.224 4.75
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.409 0.31
-    M13: (Intercept)                                                 -7.009 2.69
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -0.539 0.82
-    M13: abs(C1 - C2)                                                -0.054 0.14
-    M13: log(C1)                                                     18.047 7.28
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.692 0.51
-    M14: (Intercept)                                                -14.797 3.90
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                1.134 0.81
-    M14: abs(C1 - C2)                                                 0.157 0.44
-    M14: log(C1)                                                     38.293 7.20
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.314 0.60
+    M12: (Intercept)                                                -22.539 1.62
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.105 1.17
+    M12: abs(C1 - C2)                                                -0.075 0.60
+    M12: log(C1)                                                     62.278 4.31
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.024 1.27
+    M13: (Intercept)                                                -11.074 1.55
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -2.571 1.04
+    M13: abs(C1 - C2)                                                 0.033 0.52
+    M13: log(C1)                                                     29.277 4.23
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   1.853 0.61
+    M14: (Intercept)                                                -20.686 0.81
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -1.088 0.93
+    M14: abs(C1 - C2)                                                 0.201 0.21
+    M14: log(C1)                                                     55.605 3.32
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.500 0.41
                                                                        SD MCSE/SD
-    M12: (Intercept)                                                 9.62    0.24
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               1.13    0.40
-    M12: abs(C1 - C2)                                                0.78    0.40
-    M12: log(C1)                                                    26.00    0.18
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.80    0.39
-    M13: (Intercept)                                                11.64    0.23
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               1.64    0.50
-    M13: abs(C1 - C2)                                                0.79    0.18
-    M13: log(C1)                                                    31.75    0.23
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.07    0.47
-    M14: (Intercept)                                                12.45    0.31
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               2.00    0.41
-    M14: abs(C1 - C2)                                                1.44    0.30
-    M14: log(C1)                                                    31.72    0.23
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.32    0.45
+    M12: (Intercept)                                                 8.85   0.183
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               2.25   0.519
+    M12: abs(C1 - C2)                                                0.90   0.664
+    M12: log(C1)                                                    23.59   0.183
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.43   0.889
+    M13: (Intercept)                                                 8.48   0.183
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               1.84   0.567
+    M13: abs(C1 - C2)                                                1.14   0.452
+    M13: log(C1)                                                    23.14   0.183
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.20   0.507
+    M14: (Intercept)                                                10.70   0.076
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               1.57   0.593
+    M14: abs(C1 - C2)                                                0.97   0.213
+    M14: log(C1)                                                    29.25   0.114
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.93   0.437
     
 
 # summary output remained the same
@@ -438,7 +438,7 @@
             73.76760          0.26854          0.93732         -2.59000 
     
     Call:
-    mlogit_imp(formula = M1 ~ ifelse(as.numeric(O2) > as.numeric(O1), 
+    mlogit_imp(formula = M1 ~ ifelse(as.numeric(M2) > as.numeric(O1), 
         1, 0) * abs(C1 - C2) + log(C1), data = wideDF, n.adapt = 5, 
         n.iter = 10, monitor_params = list(other = "p_M1"), seed = 2020, 
         warn = FALSE)
@@ -448,35 +448,35 @@
     
     Coefficients:
                                                    (Intercept) 
-                                                     -15.41915 
-                 ifelse(as.numeric(O2) > as.numeric(O1), 1, 0) 
-                                                      -0.08030 
+                                                     -22.53908 
+                 ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                      -0.10524 
                                                   abs(C1 - C2) 
-                                                      -0.35807 
+                                                      -0.07471 
                                                        log(C1) 
-                                                      43.22353 
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                       0.40898 
+                                                      62.27821 
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                       0.02377 
                                                    (Intercept) 
-                                                      -7.00912 
-                 ifelse(as.numeric(O2) > as.numeric(O1), 1, 0) 
-                                                      -0.53873 
+                                                     -11.07413 
+                 ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                      -2.57137 
                                                   abs(C1 - C2) 
-                                                      -0.05384 
+                                                       0.03348 
                                                        log(C1) 
-                                                      18.04656 
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                       0.69177 
+                                                      29.27694 
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                       1.85307 
                                                    (Intercept) 
-                                                     -14.79708 
-                 ifelse(as.numeric(O2) > as.numeric(O1), 1, 0) 
-                                                       1.13358 
+                                                     -20.68562 
+                 ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                      -1.08794 
                                                   abs(C1 - C2) 
-                                                       0.15725 
+                                                       0.20118 
                                                        log(C1) 
-                                                      38.29271 
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                      -0.31395 
+                                                      55.60501 
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                       0.49991 
     $m0a
     
     Call:
@@ -624,7 +624,7 @@
     $m4b
     
     Call:
-    mlogit_imp(formula = M1 ~ ifelse(as.numeric(O2) > as.numeric(O1), 
+    mlogit_imp(formula = M1 ~ ifelse(as.numeric(M2) > as.numeric(O1), 
         1, 0) * abs(C1 - C2) + log(C1), data = wideDF, n.adapt = 5, 
         n.iter = 10, monitor_params = list(other = "p_M1"), seed = 2020, 
         warn = FALSE)
@@ -634,35 +634,35 @@
     
     Coefficients:
                                                    (Intercept) 
-                                                     -15.41915 
-                 ifelse(as.numeric(O2) > as.numeric(O1), 1, 0) 
-                                                      -0.08030 
+                                                     -22.53908 
+                 ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                      -0.10524 
                                                   abs(C1 - C2) 
-                                                      -0.35807 
+                                                      -0.07471 
                                                        log(C1) 
-                                                      43.22353 
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                       0.40898 
+                                                      62.27821 
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                       0.02377 
                                                    (Intercept) 
-                                                      -7.00912 
-                 ifelse(as.numeric(O2) > as.numeric(O1), 1, 0) 
-                                                      -0.53873 
+                                                     -11.07413 
+                 ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                      -2.57137 
                                                   abs(C1 - C2) 
-                                                      -0.05384 
+                                                       0.03348 
                                                        log(C1) 
-                                                      18.04656 
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                       0.69177 
+                                                      29.27694 
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                       1.85307 
                                                    (Intercept) 
-                                                     -14.79708 
-                 ifelse(as.numeric(O2) > as.numeric(O1), 1, 0) 
-                                                       1.13358 
+                                                     -20.68562 
+                 ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                      -1.08794 
                                                   abs(C1 - C2) 
-                                                       0.15725 
+                                                       0.20118 
                                                        log(C1) 
-                                                      38.29271 
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                      -0.31395 
+                                                      55.60501 
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                       0.49991 
     
 
 ---
@@ -740,35 +740,35 @@
     $m4b
     $m4b$M1
                                                    (Intercept) 
-                                                  -15.41915108 
-                 ifelse(as.numeric(O2) > as.numeric(O1), 1, 0) 
-                                                   -0.08029626 
+                                                  -22.53907646 
+                 ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                   -0.10523577 
                                                   abs(C1 - C2) 
-                                                   -0.35806660 
+                                                   -0.07470987 
                                                        log(C1) 
-                                                   43.22353215 
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                    0.40897557 
+                                                   62.27820635 
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                    0.02377362 
                                                    (Intercept) 
-                                                   -7.00911749 
-                 ifelse(as.numeric(O2) > as.numeric(O1), 1, 0) 
-                                                   -0.53872635 
+                                                  -11.07412937 
+                 ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                   -2.57136519 
                                                   abs(C1 - C2) 
-                                                   -0.05384478 
+                                                    0.03347797 
                                                        log(C1) 
-                                                   18.04655777 
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                    0.69176640 
+                                                   29.27693848 
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                    1.85307040 
                                                    (Intercept) 
-                                                  -14.79708127 
-                 ifelse(as.numeric(O2) > as.numeric(O1), 1, 0) 
-                                                    1.13358046 
+                                                  -20.68562171 
+                 ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                   -1.08794022 
                                                   abs(C1 - C2) 
-                                                    0.15725100 
+                                                    0.20118313 
                                                        log(C1) 
-                                                   38.29270804 
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                   -0.31394890 
+                                                   55.60500754 
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                    0.49990928 
     
     
 
@@ -896,37 +896,37 @@
     $m4b
     $m4b$M1
                                                                       2.5%
-    (Intercept)                                                -31.0655156
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -1.8504923
-    abs(C1 - C2)                                                -1.6428936
-    log(C1)                                                     -0.9807006
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.7517766
-    (Intercept)                                                -22.9336874
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -2.9767768
-    abs(C1 - C2)                                                -1.1440065
-    log(C1)                                                    -44.9678640
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.8338149
-    (Intercept)                                                -32.4878085
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -1.1673598
-    abs(C1 - C2)                                                -2.1991496
-    log(C1)                                                    -23.3268128
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -2.6504950
-                                                                   97.5%
-    (Intercept)                                                 1.689907
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               1.584651
-    abs(C1 - C2)                                                1.206020
-    log(C1)                                                    86.182479
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.605895
-    (Intercept)                                                14.974000
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               1.854843
-    abs(C1 - C2)                                                1.424916
-    log(C1)                                                    64.108185
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  2.411770
-    (Intercept)                                                10.642149
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               4.607062
-    abs(C1 - C2)                                                2.631969
-    log(C1)                                                    82.147152
-    ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.283767
+    (Intercept)                                                -38.8397077
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -3.3249186
+    abs(C1 - C2)                                                -1.7092604
+    log(C1)                                                     28.2209057
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -1.7032701
+    (Intercept)                                                -26.1059198
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -5.6090827
+    abs(C1 - C2)                                                -1.9283175
+    log(C1)                                                    -14.3925900
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.3703952
+    (Intercept)                                                -36.6482691
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -4.1299778
+    abs(C1 - C2)                                                -1.4725941
+    log(C1)                                                      8.5026011
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.8327012
+                                                                    97.5%
+    (Intercept)                                                 -7.940490
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                2.578032
+    abs(C1 - C2)                                                 1.443114
+    log(C1)                                                    103.527683
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   2.142452
+    (Intercept)                                                  5.711713
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.204273
+    abs(C1 - C2)                                                 2.403744
+    log(C1)                                                     66.522255
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   3.767392
+    (Intercept)                                                 -3.793041
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                1.150053
+    abs(C1 - C2)                                                 1.787078
+    log(C1)                                                    102.640628
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   2.174837
     
     
 
@@ -1246,7 +1246,7 @@
     Bayesian multinomial logit model fitted with JointAI
     
     Call:
-    mlogit_imp(formula = M1 ~ ifelse(as.numeric(O2) > as.numeric(O1), 
+    mlogit_imp(formula = M1 ~ ifelse(as.numeric(M2) > as.numeric(O1), 
         1, 0) * abs(C1 - C2) + log(C1), data = wideDF, n.adapt = 5, 
         n.iter = 10, monitor_params = list(other = "p_M1"), seed = 2020, 
         warn = FALSE)
@@ -1254,69 +1254,69 @@
     
     Posterior summary:
                                                                         Mean     SD
-    M12: (Intercept)                                                -15.4192  9.622
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -0.0803  1.126
-    M12: abs(C1 - C2)                                                -0.3581  0.777
-    M12: log(C1)                                                     43.2235 25.998
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.4090  0.797
-    M13: (Intercept)                                                 -7.0091 11.641
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -0.5387  1.638
-    M13: abs(C1 - C2)                                                -0.0538  0.787
-    M13: log(C1)                                                     18.0466 31.746
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.6918  1.075
-    M14: (Intercept)                                                -14.7971 12.453
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                1.1336  2.001
-    M14: abs(C1 - C2)                                                 0.1573  1.436
-    M14: log(C1)                                                     38.2927 31.717
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.3139  1.324
-                                                                       2.5% 97.5%
-    M12: (Intercept)                                                -31.066  1.69
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -1.850  1.58
-    M12: abs(C1 - C2)                                                -1.643  1.21
-    M12: log(C1)                                                     -0.981 86.18
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.752  1.61
-    M13: (Intercept)                                                -22.934 14.97
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -2.977  1.85
-    M13: abs(C1 - C2)                                                -1.144  1.42
-    M13: log(C1)                                                    -44.968 64.11
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.834  2.41
-    M14: (Intercept)                                                -32.488 10.64
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -1.167  4.61
-    M14: abs(C1 - C2)                                                -2.199  2.63
-    M14: log(C1)                                                    -23.327 82.15
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -2.650  1.28
+    M12: (Intercept)                                                -22.5391  8.847
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.1052  2.249
+    M12: abs(C1 - C2)                                                -0.0747  0.904
+    M12: log(C1)                                                     62.2782 23.590
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.0238  1.432
+    M13: (Intercept)                                                -11.0741  8.482
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -2.5714  1.837
+    M13: abs(C1 - C2)                                                 0.0335  1.141
+    M13: log(C1)                                                     29.2769 23.143
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   1.8531  1.200
+    M14: (Intercept)                                                -20.6856 10.699
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -1.0879  1.571
+    M14: abs(C1 - C2)                                                 0.2012  0.967
+    M14: log(C1)                                                     55.6050 29.253
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.4999  0.935
+                                                                       2.5%   97.5%
+    M12: (Intercept)                                                -38.840  -7.940
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -3.325   2.578
+    M12: abs(C1 - C2)                                                -1.709   1.443
+    M12: log(C1)                                                     28.221 103.528
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -1.703   2.142
+    M13: (Intercept)                                                -26.106   5.712
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -5.609  -0.204
+    M13: abs(C1 - C2)                                                -1.928   2.404
+    M13: log(C1)                                                    -14.393  66.522
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.370   3.767
+    M14: (Intercept)                                                -36.648  -3.793
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -4.130   1.150
+    M14: abs(C1 - C2)                                                -1.473   1.787
+    M14: log(C1)                                                      8.503 102.641
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.833   2.175
                                                                     tail-prob.
-    M12: (Intercept)                                                    0.1333
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                  1.0000
-    M12: abs(C1 - C2)                                                   0.6000
-    M12: log(C1)                                                        0.0667
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)     0.7333
-    M13: (Intercept)                                                    0.6000
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                  0.8000
-    M13: abs(C1 - C2)                                                   0.8667
-    M13: log(C1)                                                        0.6667
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)     0.8000
-    M14: (Intercept)                                                    0.3333
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                  0.9333
-    M14: abs(C1 - C2)                                                   0.9333
-    M14: log(C1)                                                        0.3333
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)     0.8000
+    M12: (Intercept)                                                     0.000
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   0.800
+    M12: abs(C1 - C2)                                                    0.867
+    M12: log(C1)                                                         0.000
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      0.733
+    M13: (Intercept)                                                     0.133
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   0.000
+    M13: abs(C1 - C2)                                                    0.867
+    M13: log(C1)                                                         0.267
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      0.000
+    M14: (Intercept)                                                     0.000
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   0.467
+    M14: abs(C1 - C2)                                                    0.867
+    M14: log(C1)                                                         0.000
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      0.600
                                                                     GR-crit MCE/SD
-    M12: (Intercept)                                                   1.17  0.241
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                 4.40  0.399
-    M12: abs(C1 - C2)                                                  2.56  0.396
-    M12: log(C1)                                                       1.11  0.183
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)    4.38  0.387
-    M13: (Intercept)                                                   1.70  0.231
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                 7.40  0.502
-    M13: abs(C1 - C2)                                                  2.25  0.183
-    M13: log(C1)                                                       1.74  0.229
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)    8.14  0.473
-    M14: (Intercept)                                                   2.60  0.314
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                 8.96  0.407
-    M14: abs(C1 - C2)                                                  5.73  0.305
-    M14: log(C1)                                                       2.07  0.227
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)    9.11  0.455
+    M12: (Intercept)                                                   1.14 0.1826
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                18.71 0.5188
+    M12: abs(C1 - C2)                                                  2.52 0.6639
+    M12: log(C1)                                                       1.27 0.1826
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   20.34 0.8888
+    M13: (Intercept)                                                   1.63 0.1826
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                10.34 0.5675
+    M13: abs(C1 - C2)                                                  2.44 0.4518
+    M13: log(C1)                                                       1.58 0.1826
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   17.91 0.5069
+    M14: (Intercept)                                                   1.05 0.0759
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                 9.14 0.5934
+    M14: abs(C1 - C2)                                                  1.01 0.2131
+    M14: log(C1)                                                       1.04 0.1136
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)    7.56 0.4371
     
     
     MCMC settings:
@@ -1535,117 +1535,117 @@
     $m4b
     $m4b$M1
                                                                             Mean
-    M12: (Intercept)                                                -15.41915108
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -0.08029626
-    M12: abs(C1 - C2)                                                -0.35806660
-    M12: log(C1)                                                     43.22353215
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.40897557
-    M13: (Intercept)                                                 -7.00911749
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -0.53872635
-    M13: abs(C1 - C2)                                                -0.05384478
-    M13: log(C1)                                                     18.04655777
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.69176640
-    M14: (Intercept)                                                -14.79708127
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)                1.13358046
-    M14: abs(C1 - C2)                                                 0.15725100
-    M14: log(C1)                                                     38.29270804
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.31394890
+    M12: (Intercept)                                                -22.53907646
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.10523577
+    M12: abs(C1 - C2)                                                -0.07470987
+    M12: log(C1)                                                     62.27820635
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.02377362
+    M13: (Intercept)                                                -11.07412937
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -2.57136519
+    M13: abs(C1 - C2)                                                 0.03347797
+    M13: log(C1)                                                     29.27693848
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   1.85307040
+    M14: (Intercept)                                                -20.68562171
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -1.08794022
+    M14: abs(C1 - C2)                                                 0.20118313
+    M14: log(C1)                                                     55.60500754
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.49990928
                                                                             SD
-    M12: (Intercept)                                                 9.6221944
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               1.1263817
-    M12: abs(C1 - C2)                                                0.7774025
-    M12: log(C1)                                                    25.9983821
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.7972414
-    M13: (Intercept)                                                11.6411578
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               1.6383969
-    M13: abs(C1 - C2)                                                0.7868222
-    M13: log(C1)                                                    31.7464285
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.0746964
-    M14: (Intercept)                                                12.4528260
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               2.0009509
-    M14: abs(C1 - C2)                                                1.4361605
-    M14: log(C1)                                                    31.7165328
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.3239660
+    M12: (Intercept)                                                 8.8472808
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               2.2488068
+    M12: abs(C1 - C2)                                                0.9043762
+    M12: log(C1)                                                    23.5896736
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.4322455
+    M13: (Intercept)                                                 8.4822909
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               1.8372615
+    M13: abs(C1 - C2)                                                1.1414992
+    M13: log(C1)                                                    23.1431032
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.1998544
+    M14: (Intercept)                                                10.6990182
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               1.5705425
+    M14: abs(C1 - C2)                                                0.9670115
+    M14: log(C1)                                                    29.2530679
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.9346769
                                                                            2.5%
-    M12: (Intercept)                                                -31.0655156
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -1.8504923
-    M12: abs(C1 - C2)                                                -1.6428936
-    M12: log(C1)                                                     -0.9807006
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.7517766
-    M13: (Intercept)                                                -22.9336874
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -2.9767768
-    M13: abs(C1 - C2)                                                -1.1440065
-    M13: log(C1)                                                    -44.9678640
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.8338149
-    M14: (Intercept)                                                -32.4878085
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               -1.1673598
-    M14: abs(C1 - C2)                                                -2.1991496
-    M14: log(C1)                                                    -23.3268128
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -2.6504950
-                                                                        97.5%
-    M12: (Intercept)                                                 1.689907
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               1.584651
-    M12: abs(C1 - C2)                                                1.206020
-    M12: log(C1)                                                    86.182479
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.605895
-    M13: (Intercept)                                                14.974000
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               1.854843
-    M13: abs(C1 - C2)                                                1.424916
-    M13: log(C1)                                                    64.108185
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  2.411770
-    M14: (Intercept)                                                10.642149
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)               4.607062
-    M14: abs(C1 - C2)                                                2.631969
-    M14: log(C1)                                                    82.147152
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.283767
+    M12: (Intercept)                                                -38.8397077
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -3.3249186
+    M12: abs(C1 - C2)                                                -1.7092604
+    M12: log(C1)                                                     28.2209057
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -1.7032701
+    M13: (Intercept)                                                -26.1059198
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -5.6090827
+    M13: abs(C1 - C2)                                                -1.9283175
+    M13: log(C1)                                                    -14.3925900
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.3703952
+    M14: (Intercept)                                                -36.6482691
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -4.1299778
+    M14: abs(C1 - C2)                                                -1.4725941
+    M14: log(C1)                                                      8.5026011
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.8327012
+                                                                         97.5%
+    M12: (Intercept)                                                 -7.940490
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                2.578032
+    M12: abs(C1 - C2)                                                 1.443114
+    M12: log(C1)                                                    103.527683
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   2.142452
+    M13: (Intercept)                                                  5.711713
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.204273
+    M13: abs(C1 - C2)                                                 2.403744
+    M13: log(C1)                                                     66.522255
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   3.767392
+    M14: (Intercept)                                                 -3.793041
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                1.150053
+    M14: abs(C1 - C2)                                                 1.787078
+    M14: log(C1)                                                    102.640628
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   2.174837
                                                                     tail-prob.
-    M12: (Intercept)                                                0.13333333
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)              1.00000000
-    M12: abs(C1 - C2)                                               0.60000000
-    M12: log(C1)                                                    0.06666667
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 0.73333333
-    M13: (Intercept)                                                0.60000000
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)              0.80000000
-    M13: abs(C1 - C2)                                               0.86666667
-    M13: log(C1)                                                    0.66666667
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 0.80000000
-    M14: (Intercept)                                                0.33333333
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)              0.93333333
-    M14: abs(C1 - C2)                                               0.93333333
-    M14: log(C1)                                                    0.33333333
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 0.80000000
-                                                                     GR-crit
-    M12: (Intercept)                                                1.172206
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)              4.398968
-    M12: abs(C1 - C2)                                               2.559224
-    M12: log(C1)                                                    1.110115
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 4.381670
-    M13: (Intercept)                                                1.700479
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)              7.397538
-    M13: abs(C1 - C2)                                               2.251788
-    M13: log(C1)                                                    1.740736
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 8.141394
-    M14: (Intercept)                                                2.601931
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)              8.962634
-    M14: abs(C1 - C2)                                               5.732200
-    M14: log(C1)                                                    2.073960
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 9.112544
+    M12: (Intercept)                                                 0.0000000
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               0.8000000
+    M12: abs(C1 - C2)                                                0.8666667
+    M12: log(C1)                                                     0.0000000
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.7333333
+    M13: (Intercept)                                                 0.1333333
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               0.0000000
+    M13: abs(C1 - C2)                                                0.8666667
+    M13: log(C1)                                                     0.2666667
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.0000000
+    M14: (Intercept)                                                 0.0000000
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               0.4666667
+    M14: abs(C1 - C2)                                                0.8666667
+    M14: log(C1)                                                     0.0000000
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.6000000
+                                                                      GR-crit
+    M12: (Intercept)                                                 1.139539
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              18.712066
+    M12: abs(C1 - C2)                                                2.520000
+    M12: log(C1)                                                     1.272897
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 20.337425
+    M13: (Intercept)                                                 1.625384
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              10.335413
+    M13: abs(C1 - C2)                                                2.441857
+    M13: log(C1)                                                     1.579611
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 17.908771
+    M14: (Intercept)                                                 1.051927
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               9.135040
+    M14: abs(C1 - C2)                                                1.013078
+    M14: log(C1)                                                     1.043293
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  7.555883
                                                                        MCE/SD
-    M12: (Intercept)                                                0.2406134
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)              0.3993616
-    M12: abs(C1 - C2)                                               0.3957706
+    M12: (Intercept)                                                0.1825742
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              0.5187946
+    M12: abs(C1 - C2)                                               0.6639484
     M12: log(C1)                                                    0.1825742
-    M12: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 0.3867353
-    M13: (Intercept)                                                0.2310066
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)              0.5020971
-    M13: abs(C1 - C2)                                               0.1825742
-    M13: log(C1)                                                    0.2291701
-    M13: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 0.4725572
-    M14: (Intercept)                                                0.3135644
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0)              0.4068894
-    M14: abs(C1 - C2)                                               0.3046966
-    M14: log(C1)                                                    0.2269445
-    M14: ifelse(as.numeric(O2) > as.numeric(O1), 1, 0):abs(C1 - C2) 0.4549310
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 0.8888170
+    M13: (Intercept)                                                0.1825742
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              0.5674710
+    M13: abs(C1 - C2)                                               0.4518497
+    M13: log(C1)                                                    0.1825742
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 0.5068755
+    M14: (Intercept)                                                0.0759189
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              0.5933684
+    M14: abs(C1 - C2)                                               0.2131117
+    M14: log(C1)                                                    0.1136399
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 0.4370537
     
     
 

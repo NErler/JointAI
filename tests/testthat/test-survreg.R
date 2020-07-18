@@ -146,3 +146,4 @@ test_that("wrong models give errors", {
                            data = PBC2, n.adapt = 5, n.iter = 10, seed = 2020))
 
 })
+

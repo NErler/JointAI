@@ -38,7 +38,7 @@ run_mlogit_models <- function() {
       m4a = mlogit_imp(M1 ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF,
                     n.adapt = 5, n.iter = 10, seed = 2020,
                     monitor_params = list(other = "p_M1")),
-      m4b = mlogit_imp(M1 ~ ifelse(as.numeric(O2) > as.numeric(O1), 1, 0) *
+      m4b = mlogit_imp(M1 ~ ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) *
                       abs(C1 - C2) + log(C1), data = wideDF, warn = FALSE,
                     n.adapt = 5, n.iter = 10, seed = 2020,
                     monitor_params = list(other = "p_M1"))
