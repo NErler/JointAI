@@ -1,7 +1,10 @@
 
 get_subset <- function(object, subset, warn = TRUE, mess = TRUE) {
 
-  if (isFALSE(subset))
+  # This comparison can't use isFALSE() because if, e.g.,
+  # subset = c(D_main = FALSE) the condition would be true, but intended is to
+  # find the case when "subset = FALSE"
+  if (identical(subset, FALSE))
     return(object$MCMC)
 
   subset <- as.list(subset)
@@ -12,8 +15,11 @@ get_subset <- function(object, subset, warn = TRUE, mess = TRUE) {
 
   if (length(subset) == 0 &
       as.logical(as.list(object$monitor_params)$analysis_main))
-    subset <- c(analysis_main = TRUE)
+    subset$analysis_main <- TRUE
 
+  if (!isFALSE(subset$analysis_main)) {
+    subset$analysis_main <- TRUE
+  }
   # if (!length(subset) == 0 && is.null(as.list(subset)$analysis_main))
   #   subset$analysis_main <- FALSE
 
