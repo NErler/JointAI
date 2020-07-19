@@ -64,6 +64,10 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
+          
+      - name: Install JAGS on macOS
+        if: runner.os == 'macOS'
+        run: brew cask install jags
 
       - name: Install dependencies
         run: |
