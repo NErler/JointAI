@@ -4,457 +4,457 @@
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    m1B: (Intercept)      0.983       1.11
-    m1C: (Intercept)      1.198       1.76
-    D_m1_id[1,1]          2.052       3.60
+    m1B: (Intercept)      1.080       1.38
+    m1C: (Intercept)      0.972       1.05
+    D_m1_id[1,1]          1.715       2.82
     
     
     $m0b
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    m2B: (Intercept)       2.77       5.08
-    m2C: (Intercept)       1.58       3.00
-    D_m2_id[1,1]           1.58       3.72
+    m2B: (Intercept)       1.17       1.72
+    m2C: (Intercept)       1.05       1.30
+    D_m2_id[1,1]           1.37       3.33
     
     
     $m1a
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    m1B: (Intercept)       1.18       1.62
-    m1B: C1                1.16       1.58
-    m1C: (Intercept)       1.01       1.13
-    m1C: C1                1.01       1.10
-    D_m1_id[1,1]           1.69       2.99
+    m1B: (Intercept)       1.98       3.58
+    m1B: C1                1.90       3.40
+    m1C: (Intercept)       1.31       2.09
+    m1C: C1                1.27       1.98
+    D_m1_id[1,1]           3.62       9.20
     
     
     $m1b
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    m2B: (Intercept)       2.10       3.86
-    m2B: C1                2.12       3.93
-    m2C: (Intercept)       1.83       3.08
-    m2C: C1                1.85       3.13
-    D_m2_id[1,1]           1.97       4.11
+    m2B: (Intercept)       2.09       5.31
+    m2B: C1                2.07       5.22
+    m2C: (Intercept)       1.89       3.34
+    m2C: C1                1.85       3.26
+    D_m2_id[1,1]           1.10       1.40
     
     
     $m1c
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    m1B: (Intercept)       1.57       2.80
-    m1C: (Intercept)       1.90       3.86
-    m1B: c1                1.23       1.94
-    m1C: c1                1.29       1.92
-    D_m1_id[1,1]           2.30       9.12
+    m1B: (Intercept)       1.14       1.54
+    m1C: (Intercept)       1.22       1.77
+    m1B: c1                1.12       1.50
+    m1C: c1                1.37       2.25
+    D_m1_id[1,1]           3.55       9.70
     
     
     $m1d
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    m2B: (Intercept)       1.52       2.38
-    m2C: (Intercept)       1.38       2.26
-    m2B: c1                1.50       2.51
-    m2C: c1                1.28       2.16
-    D_m2_id[1,1]           3.65       6.87
+    m2B: (Intercept)       1.65       2.78
+    m2C: (Intercept)       1.35       2.16
+    m2B: c1                1.08       1.37
+    m2C: c1                1.01       1.15
+    D_m2_id[1,1]           1.08       1.41
     
     
     $m2a
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    m1B: (Intercept)       2.19       4.10
-    m1B: C2                1.44       2.31
-    m1C: (Intercept)       1.33       1.99
-    m1C: C2                1.29       2.30
-    D_m1_id[1,1]           2.79       5.36
+    m1B: (Intercept)      0.984       1.08
+    m1B: C2               2.284       4.22
+    m1C: (Intercept)      1.113       1.54
+    m1C: C2               2.659       8.21
+    D_m1_id[1,1]          1.286       2.46
     
     
     $m2b
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    m2B: (Intercept)       1.73       3.02
-    m2B: C2                1.60       2.92
-    m2C: (Intercept)       1.73       2.82
-    m2C: C2                1.61       2.87
-    D_m2_id[1,1]           5.28      20.24
+    m2B: (Intercept)      0.981       1.10
+    m2B: C2               2.866       5.33
+    m2C: (Intercept)      1.233       2.05
+    m2C: C2               4.015       9.24
+    D_m2_id[1,1]          2.893       6.70
     
     
     $m2c
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    m1B: (Intercept)       1.82       3.41
-    m1C: (Intercept)       1.64       2.83
-    m1B: c2                1.56       2.55
-    m1C: c2                1.57       2.51
-    D_m1_id[1,1]           2.50       7.52
+    m1B: (Intercept)       1.18       1.88
+    m1C: (Intercept)       1.26       2.08
+    m1B: c2                1.26       2.35
+    m1C: c2                1.33       2.15
+    D_m1_id[1,1]           1.26       1.93
     
     
     $m2d
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    m2B: (Intercept)       2.60       5.02
-    m2C: (Intercept)       2.45       6.41
-    m2B: c2                1.61       3.43
-    m2C: c2                1.81       3.43
-    D_m2_id[1,1]           3.04       6.93
+    m2B: (Intercept)       3.86       8.59
+    m2C: (Intercept)       3.49       6.57
+    m2B: c2                4.61      11.59
+    m2C: c2                3.42       6.94
+    D_m2_id[1,1]           2.97       5.44
     
     
     $m3a
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        3.68       8.24
-    m1B                1.42       3.09
-    m1C                1.19       1.78
+    (Intercept)        4.80      11.81
+    m1B                1.64       4.26
+    m1C                1.26       2.13
     sigma_c1           1.02       1.30
-    D_c1_id[1,1]       1.24       1.84
+    D_c1_id[1,1]       1.28       1.92
     
     
     $m3b
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        6.17      14.23
-    m2B                3.72       7.65
-    m2C                2.55       5.08
-    sigma_c1           1.24       1.90
-    D_c1_id[1,1]       2.77       5.91
+    (Intercept)        1.46       2.59
+    m2B                1.31       1.95
+    m2C                2.28       3.99
+    sigma_c1           1.29       1.95
+    D_c1_id[1,1]       1.44       2.32
     
     
     $m4a
     Potential scale reduction factors:
     
                           Point est. Upper C.I.
-    m1B: (Intercept)            1.72       3.08
-    m1B: M22                    1.66       2.95
-    m1B: M23                    1.65       2.74
-    m1B: M24                    2.07       3.54
-    m1B: abs(C1 - C2)           1.31       2.40
-    m1B: log(C1)                1.82       3.36
-    m1C: (Intercept)            1.50       2.47
-    m1C: M22                    1.11       1.47
-    m1C: M23                    1.69       3.47
-    m1C: M24                    1.87       3.26
-    m1C: abs(C1 - C2)           4.55      10.44
-    m1C: log(C1)                1.78       3.19
-    m1B: m2B                    2.87       5.73
-    m1B: m2C                    1.67       3.16
-    m1B: m2B:abs(C1 - C2)       1.21       2.06
-    m1B: m2C:abs(C1 - C2)       1.74       4.12
-    m1C: m2B                    1.33       2.72
-    m1C: m2C                    1.30       1.98
-    m1C: m2B:abs(C1 - C2)       1.99       4.10
-    m1C: m2C:abs(C1 - C2)       1.82       5.22
-    D_m1_id[1,1]                2.13       4.88
+    m1B: (Intercept)            1.40       2.94
+    m1B: M22                    3.62       9.18
+    m1B: M23                    1.06       1.36
+    m1B: M24                    1.33       2.31
+    m1B: abs(C1 - C2)           2.40       4.44
+    m1B: log(C1)                1.17       1.99
+    m1C: (Intercept)            2.26       4.20
+    m1C: M22                    4.78       9.51
+    m1C: M23                    2.14       4.17
+    m1C: M24                    2.29       4.62
+    m1C: abs(C1 - C2)           1.65       2.80
+    m1C: log(C1)                1.54       2.59
+    m1B: m2B                    4.48       8.48
+    m1B: m2C                    1.60       2.59
+    m1B: m2B:abs(C1 - C2)       4.03      10.53
+    m1B: m2C:abs(C1 - C2)       1.37       2.14
+    m1C: m2B                    3.13       5.94
+    m1C: m2C                    1.27       1.83
+    m1C: m2B:abs(C1 - C2)       3.19       6.16
+    m1C: m2C:abs(C1 - C2)       2.35       6.68
+    D_m1_id[1,1]                2.02       3.94
     
     
     $m4b
     Potential scale reduction factors:
     
                                                                     Point est.
-    m1B: (Intercept)                                                      1.24
-    m1B: abs(C1 - C2)                                                     1.17
-    m1B: log(C1)                                                          1.28
-    m1C: (Intercept)                                                      1.09
-    m1C: abs(C1 - C2)                                                     1.77
-    m1C: log(C1)                                                          1.07
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                    2.43
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)       3.56
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                    2.02
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)       4.36
-    D_m1_id[1,1]                                                          1.92
+    m1B: (Intercept)                                                      4.05
+    m1B: abs(C1 - C2)                                                     2.55
+    m1B: log(C1)                                                          4.56
+    m1C: (Intercept)                                                      3.83
+    m1C: abs(C1 - C2)                                                     2.74
+    m1C: log(C1)                                                          3.55
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                    3.78
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)       4.76
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                    5.49
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)       2.62
+    D_m1_id[1,1]                                                          2.50
                                                                     Upper C.I.
-    m1B: (Intercept)                                                      1.79
-    m1B: abs(C1 - C2)                                                     1.80
-    m1B: log(C1)                                                          1.92
-    m1C: (Intercept)                                                      1.41
-    m1C: abs(C1 - C2)                                                     3.93
-    m1C: log(C1)                                                          1.40
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                    4.71
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)       8.05
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                    3.66
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)      10.41
-    D_m1_id[1,1]                                                          4.31
+    m1B: (Intercept)                                                      8.42
+    m1B: abs(C1 - C2)                                                     5.67
+    m1B: log(C1)                                                          9.65
+    m1C: (Intercept)                                                      9.44
+    m1C: abs(C1 - C2)                                                     4.98
+    m1C: log(C1)                                                          7.40
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                    7.96
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)      10.16
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                   11.12
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)       4.86
+    D_m1_id[1,1]                                                          6.19
     
     
     $m4c
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    m1B: (Intercept)       2.07       4.08
-    m1B: C1                1.91       3.67
-    m1B: B21               3.64       7.35
-    m1C: (Intercept)       1.19       1.65
-    m1C: C1                1.17       1.59
-    m1C: B21               2.06       5.65
-    m1B: time              1.24       1.79
-    m1B: c1                1.19       1.71
-    m1C: time              1.03       1.27
-    m1C: c1                1.50       2.41
-    D_m1_id[1,1]           2.84       6.10
-    D_m1_id[1,2]           3.53       7.10
-    D_m1_id[2,2]           4.76      10.42
-    D_m1_id[1,3]           1.15       1.80
-    D_m1_id[2,3]           2.32       4.76
-    D_m1_id[3,3]           5.65      13.24
-    D_m1_id[1,4]           3.65       8.79
-    D_m1_id[2,4]           3.68       7.09
-    D_m1_id[3,4]           2.91       7.33
-    D_m1_id[4,4]           1.53       2.44
+    m1B: (Intercept)       1.51       2.53
+    m1B: C1                1.47       2.46
+    m1B: B21               5.68      11.43
+    m1C: (Intercept)       1.17       1.88
+    m1C: C1                1.15       1.74
+    m1C: B21               2.58       4.79
+    m1B: time              1.39       2.20
+    m1B: c1                1.12       1.54
+    m1C: time              1.59       2.69
+    m1C: c1                1.08       1.36
+    D_m1_id[1,1]           2.25       4.58
+    D_m1_id[1,2]           1.29       2.30
+    D_m1_id[2,2]           4.58      11.17
+    D_m1_id[1,3]           4.20      13.14
+    D_m1_id[2,3]           1.39       3.05
+    D_m1_id[3,3]           5.82      18.48
+    D_m1_id[1,4]           3.69       7.79
+    D_m1_id[2,4]           2.25       4.20
+    D_m1_id[3,4]           5.26      15.40
+    D_m1_id[4,4]           3.58       7.07
     
     
     $m4d
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    m1B: (Intercept)      1.305      2.013
-    m1B: C1               1.279      1.944
-    m1C: (Intercept)      1.063      1.342
-    m1C: C1               1.078      1.377
-    m1B: time             3.585      7.484
-    m1B: I(time^2)        6.341     12.677
-    m1B: b21              2.443      5.488
-    m1B: c1               1.339      2.102
-    m1B: C1:time          1.399      2.158
-    m1B: b21:c1           0.981      1.013
-    m1C: time             2.009      4.794
-    m1C: I(time^2)        3.666      6.853
-    m1C: b21              1.083      1.425
-    m1C: c1               1.544      3.353
-    m1C: C1:time          5.432     10.390
-    m1C: b21:c1           0.981      0.985
-    D_m1_id[1,1]          5.153     13.549
-    D_m1_id[1,2]          2.522      5.457
-    D_m1_id[2,2]          3.461      7.226
+    m1B: (Intercept)       2.25       4.03
+    m1B: C1                2.21       3.94
+    m1C: (Intercept)       1.89       3.39
+    m1C: C1                1.78       3.18
+    m1B: time              2.64       5.08
+    m1B: I(time^2)         4.65      14.18
+    m1B: b21               1.49       2.52
+    m1B: c1                1.03       1.25
+    m1B: C1:time           4.02       9.48
+    m1B: b21:c1            1.34       2.29
+    m1C: time              2.74       6.90
+    m1C: I(time^2)         3.83       8.08
+    m1C: b21               2.13       4.24
+    m1C: c1                1.08       1.36
+    m1C: C1:time           2.75       5.26
+    m1C: b21:c1            1.05       1.26
+    D_m1_id[1,1]           1.69       5.02
+    D_m1_id[1,2]           3.62       9.75
+    D_m1_id[2,2]           3.80       7.50
     
     
     $m4e
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    m1B: (Intercept)      0.946      0.995
-    m1B: C1               0.944      0.989
-    m1C: (Intercept)      1.047      1.292
-    m1C: C1               1.059      1.352
-    m1B: log(time)        1.473      4.601
-    m1B: I(time^2)        1.477      2.492
-    m1B: p1               1.418      2.157
-    m1C: log(time)        0.991      1.055
-    m1C: I(time^2)        1.183      1.870
-    m1C: p1               1.419      2.410
-    D_m1_id[1,1]          1.581      3.047
+    m1B: (Intercept)       1.55       2.69
+    m1B: C1                1.56       2.73
+    m1C: (Intercept)       1.53       2.60
+    m1C: C1                1.55       2.61
+    m1B: log(time)         1.02       1.19
+    m1B: I(time^2)         1.25       2.11
+    m1B: p1                1.01       1.16
+    m1C: log(time)         1.05       1.20
+    m1C: I(time^2)         1.02       1.22
+    m1C: p1                1.01       1.09
+    D_m1_id[1,1]           3.83       8.79
     
     
 
 ---
 
     $m0a
-                       est  MCSE   SD MCSE/SD
-    m1B: (Intercept) 0.078 0.043 0.19    0.23
-    m1C: (Intercept) 0.192 0.040 0.17    0.23
-    D_m1_id[1,1]     1.130 0.239 0.51    0.47
+                      est  MCSE   SD MCSE/SD
+    m1B: (Intercept) 0.41 0.044 0.19    0.23
+    m1C: (Intercept) 0.39 0.051 0.16    0.33
+    D_m1_id[1,1]     1.93 0.244 0.74    0.33
     
     $m0b
-                      est  MCSE   SD MCSE/SD
-    m2B: (Intercept) 0.15 0.031 0.17    0.18
-    m2C: (Intercept) 0.16 0.036 0.16    0.23
-    D_m2_id[1,1]     1.37 0.360 0.87    0.41
+                         est  MCSE   SD MCSE/SD
+    m2B: (Intercept) -0.0017 0.039 0.21    0.18
+    m2C: (Intercept) -0.0040 0.035 0.16    0.22
+    D_m2_id[1,1]      1.4341 0.160 0.55    0.29
     
     $m1a
-                       est MCSE   SD MCSE/SD
-    m1B: (Intercept)   9.4 1.52 7.09    0.21
-    m1B: C1          -12.6 2.06 9.56    0.22
-    m1C: (Intercept)  12.0 1.09 5.98    0.18
-    m1C: C1          -16.0 1.48 8.09    0.18
-    D_m1_id[1,1]       1.0 0.13 0.56    0.24
+                      est MCSE   SD MCSE/SD
+    m1B: (Intercept) -7.0 2.95  7.5    0.39
+    m1B: C1           9.8 3.89 10.0    0.39
+    m1C: (Intercept) -3.4 2.74  7.8    0.35
+    m1C: C1           5.0 3.63 10.5    0.35
+    D_m1_id[1,1]      1.6 0.46  1.0    0.46
     
     $m1b
-                       est MCSE   SD MCSE/SD
-    m2B: (Intercept)  0.68 5.00 11.2    0.44
-    m2B: C1          -0.38 6.80 15.3    0.44
-    m2C: (Intercept)  4.85 3.90  8.9    0.44
-    m2C: C1          -6.02 5.35 12.1    0.44
-    D_m2_id[1,1]      2.48 0.54  1.0    0.53
+                      est MCSE    SD MCSE/SD
+    m2B: (Intercept)  4.2 4.87 12.52    0.39
+    m2B: C1          -5.6 6.49 16.80    0.39
+    m2C: (Intercept) -2.6 3.51 10.43    0.34
+    m2C: C1           3.6 4.66 13.98    0.33
+    D_m2_id[1,1]      1.7 0.11  0.48    0.24
     
     $m1c
                        est  MCSE   SD MCSE/SD
-    m1B: (Intercept) 0.022 0.046 0.14    0.34
-    m1C: (Intercept) 0.040 0.032 0.15    0.21
-    m1B: c1          0.370 0.045 0.25    0.18
-    m1C: c1          0.693 0.039 0.18    0.22
-    D_m1_id[1,1]     1.242 0.295 0.75    0.39
+    m1B: (Intercept)  0.33 0.047 0.17    0.27
+    m1C: (Intercept)  0.40 0.030 0.21    0.15
+    m1B: c1           0.20 0.034 0.19    0.18
+    m1C: c1          -0.07 0.045 0.25    0.18
+    D_m1_id[1,1]      1.65 0.313 0.95    0.33
     
     $m1d
-                      est  MCSE   SD MCSE/SD
-    m2B: (Intercept) 0.13 0.038 0.17    0.23
-    m2C: (Intercept) 0.14 0.037 0.20    0.18
-    m2B: c1          0.18 0.038 0.17    0.22
-    m2C: c1          0.20 0.033 0.18    0.18
-    D_m2_id[1,1]     1.52 0.248 0.80    0.31
+                        est  MCSE   SD MCSE/SD
+    m2B: (Intercept)  0.174 0.070 0.20    0.36
+    m2C: (Intercept)  0.071 0.035 0.17    0.21
+    m2B: c1          -0.402 0.039 0.18    0.22
+    m2C: c1          -0.144 0.040 0.22    0.18
+    D_m2_id[1,1]      1.714 0.183 0.59    0.31
     
     $m2a
-                        est  MCSE   SD MCSE/SD
-    m1B: (Intercept)  0.042 0.133 0.28    0.47
-    m1B: C2          -0.047 0.074 0.24    0.31
-    m1C: (Intercept)  0.221 0.054 0.24    0.22
-    m1C: C2           0.048 0.064 0.24    0.27
-    D_m1_id[1,1]      1.233 0.121 0.42    0.29
+                      est MCSE   SD MCSE/SD
+    m1B: (Intercept) 0.45 0.11 0.25    0.44
+    m1B: C2          0.31 0.12 0.29    0.41
+    m1C: (Intercept) 0.54 0.13 0.27    0.49
+    m1C: C2          0.54 0.12 0.27    0.46
+    D_m1_id[1,1]     1.87 0.20 0.67    0.30
     
     $m2b
-                      est  MCSE   SD MCSE/SD
-    m2B: (Intercept) 0.32 0.096 0.30    0.32
-    m2B: C2          0.11 0.121 0.30    0.40
-    m2C: (Intercept) 0.39 0.046 0.25    0.18
-    m2C: C2          0.14 0.153 0.31    0.49
-    D_m2_id[1,1]     1.86 0.742 1.05    0.70
+                        est  MCSE   SD MCSE/SD
+    m2B: (Intercept)  0.185 0.048 0.23    0.21
+    m2B: C2           0.068 0.122 0.33    0.37
+    m2C: (Intercept)  0.018 0.112 0.26    0.43
+    m2C: C2          -0.136 0.216 0.45    0.49
+    D_m2_id[1,1]      1.788 0.434 0.88    0.50
     
     $m2c
-                       est MCSE   SD MCSE/SD
-    m1B: (Intercept) -0.69 0.19 0.42    0.45
-    m1C: (Intercept) -0.17 0.19 0.41    0.47
-    m1B: c2          -3.82 0.47 1.57    0.30
-    m1C: c2          -2.30 0.45 1.45    0.31
-    D_m1_id[1,1]      1.75 0.51 0.79    0.65
+                        est  MCSE   SD MCSE/SD
+    m1B: (Intercept)  0.055 0.140 0.36    0.39
+    m1C: (Intercept) -0.024 0.082 0.35    0.23
+    m1B: c2          -1.189 0.240 1.31    0.18
+    m1C: c2          -1.480 0.339 1.31    0.26
+    D_m1_id[1,1]      1.869 0.114 0.47    0.24
     
     $m2d
-                      est MCSE   SD MCSE/SD
-    m2B: (Intercept) 0.33 0.11 0.33    0.32
-    m2C: (Intercept) 0.40 0.25 0.42    0.59
-    m2B: c2          0.48 0.31 1.13    0.27
-    m2C: c2          0.83 0.58 1.22    0.47
-    D_m2_id[1,1]     2.00 0.51 0.78    0.65
+                        est MCSE   SD MCSE/SD
+    m2B: (Intercept)  0.069 0.25 0.67    0.38
+    m2C: (Intercept)  0.095 0.22 0.58    0.37
+    m2B: c2          -0.504 1.36 2.58    0.53
+    m2C: c2          -0.200 1.18 2.36    0.50
+    D_m2_id[1,1]      2.408 0.55 1.00    0.54
     
     $m3a
                      est    MCSE      SD MCSE/SD
-    (Intercept)   -7.733   5.263 2.9e+01    0.18
-    m1B           -0.060   0.017 9.4e-02    0.18
-    m1C            0.083   0.016 8.7e-02    0.18
-    sigma_c1       0.650   0.010 4.6e-02    0.23
-    D_c1_id[1,1] 863.159 583.895 3.2e+03    0.18
+    (Intercept)   -7.661 5.3e+00 2.9e+01    0.18
+    m1B           -0.073 2.0e-02 9.5e-02    0.21
+    m1C           -0.142 3.2e-02 9.7e-02    0.33
+    sigma_c1       0.654 9.8e-03 4.4e-02    0.22
+    D_c1_id[1,1] 863.159 5.8e+02 3.2e+03    0.18
     
     $m3b
-                   est   MCSE    SD MCSE/SD
-    (Intercept)  0.229 0.0855 0.114    0.75
-    m2B          0.067 0.0650 0.121    0.54
-    m2C          0.041 0.0732 0.149    0.49
-    sigma_c1     0.641 0.0053 0.029    0.18
-    D_c1_id[1,1] 0.079 0.0184 0.034    0.54
+                    est   MCSE    SD MCSE/SD
+    (Intercept)   0.307 0.0287 0.064    0.45
+    m2B          -0.150 0.0140 0.077    0.18
+    m2C          -0.052 0.0309 0.095    0.33
+    sigma_c1      0.618 0.0051 0.028    0.18
+    D_c1_id[1,1]  0.092 0.0086 0.032    0.27
     
     $m4a
-                              est MCSE    SD MCSE/SD
-    m1B: (Intercept)       -2.928 1.06  2.95    0.36
-    m1B: M22                0.063 0.14  0.48    0.30
-    m1B: M23               -0.887 0.45  0.91    0.50
-    m1B: M24                0.597 0.17  0.40    0.42
-    m1B: abs(C1 - C2)       0.286 0.11  0.36    0.32
-    m1B: log(C1)           -8.834 4.71 10.39    0.45
-    m1C: (Intercept)           NA   NA  3.30      NA
-    m1C: M22                0.353 0.17  0.39    0.44
-    m1C: M23                0.262 0.14  0.46    0.29
-    m1C: M24                0.702 0.18  0.43    0.42
-    m1C: abs(C1 - C2)       0.294 0.21  0.38    0.55
-    m1C: log(C1)          -12.468 2.07 11.32    0.18
-    m1B: m2B                0.750 0.23  0.51    0.45
-    m1B: m2C               -1.354 0.09  0.49    0.18
-    m1B: m2B:abs(C1 - C2)  -0.659 0.03  0.22    0.13
-    m1B: m2C:abs(C1 - C2)   0.604 0.13  0.32    0.39
-    m1C: m2B                0.199 0.12  0.40    0.31
-    m1C: m2C               -0.385 0.21  0.49    0.43
-    m1C: m2B:abs(C1 - C2)  -0.593 0.21  0.43    0.49
-    m1C: m2C:abs(C1 - C2)  -0.137 0.15  0.40    0.36
-    D_m1_id[1,1]            1.903 0.44  1.07    0.41
+                             est  MCSE   SD MCSE/SD
+    m1B: (Intercept)      -0.350 0.357 2.23    0.16
+    m1B: M22               0.075 0.190 0.55    0.35
+    m1B: M23              -0.334 0.198 0.47    0.42
+    m1B: M24               0.811 0.099 0.33    0.30
+    m1B: abs(C1 - C2)      0.276 0.102 0.35    0.29
+    m1B: log(C1)          -1.658 2.013 6.51    0.31
+    m1C: (Intercept)      -1.370 0.503 2.22    0.23
+    m1C: M22               0.130 0.301 0.63    0.48
+    m1C: M23              -0.301 0.163 0.52    0.31
+    m1C: M24               0.485 0.266 0.49    0.54
+    m1C: abs(C1 - C2)     -0.092 0.149 0.36    0.41
+    m1C: log(C1)          -6.431 1.217 6.67    0.18
+    m1B: m2B               0.330 0.568 0.69    0.83
+    m1B: m2C              -0.343 0.161 0.34    0.47
+    m1B: m2B:abs(C1 - C2) -0.614 0.343 0.51    0.68
+    m1B: m2C:abs(C1 - C2) -0.066 0.053 0.23    0.23
+    m1C: m2B               0.561 0.255 0.47    0.54
+    m1C: m2C              -0.635 0.142 0.49    0.29
+    m1C: m2B:abs(C1 - C2) -0.745 0.195 0.43    0.46
+    m1C: m2C:abs(C1 - C2)  0.309 0.130 0.32    0.40
+    D_m1_id[1,1]           2.564 0.487 0.96    0.51
     
     $m4b
                                                                        est MCSE
-    m1B: (Intercept)                                                -0.402 1.28
-    m1B: abs(C1 - C2)                                                0.412 0.10
-    m1B: log(C1)                                                     0.261 3.45
-    m1C: (Intercept)                                                -0.523 0.76
-    m1C: abs(C1 - C2)                                               -0.021 0.18
-    m1C: log(C1)                                                    -2.804 2.37
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.486 0.55
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) -0.393 0.38
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              -1.416 0.29
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  0.677 0.25
-    D_m1_id[1,1]                                                     1.768 0.42
-                                                                      SD MCSE/SD
-    m1B: (Intercept)                                                3.14    0.41
-    m1B: abs(C1 - C2)                                               0.27    0.38
-    m1B: log(C1)                                                    9.89    0.35
-    m1C: (Intercept)                                                2.59    0.30
-    m1C: abs(C1 - C2)                                               0.28    0.64
-    m1C: log(C1)                                                    8.31    0.28
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              0.75    0.73
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 0.47    0.81
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              0.83    0.35
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 0.47    0.54
-    D_m1_id[1,1]                                                    0.78    0.53
+    m1B: (Intercept)                                                 5.312 2.42
+    m1B: abs(C1 - C2)                                               -0.266 0.28
+    m1B: log(C1)                                                    14.898 6.45
+    m1C: (Intercept)                                                 3.955 0.71
+    m1C: abs(C1 - C2)                                               -0.263 0.21
+    m1C: log(C1)                                                    10.669 4.36
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.032 0.37
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) -0.140 0.23
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.019 0.56
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) -0.029 0.42
+    D_m1_id[1,1]                                                     1.960 0.28
+                                                                       SD MCSE/SD
+    m1B: (Intercept)                                                 4.26    0.57
+    m1B: abs(C1 - C2)                                                0.56    0.51
+    m1B: log(C1)                                                    12.33    0.52
+    m1C: (Intercept)                                                 3.86    0.18
+    m1C: abs(C1 - C2)                                                0.45    0.46
+    m1C: log(C1)                                                    11.50    0.38
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.85    0.44
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  0.47    0.49
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.98    0.57
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  0.60    0.70
+    D_m1_id[1,1]                                                     0.65    0.44
     
     $m4c
-                          est   MCSE    SD MCSE/SD
-    m1B: (Intercept)   3.0058 1.9660 5.807    0.34
-    m1B: C1           -4.6259 1.6066 7.551    0.21
-    m1B: B21           0.0831 0.2200 0.406    0.54
-    m1C: (Intercept)   8.5145 0.9409 5.153    0.18
-    m1C: C1          -11.1739 1.2614 6.909    0.18
-    m1C: B21               NA     NA 0.421      NA
-    m1B: time          0.1337 0.0164 0.090    0.18
-    m1B: c1            0.0824 0.0391 0.214    0.18
-    m1C: time          0.0132 0.0194 0.106    0.18
-    m1C: c1            0.3257 0.0450 0.246    0.18
-    D_m1_id[1,1]       0.1950 0.0211 0.051    0.42
-    D_m1_id[1,2]       0.0153 0.0155 0.039    0.40
-    D_m1_id[2,2]       0.2603 0.0535 0.117    0.46
-    D_m1_id[1,3]       0.0305 0.0070 0.032    0.22
-    D_m1_id[2,3]       0.0262 0.0279 0.042    0.66
-    D_m1_id[3,3]       0.2358 0.1021 0.133    0.77
-    D_m1_id[1,4]      -0.0097 0.0454 0.043    1.05
-    D_m1_id[2,4]      -0.0148 0.0268 0.051    0.53
-    D_m1_id[3,4]      -0.0067 0.0099 0.030    0.33
-    D_m1_id[4,4]       0.1533 0.0131 0.040    0.33
+                         est   MCSE     SD MCSE/SD
+    m1B: (Intercept) -3.5789 1.8732  7.839   0.239
+    m1B: C1           4.8860 1.9180 10.505   0.183
+    m1B: B21          0.4280 0.2405  0.386   0.624
+    m1C: (Intercept)  0.7666 0.6274  7.505   0.084
+    m1C: C1          -1.4208 0.8731 10.045   0.087
+    m1C: B21          0.3878 0.1721  0.324   0.531
+    m1B: time        -0.0919 0.0285  0.097   0.293
+    m1B: c1           0.2524 0.0340  0.176   0.193
+    m1C: time         0.0500 0.0228  0.105   0.218
+    m1C: c1          -0.0057 0.0304  0.167   0.183
+    D_m1_id[1,1]      0.2395 0.0195  0.107   0.183
+    D_m1_id[1,2]     -0.0187 0.0057  0.031   0.183
+    D_m1_id[2,2]      0.1928 0.0824  0.096   0.859
+    D_m1_id[1,3]     -0.0497 0.0813  0.093   0.872
+    D_m1_id[2,3]      0.0531 0.0248  0.049   0.508
+    D_m1_id[3,3]      0.2693 0.1239  0.172   0.722
+    D_m1_id[1,4]     -0.0154 0.0418  0.079   0.530
+    D_m1_id[2,4]      0.0242 0.0137  0.039   0.352
+    D_m1_id[3,4]      0.0813 0.0597  0.123   0.487
+    D_m1_id[4,4]      0.3134 0.0361  0.095   0.379
     
     $m4d
-                         est  MCSE    SD MCSE/SD
-    m1B: (Intercept)   4.937 1.283 7.026    0.18
-    m1B: C1           -7.046 1.721 9.428    0.18
-    m1C: (Intercept)   7.970 1.196 6.551    0.18
-    m1C: C1          -10.118 1.628 8.916    0.18
-    m1B: time         -0.122 0.153 0.284    0.54
-    m1B: I(time^2)     0.018 0.059 0.067    0.88
-    m1B: b21           0.278 0.157 0.559    0.28
-    m1B: c1            0.100 0.042 0.201    0.21
-    m1B: C1:time       0.194 0.084 0.264    0.32
-    m1B: b21:c1        0.816 0.105 0.538    0.19
-    m1C: time         -0.220 0.042 0.185    0.23
-    m1C: I(time^2)     0.073 0.026 0.061    0.43
-    m1C: b21          -0.979 0.081 0.438    0.18
-    m1C: c1            0.476 0.065 0.215    0.30
-    m1C: C1:time      -0.231 0.168 0.414    0.40
-    m1C: b21:c1        0.520 0.131 0.716    0.18
-    D_m1_id[1,1]       0.392 0.077 0.194    0.40
-    D_m1_id[1,2]      -0.071 0.056 0.113    0.49
-    D_m1_id[2,2]       0.469 0.117 0.181    0.64
+                        est  MCSE     SD MCSE/SD
+    m1B: (Intercept) -4.412   Inf  8.041     Inf
+    m1B: C1           6.773   Inf 10.707     Inf
+    m1C: (Intercept)  0.859 4.538 10.885    0.42
+    m1C: C1          -0.712 6.019 14.600    0.41
+    m1B: time        -0.177 0.151  0.322    0.47
+    m1B: I(time^2)    0.027 0.036  0.044    0.81
+    m1B: b21         -0.886 0.091  0.385    0.24
+    m1B: c1          -0.141 0.039  0.212    0.18
+    m1B: C1:time     -0.060 0.148  0.501    0.29
+    m1B: b21:c1       2.695 0.278  0.859    0.32
+    m1C: time         0.067 0.075  0.211    0.36
+    m1C: I(time^2)    0.045 0.037  0.073    0.50
+    m1C: b21         -0.621 0.226  0.520    0.44
+    m1C: c1          -0.242 0.054  0.248    0.22
+    m1C: C1:time     -0.318 0.232  0.357    0.65
+    m1C: b21:c1       1.051 0.312  0.981    0.32
+    D_m1_id[1,1]      0.624 0.043  0.183    0.23
+    D_m1_id[1,2]     -0.091 0.082  0.156    0.53
+    D_m1_id[2,2]      0.326 0.056  0.112    0.50
     
     $m4e
-                        est   MCSE    SD MCSE/SD
-    m1B: (Intercept)  1.857 0.9924 5.435    0.18
-    m1B: C1          -3.104 1.3409 7.345    0.18
-    m1C: (Intercept)  4.716 1.0034 5.496    0.18
-    m1C: C1          -6.638 1.3748 7.530    0.18
-    m1B: log(time)       NA     NA 0.138      NA
-    m1B: I(time^2)    0.022 0.0047 0.019    0.24
-    m1B: p1           0.043 0.0152 0.075    0.20
-    m1C: log(time)   -0.093 0.0277 0.152    0.18
-    m1C: I(time^2)    0.015 0.0051 0.023    0.23
-    m1C: p1           0.047 0.0363 0.093    0.39
-    D_m1_id[1,1]      1.302 0.1003 0.426    0.24
+                         est   MCSE     SD MCSE/SD
+    m1B: (Intercept) -7.4621 4.1308  9.609    0.43
+    m1B: C1          10.3895 5.5815 12.974    0.43
+    m1C: (Intercept) -4.8724 3.9836  9.346    0.43
+    m1C: C1           6.8285 5.4321 12.719    0.43
+    m1B: log(time)   -0.0451 0.0200  0.110    0.18
+    m1B: I(time^2)   -0.0082 0.0033  0.018    0.18
+    m1B: p1           0.0020 0.0143  0.067    0.22
+    m1C: log(time)   -0.0156 0.0199  0.109    0.18
+    m1C: I(time^2)    0.0139 0.0037  0.018    0.21
+    m1C: p1          -0.0480 0.0114  0.063    0.18
+    D_m1_id[1,1]      1.4317 0.3755  0.673    0.56
     
 
 # summary output remained the same
@@ -468,13 +468,13 @@
     
     Fixed effects:
     (Intercept) (Intercept) 
-        0.07752     0.19202 
+         0.4112      0.3916 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)        1.13
+    (Intercept)       1.931
     
     
     Call:
@@ -485,13 +485,13 @@
     
     Fixed effects:
     (Intercept) (Intercept) 
-         0.1489      0.1575 
+      -0.001691   -0.003984 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.371
+    (Intercept)       1.434
     
     
     Call:
@@ -502,13 +502,13 @@
     
     Fixed effects:
     (Intercept)          C1 (Intercept)          C1 
-          9.365     -12.603      11.999     -16.027 
+         -6.964       9.837      -3.436       5.026 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.036
+    (Intercept)       1.618
     
     
     Call:
@@ -519,13 +519,13 @@
     
     Fixed effects:
     (Intercept)          C1 (Intercept)          C1 
-         0.6842     -0.3815      4.8474     -6.0233 
+          4.239      -5.601      -2.573       3.585 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       2.481
+    (Intercept)       1.683
     
     
     Call:
@@ -536,13 +536,13 @@
     
     Fixed effects:
     (Intercept) (Intercept)          c1          c1 
-        0.02187     0.03951     0.36973     0.69344 
+        0.33231     0.39789     0.20459    -0.06978 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.242
+    (Intercept)       1.653
     
     
     Call:
@@ -553,13 +553,13 @@
     
     Fixed effects:
     (Intercept) (Intercept)          c1          c1 
-         0.1349      0.1374      0.1792      0.2003 
+        0.17448     0.07111    -0.40222    -0.14396 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.522
+    (Intercept)       1.714
     
     
     Call:
@@ -570,13 +570,13 @@
     
     Fixed effects:
     (Intercept)          C2 (Intercept)          C2 
-        0.04201    -0.04695     0.22086     0.04837 
+         0.4523      0.3104      0.5432      0.5430 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.233
+    (Intercept)       1.873
     
     
     Call:
@@ -587,13 +587,13 @@
     
     Fixed effects:
     (Intercept)          C2 (Intercept)          C2 
-         0.3172      0.1134      0.3865      0.1393 
+        0.18546     0.06752     0.01784    -0.13621 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)        1.86
+    (Intercept)       1.788
     
     
     Call:
@@ -604,13 +604,13 @@
     
     Fixed effects:
     (Intercept) (Intercept)          c2          c2 
-        -0.6858     -0.1666     -3.8178     -2.2996 
+        0.05469    -0.02392    -1.18889    -1.48018 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.755
+    (Intercept)       1.869
     
     
     Call:
@@ -621,13 +621,13 @@
     
     Fixed effects:
     (Intercept) (Intercept)          c2          c2 
-         0.3260      0.4045      0.4761      0.8307 
+        0.06884     0.09450    -0.50378    -0.20030 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)           2
+    (Intercept)       2.408
     
     
     Call:
@@ -638,7 +638,7 @@
     
     Fixed effects:
     (Intercept)         m1B         m1C 
-       -7.73262    -0.06040     0.08273 
+       -7.66092    -0.07303    -0.14191 
     
     
     Random effects covariance matrix:
@@ -650,7 +650,7 @@
     
     Residual standard deviation:
     sigma_c1 
-      0.6496 
+      0.6542 
     
     Call:
     lme_imp(fixed = c1 ~ m2 + (1 | id), data = longDF, n.adapt = 5, 
@@ -660,19 +660,19 @@
     
     Fixed effects:
     (Intercept)         m2B         m2C 
-        0.22870     0.06687     0.04117 
+         0.3072     -0.1499     -0.0517 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.07924
+    (Intercept)     0.09176
     
     
     
     Residual standard deviation:
     sigma_c1 
-      0.6408 
+      0.6184 
     
     Call:
     mlogitmm_imp(fixed = m1 ~ M2 + m2 * abs(C1 - C2) + log(C1) + 
@@ -682,21 +682,21 @@
     
     Fixed effects:
          (Intercept)              M22              M23              M24 
-            -2.92846          0.06272         -0.88662          0.59683 
+            -0.34955          0.07482         -0.33448          0.81111 
         abs(C1 - C2)          log(C1)      (Intercept)              M22 
-             0.28564         -8.83372         -4.04574          0.35296 
+             0.27617         -1.65764         -1.36972          0.13040 
                  M23              M24     abs(C1 - C2)          log(C1) 
-             0.26178          0.70223          0.29382        -12.46814 
+            -0.30067          0.48533         -0.09221         -6.43062 
                  m2B              m2C m2B:abs(C1 - C2) m2C:abs(C1 - C2) 
-             0.75006         -1.35390         -0.65862          0.60393 
+             0.32952         -0.34274         -0.61410         -0.06559 
                  m2B              m2C m2B:abs(C1 - C2) m2C:abs(C1 - C2) 
-             0.19884         -0.38485         -0.59348         -0.13731 
+             0.56092         -0.63467         -0.74509          0.30918 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.903
+    (Intercept)       2.564
     
     
     Call:
@@ -708,31 +708,31 @@
     
     Fixed effects:
                                                    (Intercept) 
-                                                       -0.4016 
+                                                       5.31180 
                                                   abs(C1 - C2) 
-                                                        0.4116 
+                                                      -0.26596 
                                                        log(C1) 
-                                                        0.2611 
+                                                      14.89783 
                                                    (Intercept) 
-                                                       -0.5234 
+                                                       3.95502 
                                                   abs(C1 - C2) 
-                                                       -0.0212 
+                                                      -0.26296 
                                                        log(C1) 
-                                                       -2.8043 
+                                                      10.66928 
                  ifelse(as.numeric(m2) > as.numeric(M1), 1, 0) 
-                                                        0.4861 
+                                                       0.03222 
     ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 
-                                                       -0.3932 
+                                                      -0.14033 
                  ifelse(as.numeric(m2) > as.numeric(M1), 1, 0) 
-                                                       -1.4160 
+                                                       0.01904 
     ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 
-                                                        0.6769 
+                                                      -0.02876 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.768
+    (Intercept)        1.96
     
     
     Call:
@@ -744,18 +744,18 @@
     
     Fixed effects:
     (Intercept)          C1         B21 (Intercept)          C1         B21 
-        3.00576    -4.62587     0.08311     8.51448   -11.17389    -0.26657 
+      -3.578941    4.885997    0.428013    0.766630   -1.420775    0.387762 
            time          c1        time          c1 
-        0.13368     0.08236     0.01320     0.32575 
+      -0.091861    0.252423    0.050009   -0.005713 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)       c1      time   c1:time
-    (Intercept)    0.195008  0.01529  0.030453 -0.009666
-    c1             0.015288  0.26029  0.026229 -0.014777
-    time           0.030453  0.02623  0.235760 -0.006665
-    c1:time       -0.009666 -0.01478 -0.006665  0.153258
+                (Intercept)       c1     time  c1:time
+    (Intercept)     0.23949 -0.01869 -0.04974 -0.01538
+    c1             -0.01869  0.19278  0.05309  0.02420
+    time           -0.04974  0.05309  0.26929  0.08132
+    c1:time        -0.01538  0.02420  0.08132  0.31340
     
     
     Call:
@@ -766,18 +766,18 @@
     
     Fixed effects:
     (Intercept)          C1 (Intercept)          C1        time   I(time^2) 
-         4.9374     -7.0457      7.9700    -10.1176     -0.1219      0.0179 
+       -4.41246     6.77314     0.85852    -0.71169    -0.17686     0.02696 
             b21          c1     C1:time      b21:c1        time   I(time^2) 
-         0.2779      0.1004      0.1937      0.8160     -0.2198      0.0734 
+       -0.88637    -0.14071    -0.05982     2.69479     0.06687     0.04460 
             b21          c1     C1:time      b21:c1 
-        -0.9795      0.4757     -0.2308      0.5200 
+       -0.62092    -0.24204    -0.31767     1.05088 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)     time
-    (Intercept)     0.39153 -0.07065
-    time           -0.07065  0.46878
+    (Intercept)     0.62371 -0.09112
+    time           -0.09112  0.32555
     
     
     Call:
@@ -789,15 +789,15 @@
     
     Fixed effects:
     (Intercept)          C1 (Intercept)          C1   log(time)   I(time^2) 
-        1.85705    -3.10354     4.71631    -6.63848     0.06467     0.02182 
+      -7.462067   10.389508   -4.872382    6.828512   -0.045068   -0.008174 
              p1   log(time)   I(time^2)          p1 
-        0.04318    -0.09326     0.01489     0.04736 
+       0.002008   -0.015644    0.013875   -0.047965 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.302
+    (Intercept)       1.432
     
     $m0a
     
@@ -809,13 +809,13 @@
     
     Fixed effects:
     (Intercept) (Intercept) 
-        0.07752     0.19202 
+         0.4112      0.3916 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)        1.13
+    (Intercept)       1.931
     
     
     $m0b
@@ -828,13 +828,13 @@
     
     Fixed effects:
     (Intercept) (Intercept) 
-         0.1489      0.1575 
+      -0.001691   -0.003984 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.371
+    (Intercept)       1.434
     
     
     $m1a
@@ -847,13 +847,13 @@
     
     Fixed effects:
     (Intercept)          C1 (Intercept)          C1 
-          9.365     -12.603      11.999     -16.027 
+         -6.964       9.837      -3.436       5.026 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.036
+    (Intercept)       1.618
     
     
     $m1b
@@ -866,13 +866,13 @@
     
     Fixed effects:
     (Intercept)          C1 (Intercept)          C1 
-         0.6842     -0.3815      4.8474     -6.0233 
+          4.239      -5.601      -2.573       3.585 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       2.481
+    (Intercept)       1.683
     
     
     $m1c
@@ -885,13 +885,13 @@
     
     Fixed effects:
     (Intercept) (Intercept)          c1          c1 
-        0.02187     0.03951     0.36973     0.69344 
+        0.33231     0.39789     0.20459    -0.06978 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.242
+    (Intercept)       1.653
     
     
     $m1d
@@ -904,13 +904,13 @@
     
     Fixed effects:
     (Intercept) (Intercept)          c1          c1 
-         0.1349      0.1374      0.1792      0.2003 
+        0.17448     0.07111    -0.40222    -0.14396 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.522
+    (Intercept)       1.714
     
     
     $m2a
@@ -923,13 +923,13 @@
     
     Fixed effects:
     (Intercept)          C2 (Intercept)          C2 
-        0.04201    -0.04695     0.22086     0.04837 
+         0.4523      0.3104      0.5432      0.5430 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.233
+    (Intercept)       1.873
     
     
     $m2b
@@ -942,13 +942,13 @@
     
     Fixed effects:
     (Intercept)          C2 (Intercept)          C2 
-         0.3172      0.1134      0.3865      0.1393 
+        0.18546     0.06752     0.01784    -0.13621 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)        1.86
+    (Intercept)       1.788
     
     
     $m2c
@@ -961,13 +961,13 @@
     
     Fixed effects:
     (Intercept) (Intercept)          c2          c2 
-        -0.6858     -0.1666     -3.8178     -2.2996 
+        0.05469    -0.02392    -1.18889    -1.48018 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.755
+    (Intercept)       1.869
     
     
     $m2d
@@ -980,13 +980,13 @@
     
     Fixed effects:
     (Intercept) (Intercept)          c2          c2 
-         0.3260      0.4045      0.4761      0.8307 
+        0.06884     0.09450    -0.50378    -0.20030 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)           2
+    (Intercept)       2.408
     
     
     $m3a
@@ -999,7 +999,7 @@
     
     Fixed effects:
     (Intercept)         m1B         m1C 
-       -7.73262    -0.06040     0.08273 
+       -7.66092    -0.07303    -0.14191 
     
     
     Random effects covariance matrix:
@@ -1011,7 +1011,7 @@
     
     Residual standard deviation:
     sigma_c1 
-      0.6496 
+      0.6542 
     
     $m3b
     
@@ -1023,19 +1023,19 @@
     
     Fixed effects:
     (Intercept)         m2B         m2C 
-        0.22870     0.06687     0.04117 
+         0.3072     -0.1499     -0.0517 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.07924
+    (Intercept)     0.09176
     
     
     
     Residual standard deviation:
     sigma_c1 
-      0.6408 
+      0.6184 
     
     $m4a
     
@@ -1047,21 +1047,21 @@
     
     Fixed effects:
          (Intercept)              M22              M23              M24 
-            -2.92846          0.06272         -0.88662          0.59683 
+            -0.34955          0.07482         -0.33448          0.81111 
         abs(C1 - C2)          log(C1)      (Intercept)              M22 
-             0.28564         -8.83372         -4.04574          0.35296 
+             0.27617         -1.65764         -1.36972          0.13040 
                  M23              M24     abs(C1 - C2)          log(C1) 
-             0.26178          0.70223          0.29382        -12.46814 
+            -0.30067          0.48533         -0.09221         -6.43062 
                  m2B              m2C m2B:abs(C1 - C2) m2C:abs(C1 - C2) 
-             0.75006         -1.35390         -0.65862          0.60393 
+             0.32952         -0.34274         -0.61410         -0.06559 
                  m2B              m2C m2B:abs(C1 - C2) m2C:abs(C1 - C2) 
-             0.19884         -0.38485         -0.59348         -0.13731 
+             0.56092         -0.63467         -0.74509          0.30918 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.903
+    (Intercept)       2.564
     
     
     $m4b
@@ -1075,31 +1075,31 @@
     
     Fixed effects:
                                                    (Intercept) 
-                                                       -0.4016 
+                                                       5.31180 
                                                   abs(C1 - C2) 
-                                                        0.4116 
+                                                      -0.26596 
                                                        log(C1) 
-                                                        0.2611 
+                                                      14.89783 
                                                    (Intercept) 
-                                                       -0.5234 
+                                                       3.95502 
                                                   abs(C1 - C2) 
-                                                       -0.0212 
+                                                      -0.26296 
                                                        log(C1) 
-                                                       -2.8043 
+                                                      10.66928 
                  ifelse(as.numeric(m2) > as.numeric(M1), 1, 0) 
-                                                        0.4861 
+                                                       0.03222 
     ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 
-                                                       -0.3932 
+                                                      -0.14033 
                  ifelse(as.numeric(m2) > as.numeric(M1), 1, 0) 
-                                                       -1.4160 
+                                                       0.01904 
     ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 
-                                                        0.6769 
+                                                      -0.02876 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.768
+    (Intercept)        1.96
     
     
     $m4c
@@ -1113,18 +1113,18 @@
     
     Fixed effects:
     (Intercept)          C1         B21 (Intercept)          C1         B21 
-        3.00576    -4.62587     0.08311     8.51448   -11.17389    -0.26657 
+      -3.578941    4.885997    0.428013    0.766630   -1.420775    0.387762 
            time          c1        time          c1 
-        0.13368     0.08236     0.01320     0.32575 
+      -0.091861    0.252423    0.050009   -0.005713 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)       c1      time   c1:time
-    (Intercept)    0.195008  0.01529  0.030453 -0.009666
-    c1             0.015288  0.26029  0.026229 -0.014777
-    time           0.030453  0.02623  0.235760 -0.006665
-    c1:time       -0.009666 -0.01478 -0.006665  0.153258
+                (Intercept)       c1     time  c1:time
+    (Intercept)     0.23949 -0.01869 -0.04974 -0.01538
+    c1             -0.01869  0.19278  0.05309  0.02420
+    time           -0.04974  0.05309  0.26929  0.08132
+    c1:time        -0.01538  0.02420  0.08132  0.31340
     
     
     $m4d
@@ -1137,18 +1137,18 @@
     
     Fixed effects:
     (Intercept)          C1 (Intercept)          C1        time   I(time^2) 
-         4.9374     -7.0457      7.9700    -10.1176     -0.1219      0.0179 
+       -4.41246     6.77314     0.85852    -0.71169    -0.17686     0.02696 
             b21          c1     C1:time      b21:c1        time   I(time^2) 
-         0.2779      0.1004      0.1937      0.8160     -0.2198      0.0734 
+       -0.88637    -0.14071    -0.05982     2.69479     0.06687     0.04460 
             b21          c1     C1:time      b21:c1 
-        -0.9795      0.4757     -0.2308      0.5200 
+       -0.62092    -0.24204    -0.31767     1.05088 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)     time
-    (Intercept)     0.39153 -0.07065
-    time           -0.07065  0.46878
+    (Intercept)     0.62371 -0.09112
+    time           -0.09112  0.32555
     
     
     $m4e
@@ -1162,15 +1162,15 @@
     
     Fixed effects:
     (Intercept)          C1 (Intercept)          C1   log(time)   I(time^2) 
-        1.85705    -3.10354     4.71631    -6.63848     0.06467     0.02182 
+      -7.462067   10.389508   -4.872382    6.828512   -0.045068   -0.008174 
              p1   log(time)   I(time^2)          p1 
-        0.04318    -0.09326     0.01489     0.04736 
+       0.002008   -0.015644    0.013875   -0.047965 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.302
+    (Intercept)       1.432
     
     
 
@@ -1179,137 +1179,137 @@
     $m0a
     $m0a$m1
     (Intercept) (Intercept) 
-     0.07752287  0.19201779 
+      0.4111954   0.3916108 
     
     
     $m0b
     $m0b$m2
-    (Intercept) (Intercept) 
-      0.1488677   0.1575291 
+     (Intercept)  (Intercept) 
+    -0.001691199 -0.003984227 
     
     
     $m1a
     $m1a$m1
     (Intercept)          C1 (Intercept)          C1 
-       9.364955  -12.603412   11.998772  -16.026911 
+      -6.964242    9.837394   -3.436172    5.026033 
     
     
     $m1b
     $m1b$m2
     (Intercept)          C1 (Intercept)          C1 
-      0.6841871  -0.3815302   4.8473575  -6.0233084 
+       4.239143   -5.601100   -2.573461    3.584569 
     
     
     $m1c
     $m1c$m1
     (Intercept) (Intercept)          c1          c1 
-     0.02186882  0.03951072  0.36973142  0.69344212 
+     0.33230787  0.39788965  0.20459377 -0.06977906 
     
     
     $m1d
     $m1d$m2
     (Intercept) (Intercept)          c1          c1 
-      0.1348805   0.1373684   0.1791682   0.2003449 
+     0.17447649  0.07111141 -0.40222150 -0.14396465 
     
     
     $m2a
     $m2a$m1
     (Intercept)          C2 (Intercept)          C2 
-     0.04201446 -0.04694813  0.22085738  0.04836990 
+      0.4523332   0.3104303   0.5431882   0.5430399 
     
     
     $m2b
     $m2b$m2
     (Intercept)          C2 (Intercept)          C2 
-      0.3171750   0.1134449   0.3865278   0.1392547 
+     0.18545716  0.06751862  0.01783536 -0.13620709 
     
     
     $m2c
     $m2c$m1
     (Intercept) (Intercept)          c2          c2 
-     -0.6858113  -0.1665573  -3.8177768  -2.2995559 
+     0.05469462 -0.02391887 -1.18889343 -1.48017716 
     
     
     $m2d
     $m2d$m2
     (Intercept) (Intercept)          c2          c2 
-      0.3259772   0.4044743   0.4761134   0.8307182 
+     0.06884005  0.09450104 -0.50377781 -0.20029846 
     
     
     $m3a
     $m3a$c1
     (Intercept)         m1B         m1C 
-    -7.73262164 -0.06040007  0.08273420 
+    -7.66092103 -0.07303115 -0.14191406 
     
     
     $m3b
     $m3b$c1
     (Intercept)         m2B         m2C 
-     0.22870212  0.06687013  0.04117191 
+     0.30716619 -0.14989608 -0.05170018 
     
     
     $m4a
     $m4a$m1
          (Intercept)              M22              M23              M24 
-         -2.92845900       0.06271824      -0.88661898       0.59682699 
+         -0.34954956       0.07482196      -0.33448067       0.81111205 
         abs(C1 - C2)          log(C1)      (Intercept)              M22 
-          0.28563583      -8.83371753      -4.04573643       0.35296115 
+          0.27616703      -1.65763805      -1.36972364       0.13039559 
                  M23              M24     abs(C1 - C2)          log(C1) 
-          0.26178344       0.70223473       0.29381940     -12.46814364 
+         -0.30067311       0.48533037      -0.09221467      -6.43062118 
                  m2B              m2C m2B:abs(C1 - C2) m2C:abs(C1 - C2) 
-          0.75006106      -1.35390228      -0.65861898       0.60392774 
+          0.32952211      -0.34273626      -0.61410352      -0.06559019 
                  m2B              m2C m2B:abs(C1 - C2) m2C:abs(C1 - C2) 
-          0.19884032      -0.38485026      -0.59347540      -0.13730896 
+          0.56092013      -0.63467112      -0.74508797       0.30918445 
     
     
     $m4b
     $m4b$m1
                                                    (Intercept) 
-                                                   -0.40160657 
+                                                    5.31179862 
                                                   abs(C1 - C2) 
-                                                    0.41156376 
+                                                   -0.26595715 
                                                        log(C1) 
-                                                    0.26112192 
+                                                   14.89783235 
                                                    (Intercept) 
-                                                   -0.52340503 
+                                                    3.95501617 
                                                   abs(C1 - C2) 
-                                                   -0.02120198 
+                                                   -0.26296191 
                                                        log(C1) 
-                                                   -2.80434560 
+                                                   10.66927517 
                  ifelse(as.numeric(m2) > as.numeric(M1), 1, 0) 
-                                                    0.48605064 
+                                                    0.03222199 
     ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 
-                                                   -0.39316130 
+                                                   -0.14032670 
                  ifelse(as.numeric(m2) > as.numeric(M1), 1, 0) 
-                                                   -1.41595176 
+                                                    0.01904377 
     ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 
-                                                    0.67688010 
+                                                   -0.02875664 
     
     
     $m4c
     $m4c$m1
      (Intercept)           C1          B21  (Intercept)           C1          B21 
-      3.00575618  -4.62587366   0.08311468   8.51447931 -11.17389024  -0.26657028 
+    -3.578941344  4.885996667  0.428013031  0.766630087 -1.420775453  0.387761993 
             time           c1         time           c1 
-      0.13368194   0.08236306   0.01319705   0.32574651 
+    -0.091861282  0.252422896  0.050008987 -0.005712537 
     
     
     $m4d
     $m4d$m1
-     (Intercept)           C1  (Intercept)           C1         time    I(time^2) 
-      4.93741924  -7.04570659   7.97001563 -10.11764773  -0.12194427   0.01789676 
-             b21           c1      C1:time       b21:c1         time    I(time^2) 
-      0.27794367   0.10036496   0.19373069   0.81604649  -0.21975725   0.07339773 
-             b21           c1      C1:time       b21:c1 
-     -0.97947566   0.47574229  -0.23081764   0.52004099 
+    (Intercept)          C1 (Intercept)          C1        time   I(time^2) 
+    -4.41245997  6.77313979  0.85851665 -0.71169465 -0.17685615  0.02695698 
+            b21          c1     C1:time      b21:c1        time   I(time^2) 
+    -0.88637246 -0.14070716 -0.05982384  2.69479054  0.06687124  0.04459811 
+            b21          c1     C1:time      b21:c1 
+    -0.62091633 -0.24204281 -0.31766766  1.05088231 
     
     
     $m4e
     $m4e$m1
-    (Intercept)          C1 (Intercept)          C1   log(time)   I(time^2) 
-     1.85705481 -3.10353967  4.71631324 -6.63848332  0.06467041  0.02181687 
-             p1   log(time)   I(time^2)          p1 
-     0.04318256 -0.09326448  0.01489069  0.04735752 
+     (Intercept)           C1  (Intercept)           C1    log(time)    I(time^2) 
+    -7.462067327 10.389507537 -4.872381875  6.828512025 -0.045067978 -0.008173988 
+              p1    log(time)    I(time^2)           p1 
+     0.002008155 -0.015643543  0.013875224 -0.047964634 
     
     
 
@@ -1317,206 +1317,206 @@
 
     $m0a
     $m0a$m1
-                       2.5%     97.5%
-    (Intercept) -0.21725673 0.4774263
-    (Intercept) -0.08441678 0.4799758
+                     2.5%     97.5%
+    (Intercept) 0.1575538 0.7901177
+    (Intercept) 0.1832600 0.7131482
     
     
     $m0b
     $m0b$m2
                       2.5%     97.5%
-    (Intercept) -0.1428615 0.4933655
-    (Intercept) -0.1545178 0.4580343
+    (Intercept) -0.2845762 0.3882949
+    (Intercept) -0.2664229 0.2385682
     
     
     $m1a
     $m1a$m1
                       2.5%     97.5%
-    (Intercept)  -1.911451 20.048187
-    C1          -26.905470  2.484909
-    (Intercept)   2.260066 26.079175
-    C1          -35.132713 -2.686804
+    (Intercept) -20.044996  6.959249
+    C1           -8.711134 27.471707
+    (Intercept) -16.218129  9.520677
+    C1          -12.300511 22.283711
     
     
     $m1b
     $m1b$m2
                      2.5%    97.5%
-    (Intercept) -18.27010 24.21260
-    C1          -32.34680 25.51033
-    (Intercept) -10.04874 18.97084
-    C1          -25.44833 13.95836
+    (Intercept) -18.21811 26.92098
+    C1          -36.12706 24.67062
+    (Intercept) -16.16937 19.15139
+    C1          -25.24325 21.63304
     
     
     $m1c
     $m1c$m1
                        2.5%     97.5%
-    (Intercept) -0.25733378 0.1687312
-    (Intercept) -0.22356244 0.2911191
-    c1          -0.01764079 0.9394037
-    c1           0.31663455 0.9643571
+    (Intercept)  0.03538584 0.6380535
+    (Intercept) -0.03257627 0.7057324
+    c1          -0.14172023 0.4692660
+    c1          -0.56902964 0.2104772
     
     
     $m1d
     $m1d$m2
-                      2.5%     97.5%
-    (Intercept) -0.1772478 0.5367385
-    (Intercept) -0.1468774 0.4802431
-    c1          -0.1001104 0.4806150
-    c1          -0.1185982 0.5311340
+                      2.5%       97.5%
+    (Intercept) -0.1365398  0.48314542
+    (Intercept) -0.2017219  0.44191772
+    c1          -0.6701518 -0.06482932
+    c1          -0.5021135  0.23274726
     
     
     $m2a
     $m2a$m1
-                      2.5%     97.5%
-    (Intercept) -0.4645009 0.5435738
-    C2          -0.5173366 0.3442466
-    (Intercept) -0.2535238 0.6004320
-    C2          -0.4288593 0.3875578
+                       2.5%     97.5%
+    (Intercept) -0.01725488 0.7708970
+    C2          -0.13767688 0.9395541
+    (Intercept)  0.06573077 0.8858686
+    C2           0.19411106 1.2593429
     
     
     $m2b
     $m2b$m2
-                       2.5%     97.5%
-    (Intercept) -0.34174217 0.8097462
-    C2          -0.38352270 0.6010071
-    (Intercept) -0.06596893 0.8284823
-    C2          -0.39600887 0.6239464
+                      2.5%     97.5%
+    (Intercept) -0.2716948 0.5480528
+    C2          -0.5049670 0.6582114
+    (Intercept) -0.4346457 0.4360783
+    C2          -0.7662834 0.5818352
     
     
     $m2c
     $m2c$m1
-                      2.5%       97.5%
-    (Intercept) -1.2532346  0.07323716
-    (Intercept) -0.8757314  0.49985813
-    c2          -6.5841611 -1.54805655
-    c2          -4.8830204 -0.60422865
+                      2.5%     97.5%
+    (Intercept) -0.5726995 0.7775530
+    (Intercept) -0.7526038 0.6038130
+    c2          -3.6099514 1.1487779
+    c2          -4.3967736 0.7220399
     
     
     $m2d
     $m2d$m2
                       2.5%     97.5%
-    (Intercept) -0.1505952 0.9366264
-    (Intercept) -0.5009367 1.0031163
-    c2          -0.8122775 2.9727681
-    c2          -1.5080869 2.7325126
+    (Intercept) -1.0340878 0.9299347
+    (Intercept) -0.9534779 0.9107729
+    c2          -4.6334016 2.8366573
+    c2          -4.4991855 3.5945898
     
     
     $m3a
     $m3a$c1
                         2.5%      97.5%
-    (Intercept) -109.5248893 5.39605001
-    m1B           -0.2360424 0.07303221
-    m1C           -0.1029428 0.18760235
+    (Intercept) -109.5248893 5.45017428
+    m1B           -0.2356213 0.07679157
+    m1C           -0.3257532 0.01857038
     
     
     $m3b
     $m3b$c1
-                       2.5%     97.5%
-    (Intercept)  0.03935837 0.3742134
-    m2B         -0.11641995 0.2662192
-    m2C         -0.17235194 0.3041556
+                      2.5%       97.5%
+    (Intercept)  0.1823431  0.41252372
+    m2B         -0.3087688 -0.01202926
+    m2C         -0.2099551  0.12049474
     
     
     $m4a
     $m4a$m1
-                             2.5%      97.5%
-    (Intercept)       -7.77620021  3.4915515
-    M22               -0.42473138  0.9591408
-    M23               -2.12604609  0.8346796
-    M24               -0.01779491  1.4422747
-    abs(C1 - C2)      -0.30231916  1.0940736
-    log(C1)          -23.81143688 13.5337994
-    (Intercept)       -9.55053237  0.6384391
-    M22               -0.39278514  0.9439861
-    M23               -0.43156737  1.1259811
-    M24                0.02371601  1.4525824
-    abs(C1 - C2)      -0.18951895  0.9596131
-    log(C1)          -29.49881166  5.6084011
-    m2B                0.01521371  1.5905880
-    m2C               -2.10293632 -0.6012294
-    m2B:abs(C1 - C2)  -0.97621802 -0.2701707
-    m2C:abs(C1 - C2)   0.07228270  1.1697839
-    m2B               -0.70251604  0.6425866
-    m2C               -1.28058133  0.5569329
-    m2B:abs(C1 - C2)  -1.48873336  0.1185087
-    m2C:abs(C1 - C2)  -0.64635029  0.7228442
+                            2.5%      97.5%
+    (Intercept)       -3.7068244  4.0787253
+    M22               -0.9881366  0.6901861
+    M23               -0.9959813  0.6207413
+    M24                0.2871981  1.3272468
+    abs(C1 - C2)      -0.3537993  0.7731129
+    log(C1)          -12.1973853 11.5728646
+    (Intercept)       -5.3864371  3.4939971
+    M22               -0.9349368  1.1277043
+    M23               -1.1753851  0.6170950
+    M24               -0.2313747  1.4124154
+    abs(C1 - C2)      -0.8009995  0.4299194
+    log(C1)          -19.0396822  8.2371714
+    m2B               -1.0065126  1.2363166
+    m2C               -0.8290328  0.3859447
+    m2B:abs(C1 - C2)  -1.4124197  0.2167723
+    m2C:abs(C1 - C2)  -0.4271897  0.3331745
+    m2B               -0.3194328  1.2529526
+    m2C               -1.4621602  0.1697779
+    m2B:abs(C1 - C2)  -1.5212777 -0.1298321
+    m2C:abs(C1 - C2)  -0.1048224  0.9928746
     
     
     $m4b
     $m4b$m1
-                                                                       2.5%
-    (Intercept)                                                 -6.92066681
-    abs(C1 - C2)                                                -0.10873502
-    log(C1)                                                    -20.07127701
-    (Intercept)                                                 -5.13053295
-    abs(C1 - C2)                                                -0.40813735
-    log(C1)                                                    -19.72679527
-    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               -0.63346888
-    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  -1.42992503
-    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               -2.67463488
-    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)   0.01604039
+                                                                      2.5%
+    (Intercept)                                                 -0.7150209
+    abs(C1 - C2)                                                -1.0630861
+    log(C1)                                                     -1.4217657
+    (Intercept)                                                 -3.6569071
+    abs(C1 - C2)                                                -0.8846438
+    log(C1)                                                    -10.9308224
+    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               -1.4664628
+    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  -0.7900474
+    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               -1.6241086
+    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  -0.8335321
                                                                     97.5%
-    (Intercept)                                                 4.4338572
-    abs(C1 - C2)                                                0.9475762
-    log(C1)                                                    13.8555800
-    (Intercept)                                                 3.6192169
-    abs(C1 - C2)                                                0.4305868
-    log(C1)                                                    10.5409958
-    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               1.7643777
-    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  0.2383610
-    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.1512910
-    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  1.3033574
+    (Intercept)                                                12.0737911
+    abs(C1 - C2)                                                0.5350756
+    log(C1)                                                    35.5100167
+    (Intercept)                                                 9.0172643
+    abs(C1 - C2)                                                0.6372715
+    log(C1)                                                    29.1284389
+    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               1.0845985
+    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  0.6435259
+    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               1.2829513
+    ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  1.0234230
     
     
     $m4c
     $m4c$m1
-                        2.5%      97.5%
-    (Intercept)  -4.52227265 16.6063418
-    C1          -22.47901248  5.0758856
-    B21          -0.60810689  0.7124634
-    (Intercept)   0.86929575 16.9376319
-    C1          -22.90931394 -0.6540646
-    B21          -1.17423767  0.3728009
-    time         -0.01366188  0.3006044
-    c1           -0.33840960  0.4290945
-    time         -0.23049714  0.1906386
-    c1           -0.05842006  0.8174301
+                        2.5%       97.5%
+    (Intercept) -20.12365002 10.45943573
+    C1          -14.19219952 27.50485229
+    B21          -0.10004235  1.14920004
+    (Intercept) -12.15098065 14.48955134
+    C1          -19.67414841 15.88297215
+    B21          -0.11843946  1.04199063
+    time         -0.27266520  0.07184214
+    c1           -0.03440799  0.55539471
+    time         -0.09346187  0.28167730
+    c1           -0.27096364  0.31143651
     
     
     $m4d
     $m4d$m1
-                         2.5%       97.5%
-    (Intercept)  -8.937370236 16.70658514
-    C1          -22.233129256 11.56272446
-    (Intercept)  -3.330173223 19.21949121
-    C1          -25.761698677  5.45033190
-    time         -0.566995414  0.34492603
-    I(time^2)    -0.055069517  0.13057801
-    b21          -0.429092586  1.34356534
-    c1           -0.230978485  0.45130863
-    C1:time      -0.218715844  0.62423470
-    b21:c1       -0.054783689  1.86474427
-    time         -0.517053048  0.06566410
-    I(time^2)    -0.007937189  0.17682982
-    b21          -1.651160447 -0.06736911
-    c1            0.127202540  0.81251868
-    C1:time      -0.995531142  0.20429802
-    b21:c1       -0.775691629  1.67825118
+                        2.5%       97.5%
+    (Intercept) -19.52140538  8.36403961
+    C1          -10.44127577 27.00171031
+    (Intercept) -16.54629680 19.16795737
+    C1          -25.78691976 22.55994973
+    time         -0.71415484  0.24140595
+    I(time^2)    -0.07073487  0.08641906
+    b21          -1.60114042 -0.33743226
+    c1           -0.54349737  0.25282436
+    C1:time      -0.88924076  0.71283372
+    b21:c1        1.36278291  4.27597815
+    time         -0.33414582  0.34437084
+    I(time^2)    -0.05998728  0.18318428
+    b21          -1.63159757  0.08295620
+    c1           -0.73684946  0.11464174
+    C1:time      -0.92139481  0.27000330
+    b21:c1       -0.40557215  2.96148650
     
     
     $m4e
     $m4e$m1
                         2.5%       97.5%
-    (Intercept)  -6.71185011 11.70653885
-    C1          -16.36120814  8.53403628
-    (Intercept)  -5.43102990 15.43286105
-    C1          -21.06911987  6.64342837
-    log(time)    -0.09966105  0.40716431
-    I(time^2)    -0.01254173  0.05317293
-    p1           -0.08278251  0.16921938
-    log(time)    -0.33005800  0.16151208
-    I(time^2)    -0.01737322  0.05334990
-    p1           -0.18179173  0.15860432
+    (Intercept) -24.70181438  8.39066400
+    C1          -11.29678628 33.50764992
+    (Intercept) -23.99916709  6.81924749
+    C1           -9.13669017 32.66051454
+    log(time)    -0.26663200  0.11312051
+    I(time^2)    -0.03215524  0.02502058
+    p1           -0.08698579  0.12938583
+    log(time)    -0.20411754  0.18264706
+    I(time^2)    -0.01349538  0.04653946
+    p1           -0.14915098  0.07147995
     
     
 
@@ -1532,13 +1532,13 @@
     
     
     Posterior summary:
-                       Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    m1B: (Intercept) 0.0775 0.187 -0.2173 0.477      0.600    1.57  0.229
-    m1C: (Intercept) 0.1920 0.171 -0.0844 0.480      0.333    2.01  0.235
+                      Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    m1B: (Intercept) 0.411 0.191 0.158 0.790          0    2.00  0.233
+    m1C: (Intercept) 0.392 0.157 0.183 0.713          0    1.67  0.325
     
     Posterior summary of random effects covariance matrix:
-                 Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_m1_id[1,1] 1.13 0.51 0.423  2.07               2.25  0.469
+                 Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_m1_id[1,1] 1.93 0.735 1.03  3.45               2.54  0.332
     
     
     MCMC settings:
@@ -1561,13 +1561,13 @@
     
     
     Posterior summary:
-                      Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    m2B: (Intercept) 0.149 0.172 -0.143 0.493      0.467    1.90  0.183
-    m2C: (Intercept) 0.158 0.158 -0.155 0.458      0.267    1.47  0.229
+                         Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    m2B: (Intercept) -0.00169 0.212 -0.285 0.388      0.867    1.17  0.183
+    m2C: (Intercept) -0.00398 0.159 -0.266 0.239      1.000    1.19  0.224
     
     Posterior summary of random effects covariance matrix:
                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_m2_id[1,1] 1.37 0.871 0.666  3.74               2.52  0.413
+    D_m2_id[1,1] 1.43 0.545 0.718  2.76               1.99  0.294
     
     
     MCMC settings:
@@ -1590,15 +1590,15 @@
     
     
     Posterior summary:
-                       Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    m1B: (Intercept)   9.36 7.09  -1.91 20.05     0.2667    1.34  0.215
-    m1B: C1          -12.60 9.56 -26.91  2.48     0.2667    1.32  0.215
-    m1C: (Intercept)  12.00 5.98   2.26 26.08     0.0667    1.17  0.183
-    m1C: C1          -16.03 8.09 -35.13 -2.69     0.0667    1.15  0.183
+                      Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    m1B: (Intercept) -6.96  7.48 -20.04  6.96      0.400    3.71  0.394
+    m1B: C1           9.84 10.01  -8.71 27.47      0.400    3.57  0.388
+    m1C: (Intercept) -3.44  7.77 -16.22  9.52      0.533    2.54  0.352
+    m1C: C1           5.03 10.50 -12.30 22.28      0.533    2.44  0.346
     
     Posterior summary of random effects covariance matrix:
                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_m1_id[1,1] 1.04 0.561 0.447  2.63               2.78  0.237
+    D_m1_id[1,1] 1.62 0.998 0.714  4.32               9.65  0.456
     
     
     MCMC settings:
@@ -1621,15 +1621,15 @@
     
     
     Posterior summary:
-                       Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    m2B: (Intercept)  0.684 11.24 -18.3  24.2      0.800    3.37  0.445
-    m2B: C1          -0.382 15.28 -32.3  25.5      0.933    3.39  0.445
-    m2C: (Intercept)  4.847  8.93 -10.0  19.0      0.733    2.91  0.437
-    m2C: C1          -6.023 12.13 -25.4  14.0      0.733    2.92  0.441
+                      Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    m2B: (Intercept)  4.24 12.5 -18.2  26.9      0.667    4.25  0.389
+    m2B: C1          -5.60 16.8 -36.1  24.7      0.733    4.18  0.386
+    m2C: (Intercept) -2.57 10.4 -16.2  19.2      0.867    3.43  0.336
+    m2C: C1           3.58 14.0 -25.2  21.6      0.867    3.38  0.334
     
     Posterior summary of random effects covariance matrix:
-                 Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_m2_id[1,1] 2.48 1.02 0.98  4.12               3.66  0.528
+                 Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_m2_id[1,1] 1.68 0.483 0.95  2.57               1.41  0.236
     
     
     MCMC settings:
@@ -1652,15 +1652,15 @@
     
     
     Posterior summary:
-                       Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    m1B: (Intercept) 0.0219 0.136 -0.2573 0.169     0.8000    1.95  0.339
-    m1C: (Intercept) 0.0395 0.155 -0.2236 0.291     0.8667    2.23  0.209
-    m1B: c1          0.3697 0.246 -0.0176 0.939     0.0667    1.23  0.183
-    m1C: c1          0.6934 0.177  0.3166 0.964     0.0000    1.29  0.221
+                        Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
+    m1B: (Intercept)  0.3323 0.174  0.0354 0.638     0.0667   0.995  0.271
+    m1C: (Intercept)  0.3979 0.205 -0.0326 0.706     0.1333   1.016  0.148
+    m1B: c1           0.2046 0.188 -0.1417 0.469     0.2667   1.416  0.183
+    m1C: c1          -0.0698 0.247 -0.5690 0.210     1.0000   1.646  0.183
     
     Posterior summary of random effects covariance matrix:
                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_m1_id[1,1] 1.24 0.748 0.529  2.85               5.64  0.394
+    D_m1_id[1,1] 1.65 0.945 0.444  3.46               5.17  0.331
     
     
     MCMC settings:
@@ -1683,15 +1683,15 @@
     
     
     Posterior summary:
-                      Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    m2B: (Intercept) 0.135 0.170 -0.177 0.537      0.267    2.07  0.226
-    m2C: (Intercept) 0.137 0.201 -0.147 0.480      0.667    1.37  0.183
-    m2B: c1          0.179 0.172 -0.100 0.481      0.333    1.96  0.221
-    m2C: c1          0.200 0.178 -0.119 0.531      0.200    1.54  0.183
+                        Mean    SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
+    m2B: (Intercept)  0.1745 0.196 -0.137  0.4831      0.467    2.79  0.355
+    m2C: (Intercept)  0.0711 0.167 -0.202  0.4419      0.533    1.89  0.210
+    m2B: c1          -0.4022 0.180 -0.670 -0.0648      0.000    1.28  0.217
+    m2C: c1          -0.1440 0.217 -0.502  0.2327      0.600    1.16  0.183
     
     Posterior summary of random effects covariance matrix:
                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_m2_id[1,1] 1.52 0.797 0.654  3.51               2.18  0.311
+    D_m2_id[1,1] 1.71 0.593 0.956  2.73               1.62  0.309
     
     
     MCMC settings:
@@ -1714,15 +1714,15 @@
     
     
     Posterior summary:
-                        Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    m1B: (Intercept)  0.0420 0.282 -0.465 0.544      0.933    3.02  0.470
-    m1B: C2          -0.0469 0.242 -0.517 0.344      0.867    1.84  0.307
-    m1C: (Intercept)  0.2209 0.240 -0.254 0.600      0.333    2.34  0.224
-    m1C: C2           0.0484 0.239 -0.429 0.388      0.800    2.44  0.267
+                      Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
+    m1B: (Intercept) 0.452 0.253 -0.0173 0.771     0.0667    1.38  0.437
+    m1B: C2          0.310 0.295 -0.1377 0.940     0.2667    3.31  0.406
+    m1C: (Intercept) 0.543 0.269  0.0657 0.886     0.0000    2.17  0.486
+    m1C: C2          0.543 0.270  0.1941 1.259     0.0000    4.92  0.461
     
     Posterior summary of random effects covariance matrix:
-                 Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_m1_id[1,1] 1.23 0.424 0.496  1.88               3.36  0.286
+                 Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_m1_id[1,1] 1.87 0.668 1.07  3.41               1.15  0.301
     
     
     MCMC settings:
@@ -1745,15 +1745,15 @@
     
     
     Posterior summary:
-                      Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    m2B: (Intercept) 0.317 0.300 -0.342 0.810      0.200    1.46  0.320
-    m2B: C2          0.113 0.303 -0.384 0.601      0.800    2.16  0.399
-    m2C: (Intercept) 0.387 0.251 -0.066 0.828      0.133    1.66  0.183
-    m2C: C2          0.139 0.310 -0.396 0.624      0.667    2.85  0.495
+                        Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    m2B: (Intercept)  0.1855 0.232 -0.272 0.548      0.400    1.33  0.208
+    m2B: C2           0.0675 0.330 -0.505 0.658      1.000    4.60  0.371
+    m2C: (Intercept)  0.0178 0.261 -0.435 0.436      0.933    2.39  0.430
+    m2C: C2          -0.1362 0.445 -0.766 0.582      0.667   10.48  0.486
     
     Posterior summary of random effects covariance matrix:
-                 Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_m2_id[1,1] 1.86 1.05 0.866  3.83               11.7  0.705
+                 Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_m2_id[1,1] 1.79 0.877 0.691  4.11                4.2  0.496
     
     
     MCMC settings:
@@ -1776,15 +1776,15 @@
     
     
     Posterior summary:
-                       Mean    SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
-    m1B: (Intercept) -0.686 0.420 -1.253  0.0732      0.200    2.10  0.454
-    m1C: (Intercept) -0.167 0.409 -0.876  0.4999      0.733    2.57  0.468
-    m1B: c2          -3.818 1.569 -6.584 -1.5481      0.000    1.69  0.300
-    m1C: c2          -2.300 1.451 -4.883 -0.6042      0.000    2.09  0.312
+                        Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    m1B: (Intercept)  0.0547 0.358 -0.573 0.778      0.933    2.14  0.392
+    m1C: (Intercept) -0.0239 0.350 -0.753 0.604      0.933    2.28  0.233
+    m1B: c2          -1.1889 1.314 -3.610 1.149      0.267    2.42  0.183
+    m1C: c2          -1.4802 1.311 -4.397 0.722      0.267    2.32  0.258
     
     Posterior summary of random effects covariance matrix:
-                 Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_m1_id[1,1] 1.75 0.791 0.567  3.32               7.34  0.648
+                 Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_m1_id[1,1] 1.87 0.465 1.13  2.81                1.2  0.244
     
     
     MCMC settings:
@@ -1807,15 +1807,15 @@
     
     
     Posterior summary:
-                      Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    m2B: (Intercept) 0.326 0.333 -0.151 0.937      0.467    4.29  0.322
-    m2C: (Intercept) 0.404 0.424 -0.501 1.003      0.400    4.93  0.586
-    m2B: c2          0.476 1.127 -0.812 2.973      0.933    3.10  0.271
-    m2C: c2          0.831 1.219 -1.508 2.733      0.467    2.79  0.474
+                        Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    m2B: (Intercept)  0.0688 0.666 -1.034 0.930      0.800    4.21  0.379
+    m2C: (Intercept)  0.0945 0.579 -0.953 0.911      0.733    4.63  0.372
+    m2B: c2          -0.5038 2.577 -4.633 2.837      1.000    5.39  0.528
+    m2C: c2          -0.2003 2.356 -4.499 3.595      0.933    4.54  0.502
     
     Posterior summary of random effects covariance matrix:
-                 Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_m2_id[1,1]    2 0.78  1.2  3.47               8.47  0.652
+                 Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_m2_id[1,1] 2.41  1 0.75  4.31               3.47  0.544
     
     
     MCMC settings:
@@ -1838,18 +1838,18 @@
     
     
     Posterior summary:
-                   Mean      SD     2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -7.7326 28.8253 -109.525 5.396      0.333    1.16  0.183
-    m1B         -0.0604  0.0943   -0.236 0.073      0.600    2.29  0.183
-    m1C          0.0827  0.0871   -0.103 0.188      0.400    2.02  0.183
+                  Mean      SD     2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -7.661 28.8465 -109.525 5.4502      0.333    1.16  0.183
+    m1B         -0.073  0.0947   -0.236 0.0768      0.600    2.89  0.210
+    m1C         -0.142  0.0969   -0.326 0.0186      0.133    2.27  0.327
     
     Posterior summary of random effects covariance matrix:
                  Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_c1_id[1,1]  863 3198 0.0661 12177               1.25  0.183
+    D_c1_id[1,1]  863 3198 0.0643 12177               1.25  0.183
     
     Posterior summary of residual std. deviation:
-             Mean     SD  2.5% 97.5% GR-crit MCE/SD
-    sigma_c1 0.65 0.0455 0.601 0.768    1.08  0.225
+              Mean     SD  2.5% 97.5% GR-crit MCE/SD
+    sigma_c1 0.654 0.0438 0.608 0.768    1.07  0.224
     
     
     MCMC settings:
@@ -1872,18 +1872,18 @@
     
     
     Posterior summary:
-                  Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 0.2287 0.114  0.0394 0.374      0.000   11.79  0.748
-    m2B         0.0669 0.121 -0.1164 0.266      0.800    7.35  0.538
-    m2C         0.0412 0.149 -0.1724 0.304      0.933    4.79  0.490
+                   Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  0.3072 0.0642  0.182  0.413        0.0    3.10  0.447
+    m2B         -0.1499 0.0767 -0.309 -0.012        0.0    2.10  0.183
+    m2C         -0.0517 0.0946 -0.210  0.120        0.6    4.16  0.326
     
     Posterior summary of random effects covariance matrix:
                    Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_c1_id[1,1] 0.0792 0.0343 0.0291 0.141                  4  0.537
+    D_c1_id[1,1] 0.0918 0.0318 0.0526  0.15               1.24  0.271
     
     Posterior summary of residual std. deviation:
               Mean     SD  2.5% 97.5% GR-crit MCE/SD
-    sigma_c1 0.641 0.0288 0.596 0.697    1.97  0.183
+    sigma_c1 0.618 0.0277 0.567 0.663    2.25  0.183
     
     
     MCMC settings:
@@ -1906,31 +1906,31 @@
     
     
     Posterior summary:
-                              Mean     SD     2.5%  97.5% tail-prob. GR-crit MCE/SD
-    m1B: (Intercept)       -2.9285  2.954  -7.7762  3.492     0.3333    2.06  0.357
-    m1B: M22                0.0627  0.477  -0.4247  0.959     0.9333    2.29  0.295
-    m1B: M23               -0.8866  0.908  -2.1260  0.835     0.3333    3.65  0.496
-    m1B: M24                0.5968  0.404  -0.0178  1.442     0.0667    2.36  0.419
-    m1B: abs(C1 - C2)       0.2856  0.356  -0.3023  1.094     0.4000    2.66  0.322
-    m1B: log(C1)           -8.8337 10.393 -23.8114 13.534     0.4000    2.25  0.454
-    m1C: (Intercept)       -4.0457  3.302  -9.5505  0.638     0.2667    1.54       
-    m1C: M22                0.3530  0.391  -0.3928  0.944     0.3333    2.09  0.439
-    m1C: M23                0.2618  0.463  -0.4316  1.126     0.6000    2.15  0.294
-    m1C: M24                0.7022  0.433   0.0237  1.453     0.0667    3.34  0.422
-    m1C: abs(C1 - C2)       0.2938  0.382  -0.1895  0.960     0.5333    7.83  0.548
-    m1C: log(C1)          -12.4681 11.322 -29.4988  5.608     0.3333    1.87  0.183
-    m1B: m2B                0.7501  0.510   0.0152  1.591     0.0667    3.78  0.446
-    m1B: m2C               -1.3539  0.494  -2.1029 -0.601     0.0000    1.80  0.183
-    m1B: m2B:abs(C1 - C2)  -0.6586  0.222  -0.9762 -0.270     0.0000    1.68  0.135
-    m1B: m2C:abs(C1 - C2)   0.6039  0.322   0.0723  1.170     0.0667    2.40  0.390
-    m1C: m2B                0.1988  0.400  -0.7025  0.643     0.4667    3.27  0.306
-    m1C: m2C               -0.3849  0.494  -1.2806  0.557     0.2667    1.96  0.432
-    m1C: m2B:abs(C1 - C2)  -0.5935  0.434  -1.4887  0.119     0.1333    3.29  0.489
-    m1C: m2C:abs(C1 - C2)  -0.1373  0.402  -0.6464  0.723     0.7333    4.65  0.364
+                             Mean    SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
+    m1B: (Intercept)      -0.3495 2.232  -3.707  4.079      0.933    1.42  0.160
+    m1B: M22               0.0748 0.547  -0.988  0.690      0.733    7.72  0.348
+    m1B: M23              -0.3345 0.469  -0.996  0.621      0.467    1.09  0.423
+    m1B: M24               0.8111 0.326   0.287  1.327      0.000    2.83  0.304
+    m1B: abs(C1 - C2)      0.2762 0.348  -0.354  0.773      0.467    1.85  0.294
+    m1B: log(C1)          -1.6576 6.512 -12.197 11.573      0.867    1.32  0.309
+    m1C: (Intercept)      -1.3697 2.215  -5.386  3.494      0.267    2.35  0.227
+    m1C: M22               0.1304 0.627  -0.935  1.128      0.667    7.14  0.481
+    m1C: M23              -0.3007 0.524  -1.175  0.617      0.533    1.61  0.310
+    m1C: M24               0.4853 0.489  -0.231  1.412      0.400    3.36  0.543
+    m1C: abs(C1 - C2)     -0.0922 0.364  -0.801  0.430      0.933    2.16  0.410
+    m1C: log(C1)          -6.4306 6.665 -19.040  8.237      0.200    1.89  0.183
+    m1B: m2B               0.3295 0.688  -1.007  1.236      0.667    7.25  0.826
+    m1B: m2C              -0.3427 0.340  -0.829  0.386      0.400    1.77  0.473
+    m1B: m2B:abs(C1 - C2) -0.6141 0.507  -1.412  0.217      0.333    6.60  0.677
+    m1B: m2C:abs(C1 - C2) -0.0656 0.226  -0.427  0.333      0.733    2.75  0.234
+    m1C: m2B               0.5609 0.471  -0.319  1.253      0.267    5.48  0.541
+    m1C: m2C              -0.6347 0.491  -1.462  0.170      0.133    1.30  0.289
+    m1C: m2B:abs(C1 - C2) -0.7451 0.428  -1.521 -0.130      0.000    4.09  0.457
+    m1C: m2C:abs(C1 - C2)  0.3092 0.323  -0.105  0.993      0.400    2.49  0.404
     
     Posterior summary of random effects covariance matrix:
-                 Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_m1_id[1,1]  1.9 1.07 0.919  4.25               6.55  0.414
+                 Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_m1_id[1,1] 2.56 0.96 1.25   4.6               3.21  0.507
     
     
     MCMC settings:
@@ -1954,54 +1954,54 @@
     
     
     Posterior summary:
-                                                                       Mean    SD
-    m1B: (Intercept)                                                -0.4016 3.138
-    m1B: abs(C1 - C2)                                                0.4116 0.273
-    m1B: log(C1)                                                     0.2611 9.894
-    m1C: (Intercept)                                                -0.5234 2.586
-    m1C: abs(C1 - C2)                                               -0.0212 0.281
-    m1C: log(C1)                                                    -2.8043 8.306
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.4861 0.753
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) -0.3932 0.467
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              -1.4160 0.830
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  0.6769 0.466
+                                                                       Mean     SD
+    m1B: (Intercept)                                                 5.3118  4.257
+    m1B: abs(C1 - C2)                                               -0.2660  0.556
+    m1B: log(C1)                                                    14.8978 12.327
+    m1C: (Intercept)                                                 3.9550  3.864
+    m1C: abs(C1 - C2)                                               -0.2630  0.452
+    m1C: log(C1)                                                    10.6693 11.505
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.0322  0.853
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) -0.1403  0.472
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.0190  0.978
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) -0.0288  0.603
                                                                        2.5%  97.5%
-    m1B: (Intercept)                                                 -6.921  4.434
-    m1B: abs(C1 - C2)                                                -0.109  0.948
-    m1B: log(C1)                                                    -20.071 13.856
-    m1C: (Intercept)                                                 -5.131  3.619
-    m1C: abs(C1 - C2)                                                -0.408  0.431
-    m1C: log(C1)                                                    -19.727 10.541
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               -0.633  1.764
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  -1.430  0.238
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               -2.675  0.151
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)   0.016  1.303
+    m1B: (Intercept)                                                 -0.715 12.074
+    m1B: abs(C1 - C2)                                                -1.063  0.535
+    m1B: log(C1)                                                     -1.422 35.510
+    m1C: (Intercept)                                                 -3.657  9.017
+    m1C: abs(C1 - C2)                                                -0.885  0.637
+    m1C: log(C1)                                                    -10.931 29.128
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               -1.466  1.085
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  -0.790  0.644
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               -1.624  1.283
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  -0.834  1.023
                                                                     tail-prob.
-    m1B: (Intercept)                                                    0.9333
-    m1B: abs(C1 - C2)                                                   0.1333
-    m1B: log(C1)                                                        0.8667
-    m1C: (Intercept)                                                    0.9333
-    m1C: abs(C1 - C2)                                                   0.8667
-    m1C: log(C1)                                                        0.7333
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                  0.5333
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)     0.2000
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                  0.2000
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)     0.0667
+    m1B: (Intercept)                                                     0.333
+    m1B: abs(C1 - C2)                                                    0.867
+    m1B: log(C1)                                                         0.267
+    m1C: (Intercept)                                                     0.333
+    m1C: abs(C1 - C2)                                                    0.600
+    m1C: log(C1)                                                         0.400
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                   0.733
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)      0.733
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                   0.867
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)      0.933
                                                                     GR-crit MCE/SD
-    m1B: (Intercept)                                                   2.15  0.408
-    m1B: abs(C1 - C2)                                                  1.64  0.375
-    m1B: log(C1)                                                       2.20  0.349
-    m1C: (Intercept)                                                   1.66  0.295
-    m1C: abs(C1 - C2)                                                  4.13  0.637
-    m1C: log(C1)                                                       1.61  0.285
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                 5.13  0.729
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)    7.44  0.805
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                 3.87  0.347
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)   11.01  0.544
+    m1B: (Intercept)                                                   6.66  0.568
+    m1B: abs(C1 - C2)                                                  7.04  0.509
+    m1B: log(C1)                                                       6.78  0.523
+    m1C: (Intercept)                                                   7.32  0.183
+    m1C: abs(C1 - C2)                                                  4.94  0.457
+    m1C: log(C1)                                                       6.38  0.379
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                 8.42  0.438
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)    6.88  0.486
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)                 7.15  0.569
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)    3.65  0.702
     
     Posterior summary of random effects covariance matrix:
-                 Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_m1_id[1,1] 1.77 0.782 0.775   3.3               4.05  0.533
+                 Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_m1_id[1,1] 1.96 0.648 1.16  3.22               1.92  0.436
     
     
     MCMC settings:
@@ -2025,30 +2025,30 @@
     
     
     Posterior summary:
-                         Mean     SD     2.5%  97.5% tail-prob. GR-crit MCE/SD
-    m1B: (Intercept)   3.0058 5.8070  -4.5223 16.606     0.7333    3.14  0.339
-    m1B: C1           -4.6259 7.5506 -22.4790  5.076     0.6000    2.84  0.213
-    m1B: B21           0.0831 0.4059  -0.6081  0.712     0.8000    6.38  0.542
-    m1C: (Intercept)   8.5145 5.1533   0.8693 16.938     0.0667    1.43  0.183
-    m1C: C1          -11.1739 6.9089 -22.9093 -0.654     0.0667    1.33  0.183
-    m1C: B21          -0.2666 0.4207  -1.1742  0.373     0.4000    3.72       
-    m1B: time          0.1337 0.0897  -0.0137  0.301     0.0667    1.62  0.183
-    m1B: c1            0.0824 0.2144  -0.3384  0.429     0.7333    1.02  0.183
-    m1C: time          0.0132 0.1063  -0.2305  0.191     0.7333    1.26  0.183
-    m1C: c1            0.3257 0.2465  -0.0584  0.817     0.2000    1.37  0.183
+                         Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
+    m1B: (Intercept) -3.57894  7.8391 -20.1237 10.4594      0.600    1.70 0.2390
+    m1B: C1           4.88600 10.5055 -14.1922 27.5049      0.600    1.65 0.1826
+    m1B: B21          0.42801  0.3856  -0.1000  1.1492      0.200    8.00 0.6237
+    m1C: (Intercept)  0.76663  7.5046 -12.1510 14.4896      1.000    1.83 0.0836
+    m1C: C1          -1.42078 10.0446 -19.6741 15.8830      1.000    1.79 0.0869
+    m1C: B21          0.38776  0.3243  -0.1184  1.0420      0.200    3.64 0.5309
+    m1B: time        -0.09186  0.0974  -0.2727  0.0718      0.267    1.78 0.2926
+    m1B: c1           0.25242  0.1757  -0.0344  0.5554      0.200    1.50 0.1934
+    m1C: time         0.05001  0.1047  -0.0935  0.2817      0.533    1.67 0.2177
+    m1C: c1          -0.00571  0.1665  -0.2710  0.3114      0.933    1.22 0.1826
     
     Posterior summary of random effects covariance matrix:
-                     Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_m1_id[1,1]  0.19501 0.0508  0.1079 0.2755               2.85  0.416
-    D_m1_id[1,2]  0.01529 0.0386 -0.0583 0.0704      0.600    6.41  0.401
-    D_m1_id[2,2]  0.26029 0.1172  0.1255 0.4599               8.80  0.457
-    D_m1_id[1,3]  0.03045 0.0320 -0.0280 0.0992      0.200    1.61  0.219
-    D_m1_id[2,3]  0.02623 0.0421 -0.0505 0.1069      0.400    5.17  0.664
-    D_m1_id[3,3]  0.23576 0.1326  0.0718 0.4567              14.02  0.770
-    D_m1_id[1,4] -0.00967 0.0432 -0.0814 0.0446      1.000    6.32  1.051
-    D_m1_id[2,4] -0.01478 0.0507 -0.0916 0.0642      0.933    7.63  0.529
-    D_m1_id[3,4] -0.00666 0.0297 -0.0474 0.0465      0.733    2.59  0.332
-    D_m1_id[4,4]  0.15326 0.0402  0.0934 0.2401               1.81  0.325
+                    Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
+    D_m1_id[1,1]  0.2395 0.1067  0.1207 0.4539               4.57  0.183
+    D_m1_id[1,2] -0.0187 0.0311 -0.0924 0.0439      0.400    2.40  0.183
+    D_m1_id[2,2]  0.1928 0.0959  0.0667 0.3344              10.11  0.859
+    D_m1_id[1,3] -0.0497 0.0932 -0.2240 0.0764      0.533   12.20  0.872
+    D_m1_id[2,3]  0.0531 0.0488 -0.0072 0.1642      0.133    3.11  0.508
+    D_m1_id[3,3]  0.2693 0.1717  0.0589 0.5744              12.07  0.722
+    D_m1_id[1,4] -0.0154 0.0790 -0.1436 0.0958      1.000    5.97  0.530
+    D_m1_id[2,4]  0.0242 0.0390 -0.0410 0.0899      0.400    2.40  0.352
+    D_m1_id[3,4]  0.0813 0.1227 -0.0374 0.3319      0.600   12.03  0.487
+    D_m1_id[4,4]  0.3134 0.0950  0.1694 0.4726               4.00  0.379
     
     
     MCMC settings:
@@ -2071,29 +2071,29 @@
     
     
     Posterior summary:
-                         Mean     SD      2.5%   97.5% tail-prob. GR-crit MCE/SD
-    m1B: (Intercept)   4.9374 7.0259  -8.93737 16.7066     0.3333    1.34  0.183
-    m1B: C1           -7.0457 9.4280 -22.23313 11.5627     0.3333    1.25  0.183
-    m1C: (Intercept)   7.9700 6.5510  -3.33017 19.2195     0.1333    1.05  0.183
-    m1C: C1          -10.1176 8.9158 -25.76170  5.4503     0.1333    1.05  0.183
-    m1B: time         -0.1219 0.2844  -0.56700  0.3449     0.6667    6.72  0.539
-    m1B: I(time^2)     0.0179 0.0667  -0.05507  0.1306     0.9333   11.19  0.882
-    m1B: b21           0.2779 0.5594  -0.42909  1.3436     0.9333    2.89  0.281
-    m1B: c1            0.1004 0.2011  -0.23098  0.4513     0.6000    1.74  0.211
-    m1B: C1:time       0.1937 0.2636  -0.21872  0.6242     0.5333    1.38  0.317
-    m1B: b21:c1        0.8160 0.5382  -0.05478  1.8647     0.0667    1.01  0.194
-    m1C: time         -0.2198 0.1848  -0.51705  0.0657     0.2667    2.21  0.229
-    m1C: I(time^2)     0.0734 0.0606  -0.00794  0.1768     0.2667    5.75  0.431
-    m1C: b21          -0.9795 0.4379  -1.65116 -0.0674     0.0667    1.08  0.184
-    m1C: c1            0.4757 0.2153   0.12720  0.8125     0.0000    2.34  0.300
-    m1C: C1:time      -0.2308 0.4144  -0.99553  0.2043     0.9333   10.94  0.404
-    m1C: b21:c1        0.5200 0.7156  -0.77569  1.6783     0.4667    1.19  0.183
+                        Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
+    m1B: (Intercept) -4.4125  8.0411 -19.5214  8.3640      0.667   3.963    Inf
+    m1B: C1           6.7731 10.7070 -10.4413 27.0017      0.667   3.917    Inf
+    m1C: (Intercept)  0.8585 10.8849 -16.5463 19.1680      0.867   2.518  0.417
+    m1C: C1          -0.7117 14.6003 -25.7869 22.5599      0.933   2.460  0.412
+    m1B: time        -0.1769  0.3220  -0.7142  0.2414      0.800   5.946  0.467
+    m1B: I(time^2)    0.0270  0.0443  -0.0707  0.0864      0.533   7.784  0.810
+    m1B: b21         -0.8864  0.3848  -1.6011 -0.3374      0.000   1.943  0.236
+    m1B: c1          -0.1407  0.2122  -0.5435  0.2528      0.400   0.961  0.183
+    m1B: C1:time     -0.0598  0.5006  -0.8892  0.7128      0.800   8.124  0.295
+    m1B: b21:c1       2.6948  0.8586   1.3628  4.2760      0.000   1.490  0.324
+    m1C: time         0.0669  0.2110  -0.3341  0.3444      0.733   2.720  0.356
+    m1C: I(time^2)    0.0446  0.0727  -0.0600  0.1832      0.600   7.479  0.503
+    m1C: b21         -0.6209  0.5201  -1.6316  0.0830      0.133   1.707  0.435
+    m1C: c1          -0.2420  0.2485  -0.7368  0.1146      0.467   1.030  0.217
+    m1C: C1:time     -0.3177  0.3567  -0.9214  0.2700      0.400   3.554  0.651
+    m1C: b21:c1       1.0509  0.9811  -0.4056  2.9615      0.400   1.074  0.318
     
     Posterior summary of random effects covariance matrix:
                     Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_m1_id[1,1]  0.3915 0.194  0.161 0.7804               8.93  0.397
-    D_m1_id[1,2] -0.0707 0.113 -0.291 0.0959      0.467    3.55  0.495
-    D_m1_id[2,2]  0.4688 0.181  0.188 0.7754               5.27  0.645
+    D_m1_id[1,1]  0.6237 0.183  0.399 1.0652               3.19  0.235
+    D_m1_id[1,2] -0.0911 0.156 -0.437 0.0675      0.733    8.13  0.526
+    D_m1_id[2,2]  0.3256 0.112  0.131 0.4942               6.00  0.495
     
     
     MCMC settings:
@@ -2117,21 +2117,21 @@
     
     
     Posterior summary:
-                        Mean     SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
-    m1B: (Intercept)  1.8571 5.4354  -6.7119 11.7065      0.733    1.38  0.183
-    m1B: C1          -3.1035 7.3445 -16.3612  8.5340      0.733    1.36  0.183
-    m1C: (Intercept)  4.7163 5.4960  -5.4310 15.4329      0.267    1.00  0.183
-    m1C: C1          -6.6385 7.5303 -21.0691  6.6434      0.400    1.00  0.183
-    m1B: log(time)    0.0647 0.1377  -0.0997  0.4072      0.733    1.28       
-    m1B: I(time^2)    0.0218 0.0193  -0.0125  0.0532      0.333    1.78  0.244
-    m1B: p1           0.0432 0.0752  -0.0828  0.1692      0.600    1.43  0.202
-    m1C: log(time)   -0.0933 0.1518  -0.3301  0.1615      0.667    1.18  0.183
-    m1C: I(time^2)    0.0149 0.0227  -0.0174  0.0533      0.733    1.08  0.226
-    m1C: p1           0.0474 0.0928  -0.1818  0.1586      0.467    1.83  0.392
+                         Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
+    m1B: (Intercept) -7.46207  9.6087 -24.7018  8.3907      0.333   3.340  0.430
+    m1B: C1          10.38951 12.9743 -11.2968 33.5076      0.333   3.384  0.430
+    m1C: (Intercept) -4.87238  9.3460 -23.9992  6.8192      0.733   3.543  0.426
+    m1C: C1           6.82851 12.7190  -9.1367 32.6605      0.733   3.555  0.427
+    m1B: log(time)   -0.04507  0.1097  -0.2666  0.1131      0.800   1.223  0.183
+    m1B: I(time^2)   -0.00817  0.0182  -0.0322  0.0250      0.600   1.995  0.183
+    m1B: p1           0.00201  0.0665  -0.0870  0.1294      0.867   1.511  0.216
+    m1C: log(time)   -0.01564  0.1090  -0.2041  0.1826      0.933   0.993  0.183
+    m1C: I(time^2)    0.01388  0.0180  -0.0135  0.0465      0.533   1.444  0.206
+    m1C: p1          -0.04796  0.0625  -0.1492  0.0715      0.333   1.412  0.183
     
     Posterior summary of random effects covariance matrix:
                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_m1_id[1,1]  1.3 0.426 0.576  1.96               1.62  0.235
+    D_m1_id[1,1] 1.43 0.673 0.473  2.91               6.64  0.558
     
     
     MCMC settings:
@@ -2149,375 +2149,375 @@
 
     $m0a
     $m0a$m1
-                           Mean        SD        2.5%     97.5% tail-prob.  GR-crit
-    m1B: (Intercept) 0.07752287 0.1869344 -0.21725673 0.4774263  0.6000000 1.573960
-    m1C: (Intercept) 0.19201779 0.1709501 -0.08441678 0.4799758  0.3333333 2.013739
+                          Mean        SD      2.5%     97.5% tail-prob.  GR-crit
+    m1B: (Intercept) 0.4111954 0.1908804 0.1575538 0.7901177          0 1.995328
+    m1C: (Intercept) 0.3916108 0.1570900 0.1832600 0.7131482          0 1.673623
                         MCE/SD
-    m1B: (Intercept) 0.2291616
-    m1C: (Intercept) 0.2346531
+    m1B: (Intercept) 0.2327255
+    m1C: (Intercept) 0.3251097
     
     
     $m0b
     $m0b$m2
-                          Mean        SD       2.5%     97.5% tail-prob.  GR-crit
-    m2B: (Intercept) 0.1488677 0.1722441 -0.1428615 0.4933655  0.4666667 1.899752
-    m2C: (Intercept) 0.1575291 0.1580806 -0.1545178 0.4580343  0.2666667 1.468485
-                        MCE/SD
-    m2B: (Intercept) 0.1825742
-    m2C: (Intercept) 0.2289428
+                             Mean        SD       2.5%     97.5% tail-prob.
+    m2B: (Intercept) -0.001691199 0.2116387 -0.2845762 0.3882949  0.8666667
+    m2C: (Intercept) -0.003984227 0.1585109 -0.2664229 0.2385682  1.0000000
+                      GR-crit    MCE/SD
+    m2B: (Intercept) 1.169999 0.1825742
+    m2C: (Intercept) 1.189016 0.2236091
     
     
     $m1a
     $m1a$m1
-                           Mean       SD       2.5%     97.5% tail-prob.  GR-crit
-    m1B: (Intercept)   9.364955 7.093842  -1.911451 20.048187 0.26666667 1.342978
-    m1B: C1          -12.603412 9.564427 -26.905470  2.484909 0.26666667 1.319992
-    m1C: (Intercept)  11.998772 5.981998   2.260066 26.079175 0.06666667 1.169105
-    m1C: C1          -16.026911 8.090840 -35.132713 -2.686804 0.06666667 1.146591
+                          Mean        SD       2.5%     97.5% tail-prob.  GR-crit
+    m1B: (Intercept) -6.964242  7.484122 -20.044996  6.959249  0.4000000 3.712156
+    m1B: C1           9.837394 10.014557  -8.711134 27.471707  0.4000000 3.572426
+    m1C: (Intercept) -3.436172  7.774117 -16.218129  9.520677  0.5333333 2.536242
+    m1C: C1           5.026033 10.500016 -12.300511 22.283711  0.5333333 2.444180
                         MCE/SD
-    m1B: (Intercept) 0.2149369
-    m1B: C1          0.2151855
-    m1C: (Intercept) 0.1825742
-    m1C: C1          0.1825742
+    m1B: (Intercept) 0.3938656
+    m1B: C1          0.3883897
+    m1C: (Intercept) 0.3520077
+    m1C: C1          0.3458424
     
     
     $m1b
     $m1b$m2
-                           Mean        SD      2.5%    97.5% tail-prob.  GR-crit
-    m2B: (Intercept)  0.6841871 11.241467 -18.27010 24.21260  0.8000000 3.365264
-    m2B: C1          -0.3815302 15.283328 -32.34680 25.51033  0.9333333 3.391486
-    m2C: (Intercept)  4.8473575  8.929356 -10.04874 18.97084  0.7333333 2.906228
-    m2C: C1          -6.0233084 12.127179 -25.44833 13.95836  0.7333333 2.918592
+                          Mean       SD      2.5%    97.5% tail-prob.  GR-crit
+    m2B: (Intercept)  4.239143 12.51542 -18.21811 26.92098  0.6666667 4.249084
+    m2B: C1          -5.601100 16.80333 -36.12706 24.67062  0.7333333 4.179420
+    m2C: (Intercept) -2.573461 10.43405 -16.16937 19.15139  0.8666667 3.429411
+    m2C: C1           3.584569 13.97812 -25.24325 21.63304  0.8666667 3.376649
                         MCE/SD
-    m2B: (Intercept) 0.4446481
-    m2B: C1          0.4448405
-    m2C: (Intercept) 0.4366038
-    m2C: C1          0.4410298
+    m2B: (Intercept) 0.3891265
+    m2B: C1          0.3859435
+    m2C: (Intercept) 0.3363870
+    m2C: C1          0.3336166
     
     
     $m1c
     $m1c$m1
-                           Mean        SD        2.5%     97.5% tail-prob.  GR-crit
-    m1B: (Intercept) 0.02186882 0.1364108 -0.25733378 0.1687312 0.80000000 1.945133
-    m1C: (Intercept) 0.03951072 0.1548759 -0.22356244 0.2911191 0.86666667 2.225664
-    m1B: c1          0.36973142 0.2463704 -0.01764079 0.9394037 0.06666667 1.226697
-    m1C: c1          0.69344212 0.1767438  0.31663455 0.9643571 0.00000000 1.291277
-                        MCE/SD
-    m1B: (Intercept) 0.3387845
-    m1C: (Intercept) 0.2090032
-    m1B: c1          0.1825742
-    m1C: c1          0.2206074
+                            Mean        SD        2.5%     97.5% tail-prob.
+    m1B: (Intercept)  0.33230787 0.1741880  0.03538584 0.6380535 0.06666667
+    m1C: (Intercept)  0.39788965 0.2053512 -0.03257627 0.7057324 0.13333333
+    m1B: c1           0.20459377 0.1882886 -0.14172023 0.4692660 0.26666667
+    m1C: c1          -0.06977906 0.2471783 -0.56902964 0.2104772 1.00000000
+                       GR-crit    MCE/SD
+    m1B: (Intercept) 0.9954695 0.2713939
+    m1C: (Intercept) 1.0156651 0.1476120
+    m1B: c1          1.4164299 0.1825742
+    m1C: c1          1.6459482 0.1825742
     
     
     $m1d
     $m1d$m2
-                          Mean        SD       2.5%     97.5% tail-prob.  GR-crit
-    m2B: (Intercept) 0.1348805 0.1703809 -0.1772478 0.5367385  0.2666667 2.067794
-    m2C: (Intercept) 0.1373684 0.2014477 -0.1468774 0.4802431  0.6666667 1.366324
-    m2B: c1          0.1791682 0.1721695 -0.1001104 0.4806150  0.3333333 1.958268
-    m2C: c1          0.2003449 0.1781285 -0.1185982 0.5311340  0.2000000 1.540413
-                        MCE/SD
-    m2B: (Intercept) 0.2255254
-    m2C: (Intercept) 0.1825742
-    m2B: c1          0.2208212
-    m2C: c1          0.1825742
+                            Mean        SD       2.5%       97.5% tail-prob.
+    m2B: (Intercept)  0.17447649 0.1961358 -0.1365398  0.48314542  0.4666667
+    m2C: (Intercept)  0.07111141 0.1668612 -0.2017219  0.44191772  0.5333333
+    m2B: c1          -0.40222150 0.1796564 -0.6701518 -0.06482932  0.0000000
+    m2C: c1          -0.14396465 0.2167974 -0.5021135  0.23274726  0.6000000
+                      GR-crit    MCE/SD
+    m2B: (Intercept) 2.786842 0.3552224
+    m2C: (Intercept) 1.893779 0.2098171
+    m2B: c1          1.280341 0.2174483
+    m2C: c1          1.156531 0.1825742
     
     
     $m2a
     $m2a$m1
-                            Mean        SD       2.5%     97.5% tail-prob.  GR-crit
-    m1B: (Intercept)  0.04201446 0.2824637 -0.4645009 0.5435738  0.9333333 3.015622
-    m1B: C2          -0.04694813 0.2420288 -0.5173366 0.3442466  0.8666667 1.838006
-    m1C: (Intercept)  0.22085738 0.2401278 -0.2535238 0.6004320  0.3333333 2.336051
-    m1C: C2           0.04836990 0.2390335 -0.4288593 0.3875578  0.8000000 2.439146
+                          Mean        SD        2.5%     97.5% tail-prob.  GR-crit
+    m1B: (Intercept) 0.4523332 0.2525080 -0.01725488 0.7708970 0.06666667 1.383399
+    m1B: C2          0.3104303 0.2949456 -0.13767688 0.9395541 0.26666667 3.312414
+    m1C: (Intercept) 0.5431882 0.2693183  0.06573077 0.8858686 0.00000000 2.167057
+    m1C: C2          0.5430399 0.2695326  0.19411106 1.2593429 0.00000000 4.915568
                         MCE/SD
-    m1B: (Intercept) 0.4703798
-    m1B: C2          0.3073951
-    m1C: (Intercept) 0.2238366
-    m1C: C2          0.2670835
+    m1B: (Intercept) 0.4366272
+    m1B: C2          0.4056142
+    m1C: (Intercept) 0.4863807
+    m1C: C2          0.4610951
     
     
     $m2b
     $m2b$m2
-                          Mean        SD        2.5%     97.5% tail-prob.  GR-crit
-    m2B: (Intercept) 0.3171750 0.2999975 -0.34174217 0.8097462  0.2000000 1.462567
-    m2B: C2          0.1134449 0.3027903 -0.38352270 0.6010071  0.8000000 2.157849
-    m2C: (Intercept) 0.3865278 0.2514748 -0.06596893 0.8284823  0.1333333 1.662732
-    m2C: C2          0.1392547 0.3095189 -0.39600887 0.6239464  0.6666667 2.853836
-                        MCE/SD
-    m2B: (Intercept) 0.3204529
-    m2B: C2          0.3990568
-    m2C: (Intercept) 0.1825742
-    m2C: C2          0.4946734
+                            Mean        SD       2.5%     97.5% tail-prob.
+    m2B: (Intercept)  0.18545716 0.2316659 -0.2716948 0.5480528  0.4000000
+    m2B: C2           0.06751862 0.3295247 -0.5049670 0.6582114  1.0000000
+    m2C: (Intercept)  0.01783536 0.2605607 -0.4346457 0.4360783  0.9333333
+    m2C: C2          -0.13620709 0.4452529 -0.7662834 0.5818352  0.6666667
+                       GR-crit    MCE/SD
+    m2B: (Intercept)  1.330667 0.2083469
+    m2B: C2           4.599792 0.3710497
+    m2C: (Intercept)  2.390754 0.4301509
+    m2C: C2          10.480672 0.4855091
     
     
     $m2c
     $m2c$m1
-                           Mean        SD       2.5%       97.5% tail-prob.
-    m1B: (Intercept) -0.6858113 0.4204170 -1.2532346  0.07323716  0.2000000
-    m1C: (Intercept) -0.1665573 0.4089271 -0.8757314  0.49985813  0.7333333
-    m1B: c2          -3.8177768 1.5689357 -6.5841611 -1.54805655  0.0000000
-    m1C: c2          -2.2995559 1.4510134 -4.8830204 -0.60422865  0.0000000
-                      GR-crit    MCE/SD
-    m1B: (Intercept) 2.097183 0.4537401
-    m1C: (Intercept) 2.574487 0.4682802
-    m1B: c2          1.693181 0.3000903
-    m1C: c2          2.086592 0.3122656
+                            Mean        SD       2.5%     97.5% tail-prob.  GR-crit
+    m1B: (Intercept)  0.05469462 0.3577724 -0.5726995 0.7775530  0.9333333 2.137532
+    m1C: (Intercept) -0.02391887 0.3498828 -0.7526038 0.6038130  0.9333333 2.277315
+    m1B: c2          -1.18889343 1.3138488 -3.6099514 1.1487779  0.2666667 2.423742
+    m1C: c2          -1.48017716 1.3112757 -4.3967736 0.7220399  0.2666667 2.324455
+                        MCE/SD
+    m1B: (Intercept) 0.3923798
+    m1C: (Intercept) 0.2332048
+    m1B: c2          0.1825742
+    m1C: c2          0.2581751
     
     
     $m2d
     $m2d$m2
-                          Mean        SD       2.5%     97.5% tail-prob.  GR-crit
-    m2B: (Intercept) 0.3259772 0.3333864 -0.1505952 0.9366264  0.4666667 4.286149
-    m2C: (Intercept) 0.4044743 0.4236772 -0.5009367 1.0031163  0.4000000 4.929631
-    m2B: c2          0.4761134 1.1273834 -0.8122775 2.9727681  0.9333333 3.104377
-    m2C: c2          0.8307182 1.2189926 -1.5080869 2.7325126  0.4666667 2.786962
+                            Mean        SD       2.5%     97.5% tail-prob.  GR-crit
+    m2B: (Intercept)  0.06884005 0.6662249 -1.0340878 0.9299347  0.8000000 4.211379
+    m2C: (Intercept)  0.09450104 0.5786569 -0.9534779 0.9107729  0.7333333 4.627395
+    m2B: c2          -0.50377781 2.5770601 -4.6334016 2.8366573  1.0000000 5.385492
+    m2C: c2          -0.20029846 2.3561300 -4.4991855 3.5945898  0.9333333 4.543108
                         MCE/SD
-    m2B: (Intercept) 0.3216186
-    m2C: (Intercept) 0.5862511
-    m2B: c2          0.2705735
-    m2C: c2          0.4735191
+    m2B: (Intercept) 0.3786841
+    m2C: (Intercept) 0.3721307
+    m2B: c2          0.5277955
+    m2C: c2          0.5021305
     
     
     $m3a
     $m3a$c1
                        Mean          SD         2.5%      97.5% tail-prob.  GR-crit
-    (Intercept) -7.73262164 28.82533457 -109.5248893 5.39605001  0.3333333 1.160457
-    m1B         -0.06040007  0.09429753   -0.2360424 0.07303221  0.6000000 2.285011
-    m1C          0.08273420  0.08709346   -0.1029428 0.18760235  0.4000000 2.016284
+    (Intercept) -7.66092103 28.84650091 -109.5248893 5.45017428  0.3333333 1.160351
+    m1B         -0.07303115  0.09469874   -0.2356213 0.07679157  0.6000000 2.885421
+    m1C         -0.14191406  0.09693537   -0.3257532 0.01857038  0.1333333 2.274959
                    MCE/SD
     (Intercept) 0.1825742
-    m1B         0.1825742
-    m1C         0.1825742
+    m1B         0.2101254
+    m1C         0.3273654
     
     
     $m3b
     $m3b$c1
-                      Mean        SD        2.5%     97.5% tail-prob.   GR-crit
-    (Intercept) 0.22870212 0.1143952  0.03935837 0.3742134  0.0000000 11.787272
-    m2B         0.06687013 0.1208311 -0.11641995 0.2662192  0.8000000  7.350207
-    m2C         0.04117191 0.1493510 -0.17235194 0.3041556  0.9333333  4.785850
+                       Mean         SD       2.5%       97.5% tail-prob.  GR-crit
+    (Intercept)  0.30716619 0.06421403  0.1823431  0.41252372        0.0 3.098939
+    m2B         -0.14989608 0.07669020 -0.3087688 -0.01202926        0.0 2.095306
+    m2C         -0.05170018 0.09456748 -0.2099551  0.12049474        0.6 4.163973
                    MCE/SD
-    (Intercept) 0.7477058
-    m2B         0.5377122
-    m2C         0.4898366
+    (Intercept) 0.4465119
+    m2B         0.1825742
+    m2C         0.3264864
     
     
     $m4a
     $m4a$m1
-                                  Mean         SD         2.5%      97.5%
-    m1B: (Intercept)       -2.92845900  2.9544374  -7.77620021  3.4915515
-    m1B: M22                0.06271824  0.4766916  -0.42473138  0.9591408
-    m1B: M23               -0.88661898  0.9079054  -2.12604609  0.8346796
-    m1B: M24                0.59682699  0.4042386  -0.01779491  1.4422747
-    m1B: abs(C1 - C2)       0.28563583  0.3560018  -0.30231916  1.0940736
-    m1B: log(C1)           -8.83371753 10.3929112 -23.81143688 13.5337994
-    m1C: (Intercept)       -4.04573643  3.3021895  -9.55053237  0.6384391
-    m1C: M22                0.35296115  0.3906214  -0.39278514  0.9439861
-    m1C: M23                0.26178344  0.4630534  -0.43156737  1.1259811
-    m1C: M24                0.70223473  0.4325362   0.02371601  1.4525824
-    m1C: abs(C1 - C2)       0.29381940  0.3820864  -0.18951895  0.9596131
-    m1C: log(C1)          -12.46814364 11.3223590 -29.49881166  5.6084011
-    m1B: m2B                0.75006106  0.5103214   0.01521371  1.5905880
-    m1B: m2C               -1.35390228  0.4935539  -2.10293632 -0.6012294
-    m1B: m2B:abs(C1 - C2)  -0.65861898  0.2224863  -0.97621802 -0.2701707
-    m1B: m2C:abs(C1 - C2)   0.60392774  0.3218326   0.07228270  1.1697839
-    m1C: m2B                0.19884032  0.4000661  -0.70251604  0.6425866
-    m1C: m2C               -0.38485026  0.4936560  -1.28058133  0.5569329
-    m1C: m2B:abs(C1 - C2)  -0.59347540  0.4344817  -1.48873336  0.1185087
-    m1C: m2C:abs(C1 - C2)  -0.13730896  0.4023732  -0.64635029  0.7228442
-                          tail-prob.  GR-crit    MCE/SD
-    m1B: (Intercept)      0.33333333 2.063846 0.3574459
-    m1B: M22              0.93333333 2.291913 0.2953135
-    m1B: M23              0.33333333 3.651378 0.4959195
-    m1B: M24              0.06666667 2.363120 0.4193421
-    m1B: abs(C1 - C2)     0.40000000 2.656190 0.3219175
-    m1B: log(C1)          0.40000000 2.254046 0.4535232
-    m1C: (Intercept)      0.26666667 1.538239        NA
-    m1C: M22              0.33333333 2.085945 0.4389164
-    m1C: M23              0.60000000 2.147265 0.2939239
-    m1C: M24              0.06666667 3.342437 0.4216350
-    m1C: abs(C1 - C2)     0.53333333 7.832791 0.5484198
-    m1C: log(C1)          0.33333333 1.867747 0.1825742
-    m1B: m2B              0.06666667 3.783612 0.4464990
-    m1B: m2C              0.00000000 1.795296 0.1825742
-    m1B: m2B:abs(C1 - C2) 0.00000000 1.680282 0.1345822
-    m1B: m2C:abs(C1 - C2) 0.06666667 2.395091 0.3897202
-    m1C: m2B              0.46666667 3.270737 0.3059152
-    m1C: m2C              0.26666667 1.958679 0.4324668
-    m1C: m2B:abs(C1 - C2) 0.13333333 3.288856 0.4893208
-    m1C: m2C:abs(C1 - C2) 0.73333333 4.648245 0.3643190
+                                 Mean        SD        2.5%      97.5% tail-prob.
+    m1B: (Intercept)      -0.34954956 2.2320397  -3.7068244  4.0787253  0.9333333
+    m1B: M22               0.07482196 0.5467749  -0.9881366  0.6901861  0.7333333
+    m1B: M23              -0.33448067 0.4691213  -0.9959813  0.6207413  0.4666667
+    m1B: M24               0.81111205 0.3262735   0.2871981  1.3272468  0.0000000
+    m1B: abs(C1 - C2)      0.27616703 0.3477122  -0.3537993  0.7731129  0.4666667
+    m1B: log(C1)          -1.65763805 6.5121739 -12.1973853 11.5728646  0.8666667
+    m1C: (Intercept)      -1.36972364 2.2151972  -5.3864371  3.4939971  0.2666667
+    m1C: M22               0.13039559 0.6270180  -0.9349368  1.1277043  0.6666667
+    m1C: M23              -0.30067311 0.5238373  -1.1753851  0.6170950  0.5333333
+    m1C: M24               0.48533037 0.4892866  -0.2313747  1.4124154  0.4000000
+    m1C: abs(C1 - C2)     -0.09221467 0.3643839  -0.8009995  0.4299194  0.9333333
+    m1C: log(C1)          -6.43062118 6.6652105 -19.0396822  8.2371714  0.2000000
+    m1B: m2B               0.32952211 0.6881115  -1.0065126  1.2363166  0.6666667
+    m1B: m2C              -0.34273626 0.3404999  -0.8290328  0.3859447  0.4000000
+    m1B: m2B:abs(C1 - C2) -0.61410352 0.5069768  -1.4124197  0.2167723  0.3333333
+    m1B: m2C:abs(C1 - C2) -0.06559019 0.2261035  -0.4271897  0.3331745  0.7333333
+    m1C: m2B               0.56092013 0.4712189  -0.3194328  1.2529526  0.2666667
+    m1C: m2C              -0.63467112 0.4913127  -1.4621602  0.1697779  0.1333333
+    m1C: m2B:abs(C1 - C2) -0.74508797 0.4276227  -1.5212777 -0.1298321  0.0000000
+    m1C: m2C:abs(C1 - C2)  0.30918445 0.3227731  -0.1048224  0.9928746  0.4000000
+                           GR-crit    MCE/SD
+    m1B: (Intercept)      1.417318 0.1601231
+    m1B: M22              7.719149 0.3479364
+    m1B: M23              1.086786 0.4229629
+    m1B: M24              2.831394 0.3040540
+    m1B: abs(C1 - C2)     1.845078 0.2944073
+    m1B: log(C1)          1.318980 0.3091415
+    m1C: (Intercept)      2.351116 0.2270496
+    m1C: M22              7.144523 0.4806885
+    m1C: M23              1.611144 0.3102786
+    m1C: M24              3.362157 0.5431270
+    m1C: abs(C1 - C2)     2.158893 0.4101198
+    m1C: log(C1)          1.887494 0.1825742
+    m1B: m2B              7.248779 0.8257033
+    m1B: m2C              1.772265 0.4732553
+    m1B: m2B:abs(C1 - C2) 6.598520 0.6771023
+    m1B: m2C:abs(C1 - C2) 2.745389 0.2337070
+    m1C: m2B              5.477783 0.5412502
+    m1C: m2C              1.304814 0.2886718
+    m1C: m2B:abs(C1 - C2) 4.085916 0.4569155
+    m1C: m2C:abs(C1 - C2) 2.493428 0.4042704
     
     
     $m4b
     $m4b$m1
                                                                            Mean
-    m1B: (Intercept)                                                -0.40160657
-    m1B: abs(C1 - C2)                                                0.41156376
-    m1B: log(C1)                                                     0.26112192
-    m1C: (Intercept)                                                -0.52340503
-    m1C: abs(C1 - C2)                                               -0.02120198
-    m1C: log(C1)                                                    -2.80434560
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.48605064
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) -0.39316130
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              -1.41595176
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  0.67688010
-                                                                           SD
-    m1B: (Intercept)                                                3.1384544
-    m1B: abs(C1 - C2)                                               0.2727259
-    m1B: log(C1)                                                    9.8935114
-    m1C: (Intercept)                                                2.5861412
-    m1C: abs(C1 - C2)                                               0.2812661
-    m1C: log(C1)                                                    8.3055561
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              0.7534345
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 0.4671639
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              0.8300074
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 0.4661788
-                                                                            2.5%
-    m1B: (Intercept)                                                 -6.92066681
-    m1B: abs(C1 - C2)                                                -0.10873502
-    m1B: log(C1)                                                    -20.07127701
-    m1C: (Intercept)                                                 -5.13053295
-    m1C: abs(C1 - C2)                                                -0.40813735
-    m1C: log(C1)                                                    -19.72679527
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               -0.63346888
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  -1.42992503
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               -2.67463488
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)   0.01604039
+    m1B: (Intercept)                                                 5.31179862
+    m1B: abs(C1 - C2)                                               -0.26595715
+    m1B: log(C1)                                                    14.89783235
+    m1C: (Intercept)                                                 3.95501617
+    m1C: abs(C1 - C2)                                               -0.26296191
+    m1C: log(C1)                                                    10.66927517
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.03222199
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) -0.14032670
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.01904377
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) -0.02875664
+                                                                            SD
+    m1B: (Intercept)                                                 4.2565459
+    m1B: abs(C1 - C2)                                                0.5555408
+    m1B: log(C1)                                                    12.3272946
+    m1C: (Intercept)                                                 3.8636749
+    m1C: abs(C1 - C2)                                                0.4524377
+    m1C: log(C1)                                                    11.5048520
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.8525124
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  0.4717113
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.9781438
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  0.6028068
+                                                                           2.5%
+    m1B: (Intercept)                                                 -0.7150209
+    m1B: abs(C1 - C2)                                                -1.0630861
+    m1B: log(C1)                                                     -1.4217657
+    m1C: (Intercept)                                                 -3.6569071
+    m1C: abs(C1 - C2)                                                -0.8846438
+    m1C: log(C1)                                                    -10.9308224
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               -1.4664628
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  -0.7900474
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               -1.6241086
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  -0.8335321
                                                                          97.5%
-    m1B: (Intercept)                                                 4.4338572
-    m1B: abs(C1 - C2)                                                0.9475762
-    m1B: log(C1)                                                    13.8555800
-    m1C: (Intercept)                                                 3.6192169
-    m1C: abs(C1 - C2)                                                0.4305868
-    m1C: log(C1)                                                    10.5409958
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               1.7643777
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  0.2383610
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.1512910
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  1.3033574
+    m1B: (Intercept)                                                12.0737911
+    m1B: abs(C1 - C2)                                                0.5350756
+    m1B: log(C1)                                                    35.5100167
+    m1C: (Intercept)                                                 9.0172643
+    m1C: abs(C1 - C2)                                                0.6372715
+    m1C: log(C1)                                                    29.1284389
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               1.0845985
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  0.6435259
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               1.2829513
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  1.0234230
                                                                     tail-prob.
-    m1B: (Intercept)                                                0.93333333
-    m1B: abs(C1 - C2)                                               0.13333333
-    m1B: log(C1)                                                    0.86666667
-    m1C: (Intercept)                                                0.93333333
-    m1C: abs(C1 - C2)                                               0.86666667
-    m1C: log(C1)                                                    0.73333333
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              0.53333333
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 0.20000000
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              0.20000000
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 0.06666667
-                                                                      GR-crit
-    m1B: (Intercept)                                                 2.145190
-    m1B: abs(C1 - C2)                                                1.636072
-    m1B: log(C1)                                                     2.195547
-    m1C: (Intercept)                                                 1.659299
-    m1C: abs(C1 - C2)                                                4.134504
-    m1C: log(C1)                                                     1.605391
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               5.131510
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  7.435826
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               3.871514
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 11.005653
+    m1B: (Intercept)                                                 0.3333333
+    m1B: abs(C1 - C2)                                                0.8666667
+    m1B: log(C1)                                                     0.2666667
+    m1C: (Intercept)                                                 0.3333333
+    m1C: abs(C1 - C2)                                                0.6000000
+    m1C: log(C1)                                                     0.4000000
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.7333333
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  0.7333333
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)               0.8666667
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2)  0.9333333
+                                                                     GR-crit
+    m1B: (Intercept)                                                6.664791
+    m1B: abs(C1 - C2)                                               7.037402
+    m1B: log(C1)                                                    6.779515
+    m1C: (Intercept)                                                7.323323
+    m1C: abs(C1 - C2)                                               4.942524
+    m1C: log(C1)                                                    6.375491
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              8.419086
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 6.875832
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              7.148380
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 3.652273
                                                                        MCE/SD
-    m1B: (Intercept)                                                0.4075612
-    m1B: abs(C1 - C2)                                               0.3751615
-    m1B: log(C1)                                                    0.3488142
-    m1C: (Intercept)                                                0.2954384
-    m1C: abs(C1 - C2)                                               0.6373265
-    m1C: log(C1)                                                    0.2849521
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              0.7291191
-    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 0.8050187
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              0.3473643
-    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 0.5436065
+    m1B: (Intercept)                                                0.5681047
+    m1B: abs(C1 - C2)                                               0.5093749
+    m1B: log(C1)                                                    0.5233503
+    m1C: (Intercept)                                                0.1825742
+    m1C: abs(C1 - C2)                                               0.4573188
+    m1C: log(C1)                                                    0.3785452
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              0.4381728
+    m1B: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 0.4862282
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0)              0.5689782
+    m1C: ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 0.7015813
     
     
     $m4c
     $m4c$m1
-                             Mean         SD         2.5%      97.5% tail-prob.
-    m1B: (Intercept)   3.00575618 5.80702187  -4.52227265 16.6063418 0.73333333
-    m1B: C1           -4.62587366 7.55056398 -22.47901248  5.0758856 0.60000000
-    m1B: B21           0.08311468 0.40589492  -0.60810689  0.7124634 0.80000000
-    m1C: (Intercept)   8.51447931 5.15328383   0.86929575 16.9376319 0.06666667
-    m1C: C1          -11.17389024 6.90887086 -22.90931394 -0.6540646 0.06666667
-    m1C: B21          -0.26657028 0.42069372  -1.17423767  0.3728009 0.40000000
-    m1B: time          0.13368194 0.08971235  -0.01366188  0.3006044 0.06666667
-    m1B: c1            0.08236306 0.21439328  -0.33840960  0.4290945 0.73333333
-    m1C: time          0.01319705 0.10633851  -0.23049714  0.1906386 0.73333333
-    m1C: c1            0.32574651 0.24648199  -0.05842006  0.8174301 0.20000000
-                      GR-crit    MCE/SD
-    m1B: (Intercept) 3.142131 0.3385517
-    m1B: C1          2.838511 0.2127806
-    m1B: B21         6.378046 0.5419444
-    m1C: (Intercept) 1.426090 0.1825742
-    m1C: C1          1.328826 0.1825742
-    m1C: B21         3.717614        NA
-    m1B: time        1.622047 0.1825742
-    m1B: c1          1.020361 0.1825742
-    m1C: time        1.263412 0.1825742
-    m1C: c1          1.367357 0.1825742
+                             Mean          SD         2.5%       97.5% tail-prob.
+    m1B: (Intercept) -3.578941344  7.83905663 -20.12365002 10.45943573  0.6000000
+    m1B: C1           4.885996667 10.50546739 -14.19219952 27.50485229  0.6000000
+    m1B: B21          0.428013031  0.38564734  -0.10004235  1.14920004  0.2000000
+    m1C: (Intercept)  0.766630087  7.50460239 -12.15098065 14.48955134  1.0000000
+    m1C: C1          -1.420775453 10.04461755 -19.67414841 15.88297215  1.0000000
+    m1C: B21          0.387761993  0.32426622  -0.11843946  1.04199063  0.2000000
+    m1B: time        -0.091861282  0.09744787  -0.27266520  0.07184214  0.2666667
+    m1B: c1           0.252422896  0.17565101  -0.03440799  0.55539471  0.2000000
+    m1C: time         0.050008987  0.10469507  -0.09346187  0.28167730  0.5333333
+    m1C: c1          -0.005712537  0.16653939  -0.27096364  0.31143651  0.9333333
+                      GR-crit     MCE/SD
+    m1B: (Intercept) 1.698614 0.23895850
+    m1B: C1          1.650614 0.18257419
+    m1B: B21         7.995082 0.62371560
+    m1C: (Intercept) 1.834968 0.08360347
+    m1C: C1          1.787326 0.08692177
+    m1C: B21         3.636320 0.53088515
+    m1B: time        1.781025 0.29257617
+    m1B: c1          1.495511 0.19342761
+    m1C: time        1.674804 0.21769382
+    m1C: c1          1.220257 0.18257419
     
     
     $m4d
     $m4d$m1
-                             Mean         SD          2.5%       97.5% tail-prob.
-    m1B: (Intercept)   4.93741924 7.02591813  -8.937370236 16.70658514 0.33333333
-    m1B: C1           -7.04570659 9.42804502 -22.233129256 11.56272446 0.33333333
-    m1C: (Intercept)   7.97001563 6.55096222  -3.330173223 19.21949121 0.13333333
-    m1C: C1          -10.11764773 8.91580887 -25.761698677  5.45033190 0.13333333
-    m1B: time         -0.12194427 0.28438493  -0.566995414  0.34492603 0.66666667
-    m1B: I(time^2)     0.01789676 0.06674384  -0.055069517  0.13057801 0.93333333
-    m1B: b21           0.27794367 0.55936790  -0.429092586  1.34356534 0.93333333
-    m1B: c1            0.10036496 0.20111979  -0.230978485  0.45130863 0.60000000
-    m1B: C1:time       0.19373069 0.26361311  -0.218715844  0.62423470 0.53333333
-    m1B: b21:c1        0.81604649 0.53818355  -0.054783689  1.86474427 0.06666667
-    m1C: time         -0.21975725 0.18475559  -0.517053048  0.06566410 0.26666667
-    m1C: I(time^2)     0.07339773 0.06059251  -0.007937189  0.17682982 0.26666667
-    m1C: b21          -0.97947566 0.43787679  -1.651160447 -0.06736911 0.06666667
-    m1C: c1            0.47574229 0.21528389   0.127202540  0.81251868 0.00000000
-    m1C: C1:time      -0.23081764 0.41439977  -0.995531142  0.20429802 0.93333333
-    m1C: b21:c1        0.52004099 0.71564492  -0.775691629  1.67825118 0.46666667
+                            Mean          SD         2.5%       97.5% tail-prob.
+    m1B: (Intercept) -4.41245997  8.04113648 -19.52140538  8.36403961  0.6666667
+    m1B: C1           6.77313979 10.70703203 -10.44127577 27.00171031  0.6666667
+    m1C: (Intercept)  0.85851665 10.88486641 -16.54629680 19.16795737  0.8666667
+    m1C: C1          -0.71169465 14.60030427 -25.78691976 22.55994973  0.9333333
+    m1B: time        -0.17685615  0.32203363  -0.71415484  0.24140595  0.8000000
+    m1B: I(time^2)    0.02695698  0.04432873  -0.07073487  0.08641906  0.5333333
+    m1B: b21         -0.88637246  0.38482599  -1.60114042 -0.33743226  0.0000000
+    m1B: c1          -0.14070716  0.21221380  -0.54349737  0.25282436  0.4000000
+    m1B: C1:time     -0.05982384  0.50063453  -0.88924076  0.71283372  0.8000000
+    m1B: b21:c1       2.69479054  0.85859477   1.36278291  4.27597815  0.0000000
+    m1C: time         0.06687124  0.21098933  -0.33414582  0.34437084  0.7333333
+    m1C: I(time^2)    0.04459811  0.07272565  -0.05998728  0.18318428  0.6000000
+    m1C: b21         -0.62091633  0.52011190  -1.63159757  0.08295620  0.1333333
+    m1C: c1          -0.24204281  0.24848432  -0.73684946  0.11464174  0.4666667
+    m1C: C1:time     -0.31766766  0.35669872  -0.92139481  0.27000330  0.4000000
+    m1C: b21:c1       1.05088231  0.98110079  -0.40557215  2.96148650  0.4000000
                        GR-crit    MCE/SD
-    m1B: (Intercept)  1.344874 0.1825742
-    m1B: C1           1.246307 0.1825742
-    m1C: (Intercept)  1.052089 0.1825742
-    m1C: C1           1.053645 0.1825742
-    m1B: time         6.718015 0.5394555
-    m1B: I(time^2)   11.185255 0.8817643
-    m1B: b21          2.892301 0.2805670
-    m1B: c1           1.744924 0.2111872
-    m1B: C1:time      1.379226 0.3173408
-    m1B: b21:c1       1.013935 0.1944672
-    m1C: time         2.212130 0.2294269
-    m1C: I(time^2)    5.746522 0.4312902
-    m1C: b21          1.080008 0.1840792
-    m1C: c1           2.337200 0.2997764
-    m1C: C1:time     10.939257 0.4044518
-    m1C: b21:c1       1.185338 0.1825742
+    m1B: (Intercept) 3.9634853       Inf
+    m1B: C1          3.9171874       Inf
+    m1C: (Intercept) 2.5181427 0.4168774
+    m1C: C1          2.4604490 0.4122508
+    m1B: time        5.9464455 0.4673774
+    m1B: I(time^2)   7.7842676 0.8100928
+    m1B: b21         1.9428888 0.2361696
+    m1B: c1          0.9614269 0.1825742
+    m1B: C1:time     8.1237329 0.2946542
+    m1B: b21:c1      1.4899127 0.3241631
+    m1C: time        2.7203893 0.3557864
+    m1C: I(time^2)   7.4791651 0.5029119
+    m1C: b21         1.7071998 0.4352023
+    m1C: c1          1.0299835 0.2168432
+    m1C: C1:time     3.5542686 0.6509009
+    m1C: b21:c1      1.0742094 0.3175327
     
     
     $m4e
     $m4e$m1
-                            Mean         SD         2.5%       97.5% tail-prob.
-    m1B: (Intercept)  1.85705481 5.43543576  -6.71185011 11.70653885  0.7333333
-    m1B: C1          -3.10353967 7.34450765 -16.36120814  8.53403628  0.7333333
-    m1C: (Intercept)  4.71631324 5.49595912  -5.43102990 15.43286105  0.2666667
-    m1C: C1          -6.63848332 7.53033590 -21.06911987  6.64342837  0.4000000
-    m1B: log(time)    0.06467041 0.13768544  -0.09966105  0.40716431  0.7333333
-    m1B: I(time^2)    0.02181687 0.01932204  -0.01254173  0.05317293  0.3333333
-    m1B: p1           0.04318256 0.07515345  -0.08278251  0.16921938  0.6000000
-    m1C: log(time)   -0.09326448 0.15179094  -0.33005800  0.16151208  0.6666667
-    m1C: I(time^2)    0.01489069 0.02271850  -0.01737322  0.05334990  0.7333333
-    m1C: p1           0.04735752 0.09280461  -0.18179173  0.15860432  0.4666667
-                      GR-crit    MCE/SD
-    m1B: (Intercept) 1.381249 0.1825742
-    m1B: C1          1.362057 0.1825742
-    m1C: (Intercept) 1.002086 0.1825742
-    m1C: C1          1.004279 0.1825742
-    m1B: log(time)   1.278779        NA
-    m1B: I(time^2)   1.775294 0.2438765
-    m1B: p1          1.433475 0.2022209
-    m1C: log(time)   1.180656 0.1825742
-    m1C: I(time^2)   1.081669 0.2255757
-    m1C: p1          1.830484 0.3915003
+                             Mean          SD         2.5%       97.5% tail-prob.
+    m1B: (Intercept) -7.462067327  9.60869346 -24.70181438  8.39066400  0.3333333
+    m1B: C1          10.389507537 12.97431451 -11.29678628 33.50764992  0.3333333
+    m1C: (Intercept) -4.872381875  9.34596095 -23.99916709  6.81924749  0.7333333
+    m1C: C1           6.828512025 12.71897972  -9.13669017 32.66051454  0.7333333
+    m1B: log(time)   -0.045067978  0.10974873  -0.26663200  0.11312051  0.8000000
+    m1B: I(time^2)   -0.008173988  0.01816332  -0.03215524  0.02502058  0.6000000
+    m1B: p1           0.002008155  0.06650675  -0.08698579  0.12938583  0.8666667
+    m1C: log(time)   -0.015643543  0.10896714  -0.20411754  0.18264706  0.9333333
+    m1C: I(time^2)    0.013875224  0.01799478  -0.01349538  0.04653946  0.5333333
+    m1C: p1          -0.047964634  0.06254938  -0.14915098  0.07147995  0.3333333
+                       GR-crit    MCE/SD
+    m1B: (Intercept) 3.3396694 0.4298991
+    m1B: C1          3.3844870 0.4301998
+    m1C: (Intercept) 3.5432339 0.4262392
+    m1C: C1          3.5551547 0.4270895
+    m1B: log(time)   1.2233013 0.1825742
+    m1B: I(time^2)   1.9947977 0.1825742
+    m1B: p1          1.5113329 0.2155650
+    m1C: log(time)   0.9927089 0.1825742
+    m1C: I(time^2)   1.4441641 0.2056591
+    m1C: p1          1.4124265 0.1825742
     
     
 

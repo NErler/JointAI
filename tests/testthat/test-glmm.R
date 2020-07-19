@@ -1,5 +1,73 @@
-context("Longitudinal Models")
+context("GLMM")
 library("JointAI")
+
+
+wideDF$x <- plogis(wideDF$y)
+longDF$x <- plogis(longDF$y)
+
+test_that('minimal models work', {
+  # no covariates
+  expect_s3_class(betamm_imp(x ~ 1 + (1 | id), data = longDF, n.adapt = 1),
+                  'JointAI')
+
+  # one complete covariate
+  expect_s3_class(betamm_imp(x ~ C1 + (1 | id), data = longDF, n.adapt = 1),
+                  'JointAI')
+
+  # one incomplete covariate
+  expect_s3_class(betamm_imp(x ~ C2 + (1 | id), data = longDF, n.adapt = 1),
+                  'JointAI')
+
+  # no intercept
+  expect_s3_class(betareg_imp(x ~ C1 - 1, data = wideDF, n.adapt = 1), 'JointAI')
+  expect_s3_class(betamm_imp(x ~ C1 - 1 + (1 | id), data = longDF, n.adapt = 1),
+                  'JointAI')
+
+  # no random intercept
+  expect_s3_class(betamm_imp(x ~ C1 - 1 + (time + 0 | id), data = longDF,
+                             n.adapt = 1), 'JointAI')
+})
+
+
+test_that('parameter selection work', {
+  mod <- betareg_imp(x ~ C1 + B2 + O1 + C2, data = wideDF, n.iter = 2, n.adapt = 1)
+  expect_equal(mod$mcmc_settings$variable.names, c('beta', 'tau_x'))
+
+  mod2 <- betareg_imp(x ~ C1 + B2 + O1 + C2, data = wideDF, n.adapt = 0,
+                      monitor_params = c(analysis_main = TRUE, tau_main = FALSE))
+  expect_equal(mod2$mcmc_settings$variable.names, c('beta'))
+
+  mod3 <- betareg_imp(x ~ C1 + B2 + O1 + C2, data = wideDF, n.adapt = 0,
+                      monitor_params = c(tau_main = TRUE, analysis_main = FALSE,
+                                         sigma_main = TRUE))
+  expect_equal(mod3$mcmc_settings$variable.names, c('tau_x'))
+
+})
+
+
+
+
+
+
+
+test_that("bugfix in model with ordinal longitudinal covariate", {
+  newlongDF <- longDF
+  newlongDF$x <- factor(sample(1:4, nrow(longDF), replace = TRUE),
+                        ordered = TRUE)
+  newlongDF$x[sample(seq_len(nrow(longDF)), 50)] <- NA
+  expect_s3_class(lme_imp(y ~ C1 + o1 + o2 + x + time, random = ~ 1|id,
+                          data = newlongDF), 'JointAI')
+})
+
+test_that('parmeters for clmm models without baseline covarites work', {
+  expect_s3_class(lme_imp(y ~ o2 + o1 + c2 + b2, data = longDF,
+                          random = ~ 1|id),
+                  'JointAI')
+})
+
+
+
+
 
 
 test_that("model with no covariates work", {
@@ -44,8 +112,8 @@ test_that("models with standard random effects structure work", {
                "JointAI")
 
   expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 -C2) + log(C1) + time,
-                random = ~ time + I(time^2)|id, data = longDF,
-                no_model = 'time')),
+                             random = ~ time + I(time^2)|id, data = longDF,
+                             no_model = 'time')),
                "JointAI")
 
   expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 -C2) + log(C1) + time,
@@ -85,21 +153,21 @@ test_that('models with spline random effects work', {
                "JointAI")
 
   testmod <- lme_imp(y ~ C1 + C2 + c1 + ns(time, df = 3),
-                  random = ~ time|id,
-                  data = longDF)
-#
-#   expect_equal(testmod$K, matrix(nrow = 5, ncol = 2, byrow = TRUE,
-#                                  data = c(1, 3, rep(NA, 4), 4, 7, rep(NA, 2)),
-#                                  dimnames = list(c('Xc', 'Xic', 'time',
-#                                   'Xl', 'Xil'),
-#                                                  c("start", 'end')))
-#   )
-#
-#   expect_equal(testmod$K_imp, matrix(nrow = 3, ncol = 2, byrow = TRUE,
-#                                      data = c(1, 2, 3, 5, 6, 9),
-#                                      dimnames = list(c('C2', 'c1', 'time'),
-#                                                      c("start", 'end')))
-#   )
+                     random = ~ time|id,
+                     data = longDF)
+  #
+  #   expect_equal(testmod$K, matrix(nrow = 5, ncol = 2, byrow = TRUE,
+  #                                  data = c(1, 3, rep(NA, 4), 4, 7, rep(NA, 2)),
+  #                                  dimnames = list(c('Xc', 'Xic', 'time',
+  #                                   'Xl', 'Xil'),
+  #                                                  c("start", 'end')))
+  #   )
+  #
+  #   expect_equal(testmod$K_imp, matrix(nrow = 3, ncol = 2, byrow = TRUE,
+  #                                      data = c(1, 2, 3, 5, 6, 9),
+  #                                      dimnames = list(c('C2', 'c1', 'time'),
+  #                                                      c("start", 'end')))
+  #   )
 
   # expect_equal(testmod$imp_par_list$c1$par_elmts,
   #              matrix(nrow = 2, ncol = 2, byrow = TRUE,
@@ -229,4 +297,5 @@ test_that('poisson imputation', {
                              n.iter = 100)),
                "JointAI")
 })
+
 

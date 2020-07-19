@@ -515,7 +515,7 @@ impDF <- get_MIdat(mod13d, m = 10, seed = 2018)
 
 The function `plot_imp_distr()` allows us to visually compare the distribution
 of the observed and imputed values.
-```{r, fig.width = 7, fig.height = 2.5, out.width = '100%'}
+```{r, fig.width = 7, fig.height = 2.5, out.width = '100%', error = TRUE}
 plot_imp_distr(impDF, nrow = 1)
 ```
 

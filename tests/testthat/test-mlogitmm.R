@@ -1,6 +1,7 @@
 context("mlogitmm Models")
 library("JointAI")
 
+set.seed(2020)
 longDF$m1 <- factor(sample(c('A', 'B', 'C'), size = nrow(longDF),
                            replace = TRUE))
 longDF$m2 <- factor(sample(c('A', 'B', 'C'), size = nrow(longDF),
