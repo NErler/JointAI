@@ -465,6 +465,110 @@
     tau_Be1           1.07       1.37
     
     
+    $m6a
+    Potential scale reduction factors:
+    
+                     Point est. Upper C.I.
+    (Intercept)            1.42       2.30
+    M22                    1.13       1.54
+    M23                    1.39       2.35
+    M24                    1.21       1.86
+    O22                    1.23       1.78
+    O23                    1.31       2.27
+    O24                    1.13       1.61
+    abs(C1 - C2)           1.22       1.80
+    log(C1)                1.36       2.22
+    O22:abs(C1 - C2)       1.20       1.72
+    O23:abs(C1 - C2)       1.23       2.01
+    O24:abs(C1 - C2)       1.13       1.62
+    sigma_y                1.61       3.00
+    
+    
+    $m6b
+    Potential scale reduction factors:
+    
+                     Point est. Upper C.I.
+    (Intercept)           0.936      1.026
+    M22                   2.041      3.691
+    M23                   2.166      4.262
+    M24                   2.177      5.337
+    O22                   6.872     14.634
+    O23                   3.749      8.358
+    O24                   1.706      3.441
+    abs(C1 - C2)          3.458     12.213
+    log(C1)               0.917      0.954
+    O22:abs(C1 - C2)      8.782     16.907
+    O23:abs(C1 - C2)      4.697     13.444
+    O24:abs(C1 - C2)      1.422      2.476
+    
+    
+    $m6c
+    Potential scale reduction factors:
+    
+                    Point est. Upper C.I.
+    (Intercept)           6.78      14.80
+    M22                   1.30       2.21
+    M23                   1.32       2.12
+    M24                   1.51       2.86
+    O22                   4.49      10.09
+    O23                   7.40      25.49
+    O24                   3.70      12.48
+    abs(y - C2)           5.52      12.42
+    O22:abs(y - C2)       3.01       6.81
+    O23:abs(y - C2)       7.74      16.15
+    O24:abs(y - C2)       3.56       8.43
+    sigma_C1              1.95       5.10
+    
+    
+    $m6d
+    Potential scale reduction factors:
+    
+                 Point est. Upper C.I.
+    (Intercept)       1.628       3.04
+    age               1.444       2.46
+    genderfemale      0.996       1.19
+    log(bili)         2.618       5.93
+    exp(creat)        1.294       2.28
+    sigma_SBP         1.692       2.79
+    
+    
+    $m6e
+    Potential scale reduction factors:
+    
+                 Point est. Upper C.I.
+    (Intercept)       0.958       1.10
+    age               0.941       1.03
+    genderfemale      1.421       2.47
+    log(bili)         1.695       3.01
+    exp(creat)        1.036       1.33
+    sigma_SBP         0.978       1.15
+    
+    
+    $m6f
+    Potential scale reduction factors:
+    
+                 Point est. Upper C.I.
+    (Intercept)        1.19       2.56
+    age                1.18       2.22
+    genderfemale       1.44       5.08
+    log(bili)          1.12       1.61
+    exp(creat)         1.70       3.62
+    sigma_SBP          1.47       6.23
+    
+    
+    $mod7a
+    Potential scale reduction factors:
+    
+                     Point est. Upper C.I.
+    (Intercept)           1.140       1.67
+    ns(age, df = 2)1      1.163       1.67
+    ns(age, df = 2)2      1.046       1.23
+    genderfemale          0.984       1.06
+    I(bili^2)             1.145       1.60
+    I(bili^3)             1.126       1.52
+    sigma_SBP             1.640       3.04
+    
+    
 
 ---
 
@@ -797,6 +901,89 @@
     O1.Q         0.107 0.029 0.16    0.18
     O1.C        -0.016 0.030 0.17    0.18
     tau_Be1      4.971 0.131 0.72    0.18
+    
+    $m6a
+                        est  MCSE    SD MCSE/SD
+    (Intercept)       12.61 2.597 10.06    0.26
+    M22               -0.49 0.191  0.74    0.26
+    M23                0.25 0.177  0.69    0.26
+    M24               -1.05 0.217  0.84    0.26
+    O22                0.74 0.750  2.90    0.26
+    O23               -1.17 1.177  4.56    0.26
+    O24               -1.45 1.042  4.04    0.26
+    abs(C1 - C2)      -1.68 0.582  2.25    0.26
+    log(C1)          -37.61 6.499 25.17    0.26
+    O22:abs(C1 - C2)  -0.37 0.531  2.06    0.26
+    O23:abs(C1 - C2)   0.98 0.755  2.92    0.26
+    O24:abs(C1 - C2)   1.65 0.687  2.66    0.26
+    sigma_y            2.33 0.044  0.17    0.26
+    
+    $m6b
+                         est MCSE    SD MCSE/SD
+    (Intercept)       26.922 2.63 10.53    0.25
+    M22                1.818 0.40  0.81    0.50
+    M23                1.894 0.18  0.71    0.26
+    M24                2.103 0.12  0.48    0.26
+    O22                2.840 0.75  2.05    0.37
+    O23               -0.033 0.97  1.59    0.61
+    O24               -1.288 0.51  0.86    0.59
+    abs(C1 - C2)       1.552 0.36  1.12    0.32
+    log(C1)          -79.891 6.82 28.11    0.24
+    O22:abs(C1 - C2)  -2.893 0.51  1.30    0.40
+    O23:abs(C1 - C2)  -0.085 0.48  1.02    0.46
+    O24:abs(C1 - C2)   1.000 0.17  0.53    0.33
+    
+    $m6c
+                       est  MCSE    SD MCSE/SD
+    (Intercept)      0.238 0.073 0.162    0.45
+    M22              0.055 0.016 0.061    0.26
+    M23              0.048   Inf 0.042     Inf
+    M24              0.051 0.028 0.063    0.45
+    O22              0.021 0.046 0.126    0.37
+    O23              0.108 0.168 0.185    0.91
+    O24              0.176 0.153 0.279    0.55
+    abs(y - C2)      0.012 0.013 0.034    0.40
+    O22:abs(y - C2)  0.011 0.008 0.022    0.37
+    O23:abs(y - C2) -0.010 0.014 0.034    0.42
+    O24:abs(y - C2) -0.041 0.050 0.060    0.83
+    sigma_C1         0.248 0.013 0.049    0.26
+    
+    $m6d
+                    est   MCSE    SD MCSE/SD
+    (Intercept)   99.78 2.1675 8.395   0.258
+    age            0.31 0.0101 0.039   0.258
+    genderfemale  -5.37 0.0074 2.478   0.003
+    log(bili)     -7.71 1.2455 3.697   0.337
+    exp(creat)     2.33 0.7293 2.825   0.258
+    sigma_SBP     14.30 0.1988 0.770   0.258
+    
+    $m6e
+                     est  MCSE    SD MCSE/SD
+    (Intercept)  104.579 1.966 7.612    0.26
+    age            0.357 0.022 0.086    0.26
+    genderfemale  -6.712 0.516 1.999    0.26
+    log(bili)     -6.709 1.311 3.678    0.36
+    exp(creat)    -0.082 0.610 2.363    0.26
+    sigma_SBP     14.355 0.135 0.522    0.26
+    
+    $m6f
+                   est  MCSE     SD MCSE/SD
+    (Intercept)  88.49 14.05  54.40    0.26
+    age           0.54  0.27   1.05    0.26
+    genderfemale  2.09  6.29  16.39    0.38
+    log(bili)     0.21  0.22   0.86    0.26
+    exp(creat)    1.99  0.76   2.94    0.26
+    sigma_SBP    60.80 32.44 125.62    0.26
+    
+    $mod7a
+                       est MCSE    SD MCSE/SD
+    (Intercept)      117.7 0.74  5.73    0.13
+    ns(age, df = 2)1  24.6 0.76  4.70    0.16
+    ns(age, df = 2)2  16.2 0.78  4.28    0.18
+    genderfemale      -7.0 0.40  2.20    0.18
+    I(bili^2)        -13.9 3.66 20.07    0.18
+    I(bili^3)          6.6 2.73 14.95    0.18
+    sigma_SBP         14.0 0.15  0.74    0.20
     
 
 # summary output remained the same
@@ -1454,6 +1641,130 @@
         -0.3963      0.2514      0.2248      0.2906      0.1314      0.1073 
            O1.C 
         -0.0158 
+    
+    Call:
+    lm_imp(formula = y ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
+        n.adapt = 5, n.iter = 5, seed = 2020)
+    
+     Bayesian linear model for "y" 
+    
+    
+    Coefficients:
+         (Intercept)              M22              M23              M24 
+             12.6130          -0.4884           0.2509          -1.0499 
+                 O22              O23              O24     abs(C1 - C2) 
+              0.7394          -1.1729          -1.4523          -1.6762 
+             log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+            -37.6129          -0.3674           0.9773           1.6502 
+    
+    
+    Residual standard deviation:
+    sigma_y 
+      2.329 
+    
+    Call:
+    glm_imp(formula = B1 ~ M2 + O2 * abs(C1 - C2) + log(C1), family = "binomial", 
+        data = wideDF, n.adapt = 5, n.iter = 5, seed = 2020)
+    
+     Bayesian binomial model for "B1" 
+    
+    
+    Coefficients:
+         (Intercept)              M22              M23              M24 
+            26.92224          1.81806          1.89397          2.10279 
+                 O22              O23              O24     abs(C1 - C2) 
+             2.84047         -0.03319         -1.28832          1.55189 
+             log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+           -79.89139         -2.89281         -0.08486          0.99996 
+    
+    Call:
+    glm_imp(formula = C1 ~ M2 + O2 * abs(y - C2), family = Gamma(link = "log"), 
+        data = wideDF, n.adapt = 5, n.iter = 5, seed = 2020)
+    
+     Bayesian Gamma model for "C1" 
+    
+    
+    Coefficients:
+        (Intercept)             M22             M23             M24             O22 
+            0.23818         0.05507         0.04791         0.05101         0.02107 
+                O23             O24     abs(y - C2) O22:abs(y - C2) O23:abs(y - C2) 
+            0.10785         0.17601         0.01200         0.01070        -0.01013 
+    O24:abs(y - C2) 
+           -0.04081 
+    
+    
+    Residual standard deviation:
+    sigma_C1 
+      0.2484 
+    
+    Call:
+    lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+        data = NHANES, n.adapt = 5, n.iter = 5, trunc = list(bili = c(1e-05, 
+            1e+10)), seed = 2020, mess = FALSE)
+    
+     Bayesian linear model for "SBP" 
+    
+    
+    Coefficients:
+     (Intercept)          age genderfemale    log(bili)   exp(creat) 
+         99.7818       0.3122      -5.3651      -7.7145       2.3343 
+    
+    
+    Residual standard deviation:
+    sigma_SBP 
+         14.3 
+    
+    Call:
+    lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+        data = NHANES, n.adapt = 5, n.iter = 5, models = c(bili = "lognorm", 
+            creat = "lm"), seed = 2020, mess = FALSE)
+    
+     Bayesian linear model for "SBP" 
+    
+    
+    Coefficients:
+     (Intercept)          age genderfemale    log(bili)   exp(creat) 
+       104.57938      0.35693     -6.71163     -6.70884     -0.08203 
+    
+    
+    Residual standard deviation:
+    sigma_SBP 
+        14.35 
+    
+    Call:
+    lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+        data = NHANES, n.adapt = 5, n.iter = 5, models = c(bili = "glm_gamma_inverse", 
+            creat = "lm"), seed = 2020, mess = FALSE)
+    
+     Bayesian linear model for "SBP" 
+    
+    
+    Coefficients:
+     (Intercept)          age genderfemale    log(bili)   exp(creat) 
+         88.4892       0.5357       2.0853       0.2125       1.9910 
+    
+    
+    Residual standard deviation:
+    sigma_SBP 
+         60.8 
+    
+    Call:
+    lm_imp(formula = SBP ~ ns(age, df = 2) + gender + I(bili^2) + 
+        I(bili^3), data = NHANES, n.adapt = 5, n.iter = 10, seed = 2020)
+    
+     Bayesian linear model for "SBP" 
+    
+    
+    Coefficients:
+         (Intercept) ns(age, df = 2)1 ns(age, df = 2)2     genderfemale 
+             117.698           24.631           16.151           -7.046 
+           I(bili^2)        I(bili^3) 
+             -13.922            6.595 
+    
+    
+    Residual standard deviation:
+    sigma_SBP 
+        13.99 
     $m0a1
     
     Call:
@@ -2197,6 +2508,144 @@
            O1.C 
         -0.0158 
     
+    $m6a
+    
+    Call:
+    lm_imp(formula = y ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
+        n.adapt = 5, n.iter = 5, seed = 2020)
+    
+     Bayesian linear model for "y" 
+    
+    
+    Coefficients:
+         (Intercept)              M22              M23              M24 
+             12.6130          -0.4884           0.2509          -1.0499 
+                 O22              O23              O24     abs(C1 - C2) 
+              0.7394          -1.1729          -1.4523          -1.6762 
+             log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+            -37.6129          -0.3674           0.9773           1.6502 
+    
+    
+    Residual standard deviation:
+    sigma_y 
+      2.329 
+    
+    $m6b
+    
+    Call:
+    glm_imp(formula = B1 ~ M2 + O2 * abs(C1 - C2) + log(C1), family = "binomial", 
+        data = wideDF, n.adapt = 5, n.iter = 5, seed = 2020)
+    
+     Bayesian binomial model for "B1" 
+    
+    
+    Coefficients:
+         (Intercept)              M22              M23              M24 
+            26.92224          1.81806          1.89397          2.10279 
+                 O22              O23              O24     abs(C1 - C2) 
+             2.84047         -0.03319         -1.28832          1.55189 
+             log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+           -79.89139         -2.89281         -0.08486          0.99996 
+    
+    $m6c
+    
+    Call:
+    glm_imp(formula = C1 ~ M2 + O2 * abs(y - C2), family = Gamma(link = "log"), 
+        data = wideDF, n.adapt = 5, n.iter = 5, seed = 2020)
+    
+     Bayesian Gamma model for "C1" 
+    
+    
+    Coefficients:
+        (Intercept)             M22             M23             M24             O22 
+            0.23818         0.05507         0.04791         0.05101         0.02107 
+                O23             O24     abs(y - C2) O22:abs(y - C2) O23:abs(y - C2) 
+            0.10785         0.17601         0.01200         0.01070        -0.01013 
+    O24:abs(y - C2) 
+           -0.04081 
+    
+    
+    Residual standard deviation:
+    sigma_C1 
+      0.2484 
+    
+    $m6d
+    
+    Call:
+    lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+        data = NHANES, n.adapt = 5, n.iter = 5, trunc = list(bili = c(1e-05, 
+            1e+10)), seed = 2020, mess = FALSE)
+    
+     Bayesian linear model for "SBP" 
+    
+    
+    Coefficients:
+     (Intercept)          age genderfemale    log(bili)   exp(creat) 
+         99.7818       0.3122      -5.3651      -7.7145       2.3343 
+    
+    
+    Residual standard deviation:
+    sigma_SBP 
+         14.3 
+    
+    $m6e
+    
+    Call:
+    lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+        data = NHANES, n.adapt = 5, n.iter = 5, models = c(bili = "lognorm", 
+            creat = "lm"), seed = 2020, mess = FALSE)
+    
+     Bayesian linear model for "SBP" 
+    
+    
+    Coefficients:
+     (Intercept)          age genderfemale    log(bili)   exp(creat) 
+       104.57938      0.35693     -6.71163     -6.70884     -0.08203 
+    
+    
+    Residual standard deviation:
+    sigma_SBP 
+        14.35 
+    
+    $m6f
+    
+    Call:
+    lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+        data = NHANES, n.adapt = 5, n.iter = 5, models = c(bili = "glm_gamma_inverse", 
+            creat = "lm"), seed = 2020, mess = FALSE)
+    
+     Bayesian linear model for "SBP" 
+    
+    
+    Coefficients:
+     (Intercept)          age genderfemale    log(bili)   exp(creat) 
+         88.4892       0.5357       2.0853       0.2125       1.9910 
+    
+    
+    Residual standard deviation:
+    sigma_SBP 
+         60.8 
+    
+    $mod7a
+    
+    Call:
+    lm_imp(formula = SBP ~ ns(age, df = 2) + gender + I(bili^2) + 
+        I(bili^3), data = NHANES, n.adapt = 5, n.iter = 10, seed = 2020)
+    
+     Bayesian linear model for "SBP" 
+    
+    
+    Coefficients:
+         (Intercept) ns(age, df = 2)1 ns(age, df = 2)2     genderfemale 
+             117.698           24.631           16.151           -7.046 
+           I(bili^2)        I(bili^3) 
+             -13.922            6.595 
+    
+    
+    Residual standard deviation:
+    sigma_SBP 
+        13.99 
+    
 
 ---
 
@@ -2502,6 +2951,62 @@
     -0.39630491  0.25140494  0.22482003  0.29061087  0.13142879  0.10730331 
            O1.C 
     -0.01580068 
+    
+    
+    $m6a
+    $m6a$y
+         (Intercept)              M22              M23              M24 
+          12.6130216       -0.4884432        0.2508970       -1.0499029 
+                 O22              O23              O24     abs(C1 - C2) 
+           0.7394347       -1.1728883       -1.4523380       -1.6762185 
+             log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+         -37.6129176       -0.3674371        0.9772678        1.6501918 
+    
+    
+    $m6b
+    $m6b$B1
+         (Intercept)              M22              M23              M24 
+         26.92223754       1.81805963       1.89396607       2.10279421 
+                 O22              O23              O24     abs(C1 - C2) 
+          2.84047306      -0.03319140      -1.28832390       1.55188736 
+             log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+        -79.89139025      -2.89280994      -0.08485595       0.99995508 
+    
+    
+    $m6c
+    $m6c$C1
+        (Intercept)             M22             M23             M24             O22 
+         0.23818443      0.05506632      0.04790685      0.05100629      0.02107091 
+                O23             O24     abs(y - C2) O22:abs(y - C2) O23:abs(y - C2) 
+         0.10784656      0.17601451      0.01199894      0.01069835     -0.01013310 
+    O24:abs(y - C2) 
+        -0.04080532 
+    
+    
+    $m6d
+    $m6d$SBP
+     (Intercept)          age genderfemale    log(bili)   exp(creat) 
+      99.7817948    0.3121653   -5.3650565   -7.7145111    2.3342748 
+    
+    
+    $m6e
+    $m6e$SBP
+     (Intercept)          age genderfemale    log(bili)   exp(creat) 
+     104.5793826    0.3569345   -6.7116292   -6.7088409   -0.0820270 
+    
+    
+    $m6f
+    $m6f$SBP
+     (Intercept)          age genderfemale    log(bili)   exp(creat) 
+      88.4892090    0.5356984    2.0852610    0.2125142    1.9910472 
+    
+    
+    $mod7a
+    $mod7a$SBP
+         (Intercept) ns(age, df = 2)1 ns(age, df = 2)2     genderfemale 
+          117.698350        24.631410        16.150986        -7.046120 
+           I(bili^2)        I(bili^3) 
+          -13.921627         6.594818 
     
     
 
@@ -2899,6 +3404,97 @@
     O1.C        -0.26683881 0.28106410
     
     
+    $m6a
+    $m6a$y
+                           2.5%      97.5%
+    (Intercept)       -5.503387 27.6884723
+    M22               -1.765059  0.6422393
+    M23               -1.051632  1.1315400
+    M24               -2.388587  0.4850433
+    O22               -3.470521  5.5016992
+    O23               -9.467546  3.9084484
+    O24               -9.374053  3.9159831
+    abs(C1 - C2)      -5.037589  2.1829951
+    log(C1)          -74.916506  5.2173036
+    O22:abs(C1 - C2)  -3.832877  2.5730553
+    O23:abs(C1 - C2)  -2.436185  6.1058867
+    O24:abs(C1 - C2)  -1.579312  7.0373794
+    
+    
+    $m6b
+    $m6b$B1
+                             2.5%       97.5%
+    (Intercept)        10.0570681  39.6752298
+    M22                 0.5811473   3.3274653
+    M23                 0.5764135   3.0499970
+    M24                 1.5727363   2.9862884
+    O22                -0.3344497   5.6873223
+    O23                -1.8044683   2.9094807
+    O24                -2.6866719  -0.1115429
+    abs(C1 - C2)        0.1662856   3.7823446
+    log(C1)          -113.1024755 -30.8951915
+    O22:abs(C1 - C2)   -4.6281024  -1.1090289
+    O23:abs(C1 - C2)   -1.8166628   1.2006655
+    O24:abs(C1 - C2)    0.3412651   2.0806930
+    
+    
+    $m6c
+    $m6c$C1
+                           2.5%      97.5%
+    (Intercept)     -0.02688502 0.42443982
+    M22             -0.05430741 0.15438182
+    M23             -0.03142928 0.11962193
+    M24             -0.05934168 0.17428296
+    O22             -0.18452050 0.20432265
+    O23             -0.13611414 0.35766479
+    O24             -0.10091612 0.68641698
+    abs(y - C2)     -0.03837084 0.06371013
+    O22:abs(y - C2) -0.01705079 0.04592463
+    O23:abs(y - C2) -0.04546665 0.03863924
+    O24:abs(y - C2) -0.14767808 0.03510488
+    
+    
+    $m6d
+    $m6d$SBP
+                        2.5%        97.5%
+    (Intercept)   89.3352335 113.32384539
+    age            0.2405291   0.36053655
+    genderfemale  -8.9481041  -1.09109842
+    log(bili)    -12.3437674  -0.04829816
+    exp(creat)    -1.9500822   7.07132440
+    
+    
+    $m6e
+    $m6e$SBP
+                        2.5%        97.5%
+    (Intercept)   96.0846808 117.58106714
+    age            0.2176848   0.48344776
+    genderfemale  -8.9182474  -2.92016088
+    log(bili)    -11.7751206  -0.09260933
+    exp(creat)    -3.7536678   3.83505860
+    
+    
+    $m6f
+    $m6f$SBP
+                        2.5%      97.5%
+    (Intercept)  -38.8834168 132.996270
+    age           -0.6552434   2.833327
+    genderfemale  -9.8158382  41.412134
+    log(bili)     -0.9627983   2.049233
+    exp(creat)    -1.4553029   8.078799
+    
+    
+    $mod7a
+    $mod7a$SBP
+                           2.5%     97.5%
+    (Intercept)      107.157271 127.30233
+    ns(age, df = 2)1  16.858414  31.76387
+    ns(age, df = 2)2   9.367797  23.95972
+    genderfemale     -10.649347  -2.58981
+    I(bili^2)        -50.066409  13.28015
+    I(bili^3)        -13.960932  33.50849
+    
+    
 
 ---
 
@@ -2928,6 +3524,16 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+      # NA % NA
+    y    0    0
+    
+    
     $m0a2
     
     Bayesian linear model fitted with JointAI
@@ -2953,6 +3559,16 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+      # NA % NA
+    y    0    0
+    
     
     $m0a3
     
@@ -2980,6 +3596,16 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+      # NA % NA
+    y    0    0
+    
+    
     $m0a4
     
     Bayesian linear model fitted with JointAI
@@ -3006,6 +3632,16 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+      # NA % NA
+    y    0    0
+    
+    
     $m0b1
     
     Bayesian binomial model fitted with JointAI
@@ -3027,6 +3663,16 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    B1    0    0
+    
     
     $m0b2
     
@@ -3050,6 +3696,16 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    B1    0    0
+    
+    
     $m0b3
     
     Bayesian binomial model fitted with JointAI
@@ -3072,6 +3728,16 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    B1    0    0
+    
+    
     $m0b4
     
     Bayesian binomial model fitted with JointAI
@@ -3093,6 +3759,16 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    B1    0    0
+    
     
     $m0c1
     
@@ -3120,6 +3796,16 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    L1    0    0
+    
+    
     $m0c2
     
     Bayesian Gamma model fitted with JointAI
@@ -3146,6 +3832,16 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    L1    0    0
+    
+    
     $m0d1
     
     Bayesian poisson model fitted with JointAI
@@ -3168,6 +3864,16 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    P1    0    0
+    
+    
     $m0d2
     
     Bayesian poisson model fitted with JointAI
@@ -3189,6 +3895,16 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    P1    0    0
+    
     
     $m0e1
     
@@ -3216,6 +3932,16 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    L1    0    0
+    
+    
     $m0f1
     
     Bayesian beta model fitted with JointAI
@@ -3241,6 +3967,16 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+        # NA % NA
+    Be1    0    0
+    
     
     $m1a
     
@@ -3269,6 +4005,17 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    y     0    0
+    C1    0    0
+    
+    
     $m1b
     
     Bayesian binomial model fitted with JointAI
@@ -3291,6 +4038,17 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    B1    0    0
+    C1    0    0
+    
     
     $m1c
     
@@ -3319,6 +4077,17 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    L1    0    0
+    C1    0    0
+    
+    
     $m1d
     
     Bayesian poisson model fitted with JointAI
@@ -3341,6 +4110,17 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    P1    0    0
+    C1    0    0
+    
     
     $m1e
     
@@ -3369,6 +4149,17 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+       # NA % NA
+    L1    0    0
+    C1    0    0
+    
+    
     $m1f
     
     Bayesian beta model fitted with JointAI
@@ -3395,6 +4186,17 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+             #   %
+    lvlone 100 100
+    
+    Number and proportion of missing values:
+        # NA % NA
+    Be1    0    0
+    C1     0    0
+    
     
     $m2a
     
@@ -3423,6 +4225,17 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 96 96
+    
+    Number and proportion of missing values:
+       # NA % NA
+    y     0    0
+    C2    4    4
+    
+    
     $m2b
     
     Bayesian binomial model fitted with JointAI
@@ -3445,6 +4258,17 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+       # NA % NA
+    C2    4    4
+    B2   20   20
+    
     
     $m2c
     
@@ -3473,6 +4297,17 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 76 76
+    
+    Number and proportion of missing values:
+          # NA % NA
+    C2       4    4
+    L1mis   20   20
+    
+    
     $m2d
     
     Bayesian poisson model fitted with JointAI
@@ -3495,6 +4330,17 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 78 78
+    
+    Number and proportion of missing values:
+       # NA % NA
+    C2    4    4
+    P2   20   20
+    
     
     $m2e
     
@@ -3523,6 +4369,17 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 76 76
+    
+    Number and proportion of missing values:
+          # NA % NA
+    C2       4    4
+    L1mis   20   20
+    
+    
     $m2f
     
     Bayesian beta model fitted with JointAI
@@ -3549,6 +4406,17 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 96 96
+    
+    Number and proportion of missing values:
+        # NA % NA
+    Be2    0    0
+    C2     4    4
+    
     
     $m3a
     
@@ -3582,6 +4450,21 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 55 55
+    
+    Number and proportion of missing values:
+          # NA % NA
+    C1       0    0
+    Be2      0    0
+    C2       4    4
+    B2      20   20
+    P2      20   20
+    L1mis   20   20
+    
+    
     $m3b
     
     Bayesian linear model fitted with JointAI
@@ -3613,6 +4496,20 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 55 55
+    
+    Number and proportion of missing values:
+          # NA % NA
+    C1       0    0
+    C2       4    4
+    B2      20   20
+    P2      20   20
+    L1mis   20   20
+    
+    
     $m3c
     
     Bayesian linear model fitted with JointAI
@@ -3643,6 +4540,20 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 55 55
+    
+    Number and proportion of missing values:
+          # NA % NA
+    C1       0    0
+    C2       4    4
+    B2      20   20
+    P2      20   20
+    L1mis   20   20
+    
     
     $m3d
     
@@ -3677,6 +4588,21 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 55 55
+    
+    Number and proportion of missing values:
+          # NA % NA
+    C1       0    0
+    Be2      0    0
+    C2       4    4
+    B2      20   20
+    P2      20   20
+    L1mis   20   20
+    
     
     $m4a
     
@@ -3715,6 +4641,20 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 91 91
+    
+    Number and proportion of missing values:
+       # NA % NA
+    y     0    0
+    C1    0    0
+    O2    2    2
+    M2    3    3
+    C2    4    4
+    
+    
     $m4b
     
     Bayesian binomial model fitted with JointAI
@@ -3741,6 +4681,20 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 76 76
+    
+    Number and proportion of missing values:
+          # NA % NA
+    B1       0    0
+    C1       0    0
+    Be2      0    0
+    C2       4    4
+    L1mis   20   20
+    
     
     $m5a1
     
@@ -3774,6 +4728,20 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+       # NA % NA
+    y     0    0
+    B1    0    0
+    O1    0    0
+    C2    4    4
+    B2   20   20
+    
+    
     $m5a2
     
     Bayesian linear model fitted with JointAI
@@ -3805,6 +4773,20 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+       # NA % NA
+    y     0    0
+    B1    0    0
+    O1    0    0
+    C2    4    4
+    B2   20   20
+    
     
     $m5a3
     
@@ -3838,6 +4820,20 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+       # NA % NA
+    y     0    0
+    B1    0    0
+    O1    0    0
+    C2    4    4
+    B2   20   20
+    
+    
     $m5b1
     
     Bayesian binomial model fitted with JointAI
@@ -3865,6 +4861,20 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+       # NA % NA
+    B1    0    0
+    C1    0    0
+    O1    0    0
+    C2    4    4
+    B2   20   20
+    
     
     $m5b2
     
@@ -3894,6 +4904,20 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+       # NA % NA
+    B1    0    0
+    C1    0    0
+    O1    0    0
+    C2    4    4
+    B2   20   20
+    
+    
     $m5b3
     
     Bayesian binomial model fitted with JointAI
@@ -3922,6 +4946,20 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+       # NA % NA
+    B1    0    0
+    C1    0    0
+    O1    0    0
+    C2    4    4
+    B2   20   20
+    
+    
     $m5b4
     
     Bayesian binomial model fitted with JointAI
@@ -3949,6 +4987,20 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+       # NA % NA
+    B1    0    0
+    C1    0    0
+    O1    0    0
+    C2    4    4
+    B2   20   20
+    
     
     $m5c1
     
@@ -3982,6 +5034,20 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+       # NA % NA
+    L1    0    0
+    B1    0    0
+    O1    0    0
+    C2    4    4
+    B2   20   20
+    
+    
     $m5c2
     
     Bayesian Gamma model fitted with JointAI
@@ -4014,6 +5080,20 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+       # NA % NA
+    L1    0    0
+    B1    0    0
+    O1    0    0
+    C2    4    4
+    B2   20   20
+    
+    
     $m5d1
     
     Bayesian poisson model fitted with JointAI
@@ -4042,6 +5122,20 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+       # NA % NA
+    P1    0    0
+    B1    0    0
+    O1    0    0
+    C2    4    4
+    B2   20   20
+    
+    
     $m5d2
     
     Bayesian poisson model fitted with JointAI
@@ -4069,6 +5163,20 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+       # NA % NA
+    P1    0    0
+    B1    0    0
+    O1    0    0
+    C2    4    4
+    B2   20   20
+    
     
     $m5e1
     
@@ -4102,6 +5210,20 @@
     
     Number of observations: 100 
     
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+       # NA % NA
+    L1    0    0
+    B1    0    0
+    O1    0    0
+    C2    4    4
+    B2   20   20
+    
+    
     $m5f1
     
     Bayesian beta model fitted with JointAI
@@ -4133,6 +5255,347 @@
     Number of chains = 3 
     
     Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 77 77
+    
+    Number and proportion of missing values:
+        # NA % NA
+    Be1    0    0
+    B1     0    0
+    O1     0    0
+    C2     4    4
+    B2    20   20
+    
+    
+    $m6a
+    
+    Bayesian linear model fitted with JointAI
+    
+    Call:
+    lm_imp(formula = y ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
+        n.adapt = 5, n.iter = 5, seed = 2020)
+    
+    
+    Posterior summary:
+                        Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)       12.613 10.056  -5.50 27.688      0.267    2.30  0.258
+    M22               -0.488  0.740  -1.77  0.642      0.533    1.54  0.258
+    M23                0.251  0.687  -1.05  1.132      0.667    2.35  0.258
+    M24               -1.050  0.841  -2.39  0.485      0.267    1.86  0.258
+    O22                0.739  2.904  -3.47  5.502      0.933    1.78  0.258
+    O23               -1.173  4.560  -9.47  3.908      0.933    2.27  0.258
+    O24               -1.452  4.036  -9.37  3.916      0.800    1.61  0.258
+    abs(C1 - C2)      -1.676  2.252  -5.04  2.183      0.400    1.80  0.258
+    log(C1)          -37.613 25.171 -74.92  5.217      0.133    2.22  0.258
+    O22:abs(C1 - C2)  -0.367  2.055  -3.83  2.573      0.933    1.72  0.258
+    O23:abs(C1 - C2)   0.977  2.923  -2.44  6.106      0.933    2.01  0.258
+    O24:abs(C1 - C2)   1.650  2.662  -1.58  7.037      0.667    1.62  0.258
+    
+    Posterior summary of residual std. deviation:
+            Mean    SD 2.5% 97.5% GR-crit MCE/SD
+    sigma_y 2.33 0.172 2.15  2.62       3  0.258
+    
+    
+    MCMC settings:
+    Iterations = 6:10
+    Sample size per chain = 5 
+    Thinning interval = 1 
+    Number of chains = 3 
+    
+    Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 91 91
+    
+    Number and proportion of missing values:
+       # NA % NA
+    y     0    0
+    C1    0    0
+    O2    2    2
+    M2    3    3
+    C2    4    4
+    
+    
+    $m6b
+    
+    Bayesian binomial model fitted with JointAI
+    
+    Call:
+    glm_imp(formula = B1 ~ M2 + O2 * abs(C1 - C2) + log(C1), family = "binomial", 
+        data = wideDF, n.adapt = 5, n.iter = 5, seed = 2020)
+    
+    
+    Posterior summary:
+                         Mean     SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)       26.9222 10.531   10.057  39.675      0.000   1.026  0.250
+    M22                1.8181  0.806    0.581   3.327      0.000   3.691  0.498
+    M23                1.8940  0.712    0.576   3.050      0.000   4.262  0.258
+    M24                2.1028  0.478    1.573   2.986      0.000   5.337  0.258
+    O22                2.8405  2.049   -0.334   5.687      0.133  14.634  0.367
+    O23               -0.0332  1.591   -1.804   2.909      0.800   8.358  0.607
+    O24               -1.2883  0.860   -2.687  -0.112      0.133   3.441  0.593
+    abs(C1 - C2)       1.5519  1.121    0.166   3.782      0.000  12.213  0.318
+    log(C1)          -79.8914 28.111 -113.102 -30.895      0.000   0.954  0.242
+    O22:abs(C1 - C2)  -2.8928  1.296   -4.628  -1.109      0.000  16.907  0.396
+    O23:abs(C1 - C2)  -0.0849  1.025   -1.817   1.201      0.800  13.444  0.465
+    O24:abs(C1 - C2)   1.0000  0.527    0.341   2.081      0.000   2.476  0.325
+    
+    
+    MCMC settings:
+    Iterations = 6:10
+    Sample size per chain = 5 
+    Thinning interval = 1 
+    Number of chains = 3 
+    
+    Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 91 91
+    
+    Number and proportion of missing values:
+       # NA % NA
+    B1    0    0
+    C1    0    0
+    O2    2    2
+    M2    3    3
+    C2    4    4
+    
+    
+    $m6c
+    
+    Bayesian Gamma model fitted with JointAI
+    
+    Call:
+    glm_imp(formula = C1 ~ M2 + O2 * abs(y - C2), family = Gamma(link = "log"), 
+        data = wideDF, n.adapt = 5, n.iter = 5, seed = 2020)
+    
+    
+    Posterior summary:
+                       Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)      0.2382 0.1622 -0.0269 0.4244      0.267   14.80  0.451
+    M22              0.0551 0.0606 -0.0543 0.1544      0.267    2.21  0.258
+    M23              0.0479 0.0424 -0.0314 0.1196      0.133    2.12    Inf
+    M24              0.0510 0.0630 -0.0593 0.1743      0.267    2.86  0.452
+    O22              0.0211 0.1263 -0.1845 0.2043      0.933   10.09  0.365
+    O23              0.1078 0.1849 -0.1361 0.3577      0.667   25.49  0.907
+    O24              0.1760 0.2790 -0.1009 0.6864      0.667   12.48  0.549
+    abs(y - C2)      0.0120 0.0338 -0.0384 0.0637      0.667   12.42  0.398
+    O22:abs(y - C2)  0.0107 0.0218 -0.0171 0.0459      0.800    6.81  0.367
+    O23:abs(y - C2) -0.0101 0.0336 -0.0455 0.0386      0.667   16.15  0.416
+    O24:abs(y - C2) -0.0408 0.0603 -0.1477 0.0351      0.667    8.43  0.835
+    
+    Posterior summary of residual std. deviation:
+              Mean     SD  2.5% 97.5% GR-crit MCE/SD
+    sigma_C1 0.248 0.0487 0.174 0.351     5.1  0.258
+    
+    
+    MCMC settings:
+    Iterations = 6:10
+    Sample size per chain = 5 
+    Thinning interval = 1 
+    Number of chains = 3 
+    
+    Number of observations: 100 
+    
+    
+    Number and proportion of complete cases:
+            #  %
+    lvlone 91 91
+    
+    Number and proportion of missing values:
+       # NA % NA
+    C1    0    0
+    y     0    0
+    O2    2    2
+    M2    3    3
+    C2    4    4
+    
+    
+    $m6d
+    
+    Bayesian linear model fitted with JointAI
+    
+    Call:
+    lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+        data = NHANES, n.adapt = 5, n.iter = 5, trunc = list(bili = c(1e-05, 
+            1e+10)), seed = 2020, mess = FALSE)
+    
+    
+    Posterior summary:
+                   Mean     SD    2.5%    97.5% tail-prob. GR-crit  MCE/SD
+    (Intercept)  99.782 8.3947  89.335 113.3238      0.000    3.04 0.25820
+    age           0.312 0.0391   0.241   0.3605      0.000    2.46 0.25820
+    genderfemale -5.365 2.4778  -8.948  -1.0911      0.000    1.19 0.00299
+    log(bili)    -7.715 3.6973 -12.344  -0.0483      0.133    5.93 0.33688
+    exp(creat)    2.334 2.8247  -1.950   7.0713      0.533    2.28 0.25820
+    
+    Posterior summary of residual std. deviation:
+              Mean   SD 2.5% 97.5% GR-crit MCE/SD
+    sigma_SBP 14.3 0.77 13.1  15.6    2.79  0.258
+    
+    
+    MCMC settings:
+    Iterations = 6:10
+    Sample size per chain = 5 
+    Thinning interval = 1 
+    Number of chains = 3 
+    
+    Number of observations: 186 
+    
+    
+    Number and proportion of complete cases:
+             #    %
+    lvlone 178 95.7
+    
+    Number and proportion of missing values:
+           # NA % NA
+    SBP       0  0.0
+    age       0  0.0
+    gender    0  0.0
+    bili      8  4.3
+    creat     8  4.3
+    
+    
+    $m6e
+    
+    Bayesian linear model fitted with JointAI
+    
+    Call:
+    lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+        data = NHANES, n.adapt = 5, n.iter = 5, models = c(bili = "lognorm", 
+            creat = "lm"), seed = 2020, mess = FALSE)
+    
+    
+    Posterior summary:
+                    Mean     SD    2.5%    97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  104.579 7.6125  96.085 117.5811      0.000    1.10  0.258
+    age            0.357 0.0855   0.218   0.4834      0.000    1.03  0.258
+    genderfemale  -6.712 1.9987  -8.918  -2.9202      0.000    2.47  0.258
+    log(bili)     -6.709 3.6783 -11.775  -0.0926      0.133    3.01  0.356
+    exp(creat)    -0.082 2.3634  -3.754   3.8351      0.933    1.33  0.258
+    
+    Posterior summary of residual std. deviation:
+              Mean    SD 2.5% 97.5% GR-crit MCE/SD
+    sigma_SBP 14.4 0.522 13.7  15.1    1.15  0.258
+    
+    
+    MCMC settings:
+    Iterations = 6:10
+    Sample size per chain = 5 
+    Thinning interval = 1 
+    Number of chains = 3 
+    
+    Number of observations: 186 
+    
+    
+    Number and proportion of complete cases:
+             #    %
+    lvlone 178 95.7
+    
+    Number and proportion of missing values:
+           # NA % NA
+    SBP       0  0.0
+    age       0  0.0
+    gender    0  0.0
+    bili      8  4.3
+    creat     8  4.3
+    
+    
+    $m6f
+    
+    Bayesian linear model fitted with JointAI
+    
+    Call:
+    lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+        data = NHANES, n.adapt = 5, n.iter = 5, models = c(bili = "glm_gamma_inverse", 
+            creat = "lm"), seed = 2020, mess = FALSE)
+    
+    
+    Posterior summary:
+                   Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  88.489 54.400 -38.883 133.00      0.133    2.56  0.258
+    age           0.536  1.053  -0.655   2.83      0.133    2.22  0.258
+    genderfemale  2.085 16.387  -9.816  41.41      0.667    5.08  0.384
+    log(bili)     0.213  0.862  -0.963   2.05      0.800    1.61  0.258
+    exp(creat)    1.991  2.944  -1.455   8.08      0.667    3.62  0.258
+    
+    Posterior summary of residual std. deviation:
+              Mean  SD 2.5% 97.5% GR-crit MCE/SD
+    sigma_SBP 60.8 126 13.5   383    6.23  0.258
+    
+    
+    MCMC settings:
+    Iterations = 6:10
+    Sample size per chain = 5 
+    Thinning interval = 1 
+    Number of chains = 3 
+    
+    Number of observations: 186 
+    
+    
+    Number and proportion of complete cases:
+             #    %
+    lvlone 178 95.7
+    
+    Number and proportion of missing values:
+           # NA % NA
+    SBP       0  0.0
+    age       0  0.0
+    gender    0  0.0
+    bili      8  4.3
+    creat     8  4.3
+    
+    
+    $mod7a
+    
+    Bayesian linear model fitted with JointAI
+    
+    Call:
+    lm_imp(formula = SBP ~ ns(age, df = 2) + gender + I(bili^2) + 
+        I(bili^3), data = NHANES, n.adapt = 5, n.iter = 10, seed = 2020)
+    
+    
+    Posterior summary:
+                       Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)      117.70  5.73 107.16 127.30      0.000    1.15  0.130
+    ns(age, df = 2)1  24.63  4.70  16.86  31.76      0.000    1.32  0.162
+    ns(age, df = 2)2  16.15  4.28   9.37  23.96      0.000    1.37  0.183
+    genderfemale      -7.05  2.20 -10.65  -2.59      0.000    1.27  0.183
+    I(bili^2)        -13.92 20.07 -50.07  13.28      0.667    1.11  0.183
+    I(bili^3)          6.59 14.95 -13.96  33.51      0.800    1.10  0.183
+    
+    Posterior summary of residual std. deviation:
+              Mean    SD 2.5% 97.5% GR-crit MCE/SD
+    sigma_SBP   14 0.739   13  15.4     1.2    0.2
+    
+    
+    MCMC settings:
+    Iterations = 6:15
+    Sample size per chain = 10 
+    Thinning interval = 1 
+    Number of chains = 3 
+    
+    Number of observations: 186 
+    
+    
+    Number and proportion of complete cases:
+             #    %
+    lvlone 178 95.7
+    
+    Number and proportion of missing values:
+           # NA % NA
+    SBP       0  0.0
+    age       0  0.0
+    gender    0  0.0
+    bili      8  4.3
+    
     
 
 ---
@@ -4721,6 +6184,160 @@
     O1.L        0.1825742
     O1.Q        0.1825742
     O1.C        0.1825742
+    
+    
+    $m6a
+    $m6a$y
+                            Mean         SD       2.5%      97.5% tail-prob.
+    (Intercept)       12.6130216 10.0562060  -5.503387 27.6884723  0.2666667
+    M22               -0.4884432  0.7401864  -1.765059  0.6422393  0.5333333
+    M23                0.2508970  0.6872267  -1.051632  1.1315400  0.6666667
+    M24               -1.0499029  0.8411015  -2.388587  0.4850433  0.2666667
+    O22                0.7394347  2.9042209  -3.470521  5.5016992  0.9333333
+    O23               -1.1728883  4.5599430  -9.467546  3.9084484  0.9333333
+    O24               -1.4523380  4.0357332  -9.374053  3.9159831  0.8000000
+    abs(C1 - C2)      -1.6762185  2.2522648  -5.037589  2.1829951  0.4000000
+    log(C1)          -37.6129176 25.1713972 -74.916506  5.2173036  0.1333333
+    O22:abs(C1 - C2)  -0.3674371  2.0550348  -3.832877  2.5730553  0.9333333
+    O23:abs(C1 - C2)   0.9772678  2.9232766  -2.436185  6.1058867  0.9333333
+    O24:abs(C1 - C2)   1.6501918  2.6621728  -1.579312  7.0373794  0.6666667
+                      GR-crit    MCE/SD
+    (Intercept)      2.304005 0.2581989
+    M22              1.542044 0.2581989
+    M23              2.349055 0.2581989
+    M24              1.858230 0.2581989
+    O22              1.783494 0.2581989
+    O23              2.265926 0.2581989
+    O24              1.608800 0.2581989
+    abs(C1 - C2)     1.800651 0.2581989
+    log(C1)          2.219096 0.2581989
+    O22:abs(C1 - C2) 1.716634 0.2581989
+    O23:abs(C1 - C2) 2.006201 0.2581989
+    O24:abs(C1 - C2) 1.615587 0.2581989
+    
+    
+    $m6b
+    $m6b$B1
+                             Mean         SD         2.5%       97.5% tail-prob.
+    (Intercept)       26.92223754 10.5313034   10.0570681  39.6752298  0.0000000
+    M22                1.81805963  0.8063847    0.5811473   3.3274653  0.0000000
+    M23                1.89396607  0.7123114    0.5764135   3.0499970  0.0000000
+    M24                2.10279421  0.4780319    1.5727363   2.9862884  0.0000000
+    O22                2.84047306  2.0492974   -0.3344497   5.6873223  0.1333333
+    O23               -0.03319140  1.5909961   -1.8044683   2.9094807  0.8000000
+    O24               -1.28832390  0.8601485   -2.6866719  -0.1115429  0.1333333
+    abs(C1 - C2)       1.55188736  1.1211070    0.1662856   3.7823446  0.0000000
+    log(C1)          -79.89139025 28.1108608 -113.1024755 -30.8951915  0.0000000
+    O22:abs(C1 - C2)  -2.89280994  1.2959271   -4.6281024  -1.1090289  0.0000000
+    O23:abs(C1 - C2)  -0.08485595  1.0249101   -1.8166628   1.2006655  0.8000000
+    O24:abs(C1 - C2)   0.99995508  0.5268156    0.3412651   2.0806930  0.0000000
+                        GR-crit    MCE/SD
+    (Intercept)       1.0257780 0.2495446
+    M22               3.6909405 0.4979577
+    M23               4.2616822 0.2581989
+    M24               5.3371532 0.2581989
+    O22              14.6338395 0.3667523
+    O23               8.3576965 0.6067176
+    O24               3.4413992 0.5929225
+    abs(C1 - C2)     12.2130157 0.3180142
+    log(C1)           0.9538066 0.2424774
+    O22:abs(C1 - C2) 16.9071775 0.3956187
+    O23:abs(C1 - C2) 13.4438937 0.4647268
+    O24:abs(C1 - C2)  2.4760167 0.3253591
+    
+    
+    $m6c
+    $m6c$C1
+                           Mean         SD        2.5%      97.5% tail-prob.
+    (Intercept)      0.23818443 0.16224864 -0.02688502 0.42443982  0.2666667
+    M22              0.05506632 0.06058860 -0.05430741 0.15438182  0.2666667
+    M23              0.04790685 0.04239324 -0.03142928 0.11962193  0.1333333
+    M24              0.05100629 0.06297134 -0.05934168 0.17428296  0.2666667
+    O22              0.02107091 0.12631927 -0.18452050 0.20432265  0.9333333
+    O23              0.10784656 0.18485611 -0.13611414 0.35766479  0.6666667
+    O24              0.17601451 0.27895347 -0.10091612 0.68641698  0.6666667
+    abs(y - C2)      0.01199894 0.03381698 -0.03837084 0.06371013  0.6666667
+    O22:abs(y - C2)  0.01069835 0.02184344 -0.01705079 0.04592463  0.8000000
+    O23:abs(y - C2) -0.01013310 0.03355079 -0.04546665 0.03863924  0.6666667
+    O24:abs(y - C2) -0.04080532 0.06027733 -0.14767808 0.03510488  0.6666667
+                      GR-crit    MCE/SD
+    (Intercept)     14.801910 0.4511355
+    M22              2.211640 0.2581989
+    M23              2.120121       Inf
+    M24              2.858678 0.4518852
+    O22             10.092798 0.3654140
+    O23             25.488847 0.9070842
+    O24             12.475839 0.5490002
+    abs(y - C2)     12.415717 0.3975097
+    O22:abs(y - C2)  6.805461 0.3666798
+    O23:abs(y - C2) 16.153230 0.4156243
+    O24:abs(y - C2)  8.430374 0.8345101
+    
+    
+    $m6d
+    $m6d$SBP
+                       Mean         SD        2.5%        97.5% tail-prob.  GR-crit
+    (Intercept)  99.7817948 8.39470084  89.3352335 113.32384539  0.0000000 3.039372
+    age           0.3121653 0.03907109   0.2405291   0.36053655  0.0000000 2.461932
+    genderfemale -5.3650565 2.47781419  -8.9481041  -1.09109842  0.0000000 1.190858
+    log(bili)    -7.7145111 3.69730126 -12.3437674  -0.04829816  0.1333333 5.932619
+    exp(creat)    2.3342748 2.82470892  -1.9500822   7.07132440  0.5333333 2.277091
+                      MCE/SD
+    (Intercept)  0.258198890
+    age          0.258198890
+    genderfemale 0.002989379
+    log(bili)    0.336877380
+    exp(creat)   0.258198890
+    
+    
+    $m6e
+    $m6e$SBP
+                        Mean         SD        2.5%        97.5% tail-prob.
+    (Intercept)  104.5793826 7.61245643  96.0846808 117.58106714  0.0000000
+    age            0.3569345 0.08550902   0.2176848   0.48344776  0.0000000
+    genderfemale  -6.7116292 1.99867490  -8.9182474  -2.92016088  0.0000000
+    log(bili)     -6.7088409 3.67832176 -11.7751206  -0.09260933  0.1333333
+    exp(creat)    -0.0820270 2.36341098  -3.7536678   3.83505860  0.9333333
+                  GR-crit    MCE/SD
+    (Intercept)  1.096659 0.2581989
+    age          1.033034 0.2581989
+    genderfemale 2.473875 0.2581989
+    log(bili)    3.012110 0.3563141
+    exp(creat)   1.329099 0.2581989
+    
+    
+    $m6f
+    $m6f$SBP
+                       Mean        SD        2.5%      97.5% tail-prob.  GR-crit
+    (Intercept)  88.4892090 54.399561 -38.8834168 132.996270  0.1333333 2.558937
+    age           0.5356984  1.053229  -0.6552434   2.833327  0.1333333 2.215669
+    genderfemale  2.0852610 16.387256  -9.8158382  41.412134  0.6666667 5.083302
+    log(bili)     0.2125142  0.862233  -0.9627983   2.049233  0.8000000 1.612110
+    exp(creat)    1.9910472  2.943532  -1.4553029   8.078799  0.6666667 3.622846
+                    MCE/SD
+    (Intercept)  0.2581989
+    age          0.2581989
+    genderfemale 0.3840236
+    log(bili)    0.2581989
+    exp(creat)   0.2581989
+    
+    
+    $mod7a
+    $mod7a$SBP
+                           Mean        SD       2.5%     97.5% tail-prob.  GR-crit
+    (Intercept)      117.698350  5.729422 107.157271 127.30233  0.0000000 1.150046
+    ns(age, df = 2)1  24.631410  4.704445  16.858414  31.76387  0.0000000 1.323018
+    ns(age, df = 2)2  16.150986  4.276156   9.367797  23.95972  0.0000000 1.374964
+    genderfemale      -7.046120  2.200535 -10.649347  -2.58981  0.0000000 1.265205
+    I(bili^2)        -13.921627 20.072504 -50.066409  13.28015  0.6666667 1.111366
+    I(bili^3)          6.594818 14.949110 -13.960932  33.50849  0.8000000 1.095549
+                        MCE/SD
+    (Intercept)      0.1297580
+    ns(age, df = 2)1 0.1617931
+    ns(age, df = 2)2 0.1825742
+    genderfemale     0.1825742
+    I(bili^2)        0.1825742
+    I(bili^3)        0.1825742
     
     
 

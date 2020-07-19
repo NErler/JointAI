@@ -2,46 +2,6 @@ context("main model functions")
 library("JointAI")
 
 
-test_that("Univariate GLM like models work", {
-  wideDF$xbeta <- runif(nrow(wideDF), 0, 1)
-  wideDF$P1 <- rpois(n = nrow(wideDF), lambda = 2)
-
-  mod <- lm_imp(y ~ 1, data = wideDF)
-  expect_s3_class(mod, "JointAI")
-  expect_equal(mod$models, c(y = 'glm_gaussian_identity'))
-
-  mod <- glm_imp(B1 ~ 1, data = wideDF, family = binomial())
-  expect_s3_class(mod, "JointAI")
-  expect_equal(mod$models, c(B1 = 'glm_binomial_logit'))
-
-  mod <- glm_imp(C1 ~ 1, data = wideDF, family = Gamma())
-  expect_s3_class(mod, "JointAI")
-  expect_equal(mod$models, c(C1 = 'glm_gamma_inverse'))
-
-  mod <- glm_imp(P1 ~ 1, data = wideDF, family = poisson())
-  expect_s3_class(mod, "JointAI")
-  expect_equal(mod$models, c(P1 = 'glm_poisson_log'))
-
-  mod <- betareg_imp(xbeta ~ 1, data = wideDF)
-  expect_s3_class(mod, "JointAI")
-  expect_equal(mod$models, c(xbeta = 'beta'))
-
-  mod <- lognorm_imp(C1 ~ 1, data = wideDF)
-  expect_s3_class(mod, "JointAI")
-  expect_equal(mod$models, c(C1 = 'lognorm'))
-
-  mod <- mlogit_imp(M1 ~ 1, data = wideDF)
-  expect_s3_class(mod, "JointAI")
-  expect_equal(mod$models, c(M1 = 'mlogit'))
-
-  mod <- clm_imp(O1 ~ C1, data = wideDF)
-  expect_s3_class(mod, "JointAI")
-  expect_equal(mod$models, c(O1 = 'clm'))
-})
-
-
-
-
 test_that("Univariate glmm like models work", {
   longDF$xbeta <- runif(nrow(longDF), 0, 1)
   longDF$p1 <- rpois(n = nrow(longDF), lambda = 2)

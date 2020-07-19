@@ -10,30 +10,13 @@
 #                  keep_scaled_mcmc = TRUE, seed = 2020, warn = FALSE)
 #
 #
-# test_that("main summary functions", {
-#
-#   expect_s3_class(summary(mymod, missinfo = TRUE), 'summary.JointAI')
-#   expect_type(coef(mymod), 'list')
-#   expect_type(confint(mymod), 'list')
-#   expect_output(print(mymod))
-#   expect_type(coef(summary(mymod)), 'list')
-#
-# })
-#
 # test_that('plots', {
 #   newDF <- longDF
 #   newDF$dat <- Sys.Date() - c(1:nrow(newDF))
 #   # newDF$dat2 <- as.POSIXct.Date(Sys.Date() - c(1:nrow(newDF)))
 #
-#   expect_silent(traceplot(mymod, thin = 2))
-#   expect_silent(densplot(mymod))
-#   expect_s3_class(traceplot(mymod, use_ggplot = TRUE), 'ggplot')
-#   expect_s3_class(densplot(mymod, use_ggplot = TRUE, start = 11, end = 19),
-#                   'ggplot')
-#   expect_s3_class(densplot(mymod, use_ggplot = TRUE, joined = TRUE), 'ggplot')
 #   expect_silent({par(mar = c(2,2,1,0.1));
 #                 plot_all(newDF, idvars = 'id', breaks = 50, ncol = 5)})
-#   expect_silent(plot(MC_error(mymod)))
 # })
 #
 # test_that('print functions', {
@@ -76,35 +59,9 @@
 # })
 #
 #
-# test_that('JM', {
-#   mod <- JM_imp(list(Surv(futime, status != "censored") ~ age + sex + chol +
-#                        stage + hepato + (1 | id),
-#                      hepato ~ day + (1 | id),
-#                      chol ~ day + (1 | id),
-#                      stage ~ age + (1 | id)),
-#                 timevar = 'day', data = JointAI::PBC, n.iter = 5, n.adapt = 2)
-#   expect_s3_class(mod, 'JointAI')
-#   expect_output(list_models(mod))
-#   expect_s3_class(parameters(mod), 'data.frame')
-#   expect_s3_class(summary(mod), 'summary.JointAI')
-# })
 #
 # test_that('md_pattern', {
 #   expect_is(md_pattern(wideDF, plot = FALSE, pattern = TRUE), 'matrix')
 #   expect_silent(md_pattern(wideDF))
 # })
 #
-#
-# test_that("fill_locf works", {
-#   locfdat <- JointAI:::fill_locf(data = JointAI::PBC,
-#                                  fixed = list(Surv(futime, status != "censored") ~
-#                                                 age + sex + hepato + platelet),
-#                                  auxvars = NULL,
-#                                  random = ~ 1 | id, timevar = 'day',
-#                                  groups = JointAI:::get_groups('id',
-#                                                                JointAI::PBC))
-#
-#   expect_s3_class(locfdat, 'data.frame')
-#   expect_equal(colSums(is.na(locfdat[, c('hepato', 'platelet')])),
-#                c('hepato' = 0, 'platelet' = 0))
-# })

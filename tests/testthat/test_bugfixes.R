@@ -1,11 +1,6 @@
 context("bugfixes's")
 library("JointAI")
 
-test_that("bugfix parameters for ordinal", {
-  expect_equal(class(clm_imp(O1 ~ C1 + B1, data = wideDF)), "JointAI")
-  expect_equal(class(clm_imp(O1 ~ 1, data = wideDF)), "JointAI")
-  expect_equal(class(clm_imp(O1 ~ C1 + B1 + C2, data = wideDF)), "JointAI")
-})
 
 
 test_that("bugfix in model with ordinal longitudinal covariate", {
@@ -23,10 +18,3 @@ test_that('parmeters for clmm models without baseline covarites work', {
                   'JointAI')
 })
 
-
-test_that('two-part trafo is pasted correctly', {
-  library(splines)
-  expect_s3_class(lm_imp(SBP ~ ns(age, df = 2) + gender + I(bili^2) + I(bili^3),
-                         data = NHANES),
-                  'JointAI')
-})
