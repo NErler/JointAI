@@ -55,9 +55,9 @@ make_filename <- function(modeldir, modelname, keep_model, overwrite, mess) {
 get_initial_values <- function(inits, seed, n.chains, warn) {
   # check if initial values are supplied or should be generated
 
-  old <- .Random.seed
+  oldseed <- .Random.seed
   on.exit({
-    .Random.seed <<- old
+    .Random.seed <<- oldseed
   })
 
   if (is.null(inits)) {
