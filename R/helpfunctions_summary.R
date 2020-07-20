@@ -77,10 +77,19 @@ get_Dmat <- function(object, varname) {
                as.numeric))
     }, pat = pat, Ds = Ds)
 
+    contr_list <- lapply(object$Mlist$refs, attr, "contr_matrix")
+
     Dmat <- lapply(remove_grouping(object$random[[varname]]), function(r) {
       term <- terms(r)
-      dimnam <- c(if (attr(term, 'intercept') == 1) "(Intercept)",
-                  attr(term, 'term.labels'))
+
+      dimnam <- colnames(
+        model.matrix(r, object$data,
+                     contrasts.arg = contr_list[intersect(
+                       names(contr_list),
+                       sapply(attr(term, "variables")[-1], deparse,
+                              width.cutoff = 500)
+                     )]
+        ))
 
       matrix(nrow = length(dimnam), ncol = length(dimnam),
              dimnames = list(dimnam, dimnam))
