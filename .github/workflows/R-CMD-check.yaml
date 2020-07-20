@@ -64,11 +64,23 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
-          
-#      - name: Install JAGS on macOS
-#        if: runner.os == 'macOS'
-#        run: |
-#          brew install jags
+
+      - name: Install JAGS macOS
+        if: runner.os == 'macOS'
+        run: |
+          rm '/usr/local/bin/gfortran'
+          brew install jags
+
+      - name: Download JAGS Windows
+        if: runner.os == 'Windows'
+        run: (New-Object System.Net.WebClient).DownloadFile('https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Windows/JAGS-4.3.0.exe', 'C:\JAGS-4.3.0.exe')
+        shell: powershell
+
+      - name: Install JAGS Windows
+        if: runner.os == 'Windows'
+        run: C:\JAGS-4.3.0.exe /S
+        shell: cmd
+
 
       - name: Install dependencies
         run: |
