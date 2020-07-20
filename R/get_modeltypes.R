@@ -26,12 +26,11 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
   }
 
   # check that all variables are found in the data
-  allvars <- unique(c(all_vars(c(fixed, random, auxvars)),
-                      names(models), timevar))
+  allvars <- unique(c(all_vars(c(fixed, random, auxvars)), timevar))
 
-  if (any(!allvars %in% names(data))) {
+  if (any(!names(models) %in% names(data))) {
     errormsg("Variable(s) %s were not found in the data." ,
-             paste(dQuote(allvars[!allvars %in% names(data)]), collapse = ", "))
+             paste_and(dQuote(names(models)[!names(models) %in% names(data)])))
   }
 
 
