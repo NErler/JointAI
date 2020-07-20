@@ -1388,7 +1388,7 @@
     
     Call:
     lme_imp(fixed = y ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -1410,7 +1410,7 @@
     
     Call:
     glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "identity"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -1432,7 +1432,7 @@
     
     Call:
     glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "log"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -1454,7 +1454,7 @@
     
     Call:
     glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "inverse"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -1476,7 +1476,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "logit"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -1493,7 +1493,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "probit"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -1510,7 +1510,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "log"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -1527,7 +1527,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "cloglog"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -1544,7 +1544,7 @@
     
     Call:
     glme_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, family = Gamma(link = "inverse"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian Gamma mixed model for "L1" 
     
@@ -1566,7 +1566,7 @@
     
     Call:
     glme_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, family = Gamma(link = "log"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian Gamma mixed model for "L1" 
     
@@ -1588,7 +1588,7 @@
     
     Call:
     glme_imp(fixed = p1 ~ 1 + (1 | id), data = longDF, family = poisson(link = "log"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian poisson mixed model for "p1" 
     
@@ -1605,7 +1605,7 @@
     
     Call:
     glme_imp(fixed = p1 ~ 1 + (1 | id), data = longDF, family = poisson(link = "identity"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian poisson mixed model for "p1" 
     
@@ -1622,7 +1622,7 @@
     
     Call:
     lognormmm_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian log-normal mixed model for "L1" 
     
@@ -1644,7 +1644,7 @@
     
     Call:
     betamm_imp(fixed = Be1 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian beta mixed model for "Be1" 
     
@@ -1661,7 +1661,7 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -1683,7 +1683,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ C1 + (1 | id), data = longDF, family = binomial(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -1700,7 +1700,7 @@
     
     Call:
     glme_imp(fixed = L1 ~ C1 + (1 | id), data = longDF, family = Gamma(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian Gamma mixed model for "L1" 
     
@@ -1722,7 +1722,7 @@
     
     Call:
     glme_imp(fixed = p1 ~ C1 + (1 | id), data = longDF, family = poisson(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian poisson mixed model for "p1" 
     
@@ -1739,7 +1739,7 @@
     
     Call:
     lognormmm_imp(fixed = L1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian log-normal mixed model for "L1" 
     
@@ -1761,7 +1761,7 @@
     
     Call:
     betamm_imp(fixed = Be1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian beta mixed model for "Be1" 
     
@@ -1778,7 +1778,7 @@
     
     Call:
     lme_imp(fixed = y ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -1800,7 +1800,7 @@
     
     Call:
     glme_imp(fixed = b2 ~ c2 + (1 | id), data = longDF, family = binomial(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b2" 
     
@@ -1817,7 +1817,7 @@
     
     Call:
     glme_imp(fixed = L1mis ~ c2 + (1 | id), data = longDF, family = Gamma(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian Gamma mixed model for "L1mis" 
     
@@ -1839,7 +1839,7 @@
     
     Call:
     glme_imp(fixed = p2 ~ c2 + (1 | id), data = longDF, family = poisson(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian poisson mixed model for "p2" 
     
@@ -1856,7 +1856,7 @@
     
     Call:
     lognormmm_imp(fixed = L1mis ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian log-normal mixed model for "L1mis" 
     
@@ -1878,7 +1878,7 @@
     
     Call:
     betamm_imp(fixed = Be2 ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian beta mixed model for "Be2" 
     
@@ -1895,7 +1895,7 @@
     
     Call:
     lme_imp(fixed = y ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -1917,7 +1917,7 @@
     
     Call:
     glme_imp(fixed = b2 ~ 0 + C2 + (1 | id), data = longDF, family = binomial(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b2" 
     
@@ -1934,7 +1934,7 @@
     
     Call:
     glme_imp(fixed = L1mis ~ 0 + C2 + (1 | id), data = longDF, family = Gamma(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian Gamma mixed model for "L1mis" 
     
@@ -1956,7 +1956,7 @@
     
     Call:
     glme_imp(fixed = p2 ~ 0 + C2 + (1 | id), data = longDF, family = poisson(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian poisson mixed model for "p2" 
     
@@ -1973,7 +1973,7 @@
     
     Call:
     lognormmm_imp(fixed = L1mis ~ 0 + C2 + (1 | id), data = longDF, 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian log-normal mixed model for "L1mis" 
     
@@ -1995,7 +1995,7 @@
     
     Call:
     betamm_imp(fixed = Be2 ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian beta mixed model for "Be2" 
     
@@ -2013,7 +2013,8 @@
     Call:
     lme_imp(fixed = c1 ~ c2 + B2 + p2 + L1mis + Be2 + (1 | id), data = longDF, 
         n.adapt = 5, n.iter = 10, models = c(p2 = "glmm_poisson_log", 
-            L1mis = "glmm_gamma_inverse", Be2 = "glmm_beta"), seed = 2020)
+            L1mis = "glmm_gamma_inverse", Be2 = "glmm_beta"), seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "c1" 
     
@@ -2037,7 +2038,7 @@
     lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF, 
         n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_inverse", 
             p2 = "glmm_poisson_identity", b2 = "glmm_binomial_probit", 
-            L1mis = "glmm_lognorm"), seed = 2020)
+            L1mis = "glmm_lognorm"), seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "c1" 
     
@@ -2061,7 +2062,8 @@
     lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF, 
         n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_log", 
             p2 = "glmm_poisson_identity", L1mis = "glmm_gamma_log", 
-            b2 = "glmm_binomial_log"), no_model = "time", seed = 2020)
+            b2 = "glmm_binomial_log"), no_model = "time", seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "c1" 
     
@@ -2086,7 +2088,7 @@
         n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_log", 
             p2 = "glmm_poisson_identity", L1mis = "glmm_gamma_log", 
             b2 = "glmm_binomial_log"), trunc = list(Be2 = c(0, 1)), 
-        shrinkage = "ridge", seed = 2020)
+        shrinkage = "ridge", seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "c1" 
     
@@ -2109,7 +2111,7 @@
     Call:
     lme_imp(fixed = y ~ M2 + o2 * abs(C1 - c2) + log(C1) + time + 
         I(time^2) + (time | id), data = longDF, n.adapt = 5, n.iter = 10, 
-        seed = 2020)
+        seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2141,7 +2143,7 @@
         (time + I(time^2) | id), data = longDF, family = binomial(), 
         n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
             L1mis = "glmm_gamma_inverse", Be2 = "glmm_beta"), shrinkage = "ridge", 
-        seed = 2020, warn = FALSE)
+        seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -2160,7 +2162,8 @@
     
     Call:
     lme_imp(fixed = y ~ b2 + C1 + C2 + time + (0 + time | id), data = longDF, 
-        n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020)
+        n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2183,7 +2186,7 @@
     Call:
     glme_imp(fixed = b1 ~ c1 + C2 + B1 + time + (0 + time + I(time^2) | 
         id), data = longDF, family = binomial(), n.adapt = 5, n.iter = 10, 
-        shrinkage = "ridge", seed = 2020, warn = FALSE)
+        shrinkage = "ridge", seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -2225,7 +2228,8 @@
     
     Call:
     lme_imp(fixed = y ~ bs(time, df = 3), data = longDF, random = ~bs(time, 
-        df = 3) | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        df = 3) | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2288,7 +2292,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
-        random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2346,7 +2351,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
-        random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2371,7 +2377,8 @@
     
     Call:
     lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time + 
-        c2 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020)
+        c2 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2395,7 +2402,8 @@
     
     Call:
     lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time + 
-        c2 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2419,7 +2427,8 @@
     
     Call:
     lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time + 
-        c1 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020)
+        c1 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2443,7 +2452,8 @@
     
     Call:
     lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time + 
-        c1 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        c1 | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2467,7 +2477,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
-        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2494,7 +2505,7 @@
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
         random = ~time + c2 | id, n.adapt = 5, n.iter = 10, no_model = "time", 
-        seed = 2020)
+        seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2521,7 +2532,7 @@
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
         random = ~time + c2 | id, n.adapt = 5, n.iter = 10, no_model = c("time", 
-            "c1"), seed = 2020)
+            "c1"), seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2547,7 +2558,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
-        random = ~time + c1 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time + c1 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2574,7 +2586,7 @@
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
         random = ~time + c1 | id, n.adapt = 5, n.iter = 10, no_model = "time", 
-        seed = 2020)
+        seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2600,7 +2612,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
-        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2626,7 +2639,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
-        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2652,7 +2666,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 * time, data = longDF, random = ~time + 
-        I(time^2) | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        I(time^2) | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2678,7 +2693,8 @@
     
     Call:
     lme_imp(fixed = y ~ c1 * b1 + o1, data = longDF, random = ~b1 | 
-        id, n.adapt = 5, n.iter = 10, seed = 2020)
+        id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2702,7 +2718,7 @@
     
     Call:
     lme_imp(fixed = y ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2726,7 +2742,7 @@
     
     Call:
     glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "identity"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2750,7 +2766,7 @@
     
     Call:
     glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "log"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2774,7 +2790,7 @@
     
     Call:
     glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "inverse"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -2798,7 +2814,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "logit"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -2817,7 +2833,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "probit"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -2836,7 +2852,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "log"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -2855,7 +2871,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "cloglog"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -2874,7 +2890,7 @@
     
     Call:
     glme_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, family = Gamma(link = "inverse"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian Gamma mixed model for "L1" 
     
@@ -2898,7 +2914,7 @@
     
     Call:
     glme_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, family = Gamma(link = "log"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian Gamma mixed model for "L1" 
     
@@ -2922,7 +2938,7 @@
     
     Call:
     glme_imp(fixed = p1 ~ 1 + (1 | id), data = longDF, family = poisson(link = "log"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian poisson mixed model for "p1" 
     
@@ -2941,7 +2957,7 @@
     
     Call:
     glme_imp(fixed = p1 ~ 1 + (1 | id), data = longDF, family = poisson(link = "identity"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian poisson mixed model for "p1" 
     
@@ -2960,7 +2976,7 @@
     
     Call:
     lognormmm_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian log-normal mixed model for "L1" 
     
@@ -2984,7 +3000,7 @@
     
     Call:
     betamm_imp(fixed = Be1 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian beta mixed model for "Be1" 
     
@@ -3003,7 +3019,7 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3027,7 +3043,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ C1 + (1 | id), data = longDF, family = binomial(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -3046,7 +3062,7 @@
     
     Call:
     glme_imp(fixed = L1 ~ C1 + (1 | id), data = longDF, family = Gamma(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian Gamma mixed model for "L1" 
     
@@ -3070,7 +3086,7 @@
     
     Call:
     glme_imp(fixed = p1 ~ C1 + (1 | id), data = longDF, family = poisson(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian poisson mixed model for "p1" 
     
@@ -3089,7 +3105,7 @@
     
     Call:
     lognormmm_imp(fixed = L1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian log-normal mixed model for "L1" 
     
@@ -3113,7 +3129,7 @@
     
     Call:
     betamm_imp(fixed = Be1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian beta mixed model for "Be1" 
     
@@ -3132,7 +3148,7 @@
     
     Call:
     lme_imp(fixed = y ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3156,7 +3172,7 @@
     
     Call:
     glme_imp(fixed = b2 ~ c2 + (1 | id), data = longDF, family = binomial(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b2" 
     
@@ -3175,7 +3191,7 @@
     
     Call:
     glme_imp(fixed = L1mis ~ c2 + (1 | id), data = longDF, family = Gamma(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian Gamma mixed model for "L1mis" 
     
@@ -3199,7 +3215,7 @@
     
     Call:
     glme_imp(fixed = p2 ~ c2 + (1 | id), data = longDF, family = poisson(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian poisson mixed model for "p2" 
     
@@ -3218,7 +3234,7 @@
     
     Call:
     lognormmm_imp(fixed = L1mis ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian log-normal mixed model for "L1mis" 
     
@@ -3242,7 +3258,7 @@
     
     Call:
     betamm_imp(fixed = Be2 ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian beta mixed model for "Be2" 
     
@@ -3261,7 +3277,7 @@
     
     Call:
     lme_imp(fixed = y ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3285,7 +3301,7 @@
     
     Call:
     glme_imp(fixed = b2 ~ 0 + C2 + (1 | id), data = longDF, family = binomial(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b2" 
     
@@ -3304,7 +3320,7 @@
     
     Call:
     glme_imp(fixed = L1mis ~ 0 + C2 + (1 | id), data = longDF, family = Gamma(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian Gamma mixed model for "L1mis" 
     
@@ -3328,7 +3344,7 @@
     
     Call:
     glme_imp(fixed = p2 ~ 0 + C2 + (1 | id), data = longDF, family = poisson(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian poisson mixed model for "p2" 
     
@@ -3347,7 +3363,7 @@
     
     Call:
     lognormmm_imp(fixed = L1mis ~ 0 + C2 + (1 | id), data = longDF, 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian log-normal mixed model for "L1mis" 
     
@@ -3371,7 +3387,7 @@
     
     Call:
     betamm_imp(fixed = Be2 ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian beta mixed model for "Be2" 
     
@@ -3391,7 +3407,8 @@
     Call:
     lme_imp(fixed = c1 ~ c2 + B2 + p2 + L1mis + Be2 + (1 | id), data = longDF, 
         n.adapt = 5, n.iter = 10, models = c(p2 = "glmm_poisson_log", 
-            L1mis = "glmm_gamma_inverse", Be2 = "glmm_beta"), seed = 2020)
+            L1mis = "glmm_gamma_inverse", Be2 = "glmm_beta"), seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "c1" 
     
@@ -3417,7 +3434,7 @@
     lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF, 
         n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_inverse", 
             p2 = "glmm_poisson_identity", b2 = "glmm_binomial_probit", 
-            L1mis = "glmm_lognorm"), seed = 2020)
+            L1mis = "glmm_lognorm"), seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "c1" 
     
@@ -3443,7 +3460,8 @@
     lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF, 
         n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_log", 
             p2 = "glmm_poisson_identity", L1mis = "glmm_gamma_log", 
-            b2 = "glmm_binomial_log"), no_model = "time", seed = 2020)
+            b2 = "glmm_binomial_log"), no_model = "time", seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "c1" 
     
@@ -3470,7 +3488,7 @@
         n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_log", 
             p2 = "glmm_poisson_identity", L1mis = "glmm_gamma_log", 
             b2 = "glmm_binomial_log"), trunc = list(Be2 = c(0, 1)), 
-        shrinkage = "ridge", seed = 2020)
+        shrinkage = "ridge", seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "c1" 
     
@@ -3495,7 +3513,7 @@
     Call:
     lme_imp(fixed = y ~ M2 + o2 * abs(C1 - c2) + log(C1) + time + 
         I(time^2) + (time | id), data = longDF, n.adapt = 5, n.iter = 10, 
-        seed = 2020)
+        seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3529,7 +3547,7 @@
         (time + I(time^2) | id), data = longDF, family = binomial(), 
         n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
             L1mis = "glmm_gamma_inverse", Be2 = "glmm_beta"), shrinkage = "ridge", 
-        seed = 2020, warn = FALSE)
+        seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -3550,7 +3568,8 @@
     
     Call:
     lme_imp(fixed = y ~ b2 + C1 + C2 + time + (0 + time | id), data = longDF, 
-        n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020)
+        n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3575,7 +3594,7 @@
     Call:
     glme_imp(fixed = b1 ~ c1 + C2 + B1 + time + (0 + time + I(time^2) | 
         id), data = longDF, family = binomial(), n.adapt = 5, n.iter = 10, 
-        shrinkage = "ridge", seed = 2020, warn = FALSE)
+        shrinkage = "ridge", seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian binomial mixed model for "b1" 
     
@@ -3621,7 +3640,8 @@
     
     Call:
     lme_imp(fixed = y ~ bs(time, df = 3), data = longDF, random = ~bs(time, 
-        df = 3) | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        df = 3) | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3688,7 +3708,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
-        random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3750,7 +3771,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
-        random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3777,7 +3799,8 @@
     
     Call:
     lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time + 
-        c2 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020)
+        c2 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3803,7 +3826,8 @@
     
     Call:
     lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time + 
-        c2 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3829,7 +3853,8 @@
     
     Call:
     lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time + 
-        c1 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020)
+        c1 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3855,7 +3880,8 @@
     
     Call:
     lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time + 
-        c1 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        c1 | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3881,7 +3907,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
-        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3910,7 +3937,7 @@
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
         random = ~time + c2 | id, n.adapt = 5, n.iter = 10, no_model = "time", 
-        seed = 2020)
+        seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3939,7 +3966,7 @@
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
         random = ~time + c2 | id, n.adapt = 5, n.iter = 10, no_model = c("time", 
-            "c1"), seed = 2020)
+            "c1"), seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3967,7 +3994,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
-        random = ~time + c1 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time + c1 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -3996,7 +4024,7 @@
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
         random = ~time + c1 | id, n.adapt = 5, n.iter = 10, no_model = "time", 
-        seed = 2020)
+        seed = 2020, warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -4024,7 +4052,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
-        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -4052,7 +4081,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
-        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -4080,7 +4110,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 * time, data = longDF, random = ~time + 
-        I(time^2) | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        I(time^2) | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -4108,7 +4139,8 @@
     
     Call:
     lme_imp(fixed = y ~ c1 * b1 + o1, data = longDF, random = ~b1 | 
-        id, n.adapt = 5, n.iter = 10, seed = 2020)
+        id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
      Bayesian linear mixed model for "y" 
     
@@ -5038,7 +5070,7 @@
     
     Call:
     lme_imp(fixed = y ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5084,7 +5116,7 @@
     
     Call:
     glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "identity"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5130,7 +5162,7 @@
     
     Call:
     glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "log"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5176,7 +5208,7 @@
     
     Call:
     glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "inverse"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5222,7 +5254,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "logit"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5264,7 +5296,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "probit"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5306,7 +5338,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "log"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5348,7 +5380,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "cloglog"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5390,7 +5422,7 @@
     
     Call:
     glme_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, family = Gamma(link = "inverse"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5436,7 +5468,7 @@
     
     Call:
     glme_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, family = Gamma(link = "log"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5482,7 +5514,7 @@
     
     Call:
     glme_imp(fixed = p1 ~ 1 + (1 | id), data = longDF, family = poisson(link = "log"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5524,7 +5556,7 @@
     
     Call:
     glme_imp(fixed = p1 ~ 1 + (1 | id), data = longDF, family = poisson(link = "identity"), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5566,7 +5598,7 @@
     
     Call:
     lognormmm_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5612,7 +5644,7 @@
     
     Call:
     betamm_imp(fixed = Be1 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5658,7 +5690,7 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5706,7 +5738,7 @@
     
     Call:
     glme_imp(fixed = b1 ~ C1 + (1 | id), data = longDF, family = binomial(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5750,7 +5782,7 @@
     
     Call:
     glme_imp(fixed = L1 ~ C1 + (1 | id), data = longDF, family = Gamma(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5798,7 +5830,7 @@
     
     Call:
     glme_imp(fixed = p1 ~ C1 + (1 | id), data = longDF, family = poisson(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5842,7 +5874,7 @@
     
     Call:
     lognormmm_imp(fixed = L1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5890,7 +5922,7 @@
     
     Call:
     betamm_imp(fixed = Be1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5938,7 +5970,7 @@
     
     Call:
     lme_imp(fixed = y ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -5986,7 +6018,7 @@
     
     Call:
     glme_imp(fixed = b2 ~ c2 + (1 | id), data = longDF, family = binomial(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6030,7 +6062,7 @@
     
     Call:
     glme_imp(fixed = L1mis ~ c2 + (1 | id), data = longDF, family = Gamma(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6078,7 +6110,7 @@
     
     Call:
     glme_imp(fixed = p2 ~ c2 + (1 | id), data = longDF, family = poisson(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6122,7 +6154,7 @@
     
     Call:
     lognormmm_imp(fixed = L1mis ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6170,7 +6202,7 @@
     
     Call:
     betamm_imp(fixed = Be2 ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6218,7 +6250,7 @@
     
     Call:
     lme_imp(fixed = y ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6265,7 +6297,7 @@
     
     Call:
     glme_imp(fixed = b2 ~ 0 + C2 + (1 | id), data = longDF, family = binomial(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6308,7 +6340,7 @@
     
     Call:
     glme_imp(fixed = L1mis ~ 0 + C2 + (1 | id), data = longDF, family = Gamma(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6355,7 +6387,7 @@
     
     Call:
     glme_imp(fixed = p2 ~ 0 + C2 + (1 | id), data = longDF, family = poisson(), 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6398,7 +6430,7 @@
     
     Call:
     lognormmm_imp(fixed = L1mis ~ 0 + C2 + (1 | id), data = longDF, 
-        n.adapt = 5, n.iter = 10, seed = 2020)
+        n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6445,7 +6477,7 @@
     
     Call:
     betamm_imp(fixed = Be2 ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5, 
-        n.iter = 10, seed = 2020)
+        n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6493,7 +6525,8 @@
     Call:
     lme_imp(fixed = c1 ~ c2 + B2 + p2 + L1mis + Be2 + (1 | id), data = longDF, 
         n.adapt = 5, n.iter = 10, models = c(p2 = "glmm_poisson_log", 
-            L1mis = "glmm_gamma_inverse", Be2 = "glmm_beta"), seed = 2020)
+            L1mis = "glmm_gamma_inverse", Be2 = "glmm_beta"), seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6551,7 +6584,7 @@
     lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF, 
         n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_inverse", 
             p2 = "glmm_poisson_identity", b2 = "glmm_binomial_probit", 
-            L1mis = "glmm_lognorm"), seed = 2020)
+            L1mis = "glmm_lognorm"), seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6607,7 +6640,8 @@
     lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF, 
         n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_log", 
             p2 = "glmm_poisson_identity", L1mis = "glmm_gamma_log", 
-            b2 = "glmm_binomial_log"), no_model = "time", seed = 2020)
+            b2 = "glmm_binomial_log"), no_model = "time", seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6664,7 +6698,7 @@
         n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_log", 
             p2 = "glmm_poisson_identity", L1mis = "glmm_gamma_log", 
             b2 = "glmm_binomial_log"), trunc = list(Be2 = c(0, 1)), 
-        shrinkage = "ridge", seed = 2020)
+        shrinkage = "ridge", seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6721,7 +6755,7 @@
     Call:
     lme_imp(fixed = y ~ M2 + o2 * abs(C1 - c2) + log(C1) + time + 
         I(time^2) + (time | id), data = longDF, n.adapt = 5, n.iter = 10, 
-        seed = 2020)
+        seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6790,7 +6824,7 @@
         (time + I(time^2) | id), data = longDF, family = binomial(), 
         n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
             L1mis = "glmm_gamma_inverse", Be2 = "glmm_beta"), shrinkage = "ridge", 
-        seed = 2020, warn = FALSE)
+        seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6846,7 +6880,8 @@
     
     Call:
     lme_imp(fixed = y ~ b2 + C1 + C2 + time + (0 + time | id), data = longDF, 
-        n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020)
+        n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -6901,7 +6936,7 @@
     Call:
     glme_imp(fixed = b1 ~ c1 + C2 + B1 + time + (0 + time + I(time^2) | 
         id), data = longDF, family = binomial(), n.adapt = 5, n.iter = 10, 
-        shrinkage = "ridge", seed = 2020, warn = FALSE)
+        shrinkage = "ridge", seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -7007,7 +7042,8 @@
     
     Call:
     lme_imp(fixed = y ~ bs(time, df = 3), data = longDF, random = ~bs(time, 
-        df = 3) | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        df = 3) | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
     
     Posterior summary:
@@ -7130,7 +7166,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
-        random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -7254,7 +7291,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
-        random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -7312,7 +7350,8 @@
     
     Call:
     lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time + 
-        c2 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020)
+        c2 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -7369,7 +7408,8 @@
     
     Call:
     lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time + 
-        c2 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
     
     Posterior summary:
@@ -7426,7 +7466,8 @@
     
     Call:
     lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time + 
-        c1 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020)
+        c1 | id, n.adapt = 5, n.iter = 10, no_model = "time", seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -7486,7 +7527,8 @@
     
     Call:
     lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time + 
-        c1 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        c1 | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
     
     Posterior summary:
@@ -7546,7 +7588,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
-        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -7609,7 +7652,7 @@
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
         random = ~time + c2 | id, n.adapt = 5, n.iter = 10, no_model = "time", 
-        seed = 2020)
+        seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -7672,7 +7715,7 @@
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
         random = ~time + c2 | id, n.adapt = 5, n.iter = 10, no_model = c("time", 
-            "c1"), seed = 2020)
+            "c1"), seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -7734,7 +7777,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
-        random = ~time + c1 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time + c1 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -7797,7 +7841,7 @@
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
         random = ~time + c1 | id, n.adapt = 5, n.iter = 10, no_model = "time", 
-        seed = 2020)
+        seed = 2020, warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -7859,7 +7903,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
-        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -7921,7 +7966,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
-        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        random = ~time + c2 | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+        warn = FALSE, mess = FALSE)
     
     
     Posterior summary:
@@ -7983,7 +8029,8 @@
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 * time, data = longDF, random = ~time + 
-        I(time^2) | id, n.adapt = 5, n.iter = 10, seed = 2020)
+        I(time^2) | id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
     
     Posterior summary:
@@ -8046,7 +8093,8 @@
     
     Call:
     lme_imp(fixed = y ~ c1 * b1 + o1, data = longDF, random = ~b1 | 
-        id, n.adapt = 5, n.iter = 10, seed = 2020)
+        id, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+        mess = FALSE)
     
     
     Posterior summary:
