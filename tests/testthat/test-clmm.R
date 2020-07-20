@@ -5,7 +5,7 @@ library("JointAI")
 run_clmm_models <- function() {
   cat('\nRunning clmm models...\n')
 
-  set.seed(1234)
+  set_seed(1234)
   longDF <- JointAI::longDF
   longDF$x <- factor(sample(1:4, nrow(longDF), replace = TRUE),
                      ordered = TRUE)

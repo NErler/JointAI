@@ -1,7 +1,7 @@
 context("mlogitmm Models")
 library("JointAI")
 
-set.seed(2020)
+set_seed(2020)
 longDF$m1 <- factor(sample(c('A', 'B', 'C'), size = nrow(longDF),
                            replace = TRUE))
 longDF$m2 <- factor(sample(c('A', 'B', 'C'), size = nrow(longDF),
@@ -188,6 +188,6 @@ test_that("wrong models give errors", {
 
   # model formula that can't be used
   expect_s3_class(mlogitmm_imp(m2 ~ I(O1^2) + C1 + C2 + (1 | id), warn = FALSE,
-                           data = longDF), "JointAI_errored")
+                               data = longDF), "JointAI_errored")
 
 })

@@ -99,7 +99,7 @@ test_that("correct imputation methods are chosen", {
                  M2 = 'mlogit', C2 = 'lm', O2 = 'clm',
                  B2 = 'glm_binomial_logit'))
 
-  set.seed(123)
+  set_seed(123)
   longDF$m2 <- factor(sample(LETTERS[1:3], size = nrow(longDF), replace = TRUE))
   longDF$m2[sample.int(nrow(longDF), size = 50)] <- NA
 

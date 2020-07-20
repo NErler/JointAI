@@ -2,7 +2,7 @@ context("GLM Models")
 library("JointAI")
 library("splines")
 
-set.seed(1234)
+set_seed(1234)
 wideDF <- JointAI::wideDF
 
 # poisson variables
