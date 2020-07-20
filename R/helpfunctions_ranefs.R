@@ -159,8 +159,8 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_list, parelmts, lp) {
       } else {
         do.call(rbind, sapply(hc_list[[k]][[ii]]$interact, function(x) {
           data.frame(term = attr(x, 'interaction'),
-                     matrix = names(x$elmts[attr(x, 'elements') != ii]),
-                     cols = x$elmts[attr(x, 'elements') != ii],
+                     matrix = names(x$interterm),
+                     cols = x$interterm,
                      parelmts = unname(parelmts[[names(x$interterm)]][
                        attr(x, 'interaction')]),
                      stringsAsFactors = FALSE
