@@ -115,9 +115,9 @@
     Potential scale reduction factors:
     
                   Point est. Upper C.I.
-    (Intercept)         1.01       1.17
-    tau_Be1             1.07       1.39
-    D_Be1_id[1,1]       1.23       1.98
+    (Intercept)         1.35       2.15
+    tau_Be1             1.51       2.40
+    D_Be1_id[1,1]       2.50       5.32
     
     
     $m1a
@@ -172,10 +172,10 @@
     Potential scale reduction factors:
     
                   Point est. Upper C.I.
-    (Intercept)         1.61       2.77
-    C1                  1.64       2.86
-    tau_Be1             1.38       2.09
-    D_Be1_id[1,1]       1.37       2.51
+    (Intercept)         1.10       1.42
+    C1                  1.09       1.39
+    tau_Be1             2.01       3.57
+    D_Be1_id[1,1]       1.77       3.14
     
     
     $m2a
@@ -230,10 +230,10 @@
     Potential scale reduction factors:
     
                   Point est. Upper C.I.
-    (Intercept)         1.60       3.12
-    c2                  1.17       1.81
-    tau_Be2             1.60       2.60
-    D_Be2_id[1,1]       2.17       4.63
+    (Intercept)         4.69      10.35
+    c2                  1.18       1.72
+    tau_Be2             1.53       2.81
+    D_Be2_id[1,1]       6.14      14.07
     
     
     $m3a
@@ -283,23 +283,23 @@
     Potential scale reduction factors:
     
                   Point est. Upper C.I.
-    C2                  2.07       4.96
-    tau_Be2             1.22       2.02
-    D_Be2_id[1,1]       2.61       6.07
+    C2                  1.85       4.13
+    tau_Be2             1.57       2.68
+    D_Be2_id[1,1]       3.58      13.81
     
     
     $m4a
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.08       1.43
-    B21                1.50       3.25
-    c2                 1.09       1.41
-    p2                 1.30       2.03
-    L1mis              1.41       2.30
-    Be2                1.07       1.35
-    sigma_c1           1.32       2.07
-    D_c1_id[1,1]       1.31       2.08
+    (Intercept)        2.79       5.57
+    B21                2.57       5.89
+    c2                 1.68       2.89
+    p2                 3.18       5.85
+    L1mis              1.01       1.13
+    Be2                1.22       1.99
+    sigma_c1           1.15       1.76
+    D_c1_id[1,1]       2.00       4.01
     
     
     $m4b
@@ -332,14 +332,14 @@
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)       1.005       1.18
-    c2                1.342       2.01
-    b21               3.212       6.37
-    p2                1.347       2.08
-    L1mis             1.219       1.82
-    Be2               1.163       1.58
-    sigma_c1          0.985       1.11
-    D_c1_id[1,1]      1.994       4.03
+    (Intercept)        1.09       1.34
+    c2                 1.92       3.35
+    b21                1.16       1.56
+    p2                 1.93       3.74
+    L1mis              1.06       1.31
+    Be2                0.98       1.08
+    sigma_c1           1.33       2.10
+    D_c1_id[1,1]       1.24       2.44
     
     
     $m5a
@@ -370,17 +370,17 @@
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.10       1.44
-    L1mis              1.49       2.53
-    abs(c1 - C2)       1.55       2.66
-    log(Be2)           1.45       2.46
-    time               1.42       2.37
-    D_b1_id[1,1]       1.83       3.42
-    D_b1_id[1,2]       2.67       5.70
-    D_b1_id[2,2]       2.77       5.31
-    D_b1_id[1,3]       1.57       2.61
-    D_b1_id[2,3]       3.77       7.09
-    D_b1_id[3,3]       4.25       9.02
+    (Intercept)        1.38       2.14
+    L1mis              1.23       2.24
+    abs(c1 - C2)       1.45       2.44
+    log(Be2)           1.83       3.70
+    time               1.48       2.40
+    D_b1_id[1,1]       4.75      11.53
+    D_b1_id[1,2]       2.86       6.74
+    D_b1_id[2,2]       4.45       9.89
+    D_b1_id[1,3]       3.46       8.39
+    D_b1_id[2,3]       3.07       6.40
+    D_b1_id[3,3]       3.46      10.30
     
     
     $m6a
@@ -854,10 +854,10 @@
     D_L1_id[1,1]  0.12 0.0192 0.064    0.30
     
     $m0f1
-                     est  MCSE    SD MCSE/SD
-    (Intercept)   0.0068 0.028 0.091    0.30
-    tau_Be1       5.1873 0.082 0.452    0.18
-    D_Be1_id[1,1] 0.2182 0.021 0.113    0.18
+                   est  MCSE    SD MCSE/SD
+    (Intercept)   1.29 0.019 0.073    0.26
+    tau_Be1       4.33 0.046 0.250    0.18
+    D_Be1_id[1,1] 0.21 0.036 0.151    0.24
     
     $m1a
                    est    MCSE      SD MCSE/SD
@@ -894,10 +894,10 @@
     
     $m1f
                     est  MCSE   SD MCSE/SD
-    (Intercept)    1.02 0.800 3.67    0.22
-    C1            -1.37 1.106 5.00    0.22
-    tau_Be1        5.26 0.066 0.29    0.23
-    D_Be1_id[1,1]  0.27 0.061 0.26    0.23
+    (Intercept)    5.16 1.428 3.86    0.37
+    C1            -5.18 1.960 5.27    0.37
+    tau_Be1        4.51 0.118 0.38    0.31
+    D_Be1_id[1,1]  0.26 0.038 0.16    0.24
     
     $m2a
                   est   MCSE     SD MCSE/SD
@@ -933,11 +933,11 @@
     D_L1mis_id[1,1]  0.15 0.017 0.065    0.26
     
     $m2f
-                     est  MCSE    SD MCSE/SD
-    (Intercept)   0.1006 0.022 0.104    0.21
-    c2            0.0054 0.072 0.364    0.20
-    tau_Be2       5.4472 0.086 0.470    0.18
-    D_Be2_id[1,1] 0.2362 0.031 0.096    0.32
+                    est MCSE   SD MCSE/SD
+    (Intercept)   -5.31 0.39 0.81    0.48
+    c2            -0.66 0.20 1.08    0.18
+    tau_Be2        1.29 0.13 0.32    0.40
+    D_Be2_id[1,1]  7.96 2.02 3.35    0.60
     
     $m3a
                    est    MCSE      SD MCSE/SD
@@ -968,21 +968,21 @@
     D_L1mis_id[1,1]  1.02 0.0360 0.197    0.18
     
     $m3f
-                     est  MCSE    SD MCSE/SD
-    C2            -0.087 0.043 0.119    0.36
-    tau_Be2        5.178 0.120 0.458    0.26
-    D_Be2_id[1,1]  0.167 0.027 0.091    0.30
+                    est  MCSE    SD MCSE/SD
+    C2            -0.51 0.362  1.18    0.31
+    tau_Be2        1.01 0.056  0.19    0.29
+    D_Be2_id[1,1] 30.68 5.744 11.64    0.49
     
     $m4a
                       est    MCSE      SD MCSE/SD
-    (Intercept)   2.1e-01 2.7e-02 1.8e-01    0.15
-    B21          -8.1e-02 2.9e-02 1.0e-01    0.28
-    c2           -2.9e-02 3.4e-02 3.2e-01    0.11
-    p2            1.1e-02 5.9e-03 3.2e-02    0.18
-    L1mis        -2.9e-12 3.5e-12 1.6e-11    0.22
-    Be2           9.9e-02 3.4e-02 1.8e-01    0.18
-    sigma_c1      6.5e-01 4.5e-03 2.5e-02    0.18
-    D_c1_id[1,1]  4.1e-02 6.3e-03 1.8e-02    0.35
+    (Intercept)   2.2e-01 1.0e-01 2.0e-01    0.50
+    B21          -3.0e-03 1.0e-01 1.6e-01    0.66
+    c2            3.9e-02 7.5e-02 3.6e-01    0.21
+    p2            7.6e-03 1.0e-02 3.1e-02    0.32
+    L1mis        -2.2e-12 2.9e-12 1.6e-11    0.18
+    Be2           2.7e-01 3.3e-02 1.8e-01    0.18
+    sigma_c1      6.4e-01 5.9e-03 3.2e-02    0.18
+    D_c1_id[1,1]  5.0e-02 1.3e-02 2.8e-02    0.47
     
     $m4b
                       est    MCSE      SD MCSE/SD
@@ -1006,14 +1006,14 @@
     
     $m4d
                      est   MCSE    SD MCSE/SD
-    (Intercept)   0.1292 0.0361 0.162    0.22
-    c2           -0.0328 0.0314 0.172    0.18
-    b21          -0.0251 0.0754 0.144    0.52
-    p2            0.0056 0.0034 0.019    0.18
-    L1mis        -0.0564 0.0181 0.099    0.18
-    Be2           0.1929 0.0561 0.193    0.29
-    sigma_c1      0.6320 0.0046 0.025    0.18
-    D_c1_id[1,1]  0.0947 0.0296 0.043    0.69
+    (Intercept)   0.2336 0.0133 0.073    0.18
+    c2           -0.1217 0.0798 0.185    0.43
+    b21           0.0435 0.0184 0.056    0.33
+    p2            0.0093 0.0113 0.023    0.49
+    L1mis        -0.1050 0.0184 0.101    0.18
+    Be2           0.3324 0.0446 0.244    0.18
+    sigma_c1      0.6331 0.0054 0.030    0.18
+    D_c1_id[1,1]  0.0545 0.0086 0.026    0.33
     
     $m5a
                          est   MCSE     SD MCSE/SD
@@ -1038,17 +1038,17 @@
     
     $m5b
                       est    MCSE      SD MCSE/SD
-    (Intercept)   4.6e-01 5.4e-02 3.0e-01    0.18
-    L1mis        -2.6e-11 6.3e-12 3.0e-11    0.21
-    abs(c1 - C2) -8.0e-02 5.0e-02 1.7e-01    0.30
-    log(Be2)      3.2e-01 5.5e-02 2.6e-01    0.21
-    time         -3.0e-03 1.1e-02 5.8e-02    0.18
-    D_b1_id[1,1]  3.6e-01 4.7e-02 9.4e-02    0.51
-    D_b1_id[1,2]  3.4e-02 3.3e-02 9.9e-02    0.33
-    D_b1_id[2,2]  4.6e-01 4.5e-02 9.3e-02    0.48
-    D_b1_id[1,3] -1.3e-01 1.6e-02 6.5e-02    0.24
-    D_b1_id[2,3] -1.5e-01 2.2e-02 1.3e-01    0.17
-    D_b1_id[3,3]  4.2e-01 3.9e-02 1.3e-01    0.30
+    (Intercept)   5.6e-01 5.7e-02 3.1e-01    0.18
+    L1mis        -3.6e-11 1.4e-11 7.8e-11    0.18
+    abs(c1 - C2) -2.5e-01 5.3e-02 2.0e-01    0.26
+    log(Be2)      1.0e-02 6.4e-03 1.6e-02    0.39
+    time         -3.2e-02 1.6e-02 5.1e-02    0.31
+    D_b1_id[1,1]  4.1e-01 1.0e-01 1.9e-01    0.54
+    D_b1_id[1,2]  1.9e-02 7.6e-02 9.6e-02    0.79
+    D_b1_id[2,2]  3.9e-01 6.8e-02 1.3e-01    0.53
+    D_b1_id[1,3] -2.5e-02 1.3e-02 7.5e-02    0.18
+    D_b1_id[2,3] -1.2e-01 2.9e-02 6.4e-02    0.45
+    D_b1_id[3,3]  3.7e-01 8.3e-02 1.3e-01    0.66
     
     $m6a
                    est  MCSE    SD MCSE/SD
@@ -1650,13 +1650,13 @@
     
     Fixed effects:
     (Intercept) 
-       0.006774 
+          1.294 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.2182
+    (Intercept)      0.2073
     
     
     Call:
@@ -1767,13 +1767,13 @@
     
     Fixed effects:
     (Intercept)          C1 
-          1.017      -1.375 
+          5.162      -5.183 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.2709
+    (Intercept)      0.2613
     
     
     Call:
@@ -1884,13 +1884,13 @@
     
     Fixed effects:
     (Intercept)          c2 
-       0.100639    0.005447 
+        -5.3130     -0.6615 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.2362
+    (Intercept)       7.959
     
     
     Call:
@@ -2000,14 +2000,14 @@
      Bayesian beta mixed model for "Be2" 
     
     Fixed effects:
-          C2 
-    -0.08724 
+         C2 
+    -0.5119 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       0.167
+    (Intercept)       30.68
     
     
     Call:
@@ -2020,19 +2020,19 @@
     
     Fixed effects:
     (Intercept)         B21          c2          p2       L1mis         Be2 
-      2.053e-01  -8.113e-02  -2.892e-02   1.056e-02  -2.939e-12   9.894e-02 
+      2.171e-01  -3.033e-03   3.909e-02   7.595e-03  -2.202e-12   2.742e-01 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.04065
+    (Intercept)     0.05035
     
     
     
     Residual standard deviation:
     sigma_c1 
-      0.6495 
+      0.6352 
     
     Call:
     lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF, 
@@ -2094,19 +2094,19 @@
     
     Fixed effects:
     (Intercept)          c2         b21          p2       L1mis         Be2 
-       0.129194   -0.032823   -0.025055    0.005626   -0.056423    0.192874 
+       0.233553   -0.121692    0.043503    0.009268   -0.105000    0.332361 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.09465
+    (Intercept)      0.0545
     
     
     
     Residual standard deviation:
     sigma_c1 
-       0.632 
+      0.6331 
     
     Call:
     lme_imp(fixed = y ~ M2 + o2 * abs(C1 - c2) + log(C1) + time + 
@@ -2149,15 +2149,15 @@
     
     Fixed effects:
      (Intercept)        L1mis abs(c1 - C2)     log(Be2)         time 
-       4.560e-01   -2.636e-11   -8.001e-02    3.230e-01   -3.035e-03 
+       5.574e-01   -3.559e-11   -2.537e-01    1.040e-02   -3.184e-02 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time I(time^2)
-    (Intercept)      0.3625  0.0342   -0.1257
-    time             0.0342  0.4581   -0.1524
-    I(time^2)       -0.1257 -0.1524    0.4153
+                (Intercept)     time I(time^2)
+    (Intercept)     0.41348  0.01893  -0.02534
+    time            0.01893  0.38805  -0.11829
+    I(time^2)      -0.02534 -0.11829   0.36672
     
     
     Call:
@@ -3006,13 +3006,13 @@
     
     Fixed effects:
     (Intercept) 
-       0.006774 
+          1.294 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.2182
+    (Intercept)      0.2073
     
     
     $m1a
@@ -3135,13 +3135,13 @@
     
     Fixed effects:
     (Intercept)          C1 
-          1.017      -1.375 
+          5.162      -5.183 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.2709
+    (Intercept)      0.2613
     
     
     $m2a
@@ -3264,13 +3264,13 @@
     
     Fixed effects:
     (Intercept)          c2 
-       0.100639    0.005447 
+        -5.3130     -0.6615 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.2362
+    (Intercept)       7.959
     
     
     $m3a
@@ -3392,14 +3392,14 @@
      Bayesian beta mixed model for "Be2" 
     
     Fixed effects:
-          C2 
-    -0.08724 
+         C2 
+    -0.5119 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       0.167
+    (Intercept)       30.68
     
     
     $m4a
@@ -3414,19 +3414,19 @@
     
     Fixed effects:
     (Intercept)         B21          c2          p2       L1mis         Be2 
-      2.053e-01  -8.113e-02  -2.892e-02   1.056e-02  -2.939e-12   9.894e-02 
+      2.171e-01  -3.033e-03   3.909e-02   7.595e-03  -2.202e-12   2.742e-01 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.04065
+    (Intercept)     0.05035
     
     
     
     Residual standard deviation:
     sigma_c1 
-      0.6495 
+      0.6352 
     
     $m4b
     
@@ -3494,19 +3494,19 @@
     
     Fixed effects:
     (Intercept)          c2         b21          p2       L1mis         Be2 
-       0.129194   -0.032823   -0.025055    0.005626   -0.056423    0.192874 
+       0.233553   -0.121692    0.043503    0.009268   -0.105000    0.332361 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.09465
+    (Intercept)      0.0545
     
     
     
     Residual standard deviation:
     sigma_c1 
-       0.632 
+      0.6331 
     
     $m5a
     
@@ -3553,15 +3553,15 @@
     
     Fixed effects:
      (Intercept)        L1mis abs(c1 - C2)     log(Be2)         time 
-       4.560e-01   -2.636e-11   -8.001e-02    3.230e-01   -3.035e-03 
+       5.574e-01   -3.559e-11   -2.537e-01    1.040e-02   -3.184e-02 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time I(time^2)
-    (Intercept)      0.3625  0.0342   -0.1257
-    time             0.0342  0.4581   -0.1524
-    I(time^2)       -0.1257 -0.1524    0.4153
+                (Intercept)     time I(time^2)
+    (Intercept)     0.41348  0.01893  -0.02534
+    time            0.01893  0.38805  -0.11829
+    I(time^2)      -0.02534 -0.11829   0.36672
     
     
     $m6a
@@ -4245,7 +4245,7 @@
     $m0f1
     $m0f1$Be1
     (Intercept) 
-     0.00677405 
+       1.294395 
     
     
     $m1a
@@ -4281,7 +4281,7 @@
     $m1f
     $m1f$Be1
     (Intercept)          C1 
-       1.017266   -1.374735 
+       5.161822   -5.182991 
     
     
     $m2a
@@ -4317,7 +4317,7 @@
     $m2f
     $m2f$Be2
     (Intercept)          c2 
-    0.100638946 0.005447377 
+     -5.3129914  -0.6615108 
     
     
     $m3a
@@ -4352,16 +4352,16 @@
     
     $m3f
     $m3f$Be2
-             C2 
-    -0.08724206 
+            C2 
+    -0.5118679 
     
     
     $m4a
     $m4a$c1
       (Intercept)           B21            c2            p2         L1mis 
-     2.053080e-01 -8.113283e-02 -2.892017e-02  1.056257e-02 -2.939364e-12 
+     2.171270e-01 -3.032868e-03  3.909261e-02  7.594766e-03 -2.201879e-12 
               Be2 
-     9.894152e-02 
+     2.742074e-01 
     
     
     $m4b
@@ -4379,7 +4379,7 @@
     $m4d
     $m4d$c1
      (Intercept)           c2          b21           p2        L1mis          Be2 
-     0.129193611 -0.032822897 -0.025054841  0.005625511 -0.056423015  0.192874238 
+     0.233553206 -0.121691737  0.043503152  0.009268028 -0.105000058  0.332361360 
     
     
     $m5a
@@ -4397,7 +4397,7 @@
     $m5b
     $m5b$b1
       (Intercept)         L1mis  abs(c1 - C2)      log(Be2)          time 
-     4.559961e-01 -2.636136e-11 -8.000560e-02  3.229805e-01 -3.034639e-03 
+     5.573593e-01 -3.559413e-11 -2.536982e-01  1.039604e-02 -3.183701e-02 
     
     
     $m6a
@@ -4633,8 +4633,8 @@
     
     $m0f1
     $m0f1$Be1
-                      2.5%     97.5%
-    (Intercept) -0.1183976 0.2388312
+                    2.5%    97.5%
+    (Intercept) 1.177477 1.431413
     
     
     $m1a
@@ -4675,8 +4675,8 @@
     $m1f
     $m1f$Be1
                       2.5%    97.5%
-    (Intercept)  -3.932729 8.257874
-    C1          -11.253365 5.431730
+    (Intercept)  -1.726289 11.17428
+    C1          -13.379256  4.24010
     
     
     $m2a
@@ -4716,9 +4716,9 @@
     
     $m2f
     $m2f$Be2
-                       2.5%     97.5%
-    (Intercept) -0.07758473 0.2960306
-    c2          -0.63332997 0.6064386
+                     2.5%     97.5%
+    (Intercept) -6.466454 -3.901900
+    c2          -2.711384  1.286395
     
     
     $m3a
@@ -4753,19 +4753,19 @@
     
     $m3f
     $m3f$Be2
-             2.5%     97.5%
-    C2 -0.3204452 0.1076555
+            2.5%    97.5%
+    C2 -2.533235 1.375975
     
     
     $m4a
     $m4a$c1
                          2.5%        97.5%
-    (Intercept) -7.705423e-02 6.050301e-01
-    B21         -2.423533e-01 9.115718e-02
-    c2          -5.780950e-01 4.939075e-01
-    p2          -3.934682e-02 6.283881e-02
-    L1mis       -3.136820e-11 2.507369e-11
-    Be2         -2.473504e-01 3.876082e-01
+    (Intercept) -1.166897e-01 5.392707e-01
+    B21         -2.085994e-01 2.421204e-01
+    c2          -6.081160e-01 6.544365e-01
+    p2          -4.103080e-02 6.230622e-02
+    L1mis       -3.072812e-11 2.355415e-11
+    Be2          1.653665e-02 5.868723e-01
     
     
     $m4b
@@ -4791,12 +4791,12 @@
     $m4d
     $m4d$c1
                        2.5%      97.5%
-    (Intercept) -0.13149757 0.43874647
-    c2          -0.33381731 0.25421157
-    b21         -0.22608078 0.25990961
-    p2          -0.02284423 0.03777185
-    L1mis       -0.23048701 0.12395722
-    Be2         -0.15672625 0.45576133
+    (Intercept)  0.11351631 0.36025418
+    c2          -0.47755811 0.15216411
+    b21         -0.05164070 0.14425130
+    p2          -0.02675862 0.05412375
+    L1mis       -0.29109240 0.06410965
+    Be2         -0.08864286 0.74964934
     
     
     $m5a
@@ -4821,11 +4821,11 @@
     $m5b
     $m5b$b1
                           2.5%        97.5%
-    (Intercept)  -2.254582e-02 9.173246e-01
-    L1mis        -7.536009e-11 1.924063e-11
-    abs(c1 - C2) -3.517072e-01 2.425263e-01
-    log(Be2)     -3.205099e-01 7.411132e-01
-    time         -9.661919e-02 1.168435e-01
+    (Intercept)  -1.385434e-01 1.191095e+00
+    L1mis        -1.516869e-10 1.205383e-10
+    abs(c1 - C2) -6.850587e-01 7.435787e-02
+    log(Be2)     -1.965347e-02 3.823071e-02
+    time         -1.104596e-01 7.909789e-02
     
     
     $m6a
@@ -5648,16 +5648,16 @@
     
     
     Posterior summary:
-                   Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 0.00677 0.0915 -0.118 0.239          1    2.31  0.303
+                Mean     SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) 1.29 0.0732 1.18  1.43          0    1.42  0.258
     
     Posterior summary of random effects covariance matrix:
                    Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_Be1_id[1,1] 0.218 0.113 0.0997 0.542               1.02  0.183
+    D_Be1_id[1,1] 0.207 0.151 0.0776 0.529               3.23  0.236
     
     Posterior summary of other parameters:
-            Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    tau_Be1 5.19 0.452 4.49  5.91          0    1.56  0.183
+            Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    tau_Be1 4.33 0.25 3.89  4.82          0    1.61  0.183
     
     
     MCMC settings:
@@ -5927,16 +5927,16 @@
     
     Posterior summary:
                  Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  1.02 3.67  -3.93  8.26      0.867    1.20  0.218
-    C1          -1.37 5.00 -11.25  5.43      0.867    1.23  0.221
+    (Intercept)  5.16 3.86  -1.73 11.17      0.333    1.28  0.370
+    C1          -5.18 5.27 -13.38  4.24      0.400    1.26  0.372
     
     Posterior summary of random effects covariance matrix:
-                   Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_Be1_id[1,1] 0.271 0.26 0.0829 0.811               2.52  0.234
+                   Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_Be1_id[1,1] 0.261 0.157 0.115 0.632              0.983   0.24
     
     Posterior summary of other parameters:
             Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    tau_Be1 5.26 0.291 4.77   5.9          0    1.32  0.227
+    tau_Be1 4.51 0.381 3.87  5.25          0    2.58  0.309
     
     
     MCMC settings:
@@ -6206,17 +6206,17 @@
     
     
     Posterior summary:
-                   Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 0.10064 0.104 -0.0776 0.296      0.333    1.89  0.214
-    c2          0.00545 0.364 -0.6333 0.606      0.933    1.58  0.199
+                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -5.313 0.807 -6.47 -3.90        0.0    6.56  0.484
+    c2          -0.662 1.080 -2.71  1.29        0.6    1.36  0.183
     
     Posterior summary of random effects covariance matrix:
-                   Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_Be2_id[1,1] 0.236 0.0962 0.0823 0.398               1.72   0.32
+                  Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_Be2_id[1,1] 7.96 3.35 3.04  12.3               10.7  0.604
     
     Posterior summary of other parameters:
-            Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    tau_Be2 5.45 0.47  4.5  6.03          0       1  0.183
+            Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    tau_Be2 1.29 0.322 0.776  1.89          0    2.24  0.404
     
     
     MCMC settings:
@@ -6231,14 +6231,14 @@
     
     
     Number and proportion of complete cases:
-            level   #  %
-    id         id  72 72
-    lvlone lvlone 227 69
+            level   #    %
+    id         id  73 73.0
+    lvlone lvlone 246 74.8
     
     Number and proportion of missing values:
-         level # NA % NA
-    Be2 lvlone   50 15.2
-    c2  lvlone   66 20.1
+         level # NA  % NA
+    Be2 lvlone   20  6.08
+    c2  lvlone   66 20.06
     
        level # NA % NA
     id    id    0    0
@@ -6481,16 +6481,16 @@
     
     
     Posterior summary:
-          Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    C2 -0.0872 0.119 -0.32 0.108        0.4    2.03  0.358
+         Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    C2 -0.512 1.18 -2.53  1.38        0.8    3.56  0.306
     
     Posterior summary of random effects covariance matrix:
-                   Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_Be2_id[1,1] 0.167 0.0915 0.0785  0.39               2.18  0.298
+                  Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_Be2_id[1,1] 30.7 11.6 13.1  49.9               8.81  0.494
     
     Posterior summary of other parameters:
-            Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    tau_Be2 5.18 0.458  4.4  6.09          0     1.3  0.263
+            Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    tau_Be2 1.01 0.19 0.736  1.36          0    3.01  0.293
     
     
     MCMC settings:
@@ -6505,13 +6505,13 @@
     
     
     Number and proportion of complete cases:
-            level   #  %
-    id         id  52 52
-    lvlone lvlone 158 48
+            level   #    %
+    id         id  52 52.0
+    lvlone lvlone 169 51.4
     
     Number and proportion of missing values:
          level # NA % NA
-    Be2 lvlone   50 15.2
+    Be2 lvlone   20 6.08
     
        level # NA % NA
     id    id    0    0
@@ -6531,20 +6531,20 @@
     
     Posterior summary:
                      Mean       SD      2.5%    97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  2.05e-01 1.82e-01 -7.71e-02 6.05e-01      0.200    1.75  0.147
-    B21         -8.11e-02 1.04e-01 -2.42e-01 9.12e-02      0.333    3.99  0.280
-    c2          -2.89e-02 3.18e-01 -5.78e-01 4.94e-01      0.933    1.21  0.107
-    p2           1.06e-02 3.23e-02 -3.93e-02 6.28e-02      0.733    1.09  0.183
-    L1mis       -2.94e-12 1.62e-11 -3.14e-11 2.51e-11      0.667    1.37  0.216
-    Be2          9.89e-02 1.84e-01 -2.47e-01 3.88e-01      0.733    1.02  0.183
+    (Intercept)  2.17e-01 2.04e-01 -1.17e-01 5.39e-01      0.333    4.86  0.500
+    B21         -3.03e-03 1.57e-01 -2.09e-01 2.42e-01      0.933    5.89  0.660
+    c2           3.91e-02 3.61e-01 -6.08e-01 6.54e-01      0.800    2.34  0.207
+    p2           7.59e-03 3.11e-02 -4.10e-02 6.23e-02      0.800    3.29  0.324
+    L1mis       -2.20e-12 1.60e-11 -3.07e-11 2.36e-11      1.000    1.04  0.183
+    Be2          2.74e-01 1.83e-01  1.65e-02 5.87e-01      0.000    1.37  0.183
     
     Posterior summary of random effects covariance matrix:
-                   Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_c1_id[1,1] 0.0407 0.0178 0.0151 0.073                2.4   0.35
+                   Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
+    D_c1_id[1,1] 0.0504 0.0284 0.00364 0.0957                2.7  0.474
     
     Posterior summary of residual std. deviation:
-             Mean     SD  2.5% 97.5% GR-crit MCE/SD
-    sigma_c1 0.65 0.0246 0.616 0.708   0.985  0.183
+              Mean     SD  2.5% 97.5% GR-crit MCE/SD
+    sigma_c1 0.635 0.0324 0.578 0.697    1.12  0.183
     
     
     MCMC settings:
@@ -6561,13 +6561,13 @@
     Number and proportion of complete cases:
             level   #    %
     id         id  31 31.0
-    lvlone lvlone 104 31.6
+    lvlone lvlone 114 34.7
     
     Number and proportion of missing values:
            level # NA  % NA
     c1    lvlone    0  0.00
     L1mis lvlone   20  6.08
-    Be2   lvlone   50 15.20
+    Be2   lvlone   20  6.08
     c2    lvlone   66 20.06
     p2    lvlone  162 49.24
     
@@ -6703,20 +6703,20 @@
     
     Posterior summary:
                     Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  0.12919 0.1616 -0.1315 0.4387      0.400    1.20  0.223
-    c2          -0.03282 0.1719 -0.3338 0.2542      0.800    1.43  0.183
-    b21         -0.02505 0.1440 -0.2261 0.2599      0.667    5.80  0.523
-    p2           0.00563 0.0187 -0.0228 0.0378      0.800    1.28  0.183
-    L1mis       -0.05642 0.0989 -0.2305 0.1240      0.467    1.13  0.183
-    Be2          0.19287 0.1929 -0.1567 0.4558      0.400    1.95  0.291
+    (Intercept)  0.23355 0.0728  0.1135 0.3603      0.000    1.32  0.183
+    c2          -0.12169 0.1846 -0.4776 0.1522      0.600    3.62  0.433
+    b21          0.04350 0.0564 -0.0516 0.1443      0.467    1.94  0.327
+    p2           0.00927 0.0230 -0.0268 0.0541      0.800    3.61  0.491
+    L1mis       -0.10500 0.1009 -0.2911 0.0641      0.200    1.60  0.183
+    Be2          0.33236 0.2440 -0.0886 0.7496      0.200    1.11  0.183
     
     Posterior summary of random effects covariance matrix:
                    Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_c1_id[1,1] 0.0947 0.0429 0.0338 0.172               4.74   0.69
+    D_c1_id[1,1] 0.0545 0.0261 0.0272 0.117               1.85  0.332
     
     Posterior summary of residual std. deviation:
               Mean     SD  2.5% 97.5% GR-crit MCE/SD
-    sigma_c1 0.632 0.0254 0.591 0.681    1.11  0.183
+    sigma_c1 0.633 0.0296 0.581 0.681    1.41  0.183
     
     
     MCMC settings:
@@ -6731,15 +6731,15 @@
     
     
     Number and proportion of complete cases:
-            level  #    %
-    id         id 27 27.0
-    lvlone lvlone 85 25.8
+            level  #  %
+    id         id 27 27
+    lvlone lvlone 92 28
     
     Number and proportion of missing values:
            level # NA  % NA
     c1    lvlone    0  0.00
     L1mis lvlone   20  6.08
-    Be2   lvlone   50 15.20
+    Be2   lvlone   20  6.08
     c2    lvlone   66 20.06
     b2    lvlone   99 30.09
     p2    lvlone  162 49.24
@@ -6829,20 +6829,20 @@
     
     Posterior summary:
                       Mean       SD      2.5%    97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)   4.56e-01 2.98e-01 -2.25e-02 9.17e-01      0.133    1.30  0.183
-    L1mis        -2.64e-11 2.98e-11 -7.54e-11 1.92e-11      0.533    1.79  0.212
-    abs(c1 - C2) -8.00e-02 1.68e-01 -3.52e-01 2.43e-01      0.467    2.38  0.298
-    log(Be2)      3.23e-01 2.63e-01 -3.21e-01 7.41e-01      0.200    2.02  0.209
-    time         -3.03e-03 5.78e-02 -9.66e-02 1.17e-01      0.867    2.10  0.183
+    (Intercept)   5.57e-01 3.10e-01 -1.39e-01 1.19e+00      0.133    1.22  0.183
+    L1mis        -3.56e-11 7.83e-11 -1.52e-10 1.21e-10      0.467    2.00  0.183
+    abs(c1 - C2) -2.54e-01 1.99e-01 -6.85e-01 7.44e-02      0.267    1.19  0.265
+    log(Be2)      1.04e-02 1.64e-02 -1.97e-02 3.82e-02      0.600    3.14  0.393
+    time         -3.18e-02 5.09e-02 -1.10e-01 7.91e-02      0.400    2.59  0.306
     
     Posterior summary of random effects covariance matrix:
-                    Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_b1_id[1,1]  0.3625 0.0938  0.211 0.5488               2.83  0.506
-    D_b1_id[1,2]  0.0342 0.0993 -0.127 0.1813      0.667    4.11  0.328
-    D_b1_id[2,2]  0.4581 0.0929  0.309 0.6065               4.24  0.480
-    D_b1_id[1,3] -0.1257 0.0652 -0.227 0.0125      0.133    2.73  0.242
-    D_b1_id[2,3] -0.1524 0.1264 -0.364 0.0408      0.333    6.52  0.171
-    D_b1_id[3,3]  0.4153 0.1296  0.199 0.6210               7.67  0.301
+                    Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
+    D_b1_id[1,1]  0.4135 0.1885  0.155  0.6813              12.65  0.536
+    D_b1_id[1,2]  0.0189 0.0963 -0.115  0.2241      0.733    6.92  0.789
+    D_b1_id[2,2]  0.3881 0.1285  0.194  0.6150               8.58  0.527
+    D_b1_id[1,3] -0.0253 0.0752 -0.183  0.0939      0.800    6.60  0.178
+    D_b1_id[2,3] -0.1183 0.0642 -0.227 -0.0311      0.000    3.38  0.445
+    D_b1_id[3,3]  0.3667 0.1257  0.171  0.5765               5.69  0.659
     
     
     MCMC settings:
@@ -6858,16 +6858,16 @@
     
     Number and proportion of complete cases:
             level   #    %
-    id         id  50 50.0
-    lvlone lvlone 149 45.3
+    id         id  51 51.0
+    lvlone lvlone 162 49.2
     
     Number and proportion of missing values:
-           level # NA  % NA
-    b1    lvlone    0  0.00
-    c1    lvlone    0  0.00
-    time  lvlone    0  0.00
-    L1mis lvlone   20  6.08
-    Be2   lvlone   50 15.20
+           level # NA % NA
+    b1    lvlone    0 0.00
+    c1    lvlone    0 0.00
+    time  lvlone    0 0.00
+    L1mis lvlone   20 6.08
+    Be2   lvlone   20 6.08
     
        level # NA % NA
     id    id    0    0
@@ -8239,10 +8239,8 @@
     
     $m0f1
     $m0f1$Be1
-                      Mean         SD       2.5%     97.5% tail-prob.  GR-crit
-    (Intercept) 0.00677405 0.09146537 -0.1183976 0.2388312          1 2.311219
-                  MCE/SD
-    (Intercept) 0.303057
+                    Mean        SD     2.5%    97.5% tail-prob.  GR-crit    MCE/SD
+    (Intercept) 1.294395 0.0732214 1.177477 1.431413          0 1.421528 0.2583857
     
     
     $m1a
@@ -8289,11 +8287,11 @@
     $m1f
     $m1f$Be1
                      Mean       SD       2.5%    97.5% tail-prob.  GR-crit
-    (Intercept)  1.017266 3.665916  -3.932729 8.257874  0.8666667 1.204464
-    C1          -1.374735 5.001892 -11.253365 5.431730  0.8666667 1.226861
+    (Intercept)  5.161822 3.859930  -1.726289 11.17428  0.3333333 1.279063
+    C1          -5.182991 5.269059 -13.379256  4.24010  0.4000000 1.257048
                    MCE/SD
-    (Intercept) 0.2181741
-    C1          0.2211955
+    (Intercept) 0.3698938
+    C1          0.3720480
     
     
     $m2a
@@ -8348,12 +8346,12 @@
     
     $m2f
     $m2f$Be2
-                       Mean        SD        2.5%     97.5% tail-prob.  GR-crit
-    (Intercept) 0.100638946 0.1044639 -0.07758473 0.2960306  0.3333333 1.889394
-    c2          0.005447377 0.3639925 -0.63332997 0.6064386  0.9333333 1.582989
+                      Mean        SD      2.5%     97.5% tail-prob.  GR-crit
+    (Intercept) -5.3129914 0.8074684 -6.466454 -3.901900        0.0 6.557488
+    c2          -0.6615108 1.0797997 -2.711384  1.286395        0.6 1.362448
                    MCE/SD
-    (Intercept) 0.2142468
-    c2          0.1985104
+    (Intercept) 0.4837333
+    c2          0.1825742
     
     
     $m3a
@@ -8388,26 +8386,26 @@
     
     $m3f
     $m3f$Be2
-              Mean       SD       2.5%     97.5% tail-prob.  GR-crit    MCE/SD
-    C2 -0.08724206 0.119137 -0.3204452 0.1076555        0.4 2.026514 0.3578058
+             Mean       SD      2.5%    97.5% tail-prob.  GR-crit  MCE/SD
+    C2 -0.5118679 1.181932 -2.533235 1.375975        0.8 3.556341 0.30642
     
     
     $m4a
     $m4a$c1
                          Mean           SD          2.5%        97.5% tail-prob.
-    (Intercept)  2.053080e-01 1.822277e-01 -7.705423e-02 6.050301e-01  0.2000000
-    B21         -8.113283e-02 1.036616e-01 -2.423533e-01 9.115718e-02  0.3333333
-    c2          -2.892017e-02 3.183004e-01 -5.780950e-01 4.939075e-01  0.9333333
-    p2           1.056257e-02 3.233075e-02 -3.934682e-02 6.283881e-02  0.7333333
-    L1mis       -2.939364e-12 1.621903e-11 -3.136820e-11 2.507369e-11  0.6666667
-    Be2          9.894152e-02 1.843049e-01 -2.473504e-01 3.876082e-01  0.7333333
+    (Intercept)  2.171270e-01 2.039875e-01 -1.166897e-01 5.392707e-01  0.3333333
+    B21         -3.032868e-03 1.573887e-01 -2.085994e-01 2.421204e-01  0.9333333
+    c2           3.909261e-02 3.610041e-01 -6.081160e-01 6.544365e-01  0.8000000
+    p2           7.594766e-03 3.110972e-02 -4.103080e-02 6.230622e-02  0.8000000
+    L1mis       -2.201879e-12 1.599524e-11 -3.072812e-11 2.355415e-11  1.0000000
+    Be2          2.742074e-01 1.830995e-01  1.653665e-02 5.868723e-01  0.0000000
                  GR-crit    MCE/SD
-    (Intercept) 1.749338 0.1470741
-    B21         3.992431 0.2804632
-    c2          1.212499 0.1070308
-    p2          1.092450 0.1825742
-    L1mis       1.366578 0.2164716
-    Be2         1.019905 0.1825742
+    (Intercept) 4.860513 0.5004928
+    B21         5.885882 0.6596415
+    c2          2.343262 0.2072694
+    p2          3.285960 0.3242361
+    L1mis       1.035310 0.1825742
+    Be2         1.374764 0.1825742
     
     
     $m4b
@@ -8445,19 +8443,19 @@
     $m4d
     $m4d$c1
                         Mean         SD        2.5%      97.5% tail-prob.  GR-crit
-    (Intercept)  0.129193611 0.16161698 -0.13149757 0.43874647  0.4000000 1.204417
-    c2          -0.032822897 0.17191969 -0.33381731 0.25421157  0.8000000 1.433666
-    b21         -0.025054841 0.14395136 -0.22608078 0.25990961  0.6666667 5.803169
-    p2           0.005625511 0.01867812 -0.02284423 0.03777185  0.8000000 1.276578
-    L1mis       -0.056423015 0.09888204 -0.23048701 0.12395722  0.4666667 1.129660
-    Be2          0.192874238 0.19291811 -0.15672625 0.45576133  0.4000000 1.948874
+    (Intercept)  0.233553206 0.07276411  0.11351631 0.36025418  0.0000000 1.322743
+    c2          -0.121691737 0.18458921 -0.47755811 0.15216411  0.6000000 3.617454
+    b21          0.043503152 0.05642051 -0.05164070 0.14425130  0.4666667 1.942080
+    p2           0.009268028 0.02296725 -0.02675862 0.05412375  0.8000000 3.608607
+    L1mis       -0.105000058 0.10088952 -0.29109240 0.06410965  0.2000000 1.600817
+    Be2          0.332361360 0.24403556 -0.08864286 0.74964934  0.2000000 1.105257
                    MCE/SD
-    (Intercept) 0.2233343
-    c2          0.1825742
-    b21         0.5234990
-    p2          0.1825742
+    (Intercept) 0.1825742
+    c2          0.4325712
+    b21         0.3266110
+    p2          0.4912261
     L1mis       0.1825742
-    Be2         0.2910220
+    Be2         0.1825742
     
     
     $m5a
@@ -8497,17 +8495,17 @@
     $m5b
     $m5b$b1
                           Mean           SD          2.5%        97.5% tail-prob.
-    (Intercept)   4.559961e-01 2.977483e-01 -2.254582e-02 9.173246e-01  0.1333333
-    L1mis        -2.636136e-11 2.983619e-11 -7.536009e-11 1.924063e-11  0.5333333
-    abs(c1 - C2) -8.000560e-02 1.683882e-01 -3.517072e-01 2.425263e-01  0.4666667
-    log(Be2)      3.229805e-01 2.629571e-01 -3.205099e-01 7.411132e-01  0.2000000
-    time         -3.034639e-03 5.782518e-02 -9.661919e-02 1.168435e-01  0.8666667
+    (Intercept)   5.573593e-01 3.098541e-01 -1.385434e-01 1.191095e+00  0.1333333
+    L1mis        -3.559413e-11 7.831189e-11 -1.516869e-10 1.205383e-10  0.4666667
+    abs(c1 - C2) -2.536982e-01 1.991878e-01 -6.850587e-01 7.435787e-02  0.2666667
+    log(Be2)      1.039604e-02 1.637543e-02 -1.965347e-02 3.823071e-02  0.6000000
+    time         -3.183701e-02 5.094703e-02 -1.104596e-01 7.909789e-02  0.4000000
                   GR-crit    MCE/SD
-    (Intercept)  1.303362 0.1825742
-    L1mis        1.794669 0.2122657
-    abs(c1 - C2) 2.384048 0.2982777
-    log(Be2)     2.015304 0.2088111
-    time         2.098754 0.1825742
+    (Intercept)  1.224998 0.1825742
+    L1mis        1.996029 0.1825742
+    abs(c1 - C2) 1.187220 0.2647786
+    log(Be2)     3.143582 0.3925559
+    time         2.593929 0.3056791
     
     
     $m6a

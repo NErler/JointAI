@@ -12,9 +12,9 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   longDF$L1mis[sample.int(nrow(longDF), 20)] <- NA
 
   # beta variables
-  longDF$Be1 <- plogis(rnorm(nrow(longDF)))
-  longDF$Be2 <- plogis(rnorm(nrow(longDF)))
-  longDF$Be2[sample.int(nrow(longDF), 50)] <- NA
+  longDF$Be1 <- plogis(longDF$time - longDF$C1)
+  longDF$Be2 <- plogis(longDF$y + longDF$c1)
+  longDF$Be2[c(1:20) * 5] <- NA
 
 
   run_glmm_models <- function() {
