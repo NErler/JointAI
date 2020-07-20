@@ -43,6 +43,14 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
                    collapse = ", "))
   }
 
+  if (any(!names(models_user) %in% allvars)) {
+    errormsg("You have specified covariate model types for the variable(s) %s
+             which are not part of the model.",
+             paste_and(dQuote(names(models_user)[
+               !names(models_user) %in% allvars])))
+  }
+
+
 
   # extract the id variable from the random effects formula and get groups
   idvar <- extract_id(random, warn = warn)
