@@ -264,6 +264,17 @@ JAGSmodel_coxph <- function(info) {
 # Joint model ------------------------------------------------------------------
 JAGSmodel_JM <- function(info) {
 
+  # check if a transformation of time-dependent covariate is used
+  # (not yet implemented)
+  if (!is.null(unlist(sapply(info$tv_vars, "[[", "trafos")))) {
+    trfs <- sapply(info$tv_vars, function(x) !is.null(x$trafos))
+    errormsg("You have specified functions of the time-varying covariate(s) %s
+             in the linear predictor of the survival model. This is currently
+             not possible in a joint model.",
+             paste_and(dQuote(names(trfs)[trfs])))
+  }
+
+
   # specify indent width and index
   index <- info$index[gsub("M_", "", info$resp_mat[2])]
   indent <- 4 + 4 + nchar(info$varname) + 1 + nchar(index) + 5
