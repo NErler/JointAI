@@ -24,7 +24,7 @@ LazyData: TRUE
 RoxygenNote: 7.1.1
 Roxygen: list(old_usage = TRUE)
 Depends: R (>= 3.5.0)
-Imports: rjags, MASS, mcmcse, coda, rlang, foreach, doParallel, survival, mathjaxr
+Imports: rjags, MASS, mcmcse, coda, rlang, foreach, doParallel, survival, mathjaxr, car
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
 Suggests: 
     knitr,
