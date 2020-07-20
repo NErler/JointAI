@@ -62,8 +62,7 @@ residuals.JointAI <- function(object,
                         clm = resid_clm,
                         clmm = resid_clm,
                         survreg = resid_survreg,
-                        coxph = resid_coxph,
-                        JM = resid_coxph
+                        coxph = resid_coxph
     )
 
     # If a function could be selected, call this function, otherwise give a
