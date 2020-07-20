@@ -106,12 +106,14 @@ test_that("MCMC samples can be plottet", {
 })
 
 test_that("GRcrit and MCerror give same result", {
+  skip_on_cran()
   expect_snapshot_output(lapply(models, GR_crit, multivariate = FALSE))
   expect_snapshot_output(lapply(models, MC_error))
 })
 
 
 test_that("summary output remained the same", {
+  skip_on_cran()
   expect_snapshot_output(lapply(models, print))
   expect_snapshot_output(lapply(models, coef))
   expect_snapshot_output(lapply(models, confint))

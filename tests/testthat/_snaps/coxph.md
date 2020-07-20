@@ -4,161 +4,161 @@
     Potential scale reduction factors:
     
                                 Point est. Upper C.I.
-    beta_Bh0_Srv_ftm_stts_cn[1]       4.58      25.04
-    beta_Bh0_Srv_ftm_stts_cn[2]       1.20       3.58
-    beta_Bh0_Srv_ftm_stts_cn[3]       1.32       5.42
-    beta_Bh0_Srv_ftm_stts_cn[4]       1.16       2.43
-    beta_Bh0_Srv_ftm_stts_cn[5]       6.30      20.66
-    beta_Bh0_Srv_ftm_stts_cn[6]       1.48       2.98
+    beta_Bh0_Srv_ftm_stts_cn[1]       9.79      36.86
+    beta_Bh0_Srv_ftm_stts_cn[2]       2.80      14.04
+    beta_Bh0_Srv_ftm_stts_cn[3]       7.32      21.86
+    beta_Bh0_Srv_ftm_stts_cn[4]       1.61       3.22
+    beta_Bh0_Srv_ftm_stts_cn[5]       2.03       7.18
+    beta_Bh0_Srv_ftm_stts_cn[6]       4.71      10.69
     
     
     $m1a
     Potential scale reduction factors:
     
                                 Point est. Upper C.I.
-    age                               1.84       3.44
-    sexfemale                         2.90       6.25
-    beta_Bh0_Srv_ftm_stts_cn[1]       1.34       2.12
-    beta_Bh0_Srv_ftm_stts_cn[2]       2.02       8.66
-    beta_Bh0_Srv_ftm_stts_cn[3]       6.77      16.01
-    beta_Bh0_Srv_ftm_stts_cn[4]       3.97       9.38
-    beta_Bh0_Srv_ftm_stts_cn[5]       1.39       4.72
-    beta_Bh0_Srv_ftm_stts_cn[6]       4.53      10.28
+    age                              0.957       1.02
+    sexfemale                        1.624       3.38
+    beta_Bh0_Srv_ftm_stts_cn[1]      3.469       9.54
+    beta_Bh0_Srv_ftm_stts_cn[2]      1.417       2.98
+    beta_Bh0_Srv_ftm_stts_cn[3]      2.448       6.65
+    beta_Bh0_Srv_ftm_stts_cn[4]      3.478      10.78
+    beta_Bh0_Srv_ftm_stts_cn[5]      3.403       6.38
+    beta_Bh0_Srv_ftm_stts_cn[6]      1.560       2.75
     
     
     $m1b
     Potential scale reduction factors:
     
                                 Point est. Upper C.I.
-    age                               1.84       3.44
-    sexfemale                         2.90       6.25
-    beta_Bh0_Srv_ftm_stts_cn[1]       1.34       2.12
-    beta_Bh0_Srv_ftm_stts_cn[2]       2.02       8.66
-    beta_Bh0_Srv_ftm_stts_cn[3]       6.77      16.01
-    beta_Bh0_Srv_ftm_stts_cn[4]       3.97       9.38
-    beta_Bh0_Srv_ftm_stts_cn[5]       1.39       4.72
-    beta_Bh0_Srv_ftm_stts_cn[6]       4.53      10.28
+    age                              0.957       1.02
+    sexfemale                        1.624       3.38
+    beta_Bh0_Srv_ftm_stts_cn[1]      3.469       9.54
+    beta_Bh0_Srv_ftm_stts_cn[2]      1.417       2.98
+    beta_Bh0_Srv_ftm_stts_cn[3]      2.448       6.65
+    beta_Bh0_Srv_ftm_stts_cn[4]      3.478      10.78
+    beta_Bh0_Srv_ftm_stts_cn[5]      3.403       6.38
+    beta_Bh0_Srv_ftm_stts_cn[6]      1.560       2.75
     
     
     $m2a
     Potential scale reduction factors:
     
                                 Point est. Upper C.I.
-    beta_Bh0_Srv_ftm_stts_cn[1]       1.96       3.42
-    beta_Bh0_Srv_ftm_stts_cn[2]       3.52       9.15
-    beta_Bh0_Srv_ftm_stts_cn[3]       1.82       8.01
-    beta_Bh0_Srv_ftm_stts_cn[4]       1.00       1.26
-    beta_Bh0_Srv_ftm_stts_cn[5]       1.30       3.03
-    beta_Bh0_Srv_ftm_stts_cn[6]       1.11       1.65
-    copper                            1.91       4.23
+    beta_Bh0_Srv_ftm_stts_cn[1]       2.35       6.70
+    beta_Bh0_Srv_ftm_stts_cn[2]       1.49       2.79
+    beta_Bh0_Srv_ftm_stts_cn[3]       3.40       7.57
+    beta_Bh0_Srv_ftm_stts_cn[4]       3.94       7.82
+    beta_Bh0_Srv_ftm_stts_cn[5]       1.67       3.17
+    beta_Bh0_Srv_ftm_stts_cn[6]       3.25       7.32
+    copper                            1.27       2.81
     
     
     $m3a
     Potential scale reduction factors:
     
                                 Point est. Upper C.I.
-    copper                            2.38       4.75
-    sexfemale                         1.66       3.80
-    age                               1.42       2.44
-    abs(age - copper)                 2.54       5.77
-    log(trig)                         1.24       2.18
-    beta_Bh0_Srv_ftm_stts_cn[1]       1.68       3.23
-    beta_Bh0_Srv_ftm_stts_cn[2]       2.37       4.83
-    beta_Bh0_Srv_ftm_stts_cn[3]       6.11      14.02
-    beta_Bh0_Srv_ftm_stts_cn[4]       9.55      29.14
-    beta_Bh0_Srv_ftm_stts_cn[5]       3.08       8.02
-    beta_Bh0_Srv_ftm_stts_cn[6]       1.43       2.28
+    copper                           4.629       9.67
+    sexfemale                        2.056       3.94
+    age                              1.633       2.65
+    abs(age - copper)                6.748      12.87
+    log(trig)                        1.745       3.84
+    beta_Bh0_Srv_ftm_stts_cn[1]      0.965       1.01
+    beta_Bh0_Srv_ftm_stts_cn[2]      7.157      14.15
+    beta_Bh0_Srv_ftm_stts_cn[3]      1.457       2.32
+    beta_Bh0_Srv_ftm_stts_cn[4]      6.125      12.22
+    beta_Bh0_Srv_ftm_stts_cn[5]      4.424      12.26
+    beta_Bh0_Srv_ftm_stts_cn[6]      1.696       2.77
     
     
     $m3b
     Potential scale reduction factors:
     
                                   Point est. Upper C.I.
-    copper                             6.536      15.90
-    sexfemale                          1.332       2.33
-    age                                0.987       1.01
-    abs(age - copper)                  6.124      14.79
-    log(trig)                          1.160       1.71
-    beta_Bh0_Srv_ftm_stts_cn[1]        4.791       9.17
-    beta_Bh0_Srv_ftm_stts_cn[2]        1.231       1.81
-    beta_Bh0_Srv_ftm_stts_cn[3]        7.657      18.23
-    beta_Bh0_Srv_ftm_stts_cn[4]        3.301       8.99
-    beta_Bh0_Srv_ftm_stts_cn[5]        5.822      11.65
-    beta_Bh0_Srv_ftm_stts_cn[6]        1.927       3.70
-    D_Srv_ftm_stts_cn_center[1,1]      1.895       5.64
+    copper                              5.15      14.86
+    sexfemale                           2.27       9.78
+    age                                 2.01       6.52
+    abs(age - copper)                   5.03      15.20
+    log(trig)                           3.75      15.37
+    beta_Bh0_Srv_ftm_stts_cn[1]         3.24       8.63
+    beta_Bh0_Srv_ftm_stts_cn[2]         3.81      13.80
+    beta_Bh0_Srv_ftm_stts_cn[3]         1.55       2.64
+    beta_Bh0_Srv_ftm_stts_cn[4]         7.72      33.45
+    beta_Bh0_Srv_ftm_stts_cn[5]         3.79       9.57
+    beta_Bh0_Srv_ftm_stts_cn[6]        10.92      26.00
+    D_Srv_ftm_stts_cn_center[1,1]       2.09       7.02
     
     
     $m4a
     Potential scale reduction factors:
     
                                 Point est. Upper C.I.
-    age                               1.84       3.54
-    sexfemale                         1.69       3.38
-    trtplacebo                        1.31       3.17
-    albumin                           1.34       2.23
-    platelet                          1.28       3.10
-    stage.L                           3.27       9.01
-    stage.Q                           1.73       2.93
-    stage.C                           2.05       9.12
-    beta_Bh0_Srv_ftm_stts_cn[1]       1.27       2.08
-    beta_Bh0_Srv_ftm_stts_cn[2]       8.09      15.79
-    beta_Bh0_Srv_ftm_stts_cn[3]       1.77       3.82
-    beta_Bh0_Srv_ftm_stts_cn[4]       3.47      10.28
-    beta_Bh0_Srv_ftm_stts_cn[5]       8.84      22.91
-    beta_Bh0_Srv_ftm_stts_cn[6]       6.18      14.45
+    age                               1.14       1.70
+    sexfemale                         1.12       1.57
+    trtplacebo                        1.08       1.11
+    albumin                           1.40       2.70
+    platelet                          1.45       3.10
+    stage.L                           1.13       1.50
+    stage.Q                           2.78       8.73
+    stage.C                           5.86      11.20
+    beta_Bh0_Srv_ftm_stts_cn[1]       2.61       7.52
+    beta_Bh0_Srv_ftm_stts_cn[2]       1.69       3.07
+    beta_Bh0_Srv_ftm_stts_cn[3]       4.81      10.53
+    beta_Bh0_Srv_ftm_stts_cn[4]       1.48       2.76
+    beta_Bh0_Srv_ftm_stts_cn[5]       4.30      11.08
+    beta_Bh0_Srv_ftm_stts_cn[6]       3.32       9.54
     
     
     $m4b
     Potential scale reduction factors:
     
                                 Point est. Upper C.I.
-    age                               2.43       4.41
-    sexfemale                         3.31       6.28
-    trtplacebo                        7.29      17.87
-    sexfemale:trtplacebo              3.86       7.21
-    albumin                           1.04       1.22
-    log(platelet)                     2.67       5.60
-    beta_Bh0_Srv_ftm_stts_cn[1]       2.07       4.51
-    beta_Bh0_Srv_ftm_stts_cn[2]       1.21       1.88
-    beta_Bh0_Srv_ftm_stts_cn[3]       7.22      14.50
-    beta_Bh0_Srv_ftm_stts_cn[4]       2.86       6.21
-    beta_Bh0_Srv_ftm_stts_cn[5]       4.89       9.64
-    beta_Bh0_Srv_ftm_stts_cn[6]       3.00       6.22
+    age                               1.21       2.04
+    sexfemale                         1.68       3.24
+    trtplacebo                        7.68      19.03
+    sexfemale:trtplacebo              4.35      10.00
+    albumin                           1.18       2.16
+    log(platelet)                     1.06       1.36
+    beta_Bh0_Srv_ftm_stts_cn[1]       1.22       1.91
+    beta_Bh0_Srv_ftm_stts_cn[2]       3.24       7.57
+    beta_Bh0_Srv_ftm_stts_cn[3]       8.82      19.23
+    beta_Bh0_Srv_ftm_stts_cn[4]       5.19       9.80
+    beta_Bh0_Srv_ftm_stts_cn[5]       6.58      17.32
+    beta_Bh0_Srv_ftm_stts_cn[6]       2.34       5.27
     
     
     $m4c
     Potential scale reduction factors:
     
                                   Point est. Upper C.I.
-    age                                0.939       0.99
-    sexfemale                          1.080       1.40
-    albumin                            1.789       3.35
-    log(platelet)                      0.943       0.96
-    beta_Bh0_Srv_ftm_stts_cn[1]        1.589       4.37
-    beta_Bh0_Srv_ftm_stts_cn[2]        7.262      15.65
-    beta_Bh0_Srv_ftm_stts_cn[3]        1.155       1.74
-    beta_Bh0_Srv_ftm_stts_cn[4]        7.150      14.04
-    beta_Bh0_Srv_ftm_stts_cn[5]        1.429       2.29
-    beta_Bh0_Srv_ftm_stts_cn[6]        1.484       2.83
-    D_Srv_ftm_stts_cn_center[1,1]      1.399       2.33
+    age                                 1.33       2.33
+    sexfemale                           1.62       2.72
+    albumin                             2.51       5.61
+    log(platelet)                       1.45       2.78
+    beta_Bh0_Srv_ftm_stts_cn[1]         3.29       6.35
+    beta_Bh0_Srv_ftm_stts_cn[2]         6.57      13.98
+    beta_Bh0_Srv_ftm_stts_cn[3]         4.85      11.18
+    beta_Bh0_Srv_ftm_stts_cn[4]         6.64      14.26
+    beta_Bh0_Srv_ftm_stts_cn[5]         4.95       9.47
+    beta_Bh0_Srv_ftm_stts_cn[6]         3.08       9.99
+    D_Srv_ftm_stts_cn_center[1,1]       2.19       9.15
     
     
     $m4d
     Potential scale reduction factors:
     
                                   Point est. Upper C.I.
-    age                                 1.64       3.29
-    sexfemale                           1.10       1.45
-    albumin                             2.06       4.30
-    ns(platelet, df = 2)1               2.79       6.00
-    ns(platelet, df = 2)2               1.75       4.08
-    beta_Bh0_Srv_ftm_stts_cn[1]         5.18      11.91
-    beta_Bh0_Srv_ftm_stts_cn[2]         1.49       4.29
-    beta_Bh0_Srv_ftm_stts_cn[3]         2.07       4.44
-    beta_Bh0_Srv_ftm_stts_cn[4]         1.90       4.42
-    beta_Bh0_Srv_ftm_stts_cn[5]         1.72       3.32
-    beta_Bh0_Srv_ftm_stts_cn[6]         1.10       1.54
-    D_Srv_ftm_stts_cn_center[1,1]       1.29       2.15
+    age                                 2.04       4.42
+    sexfemale                           2.03       6.68
+    albumin                             1.22       2.05
+    ns(platelet, df = 2)1               1.48       4.44
+    ns(platelet, df = 2)2               1.43       4.36
+    beta_Bh0_Srv_ftm_stts_cn[1]         4.08       9.48
+    beta_Bh0_Srv_ftm_stts_cn[2]         8.36      23.08
+    beta_Bh0_Srv_ftm_stts_cn[3]         3.75      10.63
+    beta_Bh0_Srv_ftm_stts_cn[4]         8.12      16.09
+    beta_Bh0_Srv_ftm_stts_cn[5]         2.71       5.97
+    beta_Bh0_Srv_ftm_stts_cn[6]         2.84       5.34
+    D_Srv_ftm_stts_cn_center[1,1]       1.81       4.38
     
     
 
@@ -166,134 +166,134 @@
 
     $m0a
                                   est MCSE  SD MCSE/SD
-    beta_Bh0_Srv_ftm_stts_cn[1]  -8.8 2.24 4.1    0.54
-    beta_Bh0_Srv_ftm_stts_cn[2]  -4.6 0.91 3.2    0.29
-    beta_Bh0_Srv_ftm_stts_cn[3]  -7.7 0.66 2.8    0.24
-    beta_Bh0_Srv_ftm_stts_cn[4]  -5.1 0.72 2.5    0.29
-    beta_Bh0_Srv_ftm_stts_cn[5] -11.1 1.93 6.7    0.29
-    beta_Bh0_Srv_ftm_stts_cn[6]  -8.1 1.53 3.1    0.49
+    beta_Bh0_Srv_ftm_stts_cn[1]  -7.8 0.54 3.0    0.18
+    beta_Bh0_Srv_ftm_stts_cn[2]  -4.6 1.23 3.2    0.39
+    beta_Bh0_Srv_ftm_stts_cn[3] -10.0 0.97 3.4    0.29
+    beta_Bh0_Srv_ftm_stts_cn[4]  -8.1 0.72 2.7    0.27
+    beta_Bh0_Srv_ftm_stts_cn[5]  -5.4 1.04 3.6    0.29
+    beta_Bh0_Srv_ftm_stts_cn[6]  -6.8 2.08 5.3    0.40
     
     $m1a
                                     est   MCSE    SD MCSE/SD
-    age                         -0.0036 0.0099 0.034    0.29
-    sexfemale                   -5.4358 1.6103 2.526    0.64
-    beta_Bh0_Srv_ftm_stts_cn[1] -8.1420 0.4405 1.097    0.40
-    beta_Bh0_Srv_ftm_stts_cn[2] -5.9882 1.0107 3.053    0.33
-    beta_Bh0_Srv_ftm_stts_cn[3] -6.4792 2.2832 2.576    0.89
-    beta_Bh0_Srv_ftm_stts_cn[4] -6.0422 1.9935 1.771    1.13
-    beta_Bh0_Srv_ftm_stts_cn[5] -5.7662 0.9474 3.282    0.29
-    beta_Bh0_Srv_ftm_stts_cn[6] -6.5122 3.0271 3.540    0.86
+    age                          -0.012 0.0037 0.023    0.16
+    sexfemale                    -3.796 0.4269 1.479    0.29
+    beta_Bh0_Srv_ftm_stts_cn[1]  -6.393 0.4763 0.852    0.56
+    beta_Bh0_Srv_ftm_stts_cn[2]  -7.174 0.4452 1.542    0.29
+    beta_Bh0_Srv_ftm_stts_cn[3]  -5.750 0.7378 1.750    0.42
+    beta_Bh0_Srv_ftm_stts_cn[4]  -8.505 1.2123 2.127    0.57
+    beta_Bh0_Srv_ftm_stts_cn[5]  -3.291 0.6579 1.566    0.42
+    beta_Bh0_Srv_ftm_stts_cn[6] -11.235 1.2994 4.501    0.29
     
     $m1b
                                     est   MCSE    SD MCSE/SD
-    age                         -0.0036 0.0099 0.034    0.29
-    sexfemale                   -5.4358 1.6103 2.526    0.64
-    beta_Bh0_Srv_ftm_stts_cn[1] -8.1420 0.4405 1.097    0.40
-    beta_Bh0_Srv_ftm_stts_cn[2] -5.9882 1.0107 3.053    0.33
-    beta_Bh0_Srv_ftm_stts_cn[3] -6.4792 2.2832 2.576    0.89
-    beta_Bh0_Srv_ftm_stts_cn[4] -6.0422 1.9935 1.771    1.13
-    beta_Bh0_Srv_ftm_stts_cn[5] -5.7662 0.9474 3.282    0.29
-    beta_Bh0_Srv_ftm_stts_cn[6] -6.5122 3.0271 3.540    0.86
+    age                          -0.012 0.0037 0.023    0.16
+    sexfemale                    -3.796 0.4269 1.479    0.29
+    beta_Bh0_Srv_ftm_stts_cn[1]  -6.393 0.4763 0.852    0.56
+    beta_Bh0_Srv_ftm_stts_cn[2]  -7.174 0.4452 1.542    0.29
+    beta_Bh0_Srv_ftm_stts_cn[3]  -5.750 0.7378 1.750    0.42
+    beta_Bh0_Srv_ftm_stts_cn[4]  -8.505 1.2123 2.127    0.57
+    beta_Bh0_Srv_ftm_stts_cn[5]  -3.291 0.6579 1.566    0.42
+    beta_Bh0_Srv_ftm_stts_cn[6] -11.235 1.2994 4.501    0.29
     
     $m2a
                                     est    MCSE     SD MCSE/SD
-    beta_Bh0_Srv_ftm_stts_cn[1] -8.4164 1.05577 1.5661    0.67
-    beta_Bh0_Srv_ftm_stts_cn[2] -9.3433 1.83941 3.0006    0.61
-    beta_Bh0_Srv_ftm_stts_cn[3] -6.3503 0.73587 2.5491    0.29
-    beta_Bh0_Srv_ftm_stts_cn[4] -9.3274 0.74449 2.5790    0.29
-    beta_Bh0_Srv_ftm_stts_cn[5] -8.6422 1.05837 3.3005    0.32
-    beta_Bh0_Srv_ftm_stts_cn[6] -9.3905 1.60814 3.9055    0.41
-    copper                       0.0042 0.00086 0.0021    0.40
+    beta_Bh0_Srv_ftm_stts_cn[1] -9.2945 0.60806 2.1064    0.29
+    beta_Bh0_Srv_ftm_stts_cn[2] -7.7374 0.33210 1.1504    0.29
+    beta_Bh0_Srv_ftm_stts_cn[3] -9.1811 0.60648 1.4673    0.41
+    beta_Bh0_Srv_ftm_stts_cn[4] -8.7793 2.54209 3.0335    0.84
+    beta_Bh0_Srv_ftm_stts_cn[5] -4.7083 0.84179 2.9160    0.29
+    beta_Bh0_Srv_ftm_stts_cn[6] -8.3505 2.41892 5.9271    0.41
+    copper                       0.0056 0.00045 0.0015    0.29
     
     $m3a
-                                    est    MCSE     SD MCSE/SD
-    copper                      -0.0039 0.00058 0.0022    0.26
-    sexfemale                   -1.0941 0.31405 1.2830    0.24
-    age                          0.0116 0.00355 0.0194    0.18
-    abs(age - copper)            0.0086 0.00034 0.0018    0.18
-    log(trig)                   -0.0429 0.08257 0.2000    0.41
-    beta_Bh0_Srv_ftm_stts_cn[1] -8.9671 0.20801 0.6143    0.34
-    beta_Bh0_Srv_ftm_stts_cn[2] -6.6160 0.34557 1.8928    0.18
-    beta_Bh0_Srv_ftm_stts_cn[3] -9.2337 1.03144 2.0443    0.50
-    beta_Bh0_Srv_ftm_stts_cn[4] -6.7849 0.89594 1.9406    0.46
-    beta_Bh0_Srv_ftm_stts_cn[5] -8.3679 1.01948 2.4006    0.42
-    beta_Bh0_Srv_ftm_stts_cn[6] -9.9114 0.49902 2.9032    0.17
+                                     est   MCSE     SD MCSE/SD
+    copper                       -0.0025 0.0013 0.0050    0.26
+    sexfemale                    -1.6491 0.6169 1.9413    0.32
+    age                           0.0081 0.0038 0.0208    0.18
+    abs(age - copper)             0.0051 0.0012 0.0058    0.21
+    log(trig)                     0.0012 0.0646 0.2185    0.30
+    beta_Bh0_Srv_ftm_stts_cn[1]  -7.5816 0.4946 2.0778    0.24
+    beta_Bh0_Srv_ftm_stts_cn[2]  -8.5936 0.8742 2.3200    0.38
+    beta_Bh0_Srv_ftm_stts_cn[3]  -6.6895 0.4125 1.6530    0.25
+    beta_Bh0_Srv_ftm_stts_cn[4]  -9.7231 1.1792 2.5364    0.46
+    beta_Bh0_Srv_ftm_stts_cn[5]  -3.4951 0.7044 2.0196    0.35
+    beta_Bh0_Srv_ftm_stts_cn[6] -16.0969 1.0413 3.9552    0.26
     
     $m3b
-                                       est   MCSE     SD MCSE/SD
-    copper                        -0.00088 0.0021 0.0055    0.38
-    sexfemale                     -1.00705 0.3809 0.7680    0.50
-    age                            0.01063 0.0031 0.0139    0.23
-    abs(age - copper)              0.00593 0.0024 0.0050    0.49
-    log(trig)                      0.03042 0.0395 0.2166    0.18
-    beta_Bh0_Srv_ftm_stts_cn[1]   -6.14632 0.8641 1.5687    0.55
-    beta_Bh0_Srv_ftm_stts_cn[2]   -4.77545 0.9153 1.7538    0.52
-    beta_Bh0_Srv_ftm_stts_cn[3]   -5.28172 1.7151 1.7404    0.99
-    beta_Bh0_Srv_ftm_stts_cn[4]   -5.04614 0.7598 2.1807    0.35
-    beta_Bh0_Srv_ftm_stts_cn[5]   -3.95410 1.3085 2.5976    0.50
-    beta_Bh0_Srv_ftm_stts_cn[6]   -7.54422 1.4896 3.3057    0.45
-    D_Srv_ftm_stts_cn_center[1,1] 12.13135 1.8324 8.6814    0.21
+                                       est   MCSE      SD MCSE/SD
+    copper                         5.1e-03 0.0037  0.0058    0.64
+    sexfemale                     -2.6e+00 0.7833  2.3374    0.34
+    age                            4.1e-05 0.0081  0.0323    0.25
+    abs(age - copper)             -3.1e-03 0.0072  0.0057    1.28
+    log(trig)                     -1.7e-01 0.1591  0.3235    0.49
+    beta_Bh0_Srv_ftm_stts_cn[1]   -5.1e+00 0.7433  1.2657    0.59
+    beta_Bh0_Srv_ftm_stts_cn[2]   -4.9e+00 1.1410  2.1564    0.53
+    beta_Bh0_Srv_ftm_stts_cn[3]   -4.5e+00 0.3192  1.0023    0.32
+    beta_Bh0_Srv_ftm_stts_cn[4]   -5.1e+00 2.2767  3.1998    0.71
+    beta_Bh0_Srv_ftm_stts_cn[5]   -3.4e+00 0.9650  2.9546    0.33
+    beta_Bh0_Srv_ftm_stts_cn[6]   -9.5e+00 5.1521  8.0155    0.64
+    D_Srv_ftm_stts_cn_center[1,1]  1.0e+01 3.5088 10.3942    0.34
     
     $m4a
-                                     est   MCSE    SD MCSE/SD
-    age                         -1.6e-02 0.0112 0.026    0.42
-    sexfemale                   -2.7e+00 1.0056 1.961    0.51
-    trtplacebo                  -5.7e-01 0.2621 1.072    0.24
-    albumin                     -2.0e+00 0.0899 0.302    0.30
-    platelet                     5.6e-04 0.0015 0.005    0.30
-    stage.L                      2.6e-01 0.3473 1.307    0.27
-    stage.Q                      1.1e+00 0.1105 0.605    0.18
-    stage.C                           NA     NA 0.863      NA
-    beta_Bh0_Srv_ftm_stts_cn[1] -7.2e+00 0.8863 2.233    0.40
-    beta_Bh0_Srv_ftm_stts_cn[2] -8.6e+00 0.4370 1.194    0.37
-    beta_Bh0_Srv_ftm_stts_cn[3] -6.1e+00 1.3078 2.297    0.57
-    beta_Bh0_Srv_ftm_stts_cn[4] -1.0e+01 1.0857 2.629    0.41
-    beta_Bh0_Srv_ftm_stts_cn[5] -4.8e+00 0.8194 3.041    0.27
-    beta_Bh0_Srv_ftm_stts_cn[6] -1.2e+01 2.1363 5.551    0.38
+                                     est    MCSE     SD MCSE/SD
+    age                          -0.0122 0.00361 0.0168    0.21
+    sexfemale                    -1.9118 0.36964 1.1553    0.32
+    trtplacebo                   -0.9341 0.30870 1.6908    0.18
+    albumin                      -2.1101 0.10390 0.2839    0.37
+    platelet                     -0.0011 0.00095 0.0027    0.35
+    stage.L                      -0.0138 0.26581 0.8176    0.33
+    stage.Q                       1.8599 0.53323 1.2794    0.42
+    stage.C                      -1.1581 0.31019 1.1453    0.27
+    beta_Bh0_Srv_ftm_stts_cn[1]  -7.7921 0.50277 1.5991    0.31
+    beta_Bh0_Srv_ftm_stts_cn[2]  -7.9906 0.36696 1.0254    0.36
+    beta_Bh0_Srv_ftm_stts_cn[3]  -7.4691 0.51414 1.4670    0.35
+    beta_Bh0_Srv_ftm_stts_cn[4]  -9.8265 0.65231 1.4180    0.46
+    beta_Bh0_Srv_ftm_stts_cn[5]  -5.8527 1.29166 2.7458    0.47
+    beta_Bh0_Srv_ftm_stts_cn[6] -11.4451 1.41446 3.9792    0.36
     
     $m4b
                                    est   MCSE    SD MCSE/SD
-    age                         -0.019 0.0049 0.019    0.26
-    sexfemale                   -3.998 0.8987 1.585    0.57
-    trtplacebo                  -2.998 0.6650 1.414    0.47
-    sexfemale:trtplacebo         4.509 0.9076 1.846    0.49
-    albumin                     -2.032    Inf 0.549     Inf
-    log(platelet)               -0.074 0.0976 0.534    0.18
-    beta_Bh0_Srv_ftm_stts_cn[1] -6.067 0.7264 1.415    0.51
-    beta_Bh0_Srv_ftm_stts_cn[2] -7.933 0.3850 1.487    0.26
-    beta_Bh0_Srv_ftm_stts_cn[3] -5.586 0.5727 1.672    0.34
-    beta_Bh0_Srv_ftm_stts_cn[4] -8.261 1.4018 2.541    0.55
-    beta_Bh0_Srv_ftm_stts_cn[5] -6.046 2.8157 3.988    0.71
-    beta_Bh0_Srv_ftm_stts_cn[6] -9.002 0.9245 5.064    0.18
+    age                         -0.019 0.0086 0.021    0.41
+    sexfemale                   -3.276 0.5097 1.288    0.40
+    trtplacebo                  -3.130 1.0231 1.627    0.63
+    sexfemale:trtplacebo         3.564 0.8950 1.874    0.48
+    albumin                     -2.251 0.0453 0.446    0.10
+    log(platelet)               -0.185 0.2074 0.663    0.31
+    beta_Bh0_Srv_ftm_stts_cn[1] -7.035 0.2583 1.258    0.21
+    beta_Bh0_Srv_ftm_stts_cn[2] -7.012 0.5294 1.329    0.40
+    beta_Bh0_Srv_ftm_stts_cn[3] -6.203 1.2410 2.137    0.58
+    beta_Bh0_Srv_ftm_stts_cn[4] -7.897 0.9316 2.171    0.43
+    beta_Bh0_Srv_ftm_stts_cn[5] -7.364 1.4482 2.784    0.52
+    beta_Bh0_Srv_ftm_stts_cn[6] -6.851 0.3411 1.482    0.23
     
     $m4c
                                       est   MCSE     SD MCSE/SD
-    age                            -0.011 0.0033  0.018    0.18
-    sexfemale                      -1.434 0.2130  0.810    0.26
-    albumin                        -2.096 0.2379  0.576    0.41
-    log(platelet)                  -0.675 0.1023  0.324    0.32
-    beta_Bh0_Srv_ftm_stts_cn[1]    -4.880 0.1009  0.673    0.15
-    beta_Bh0_Srv_ftm_stts_cn[2]    -5.653 0.6292  1.321    0.48
-    beta_Bh0_Srv_ftm_stts_cn[3]    -3.606 0.1461  0.800    0.18
-    beta_Bh0_Srv_ftm_stts_cn[4]    -8.342 0.5867  1.302    0.45
-    beta_Bh0_Srv_ftm_stts_cn[5]    -1.439 0.4495  1.299    0.35
-    beta_Bh0_Srv_ftm_stts_cn[6]   -10.367    Inf  3.951     Inf
-    D_Srv_ftm_stts_cn_center[1,1]  16.941 5.0741 27.792    0.18
+    age                           -0.0039 0.0069  0.016    0.44
+    sexfemale                     -1.6370 0.2013  0.835    0.24
+    albumin                       -2.1385 0.1792  0.526    0.34
+    log(platelet)                 -0.4069 0.0564  0.275    0.20
+    beta_Bh0_Srv_ftm_stts_cn[1]   -5.3564 0.3200  1.330    0.24
+    beta_Bh0_Srv_ftm_stts_cn[2]   -4.7314 0.7578  2.047    0.37
+    beta_Bh0_Srv_ftm_stts_cn[3]   -4.8003 0.2327  1.274    0.18
+    beta_Bh0_Srv_ftm_stts_cn[4]   -6.4278 1.3371  2.146    0.62
+    beta_Bh0_Srv_ftm_stts_cn[5]   -5.0717 1.0165  2.276    0.45
+    beta_Bh0_Srv_ftm_stts_cn[6]   -6.5309 1.4949  2.958    0.51
+    D_Srv_ftm_stts_cn_center[1,1] 13.6744 2.8819 15.785    0.18
     
     $m4d
-                                     est   MCSE    SD MCSE/SD
-    age                           -0.011 0.0029 0.016    0.18
-    sexfemale                     -1.797 0.2364 1.295    0.18
-    albumin                       -2.229 0.1521 0.457    0.33
-    ns(platelet, df = 2)1         -2.195 0.4078 1.069    0.38
-    ns(platelet, df = 2)2         -1.151 0.5255 2.878    0.18
-    beta_Bh0_Srv_ftm_stts_cn[1]   -4.639 0.3237 0.912    0.36
-    beta_Bh0_Srv_ftm_stts_cn[2]   -5.437 0.4162 1.191    0.35
-    beta_Bh0_Srv_ftm_stts_cn[3]   -3.367 0.4028 1.264    0.32
-    beta_Bh0_Srv_ftm_stts_cn[4]   -7.433 0.3342 0.871    0.38
-    beta_Bh0_Srv_ftm_stts_cn[5]   -2.779 0.3872 1.745    0.22
-    beta_Bh0_Srv_ftm_stts_cn[6]   -7.887 0.8652 3.112    0.28
-    D_Srv_ftm_stts_cn_center[1,1] 15.726 1.7016 9.320    0.18
+                                    est   MCSE     SD MCSE/SD
+    age                           -0.01 0.0033  0.018    0.18
+    sexfemale                     -1.98 0.9013  1.748    0.52
+    albumin                       -2.22 0.1520  0.614    0.25
+    ns(platelet, df = 2)1         -2.02 0.2628  1.440    0.18
+    ns(platelet, df = 2)2         -0.87 0.4158  3.083    0.13
+    beta_Bh0_Srv_ftm_stts_cn[1]   -3.93 0.9008  1.488    0.61
+    beta_Bh0_Srv_ftm_stts_cn[2]   -4.01 1.0510  1.965    0.53
+    beta_Bh0_Srv_ftm_stts_cn[3]   -3.65 0.8655  1.231    0.70
+    beta_Bh0_Srv_ftm_stts_cn[4]   -4.26 2.3680  2.690    0.88
+    beta_Bh0_Srv_ftm_stts_cn[5]   -4.96 1.2011  1.567    0.77
+    beta_Bh0_Srv_ftm_stts_cn[6]   -4.48 1.3566  2.719    0.50
+    D_Srv_ftm_stts_cn_center[1,1] 21.10 3.8025 20.827    0.18
     
 
 # summary output remained the same
@@ -314,7 +314,7 @@
     
     Coefficients:
           age sexfemale 
-    -0.003563 -5.435757 
+     -0.01151  -3.79641 
     
     Call:
     coxph_imp(formula = Surv(futime, I(status != "censored")) ~ age + 
@@ -325,7 +325,7 @@
     
     Coefficients:
           age sexfemale 
-    -0.003563 -5.435757 
+     -0.01151  -3.79641 
     
     Call:
     coxph_imp(formula = Surv(futime, status != "censored") ~ copper, 
@@ -336,7 +336,7 @@
     
     Coefficients:
       copper 
-    0.004169 
+    0.005598 
     
     Call:
     coxph_imp(formula = Surv(futime, status != "censored") ~ copper + 
@@ -348,9 +348,9 @@
     
     Coefficients:
                copper         sexfemale               age abs(age - copper) 
-            -0.003853         -1.094111          0.011558          0.008556 
+            -0.002466         -1.649129          0.008092          0.005092 
             log(trig) 
-            -0.042871 
+             0.001158 
     
     Call:
     coxph_imp(formula = Surv(futime, status != "censored") ~ copper + 
@@ -363,9 +363,9 @@
     
     Coefficients:
                copper         sexfemale               age abs(age - copper) 
-             -0.00088          -1.00705           0.01063           0.00593 
+            5.101e-03        -2.588e+00         4.114e-05        -3.052e-03 
             log(trig) 
-              0.03042 
+           -1.704e-01 
     
     Call:
     coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
@@ -377,9 +377,9 @@
     
     Coefficients:
            age  sexfemale trtplacebo    albumin   platelet    stage.L    stage.Q 
-    -0.0158880 -2.7215731 -0.5676230 -2.0141786  0.0005587  0.2637735  1.1187499 
+     -0.012191  -1.911792  -0.934091  -2.110051  -0.001102  -0.013809   1.859923 
        stage.C 
-    -0.8902576 
+     -1.158105 
     
     Call:
     coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
@@ -391,9 +391,9 @@
     
     Coefficients:
                      age            sexfemale           trtplacebo 
-                -0.01946             -3.99837             -2.99795 
+                -0.01942             -3.27576             -3.13047 
     sexfemale:trtplacebo              albumin        log(platelet) 
-                 4.50936             -2.03212             -0.07386 
+                 3.56389             -2.25084             -0.18466 
     
     Call:
     coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
@@ -405,7 +405,7 @@
     
     Coefficients:
               age     sexfemale       albumin log(platelet) 
-         -0.01064      -1.43379      -2.09582      -0.67477 
+        -0.003936     -1.637001     -2.138510     -0.406897 
     
     Call:
     coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
@@ -417,9 +417,9 @@
     
     Coefficients:
                       age             sexfemale               albumin 
-                  -0.0106               -1.7973               -2.2295 
+                 -0.01031              -1.97924              -2.22394 
     ns(platelet, df = 2)1 ns(platelet, df = 2)2 
-                  -2.1948               -1.1507 
+                 -2.02237              -0.86924 
     $m0a
     
     Call:
@@ -439,7 +439,7 @@
     
     Coefficients:
           age sexfemale 
-    -0.003563 -5.435757 
+     -0.01151  -3.79641 
     
     $m1b
     
@@ -452,7 +452,7 @@
     
     Coefficients:
           age sexfemale 
-    -0.003563 -5.435757 
+     -0.01151  -3.79641 
     
     $m2a
     
@@ -465,7 +465,7 @@
     
     Coefficients:
       copper 
-    0.004169 
+    0.005598 
     
     $m3a
     
@@ -479,9 +479,9 @@
     
     Coefficients:
                copper         sexfemale               age abs(age - copper) 
-            -0.003853         -1.094111          0.011558          0.008556 
+            -0.002466         -1.649129          0.008092          0.005092 
             log(trig) 
-            -0.042871 
+             0.001158 
     
     $m3b
     
@@ -496,9 +496,9 @@
     
     Coefficients:
                copper         sexfemale               age abs(age - copper) 
-             -0.00088          -1.00705           0.01063           0.00593 
+            5.101e-03        -2.588e+00         4.114e-05        -3.052e-03 
             log(trig) 
-              0.03042 
+           -1.704e-01 
     
     $m4a
     
@@ -512,9 +512,9 @@
     
     Coefficients:
            age  sexfemale trtplacebo    albumin   platelet    stage.L    stage.Q 
-    -0.0158880 -2.7215731 -0.5676230 -2.0141786  0.0005587  0.2637735  1.1187499 
+     -0.012191  -1.911792  -0.934091  -2.110051  -0.001102  -0.013809   1.859923 
        stage.C 
-    -0.8902576 
+     -1.158105 
     
     $m4b
     
@@ -528,9 +528,9 @@
     
     Coefficients:
                      age            sexfemale           trtplacebo 
-                -0.01946             -3.99837             -2.99795 
+                -0.01942             -3.27576             -3.13047 
     sexfemale:trtplacebo              albumin        log(platelet) 
-                 4.50936             -2.03212             -0.07386 
+                 3.56389             -2.25084             -0.18466 
     
     $m4c
     
@@ -544,7 +544,7 @@
     
     Coefficients:
               age     sexfemale       albumin log(platelet) 
-         -0.01064      -1.43379      -2.09582      -0.67477 
+        -0.003936     -1.637001     -2.138510     -0.406897 
     
     $m4d
     
@@ -558,9 +558,9 @@
     
     Coefficients:
                       age             sexfemale               albumin 
-                  -0.0106               -1.7973               -2.2295 
+                 -0.01031              -1.97924              -2.22394 
     ns(platelet, df = 2)1 ns(platelet, df = 2)2 
-                  -2.1948               -1.1507 
+                 -2.02237              -0.86924 
     
 
 ---
@@ -572,66 +572,66 @@
     
     $m1a
     $m1a$`Surv(futime, status != "censored")`
-             age    sexfemale 
-    -0.003563391 -5.435757187 
+            age   sexfemale 
+    -0.01151145 -3.79641198 
     
     
     $m1b
     $m1b$`Surv(futime, I(status != "censored"))`
-             age    sexfemale 
-    -0.003563391 -5.435757187 
+            age   sexfemale 
+    -0.01151145 -3.79641198 
     
     
     $m2a
     $m2a$`Surv(futime, status != "censored")`
          copper 
-    0.004169068 
+    0.005598315 
     
     
     $m3a
     $m3a$`Surv(futime, status != "censored")`
                copper         sexfemale               age abs(age - copper) 
-         -0.003852868      -1.094111220       0.011558178       0.008555954 
+         -0.002466153      -1.649129340       0.008091912       0.005091666 
             log(trig) 
-         -0.042871021 
+          0.001157879 
     
     
     $m3b
     $m3b$`Surv(futime, status != "censored")`
                copper         sexfemale               age abs(age - copper) 
-        -0.0008800484     -1.0070498760      0.0106285732      0.0059298340 
+         5.101207e-03     -2.588358e+00      4.114451e-05     -3.051898e-03 
             log(trig) 
-         0.0304234372 
+        -1.704065e-01 
     
     
     $m4a
     $m4a$`Surv(futime, status != "censored")`
-              age     sexfemale    trtplacebo       albumin      platelet 
-    -0.0158880368 -2.7215731304 -0.5676230074 -2.0141786082  0.0005587242 
-          stage.L       stage.Q       stage.C 
-     0.2637735366  1.1187498930 -0.8902576262 
+            age   sexfemale  trtplacebo     albumin    platelet     stage.L 
+    -0.01219139 -1.91179207 -0.93409060 -2.11005107 -0.00110195 -0.01380880 
+        stage.Q     stage.C 
+     1.85992259 -1.15810504 
     
     
     $m4b
     $m4b$`Surv(futime, status != "censored")`
                      age            sexfemale           trtplacebo 
-             -0.01946302          -3.99837393          -2.99795411 
+             -0.01942207          -3.27575938          -3.13046553 
     sexfemale:trtplacebo              albumin        log(platelet) 
-              4.50936103          -2.03211978          -0.07385869 
+              3.56389047          -2.25084133          -0.18466117 
     
     
     $m4c
     $m4c$`Surv(futime, status != "censored")`
               age     sexfemale       albumin log(platelet) 
-      -0.01063719   -1.43378996   -2.09582152   -0.67476804 
+     -0.003935506  -1.637000759  -2.138509732  -0.406897017 
     
     
     $m4d
     $m4d$`Surv(futime, status != "censored")`
                       age             sexfemale               albumin 
-              -0.01060027           -1.79727637           -2.22948405 
+               -0.0103071            -1.9792357            -2.2239445 
     ns(platelet, df = 2)1 ns(platelet, df = 2)2 
-              -2.19477826           -1.15072530 
+               -2.0223729            -0.8692401 
     
     
 
@@ -645,84 +645,84 @@
     $m1a
     $m1a$`Surv(futime, status != "censored")`
                      2.5%       97.5%
-    age       -0.04626874  0.05790722
-    sexfemale -8.94314146 -1.68425614
+    age       -0.04410083  0.02614696
+    sexfemale -5.78814140 -1.72788620
     
     
     $m1b
     $m1b$`Surv(futime, I(status != "censored"))`
                      2.5%       97.5%
-    age       -0.04626874  0.05790722
-    sexfemale -8.94314146 -1.68425614
+    age       -0.04410083  0.02614696
+    sexfemale -5.78814140 -1.72788620
     
     
     $m2a
     $m2a$`Surv(futime, status != "censored")`
                   2.5%       97.5%
-    copper 0.001853962 0.007954637
+    copper 0.003322605 0.007280229
     
     
     $m3a
     $m3a$`Surv(futime, status != "censored")`
-                             2.5%         97.5%
-    copper            -0.00802129 -0.0004647465
-    sexfemale         -4.13452866  0.1079552553
-    age               -0.03148391  0.0377688768
-    abs(age - copper)  0.00514195  0.0126032897
-    log(trig)         -0.43610588  0.1682127603
+                              2.5%      97.5%
+    copper            -0.013252291 0.00636426
+    sexfemale         -5.912451120 0.55951811
+    age               -0.035719260 0.03364059
+    abs(age - copper) -0.002999525 0.01319711
+    log(trig)         -0.422065004 0.27459244
     
     
     $m3b
     $m3b$`Surv(futime, status != "censored")`
                               2.5%        97.5%
-    copper            -0.012414936  0.006387176
-    sexfemale         -2.690541789 -0.209977066
-    age               -0.021460648  0.030134925
-    abs(age - copper) -0.001591169  0.014082357
-    log(trig)         -0.244836388  0.426715248
+    copper            -0.005189366  0.011665479
+    sexfemale         -7.550944303 -0.425092599
+    age               -0.074781974  0.057110314
+    abs(age - copper) -0.009776302  0.004029194
+    log(trig)         -0.792825512  0.162041803
     
     
     $m4a
     $m4a$`Surv(futime, status != "censored")`
-                       2.5%       97.5%
-    age        -0.073151043  0.02465452
-    sexfemale  -7.146183593 -0.76540034
-    trtplacebo -3.223067209  0.31050254
-    albumin    -2.282304389 -1.29627309
-    platelet   -0.005338757  0.01226778
-    stage.L    -1.947177362  2.89373548
-    stage.Q    -0.058804953  2.01338354
-    stage.C    -2.935986142  0.46311136
+                       2.5%        97.5%
+    age        -0.046056196  0.012321052
+    sexfemale  -4.489242251 -0.744944781
+    trtplacebo -4.834739360  0.530853418
+    albumin    -2.545148997 -1.586528802
+    platelet   -0.007154503  0.003629773
+    stage.L    -1.876311808  0.988458750
+    stage.Q     0.084048380  4.544869760
+    stage.C    -3.242119282  0.313589665
     
     
     $m4b
     $m4b$`Surv(futime, status != "censored")`
-                                2.5%       97.5%
-    age                  -0.04978316  0.01478515
-    sexfemale            -6.47879699 -0.97606728
-    trtplacebo           -5.49775303 -1.17351162
-    sexfemale:trtplacebo  2.09456275  7.89595964
-    albumin              -2.56900534 -0.57586181
-    log(platelet)        -0.69596310  1.35452972
+                                2.5%        97.5%
+    age                  -0.07089203  0.009532033
+    sexfemale            -6.35774231 -1.616816029
+    trtplacebo           -5.79337043 -0.690346595
+    sexfemale:trtplacebo  0.30189724  6.465480908
+    albumin              -2.78819189 -1.261900810
+    log(platelet)        -0.76555577  1.959523913
     
     
     $m4c
     $m4c$`Surv(futime, status != "censored")`
                          2.5%       97.5%
-    age           -0.04842968  0.01358173
-    sexfemale     -3.11969841 -0.62428256
-    albumin       -2.71638106 -0.64632059
-    log(platelet) -1.40706765 -0.25379730
+    age           -0.03601239  0.02870969
+    sexfemale     -3.74264077 -0.75460387
+    albumin       -2.84991395 -1.04985874
+    log(platelet) -1.04689602  0.12524832
     
     
     $m4d
     $m4d$`Surv(futime, status != "censored")`
-                                 2.5%      97.5%
-    age                   -0.04620629  0.0135690
-    sexfemale             -5.62406175 -0.6799098
-    albumin               -2.84912297 -1.1693968
-    ns(platelet, df = 2)1 -3.47384950  0.2220275
-    ns(platelet, df = 2)2 -6.77424948  5.3216798
+                                 2.5%       97.5%
+    age                   -0.04368208  0.01631841
+    sexfemale             -6.87760741 -0.67716758
+    albumin               -3.11370810 -0.55502443
+    ns(platelet, df = 2)1 -4.88037487  0.08987586
+    ns(platelet, df = 2)2 -8.97380833  3.81257505
     
     
 
@@ -743,13 +743,13 @@
          Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
     
     Posterior summary of other parameters:
-                                  Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    beta_Bh0_Srv_ftm_stts_cn[1]  -8.83 4.11 -14.51 -3.05          0   10.43  0.543
-    beta_Bh0_Srv_ftm_stts_cn[2]  -4.58 3.16  -9.84 -1.72          0    2.33  0.289
-    beta_Bh0_Srv_ftm_stts_cn[3]  -7.67 2.82 -12.48 -4.30          0    1.02  0.235
-    beta_Bh0_Srv_ftm_stts_cn[4]  -5.09 2.49  -8.80 -1.73          0    2.05  0.289
-    beta_Bh0_Srv_ftm_stts_cn[5] -11.14 6.69 -23.98 -2.37          0    6.53  0.289
-    beta_Bh0_Srv_ftm_stts_cn[6]  -8.09 3.14 -13.67 -3.59          0    1.05  0.486
+                                 Mean   SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    beta_Bh0_Srv_ftm_stts_cn[1] -7.82 2.99 -12.39 -2.831          0    1.88  0.179
+    beta_Bh0_Srv_ftm_stts_cn[2] -4.62 3.18  -8.99 -0.482          0    5.63  0.387
+    beta_Bh0_Srv_ftm_stts_cn[3] -9.99 3.36 -15.37 -6.042          0    3.19  0.289
+    beta_Bh0_Srv_ftm_stts_cn[4] -8.10 2.68 -10.79 -2.983          0    1.97  0.268
+    beta_Bh0_Srv_ftm_stts_cn[5] -5.44 3.60 -12.27 -1.133          0    3.85  0.289
+    beta_Bh0_Srv_ftm_stts_cn[6] -6.78 5.26 -16.99 -1.819          0    8.33  0.395
     
     
     MCMC settings:
@@ -772,18 +772,18 @@
     Number of events: 169 
     
     Posterior summary:
-                  Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
-    age       -0.00356 0.0344 -0.0463  0.0579      0.667    3.44  0.289
-    sexfemale -5.43576 2.5259 -8.9431 -1.6843      0.000    6.25  0.638
+                 Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+    age       -0.0115 0.0233 -0.0441  0.0261      0.667    1.02  0.158
+    sexfemale -3.7964 1.4788 -5.7881 -1.7279      0.000    3.38  0.289
     
     Posterior summary of other parameters:
-                                 Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    beta_Bh0_Srv_ftm_stts_cn[1] -8.14 1.10  -9.49 -6.56          0    2.12  0.402
-    beta_Bh0_Srv_ftm_stts_cn[2] -5.99 3.05 -12.20 -3.66          0    8.66  0.331
-    beta_Bh0_Srv_ftm_stts_cn[3] -6.48 2.58  -9.52 -2.87          0   16.01  0.886
-    beta_Bh0_Srv_ftm_stts_cn[4] -6.04 1.77  -8.91 -4.44          0    9.38  1.125
-    beta_Bh0_Srv_ftm_stts_cn[5] -5.77 3.28 -12.16 -2.37          0    4.72  0.289
-    beta_Bh0_Srv_ftm_stts_cn[6] -6.51 3.54 -11.44 -1.16          0   10.28  0.855
+                                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    beta_Bh0_Srv_ftm_stts_cn[1]  -6.39 0.852  -7.54 -5.01          0    9.54  0.559
+    beta_Bh0_Srv_ftm_stts_cn[2]  -7.17 1.542  -8.59 -3.97          0    2.98  0.289
+    beta_Bh0_Srv_ftm_stts_cn[3]  -5.75 1.750  -8.32 -3.03          0    6.65  0.422
+    beta_Bh0_Srv_ftm_stts_cn[4]  -8.51 2.127 -11.53 -5.47          0   10.78  0.570
+    beta_Bh0_Srv_ftm_stts_cn[5]  -3.29 1.566  -5.81 -1.08          0    6.38  0.420
+    beta_Bh0_Srv_ftm_stts_cn[6] -11.24 4.501 -18.86 -6.72          0    2.75  0.289
     
     
     MCMC settings:
@@ -806,18 +806,18 @@
     Number of events: 169 
     
     Posterior summary:
-                  Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
-    age       -0.00356 0.0344 -0.0463  0.0579      0.667    3.44  0.289
-    sexfemale -5.43576 2.5259 -8.9431 -1.6843      0.000    6.25  0.638
+                 Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+    age       -0.0115 0.0233 -0.0441  0.0261      0.667    1.02  0.158
+    sexfemale -3.7964 1.4788 -5.7881 -1.7279      0.000    3.38  0.289
     
     Posterior summary of other parameters:
-                                 Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    beta_Bh0_Srv_ftm_stts_cn[1] -8.14 1.10  -9.49 -6.56          0    2.12  0.402
-    beta_Bh0_Srv_ftm_stts_cn[2] -5.99 3.05 -12.20 -3.66          0    8.66  0.331
-    beta_Bh0_Srv_ftm_stts_cn[3] -6.48 2.58  -9.52 -2.87          0   16.01  0.886
-    beta_Bh0_Srv_ftm_stts_cn[4] -6.04 1.77  -8.91 -4.44          0    9.38  1.125
-    beta_Bh0_Srv_ftm_stts_cn[5] -5.77 3.28 -12.16 -2.37          0    4.72  0.289
-    beta_Bh0_Srv_ftm_stts_cn[6] -6.51 3.54 -11.44 -1.16          0   10.28  0.855
+                                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    beta_Bh0_Srv_ftm_stts_cn[1]  -6.39 0.852  -7.54 -5.01          0    9.54  0.559
+    beta_Bh0_Srv_ftm_stts_cn[2]  -7.17 1.542  -8.59 -3.97          0    2.98  0.289
+    beta_Bh0_Srv_ftm_stts_cn[3]  -5.75 1.750  -8.32 -3.03          0    6.65  0.422
+    beta_Bh0_Srv_ftm_stts_cn[4]  -8.51 2.127 -11.53 -5.47          0   10.78  0.570
+    beta_Bh0_Srv_ftm_stts_cn[5]  -3.29 1.566  -5.81 -1.08          0    6.38  0.420
+    beta_Bh0_Srv_ftm_stts_cn[6] -11.24 4.501 -18.86 -6.72          0    2.75  0.289
     
     
     MCMC settings:
@@ -840,17 +840,17 @@
     Number of events: 169 
     
     Posterior summary:
-              Mean      SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
-    copper 0.00417 0.00214 0.00185 0.00795          0    4.23  0.404
+             Mean      SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+    copper 0.0056 0.00155 0.00332 0.00728          0    2.81  0.289
     
     Posterior summary of other parameters:
-                                 Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    beta_Bh0_Srv_ftm_stts_cn[1] -8.42 1.57 -10.85 -6.38          0    3.42  0.674
-    beta_Bh0_Srv_ftm_stts_cn[2] -9.34 3.00 -13.03 -3.88          0    9.15  0.613
-    beta_Bh0_Srv_ftm_stts_cn[3] -6.35 2.55  -9.85 -2.97          0    8.01  0.289
-    beta_Bh0_Srv_ftm_stts_cn[4] -9.33 2.58 -14.36 -6.46          0    1.26  0.289
-    beta_Bh0_Srv_ftm_stts_cn[5] -8.64 3.30 -13.51 -4.22          0    3.03  0.321
-    beta_Bh0_Srv_ftm_stts_cn[6] -9.39 3.91 -15.59 -4.21          0    1.65  0.412
+                                 Mean   SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    beta_Bh0_Srv_ftm_stts_cn[1] -9.29 2.11 -11.94 -5.389          0    6.70  0.289
+    beta_Bh0_Srv_ftm_stts_cn[2] -7.74 1.15  -9.69 -6.162          0    2.79  0.289
+    beta_Bh0_Srv_ftm_stts_cn[3] -9.18 1.47 -11.65 -6.983          0    7.57  0.413
+    beta_Bh0_Srv_ftm_stts_cn[4] -8.78 3.03 -12.80 -4.578          0    7.82  0.838
+    beta_Bh0_Srv_ftm_stts_cn[5] -4.71 2.92  -9.83 -0.755          0    3.17  0.289
+    beta_Bh0_Srv_ftm_stts_cn[6] -8.35 5.93 -16.32 -1.511          0    7.32  0.408
     
     
     MCMC settings:
@@ -874,21 +874,21 @@
     Number of events: 169 
     
     Posterior summary:
-                          Mean      SD     2.5%     97.5% tail-prob. GR-crit MCE/SD
-    copper            -0.00385 0.00224 -0.00802 -0.000465     0.0667    2.13  0.259
-    sexfemale         -1.09411 1.28297 -4.13453  0.107955     0.1333    1.17  0.245
-    age                0.01156 0.01942 -0.03148  0.037769     0.4667    1.31  0.183
-    abs(age - copper)  0.00856 0.00184  0.00514  0.012603     0.0000    2.74  0.183
-    log(trig)         -0.04287 0.20002 -0.43611  0.168213     0.8000    1.94  0.413
+                          Mean      SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+    copper            -0.00247 0.00504 -0.0133 0.00636      0.533    3.50  0.258
+    sexfemale         -1.64913 1.94129 -5.9125 0.55952      0.333    1.63  0.318
+    age                0.00809 0.02084 -0.0357 0.03364      0.467    1.15  0.183
+    abs(age - copper)  0.00509 0.00575 -0.0030 0.01320      0.600    2.75  0.214
+    log(trig)          0.00116 0.21853 -0.4221 0.27459      0.733    2.44  0.295
     
     Posterior summary of other parameters:
-                                 Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    beta_Bh0_Srv_ftm_stts_cn[1] -8.97 0.614  -9.86 -7.72          0    2.26  0.339
-    beta_Bh0_Srv_ftm_stts_cn[2] -6.62 1.893  -9.04 -2.77          0    2.52  0.183
-    beta_Bh0_Srv_ftm_stts_cn[3] -9.23 2.044 -14.59 -6.95          0    7.59  0.505
-    beta_Bh0_Srv_ftm_stts_cn[4] -6.78 1.941 -10.01 -3.74          0    4.43  0.462
-    beta_Bh0_Srv_ftm_stts_cn[5] -8.37 2.401 -13.44 -4.95          0    4.48  0.425
-    beta_Bh0_Srv_ftm_stts_cn[6] -9.91 2.903 -13.74 -2.08          0    2.29  0.172
+                                  Mean   SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    beta_Bh0_Srv_ftm_stts_cn[1]  -7.58 2.08 -10.07 -2.883          0    1.48  0.238
+    beta_Bh0_Srv_ftm_stts_cn[2]  -8.59 2.32 -13.48 -4.680          0    6.97  0.377
+    beta_Bh0_Srv_ftm_stts_cn[3]  -6.69 1.65  -9.87 -3.526          0    3.33  0.250
+    beta_Bh0_Srv_ftm_stts_cn[4]  -9.72 2.54 -14.09 -6.654          0    4.32  0.465
+    beta_Bh0_Srv_ftm_stts_cn[5]  -3.50 2.02  -6.53 -0.803          0    1.65  0.349
+    beta_Bh0_Srv_ftm_stts_cn[6] -16.10 3.96 -22.38 -8.752          0    2.68  0.263
     
     
     MCMC settings:
@@ -913,25 +913,25 @@
     Number of events: 169 
     
     Posterior summary:
-                          Mean      SD     2.5%    97.5% tail-prob. GR-crit MCE/SD
-    copper            -0.00088 0.00548 -0.01241  0.00639      0.867    6.33  0.378
-    sexfemale         -1.00705 0.76804 -2.69054 -0.20998      0.000    2.01  0.496
-    age                0.01063 0.01391 -0.02146  0.03013      0.267    1.63  0.226
-    abs(age - copper)  0.00593 0.00497 -0.00159  0.01408      0.267    6.87  0.491
-    log(trig)          0.03042 0.21657 -0.24484  0.42672      0.733    1.55  0.183
+                           Mean      SD     2.5%    97.5% tail-prob. GR-crit MCE/SD
+    copper             5.10e-03 0.00581 -0.00519  0.01167      0.467    4.85  0.643
+    sexfemale         -2.59e+00 2.33743 -7.55094 -0.42509      0.000    4.00  0.335
+    age                4.11e-05 0.03230 -0.07478  0.05711      0.667    2.33  0.252
+    abs(age - copper) -3.05e-03 0.00566 -0.00978  0.00403      0.933   10.02  1.279
+    log(trig)         -1.70e-01 0.32355 -0.79283  0.16204      0.933    5.69  0.492
     
     Posterior summary of random effects covariance matrix:
-                                  Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_Srv_ftm_stts_cn_center[1,1] 12.1 8.68  1.9  29.9               3.09  0.211
+                                  Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_Srv_ftm_stts_cn_center[1,1] 10.4 10.4 0.609  37.7               4.38  0.338
     
     Posterior summary of other parameters:
                                  Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    beta_Bh0_Srv_ftm_stts_cn[1] -6.15 1.57  -8.71 -3.97      0.000    6.35  0.551
-    beta_Bh0_Srv_ftm_stts_cn[2] -4.78 1.75  -7.88 -1.44      0.000    2.19  0.522
-    beta_Bh0_Srv_ftm_stts_cn[3] -5.28 1.74  -7.05 -2.39      0.000   13.49  0.985
-    beta_Bh0_Srv_ftm_stts_cn[4] -5.05 2.18  -9.14 -1.49      0.000    4.95  0.348
-    beta_Bh0_Srv_ftm_stts_cn[5] -3.95 2.60  -8.39  1.08      0.133    2.79  0.504
-    beta_Bh0_Srv_ftm_stts_cn[6] -7.54 3.31 -13.52 -2.73      0.000    2.35  0.451
+    beta_Bh0_Srv_ftm_stts_cn[1] -5.13 1.27  -7.02 -2.38      0.000    5.73  0.587
+    beta_Bh0_Srv_ftm_stts_cn[2] -4.94 2.16  -8.53 -2.28      0.000    4.14  0.529
+    beta_Bh0_Srv_ftm_stts_cn[3] -4.46 1.00  -6.05 -2.28      0.000    1.93  0.318
+    beta_Bh0_Srv_ftm_stts_cn[4] -5.14 3.20 -10.06 -1.55      0.000    8.58  0.712
+    beta_Bh0_Srv_ftm_stts_cn[5] -3.40 2.95  -7.31  2.27      0.267    6.68  0.327
+    beta_Bh0_Srv_ftm_stts_cn[6] -9.55 8.02 -24.39 -2.29      0.000   12.61  0.643
     
     
     MCMC settings:
@@ -957,31 +957,31 @@
     Number of events: 169 
     
     Posterior summary:
-                    Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
-    age        -0.015888 0.02630 -0.07315  0.0247      0.400    1.92  0.424
-    sexfemale  -2.721573 1.96131 -7.14618 -0.7654      0.000    2.48  0.513
-    trtplacebo -0.567623 1.07217 -3.22307  0.3105      0.867    1.43  0.244
-    albumin    -2.014179 0.30243 -2.28230 -1.2963      0.000    1.90  0.297
-    platelet    0.000559 0.00501 -0.00534  0.0123      0.667    1.73  0.297
-    stage.L     0.263774 1.30739 -1.94718  2.8937      0.933    2.71  0.266
-    stage.Q     1.118750 0.60546 -0.05880  2.0134      0.133    1.47  0.183
-    stage.C    -0.890258 0.86266 -2.93599  0.4631      0.133    1.83       
+                  Mean      SD     2.5%    97.5% tail-prob. GR-crit MCE/SD
+    age        -0.0122 0.01684 -0.04606  0.01232      0.400    1.67  0.214
+    sexfemale  -1.9118 1.15532 -4.48924 -0.74494      0.000    1.35  0.320
+    trtplacebo -0.9341 1.69081 -4.83474  0.53085      1.000    1.30  0.183
+    albumin    -2.1101 0.28388 -2.54515 -1.58653      0.000    1.82  0.366
+    platelet   -0.0011 0.00268 -0.00715  0.00363      0.533    1.62  0.354
+    stage.L    -0.0138 0.81761 -1.87631  0.98846      0.600    1.50  0.325
+    stage.Q     1.8599 1.27945  0.08405  4.54487      0.000    7.79  0.417
+    stage.C    -1.1581 1.14533 -3.24212  0.31359      0.400    3.20  0.271
     
     Posterior summary of other parameters:
                                   Mean   SD   2.5%   97.5% tail-prob. GR-crit
-    beta_Bh0_Srv_ftm_stts_cn[1]  -7.21 2.23 -10.31 -2.1346     0.0000    1.58
-    beta_Bh0_Srv_ftm_stts_cn[2]  -8.60 1.19 -10.15 -6.5299     0.0000    8.49
-    beta_Bh0_Srv_ftm_stts_cn[3]  -6.06 2.30  -9.81 -1.9983     0.0000    3.06
-    beta_Bh0_Srv_ftm_stts_cn[4] -10.34 2.63 -14.03 -5.7018     0.0000    1.89
-    beta_Bh0_Srv_ftm_stts_cn[5]  -4.84 3.04  -8.42  0.0568     0.0667    4.38
-    beta_Bh0_Srv_ftm_stts_cn[6] -12.44 5.55 -24.55 -6.3814     0.0000    5.37
+    beta_Bh0_Srv_ftm_stts_cn[1]  -7.79 1.60  -9.96 -4.7202          0    1.72
+    beta_Bh0_Srv_ftm_stts_cn[2]  -7.99 1.03  -9.39 -5.8308          0    1.22
+    beta_Bh0_Srv_ftm_stts_cn[3]  -7.47 1.47 -10.03 -5.0013          0    3.29
+    beta_Bh0_Srv_ftm_stts_cn[4]  -9.83 1.42 -13.42 -7.4132          0    3.22
+    beta_Bh0_Srv_ftm_stts_cn[5]  -5.85 2.75  -9.26 -0.0136          0    2.27
+    beta_Bh0_Srv_ftm_stts_cn[6] -11.45 3.98 -19.18 -4.8627          0    2.13
                                 MCE/SD
-    beta_Bh0_Srv_ftm_stts_cn[1]  0.397
-    beta_Bh0_Srv_ftm_stts_cn[2]  0.366
-    beta_Bh0_Srv_ftm_stts_cn[3]  0.569
-    beta_Bh0_Srv_ftm_stts_cn[4]  0.413
-    beta_Bh0_Srv_ftm_stts_cn[5]  0.269
-    beta_Bh0_Srv_ftm_stts_cn[6]  0.385
+    beta_Bh0_Srv_ftm_stts_cn[1]  0.314
+    beta_Bh0_Srv_ftm_stts_cn[2]  0.358
+    beta_Bh0_Srv_ftm_stts_cn[3]  0.350
+    beta_Bh0_Srv_ftm_stts_cn[4]  0.460
+    beta_Bh0_Srv_ftm_stts_cn[5]  0.470
+    beta_Bh0_Srv_ftm_stts_cn[6]  0.355
     
     
     MCMC settings:
@@ -1007,22 +1007,22 @@
     Number of events: 169 
     
     Posterior summary:
-                            Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
-    age                  -0.0195 0.0187 -0.0498  0.0148      0.267    3.04  0.262
-    sexfemale            -3.9984 1.5847 -6.4788 -0.9761      0.000    4.71  0.567
-    trtplacebo           -2.9980 1.4145 -5.4978 -1.1735      0.000    6.11  0.470
-    sexfemale:trtplacebo  4.5094 1.8457  2.0946  7.8960      0.000    6.26  0.492
-    albumin              -2.0321 0.5486 -2.5690 -0.5759      0.000    1.30    Inf
-    log(platelet)        -0.0739 0.5345 -0.6960  1.3545      0.600    1.52  0.183
+                            Mean     SD    2.5%    97.5% tail-prob. GR-crit MCE/SD
+    age                  -0.0194 0.0213 -0.0709  0.00953     0.1333    1.47  0.406
+    sexfemale            -3.2758 1.2881 -6.3577 -1.61682     0.0000    1.95  0.396
+    trtplacebo           -3.1305 1.6273 -5.7934 -0.69035     0.0000    9.33  0.629
+    sexfemale:trtplacebo  3.5639 1.8737  0.3019  6.46548     0.0667    3.27  0.478
+    albumin              -2.2508 0.4461 -2.7882 -1.26190     0.0000    1.00  0.101
+    log(platelet)        -0.1847 0.6632 -0.7656  1.95952     0.2667    2.61  0.313
     
     Posterior summary of other parameters:
-                                 Mean   SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    beta_Bh0_Srv_ftm_stts_cn[1] -6.07 1.42  -7.83 -2.231      0.000    4.04  0.513
-    beta_Bh0_Srv_ftm_stts_cn[2] -7.93 1.49 -11.53 -4.987      0.000    2.02  0.259
-    beta_Bh0_Srv_ftm_stts_cn[3] -5.59 1.67  -7.61 -2.160      0.000    8.73  0.343
-    beta_Bh0_Srv_ftm_stts_cn[4] -8.26 2.54 -12.60 -4.015      0.000    4.06  0.552
-    beta_Bh0_Srv_ftm_stts_cn[5] -6.05 3.99 -13.51  0.268      0.133    7.41  0.706
-    beta_Bh0_Srv_ftm_stts_cn[6] -9.00 5.06 -18.58 -2.278      0.000    3.31  0.183
+                                 Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    beta_Bh0_Srv_ftm_stts_cn[1] -7.04 1.26  -8.47 -4.36          0    1.50  0.205
+    beta_Bh0_Srv_ftm_stts_cn[2] -7.01 1.33  -8.84 -4.80          0    3.29  0.398
+    beta_Bh0_Srv_ftm_stts_cn[3] -6.20 2.14  -8.87 -1.68          0    4.18  0.581
+    beta_Bh0_Srv_ftm_stts_cn[4] -7.90 2.17 -10.87 -4.23          0    7.46  0.429
+    beta_Bh0_Srv_ftm_stts_cn[5] -7.36 2.78 -11.27 -2.88          0    4.50  0.520
+    beta_Bh0_Srv_ftm_stts_cn[6] -6.85 1.48  -9.04 -4.01          0    1.46  0.230
     
     
     MCMC settings:
@@ -1048,31 +1048,24 @@
     Number of events: 169 
     
     Posterior summary:
-                     Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
-    age           -0.0106 0.0183 -0.0484  0.0136      0.667    1.11  0.183
-    sexfemale     -1.4338 0.8101 -3.1197 -0.6243      0.000    1.26  0.263
-    albumin       -2.0958 0.5756 -2.7164 -0.6463      0.000    2.55  0.413
-    log(platelet) -0.6748 0.3240 -1.4071 -0.2538      0.000    1.09  0.316
+                      Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
+    age           -0.00394 0.0155 -0.036  0.0287      0.600    2.66  0.443
+    sexfemale     -1.63700 0.8352 -3.743 -0.7546      0.000    1.22  0.241
+    albumin       -2.13851 0.5261 -2.850 -1.0499      0.000    1.98  0.341
+    log(platelet) -0.40690 0.2750 -1.047  0.1252      0.133    1.65  0.205
     
     Posterior summary of random effects covariance matrix:
-                                  Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_Srv_ftm_stts_cn_center[1,1] 16.9 27.8 3.25  64.6               2.26  0.183
+                                  Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_Srv_ftm_stts_cn_center[1,1] 13.7 15.8 0.156  49.9               4.09  0.183
     
     Posterior summary of other parameters:
-                                  Mean    SD   2.5%  97.5% tail-prob. GR-crit
-    beta_Bh0_Srv_ftm_stts_cn[1]  -4.88 0.673  -6.35 -3.896      0.000   1.549
-    beta_Bh0_Srv_ftm_stts_cn[2]  -5.65 1.321  -7.59 -3.104      0.000   3.264
-    beta_Bh0_Srv_ftm_stts_cn[3]  -3.61 0.800  -4.63 -1.942      0.000   0.978
-    beta_Bh0_Srv_ftm_stts_cn[4]  -8.34 1.302 -11.28 -6.626      0.000   6.819
-    beta_Bh0_Srv_ftm_stts_cn[5]  -1.44 1.299  -3.87  0.649      0.333   1.492
-    beta_Bh0_Srv_ftm_stts_cn[6] -10.37 3.951 -15.73 -2.906      0.000   1.370
-                                MCE/SD
-    beta_Bh0_Srv_ftm_stts_cn[1]  0.150
-    beta_Bh0_Srv_ftm_stts_cn[2]  0.476
-    beta_Bh0_Srv_ftm_stts_cn[3]  0.183
-    beta_Bh0_Srv_ftm_stts_cn[4]  0.451
-    beta_Bh0_Srv_ftm_stts_cn[5]  0.346
-    beta_Bh0_Srv_ftm_stts_cn[6]    Inf
+                                 Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    beta_Bh0_Srv_ftm_stts_cn[1] -5.36 1.33  -7.81 -3.01          0    2.10  0.241
+    beta_Bh0_Srv_ftm_stts_cn[2] -4.73 2.05  -7.56 -1.25          0    5.18  0.370
+    beta_Bh0_Srv_ftm_stts_cn[3] -4.80 1.27  -6.99 -2.63          0    3.04  0.183
+    beta_Bh0_Srv_ftm_stts_cn[4] -6.43 2.15  -8.64 -2.72          0    7.82  0.623
+    beta_Bh0_Srv_ftm_stts_cn[5] -5.07 2.28  -8.59 -1.45          0    2.72  0.447
+    beta_Bh0_Srv_ftm_stts_cn[6] -6.53 2.96 -13.16 -2.87          0    3.41  0.505
     
     
     MCMC settings:
@@ -1100,24 +1093,24 @@
     
     Posterior summary:
                              Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
-    age                   -0.0106 0.0157 -0.0462  0.0136      0.467    1.62  0.183
-    sexfemale             -1.7973 1.2946 -5.6241 -0.6799      0.000    1.18  0.183
-    albumin               -2.2295 0.4574 -2.8491 -1.1694      0.000    1.36  0.333
-    ns(platelet, df = 2)1 -2.1948 1.0693 -3.4738  0.2220      0.133    3.49  0.381
-    ns(platelet, df = 2)2 -1.1507 2.8782 -6.7742  5.3217      0.467    2.40  0.183
+    age                   -0.0103 0.0183 -0.0437  0.0163     0.4667    1.65  0.183
+    sexfemale             -1.9792 1.7475 -6.8776 -0.6772     0.0000    6.39  0.516
+    albumin               -2.2239 0.6135 -3.1137 -0.5550     0.0000    1.46  0.248
+    ns(platelet, df = 2)1 -2.0224 1.4397 -4.8804  0.0899     0.0667    2.45  0.183
+    ns(platelet, df = 2)2 -0.8692 3.0834 -8.9738  3.8126     0.7333    1.76  0.135
     
     Posterior summary of random effects covariance matrix:
                                   Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_Srv_ftm_stts_cn_center[1,1] 15.7 9.32 4.67  40.5               2.27  0.183
+    D_Srv_ftm_stts_cn_center[1,1] 21.1 20.8 4.57  68.1               4.53  0.183
     
     Posterior summary of other parameters:
-                                 Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    beta_Bh0_Srv_ftm_stts_cn[1] -4.64 0.912  -6.08 -2.74      0.000    2.82  0.355
-    beta_Bh0_Srv_ftm_stts_cn[2] -5.44 1.191  -6.96 -2.77      0.000    1.93  0.349
-    beta_Bh0_Srv_ftm_stts_cn[3] -3.37 1.264  -4.99 -1.32      0.000    1.96  0.319
-    beta_Bh0_Srv_ftm_stts_cn[4] -7.43 0.871  -9.09 -5.90      0.000    2.93  0.384
-    beta_Bh0_Srv_ftm_stts_cn[5] -2.78 1.745  -4.91  2.63      0.133    2.82  0.222
-    beta_Bh0_Srv_ftm_stts_cn[6] -7.89 3.112 -13.15 -2.17      0.000    1.15  0.278
+                                 Mean   SD  2.5%   97.5% tail-prob. GR-crit MCE/SD
+    beta_Bh0_Srv_ftm_stts_cn[1] -3.93 1.49 -6.09 -0.6569     0.0000   10.70  0.605
+    beta_Bh0_Srv_ftm_stts_cn[2] -4.01 1.96 -6.58 -0.6762     0.0000    9.00  0.535
+    beta_Bh0_Srv_ftm_stts_cn[3] -3.65 1.23 -5.25 -1.5479     0.0000    4.74  0.703
+    beta_Bh0_Srv_ftm_stts_cn[4] -4.26 2.69 -8.28  0.0171     0.1333   11.43  0.880
+    beta_Bh0_Srv_ftm_stts_cn[5] -4.96 1.57 -7.79 -2.5944     0.0000    6.77  0.767
+    beta_Bh0_Srv_ftm_stts_cn[6] -4.48 2.72 -9.42 -0.2310     0.0667    4.47  0.499
     
     
     MCMC settings:
@@ -1141,132 +1134,132 @@
     
     $m1a
     $m1a$`Surv(futime, status != "censored")`
-                      Mean         SD        2.5%       97.5% tail-prob.  GR-crit
-    age       -0.003563391 0.03440448 -0.04626874  0.05790722  0.6666667 3.444820
-    sexfemale -5.435757187 2.52591267 -8.94314146 -1.68425614  0.0000000 6.250713
+                     Mean         SD        2.5%       97.5% tail-prob.  GR-crit
+    age       -0.01151145 0.02331643 -0.04410083  0.02614696  0.6666667 1.022333
+    sexfemale -3.79641198 1.47884999 -5.78814140 -1.72788620  0.0000000 3.376461
                  MCE/SD
-    age       0.2886751
-    sexfemale 0.6375043
+    age       0.1578519
+    sexfemale 0.2886751
     
     
     $m1b
     $m1b$`Surv(futime, I(status != "censored"))`
-                      Mean         SD        2.5%       97.5% tail-prob.  GR-crit
-    age       -0.003563391 0.03440448 -0.04626874  0.05790722  0.6666667 3.444820
-    sexfemale -5.435757187 2.52591267 -8.94314146 -1.68425614  0.0000000 6.250713
+                     Mean         SD        2.5%       97.5% tail-prob.  GR-crit
+    age       -0.01151145 0.02331643 -0.04410083  0.02614696  0.6666667 1.022333
+    sexfemale -3.79641198 1.47884999 -5.78814140 -1.72788620  0.0000000 3.376461
                  MCE/SD
-    age       0.2886751
-    sexfemale 0.6375043
+    age       0.1578519
+    sexfemale 0.2886751
     
     
     $m2a
     $m2a$`Surv(futime, status != "censored")`
                   Mean          SD        2.5%       97.5% tail-prob.  GR-crit
-    copper 0.004169068 0.002138354 0.001853962 0.007954637          0 4.228508
+    copper 0.005598315 0.001545245 0.003322605 0.007280229          0 2.809162
               MCE/SD
-    copper 0.4035201
+    copper 0.2886751
     
     
     $m3a
     $m3a$`Surv(futime, status != "censored")`
-                              Mean          SD        2.5%         97.5% tail-prob.
-    copper            -0.003852868 0.002235931 -0.00802129 -0.0004647465 0.06666667
-    sexfemale         -1.094111220 1.282966729 -4.13452866  0.1079552553 0.13333333
-    age                0.011558178 0.019421347 -0.03148391  0.0377688768 0.46666667
-    abs(age - copper)  0.008555954 0.001842385  0.00514195  0.0126032897 0.00000000
-    log(trig)         -0.042871021 0.200016780 -0.43610588  0.1682127603 0.80000000
+                              Mean          SD         2.5%      97.5% tail-prob.
+    copper            -0.002466153 0.005040042 -0.013252291 0.00636426  0.5333333
+    sexfemale         -1.649129340 1.941290091 -5.912451120 0.55951811  0.3333333
+    age                0.008091912 0.020839505 -0.035719260 0.03364059  0.4666667
+    abs(age - copper)  0.005091666 0.005750891 -0.002999525 0.01319711  0.6000000
+    log(trig)          0.001157879 0.218525279 -0.422065004 0.27459244  0.7333333
                        GR-crit    MCE/SD
-    copper            2.126821 0.2585763
-    sexfemale         1.171966 0.2447821
-    age               1.310143 0.1825742
-    abs(age - copper) 2.736445 0.1825742
-    log(trig)         1.939378 0.4128176
+    copper            3.500495 0.2576980
+    sexfemale         1.632443 0.3177620
+    age               1.150251 0.1825742
+    abs(age - copper) 2.752923 0.2140261
+    log(trig)         2.437292 0.2954663
     
     
     $m3b
     $m3b$`Surv(futime, status != "censored")`
                                Mean          SD         2.5%        97.5%
-    copper            -0.0008800484 0.005479550 -0.012414936  0.006387176
-    sexfemale         -1.0070498760 0.768035159 -2.690541789 -0.209977066
-    age                0.0106285732 0.013905617 -0.021460648  0.030134925
-    abs(age - copper)  0.0059298340 0.004972411 -0.001591169  0.014082357
-    log(trig)          0.0304234372 0.216570615 -0.244836388  0.426715248
-                      tail-prob.  GR-crit    MCE/SD
-    copper             0.8666667 6.329391 0.3783617
-    sexfemale          0.0000000 2.008645 0.4959068
-    age                0.2666667 1.627495 0.2255017
-    abs(age - copper)  0.2666667 6.872657 0.4906391
-    log(trig)          0.7333333 1.548263 0.1825742
+    copper             5.101207e-03 0.005805579 -0.005189366  0.011665479
+    sexfemale         -2.588358e+00 2.337428536 -7.550944303 -0.425092599
+    age                4.114451e-05 0.032295897 -0.074781974  0.057110314
+    abs(age - copper) -3.051898e-03 0.005664952 -0.009776302  0.004029194
+    log(trig)         -1.704065e-01 0.323546695 -0.792825512  0.162041803
+                      tail-prob.   GR-crit    MCE/SD
+    copper             0.4666667  4.852170 0.6429938
+    sexfemale          0.0000000  3.995009 0.3351031
+    age                0.6666667  2.332065 0.2518713
+    abs(age - copper)  0.9333333 10.023772 1.2789149
+    log(trig)          0.9333333  5.691521 0.4917624
     
     
     $m4a
     $m4a$`Surv(futime, status != "censored")`
-                        Mean          SD         2.5%       97.5% tail-prob.
-    age        -0.0158880368 0.026301567 -0.073151043  0.02465452  0.4000000
-    sexfemale  -2.7215731304 1.961312443 -7.146183593 -0.76540034  0.0000000
-    trtplacebo -0.5676230074 1.072166018 -3.223067209  0.31050254  0.8666667
-    albumin    -2.0141786082 0.302430183 -2.282304389 -1.29627309  0.0000000
-    platelet    0.0005587242 0.005012382 -0.005338757  0.01226778  0.6666667
-    stage.L     0.2637735366 1.307392498 -1.947177362  2.89373548  0.9333333
-    stage.Q     1.1187498930 0.605464178 -0.058804953  2.01338354  0.1333333
-    stage.C    -0.8902576262 0.862659918 -2.935986142  0.46311136  0.1333333
+                      Mean          SD         2.5%        97.5% tail-prob.
+    age        -0.01219139 0.016835146 -0.046056196  0.012321052  0.4000000
+    sexfemale  -1.91179207 1.155319616 -4.489242251 -0.744944781  0.0000000
+    trtplacebo -0.93409060 1.690812675 -4.834739360  0.530853418  1.0000000
+    albumin    -2.11005107 0.283881591 -2.545148997 -1.586528802  0.0000000
+    platelet   -0.00110195 0.002678814 -0.007154503  0.003629773  0.5333333
+    stage.L    -0.01380880 0.817608757 -1.876311808  0.988458750  0.6000000
+    stage.Q     1.85992259 1.279449947  0.084048380  4.544869760  0.0000000
+    stage.C    -1.15810504 1.145327874 -3.242119282  0.313589665  0.4000000
                 GR-crit    MCE/SD
-    age        1.919310 0.4243287
-    sexfemale  2.484975 0.5126949
-    trtplacebo 1.427565 0.2444628
-    albumin    1.900300 0.2973572
-    platelet   1.734110 0.2965776
-    stage.L    2.710870 0.2656798
-    stage.Q    1.465872 0.1825742
-    stage.C    1.825955        NA
+    age        1.668711 0.2143245
+    sexfemale  1.350656 0.3199503
+    trtplacebo 1.304976 0.1825742
+    albumin    1.823645 0.3659819
+    platelet   1.620125 0.3535044
+    stage.L    1.503438 0.3251075
+    stage.Q    7.794657 0.4167623
+    stage.C    3.195378 0.2708303
     
     
     $m4b
     $m4b$`Surv(futime, status != "censored")`
-                                Mean         SD        2.5%       97.5% tail-prob.
-    age                  -0.01946302 0.01872176 -0.04978316  0.01478515  0.2666667
-    sexfemale            -3.99837393 1.58474161 -6.47879699 -0.97606728  0.0000000
-    trtplacebo           -2.99795411 1.41447645 -5.49775303 -1.17351162  0.0000000
-    sexfemale:trtplacebo  4.50936103 1.84574888  2.09456275  7.89595964  0.0000000
-    albumin              -2.03211978 0.54861712 -2.56900534 -0.57586181  0.0000000
-    log(platelet)        -0.07385869 0.53445523 -0.69596310  1.35452972  0.6000000
+                                Mean         SD        2.5%        97.5% tail-prob.
+    age                  -0.01942207 0.02126537 -0.07089203  0.009532033 0.13333333
+    sexfemale            -3.27575938 1.28813550 -6.35774231 -1.616816029 0.00000000
+    trtplacebo           -3.13046553 1.62726653 -5.79337043 -0.690346595 0.00000000
+    sexfemale:trtplacebo  3.56389047 1.87368028  0.30189724  6.465480908 0.06666667
+    albumin              -2.25084133 0.44608457 -2.78819189 -1.261900810 0.00000000
+    log(platelet)        -0.18466117 0.66321144 -0.76555577  1.959523913 0.26666667
                           GR-crit    MCE/SD
-    age                  3.039244 0.2615351
-    sexfemale            4.709744 0.5670714
-    trtplacebo           6.105392 0.4701730
-    sexfemale:trtplacebo 6.261526 0.4917404
-    albumin              1.296114       Inf
-    log(platelet)        1.520634 0.1825742
+    age                  1.468526 0.4062298
+    sexfemale            1.950555 0.3957175
+    trtplacebo           9.327590 0.6286954
+    sexfemale:trtplacebo 3.271577 0.4776637
+    albumin              1.001311 0.1014482
+    log(platelet)        2.605330 0.3127768
     
     
     $m4c
     $m4c$`Surv(futime, status != "censored")`
-                         Mean         SD        2.5%       97.5% tail-prob.
-    age           -0.01063719 0.01833217 -0.04842968  0.01358173  0.6666667
-    sexfemale     -1.43378996 0.81008748 -3.11969841 -0.62428256  0.0000000
-    albumin       -2.09582152 0.57562292 -2.71638106 -0.64632059  0.0000000
-    log(platelet) -0.67476804 0.32404347 -1.40706765 -0.25379730  0.0000000
+                          Mean        SD        2.5%       97.5% tail-prob.
+    age           -0.003935506 0.0155342 -0.03601239  0.02870969  0.6000000
+    sexfemale     -1.637000759 0.8351623 -3.74264077 -0.75460387  0.0000000
+    albumin       -2.138509732 0.5260907 -2.84991395 -1.04985874  0.0000000
+    log(platelet) -0.406897017 0.2750260 -1.04689602  0.12524832  0.1333333
                    GR-crit    MCE/SD
-    age           1.107735 0.1825742
-    sexfemale     1.261232 0.2628998
-    albumin       2.549584 0.4132439
-    log(platelet) 1.086660 0.3157542
+    age           2.657580 0.4428842
+    sexfemale     1.217431 0.2410749
+    albumin       1.977565 0.3405552
+    log(platelet) 1.646913 0.2049080
     
     
     $m4d
     $m4d$`Surv(futime, status != "censored")`
-                                 Mean         SD        2.5%      97.5% tail-prob.
-    age                   -0.01060027 0.01565656 -0.04620629  0.0135690  0.4666667
-    sexfemale             -1.79727637 1.29459141 -5.62406175 -0.6799098  0.0000000
-    albumin               -2.22948405 0.45735907 -2.84912297 -1.1693968  0.0000000
-    ns(platelet, df = 2)1 -2.19477826 1.06929377 -3.47384950  0.2220275  0.1333333
-    ns(platelet, df = 2)2 -1.15072530 2.87823313 -6.77424948  5.3216798  0.4666667
+                                Mean         SD        2.5%       97.5% tail-prob.
+    age                   -0.0103071 0.01832492 -0.04368208  0.01631841 0.46666667
+    sexfemale             -1.9792357 1.74753858 -6.87760741 -0.67716758 0.00000000
+    albumin               -2.2239445 0.61351192 -3.11370810 -0.55502443 0.00000000
+    ns(platelet, df = 2)1 -2.0223729 1.43966623 -4.88037487  0.08987586 0.06666667
+    ns(platelet, df = 2)2 -0.8692401 3.08336764 -8.97380833  3.81257505 0.73333333
                            GR-crit    MCE/SD
-    age                   1.615337 0.1825742
-    sexfemale             1.180529 0.1825742
-    albumin               1.359666 0.3325924
-    ns(platelet, df = 2)1 3.493549 0.3813915
-    ns(platelet, df = 2)2 2.395869 0.1825742
+    age                   1.646515 0.1825742
+    sexfemale             6.393688 0.5157295
+    albumin               1.461796 0.2477862
+    ns(platelet, df = 2)1 2.449969 0.1825742
+    ns(platelet, df = 2)2 1.757892 0.1348607
     
     
 

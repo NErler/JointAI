@@ -4,1383 +4,1383 @@
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)      0.981      0.982
-    sigma_y          1.079      1.504
-    D_y_id[1,1]      1.166      1.840
+    (Intercept)      1.192       1.92
+    sigma_y          0.966       1.09
+    D_y_id[1,1]      1.584       2.68
     
     
     $m0a2
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)      0.981      0.982
-    sigma_y          1.079      1.504
-    D_y_id[1,1]      1.166      1.840
+    (Intercept)      1.192       1.92
+    sigma_y          0.966       1.09
+    D_y_id[1,1]      1.584       2.68
     
     
     $m0a3
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       2.06       4.14
-    sigma_y           1.03       1.25
-    D_y_id[1,1]       2.08       5.32
+    (Intercept)       2.65       4.74
+    sigma_y           1.02       1.21
+    D_y_id[1,1]       1.68       3.49
     
     
     $m0a4
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       2.60       5.44
-    sigma_y           2.64       7.12
-    D_y_id[1,1]       4.59      10.81
+    (Intercept)       2.63       4.70
+    sigma_y           1.19       1.93
+    D_y_id[1,1]       1.52       2.83
     
     
     $m0b1
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.63       2.77
-    D_b1_id[1,1]       2.91       7.54
+    (Intercept)        1.92       6.21
+    D_b1_id[1,1]       3.70      15.05
     
     
     $m0b2
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.50       2.68
-    D_b1_id[1,1]       3.09      11.12
+    (Intercept)        1.24       2.10
+    D_b1_id[1,1]       1.72       7.62
     
     
     $m0b3
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.09       1.46
-    D_b1_id[1,1]       1.87       3.23
+    (Intercept)        2.85       11.7
+    D_b1_id[1,1]       5.15       19.0
     
     
     $m0b4
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.09       1.46
-    D_b1_id[1,1]       1.87       3.23
+    (Intercept)        2.85       11.7
+    D_b1_id[1,1]       5.15       19.0
     
     
     $m0c1
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.13       1.59
-    sigma_L1           1.26       2.94
-    D_L1_id[1,1]       1.03       1.16
+    (Intercept)       14.17      34.30
+    sigma_L1           3.09       8.69
+    D_L1_id[1,1]       1.39       2.50
     
     
     $m0c2
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.99       5.17
-    sigma_L1           1.56       2.83
-    D_L1_id[1,1]       2.23       3.98
+    (Intercept)        1.77       3.28
+    sigma_L1           1.38       2.33
+    D_L1_id[1,1]       1.73       2.88
     
     
     $m0d1
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)       1.348       2.39
-    D_p1_id[1,1]      0.963       1.00
+    (Intercept)        1.53       2.67
+    D_p1_id[1,1]       1.43       2.99
     
     
     $m0d2
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.15       1.59
-    D_p1_id[1,1]       1.20       1.90
+    (Intercept)        1.32       1.94
+    D_p1_id[1,1]       1.45       2.34
     
     
     $m0e1
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.74       3.64
-    sigma_L1           1.01       1.10
-    D_L1_id[1,1]       1.45       2.34
+    (Intercept)        1.23       1.86
+    sigma_L1           1.25       1.77
+    D_L1_id[1,1]       1.51       3.70
     
     
     $m0f1
     Potential scale reduction factors:
     
                   Point est. Upper C.I.
-    (Intercept)         1.72       2.85
-    tau_Be1             1.40       2.20
-    D_Be1_id[1,1]       1.13       1.70
+    (Intercept)         1.01       1.17
+    tau_Be1             1.07       1.39
+    D_Be1_id[1,1]       1.23       1.98
     
     
     $m1a
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       1.36       2.19
-    C1                1.36       2.19
-    sigma_y           1.46       2.69
-    D_y_id[1,1]       1.43       2.25
+    (Intercept)       1.06       1.42
+    C1                1.05       1.41
+    sigma_y           1.47       2.37
+    D_y_id[1,1]       2.94      12.20
     
     
     $m1b
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.27       2.39
-    C1                 1.26       2.35
-    D_b1_id[1,1]       1.66       3.18
+    (Intercept)        1.42       2.71
+    C1                 1.41       2.67
+    D_b1_id[1,1]       1.68       3.25
     
     
     $m1c
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.64       2.97
-    C1                 1.62       2.93
-    sigma_L1           2.25       7.25
-    D_L1_id[1,1]       1.54       4.19
+    (Intercept)        1.18       1.86
+    C1                 1.17       1.79
+    sigma_L1           1.32       1.99
+    D_L1_id[1,1]       1.63       6.85
     
     
     $m1d
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.09       1.39
-    C1                 1.06       1.33
-    D_p1_id[1,1]       1.26       2.95
+    (Intercept)        1.78       3.63
+    C1                 1.77       3.60
+    D_p1_id[1,1]       1.01       1.01
     
     
     $m1e
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)       1.217       1.74
-    C1                1.220       1.74
-    sigma_L1          0.975       1.06
-    D_L1_id[1,1]      1.817       3.47
+    (Intercept)        1.30       2.22
+    C1                 1.30       2.23
+    sigma_L1           1.14       1.57
+    D_L1_id[1,1]       1.39       2.51
     
     
     $m1f
     Potential scale reduction factors:
     
                   Point est. Upper C.I.
-    (Intercept)         1.23       2.13
-    C1                  1.25       2.19
-    tau_Be1             1.14       1.57
-    D_Be1_id[1,1]       2.36       5.98
+    (Intercept)         1.61       2.77
+    C1                  1.64       2.86
+    tau_Be1             1.38       2.09
+    D_Be1_id[1,1]       1.37       2.51
     
     
     $m2a
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       1.20       1.96
-    c2                1.52       2.79
-    sigma_y           1.87       3.28
-    D_y_id[1,1]       1.98       3.53
+    (Intercept)       1.81       3.17
+    c2                2.49       4.60
+    sigma_y           1.04       1.36
+    D_y_id[1,1]       1.40       2.17
     
     
     $m2b
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)       1.270       1.87
-    c2                1.846       3.66
-    D_b2_id[1,1]      0.965       1.05
+    (Intercept)        1.66       2.87
+    c2                 1.37       2.13
+    D_b2_id[1,1]       3.12       6.53
     
     
     $m2c
     Potential scale reduction factors:
     
                     Point est. Upper C.I.
-    (Intercept)           8.70      19.12
-    c2                   24.09      60.77
-    sigma_L1mis           1.33       4.23
-    D_L1mis_id[1,1]       1.70       3.41
+    (Intercept)           8.43      18.92
+    c2                    6.37      32.17
+    sigma_L1mis           1.61       4.83
+    D_L1mis_id[1,1]       1.95       9.42
     
     
     $m2d
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        2.22       3.88
-    c2                 1.88       3.15
-    D_p2_id[1,1]       2.07       3.93
+    (Intercept)        1.44       3.24
+    c2                 1.30       2.15
+    D_p2_id[1,1]       1.62       3.13
     
     
     $m2e
     Potential scale reduction factors:
     
                     Point est. Upper C.I.
-    (Intercept)          1.456      2.569
-    c2                   1.430      2.329
-    sigma_L1mis          0.967      0.996
-    D_L1mis_id[1,1]      2.596      5.113
+    (Intercept)           1.35       2.23
+    c2                    1.04       1.25
+    sigma_L1mis           1.02       1.16
+    D_L1mis_id[1,1]       4.15       7.95
     
     
     $m2f
     Potential scale reduction factors:
     
                   Point est. Upper C.I.
-    (Intercept)         1.24       2.17
-    c2                  1.16       1.79
-    tau_Be2             1.74       3.16
-    D_Be2_id[1,1]       2.32       5.14
+    (Intercept)         1.60       3.12
+    c2                  1.17       1.81
+    tau_Be2             1.60       2.60
+    D_Be2_id[1,1]       2.17       4.63
     
     
     $m3a
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    C2               1.070       1.45
-    sigma_y          0.976       1.12
-    D_y_id[1,1]      1.094       1.46
+    C2                1.91       3.65
+    sigma_y           2.64       6.22
+    D_y_id[1,1]       1.20       2.22
     
     
     $m3b
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    C2                 2.97       5.58
-    D_b2_id[1,1]       7.55      14.94
+    C2                 1.43       2.20
+    D_b2_id[1,1]       1.13       1.59
     
     
     $m3c
     Potential scale reduction factors:
     
                     Point est. Upper C.I.
-    C2                    1.18       1.77
-    sigma_L1mis           2.83      14.03
-    D_L1mis_id[1,1]       1.24       2.62
+    C2                    2.10       3.66
+    sigma_L1mis           1.03       1.24
+    D_L1mis_id[1,1]       1.93       3.46
     
     
     $m3d
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    C2                 1.05       1.28
-    D_p2_id[1,1]       1.15       1.62
+    C2                 1.83       3.17
+    D_p2_id[1,1]       1.58       3.61
     
     
     $m3e
     Potential scale reduction factors:
     
                     Point est. Upper C.I.
-    C2                    1.78       2.94
-    sigma_L1mis           1.23       1.76
-    D_L1mis_id[1,1]       1.02       1.18
+    C2                    1.67       2.73
+    sigma_L1mis           1.02       1.11
+    D_L1mis_id[1,1]       1.09       1.42
     
     
     $m3f
     Potential scale reduction factors:
     
                   Point est. Upper C.I.
-    C2                 1.416       2.38
-    tau_Be2            0.982       1.11
-    D_Be2_id[1,1]      2.113       5.53
+    C2                  2.07       4.96
+    tau_Be2             1.22       2.02
+    D_Be2_id[1,1]       2.61       6.07
     
     
     $m4a
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        2.69       6.03
-    B21                4.73      10.90
-    c2                 0.99       1.12
-    p2                 1.71       3.26
-    L1mis              1.04       1.22
-    Be2                1.44       2.35
-    sigma_c1           1.11       1.47
-    D_c1_id[1,1]       3.25       7.03
+    (Intercept)        1.08       1.43
+    B21                1.50       3.25
+    c2                 1.09       1.41
+    p2                 1.30       2.03
+    L1mis              1.41       2.30
+    Be2                1.07       1.35
+    sigma_c1           1.32       2.07
+    D_c1_id[1,1]       1.31       2.08
     
     
     $m4b
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)       1.087       1.40
-    c2                1.096       1.44
-    b21               1.004       1.08
-    p2                1.026       1.14
-    L1mis             2.461       4.67
-    sigma_c1          0.956       1.01
-    D_c1_id[1,1]      3.007       6.10
+    (Intercept)       0.959      0.997
+    c2                0.972      1.039
+    b21               1.904      3.804
+    p2                1.540      4.118
+    L1mis             1.050      1.287
+    sigma_c1          1.059      1.321
+    D_c1_id[1,1]      2.446      5.764
     
     
     $m4c
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.29       2.13
-    c2                 1.35       2.33
-    b21                3.54       7.75
-    p2                 1.32       1.96
-    L1mis              1.98       3.42
-    sigma_c1           1.44       3.04
-    D_c1_id[1,1]       1.48       2.76
+    (Intercept)        1.25       1.85
+    c2                 3.21       5.99
+    b21                1.29       1.91
+    p2                 1.58       2.80
+    L1mis              1.00       1.16
+    sigma_c1           1.01       1.16
+    D_c1_id[1,1]       2.14       4.43
     
     
     $m4d
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.28       1.98
-    c2                 2.32       4.59
-    b21                1.55       2.50
-    p2                 1.26       1.98
-    L1mis              1.11       1.51
-    Be2                1.32       2.18
-    sigma_c1           1.17       1.69
-    D_c1_id[1,1]       2.93       5.67
+    (Intercept)       1.005       1.18
+    c2                1.342       2.01
+    b21               3.212       6.37
+    p2                1.347       2.08
+    L1mis             1.219       1.82
+    Be2               1.163       1.58
+    sigma_c1          0.985       1.11
+    D_c1_id[1,1]      1.994       4.03
     
     
     $m5a
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    (Intercept)           1.004       1.13
-    M22                   1.216       1.93
-    M23                   1.147       1.58
-    M24                   1.119       1.54
-    log(C1)               1.035       1.25
-    o22                   2.343       4.29
-    o23                   1.861       3.34
-    o24                   8.286      16.78
-    abs(C1 - c2)          1.348       2.01
-    time                  1.478       3.40
-    I(time^2)             1.694       2.77
-    o22:abs(C1 - c2)      0.964       1.04
-    o23:abs(C1 - c2)      1.756       3.40
-    o24:abs(C1 - c2)      3.890       7.67
-    sigma_y               1.380       2.12
-    D_y_id[1,1]           1.799       3.10
-    D_y_id[1,2]           2.306       8.33
-    D_y_id[2,2]           1.184       1.72
+    (Intercept)            2.88       5.50
+    M22                    2.91       5.68
+    M23                    1.85       3.67
+    M24                    3.92       7.92
+    log(C1)                2.26       4.12
+    o22                    2.00       4.25
+    o23                    6.07      12.50
+    o24                    4.10       8.54
+    abs(C1 - c2)           3.30       6.21
+    time                   2.46       6.57
+    I(time^2)              1.39       2.53
+    o22:abs(C1 - c2)       1.83       3.24
+    o23:abs(C1 - c2)       3.28      12.96
+    o24:abs(C1 - c2)       3.73       9.87
+    sigma_y                1.57       2.77
+    D_y_id[1,1]            2.51       5.25
+    D_y_id[1,2]            3.75       8.57
+    D_y_id[2,2]            2.28       4.37
     
     
     $m5b
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.82       3.13
-    L1mis              1.69       2.75
-    abs(c1 - C2)       2.03       3.76
-    log(Be2)           1.48       2.30
-    time               1.30       2.10
-    D_b1_id[1,1]       2.70       6.56
-    D_b1_id[1,2]       4.47      12.65
-    D_b1_id[2,2]       1.39       2.61
-    D_b1_id[1,3]       1.90       3.30
-    D_b1_id[2,3]       2.54       4.52
-    D_b1_id[3,3]       2.63       5.86
+    (Intercept)        1.10       1.44
+    L1mis              1.49       2.53
+    abs(c1 - C2)       1.55       2.66
+    log(Be2)           1.45       2.46
+    time               1.42       2.37
+    D_b1_id[1,1]       1.83       3.42
+    D_b1_id[1,2]       2.67       5.70
+    D_b1_id[2,2]       2.77       5.31
+    D_b1_id[1,3]       1.57       2.61
+    D_b1_id[2,3]       3.77       7.09
+    D_b1_id[3,3]       4.25       9.02
     
     
     $m6a
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)      1.056       1.33
-    C1               1.040       1.28
-    C2               1.129       1.72
-    b21              0.955       1.01
-    time             9.288      33.72
-    sigma_y          0.995       1.14
-    D_y_id[1,1]      1.175       1.88
+    (Intercept)      0.945      0.990
+    C1               0.942      0.978
+    C2               2.493      5.172
+    b21              0.966      0.992
+    time             3.934     21.249
+    sigma_y          0.957      1.011
+    D_y_id[1,1]      1.150      1.824
     
     
     $m6b
     Potential scale reduction factors:
     
                  Point est. Upper C.I.
-    (Intercept)        1.12       1.55
-    C2                 1.56       2.68
-    B11                2.19       4.16
-    c1                 1.27       1.90
-    time               5.37      14.74
-    D_b1_id[1,1]       4.70      12.71
-    D_b1_id[1,2]       1.72       3.23
-    D_b1_id[2,2]       3.62       7.37
+    (Intercept)        1.82       3.04
+    C2                 1.13       1.65
+    B11                1.91       3.40
+    c1                 1.42       2.45
+    time               2.11       3.71
+    D_b1_id[1,1]       2.77       5.34
+    D_b1_id[1,2]       2.04       6.21
+    D_b1_id[2,2]       2.41       5.42
     
     
     $m7a
     Potential scale reduction factors:
     
                       Point est. Upper C.I.
-    (Intercept)             1.76       3.96
-    ns(time, df = 2)1       2.48       5.48
-    ns(time, df = 2)2       2.42       4.30
-    sigma_y                 1.26       1.79
-    D_y_id[1,1]             1.83       3.16
-    D_y_id[1,2]             2.85       6.32
-    D_y_id[2,2]             3.63      12.31
-    D_y_id[1,3]             3.85       7.68
-    D_y_id[2,3]             2.57       5.63
-    D_y_id[3,3]             1.86       3.49
+    (Intercept)             1.37       3.67
+    ns(time, df = 2)1       1.32       1.95
+    ns(time, df = 2)2       3.61       7.13
+    sigma_y                 1.10       1.45
+    D_y_id[1,1]             1.12       1.43
+    D_y_id[1,2]             1.54       2.46
+    D_y_id[2,2]             2.79       6.16
+    D_y_id[1,3]             1.58       2.76
+    D_y_id[2,3]             1.07       1.25
+    D_y_id[3,3]             3.20       6.97
     
     
     $m7b
     Potential scale reduction factors:
     
                       Point est. Upper C.I.
-    (Intercept)            1.096       1.37
-    bs(time, df = 3)1      1.141       1.69
-    bs(time, df = 3)2      1.411       2.64
-    bs(time, df = 3)3      1.128       1.59
-    sigma_y                0.993       1.13
-    D_y_id[1,1]            1.321       2.04
-    D_y_id[1,2]            3.307       6.31
-    D_y_id[2,2]            3.542       8.38
-    D_y_id[1,3]            1.436       2.28
-    D_y_id[2,3]            3.637       9.75
-    D_y_id[3,3]            0.997       1.05
-    D_y_id[1,4]            2.013       4.27
-    D_y_id[2,4]            1.337       2.17
-    D_y_id[3,4]            1.360       2.48
-    D_y_id[4,4]            2.756       8.62
+    (Intercept)            3.143       6.58
+    bs(time, df = 3)1      3.622       8.46
+    bs(time, df = 3)2      1.831       3.57
+    bs(time, df = 3)3      2.326       5.77
+    sigma_y                1.133       1.50
+    D_y_id[1,1]            1.551       2.47
+    D_y_id[1,2]            1.318       2.18
+    D_y_id[2,2]            1.404       3.46
+    D_y_id[1,3]            1.626       3.50
+    D_y_id[2,3]            1.895       3.52
+    D_y_id[3,3]            2.625       7.14
+    D_y_id[1,4]            0.988       1.11
+    D_y_id[2,4]            3.086       6.46
+    D_y_id[3,4]            2.013       3.67
+    D_y_id[4,4]            2.256       4.31
     
     
     $m7c
     Potential scale reduction factors:
     
                       Point est. Upper C.I.
-    (Intercept)            2.261       3.94
-    C1                     2.366       4.16
-    c1                     0.975       1.04
-    ns(time, df = 3)1      1.722       3.55
-    ns(time, df = 3)2      2.337       8.24
-    ns(time, df = 3)3      2.629       5.45
-    sigma_y                1.198       1.76
-    D_y_id[1,1]            1.343       1.99
-    D_y_id[1,2]            3.223       6.58
-    D_y_id[2,2]            5.716      19.79
-    D_y_id[1,3]            2.901       6.20
-    D_y_id[2,3]            4.251      10.23
-    D_y_id[3,3]            3.015       8.59
-    D_y_id[1,4]            3.896       7.86
-    D_y_id[2,4]            5.469      24.51
-    D_y_id[3,4]            3.009       5.61
-    D_y_id[4,4]            2.899       8.40
+    (Intercept)             1.64       3.15
+    C1                      1.63       3.11
+    c1                      1.12       1.48
+    ns(time, df = 3)1       2.61       8.64
+    ns(time, df = 3)2       2.12       7.72
+    ns(time, df = 3)3       3.36       7.40
+    sigma_y                 1.05       1.25
+    D_y_id[1,1]             1.46       2.69
+    D_y_id[1,2]             4.03       9.84
+    D_y_id[2,2]             3.81       8.67
+    D_y_id[1,3]             4.03      13.63
+    D_y_id[2,3]             2.92       9.59
+    D_y_id[3,3]             7.72      30.13
+    D_y_id[1,4]             3.31       6.28
+    D_y_id[2,4]             3.18       6.06
+    D_y_id[3,4]             2.51      11.60
+    D_y_id[4,4]             4.26      13.30
     
     
     $m7d
     Potential scale reduction factors:
     
                       Point est. Upper C.I.
-    (Intercept)             1.02       1.15
-    C1                      1.01       1.14
-    C2                      2.35       4.18
-    c1                      1.30       1.99
-    ns(time, df = 3)1       1.14       1.65
-    ns(time, df = 3)2       1.48       2.36
-    ns(time, df = 3)3       1.62       2.80
-    sigma_y                 1.33       2.00
-    D_y_id[1,1]             1.86       3.11
-    D_y_id[1,2]             1.56       2.66
-    D_y_id[2,2]             3.44       6.75
+    (Intercept)            0.991       1.12
+    C1                     0.971       1.06
+    C2                     1.572       3.19
+    c1                     1.137       1.58
+    ns(time, df = 3)1      1.221       1.89
+    ns(time, df = 3)2      1.487       2.72
+    ns(time, df = 3)3      1.648       4.10
+    sigma_y                0.988       1.12
+    D_y_id[1,1]            1.610       3.13
+    D_y_id[1,2]            1.944       5.12
+    D_y_id[2,2]            1.992       3.48
     
     
     $m7e
     Potential scale reduction factors:
     
                       Point est. Upper C.I.
-    (Intercept)             1.06       1.25
-    C1                      1.07       1.30
-    C2                      1.84       3.37
-    c1                      1.09       1.42
-    ns(time, df = 3)1       3.78      13.47
-    ns(time, df = 3)2       1.05       1.30
-    ns(time, df = 3)3       2.76       5.44
-    sigma_y                 1.03       1.22
-    D_y_id[1,1]             1.66       2.72
-    D_y_id[1,2]             1.45       2.29
-    D_y_id[2,2]             3.38       7.75
-    D_y_id[1,3]             1.65       2.97
-    D_y_id[2,3]             1.57       3.11
-    D_y_id[3,3]             2.73       5.33
-    D_y_id[1,4]             1.47       2.62
-    D_y_id[2,4]             2.12       3.69
-    D_y_id[3,4]             1.87       4.74
-    D_y_id[4,4]             1.67       5.20
+    (Intercept)             1.17       1.69
+    C1                      1.13       1.56
+    C2                      2.32       4.07
+    c1                      1.07       1.39
+    ns(time, df = 3)1       1.30       2.10
+    ns(time, df = 3)2       2.60       5.82
+    ns(time, df = 3)3       1.97       3.76
+    sigma_y                 1.11       1.57
+    D_y_id[1,1]             2.13       5.25
+    D_y_id[1,2]             2.59       5.47
+    D_y_id[2,2]             1.50       2.58
+    D_y_id[1,3]             1.24       1.91
+    D_y_id[2,3]             3.73       7.40
+    D_y_id[3,3]             1.26       1.95
+    D_y_id[1,4]             2.77       5.69
+    D_y_id[2,4]             1.65       2.81
+    D_y_id[3,4]             2.70       5.04
+    D_y_id[4,4]             2.13       3.70
     
     
     $m7f
     Potential scale reduction factors:
     
                       Point est. Upper C.I.
-    (Intercept)             1.02       1.15
-    C1                      1.01       1.14
-    C2                      2.35       4.18
-    c1                      1.30       1.99
-    ns(time, df = 3)1       1.14       1.65
-    ns(time, df = 3)2       1.48       2.36
-    ns(time, df = 3)3       1.62       2.80
-    sigma_y                 1.33       2.00
-    D_y_id[1,1]             1.86       3.11
-    D_y_id[1,2]             1.56       2.66
-    D_y_id[2,2]             3.44       6.75
+    (Intercept)            0.991       1.12
+    C1                     0.971       1.06
+    C2                     1.572       3.19
+    c1                     1.137       1.58
+    ns(time, df = 3)1      1.221       1.89
+    ns(time, df = 3)2      1.487       2.72
+    ns(time, df = 3)3      1.648       4.10
+    sigma_y                0.988       1.12
+    D_y_id[1,1]            1.610       3.13
+    D_y_id[1,2]            1.944       5.12
+    D_y_id[2,2]            1.992       3.48
     
     
     $m8a
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       1.11       1.55
-    c1                1.02       1.11
-    c2                1.11       1.44
-    time              2.25       4.89
-    sigma_y           2.60       4.93
-    D_y_id[1,1]       1.43       2.45
-    D_y_id[1,2]       2.45       5.15
-    D_y_id[2,2]       1.29       2.46
-    D_y_id[1,3]       2.29       4.14
-    D_y_id[2,3]       2.94       6.27
-    D_y_id[3,3]       2.75       9.35
+    (Intercept)      1.731       3.42
+    c1               1.306       2.05
+    c2               1.429       2.96
+    time             2.665       5.09
+    sigma_y          1.102       1.44
+    D_y_id[1,1]      0.981       1.07
+    D_y_id[1,2]      3.558       6.96
+    D_y_id[2,2]      1.003       1.16
+    D_y_id[1,3]      1.605       2.76
+    D_y_id[2,3]      1.971       5.60
+    D_y_id[3,3]      3.189       8.72
     
     
     $m8b
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       1.11       1.55
-    c1                1.02       1.11
-    c2                1.11       1.44
-    time              2.25       4.89
-    sigma_y           2.60       4.93
-    D_y_id[1,1]       1.43       2.45
-    D_y_id[1,2]       2.45       5.15
-    D_y_id[2,2]       1.29       2.46
-    D_y_id[1,3]       2.29       4.14
-    D_y_id[2,3]       2.94       6.27
-    D_y_id[3,3]       2.75       9.35
+    (Intercept)      1.731       3.42
+    c1               1.306       2.05
+    c2               1.429       2.96
+    time             2.665       5.09
+    sigma_y          1.102       1.44
+    D_y_id[1,1]      0.981       1.07
+    D_y_id[1,2]      3.558       6.96
+    D_y_id[2,2]      1.003       1.16
+    D_y_id[1,3]      1.605       2.76
+    D_y_id[2,3]      1.971       5.60
+    D_y_id[3,3]      3.189       8.72
     
     
     $m8c
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       1.15       1.75
-    B21               1.03       1.22
-    c1                3.44       7.39
-    c2                1.22       2.45
-    time              1.04       1.05
-    B21:c1            2.06       4.88
-    sigma_y           2.02       3.56
-    D_y_id[1,1]       1.12       1.55
-    D_y_id[1,2]       2.38       4.25
-    D_y_id[2,2]       1.83       3.50
-    D_y_id[1,3]       3.80       8.29
-    D_y_id[2,3]       1.55       3.67
-    D_y_id[3,3]       1.22       2.10
+    (Intercept)       1.50       2.36
+    B21               1.05       1.14
+    c1                9.81      20.48
+    c2                1.78       3.35
+    time              7.28      13.94
+    B21:c1            3.43       8.17
+    sigma_y           2.90       5.88
+    D_y_id[1,1]       1.76       4.06
+    D_y_id[1,2]       1.37       3.13
+    D_y_id[2,2]       3.25       7.20
+    D_y_id[1,3]       2.40       4.86
+    D_y_id[2,3]       3.73       7.83
+    D_y_id[3,3]       1.62       2.91
     
     
     $m8d
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       1.74       3.80
-    B21               1.59       2.77
-    c1                3.76       7.78
-    c2                1.73       3.40
-    time              2.64       4.99
-    B21:c1            1.42       2.53
-    sigma_y           1.03       1.11
-    D_y_id[1,1]       1.88       3.47
-    D_y_id[1,2]       1.21       1.79
-    D_y_id[2,2]       1.06       1.36
-    D_y_id[1,3]       1.84       3.74
-    D_y_id[2,3]       1.35       2.40
-    D_y_id[3,3]       1.77       3.17
+    (Intercept)       4.71       9.62
+    B21               2.61       5.68
+    c1                2.09       3.74
+    c2                1.38       2.28
+    time              4.80      10.30
+    B21:c1            2.30       4.60
+    sigma_y           1.18       1.93
+    D_y_id[1,1]       1.36       2.08
+    D_y_id[1,2]       1.84       3.95
+    D_y_id[2,2]       1.47       2.47
+    D_y_id[1,3]       1.45       2.23
+    D_y_id[2,3]       4.31       8.43
+    D_y_id[3,3]       2.11       3.83
     
     
     $m8e
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       1.11       1.43
-    C1                1.09       1.33
-    B21               1.37       2.65
-    c1                3.74       7.00
-    c2                2.70       5.60
-    time              2.42       4.66
-    B21:c1            3.64       6.75
-    sigma_y           1.18       1.65
-    D_y_id[1,1]       1.30       1.96
-    D_y_id[1,2]       1.17       1.84
-    D_y_id[2,2]       1.92       6.27
-    D_y_id[1,3]       1.08       1.37
-    D_y_id[2,3]       1.89       3.31
-    D_y_id[3,3]       1.90       3.24
+    (Intercept)       1.35       2.12
+    C1                1.35       2.13
+    B21               1.03       1.08
+    c1                2.61       4.71
+    c2                2.33       5.81
+    time              1.99       3.76
+    B21:c1            1.70       2.92
+    sigma_y           2.00       3.48
+    D_y_id[1,1]       1.57       3.36
+    D_y_id[1,2]       1.58       2.62
+    D_y_id[2,2]       1.43       3.58
+    D_y_id[1,3]       1.13       1.61
+    D_y_id[2,3]       1.89       3.37
+    D_y_id[3,3]       1.85       5.64
     
     
     $m8f
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       1.31       2.08
-    C1                1.30       2.02
-    B21               1.45       2.67
-    c1                1.39       2.12
-    c2                2.37       4.33
-    time              1.59       2.76
-    B21:c1            1.68       2.73
-    sigma_y           1.27       1.84
-    D_y_id[1,1]       1.01       1.06
-    D_y_id[1,2]       1.63       2.73
-    D_y_id[2,2]       3.28      11.90
-    D_y_id[1,3]       3.22       7.41
-    D_y_id[2,3]       6.26      16.40
-    D_y_id[3,3]       4.16       9.95
+    (Intercept)      0.977       1.01
+    C1               0.983       1.06
+    B21              2.250       4.15
+    c1               1.143       1.66
+    c2               2.397       5.13
+    time             1.589       5.19
+    B21:c1           1.185       1.75
+    sigma_y          1.059       1.30
+    D_y_id[1,1]      1.137       1.63
+    D_y_id[1,2]      1.696       4.64
+    D_y_id[2,2]      4.090       9.20
+    D_y_id[1,3]      2.052       3.51
+    D_y_id[2,3]      1.928       4.41
+    D_y_id[3,3]      1.283       2.03
     
     
     $m8g
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       1.40       2.27
-    C1                1.45       2.39
-    B21               2.09       4.06
-    c1                1.50       3.16
-    c2                1.22       1.82
-    time              2.00       3.82
-    B21:c1            1.94       4.67
-    sigma_y           1.46       2.33
-    D_y_id[1,1]       1.50       3.28
-    D_y_id[1,2]       3.23       6.01
-    D_y_id[2,2]       1.97       4.00
-    D_y_id[1,3]       1.15       1.61
-    D_y_id[2,3]       4.06       8.40
-    D_y_id[3,3]       1.85       3.68
+    (Intercept)      1.416       2.35
+    C1               1.384       2.26
+    B21              1.081       1.41
+    c1               1.112       1.39
+    c2               3.851       8.71
+    time             1.615       3.72
+    B21:c1           1.093       1.18
+    sigma_y          2.760       6.03
+    D_y_id[1,1]      0.974       1.00
+    D_y_id[1,2]      4.012       8.32
+    D_y_id[2,2]      4.105       8.43
+    D_y_id[1,3]      2.538       6.17
+    D_y_id[2,3]      3.467       6.55
+    D_y_id[3,3]      2.370       4.79
     
     
     $m8h
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       2.49       4.63
-    C1                2.45       4.56
-    B21               2.76       8.40
-    c2                1.16       1.79
-    c1                1.74       2.91
-    time              2.78       5.10
-    B21:c2            2.59       4.84
-    sigma_y           1.43       2.44
-    D_y_id[1,1]       1.08       1.36
-    D_y_id[1,2]       1.18       1.78
-    D_y_id[2,2]       1.07       1.34
-    D_y_id[1,3]       1.10       1.39
-    D_y_id[2,3]       2.02       4.95
-    D_y_id[3,3]       1.12       1.20
+    (Intercept)      1.249      1.800
+    C1               1.241      1.775
+    B21              1.747      5.319
+    c2               2.783      6.010
+    c1               1.157      1.672
+    time             2.080      3.576
+    B21:c2           2.233      5.144
+    sigma_y          0.946      0.989
+    D_y_id[1,1]      1.354      2.462
+    D_y_id[1,2]      1.200      1.664
+    D_y_id[2,2]      1.197      1.731
+    D_y_id[1,3]      2.516      4.567
+    D_y_id[2,3]      1.429      2.932
+    D_y_id[3,3]      1.099      1.437
     
     
     $m8i
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)      1.200       1.77
-    C1               1.126       1.55
-    B21              3.092       5.89
-    c2               3.205       5.92
-    c1               3.884       7.22
-    time             1.699       3.46
-    B21:c2           2.647       5.17
-    sigma_y          0.994       1.00
-    D_y_id[1,1]      2.503       6.67
-    D_y_id[1,2]      2.034       3.81
-    D_y_id[2,2]      2.925       6.34
-    D_y_id[1,3]      1.227       1.89
-    D_y_id[2,3]      2.449       9.63
-    D_y_id[3,3]      2.918       6.42
+    (Intercept)       1.03       1.26
+    C1                1.04       1.29
+    B21               1.25       1.96
+    c2                1.66       2.67
+    c1                3.98       9.06
+    time              4.50      15.12
+    B21:c2            1.82       3.08
+    sigma_y           1.07       1.37
+    D_y_id[1,1]       1.15       1.65
+    D_y_id[1,2]       1.57       2.66
+    D_y_id[2,2]       1.66       5.57
+    D_y_id[1,3]       3.73       8.23
+    D_y_id[2,3]       1.13       1.55
+    D_y_id[3,3]       2.08       5.28
     
     
     $m8j
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)      1.066       1.37
-    C1               1.368       2.30
-    B21              3.717       7.82
-    c2               4.598       9.35
-    c1               0.973       1.08
-    time             1.651       3.60
-    B21:c2           5.010      10.90
-    sigma_y          0.977       1.03
-    D_y_id[1,1]      1.187       1.72
-    D_y_id[1,2]      1.776       3.36
-    D_y_id[2,2]      1.865       3.33
-    D_y_id[1,3]      1.970       3.86
-    D_y_id[2,3]      1.333       1.98
-    D_y_id[3,3]      1.181       1.63
+    (Intercept)      0.970       1.07
+    C1               0.956       1.02
+    B21              1.405       2.39
+    c2               1.752       3.48
+    c1               1.530       2.80
+    time             1.113       1.50
+    B21:c2           1.378       2.97
+    sigma_y          1.178       1.61
+    D_y_id[1,1]      1.366       2.06
+    D_y_id[1,2]      1.361       3.32
+    D_y_id[2,2]      1.441       2.56
+    D_y_id[1,3]      1.153       1.65
+    D_y_id[2,3]      3.309       6.54
+    D_y_id[3,3]      1.841       5.38
     
     
     $m8k
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)      1.066       1.37
-    C1               1.368       2.30
-    B21              3.717       7.82
-    c2               4.598       9.35
-    c1               0.973       1.08
-    time             1.651       3.60
-    B21:c2           5.010      10.90
-    sigma_y          0.977       1.03
-    D_y_id[1,1]      1.187       1.72
-    D_y_id[1,2]      1.776       3.36
-    D_y_id[2,2]      1.865       3.33
-    D_y_id[1,3]      1.970       3.86
-    D_y_id[2,3]      1.333       1.98
-    D_y_id[3,3]      1.181       1.63
+    (Intercept)      0.970       1.07
+    C1               0.956       1.02
+    B21              1.405       2.39
+    c2               1.752       3.48
+    c1               1.530       2.80
+    time             1.113       1.50
+    B21:c2           1.378       2.97
+    sigma_y          1.178       1.61
+    D_y_id[1,1]      1.366       2.06
+    D_y_id[1,2]      1.361       3.32
+    D_y_id[2,2]      1.441       2.56
+    D_y_id[1,3]      1.153       1.65
+    D_y_id[2,3]      3.309       6.54
+    D_y_id[3,3]      1.841       5.38
     
     
     $m8l
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       1.05       1.32
-    C1                1.03       1.24
-    B21               2.48       4.40
-    c1                1.21       1.73
-    time              1.38       2.95
-    B21:c1            1.85       3.12
-    B21:time          5.24      10.32
-    c1:time           1.34       2.71
-    B21:c1:time       2.93       5.74
-    sigma_y           1.05       1.30
-    D_y_id[1,1]       1.34       2.03
-    D_y_id[1,2]       1.77       3.12
-    D_y_id[2,2]       1.15       1.60
-    D_y_id[1,3]       1.08       1.37
-    D_y_id[2,3]       1.61       2.67
-    D_y_id[3,3]       1.45       2.37
+    (Intercept)       1.38       2.24
+    C1                1.29       2.02
+    B21               6.29      13.38
+    c1                1.50       2.59
+    time              2.11       3.82
+    B21:c1            1.64       2.84
+    B21:time          4.32      10.65
+    c1:time           3.32       6.82
+    B21:c1:time       3.32       6.60
+    sigma_y           1.11       1.45
+    D_y_id[1,1]       3.18       6.69
+    D_y_id[1,2]       6.21      11.96
+    D_y_id[2,2]       1.40       2.12
+    D_y_id[1,3]       6.39      13.61
+    D_y_id[2,3]       2.66       6.75
+    D_y_id[3,3]       3.91      10.06
     
     
     $m8m
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       1.11       1.50
-    c1                1.00       1.13
-    b11               4.17      14.64
-    o1.L              1.01       1.19
-    o1.Q              1.51       2.40
-    c1:b11            2.39       4.34
-    sigma_y           1.16       1.64
-    D_y_id[1,1]       2.78       5.07
-    D_y_id[1,2]       4.74      10.38
-    D_y_id[2,2]       2.65       5.41
+    (Intercept)       3.38       6.72
+    c1                1.05       1.31
+    b11               6.81      17.77
+    o1.L              1.18       1.68
+    o1.Q              1.78       3.20
+    c1:b11            3.06       9.22
+    sigma_y           3.03       5.80
+    D_y_id[1,1]       2.14      10.56
+    D_y_id[1,2]       5.30      13.97
+    D_y_id[2,2]       4.00      18.19
     
     
 
 ---
 
     $m0a1
-                  est    MCSE      SD MCSE/SD
-    (Intercept)  -5.0   5.248   28.74    0.18
-    sigma_y       4.8   0.058    0.32    0.18
-    D_y_id[1,1] 966.7 718.062 3932.99    0.18
+                   est    MCSE      SD MCSE/SD
+    (Intercept)  -12.3     Inf   36.85     Inf
+    sigma_y        4.8   0.062    0.34    0.18
+    D_y_id[1,1] 1551.9 939.132 5143.84    0.18
     
     $m0a2
-                  est    MCSE      SD MCSE/SD
-    (Intercept)  -5.0   5.248   28.74    0.18
-    sigma_y       4.8   0.058    0.32    0.18
-    D_y_id[1,1] 966.7 718.062 3932.99    0.18
+                   est    MCSE      SD MCSE/SD
+    (Intercept)  -12.3     Inf   36.85     Inf
+    sigma_y        4.8   0.062    0.34    0.18
+    D_y_id[1,1] 1551.9 939.132 5143.84    0.18
     
     $m0a3
                  est  MCSE   SD MCSE/SD
-    (Intercept) -5.4 0.399 0.71    0.56
-    sigma_y     12.9 0.094 0.51    0.18
-    D_y_id[1,1]  8.3 1.239 3.04    0.41
+    (Intercept) -5.3 0.228 0.62    0.37
+    sigma_y     13.1 0.083 0.46    0.18
+    D_y_id[1,1] 11.2 0.894 2.91    0.31
     
     $m0a4
-                    est  MCSE      SD MCSE/SD
-    (Intercept) 6.0e+00 2e-01 8.3e-01    0.24
-    sigma_y     1.2e+09 3e+08 6.4e+08    0.48
-    D_y_id[1,1] 1.3e+01 3e+00 6.5e+00    0.47
+                    est    MCSE      SD MCSE/SD
+    (Intercept) 7.1e+00 4.9e-01 9.2e-01    0.53
+    sigma_y     4.8e+08 1.6e+08 6.3e+08    0.25
+    D_y_id[1,1] 1.3e+01 1.2e+00 2.7e+00    0.45
     
     $m0b1
-                  est  MCSE   SD MCSE/SD
-    (Intercept)  0.69 0.083 0.29    0.28
-    D_b1_id[1,1] 6.42 1.230 3.32    0.37
+                 est MCSE  SD MCSE/SD
+    (Intercept)  0.8 0.16 0.6    0.26
+    D_b1_id[1,1] 6.0 2.85 5.2    0.54
     
     $m0b2
-                  est  MCSE   SD MCSE/SD
-    (Intercept)  0.34 0.076 0.25    0.31
-    D_b1_id[1,1] 2.42 0.620 2.11    0.29
+                  est MCSE   SD MCSE/SD
+    (Intercept)  0.47 0.06 0.33    0.18
+    D_b1_id[1,1] 3.23 1.98 3.84    0.52
     
     $m0b3
-                 est MCSE   SD MCSE/SD
-    (Intercept)   NA   NA 0.71      NA
-    D_b1_id[1,1]  13  1.9 7.32    0.25
+                   est  MCSE   SD MCSE/SD
+    (Intercept)   0.37  0.79  1.2    0.64
+    D_b1_id[1,1] 11.26 11.49 11.1    1.03
     
     $m0b4
-                 est MCSE   SD MCSE/SD
-    (Intercept)   NA   NA 0.71      NA
-    D_b1_id[1,1]  13  1.9 7.32    0.25
+                   est  MCSE   SD MCSE/SD
+    (Intercept)   0.37  0.79  1.2    0.64
+    D_b1_id[1,1] 11.26 11.49 11.1    1.03
     
     $m0c1
-                    est    MCSE     SD MCSE/SD
-    (Intercept)    0.19   0.063   0.22    0.29
-    sigma_L1     386.52 147.038 805.36    0.18
-    D_L1_id[1,1]   0.28   0.072   0.29    0.25
+                   est  MCSE     SD MCSE/SD
+    (Intercept)   0.94  0.88   0.99    0.89
+    sigma_L1     84.55 30.68 121.59    0.25
+    D_L1_id[1,1]  0.43  0.18   0.50    0.37
     
     $m0c2
                     est   MCSE    SD MCSE/SD
-    (Intercept)  -0.592 0.0296 0.062    0.48
-    sigma_L1      0.393 0.0203 0.040    0.50
-    D_L1_id[1,1]  0.032 0.0045 0.015    0.30
+    (Intercept)  -0.609 0.0287 0.058    0.50
+    sigma_L1      0.385 0.0050 0.027    0.18
+    D_L1_id[1,1]  0.034 0.0019 0.013    0.14
     
     $m0d1
-                   est   MCSE    SD MCSE/SD
-    (Intercept)  1.282 0.0079 0.034    0.23
-    D_p1_id[1,1] 0.062 0.0091 0.036    0.25
+                   est  MCSE    SD MCSE/SD
+    (Intercept)  1.270 0.026 0.056    0.47
+    D_p1_id[1,1] 0.067 0.016 0.047    0.33
     
     $m0d2
-                  est MCSE  SD MCSE/SD
-    (Intercept)   2.8  Inf 0.9     Inf
-    D_p1_id[1,1] 11.8  3.3 8.5    0.39
+                 est MCSE   SD MCSE/SD
+    (Intercept)  3.2  0.2 0.58    0.35
+    D_p1_id[1,1] 8.4  2.5 6.02    0.42
     
     $m0e1
                    est   MCSE    SD MCSE/SD
-    (Intercept)  -0.91 0.0194 0.051   0.382
-    sigma_L1      0.78 0.0070 0.038   0.183
-    D_L1_id[1,1]  0.12 0.0055 0.062   0.088
+    (Intercept)  -0.95 0.0194 0.062    0.31
+    sigma_L1      0.78 0.0069 0.038    0.18
+    D_L1_id[1,1]  0.12 0.0192 0.064    0.30
     
     $m0f1
-                   est  MCSE   SD MCSE/SD
-    (Intercept)   0.08 0.013 0.06    0.22
-    tau_Be1       5.96 0.093 0.47    0.20
-    D_Be1_id[1,1] 0.18 0.026 0.09    0.29
+                     est  MCSE    SD MCSE/SD
+    (Intercept)   0.0068 0.028 0.091    0.30
+    tau_Be1       5.1873 0.082 0.452    0.18
+    D_Be1_id[1,1] 0.2182 0.021 0.113    0.18
     
     $m1a
                    est    MCSE      SD MCSE/SD
-    (Intercept) -239.8 4.9e+02 2.7e+03    0.18
-    C1           319.3 6.6e+02 3.6e+03    0.18
-    sigma_y        4.9 5.2e-02 2.9e-01    0.18
-    D_y_id[1,1] 3867.2 2.4e+03 1.3e+04    0.18
+    (Intercept)  203.1  99.642  545.76    0.18
+    C1          -292.1 134.207  735.08    0.18
+    sigma_y        4.9   0.062    0.34    0.18
+    D_y_id[1,1] 1504.0 899.853 4928.70    0.18
     
     $m1b
                    est MCSE   SD MCSE/SD
-    (Intercept)   27.2  4.6 15.9    0.29
-    C1           -36.0  6.2 21.5    0.29
-    D_b1_id[1,1]   4.9  1.8  3.9    0.48
+    (Intercept)   22.0  3.1 17.0    0.18
+    C1           -28.7  4.2 22.9    0.18
+    D_b1_id[1,1]   9.4  1.7  5.2    0.32
     
     $m1c
-                    est    MCSE     SD MCSE/SD
-    (Intercept)    0.27   1.812   4.58    0.40
-    C1            -0.09   2.529   6.27    0.40
-    sigma_L1     300.60 106.786 363.76    0.29
-    D_L1_id[1,1]   0.46   0.084   0.46    0.18
+                    est  MCSE   SD MCSE/SD
+    (Intercept)    0.66  1.36  5.0    0.27
+    C1            -0.48  1.92  7.0    0.27
+    sigma_L1     111.80 39.99 87.4    0.46
+    D_L1_id[1,1]   0.63  0.21  1.1    0.18
     
     $m1d
-                    est   MCSE    SD MCSE/SD
-    (Intercept)  -0.288 0.4214 1.932    0.22
-    C1            2.126 0.5666 2.610    0.22
-    D_p1_id[1,1]  0.082 0.0086 0.039    0.22
+                   est   MCSE   SD MCSE/SD
+    (Intercept)     NA     NA 2.39      NA
+    C1              NA     NA 3.23      NA
+    D_p1_id[1,1] 0.065 0.0097 0.04    0.24
     
     $m1e
                    est   MCSE    SD MCSE/SD
-    (Intercept)  -2.84 1.2918 3.643    0.35
-    C1            2.63 1.7527 4.943    0.35
-    sigma_L1      0.78 0.0084 0.039    0.22
-    D_L1_id[1,1]  0.16 0.0176 0.067    0.26
+    (Intercept)  -2.17 0.6347 2.747    0.23
+    C1            1.67 0.8646 3.744    0.23
+    sigma_L1      0.79 0.0063 0.034    0.18
+    D_L1_id[1,1]  0.14 0.0139 0.055    0.25
     
     $m1f
                     est  MCSE   SD MCSE/SD
-    (Intercept)   -4.36 0.436 2.39    0.18
-    C1             6.00 0.596 3.26    0.18
-    tau_Be1        6.10 0.107 0.58    0.18
-    D_Be1_id[1,1]  0.21 0.039 0.16    0.25
+    (Intercept)    1.02 0.800 3.67    0.22
+    C1            -1.37 1.106 5.00    0.22
+    tau_Be1        5.26 0.066 0.29    0.23
+    D_Be1_id[1,1]  0.27 0.061 0.26    0.23
     
     $m2a
-                   est    MCSE      SD MCSE/SD
-    (Intercept)   -3.2 1.0e+01   54.61    0.18
-    c2            -1.8 1.5e-01    1.22    0.12
-    sigma_y        4.9 7.3e-02    0.33    0.23
-    D_y_id[1,1] 2898.5 1.8e+03 9585.90    0.18
+                  est   MCSE     SD MCSE/SD
+    (Intercept) -13.7  1.381   7.56    0.18
+    c2           -1.6  1.151   3.23    0.36
+    sigma_y       4.7  0.058   0.32    0.18
+    D_y_id[1,1]  80.0 43.392 237.67    0.18
     
     $m2b
-                   est MCSE   SD MCSE/SD
-    (Intercept)  -4.07 0.12 0.52    0.22
-    c2            0.47 1.11 2.36    0.47
-    D_b2_id[1,1]  8.49 0.39 2.15    0.18
+                  est MCSE   SD MCSE/SD
+    (Intercept)  -4.4 0.38 0.76    0.49
+    c2           -1.9 0.87 1.97    0.44
+    D_b2_id[1,1]  8.9 4.16 4.69    0.89
     
     $m2c
-                      est   MCSE      SD MCSE/SD
-    (Intercept)       2.0   0.48    0.90    0.53
-    c2                4.9   1.54    3.14    0.49
-    sigma_L1mis     279.4 189.13 1035.90    0.18
-    D_L1mis_id[1,1]   1.2   0.21    0.81    0.25
+                      est  MCSE   SD MCSE/SD
+    (Intercept)      1.13  0.71  0.8    0.88
+    c2               0.52  1.25  1.4    0.91
+    sigma_L1mis     31.63 10.44 40.9    0.26
+    D_L1mis_id[1,1]  1.23  0.94  1.7    0.54
     
     $m2d
-                    est  MCSE    SD MCSE/SD
-    (Intercept)   0.957 0.041 0.119    0.34
-    c2           -0.112 0.150 0.524    0.29
-    D_p2_id[1,1]  0.099 0.016 0.064    0.25
+                    est  MCSE   SD MCSE/SD
+    (Intercept)   0.906 0.075 0.15    0.51
+    c2           -0.029 0.252 0.53    0.48
+    D_p2_id[1,1]  0.214 0.051 0.28    0.18
     
     $m2e
-                       est   MCSE    SD MCSE/SD
-    (Intercept)     -1.031 0.0572 0.125   0.457
-    c2              -0.068 0.1789 0.454   0.394
-    sigma_L1mis      0.767 0.0027 0.032   0.085
-    D_L1mis_id[1,1]  0.157 0.0158 0.053   0.296
+                      est  MCSE    SD MCSE/SD
+    (Intercept)     -0.96 0.047 0.141    0.34
+    c2               0.13 0.146 0.578    0.25
+    sigma_L1mis        NA    NA 0.032      NA
+    D_L1mis_id[1,1]  0.15 0.017 0.065    0.26
     
     $m2f
                      est  MCSE    SD MCSE/SD
-    (Intercept)   -0.061 0.039 0.124    0.32
-    c2            -0.186 0.094 0.456    0.21
-    tau_Be2        5.827 0.144 0.412    0.35
-    D_Be2_id[1,1]  0.194 0.037 0.081    0.46
+    (Intercept)   0.1006 0.022 0.104    0.21
+    c2            0.0054 0.072 0.364    0.20
+    tau_Be2       5.4472 0.086 0.470    0.18
+    D_Be2_id[1,1] 0.2362 0.031 0.096    0.32
     
     $m3a
                    est    MCSE      SD MCSE/SD
-    C2             7.1 7.0e+00   38.40    0.18
-    sigma_y        4.9 6.4e-02    0.35    0.18
-    D_y_id[1,1] 1594.8 1.1e+03 5760.45    0.18
+    C2            -5.7  10.180   55.76   0.183
+    sigma_y        4.8   0.083    0.33   0.250
+    D_y_id[1,1] 2513.9 422.190 7099.52   0.059
     
     $m3b
-                  est MCSE   SD MCSE/SD
-    C2           -0.2  1.1  1.4    0.76
-    D_b2_id[1,1] 28.0  7.4 11.3    0.66
+                   est MCSE  SD MCSE/SD
+    C2            0.72 0.44 1.1    0.41
+    D_b2_id[1,1] 18.36 0.56 3.1    0.18
     
     $m3c
-                        est    MCSE     SD MCSE/SD
-    C2                0.051   0.034   0.19    0.18
-    sigma_L1mis     335.282 122.479 485.43    0.25
-    D_L1mis_id[1,1]   0.491   0.200   0.83    0.24
+                        est   MCSE     SD MCSE/SD
+    C2               -0.056  0.045   0.19    0.24
+    sigma_L1mis     126.056 28.900 123.47    0.23
+    D_L1mis_id[1,1]   0.529  0.170   0.70    0.24
     
     $m3d
                   est  MCSE   SD MCSE/SD
-    C2           0.32 0.032 0.17    0.18
-    D_p2_id[1,1] 0.94 0.046 0.25    0.18
+    C2           0.12 0.051 0.24    0.21
+    D_p2_id[1,1] 0.91 0.051 0.28    0.18
     
     $m3e
-                      est   MCSE   SD MCSE/SD
-    C2              -0.25 0.0504 0.22    0.23
-    sigma_L1mis      0.80 0.0092 0.04    0.23
-    D_L1mis_id[1,1]  1.05 0.0369 0.20    0.18
+                      est   MCSE    SD MCSE/SD
+    C2              -0.21 0.0793 0.247    0.32
+    sigma_L1mis      0.78 0.0094 0.029    0.32
+    D_L1mis_id[1,1]  1.02 0.0360 0.197    0.18
     
     $m3f
-                     est  MCSE   SD MCSE/SD
-    C2            -0.077 0.054 0.11    0.50
-    tau_Be2        5.751 0.083 0.45    0.18
-    D_Be2_id[1,1]  0.169 0.029 0.10    0.29
+                     est  MCSE    SD MCSE/SD
+    C2            -0.087 0.043 0.119    0.36
+    tau_Be2        5.178 0.120 0.458    0.26
+    D_Be2_id[1,1]  0.167 0.027 0.091    0.30
     
     $m4a
                       est    MCSE      SD MCSE/SD
-    (Intercept)   3.1e-01 1.6e-01 2.4e-01    0.69
-    B21          -1.4e-01 1.3e-01 1.7e-01    0.76
-    c2           -9.1e-03 8.0e-02 3.5e-01    0.23
-    p2            1.2e-02 5.3e-03 2.3e-02    0.23
-    L1mis         1.3e-11 3.5e-12 1.9e-11    0.18
-    Be2           2.2e-02 3.7e-02 2.0e-01    0.18
-    sigma_c1      6.4e-01 5.3e-03 2.9e-02    0.18
-    D_c1_id[1,1]  4.4e-02 1.5e-02 2.9e-02    0.53
+    (Intercept)   2.1e-01 2.7e-02 1.8e-01    0.15
+    B21          -8.1e-02 2.9e-02 1.0e-01    0.28
+    c2           -2.9e-02 3.4e-02 3.2e-01    0.11
+    p2            1.1e-02 5.9e-03 3.2e-02    0.18
+    L1mis        -2.9e-12 3.5e-12 1.6e-11    0.22
+    Be2           9.9e-02 3.4e-02 1.8e-01    0.18
+    sigma_c1      6.5e-01 4.5e-03 2.5e-02    0.18
+    D_c1_id[1,1]  4.1e-02 6.3e-03 1.8e-02    0.35
     
     $m4b
                       est    MCSE      SD MCSE/SD
-    (Intercept)   2.6e-01 1.3e-02 6.8e-02    0.19
-    c2           -7.4e-12 3.0e-12 1.0e-11    0.29
-    b21          -6.4e-02 3.4e-02 1.1e-01    0.30
-    p2            1.2e-02 3.0e-03 1.6e-02    0.18
-    L1mis        -5.6e-02 5.1e-02 9.9e-02    0.51
-    sigma_c1      6.2e-01 4.8e-03 2.6e-02    0.18
-    D_c1_id[1,1]  9.4e-02 7.5e-03 2.3e-02    0.32
+    (Intercept)   2.5e-01 1.2e-02 6.6e-02    0.18
+    c2           -3.5e-12 1.6e-12 8.8e-12    0.18
+    b21           5.2e-02 4.9e-02 1.4e-01    0.35
+    p2            9.5e-03 6.2e-03 1.8e-02    0.33
+    L1mis        -5.8e-02 1.5e-02 8.2e-02    0.18
+    sigma_c1      6.3e-01 5.1e-03 2.8e-02    0.18
+    D_c1_id[1,1]  9.7e-02 1.2e-02 4.6e-02    0.26
     
     $m4c
                     est   MCSE    SD MCSE/SD
-    (Intercept)   0.203 0.0186 0.122    0.15
-    c2           -0.124 0.0286 0.123    0.23
-    b21          -0.098 0.1816 0.163    1.12
-    p2            0.023 0.0062 0.023    0.27
-    L1mis        -0.053 0.0556 0.148    0.38
-    sigma_c1      0.618 0.0064 0.022    0.28
-    D_c1_id[1,1]  0.108 0.0082 0.035    0.23
+    (Intercept)   0.249 0.0149 0.082    0.18
+    c2           -0.101 0.1197 0.272    0.44
+    b21          -0.020 0.0183 0.100    0.18
+    p2            0.019 0.0049 0.018    0.26
+    L1mis        -0.126 0.0253 0.139    0.18
+    sigma_c1      0.636 0.0039 0.021    0.18
+    D_c1_id[1,1]  0.065 0.0050 0.021    0.24
     
     $m4d
-                    est   MCSE    SD MCSE/SD
-    (Intercept)   0.173 0.0274 0.150    0.18
-    c2            0.018 0.0875 0.220    0.40
-    b21           0.014 0.0174 0.095    0.18
-    p2            0.010 0.0059 0.019    0.30
-    L1mis        -0.016 0.0178 0.097    0.18
-    Be2           0.005 0.0722 0.213    0.34
-    sigma_c1      0.635 0.0033 0.029    0.11
-    D_c1_id[1,1]  0.069 0.0130 0.025    0.52
+                     est   MCSE    SD MCSE/SD
+    (Intercept)   0.1292 0.0361 0.162    0.22
+    c2           -0.0328 0.0314 0.172    0.18
+    b21          -0.0251 0.0754 0.144    0.52
+    p2            0.0056 0.0034 0.019    0.18
+    L1mis        -0.0564 0.0181 0.099    0.18
+    Be2           0.1929 0.0561 0.193    0.29
+    sigma_c1      0.6320 0.0046 0.025    0.18
+    D_c1_id[1,1]  0.0947 0.0296 0.043    0.69
     
     $m5a
-                         est MCSE     SD MCSE/SD
-    (Intercept)      -11.219 1.33  5.727    0.23
-    M22               -2.748 0.36  0.960    0.38
-    M23               -6.261 0.46  1.415    0.32
-    M24               -2.343 0.20  0.991    0.20
-    log(C1)          -23.883 4.30 18.510    0.23
-    o22               -0.885 0.21  0.649    0.32
-    o23                1.580 0.36  0.817    0.44
-    o24               -0.064 1.71  2.074    0.83
-    abs(C1 - c2)       0.172 0.32  1.616    0.20
-    time              -1.553 0.12  0.267    0.46
-    I(time^2)         -0.018 0.03  0.063    0.47
-    o22:abs(C1 - c2)   1.730 0.14  0.780    0.18
-    o23:abs(C1 - c2)  -0.517 0.35  0.919    0.38
-    o24:abs(C1 - c2)  -2.015 1.14  2.062    0.55
-    sigma_y               NA   NA  0.225      NA
-    D_y_id[1,1]       11.721 1.02  2.978    0.34
-    D_y_id[1,2]       -0.216 0.34  0.975    0.35
-    D_y_id[2,2]        2.251 0.16  0.571    0.28
+                         est   MCSE     SD MCSE/SD
+    (Intercept)       -7.633  6.633 12.497    0.53
+    M22               -3.982  1.123  1.992    0.56
+    M23               -6.541  0.753  1.463    0.51
+    M24               -2.761  0.891  2.057    0.43
+    log(C1)          -14.338 16.430 35.424    0.46
+    o22               -1.101  0.457  1.108    0.41
+    o23               -0.356  0.713  1.381    0.52
+    o24               -0.076  0.584  1.594    0.37
+    abs(C1 - c2)       0.261  0.740  1.993    0.37
+    time              -1.122  0.151  0.349    0.43
+    I(time^2)         -0.081  0.013  0.055    0.23
+    o22:abs(C1 - c2)   1.199  0.415  0.949    0.44
+    o23:abs(C1 - c2)   0.504  0.662  1.253    0.53
+    o24:abs(C1 - c2)  -2.777  0.836  1.601    0.52
+    sigma_y            4.250  0.060  0.182    0.33
+    D_y_id[1,1]       13.624  1.002  3.587    0.28
+    D_y_id[1,2]        1.028  0.723  1.413    0.51
+    D_y_id[2,2]        2.797  0.372  1.245    0.30
     
     $m5b
                       est    MCSE      SD MCSE/SD
-    (Intercept)   1.1e-01 1.4e-01 4.3e-01    0.31
-    L1mis         7.5e-11 2.8e-11 6.8e-11    0.41
-    abs(c1 - C2) -7.5e-02 9.5e-02 2.2e-01    0.44
-    log(Be2)     -6.6e-02 4.3e-02 2.4e-01    0.18
-    time          2.2e-02 8.7e-03 4.8e-02    0.18
-    D_b1_id[1,1]  4.7e-01 6.2e-02 1.2e-01    0.51
-    D_b1_id[1,2] -4.7e-02 4.9e-02 1.3e-01    0.39
-    D_b1_id[2,2]  4.8e-01 3.9e-02 1.1e-01    0.35
-    D_b1_id[1,3]  2.4e-02 1.4e-02 6.6e-02    0.21
-    D_b1_id[2,3] -7.9e-02 3.6e-02 8.5e-02    0.42
-    D_b1_id[3,3]  4.9e-01 5.8e-02 1.1e-01    0.51
+    (Intercept)   4.6e-01 5.4e-02 3.0e-01    0.18
+    L1mis        -2.6e-11 6.3e-12 3.0e-11    0.21
+    abs(c1 - C2) -8.0e-02 5.0e-02 1.7e-01    0.30
+    log(Be2)      3.2e-01 5.5e-02 2.6e-01    0.21
+    time         -3.0e-03 1.1e-02 5.8e-02    0.18
+    D_b1_id[1,1]  3.6e-01 4.7e-02 9.4e-02    0.51
+    D_b1_id[1,2]  3.4e-02 3.3e-02 9.9e-02    0.33
+    D_b1_id[2,2]  4.6e-01 4.5e-02 9.3e-02    0.48
+    D_b1_id[1,3] -1.3e-01 1.6e-02 6.5e-02    0.24
+    D_b1_id[2,3] -1.5e-01 2.2e-02 1.3e-01    0.17
+    D_b1_id[3,3]  4.2e-01 3.9e-02 1.3e-01    0.30
     
     $m6a
-                    est  MCSE    SD MCSE/SD
-    (Intercept)  12.116 3.292 18.03    0.18
-    C1          -26.776 4.370 23.94    0.18
-    C2           -0.011 0.329  0.88    0.38
-    b21           1.085 0.197  1.08    0.18
-    time         -1.500 0.142  0.25    0.58
-    sigma_y       5.773 0.037  0.20    0.18
-    D_y_id[1,1]   0.578 0.278  1.14    0.24
+                   est  MCSE    SD MCSE/SD
+    (Intercept)  17.81 2.553 13.98    0.18
+    C1          -32.99 3.464 18.97    0.18
+    C2           -0.56 0.395  1.03    0.38
+    b21           0.83 0.164  0.90    0.18
+    time         -2.04 0.326  0.36    0.92
+    sigma_y       5.81 0.045  0.25    0.18
+    D_y_id[1,1]   0.72 0.201  1.10    0.18
     
     $m6b
                     est  MCSE    SD MCSE/SD
-    (Intercept)   0.263 0.036 0.174    0.21
-    C2               NA    NA 0.278      NA
-    B11           0.159 0.084 0.218    0.39
-    c1           -0.162 0.082 0.214    0.39
-    time          0.015 0.108 0.126    0.86
-    D_b1_id[1,1]  0.512 0.169 0.179    0.94
-    D_b1_id[1,2] -0.054 0.026 0.075    0.35
-    D_b1_id[2,2]  0.441 0.115 0.191    0.60
+    (Intercept)   0.345 0.078 0.294    0.27
+    C2           -0.028 0.077 0.235    0.33
+    B11           0.222 0.081 0.249    0.33
+    c1           -0.156 0.027 0.150    0.18
+    time         -0.060 0.040 0.088    0.46
+    D_b1_id[1,1]  0.632 0.096 0.192    0.50
+    D_b1_id[1,2] -0.168 0.058 0.144    0.40
+    D_b1_id[2,2]  0.581 0.060 0.157    0.38
     
     $m7a
                          est  MCSE   SD MCSE/SD
-    (Intercept)        -7.13 0.515 0.96    0.53
-    ns(time, df = 2)1 -10.05 1.096 2.33    0.47
-    ns(time, df = 2)2  -5.87 0.361 0.76    0.47
-    sigma_y             4.29 0.057 0.24    0.24
-    D_y_id[1,1]        14.87 1.174 2.86    0.41
-    D_y_id[1,2]         0.52 0.488 1.16    0.42
-    D_y_id[2,2]         0.78 0.364 0.44    0.83
-    D_y_id[1,3]        -0.47 0.923 1.27    0.73
-    D_y_id[2,3]        -0.19 0.163 0.28    0.59
-    D_y_id[3,3]         0.94 0.119 0.28    0.43
+    (Intercept)        -6.66 0.272 0.63    0.43
+    ns(time, df = 2)1 -10.70 0.663 1.52    0.44
+    ns(time, df = 2)2  -5.33 0.684 1.09    0.63
+    sigma_y             4.40 0.038 0.21    0.18
+    D_y_id[1,1]        13.48 0.585 3.21    0.18
+    D_y_id[1,2]         2.62 0.436 1.24    0.35
+    D_y_id[2,2]         1.77 0.580 1.00    0.58
+    D_y_id[1,3]        -1.07 0.259 0.73    0.35
+    D_y_id[2,3]        -0.43 0.047 0.26    0.18
+    D_y_id[3,3]         1.08 0.229 0.59    0.39
     
     $m7b
                         est  MCSE   SD MCSE/SD
-    (Intercept)       -9.56 0.416 1.01    0.41
-    bs(time, df = 3)1  5.53 1.094 2.49    0.44
-    bs(time, df = 3)2 -9.18 0.708 1.94    0.36
-    bs(time, df = 3)3 -2.99 0.238 1.02    0.23
-    sigma_y              NA    NA 0.22      NA
-    D_y_id[1,1]       12.77 0.409 2.24    0.18
-    D_y_id[1,2]       -0.65 0.575 1.49    0.39
-    D_y_id[2,2]        2.91 0.620 1.29    0.48
-    D_y_id[1,3]        0.31 0.285 0.93    0.31
-    D_y_id[2,3]       -0.11 0.320 0.75    0.43
-    D_y_id[3,3]        2.48 0.115 0.63    0.18
-    D_y_id[1,4]       -1.59 0.864 1.64    0.53
-    D_y_id[2,4]        0.76 0.087 0.39    0.22
-    D_y_id[3,4]       -0.41 0.142 0.45    0.31
-    D_y_id[4,4]        2.88 0.583 1.21    0.48
+    (Intercept)       -7.34 0.561 1.13    0.50
+    bs(time, df = 3)1  1.40 1.582 3.42    0.46
+    bs(time, df = 3)2    NA    NA 2.30      NA
+    bs(time, df = 3)3 -4.69 0.873 2.14    0.41
+    sigma_y            4.18 0.046 0.19    0.24
+    D_y_id[1,1]       13.54 0.739 2.40    0.31
+    D_y_id[1,2]        1.63 0.403 1.15    0.35
+    D_y_id[2,2]        4.53 0.454 1.17    0.39
+    D_y_id[1,3]        0.70 0.541 1.33    0.41
+    D_y_id[2,3]       -0.16 0.422 0.84    0.50
+    D_y_id[3,3]        3.06 0.399 1.24    0.32
+    D_y_id[1,4]        0.47 0.201 0.92    0.22
+    D_y_id[2,4]        1.22 0.491 0.92    0.53
+    D_y_id[3,4]       -0.92 0.088 0.37    0.24
+    D_y_id[4,4]        2.50 0.263 0.52    0.50
     
     $m7c
-                          est  MCSE     SD MCSE/SD
-    (Intercept)         8.753 4.455 15.491    0.29
-    C1                -21.902 6.346 21.331    0.30
-    c1                  0.561 0.067  0.370    0.18
-    ns(time, df = 3)1  -6.253 0.446  0.679    0.66
-    ns(time, df = 3)2  -8.590 0.796  1.557    0.51
-    ns(time, df = 3)3  -6.089 0.340  0.675    0.50
-    sigma_y             4.226 0.073  0.221    0.33
-    D_y_id[1,1]        15.456 0.532  2.412    0.22
-    D_y_id[1,2]         1.254 0.895  0.846    1.06
-    D_y_id[2,2]         0.480 0.407  0.409    0.99
-    D_y_id[1,3]         0.637 0.225  0.552    0.41
-    D_y_id[2,3]         0.070 0.051  0.091    0.56
-    D_y_id[3,3]         0.221 0.078  0.111    0.71
-    D_y_id[1,4]        -1.310 0.716  1.116    0.64
-    D_y_id[2,4]        -0.315 0.440  0.444    0.99
-    D_y_id[3,4]        -0.019 0.099  0.126    0.78
-    D_y_id[4,4]         0.626 0.239  0.363    0.66
+                          est   MCSE    SD MCSE/SD
+    (Intercept)        17.716  9.773 19.64   0.498
+    C1                -33.101 13.537 26.78   0.506
+    c1                  0.465  0.040  0.43   0.094
+    ns(time, df = 3)1  -5.700  0.648  0.87   0.748
+    ns(time, df = 3)2 -10.015  1.007  1.50   0.673
+    ns(time, df = 3)3  -6.606  0.273  0.76   0.358
+    sigma_y             4.365  0.055  0.25   0.220
+    D_y_id[1,1]        13.460  0.909  2.76   0.329
+    D_y_id[1,2]         1.196  0.505  0.94   0.537
+    D_y_id[2,2]         0.385  0.110  0.20   0.547
+    D_y_id[1,3]         0.599  0.573  1.12   0.514
+    D_y_id[2,3]         0.041  0.135  0.18   0.762
+    D_y_id[3,3]         0.499  0.226  0.45   0.502
+    D_y_id[1,4]        -0.574  0.615  0.97   0.635
+    D_y_id[2,4]        -0.148  0.060  0.14   0.438
+    D_y_id[3,4]        -0.014  0.105  0.24   0.440
+    D_y_id[4,4]         0.642  0.283  0.39   0.733
     
     $m7d
                          est  MCSE    SD MCSE/SD
-    (Intercept)        15.37 3.273 17.92   0.183
-    C1                -29.65 4.407 24.14   0.183
-    C2                 -0.46 0.454  0.97   0.468
-    c1                  0.62 0.036  0.41   0.088
-    ns(time, df = 3)1  -5.37 0.391  1.15   0.341
-    ns(time, df = 3)2 -11.81 0.389  2.13   0.183
-    ns(time, df = 3)3  -5.56 0.271  1.18   0.229
-    sigma_y             4.28 0.053  0.24   0.226
-    D_y_id[1,1]        13.79 0.973  3.21   0.303
-    D_y_id[1,2]         0.22 0.271  1.14   0.237
-    D_y_id[2,2]         2.35 0.283  0.96   0.296
+    (Intercept)        10.89 3.593 19.68    0.18
+    C1                -23.70 4.720 25.85    0.18
+    C2                  0.16 0.339  0.81    0.42
+    c1                  0.67 0.077  0.42    0.18
+    ns(time, df = 3)1  -5.71 0.328  1.41    0.23
+    ns(time, df = 3)2 -10.31 1.124  3.76    0.30
+    ns(time, df = 3)3  -5.20 0.412  1.28    0.32
+    sigma_y             4.28 0.059  0.19    0.30
+    D_y_id[1,1]        13.92 1.182  3.83    0.31
+    D_y_id[1,2]         0.21 0.400  1.16    0.34
+    D_y_id[2,2]         3.25 0.223  1.22    0.18
     
     $m7e
-                         est  MCSE    SD MCSE/SD
-    (Intercept)        16.55 3.718 20.36    0.18
-    C1                -30.95 5.095 27.90    0.18
-    C2                  0.20 0.287  0.66    0.43
-    c1                  0.59 0.073  0.40    0.18
-    ns(time, df = 3)1  -6.33 0.757  1.60    0.47
-    ns(time, df = 3)2 -10.22 0.560  3.07    0.18
-    ns(time, df = 3)3  -5.48 0.985  1.89    0.52
-    sigma_y             4.10 0.060  0.25    0.24
-    D_y_id[1,1]        12.97 1.234  3.12    0.39
-    D_y_id[1,2]         1.45 0.569  1.25    0.46
-    D_y_id[2,2]         2.90 0.317  1.31    0.24
-    D_y_id[1,3]         0.78 0.223  1.22    0.18
-    D_y_id[2,3]         0.12 0.209  0.41    0.51
-    D_y_id[3,3]         2.19 0.400  0.61    0.66
-    D_y_id[1,4]        -1.18 0.539  1.44    0.37
-    D_y_id[2,4]        -0.76 0.275  0.92    0.30
-    D_y_id[3,4]         0.29 0.131  0.44    0.30
-    D_y_id[4,4]         3.51 0.792  1.78    0.44
+                          est  MCSE    SD MCSE/SD
+    (Intercept)        17.723 7.123 22.09    0.32
+    C1                -32.259 6.595 28.87    0.23
+    C2                  0.433 0.265  0.88    0.30
+    c1                  0.543 0.058  0.32    0.18
+    ns(time, df = 3)1  -5.539 0.258  1.11    0.23
+    ns(time, df = 3)2 -11.229 1.398  3.82    0.37
+    ns(time, df = 3)3  -5.776 0.436  1.71    0.25
+    sigma_y             3.927 0.064  0.26    0.25
+    D_y_id[1,1]        15.413 1.992  4.95    0.40
+    D_y_id[1,2]         2.676 0.797  1.79    0.45
+    D_y_id[2,2]         3.691 0.206  1.00    0.21
+    D_y_id[1,3]         1.512 0.254  1.19    0.21
+    D_y_id[2,3]         0.056 0.170  0.49    0.35
+    D_y_id[3,3]         2.222 0.564  1.05    0.54
+    D_y_id[1,4]        -1.306 0.854  1.77    0.48
+    D_y_id[2,4]        -0.537 0.283  0.97    0.29
+    D_y_id[3,4]         0.125 0.262  0.64    0.41
+    D_y_id[4,4]         3.938 0.516  1.16    0.44
     
     $m7f
                          est  MCSE    SD MCSE/SD
-    (Intercept)        15.37 3.273 17.92   0.183
-    C1                -29.65 4.407 24.14   0.183
-    C2                 -0.46 0.454  0.97   0.468
-    c1                  0.62 0.036  0.41   0.088
-    ns(time, df = 3)1  -5.37 0.391  1.15   0.341
-    ns(time, df = 3)2 -11.81 0.389  2.13   0.183
-    ns(time, df = 3)3  -5.56 0.271  1.18   0.229
-    sigma_y             4.28 0.053  0.24   0.226
-    D_y_id[1,1]        13.79 0.973  3.21   0.303
-    D_y_id[1,2]         0.22 0.271  1.14   0.237
-    D_y_id[2,2]         2.35 0.283  0.96   0.296
+    (Intercept)        10.89 3.593 19.68    0.18
+    C1                -23.70 4.720 25.85    0.18
+    C2                  0.16 0.339  0.81    0.42
+    c1                  0.67 0.077  0.42    0.18
+    ns(time, df = 3)1  -5.71 0.328  1.41    0.23
+    ns(time, df = 3)2 -10.31 1.124  3.76    0.30
+    ns(time, df = 3)3  -5.20 0.412  1.28    0.32
+    sigma_y             4.28 0.059  0.19    0.30
+    D_y_id[1,1]        13.92 1.182  3.83    0.31
+    D_y_id[1,2]         0.21 0.400  1.16    0.34
+    D_y_id[2,2]         3.25 0.223  1.22    0.18
     
     $m8a
-                  est MCSE   SD MCSE/SD
-    (Intercept) -8.35 0.40 1.20    0.33
-    c1           0.73 0.16 0.55    0.29
-    c2          -2.15 0.77 2.20    0.35
-    time        -1.39 0.11 0.23    0.48
-    sigma_y      3.94 0.10 0.27    0.37
-    D_y_id[1,1] 14.47 1.04 2.62    0.40
-    D_y_id[1,2] -1.35 0.75 1.57    0.48
-    D_y_id[2,2]  2.97 0.30 1.25    0.24
-    D_y_id[1,3]  1.51 0.77 1.43    0.54
-    D_y_id[2,3] -0.61 0.50 0.85    0.59
-    D_y_id[3,3]  3.38 0.44 1.04    0.42
+                  est  MCSE   SD MCSE/SD
+    (Intercept) -8.50 0.636 1.15   0.555
+    c1           0.53 0.175 0.51   0.339
+    c2          -3.04 1.030 4.20   0.245
+    time        -1.42 0.041 0.13   0.318
+    sigma_y        NA    NA 0.25      NA
+    D_y_id[1,1] 14.63 0.499 2.73   0.183
+    D_y_id[1,2]  0.23 0.473 1.13   0.417
+    D_y_id[2,2]  2.56 0.033 0.93   0.035
+    D_y_id[1,3]  1.35 0.396 1.26   0.314
+    D_y_id[2,3] -0.30 0.231 0.57   0.405
+    D_y_id[3,3]  2.95 0.581 1.17   0.496
     
     $m8b
-                  est MCSE   SD MCSE/SD
-    (Intercept) -8.35 0.40 1.20    0.33
-    c1           0.73 0.16 0.55    0.29
-    c2          -2.15 0.77 2.20    0.35
-    time        -1.39 0.11 0.23    0.48
-    sigma_y      3.94 0.10 0.27    0.37
-    D_y_id[1,1] 14.47 1.04 2.62    0.40
-    D_y_id[1,2] -1.35 0.75 1.57    0.48
-    D_y_id[2,2]  2.97 0.30 1.25    0.24
-    D_y_id[1,3]  1.51 0.77 1.43    0.54
-    D_y_id[2,3] -0.61 0.50 0.85    0.59
-    D_y_id[3,3]  3.38 0.44 1.04    0.42
+                  est  MCSE   SD MCSE/SD
+    (Intercept) -8.50 0.636 1.15   0.555
+    c1           0.53 0.175 0.51   0.339
+    c2          -3.04 1.030 4.20   0.245
+    time        -1.42 0.041 0.13   0.318
+    sigma_y        NA    NA 0.25      NA
+    D_y_id[1,1] 14.63 0.499 2.73   0.183
+    D_y_id[1,2]  0.23 0.473 1.13   0.417
+    D_y_id[2,2]  2.56 0.033 0.93   0.035
+    D_y_id[1,3]  1.35 0.396 1.26   0.314
+    D_y_id[2,3] -0.30 0.231 0.57   0.405
+    D_y_id[3,3]  2.95 0.581 1.17   0.496
     
     $m8c
                    est  MCSE   SD MCSE/SD
-    (Intercept) -10.53 0.394 1.50    0.26
-    B21           1.45 0.403 1.45    0.28
-    c1           -0.21 0.344 0.54    0.63
-    c2           -4.89 0.833 3.46    0.24
-    time         -1.05 0.029 0.28    0.10
-    B21:c1        2.06 0.110 0.70    0.16
-    sigma_y       4.41 0.100 0.33    0.30
-    D_y_id[1,1]  14.04 0.433 2.37    0.18
-    D_y_id[1,2]   1.72 0.846 1.51    0.56
-    D_y_id[2,2]   1.51 0.143 0.50    0.29
-    D_y_id[1,3]   0.72 0.877 1.67    0.52
-    D_y_id[2,3]   0.39 0.117 0.37    0.32
-    D_y_id[3,3]   2.15 0.314 0.87    0.36
+    (Intercept) -7.986 0.570 1.81    0.32
+    B21          0.983 0.263 1.03    0.25
+    c1          -0.840 0.567 0.97    0.58
+    c2          -2.526 1.440 3.78    0.38
+    time        -1.650 0.308 0.51    0.61
+    B21:c1       1.888 0.230 0.53    0.44
+    sigma_y      4.569 0.102 0.34    0.30
+    D_y_id[1,1] 11.058 0.586 3.21    0.18
+    D_y_id[1,2]  1.473 0.373 0.99    0.38
+    D_y_id[2,2]  1.489 0.526 0.64    0.82
+    D_y_id[1,3]  0.036 0.367 0.84    0.44
+    D_y_id[2,3]  0.209 0.244 0.47    0.52
+    D_y_id[3,3]  1.038 0.098 0.40    0.25
     
     $m8d
-                   est  MCSE   SD MCSE/SD
-    (Intercept) -4.355 0.689 1.42    0.48
-    B21         -4.012 0.307 1.40    0.22
-    c1           0.081 0.461 0.90    0.51
-    c2          -3.586 0.630 2.25    0.28
-    time        -1.743 0.123 0.22    0.56
-    B21:c1       1.803 0.270 1.04    0.26
-    sigma_y      4.031 0.037 0.20    0.18
-    D_y_id[1,1] 19.364 1.247 3.64    0.34
-    D_y_id[1,2]  0.747 0.231 1.00    0.23
-    D_y_id[2,2]     NA    NA 1.37      NA
-    D_y_id[1,3] -2.078 0.635 1.78    0.36
-    D_y_id[2,3] -1.197 0.104 0.45    0.23
-    D_y_id[3,3]  4.651 0.550 1.56    0.35
+                  est MCSE   SD MCSE/SD
+    (Intercept) -4.55 0.83 2.15    0.38
+    B21         -3.57 1.07 2.03    0.53
+    c1           0.48 0.46 0.64    0.71
+    c2          -2.30 0.79 1.15    0.69
+    time        -1.88 0.15 0.31    0.48
+    B21:c1       2.35 0.63 1.32    0.48
+    sigma_y      4.08 0.09 0.27    0.33
+    D_y_id[1,1] 20.21 1.51 5.08    0.30
+    D_y_id[1,2]  1.90 0.50 1.77    0.28
+    D_y_id[2,2]    NA   NA 1.25      NA
+    D_y_id[1,3] -1.33 0.87 1.71    0.51
+    D_y_id[2,3] -0.76 0.41 0.88    0.47
+    D_y_id[3,3]  4.39 0.49 1.51    0.33
     
     $m8e
-                   est MCSE    SD MCSE/SD
-    (Intercept)  23.65 3.36 19.09    0.18
-    C1          -41.53 4.50 25.91    0.17
-    B21          -2.02 0.71  1.42    0.50
-    c1           -0.38 0.52  0.95    0.55
-    c2           -3.12 0.70  2.26    0.31
-    time         -1.33 0.12  0.26    0.46
-    B21:c1        1.11 0.35  0.87    0.40
-    sigma_y       4.05 0.05  0.23    0.21
-    D_y_id[1,1]  15.17 1.78  4.38    0.41
-    D_y_id[1,2]  -1.02 0.31  1.27    0.24
-    D_y_id[2,2]   3.36 0.53  1.30    0.41
-    D_y_id[1,3]   1.19 0.10  0.56    0.18
-    D_y_id[2,3]  -0.22 0.11  0.42    0.26
-    D_y_id[3,3]   2.42 0.12  0.54    0.22
+                    est  MCSE    SD MCSE/SD
+    (Intercept)  25.456 5.756 25.15    0.23
+    C1          -41.927 7.739 34.09    0.23
+    B21          -3.565 0.550  1.53    0.36
+    c1           -0.855 0.362  0.62    0.58
+    c2           -4.239 2.060  3.95    0.52
+    time         -1.588 0.045  0.19    0.23
+    B21:c1        1.716 0.294  0.68    0.43
+    sigma_y       3.896 0.137  0.29    0.48
+    D_y_id[1,1]  14.760 0.675  3.70    0.18
+    D_y_id[1,2]   0.075 0.242  1.16    0.21
+    D_y_id[2,2]   3.387 0.547  1.76    0.31
+    D_y_id[1,3]   1.902 0.267  1.13    0.24
+    D_y_id[2,3]  -0.660 0.256  0.56    0.46
+    D_y_id[3,3]   4.238 1.142  1.54    0.74
     
     $m8f
                    est  MCSE    SD MCSE/SD
-    (Intercept)  20.30 8.780 26.00    0.34
-    C1          -38.61 6.788 34.96    0.19
-    B21           0.72 0.289  1.16    0.25
-    c1           -0.37 0.217  1.19    0.18
-    c2           -1.40 1.383  3.18    0.44
-    time         -1.58 0.054  0.23    0.24
-    B21:c1        1.17 0.277  1.24    0.22
-    sigma_y       4.07 0.110  0.30    0.37
-    D_y_id[1,1]  13.62 0.575  2.77    0.21
-    D_y_id[1,2]  -1.34 0.436  1.03    0.42
-    D_y_id[2,2]   2.73 0.429  0.94    0.46
-    D_y_id[1,3]   1.38 0.877  1.55    0.57
-    D_y_id[2,3]  -0.56 1.092  1.24    0.88
-    D_y_id[3,3]   3.08 0.702  1.26    0.56
+    (Intercept)  22.53 8.710 19.88    0.44
+    C1          -42.06 3.973 26.97    0.15
+    B21           0.16 0.532  1.38    0.39
+    c1           -0.32 0.265  1.18    0.22
+    c2           -2.74 0.750  2.14    0.35
+    time         -1.52 0.047  0.26    0.18
+    B21:c1        1.23 0.314  1.39    0.23
+    sigma_y       4.05 0.048  0.23    0.21
+    D_y_id[1,1]  15.43 0.785  3.33    0.24
+    D_y_id[1,2]  -1.31 0.334  0.80    0.42
+    D_y_id[2,2]   2.24 0.770  1.26    0.61
+    D_y_id[1,3]   0.47 0.623  1.42    0.44
+    D_y_id[2,3]  -0.26 0.090  0.34    0.27
+    D_y_id[3,3]   2.28 0.256  0.81    0.32
     
     $m8g
-                    est  MCSE    SD MCSE/SD
-    (Intercept) -6.3418 4.215 23.09    0.18
-    C1          -3.8374 5.740 31.44    0.18
-    B21          0.9693 0.376  1.10    0.34
-    c1          -0.6720 0.461  1.28    0.36
-    c2          -2.0618 0.760  2.38    0.32
-    time        -1.3933 0.069  0.16    0.43
-    B21:c1       1.5299 0.508  1.29    0.40
-    sigma_y      3.9648 0.085  0.28    0.31
-    D_y_id[1,1] 12.9714 1.048  3.04    0.34
-    D_y_id[1,2] -0.3282 0.270  0.67    0.40
-    D_y_id[2,2]  1.8805 0.207  0.85    0.24
-    D_y_id[1,3]  0.0014 0.293  1.27    0.23
-    D_y_id[2,3] -0.2795 0.472  0.93    0.51
-    D_y_id[3,3]  3.6484 0.740  1.45    0.51
+                   est  MCSE    SD MCSE/SD
+    (Intercept)   7.00 4.742 23.02    0.21
+    C1          -22.22 6.298 30.51    0.21
+    B21           0.68 0.295  1.21    0.24
+    c1           -0.90 0.140  0.77    0.18
+    c2           -5.13 1.671  4.47    0.37
+    time         -1.54 0.039  0.21    0.18
+    B21:c1        1.88 0.167  0.92    0.18
+    sigma_y       4.08 0.075  0.23    0.33
+    D_y_id[1,1]  14.47 0.506  2.77    0.18
+    D_y_id[1,2]   0.23 0.847  2.12    0.40
+    D_y_id[2,2]   2.81 1.231  1.41    0.87
+    D_y_id[1,3]   1.69 1.087  1.97    0.55
+    D_y_id[2,3]  -0.28 0.305  0.79    0.39
+    D_y_id[3,3]   2.54 0.184  0.55    0.33
     
     $m8h
-                   est   MCSE    SD MCSE/SD
-    (Intercept)  28.11 16.552 36.53    0.45
-    C1          -45.36 22.170 48.98    0.45
-    B21          -3.00  0.880  1.62    0.54
-    c2           -1.32  0.497  2.01    0.25
-    c1            0.40  0.067  0.37    0.18
-    time         -1.79  0.056  0.31    0.18
-    B21:c2       -4.64  1.807  2.89    0.63
-    sigma_y       3.88  0.042  0.23    0.18
-    D_y_id[1,1]  15.94  1.800  3.80    0.47
-    D_y_id[1,2]  -0.61  0.187  1.02    0.18
-    D_y_id[2,2]   3.74  0.308  1.01    0.30
-    D_y_id[1,3]  -0.47  0.237  0.98    0.24
-    D_y_id[2,3]  -0.48  0.253  0.69    0.36
-    D_y_id[3,3]   4.21  0.664  1.28    0.52
+                   est  MCSE    SD MCSE/SD
+    (Intercept)  33.92 4.311 23.61    0.18
+    C1          -53.10 5.929 32.47    0.18
+    B21          -3.46 0.928  1.64    0.57
+    c2           -1.03 0.920  1.79    0.51
+    c1            0.16 0.079  0.43    0.18
+    time         -1.59 0.061  0.19    0.31
+    B21:c2       -2.60 1.207  2.66    0.45
+    sigma_y       4.11 0.052  0.23    0.22
+    D_y_id[1,1]  15.38 1.256  3.72    0.34
+    D_y_id[1,2]   0.56 0.452  1.25    0.36
+    D_y_id[2,2]   2.24 0.291  1.08    0.27
+    D_y_id[1,3]  -1.62 0.968  1.92    0.50
+    D_y_id[2,3]  -0.19 0.264  0.81    0.33
+    D_y_id[3,3]   5.31 0.741  2.48    0.30
     
     $m8i
-                     est   MCSE    SD MCSE/SD
-    (Intercept)   7.0088  7.935 23.41    0.34
-    C1          -23.0834 10.341 31.26    0.33
-    B21           1.4959  0.849  1.97    0.43
-    c2           -5.2793  2.810  5.94    0.47
-    c1           -0.0056  0.367  0.48    0.76
-    time         -1.0508  0.066  0.26    0.25
-    B21:c2        1.6677  3.452  6.72    0.51
-    sigma_y       4.5106  0.118  0.37    0.32
-    D_y_id[1,1]  15.2689  1.481  3.62    0.41
-    D_y_id[1,2]   2.1928  0.206  1.13    0.18
-    D_y_id[2,2]   1.1327  0.105  0.57    0.18
-    D_y_id[1,3]   0.0158  0.158  0.58    0.27
-    D_y_id[2,3]  -0.1658  0.210  0.51    0.41
-    D_y_id[3,3]   1.4818  0.326  0.63    0.52
+                    est  MCSE    SD MCSE/SD
+    (Intercept)   8.627 3.012 21.29    0.14
+    C1          -23.619 4.165 28.72    0.15
+    B21           0.447 0.236  1.29    0.18
+    c2           -3.029 2.644  5.36    0.49
+    c1           -0.823 0.985  1.17    0.84
+    time         -1.366 0.369  0.50    0.74
+    B21:c2       -2.495 1.976  5.30    0.37
+    sigma_y       4.540 0.097  0.32    0.30
+    D_y_id[1,1]  13.479 0.740  3.30    0.22
+    D_y_id[1,2]   0.395 0.375  1.29    0.29
+    D_y_id[2,2]   1.485 0.368  0.79    0.47
+    D_y_id[1,3]   0.713 0.430  1.16    0.37
+    D_y_id[2,3]  -0.046 0.117  0.33    0.36
+    D_y_id[3,3]   1.497 0.280  0.55    0.51
     
     $m8j
-                   est   MCSE    SD MCSE/SD
-    (Intercept)  22.70  3.269 17.91    0.18
-    C1          -34.36  4.895 26.81    0.18
-    B21          -1.84  0.902  1.71    0.53
-    c2            0.60  4.222  6.25    0.68
-    c1            0.69  0.075  0.39    0.20
-    time         -1.52  0.117  0.28    0.43
-    B21:c2       18.45 14.288 22.83    0.63
-    sigma_y       4.07  0.042  0.20    0.21
-    D_y_id[1,1]  16.21  0.712  4.85    0.15
-    D_y_id[1,2]     NA     NA  1.29      NA
-    D_y_id[2,2]   3.34  0.340  0.93    0.37
-    D_y_id[1,3]   1.42  0.285  0.93    0.31
-    D_y_id[2,3]  -0.29  0.191  0.59    0.32
-    D_y_id[3,3]   2.56  0.092  0.50    0.18
+                   est  MCSE    SD MCSE/SD
+    (Intercept)  39.39 6.287 26.80    0.23
+    C1          -57.49 8.381 35.80    0.23
+    B21          -3.73 0.643  1.62    0.40
+    c2           -2.21 1.814  3.64    0.50
+    c1            0.81 0.181  0.65    0.28
+    time         -1.63 0.049  0.21    0.23
+    B21:c2        9.98 5.654 15.21    0.37
+    sigma_y       3.99 0.097  0.30    0.32
+    D_y_id[1,1]  14.19 1.608  3.57    0.45
+    D_y_id[1,2]   0.31 0.194  1.06    0.18
+    D_y_id[2,2]   3.73 0.670  2.08    0.32
+    D_y_id[1,3]     NA    NA  1.23      NA
+    D_y_id[2,3]  -0.32 1.042  0.99    1.06
+    D_y_id[3,3]   3.87 0.809  1.43    0.57
     
     $m8k
-                   est   MCSE    SD MCSE/SD
-    (Intercept)  22.70  3.269 17.91    0.18
-    C1          -34.36  4.895 26.81    0.18
-    B21          -1.84  0.902  1.71    0.53
-    c2            0.60  4.222  6.25    0.68
-    c1            0.69  0.075  0.39    0.20
-    time         -1.52  0.117  0.28    0.43
-    B21:c2       18.45 14.288 22.83    0.63
-    sigma_y       4.07  0.042  0.20    0.21
-    D_y_id[1,1]  16.21  0.712  4.85    0.15
-    D_y_id[1,2]     NA     NA  1.29      NA
-    D_y_id[2,2]   3.34  0.340  0.93    0.37
-    D_y_id[1,3]   1.42  0.285  0.93    0.31
-    D_y_id[2,3]  -0.29  0.191  0.59    0.32
-    D_y_id[3,3]   2.56  0.092  0.50    0.18
+                   est  MCSE    SD MCSE/SD
+    (Intercept)  39.39 6.287 26.80    0.23
+    C1          -57.49 8.381 35.80    0.23
+    B21          -3.73 0.643  1.62    0.40
+    c2           -2.21 1.814  3.64    0.50
+    c1            0.81 0.181  0.65    0.28
+    time         -1.63 0.049  0.21    0.23
+    B21:c2        9.98 5.654 15.21    0.37
+    sigma_y       3.99 0.097  0.30    0.32
+    D_y_id[1,1]  14.19 1.608  3.57    0.45
+    D_y_id[1,2]   0.31 0.194  1.06    0.18
+    D_y_id[2,2]   3.73 0.670  2.08    0.32
+    D_y_id[1,3]     NA    NA  1.23      NA
+    D_y_id[2,3]  -0.32 1.042  0.99    1.06
+    D_y_id[3,3]   3.87 0.809  1.43    0.57
     
     $m8l
                     est  MCSE    SD MCSE/SD
-    (Intercept)  35.560 4.208 19.64    0.21
-    C1          -54.809 5.683 26.63    0.21
-    B21          -4.774 0.880  1.71    0.51
-    c1           -1.525 0.321  0.77    0.42
-    time         -0.682 0.143  0.38    0.37
-    B21:c1        2.364 0.432  0.92    0.47
-    B21:time     -0.358 0.051  0.12    0.41
-    c1:time      -0.097 0.023  0.13    0.18
-    B21:c1:time   0.014 0.131  0.27    0.49
-    sigma_y       4.221 0.070  0.20    0.36
-    D_y_id[1,1]  18.923 1.665  4.82    0.35
-    D_y_id[1,2]  -0.803 0.440  1.80    0.24
-    D_y_id[2,2]   3.411 0.387  1.16    0.33
-    D_y_id[1,3]   0.803 0.266  1.46    0.18
-    D_y_id[2,3]  -0.778 0.073  0.71    0.10
-    D_y_id[3,3]   3.622 0.442  1.74    0.25
+    (Intercept)  14.770 7.605 24.09    0.32
+    C1          -27.457 9.684 31.58    0.31
+    B21          -3.044 0.948  2.34    0.40
+    c1           -0.178 0.256  0.76    0.34
+    time         -1.063 0.309  0.46    0.68
+    B21:c1        0.927 0.330  0.93    0.35
+    B21:time     -0.249 0.183  0.16    1.12
+    c1:time       0.011 0.057  0.12    0.47
+    B21:c1:time  -0.040 0.089  0.20    0.45
+    sigma_y       4.243 0.039  0.15    0.27
+    D_y_id[1,1]  15.510 1.651  4.76    0.35
+    D_y_id[1,2]   1.979 1.889  3.33    0.57
+    D_y_id[2,2]   6.630 0.377  1.18    0.32
+    D_y_id[1,3]  -1.964 1.817  3.24    0.56
+    D_y_id[2,3]  -4.314 0.631  1.47    0.43
+    D_y_id[3,3]   5.658 0.744  2.29    0.32
     
     $m8m
                   est  MCSE   SD MCSE/SD
-    (Intercept) -7.11 0.237 1.30    0.18
-    c1           0.18 0.110 0.63    0.17
-    b11         -2.80 0.618 0.78    0.80
-    o1.L         1.04 0.125 0.69    0.18
-    o1.Q         0.32 0.091 0.50    0.18
-    c1:b11      -0.80 0.385 0.90    0.43
-    sigma_y      6.38 0.287 0.77    0.37
-    D_y_id[1,1]  4.12 0.718 1.24    0.58
-    D_y_id[1,2]  1.27 0.754 0.81    0.93
-    D_y_id[2,2]  1.18 0.337 0.43    0.79
+    (Intercept) -7.53 1.208 1.66   0.727
+    c1           0.17 0.043 0.51   0.084
+    b11         -2.83 0.549 0.71   0.777
+    o1.L         1.30 0.155 0.76   0.204
+    o1.Q         0.28 0.161 0.75   0.214
+    c1:b11      -0.94 0.636 0.87   0.729
+    sigma_y      6.39 0.484 0.88   0.549
+    D_y_id[1,1]  3.85 1.008 3.27   0.308
+    D_y_id[1,2]  0.30 0.832 0.95   0.879
+    D_y_id[2,2]  1.53 0.815 1.21   0.674
     
 
 # summary output remained the same
@@ -1394,19 +1394,19 @@
     
     Fixed effects:
     (Intercept) 
-         -5.045 
+         -12.27 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       966.7
+    (Intercept)        1552
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.816 
+       4.84 
     
     Call:
     glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "identity"), 
@@ -1416,19 +1416,19 @@
     
     Fixed effects:
     (Intercept) 
-         -5.045 
+         -12.27 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       966.7
+    (Intercept)        1552
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.816 
+       4.84 
     
     Call:
     glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "log"), 
@@ -1438,19 +1438,19 @@
     
     Fixed effects:
     (Intercept) 
-         -5.372 
+         -5.349 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       8.256
+    (Intercept)       11.22
     
     
     
     Residual standard deviation:
     sigma_y 
-      12.92 
+      13.07 
     
     Call:
     glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "inverse"), 
@@ -1460,19 +1460,19 @@
     
     Fixed effects:
     (Intercept) 
-           5.96 
+          7.071 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       13.07
+    (Intercept)       12.93
     
     
     
     Residual standard deviation:
       sigma_y 
-    1.182e+09 
+    475457477 
     
     Call:
     glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "logit"), 
@@ -1482,13 +1482,13 @@
     
     Fixed effects:
     (Intercept) 
-         0.6866 
+         0.7985 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       6.416
+    (Intercept)       6.023
     
     
     Call:
@@ -1499,13 +1499,13 @@
     
     Fixed effects:
     (Intercept) 
-         0.3387 
+         0.4668 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       2.419
+    (Intercept)       3.231
     
     
     Call:
@@ -1516,13 +1516,13 @@
     
     Fixed effects:
     (Intercept) 
-          0.455 
+         0.3675 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       13.32
+    (Intercept)       11.26
     
     
     Call:
@@ -1533,13 +1533,13 @@
     
     Fixed effects:
     (Intercept) 
-          0.455 
+         0.3675 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       13.32
+    (Intercept)       11.26
     
     
     Call:
@@ -1550,19 +1550,19 @@
     
     Fixed effects:
     (Intercept) 
-          0.186 
+         0.9392 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.2836
+    (Intercept)      0.4296
     
     
     
     Residual standard deviation:
     sigma_L1 
-       386.5 
+       84.55 
     
     Call:
     glme_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, family = Gamma(link = "log"), 
@@ -1572,19 +1572,19 @@
     
     Fixed effects:
     (Intercept) 
-        -0.5922 
+        -0.6091 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.03225
+    (Intercept)      0.0341
     
     
     
     Residual standard deviation:
     sigma_L1 
-       0.393 
+      0.3853 
     
     Call:
     glme_imp(fixed = p1 ~ 1 + (1 | id), data = longDF, family = poisson(link = "log"), 
@@ -1594,13 +1594,13 @@
     
     Fixed effects:
     (Intercept) 
-          1.282 
+           1.27 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.06159
+    (Intercept)     0.06742
     
     
     Call:
@@ -1611,13 +1611,13 @@
     
     Fixed effects:
     (Intercept) 
-          2.808 
+          3.182 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       11.84
+    (Intercept)       8.415
     
     
     Call:
@@ -1628,19 +1628,19 @@
     
     Fixed effects:
     (Intercept) 
-        -0.9119 
+         -0.949 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.1238
+    (Intercept)      0.1247
     
     
     
     Residual standard deviation:
     sigma_L1 
-      0.7774 
+      0.7833 
     
     Call:
     betamm_imp(fixed = Be1 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
@@ -1650,13 +1650,13 @@
     
     Fixed effects:
     (Intercept) 
-        0.07994 
+       0.006774 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.1794
+    (Intercept)      0.2182
     
     
     Call:
@@ -1667,19 +1667,19 @@
     
     Fixed effects:
     (Intercept)          C1 
-         -239.8       319.3 
+          203.1      -292.1 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)        3867
+    (Intercept)        1504
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.926 
+      4.893 
     
     Call:
     glme_imp(fixed = b1 ~ C1 + (1 | id), data = longDF, family = binomial(), 
@@ -1689,13 +1689,13 @@
     
     Fixed effects:
     (Intercept)          C1 
-          27.16      -36.02 
+          22.03      -28.74 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       4.918
+    (Intercept)       9.415
     
     
     Call:
@@ -1706,19 +1706,19 @@
     
     Fixed effects:
     (Intercept)          C1 
-        0.27121    -0.09009 
+         0.6570     -0.4805 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.4646
+    (Intercept)      0.6324
     
     
     
     Residual standard deviation:
     sigma_L1 
-       300.6 
+       111.8 
     
     Call:
     glme_imp(fixed = p1 ~ C1 + (1 | id), data = longDF, family = poisson(), 
@@ -1728,13 +1728,13 @@
     
     Fixed effects:
     (Intercept)          C1 
-        -0.2881      2.1258 
+        -0.3009      2.1814 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.08202
+    (Intercept)      0.0646
     
     
     Call:
@@ -1745,19 +1745,19 @@
     
     Fixed effects:
     (Intercept)          C1 
-         -2.845       2.632 
+         -2.168       1.671 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.1596
+    (Intercept)      0.1352
     
     
     
     Residual standard deviation:
     sigma_L1 
-      0.7779 
+      0.7853 
     
     Call:
     betamm_imp(fixed = Be1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
@@ -1767,13 +1767,13 @@
     
     Fixed effects:
     (Intercept)          C1 
-         -4.361       6.003 
+          1.017      -1.375 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.2109
+    (Intercept)      0.2709
     
     
     Call:
@@ -1784,19 +1784,19 @@
     
     Fixed effects:
     (Intercept)          c2 
-         -3.201      -1.830 
+        -13.688      -1.637 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)        2898
+    (Intercept)       80.04
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.859 
+      4.721 
     
     Call:
     glme_imp(fixed = b2 ~ c2 + (1 | id), data = longDF, family = binomial(), 
@@ -1806,13 +1806,13 @@
     
     Fixed effects:
     (Intercept)          c2 
-        -4.0700      0.4713 
+         -4.363      -1.892 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       8.487
+    (Intercept)       8.906
     
     
     Call:
@@ -1823,19 +1823,19 @@
     
     Fixed effects:
     (Intercept)          c2 
-          1.996       4.892 
+         1.1293      0.5214 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.192
+    (Intercept)       1.227
     
     
     
     Residual standard deviation:
     sigma_L1mis 
-          279.4 
+          31.63 
     
     Call:
     glme_imp(fixed = p2 ~ c2 + (1 | id), data = longDF, family = poisson(), 
@@ -1845,13 +1845,13 @@
     
     Fixed effects:
     (Intercept)          c2 
-         0.9570     -0.1123 
+        0.90606    -0.02866 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.09914
+    (Intercept)      0.2138
     
     
     Call:
@@ -1862,19 +1862,19 @@
     
     Fixed effects:
     (Intercept)          c2 
-        -1.0307     -0.0682 
+        -0.9600      0.1304 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       0.157
+    (Intercept)      0.1489
     
     
     
     Residual standard deviation:
     sigma_L1mis 
-         0.7666 
+         0.7711 
     
     Call:
     betamm_imp(fixed = Be2 ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
@@ -1884,13 +1884,13 @@
     
     Fixed effects:
     (Intercept)          c2 
-       -0.06094    -0.18617 
+       0.100639    0.005447 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.1941
+    (Intercept)      0.2362
     
     
     Call:
@@ -1900,20 +1900,20 @@
      Bayesian linear mixed model for "y" 
     
     Fixed effects:
-       C2 
-    7.094 
+        C2 
+    -5.701 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)        1595
+    (Intercept)        2514
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.859 
+      4.828 
     
     Call:
     glme_imp(fixed = b2 ~ 0 + C2 + (1 | id), data = longDF, family = binomial(), 
@@ -1923,13 +1923,13 @@
     
     Fixed effects:
         C2 
-    -0.197 
+    0.7243 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       28.01
+    (Intercept)       18.36
     
     
     Call:
@@ -1939,20 +1939,20 @@
      Bayesian Gamma mixed model for "L1mis" 
     
     Fixed effects:
-         C2 
-    0.05087 
+          C2 
+    -0.05628 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.4908
+    (Intercept)      0.5294
     
     
     
     Residual standard deviation:
     sigma_L1mis 
-          335.3 
+          126.1 
     
     Call:
     glme_imp(fixed = p2 ~ 0 + C2 + (1 | id), data = longDF, family = poisson(), 
@@ -1962,13 +1962,13 @@
     
     Fixed effects:
         C2 
-    0.3179 
+    0.1245 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.9361
+    (Intercept)      0.9141
     
     
     Call:
@@ -1979,19 +1979,19 @@
     
     Fixed effects:
          C2 
-    -0.2501 
+    -0.2088 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.049
+    (Intercept)       1.021
     
     
     
     Residual standard deviation:
     sigma_L1mis 
-         0.7986 
+         0.7841 
     
     Call:
     betamm_imp(fixed = Be2 ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5, 
@@ -2001,13 +2001,13 @@
     
     Fixed effects:
           C2 
-    -0.07734 
+    -0.08724 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.1694
+    (Intercept)       0.167
     
     
     Call:
@@ -2019,19 +2019,19 @@
     
     Fixed effects:
     (Intercept)         B21          c2          p2       L1mis         Be2 
-      3.084e-01  -1.434e-01  -9.122e-03   1.199e-02   1.338e-11   2.179e-02 
+      2.053e-01  -8.113e-02  -2.892e-02   1.056e-02  -2.939e-12   9.894e-02 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.04407
+    (Intercept)     0.04065
     
     
     
     Residual standard deviation:
     sigma_c1 
-      0.6404 
+      0.6495 
     
     Call:
     lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF, 
@@ -2043,19 +2043,19 @@
     
     Fixed effects:
     (Intercept)          c2         b21          p2       L1mis 
-      2.630e-01  -7.359e-12  -6.375e-02   1.189e-02  -5.594e-02 
+      2.514e-01  -3.451e-12   5.218e-02   9.521e-03  -5.771e-02 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.09414
+    (Intercept)     0.09715
     
     
     
     Residual standard deviation:
     sigma_c1 
-       0.622 
+      0.6322 
     
     Call:
     lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF, 
@@ -2067,19 +2067,19 @@
     
     Fixed effects:
     (Intercept)          c2         b21          p2       L1mis 
-        0.20278    -0.12391    -0.09790     0.02274    -0.05312 
+        0.24854    -0.10094    -0.02002     0.01911    -0.12573 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.1084
+    (Intercept)      0.0651
     
     
     
     Residual standard deviation:
     sigma_c1 
-      0.6181 
+       0.636 
     
     Call:
     lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + Be2 + (1 | id), data = longDF, 
@@ -2092,19 +2092,19 @@
     
     Fixed effects:
     (Intercept)          c2         b21          p2       L1mis         Be2 
-       0.172655    0.017579    0.013569    0.010422   -0.015692    0.005033 
+       0.129194   -0.032823   -0.025055    0.005626   -0.056423    0.192874 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.06882
+    (Intercept)     0.09465
     
     
     
     Residual standard deviation:
     sigma_c1 
-      0.6354 
+       0.632 
     
     Call:
     lme_imp(fixed = y ~ M2 + o2 * abs(C1 - c2) + log(C1) + time + 
@@ -2115,26 +2115,26 @@
     
     Fixed effects:
          (Intercept)              M22              M23              M24 
-           -11.21925         -2.74826         -6.26069         -2.34338 
+            -7.63273         -3.98164         -6.54094         -2.76126 
              log(C1)              o22              o23              o24 
-           -23.88325         -0.88493          1.58010         -0.06409 
+           -14.33779         -1.10098         -0.35632         -0.07641 
         abs(C1 - c2)             time        I(time^2) o22:abs(C1 - c2) 
-             0.17153         -1.55300         -0.01800          1.73022 
+             0.26105         -1.12215         -0.08058          1.19888 
     o23:abs(C1 - c2) o24:abs(C1 - c2) 
-            -0.51696         -2.01484 
+             0.50363         -2.77723 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time
-    (Intercept)     11.7211 -0.2158
-    time            -0.2158  2.2506
+                (Intercept)  time
+    (Intercept)      13.624 1.028
+    time              1.028 2.797
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.257 
+       4.25 
     
     Call:
     glme_imp(fixed = b1 ~ L1mis + abs(c1 - C2) + log(Be2) + time + 
@@ -2147,15 +2147,15 @@
     
     Fixed effects:
      (Intercept)        L1mis abs(c1 - C2)     log(Be2)         time 
-       1.145e-01    7.528e-11   -7.453e-02   -6.625e-02    2.171e-02 
+       4.560e-01   -2.636e-11   -8.001e-02    3.230e-01   -3.035e-03 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)     time I(time^2)
-    (Intercept)     0.46827 -0.04733   0.02442
-    time           -0.04733  0.47877  -0.07868
-    I(time^2)       0.02442 -0.07868   0.48901
+                (Intercept)    time I(time^2)
+    (Intercept)      0.3625  0.0342   -0.1257
+    time             0.0342  0.4581   -0.1524
+    I(time^2)       -0.1257 -0.1524    0.4153
     
     
     Call:
@@ -2166,19 +2166,19 @@
     
     Fixed effects:
     (Intercept)          C1          C2         b21        time 
-       12.11632   -26.77612    -0.01068     1.08478    -1.50020 
+        17.8097    -32.9918     -0.5647      0.8269     -2.0420 
     
     
     Random effects covariance matrix:
     $id
-          time
-    time 0.578
+           time
+    time 0.7192
     
     
     
     Residual standard deviation:
     sigma_y 
-      5.773 
+      5.808 
     
     Call:
     glme_imp(fixed = b1 ~ c1 + C2 + B1 + time + (0 + time + I(time^2) | 
@@ -2189,14 +2189,14 @@
     
     Fixed effects:
     (Intercept)          C2         B11          c1        time 
-        0.26300     0.04260     0.15884    -0.16175     0.01466 
+        0.34495    -0.02842     0.22192    -0.15585    -0.06023 
     
     
     Random effects covariance matrix:
     $id
-                  time I(time^2)
-    time       0.51220  -0.05423
-    I(time^2) -0.05423   0.44095
+                 time I(time^2)
+    time       0.6315   -0.1685
+    I(time^2) -0.1685    0.5812
     
     
     Call:
@@ -2207,21 +2207,21 @@
     
     Fixed effects:
           (Intercept) ns(time, df = 2)1 ns(time, df = 2)2 
-               -7.126           -10.053            -5.869 
+               -6.662           -10.698            -5.328 
     
     
     Random effects covariance matrix:
     $id
                       (Intercept) ns(time, df = 2)1 ns(time, df = 2)2
-    (Intercept)           14.8748            0.5226           -0.4715
-    ns(time, df = 2)1      0.5226            0.7784           -0.1895
-    ns(time, df = 2)2     -0.4715           -0.1895            0.9404
+    (Intercept)            13.477            2.6192           -1.0701
+    ns(time, df = 2)1       2.619            1.7723           -0.4318
+    ns(time, df = 2)2      -1.070           -0.4318            1.0817
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.286 
+      4.398 
     
     Call:
     lme_imp(fixed = y ~ bs(time, df = 3), data = longDF, random = ~bs(time, 
@@ -2231,27 +2231,27 @@
     
     Fixed effects:
           (Intercept) bs(time, df = 3)1 bs(time, df = 3)2 bs(time, df = 3)3 
-               -9.558             5.533            -9.176            -2.991 
+               -7.339             1.399           -11.328            -4.690 
     
     
     Random effects covariance matrix:
     $id
                       (Intercept) bs(time, df = 3)1 bs(time, df = 3)2
-    (Intercept)           12.7712           -0.6501            0.3065
-    bs(time, df = 3)1     -0.6501            2.9091           -0.1106
-    bs(time, df = 3)2      0.3065           -0.1106            2.4808
-    bs(time, df = 3)3     -1.5936            0.7585           -0.4108
+    (Intercept)           13.5432             1.632            0.6975
+    bs(time, df = 3)1      1.6315             4.527           -0.1620
+    bs(time, df = 3)2      0.6975            -0.162            3.0588
+    bs(time, df = 3)3      0.4704             1.220           -0.9212
                       bs(time, df = 3)3
-    (Intercept)                 -1.5936
-    bs(time, df = 3)1            0.7585
-    bs(time, df = 3)2           -0.4108
-    bs(time, df = 3)3            2.8772
+    (Intercept)                  0.4704
+    bs(time, df = 3)1            1.2195
+    bs(time, df = 3)2           -0.9212
+    bs(time, df = 3)3            2.5033
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.148 
+      4.183 
     
     Call:
     lme_imp(fixed = y ~ C1 + c1 + ns(time, df = 3), data = longDF, 
@@ -2262,29 +2262,29 @@
     
     Fixed effects:
           (Intercept)                C1                c1 ns(time, df = 3)1 
-                8.753           -21.902             0.561            -6.253 
+              17.7156          -33.1007            0.4651           -5.6996 
     ns(time, df = 3)2 ns(time, df = 3)3 
-               -8.590            -6.089 
+             -10.0145           -6.6062 
     
     
     Random effects covariance matrix:
     $id
                       (Intercept) ns(time, df = 3)1 ns(time, df = 3)2
-    (Intercept)           15.4562           1.25438           0.63736
-    ns(time, df = 3)1      1.2544           0.48050           0.06996
-    ns(time, df = 3)2      0.6374           0.06996           0.22097
-    ns(time, df = 3)3     -1.3103          -0.31468          -0.01884
+    (Intercept)           13.4603           1.19636           0.59929
+    ns(time, df = 3)1      1.1964           0.38450           0.04071
+    ns(time, df = 3)2      0.5993           0.04071           0.49858
+    ns(time, df = 3)3     -0.5737          -0.14841          -0.01425
                       ns(time, df = 3)3
-    (Intercept)                -1.31026
-    ns(time, df = 3)1          -0.31468
-    ns(time, df = 3)2          -0.01884
-    ns(time, df = 3)3           0.62604
+    (Intercept)                -0.57371
+    ns(time, df = 3)1          -0.14841
+    ns(time, df = 3)2          -0.01425
+    ns(time, df = 3)3           0.64239
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.226 
+      4.365 
     
     Call:
     lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
@@ -2294,22 +2294,22 @@
     
     Fixed effects:
           (Intercept)                C1                C2                c1 
-              15.3699          -29.6519           -0.4627            0.6224 
+              10.8923          -23.7015            0.1611            0.6737 
     ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
-              -5.3660          -11.8081           -5.5552 
+              -5.7102          -10.3129           -5.2007 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)   time
-    (Intercept)     13.7865 0.2217
-    time             0.2217 2.3514
+    (Intercept)     13.9198 0.2138
+    time             0.2138 3.2476
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.277 
+      4.283 
     
     Call:
     lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
@@ -2320,29 +2320,29 @@
     
     Fixed effects:
           (Intercept)                C1                C2                c1 
-              16.5529          -30.9465            0.2019            0.5891 
+              17.7226          -32.2589            0.4333            0.5426 
     ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
-              -6.3252          -10.2207           -5.4813 
+              -5.5394          -11.2289           -5.7755 
     
     
     Random effects covariance matrix:
     $id
                       (Intercept) ns(time, df = 3)1 ns(time, df = 3)2
-    (Intercept)           12.9713            1.4543            0.7836
-    ns(time, df = 3)1      1.4543            2.8999            0.1244
-    ns(time, df = 3)2      0.7836            0.1244            2.1922
-    ns(time, df = 3)3     -1.1779           -0.7585            0.2881
+    (Intercept)            15.413           2.67623           1.51236
+    ns(time, df = 3)1       2.676           3.69086           0.05597
+    ns(time, df = 3)2       1.512           0.05597           2.22208
+    ns(time, df = 3)3      -1.306          -0.53719           0.12538
                       ns(time, df = 3)3
-    (Intercept)                 -1.1779
-    ns(time, df = 3)1           -0.7585
-    ns(time, df = 3)2            0.2881
-    ns(time, df = 3)3            3.5086
+    (Intercept)                 -1.3056
+    ns(time, df = 3)1           -0.5372
+    ns(time, df = 3)2            0.1254
+    ns(time, df = 3)3            3.9384
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.097 
+      3.927 
     
     Call:
     lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
@@ -2352,22 +2352,22 @@
     
     Fixed effects:
           (Intercept)                C1                C2                c1 
-              15.3699          -29.6519           -0.4627            0.6224 
+              10.8923          -23.7015            0.1611            0.6737 
     ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
-              -5.3660          -11.8081           -5.5552 
+              -5.7102          -10.3129           -5.2007 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)   time
-    (Intercept)     13.7865 0.2217
-    time             0.2217 2.3514
+    (Intercept)     13.9198 0.2138
+    time             0.2138 3.2476
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.277 
+      4.283 
     
     Call:
     lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time + 
@@ -2377,21 +2377,21 @@
     
     Fixed effects:
     (Intercept)          c1          c2        time 
-        -8.3482      0.7313     -2.1480     -1.3922 
+         -8.497       0.529      -3.036      -1.422 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)    time      c2
-    (Intercept)      14.467 -1.3524  1.5062
-    time             -1.352  2.9651 -0.6105
-    c2                1.506 -0.6105  3.3787
+    (Intercept)     14.6278  0.2345  1.3464
+    time             0.2345  2.5619 -0.3046
+    c2               1.3464 -0.3046  2.9486
     
     
     
     Residual standard deviation:
     sigma_y 
-      3.938 
+      4.094 
     
     Call:
     lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time + 
@@ -2401,21 +2401,21 @@
     
     Fixed effects:
     (Intercept)          c1          c2        time 
-        -8.3482      0.7313     -2.1480     -1.3922 
+         -8.497       0.529      -3.036      -1.422 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)    time      c2
-    (Intercept)      14.467 -1.3524  1.5062
-    time             -1.352  2.9651 -0.6105
-    c2                1.506 -0.6105  3.3787
+    (Intercept)     14.6278  0.2345  1.3464
+    time             0.2345  2.5619 -0.3046
+    c2               1.3464 -0.3046  2.9486
     
     
     
     Residual standard deviation:
     sigma_y 
-      3.938 
+      4.094 
     
     Call:
     lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time + 
@@ -2425,21 +2425,21 @@
     
     Fixed effects:
     (Intercept)         B21          c1          c2        time      B21:c1 
-       -10.5256      1.4498     -0.2146     -4.8863     -1.0458      2.0645 
+        -7.9858      0.9833     -0.8402     -2.5260     -1.6499      1.8878 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)   time     c1
-    (Intercept)     14.0355 1.7182 0.7173
-    time             1.7182 1.5068 0.3926
-    c1               0.7173 0.3926 2.1535
+                (Intercept)   time      c1
+    (Intercept)    11.05820 1.4734 0.03618
+    time            1.47338 1.4893 0.20885
+    c1              0.03618 0.2088 1.03784
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.409 
+      4.569 
     
     Call:
     lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time + 
@@ -2449,21 +2449,21 @@
     
     Fixed effects:
     (Intercept)         B21          c1          c2        time      B21:c1 
-       -4.35461    -4.01249     0.08086    -3.58608    -1.74330     1.80339 
+        -4.5545     -3.5707      0.4779     -2.2968     -1.8795      2.3522 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time     c1
-    (Intercept)     19.3642  0.7466 -2.078
-    time             0.7466  3.0996 -1.197
-    c1              -2.0783 -1.1966  4.651
+                (Intercept)    time      c1
+    (Intercept)      20.206  1.8996 -1.3281
+    time              1.900  3.2187 -0.7643
+    c1               -1.328 -0.7643  4.3886
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.031 
+      4.084 
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
@@ -2473,23 +2473,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c1          c2        time 
-        23.6534    -41.5304     -2.0209     -0.3768     -3.1171     -1.3349 
+        25.4556    -41.9269     -3.5649     -0.8546     -4.2391     -1.5877 
          B21:c1 
-         1.1134 
+         1.7162 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time      c2
-    (Intercept)      15.171 -1.0150  1.1860
-    time             -1.015  3.3556 -0.2153
-    c2                1.186 -0.2153  2.4159
+                (Intercept)     time      c2
+    (Intercept)    14.75972  0.07473  1.9016
+    time            0.07473  3.38659 -0.6604
+    c2              1.90156 -0.66041  4.2376
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.051 
+      3.896 
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
@@ -2500,23 +2500,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c1          c2        time 
-        20.3027    -38.6130      0.7167     -0.3666     -1.3950     -1.5790 
+        22.5331    -42.0579      0.1608     -0.3175     -2.7429     -1.5202 
          B21:c1 
-         1.1655 
+         1.2306 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)    time      c2
-    (Intercept)      13.618 -1.3377  1.3761
-    time             -1.338  2.7341 -0.5568
-    c2                1.376 -0.5568  3.0817
+    (Intercept)     15.4262 -1.3058  0.4723
+    time            -1.3058  2.2368 -0.2579
+    c2               0.4723 -0.2579  2.2839
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.066 
+      4.055 
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF, 
@@ -2527,23 +2527,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c1          c2        time 
-        -6.3418     -3.8374      0.9693     -0.6720     -2.0618     -1.3933 
+         6.9992    -22.2240      0.6818     -0.9013     -5.1273     -1.5384 
          B21:c1 
-         1.5299 
+         1.8758 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time        c2
-    (Intercept)   12.971366 -0.3282  0.001431
-    time          -0.328191  1.8805 -0.279539
-    c2             0.001431 -0.2795  3.648373
+                (Intercept)    time      c2
+    (Intercept)     14.4695  0.2329  1.6920
+    time             0.2329  2.8111 -0.2784
+    c2               1.6920 -0.2784  2.5433
     
     
     
     Residual standard deviation:
     sigma_y 
-      3.965 
+      4.078 
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
@@ -2553,23 +2553,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c2          c1        time 
-        28.1138    -45.3622     -2.9972     -1.3227      0.3956     -1.7873 
+        33.9160    -53.0959     -3.4623     -1.0344      0.1647     -1.5869 
          B21:c2 
-        -4.6450 
+        -2.5984 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)    time      c1
-    (Intercept)     15.9418 -0.6051 -0.4659
-    time            -0.6051  3.7442 -0.4790
-    c1              -0.4659 -0.4790  4.2056
+    (Intercept)     15.3776  0.5605 -1.6152
+    time             0.5605  2.2394 -0.1937
+    c1              -1.6152 -0.1937  5.3082
     
     
     
     Residual standard deviation:
     sigma_y 
-      3.881 
+      4.107 
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
@@ -2580,23 +2580,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c2          c1        time 
-        7.00879   -23.08339     1.49588    -5.27935    -0.00563    -1.05078 
+         8.6273    -23.6193      0.4467     -3.0289     -0.8228     -1.3660 
          B21:c2 
-        1.66771 
+        -2.4949 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time       c1
-    (Intercept)    15.26892  2.1928  0.01579
-    time            2.19276  1.1327 -0.16580
-    c1              0.01579 -0.1658  1.48185
+                (Intercept)     time       c1
+    (Intercept)     13.4792  0.39533  0.71259
+    time             0.3953  1.48498 -0.04636
+    c1               0.7126 -0.04636  1.49659
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.511 
+       4.54 
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
@@ -2606,23 +2606,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c2          c1        time 
-        22.6955    -34.3565     -1.8394      0.5995      0.6923     -1.5223 
+        39.3924    -57.4875     -3.7255     -2.2149      0.8147     -1.6277 
          B21:c2 
-        18.4464 
+         9.9833 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)    time      c2
-    (Intercept)     16.2078 -0.7282  1.4170
-    time            -0.7282  3.3426 -0.2897
-    c2               1.4170 -0.2897  2.5622
+    (Intercept)     14.1931  0.3089  1.3833
+    time             0.3089  3.7265 -0.3247
+    c2               1.3833 -0.3247  3.8727
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.073 
+      3.989 
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF, 
@@ -2632,23 +2632,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c2          c1        time 
-        22.6955    -34.3565     -1.8394      0.5995      0.6923     -1.5223 
+        39.3924    -57.4875     -3.7255     -2.2149      0.8147     -1.6277 
          B21:c2 
-        18.4464 
+         9.9833 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)    time      c2
-    (Intercept)     16.2078 -0.7282  1.4170
-    time            -0.7282  3.3426 -0.2897
-    c2               1.4170 -0.2897  2.5622
+    (Intercept)     14.1931  0.3089  1.3833
+    time             0.3089  3.7265 -0.3247
+    c2               1.3833 -0.3247  3.8727
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.073 
+      3.989 
     
     Call:
     lme_imp(fixed = y ~ C1 + B2 * c1 * time, data = longDF, random = ~time + 
@@ -2658,23 +2658,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c1        time      B21:c1 
-       35.56048   -54.80861    -4.77367    -1.52549    -0.68183     2.36415 
+       14.76973   -27.45747    -3.04385    -0.17822    -1.06282     0.92739 
        B21:time     c1:time B21:c1:time 
-       -0.35783    -0.09668     0.01371 
+       -0.24863     0.01092    -0.04006 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time I(time^2)
-    (Intercept)     18.9228 -0.8027    0.8032
-    time            -0.8027  3.4107   -0.7779
-    I(time^2)        0.8032 -0.7779    3.6221
+                (Intercept)   time I(time^2)
+    (Intercept)      15.510  1.979    -1.964
+    time              1.979  6.630    -4.314
+    I(time^2)        -1.964 -4.314     5.658
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.221 
+      4.243 
     
     Call:
     lme_imp(fixed = y ~ c1 * b1 + o1, data = longDF, random = ~b1 | 
@@ -2684,20 +2684,20 @@
     
     Fixed effects:
     (Intercept)          c1         b11        o1.L        o1.Q      c1:b11 
-        -7.1135      0.1829     -2.7960      1.0399      0.3168     -0.7968 
+        -7.5330      0.1718     -2.8252      1.2989      0.2780     -0.9423 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)   b11
-    (Intercept)       4.124 1.274
-    b11               1.274 1.179
+                (Intercept)    b11
+    (Intercept)      3.8508 0.3021
+    b11              0.3021 1.5337
     
     
     
     Residual standard deviation:
     sigma_y 
-      6.381 
+      6.388 
     $m0a1
     
     Call:
@@ -2708,19 +2708,19 @@
     
     Fixed effects:
     (Intercept) 
-         -5.045 
+         -12.27 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       966.7
+    (Intercept)        1552
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.816 
+       4.84 
     
     $m0a2
     
@@ -2732,19 +2732,19 @@
     
     Fixed effects:
     (Intercept) 
-         -5.045 
+         -12.27 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       966.7
+    (Intercept)        1552
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.816 
+       4.84 
     
     $m0a3
     
@@ -2756,19 +2756,19 @@
     
     Fixed effects:
     (Intercept) 
-         -5.372 
+         -5.349 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       8.256
+    (Intercept)       11.22
     
     
     
     Residual standard deviation:
     sigma_y 
-      12.92 
+      13.07 
     
     $m0a4
     
@@ -2780,19 +2780,19 @@
     
     Fixed effects:
     (Intercept) 
-           5.96 
+          7.071 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       13.07
+    (Intercept)       12.93
     
     
     
     Residual standard deviation:
       sigma_y 
-    1.182e+09 
+    475457477 
     
     $m0b1
     
@@ -2804,13 +2804,13 @@
     
     Fixed effects:
     (Intercept) 
-         0.6866 
+         0.7985 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       6.416
+    (Intercept)       6.023
     
     
     $m0b2
@@ -2823,13 +2823,13 @@
     
     Fixed effects:
     (Intercept) 
-         0.3387 
+         0.4668 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       2.419
+    (Intercept)       3.231
     
     
     $m0b3
@@ -2842,13 +2842,13 @@
     
     Fixed effects:
     (Intercept) 
-          0.455 
+         0.3675 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       13.32
+    (Intercept)       11.26
     
     
     $m0b4
@@ -2861,13 +2861,13 @@
     
     Fixed effects:
     (Intercept) 
-          0.455 
+         0.3675 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       13.32
+    (Intercept)       11.26
     
     
     $m0c1
@@ -2880,19 +2880,19 @@
     
     Fixed effects:
     (Intercept) 
-          0.186 
+         0.9392 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.2836
+    (Intercept)      0.4296
     
     
     
     Residual standard deviation:
     sigma_L1 
-       386.5 
+       84.55 
     
     $m0c2
     
@@ -2904,19 +2904,19 @@
     
     Fixed effects:
     (Intercept) 
-        -0.5922 
+        -0.6091 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.03225
+    (Intercept)      0.0341
     
     
     
     Residual standard deviation:
     sigma_L1 
-       0.393 
+      0.3853 
     
     $m0d1
     
@@ -2928,13 +2928,13 @@
     
     Fixed effects:
     (Intercept) 
-          1.282 
+           1.27 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.06159
+    (Intercept)     0.06742
     
     
     $m0d2
@@ -2947,13 +2947,13 @@
     
     Fixed effects:
     (Intercept) 
-          2.808 
+          3.182 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       11.84
+    (Intercept)       8.415
     
     
     $m0e1
@@ -2966,19 +2966,19 @@
     
     Fixed effects:
     (Intercept) 
-        -0.9119 
+         -0.949 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.1238
+    (Intercept)      0.1247
     
     
     
     Residual standard deviation:
     sigma_L1 
-      0.7774 
+      0.7833 
     
     $m0f1
     
@@ -2990,13 +2990,13 @@
     
     Fixed effects:
     (Intercept) 
-        0.07994 
+       0.006774 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.1794
+    (Intercept)      0.2182
     
     
     $m1a
@@ -3009,19 +3009,19 @@
     
     Fixed effects:
     (Intercept)          C1 
-         -239.8       319.3 
+          203.1      -292.1 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)        3867
+    (Intercept)        1504
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.926 
+      4.893 
     
     $m1b
     
@@ -3033,13 +3033,13 @@
     
     Fixed effects:
     (Intercept)          C1 
-          27.16      -36.02 
+          22.03      -28.74 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       4.918
+    (Intercept)       9.415
     
     
     $m1c
@@ -3052,19 +3052,19 @@
     
     Fixed effects:
     (Intercept)          C1 
-        0.27121    -0.09009 
+         0.6570     -0.4805 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.4646
+    (Intercept)      0.6324
     
     
     
     Residual standard deviation:
     sigma_L1 
-       300.6 
+       111.8 
     
     $m1d
     
@@ -3076,13 +3076,13 @@
     
     Fixed effects:
     (Intercept)          C1 
-        -0.2881      2.1258 
+        -0.3009      2.1814 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.08202
+    (Intercept)      0.0646
     
     
     $m1e
@@ -3095,19 +3095,19 @@
     
     Fixed effects:
     (Intercept)          C1 
-         -2.845       2.632 
+         -2.168       1.671 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.1596
+    (Intercept)      0.1352
     
     
     
     Residual standard deviation:
     sigma_L1 
-      0.7779 
+      0.7853 
     
     $m1f
     
@@ -3119,13 +3119,13 @@
     
     Fixed effects:
     (Intercept)          C1 
-         -4.361       6.003 
+          1.017      -1.375 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.2109
+    (Intercept)      0.2709
     
     
     $m2a
@@ -3138,19 +3138,19 @@
     
     Fixed effects:
     (Intercept)          c2 
-         -3.201      -1.830 
+        -13.688      -1.637 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)        2898
+    (Intercept)       80.04
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.859 
+      4.721 
     
     $m2b
     
@@ -3162,13 +3162,13 @@
     
     Fixed effects:
     (Intercept)          c2 
-        -4.0700      0.4713 
+         -4.363      -1.892 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       8.487
+    (Intercept)       8.906
     
     
     $m2c
@@ -3181,19 +3181,19 @@
     
     Fixed effects:
     (Intercept)          c2 
-          1.996       4.892 
+         1.1293      0.5214 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.192
+    (Intercept)       1.227
     
     
     
     Residual standard deviation:
     sigma_L1mis 
-          279.4 
+          31.63 
     
     $m2d
     
@@ -3205,13 +3205,13 @@
     
     Fixed effects:
     (Intercept)          c2 
-         0.9570     -0.1123 
+        0.90606    -0.02866 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.09914
+    (Intercept)      0.2138
     
     
     $m2e
@@ -3224,19 +3224,19 @@
     
     Fixed effects:
     (Intercept)          c2 
-        -1.0307     -0.0682 
+        -0.9600      0.1304 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       0.157
+    (Intercept)      0.1489
     
     
     
     Residual standard deviation:
     sigma_L1mis 
-         0.7666 
+         0.7711 
     
     $m2f
     
@@ -3248,13 +3248,13 @@
     
     Fixed effects:
     (Intercept)          c2 
-       -0.06094    -0.18617 
+       0.100639    0.005447 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.1941
+    (Intercept)      0.2362
     
     
     $m3a
@@ -3266,20 +3266,20 @@
      Bayesian linear mixed model for "y" 
     
     Fixed effects:
-       C2 
-    7.094 
+        C2 
+    -5.701 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)        1595
+    (Intercept)        2514
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.859 
+      4.828 
     
     $m3b
     
@@ -3291,13 +3291,13 @@
     
     Fixed effects:
         C2 
-    -0.197 
+    0.7243 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       28.01
+    (Intercept)       18.36
     
     
     $m3c
@@ -3309,20 +3309,20 @@
      Bayesian Gamma mixed model for "L1mis" 
     
     Fixed effects:
-         C2 
-    0.05087 
+          C2 
+    -0.05628 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.4908
+    (Intercept)      0.5294
     
     
     
     Residual standard deviation:
     sigma_L1mis 
-          335.3 
+          126.1 
     
     $m3d
     
@@ -3334,13 +3334,13 @@
     
     Fixed effects:
         C2 
-    0.3179 
+    0.1245 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.9361
+    (Intercept)      0.9141
     
     
     $m3e
@@ -3353,19 +3353,19 @@
     
     Fixed effects:
          C2 
-    -0.2501 
+    -0.2088 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)       1.049
+    (Intercept)       1.021
     
     
     
     Residual standard deviation:
     sigma_L1mis 
-         0.7986 
+         0.7841 
     
     $m3f
     
@@ -3377,13 +3377,13 @@
     
     Fixed effects:
           C2 
-    -0.07734 
+    -0.08724 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.1694
+    (Intercept)       0.167
     
     
     $m4a
@@ -3397,19 +3397,19 @@
     
     Fixed effects:
     (Intercept)         B21          c2          p2       L1mis         Be2 
-      3.084e-01  -1.434e-01  -9.122e-03   1.199e-02   1.338e-11   2.179e-02 
+      2.053e-01  -8.113e-02  -2.892e-02   1.056e-02  -2.939e-12   9.894e-02 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.04407
+    (Intercept)     0.04065
     
     
     
     Residual standard deviation:
     sigma_c1 
-      0.6404 
+      0.6495 
     
     $m4b
     
@@ -3423,19 +3423,19 @@
     
     Fixed effects:
     (Intercept)          c2         b21          p2       L1mis 
-      2.630e-01  -7.359e-12  -6.375e-02   1.189e-02  -5.594e-02 
+      2.514e-01  -3.451e-12   5.218e-02   9.521e-03  -5.771e-02 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.09414
+    (Intercept)     0.09715
     
     
     
     Residual standard deviation:
     sigma_c1 
-       0.622 
+      0.6322 
     
     $m4c
     
@@ -3449,19 +3449,19 @@
     
     Fixed effects:
     (Intercept)          c2         b21          p2       L1mis 
-        0.20278    -0.12391    -0.09790     0.02274    -0.05312 
+        0.24854    -0.10094    -0.02002     0.01911    -0.12573 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)      0.1084
+    (Intercept)      0.0651
     
     
     
     Residual standard deviation:
     sigma_c1 
-      0.6181 
+       0.636 
     
     $m4d
     
@@ -3476,19 +3476,19 @@
     
     Fixed effects:
     (Intercept)          c2         b21          p2       L1mis         Be2 
-       0.172655    0.017579    0.013569    0.010422   -0.015692    0.005033 
+       0.129194   -0.032823   -0.025055    0.005626   -0.056423    0.192874 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)
-    (Intercept)     0.06882
+    (Intercept)     0.09465
     
     
     
     Residual standard deviation:
     sigma_c1 
-      0.6354 
+       0.632 
     
     $m5a
     
@@ -3501,26 +3501,26 @@
     
     Fixed effects:
          (Intercept)              M22              M23              M24 
-           -11.21925         -2.74826         -6.26069         -2.34338 
+            -7.63273         -3.98164         -6.54094         -2.76126 
              log(C1)              o22              o23              o24 
-           -23.88325         -0.88493          1.58010         -0.06409 
+           -14.33779         -1.10098         -0.35632         -0.07641 
         abs(C1 - c2)             time        I(time^2) o22:abs(C1 - c2) 
-             0.17153         -1.55300         -0.01800          1.73022 
+             0.26105         -1.12215         -0.08058          1.19888 
     o23:abs(C1 - c2) o24:abs(C1 - c2) 
-            -0.51696         -2.01484 
+             0.50363         -2.77723 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time
-    (Intercept)     11.7211 -0.2158
-    time            -0.2158  2.2506
+                (Intercept)  time
+    (Intercept)      13.624 1.028
+    time              1.028 2.797
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.257 
+       4.25 
     
     $m5b
     
@@ -3535,15 +3535,15 @@
     
     Fixed effects:
      (Intercept)        L1mis abs(c1 - C2)     log(Be2)         time 
-       1.145e-01    7.528e-11   -7.453e-02   -6.625e-02    2.171e-02 
+       4.560e-01   -2.636e-11   -8.001e-02    3.230e-01   -3.035e-03 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)     time I(time^2)
-    (Intercept)     0.46827 -0.04733   0.02442
-    time           -0.04733  0.47877  -0.07868
-    I(time^2)       0.02442 -0.07868   0.48901
+                (Intercept)    time I(time^2)
+    (Intercept)      0.3625  0.0342   -0.1257
+    time             0.0342  0.4581   -0.1524
+    I(time^2)       -0.1257 -0.1524    0.4153
     
     
     $m6a
@@ -3556,19 +3556,19 @@
     
     Fixed effects:
     (Intercept)          C1          C2         b21        time 
-       12.11632   -26.77612    -0.01068     1.08478    -1.50020 
+        17.8097    -32.9918     -0.5647      0.8269     -2.0420 
     
     
     Random effects covariance matrix:
     $id
-          time
-    time 0.578
+           time
+    time 0.7192
     
     
     
     Residual standard deviation:
     sigma_y 
-      5.773 
+      5.808 
     
     $m6b
     
@@ -3581,14 +3581,14 @@
     
     Fixed effects:
     (Intercept)          C2         B11          c1        time 
-        0.26300     0.04260     0.15884    -0.16175     0.01466 
+        0.34495    -0.02842     0.22192    -0.15585    -0.06023 
     
     
     Random effects covariance matrix:
     $id
-                  time I(time^2)
-    time       0.51220  -0.05423
-    I(time^2) -0.05423   0.44095
+                 time I(time^2)
+    time       0.6315   -0.1685
+    I(time^2) -0.1685    0.5812
     
     
     $m7a
@@ -3601,21 +3601,21 @@
     
     Fixed effects:
           (Intercept) ns(time, df = 2)1 ns(time, df = 2)2 
-               -7.126           -10.053            -5.869 
+               -6.662           -10.698            -5.328 
     
     
     Random effects covariance matrix:
     $id
                       (Intercept) ns(time, df = 2)1 ns(time, df = 2)2
-    (Intercept)           14.8748            0.5226           -0.4715
-    ns(time, df = 2)1      0.5226            0.7784           -0.1895
-    ns(time, df = 2)2     -0.4715           -0.1895            0.9404
+    (Intercept)            13.477            2.6192           -1.0701
+    ns(time, df = 2)1       2.619            1.7723           -0.4318
+    ns(time, df = 2)2      -1.070           -0.4318            1.0817
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.286 
+      4.398 
     
     $m7b
     
@@ -3627,27 +3627,27 @@
     
     Fixed effects:
           (Intercept) bs(time, df = 3)1 bs(time, df = 3)2 bs(time, df = 3)3 
-               -9.558             5.533            -9.176            -2.991 
+               -7.339             1.399           -11.328            -4.690 
     
     
     Random effects covariance matrix:
     $id
                       (Intercept) bs(time, df = 3)1 bs(time, df = 3)2
-    (Intercept)           12.7712           -0.6501            0.3065
-    bs(time, df = 3)1     -0.6501            2.9091           -0.1106
-    bs(time, df = 3)2      0.3065           -0.1106            2.4808
-    bs(time, df = 3)3     -1.5936            0.7585           -0.4108
+    (Intercept)           13.5432             1.632            0.6975
+    bs(time, df = 3)1      1.6315             4.527           -0.1620
+    bs(time, df = 3)2      0.6975            -0.162            3.0588
+    bs(time, df = 3)3      0.4704             1.220           -0.9212
                       bs(time, df = 3)3
-    (Intercept)                 -1.5936
-    bs(time, df = 3)1            0.7585
-    bs(time, df = 3)2           -0.4108
-    bs(time, df = 3)3            2.8772
+    (Intercept)                  0.4704
+    bs(time, df = 3)1            1.2195
+    bs(time, df = 3)2           -0.9212
+    bs(time, df = 3)3            2.5033
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.148 
+      4.183 
     
     $m7c
     
@@ -3660,29 +3660,29 @@
     
     Fixed effects:
           (Intercept)                C1                c1 ns(time, df = 3)1 
-                8.753           -21.902             0.561            -6.253 
+              17.7156          -33.1007            0.4651           -5.6996 
     ns(time, df = 3)2 ns(time, df = 3)3 
-               -8.590            -6.089 
+             -10.0145           -6.6062 
     
     
     Random effects covariance matrix:
     $id
                       (Intercept) ns(time, df = 3)1 ns(time, df = 3)2
-    (Intercept)           15.4562           1.25438           0.63736
-    ns(time, df = 3)1      1.2544           0.48050           0.06996
-    ns(time, df = 3)2      0.6374           0.06996           0.22097
-    ns(time, df = 3)3     -1.3103          -0.31468          -0.01884
+    (Intercept)           13.4603           1.19636           0.59929
+    ns(time, df = 3)1      1.1964           0.38450           0.04071
+    ns(time, df = 3)2      0.5993           0.04071           0.49858
+    ns(time, df = 3)3     -0.5737          -0.14841          -0.01425
                       ns(time, df = 3)3
-    (Intercept)                -1.31026
-    ns(time, df = 3)1          -0.31468
-    ns(time, df = 3)2          -0.01884
-    ns(time, df = 3)3           0.62604
+    (Intercept)                -0.57371
+    ns(time, df = 3)1          -0.14841
+    ns(time, df = 3)2          -0.01425
+    ns(time, df = 3)3           0.64239
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.226 
+      4.365 
     
     $m7d
     
@@ -3694,22 +3694,22 @@
     
     Fixed effects:
           (Intercept)                C1                C2                c1 
-              15.3699          -29.6519           -0.4627            0.6224 
+              10.8923          -23.7015            0.1611            0.6737 
     ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
-              -5.3660          -11.8081           -5.5552 
+              -5.7102          -10.3129           -5.2007 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)   time
-    (Intercept)     13.7865 0.2217
-    time             0.2217 2.3514
+    (Intercept)     13.9198 0.2138
+    time             0.2138 3.2476
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.277 
+      4.283 
     
     $m7e
     
@@ -3722,29 +3722,29 @@
     
     Fixed effects:
           (Intercept)                C1                C2                c1 
-              16.5529          -30.9465            0.2019            0.5891 
+              17.7226          -32.2589            0.4333            0.5426 
     ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
-              -6.3252          -10.2207           -5.4813 
+              -5.5394          -11.2289           -5.7755 
     
     
     Random effects covariance matrix:
     $id
                       (Intercept) ns(time, df = 3)1 ns(time, df = 3)2
-    (Intercept)           12.9713            1.4543            0.7836
-    ns(time, df = 3)1      1.4543            2.8999            0.1244
-    ns(time, df = 3)2      0.7836            0.1244            2.1922
-    ns(time, df = 3)3     -1.1779           -0.7585            0.2881
+    (Intercept)            15.413           2.67623           1.51236
+    ns(time, df = 3)1       2.676           3.69086           0.05597
+    ns(time, df = 3)2       1.512           0.05597           2.22208
+    ns(time, df = 3)3      -1.306          -0.53719           0.12538
                       ns(time, df = 3)3
-    (Intercept)                 -1.1779
-    ns(time, df = 3)1           -0.7585
-    ns(time, df = 3)2            0.2881
-    ns(time, df = 3)3            3.5086
+    (Intercept)                 -1.3056
+    ns(time, df = 3)1           -0.5372
+    ns(time, df = 3)2            0.1254
+    ns(time, df = 3)3            3.9384
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.097 
+      3.927 
     
     $m7f
     
@@ -3756,22 +3756,22 @@
     
     Fixed effects:
           (Intercept)                C1                C2                c1 
-              15.3699          -29.6519           -0.4627            0.6224 
+              10.8923          -23.7015            0.1611            0.6737 
     ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
-              -5.3660          -11.8081           -5.5552 
+              -5.7102          -10.3129           -5.2007 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)   time
-    (Intercept)     13.7865 0.2217
-    time             0.2217 2.3514
+    (Intercept)     13.9198 0.2138
+    time             0.2138 3.2476
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.277 
+      4.283 
     
     $m8a
     
@@ -3783,21 +3783,21 @@
     
     Fixed effects:
     (Intercept)          c1          c2        time 
-        -8.3482      0.7313     -2.1480     -1.3922 
+         -8.497       0.529      -3.036      -1.422 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)    time      c2
-    (Intercept)      14.467 -1.3524  1.5062
-    time             -1.352  2.9651 -0.6105
-    c2                1.506 -0.6105  3.3787
+    (Intercept)     14.6278  0.2345  1.3464
+    time             0.2345  2.5619 -0.3046
+    c2               1.3464 -0.3046  2.9486
     
     
     
     Residual standard deviation:
     sigma_y 
-      3.938 
+      4.094 
     
     $m8b
     
@@ -3809,21 +3809,21 @@
     
     Fixed effects:
     (Intercept)          c1          c2        time 
-        -8.3482      0.7313     -2.1480     -1.3922 
+         -8.497       0.529      -3.036      -1.422 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)    time      c2
-    (Intercept)      14.467 -1.3524  1.5062
-    time             -1.352  2.9651 -0.6105
-    c2                1.506 -0.6105  3.3787
+    (Intercept)     14.6278  0.2345  1.3464
+    time             0.2345  2.5619 -0.3046
+    c2               1.3464 -0.3046  2.9486
     
     
     
     Residual standard deviation:
     sigma_y 
-      3.938 
+      4.094 
     
     $m8c
     
@@ -3835,21 +3835,21 @@
     
     Fixed effects:
     (Intercept)         B21          c1          c2        time      B21:c1 
-       -10.5256      1.4498     -0.2146     -4.8863     -1.0458      2.0645 
+        -7.9858      0.9833     -0.8402     -2.5260     -1.6499      1.8878 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)   time     c1
-    (Intercept)     14.0355 1.7182 0.7173
-    time             1.7182 1.5068 0.3926
-    c1               0.7173 0.3926 2.1535
+                (Intercept)   time      c1
+    (Intercept)    11.05820 1.4734 0.03618
+    time            1.47338 1.4893 0.20885
+    c1              0.03618 0.2088 1.03784
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.409 
+      4.569 
     
     $m8d
     
@@ -3861,21 +3861,21 @@
     
     Fixed effects:
     (Intercept)         B21          c1          c2        time      B21:c1 
-       -4.35461    -4.01249     0.08086    -3.58608    -1.74330     1.80339 
+        -4.5545     -3.5707      0.4779     -2.2968     -1.8795      2.3522 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time     c1
-    (Intercept)     19.3642  0.7466 -2.078
-    time             0.7466  3.0996 -1.197
-    c1              -2.0783 -1.1966  4.651
+                (Intercept)    time      c1
+    (Intercept)      20.206  1.8996 -1.3281
+    time              1.900  3.2187 -0.7643
+    c1               -1.328 -0.7643  4.3886
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.031 
+      4.084 
     
     $m8e
     
@@ -3887,23 +3887,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c1          c2        time 
-        23.6534    -41.5304     -2.0209     -0.3768     -3.1171     -1.3349 
+        25.4556    -41.9269     -3.5649     -0.8546     -4.2391     -1.5877 
          B21:c1 
-         1.1134 
+         1.7162 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time      c2
-    (Intercept)      15.171 -1.0150  1.1860
-    time             -1.015  3.3556 -0.2153
-    c2                1.186 -0.2153  2.4159
+                (Intercept)     time      c2
+    (Intercept)    14.75972  0.07473  1.9016
+    time            0.07473  3.38659 -0.6604
+    c2              1.90156 -0.66041  4.2376
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.051 
+      3.896 
     
     $m8f
     
@@ -3916,23 +3916,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c1          c2        time 
-        20.3027    -38.6130      0.7167     -0.3666     -1.3950     -1.5790 
+        22.5331    -42.0579      0.1608     -0.3175     -2.7429     -1.5202 
          B21:c1 
-         1.1655 
+         1.2306 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)    time      c2
-    (Intercept)      13.618 -1.3377  1.3761
-    time             -1.338  2.7341 -0.5568
-    c2                1.376 -0.5568  3.0817
+    (Intercept)     15.4262 -1.3058  0.4723
+    time            -1.3058  2.2368 -0.2579
+    c2               0.4723 -0.2579  2.2839
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.066 
+      4.055 
     
     $m8g
     
@@ -3945,23 +3945,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c1          c2        time 
-        -6.3418     -3.8374      0.9693     -0.6720     -2.0618     -1.3933 
+         6.9992    -22.2240      0.6818     -0.9013     -5.1273     -1.5384 
          B21:c1 
-         1.5299 
+         1.8758 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time        c2
-    (Intercept)   12.971366 -0.3282  0.001431
-    time          -0.328191  1.8805 -0.279539
-    c2             0.001431 -0.2795  3.648373
+                (Intercept)    time      c2
+    (Intercept)     14.4695  0.2329  1.6920
+    time             0.2329  2.8111 -0.2784
+    c2               1.6920 -0.2784  2.5433
     
     
     
     Residual standard deviation:
     sigma_y 
-      3.965 
+      4.078 
     
     $m8h
     
@@ -3973,23 +3973,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c2          c1        time 
-        28.1138    -45.3622     -2.9972     -1.3227      0.3956     -1.7873 
+        33.9160    -53.0959     -3.4623     -1.0344      0.1647     -1.5869 
          B21:c2 
-        -4.6450 
+        -2.5984 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)    time      c1
-    (Intercept)     15.9418 -0.6051 -0.4659
-    time            -0.6051  3.7442 -0.4790
-    c1              -0.4659 -0.4790  4.2056
+    (Intercept)     15.3776  0.5605 -1.6152
+    time             0.5605  2.2394 -0.1937
+    c1              -1.6152 -0.1937  5.3082
     
     
     
     Residual standard deviation:
     sigma_y 
-      3.881 
+      4.107 
     
     $m8i
     
@@ -4002,23 +4002,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c2          c1        time 
-        7.00879   -23.08339     1.49588    -5.27935    -0.00563    -1.05078 
+         8.6273    -23.6193      0.4467     -3.0289     -0.8228     -1.3660 
          B21:c2 
-        1.66771 
+        -2.4949 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time       c1
-    (Intercept)    15.26892  2.1928  0.01579
-    time            2.19276  1.1327 -0.16580
-    c1              0.01579 -0.1658  1.48185
+                (Intercept)     time       c1
+    (Intercept)     13.4792  0.39533  0.71259
+    time             0.3953  1.48498 -0.04636
+    c1               0.7126 -0.04636  1.49659
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.511 
+       4.54 
     
     $m8j
     
@@ -4030,23 +4030,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c2          c1        time 
-        22.6955    -34.3565     -1.8394      0.5995      0.6923     -1.5223 
+        39.3924    -57.4875     -3.7255     -2.2149      0.8147     -1.6277 
          B21:c2 
-        18.4464 
+         9.9833 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)    time      c2
-    (Intercept)     16.2078 -0.7282  1.4170
-    time            -0.7282  3.3426 -0.2897
-    c2               1.4170 -0.2897  2.5622
+    (Intercept)     14.1931  0.3089  1.3833
+    time             0.3089  3.7265 -0.3247
+    c2               1.3833 -0.3247  3.8727
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.073 
+      3.989 
     
     $m8k
     
@@ -4058,23 +4058,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c2          c1        time 
-        22.6955    -34.3565     -1.8394      0.5995      0.6923     -1.5223 
+        39.3924    -57.4875     -3.7255     -2.2149      0.8147     -1.6277 
          B21:c2 
-        18.4464 
+         9.9833 
     
     
     Random effects covariance matrix:
     $id
                 (Intercept)    time      c2
-    (Intercept)     16.2078 -0.7282  1.4170
-    time            -0.7282  3.3426 -0.2897
-    c2               1.4170 -0.2897  2.5622
+    (Intercept)     14.1931  0.3089  1.3833
+    time             0.3089  3.7265 -0.3247
+    c2               1.3833 -0.3247  3.8727
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.073 
+      3.989 
     
     $m8l
     
@@ -4086,23 +4086,23 @@
     
     Fixed effects:
     (Intercept)          C1         B21          c1        time      B21:c1 
-       35.56048   -54.80861    -4.77367    -1.52549    -0.68183     2.36415 
+       14.76973   -27.45747    -3.04385    -0.17822    -1.06282     0.92739 
        B21:time     c1:time B21:c1:time 
-       -0.35783    -0.09668     0.01371 
+       -0.24863     0.01092    -0.04006 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)    time I(time^2)
-    (Intercept)     18.9228 -0.8027    0.8032
-    time            -0.8027  3.4107   -0.7779
-    I(time^2)        0.8032 -0.7779    3.6221
+                (Intercept)   time I(time^2)
+    (Intercept)      15.510  1.979    -1.964
+    time              1.979  6.630    -4.314
+    I(time^2)        -1.964 -4.314     5.658
     
     
     
     Residual standard deviation:
     sigma_y 
-      4.221 
+      4.243 
     
     $m8m
     
@@ -4114,20 +4114,20 @@
     
     Fixed effects:
     (Intercept)          c1         b11        o1.L        o1.Q      c1:b11 
-        -7.1135      0.1829     -2.7960      1.0399      0.3168     -0.7968 
+        -7.5330      0.1718     -2.8252      1.2989      0.2780     -0.9423 
     
     
     Random effects covariance matrix:
     $id
-                (Intercept)   b11
-    (Intercept)       4.124 1.274
-    b11               1.274 1.179
+                (Intercept)    b11
+    (Intercept)      3.8508 0.3021
+    b11              0.3021 1.5337
     
     
     
     Residual standard deviation:
     sigma_y 
-      6.381 
+      6.388 
     
 
 ---
@@ -4135,387 +4135,387 @@
     $m0a1
     $m0a1$y
     (Intercept) 
-      -5.044537 
+      -12.27183 
     
     
     $m0a2
     $m0a2$y
     (Intercept) 
-      -5.044537 
+      -12.27183 
     
     
     $m0a3
     $m0a3$y
     (Intercept) 
-      -5.372323 
+      -5.348965 
     
     
     $m0a4
     $m0a4$y
     (Intercept) 
-        5.95995 
+       7.071404 
     
     
     $m0b1
     $m0b1$b1
     (Intercept) 
-      0.6865567 
+      0.7985431 
     
     
     $m0b2
     $m0b2$b1
     (Intercept) 
-      0.3386755 
+      0.4668347 
     
     
     $m0b3
     $m0b3$b1
     (Intercept) 
-      0.4549729 
+      0.3674796 
     
     
     $m0b4
     $m0b4$b1
     (Intercept) 
-      0.4549729 
+      0.3674796 
     
     
     $m0c1
     $m0c1$L1
     (Intercept) 
-       0.185974 
+      0.9391855 
     
     
     $m0c2
     $m0c2$L1
     (Intercept) 
-     -0.5922315 
+     -0.6091212 
     
     
     $m0d1
     $m0d1$p1
     (Intercept) 
-        1.28213 
+       1.270401 
     
     
     $m0d2
     $m0d2$p1
     (Intercept) 
-       2.808121 
+       3.182457 
     
     
     $m0e1
     $m0e1$L1
     (Intercept) 
-     -0.9118851 
+     -0.9489953 
     
     
     $m0f1
     $m0f1$Be1
     (Intercept) 
-     0.07993741 
+     0.00677405 
     
     
     $m1a
     $m1a$y
     (Intercept)          C1 
-      -239.8138    319.3273 
+       203.1116   -292.0678 
     
     
     $m1b
     $m1b$b1
     (Intercept)          C1 
-       27.15682   -36.01862 
+       22.02800   -28.74428 
     
     
     $m1c
     $m1c$L1
     (Intercept)          C1 
-     0.27120515 -0.09008905 
+       0.657017   -0.480477 
     
     
     $m1d
     $m1d$p1
     (Intercept)          C1 
-     -0.2881178   2.1258197 
+     -0.3009152   2.1814209 
     
     
     $m1e
     $m1e$L1
     (Intercept)          C1 
-      -2.844765    2.632113 
+      -2.167589    1.670759 
     
     
     $m1f
     $m1f$Be1
     (Intercept)          C1 
-      -4.361141    6.003403 
+       1.017266   -1.374735 
     
     
     $m2a
     $m2a$y
     (Intercept)          c2 
-      -3.201281   -1.830185 
+      -13.68846    -1.63738 
     
     
     $m2b
     $m2b$b2
     (Intercept)          c2 
-     -4.0699761   0.4713144 
+      -4.363186   -1.892313 
     
     
     $m2c
     $m2c$L1mis
     (Intercept)          c2 
-       1.996165    4.891677 
+      1.1292972   0.5214006 
     
     
     $m2d
     $m2d$p2
     (Intercept)          c2 
-      0.9569791  -0.1122915 
+     0.90605746 -0.02865698 
     
     
     $m2e
     $m2e$L1mis
     (Intercept)          c2 
-    -1.03072685 -0.06819622 
+     -0.9599886   0.1304310 
     
     
     $m2f
     $m2f$Be2
     (Intercept)          c2 
-    -0.06094148 -0.18616621 
+    0.100638946 0.005447377 
     
     
     $m3a
     $m3a$y
-         C2 
-    7.09393 
+           C2 
+    -5.700957 
     
     
     $m3b
     $m3b$b2
-            C2 
-    -0.1970448 
+           C2 
+    0.7243435 
     
     
     $m3c
     $m3c$L1mis
             C2 
-    0.05087298 
+    -0.0562832 
     
     
     $m3d
     $m3d$p2
            C2 
-    0.3178806 
+    0.1245285 
     
     
     $m3e
     $m3e$L1mis
-           C2 
-    -0.250113 
+            C2 
+    -0.2087964 
     
     
     $m3f
     $m3f$Be2
              C2 
-    -0.07733757 
+    -0.08724206 
     
     
     $m4a
     $m4a$c1
       (Intercept)           B21            c2            p2         L1mis 
-     3.084184e-01 -1.433700e-01 -9.122049e-03  1.198923e-02  1.337528e-11 
+     2.053080e-01 -8.113283e-02 -2.892017e-02  1.056257e-02 -2.939364e-12 
               Be2 
-     2.178909e-02 
+     9.894152e-02 
     
     
     $m4b
     $m4b$c1
       (Intercept)            c2           b21            p2         L1mis 
-     2.629893e-01 -7.359234e-12 -6.374963e-02  1.189173e-02 -5.593985e-02 
+     2.513696e-01 -3.451225e-12  5.217701e-02  9.521162e-03 -5.771101e-02 
     
     
     $m4c
     $m4c$c1
     (Intercept)          c2         b21          p2       L1mis 
-     0.20278031 -0.12390623 -0.09789777  0.02274182 -0.05311945 
+     0.24853623 -0.10093950 -0.02001651  0.01910765 -0.12573088 
     
     
     $m4d
     $m4d$c1
      (Intercept)           c2          b21           p2        L1mis          Be2 
-     0.172655150  0.017579467  0.013568769  0.010421638 -0.015692256  0.005032806 
+     0.129193611 -0.032822897 -0.025054841  0.005625511 -0.056423015  0.192874238 
     
     
     $m5a
     $m5a$y
          (Intercept)              M22              M23              M24 
-        -11.21925297      -2.74825910      -6.26068566      -2.34338112 
+         -7.63273254      -3.98163661      -6.54094031      -2.76125921 
              log(C1)              o22              o23              o24 
-        -23.88325287      -0.88492959       1.58009588      -0.06408729 
+        -14.33779269      -1.10098070      -0.35632185      -0.07640924 
         abs(C1 - c2)             time        I(time^2) o22:abs(C1 - c2) 
-          0.17153174      -1.55299587      -0.01800176       1.73022035 
+          0.26104551      -1.12214936      -0.08057971       1.19888101 
     o23:abs(C1 - c2) o24:abs(C1 - c2) 
-         -0.51695623      -2.01484214 
+          0.50363495      -2.77722969 
     
     
     $m5b
     $m5b$b1
       (Intercept)         L1mis  abs(c1 - C2)      log(Be2)          time 
-     1.145410e-01  7.527742e-11 -7.453355e-02 -6.624547e-02  2.171068e-02 
+     4.559961e-01 -2.636136e-11 -8.000560e-02  3.229805e-01 -3.034639e-03 
     
     
     $m6a
     $m6a$y
-     (Intercept)           C1           C2          b21         time 
-     12.11631982 -26.77611847  -0.01067526   1.08477751  -1.50020361 
+    (Intercept)          C1          C2         b21        time 
+     17.8096920 -32.9918317  -0.5646779   0.8268772  -2.0419515 
     
     
     $m6b
     $m6b$b1
     (Intercept)          C2         B11          c1        time 
-     0.26299742  0.04260293  0.15884190 -0.16175257  0.01466441 
+     0.34495487 -0.02841990  0.22192347 -0.15584816 -0.06022702 
     
     
     $m7a
     $m7a$y
           (Intercept) ns(time, df = 2)1 ns(time, df = 2)2 
-            -7.126291        -10.052664         -5.869227 
+            -6.661631        -10.697941         -5.327926 
     
     
     $m7b
     $m7b$y
           (Intercept) bs(time, df = 3)1 bs(time, df = 3)2 bs(time, df = 3)3 
-            -9.558302          5.532585         -9.176323         -2.990998 
+            -7.339176          1.398630        -11.328489         -4.690344 
     
     
     $m7c
     $m7c$y
           (Intercept)                C1                c1 ns(time, df = 3)1 
-            8.7526483       -21.9015270         0.5609717        -6.2531392 
+           17.7156495       -33.1007179         0.4651491        -5.6995907 
     ns(time, df = 3)2 ns(time, df = 3)3 
-           -8.5901351        -6.0892360 
+          -10.0145264        -6.6061720 
     
     
     $m7d
     $m7d$y
           (Intercept)                C1                C2                c1 
-           15.3699015       -29.6519305        -0.4627484         0.6223845 
+           10.8922682       -23.7015267         0.1610952         0.6736518 
     ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
-           -5.3659675       -11.8081197        -5.5551970 
+           -5.7101577       -10.3129491        -5.2007490 
     
     
     $m7e
     $m7e$y
           (Intercept)                C1                C2                c1 
-           16.5529065       -30.9465294         0.2018751         0.5890741 
+           17.7225573       -32.2588839         0.4333445         0.5426112 
     ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
-           -6.3251504       -10.2206890        -5.4813296 
+           -5.5394457       -11.2288677        -5.7755138 
     
     
     $m7f
     $m7f$y
           (Intercept)                C1                C2                c1 
-           15.3699015       -29.6519305        -0.4627484         0.6223845 
+           10.8922682       -23.7015267         0.1610952         0.6736518 
     ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
-           -5.3659675       -11.8081197        -5.5551970 
+           -5.7101577       -10.3129491        -5.2007490 
     
     
     $m8a
     $m8a$y
     (Intercept)          c1          c2        time 
-     -8.3482009   0.7312775  -2.1480442  -1.3922137 
+     -8.4973346   0.5289676  -3.0361922  -1.4217088 
     
     
     $m8b
     $m8b$y
     (Intercept)          c1          c2        time 
-     -8.3482009   0.7312775  -2.1480442  -1.3922137 
+     -8.4973346   0.5289676  -3.0361922  -1.4217088 
     
     
     $m8c
     $m8c$y
     (Intercept)         B21          c1          c2        time      B21:c1 
-    -10.5255891   1.4498447  -0.2145989  -4.8862883  -1.0458304   2.0644546 
+     -7.9858130   0.9833424  -0.8401943  -2.5260423  -1.6498518   1.8877631 
     
     
     $m8d
     $m8d$y
     (Intercept)         B21          c1          c2        time      B21:c1 
-    -4.35460667 -4.01249494  0.08086487 -3.58607615 -1.74329985  1.80338929 
+     -4.5545227  -3.5707409   0.4778522  -2.2968039  -1.8795208   2.3522090 
     
     
     $m8e
     $m8e$y
     (Intercept)          C1         B21          c1          c2        time 
-     23.6534358 -41.5303547  -2.0208577  -0.3768158  -3.1171101  -1.3349377 
+     25.4555748 -41.9268853  -3.5648680  -0.8546425  -4.2391349  -1.5876967 
          B21:c1 
-      1.1133969 
+      1.7161575 
     
     
     $m8f
     $m8f$y
     (Intercept)          C1         B21          c1          c2        time 
-     20.3027473 -38.6129785   0.7166518  -0.3665742  -1.3950130  -1.5789762 
+     22.5331405 -42.0578916   0.1607680  -0.3175318  -2.7428738  -1.5202459 
          B21:c1 
-      1.1654590 
+      1.2306281 
     
     
     $m8g
     $m8g$y
     (Intercept)          C1         B21          c1          c2        time 
-     -6.3418319  -3.8374058   0.9693318  -0.6719624  -2.0618394  -1.3932985 
+      6.9991766 -22.2240332   0.6817866  -0.9013129  -5.1272800  -1.5384364 
          B21:c1 
-      1.5298864 
+      1.8757981 
     
     
     $m8h
     $m8h$y
     (Intercept)          C1         B21          c2          c1        time 
-     28.1138140 -45.3622388  -2.9972265  -1.3227212   0.3956304  -1.7872821 
+     33.9160447 -53.0959321  -3.4622884  -1.0343571   0.1646677  -1.5868869 
          B21:c2 
-     -4.6449924 
+     -2.5983544 
     
     
     $m8i
     $m8i$y
-      (Intercept)            C1           B21            c2            c1 
-      7.008793236 -23.083388969   1.495883682  -5.279345331  -0.005629688 
-             time        B21:c2 
-     -1.050782043   1.667711654 
+    (Intercept)          C1         B21          c2          c1        time 
+      8.6273362 -23.6192976   0.4466829  -3.0289219  -0.8228078  -1.3660270 
+         B21:c2 
+     -2.4949335 
     
     
     $m8j
     $m8j$y
     (Intercept)          C1         B21          c2          c1        time 
-     22.6955470 -34.3565020  -1.8394079   0.5994673   0.6922801  -1.5223208 
+     39.3923977 -57.4875288  -3.7254527  -2.2148902   0.8146923  -1.6277418 
          B21:c2 
-     18.4464244 
+      9.9833438 
     
     
     $m8k
     $m8k$y
     (Intercept)          C1         B21          c2          c1        time 
-     22.6955470 -34.3565020  -1.8394079   0.5994673   0.6922801  -1.5223208 
+     39.3923977 -57.4875288  -3.7254527  -2.2148902   0.8146923  -1.6277418 
          B21:c2 
-     18.4464244 
+      9.9833438 
     
     
     $m8l
     $m8l$y
      (Intercept)           C1          B21           c1         time       B21:c1 
-     35.56048179 -54.80861169  -4.77366545  -1.52549386  -0.68183235   2.36415220 
+     14.76972761 -27.45747397  -3.04384969  -0.17822077  -1.06282485   0.92738543 
         B21:time      c1:time  B21:c1:time 
-     -0.35782569  -0.09668030   0.01371063 
+     -0.24863282   0.01092246  -0.04005897 
     
     
     $m8m
     $m8m$y
     (Intercept)          c1         b11        o1.L        o1.Q      c1:b11 
-     -7.1134989   0.1828501  -2.7959986   1.0398703   0.3168462  -0.7967659 
+     -7.5330174   0.1717792  -2.8252421   1.2988730   0.2779994  -0.9422984 
     
     
 
@@ -4523,510 +4523,510 @@
 
     $m0a1
     $m0a1$y
-                    2.5%    97.5%
-    (Intercept) -25.9742 83.75883
+                     2.5%    97.5%
+    (Intercept) -107.7387 32.29141
     
     
     $m0a2
     $m0a2$y
-                    2.5%    97.5%
-    (Intercept) -25.9742 83.75883
+                     2.5%    97.5%
+    (Intercept) -107.7387 32.29141
     
     
     $m0a3
     $m0a3$y
-                     2.5%     97.5%
-    (Intercept) -6.458238 -4.398238
+                  2.5%     97.5%
+    (Intercept) -6.483 -4.385323
     
     
     $m0a4
     $m0a4$y
                     2.5%    97.5%
-    (Intercept) 4.419342 7.242109
+    (Intercept) 5.167718 8.658147
     
     
     $m0b1
     $m0b1$b1
-                     2.5%   97.5%
-    (Intercept) 0.2206726 1.31203
+                    2.5%    97.5%
+    (Intercept) 0.196443 2.282313
     
     
     $m0b2
     $m0b2$b1
-                      2.5%     97.5%
-    (Intercept) 0.01610328 0.9185814
+                      2.5%    97.5%
+    (Intercept) 0.04282297 1.370555
     
     
     $m0b3
     $m0b3$b1
                       2.5%    97.5%
-    (Intercept) -0.5401872 1.853853
+    (Intercept) -0.7986554 2.831571
     
     
     $m0b4
     $m0b4$b1
                       2.5%    97.5%
-    (Intercept) -0.5401872 1.853853
+    (Intercept) -0.7986554 2.831571
     
     
     $m0c1
     $m0c1$L1
-                       2.5%    97.5%
-    (Intercept) -0.02395871 0.715314
+                      2.5%    97.5%
+    (Intercept) 0.02022479 2.494891
     
     
     $m0c2
     $m0c2$L1
-                      2.5%     97.5%
-    (Intercept) -0.6772459 -0.460491
+                      2.5%      97.5%
+    (Intercept) -0.6914785 -0.4889242
     
     
     $m0d1
     $m0d1$p1
-                   2.5%    97.5%
-    (Intercept) 1.22827 1.349761
+                    2.5%    97.5%
+    (Intercept) 1.149605 1.369389
     
     
     $m0d2
     $m0d2$p1
-                     2.5%    97.5%
-    (Intercept) 0.8638558 3.711174
+                    2.5%    97.5%
+    (Intercept) 2.117371 3.873941
     
     
     $m0e1
     $m0e1$L1
                      2.5%      97.5%
-    (Intercept) -0.979457 -0.8106841
+    (Intercept) -1.092817 -0.8648362
     
     
     $m0f1
     $m0f1$Be1
-                       2.5%    97.5%
-    (Intercept) -0.03744616 0.165656
+                      2.5%     97.5%
+    (Intercept) -0.1183976 0.2388312
     
     
     $m1a
     $m1a$y
-                     2.5%     97.5%
-    (Intercept) -7915.105  2670.855
-    C1          -3636.131 10756.359
+                       2.5%     97.5%
+    (Intercept)   -93.94668 1895.2219
+    C1          -2637.42247  113.1248
     
     
     $m1b
     $m1b$b1
-                      2.5%     97.5%
-    (Intercept)   7.705886 59.915270
-    C1          -80.112404 -9.705424
+                      2.5%   97.5%
+    (Intercept)  -7.040887 55.8969
+    C1          -74.248996 10.3754
     
     
     $m1c
     $m1c$L1
-                      2.5%    97.5%
-    (Intercept)  -7.723444  9.18529
-    C1          -12.326255 11.40924
+                      2.5%     97.5%
+    (Intercept) -11.531814  7.634343
+    C1           -9.948741 17.284573
     
     
     $m1d
     $m1d$p1
                      2.5%    97.5%
-    (Intercept) -3.839402 3.080688
-    C1          -2.443251 7.031602
+    (Intercept) -3.683121 5.029362
+    C1          -5.026401 6.735212
     
     
     $m1e
     $m1e$L1
-                     2.5%     97.5%
-    (Intercept) -8.815485  3.375905
-    C1          -5.816128 10.706089
+                     2.5%    97.5%
+    (Intercept) -6.791427 2.820184
+    C1          -5.072217 8.021967
     
     
     $m1f
     $m1f$Be1
-                      2.5%      97.5%
-    (Intercept) -8.7744162  0.2099434
-    C1          -0.2456378 12.0131502
+                      2.5%    97.5%
+    (Intercept)  -3.932729 8.257874
+    C1          -11.253365 5.431730
     
     
     $m2a
     $m2a$y
-                      2.5%       97.5%
-    (Intercept) -50.541948 158.3089604
-    c2           -3.641809   0.1260621
+                      2.5%     97.5%
+    (Intercept) -39.029708 -9.339431
+    c2           -6.542051  3.935608
     
     
     $m2b
     $m2b$b2
                      2.5%     97.5%
-    (Intercept) -5.026840 -3.205385
-    c2          -2.473645  4.958252
+    (Intercept) -5.443985 -3.006162
+    c2          -5.516912  1.866201
     
     
     $m2c
     $m2c$L1mis
-                      2.5%    97.5%
-    (Intercept) 0.58465636 3.139058
-    c2          0.09616585 7.694885
+                       2.5%    97.5%
+    (Intercept)  0.01873431 2.322402
+    c2          -1.01684331 2.398858
     
     
     $m2d
     $m2d$p2
                       2.5%     97.5%
-    (Intercept)  0.7405972 1.1449640
-    c2          -0.8753818 0.7693149
+    (Intercept)  0.6054029 1.0938975
+    c2          -0.9299409 0.6480205
     
     
     $m2e
     $m2e$L1mis
                       2.5%      97.5%
-    (Intercept) -1.2316843 -0.7318210
-    c2          -0.7911872  0.9452577
+    (Intercept) -1.1710969 -0.7190916
+    c2          -0.6786182  1.2474742
     
     
     $m2f
     $m2f$Be2
-                      2.5%     97.5%
-    (Intercept) -0.3632195 0.1261131
-    c2          -1.3473665 0.4847500
+                       2.5%     97.5%
+    (Intercept) -0.07758473 0.2960306
+    c2          -0.63332997 0.6064386
     
     
     $m3a
     $m3a$y
             2.5%    97.5%
-    C2 -19.45679 122.1489
+    C2 -157.1197 86.77159
     
     
     $m3b
     $m3b$b2
-            2.5%  97.5%
-    C2 -2.585532 1.8547
+            2.5%    97.5%
+    C2 -1.589468 2.309191
     
     
     $m3c
     $m3c$L1mis
-             2.5%   97.5%
-    C2 -0.3088603 0.41207
+             2.5%     97.5%
+    C2 -0.4331816 0.2034595
     
     
     $m3d
     $m3d$p2
              2.5%     97.5%
-    C2 0.01772127 0.6118607
+    C2 -0.2488833 0.5768491
     
     
     $m3e
     $m3e$L1mis
-             2.5%     97.5%
-    C2 -0.6048791 0.1450219
+            2.5%     97.5%
+    C2 -0.564713 0.2719835
     
     
     $m3f
     $m3f$Be2
              2.5%     97.5%
-    C2 -0.2795584 0.1064095
+    C2 -0.3204452 0.1076555
     
     
     $m4a
     $m4a$c1
                          2.5%        97.5%
-    (Intercept) -3.765252e-02 8.064366e-01
-    B21         -4.528186e-01 1.076661e-01
-    c2          -6.513632e-01 4.886510e-01
-    p2          -2.771811e-02 4.940519e-02
-    L1mis       -2.349281e-11 4.347531e-11
-    Be2         -3.899422e-01 3.233613e-01
+    (Intercept) -7.705423e-02 6.050301e-01
+    B21         -2.423533e-01 9.115718e-02
+    c2          -5.780950e-01 4.939075e-01
+    p2          -3.934682e-02 6.283881e-02
+    L1mis       -3.136820e-11 2.507369e-11
+    Be2         -2.473504e-01 3.876082e-01
     
     
     $m4b
     $m4b$c1
                          2.5%        97.5%
-    (Intercept)  1.582766e-01 3.891363e-01
-    c2          -2.762783e-11 8.248578e-12
-    b21         -3.465853e-01 9.878683e-02
-    p2          -2.422035e-02 3.498137e-02
-    L1mis       -2.348838e-01 9.097917e-02
+    (Intercept)  1.379249e-01 3.677624e-01
+    c2          -1.918072e-11 1.048478e-11
+    b21         -2.962633e-01 2.529930e-01
+    p2          -3.493190e-02 3.180030e-02
+    L1mis       -1.983384e-01 7.948761e-02
     
     
     $m4c
     $m4c$c1
                        2.5%      97.5%
-    (Intercept) -0.04152910 0.37265938
-    c2          -0.37308112 0.04907909
-    b21         -0.32497271 0.20267380
-    p2          -0.01367123 0.05994204
-    L1mis       -0.31397356 0.16412098
+    (Intercept)  0.10377548 0.38572761
+    c2          -0.48454532 0.44069607
+    b21         -0.19669892 0.14959454
+    p2          -0.01253914 0.04402356
+    L1mis       -0.39415940 0.08388984
     
     
     $m4d
     $m4d$c1
                        2.5%      97.5%
-    (Intercept) -0.05821744 0.45359287
-    c2          -0.29182403 0.42442583
-    b21         -0.14236320 0.17318367
-    p2          -0.02446909 0.04066537
-    L1mis       -0.15079217 0.17434428
-    Be2         -0.45231292 0.28747344
+    (Intercept) -0.13149757 0.43874647
+    c2          -0.33381731 0.25421157
+    b21         -0.22608078 0.25990961
+    p2          -0.02284423 0.03777185
+    L1mis       -0.23048701 0.12395722
+    Be2         -0.15672625 0.45576133
     
     
     $m5a
     $m5a$y
-                             2.5%       97.5%
-    (Intercept)      -22.17558473 -2.46878148
-    M22               -4.20765889 -1.06562638
-    M23               -8.43754652 -3.08907716
-    M24               -3.72527276 -0.51005805
-    log(C1)          -55.61629902  5.27345003
-    o22               -2.23440895  0.06504092
-    o23                0.05949663  3.04039065
-    o24               -3.17834349  3.11312819
-    abs(C1 - c2)      -2.63757052  3.20297643
-    time              -1.96247493 -0.91261733
-    I(time^2)         -0.11993989  0.07820809
-    o22:abs(C1 - c2)   0.49926056  3.06114712
-    o23:abs(C1 - c2)  -2.31048563  1.04346166
-    o24:abs(C1 - c2)  -4.90198200  1.41564995
+                            2.5%       97.5%
+    (Intercept)      -31.3222385 14.82978708
+    M22               -7.3507683 -0.85914206
+    M23               -9.6168374 -4.64846914
+    M24               -6.6110107 -0.12525075
+    log(C1)          -82.9443464 50.87915329
+    o22               -2.9128267  1.05425134
+    o23               -2.7541227  1.49874992
+    o24               -1.7802915  3.40886197
+    abs(C1 - c2)      -3.9928917  3.02460735
+    time              -1.6346027 -0.50135301
+    I(time^2)         -0.1750579  0.02251568
+    o22:abs(C1 - c2)  -0.5535858  2.77651022
+    o23:abs(C1 - c2)  -1.1064694  3.19448528
+    o24:abs(C1 - c2)  -5.4819103  0.59338577
     
     
     $m5b
     $m5b$b1
                           2.5%        97.5%
-    (Intercept)  -5.181280e-01 9.845835e-01
-    L1mis        -2.188633e-11 1.655977e-10
-    abs(c1 - C2) -4.438244e-01 2.983514e-01
-    log(Be2)     -5.223379e-01 3.789458e-01
-    time         -7.301793e-02 9.484355e-02
+    (Intercept)  -2.254582e-02 9.173246e-01
+    L1mis        -7.536009e-11 1.924063e-11
+    abs(c1 - C2) -3.517072e-01 2.425263e-01
+    log(Be2)     -3.205099e-01 7.411132e-01
+    time         -9.661919e-02 1.168435e-01
     
     
     $m6a
     $m6a$y
-                      2.5%     97.5%
-    (Intercept) -23.891692 40.235476
-    C1          -64.208012 20.307796
-    C2           -1.626041  1.552196
-    b21          -1.064882  2.463229
-    time         -1.912222 -1.226716
+                       2.5%     97.5%
+    (Intercept)  -3.9486613 44.735187
+    C1          -69.2333083 -1.445674
+    C2           -2.4753834  1.372961
+    b21          -0.5420198  2.302073
+    time         -2.3914347 -1.403366
     
     
     $m6b
     $m6b$b1
-                       2.5%     97.5%
-    (Intercept) -0.03976726 0.5667342
-    C2          -0.42136389 0.5354978
-    B11         -0.24426359 0.4179266
-    c1          -0.71172200 0.1493743
-    time        -0.15124221 0.2171816
+                      2.5%      97.5%
+    (Intercept) -0.1277123 0.79925525
+    C2          -0.5074605 0.38325393
+    B11         -0.2557500 0.63399904
+    c1          -0.4108956 0.11595668
+    time        -0.2388880 0.09288276
     
     
     $m7a
     $m7a$y
                             2.5%     97.5%
-    (Intercept)        -8.872309 -6.007100
-    ns(time, df = 2)1 -13.348508 -6.353015
-    ns(time, df = 2)2  -7.081575 -4.599463
+    (Intercept)        -7.402653 -4.993710
+    ns(time, df = 2)1 -13.600385 -8.347677
+    ns(time, df = 2)2  -7.419272 -4.027349
     
     
     $m7b
     $m7b$y
-                             2.5%     97.5%
-    (Intercept)       -11.1927903 -7.649545
-    bs(time, df = 3)1   0.5797995  8.452395
-    bs(time, df = 3)2 -12.3904834 -5.411146
-    bs(time, df = 3)3  -4.7372629 -1.197128
+                            2.5%      97.5%
+    (Intercept)        -9.217803 -5.2354068
+    bs(time, df = 3)1  -5.731509  6.8268480
+    bs(time, df = 3)2 -16.414374 -7.5602648
+    bs(time, df = 3)3  -8.474562 -0.6812481
     
     
     $m7c
     $m7c$y
-                              2.5%     97.5%
-    (Intercept)       -20.01082856 27.612910
-    C1                -48.17670218 16.837250
-    c1                 -0.01955734  1.199071
-    ns(time, df = 3)1  -7.49697905 -5.174915
-    ns(time, df = 3)2 -11.40799376 -6.539075
-    ns(time, df = 3)3  -7.57842302 -5.029103
+                             2.5%     97.5%
+    (Intercept)       -21.2707193 52.655202
+    C1                -80.5942063 20.882027
+    c1                 -0.1614653  1.299388
+    ns(time, df = 3)1  -7.1539095 -4.497399
+    ns(time, df = 3)2 -12.3605841 -7.894951
+    ns(time, df = 3)3  -7.4495789 -4.952570
     
     
     $m7d
     $m7d$y
-                             2.5%     97.5%
-    (Intercept)       -18.3810076 46.252914
-    C1                -71.0253009 16.649414
-    C2                 -2.0754367  1.314595
-    c1                 -0.1846882  1.511924
-    ns(time, df = 3)1  -7.4499106 -2.903615
-    ns(time, df = 3)2 -15.1574908 -7.360736
-    ns(time, df = 3)3  -7.5874126 -3.483473
+                              2.5%     97.5%
+    (Intercept)       -31.46352256 40.956770
+    C1                -63.18867112 31.602332
+    C2                 -1.21952451  1.504104
+    c1                 -0.01200116  1.316854
+    ns(time, df = 3)1  -7.90053179 -2.952394
+    ns(time, df = 3)2 -16.40136144 -4.192332
+    ns(time, df = 3)3  -7.66850232 -3.421328
     
     
     $m7e
     $m7e$y
-                             2.5%     97.5%
-    (Intercept)       -21.4167075 57.418208
-    C1                -88.4843698 22.287035
-    C2                 -0.8223242  1.390249
-    c1                 -0.1805927  1.229320
-    ns(time, df = 3)1  -9.1535128 -4.266629
-    ns(time, df = 3)2 -15.1719078 -4.846142
-    ns(time, df = 3)3  -8.7924194 -2.025662
+                              2.5%      97.5%
+    (Intercept)       -15.46284934 56.1752861
+    C1                -81.02669857 12.2610962
+    C2                 -1.12840716  1.8479835
+    c1                 -0.06159346  0.9957852
+    ns(time, df = 3)1  -7.81485037 -3.6619424
+    ns(time, df = 3)2 -18.37771686 -5.5141970
+    ns(time, df = 3)3  -8.70267494 -2.7700855
     
     
     $m7f
     $m7f$y
-                             2.5%     97.5%
-    (Intercept)       -18.3810076 46.252914
-    C1                -71.0253009 16.649414
-    C2                 -2.0754367  1.314595
-    c1                 -0.1846882  1.511924
-    ns(time, df = 3)1  -7.4499106 -2.903615
-    ns(time, df = 3)2 -15.1574908 -7.360736
-    ns(time, df = 3)3  -7.5874126 -3.483473
+                              2.5%     97.5%
+    (Intercept)       -31.46352256 40.956770
+    C1                -63.18867112 31.602332
+    C2                 -1.21952451  1.504104
+    c1                 -0.01200116  1.316854
+    ns(time, df = 3)1  -7.90053179 -2.952394
+    ns(time, df = 3)2 -16.40136144 -4.192332
+    ns(time, df = 3)3  -7.66850232 -3.421328
     
     
     $m8a
     $m8a$y
-                       2.5%      97.5%
-    (Intercept) -10.7258109 -6.3815654
-    c1           -0.1065299  1.6803755
-    c2           -6.2963617  1.1635032
-    time         -1.6699723 -0.9770008
+                       2.5%     97.5%
+    (Intercept) -10.4136563 -6.556623
+    c1           -0.4101856  1.207525
+    c2           -8.7714717  3.022391
+    time         -1.5803407 -1.157956
     
     
     $m8b
     $m8b$y
-                       2.5%      97.5%
-    (Intercept) -10.7258109 -6.3815654
-    c1           -0.1065299  1.6803755
-    c2           -6.2963617  1.1635032
-    time         -1.6699723 -0.9770008
+                       2.5%     97.5%
+    (Intercept) -10.4136563 -6.556623
+    c1           -0.4101856  1.207525
+    c2           -8.7714717  3.022391
+    time         -1.5803407 -1.157956
     
     
     $m8c
     $m8c$y
                        2.5%      97.5%
-    (Intercept) -13.1922723 -7.7157619
-    B21          -0.8806217  3.9534909
-    c1           -1.2633918  0.3989264
-    c2          -11.0630211  1.7321479
-    time         -1.4388617 -0.5304150
-    B21:c1        0.8412215  3.1148174
+    (Intercept) -11.7485633 -5.2726756
+    B21          -0.8184578  2.7042850
+    c1           -2.3144557  0.2876967
+    c2           -9.8451782  4.2068172
+    time         -2.3321136 -0.7511281
+    B21:c1        1.1105545  2.7828116
     
     
     $m8d
     $m8d$y
-                     2.5%       97.5%
-    (Intercept) -7.007771 -2.41617285
-    B21         -6.469625 -1.80749195
-    c1          -1.762574  1.24430997
-    c2          -8.119910 -0.04833173
-    time        -2.178099 -1.40565832
-    B21:c1      -0.189223  3.74504875
+                      2.5%      97.5%
+    (Intercept) -8.1271011 -1.0735806
+    B21         -7.2187320 -0.8630908
+    c1          -0.6211048  1.3071018
+    c2          -4.3618002 -0.4161863
+    time        -2.3954235 -1.4860296
+    B21:c1       0.6573749  4.5628137
     
     
     $m8e
     $m8e$y
-                        2.5%      97.5%
-    (Intercept) -14.05469312 58.1937620
-    C1          -86.47303065 11.4297558
-    B21          -5.73704071 -0.4387498
-    c1           -2.39933159  0.8996086
-    c2           -6.86501366  0.3461906
-    time         -1.80213987 -0.9011773
-    B21:c1       -0.06104156  2.7516653
+                        2.5%       97.5%
+    (Intercept)  -16.9746819 72.96278885
+    C1          -106.0041937 16.82605988
+    B21           -6.5482167 -1.47266783
+    c1            -1.8364082  0.09632146
+    c2           -12.0679545  0.51016739
+    time          -1.9461162 -1.23372412
+    B21:c1         0.2953994  2.79075832
     
     
     $m8f
     $m8f$y
-                       2.5%     97.5%
-    (Intercept) -34.8005269 61.820031
-    C1          -94.7454131 34.814323
-    B21          -1.5593468  2.290683
-    c1           -2.6783193  1.328933
-    c2           -6.8154038  3.606627
-    time         -1.9524764 -1.203755
-    B21:c1       -0.4966029  3.549436
+                      2.5%      97.5%
+    (Intercept) -13.044509 52.6182450
+    C1          -81.653819  5.5035136
+    B21          -2.164536  2.4570510
+    c1           -2.959322  1.6010407
+    c2           -6.637990  0.7227259
+    time         -2.179770 -1.1781353
+    B21:c1       -1.191808  3.9447967
     
     
     $m8g
     $m8g$y
-                       2.5%     97.5%
-    (Intercept) -50.4586394 29.028156
-    C1          -52.1280327 55.525720
-    B21          -1.1590204  3.125298
-    c1           -2.9230508  1.500316
-    c2           -6.0845067  2.190110
-    time         -1.7636493 -1.174444
-    B21:c1       -0.6906827  3.480162
+                       2.5%      97.5%
+    (Intercept) -33.2610837 43.9941075
+    C1          -70.5229632 32.9438284
+    B21          -2.1394855  2.1539252
+    c1           -2.8046357  0.5341487
+    c2          -15.0085087  0.4970016
+    time         -1.8243894 -1.0500725
+    B21:c1        0.4169245  4.0734041
     
     
     $m8h
     $m8h$y
                         2.5%      97.5%
-    (Intercept)  -26.0626630 89.9046403
-    C1          -132.5273779 26.5998221
-    B21           -6.1938653 -1.1199383
-    c2            -5.1647356  2.1993308
-    c1            -0.2927897  0.9271631
-    time          -2.2243604 -1.2858373
-    B21:c2        -9.2544736  0.3947344
+    (Intercept)   -0.7124965 75.5610520
+    C1          -109.6112702 -5.2874709
+    B21           -7.2125060 -1.8099964
+    c2            -3.9422226  2.0539450
+    c1            -0.6407607  0.8620751
+    time          -1.9123921 -1.1902823
+    B21:c2        -8.7468848  1.2171022
     
     
     $m8i
     $m8i$y
-                       2.5%     97.5%
-    (Intercept) -44.9462019 40.664492
-    C1          -65.8010823 44.401637
-    B21          -2.0808742  5.579226
-    c2          -15.3877442  5.006195
-    c1           -0.8976461  0.682280
-    time         -1.3777944 -0.397602
-    B21:c2       -9.2848597 15.981429
+                      2.5%      97.5%
+    (Intercept) -30.116022 41.9095983
+    C1          -70.793499 29.5435705
+    B21          -1.649294  2.8881003
+    c2          -14.630765  5.1286002
+    c1           -2.758229  0.7752253
+    time         -2.084034 -0.4740419
+    B21:c2      -12.670116  5.0120586
     
     
     $m8j
     $m8j$y
-                        2.5%      97.5%
-    (Intercept) -14.49616105 57.4834727
-    C1          -89.25230985 20.8437487
-    B21          -5.76815557  0.1973283
-    c2           -8.20280686 10.4723184
-    c1            0.06167413  1.4452915
-    time         -1.91891140 -1.0178071
-    B21:c2      -12.46586999 57.5157368
+                        2.5%     97.5%
+    (Intercept)   -6.9870560 83.783561
+    C1          -115.5043370  7.681840
+    B21           -6.5440920 -1.117709
+    c2            -9.2461774  3.463779
+    c1            -0.4982479  1.760943
+    time          -2.0591062 -1.244039
+    B21:c2       -20.3746254 28.119599
     
     
     $m8k
     $m8k$y
-                        2.5%      97.5%
-    (Intercept) -14.49616105 57.4834727
-    C1          -89.25230985 20.8437487
-    B21          -5.76815557  0.1973283
-    c2           -8.20280686 10.4723184
-    c1            0.06167413  1.4452915
-    time         -1.91891140 -1.0178071
-    B21:c2      -12.46586999 57.5157368
+                        2.5%     97.5%
+    (Intercept)   -6.9870560 83.783561
+    C1          -115.5043370  7.681840
+    B21           -6.5440920 -1.117709
+    c2            -9.2461774  3.463779
+    c1            -0.4982479  1.760943
+    time          -2.0591062 -1.244039
+    B21:c2       -20.3746254 28.119599
     
     
     $m8l
     $m8l$y
                        2.5%       97.5%
-    (Intercept)   8.1173562  68.0890820
-    C1          -98.5556121 -17.9069067
-    B21          -8.7530730  -2.4466499
-    c1           -2.9381616  -0.1423527
-    time         -1.1912292   0.1392294
-    B21:c1        0.9223363   3.8474299
-    B21:time     -0.5302992  -0.1177712
-    c1:time      -0.3116700   0.1653277
-    B21:c1:time  -0.5180458   0.4561304
+    (Intercept) -29.6901989 49.99613165
+    C1          -72.8817240 29.85102306
+    B21          -6.7261856  0.42348420
+    c1           -1.4147063  1.31348346
+    time         -1.8605902 -0.38036847
+    B21:c1       -0.5258295  2.32371008
+    B21:time     -0.4996021  0.01101357
+    c1:time      -0.1921360  0.22024006
+    B21:c1:time  -0.3404594  0.35661679
     
     
     $m8m
     $m8m$y
-                        2.5%      97.5%
-    (Intercept) -9.098633811 -5.1315501
-    c1          -0.879047521  1.4389119
-    b11         -4.130376370 -1.6406936
-    o1.L         0.006201999  2.2445127
-    o1.Q        -0.444186780  1.3577923
-    c1:b11      -2.307004553  0.6044297
+                         2.5%     97.5%
+    (Intercept) -10.069743451 -4.228058
+    c1           -0.727397653  1.014928
+    b11          -3.903547286 -1.651826
+    o1.L          0.008515196  2.541393
+    o1.Q         -0.966852667  1.423120
+    c1:b11       -2.729920739  0.313921
     
     
 
@@ -5043,15 +5043,15 @@
     
     Posterior summary:
                  Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -5.04 28.7  -26  83.8      0.133    1.39  0.183
+    (Intercept) -12.3 36.9 -108  32.3     0.0667    1.34    Inf
     
     Posterior summary of random effects covariance matrix:
                 Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1]  967 3933 11.2 10879               1.94  0.183
+    D_y_id[1,1] 1552 5144 13.3 16178               1.21  0.183
     
     Posterior summary of residual std. deviation:
-            Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.82 0.317 3.93   5.3     1.1  0.183
+            Mean   SD 2.5% 97.5% GR-crit MCE/SD
+    sigma_y 4.84 0.34 4.25  5.37    1.18  0.183
     
     
     MCMC settings:
@@ -5089,15 +5089,15 @@
     
     Posterior summary:
                  Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -5.04 28.7  -26  83.8      0.133    1.39  0.183
+    (Intercept) -12.3 36.9 -108  32.3     0.0667    1.34    Inf
     
     Posterior summary of random effects covariance matrix:
                 Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1]  967 3933 11.2 10879               1.94  0.183
+    D_y_id[1,1] 1552 5144 13.3 16178               1.21  0.183
     
     Posterior summary of residual std. deviation:
-            Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.82 0.317 3.93   5.3     1.1  0.183
+            Mean   SD 2.5% 97.5% GR-crit MCE/SD
+    sigma_y 4.84 0.34 4.25  5.37    1.18  0.183
     
     
     MCMC settings:
@@ -5135,15 +5135,15 @@
     
     Posterior summary:
                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -5.37 0.709 -6.46  -4.4          0    4.03  0.563
+    (Intercept) -5.35 0.621 -6.48 -4.39          0    3.37  0.367
     
     Posterior summary of random effects covariance matrix:
                 Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 8.26 3.04 4.86    15               3.69  0.407
+    D_y_id[1,1] 11.2 2.91  6.1  16.3                2.2  0.307
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 12.9 0.514 11.9  13.7    1.03  0.183
+    sigma_y 13.1 0.457 12.3  13.8    1.24  0.183
     
     
     MCMC settings:
@@ -5181,15 +5181,15 @@
     
     Posterior summary:
                 Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 5.96 0.829 4.42  7.24          0    4.33  0.243
+    (Intercept) 7.07 0.915 5.17  8.66          0    3.05   0.53
     
     Posterior summary of random effects covariance matrix:
                 Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 13.1 6.47 2.81  25.1               5.97  0.469
+    D_y_id[1,1] 12.9 2.74 8.25  17.2               2.67  0.447
     
     Posterior summary of residual std. deviation:
                 Mean       SD 2.5%    97.5% GR-crit MCE/SD
-    sigma_y 1.18e+09 6.38e+08 12.5 2.03e+09     3.6  0.477
+    sigma_y 4.75e+08 6.27e+08 12.4 1.83e+09    2.43  0.253
     
     
     MCMC settings:
@@ -5227,11 +5227,11 @@
     
     Posterior summary:
                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 0.687 0.293 0.221  1.31          0    1.92  0.283
+    (Intercept) 0.799 0.596 0.196  2.28          0    4.38  0.264
     
     Posterior summary of random effects covariance matrix:
                  Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_b1_id[1,1] 6.42 3.32 2.11  12.5               4.76   0.37
+    D_b1_id[1,1] 6.02 5.23 1.69  18.2               12.5  0.545
     
     
     MCMC settings:
@@ -5269,11 +5269,11 @@
     
     Posterior summary:
                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 0.339 0.247 0.0161 0.919          0    2.66  0.309
+    (Intercept) 0.467 0.329 0.0428  1.37          0    1.91  0.183
     
     Posterior summary of random effects covariance matrix:
                  Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_b1_id[1,1] 2.42 2.11 0.323  7.58               3.26  0.294
+    D_b1_id[1,1] 3.23 3.84 0.499  12.9                4.1  0.516
     
     
     MCMC settings:
@@ -5310,12 +5310,12 @@
     
     
     Posterior summary:
-                 Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 0.455 0.713 -0.54  1.85        0.6    1.39       
+                 Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) 0.367 1.24 -0.799  2.83      0.933    8.12  0.638
     
     Posterior summary of random effects covariance matrix:
                  Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_b1_id[1,1] 13.3 7.32 3.22  29.6               2.35  0.253
+    D_b1_id[1,1] 11.3 11.1 1.31  36.1               10.1   1.03
     
     
     MCMC settings:
@@ -5352,12 +5352,12 @@
     
     
     Posterior summary:
-                 Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 0.455 0.713 -0.54  1.85        0.6    1.39       
+                 Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) 0.367 1.24 -0.799  2.83      0.933    8.12  0.638
     
     Posterior summary of random effects covariance matrix:
                  Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_b1_id[1,1] 13.3 7.32 3.22  29.6               2.35  0.253
+    D_b1_id[1,1] 11.3 11.1 1.31  36.1               10.1   1.03
     
     
     MCMC settings:
@@ -5395,15 +5395,15 @@
     
     Posterior summary:
                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 0.186 0.218 -0.024 0.715      0.133    1.29   0.29
+    (Intercept) 0.939 0.986 0.0202  2.49          0    14.8  0.895
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_L1_id[1,1] 0.284 0.292 0.0234  1.06               1.09  0.247
+                 Mean  SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_L1_id[1,1] 0.43 0.5 0.00261  1.59               1.83  0.367
     
     Posterior summary of residual std. deviation:
-             Mean  SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_L1  387 805 7.19  1898    2.33  0.183
+             Mean  SD  2.5% 97.5% GR-crit MCE/SD
+    sigma_L1 84.5 122 0.318   409    6.13  0.252
     
     
     MCMC settings:
@@ -5440,16 +5440,16 @@
     
     
     Posterior summary:
-                  Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -0.592 0.0622 -0.677 -0.46          0    4.24  0.477
+                  Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -0.609 0.0577 -0.691 -0.489          0    4.01  0.498
     
     Posterior summary of random effects covariance matrix:
                    Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_L1_id[1,1] 0.0322 0.0153 0.0121 0.0637                1.4  0.295
+    D_L1_id[1,1] 0.0341 0.0133 0.0176 0.0574               1.51  0.143
     
     Posterior summary of residual std. deviation:
               Mean     SD  2.5% 97.5% GR-crit MCE/SD
-    sigma_L1 0.393 0.0403 0.343 0.504    3.99  0.503
+    sigma_L1 0.385 0.0273 0.355 0.445    2.59  0.183
     
     
     MCMC settings:
@@ -5487,11 +5487,11 @@
     
     Posterior summary:
                 Mean     SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 1.28 0.0344 1.23  1.35          0    1.86  0.231
+    (Intercept) 1.27 0.0556 1.15  1.37          0    2.74   0.47
     
     Posterior summary of random effects covariance matrix:
                    Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_p1_id[1,1] 0.0616 0.0364 0.0288 0.146               1.19  0.249
+    D_p1_id[1,1] 0.0674 0.0471 0.0301 0.168               2.37  0.332
     
     
     MCMC settings:
@@ -5528,12 +5528,12 @@
     
     
     Posterior summary:
-                Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 2.81 0.898 0.864  3.71          0    1.21    Inf
+                Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) 3.18 0.582 2.12  3.87          0     1.5  0.345
     
     Posterior summary of random effects covariance matrix:
                  Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_p1_id[1,1] 11.8 8.53 2.31  28.4               1.31  0.392
+    D_p1_id[1,1] 8.42 6.02  1.3  20.3               1.61  0.422
     
     
     MCMC settings:
@@ -5570,16 +5570,16 @@
     
     
     Posterior summary:
-                  Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -0.912 0.0509 -0.979 -0.811          0    1.83  0.382
+                  Mean     SD  2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -0.949 0.0617 -1.09 -0.865          0    2.06  0.314
     
     Posterior summary of random effects covariance matrix:
                   Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_L1_id[1,1] 0.124 0.0623 0.0592 0.264              0.991 0.0879
+    D_L1_id[1,1] 0.125 0.0643 0.0679 0.254               1.16  0.298
     
     Posterior summary of residual std. deviation:
               Mean     SD  2.5% 97.5% GR-crit MCE/SD
-    sigma_L1 0.777 0.0383 0.728 0.858    1.17  0.183
+    sigma_L1 0.783 0.0378 0.713 0.841    1.63  0.183
     
     
     MCMC settings:
@@ -5616,16 +5616,16 @@
     
     
     Posterior summary:
-                  Mean     SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 0.0799 0.0599 -0.0374 0.166        0.2    1.96  0.221
+                   Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) 0.00677 0.0915 -0.118 0.239          1    2.31  0.303
     
     Posterior summary of random effects covariance matrix:
-                   Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_Be1_id[1,1] 0.179 0.0904 0.0726 0.358               1.13   0.29
+                   Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_Be1_id[1,1] 0.218 0.113 0.0997 0.542               1.02  0.183
     
     Posterior summary of other parameters:
             Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    tau_Be1 5.96 0.471  5.2   6.9          0    1.53  0.197
+    tau_Be1 5.19 0.452 4.49  5.91          0    1.56  0.183
     
     
     MCMC settings:
@@ -5662,17 +5662,17 @@
     
     
     Posterior summary:
-                Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -240 2671 -7915  2671      0.600    1.27  0.183
-    C1           319 3634 -3636 10756      0.267    1.27  0.183
+                Mean  SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  203 546   -93.9  1895      0.467    1.17  0.183
+    C1          -292 735 -2637.4   113      0.333    1.10  0.183
     
     Posterior summary of random effects covariance matrix:
-                Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 3867 13011 9.45 35811               1.31  0.183
+                Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 1504 4929 10.4 14571               1.23  0.183
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.93 0.285 4.32  5.37    1.26  0.183
+    sigma_y 4.89 0.341 4.13  5.34    1.09  0.183
     
     
     MCMC settings:
@@ -5711,12 +5711,12 @@
     
     Posterior summary:
                  Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  27.2 15.9   7.71 59.92          0    2.56  0.289
-    C1          -36.0 21.5 -80.11 -9.71          0    2.52  0.288
+    (Intercept)  22.0 17.0  -7.04  55.9      0.133    1.96  0.183
+    C1          -28.7 22.9 -74.25  10.4      0.133    1.92  0.183
     
     Posterior summary of random effects covariance matrix:
-                 Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_b1_id[1,1] 4.92 3.85 0.595  13.3               2.72  0.477
+                 Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_b1_id[1,1] 9.42 5.25 2.84    21               2.32  0.316
     
     
     MCMC settings:
@@ -5754,17 +5754,17 @@
     
     
     Posterior summary:
-                   Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  0.2712 4.58  -7.72  9.19          1    2.16  0.396
-    C1          -0.0901 6.27 -12.33 11.41          1    2.18  0.403
+                  Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  0.657 5.01 -11.53  7.63      0.533    2.51  0.271
+    C1          -0.480 7.03  -9.95 17.28      0.533    2.74  0.273
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_L1_id[1,1] 0.465 0.463 0.0639  1.59               1.73  0.183
+                  Mean   SD     2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_L1_id[1,1] 0.632 1.13 0.000618  4.13               5.15  0.183
     
     Posterior summary of residual std. deviation:
-             Mean  SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_L1  301 364 9.86  1270    5.66  0.294
+             Mean   SD 2.5% 97.5% GR-crit MCE/SD
+    sigma_L1  112 87.4 8.78   289    1.95  0.458
     
     
     MCMC settings:
@@ -5803,12 +5803,12 @@
     
     Posterior summary:
                   Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -0.288 1.93 -3.84  3.08      0.933    1.72  0.218
-    C1           2.126 2.61 -2.44  7.03      0.400    1.66  0.217
+    (Intercept) -0.301 2.39 -3.68  5.03      0.800    3.04       
+    C1           2.181 3.23 -5.03  6.74      0.533    3.00       
     
     Posterior summary of random effects covariance matrix:
-                  Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_p1_id[1,1] 0.082 0.0388 0.0382 0.164               1.14  0.222
+                   Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_p1_id[1,1] 0.0646 0.0401 0.0299 0.179               1.09  0.242
     
     
     MCMC settings:
@@ -5847,16 +5847,16 @@
     
     Posterior summary:
                  Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -2.84 3.64 -8.82  3.38      0.467   1.001  0.355
-    C1           2.63 4.94 -5.82 10.71      0.733   0.999  0.355
+    (Intercept) -2.17 2.75 -6.79  2.82      0.467    1.39  0.231
+    C1           1.67 3.74 -5.07  8.02      0.600    1.41  0.231
     
     Posterior summary of random effects covariance matrix:
-                 Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_L1_id[1,1] 0.16 0.0673 0.0771 0.312                1.7  0.261
+                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_L1_id[1,1] 0.135 0.055 0.0469 0.244               1.12  0.253
     
     Posterior summary of residual std. deviation:
-              Mean    SD  2.5% 97.5% GR-crit MCE/SD
-    sigma_L1 0.778 0.039 0.723 0.855    1.55  0.215
+              Mean     SD  2.5% 97.5% GR-crit MCE/SD
+    sigma_L1 0.785 0.0343 0.716 0.842    1.11  0.183
     
     
     MCMC settings:
@@ -5895,16 +5895,16 @@
     
     Posterior summary:
                  Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -4.36 2.39 -8.774  0.21     0.0667    1.38  0.183
-    C1           6.00 3.26 -0.246 12.01     0.0667    1.42  0.183
+    (Intercept)  1.02 3.67  -3.93  8.26      0.867    1.20  0.218
+    C1          -1.37 5.00 -11.25  5.43      0.867    1.23  0.221
     
     Posterior summary of random effects covariance matrix:
-                   Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_Be1_id[1,1] 0.211 0.158 0.0605 0.591                2.2  0.248
+                   Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_Be1_id[1,1] 0.271 0.26 0.0829 0.811               2.52  0.234
     
     Posterior summary of other parameters:
             Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    tau_Be1  6.1 0.583 4.98  7.07          0    1.07  0.183
+    tau_Be1 5.26 0.291 4.77   5.9          0    1.32  0.227
     
     
     MCMC settings:
@@ -5942,17 +5942,17 @@
     
     
     Posterior summary:
-                 Mean    SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -3.20 54.61 -50.54 158.309     0.2000    1.32  0.183
-    c2          -1.83  1.22  -3.64   0.126     0.0667    2.35  0.119
+                  Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -13.69 7.56 -39.03 -9.34        0.0    1.08  0.183
+    c2           -1.64 3.23  -6.54  3.94        0.6    4.35  0.357
     
     Posterior summary of random effects covariance matrix:
-                Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 2898 9586 11.3 27141               1.21  0.183
+                Mean  SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1]   80 238 13.2   731               1.65  0.183
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.86 0.325 4.03  5.24    1.27  0.226
+    sigma_y 4.72 0.319 3.96   5.3    1.03  0.183
     
     
     MCMC settings:
@@ -5990,13 +5990,13 @@
     
     
     Posterior summary:
-                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -4.070 0.524 -5.03 -3.21      0.000    2.29  0.224
-    c2           0.471 2.358 -2.47  4.96      0.933    3.60  0.470
+                 Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -4.36 0.764 -5.44 -3.01      0.000    3.29  0.491
+    c2          -1.89 1.968 -5.52  1.87      0.267    2.71  0.442
     
     Posterior summary of random effects covariance matrix:
                  Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_b2_id[1,1] 8.49 2.15 5.87  13.4               1.34  0.183
+    D_b2_id[1,1] 8.91 4.69 3.95  20.5               7.81  0.887
     
     
     MCMC settings:
@@ -6034,17 +6034,17 @@
     
     
     Posterior summary:
-                Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 2.00 0.897 0.5847  3.14          0    11.4  0.532
-    c2          4.89 3.138 0.0962  7.69          0    47.1  0.490
+                 Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) 1.129 0.805  0.0187  2.32     0.0667    11.7  0.881
+    c2          0.521 1.381 -1.0168  2.40     0.9333    32.5  0.907
     
     Posterior summary of random effects covariance matrix:
-                    Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_L1mis_id[1,1] 1.19 0.814 0.185  2.88                2.4  0.253
+                    Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_L1mis_id[1,1] 1.23 1.74 0.0924  5.56               7.12   0.54
     
     Posterior summary of residual std. deviation:
                 Mean   SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_L1mis  279 1036    2  2361    3.54  0.183
+    sigma_L1mis 31.6 40.9 0.31   141    3.98  0.255
     
     
     MCMC settings:
@@ -6060,7 +6060,7 @@
     
     Number and proportion of complete cases:
             level   #    %
-    id         id  76 76.0
+    id         id  73 73.0
     lvlone lvlone 246 74.8
     
     Number and proportion of missing values:
@@ -6082,13 +6082,13 @@
     
     
     Posterior summary:
-                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  0.957 0.119  0.741 1.145      0.000    4.04  0.344
-    c2          -0.112 0.524 -0.875 0.769      0.933    2.82  0.287
+                   Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  0.9061 0.147  0.605 1.094      0.000    4.54  0.514
+    c2          -0.0287 0.529 -0.930 0.648      0.933    3.19  0.477
     
     Posterior summary of random effects covariance matrix:
-                   Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_p2_id[1,1] 0.0991 0.0639 0.0304 0.249               2.13  0.246
+                  Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_p2_id[1,1] 0.214 0.28 0.047  1.14               3.56  0.183
     
     
     MCMC settings:
@@ -6126,17 +6126,17 @@
     
     
     Posterior summary:
-                   Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -1.0307 0.125 -1.232 -0.732      0.000    3.33  0.457
-    c2          -0.0682 0.454 -0.791  0.945      0.667    2.57  0.394
+                 Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -0.96 0.141 -1.171 -0.719      0.000    1.45  0.336
+    c2           0.13 0.578 -0.679  1.247      0.933    1.08  0.252
     
     Posterior summary of random effects covariance matrix:
-                     Mean     SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_L1mis_id[1,1] 0.157 0.0534 0.063 0.252               3.24  0.296
+                     Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_L1mis_id[1,1] 0.149 0.0647 0.0572 0.286                  3  0.259
     
     Posterior summary of residual std. deviation:
                  Mean     SD  2.5% 97.5% GR-crit MCE/SD
-    sigma_L1mis 0.767 0.0323 0.708 0.823   0.997 0.0847
+    sigma_L1mis 0.771 0.0321 0.721 0.834   0.966       
     
     
     MCMC settings:
@@ -6152,7 +6152,7 @@
     
     Number and proportion of complete cases:
             level   #    %
-    id         id  76 76.0
+    id         id  73 73.0
     lvlone lvlone 246 74.8
     
     Number and proportion of missing values:
@@ -6174,17 +6174,17 @@
     
     
     Posterior summary:
-                   Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -0.0609 0.124 -0.363 0.126      0.533    1.34  0.315
-    c2          -0.1862 0.456 -1.347 0.485      0.867    1.58  0.205
+                   Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) 0.10064 0.104 -0.0776 0.296      0.333    1.89  0.214
+    c2          0.00545 0.364 -0.6333 0.606      0.933    1.58  0.199
     
     Posterior summary of random effects covariance matrix:
                    Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_Be2_id[1,1] 0.194 0.0806 0.0829 0.363               2.98  0.463
+    D_Be2_id[1,1] 0.236 0.0962 0.0823 0.398               1.72   0.32
     
     Posterior summary of other parameters:
-            Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    tau_Be2 5.83 0.412 5.02  6.62          0    3.56   0.35
+            Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    tau_Be2 5.45 0.47  4.5  6.03          0       1  0.183
     
     
     MCMC settings:
@@ -6199,9 +6199,9 @@
     
     
     Number and proportion of complete cases:
-            level   #    %
-    id         id  72 72.0
-    lvlone lvlone 222 67.5
+            level   #  %
+    id         id  72 72
+    lvlone lvlone 227 69
     
     Number and proportion of missing values:
          level # NA % NA
@@ -6222,16 +6222,16 @@
     
     
     Posterior summary:
-       Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    C2 7.09 38.4 -19.5   122        0.8    1.48  0.183
+       Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    C2 -5.7 55.8 -157  86.8      0.533    1.22  0.183
     
     Posterior summary of random effects covariance matrix:
                 Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 1595 5760  121 17492               1.66  0.183
+    D_y_id[1,1] 2514 7100  110 23223              0.965 0.0595
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.86 0.349 4.02  5.33    1.03  0.183
+    sigma_y 4.83 0.333 4.17  5.28    1.63   0.25
     
     
     MCMC settings:
@@ -6269,12 +6269,12 @@
     
     
     Posterior summary:
-         Mean  SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    C2 -0.197 1.4 -2.59  1.85      0.933    4.81  0.757
+        Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    C2 0.724 1.08 -1.59  2.31        0.6    2.93  0.408
     
     Posterior summary of random effects covariance matrix:
                  Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_b2_id[1,1]   28 11.3 17.1  47.2               11.7  0.657
+    D_b2_id[1,1] 18.4 3.08 14.5  24.6               1.27  0.183
     
     
     MCMC settings:
@@ -6312,16 +6312,16 @@
     
     
     Posterior summary:
-         Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    C2 0.0509 0.189 -0.309 0.412      0.467    1.15  0.183
+          Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    C2 -0.0563 0.19 -0.433 0.203      0.867    1.84  0.237
     
     Posterior summary of random effects covariance matrix:
-                     Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_L1mis_id[1,1] 0.491 0.827 0.00491  2.53               1.78  0.242
+                     Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_L1mis_id[1,1] 0.529 0.695 0.0174  2.31               1.07  0.244
     
     Posterior summary of residual std. deviation:
                 Mean  SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_L1mis  335 485 11.6  1537    9.82  0.252
+    sigma_L1mis  126 123 9.11   423    1.14  0.234
     
     
     MCMC settings:
@@ -6336,9 +6336,9 @@
     
     
     Number and proportion of complete cases:
-            level   #    %
-    id         id  55 55.0
-    lvlone lvlone 172 52.3
+            level   #  %
+    id         id  56 56
+    lvlone lvlone 171 52
     
     Number and proportion of missing values:
            level # NA % NA
@@ -6360,11 +6360,11 @@
     
     Posterior summary:
         Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    C2 0.318 0.174 0.0177 0.612     0.0667    1.19  0.183
+    C2 0.125 0.243 -0.249 0.577      0.733    1.73   0.21
     
     Posterior summary of random effects covariance matrix:
                   Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_p2_id[1,1] 0.936 0.25 0.654  1.47               1.53  0.183
+    D_p2_id[1,1] 0.914 0.28 0.675  1.74               1.57  0.183
     
     
     MCMC settings:
@@ -6402,16 +6402,16 @@
     
     
     Posterior summary:
-        Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    C2 -0.25 0.223 -0.605 0.145      0.333    2.23  0.226
+         Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    C2 -0.209 0.247 -0.565 0.272      0.467    2.28  0.321
     
     Posterior summary of random effects covariance matrix:
                     Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_L1mis_id[1,1] 1.05 0.202 0.753  1.52                1.1  0.183
+    D_L1mis_id[1,1] 1.02 0.197 0.736  1.35               1.13  0.183
     
     Posterior summary of residual std. deviation:
                  Mean     SD  2.5% 97.5% GR-crit MCE/SD
-    sigma_L1mis 0.799 0.0396 0.736 0.859    1.34  0.232
+    sigma_L1mis 0.784 0.0292 0.726 0.832    1.09  0.321
     
     
     MCMC settings:
@@ -6426,9 +6426,9 @@
     
     
     Number and proportion of complete cases:
-            level   #    %
-    id         id  55 55.0
-    lvlone lvlone 172 52.3
+            level   #  %
+    id         id  56 56
+    lvlone lvlone 171 52
     
     Number and proportion of missing values:
            level # NA % NA
@@ -6450,15 +6450,15 @@
     
     Posterior summary:
           Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    C2 -0.0773 0.109 -0.28 0.106      0.467    2.17  0.496
+    C2 -0.0872 0.119 -0.32 0.108        0.4    2.03  0.358
     
     Posterior summary of random effects covariance matrix:
-                   Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_Be2_id[1,1] 0.169 0.101 0.0702   0.4               2.63  0.285
+                   Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_Be2_id[1,1] 0.167 0.0915 0.0785  0.39               2.18  0.298
     
     Posterior summary of other parameters:
             Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    tau_Be2 5.75 0.451 4.98  6.58          0   0.997  0.184
+    tau_Be2 5.18 0.458  4.4  6.09          0     1.3  0.263
     
     
     MCMC settings:
@@ -6473,9 +6473,9 @@
     
     
     Number and proportion of complete cases:
-            level   #    %
-    id         id  53 53.0
-    lvlone lvlone 152 46.2
+            level   #  %
+    id         id  52 52
+    lvlone lvlone 158 48
     
     Number and proportion of missing values:
          level # NA % NA
@@ -6498,20 +6498,20 @@
     
     Posterior summary:
                      Mean       SD      2.5%    97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  3.08e-01 2.35e-01 -3.77e-02 8.06e-01      0.200    4.25  0.688
-    B21         -1.43e-01 1.73e-01 -4.53e-01 1.08e-01      0.333    5.73  0.756
-    c2          -9.12e-03 3.49e-01 -6.51e-01 4.89e-01      0.800    1.03  0.231
-    p2           1.20e-02 2.28e-02 -2.77e-02 4.94e-02      0.667    2.55  0.232
-    L1mis        1.34e-11 1.89e-11 -2.35e-11 4.35e-11      0.467    1.61  0.183
-    Be2          2.18e-02 2.02e-01 -3.90e-01 3.23e-01      0.667    2.37  0.183
+    (Intercept)  2.05e-01 1.82e-01 -7.71e-02 6.05e-01      0.200    1.75  0.147
+    B21         -8.11e-02 1.04e-01 -2.42e-01 9.12e-02      0.333    3.99  0.280
+    c2          -2.89e-02 3.18e-01 -5.78e-01 4.94e-01      0.933    1.21  0.107
+    p2           1.06e-02 3.23e-02 -3.93e-02 6.28e-02      0.733    1.09  0.183
+    L1mis       -2.94e-12 1.62e-11 -3.14e-11 2.51e-11      0.667    1.37  0.216
+    Be2          9.89e-02 1.84e-01 -2.47e-01 3.88e-01      0.733    1.02  0.183
     
     Posterior summary of random effects covariance matrix:
-                   Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_c1_id[1,1] 0.0441 0.0291 0.00196 0.0953               5.43  0.525
+                   Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_c1_id[1,1] 0.0407 0.0178 0.0151 0.073                2.4   0.35
     
     Posterior summary of residual std. deviation:
-             Mean     SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_c1 0.64 0.0292 0.59 0.699    1.27  0.183
+             Mean     SD  2.5% 97.5% GR-crit MCE/SD
+    sigma_c1 0.65 0.0246 0.616 0.708   0.985  0.183
     
     
     MCMC settings:
@@ -6526,9 +6526,9 @@
     
     
     Number and proportion of complete cases:
-            level   #  %
-    id         id  35 35
-    lvlone lvlone 102 31
+            level   #    %
+    id         id  31 31.0
+    lvlone lvlone 104 31.6
     
     Number and proportion of missing values:
            level # NA  % NA
@@ -6556,19 +6556,19 @@
     
     Posterior summary:
                      Mean       SD      2.5%    97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  2.63e-01 6.79e-02  1.58e-01 3.89e-01      0.000    1.00  0.188
-    c2          -7.36e-12 1.04e-11 -2.76e-11 8.25e-12      0.467    1.28  0.286
-    b21         -6.37e-02 1.15e-01 -3.47e-01 9.88e-02      0.533    1.98  0.296
-    p2           1.19e-02 1.65e-02 -2.42e-02 3.50e-02      0.400    1.10  0.183
-    L1mis       -5.59e-02 9.88e-02 -2.35e-01 9.10e-02      0.800    3.31  0.512
+    (Intercept)  2.51e-01 6.58e-02  1.38e-01 3.68e-01      0.000    1.21  0.183
+    c2          -3.45e-12 8.84e-12 -1.92e-11 1.05e-11      0.800    1.14  0.183
+    b21          5.22e-02 1.41e-01 -2.96e-01 2.53e-01      0.467    2.27  0.348
+    p2           9.52e-03 1.85e-02 -3.49e-02 3.18e-02      0.667    4.01  0.333
+    L1mis       -5.77e-02 8.21e-02 -1.98e-01 7.95e-02      0.467    1.09  0.183
     
     Posterior summary of random effects covariance matrix:
                    Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_c1_id[1,1] 0.0941 0.0233 0.0618 0.139               3.57   0.32
+    D_c1_id[1,1] 0.0972 0.0455 0.0435 0.198               2.84  0.257
     
     Posterior summary of residual std. deviation:
               Mean     SD  2.5% 97.5% GR-crit MCE/SD
-    sigma_c1 0.622 0.0263 0.577 0.666    1.05  0.183
+    sigma_c1 0.632 0.0279 0.576 0.678    1.44  0.183
     
     
     MCMC settings:
@@ -6584,8 +6584,8 @@
     
     Number and proportion of complete cases:
             level  #    %
-    id         id 32 32.0
-    lvlone lvlone 98 29.8
+    id         id 30 30.0
+    lvlone lvlone 96 29.2
     
     Number and proportion of missing values:
            level # NA  % NA
@@ -6612,19 +6612,19 @@
     
     Posterior summary:
                    Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  0.2028 0.1218 -0.0415 0.3727      0.133    1.81  0.153
-    c2          -0.1239 0.1235 -0.3731 0.0491      0.267    1.64  0.232
-    b21         -0.0979 0.1629 -0.3250 0.2027      0.533    7.72  1.115
-    p2           0.0227 0.0233 -0.0137 0.0599      0.467    1.61  0.266
-    L1mis       -0.0531 0.1477 -0.3140 0.1641      0.800    2.56  0.376
+    (Intercept)  0.2485 0.0818  0.1038 0.3857      0.000    1.36  0.183
+    c2          -0.1009 0.2719 -0.4845 0.4407      0.533    4.34  0.440
+    b21         -0.0200 0.1005 -0.1967 0.1496      0.867    1.43  0.183
+    p2           0.0191 0.0185 -0.0125 0.0440      0.267    3.16  0.263
+    L1mis       -0.1257 0.1385 -0.3942 0.0839      0.400    1.36  0.183
     
     Posterior summary of random effects covariance matrix:
-                  Mean     SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_c1_id[1,1] 0.108 0.0352 0.067 0.191               2.06  0.232
+                   Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_c1_id[1,1] 0.0651 0.0208 0.0327 0.102               2.35  0.242
     
     Posterior summary of residual std. deviation:
               Mean     SD  2.5% 97.5% GR-crit MCE/SD
-    sigma_c1 0.618 0.0224 0.581 0.663    2.07  0.285
+    sigma_c1 0.636 0.0212 0.601 0.676    1.15  0.183
     
     
     MCMC settings:
@@ -6640,8 +6640,8 @@
     
     Number and proportion of complete cases:
             level  #    %
-    id         id 32 32.0
-    lvlone lvlone 98 29.8
+    id         id 30 30.0
+    lvlone lvlone 96 29.2
     
     Number and proportion of missing values:
            level # NA  % NA
@@ -6669,20 +6669,20 @@
     
     Posterior summary:
                     Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  0.17266 0.1501 -0.0582 0.4536      0.267    1.25  0.183
-    c2           0.01758 0.2205 -0.2918 0.4244      0.867    2.22  0.397
-    b21          0.01357 0.0952 -0.1424 0.1732      0.733    1.84  0.183
-    p2           0.01042 0.0195 -0.0245 0.0407      0.600    1.17  0.302
-    L1mis       -0.01569 0.0972 -0.1508 0.1743      0.667    1.10  0.183
-    Be2          0.00503 0.2132 -0.4523 0.2875      0.933    1.39  0.339
+    (Intercept)  0.12919 0.1616 -0.1315 0.4387      0.400    1.20  0.223
+    c2          -0.03282 0.1719 -0.3338 0.2542      0.800    1.43  0.183
+    b21         -0.02505 0.1440 -0.2261 0.2599      0.667    5.80  0.523
+    p2           0.00563 0.0187 -0.0228 0.0378      0.800    1.28  0.183
+    L1mis       -0.05642 0.0989 -0.2305 0.1240      0.467    1.13  0.183
+    Be2          0.19287 0.1929 -0.1567 0.4558      0.400    1.95  0.291
     
     Posterior summary of random effects covariance matrix:
                    Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_c1_id[1,1] 0.0688 0.0248 0.0305 0.109               3.41  0.523
+    D_c1_id[1,1] 0.0947 0.0429 0.0338 0.172               4.74   0.69
     
     Posterior summary of residual std. deviation:
-              Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_c1 0.635 0.029 0.59 0.693    1.49  0.114
+              Mean     SD  2.5% 97.5% GR-crit MCE/SD
+    sigma_c1 0.632 0.0254 0.591 0.681    1.11  0.183
     
     
     MCMC settings:
@@ -6698,8 +6698,8 @@
     
     Number and proportion of complete cases:
             level  #    %
-    id         id 29 29.0
-    lvlone lvlone 83 25.2
+    id         id 27 27.0
+    lvlone lvlone 85 25.8
     
     Number and proportion of missing values:
            level # NA  % NA
@@ -6725,31 +6725,31 @@
     
     
     Posterior summary:
-                         Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)      -11.2193  5.7274 -22.1756 -2.4688     0.0000   1.740  0.232
-    M22               -2.7483  0.9602  -4.2077 -1.0656     0.0000   1.527  0.377
-    M23               -6.2607  1.4146  -8.4375 -3.0891     0.0000   1.308  0.323
-    M24               -2.3434  0.9908  -3.7253 -0.5101     0.0000   1.822  0.202
-    log(C1)          -23.8833 18.5098 -55.6163  5.2735     0.2000   1.547  0.232
-    o22               -0.8849  0.6486  -2.2344  0.0650     0.1333   2.889  0.317
-    o23                1.5801  0.8168   0.0595  3.0404     0.0667   2.731  0.438
-    o24               -0.0641  2.0737  -3.1783  3.1131     0.8667   7.721  0.826
-    abs(C1 - c2)       0.1715  1.6158  -2.6376  3.2030     0.8667   1.536  0.200
-    time              -1.5530  0.2668  -1.9625 -0.9126     0.0000   3.396  0.456
-    I(time^2)         -0.0180  0.0632  -0.1199  0.0782     0.9333   3.382  0.470
-    o22:abs(C1 - c2)   1.7302  0.7804   0.4993  3.0611     0.0000   0.985  0.183
-    o23:abs(C1 - c2)  -0.5170  0.9192  -2.3105  1.0435     0.5333   2.560  0.378
-    o24:abs(C1 - c2)  -2.0148  2.0623  -4.9020  1.4156     0.4000   4.989  0.552
+                         Mean      SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)       -7.6327 12.4975 -31.322 14.8298     0.4667    3.67  0.531
+    M22               -3.9816  1.9923  -7.351 -0.8591     0.0000    6.79  0.564
+    M23               -6.5409  1.4632  -9.617 -4.6485     0.0000    4.60  0.515
+    M24               -2.7613  2.0572  -6.611 -0.1253     0.0667    5.47  0.433
+    log(C1)          -14.3378 35.4244 -82.944 50.8792     0.8667    3.03  0.464
+    o22               -1.1010  1.1079  -2.913  1.0543     0.2667    1.95  0.412
+    o23               -0.3563  1.3805  -2.754  1.4987     1.0000    7.00  0.516
+    o24               -0.0764  1.5937  -1.780  3.4089     0.8000    4.99  0.366
+    abs(C1 - c2)       0.2610  1.9927  -3.993  3.0246     0.6000    3.41  0.371
+    time              -1.1221  0.3485  -1.635 -0.5014     0.0000    5.48  0.434
+    I(time^2)         -0.0806  0.0551  -0.175  0.0225     0.1333    2.74  0.230
+    o22:abs(C1 - c2)   1.1989  0.9489  -0.554  2.7765     0.2000    2.64  0.437
+    o23:abs(C1 - c2)   0.5036  1.2531  -1.106  3.1945     0.8000    5.93  0.528
+    o24:abs(C1 - c2)  -2.7772  1.6015  -5.482  0.5934     0.1333    4.17  0.522
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 11.721 2.978  7.68 18.24               2.53  0.341
-    D_y_id[1,2] -0.216 0.975 -2.00  1.08      0.867    3.68  0.352
-    D_y_id[2,2]  2.251 0.571  1.19  3.23               1.55  0.279
+                 Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 13.62 3.59  8.481 20.22               2.47  0.279
+    D_y_id[1,2]  1.03 1.41 -1.941  3.01      0.467    4.88  0.511
+    D_y_id[2,2]  2.80 1.24  0.928  5.26               2.18  0.299
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.26 0.225  3.9  4.71    2.02       
+    sigma_y 4.25 0.182 3.92  4.57    1.68  0.328
     
     
     MCMC settings:
@@ -6795,20 +6795,20 @@
     
     Posterior summary:
                       Mean       SD      2.5%    97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)   1.15e-01 4.33e-01 -5.18e-01 9.85e-01      0.800    2.30  0.313
-    L1mis         7.53e-11 6.81e-11 -2.19e-11 1.66e-10      0.400    3.05  0.408
-    abs(c1 - C2) -7.45e-02 2.15e-01 -4.44e-01 2.98e-01      0.733    3.38  0.441
-    log(Be2)     -6.62e-02 2.37e-01 -5.22e-01 3.79e-01      0.733    1.54  0.183
-    time          2.17e-02 4.76e-02 -7.30e-02 9.48e-02      0.600    1.95  0.183
+    (Intercept)   4.56e-01 2.98e-01 -2.25e-02 9.17e-01      0.133    1.30  0.183
+    L1mis        -2.64e-11 2.98e-11 -7.54e-11 1.92e-11      0.533    1.79  0.212
+    abs(c1 - C2) -8.00e-02 1.68e-01 -3.52e-01 2.43e-01      0.467    2.38  0.298
+    log(Be2)      3.23e-01 2.63e-01 -3.21e-01 7.41e-01      0.200    2.02  0.209
+    time         -3.03e-03 5.78e-02 -9.66e-02 1.17e-01      0.867    2.10  0.183
     
     Posterior summary of random effects covariance matrix:
-                    Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_b1_id[1,1]  0.4683 0.1210  0.2881 0.6899               6.17  0.513
-    D_b1_id[1,2] -0.0473 0.1279 -0.2828 0.1555      0.733    8.09  0.386
-    D_b1_id[2,2]  0.4788 0.1109  0.3231 0.7045               2.04  0.350
-    D_b1_id[1,3]  0.0244 0.0658 -0.0932 0.1237      0.667    1.63  0.211
-    D_b1_id[2,3] -0.0787 0.0853 -0.2242 0.0569      0.333    2.18  0.420
-    D_b1_id[3,3]  0.4890 0.1141  0.3338 0.7136               5.93  0.508
+                    Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    D_b1_id[1,1]  0.3625 0.0938  0.211 0.5488               2.83  0.506
+    D_b1_id[1,2]  0.0342 0.0993 -0.127 0.1813      0.667    4.11  0.328
+    D_b1_id[2,2]  0.4581 0.0929  0.309 0.6065               4.24  0.480
+    D_b1_id[1,3] -0.1257 0.0652 -0.227 0.0125      0.133    2.73  0.242
+    D_b1_id[2,3] -0.1524 0.1264 -0.364 0.0408      0.333    6.52  0.171
+    D_b1_id[3,3]  0.4153 0.1296  0.199 0.6210               7.67  0.301
     
     
     MCMC settings:
@@ -6825,7 +6825,7 @@
     Number and proportion of complete cases:
             level   #    %
     id         id  50 50.0
-    lvlone lvlone 145 44.1
+    lvlone lvlone 149 45.3
     
     Number and proportion of missing values:
            level # NA  % NA
@@ -6850,20 +6850,20 @@
     
     
     Posterior summary:
-                    Mean     SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  12.1163 18.029 -23.89 40.24      0.400    1.85  0.183
-    C1          -26.7761 23.938 -64.21 20.31      0.267    1.77  0.183
-    C2           -0.0107  0.877  -1.63  1.55      1.000    1.43  0.375
-    b21           1.0848  1.080  -1.06  2.46      0.333    1.12  0.183
-    time         -1.5002  0.246  -1.91 -1.23      0.000   10.41  0.579
+                   Mean     SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  17.810 13.983  -3.949 44.74     0.2000   1.035  0.183
+    C1          -32.992 18.971 -69.233 -1.45     0.0667   0.988  0.183
+    C2           -0.565  1.026  -2.475  1.37     0.6000   3.617  0.385
+    b21           0.827  0.899  -0.542  2.30     0.4667   1.213  0.183
+    time         -2.042  0.355  -2.391 -1.40     0.0000  24.600  0.918
     
     Posterior summary of random effects covariance matrix:
-                 Mean   SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 0.578 1.14 0.00174  3.27               3.37  0.243
+                 Mean  SD     2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 0.719 1.1 0.000937  3.53               1.74  0.183
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 5.77 0.202 5.47  6.13     1.3  0.183
+    sigma_y 5.81 0.246 5.32  6.26    1.12  0.183
     
     
     MCMC settings:
@@ -6905,18 +6905,18 @@
     
     
     Posterior summary:
-                   Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  0.2630 0.174 -0.0398 0.567      0.200    1.33  0.205
-    C2           0.0426 0.278 -0.4214 0.535      0.867    3.07       
-    B11          0.1588 0.218 -0.2443 0.418      0.467    4.56  0.387
-    c1          -0.1618 0.214 -0.7117 0.149      0.533    2.65  0.385
-    time         0.0147 0.126 -0.1512 0.217      0.800    8.00  0.862
+                   Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  0.3450 0.2936 -0.128 0.7993      0.200    2.87  0.267
+    C2          -0.0284 0.2351 -0.507 0.3833      0.933    1.80  0.326
+    B11          0.2219 0.2494 -0.256 0.6340      0.333    1.68  0.327
+    c1          -0.1558 0.1501 -0.411 0.1160      0.333    1.70  0.183
+    time        -0.0602 0.0877 -0.239 0.0929      0.467    3.24  0.460
     
     Posterior summary of random effects covariance matrix:
-                    Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_b1_id[1,1]  0.5122 0.179  0.24 0.784               8.01  0.944
-    D_b1_id[1,2] -0.0542 0.075 -0.19 0.090      0.467    3.47  0.352
-    D_b1_id[2,2]  0.4409 0.191  0.22 0.794               6.47  0.601
+                   Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    D_b1_id[1,1]  0.632 0.192  0.306 0.9995               5.57  0.499
+    D_b1_id[1,2] -0.168 0.144 -0.395 0.0394      0.267    5.28  0.402
+    D_b1_id[2,2]  0.581 0.157  0.357 0.8339               4.69  0.381
     
     
     MCMC settings:
@@ -6957,23 +6957,23 @@
     
     
     Posterior summary:
-                        Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)        -7.13 0.965  -8.87 -6.01          0    3.96  0.534
-    ns(time, df = 2)1 -10.05 2.326 -13.35 -6.35          0    5.48  0.471
-    ns(time, df = 2)2  -5.87 0.761  -7.08 -4.60          0    4.30  0.474
+                        Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)        -6.66 0.63  -7.40 -4.99          0    3.67  0.431
+    ns(time, df = 2)1 -10.70 1.52 -13.60 -8.35          0    1.95  0.437
+    ns(time, df = 2)2  -5.33 1.09  -7.42 -4.03          0    7.13  0.630
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 14.875 2.859 10.327 19.240               3.16  0.411
-    D_y_id[1,2]  0.523 1.158 -1.869  1.909      0.667    6.32  0.421
-    D_y_id[2,2]  0.778 0.440  0.278  1.640              12.31  0.826
-    D_y_id[1,3] -0.472 1.272 -2.493  1.535      0.800    7.68  0.726
-    D_y_id[2,3] -0.189 0.277 -0.763  0.253      0.467    5.63  0.588
-    D_y_id[3,3]  0.940 0.276  0.572  1.376               3.49  0.432
+                  Mean    SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 13.477 3.206  8.907 19.6466               1.43  0.183
+    D_y_id[1,2]  2.619 1.244  0.207  4.7292      0.000    2.46  0.350
+    D_y_id[2,2]  1.772 0.997  0.685  4.0367               6.16  0.582
+    D_y_id[1,3] -1.070 0.732 -2.330  0.4586      0.133    2.76  0.354
+    D_y_id[2,3] -0.432 0.256 -0.868  0.0686      0.133    1.25  0.183
+    D_y_id[3,3]  1.082 0.588  0.279  1.9846               6.97  0.390
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.29 0.239 3.88   4.7    1.79   0.24
+    sigma_y  4.4 0.206 4.05  4.84    1.45  0.183
     
     
     MCMC settings:
@@ -7011,28 +7011,28 @@
     
     
     Posterior summary:
-                       Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)       -9.56 1.01 -11.19 -7.65          0    1.45  0.412
-    bs(time, df = 3)1  5.53 2.49   0.58  8.45          0    1.84  0.440
-    bs(time, df = 3)2 -9.18 1.94 -12.39 -5.41          0    2.11  0.365
-    bs(time, df = 3)3 -2.99 1.02  -4.74 -1.20          0    1.34  0.233
+                        Mean   SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)        -7.34 1.13  -9.22 -5.235      0.000    3.34  0.498
+    bs(time, df = 3)1   1.40 3.42  -5.73  6.827      0.533    4.77  0.463
+    bs(time, df = 3)2 -11.33 2.30 -16.41 -7.560      0.000    2.60       
+    bs(time, df = 3)3  -4.69 2.14  -8.47 -0.681      0.000    3.90  0.407
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 12.771 2.238  8.4386 16.726               1.93  0.183
-    D_y_id[1,2] -0.650 1.486 -3.5380  1.402     0.8000    3.14  0.387
-    D_y_id[2,2]  2.909 1.291  1.0407  5.185               7.39  0.480
-    D_y_id[1,3]  0.306 0.926 -1.2696  1.769     0.6667    1.26  0.308
-    D_y_id[2,3] -0.111 0.749 -0.7996  1.702     0.4667    7.86  0.428
-    D_y_id[3,3]  2.481 0.631  1.4547  3.685               1.15  0.183
-    D_y_id[1,4] -1.594 1.642 -4.9720  1.340     0.2667    3.54  0.526
-    D_y_id[2,4]  0.758 0.388  0.0853  1.677     0.0667    1.56  0.224
-    D_y_id[3,4] -0.411 0.453 -1.1034  0.579     0.2667    1.83  0.313
-    D_y_id[4,4]  2.877 1.209  1.4876  6.070               4.71  0.482
+                  Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 13.543 2.402  9.985 17.842               2.95  0.308
+    D_y_id[1,2]  1.632 1.146 -0.273  3.913     0.0667    1.69  0.352
+    D_y_id[2,2]  4.527 1.170  2.495  6.698               2.02  0.388
+    D_y_id[1,3]  0.698 1.333 -1.399  3.276     0.6667    1.97  0.405
+    D_y_id[2,3] -0.162 0.843 -1.545  1.288     0.9333    3.70  0.501
+    D_y_id[3,3]  3.059 1.242  1.483  6.035               2.96  0.321
+    D_y_id[1,4]  0.470 0.921 -1.076  2.047     0.8000    1.19  0.218
+    D_y_id[2,4]  1.220 0.925 -0.625  2.718     0.2000    4.68  0.530
+    D_y_id[3,4] -0.921 0.369 -1.629 -0.421     0.0000    1.95  0.240
+    D_y_id[4,4]  2.503 0.524  1.509  3.572               3.97  0.502
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.15 0.215 3.83  4.54    1.36       
+    sigma_y 4.18 0.191  3.8  4.46     1.7  0.242
     
     
     MCMC settings:
@@ -7071,30 +7071,30 @@
     
     
     Posterior summary:
-                         Mean     SD     2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)         8.753 15.491 -20.0108 27.61     0.6000    3.94  0.288
-    C1                -21.902 21.331 -48.1767 16.84     0.4000    4.16  0.297
-    c1                  0.561  0.370  -0.0196  1.20     0.0667    1.04  0.183
-    ns(time, df = 3)1  -6.253  0.679  -7.4970 -5.17     0.0000    3.55  0.657
-    ns(time, df = 3)2  -8.590  1.557 -11.4080 -6.54     0.0000    8.24  0.511
-    ns(time, df = 3)3  -6.089  0.675  -7.5784 -5.03     0.0000    5.45  0.504
+                         Mean     SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)        17.716 19.635 -21.271 52.66      0.267    3.15 0.4977
+    C1                -33.101 26.776 -80.594 20.88      0.200    3.11 0.5055
+    c1                  0.465  0.425  -0.161  1.30      0.267    1.48 0.0941
+    ns(time, df = 3)1  -5.700  0.866  -7.154 -4.50      0.000    8.64 0.7484
+    ns(time, df = 3)2 -10.015  1.497 -12.361 -7.89      0.000    7.72 0.6726
+    ns(time, df = 3)3  -6.606  0.762  -7.450 -4.95      0.000    7.40 0.3583
     
     Posterior summary of random effects covariance matrix:
-                   Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 15.4562 2.4121 11.0916 19.547               1.99  0.221
-    D_y_id[1,2]  1.2544 0.8463 -0.0331  2.737      0.133    6.58  1.058
-    D_y_id[2,2]  0.4805 0.4092  0.1390  1.227              19.79  0.994
-    D_y_id[1,3]  0.6374 0.5515 -0.1014  1.553      0.267    6.20  0.408
-    D_y_id[2,3]  0.0700 0.0906 -0.0655  0.215      0.667   10.23  0.561
-    D_y_id[3,3]  0.2210 0.1107  0.0722  0.456               8.59  0.708
-    D_y_id[1,4] -1.3103 1.1156 -3.1203  0.569      0.333    7.86  0.641
-    D_y_id[2,4] -0.3147 0.4443 -1.1996  0.126      0.600   24.51  0.991
-    D_y_id[3,4] -0.0188 0.1255 -0.2667  0.134      0.933    5.61  0.785
-    D_y_id[4,4]  0.6260 0.3630  0.2558  1.446               8.40  0.659
+                   Mean    SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 13.4603 2.761  7.914 17.9816               2.69  0.329
+    D_y_id[1,2]  1.1964 0.942 -0.224  3.0821      0.200    9.84  0.537
+    D_y_id[2,2]  0.3845 0.201  0.127  0.7437               8.67  0.547
+    D_y_id[1,3]  0.5993 1.116 -1.076  2.1321      0.667   13.63  0.514
+    D_y_id[2,3]  0.0407 0.177 -0.310  0.3118      0.800    9.59  0.762
+    D_y_id[3,3]  0.4986 0.450  0.160  1.3030              30.13  0.502
+    D_y_id[1,4] -0.5737 0.969 -1.978  1.3890      0.533    6.28  0.635
+    D_y_id[2,4] -0.1484 0.137 -0.352  0.0927      0.400    6.06  0.438
+    D_y_id[3,4] -0.0142 0.239 -0.223  0.5364      0.533   11.60  0.440
+    D_y_id[4,4]  0.6424 0.386  0.111  1.3556              13.30  0.733
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.23 0.221 3.87  4.72    1.76  0.332
+    sigma_y 4.36 0.251 3.97  4.88    1.25   0.22
     
     
     MCMC settings:
@@ -7135,23 +7135,23 @@
     
     Posterior summary:
                          Mean     SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)        15.370 17.925 -18.381 46.25      0.467    1.11 0.1826
-    C1                -29.652 24.139 -71.025 16.65      0.200    1.10 0.1826
-    C2                 -0.463  0.970  -2.075  1.31      0.667    4.42 0.4685
-    c1                  0.622  0.409  -0.185  1.51      0.133    1.63 0.0881
-    ns(time, df = 3)1  -5.366  1.147  -7.450 -2.90      0.000    1.64 0.3409
-    ns(time, df = 3)2 -11.808  2.129 -15.157 -7.36      0.000    2.41 0.1826
-    ns(time, df = 3)3  -5.555  1.184  -7.587 -3.48      0.000    1.38 0.2292
+    (Intercept)        10.892 19.677 -31.464 40.96     0.4667    1.01  0.183
+    C1                -23.702 25.853 -63.189 31.60     0.2000    1.02  0.183
+    C2                  0.161  0.807  -1.220  1.50     0.8000    2.56  0.420
+    c1                  0.674  0.421  -0.012  1.32     0.0667    1.69  0.183
+    ns(time, df = 3)1  -5.710  1.414  -7.901 -2.95     0.0000    1.60  0.232
+    ns(time, df = 3)2 -10.313  3.760 -16.401 -4.19     0.0000    1.55  0.299
+    ns(time, df = 3)3  -5.201  1.276  -7.669 -3.42     0.0000    1.69  0.323
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 13.787 3.213  8.51 19.57               2.02  0.303
-    D_y_id[1,2]  0.222 1.144 -1.44  2.95      0.867    1.31  0.237
-    D_y_id[2,2]  2.351 0.956  1.03  4.16               2.05  0.296
+                  Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 13.920 3.83  8.73 21.95               2.22  0.308
+    D_y_id[1,2]  0.214 1.16 -2.12  2.14      0.733    1.92  0.344
+    D_y_id[2,2]  3.248 1.22  1.35  5.45               1.43  0.183
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.28 0.236 3.87  4.71    2.24  0.226
+    sigma_y 4.28 0.194 3.99  4.64    1.02  0.304
     
     
     MCMC settings:
@@ -7193,31 +7193,31 @@
     
     
     Posterior summary:
-                         Mean     SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)        16.553 20.362 -21.417 57.42      0.333    1.32  0.183
-    C1                -30.947 27.904 -88.484 22.29      0.267    1.35  0.183
-    C2                  0.202  0.663  -0.822  1.39      0.867    2.57  0.433
-    c1                  0.589  0.402  -0.181  1.23      0.267    1.08  0.183
-    ns(time, df = 3)1  -6.325  1.601  -9.154 -4.27      0.000    6.11  0.473
-    ns(time, df = 3)2 -10.221  3.067 -15.172 -4.85      0.000    1.21  0.183
-    ns(time, df = 3)3  -5.481  1.892  -8.792 -2.03      0.000    3.87  0.521
+                         Mean     SD     2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)        17.723 22.093 -15.4628 56.175      0.400    1.10  0.322
+    C1                -32.259 28.875 -81.0267 12.261      0.267    1.06  0.228
+    C2                  0.433  0.884  -1.1284  1.848      0.667    1.99  0.300
+    c1                  0.543  0.318  -0.0616  0.996      0.133    1.32  0.183
+    ns(time, df = 3)1  -5.539  1.113  -7.8149 -3.662      0.000    2.19  0.232
+    ns(time, df = 3)2 -11.229  3.822 -18.3777 -5.514      0.000    4.60  0.366
+    ns(time, df = 3)3  -5.776  1.711  -8.7027 -2.770      0.000    3.35  0.255
     
     Posterior summary of random effects covariance matrix:
                   Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 12.971 3.124  7.329 18.445               2.08  0.395
-    D_y_id[1,2]  1.454 1.249 -0.232  3.671      0.200    2.83  0.456
-    D_y_id[2,2]  2.900 1.313  1.240  5.420               4.78  0.242
-    D_y_id[1,3]  0.784 1.220 -1.375  3.134      0.533    3.37  0.183
-    D_y_id[2,3]  0.124 0.406 -0.643  0.744      0.667    2.51  0.514
-    D_y_id[3,3]  2.192 0.606  1.333  3.477               4.51  0.660
-    D_y_id[1,4] -1.178 1.438 -3.654  1.410      0.200    2.72  0.375
-    D_y_id[2,4] -0.758 0.924 -2.448  0.655      0.467    4.22  0.298
-    D_y_id[3,4]  0.288 0.442 -0.415  0.916      0.667    3.52  0.297
-    D_y_id[4,4]  3.509 1.782  1.842  8.090               7.21  0.444
+    D_y_id[1,1] 15.413 4.954  9.391 26.487               2.67  0.402
+    D_y_id[1,2]  2.676 1.787 -0.583  6.093      0.133    2.37  0.446
+    D_y_id[2,2]  3.691 0.997  1.991  5.429               1.09  0.207
+    D_y_id[1,3]  1.512 1.192 -0.211  3.759      0.133    1.57  0.213
+    D_y_id[2,3]  0.056 0.490 -0.878  0.748      0.800    3.31  0.347
+    D_y_id[3,3]  2.222 1.047  1.116  4.822               4.18  0.539
+    D_y_id[1,4] -1.306 1.775 -4.350  2.357      0.533    4.57  0.482
+    D_y_id[2,4] -0.537 0.975 -2.709  0.975      0.533    1.26  0.291
+    D_y_id[3,4]  0.125 0.636 -0.726  1.311      0.933    4.72  0.412
+    D_y_id[4,4]  3.938 1.164  1.645  5.690               4.14  0.444
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y  4.1 0.254 3.67  4.59    1.49  0.235
+    sigma_y 3.93 0.256  3.5  4.31    1.17   0.25
     
     
     MCMC settings:
@@ -7259,23 +7259,23 @@
     
     Posterior summary:
                          Mean     SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)        15.370 17.925 -18.381 46.25      0.467    1.11 0.1826
-    C1                -29.652 24.139 -71.025 16.65      0.200    1.10 0.1826
-    C2                 -0.463  0.970  -2.075  1.31      0.667    4.42 0.4685
-    c1                  0.622  0.409  -0.185  1.51      0.133    1.63 0.0881
-    ns(time, df = 3)1  -5.366  1.147  -7.450 -2.90      0.000    1.64 0.3409
-    ns(time, df = 3)2 -11.808  2.129 -15.157 -7.36      0.000    2.41 0.1826
-    ns(time, df = 3)3  -5.555  1.184  -7.587 -3.48      0.000    1.38 0.2292
+    (Intercept)        10.892 19.677 -31.464 40.96     0.4667    1.01  0.183
+    C1                -23.702 25.853 -63.189 31.60     0.2000    1.02  0.183
+    C2                  0.161  0.807  -1.220  1.50     0.8000    2.56  0.420
+    c1                  0.674  0.421  -0.012  1.32     0.0667    1.69  0.183
+    ns(time, df = 3)1  -5.710  1.414  -7.901 -2.95     0.0000    1.60  0.232
+    ns(time, df = 3)2 -10.313  3.760 -16.401 -4.19     0.0000    1.55  0.299
+    ns(time, df = 3)3  -5.201  1.276  -7.669 -3.42     0.0000    1.69  0.323
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 13.787 3.213  8.51 19.57               2.02  0.303
-    D_y_id[1,2]  0.222 1.144 -1.44  2.95      0.867    1.31  0.237
-    D_y_id[2,2]  2.351 0.956  1.03  4.16               2.05  0.296
+                  Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 13.920 3.83  8.73 21.95               2.22  0.308
+    D_y_id[1,2]  0.214 1.16 -2.12  2.14      0.733    1.92  0.344
+    D_y_id[2,2]  3.248 1.22  1.35  5.45               1.43  0.183
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.28 0.236 3.87  4.71    2.24  0.226
+    sigma_y 4.28 0.194 3.99  4.64    1.02  0.304
     
     
     MCMC settings:
@@ -7316,24 +7316,24 @@
     
     
     Posterior summary:
-                  Mean    SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -8.348 1.199 -10.726 -6.382        0.0    1.47  0.333
-    c1           0.731 0.552  -0.107  1.680        0.2    1.32  0.294
-    c2          -2.148 2.205  -6.296  1.164        0.4    1.43  0.351
-    time        -1.392 0.227  -1.670 -0.977        0.0    2.21  0.479
+                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -8.497 1.146 -10.41 -6.56      0.000    4.13  0.555
+    c1           0.529 0.515  -0.41  1.21      0.333    1.51  0.339
+    c2          -3.036 4.199  -8.77  3.02      0.667    3.71  0.245
+    time        -1.422 0.129  -1.58 -1.16      0.000    3.27  0.318
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 14.467 2.616 11.50 21.32               1.91  0.396
-    D_y_id[1,2] -1.352 1.570 -3.71  1.27      0.400    3.81  0.475
-    D_y_id[2,2]  2.965 1.246  1.34  5.72               1.11  0.241
-    D_y_id[1,3]  1.506 1.428 -1.16  3.75      0.333    2.56  0.541
-    D_y_id[2,3] -0.611 0.848 -2.05  0.76      0.600    5.49  0.585
-    D_y_id[3,3]  3.379 1.044  2.07  5.57               3.85  0.424
+                  Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 14.628 2.732 10.570 20.086              1.106  0.183
+    D_y_id[1,2]  0.235 1.133 -1.629  2.011      0.933   4.273  0.417
+    D_y_id[2,2]  2.562 0.935  1.344  4.163              0.971  0.035
+    D_y_id[1,3]  1.346 1.260 -0.618  4.052      0.333   2.905  0.314
+    D_y_id[2,3] -0.305 0.572 -1.100  0.605      0.667   2.858  0.405
+    D_y_id[3,3]  2.949 1.171  1.497  5.296              4.567  0.496
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 3.94 0.269  3.5  4.43    4.27  0.373
+    sigma_y 4.09 0.247 3.75  4.58    1.19       
     
     
     MCMC settings:
@@ -7373,24 +7373,24 @@
     
     
     Posterior summary:
-                  Mean    SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -8.348 1.199 -10.726 -6.382        0.0    1.47  0.333
-    c1           0.731 0.552  -0.107  1.680        0.2    1.32  0.294
-    c2          -2.148 2.205  -6.296  1.164        0.4    1.43  0.351
-    time        -1.392 0.227  -1.670 -0.977        0.0    2.21  0.479
+                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -8.497 1.146 -10.41 -6.56      0.000    4.13  0.555
+    c1           0.529 0.515  -0.41  1.21      0.333    1.51  0.339
+    c2          -3.036 4.199  -8.77  3.02      0.667    3.71  0.245
+    time        -1.422 0.129  -1.58 -1.16      0.000    3.27  0.318
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 14.467 2.616 11.50 21.32               1.91  0.396
-    D_y_id[1,2] -1.352 1.570 -3.71  1.27      0.400    3.81  0.475
-    D_y_id[2,2]  2.965 1.246  1.34  5.72               1.11  0.241
-    D_y_id[1,3]  1.506 1.428 -1.16  3.75      0.333    2.56  0.541
-    D_y_id[2,3] -0.611 0.848 -2.05  0.76      0.600    5.49  0.585
-    D_y_id[3,3]  3.379 1.044  2.07  5.57               3.85  0.424
+                  Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 14.628 2.732 10.570 20.086              1.106  0.183
+    D_y_id[1,2]  0.235 1.133 -1.629  2.011      0.933   4.273  0.417
+    D_y_id[2,2]  2.562 0.935  1.344  4.163              0.971  0.035
+    D_y_id[1,3]  1.346 1.260 -0.618  4.052      0.333   2.905  0.314
+    D_y_id[2,3] -0.305 0.572 -1.100  0.605      0.667   2.858  0.405
+    D_y_id[3,3]  2.949 1.171  1.497  5.296              4.567  0.496
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 3.94 0.269  3.5  4.43    4.27  0.373
+    sigma_y 4.09 0.247 3.75  4.58    1.19       
     
     
     MCMC settings:
@@ -7430,26 +7430,26 @@
     
     
     Posterior summary:
-                   Mean    SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -10.526 1.499 -13.192 -7.716      0.000    1.24  0.263
-    B21           1.450 1.453  -0.881  3.953      0.400    1.21  0.277
-    c1           -0.215 0.544  -1.263  0.399      0.867    7.54  0.633
-    c2           -4.886 3.459 -11.063  1.732      0.133    2.40  0.241
-    time         -1.046 0.282  -1.439 -0.530      0.000    1.01  0.104
-    B21:c1        2.064 0.698   0.841  3.115      0.000    2.95  0.158
+                  Mean    SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -7.986 1.807 -11.749 -5.273      0.000    3.43  0.315
+    B21          0.983 1.035  -0.818  2.704      0.267    1.48  0.254
+    c1          -0.840 0.973  -2.314  0.288      0.333   16.19  0.583
+    c2          -2.526 3.780  -9.845  4.207      0.533    2.54  0.381
+    time        -1.650 0.507  -2.332 -0.751      0.000    7.96  0.608
+    B21:c1       1.888 0.529   1.111  2.783      0.000    3.48  0.435
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 14.035 2.370 10.681 19.18               1.25  0.183
-    D_y_id[1,2]  1.718 1.509 -1.028  3.95      0.267    3.88  0.560
-    D_y_id[2,2]  1.507 0.496  0.521  2.39               2.33  0.288
-    D_y_id[1,3]  0.717 1.673 -1.655  3.87      0.733    8.86  0.524
-    D_y_id[2,3]  0.393 0.365 -0.183  1.22      0.267    3.49  0.320
-    D_y_id[3,3]  2.154 0.871  1.200  4.17               2.89  0.360
+                   Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 11.0582 3.209  6.933 18.90               3.04  0.183
+    D_y_id[1,2]  1.4734 0.987 -0.310  2.78      0.267    3.10  0.378
+    D_y_id[2,2]  1.4893 0.643  0.724  2.55               7.85  0.817
+    D_y_id[1,3]  0.0362 0.836 -1.443  1.72      0.867    3.53  0.439
+    D_y_id[2,3]  0.2088 0.467 -0.488  1.08      0.667    6.24  0.521
+    D_y_id[3,3]  1.0378 0.398  0.490  1.75               3.03  0.246
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.41 0.333 4.02  5.13    2.48  0.302
+    sigma_y 4.57 0.338 4.16  5.25    2.65  0.303
     
     
     MCMC settings:
@@ -7490,26 +7490,26 @@
     
     
     Posterior summary:
-                   Mean    SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -4.3546 1.422 -7.008 -2.4162     0.0000    3.19  0.484
-    B21         -4.0125 1.404 -6.470 -1.8075     0.0000    2.11  0.219
-    c1           0.0809 0.903 -1.763  1.2443     0.6667    5.65  0.511
-    c2          -3.5861 2.245 -8.120 -0.0483     0.0667    3.77  0.281
-    time        -1.7433 0.221 -2.178 -1.4057     0.0000    4.06  0.555
-    B21:c1       1.8034 1.037 -0.189  3.7450     0.0667    2.36  0.261
+                  Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -4.555 2.149 -8.127 -1.074      0.000    6.30  0.384
+    B21         -3.571 2.034 -7.219 -0.863      0.000    2.96  0.528
+    c1           0.478 0.645 -0.621  1.307      0.533    4.70  0.709
+    c2          -2.297 1.147 -4.362 -0.416      0.000    2.90  0.692
+    time        -1.880 0.306 -2.395 -1.486      0.000    6.10  0.481
+    B21:c1       2.352 1.324  0.657  4.563      0.000    4.27  0.476
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 19.364 3.645 13.410 26.202               2.29  0.342
-    D_y_id[1,2]  0.747 0.995 -0.829  2.870      0.533    1.07  0.232
-    D_y_id[2,2]  3.100 1.369  1.775  7.177               2.74       
-    D_y_id[1,3] -2.078 1.783 -6.392  0.423      0.267    3.61  0.356
-    D_y_id[2,3] -1.197 0.452 -2.099 -0.591      0.000    1.82  0.230
-    D_y_id[3,3]  4.651 1.564  2.388  7.508               1.51  0.352
+                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 20.206 5.078 11.506 27.30               2.24  0.297
+    D_y_id[1,2]  1.900 1.774 -0.732  4.88      0.400    3.70  0.280
+    D_y_id[2,2]  3.219 1.248  1.609  6.00               1.78       
+    D_y_id[1,3] -1.328 1.708 -4.107  1.73      0.333    3.08  0.511
+    D_y_id[2,3] -0.764 0.876 -1.868  1.08      0.467    8.54  0.473
+    D_y_id[3,3]  4.389 1.511  2.149  7.36               1.82  0.327
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.03 0.204 3.67  4.43    1.03  0.183
+    sigma_y 4.08 0.272 3.73  4.67    2.03  0.331
     
     
     MCMC settings:
@@ -7550,27 +7550,27 @@
     
     
     Posterior summary:
-                   Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  23.653 19.092 -14.055 58.194      0.200    1.15  0.176
-    C1          -41.530 25.906 -86.473 11.430      0.200    1.11  0.174
-    B21          -2.021  1.415  -5.737 -0.439      0.000    2.89  0.503
-    c1           -0.377  0.955  -2.399  0.900      0.667    4.31  0.548
-    c2           -3.117  2.258  -6.865  0.346      0.133    3.79  0.311
-    time         -1.335  0.261  -1.802 -0.901      0.000    3.95  0.456
-    B21:c1        1.113  0.874  -0.061  2.752      0.133    4.57  0.395
+                   Mean     SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  25.456 25.150  -16.975 72.9628     0.2667    2.01  0.229
+    C1          -41.927 34.088 -106.004 16.8261     0.2000    2.00  0.227
+    B21          -3.565  1.534   -6.548 -1.4727     0.0000    1.07  0.358
+    c1           -0.855  0.621   -1.836  0.0963     0.1333    5.04  0.584
+    c2           -4.239  3.950  -12.068  0.5102     0.2000    4.89  0.521
+    time         -1.588  0.192   -1.946 -1.2337     0.0000    1.83  0.232
+    B21:c1        1.716  0.678    0.295  2.7908     0.0667    3.63  0.433
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 15.171 4.384  9.8043 24.662               1.61  0.407
-    D_y_id[1,2] -1.015 1.270 -2.9715  1.484     0.5333    1.05  0.240
-    D_y_id[2,2]  3.356 1.302  1.7888  6.134               3.64  0.405
-    D_y_id[1,3]  1.186 0.558 -0.0228  2.038     0.0667    1.11  0.183
-    D_y_id[2,3] -0.215 0.415 -0.9694  0.464     0.6000    2.90  0.258
-    D_y_id[3,3]  2.416 0.536  1.6632  3.467               2.12  0.218
+                   Mean    SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 14.7597 3.700  9.8751 22.204               2.57  0.183
+    D_y_id[1,2]  0.0747 1.156 -1.7962  2.120      0.867    1.39  0.209
+    D_y_id[2,2]  3.3866 1.762  1.5277  7.440               1.78  0.310
+    D_y_id[1,3]  1.9016 1.131 -0.0955  3.568      0.133    1.18  0.236
+    D_y_id[2,3] -0.6604 0.561 -1.5189  0.501      0.200    2.15  0.457
+    D_y_id[3,3]  4.2376 1.543  2.2117  7.419               4.01  0.740
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.05 0.231 3.64   4.4    1.29  0.215
+    sigma_y  3.9 0.287 3.43  4.48     2.3  0.477
     
     
     MCMC settings:
@@ -7613,27 +7613,27 @@
     
     
     Posterior summary:
-                   Mean     SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  20.303 26.001 -34.801 61.82      0.333    1.34  0.338
-    C1          -38.613 34.963 -94.745 34.81      0.267    1.31  0.194
-    B21           0.717  1.163  -1.559  2.29      0.533    1.32  0.248
-    c1           -0.367  1.191  -2.678  1.33      0.867    1.08  0.183
-    c2           -1.395  3.176  -6.815  3.61      0.733    3.79  0.436
-    time         -1.579  0.229  -1.952 -1.20      0.000    1.82  0.236
-    B21:c1        1.165  1.242  -0.497  3.55      0.467    1.22  0.223
+                   Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  22.533 19.88 -13.04 52.618      0.333    1.33  0.438
+    C1          -42.058 26.97 -81.65  5.504      0.133    1.24  0.147
+    B21           0.161  1.38  -2.16  2.457      0.733    2.76  0.387
+    c1           -0.318  1.18  -2.96  1.601      0.800    1.40  0.224
+    c2           -2.743  2.14  -6.64  0.723      0.200    3.17  0.351
+    time         -1.520  0.26  -2.18 -1.178      0.000    5.21  0.183
+    B21:c1        1.231  1.39  -1.19  3.945      0.467    1.51  0.225
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 13.618 2.768  8.70 19.39               1.24  0.208
-    D_y_id[1,2] -1.338 1.028 -2.59  1.08      0.200    3.88  0.424
-    D_y_id[2,2]  2.734 0.935  1.65  4.77               2.17  0.459
-    D_y_id[1,3]  1.376 1.548 -1.11  4.11      0.467    5.47  0.567
-    D_y_id[2,3] -0.557 1.238 -2.54  1.32      0.667   11.60  0.882
-    D_y_id[3,3]  3.082 1.255  1.20  5.15               5.63  0.559
+                  Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 15.426 3.333 10.816 22.432               1.68  0.235
+    D_y_id[1,2] -1.306 0.800 -3.348 -0.134      0.000    3.96  0.418
+    D_y_id[2,2]  2.237 1.263  0.686  4.648               6.50  0.609
+    D_y_id[1,3]  0.472 1.424 -2.407  2.642      0.667    2.71  0.437
+    D_y_id[2,3] -0.258 0.340 -0.826  0.262      0.733    2.36  0.265
+    D_y_id[3,3]  2.284 0.807  1.256  3.723               1.26  0.317
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.07 0.296  3.6  4.61    2.14  0.372
+    sigma_y 4.05 0.225 3.61  4.45    1.24  0.211
     
     
     MCMC settings:
@@ -7676,27 +7676,27 @@
     
     
     Posterior summary:
-                  Mean     SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -6.342 23.086 -50.459 29.03      0.800    1.46  0.183
-    C1          -3.837 31.440 -52.128 55.53      0.800    1.47  0.183
-    B21          0.969  1.097  -1.159  3.13      0.400    3.29  0.343
-    c1          -0.672  1.278  -2.923  1.50      0.600    2.50  0.361
-    c2          -2.062  2.380  -6.085  2.19      0.400    1.25  0.319
-    time        -1.393  0.162  -1.764 -1.17      0.000    3.37  0.426
-    B21:c1       1.530  1.285  -0.691  3.48      0.267    2.52  0.396
+                   Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)   6.999 23.021 -33.261 43.994     0.7333    2.77  0.206
+    C1          -22.224 30.511 -70.523 32.944     0.6000    2.66  0.206
+    B21           0.682  1.212  -2.139  2.154     0.4000    1.28  0.243
+    c1           -0.901  0.766  -2.805  0.534     0.1333    1.14  0.183
+    c2           -5.127  4.469 -15.009  0.497     0.1333    8.77  0.374
+    time         -1.538  0.214  -1.824 -1.050     0.0000    3.08  0.183
+    B21:c1        1.876  0.917   0.417  4.073     0.0667    1.09  0.183
     
     Posterior summary of random effects covariance matrix:
-                    Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 12.97137 3.041  9.702 20.929               1.03  0.345
-    D_y_id[1,2] -0.32819 0.675 -1.562  0.632      0.600    2.58  0.401
-    D_y_id[2,2]  1.88054 0.849  0.882  3.826               2.66  0.244
-    D_y_id[1,3]  0.00143 1.270 -1.543  2.326      1.000    1.56  0.231
-    D_y_id[2,3] -0.27954 0.928 -1.994  1.184      0.733    9.86  0.509
-    D_y_id[3,3]  3.64837 1.449  1.832  6.458               4.26  0.511
+                  Mean    SD  2.5%  97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 14.469 2.773 10.18 18.845               1.53  0.183
+    D_y_id[1,2]  0.233 2.124 -3.67  3.596      0.733    7.76  0.399
+    D_y_id[2,2]  2.811 1.411  1.28  5.470               9.71  0.872
+    D_y_id[1,3]  1.692 1.966 -1.32  4.958      0.467    3.58  0.553
+    D_y_id[2,3] -0.278 0.786 -1.97  0.928      0.800    5.51  0.388
+    D_y_id[3,3]  2.543 0.552  1.73  3.615               1.73  0.332
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 3.96 0.275 3.57  4.47    1.49  0.309
+    sigma_y 4.08 0.226 3.74  4.44    3.17  0.332
     
     
     MCMC settings:
@@ -7739,26 +7739,26 @@
     
     Posterior summary:
                    Mean     SD     2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  28.114 36.527  -26.063 89.905      0.600    4.36  0.453
-    C1          -45.362 48.981 -132.527 26.600      0.533    4.35  0.453
-    B21          -2.997  1.616   -6.194 -1.120      0.000    7.03  0.545
-    c2           -1.323  2.012   -5.165  2.199      0.400    2.14  0.247
-    c1            0.396  0.370   -0.293  0.927      0.267    2.00  0.183
-    time         -1.787  0.308   -2.224 -1.286      0.000    3.23  0.183
-    B21:c2       -4.645  2.886   -9.254  0.395      0.200    4.47  0.626
+    (Intercept)  33.916 23.614   -0.712 75.561     0.0667    1.32  0.183
+    C1          -53.096 32.474 -109.611 -5.287     0.0667    1.34  0.183
+    B21          -3.462  1.640   -7.213 -1.810     0.0000    3.02  0.566
+    c2           -1.034  1.795   -3.942  2.054     0.6000    4.49  0.512
+    c1            0.165  0.433   -0.641  0.862     0.6000    1.79  0.183
+    time         -1.587  0.195   -1.912 -1.190     0.0000    3.03  0.311
+    B21:c2       -2.598  2.657   -8.747  1.217     0.3333    3.89  0.454
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 15.942 3.802 10.86 23.75               2.12  0.474
-    D_y_id[1,2] -0.605 1.023 -2.50  0.88      0.533    1.43  0.183
-    D_y_id[2,2]  3.744 1.013  1.84  5.36               1.34  0.304
-    D_y_id[1,3] -0.466 0.983 -1.95  1.51      0.600    1.31  0.241
-    D_y_id[2,3] -0.479 0.694 -1.83  0.45      0.533    3.78  0.364
-    D_y_id[3,3]  4.206 1.284  2.57  6.93               1.96  0.517
+                  Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 15.378 3.716  9.716 23.037               1.28  0.338
+    D_y_id[1,2]  0.561 1.251 -0.815  3.458      0.733    2.04  0.361
+    D_y_id[2,2]  2.239 1.077  0.905  4.577               1.17  0.270
+    D_y_id[1,3] -1.615 1.922 -5.188  1.661      0.400    3.82  0.503
+    D_y_id[2,3] -0.194 0.807 -2.169  0.655      1.000    1.44  0.328
+    D_y_id[3,3]  5.308 2.475  2.280 10.434               1.40  0.299
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 3.88 0.231 3.54  4.38    2.05  0.183
+    sigma_y 4.11 0.234 3.67  4.45    1.35  0.223
     
     
     MCMC settings:
@@ -7801,27 +7801,27 @@
     
     
     Posterior summary:
-                     Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)   7.00879 23.406 -44.946 40.664      0.600    1.84  0.339
-    C1          -23.08339 31.262 -65.801 44.402      0.400    1.83  0.331
-    B21           1.49588  1.972  -2.081  5.579      0.333    3.96  0.430
-    c2           -5.27935  5.941 -15.388  5.006      0.333    3.61  0.473
-    c1           -0.00563  0.483  -0.898  0.682      0.800    6.63  0.760
-    time         -1.05078  0.262  -1.378 -0.398      0.000    1.12  0.252
-    B21:c2        1.66771  6.722  -9.285 15.981      0.733    4.38  0.513
+                   Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)   8.627 21.287 -30.12 41.910      0.467    1.10  0.141
+    C1          -23.619 28.716 -70.79 29.544      0.333    1.18  0.145
+    B21           0.447  1.294  -1.65  2.888      0.733    1.85  0.183
+    c2           -3.029  5.363 -14.63  5.129      0.400    3.05  0.493
+    c1           -0.823  1.169  -2.76  0.775      0.667    8.57  0.843
+    time         -1.366  0.496  -2.08 -0.474      0.000    8.96  0.744
+    B21:c2       -2.495  5.301 -12.67  5.012      0.733    2.73  0.373
     
     Posterior summary of random effects covariance matrix:
                    Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 15.2689 3.617 10.446 23.921               3.30  0.410
-    D_y_id[1,2]  2.1928 1.129  0.437  4.246      0.000    2.18  0.183
-    D_y_id[2,2]  1.1327 0.575  0.531  2.583               7.21  0.183
-    D_y_id[1,3]  0.0158 0.579 -1.177  1.049      0.933    2.13  0.273
-    D_y_id[2,3] -0.1658 0.507 -1.258  0.422      0.867   11.63  0.414
-    D_y_id[3,3]  1.4818 0.626  0.550  2.863               4.70  0.520
+    D_y_id[1,1] 13.4792 3.305  9.272 19.733               1.24  0.224
+    D_y_id[1,2]  0.3953 1.289 -1.407  3.235      0.733    2.41  0.291
+    D_y_id[2,2]  1.4850 0.786  0.649  3.173               7.64  0.468
+    D_y_id[1,3]  0.7126 1.156 -1.151  2.714      0.600    1.90  0.372
+    D_y_id[2,3] -0.0464 0.329 -0.682  0.632      1.000    1.59  0.356
+    D_y_id[3,3]  1.4966 0.553  0.863  2.768               3.79  0.506
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.51 0.367 4.02   5.5    1.23  0.321
+    sigma_y 4.54 0.319 3.98   5.1    1.41  0.304
     
     
     MCMC settings:
@@ -7863,27 +7863,27 @@
     
     
     Posterior summary:
-                   Mean     SD     2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  22.696 17.907 -14.4962 57.483      0.200    1.31  0.183
-    C1          -34.357 26.813 -89.2523 20.844      0.133    1.87  0.183
-    B21          -1.839  1.712  -5.7682  0.197      0.267    3.89  0.527
-    c2            0.599  6.251  -8.2028 10.472      1.000    8.56  0.675
-    c1            0.692  0.386   0.0617  1.445      0.000    1.22  0.195
-    time         -1.522  0.276  -1.9189 -1.018      0.000    2.78  0.425
-    B21:c2       18.446 22.826 -12.4659 57.516      0.467    8.40  0.626
+                   Mean     SD     2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  39.392 26.801   -6.987 83.78      0.133    1.25  0.235
+    C1          -57.488 35.803 -115.504  7.68      0.133    1.15  0.234
+    B21          -3.725  1.618   -6.544 -1.12      0.000    1.73  0.397
+    c2           -2.215  3.639   -9.246  3.46      0.667    3.31  0.498
+    c1            0.815  0.651   -0.498  1.76      0.267    2.06  0.278
+    time         -1.628  0.210   -2.059 -1.24      0.000    1.80  0.235
+    B21:c2        9.983 15.209  -20.375 28.12      0.467    2.39  0.372
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 16.208 4.853 10.010 26.617               1.02  0.147
-    D_y_id[1,2] -0.728 1.288 -2.924  1.774      0.533    2.03       
-    D_y_id[2,2]  3.343 0.930  1.702  4.968               1.54  0.366
-    D_y_id[1,3]  1.417 0.933 -0.458  3.187      0.133    2.37  0.306
-    D_y_id[2,3] -0.290 0.592 -1.568  0.543      0.800    1.78  0.323
-    D_y_id[3,3]  2.562 0.502  1.876  3.700               1.19  0.183
+                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 14.193 3.570  9.765 23.78              2.954  0.451
+    D_y_id[1,2]  0.309 1.060 -1.908  2.48      0.600   1.689  0.183
+    D_y_id[2,2]  3.726 2.077  1.192  8.05              1.542  0.322
+    D_y_id[1,3]  1.383 1.233 -0.731  3.50      0.333   0.997       
+    D_y_id[2,3] -0.325 0.986 -1.887  1.18      0.800   5.707  1.057
+    D_y_id[3,3]  3.873 1.425  2.051  6.78              4.197  0.568
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.07 0.203 3.71   4.4    1.27  0.208
+    sigma_y 3.99 0.299 3.42  4.44     1.8  0.323
     
     
     MCMC settings:
@@ -7925,27 +7925,27 @@
     
     
     Posterior summary:
-                   Mean     SD     2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  22.696 17.907 -14.4962 57.483      0.200    1.31  0.183
-    C1          -34.357 26.813 -89.2523 20.844      0.133    1.87  0.183
-    B21          -1.839  1.712  -5.7682  0.197      0.267    3.89  0.527
-    c2            0.599  6.251  -8.2028 10.472      1.000    8.56  0.675
-    c1            0.692  0.386   0.0617  1.445      0.000    1.22  0.195
-    time         -1.522  0.276  -1.9189 -1.018      0.000    2.78  0.425
-    B21:c2       18.446 22.826 -12.4659 57.516      0.467    8.40  0.626
+                   Mean     SD     2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  39.392 26.801   -6.987 83.78      0.133    1.25  0.235
+    C1          -57.488 35.803 -115.504  7.68      0.133    1.15  0.234
+    B21          -3.725  1.618   -6.544 -1.12      0.000    1.73  0.397
+    c2           -2.215  3.639   -9.246  3.46      0.667    3.31  0.498
+    c1            0.815  0.651   -0.498  1.76      0.267    2.06  0.278
+    time         -1.628  0.210   -2.059 -1.24      0.000    1.80  0.235
+    B21:c2        9.983 15.209  -20.375 28.12      0.467    2.39  0.372
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 16.208 4.853 10.010 26.617               1.02  0.147
-    D_y_id[1,2] -0.728 1.288 -2.924  1.774      0.533    2.03       
-    D_y_id[2,2]  3.343 0.930  1.702  4.968               1.54  0.366
-    D_y_id[1,3]  1.417 0.933 -0.458  3.187      0.133    2.37  0.306
-    D_y_id[2,3] -0.290 0.592 -1.568  0.543      0.800    1.78  0.323
-    D_y_id[3,3]  2.562 0.502  1.876  3.700               1.19  0.183
+                  Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 14.193 3.570  9.765 23.78              2.954  0.451
+    D_y_id[1,2]  0.309 1.060 -1.908  2.48      0.600   1.689  0.183
+    D_y_id[2,2]  3.726 2.077  1.192  8.05              1.542  0.322
+    D_y_id[1,3]  1.383 1.233 -0.731  3.50      0.333   0.997       
+    D_y_id[2,3] -0.325 0.986 -1.887  1.18      0.800   5.707  1.057
+    D_y_id[3,3]  3.873 1.425  2.051  6.78              4.197  0.568
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.07 0.203 3.71   4.4    1.27  0.208
+    sigma_y 3.99 0.299 3.42  4.44     1.8  0.323
     
     
     MCMC settings:
@@ -7987,29 +7987,29 @@
     
     
     Posterior summary:
-                    Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  35.5605 19.639   8.117  68.089     0.0000    1.24  0.214
-    C1          -54.8086 26.629 -98.556 -17.907     0.0000    1.22  0.213
-    B21          -4.7737  1.712  -8.753  -2.447     0.0000    3.61  0.514
-    c1           -1.5255  0.766  -2.938  -0.142     0.0667    1.94  0.419
-    time         -0.6818  0.382  -1.191   0.139     0.1333    3.02  0.374
-    B21:c1        2.3642  0.921   0.922   3.847     0.0000    2.44  0.469
-    B21:time     -0.3578  0.124  -0.530  -0.118     0.0000    5.55  0.408
-    c1:time      -0.0967  0.125  -0.312   0.165     0.2667    2.31  0.183
-    B21:c1:time   0.0137  0.269  -0.518   0.456     0.8000    5.35  0.488
+                    Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  14.7697 24.086 -29.690 49.996      0.467    2.25  0.316
+    C1          -27.4575 31.577 -72.882 29.851      0.467    2.06  0.307
+    B21          -3.0438  2.344  -6.726  0.423      0.333    7.19  0.404
+    c1           -0.1782  0.759  -1.415  1.313      0.867    2.61  0.338
+    time         -1.0628  0.456  -1.861 -0.380      0.000    3.37  0.679
+    B21:c1        0.9274  0.930  -0.526  2.324      0.533    2.84  0.355
+    B21:time     -0.2486  0.163  -0.500  0.011      0.133    8.72  1.125
+    c1:time       0.0109  0.121  -0.192  0.220      0.867    3.97  0.471
+    B21:c1:time  -0.0401  0.197  -0.340  0.357      0.667    3.71  0.451
     
     Posterior summary of random effects covariance matrix:
-                  Mean    SD  2.5%  97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 18.923 4.822 12.60 31.038               2.32  0.345
-    D_y_id[1,2] -0.803 1.803 -4.12  2.102      0.667    1.59  0.244
-    D_y_id[2,2]  3.411 1.158  1.49  5.664               1.05  0.334
-    D_y_id[1,3]  0.803 1.457 -2.29  2.751      0.400    1.22  0.183
-    D_y_id[2,3] -0.778 0.712 -2.09  0.374      0.333    1.59  0.102
-    D_y_id[3,3]  3.622 1.744  1.31  7.170               1.78  0.254
+                 Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 15.51 4.76  9.53 24.68               3.79  0.347
+    D_y_id[1,2]  1.98 3.33 -3.22  6.16      0.667   12.38  0.567
+    D_y_id[2,2]  6.63 1.18  4.13  8.59               1.42  0.319
+    D_y_id[1,3] -1.96 3.24 -6.48  3.67      0.667   10.77  0.561
+    D_y_id[2,3] -4.31 1.47 -7.22 -2.62      0.000    5.48  0.428
+    D_y_id[3,3]  5.66 2.29  2.57  9.82               8.02  0.325
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 4.22 0.196 3.86  4.64    1.55  0.357
+    sigma_y 4.24 0.147 3.95   4.5    1.82  0.266
     
     
     MCMC settings:
@@ -8050,23 +8050,23 @@
     
     
     Posterior summary:
-                  Mean    SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) -7.113 1.297 -9.0986 -5.132     0.0000   1.130  0.183
-    c1           0.183 0.633 -0.8790  1.439     0.8667   1.054  0.174
-    b11         -2.796 0.777 -4.1304 -1.641     0.0000   8.797  0.795
-    o1.L         1.040 0.687  0.0062  2.245     0.0667   0.968  0.183
-    o1.Q         0.317 0.501 -0.4442  1.358     0.5333   1.498  0.183
-    c1:b11      -0.797 0.901 -2.3070  0.604     0.5333   2.397  0.427
+                  Mean    SD      2.5%  97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -7.533 1.663 -10.06974 -4.228     0.0000    4.87 0.7267
+    c1           0.172 0.509  -0.72740  1.015     0.7333    1.30 0.0836
+    b11         -2.825 0.706  -3.90355 -1.652     0.0000    8.17 0.7774
+    o1.L         1.299 0.757   0.00852  2.541     0.0667    1.32 0.2042
+    o1.Q         0.278 0.754  -0.96685  1.423     0.7333    1.84 0.2136
+    c1:b11      -0.942 0.872  -2.72992  0.314     0.4667    9.24 0.7288
     
     Posterior summary of random effects covariance matrix:
-                Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_y_id[1,1] 4.12 1.242  2.0250  6.06               4.72  0.578
-    D_y_id[1,2] 1.27 0.809 -0.0147  2.56     0.0667    8.61  0.933
-    D_y_id[2,2] 1.18 0.427  0.6057  1.94               4.35  0.790
+                 Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_y_id[1,1] 3.851 3.275  1.829 12.72               7.08  0.308
+    D_y_id[1,2] 0.302 0.947 -1.503  1.47      0.667   14.30  0.879
+    D_y_id[2,2] 1.534 1.210  0.368  4.03              14.85  0.674
     
     Posterior summary of residual std. deviation:
             Mean    SD 2.5% 97.5% GR-crit MCE/SD
-    sigma_y 6.38 0.771 5.43  7.98    1.31  0.373
+    sigma_y 6.39 0.881 4.93  8.33    5.12  0.549
     
     
     MCMC settings:
@@ -8101,105 +8101,107 @@
 
     $m0a1
     $m0a1$y
-                     Mean       SD     2.5%    97.5% tail-prob.  GR-crit    MCE/SD
-    (Intercept) -5.044537 28.74283 -25.9742 83.75883  0.1333333 1.392414 0.1825742
+                     Mean       SD      2.5%    97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -12.27183 36.85028 -107.7387 32.29141 0.06666667 1.34342    Inf
     
     
     $m0a2
     $m0a2$y
-                     Mean       SD     2.5%    97.5% tail-prob.  GR-crit    MCE/SD
-    (Intercept) -5.044537 28.74283 -25.9742 83.75883  0.1333333 1.392414 0.1825742
+                     Mean       SD      2.5%    97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) -12.27183 36.85028 -107.7387 32.29141 0.06666667 1.34342    Inf
     
     
     $m0a3
     $m0a3$y
-                     Mean        SD      2.5%     97.5% tail-prob.  GR-crit
-    (Intercept) -5.372323 0.7085642 -6.458238 -4.398238          0 4.033658
-                   MCE/SD
-    (Intercept) 0.5631798
+                     Mean        SD   2.5%     97.5% tail-prob.  GR-crit    MCE/SD
+    (Intercept) -5.348965 0.6205828 -6.483 -4.385323          0 3.367276 0.3674964
     
     
     $m0a4
     $m0a4$y
-                   Mean        SD     2.5%    97.5% tail-prob.  GR-crit    MCE/SD
-    (Intercept) 5.95995 0.8294848 4.419342 7.242109          0 4.332576 0.2427957
+                    Mean        SD     2.5%    97.5% tail-prob.  GR-crit   MCE/SD
+    (Intercept) 7.071404 0.9150032 5.167718 8.658147          0 3.052243 0.530163
     
     
     $m0b1
     $m0b1$b1
-                     Mean        SD      2.5%   97.5% tail-prob.  GR-crit    MCE/SD
-    (Intercept) 0.6865567 0.2934701 0.2206726 1.31203          0 1.922238 0.2830443
+                     Mean        SD     2.5%    97.5% tail-prob.  GR-crit    MCE/SD
+    (Intercept) 0.7985431 0.5962506 0.196443 2.282313          0 4.376429 0.2635151
     
     
     $m0b2
     $m0b2$b1
-                     Mean        SD       2.5%     97.5% tail-prob.  GR-crit
-    (Intercept) 0.3386755 0.2473027 0.01610328 0.9185814          0 2.658444
+                     Mean        SD       2.5%    97.5% tail-prob.  GR-crit
+    (Intercept) 0.4668347 0.3293219 0.04282297 1.370555          0 1.914814
                    MCE/SD
-    (Intercept) 0.3085562
+    (Intercept) 0.1825742
     
     
     $m0b3
     $m0b3$b1
-                     Mean        SD       2.5%    97.5% tail-prob.  GR-crit MCE/SD
-    (Intercept) 0.4549729 0.7132344 -0.5401872 1.853853        0.6 1.385566     NA
+                     Mean       SD       2.5%    97.5% tail-prob.  GR-crit
+    (Intercept) 0.3674796 1.241118 -0.7986554 2.831571  0.9333333 8.117047
+                   MCE/SD
+    (Intercept) 0.6381181
     
     
     $m0b4
     $m0b4$b1
-                     Mean        SD       2.5%    97.5% tail-prob.  GR-crit MCE/SD
-    (Intercept) 0.4549729 0.7132344 -0.5401872 1.853853        0.6 1.385566     NA
+                     Mean       SD       2.5%    97.5% tail-prob.  GR-crit
+    (Intercept) 0.3674796 1.241118 -0.7986554 2.831571  0.9333333 8.117047
+                   MCE/SD
+    (Intercept) 0.6381181
     
     
     $m0c1
     $m0c1$L1
-                    Mean        SD        2.5%    97.5% tail-prob.  GR-crit
-    (Intercept) 0.185974 0.2180282 -0.02395871 0.715314  0.1333333 1.286181
+                     Mean        SD       2.5%    97.5% tail-prob.  GR-crit
+    (Intercept) 0.9391855 0.9861964 0.02022479 2.494891          0 14.79955
                   MCE/SD
-    (Intercept) 0.290235
+    (Intercept) 0.894679
     
     
     $m0c2
     $m0c2$L1
-                      Mean         SD       2.5%     97.5% tail-prob.  GR-crit
-    (Intercept) -0.5922315 0.06219706 -0.6772459 -0.460491          0 4.236635
+                      Mean         SD       2.5%      97.5% tail-prob.  GR-crit
+    (Intercept) -0.6091212 0.05765406 -0.6914785 -0.4889242          0 4.012268
                    MCE/SD
-    (Intercept) 0.4766904
+    (Intercept) 0.4975044
     
     
     $m0d1
     $m0d1$p1
-                   Mean         SD    2.5%    97.5% tail-prob.  GR-crit    MCE/SD
-    (Intercept) 1.28213 0.03437329 1.22827 1.349761          0 1.855972 0.2312292
+                    Mean         SD     2.5%    97.5% tail-prob. GR-crit   MCE/SD
+    (Intercept) 1.270401 0.05560413 1.149605 1.369389          0  2.7438 0.470134
     
     
     $m0d2
     $m0d2$p1
-                    Mean        SD      2.5%    97.5% tail-prob.  GR-crit MCE/SD
-    (Intercept) 2.808121 0.8979006 0.8638558 3.711174          0 1.207418    Inf
+                    Mean        SD     2.5%    97.5% tail-prob.  GR-crit   MCE/SD
+    (Intercept) 3.182457 0.5818295 2.117371 3.873941          0 1.495672 0.345147
     
     
     $m0e1
     $m0e1$L1
                       Mean         SD      2.5%      97.5% tail-prob.  GR-crit
-    (Intercept) -0.9118851 0.05085347 -0.979457 -0.8106841          0 1.830071
-                  MCE/SD
-    (Intercept) 0.381744
+    (Intercept) -0.9489953 0.06173103 -1.092817 -0.8648362          0 2.061669
+                   MCE/SD
+    (Intercept) 0.3139936
     
     
     $m0f1
     $m0f1$Be1
-                      Mean         SD        2.5%    97.5% tail-prob.  GR-crit
-    (Intercept) 0.07993741 0.05994812 -0.03744616 0.165656        0.2 1.955503
-                   MCE/SD
-    (Intercept) 0.2207149
+                      Mean         SD       2.5%     97.5% tail-prob.  GR-crit
+    (Intercept) 0.00677405 0.09146537 -0.1183976 0.2388312          1 2.311219
+                  MCE/SD
+    (Intercept) 0.303057
     
     
     $m1a
     $m1a$y
-                     Mean       SD      2.5%     97.5% tail-prob.  GR-crit
-    (Intercept) -239.8138 2670.832 -7915.105  2670.855  0.6000000 1.265545
-    C1           319.3273 3633.535 -3636.131 10756.359  0.2666667 1.268450
+                     Mean       SD        2.5%     97.5% tail-prob.  GR-crit
+    (Intercept)  203.1116 545.7598   -93.94668 1895.2219  0.4666667 1.165041
+    C1          -292.0678 735.0817 -2637.42247  113.1248  0.3333333 1.103694
                    MCE/SD
     (Intercept) 0.1825742
     C1          0.1825742
@@ -8207,648 +8209,639 @@
     
     $m1b
     $m1b$b1
-                     Mean       SD       2.5%     97.5% tail-prob.  GR-crit
-    (Intercept)  27.15682 15.93740   7.705886 59.915270          0 2.562445
-    C1          -36.01862 21.45368 -80.112404 -9.705424          0 2.516946
-                   MCE/SD
-    (Intercept) 0.2885853
-    C1          0.2878742
+                     Mean       SD       2.5%   97.5% tail-prob.  GR-crit    MCE/SD
+    (Intercept)  22.02800 16.96878  -7.040887 55.8969  0.1333333 1.956780 0.1825742
+    C1          -28.74428 22.87787 -74.248996 10.3754  0.1333333 1.919967 0.1825742
     
     
     $m1c
     $m1c$L1
-                       Mean       SD       2.5%    97.5% tail-prob.  GR-crit
-    (Intercept)  0.27120515 4.575736  -7.723444  9.18529          1 2.159493
-    C1          -0.09008905 6.268556 -12.326255 11.40924          1 2.183209
+                     Mean       SD       2.5%     97.5% tail-prob.  GR-crit
+    (Intercept)  0.657017 5.007864 -11.531814  7.634343  0.5333333 2.508391
+    C1          -0.480477 7.026418  -9.948741 17.284573  0.5333333 2.741943
                    MCE/SD
-    (Intercept) 0.3959300
-    C1          0.4034214
+    (Intercept) 0.2707662
+    C1          0.2726505
     
     
     $m1d
     $m1d$p1
-                      Mean       SD      2.5%    97.5% tail-prob.  GR-crit
-    (Intercept) -0.2881178 1.932362 -3.839402 3.080688  0.9333333 1.722325
-    C1           2.1258197 2.610005 -2.443251 7.031602  0.4000000 1.655160
-                   MCE/SD
-    (Intercept) 0.2180861
-    C1          0.2171037
+                      Mean       SD      2.5%    97.5% tail-prob.  GR-crit MCE/SD
+    (Intercept) -0.3009152 2.393678 -3.683121 5.029362  0.8000000 3.042871     NA
+    C1           2.1814209 3.234177 -5.026401 6.735212  0.5333333 2.998142     NA
     
     
     $m1e
     $m1e$L1
-                     Mean       SD      2.5%     97.5% tail-prob.   GR-crit
-    (Intercept) -2.844765 3.642765 -8.815485  3.375905  0.4666667 1.0012190
-    C1           2.632113 4.943354 -5.816128 10.706089  0.7333333 0.9986746
-                   MCE/SD
-    (Intercept) 0.3546082
-    C1          0.3545511
+                     Mean       SD      2.5%    97.5% tail-prob.  GR-crit    MCE/SD
+    (Intercept) -2.167589 2.747412 -6.791427 2.820184  0.4666667 1.388211 0.2310136
+    C1           1.670759 3.744317 -5.072217 8.021967  0.6000000 1.406815 0.2309059
     
     
     $m1f
     $m1f$Be1
-                     Mean       SD       2.5%      97.5% tail-prob.  GR-crit
-    (Intercept) -4.361141 2.390192 -8.7744162  0.2099434 0.06666667 1.379043
-    C1           6.003403 3.264201 -0.2456378 12.0131502 0.06666667 1.418314
+                     Mean       SD       2.5%    97.5% tail-prob.  GR-crit
+    (Intercept)  1.017266 3.665916  -3.932729 8.257874  0.8666667 1.204464
+    C1          -1.374735 5.001892 -11.253365 5.431730  0.8666667 1.226861
                    MCE/SD
-    (Intercept) 0.1825742
-    C1          0.1825742
+    (Intercept) 0.2181741
+    C1          0.2211955
     
     
     $m2a
     $m2a$y
-                     Mean        SD       2.5%       97.5% tail-prob.  GR-crit
-    (Intercept) -3.201281 54.612838 -50.541948 158.3089604 0.20000000 1.324540
-    c2          -1.830185  1.219379  -3.641809   0.1260621 0.06666667 2.345259
+                     Mean       SD       2.5%     97.5% tail-prob.  GR-crit
+    (Intercept) -13.68846 7.564667 -39.029708 -9.339431        0.0 1.080853
+    c2           -1.63738 3.226274  -6.542051  3.935608        0.6 4.354092
                    MCE/SD
     (Intercept) 0.1825742
-    c2          0.1189163
+    c2          0.3567907
     
     
     $m2b
     $m2b$b2
-                      Mean        SD      2.5%     97.5% tail-prob.  GR-crit
-    (Intercept) -4.0699761 0.5244285 -5.026840 -3.205385  0.0000000 2.288919
-    c2           0.4713144 2.3578575 -2.473645  4.958252  0.9333333 3.599644
+                     Mean        SD      2.5%     97.5% tail-prob.  GR-crit
+    (Intercept) -4.363186 0.7642047 -5.443985 -3.006162  0.0000000 3.292382
+    c2          -1.892313 1.9682058 -5.516912  1.866201  0.2666667 2.714639
                    MCE/SD
-    (Intercept) 0.2240363
-    c2          0.4695827
+    (Intercept) 0.4912803
+    c2          0.4421159
     
     
     $m2c
     $m2c$L1mis
-                    Mean        SD       2.5%    97.5% tail-prob.  GR-crit
-    (Intercept) 1.996165 0.8973322 0.58465636 3.139058          0 11.36598
-    c2          4.891677 3.1380318 0.09616585 7.694885          0 47.07310
+                     Mean        SD        2.5%    97.5% tail-prob.  GR-crit
+    (Intercept) 1.1292972 0.8047592  0.01873431 2.322402 0.06666667 11.70545
+    c2          0.5214006 1.3814258 -1.01684331 2.398858 0.93333333 32.49484
                    MCE/SD
-    (Intercept) 0.5315003
-    c2          0.4897886
+    (Intercept) 0.8810804
+    c2          0.9071868
     
     
     $m2d
     $m2d$p2
-                      Mean        SD       2.5%     97.5% tail-prob.  GR-crit
-    (Intercept)  0.9569791 0.1191148  0.7405972 1.1449640  0.0000000 4.044203
-    c2          -0.1122915 0.5244399 -0.8753818 0.7693149  0.9333333 2.818204
+                       Mean        SD       2.5%     97.5% tail-prob.  GR-crit
+    (Intercept)  0.90605746 0.1467247  0.6054029 1.0938975  0.0000000 4.541415
+    c2          -0.02865698 0.5286775 -0.9299409 0.6480205  0.9333333 3.187655
                    MCE/SD
-    (Intercept) 0.3435061
-    c2          0.2869724
+    (Intercept) 0.5139657
+    c2          0.4767797
     
     
     $m2e
     $m2e$L1mis
-                       Mean        SD       2.5%      97.5% tail-prob.  GR-crit
-    (Intercept) -1.03072685 0.1252797 -1.2316843 -0.7318210  0.0000000 3.328784
-    c2          -0.06819622 0.4542808 -0.7911872  0.9452577  0.6666667 2.568183
+                      Mean        SD       2.5%      97.5% tail-prob.  GR-crit
+    (Intercept) -0.9599886 0.1405111 -1.1710969 -0.7190916  0.0000000 1.447135
+    c2           0.1304310 0.5779044 -0.6786182  1.2474742  0.9333333 1.078567
                    MCE/SD
-    (Intercept) 0.4567176
-    c2          0.3937495
+    (Intercept) 0.3356946
+    c2          0.2520371
     
     
     $m2f
     $m2f$Be2
-                       Mean        SD       2.5%     97.5% tail-prob.  GR-crit
-    (Intercept) -0.06094148 0.1239648 -0.3632195 0.1261131  0.5333333 1.342011
-    c2          -0.18616621 0.4560794 -1.3473665 0.4847500  0.8666667 1.575834
+                       Mean        SD        2.5%     97.5% tail-prob.  GR-crit
+    (Intercept) 0.100638946 0.1044639 -0.07758473 0.2960306  0.3333333 1.889394
+    c2          0.005447377 0.3639925 -0.63332997 0.6064386  0.9333333 1.582989
                    MCE/SD
-    (Intercept) 0.3150483
-    c2          0.2053106
+    (Intercept) 0.2142468
+    c2          0.1985104
     
     
     $m3a
     $m3a$y
-          Mean       SD      2.5%    97.5% tail-prob.  GR-crit    MCE/SD
-    C2 7.09393 38.40149 -19.45679 122.1489        0.8 1.482472 0.1825742
+            Mean       SD      2.5%    97.5% tail-prob.  GR-crit    MCE/SD
+    C2 -5.700957 55.75937 -157.1197 86.77159  0.5333333 1.220197 0.1825742
     
     
     $m3b
     $m3b$b2
-             Mean       SD      2.5%  97.5% tail-prob.  GR-crit    MCE/SD
-    C2 -0.1970448 1.395167 -2.585532 1.8547  0.9333333 4.814768 0.7565853
+            Mean       SD      2.5%    97.5% tail-prob.  GR-crit    MCE/SD
+    C2 0.7243435 1.082392 -1.589468 2.309191        0.6 2.931061 0.4081792
     
     
     $m3c
     $m3c$L1mis
-             Mean        SD       2.5%   97.5% tail-prob.  GR-crit    MCE/SD
-    C2 0.05087298 0.1886666 -0.3088603 0.41207  0.4666667 1.148143 0.1825742
+             Mean        SD       2.5%     97.5% tail-prob. GR-crit    MCE/SD
+    C2 -0.0562832 0.1902955 -0.4331816 0.2034595  0.8666667 1.84085 0.2371985
     
     
     $m3d
     $m3d$p2
             Mean        SD       2.5%     97.5% tail-prob.  GR-crit    MCE/SD
-    C2 0.3178806 0.1741723 0.01772127 0.6118607 0.06666667 1.187098 0.1825742
+    C2 0.1245285 0.2434468 -0.2488833 0.5768491  0.7333333 1.731333 0.2102829
     
     
     $m3e
     $m3e$L1mis
-            Mean        SD       2.5%     97.5% tail-prob.  GR-crit    MCE/SD
-    C2 -0.250113 0.2231538 -0.6048791 0.1450219  0.3333333 2.229821 0.2256855
+             Mean        SD      2.5%     97.5% tail-prob. GR-crit    MCE/SD
+    C2 -0.2087964 0.2468017 -0.564713 0.2719835  0.4666667 2.28206 0.3212002
     
     
     $m3f
     $m3f$Be2
-              Mean        SD       2.5%     97.5% tail-prob.  GR-crit    MCE/SD
-    C2 -0.07733757 0.1090451 -0.2795584 0.1064095  0.4666667 2.171762 0.4957675
+              Mean       SD       2.5%     97.5% tail-prob.  GR-crit    MCE/SD
+    C2 -0.08724206 0.119137 -0.3204452 0.1076555        0.4 2.026514 0.3578058
     
     
     $m4a
     $m4a$c1
                          Mean           SD          2.5%        97.5% tail-prob.
-    (Intercept)  3.084184e-01 2.354961e-01 -3.765252e-02 8.064366e-01  0.2000000
-    B21         -1.433700e-01 1.725663e-01 -4.528186e-01 1.076661e-01  0.3333333
-    c2          -9.122049e-03 3.488727e-01 -6.513632e-01 4.886510e-01  0.8000000
-    p2           1.198923e-02 2.281611e-02 -2.771811e-02 4.940519e-02  0.6666667
-    L1mis        1.337528e-11 1.893847e-11 -2.349281e-11 4.347531e-11  0.4666667
-    Be2          2.178909e-02 2.019365e-01 -3.899422e-01 3.233613e-01  0.6666667
+    (Intercept)  2.053080e-01 1.822277e-01 -7.705423e-02 6.050301e-01  0.2000000
+    B21         -8.113283e-02 1.036616e-01 -2.423533e-01 9.115718e-02  0.3333333
+    c2          -2.892017e-02 3.183004e-01 -5.780950e-01 4.939075e-01  0.9333333
+    p2           1.056257e-02 3.233075e-02 -3.934682e-02 6.283881e-02  0.7333333
+    L1mis       -2.939364e-12 1.621903e-11 -3.136820e-11 2.507369e-11  0.6666667
+    Be2          9.894152e-02 1.843049e-01 -2.473504e-01 3.876082e-01  0.7333333
                  GR-crit    MCE/SD
-    (Intercept) 4.250396 0.6881835
-    B21         5.725656 0.7556129
-    c2          1.032600 0.2305233
-    p2          2.552055 0.2324322
-    L1mis       1.607823 0.1825742
-    Be2         2.367012 0.1825742
+    (Intercept) 1.749338 0.1470741
+    B21         3.992431 0.2804632
+    c2          1.212499 0.1070308
+    p2          1.092450 0.1825742
+    L1mis       1.366578 0.2164716
+    Be2         1.019905 0.1825742
     
     
     $m4b
     $m4b$c1
                          Mean           SD          2.5%        97.5% tail-prob.
-    (Intercept)  2.629893e-01 6.791894e-02  1.582766e-01 3.891363e-01  0.0000000
-    c2          -7.359234e-12 1.038904e-11 -2.762783e-11 8.248578e-12  0.4666667
-    b21         -6.374963e-02 1.145552e-01 -3.465853e-01 9.878683e-02  0.5333333
-    p2           1.189173e-02 1.649849e-02 -2.422035e-02 3.498137e-02  0.4000000
-    L1mis       -5.593985e-02 9.883765e-02 -2.348838e-01 9.097917e-02  0.8000000
+    (Intercept)  2.513696e-01 6.575880e-02  1.379249e-01 3.677624e-01  0.0000000
+    c2          -3.451225e-12 8.841555e-12 -1.918072e-11 1.048478e-11  0.8000000
+    b21          5.217701e-02 1.411360e-01 -2.962633e-01 2.529930e-01  0.4666667
+    p2           9.521162e-03 1.847259e-02 -3.493190e-02 3.180030e-02  0.6666667
+    L1mis       -5.771101e-02 8.210762e-02 -1.983384e-01 7.948761e-02  0.4666667
                  GR-crit    MCE/SD
-    (Intercept) 1.003484 0.1881775
-    c2          1.284024 0.2858237
-    b21         1.976655 0.2955120
-    p2          1.099622 0.1825742
-    L1mis       3.314179 0.5122683
+    (Intercept) 1.211519 0.1825742
+    c2          1.141464 0.1825742
+    b21         2.271601 0.3480924
+    p2          4.005187 0.3334899
+    L1mis       1.091072 0.1825742
     
     
     $m4c
     $m4c$c1
                        Mean         SD        2.5%      97.5% tail-prob.  GR-crit
-    (Intercept)  0.20278031 0.12178172 -0.04152910 0.37265938  0.1333333 1.812699
-    c2          -0.12390623 0.12348148 -0.37308112 0.04907909  0.2666667 1.636254
-    b21         -0.09789777 0.16288441 -0.32497271 0.20267380  0.5333333 7.722505
-    p2           0.02274182 0.02329818 -0.01367123 0.05994204  0.4666667 1.608151
-    L1mis       -0.05311945 0.14771263 -0.31397356 0.16412098  0.8000000 2.557733
+    (Intercept)  0.24853623 0.08184403  0.10377548 0.38572761  0.0000000 1.357510
+    c2          -0.10093950 0.27187264 -0.48454532 0.44069607  0.5333333 4.343021
+    b21         -0.02001651 0.10049555 -0.19669892 0.14959454  0.8666667 1.427129
+    p2           0.01910765 0.01845526 -0.01253914 0.04402356  0.2666667 3.156393
+    L1mis       -0.12573088 0.13850036 -0.39415940 0.08388984  0.4000000 1.358732
                    MCE/SD
-    (Intercept) 0.1530830
-    c2          0.2315483
-    b21         1.1150719
-    p2          0.2655275
-    L1mis       0.3762050
+    (Intercept) 0.1825742
+    c2          0.4401340
+    b21         0.1825742
+    p2          0.2634728
+    L1mis       0.1825742
     
     
     $m4d
     $m4d$c1
                         Mean         SD        2.5%      97.5% tail-prob.  GR-crit
-    (Intercept)  0.172655150 0.15012274 -0.05821744 0.45359287  0.2666667 1.247900
-    c2           0.017579467 0.22047674 -0.29182403 0.42442583  0.8666667 2.216320
-    b21          0.013568769 0.09520117 -0.14236320 0.17318367  0.7333333 1.835182
-    p2           0.010421638 0.01947227 -0.02446909 0.04066537  0.6000000 1.165076
-    L1mis       -0.015692256 0.09723663 -0.15079217 0.17434428  0.6666667 1.102070
-    Be2          0.005032806 0.21317743 -0.45231292 0.28747344  0.9333333 1.386592
+    (Intercept)  0.129193611 0.16161698 -0.13149757 0.43874647  0.4000000 1.204417
+    c2          -0.032822897 0.17191969 -0.33381731 0.25421157  0.8000000 1.433666
+    b21         -0.025054841 0.14395136 -0.22608078 0.25990961  0.6666667 5.803169
+    p2           0.005625511 0.01867812 -0.02284423 0.03777185  0.8000000 1.276578
+    L1mis       -0.056423015 0.09888204 -0.23048701 0.12395722  0.4666667 1.129660
+    Be2          0.192874238 0.19291811 -0.15672625 0.45576133  0.4000000 1.948874
                    MCE/SD
-    (Intercept) 0.1825742
-    c2          0.3966499
-    b21         0.1825742
-    p2          0.3015734
+    (Intercept) 0.2233343
+    c2          0.1825742
+    b21         0.5234990
+    p2          0.1825742
     L1mis       0.1825742
-    Be2         0.3385211
+    Be2         0.2910220
     
     
     $m5a
     $m5a$y
-                             Mean          SD         2.5%       97.5% tail-prob.
-    (Intercept)      -11.21925297  5.72744398 -22.17558473 -2.46878148 0.00000000
-    M22               -2.74825910  0.96024302  -4.20765889 -1.06562638 0.00000000
-    M23               -6.26068566  1.41461431  -8.43754652 -3.08907716 0.00000000
-    M24               -2.34338112  0.99082028  -3.72527276 -0.51005805 0.00000000
-    log(C1)          -23.88325287 18.50977564 -55.61629902  5.27345003 0.20000000
-    o22               -0.88492959  0.64861853  -2.23440895  0.06504092 0.13333333
-    o23                1.58009588  0.81677657   0.05949663  3.04039065 0.06666667
-    o24               -0.06408729  2.07366820  -3.17834349  3.11312819 0.86666667
-    abs(C1 - c2)       0.17153174  1.61578248  -2.63757052  3.20297643 0.86666667
-    time              -1.55299587  0.26682354  -1.96247493 -0.91261733 0.00000000
-    I(time^2)         -0.01800176  0.06321239  -0.11993989  0.07820809 0.93333333
-    o22:abs(C1 - c2)   1.73022035  0.78037065   0.49926056  3.06114712 0.00000000
-    o23:abs(C1 - c2)  -0.51695623  0.91924791  -2.31048563  1.04346166 0.53333333
-    o24:abs(C1 - c2)  -2.01484214  2.06226318  -4.90198200  1.41564995 0.40000000
-                       GR-crit    MCE/SD
-    (Intercept)      1.7395357 0.2318243
-    M22              1.5265337 0.3772499
-    M23              1.3075557 0.3231692
-    M24              1.8224477 0.2017131
-    log(C1)          1.5468422 0.2322768
-    o22              2.8885505 0.3169370
-    o23              2.7311083 0.4381573
-    o24              7.7210395 0.8263706
-    abs(C1 - c2)     1.5359346 0.1999236
-    time             3.3957555 0.4562416
-    I(time^2)        3.3819128 0.4696868
-    o22:abs(C1 - c2) 0.9849879 0.1825742
-    o23:abs(C1 - c2) 2.5602264 0.3778616
-    o24:abs(C1 - c2) 4.9892240 0.5518041
+                             Mean          SD        2.5%       97.5% tail-prob.
+    (Intercept)       -7.63273254 12.49746324 -31.3222385 14.82978708 0.46666667
+    M22               -3.98163661  1.99232887  -7.3507683 -0.85914206 0.00000000
+    M23               -6.54094031  1.46321269  -9.6168374 -4.64846914 0.00000000
+    M24               -2.76125921  2.05718474  -6.6110107 -0.12525075 0.06666667
+    log(C1)          -14.33779269 35.42439689 -82.9443464 50.87915329 0.86666667
+    o22               -1.10098070  1.10789171  -2.9128267  1.05425134 0.26666667
+    o23               -0.35632185  1.38053541  -2.7541227  1.49874992 1.00000000
+    o24               -0.07640924  1.59368149  -1.7802915  3.40886197 0.80000000
+    abs(C1 - c2)       0.26104551  1.99266367  -3.9928917  3.02460735 0.60000000
+    time              -1.12214936  0.34850423  -1.6346027 -0.50135301 0.00000000
+    I(time^2)         -0.08057971  0.05511124  -0.1750579  0.02251568 0.13333333
+    o22:abs(C1 - c2)   1.19888101  0.94887419  -0.5535858  2.77651022 0.20000000
+    o23:abs(C1 - c2)   0.50363495  1.25312631  -1.1064694  3.19448528 0.80000000
+    o24:abs(C1 - c2)  -2.77722969  1.60149471  -5.4819103  0.59338577 0.13333333
+                      GR-crit    MCE/SD
+    (Intercept)      3.672471 0.5307710
+    M22              6.786845 0.5637289
+    M23              4.603036 0.5148632
+    M24              5.473832 0.4332165
+    log(C1)          3.026982 0.4638157
+    o22              1.952719 0.4123659
+    o23              6.997671 0.5161725
+    o24              4.986067 0.3664933
+    abs(C1 - c2)     3.408597 0.3714511
+    time             5.484287 0.4336406
+    I(time^2)        2.740326 0.2303711
+    o22:abs(C1 - c2) 2.640992 0.4373436
+    o23:abs(C1 - c2) 5.927373 0.5281503
+    o24:abs(C1 - c2) 4.173134 0.5223074
     
     
     $m5b
     $m5b$b1
                           Mean           SD          2.5%        97.5% tail-prob.
-    (Intercept)   1.145410e-01 4.332429e-01 -5.181280e-01 9.845835e-01  0.8000000
-    L1mis         7.527742e-11 6.806828e-11 -2.188633e-11 1.655977e-10  0.4000000
-    abs(c1 - C2) -7.453355e-02 2.151384e-01 -4.438244e-01 2.983514e-01  0.7333333
-    log(Be2)     -6.624547e-02 2.368565e-01 -5.223379e-01 3.789458e-01  0.7333333
-    time          2.171068e-02 4.755543e-02 -7.301793e-02 9.484355e-02  0.6000000
+    (Intercept)   4.559961e-01 2.977483e-01 -2.254582e-02 9.173246e-01  0.1333333
+    L1mis        -2.636136e-11 2.983619e-11 -7.536009e-11 1.924063e-11  0.5333333
+    abs(c1 - C2) -8.000560e-02 1.683882e-01 -3.517072e-01 2.425263e-01  0.4666667
+    log(Be2)      3.229805e-01 2.629571e-01 -3.205099e-01 7.411132e-01  0.2000000
+    time         -3.034639e-03 5.782518e-02 -9.661919e-02 1.168435e-01  0.8666667
                   GR-crit    MCE/SD
-    (Intercept)  2.295186 0.3132638
-    L1mis        3.045281 0.4077934
-    abs(c1 - C2) 3.383528 0.4406168
-    log(Be2)     1.536123 0.1825742
-    time         1.946363 0.1825742
+    (Intercept)  1.303362 0.1825742
+    L1mis        1.794669 0.2122657
+    abs(c1 - C2) 2.384048 0.2982777
+    log(Be2)     2.015304 0.2088111
+    time         2.098754 0.1825742
     
     
     $m6a
     $m6a$y
-                        Mean         SD       2.5%     97.5% tail-prob.   GR-crit
-    (Intercept)  12.11631982 18.0290299 -23.891692 40.235476  0.4000000  1.852053
-    C1          -26.77611847 23.9378028 -64.208012 20.307796  0.2666667  1.769080
-    C2           -0.01067526  0.8772161  -1.626041  1.552196  1.0000000  1.431277
-    b21           1.08477751  1.0804245  -1.064882  2.463229  0.3333333  1.117819
-    time         -1.50020361  0.2459877  -1.912222 -1.226716  0.0000000 10.408193
+                       Mean         SD        2.5%     97.5% tail-prob.    GR-crit
+    (Intercept)  17.8096920 13.9828767  -3.9486613 44.735187 0.20000000  1.0352721
+    C1          -32.9918317 18.9709529 -69.2333083 -1.445674 0.06666667  0.9879149
+    C2           -0.5646779  1.0258789  -2.4753834  1.372961 0.60000000  3.6170789
+    b21           0.8268772  0.8992190  -0.5420198  2.302073 0.46666667  1.2131788
+    time         -2.0419515  0.3554959  -2.3914347 -1.403366 0.00000000 24.6001235
                    MCE/SD
     (Intercept) 0.1825742
     C1          0.1825742
-    C2          0.3754176
+    C2          0.3846305
     b21         0.1825742
-    time        0.5787833
+    time        0.9179843
     
     
     $m6b
     $m6b$b1
-                       Mean        SD        2.5%     97.5% tail-prob.  GR-crit
-    (Intercept)  0.26299742 0.1737116 -0.03976726 0.5667342  0.2000000 1.331110
-    C2           0.04260293 0.2778100 -0.42136389 0.5354978  0.8666667 3.067506
-    B11          0.15884190 0.2179407 -0.24426359 0.4179266  0.4666667 4.560132
-    c1          -0.16175257 0.2138383 -0.71172200 0.1493743  0.5333333 2.647684
-    time         0.01466441 0.1256883 -0.15124221 0.2171816  0.8000000 8.002718
+                       Mean         SD       2.5%      97.5% tail-prob.  GR-crit
+    (Intercept)  0.34495487 0.29359767 -0.1277123 0.79925525  0.2000000 2.867387
+    C2          -0.02841990 0.23511436 -0.5074605 0.38325393  0.9333333 1.803359
+    B11          0.22192347 0.24938490 -0.2557500 0.63399904  0.3333333 1.677451
+    c1          -0.15584816 0.15014056 -0.4108956 0.11595668  0.3333333 1.703269
+    time        -0.06022702 0.08772037 -0.2388880 0.09288276  0.4666667 3.243344
                    MCE/SD
-    (Intercept) 0.2050220
-    C2                 NA
-    B11         0.3872825
-    c1          0.3854404
-    time        0.8623869
+    (Intercept) 0.2668016
+    C2          0.3261184
+    B11         0.3267565
+    c1          0.1825742
+    time        0.4602747
     
     
     $m7a
     $m7a$y
-                            Mean        SD       2.5%     97.5% tail-prob.  GR-crit
-    (Intercept)        -7.126291 0.9647173  -8.872309 -6.007100          0 3.956686
-    ns(time, df = 2)1 -10.052664 2.3259053 -13.348508 -6.353015          0 5.477279
-    ns(time, df = 2)2  -5.869227 0.7607932  -7.081575 -4.599463          0 4.300727
+                            Mean       SD       2.5%     97.5% tail-prob.  GR-crit
+    (Intercept)        -6.661631 0.630193  -7.402653 -4.993710          0 3.668876
+    ns(time, df = 2)1 -10.697941 1.516033 -13.600385 -8.347677          0 1.946715
+    ns(time, df = 2)2  -5.327926 1.086228  -7.419272 -4.027349          0 7.131363
                          MCE/SD
-    (Intercept)       0.5336484
-    ns(time, df = 2)1 0.4713763
-    ns(time, df = 2)2 0.4744213
+    (Intercept)       0.4308998
+    ns(time, df = 2)1 0.4374863
+    ns(time, df = 2)2 0.6297832
     
     
     $m7b
     $m7b$y
-                           Mean       SD        2.5%     97.5% tail-prob.  GR-crit
-    (Intercept)       -9.558302 1.008195 -11.1927903 -7.649545          0 1.445856
-    bs(time, df = 3)1  5.532585 2.487727   0.5797995  8.452395          0 1.837247
-    bs(time, df = 3)2 -9.176323 1.941178 -12.3904834 -5.411146          0 2.105440
-    bs(time, df = 3)3 -2.990998 1.021049  -4.7372629 -1.197128          0 1.339585
+                            Mean       SD       2.5%      97.5% tail-prob.  GR-crit
+    (Intercept)        -7.339176 1.126866  -9.217803 -5.2354068  0.0000000 3.344854
+    bs(time, df = 3)1   1.398630 3.419647  -5.731509  6.8268480  0.5333333 4.771131
+    bs(time, df = 3)2 -11.328489 2.299569 -16.414374 -7.5602648  0.0000000 2.597860
+    bs(time, df = 3)3  -4.690344 2.142840  -8.474562 -0.6812481  0.0000000 3.901627
                          MCE/SD
-    (Intercept)       0.4123711
-    bs(time, df = 3)1 0.4399591
-    bs(time, df = 3)2 0.3649012
-    bs(time, df = 3)3 0.2332629
+    (Intercept)       0.4980750
+    bs(time, df = 3)1 0.4625728
+    bs(time, df = 3)2        NA
+    bs(time, df = 3)3 0.4073368
     
     
     $m7c
     $m7c$y
-                             Mean         SD         2.5%     97.5% tail-prob.
-    (Intercept)         8.7526483 15.4907615 -20.01082856 27.612910 0.60000000
-    C1                -21.9015270 21.3310379 -48.17670218 16.837250 0.40000000
-    c1                  0.5609717  0.3695308  -0.01955734  1.199071 0.06666667
-    ns(time, df = 3)1  -6.2531392  0.6788573  -7.49697905 -5.174915 0.00000000
-    ns(time, df = 3)2  -8.5901351  1.5567832 -11.40799376 -6.539075 0.00000000
-    ns(time, df = 3)3  -6.0892360  0.6748357  -7.57842302 -5.029103 0.00000000
-                       GR-crit    MCE/SD
-    (Intercept)       3.943145 0.2875822
-    C1                4.163001 0.2974975
-    c1                1.036385 0.1825742
-    ns(time, df = 3)1 3.553937 0.6574386
-    ns(time, df = 3)2 8.243964 0.5112112
-    ns(time, df = 3)3 5.449132 0.5036501
+                             Mean         SD        2.5%     97.5% tail-prob.
+    (Intercept)        17.7156495 19.6350529 -21.2707193 52.655202  0.2666667
+    C1                -33.1007179 26.7764122 -80.5942063 20.882027  0.2000000
+    c1                  0.4651491  0.4250322  -0.1614653  1.299388  0.2666667
+    ns(time, df = 3)1  -5.6995907  0.8658234  -7.1539095 -4.497399  0.0000000
+    ns(time, df = 3)2 -10.0145264  1.4967352 -12.3605841 -7.894951  0.0000000
+    ns(time, df = 3)3  -6.6061720  0.7622395  -7.4495789 -4.952570  0.0000000
+                       GR-crit     MCE/SD
+    (Intercept)       3.147200 0.49773724
+    C1                3.113248 0.50554744
+    c1                1.476569 0.09414454
+    ns(time, df = 3)1 8.637913 0.74843598
+    ns(time, df = 3)2 7.720579 0.67258604
+    ns(time, df = 3)3 7.404188 0.35829967
     
     
     $m7d
     $m7d$y
-                             Mean         SD        2.5%     97.5% tail-prob.
-    (Intercept)        15.3699015 17.9246525 -18.3810076 46.252914  0.4666667
-    C1                -29.6519305 24.1391329 -71.0253009 16.649414  0.2000000
-    C2                 -0.4627484  0.9700166  -2.0754367  1.314595  0.6666667
-    c1                  0.6223845  0.4086272  -0.1846882  1.511924  0.1333333
-    ns(time, df = 3)1  -5.3659675  1.1474102  -7.4499106 -2.903615  0.0000000
-    ns(time, df = 3)2 -11.8081197  2.1285741 -15.1574908 -7.360736  0.0000000
-    ns(time, df = 3)3  -5.5551970  1.1836475  -7.5874126 -3.483473  0.0000000
-                       GR-crit     MCE/SD
-    (Intercept)       1.108203 0.18257419
-    C1                1.097326 0.18257419
-    C2                4.424025 0.46846812
-    c1                1.628935 0.08806805
-    ns(time, df = 3)1 1.635002 0.34089605
-    ns(time, df = 3)2 2.405772 0.18257419
-    ns(time, df = 3)3 1.381263 0.22915793
+                             Mean         SD         2.5%     97.5% tail-prob.
+    (Intercept)        10.8922682 19.6769746 -31.46352256 40.956770 0.46666667
+    C1                -23.7015267 25.8526626 -63.18867112 31.602332 0.20000000
+    C2                  0.1610952  0.8070472  -1.21952451  1.504104 0.80000000
+    c1                  0.6736518  0.4212050  -0.01200116  1.316854 0.06666667
+    ns(time, df = 3)1  -5.7101577  1.4144528  -7.90053179 -2.952394 0.00000000
+    ns(time, df = 3)2 -10.3129491  3.7599481 -16.40136144 -4.192332 0.00000000
+    ns(time, df = 3)3  -5.2007490  1.2762493  -7.66850232 -3.421328 0.00000000
+                       GR-crit    MCE/SD
+    (Intercept)       1.013622 0.1825742
+    C1                1.019934 0.1825742
+    C2                2.563066 0.4196919
+    c1                1.692333 0.1825742
+    ns(time, df = 3)1 1.601718 0.2316486
+    ns(time, df = 3)2 1.552094 0.2988198
+    ns(time, df = 3)3 1.691295 0.3227268
     
     
     $m7e
     $m7e$y
-                             Mean         SD        2.5%     97.5% tail-prob.
-    (Intercept)        16.5529065 20.3621909 -21.4167075 57.418208  0.3333333
-    C1                -30.9465294 27.9044527 -88.4843698 22.287035  0.2666667
-    C2                  0.2018751  0.6633980  -0.8223242  1.390249  0.8666667
-    c1                  0.5890741  0.4024287  -0.1805927  1.229320  0.2666667
-    ns(time, df = 3)1  -6.3251504  1.6012872  -9.1535128 -4.266629  0.0000000
-    ns(time, df = 3)2 -10.2206890  3.0672224 -15.1719078 -4.846142  0.0000000
-    ns(time, df = 3)3  -5.4813296  1.8919365  -8.7924194 -2.025662  0.0000000
+                             Mean         SD         2.5%      97.5% tail-prob.
+    (Intercept)        17.7225573 22.0933052 -15.46284934 56.1752861  0.4000000
+    C1                -32.2588839 28.8746378 -81.02669857 12.2610962  0.2666667
+    C2                  0.4333445  0.8838742  -1.12840716  1.8479835  0.6666667
+    c1                  0.5426112  0.3181463  -0.06159346  0.9957852  0.1333333
+    ns(time, df = 3)1  -5.5394457  1.1125816  -7.81485037 -3.6619424  0.0000000
+    ns(time, df = 3)2 -11.2288677  3.8224040 -18.37771686 -5.5141970  0.0000000
+    ns(time, df = 3)3  -5.7755138  1.7106493  -8.70267494 -2.7700855  0.0000000
                        GR-crit    MCE/SD
-    (Intercept)       1.321027 0.1825742
-    C1                1.350864 0.1825742
-    C2                2.573437 0.4331948
-    c1                1.082534 0.1825742
-    ns(time, df = 3)1 6.110084 0.4726564
-    ns(time, df = 3)2 1.211266 0.1825742
-    ns(time, df = 3)3 3.870963 0.5205519
+    (Intercept)       1.103578 0.3224136
+    C1                1.061858 0.2284056
+    C2                1.985610 0.3000682
+    c1                1.324204 0.1825742
+    ns(time, df = 3)1 2.194098 0.2317805
+    ns(time, df = 3)2 4.604260 0.3658583
+    ns(time, df = 3)3 3.352609 0.2545885
     
     
     $m7f
     $m7f$y
-                             Mean         SD        2.5%     97.5% tail-prob.
-    (Intercept)        15.3699015 17.9246525 -18.3810076 46.252914  0.4666667
-    C1                -29.6519305 24.1391329 -71.0253009 16.649414  0.2000000
-    C2                 -0.4627484  0.9700166  -2.0754367  1.314595  0.6666667
-    c1                  0.6223845  0.4086272  -0.1846882  1.511924  0.1333333
-    ns(time, df = 3)1  -5.3659675  1.1474102  -7.4499106 -2.903615  0.0000000
-    ns(time, df = 3)2 -11.8081197  2.1285741 -15.1574908 -7.360736  0.0000000
-    ns(time, df = 3)3  -5.5551970  1.1836475  -7.5874126 -3.483473  0.0000000
-                       GR-crit     MCE/SD
-    (Intercept)       1.108203 0.18257419
-    C1                1.097326 0.18257419
-    C2                4.424025 0.46846812
-    c1                1.628935 0.08806805
-    ns(time, df = 3)1 1.635002 0.34089605
-    ns(time, df = 3)2 2.405772 0.18257419
-    ns(time, df = 3)3 1.381263 0.22915793
+                             Mean         SD         2.5%     97.5% tail-prob.
+    (Intercept)        10.8922682 19.6769746 -31.46352256 40.956770 0.46666667
+    C1                -23.7015267 25.8526626 -63.18867112 31.602332 0.20000000
+    C2                  0.1610952  0.8070472  -1.21952451  1.504104 0.80000000
+    c1                  0.6736518  0.4212050  -0.01200116  1.316854 0.06666667
+    ns(time, df = 3)1  -5.7101577  1.4144528  -7.90053179 -2.952394 0.00000000
+    ns(time, df = 3)2 -10.3129491  3.7599481 -16.40136144 -4.192332 0.00000000
+    ns(time, df = 3)3  -5.2007490  1.2762493  -7.66850232 -3.421328 0.00000000
+                       GR-crit    MCE/SD
+    (Intercept)       1.013622 0.1825742
+    C1                1.019934 0.1825742
+    C2                2.563066 0.4196919
+    c1                1.692333 0.1825742
+    ns(time, df = 3)1 1.601718 0.2316486
+    ns(time, df = 3)2 1.552094 0.2988198
+    ns(time, df = 3)3 1.691295 0.3227268
     
     
     $m8a
     $m8a$y
-                      Mean        SD        2.5%      97.5% tail-prob.  GR-crit
-    (Intercept) -8.3482009 1.1989367 -10.7258109 -6.3815654        0.0 1.470322
-    c1           0.7312775 0.5520984  -0.1065299  1.6803755        0.2 1.321479
-    c2          -2.1480442 2.2046280  -6.2963617  1.1635032        0.4 1.425066
-    time        -1.3922137 0.2268699  -1.6699723 -0.9770008        0.0 2.208095
+                      Mean        SD        2.5%     97.5% tail-prob.  GR-crit
+    (Intercept) -8.4973346 1.1464984 -10.4136563 -6.556623  0.0000000 4.128850
+    c1           0.5289676 0.5148349  -0.4101856  1.207525  0.3333333 1.510428
+    c2          -3.0361922 4.1985987  -8.7714717  3.022391  0.6666667 3.713552
+    time        -1.4217088 0.1292403  -1.5803407 -1.157956  0.0000000 3.266249
                    MCE/SD
-    (Intercept) 0.3325366
-    c1          0.2936883
-    c2          0.3514153
-    time        0.4785166
+    (Intercept) 0.5545917
+    c1          0.3390762
+    c2          0.2454162
+    time        0.3180869
     
     
     $m8b
     $m8b$y
-                      Mean        SD        2.5%      97.5% tail-prob.  GR-crit
-    (Intercept) -8.3482009 1.1989367 -10.7258109 -6.3815654        0.0 1.470322
-    c1           0.7312775 0.5520984  -0.1065299  1.6803755        0.2 1.321479
-    c2          -2.1480442 2.2046280  -6.2963617  1.1635032        0.4 1.425066
-    time        -1.3922137 0.2268699  -1.6699723 -0.9770008        0.0 2.208095
+                      Mean        SD        2.5%     97.5% tail-prob.  GR-crit
+    (Intercept) -8.4973346 1.1464984 -10.4136563 -6.556623  0.0000000 4.128850
+    c1           0.5289676 0.5148349  -0.4101856  1.207525  0.3333333 1.510428
+    c2          -3.0361922 4.1985987  -8.7714717  3.022391  0.6666667 3.713552
+    time        -1.4217088 0.1292403  -1.5803407 -1.157956  0.0000000 3.266249
                    MCE/SD
-    (Intercept) 0.3325366
-    c1          0.2936883
-    c2          0.3514153
-    time        0.4785166
+    (Intercept) 0.5545917
+    c1          0.3390762
+    c2          0.2454162
+    time        0.3180869
     
     
     $m8c
     $m8c$y
-                       Mean        SD        2.5%      97.5% tail-prob.  GR-crit
-    (Intercept) -10.5255891 1.4988213 -13.1922723 -7.7157619  0.0000000 1.237727
-    B21           1.4498447 1.4534958  -0.8806217  3.9534909  0.4000000 1.214879
-    c1           -0.2145989 0.5435113  -1.2633918  0.3989264  0.8666667 7.542615
-    c2           -4.8862883 3.4590310 -11.0630211  1.7321479  0.1333333 2.404034
-    time         -1.0458304 0.2823663  -1.4388617 -0.5304150  0.0000000 1.006960
-    B21:c1        2.0644546 0.6976931   0.8412215  3.1148174  0.0000000 2.948642
+                      Mean        SD        2.5%      97.5% tail-prob.   GR-crit
+    (Intercept) -7.9858130 1.8068558 -11.7485633 -5.2726756  0.0000000  3.427383
+    B21          0.9833424 1.0347371  -0.8184578  2.7042850  0.2666667  1.480783
+    c1          -0.8401943 0.9729882  -2.3144557  0.2876967  0.3333333 16.191699
+    c2          -2.5260423 3.7795044  -9.8451782  4.2068172  0.5333333  2.543488
+    time        -1.6498518 0.5065985  -2.3321136 -0.7511281  0.0000000  7.956047
+    B21:c1       1.8877631 0.5291816   1.1105545  2.7828116  0.0000000  3.478351
                    MCE/SD
-    (Intercept) 0.2628431
-    B21         0.2769915
-    c1          0.6330554
-    c2          0.2407738
-    time        0.1039003
-    B21:c1      0.1576854
+    (Intercept) 0.3152889
+    B21         0.2540705
+    c1          0.5825431
+    c2          0.3809203
+    time        0.6076619
+    B21:c1      0.4353383
     
     
     $m8d
     $m8d$y
-                       Mean        SD      2.5%       97.5% tail-prob.  GR-crit
-    (Intercept) -4.35460667 1.4221421 -7.007771 -2.41617285 0.00000000 3.192289
-    B21         -4.01249494 1.4036569 -6.469625 -1.80749195 0.00000000 2.108942
-    c1           0.08086487 0.9028269 -1.762574  1.24430997 0.66666667 5.651675
-    c2          -3.58607615 2.2452440 -8.119910 -0.04833173 0.06666667 3.768908
-    time        -1.74329985 0.2207264 -2.178099 -1.40565832 0.00000000 4.061594
-    B21:c1       1.80338929 1.0370986 -0.189223  3.74504875 0.06666667 2.362799
+                      Mean        SD       2.5%      97.5% tail-prob.  GR-crit
+    (Intercept) -4.5545227 2.1490747 -8.1271011 -1.0735806  0.0000000 6.296005
+    B21         -3.5707409 2.0336008 -7.2187320 -0.8630908  0.0000000 2.957563
+    c1           0.4778522 0.6447335 -0.6211048  1.3071018  0.5333333 4.704990
+    c2          -2.2968039 1.1467148 -4.3618002 -0.4161863  0.0000000 2.904624
+    time        -1.8795208 0.3057877 -2.3954235 -1.4860296  0.0000000 6.095946
+    B21:c1       2.3522090 1.3243714  0.6573749  4.5628137  0.0000000 4.273288
                    MCE/SD
-    (Intercept) 0.4841556
-    B21         0.2185338
-    c1          0.5106742
-    c2          0.2806800
-    time        0.5550956
-    B21:c1      0.2605431
+    (Intercept) 0.3840290
+    B21         0.5278156
+    c1          0.7086936
+    c2          0.6923276
+    time        0.4814448
+    B21:c1      0.4759394
     
     
     $m8e
     $m8e$y
-                       Mean         SD         2.5%      97.5% tail-prob.  GR-crit
-    (Intercept)  23.6534358 19.0915036 -14.05469312 58.1937620  0.2000000 1.146283
-    C1          -41.5303547 25.9058817 -86.47303065 11.4297558  0.2000000 1.114161
-    B21          -2.0208577  1.4150473  -5.73704071 -0.4387498  0.0000000 2.893343
-    c1           -0.3768158  0.9546540  -2.39933159  0.8996086  0.6666667 4.307342
-    c2           -3.1171101  2.2584389  -6.86501366  0.3461906  0.1333333 3.790938
-    time         -1.3349377  0.2606606  -1.80213987 -0.9011773  0.0000000 3.945550
-    B21:c1        1.1133969  0.8742822  -0.06104156  2.7516653  0.1333333 4.573693
+                       Mean         SD         2.5%       97.5% tail-prob.  GR-crit
+    (Intercept)  25.4555748 25.1501620  -16.9746819 72.96278885 0.26666667 2.005633
+    C1          -41.9268853 34.0875602 -106.0041937 16.82605988 0.20000000 1.998098
+    B21          -3.5648680  1.5338463   -6.5482167 -1.47266783 0.00000000 1.068414
+    c1           -0.8546425  0.6206557   -1.8364082  0.09632146 0.13333333 5.041814
+    c2           -4.2391349  3.9495041  -12.0679545  0.51016739 0.20000000 4.894212
+    time         -1.5876967  0.1919521   -1.9461162 -1.23372412 0.00000000 1.834011
+    B21:c1        1.7161575  0.6780609    0.2953994  2.79075832 0.06666667 3.634913
                    MCE/SD
-    (Intercept) 0.1760753
-    C1          0.1735302
-    B21         0.5030565
-    c1          0.5477708
-    c2          0.3108301
-    time        0.4555362
-    B21:c1      0.3951941
+    (Intercept) 0.2288656
+    C1          0.2270294
+    B21         0.3582586
+    c1          0.5839042
+    c2          0.5214895
+    time        0.2324631
+    B21:c1      0.4332831
     
     
     $m8f
     $m8f$y
-                       Mean         SD        2.5%     97.5% tail-prob.  GR-crit
-    (Intercept)  20.3027473 26.0007577 -34.8005269 61.820031  0.3333333 1.335016
-    C1          -38.6129785 34.9626591 -94.7454131 34.814323  0.2666667 1.305295
-    B21           0.7166518  1.1629198  -1.5593468  2.290683  0.5333333 1.324820
-    c1           -0.3665742  1.1911784  -2.6783193  1.328933  0.8666667 1.076405
-    c2           -1.3950130  3.1756987  -6.8154038  3.606627  0.7333333 3.788759
-    time         -1.5789762  0.2291204  -1.9524764 -1.203755  0.0000000 1.821264
-    B21:c1        1.1654590  1.2416485  -0.4966029  3.549436  0.4666667 1.216631
+                       Mean         SD       2.5%      97.5% tail-prob.  GR-crit
+    (Intercept)  22.5331405 19.8831343 -13.044509 52.6182450  0.3333333 1.330597
+    C1          -42.0578916 26.9672001 -81.653819  5.5035136  0.1333333 1.241606
+    B21           0.1607680  1.3757190  -2.164536  2.4570510  0.7333333 2.761658
+    c1           -0.3175318  1.1849659  -2.959322  1.6010407  0.8000000 1.401918
+    c2           -2.7428738  2.1383997  -6.637990  0.7227259  0.2000000 3.167032
+    time         -1.5202459  0.2595284  -2.179770 -1.1781353  0.0000000 5.210081
+    B21:c1        1.2306281  1.3935214  -1.191808  3.9447967  0.4666667 1.506244
                    MCE/SD
-    (Intercept) 0.3376795
-    C1          0.1941520
-    B21         0.2481472
-    c1          0.1825742
-    c2          0.4356357
-    time        0.2362859
-    B21:c1      0.2231296
+    (Intercept) 0.4380569
+    C1          0.1473137
+    B21         0.3865099
+    c1          0.2236910
+    c2          0.3505346
+    time        0.1825742
+    B21:c1      0.2254513
     
     
     $m8g
     $m8g$y
-                      Mean         SD        2.5%     97.5% tail-prob.  GR-crit
-    (Intercept) -6.3418319 23.0856638 -50.4586394 29.028156  0.8000000 1.461797
-    C1          -3.8374058 31.4401037 -52.1280327 55.525720  0.8000000 1.473843
-    B21          0.9693318  1.0968245  -1.1590204  3.125298  0.4000000 3.294248
-    c1          -0.6719624  1.2775832  -2.9230508  1.500316  0.6000000 2.501606
-    c2          -2.0618394  2.3797672  -6.0845067  2.190110  0.4000000 1.245263
-    time        -1.3932985  0.1620687  -1.7636493 -1.174444  0.0000000 3.374391
-    B21:c1       1.5298864  1.2852579  -0.6906827  3.480162  0.2666667 2.524967
+                       Mean         SD        2.5%      97.5% tail-prob.  GR-crit
+    (Intercept)   6.9991766 23.0211968 -33.2610837 43.9941075 0.73333333 2.766024
+    C1          -22.2240332 30.5105846 -70.5229632 32.9438284 0.60000000 2.655154
+    B21           0.6817866  1.2117820  -2.1394855  2.1539252 0.40000000 1.277228
+    c1           -0.9013129  0.7659888  -2.8046357  0.5341487 0.13333333 1.135634
+    c2           -5.1272800  4.4687727 -15.0085087  0.4970016 0.13333333 8.773096
+    time         -1.5384364  0.2135309  -1.8243894 -1.0500725 0.00000000 3.078116
+    B21:c1        1.8757981  0.9171626   0.4169245  4.0734041 0.06666667 1.092647
                    MCE/SD
-    (Intercept) 0.1825742
-    C1          0.1825742
-    B21         0.3429089
-    c1          0.3605203
-    c2          0.3191562
-    time        0.4255900
-    B21:c1      0.3956006
+    (Intercept) 0.2059855
+    C1          0.2064226
+    B21         0.2431707
+    c1          0.1825742
+    c2          0.3740342
+    time        0.1825742
+    B21:c1      0.1825742
     
     
     $m8h
     $m8h$y
                        Mean         SD         2.5%      97.5% tail-prob.  GR-crit
-    (Intercept)  28.1138140 36.5271646  -26.0626630 89.9046403  0.6000000 4.356851
-    C1          -45.3622388 48.9812764 -132.5273779 26.5998221  0.5333333 4.354640
-    B21          -2.9972265  1.6163670   -6.1938653 -1.1199383  0.0000000 7.028161
-    c2           -1.3227212  2.0122526   -5.1647356  2.1993308  0.4000000 2.139992
-    c1            0.3956304  0.3696486   -0.2927897  0.9271631  0.2666667 2.002099
-    time         -1.7872821  0.3081997   -2.2243604 -1.2858373  0.0000000 3.226297
-    B21:c2       -4.6449924  2.8858445   -9.2544736  0.3947344  0.2000000 4.471906
+    (Intercept)  33.9160447 23.6143369   -0.7124965 75.5610520 0.06666667 1.318960
+    C1          -53.0959321 32.4735971 -109.6112702 -5.2874709 0.06666667 1.335473
+    B21          -3.4622884  1.6397831   -7.2125060 -1.8099964 0.00000000 3.017700
+    c2           -1.0343571  1.7947638   -3.9422226  2.0539450 0.60000000 4.487751
+    c1            0.1646677  0.4334433   -0.6407607  0.8620751 0.60000000 1.788600
+    time         -1.5868869  0.1946476   -1.9123921 -1.1902823 0.00000000 3.028742
+    B21:c2       -2.5983544  2.6569136   -8.7468848  1.2171022 0.33333333 3.885172
                    MCE/SD
-    (Intercept) 0.4531322
-    C1          0.4526242
-    B21         0.5445921
-    c2          0.2469250
+    (Intercept) 0.1825742
+    C1          0.1825742
+    B21         0.5656638
+    c2          0.5123450
     c1          0.1825742
-    time        0.1825742
-    B21:c2      0.6263010
+    time        0.3111166
+    B21:c2      0.4543513
     
     
     $m8i
     $m8i$y
-                         Mean         SD        2.5%     97.5% tail-prob.  GR-crit
-    (Intercept)   7.008793236 23.4055961 -44.9462019 40.664492  0.6000000 1.838203
-    C1          -23.083388969 31.2624637 -65.8010823 44.401637  0.4000000 1.833720
-    B21           1.495883682  1.9720072  -2.0808742  5.579226  0.3333333 3.960183
-    c2           -5.279345331  5.9409074 -15.3877442  5.006195  0.3333333 3.611709
-    c1           -0.005629688  0.4827093  -0.8976461  0.682280  0.8000000 6.627470
-    time         -1.050782043  0.2618548  -1.3777944 -0.397602  0.0000000 1.115201
-    B21:c2        1.667711654  6.7224713  -9.2848597 15.981429  0.7333333 4.381573
+                       Mean         SD       2.5%      97.5% tail-prob.  GR-crit
+    (Intercept)   8.6273362 21.2869224 -30.116022 41.9095983  0.4666667 1.104068
+    C1          -23.6192976 28.7158489 -70.793499 29.5435705  0.3333333 1.176477
+    B21           0.4466829  1.2941233  -1.649294  2.8881003  0.7333333 1.851465
+    c2           -3.0289219  5.3629625 -14.630765  5.1286002  0.4000000 3.048479
+    c1           -0.8228078  1.1688460  -2.758229  0.7752253  0.6666667 8.567337
+    time         -1.3660270  0.4956348  -2.084034 -0.4740419  0.0000000 8.961869
+    B21:c2       -2.4949335  5.3005921 -12.670116  5.0120586  0.7333333 2.732641
                    MCE/SD
-    (Intercept) 0.3390259
-    C1          0.3307863
-    B21         0.4304969
-    c2          0.4729293
-    c1          0.7600836
-    time        0.2521300
-    B21:c2      0.5134975
+    (Intercept) 0.1414996
+    C1          0.1450530
+    B21         0.1825742
+    c2          0.4930725
+    c1          0.8428467
+    time        0.7435426
+    B21:c2      0.3727205
     
     
     $m8j
     $m8j$y
-                       Mean         SD         2.5%      97.5% tail-prob.  GR-crit
-    (Intercept)  22.6955470 17.9071141 -14.49616105 57.4834727  0.2000000 1.309017
-    C1          -34.3565020 26.8133679 -89.25230985 20.8437487  0.1333333 1.865951
-    B21          -1.8394079  1.7115812  -5.76815557  0.1973283  0.2666667 3.888937
-    c2            0.5994673  6.2513018  -8.20280686 10.4723184  1.0000000 8.559707
-    c1            0.6922801  0.3862150   0.06167413  1.4452915  0.0000000 1.221777
-    time         -1.5223208  0.2761938  -1.91891140 -1.0178071  0.0000000 2.782877
-    B21:c2       18.4464244 22.8263657 -12.46586999 57.5157368  0.4666667 8.400248
+                       Mean         SD         2.5%     97.5% tail-prob.  GR-crit
+    (Intercept)  39.3923977 26.8012099   -6.9870560 83.783561  0.1333333 1.249481
+    C1          -57.4875288 35.8027393 -115.5043370  7.681840  0.1333333 1.145716
+    B21          -3.7254527  1.6182729   -6.5440920 -1.117709  0.0000000 1.730797
+    c2           -2.2148902  3.6394683   -9.2461774  3.463779  0.6666667 3.308828
+    c1            0.8146923  0.6508730   -0.4982479  1.760943  0.2666667 2.063620
+    time         -1.6277418  0.2101042   -2.0591062 -1.244039  0.0000000 1.798044
+    B21:c2        9.9833438 15.2090178  -20.3746254 28.119599  0.4666667 2.385815
                    MCE/SD
-    (Intercept) 0.1825742
-    C1          0.1825742
-    B21         0.5267501
-    c2          0.6754061
-    c1          0.1953404
-    time        0.4250983
-    B21:c2      0.6259335
+    (Intercept) 0.2345651
+    C1          0.2340847
+    B21         0.3973098
+    c2          0.4984108
+    c1          0.2780426
+    time        0.2346591
+    B21:c2      0.3717822
     
     
     $m8k
     $m8k$y
-                       Mean         SD         2.5%      97.5% tail-prob.  GR-crit
-    (Intercept)  22.6955470 17.9071141 -14.49616105 57.4834727  0.2000000 1.309017
-    C1          -34.3565020 26.8133679 -89.25230985 20.8437487  0.1333333 1.865951
-    B21          -1.8394079  1.7115812  -5.76815557  0.1973283  0.2666667 3.888937
-    c2            0.5994673  6.2513018  -8.20280686 10.4723184  1.0000000 8.559707
-    c1            0.6922801  0.3862150   0.06167413  1.4452915  0.0000000 1.221777
-    time         -1.5223208  0.2761938  -1.91891140 -1.0178071  0.0000000 2.782877
-    B21:c2       18.4464244 22.8263657 -12.46586999 57.5157368  0.4666667 8.400248
+                       Mean         SD         2.5%     97.5% tail-prob.  GR-crit
+    (Intercept)  39.3923977 26.8012099   -6.9870560 83.783561  0.1333333 1.249481
+    C1          -57.4875288 35.8027393 -115.5043370  7.681840  0.1333333 1.145716
+    B21          -3.7254527  1.6182729   -6.5440920 -1.117709  0.0000000 1.730797
+    c2           -2.2148902  3.6394683   -9.2461774  3.463779  0.6666667 3.308828
+    c1            0.8146923  0.6508730   -0.4982479  1.760943  0.2666667 2.063620
+    time         -1.6277418  0.2101042   -2.0591062 -1.244039  0.0000000 1.798044
+    B21:c2        9.9833438 15.2090178  -20.3746254 28.119599  0.4666667 2.385815
                    MCE/SD
-    (Intercept) 0.1825742
-    C1          0.1825742
-    B21         0.5267501
-    c2          0.6754061
-    c1          0.1953404
-    time        0.4250983
-    B21:c2      0.6259335
+    (Intercept) 0.2345651
+    C1          0.2340847
+    B21         0.3973098
+    c2          0.4984108
+    c1          0.2780426
+    time        0.2346591
+    B21:c2      0.3717822
     
     
     $m8l
     $m8l$y
                         Mean         SD        2.5%       97.5% tail-prob.  GR-crit
-    (Intercept)  35.56048179 19.6394292   8.1173562  68.0890820 0.00000000 1.236651
-    C1          -54.80861169 26.6286587 -98.5556121 -17.9069067 0.00000000 1.224862
-    B21          -4.77366545  1.7115576  -8.7530730  -2.4466499 0.00000000 3.613492
-    c1           -1.52549386  0.7657320  -2.9381616  -0.1423527 0.06666667 1.938831
-    time         -0.68183235  0.3821498  -1.1912292   0.1392294 0.13333333 3.017824
-    B21:c1        2.36415220  0.9211735   0.9223363   3.8474299 0.00000000 2.444482
-    B21:time     -0.35782569  0.1243574  -0.5302992  -0.1177712 0.00000000 5.546025
-    c1:time      -0.09668030  0.1250059  -0.3116700   0.1653277 0.26666667 2.305588
-    B21:c1:time   0.01371063  0.2694361  -0.5180458   0.4561304 0.80000000 5.347488
+    (Intercept)  14.76972761 24.0861356 -29.6901989 49.99613165  0.4666667 2.253598
+    C1          -27.45747397 31.5771364 -72.8817240 29.85102306  0.4666667 2.057567
+    B21          -3.04384969  2.3444257  -6.7261856  0.42348420  0.3333333 7.192201
+    c1           -0.17822077  0.7587723  -1.4147063  1.31348346  0.8666667 2.610590
+    time         -1.06282485  0.4556930  -1.8605902 -0.38036847  0.0000000 3.365045
+    B21:c1        0.92738543  0.9300003  -0.5258295  2.32371008  0.5333333 2.840180
+    B21:time     -0.24863282  0.1627423  -0.4996021  0.01101357  0.1333333 8.723454
+    c1:time       0.01092246  0.1213025  -0.1921360  0.22024006  0.8666667 3.972689
+    B21:c1:time  -0.04005897  0.1974184  -0.3404594  0.35661679  0.6666667 3.713958
                    MCE/SD
-    (Intercept) 0.2142646
-    C1          0.2134212
-    B21         0.5143734
-    c1          0.4190034
-    time        0.3741962
-    B21:c1      0.4694838
-    B21:time    0.4084440
-    c1:time     0.1825742
-    B21:c1:time 0.4879910
+    (Intercept) 0.3157279
+    C1          0.3066719
+    B21         0.4043443
+    c1          0.3378471
+    time        0.6788790
+    B21:c1      0.3546760
+    B21:time    1.1249265
+    c1:time     0.4710431
+    B21:c1:time 0.4510621
     
     
     $m8m
     $m8m$y
-                      Mean        SD         2.5%      97.5% tail-prob.   GR-crit
-    (Intercept) -7.1134989 1.2967598 -9.098633811 -5.1315501 0.00000000 1.1300113
-    c1           0.1828501 0.6331205 -0.879047521  1.4389119 0.86666667 1.0543704
-    b11         -2.7959986 0.7774052 -4.130376370 -1.6406936 0.00000000 8.7969333
-    o1.L         1.0398703 0.6869783  0.006201999  2.2445127 0.06666667 0.9680077
-    o1.Q         0.3168462 0.5005839 -0.444186780  1.3577923 0.53333333 1.4976372
-    c1:b11      -0.7967659 0.9014499 -2.307004553  0.6044297 0.53333333 2.3966992
-                   MCE/SD
-    (Intercept) 0.1825742
-    c1          0.1736349
-    b11         0.7954337
-    o1.L        0.1825742
-    o1.Q        0.1825742
-    c1:b11      0.4268277
+                      Mean        SD          2.5%     97.5% tail-prob.  GR-crit
+    (Intercept) -7.5330174 1.6628853 -10.069743451 -4.228058 0.00000000 4.870071
+    c1           0.1717792 0.5088198  -0.727397653  1.014928 0.73333333 1.298035
+    b11         -2.8252421 0.7056104  -3.903547286 -1.651826 0.00000000 8.165694
+    o1.L         1.2988730 0.7572364   0.008515196  2.541393 0.06666667 1.318069
+    o1.Q         0.2779994 0.7543398  -0.966852667  1.423120 0.73333333 1.842418
+    c1:b11      -0.9422984 0.8722744  -2.729920739  0.313921 0.46666667 9.242178
+                    MCE/SD
+    (Intercept) 0.72665106
+    c1          0.08357673
+    b11         0.77739225
+    o1.L        0.20424652
+    o1.Q        0.21361183
+    c1:b11      0.72881042
     
     
 

@@ -4,64 +4,64 @@
     Potential scale reduction factors:
     
                           Point est. Upper C.I.
-    (Intercept)                 2.32      11.10
-    shape_Srv_ftm_stts_cn       4.05       8.55
+    (Intercept)                 2.18       7.96
+    shape_Srv_ftm_stts_cn       3.45      11.27
     
     
     $m1a
     Potential scale reduction factors:
     
                           Point est. Upper C.I.
-    (Intercept)                 8.71      22.63
-    age                         2.73       6.27
-    sexfemale                   2.99       5.84
-    shape_Srv_ftm_stts_cn       1.53       2.44
+    (Intercept)                 2.58      10.69
+    age                         2.85       7.57
+    sexfemale                   2.60       8.48
+    shape_Srv_ftm_stts_cn       5.41      11.66
     
     
     $m1b
     Potential scale reduction factors:
     
                           Point est. Upper C.I.
-    (Intercept)                 8.71      22.63
-    age                         2.73       6.27
-    sexfemale                   2.99       5.84
-    shape_Srv_ftm_stts_cn       1.53       2.44
+    (Intercept)                 2.58      10.69
+    age                         2.85       7.57
+    sexfemale                   2.60       8.48
+    shape_Srv_ftm_stts_cn       5.41      11.66
     
     
     $m2a
     Potential scale reduction factors:
     
                           Point est. Upper C.I.
-    (Intercept)                 1.55       2.47
-    copper                      1.71       2.97
-    shape_Srv_ftm_stts_cn       1.72       3.27
+    (Intercept)                 1.35       2.16
+    copper                      1.88       3.25
+    shape_Srv_ftm_stts_cn       1.96       4.42
     
     
     $m3a
     Potential scale reduction factors:
     
                           Point est. Upper C.I.
-    (Intercept)                 2.78       5.41
-    copper                      8.82      23.68
-    sexfemale                   3.03       5.58
-    age                         1.18       1.83
-    abs(age - copper)           6.90      14.32
-    log(trig)                   1.14       1.84
-    shape_Srv_ftm_stts_cn       2.59       8.86
+    (Intercept)                 3.32      13.97
+    copper                      1.49       3.48
+    sexfemale                   2.99      15.12
+    age                         1.17       2.02
+    abs(age - copper)           2.27       5.44
+    log(trig)                   2.49       7.18
+    shape_Srv_ftm_stts_cn       5.74      12.20
     
     
     $m3b
     Potential scale reduction factors:
     
                                   Point est. Upper C.I.
-    (Intercept)                         1.72       3.92
-    copper                              7.20      14.70
-    sexfemale                           1.54       2.47
-    age                                 1.44       3.41
-    abs(age - copper)                   6.88      17.77
-    log(trig)                           1.29       1.92
-    shape_Srv_ftm_stts_cn               1.38       2.12
-    D_Srv_ftm_stts_cn_center[1,1]       1.86       3.92
+    (Intercept)                         1.97       5.05
+    copper                              2.10       5.73
+    sexfemale                           2.60      10.77
+    age                                 1.67       4.12
+    abs(age - copper)                   1.59       5.17
+    log(trig)                           1.42       3.12
+    shape_Srv_ftm_stts_cn               2.09       7.19
+    D_Srv_ftm_stts_cn_center[1,1]       1.31       2.70
     
     
 
@@ -69,49 +69,49 @@
 
     $m0a
                            est MCSE   SD MCSE/SD
-    (Intercept)           8.92 0.32 0.99    0.32
-    shape_Srv_ftm_stts_cn 0.93 0.17 0.26    0.64
+    (Intercept)           8.58 0.25 0.70    0.35
+    shape_Srv_ftm_stts_cn 0.97 0.15 0.24    0.64
     
     $m1a
                              est   MCSE    SD MCSE/SD
-    (Intercept)            9.616 0.8453 1.571    0.54
-    age                   -0.055 0.0053 0.029    0.18
-    sexfemale              0.971 0.7895 1.422    0.56
-    shape_Srv_ftm_stts_cn  0.582 0.1013 0.555    0.18
+    (Intercept)            7.754 0.3268 0.671    0.49
+    age                   -0.033 0.0098 0.024    0.41
+    sexfemale              2.251 1.1218 2.018    0.56
+    shape_Srv_ftm_stts_cn  0.672 0.1462 0.279    0.52
     
     $m1b
                              est   MCSE    SD MCSE/SD
-    (Intercept)            9.616 0.8453 1.571    0.54
-    age                   -0.055 0.0053 0.029    0.18
-    sexfemale              0.971 0.7895 1.422    0.56
-    shape_Srv_ftm_stts_cn  0.582 0.1013 0.555    0.18
+    (Intercept)            7.754 0.3268 0.671    0.49
+    age                   -0.033 0.0098 0.024    0.41
+    sexfemale              2.251 1.1218 2.018    0.56
+    shape_Srv_ftm_stts_cn  0.672 0.1462 0.279    0.52
     
     $m2a
                               est    MCSE     SD MCSE/SD
-    (Intercept)            8.7367 0.11431 0.6261    0.18
-    copper                -0.0078 0.00055 0.0017    0.32
-    shape_Srv_ftm_stts_cn  0.7949 0.11803 0.2588    0.46
+    (Intercept)            8.3022 0.05153 0.0997    0.52
+    copper                -0.0047 0.00043 0.0012    0.37
+    shape_Srv_ftm_stts_cn  1.2754 0.10966 0.2093    0.52
     
     $m3a
-                              est   MCSE    SD MCSE/SD
-    (Intercept)            6.9217 0.7679 1.396   0.550
-    copper                -0.0053 0.0122 0.014   0.854
-    sexfemale              4.2978 1.3061 2.374   0.550
-    age                   -0.0081 0.0011 0.024   0.048
-    abs(age - copper)     -0.0015 0.0120 0.014   0.871
-    log(trig)              0.3262 0.1011 0.315   0.321
-    shape_Srv_ftm_stts_cn      NA     NA 0.206      NA
+                              est   MCSE     SD MCSE/SD
+    (Intercept)            8.7681 0.3359 0.7388    0.45
+    copper                -0.0033 0.0009 0.0032    0.28
+    sexfemale              1.2021 0.5469 1.5135    0.36
+    age                   -0.0120 0.0031 0.0172    0.18
+    abs(age - copper)     -0.0051 0.0012 0.0035    0.34
+    log(trig)              0.1907 0.1057 0.2878    0.37
+    shape_Srv_ftm_stts_cn  0.9114 0.1276 0.4747    0.27
     
     $m3b
                                       est   MCSE    SD MCSE/SD
-    (Intercept)                        NA     NA 0.651      NA
-    copper                        -0.0025 0.0115 0.021    0.54
-    sexfemale                      3.7800 0.3451 1.205    0.29
-    age                           -0.0343 0.0095 0.049    0.20
-    abs(age - copper)             -0.0069 0.0138 0.026    0.53
-    log(trig)                      0.0048 0.1947 0.381    0.51
-    shape_Srv_ftm_stts_cn          0.2856 0.0618 0.119    0.52
-    D_Srv_ftm_stts_cn_center[1,1]  2.0625 1.2909 2.106    0.61
+    (Intercept)                    7.5999 0.6223 1.280    0.49
+    copper                        -0.0058 0.0077 0.014    0.56
+    sexfemale                      6.5814 1.7222 2.434    0.71
+    age                           -0.0184 0.0190 0.045    0.42
+    abs(age - copper)             -0.0074 0.0056 0.013    0.43
+    log(trig)                      0.4048 0.3662 0.775    0.47
+    shape_Srv_ftm_stts_cn              NA     NA 0.458      NA
+    D_Srv_ftm_stts_cn_center[1,1]  2.8350 0.5230 2.250    0.23
     
 
 # summary output remained the same
@@ -126,7 +126,7 @@
     
     Coefficients:
     (Intercept) 
-           8.92 
+          8.577 
     
     Call:
     survreg_imp(formula = Surv(futime, status != "censored") ~ age + 
@@ -137,7 +137,7 @@
     
     Coefficients:
     (Intercept)         age   sexfemale 
-        9.61568    -0.05494     0.97102 
+        7.75403    -0.03342     2.25126 
     
     Call:
     survreg_imp(formula = Surv(futime, I(status != "censored")) ~ 
@@ -148,7 +148,7 @@
     
     Coefficients:
     (Intercept)         age   sexfemale 
-        9.61568    -0.05494     0.97102 
+        7.75403    -0.03342     2.25126 
     
     Call:
     survreg_imp(formula = Surv(futime, status != "censored") ~ copper, 
@@ -159,7 +159,7 @@
     
     Coefficients:
     (Intercept)      copper 
-       8.736723   -0.007793 
+       8.302183   -0.004669 
     
     Call:
     survreg_imp(formula = Surv(futime, status != "censored") ~ copper + 
@@ -171,9 +171,9 @@
     
     Coefficients:
           (Intercept)            copper         sexfemale               age 
-             6.921706         -0.005326          4.297754         -0.008066 
+             8.768086         -0.003336          1.202081         -0.011995 
     abs(age - copper)         log(trig) 
-            -0.001513          0.326235 
+            -0.005132          0.190719 
     
     Call:
     survreg_imp(formula = Surv(futime, status != "censored") ~ copper + 
@@ -186,9 +186,9 @@
     
     Coefficients:
           (Intercept)            copper         sexfemale               age 
-             7.344525         -0.002483          3.779971         -0.034337 
+             7.599867         -0.005812          6.581364         -0.018355 
     abs(age - copper)         log(trig) 
-            -0.006899          0.004765 
+            -0.007409          0.404835 
     $m0a
     
     Call:
@@ -200,7 +200,7 @@
     
     Coefficients:
     (Intercept) 
-           8.92 
+          8.577 
     
     $m1a
     
@@ -213,7 +213,7 @@
     
     Coefficients:
     (Intercept)         age   sexfemale 
-        9.61568    -0.05494     0.97102 
+        7.75403    -0.03342     2.25126 
     
     $m1b
     
@@ -226,7 +226,7 @@
     
     Coefficients:
     (Intercept)         age   sexfemale 
-        9.61568    -0.05494     0.97102 
+        7.75403    -0.03342     2.25126 
     
     $m2a
     
@@ -239,7 +239,7 @@
     
     Coefficients:
     (Intercept)      copper 
-       8.736723   -0.007793 
+       8.302183   -0.004669 
     
     $m3a
     
@@ -253,9 +253,9 @@
     
     Coefficients:
           (Intercept)            copper         sexfemale               age 
-             6.921706         -0.005326          4.297754         -0.008066 
+             8.768086         -0.003336          1.202081         -0.011995 
     abs(age - copper)         log(trig) 
-            -0.001513          0.326235 
+            -0.005132          0.190719 
     
     $m3b
     
@@ -270,9 +270,9 @@
     
     Coefficients:
           (Intercept)            copper         sexfemale               age 
-             7.344525         -0.002483          3.779971         -0.034337 
+             7.599867         -0.005812          6.581364         -0.018355 
     abs(age - copper)         log(trig) 
-            -0.006899          0.004765 
+            -0.007409          0.404835 
     
 
 ---
@@ -280,41 +280,41 @@
     $m0a
     $m0a$`Surv(futime, status != "censored")`
     (Intercept) 
-       8.920167 
+       8.576968 
     
     
     $m1a
     $m1a$`Surv(futime, status != "censored")`
     (Intercept)         age   sexfemale 
-     9.61567776 -0.05493708  0.97102383 
+     7.75402552 -0.03341543  2.25126083 
     
     
     $m1b
     $m1b$`Surv(futime, I(status != "censored"))`
     (Intercept)         age   sexfemale 
-     9.61567776 -0.05493708  0.97102383 
+     7.75402552 -0.03341543  2.25126083 
     
     
     $m2a
     $m2a$`Surv(futime, status != "censored")`
      (Intercept)       copper 
-     8.736722638 -0.007793056 
+     8.302182684 -0.004669059 
     
     
     $m3a
     $m3a$`Surv(futime, status != "censored")`
           (Intercept)            copper         sexfemale               age 
-          6.921706418      -0.005325644       4.297754205      -0.008065518 
+          8.768085750      -0.003336453       1.202080789      -0.011995110 
     abs(age - copper)         log(trig) 
-         -0.001512599       0.326235131 
+         -0.005132365       0.190719127 
     
     
     $m3b
     $m3b$`Surv(futime, status != "censored")`
           (Intercept)            copper         sexfemale               age 
-          7.344524586      -0.002482514       3.779970588      -0.034336967 
+          7.599866676      -0.005811516       6.581363856      -0.018355030 
     abs(age - copper)         log(trig) 
-         -0.006898518       0.004764755 
+         -0.007409157       0.404835349 
     
     
 
@@ -322,53 +322,53 @@
 
     $m0a
     $m0a$`Surv(futime, status != "censored")`
-                    2.5%    97.5%
-    (Intercept) 8.191309 11.72205
+                   2.5%    97.5%
+    (Intercept) 7.76067 10.11905
     
     
     $m1a
     $m1a$`Surv(futime, status != "censored")`
-                      2.5%       97.5%
-    (Intercept)  8.0563136 13.89016833
-    age         -0.1186986 -0.01229382
-    sexfemale   -1.2807896  4.16901423
+                       2.5%        97.5%
+    (Intercept)  6.08625118 8.5316282849
+    age         -0.08859325 0.0009502609
+    sexfemale    0.12846086 7.0000902406
     
     
     $m1b
     $m1b$`Surv(futime, I(status != "censored"))`
-                      2.5%       97.5%
-    (Intercept)  8.0563136 13.89016833
-    age         -0.1186986 -0.01229382
-    sexfemale   -1.2807896  4.16901423
+                       2.5%        97.5%
+    (Intercept)  6.08625118 8.5316282849
+    age         -0.08859325 0.0009502609
+    sexfemale    0.12846086 7.0000902406
     
     
     $m2a
     $m2a$`Surv(futime, status != "censored")`
-                       2.5%        97.5%
-    (Intercept)  7.71204705  9.655883466
-    copper      -0.01086081 -0.004823294
+                        2.5%        97.5%
+    (Intercept)  8.148170054  8.494817962
+    copper      -0.006467309 -0.002072201
     
     
     $m3a
     $m3a$`Surv(futime, status != "censored")`
-                             2.5%      97.5%
-    (Intercept)        4.32207013 9.35677718
-    copper            -0.02510163 0.01620712
-    sexfemale         -0.23532143 8.60849978
-    age               -0.05427373 0.03173331
-    abs(age - copper) -0.02297363 0.01850717
-    log(trig)         -0.25705076 0.96361285
+                             2.5%         97.5%
+    (Intercept)        8.11031444 10.4829993599
+    copper            -0.01079280 -0.0001568012
+    sexfemale         -0.17076532  5.1088442056
+    age               -0.04935764  0.0161092947
+    abs(age - copper) -0.01260420  0.0016366364
+    log(trig)         -0.19422862  0.8251377222
     
     
     $m3b
     $m3b$`Surv(futime, status != "censored")`
-                             2.5%      97.5%
-    (Intercept)        6.45865995 8.52092785
-    copper            -0.04098652 0.02390099
-    sexfemale          2.12993733 6.33321114
-    age               -0.13617834 0.04799307
-    abs(age - copper) -0.03605017 0.03531677
-    log(trig)         -0.60099587 0.81400637
+                             2.5%        97.5%
+    (Intercept)        5.49590788  9.478000262
+    copper            -0.03039247  0.009489533
+    sexfemale          3.50818639 10.863735470
+    age               -0.13708050  0.032683805
+    abs(age - copper) -0.03175597  0.015448816
+    log(trig)         -1.25535151  1.337299871
     
     
 
@@ -386,12 +386,12 @@
     Number of events: 169 
     
     Posterior summary:
-                Mean    SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 8.92 0.994 8.19  11.7          0    6.52  0.317
+                Mean  SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) 8.58 0.7 7.76  10.1          0    4.27  0.351
     
     Posterior summary of the shape of the Weibull distribution:
-                           Mean    SD  2.5% 97.5% GR-crit MCE/SD
-    shape_Srv_ftm_stts_cn 0.927 0.261 0.505  1.37    4.03   0.64
+                           Mean   SD  2.5% 97.5% GR-crit MCE/SD
+    shape_Srv_ftm_stts_cn 0.974 0.24 0.583  1.43    4.64  0.642
     
     
     MCMC settings:
@@ -414,14 +414,14 @@
     Number of events: 169 
     
     Posterior summary:
-                   Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  9.6157 1.5707  8.056 13.8902      0.000    9.59  0.538
-    age         -0.0549 0.0288 -0.119 -0.0123      0.000    4.12  0.183
-    sexfemale    0.9710 1.4224 -1.281  4.1690      0.333    4.14  0.555
+                   Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  7.7540 0.6707  6.0863 8.53163     0.0000    5.41  0.487
+    age         -0.0334 0.0237 -0.0886 0.00095     0.0667    4.87  0.414
+    sexfemale    2.2513 2.0183  0.1285 7.00009     0.0000    6.32  0.556
     
     Posterior summary of the shape of the Weibull distribution:
                            Mean    SD  2.5% 97.5% GR-crit MCE/SD
-    shape_Srv_ftm_stts_cn 0.582 0.555 0.298  1.49    2.82  0.183
+    shape_Srv_ftm_stts_cn 0.672 0.279 0.281  1.08    9.88  0.524
     
     
     MCMC settings:
@@ -444,14 +444,14 @@
     Number of events: 169 
     
     Posterior summary:
-                   Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  9.6157 1.5707  8.056 13.8902      0.000    9.59  0.538
-    age         -0.0549 0.0288 -0.119 -0.0123      0.000    4.12  0.183
-    sexfemale    0.9710 1.4224 -1.281  4.1690      0.333    4.14  0.555
+                   Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  7.7540 0.6707  6.0863 8.53163     0.0000    5.41  0.487
+    age         -0.0334 0.0237 -0.0886 0.00095     0.0667    4.87  0.414
+    sexfemale    2.2513 2.0183  0.1285 7.00009     0.0000    6.32  0.556
     
     Posterior summary of the shape of the Weibull distribution:
                            Mean    SD  2.5% 97.5% GR-crit MCE/SD
-    shape_Srv_ftm_stts_cn 0.582 0.555 0.298  1.49    2.82  0.183
+    shape_Srv_ftm_stts_cn 0.672 0.279 0.281  1.08    9.88  0.524
     
     
     MCMC settings:
@@ -474,13 +474,13 @@
     Number of events: 169 
     
     Posterior summary:
-                    Mean      SD    2.5%    97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)  8.73672 0.62608  7.7120  9.65588          0    2.63  0.183
-    copper      -0.00779 0.00172 -0.0109 -0.00482          0    1.59  0.321
+                    Mean      SD     2.5%    97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)  8.30218 0.09974  8.14817  8.49482          0    2.43  0.517
+    copper      -0.00467 0.00115 -0.00647 -0.00207          0    4.53  0.370
     
     Posterior summary of the shape of the Weibull distribution:
-                           Mean    SD  2.5% 97.5% GR-crit MCE/SD
-    shape_Srv_ftm_stts_cn 0.795 0.259 0.454  1.35       1  0.456
+                          Mean    SD 2.5% 97.5% GR-crit MCE/SD
+    shape_Srv_ftm_stts_cn 1.28 0.209 1.06  1.78    4.14  0.524
     
     
     MCMC settings:
@@ -504,17 +504,17 @@
     Number of events: 169 
     
     Posterior summary:
-                          Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)        6.92171 1.3959  4.3221 9.3568      0.000    6.88 0.5501
-    copper            -0.00533 0.0143 -0.0251 0.0162      0.667   13.38 0.8539
-    sexfemale          4.29775 2.3745 -0.2353 8.6085      0.133    3.96 0.5501
-    age               -0.00807 0.0235 -0.0543 0.0317      0.800    1.83 0.0481
-    abs(age - copper) -0.00151 0.0137 -0.0230 0.0185      0.933    9.89 0.8707
-    log(trig)          0.32624 0.3154 -0.2571 0.9636      0.267    2.01 0.3207
+                          Mean      SD    2.5%     97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)        8.76809 0.73876  8.1103 10.482999     0.0000   15.39  0.455
+    copper            -0.00334 0.00318 -0.0108 -0.000157     0.0667    2.50  0.282
+    sexfemale          1.20208 1.51346 -0.1708  5.108844     0.4000    9.19  0.361
+    age               -0.01200 0.01724 -0.0494  0.016109     0.4000    1.44  0.183
+    abs(age - copper) -0.00513 0.00352 -0.0126  0.001637     0.1333    5.04  0.337
+    log(trig)          0.19072 0.28781 -0.1942  0.825138     0.5333    4.11  0.367
     
     Posterior summary of the shape of the Weibull distribution:
-                           Mean    SD  2.5% 97.5% GR-crit MCE/SD
-    shape_Srv_ftm_stts_cn 0.485 0.206 0.254 0.891    3.38       
+                           Mean    SD 2.5% 97.5% GR-crit MCE/SD
+    shape_Srv_ftm_stts_cn 0.911 0.475 0.25  2.09    2.32  0.269
     
     
     MCMC settings:
@@ -539,21 +539,21 @@
     Number of events: 169 
     
     Posterior summary:
-                          Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
-    (Intercept)        7.34452 0.6507  6.4587 8.5209      0.000    2.90       
-    copper            -0.00248 0.0213 -0.0410 0.0239      0.667    9.76  0.540
-    sexfemale          3.77997 1.2049  2.1299 6.3332      0.000    1.87  0.286
-    age               -0.03434 0.0486 -0.1362 0.0480      0.267    1.66  0.196
-    abs(age - copper) -0.00690 0.0260 -0.0361 0.0353      0.667   17.68  0.530
-    log(trig)          0.00476 0.3808 -0.6010 0.8140      0.800    2.85  0.511
+                          Mean     SD    2.5%    97.5% tail-prob. GR-crit MCE/SD
+    (Intercept)        7.59987 1.2799  5.4959  9.47800      0.000    2.07  0.486
+    copper            -0.00581 0.0137 -0.0304  0.00949      0.933    5.08  0.558
+    sexfemale          6.58136 2.4342  3.5082 10.86374      0.000    8.06  0.707
+    age               -0.01836 0.0448 -0.1371  0.03268      0.600    2.91  0.424
+    abs(age - copper) -0.00741 0.0128 -0.0318  0.01545      0.467    4.69  0.435
+    log(trig)          0.40484 0.7754 -1.2554  1.33730      0.600    4.10  0.472
     
     Posterior summary of random effects covariance matrix:
                                   Mean   SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    D_Srv_ftm_stts_cn_center[1,1] 2.06 2.11 0.0841  6.48               4.16  0.613
+    D_Srv_ftm_stts_cn_center[1,1] 2.83 2.25 0.0848  7.72               1.45  0.232
     
     Posterior summary of the shape of the Weibull distribution:
                            Mean    SD   2.5% 97.5% GR-crit MCE/SD
-    shape_Srv_ftm_stts_cn 0.286 0.119 0.0983 0.504     1.6  0.521
+    shape_Srv_ftm_stts_cn 0.491 0.458 0.0655  1.59    1.45       
     
     
     MCMC settings:
@@ -571,78 +571,78 @@
 
     $m0a
     $m0a$`Surv(futime, status != "censored")`
-                    Mean        SD     2.5%    97.5% tail-prob.  GR-crit    MCE/SD
-    (Intercept) 8.920167 0.9939183 8.191309 11.72205          0 6.523569 0.3174352
+                    Mean        SD    2.5%    97.5% tail-prob.  GR-crit    MCE/SD
+    (Intercept) 8.576968 0.6999852 7.76067 10.11905          0 4.268363 0.3508166
     
     
     $m1a
     $m1a$`Surv(futime, status != "censored")`
-                       Mean         SD       2.5%       97.5% tail-prob.  GR-crit
-    (Intercept)  9.61567776 1.57065526  8.0563136 13.89016833  0.0000000 9.588740
-    age         -0.05493708 0.02879581 -0.1186986 -0.01229382  0.0000000 4.117418
-    sexfemale    0.97102383 1.42235492 -1.2807896  4.16901423  0.3333333 4.142224
+                       Mean         SD        2.5%        97.5% tail-prob.  GR-crit
+    (Intercept)  7.75402552 0.67073711  6.08625118 8.5316282849 0.00000000 5.414238
+    age         -0.03341543 0.02373507 -0.08859325 0.0009502609 0.06666667 4.872822
+    sexfemale    2.25126083 2.01826352  0.12846086 7.0000902406 0.00000000 6.323336
                    MCE/SD
-    (Intercept) 0.5381789
-    age         0.1825742
-    sexfemale   0.5550906
+    (Intercept) 0.4872748
+    age         0.4139970
+    sexfemale   0.5558004
     
     
     $m1b
     $m1b$`Surv(futime, I(status != "censored"))`
-                       Mean         SD       2.5%       97.5% tail-prob.  GR-crit
-    (Intercept)  9.61567776 1.57065526  8.0563136 13.89016833  0.0000000 9.588740
-    age         -0.05493708 0.02879581 -0.1186986 -0.01229382  0.0000000 4.117418
-    sexfemale    0.97102383 1.42235492 -1.2807896  4.16901423  0.3333333 4.142224
+                       Mean         SD        2.5%        97.5% tail-prob.  GR-crit
+    (Intercept)  7.75402552 0.67073711  6.08625118 8.5316282849 0.00000000 5.414238
+    age         -0.03341543 0.02373507 -0.08859325 0.0009502609 0.06666667 4.872822
+    sexfemale    2.25126083 2.01826352  0.12846086 7.0000902406 0.00000000 6.323336
                    MCE/SD
-    (Intercept) 0.5381789
-    age         0.1825742
-    sexfemale   0.5550906
+    (Intercept) 0.4872748
+    age         0.4139970
+    sexfemale   0.5558004
     
     
     $m2a
     $m2a$`Surv(futime, status != "censored")`
-                        Mean          SD        2.5%        97.5% tail-prob.
-    (Intercept)  8.736722638 0.626075900  7.71204705  9.655883466          0
-    copper      -0.007793056 0.001720985 -0.01086081 -0.004823294          0
+                        Mean          SD         2.5%        97.5% tail-prob.
+    (Intercept)  8.302182684 0.099736359  8.148170054  8.494817962          0
+    copper      -0.004669059 0.001152257 -0.006467309 -0.002072201          0
                  GR-crit    MCE/SD
-    (Intercept) 2.627220 0.1825742
-    copper      1.589019 0.3212012
+    (Intercept) 2.430737 0.5166593
+    copper      4.531965 0.3701408
     
     
     $m3a
     $m3a$`Surv(futime, status != "censored")`
-                              Mean         SD        2.5%      97.5% tail-prob.
-    (Intercept)        6.921706418 1.39586784  4.32207013 9.35677718  0.0000000
-    copper            -0.005325644 0.01433883 -0.02510163 0.01620712  0.6666667
-    sexfemale          4.297754205 2.37445749 -0.23532143 8.60849978  0.1333333
-    age               -0.008065518 0.02352026 -0.05427373 0.03173331  0.8000000
-    abs(age - copper) -0.001512599 0.01372865 -0.02297363 0.01850717  0.9333333
-    log(trig)          0.326235131 0.31537838 -0.25705076 0.96361285  0.2666667
-                        GR-crit     MCE/SD
-    (Intercept)        6.875252 0.55013612
-    copper            13.376930 0.85394891
-    sexfemale          3.956863 0.55005569
-    age                1.826583 0.04813287
-    abs(age - copper)  9.889592 0.87066331
-    log(trig)          2.007854 0.32072480
+                              Mean          SD        2.5%         97.5% tail-prob.
+    (Intercept)        8.768085750 0.738757507  8.11031444 10.4829993599 0.00000000
+    copper            -0.003336453 0.003182426 -0.01079280 -0.0001568012 0.06666667
+    sexfemale          1.202080789 1.513457342 -0.17076532  5.1088442056 0.40000000
+    age               -0.011995110 0.017235723 -0.04935764  0.0161092947 0.40000000
+    abs(age - copper) -0.005132365 0.003515916 -0.01260420  0.0016366364 0.13333333
+    log(trig)          0.190719127 0.287813358 -0.19422862  0.8251377222 0.53333333
+                        GR-crit    MCE/SD
+    (Intercept)       15.387831 0.4547150
+    copper             2.496890 0.2822852
+    sexfemale          9.190864 0.3613601
+    age                1.443521 0.1825742
+    abs(age - copper)  5.044116 0.3368934
+    log(trig)          4.108515 0.3673100
     
     
     $m3b
     $m3b$`Surv(futime, status != "censored")`
-                              Mean         SD        2.5%      97.5% tail-prob.
-    (Intercept)        7.344524586 0.65073152  6.45865995 8.52092785  0.0000000
-    copper            -0.002482514 0.02128534 -0.04098652 0.02390099  0.6666667
-    sexfemale          3.779970588 1.20488747  2.12993733 6.33321114  0.0000000
-    age               -0.034336967 0.04857712 -0.13617834 0.04799307  0.2666667
-    abs(age - copper) -0.006898518 0.02604593 -0.03605017 0.03531677  0.6666667
-    log(trig)          0.004764755 0.38076233 -0.60099587 0.81400637  0.8000000
-                        GR-crit    MCE/SD
-    (Intercept)        2.897979        NA
-    copper             9.760845 0.5400432
-    sexfemale          1.868427 0.2863980
-    age                1.656826 0.1961632
-    abs(age - copper) 17.682321 0.5304992
-    log(trig)          2.853541 0.5113992
+                              Mean         SD        2.5%        97.5% tail-prob.
+    (Intercept)        7.599866676 1.27985095  5.49590788  9.478000262  0.0000000
+    copper            -0.005811516 0.01374986 -0.03039247  0.009489533  0.9333333
+    sexfemale          6.581363856 2.43417538  3.50818639 10.863735470  0.0000000
+    age               -0.018355030 0.04481398 -0.13708050  0.032683805  0.6000000
+    abs(age - copper) -0.007409157 0.01284329 -0.03175597  0.015448816  0.4666667
+    log(trig)          0.404835349 0.77543574 -1.25535151  1.337299871  0.6000000
+                       GR-crit    MCE/SD
+    (Intercept)       2.073492 0.4861930
+    copper            5.077397 0.5578735
+    sexfemale         8.063729 0.7074941
+    age               2.913685 0.4241797
+    abs(age - copper) 4.685845 0.4349240
+    log(trig)         4.095126 0.4723151
     
     
 

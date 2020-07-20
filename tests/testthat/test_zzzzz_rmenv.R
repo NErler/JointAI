@@ -1,1 +1,2 @@
-Sys.setenv(IS_TEST = "")
+context("IS CHECK")
+Sys.setenv(IS_CHECK = "")

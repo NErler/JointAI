@@ -4,167 +4,167 @@
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    M12: (Intercept)      0.962       0.99
-    M13: (Intercept)      1.071       1.36
-    M14: (Intercept)      1.050       1.29
+    M12: (Intercept)       1.05       1.27
+    M13: (Intercept)       1.11       1.44
+    M14: (Intercept)       1.05       1.27
     
     
     $m0b
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    M22: (Intercept)       2.28       4.01
-    M23: (Intercept)       1.89       4.90
-    M24: (Intercept)       1.40       2.14
+    M22: (Intercept)       1.25       1.77
+    M23: (Intercept)       1.76       3.15
+    M24: (Intercept)       1.42       2.45
     
     
     $m1a
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    M12: (Intercept)       1.90       3.35
-    M12: C1                1.91       3.36
-    M13: (Intercept)       1.51       2.66
-    M13: C1                1.51       2.66
-    M14: (Intercept)       1.79       3.96
-    M14: C1                1.79       3.99
+    M12: (Intercept)       1.22       1.77
+    M12: C1                1.22       1.77
+    M13: (Intercept)       1.03       1.24
+    M13: C1                1.03       1.24
+    M14: (Intercept)       1.03       1.18
+    M14: C1                1.03       1.17
     
     
     $m1b
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    M22: (Intercept)       1.41       3.00
-    M22: C1                1.41       3.00
-    M23: (Intercept)       1.13       1.48
-    M23: C1                1.12       1.47
-    M24: (Intercept)       1.41       3.04
-    M24: C1                1.41       3.04
+    M22: (Intercept)       1.55       2.54
+    M22: C1                1.56       2.57
+    M23: (Intercept)       1.83       4.36
+    M23: C1                1.84       4.42
+    M24: (Intercept)       2.09       4.39
+    M24: C1                2.09       4.39
     
     
     $m2a
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    M12: (Intercept)       1.19       1.64
-    M12: C2                1.13       1.59
-    M13: (Intercept)       1.17       1.70
-    M13: C2                1.41       2.19
-    M14: (Intercept)       1.03       1.24
-    M14: C2                1.62       2.71
+    M12: (Intercept)      0.997       1.01
+    M12: C2               0.963       1.05
+    M13: (Intercept)      1.347       2.02
+    M13: C2               1.006       1.10
+    M14: (Intercept)      1.351       2.12
+    M14: C2               1.539       2.90
     
     
     $m2b
     Potential scale reduction factors:
     
                      Point est. Upper C.I.
-    M22: (Intercept)       1.06       1.28
-    M22: C2                1.05       1.28
-    M23: (Intercept)       1.10       1.47
-    M23: C2                1.07       1.36
-    M24: (Intercept)       1.10       1.45
-    M24: C2                1.25       1.81
+    M22: (Intercept)       1.16       1.84
+    M22: C2                1.11       1.58
+    M23: (Intercept)       1.59       2.65
+    M23: C2                1.03       1.26
+    M24: (Intercept)       1.38       2.36
+    M24: C2                1.07       1.11
     
     
     $m3a
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)      0.927      0.945
-    M12              0.924      0.948
-    M13              0.938      0.985
-    M14              1.015      1.275
-    sigma_C1         1.060      1.386
+    (Intercept)      1.039      1.346
+    M12              0.927      0.948
+    M13              0.995      1.200
+    M14              1.026      1.304
+    sigma_C1         0.996      1.201
     
     
     $m3b
     Potential scale reduction factors:
     
                 Point est. Upper C.I.
-    (Intercept)       1.46       2.35
-    M22               1.23       1.83
-    M23               1.26       1.98
-    M24               1.27       2.06
-    sigma_C1          1.21       1.73
+    (Intercept)       1.06       1.31
+    M22               1.02       1.19
+    M23               1.06       1.33
+    M24               1.19       1.75
+    sigma_C1          1.11       1.48
     
     
     $m4a
     Potential scale reduction factors:
     
                           Point est. Upper C.I.
-    M12: (Intercept)           1.171      1.615
-    M12: M22                   1.309      2.156
-    M12: M23                   1.034      1.120
-    M12: M24                   1.018      1.031
-    M12: O22                   4.309      8.558
-    M12: O23                  11.340     24.184
-    M12: O24                   0.933      0.952
-    M12: abs(C1 - C2)          1.543      2.463
-    M12: log(C1)               1.104      1.434
-    M12: O22:abs(C1 - C2)      3.627      8.480
-    M12: O23:abs(C1 - C2)      8.203     16.160
-    M12: O24:abs(C1 - C2)      1.075      1.399
-    M13: (Intercept)           1.009      1.185
-    M13: M22                   1.713      3.600
-    M13: M23                   0.932      0.937
-    M13: M24                   1.452      2.327
-    M13: O22                   3.355      6.862
-    M13: O23                   5.120     11.546
-    M13: O24                   2.478      5.345
-    M13: abs(C1 - C2)          1.112      1.481
-    M13: log(C1)               0.976      1.090
-    M13: O22:abs(C1 - C2)      1.733      3.107
-    M13: O23:abs(C1 - C2)      4.304     10.597
-    M13: O24:abs(C1 - C2)      1.898      4.392
-    M14: (Intercept)           1.002      1.155
-    M14: M22                   1.841      4.442
-    M14: M23                   1.129      1.676
-    M14: M24                   1.346      2.831
-    M14: O22                   3.274      8.946
-    M14: O23                   2.146      3.731
-    M14: O24                   3.569      7.399
-    M14: abs(C1 - C2)          1.220      2.024
-    M14: log(C1)               0.997      1.139
-    M14: O22:abs(C1 - C2)      1.232      1.781
-    M14: O23:abs(C1 - C2)      3.394      6.407
-    M14: O24:abs(C1 - C2)      5.035     12.291
+    M12: (Intercept)            1.05       1.31
+    M12: M22                    1.26       1.80
+    M12: M23                    1.88       3.39
+    M12: M24                    1.66       4.30
+    M12: O22                    3.95       8.33
+    M12: O23                    1.88       6.27
+    M12: O24                    3.18       5.97
+    M12: abs(C1 - C2)           2.17       3.81
+    M12: log(C1)                1.13       1.50
+    M12: O22:abs(C1 - C2)       4.65       8.74
+    M12: O23:abs(C1 - C2)       1.93       4.15
+    M12: O24:abs(C1 - C2)       3.56       7.50
+    M13: (Intercept)            1.01       1.12
+    M13: M22                    1.04       1.27
+    M13: M23                    1.12       1.57
+    M13: M24                    1.06       1.31
+    M13: O22                    6.25      12.57
+    M13: O23                    3.57       7.66
+    M13: O24                    2.94      13.61
+    M13: abs(C1 - C2)           1.96       3.63
+    M13: log(C1)                1.04       1.27
+    M13: O22:abs(C1 - C2)       4.21       7.86
+    M13: O23:abs(C1 - C2)       4.12       8.04
+    M13: O24:abs(C1 - C2)       3.24       9.53
+    M14: (Intercept)            1.00       1.07
+    M14: M22                    1.25       1.98
+    M14: M23                    1.31       2.26
+    M14: M24                    1.02       1.15
+    M14: O22                    1.34       2.30
+    M14: O23                    4.52      10.15
+    M14: O24                    1.90       3.67
+    M14: abs(C1 - C2)           4.86       9.60
+    M14: log(C1)                1.03       1.19
+    M14: O22:abs(C1 - C2)       1.60       2.80
+    M14: O23:abs(C1 - C2)       4.22       9.29
+    M14: O24:abs(C1 - C2)       1.29       1.96
     
     
     $m4b
     Potential scale reduction factors:
     
                                                                     Point est.
-    M12: (Intercept)                                                     1.040
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   6.196
-    M12: abs(C1 - C2)                                                    1.472
-    M12: log(C1)                                                         1.056
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      8.441
-    M13: (Intercept)                                                     1.156
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   5.083
-    M13: abs(C1 - C2)                                                    1.224
-    M13: log(C1)                                                         1.143
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      6.740
-    M14: (Intercept)                                                     0.992
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   2.481
-    M14: abs(C1 - C2)                                                    1.041
-    M14: log(C1)                                                         1.013
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      3.766
+    M12: (Intercept)                                                      1.37
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                    3.26
+    M12: abs(C1 - C2)                                                     1.79
+    M12: log(C1)                                                          1.39
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)       3.40
+    M13: (Intercept)                                                      1.04
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   12.51
+    M13: abs(C1 - C2)                                                     1.89
+    M13: log(C1)                                                          1.04
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      10.61
+    M14: (Intercept)                                                      1.15
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                    5.07
+    M14: abs(C1 - C2)                                                     1.63
+    M14: log(C1)                                                          1.12
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)       5.29
                                                                     Upper C.I.
-    M12: (Intercept)                                                      1.26
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   17.14
-    M12: abs(C1 - C2)                                                     2.48
-    M12: log(C1)                                                          1.32
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      28.81
-    M13: (Intercept)                                                      1.75
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   10.79
-    M13: abs(C1 - C2)                                                     1.80
-    M13: log(C1)                                                          1.71
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      15.93
-    M14: (Intercept)                                                      1.14
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                    8.34
-    M14: abs(C1 - C2)                                                     1.20
-    M14: log(C1)                                                          1.19
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)       9.85
+    M12: (Intercept)                                                      2.23
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                    8.24
+    M12: abs(C1 - C2)                                                     3.78
+    M12: log(C1)                                                          2.30
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)       6.83
+    M13: (Intercept)                                                      1.18
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   26.07
+    M13: abs(C1 - C2)                                                     3.48
+    M13: log(C1)                                                          1.21
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      35.15
+    M14: (Intercept)                                                      1.54
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   13.12
+    M14: abs(C1 - C2)                                                     2.74
+    M14: log(C1)                                                          1.47
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      12.43
     
     
 
@@ -172,140 +172,140 @@
 
     $m0a
                        est  MCSE   SD MCSE/SD
-    M12: (Intercept) -0.15 0.031 0.17    0.18
-    M13: (Intercept) -0.41 0.044 0.24    0.18
-    M14: (Intercept) -0.51 0.061 0.34    0.18
+    M12: (Intercept) -0.20 0.061 0.35    0.18
+    M13: (Intercept) -0.46 0.049 0.27    0.18
+    M14: (Intercept) -0.54 0.054 0.29    0.18
     
     $m0b
-                      est  MCSE   SD MCSE/SD
-    M22: (Intercept) 0.41 0.114 0.31    0.36
-    M23: (Intercept) 0.45 0.115 0.26    0.45
-    M24: (Intercept) 0.46 0.057 0.31    0.18
+                       est  MCSE   SD MCSE/SD
+    M22: (Intercept) 0.082 0.044 0.22    0.20
+    M23: (Intercept) 0.167 0.067 0.28    0.24
+    M24: (Intercept) 0.107 0.082 0.26    0.31
     
     $m1a
                      est MCSE SD MCSE/SD
-    M12: (Intercept) -69 11.7 36    0.33
-    M12: C1           48  8.1 25    0.33
-    M13: (Intercept) -49 11.0 41    0.27
-    M13: C1           34  7.7 28    0.27
-    M14: (Intercept) -59  9.0 35    0.26
-    M14: C1           41  6.3 24    0.26
+    M12: (Intercept) -48  4.7 26    0.18
+    M12: C1           33  3.3 18    0.18
+    M13: (Intercept) -25  4.9 27    0.18
+    M13: C1           17  3.4 19    0.18
+    M14: (Intercept) -44  5.3 29    0.18
+    M14: C1           30  3.7 20    0.18
     
     $m1b
-                     est MCSE SD MCSE/SD
-    M22: (Intercept) -17  7.6 36    0.21
-    M22: C1           12  5.3 25    0.21
-    M23: (Intercept) -20  8.9 34    0.26
-    M23: C1           14  6.2 24    0.26
-    M24: (Intercept)  NA   NA 34      NA
-    M24: C1           NA   NA 24      NA
+                       est MCSE SD MCSE/SD
+    M22: (Intercept)  -1.6  8.1 38    0.22
+    M22: C1            1.2  5.7 26    0.22
+    M23: (Intercept)  -1.3 12.7 37    0.34
+    M23: C1            1.0  8.8 26    0.34
+    M24: (Intercept) -29.0 12.0 33    0.36
+    M24: C1           20.4  8.4 23    0.36
     
     $m2a
-                       est  MCSE   SD MCSE/SD
-    M12: (Intercept) -0.32 0.052 0.26    0.20
-    M12: C2          -0.15 0.246 0.69    0.36
-    M13: (Intercept) -0.61 0.060 0.33    0.18
-    M13: C2          -1.11 0.189 1.04    0.18
-    M14: (Intercept) -0.53 0.041 0.23    0.18
-    M14: C2          -0.46 0.349 1.05    0.33
+                        est  MCSE   SD MCSE/SD
+    M12: (Intercept) -0.331 0.026 0.23    0.11
+    M12: C2          -0.099 0.098 0.54    0.18
+    M13: (Intercept) -0.685 0.132 0.31    0.43
+    M13: C2          -0.844 0.147 0.69    0.21
+    M14: (Intercept) -0.675 0.091 0.29    0.31
+    M14: C2          -0.414 0.133 0.60    0.22
     
     $m2b
-                       est MCSE   SD MCSE/SD
-    M22: (Intercept)  0.22 0.23 0.45    0.50
-    M22: C2          -0.94 0.62 1.32    0.47
-    M23: (Intercept)  0.47 0.19 0.40    0.49
-    M23: C2           0.14 0.39 1.30    0.30
-    M24: (Intercept)  0.39 0.12 0.37    0.33
-    M24: C2           0.30 0.46 1.02    0.45
+                        est  MCSE   SD MCSE/SD
+    M22: (Intercept)  0.462 0.089 0.38   0.230
+    M22: C2          -0.826 0.125 1.09   0.114
+    M23: (Intercept)  0.525 0.117 0.42   0.278
+    M23: C2           0.264 0.117 0.84   0.139
+    M24: (Intercept)  0.551 0.131 0.49   0.268
+    M24: C2           0.023 0.084 0.88   0.095
     
     $m3a
-                  est   MCSE    SD MCSE/SD
-    (Intercept) 1.422 0.0065 0.036    0.18
-    M12         0.021 0.0103 0.057    0.18
-    M13         0.023 0.0165 0.090    0.18
-    M14         0.018 0.0066 0.036    0.18
-    sigma_C1    0.029 0.0055 0.030    0.18
+                   est  MCSE    SD MCSE/SD
+    (Intercept) 1.4117 0.017 0.095    0.18
+    M12         0.0435 0.026 0.141    0.18
+    M13         0.0093 0.028 0.152    0.18
+    M14         0.0355 0.017 0.093    0.18
+    sigma_C1    0.0440 0.013 0.069    0.18
     
     $m3b
-                    est    MCSE     SD MCSE/SD
-    (Intercept) 1.43268 0.00072 0.0039    0.18
-    M22         0.00015 0.00097 0.0053    0.18
-    M23         0.00181 0.00106 0.0058    0.18
-    M24         0.00267 0.00099 0.0054    0.18
-    sigma_C1    0.01925 0.00021 0.0012    0.18
+                   est    MCSE     SD MCSE/SD
+    (Intercept) 1.4324 0.00069 0.0038    0.18
+    M22         0.0013 0.00080 0.0044    0.18
+    M23         0.0017 0.00087 0.0047    0.18
+    M24         0.0052 0.00107 0.0053    0.20
+    sigma_C1    0.0201 0.00033 0.0014    0.23
     
     $m4a
-                              est MCSE    SD MCSE/SD
-    M12: (Intercept)      -25.419 3.48 12.24    0.28
-    M12: M22               -1.104 0.28  0.64    0.44
-    M12: M23                0.239 0.37  0.79    0.47
-    M12: M24               -0.562 0.31  0.99    0.31
-    M12: O22               -2.181 2.29  2.89    0.79
-    M12: O23                0.903 3.72  4.04    0.92
-    M12: O24               -0.207 0.50  1.02    0.49
-    M12: abs(C1 - C2)       0.839 0.41  1.13    0.36
-    M12: log(C1)           69.161 7.91 33.11    0.24
-    M12: O22:abs(C1 - C2)   0.953 0.35  1.82    0.19
-    M12: O23:abs(C1 - C2)  -1.661 1.79  2.72    0.66
-    M12: O24:abs(C1 - C2)  -0.275 0.37  0.84    0.44
-    M13: (Intercept)       -9.619 2.56 14.01    0.18
-    M13: M22               -2.107 0.28  0.95    0.30
-    M13: M23               -1.297 0.17  0.91    0.18
-    M13: M24                0.150 0.16  0.56    0.29
-    M13: O22               -3.110 0.34  1.33    0.26
-    M13: O23                1.194 1.09  1.94    0.56
-    M13: O24                0.295 0.41  1.19    0.34
-    M13: abs(C1 - C2)      -0.013 0.39  1.00    0.39
-    M13: log(C1)           24.496 6.78 37.15    0.18
-    M13: O22:abs(C1 - C2)      NA   NA  1.12      NA
-    M13: O23:abs(C1 - C2)  -0.110 0.63  1.04    0.60
-    M13: O24:abs(C1 - C2)   0.594 0.61  1.14    0.53
-    M14: (Intercept)      -26.690 2.73 14.96    0.18
-    M14: M22               -0.747 0.20  0.60    0.33
-    M14: M23               -0.970 0.22  0.85    0.26
-    M14: M24               -1.639 0.11  0.58    0.18
-    M14: O22                0.307 0.76  1.07    0.71
-    M14: O23               -1.687 0.73  1.08    0.68
-    M14: O24                2.987 1.32  2.36    0.56
-    M14: abs(C1 - C2)       0.233 0.15  0.65    0.23
-    M14: log(C1)           73.768 7.60 41.63    0.18
-    M14: O22:abs(C1 - C2)   0.269 0.37  0.84    0.44
-    M14: O23:abs(C1 - C2)   0.937 0.36  0.70    0.52
-    M14: O24:abs(C1 - C2)  -2.590 0.58  1.32    0.44
+                              est    MCSE    SD MCSE/SD
+    M12: (Intercept)      -22.756  2.1937 12.02   0.183
+    M12: M22               -0.724  0.2627  0.68   0.387
+    M12: M23                0.683  0.2880  0.54   0.538
+    M12: M24               -0.246  0.2998  0.84   0.357
+    M12: O22               -2.166  0.7493  1.53   0.490
+    M12: O23               -2.054  0.3178  1.12   0.283
+    M12: O24                0.450  0.6784  1.25   0.542
+    M12: abs(C1 - C2)       0.068  0.4034  1.01   0.400
+    M12: log(C1)           63.347  6.2287 34.12   0.183
+    M12: O22:abs(C1 - C2)   1.391  0.6938  0.97   0.713
+    M12: O23:abs(C1 - C2)   0.519  0.2267  0.74   0.307
+    M12: O24:abs(C1 - C2)  -0.474  0.3946  0.85   0.465
+    M13: (Intercept)       -8.200  2.2865 12.52   0.183
+    M13: M22               -1.899  0.1233  0.60   0.207
+    M13: M23               -1.132  0.1231  0.57   0.217
+    M13: M24                0.289  0.1583  0.44   0.360
+    M13: O22               -1.117  1.7057  1.99   0.857
+    M13: O23                1.071  0.4717  1.09   0.432
+    M13: O24                0.116  0.7165  1.88   0.382
+    M13: abs(C1 - C2)       0.584  0.6356  1.15   0.552
+    M13: log(C1)           17.950  6.6081 36.19   0.183
+    M13: O22:abs(C1 - C2)   1.763  1.2904  1.53   0.843
+    M13: O23:abs(C1 - C2)  -0.197  0.4731  0.99   0.477
+    M13: O24:abs(C1 - C2)   0.663  0.5075  1.17   0.434
+    M14: (Intercept)      -19.518  1.8632 15.90   0.117
+    M14: M22               -0.752  0.1270  0.70   0.183
+    M14: M23               -0.664  0.0095  0.71   0.013
+    M14: M24               -1.386  0.1191  0.65   0.183
+    M14: O22                   NA      NA  1.18      NA
+    M14: O23               -1.008  1.1474  1.79   0.642
+    M14: O24                2.257  0.1843  0.75   0.245
+    M14: abs(C1 - C2)       0.220  1.0267  1.55   0.663
+    M14: log(C1)           53.200 14.6498 45.83   0.320
+    M14: O22:abs(C1 - C2)   1.153  0.5193  1.02   0.511
+    M14: O23:abs(C1 - C2)   0.605  0.6722  1.24   0.544
+    M14: O24:abs(C1 - C2)  -1.904  0.1146  0.63   0.183
     
     $m4b
                                                                         est MCSE
-    M12: (Intercept)                                                -22.539 1.62
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.105 1.17
-    M12: abs(C1 - C2)                                                -0.075 0.60
-    M12: log(C1)                                                     62.278 4.31
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.024 1.27
-    M13: (Intercept)                                                -11.074 1.55
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -2.571 1.04
-    M13: abs(C1 - C2)                                                 0.033 0.52
-    M13: log(C1)                                                     29.277 4.23
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   1.853 0.61
-    M14: (Intercept)                                                -20.686 0.81
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -1.088 0.93
-    M14: abs(C1 - C2)                                                 0.201 0.21
-    M14: log(C1)                                                     55.605 3.32
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.500 0.41
+    M12: (Intercept)                                                -22.095 3.40
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                0.061 0.70
+    M12: abs(C1 - C2)                                                -0.196 0.13
+    M12: log(C1)                                                     61.445 9.46
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.064 0.43
+    M13: (Intercept)                                                -13.614 2.69
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.283 3.06
+    M13: abs(C1 - C2)                                                 0.466 0.27
+    M13: log(C1)                                                     34.320 7.39
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.368 1.90
+    M14: (Intercept)                                                -20.310 2.24
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.016 1.77
+    M14: abs(C1 - C2)                                                 0.238 0.56
+    M14: log(C1)                                                     54.350 6.34
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.219 1.38
                                                                        SD MCSE/SD
-    M12: (Intercept)                                                 8.85   0.183
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               2.25   0.519
-    M12: abs(C1 - C2)                                                0.90   0.664
-    M12: log(C1)                                                    23.59   0.183
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.43   0.889
-    M13: (Intercept)                                                 8.48   0.183
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               1.84   0.567
-    M13: abs(C1 - C2)                                                1.14   0.452
-    M13: log(C1)                                                    23.14   0.183
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.20   0.507
-    M14: (Intercept)                                                10.70   0.076
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               1.57   0.593
-    M14: abs(C1 - C2)                                                0.97   0.213
-    M14: log(C1)                                                    29.25   0.114
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.93   0.437
+    M12: (Intercept)                                                12.64    0.27
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               1.17    0.60
+    M12: abs(C1 - C2)                                                0.73    0.18
+    M12: log(C1)                                                    34.75    0.27
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.76    0.56
+    M13: (Intercept)                                                14.71    0.18
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               2.94    1.04
+    M13: abs(C1 - C2)                                                1.10    0.24
+    M13: log(C1)                                                    40.49    0.18
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.78    1.07
+    M14: (Intercept)                                                12.29    0.18
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               1.94    0.91
+    M14: abs(C1 - C2)                                                0.99    0.56
+    M14: log(C1)                                                    34.74    0.18
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.27    1.08
     
 
 # summary output remained the same
@@ -320,7 +320,7 @@
     
     Coefficients:
     (Intercept) (Intercept) (Intercept) 
-        -0.1500     -0.4060     -0.5149 
+        -0.1991     -0.4567     -0.5357 
     
     Call:
     mlogit_imp(formula = M2 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
@@ -331,7 +331,7 @@
     
     Coefficients:
     (Intercept) (Intercept) (Intercept) 
-         0.4141      0.4523      0.4628 
+        0.08186     0.16715     0.10684 
     
     Call:
     mlogit_imp(formula = M1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
@@ -342,7 +342,7 @@
     
     Coefficients:
     (Intercept)          C1 (Intercept)          C1 (Intercept)          C1 
-         -68.63       47.75      -49.19       34.01      -59.47       41.17 
+         -47.76       33.10      -25.48       17.39      -44.13       30.35 
     
     Call:
     mlogit_imp(formula = M2 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
@@ -353,7 +353,7 @@
     
     Coefficients:
     (Intercept)          C1 (Intercept)          C1 (Intercept)          C1 
-         -16.53       11.84      -19.84       14.13      -46.83       33.04 
+         -1.587       1.247      -1.318       1.049     -28.989      20.380 
     
     Call:
     mlogit_imp(formula = M1 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
@@ -364,7 +364,7 @@
     
     Coefficients:
     (Intercept)          C2 (Intercept)          C2 (Intercept)          C2 
-        -0.3195     -0.1528     -0.6086     -1.1051     -0.5301     -0.4630 
+       -0.33100    -0.09861    -0.68494    -0.84368    -0.67534    -0.41395 
     
     Call:
     mlogit_imp(formula = M2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
@@ -375,7 +375,7 @@
     
     Coefficients:
     (Intercept)          C2 (Intercept)          C2 (Intercept)          C2 
-         0.2216     -0.9384      0.4727      0.1383      0.3946      0.2962 
+        0.46176    -0.82597     0.52472     0.26357     0.55114     0.02251 
     
     Call:
     lm_imp(formula = C1 ~ M1, data = wideDF, n.adapt = 5, n.iter = 10, 
@@ -386,12 +386,12 @@
     
     Coefficients:
     (Intercept)         M12         M13         M14 
-        1.42191     0.02093     0.02302     0.01799 
+       1.411723    0.043502    0.009345    0.035515 
     
     
     Residual standard deviation:
     sigma_C1 
-     0.02862 
+     0.04403 
     
     Call:
     lm_imp(formula = C1 ~ M2, data = wideDF, n.adapt = 5, n.iter = 10, 
@@ -402,12 +402,12 @@
     
     Coefficients:
     (Intercept)         M22         M23         M24 
-      1.4326805   0.0001536   0.0018059   0.0026721 
+       1.432391    0.001332    0.001738    0.005221 
     
     
     Residual standard deviation:
     sigma_C1 
-     0.01925 
+     0.02008 
     
     Call:
     mlogit_imp(formula = M1 ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
@@ -419,23 +419,23 @@
     
     Coefficients:
          (Intercept)              M22              M23              M24 
-           -25.41883         -1.10407          0.23919         -0.56248 
+           -22.75606         -0.72351          0.68348         -0.24620 
                  O22              O23              O24     abs(C1 - C2) 
-            -2.18080          0.90289         -0.20670          0.83884 
+            -2.16613         -2.05393          0.45003          0.06833 
              log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
-            69.16121          0.95350         -1.66100         -0.27495 
+            63.34657          1.39089          0.51940         -0.47409 
          (Intercept)              M22              M23              M24 
-            -9.61891         -2.10675         -1.29748          0.14980 
+            -8.20000         -1.89937         -1.13170          0.28929 
                  O22              O23              O24     abs(C1 - C2) 
-            -3.10952          1.19358          0.29477         -0.01283 
+            -1.11717          1.07066          0.11551          0.58356 
              log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
-            24.49608          2.87800         -0.10998          0.59378 
+            17.95009          1.76265         -0.19750          0.66281 
          (Intercept)              M22              M23              M24 
-           -26.68971         -0.74704         -0.97010         -1.63888 
+           -19.51844         -0.75220         -0.66377         -1.38639 
                  O22              O23              O24     abs(C1 - C2) 
-             0.30676         -1.68665          2.98714          0.23297 
+            -0.70776         -1.00765          2.25721          0.22009 
              log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
-            73.76760          0.26854          0.93732         -2.59000 
+            53.19957          1.15337          0.60476         -1.90401 
     
     Call:
     mlogit_imp(formula = M1 ~ ifelse(as.numeric(M2) > as.numeric(O1), 
@@ -448,35 +448,35 @@
     
     Coefficients:
                                                    (Intercept) 
-                                                     -22.53908 
+                                                     -22.09524 
                  ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
-                                                      -0.10524 
+                                                       0.06126 
                                                   abs(C1 - C2) 
-                                                      -0.07471 
+                                                      -0.19563 
                                                        log(C1) 
-                                                      62.27821 
+                                                      61.44513 
     ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                       0.02377 
+                                                      -0.06422 
                                                    (Intercept) 
-                                                     -11.07413 
+                                                     -13.61386 
                  ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
-                                                      -2.57137 
+                                                      -0.28306 
                                                   abs(C1 - C2) 
-                                                       0.03348 
+                                                       0.46615 
                                                        log(C1) 
-                                                      29.27694 
+                                                      34.32018 
     ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                       1.85307 
+                                                       0.36806 
                                                    (Intercept) 
-                                                     -20.68562 
+                                                     -20.30981 
                  ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
-                                                      -1.08794 
+                                                      -0.01631 
                                                   abs(C1 - C2) 
-                                                       0.20118 
+                                                       0.23825 
                                                        log(C1) 
-                                                      55.60501 
+                                                      54.35013 
     ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                       0.49991 
+                                                      -0.21946 
     $m0a
     
     Call:
@@ -488,7 +488,7 @@
     
     Coefficients:
     (Intercept) (Intercept) (Intercept) 
-        -0.1500     -0.4060     -0.5149 
+        -0.1991     -0.4567     -0.5357 
     
     $m0b
     
@@ -501,7 +501,7 @@
     
     Coefficients:
     (Intercept) (Intercept) (Intercept) 
-         0.4141      0.4523      0.4628 
+        0.08186     0.16715     0.10684 
     
     $m1a
     
@@ -514,7 +514,7 @@
     
     Coefficients:
     (Intercept)          C1 (Intercept)          C1 (Intercept)          C1 
-         -68.63       47.75      -49.19       34.01      -59.47       41.17 
+         -47.76       33.10      -25.48       17.39      -44.13       30.35 
     
     $m1b
     
@@ -527,7 +527,7 @@
     
     Coefficients:
     (Intercept)          C1 (Intercept)          C1 (Intercept)          C1 
-         -16.53       11.84      -19.84       14.13      -46.83       33.04 
+         -1.587       1.247      -1.318       1.049     -28.989      20.380 
     
     $m2a
     
@@ -540,7 +540,7 @@
     
     Coefficients:
     (Intercept)          C2 (Intercept)          C2 (Intercept)          C2 
-        -0.3195     -0.1528     -0.6086     -1.1051     -0.5301     -0.4630 
+       -0.33100    -0.09861    -0.68494    -0.84368    -0.67534    -0.41395 
     
     $m2b
     
@@ -553,7 +553,7 @@
     
     Coefficients:
     (Intercept)          C2 (Intercept)          C2 (Intercept)          C2 
-         0.2216     -0.9384      0.4727      0.1383      0.3946      0.2962 
+        0.46176    -0.82597     0.52472     0.26357     0.55114     0.02251 
     
     $m3a
     
@@ -566,12 +566,12 @@
     
     Coefficients:
     (Intercept)         M12         M13         M14 
-        1.42191     0.02093     0.02302     0.01799 
+       1.411723    0.043502    0.009345    0.035515 
     
     
     Residual standard deviation:
     sigma_C1 
-     0.02862 
+     0.04403 
     
     $m3b
     
@@ -584,12 +584,12 @@
     
     Coefficients:
     (Intercept)         M22         M23         M24 
-      1.4326805   0.0001536   0.0018059   0.0026721 
+       1.432391    0.001332    0.001738    0.005221 
     
     
     Residual standard deviation:
     sigma_C1 
-     0.01925 
+     0.02008 
     
     $m4a
     
@@ -603,23 +603,23 @@
     
     Coefficients:
          (Intercept)              M22              M23              M24 
-           -25.41883         -1.10407          0.23919         -0.56248 
+           -22.75606         -0.72351          0.68348         -0.24620 
                  O22              O23              O24     abs(C1 - C2) 
-            -2.18080          0.90289         -0.20670          0.83884 
+            -2.16613         -2.05393          0.45003          0.06833 
              log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
-            69.16121          0.95350         -1.66100         -0.27495 
+            63.34657          1.39089          0.51940         -0.47409 
          (Intercept)              M22              M23              M24 
-            -9.61891         -2.10675         -1.29748          0.14980 
+            -8.20000         -1.89937         -1.13170          0.28929 
                  O22              O23              O24     abs(C1 - C2) 
-            -3.10952          1.19358          0.29477         -0.01283 
+            -1.11717          1.07066          0.11551          0.58356 
              log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
-            24.49608          2.87800         -0.10998          0.59378 
+            17.95009          1.76265         -0.19750          0.66281 
          (Intercept)              M22              M23              M24 
-           -26.68971         -0.74704         -0.97010         -1.63888 
+           -19.51844         -0.75220         -0.66377         -1.38639 
                  O22              O23              O24     abs(C1 - C2) 
-             0.30676         -1.68665          2.98714          0.23297 
+            -0.70776         -1.00765          2.25721          0.22009 
              log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
-            73.76760          0.26854          0.93732         -2.59000 
+            53.19957          1.15337          0.60476         -1.90401 
     
     $m4b
     
@@ -634,35 +634,35 @@
     
     Coefficients:
                                                    (Intercept) 
-                                                     -22.53908 
+                                                     -22.09524 
                  ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
-                                                      -0.10524 
+                                                       0.06126 
                                                   abs(C1 - C2) 
-                                                      -0.07471 
+                                                      -0.19563 
                                                        log(C1) 
-                                                      62.27821 
+                                                      61.44513 
     ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                       0.02377 
+                                                      -0.06422 
                                                    (Intercept) 
-                                                     -11.07413 
+                                                     -13.61386 
                  ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
-                                                      -2.57137 
+                                                      -0.28306 
                                                   abs(C1 - C2) 
-                                                       0.03348 
+                                                       0.46615 
                                                        log(C1) 
-                                                      29.27694 
+                                                      34.32018 
     ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                       1.85307 
+                                                       0.36806 
                                                    (Intercept) 
-                                                     -20.68562 
+                                                     -20.30981 
                  ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
-                                                      -1.08794 
+                                                      -0.01631 
                                                   abs(C1 - C2) 
-                                                       0.20118 
+                                                       0.23825 
                                                        log(C1) 
-                                                      55.60501 
+                                                      54.35013 
     ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                       0.49991 
+                                                      -0.21946 
     
 
 ---
@@ -670,105 +670,105 @@
     $m0a
     $m0a$M1
     (Intercept) (Intercept) (Intercept) 
-     -0.1499755  -0.4059797  -0.5148550 
+     -0.1991333  -0.4567400  -0.5356710 
     
     
     $m0b
     $m0b$M2
     (Intercept) (Intercept) (Intercept) 
-      0.4140770   0.4522598   0.4628141 
+     0.08186288  0.16714627  0.10683517 
     
     
     $m1a
     $m1a$M1
     (Intercept)          C1 (Intercept)          C1 (Intercept)          C1 
-      -68.62959    47.74971   -49.18668    34.00832   -59.47091    41.16637 
+      -47.75541    33.09711   -25.47627    17.39445   -44.12530    30.34907 
     
     
     $m1b
     $m1b$M2
     (Intercept)          C1 (Intercept)          C1 (Intercept)          C1 
-      -16.52622    11.84197   -19.83742    14.12542   -46.82612    33.03615 
+      -1.586682    1.246525   -1.318285    1.049466  -28.989424   20.379509 
     
     
     $m2a
     $m2a$M1
     (Intercept)          C2 (Intercept)          C2 (Intercept)          C2 
-     -0.3195433  -0.1528170  -0.6085633  -1.1051034  -0.5300736  -0.4629505 
+     -0.3310000  -0.0986074  -0.6849389  -0.8436799  -0.6753447  -0.4139463 
     
     
     $m2b
     $m2b$M2
     (Intercept)          C2 (Intercept)          C2 (Intercept)          C2 
-      0.2215760  -0.9383816   0.4726669   0.1382598   0.3945742   0.2962376 
+     0.46176262 -0.82597475  0.52471709  0.26357204  0.55114456  0.02251215 
     
     
     $m3a
     $m3a$C1
     (Intercept)         M12         M13         M14 
-     1.42190809  0.02093337  0.02301766  0.01798810 
+    1.411723231 0.043502417 0.009345015 0.035515397 
     
     
     $m3b
     $m3b$C1
-     (Intercept)          M22          M23          M24 
-    1.4326805486 0.0001535725 0.0018058632 0.0026721362 
+    (Intercept)         M22         M23         M24 
+    1.432391389 0.001331535 0.001738037 0.005220603 
     
     
     $m4a
     $m4a$M1
          (Intercept)              M22              M23              M24 
-        -25.41883499      -1.10407151       0.23919063      -0.56247727 
+        -22.75605951      -0.72351192       0.68347526      -0.24619879 
                  O22              O23              O24     abs(C1 - C2) 
-         -2.18079656       0.90289015      -0.20669961       0.83883705 
+         -2.16612577      -2.05392803       0.45002856       0.06833179 
              log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
-         69.16121061       0.95349573      -1.66100392      -0.27494570 
+         63.34657009       1.39089367       0.51940429      -0.47408950 
          (Intercept)              M22              M23              M24 
-         -9.61891399      -2.10674874      -1.29748053       0.14980482 
+         -8.19999754      -1.89936512      -1.13170291       0.28929255 
                  O22              O23              O24     abs(C1 - C2) 
-         -3.10952029       1.19357817       0.29476505      -0.01282905 
+         -1.11716614       1.07066200       0.11550796       0.58356257 
              log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
-         24.49608310       2.87800130      -0.10998262       0.59377908 
+         17.95008602       1.76265342      -0.19749891       0.66280587 
          (Intercept)              M22              M23              M24 
-        -26.68971405      -0.74704088      -0.97009566      -1.63888272 
+        -19.51843802      -0.75219766      -0.66376821      -1.38638927 
                  O22              O23              O24     abs(C1 - C2) 
-          0.30676263      -1.68665441       2.98713526       0.23296806 
+         -0.70775928      -1.00765310       2.25720918       0.22008638 
              log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
-         73.76760445       0.26853660       0.93731536      -2.58999583 
+         53.19956745       1.15337231       0.60476130      -1.90400993 
     
     
     $m4b
     $m4b$M1
                                                    (Intercept) 
-                                                  -22.53907646 
+                                                  -22.09524153 
                  ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
-                                                   -0.10523577 
+                                                    0.06125530 
                                                   abs(C1 - C2) 
-                                                   -0.07470987 
+                                                   -0.19562932 
                                                        log(C1) 
-                                                   62.27820635 
+                                                   61.44513454 
     ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                    0.02377362 
+                                                   -0.06421625 
                                                    (Intercept) 
-                                                  -11.07412937 
+                                                  -13.61385657 
                  ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
-                                                   -2.57136519 
+                                                   -0.28306044 
                                                   abs(C1 - C2) 
-                                                    0.03347797 
+                                                    0.46615341 
                                                        log(C1) 
-                                                   29.27693848 
+                                                   34.32017835 
     ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                    1.85307040 
+                                                    0.36805757 
                                                    (Intercept) 
-                                                  -20.68562171 
+                                                  -20.30981490 
                  ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
-                                                   -1.08794022 
+                                                   -0.01631328 
                                                   abs(C1 - C2) 
-                                                    0.20118313 
+                                                    0.23825387 
                                                        log(C1) 
-                                                   55.60500754 
+                                                   54.35012696 
     ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
-                                                    0.49990928 
+                                                   -0.21945670 
     
     
 
@@ -776,157 +776,157 @@
 
     $m0a
     $m0a$M1
-                      2.5%      97.5%
-    (Intercept) -0.4593546 0.12824517
-    (Intercept) -0.8124883 0.02955525
-    (Intercept) -1.0366750 0.10893793
+                      2.5%        97.5%
+    (Intercept) -0.8729574  0.347971764
+    (Intercept) -0.8513739  0.009762801
+    (Intercept) -1.0263750 -0.053592982
     
     
     $m0b
     $m0b$M2
                       2.5%     97.5%
-    (Intercept) -0.1687334 0.8626433
-    (Intercept)  0.0657990 1.0384481
-    (Intercept) -0.1264455 0.9056792
+    (Intercept) -0.2316991 0.5324284
+    (Intercept) -0.2892109 0.6804126
+    (Intercept) -0.3992651 0.4542914
     
     
     $m1a
     $m1a$M1
                        2.5%     97.5%
-    (Intercept) -134.713545  5.915196
-    C1            -4.236512 93.768876
-    (Intercept) -133.253703 10.263694
-    C1            -7.518452 92.579977
-    (Intercept) -114.223576  8.524604
-    C1            -6.247022 79.094721
+    (Intercept)  -88.565888 -2.166742
+    C1             1.332604 61.409204
+    (Intercept)  -70.634454 18.691091
+    C1           -13.459041 48.859971
+    (Intercept) -107.603635  4.123719
+    C1            -3.192869 74.228367
     
     
     $m1b
     $m1b$M2
                      2.5%    97.5%
-    (Intercept) -74.84385 55.15486
-    C1          -38.46172 52.67909
-    (Intercept) -64.41356 44.02551
-    C1          -30.61965 45.37486
-    (Intercept) -91.77463 32.40030
-    C1          -22.32979 64.18395
+    (Intercept) -74.06780 54.88543
+    C1          -37.83915 52.06109
+    (Intercept) -69.19055 48.77976
+    C1          -33.70314 48.70010
+    (Intercept) -89.02588 22.33684
+    C1          -15.60195 62.28285
     
     
     $m2a
     $m2a$M1
-                      2.5%       97.5%
-    (Intercept) -0.8093345  0.14167651
-    C2          -1.2232464  1.26253130
-    (Intercept) -1.1644625 -0.05893472
-    C2          -3.1486496  0.78370038
-    (Intercept) -0.8763821 -0.07794868
-    C2          -2.5024329  1.50771877
+                     2.5%       97.5%
+    (Intercept) -0.668291  0.10488060
+    C2          -1.115257  0.82074938
+    (Intercept) -1.356694 -0.29074657
+    C2          -2.395135  0.04600474
+    (Intercept) -1.152760 -0.18889646
+    C2          -1.341112  0.73512350
     
     
     $m2b
     $m2b$M2
-                      2.5%    97.5%
-    (Intercept) -0.3796428 1.200149
-    C2          -2.9726900 2.096730
-    (Intercept) -0.1023854 1.400964
-    C2          -1.9978921 1.929803
-    (Intercept) -0.1256262 1.023317
-    C2          -1.3793278 2.109527
+                      2.5%     97.5%
+    (Intercept) -0.4600186 0.9975725
+    C2          -2.3545707 1.1171074
+    (Intercept) -0.2511362 1.1089049
+    C2          -1.2117769 1.7286554
+    (Intercept) -0.3555959 1.2314532
+    C2          -1.5178227 1.4792984
     
     
     $m3a
     $m3a$C1
-                         2.5%     97.5%
-    (Intercept)  1.3033614093 1.4473908
-    M12         -0.0084195907 0.2202639
-    M13         -0.0186640638 0.2667330
-    M14         -0.0006984241 0.1393043
+                        2.5%     97.5%
+    (Intercept)  1.211601066 1.4599402
+    M12         -0.031393839 0.4497941
+    M13         -0.270780945 0.2520779
+    M14         -0.009377649 0.2916742
     
     
     $m3b
     $m3b$C1
-                        2.5%      97.5%
-    (Intercept)  1.427465556 1.44079861
-    M22         -0.010387874 0.00858564
-    M23         -0.007846449 0.01182050
-    M24         -0.009149998 0.01159916
+                        2.5%       97.5%
+    (Intercept)  1.425861243 1.438745087
+    M22         -0.006612062 0.009837361
+    M23         -0.006470470 0.010927718
+    M24         -0.003108196 0.014837976
     
     
     $m4a
     $m4a$M1
                              2.5%        97.5%
-    (Intercept)      -49.01289764  -8.56225848
-    M22               -2.22057452   0.03485964
-    M23               -1.18958355   1.85982954
-    M24               -2.89064678   0.75731479
-    O22               -6.10504731   2.02965470
-    O23               -2.73209029   7.47850873
-    O24               -1.95177371   1.24159122
-    abs(C1 - C2)      -1.39015054   2.65479328
-    log(C1)           21.53551386 132.24647562
-    O22:abs(C1 - C2)  -1.62350883   3.97977969
-    O23:abs(C1 - C2)  -6.39975724   0.98953105
-    O24:abs(C1 - C2)  -1.71054496   1.23045323
-    (Intercept)      -31.63245148  10.47322938
-    M22               -4.33200670  -0.65846809
-    M23               -2.99639484  -0.20169649
-    M24               -0.64615578   1.21635281
-    O22               -5.01573763  -1.07905551
-    O23               -1.07632839   4.69299668
-    O24               -2.35004203   1.86170194
-    abs(C1 - C2)      -1.41211194   1.80717277
-    log(C1)          -30.88854077  83.63077006
-    O22:abs(C1 - C2)   1.13258779   4.77793067
-    O23:abs(C1 - C2)  -2.01728360   1.00421744
-    O24:abs(C1 - C2)  -0.83118185   3.08631634
-    (Intercept)      -51.54024473  -1.08424298
-    M22               -1.69115388   0.08411753
-    M23               -2.70907090   0.37027558
-    M24               -2.66430129  -0.71770420
-    O22               -0.98267229   2.34191196
-    O23               -3.49739013  -0.02485139
-    O24               -0.84599721   7.01016466
-    abs(C1 - C2)      -0.76360144   1.23349851
-    log(C1)            4.58988960 148.13662264
-    O22:abs(C1 - C2)  -1.75141057   1.42832213
-    O23:abs(C1 - C2)  -0.06823752   1.97890045
-    O24:abs(C1 - C2)  -4.78740928  -0.52325428
+    (Intercept)      -44.39899903  -4.08297194
+    M22               -1.92846081   0.38444053
+    M23               -0.17770960   1.70164526
+    M24               -2.30613234   0.80116955
+    O22               -4.24500421   0.26603402
+    O23               -4.16237689  -0.51392114
+    O24               -1.64735125   2.50351111
+    abs(C1 - C2)      -1.69659759   1.95834541
+    log(C1)           13.88544645 126.64478274
+    O22:abs(C1 - C2)   0.01559889   3.02244783
+    O23:abs(C1 - C2)  -0.80168553   1.74973918
+    O24:abs(C1 - C2)  -1.85999489   1.02037119
+    (Intercept)      -35.57309224  10.16405130
+    M22               -2.85055806  -0.81533749
+    M23               -2.35514144  -0.21871046
+    M24               -0.22953015   1.18276173
+    O22               -4.27868368   1.26656246
+    O23               -0.40328440   3.53369784
+    O24               -2.02724260   4.55875064
+    abs(C1 - C2)      -1.33836682   2.78379706
+    log(C1)          -35.81426257  94.26833801
+    O22:abs(C1 - C2)  -0.17814390   4.31814673
+    O23:abs(C1 - C2)  -1.85834206   1.36261255
+    O24:abs(C1 - C2)  -1.99627282   2.00934913
+    (Intercept)      -44.90696015  17.67679644
+    M22               -2.15507082   0.06841692
+    M23               -2.03483943   0.40675977
+    M24               -2.44982156  -0.48946233
+    O22               -2.68012184   1.56346455
+    O23               -3.24433880   1.68130791
+    O24                1.10777257   3.63248379
+    abs(C1 - C2)      -2.51633519   2.20399079
+    log(C1)          -52.45332528 125.01652918
+    O22:abs(C1 - C2)  -1.19752102   2.55262650
+    O23:abs(C1 - C2)  -1.46420921   2.46596164
+    O24:abs(C1 - C2)  -3.02685649  -0.75327196
     
     
     $m4b
     $m4b$M1
-                                                                      2.5%
-    (Intercept)                                                -38.8397077
-    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -3.3249186
-    abs(C1 - C2)                                                -1.7092604
-    log(C1)                                                     28.2209057
-    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -1.7032701
-    (Intercept)                                                -26.1059198
-    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -5.6090827
-    abs(C1 - C2)                                                -1.9283175
-    log(C1)                                                    -14.3925900
-    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.3703952
-    (Intercept)                                                -36.6482691
-    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -4.1299778
-    abs(C1 - C2)                                                -1.4725941
-    log(C1)                                                      8.5026011
-    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.8327012
-                                                                    97.5%
-    (Intercept)                                                 -7.940490
-    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                2.578032
-    abs(C1 - C2)                                                 1.443114
-    log(C1)                                                    103.527683
-    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   2.142452
-    (Intercept)                                                  5.711713
-    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.204273
-    abs(C1 - C2)                                                 2.403744
-    log(C1)                                                     66.522255
-    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   3.767392
-    (Intercept)                                                 -3.793041
-    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                1.150053
-    abs(C1 - C2)                                                 1.787078
-    log(C1)                                                    102.640628
-    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   2.174837
+                                                                     2.5%
+    (Intercept)                                                -47.023626
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -2.176296
+    abs(C1 - C2)                                                -1.399176
+    log(C1)                                                     -3.592702
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -1.317628
+    (Intercept)                                                -43.457165
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -3.679506
+    abs(C1 - C2)                                                -1.375353
+    log(C1)                                                    -14.675154
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -2.557767
+    (Intercept)                                                -41.017133
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -2.859442
+    abs(C1 - C2)                                                -1.855139
+    log(C1)                                                    -13.374327
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -1.689889
+                                                                     97.5%
+    (Intercept)                                                  0.8370506
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                1.9941190
+    abs(C1 - C2)                                                 1.2785425
+    log(C1)                                                    132.2114856
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   1.2683075
+    (Intercept)                                                  3.1452971
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                4.3453034
+    abs(C1 - C2)                                                 2.7990898
+    log(C1)                                                    115.7492231
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   2.4683213
+    (Intercept)                                                  4.0883466
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                2.2099937
+    abs(C1 - C2)                                                 2.1009215
+    log(C1)                                                    109.5992574
+    ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   1.7876031
     
     
 
@@ -942,10 +942,10 @@
     
     
     Posterior summary:
-                       Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-    M12: (Intercept) -0.150 0.169 -0.459 0.1282      0.333   0.993  0.183
-    M13: (Intercept) -0.406 0.240 -0.812 0.0296      0.133   1.130  0.183
-    M14: (Intercept) -0.515 0.337 -1.037 0.1089      0.133   1.260  0.183
+                       Mean    SD   2.5%    97.5% tail-prob. GR-crit MCE/SD
+    M12: (Intercept) -0.199 0.346 -0.873  0.34797     0.6667    1.39  0.177
+    M13: (Intercept) -0.457 0.267 -0.851  0.00976     0.0667    1.41  0.183
+    M14: (Intercept) -0.536 0.294 -1.026 -0.05359     0.0667    1.34  0.183
     
     
     MCMC settings:
@@ -966,10 +966,10 @@
     
     
     Posterior summary:
-                      Mean    SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    M22: (Intercept) 0.414 0.314 -0.1687 0.863      0.333    2.86  0.364
-    M23: (Intercept) 0.452 0.258  0.0658 1.038      0.000    3.29  0.446
-    M24: (Intercept) 0.463 0.314 -0.1264 0.906      0.200    1.88  0.183
+                       Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    M22: (Intercept) 0.0819 0.219 -0.232 0.532      0.800    1.51  0.199
+    M23: (Intercept) 0.1671 0.279 -0.289 0.680      0.533    2.12  0.242
+    M24: (Intercept) 0.1068 0.260 -0.399 0.454      0.600    1.55  0.314
     
     
     MCMC settings:
@@ -991,12 +991,12 @@
     
     Posterior summary:
                       Mean   SD    2.5% 97.5% tail-prob. GR-crit MCE/SD
-    M12: (Intercept) -68.6 35.7 -134.71  5.92      0.133    2.37  0.327
-    M12: C1           47.7 24.9   -4.24 93.77      0.133    2.38  0.327
-    M13: (Intercept) -49.2 40.7 -133.25 10.26      0.200    1.93  0.271
-    M13: C1           34.0 28.4   -7.52 92.58      0.200    1.94  0.272
-    M14: (Intercept) -59.5 34.7 -114.22  8.52      0.133    1.92  0.260
-    M14: C1           41.2 24.2   -6.25 79.09      0.133    1.92  0.260
+    M12: (Intercept) -47.8 26.0  -88.57 -2.17     0.0667    1.17  0.183
+    M12: C1           33.1 18.1    1.33 61.41     0.0667    1.17  0.183
+    M13: (Intercept) -25.5 26.6  -70.63 18.69     0.4667    1.02  0.183
+    M13: C1           17.4 18.6  -13.46 48.86     0.4667    1.02  0.183
+    M14: (Intercept) -44.1 29.3 -107.60  4.12     0.1333    1.14  0.183
+    M14: C1           30.3 20.4   -3.19 74.23     0.1333    1.14  0.183
     
     
     MCMC settings:
@@ -1017,13 +1017,13 @@
     
     
     Posterior summary:
-                      Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
-    M22: (Intercept) -16.5 35.8 -74.8  55.2        0.6    1.43  0.214
-    M22: C1           11.8 24.9 -38.5  52.7        0.6    1.43  0.214
-    M23: (Intercept) -19.8 34.3 -64.4  44.0        0.6    1.22  0.260
-    M23: C1           14.1 24.0 -30.6  45.4        0.6    1.23  0.261
-    M24: (Intercept) -46.8 34.2 -91.8  32.4        0.2    1.86       
-    M24: C1           33.0 23.8 -22.3  64.2        0.2    1.88       
+                       Mean   SD  2.5% 97.5% tail-prob. GR-crit MCE/SD
+    M22: (Intercept)  -1.59 37.8 -74.1  54.9      0.933    2.58  0.216
+    M22: C1            1.25 26.4 -37.8  52.1      0.933    2.61  0.216
+    M23: (Intercept)  -1.32 37.0 -69.2  48.8      1.000    5.75  0.342
+    M23: C1            1.05 25.8 -33.7  48.7      1.000    5.83  0.342
+    M24: (Intercept) -28.99 33.2 -89.0  22.3      0.400    3.40  0.361
+    M24: C1           20.38 23.2 -15.6  62.3      0.400    3.42  0.360
     
     
     MCMC settings:
@@ -1044,13 +1044,13 @@
     
     
     Posterior summary:
-                       Mean    SD   2.5%   97.5% tail-prob. GR-crit MCE/SD
-    M12: (Intercept) -0.320 0.260 -0.809  0.1417      0.267    1.33  0.200
-    M12: C2          -0.153 0.692 -1.223  1.2625      0.533    1.56  0.356
-    M13: (Intercept) -0.609 0.331 -1.164 -0.0589      0.000    1.39  0.183
-    M13: C2          -1.105 1.038 -3.149  0.7837      0.267    1.67  0.183
-    M14: (Intercept) -0.530 0.227 -0.876 -0.0779      0.000    1.06  0.183
-    M14: C2          -0.463 1.050 -2.502  1.5077      0.533    1.20  0.333
+                        Mean    SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+    M12: (Intercept) -0.3310 0.230 -0.668  0.105        0.2   1.219  0.112
+    M12: C2          -0.0986 0.535 -1.115  0.821        1.0   0.993  0.183
+    M13: (Intercept) -0.6849 0.308 -1.357 -0.291        0.0   1.399  0.429
+    M13: C2          -0.8437 0.694 -2.395  0.046        0.2   1.012  0.211
+    M14: (Intercept) -0.6753 0.291 -1.153 -0.189        0.0   1.248  0.312
+    M14: C2          -0.4139 0.596 -1.341  0.735        0.4   1.855  0.223
     
     
     MCMC settings:
@@ -1071,13 +1071,13 @@
     
     
     Posterior summary:
-                       Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
-    M22: (Intercept)  0.222 0.450 -0.380  1.20      0.800    1.61  0.505
-    M22: C2          -0.938 1.321 -2.973  2.10      0.467    1.88  0.466
-    M23: (Intercept)  0.473 0.399 -0.102  1.40      0.133    2.73  0.487
-    M23: C2           0.138 1.301 -1.998  1.93      0.733    1.55  0.304
-    M24: (Intercept)  0.395 0.367 -0.126  1.02      0.400    1.79  0.326
-    M24: C2           0.296 1.024 -1.379  2.11      0.800    2.20  0.449
+                        Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    M22: (Intercept)  0.4618 0.385 -0.460 0.998      0.267    2.04  0.230
+    M22: C2          -0.8260 1.093 -2.355 1.117      0.600    1.35  0.114
+    M23: (Intercept)  0.5247 0.421 -0.251 1.109      0.333    3.52  0.278
+    M23: C2           0.2636 0.841 -1.212 1.729      0.867    1.25  0.139
+    M24: (Intercept)  0.5511 0.487 -0.356 1.231      0.267    2.67  0.268
+    M24: C2           0.0225 0.882 -1.518 1.479      0.933    1.32  0.095
     
     
     MCMC settings:
@@ -1098,15 +1098,15 @@
     
     
     Posterior summary:
-                  Mean     SD      2.5% 97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 1.4219 0.0356  1.303361 1.447      0.000    1.33  0.183
-    M12         0.0209 0.0567 -0.008420 0.220      0.400    1.20  0.183
-    M13         0.0230 0.0902 -0.018664 0.267      0.533    1.74  0.183
-    M14         0.0180 0.0360 -0.000698 0.139      0.133    1.20  0.183
+                   Mean     SD     2.5% 97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) 1.41172 0.0953  1.21160 1.460      0.000    2.36  0.183
+    M12         0.04350 0.1406 -0.03139 0.450      0.133    1.32  0.183
+    M13         0.00935 0.1518 -0.27078 0.252      0.600    1.77  0.183
+    M14         0.03552 0.0934 -0.00938 0.292      0.333    1.12  0.183
     
     Posterior summary of residual std. deviation:
-               Mean     SD   2.5% 97.5% GR-crit MCE/SD
-    sigma_C1 0.0286 0.0303 0.0163 0.113    1.42  0.183
+              Mean     SD   2.5% 97.5% GR-crit MCE/SD
+    sigma_C1 0.044 0.0685 0.0171 0.241    1.01  0.183
     
     
     MCMC settings:
@@ -1127,15 +1127,15 @@
     
     
     Posterior summary:
-                    Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
-    (Intercept) 1.432681 0.00392  1.42747 1.44080      0.000    1.29  0.183
-    M22         0.000154 0.00529 -0.01039 0.00859      0.867    1.30  0.183
-    M23         0.001806 0.00580 -0.00785 0.01182      0.867    1.14  0.183
-    M24         0.002672 0.00542 -0.00915 0.01160      0.467    1.44  0.183
+                   Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
+    (Intercept) 1.43239 0.00376  1.42586 1.43875        0.0    1.44  0.183
+    M22         0.00133 0.00439 -0.00661 0.00984        0.6    1.22  0.183
+    M23         0.00174 0.00475 -0.00647 0.01093        0.6    1.21  0.182
+    M24         0.00522 0.00535 -0.00311 0.01484        0.4    1.64  0.200
     
     Posterior summary of residual std. deviation:
-               Mean      SD  2.5%  97.5% GR-crit MCE/SD
-    sigma_C1 0.0192 0.00118 0.017 0.0215    1.56  0.183
+               Mean      SD   2.5%  97.5% GR-crit MCE/SD
+    sigma_C1 0.0201 0.00144 0.0176 0.0231    1.44  0.232
     
     
     MCMC settings:
@@ -1158,79 +1158,79 @@
     
     Posterior summary:
                               Mean     SD     2.5%    97.5% tail-prob. GR-crit
-    M12: (Intercept)      -25.4188 12.237 -49.0129  -8.5623     0.0000   1.624
-    M12: M22               -1.1041  0.639  -2.2206   0.0349     0.1333   2.549
-    M12: M23                0.2392  0.794  -1.1896   1.8598     0.8000   1.806
-    M12: M24               -0.5625  0.994  -2.8906   0.7573     0.6667   1.304
-    M12: O22               -2.1808  2.895  -6.1050   2.0297     0.6000   6.537
-    M12: O23                0.9029  4.040  -2.7321   7.4785     0.6667  20.589
-    M12: O24               -0.2067  1.020  -1.9518   1.2416     0.9333   1.281
-    M12: abs(C1 - C2)       0.8388  1.131  -1.3902   2.6548     0.5333   3.350
-    M12: log(C1)           69.1612 33.113  21.5355 132.2465     0.0000   1.441
-    M12: O22:abs(C1 - C2)   0.9535  1.821  -1.6235   3.9798     0.7333   6.701
-    M12: O23:abs(C1 - C2)  -1.6610  2.716  -6.3998   0.9895     0.7333  16.810
-    M12: O24:abs(C1 - C2)  -0.2749  0.837  -1.7105   1.2305     0.7333   2.358
-    M13: (Intercept)       -9.6189 14.010 -31.6325  10.4732     0.6667   1.446
-    M13: M22               -2.1067  0.952  -4.3320  -0.6585     0.0000   2.333
-    M13: M23               -1.2975  0.907  -2.9964  -0.2017     0.0000   0.961
-    M13: M24                0.1498  0.557  -0.6462   1.2164     0.9333   2.490
-    M13: O22               -3.1095  1.333  -5.0157  -1.0791     0.0000   3.615
-    M13: O23                1.1936  1.940  -1.0763   4.6930     0.7333  10.182
-    M13: O24                0.2948  1.188  -2.3500   1.8617     0.4667   4.142
-    M13: abs(C1 - C2)      -0.0128  0.995  -1.4121   1.8072     1.0000   2.237
-    M13: log(C1)           24.4961 37.147 -30.8885  83.6308     0.7333   1.269
-    M13: O22:abs(C1 - C2)   2.8780  1.118   1.1326   4.7779     0.0000   1.848
-    M13: O23:abs(C1 - C2)  -0.1100  1.043  -2.0173   1.0042     0.7333  10.569
-    M13: O24:abs(C1 - C2)   0.5938  1.136  -0.8312   3.0863     0.5333   3.238
-    M14: (Intercept)      -26.6897 14.960 -51.5402  -1.0842     0.0667   1.384
-    M14: M22               -0.7470  0.597  -1.6912   0.0841     0.2000   1.597
-    M14: M23               -0.9701  0.849  -2.7091   0.3703     0.2667   1.759
-    M14: M24               -1.6389  0.578  -2.6643  -0.7177     0.0000   1.215
-    M14: O22                0.3068  1.067  -0.9827   2.3419     0.8000   7.655
-    M14: O23               -1.6867  1.080  -3.4974  -0.0249     0.0667   2.704
-    M14: O24                2.9871  2.355  -0.8460   7.0102     0.2667   4.668
-    M14: abs(C1 - C2)       0.2330  0.654  -0.7636   1.2335     0.7333   1.413
-    M14: log(C1)           73.7676 41.629   4.5899 148.1366     0.0667   1.431
-    M14: O22:abs(C1 - C2)   0.2685  0.844  -1.7514   1.4283     0.6667   2.544
-    M14: O23:abs(C1 - C2)   0.9373  0.697  -0.0682   1.9789     0.2000   4.322
-    M14: O24:abs(C1 - C2)  -2.5900  1.316  -4.7874  -0.5233     0.0000   6.539
+    M12: (Intercept)      -22.7561 12.015 -44.3990  -4.0830     0.0000    1.32
+    M12: M22               -0.7235  0.679  -1.9285   0.3844     0.2667    2.17
+    M12: M23                0.6835  0.535  -0.1777   1.7016     0.1333    3.44
+    M12: M24               -0.2462  0.840  -2.3061   0.8012     0.8667    3.74
+    M12: O22               -2.1661  1.530  -4.2450   0.2660     0.2000    9.95
+    M12: O23               -2.0539  1.121  -4.1624  -0.5139     0.0000    5.00
+    M12: O24                0.4500  1.252  -1.6474   2.5035     0.6667    6.48
+    M12: abs(C1 - C2)       0.0683  1.009  -1.6966   1.9583     0.9333    2.79
+    M12: log(C1)           63.3466 34.116  13.8854 126.6448     0.0667    1.41
+    M12: O22:abs(C1 - C2)   1.3909  0.973   0.0156   3.0224     0.0000    7.98
+    M12: O23:abs(C1 - C2)   0.5194  0.738  -0.8017   1.7497     0.5333    2.17
+    M12: O24:abs(C1 - C2)  -0.4741  0.849  -1.8600   1.0204     0.5333    6.49
+    M13: (Intercept)       -8.2000 12.524 -35.5731  10.1641     0.5333    1.04
+    M13: M22               -1.8994  0.597  -2.8506  -0.8153     0.0000    1.07
+    M13: M23               -1.1317  0.566  -2.3551  -0.2187     0.0667    1.28
+    M13: M24                0.2893  0.440  -0.2295   1.1828     0.8000    1.57
+    M13: O22               -1.1172  1.991  -4.2787   1.2666     0.9333   11.96
+    M13: O23                1.0707  1.092  -0.4033   3.5337     0.3333    5.95
+    M13: O24                0.1155  1.876  -2.0272   4.5588     0.8000   10.50
+    M13: abs(C1 - C2)       0.5836  1.151  -1.3384   2.7838     0.7333    3.56
+    M13: log(C1)           17.9501 36.194 -35.8143  94.2683     0.6667    1.08
+    M13: O22:abs(C1 - C2)   1.7627  1.531  -0.1781   4.3181     0.1333    7.71
+    M13: O23:abs(C1 - C2)  -0.1975  0.991  -1.8583   1.3626     0.9333    6.78
+    M13: O24:abs(C1 - C2)   0.6628  1.170  -1.9963   2.0093     0.3333    7.43
+    M14: (Intercept)      -19.5184 15.899 -44.9070  17.6768     0.1333    1.14
+    M14: M22               -0.7522  0.696  -2.1551   0.0684     0.2667    1.21
+    M14: M23               -0.6638  0.707  -2.0348   0.4068     0.4000    1.35
+    M14: M24               -1.3864  0.652  -2.4498  -0.4895     0.0000    1.09
+    M14: O22               -0.7078  1.180  -2.6801   1.5635     0.6667    3.00
+    M14: O23               -1.0077  1.787  -3.2443   1.6813     0.6667   10.80
+    M14: O24                2.2572  0.752   1.1078   3.6325     0.0000    2.87
+    M14: abs(C1 - C2)       0.2201  1.549  -2.5163   2.2040     0.8000    7.24
+    M14: log(C1)           53.1996 45.833 -52.4533 125.0165     0.2000    1.27
+    M14: O22:abs(C1 - C2)   1.1534  1.016  -1.1975   2.5526     0.2000    3.75
+    M14: O23:abs(C1 - C2)   0.6048  1.236  -1.4642   2.4660     0.6667    9.67
+    M14: O24:abs(C1 - C2)  -1.9040  0.628  -3.0269  -0.7533     0.0000    1.68
                           MCE/SD
-    M12: (Intercept)       0.285
-    M12: M22               0.438
-    M12: M23               0.470
-    M12: M24               0.314
-    M12: O22               0.791
-    M12: O23               0.921
-    M12: O24               0.491
-    M12: abs(C1 - C2)      0.361
-    M12: log(C1)           0.239
-    M12: O22:abs(C1 - C2)  0.193
-    M12: O23:abs(C1 - C2)  0.659
-    M12: O24:abs(C1 - C2)  0.442
-    M13: (Intercept)       0.183
-    M13: M22               0.297
-    M13: M23               0.183
-    M13: M24               0.287
-    M13: O22               0.256
-    M13: O23               0.563
-    M13: O24               0.343
-    M13: abs(C1 - C2)      0.388
-    M13: log(C1)           0.183
-    M13: O22:abs(C1 - C2)       
-    M13: O23:abs(C1 - C2)  0.605
-    M13: O24:abs(C1 - C2)  0.535
-    M14: (Intercept)       0.183
-    M14: M22               0.330
-    M14: M23               0.257
-    M14: M24               0.183
-    M14: O22               0.715
-    M14: O23               0.680
-    M14: O24               0.560
-    M14: abs(C1 - C2)      0.233
-    M14: log(C1)           0.183
-    M14: O22:abs(C1 - C2)  0.437
-    M14: O23:abs(C1 - C2)  0.515
-    M14: O24:abs(C1 - C2)  0.444
+    M12: (Intercept)      0.1826
+    M12: M22              0.3868
+    M12: M23              0.5381
+    M12: M24              0.3570
+    M12: O22              0.4898
+    M12: O23              0.2834
+    M12: O24              0.5419
+    M12: abs(C1 - C2)     0.4000
+    M12: log(C1)          0.1826
+    M12: O22:abs(C1 - C2) 0.7130
+    M12: O23:abs(C1 - C2) 0.3074
+    M12: O24:abs(C1 - C2) 0.4649
+    M13: (Intercept)      0.1826
+    M13: M22              0.2065
+    M13: M23              0.2174
+    M13: M24              0.3602
+    M13: O22              0.8568
+    M13: O23              0.4320
+    M13: O24              0.3820
+    M13: abs(C1 - C2)     0.5523
+    M13: log(C1)          0.1826
+    M13: O22:abs(C1 - C2) 0.8426
+    M13: O23:abs(C1 - C2) 0.4772
+    M13: O24:abs(C1 - C2) 0.4338
+    M14: (Intercept)      0.1172
+    M14: M22              0.1826
+    M14: M23              0.0134
+    M14: M24              0.1826
+    M14: O22                    
+    M14: O23              0.6420
+    M14: O24              0.2449
+    M14: abs(C1 - C2)     0.6629
+    M14: log(C1)          0.3196
+    M14: O22:abs(C1 - C2) 0.5110
+    M14: O23:abs(C1 - C2) 0.5440
+    M14: O24:abs(C1 - C2) 0.1826
     
     
     MCMC settings:
@@ -1254,69 +1254,69 @@
     
     Posterior summary:
                                                                         Mean     SD
-    M12: (Intercept)                                                -22.5391  8.847
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.1052  2.249
-    M12: abs(C1 - C2)                                                -0.0747  0.904
-    M12: log(C1)                                                     62.2782 23.590
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.0238  1.432
-    M13: (Intercept)                                                -11.0741  8.482
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -2.5714  1.837
-    M13: abs(C1 - C2)                                                 0.0335  1.141
-    M13: log(C1)                                                     29.2769 23.143
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   1.8531  1.200
-    M14: (Intercept)                                                -20.6856 10.699
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -1.0879  1.571
-    M14: abs(C1 - C2)                                                 0.2012  0.967
-    M14: log(C1)                                                     55.6050 29.253
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.4999  0.935
-                                                                       2.5%   97.5%
-    M12: (Intercept)                                                -38.840  -7.940
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -3.325   2.578
-    M12: abs(C1 - C2)                                                -1.709   1.443
-    M12: log(C1)                                                     28.221 103.528
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -1.703   2.142
-    M13: (Intercept)                                                -26.106   5.712
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -5.609  -0.204
-    M13: abs(C1 - C2)                                                -1.928   2.404
-    M13: log(C1)                                                    -14.393  66.522
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.370   3.767
-    M14: (Intercept)                                                -36.648  -3.793
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -4.130   1.150
-    M14: abs(C1 - C2)                                                -1.473   1.787
-    M14: log(C1)                                                      8.503 102.641
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.833   2.175
+    M12: (Intercept)                                                -22.0952 12.641
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                0.0613  1.168
+    M12: abs(C1 - C2)                                                -0.1956  0.732
+    M12: log(C1)                                                     61.4451 34.749
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.0642  0.762
+    M13: (Intercept)                                                -13.6139 14.709
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.2831  2.941
+    M13: abs(C1 - C2)                                                 0.4662  1.098
+    M13: log(C1)                                                     34.3202 40.488
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.3681  1.784
+    M14: (Intercept)                                                -20.3098 12.289
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.0163  1.938
+    M14: abs(C1 - C2)                                                 0.2383  0.994
+    M14: log(C1)                                                     54.3501 34.744
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.2195  1.274
+                                                                      2.5%   97.5%
+    M12: (Intercept)                                                -47.02   0.837
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -2.18   1.994
+    M12: abs(C1 - C2)                                                -1.40   1.279
+    M12: log(C1)                                                     -3.59 132.211
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -1.32   1.268
+    M13: (Intercept)                                                -43.46   3.145
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -3.68   4.345
+    M13: abs(C1 - C2)                                                -1.38   2.799
+    M13: log(C1)                                                    -14.68 115.749
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -2.56   2.468
+    M14: (Intercept)                                                -41.02   4.088
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -2.86   2.210
+    M14: abs(C1 - C2)                                                -1.86   2.101
+    M14: log(C1)                                                    -13.37 109.599
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -1.69   1.788
                                                                     tail-prob.
-    M12: (Intercept)                                                     0.000
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   0.800
-    M12: abs(C1 - C2)                                                    0.867
-    M12: log(C1)                                                         0.000
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      0.733
-    M13: (Intercept)                                                     0.133
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   0.000
-    M13: abs(C1 - C2)                                                    0.867
-    M13: log(C1)                                                         0.267
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      0.000
-    M14: (Intercept)                                                     0.000
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   0.467
-    M14: abs(C1 - C2)                                                    0.867
-    M14: log(C1)                                                         0.000
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      0.600
+    M12: (Intercept)                                                     0.133
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   0.933
+    M12: abs(C1 - C2)                                                    0.733
+    M12: log(C1)                                                         0.133
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      0.800
+    M13: (Intercept)                                                     0.333
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   0.667
+    M13: abs(C1 - C2)                                                    0.667
+    M13: log(C1)                                                         0.333
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      0.667
+    M14: (Intercept)                                                     0.133
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                   0.800
+    M14: abs(C1 - C2)                                                    0.733
+    M14: log(C1)                                                         0.200
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)      0.800
                                                                     GR-crit MCE/SD
-    M12: (Intercept)                                                   1.14 0.1826
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                18.71 0.5188
-    M12: abs(C1 - C2)                                                  2.52 0.6639
-    M12: log(C1)                                                       1.27 0.1826
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   20.34 0.8888
-    M13: (Intercept)                                                   1.63 0.1826
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                10.34 0.5675
-    M13: abs(C1 - C2)                                                  2.44 0.4518
-    M13: log(C1)                                                       1.58 0.1826
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   17.91 0.5069
-    M14: (Intercept)                                                   1.05 0.0759
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                 9.14 0.5934
-    M14: abs(C1 - C2)                                                  1.01 0.2131
-    M14: log(C1)                                                       1.04 0.1136
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)    7.56 0.4371
+    M12: (Intercept)                                                   1.85  0.269
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                 6.15  0.598
+    M12: abs(C1 - C2)                                                  1.99  0.183
+    M12: log(C1)                                                       1.90  0.272
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)    7.13  0.563
+    M13: (Intercept)                                                   1.89  0.183
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                16.99  1.041
+    M13: abs(C1 - C2)                                                  3.00  0.241
+    M13: log(C1)                                                       2.04  0.183
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   16.73  1.066
+    M14: (Intercept)                                                   1.94  0.183
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                12.38  0.912
+    M14: abs(C1 - C2)                                                  3.19  0.561
+    M14: log(C1)                                                       1.83  0.183
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)    8.58  1.081
     
     
     MCMC settings:
@@ -1332,107 +1332,107 @@
 
     $m0a
     $m0a$M1
-                           Mean        SD       2.5%      97.5% tail-prob.
-    M12: (Intercept) -0.1499755 0.1694147 -0.4593546 0.12824517  0.3333333
-    M13: (Intercept) -0.4059797 0.2402434 -0.8124883 0.02955525  0.1333333
-    M14: (Intercept) -0.5148550 0.3366004 -1.0366750 0.10893793  0.1333333
-                       GR-crit    MCE/SD
-    M12: (Intercept) 0.9932978 0.1825742
-    M13: (Intercept) 1.1300108 0.1825742
-    M14: (Intercept) 1.2596380 0.1825742
+                           Mean        SD       2.5%        97.5% tail-prob.
+    M12: (Intercept) -0.1991333 0.3461909 -0.8729574  0.347971764 0.66666667
+    M13: (Intercept) -0.4567400 0.2671126 -0.8513739  0.009762801 0.06666667
+    M14: (Intercept) -0.5356710 0.2939147 -1.0263750 -0.053592982 0.06666667
+                      GR-crit    MCE/SD
+    M12: (Intercept) 1.386778 0.1769101
+    M13: (Intercept) 1.411614 0.1825742
+    M14: (Intercept) 1.339933 0.1825742
     
     
     $m0b
     $m0b$M2
-                          Mean        SD       2.5%     97.5% tail-prob.  GR-crit
-    M22: (Intercept) 0.4140770 0.3138272 -0.1687334 0.8626433  0.3333333 2.856326
-    M23: (Intercept) 0.4522598 0.2580566  0.0657990 1.0384481  0.0000000 3.293908
-    M24: (Intercept) 0.4628141 0.3143351 -0.1264455 0.9056792  0.2000000 1.877349
+                           Mean        SD       2.5%     97.5% tail-prob.  GR-crit
+    M22: (Intercept) 0.08186288 0.2191761 -0.2316991 0.5324284  0.8000000 1.508439
+    M23: (Intercept) 0.16714627 0.2787948 -0.2892109 0.6804126  0.5333333 2.115579
+    M24: (Intercept) 0.10683517 0.2598145 -0.3992651 0.4542914  0.6000000 1.549388
                         MCE/SD
-    M22: (Intercept) 0.3639365
-    M23: (Intercept) 0.4464233
-    M24: (Intercept) 0.1825742
+    M22: (Intercept) 0.1988002
+    M23: (Intercept) 0.2419915
+    M24: (Intercept) 0.3143237
     
     
     $m1a
     $m1a$M1
                           Mean       SD        2.5%     97.5% tail-prob.  GR-crit
-    M12: (Intercept) -68.62959 35.67808 -134.713545  5.915196  0.1333333 2.374020
-    M12: C1           47.74971 24.88884   -4.236512 93.768876  0.1333333 2.383029
-    M13: (Intercept) -49.18668 40.71067 -133.253703 10.263694  0.2000000 1.933152
-    M13: C1           34.00832 28.39457   -7.518452 92.579977  0.2000000 1.937662
-    M14: (Intercept) -59.47091 34.74079 -114.223576  8.524604  0.1333333 1.916760
-    M14: C1           41.16637 24.24295   -6.247022 79.094721  0.1333333 1.923975
+    M12: (Intercept) -47.75541 26.01103  -88.565888 -2.166742 0.06666667 1.171947
+    M12: C1           33.09711 18.12706    1.332604 61.409204 0.06666667 1.169748
+    M13: (Intercept) -25.47627 26.58753  -70.634454 18.691091 0.46666667 1.020608
+    M13: C1           17.39445 18.56584  -13.459041 48.859971 0.46666667 1.021487
+    M14: (Intercept) -44.12530 29.29487 -107.603635  4.123719 0.13333333 1.142683
+    M14: C1           30.34907 20.41575   -3.192869 74.228367 0.13333333 1.135301
                         MCE/SD
-    M12: (Intercept) 0.3268775
-    M12: C1          0.3267498
-    M13: (Intercept) 0.2713336
-    M13: C1          0.2720021
-    M14: (Intercept) 0.2602552
-    M14: C1          0.2604883
+    M12: (Intercept) 0.1825742
+    M12: C1          0.1825742
+    M13: (Intercept) 0.1825742
+    M13: C1          0.1825742
+    M14: (Intercept) 0.1825742
+    M14: C1          0.1825742
     
     
     $m1b
     $m1b$M2
-                          Mean       SD      2.5%    97.5% tail-prob.  GR-crit
-    M22: (Intercept) -16.52622 35.78074 -74.84385 55.15486        0.6 1.427567
-    M22: C1           11.84197 24.93609 -38.46172 52.67909        0.6 1.434887
-    M23: (Intercept) -19.83742 34.33652 -64.41356 44.02551        0.6 1.224304
-    M23: C1           14.12542 23.95689 -30.61965 45.37486        0.6 1.225643
-    M24: (Intercept) -46.82612 34.20778 -91.77463 32.40030        0.2 1.859255
-    M24: C1           33.03615 23.82624 -22.32979 64.18395        0.2 1.880389
+                           Mean       SD      2.5%    97.5% tail-prob.  GR-crit
+    M22: (Intercept)  -1.586682 37.75412 -74.06780 54.88543  0.9333333 2.584558
+    M22: C1            1.246525 26.35230 -37.83915 52.06109  0.9333333 2.608079
+    M23: (Intercept)  -1.318285 36.95605 -69.19055 48.77976  1.0000000 5.751605
+    M23: C1            1.049466 25.83369 -33.70314 48.70010  1.0000000 5.827310
+    M24: (Intercept) -28.989424 33.20016 -89.02588 22.33684  0.4000000 3.398998
+    M24: C1           20.379509 23.22558 -15.60195 62.28285  0.4000000 3.421078
                         MCE/SD
-    M22: (Intercept) 0.2137828
-    M22: C1          0.2138274
-    M23: (Intercept) 0.2602778
-    M23: C1          0.2605010
-    M24: (Intercept)        NA
-    M24: C1                 NA
+    M22: (Intercept) 0.2155433
+    M22: C1          0.2158194
+    M23: (Intercept) 0.3423800
+    M23: C1          0.3418280
+    M24: (Intercept) 0.3610240
+    M24: C1          0.3603038
     
     
     $m2a
     $m2a$M1
-                           Mean        SD       2.5%       97.5% tail-prob.
-    M12: (Intercept) -0.3195433 0.2597509 -0.8093345  0.14167651  0.2666667
-    M12: C2          -0.1528170 0.6917391 -1.2232464  1.26253130  0.5333333
-    M13: (Intercept) -0.6085633 0.3308407 -1.1644625 -0.05893472  0.0000000
-    M13: C2          -1.1051034 1.0375456 -3.1486496  0.78370038  0.2666667
-    M14: (Intercept) -0.5300736 0.2266948 -0.8763821 -0.07794868  0.0000000
-    M14: C2          -0.4629505 1.0496587 -2.5024329  1.50771877  0.5333333
-                      GR-crit    MCE/SD
-    M12: (Intercept) 1.325314 0.1995703
-    M12: C2          1.557039 0.3561627
-    M13: (Intercept) 1.390644 0.1825742
-    M13: C2          1.669298 0.1825742
-    M14: (Intercept) 1.056025 0.1825742
-    M14: C2          1.202366 0.3326650
+                           Mean        SD      2.5%       97.5% tail-prob.
+    M12: (Intercept) -0.3310000 0.2303991 -0.668291  0.10488060        0.2
+    M12: C2          -0.0986074 0.5350601 -1.115257  0.82074938        1.0
+    M13: (Intercept) -0.6849389 0.3077664 -1.356694 -0.29074657        0.0
+    M13: C2          -0.8436799 0.6941419 -2.395135  0.04600474        0.2
+    M14: (Intercept) -0.6753447 0.2914226 -1.152760 -0.18889646        0.0
+    M14: C2          -0.4139463 0.5958675 -1.341112  0.73512350        0.4
+                       GR-crit    MCE/SD
+    M12: (Intercept) 1.2189809 0.1119633
+    M12: C2          0.9931291 0.1825742
+    M13: (Intercept) 1.3987585 0.4290333
+    M13: C2          1.0123093 0.2113422
+    M14: (Intercept) 1.2480788 0.3122590
+    M14: C2          1.8550057 0.2225874
     
     
     $m2b
     $m2b$M2
-                           Mean        SD       2.5%    97.5% tail-prob.  GR-crit
-    M22: (Intercept)  0.2215760 0.4501231 -0.3796428 1.200149  0.8000000 1.611322
-    M22: C2          -0.9383816 1.3207894 -2.9726900 2.096730  0.4666667 1.882493
-    M23: (Intercept)  0.4726669 0.3990591 -0.1023854 1.400964  0.1333333 2.728079
-    M23: C2           0.1382598 1.3005391 -1.9978921 1.929803  0.7333333 1.552308
-    M24: (Intercept)  0.3945742 0.3670787 -0.1256262 1.023317  0.4000000 1.791660
-    M24: C2           0.2962376 1.0235997 -1.3793278 2.109527  0.8000000 2.197822
-                        MCE/SD
-    M22: (Intercept) 0.5048817
-    M22: C2          0.4664196
-    M23: (Intercept) 0.4867098
-    M23: C2          0.3035802
-    M24: (Intercept) 0.3261899
-    M24: C2          0.4485243
+                            Mean        SD       2.5%     97.5% tail-prob.  GR-crit
+    M22: (Intercept)  0.46176262 0.3848844 -0.4600186 0.9975725  0.2666667 2.044113
+    M22: C2          -0.82597475 1.0931475 -2.3545707 1.1171074  0.6000000 1.345627
+    M23: (Intercept)  0.52471709 0.4208004 -0.2511362 1.1089049  0.3333333 3.515887
+    M23: C2           0.26357204 0.8407769 -1.2117769 1.7286554  0.8666667 1.252077
+    M24: (Intercept)  0.55114456 0.4874599 -0.3555959 1.2314532  0.2666667 2.665144
+    M24: C2           0.02251215 0.8822720 -1.5178227 1.4792984  0.9333333 1.317799
+                         MCE/SD
+    M22: (Intercept) 0.22997106
+    M22: C2          0.11408044
+    M23: (Intercept) 0.27846512
+    M23: C2          0.13935137
+    M24: (Intercept) 0.26805584
+    M24: C2          0.09500505
     
     
     $m3a
     $m3a$C1
-                      Mean         SD          2.5%     97.5% tail-prob.  GR-crit
-    (Intercept) 1.42190809 0.03560534  1.3033614093 1.4473908  0.0000000 1.330161
-    M12         0.02093337 0.05667585 -0.0084195907 0.2202639  0.4000000 1.202072
-    M13         0.02301766 0.09017853 -0.0186640638 0.2667330  0.5333333 1.741121
-    M14         0.01798810 0.03596424 -0.0006984241 0.1393043  0.1333333 1.202582
+                       Mean         SD         2.5%     97.5% tail-prob.  GR-crit
+    (Intercept) 1.411723231 0.09534028  1.211601066 1.4599402  0.0000000 2.360744
+    M12         0.043502417 0.14064667 -0.031393839 0.4497941  0.1333333 1.315768
+    M13         0.009345015 0.15183204 -0.270780945 0.2520779  0.6000000 1.774621
+    M14         0.035515397 0.09336101 -0.009377649 0.2916742  0.3333333 1.120389
                    MCE/SD
     (Intercept) 0.1825742
     M12         0.1825742
@@ -1442,210 +1442,210 @@
     
     $m3b
     $m3b$C1
-                        Mean          SD         2.5%      97.5% tail-prob.
-    (Intercept) 1.4326805486 0.003921183  1.427465556 1.44079861  0.0000000
-    M22         0.0001535725 0.005292122 -0.010387874 0.00858564  0.8666667
-    M23         0.0018058632 0.005802248 -0.007846449 0.01182050  0.8666667
-    M24         0.0026721362 0.005415436 -0.009149998 0.01159916  0.4666667
+                       Mean          SD         2.5%       97.5% tail-prob.
+    (Intercept) 1.432391389 0.003761970  1.425861243 1.438745087        0.0
+    M22         0.001331535 0.004385657 -0.006612062 0.009837361        0.6
+    M23         0.001738037 0.004747052 -0.006470470 0.010927718        0.6
+    M24         0.005220603 0.005349547 -0.003108196 0.014837976        0.4
                  GR-crit    MCE/SD
-    (Intercept) 1.293281 0.1825742
-    M22         1.299293 0.1825742
-    M23         1.136300 0.1825742
-    M24         1.441052 0.1825742
+    (Intercept) 1.443346 0.1825742
+    M22         1.222469 0.1825742
+    M23         1.213642 0.1822581
+    M24         1.635539 0.1999533
     
     
     $m4a
     $m4a$M1
                                   Mean         SD         2.5%        97.5%
-    M12: (Intercept)      -25.41883499 12.2368946 -49.01289764  -8.56225848
-    M12: M22               -1.10407151  0.6394643  -2.22057452   0.03485964
-    M12: M23                0.23919063  0.7943736  -1.18958355   1.85982954
-    M12: M24               -0.56247727  0.9937426  -2.89064678   0.75731479
-    M12: O22               -2.18079656  2.8946843  -6.10504731   2.02965470
-    M12: O23                0.90289015  4.0404048  -2.73209029   7.47850873
-    M12: O24               -0.20669961  1.0201707  -1.95177371   1.24159122
-    M12: abs(C1 - C2)       0.83883705  1.1308317  -1.39015054   2.65479328
-    M12: log(C1)           69.16121061 33.1128617  21.53551386 132.24647562
-    M12: O22:abs(C1 - C2)   0.95349573  1.8208195  -1.62350883   3.97977969
-    M12: O23:abs(C1 - C2)  -1.66100392  2.7160932  -6.39975724   0.98953105
-    M12: O24:abs(C1 - C2)  -0.27494570  0.8365615  -1.71054496   1.23045323
-    M13: (Intercept)       -9.61891399 14.0099160 -31.63245148  10.47322938
-    M13: M22               -2.10674874  0.9521154  -4.33200670  -0.65846809
-    M13: M23               -1.29748053  0.9065690  -2.99639484  -0.20169649
-    M13: M24                0.14980482  0.5574832  -0.64615578   1.21635281
-    M13: O22               -3.10952029  1.3325168  -5.01573763  -1.07905551
-    M13: O23                1.19357817  1.9399462  -1.07632839   4.69299668
-    M13: O24                0.29476505  1.1882306  -2.35004203   1.86170194
-    M13: abs(C1 - C2)      -0.01282905  0.9952079  -1.41211194   1.80717277
-    M13: log(C1)           24.49608310 37.1468217 -30.88854077  83.63077006
-    M13: O22:abs(C1 - C2)   2.87800130  1.1183407   1.13258779   4.77793067
-    M13: O23:abs(C1 - C2)  -0.10998262  1.0434894  -2.01728360   1.00421744
-    M13: O24:abs(C1 - C2)   0.59377908  1.1364009  -0.83118185   3.08631634
-    M14: (Intercept)      -26.68971405 14.9598095 -51.54024473  -1.08424298
-    M14: M22               -0.74704088  0.5966858  -1.69115388   0.08411753
-    M14: M23               -0.97009566  0.8486494  -2.70907090   0.37027558
-    M14: M24               -1.63888272  0.5778424  -2.66430129  -0.71770420
-    M14: O22                0.30676263  1.0672448  -0.98267229   2.34191196
-    M14: O23               -1.68665441  1.0800120  -3.49739013  -0.02485139
-    M14: O24                2.98713526  2.3552651  -0.84599721   7.01016466
-    M14: abs(C1 - C2)       0.23296806  0.6535849  -0.76360144   1.23349851
-    M14: log(C1)           73.76760445 41.6287893   4.58988960 148.13662264
-    M14: O22:abs(C1 - C2)   0.26853660  0.8439742  -1.75141057   1.42832213
-    M14: O23:abs(C1 - C2)   0.93731536  0.6968745  -0.06823752   1.97890045
-    M14: O24:abs(C1 - C2)  -2.58999583  1.3162049  -4.78740928  -0.52325428
-                          tail-prob.    GR-crit    MCE/SD
-    M12: (Intercept)      0.00000000  1.6240967 0.2847445
-    M12: M22              0.13333333  2.5492486 0.4384009
-    M12: M23              0.80000000  1.8063812 0.4701172
-    M12: M24              0.66666667  1.3041825 0.3142950
-    M12: O22              0.60000000  6.5369393 0.7914078
-    M12: O23              0.66666667 20.5889488 0.9210720
-    M12: O24              0.93333333  1.2814833 0.4907845
-    M12: abs(C1 - C2)     0.53333333  3.3497624 0.3611589
-    M12: log(C1)          0.00000000  1.4410630 0.2389695
-    M12: O22:abs(C1 - C2) 0.73333333  6.7010230 0.1930572
-    M12: O23:abs(C1 - C2) 0.73333333 16.8103470 0.6588978
-    M12: O24:abs(C1 - C2) 0.73333333  2.3582577 0.4420690
-    M13: (Intercept)      0.66666667  1.4463834 0.1825742
-    M13: M22              0.00000000  2.3332968 0.2974640
-    M13: M23              0.00000000  0.9611207 0.1825742
-    M13: M24              0.93333333  2.4901097 0.2867058
-    M13: O22              0.00000000  3.6148813 0.2559585
-    M13: O23              0.73333333 10.1821632 0.5628666
-    M13: O24              0.46666667  4.1415919 0.3430746
-    M13: abs(C1 - C2)     1.00000000  2.2372371 0.3878600
-    M13: log(C1)          0.73333333  1.2694922 0.1825742
-    M13: O22:abs(C1 - C2) 0.00000000  1.8484974        NA
-    M13: O23:abs(C1 - C2) 0.73333333 10.5694990 0.6049138
-    M13: O24:abs(C1 - C2) 0.53333333  3.2380666 0.5345199
-    M14: (Intercept)      0.06666667  1.3836345 0.1825742
-    M14: M22              0.20000000  1.5969686 0.3300896
-    M14: M23              0.26666667  1.7592296 0.2567021
-    M14: M24              0.00000000  1.2146868 0.1825742
-    M14: O22              0.80000000  7.6552542 0.7149200
-    M14: O23              0.06666667  2.7039806 0.6800551
-    M14: O24              0.26666667  4.6678513 0.5595237
-    M14: abs(C1 - C2)     0.73333333  1.4127898 0.2329005
-    M14: log(C1)          0.06666667  1.4314139 0.1825742
-    M14: O22:abs(C1 - C2) 0.66666667  2.5441695 0.4373424
-    M14: O23:abs(C1 - C2) 0.20000000  4.3219944 0.5150709
-    M14: O24:abs(C1 - C2) 0.00000000  6.5391789 0.4439383
+    M12: (Intercept)      -22.75605951 12.0152198 -44.39899903  -4.08297194
+    M12: M22               -0.72351192  0.6790780  -1.92846081   0.38444053
+    M12: M23                0.68347526  0.5351828  -0.17770960   1.70164526
+    M12: M24               -0.24619879  0.8399363  -2.30613234   0.80116955
+    M12: O22               -2.16612577  1.5298873  -4.24500421   0.26603402
+    M12: O23               -2.05392803  1.1213553  -4.16237689  -0.51392114
+    M12: O24                0.45002856  1.2518838  -1.64735125   2.50351111
+    M12: abs(C1 - C2)       0.06833179  1.0085016  -1.69659759   1.95834541
+    M12: log(C1)           63.34657009 34.1159940  13.88544645 126.64478274
+    M12: O22:abs(C1 - C2)   1.39089367  0.9731263   0.01559889   3.02244783
+    M12: O23:abs(C1 - C2)   0.51940429  0.7375629  -0.80168553   1.74973918
+    M12: O24:abs(C1 - C2)  -0.47408950  0.8486405  -1.85999489   1.02037119
+    M13: (Intercept)       -8.19999754 12.5235021 -35.57309224  10.16405130
+    M13: M22               -1.89936512  0.5968603  -2.85055806  -0.81533749
+    M13: M23               -1.13170291  0.5663066  -2.35514144  -0.21871046
+    M13: M24                0.28929255  0.4395466  -0.22953015   1.18276173
+    M13: O22               -1.11716614  1.9906733  -4.27868368   1.26656246
+    M13: O23                1.07066200  1.0918823  -0.40328440   3.53369784
+    M13: O24                0.11550796  1.8758321  -2.02724260   4.55875064
+    M13: abs(C1 - C2)       0.58356257  1.1506379  -1.33836682   2.78379706
+    M13: log(C1)           17.95008602 36.1938617 -35.81426257  94.26833801
+    M13: O22:abs(C1 - C2)   1.76265342  1.5314388  -0.17814390   4.31814673
+    M13: O23:abs(C1 - C2)  -0.19749891  0.9914136  -1.85834206   1.36261255
+    M13: O24:abs(C1 - C2)   0.66280587  1.1700101  -1.99627282   2.00934913
+    M14: (Intercept)      -19.51843802 15.8990604 -44.90696015  17.67679644
+    M14: M22               -0.75219766  0.6957406  -2.15507082   0.06841692
+    M14: M23               -0.66376821  0.7066731  -2.03483943   0.40675977
+    M14: M24               -1.38638927  0.6521088  -2.44982156  -0.48946233
+    M14: O22               -0.70775928  1.1801912  -2.68012184   1.56346455
+    M14: O23               -1.00765310  1.7871800  -3.24433880   1.68130791
+    M14: O24                2.25720918  0.7523809   1.10777257   3.63248379
+    M14: abs(C1 - C2)       0.22008638  1.5487648  -2.51633519   2.20399079
+    M14: log(C1)           53.19956745 45.8326976 -52.45332528 125.01652918
+    M14: O22:abs(C1 - C2)   1.15337231  1.0163753  -1.19752102   2.55262650
+    M14: O23:abs(C1 - C2)   0.60476130  1.2355962  -1.46420921   2.46596164
+    M14: O24:abs(C1 - C2)  -1.90400993  0.6278476  -3.02685649  -0.75327196
+                          tail-prob.   GR-crit     MCE/SD
+    M12: (Intercept)      0.00000000  1.322673 0.18257419
+    M12: M22              0.26666667  2.168955 0.38684986
+    M12: M23              0.13333333  3.443643 0.53814326
+    M12: M24              0.86666667  3.744169 0.35695116
+    M12: O22              0.20000000  9.952074 0.48978755
+    M12: O23              0.00000000  4.999275 0.28339958
+    M12: O24              0.66666667  6.479507 0.54186617
+    M12: abs(C1 - C2)     0.93333333  2.793088 0.40000054
+    M12: log(C1)          0.06666667  1.405118 0.18257419
+    M12: O22:abs(C1 - C2) 0.00000000  7.982190 0.71300957
+    M12: O23:abs(C1 - C2) 0.53333333  2.172284 0.30737976
+    M12: O24:abs(C1 - C2) 0.53333333  6.493079 0.46493067
+    M13: (Intercept)      0.53333333  1.038756 0.18257419
+    M13: M22              0.00000000  1.066007 0.20654629
+    M13: M23              0.06666667  1.284318 0.21743523
+    M13: M24              0.80000000  1.569617 0.36024932
+    M13: O22              0.93333333 11.964092 0.85684625
+    M13: O23              0.33333333  5.945868 0.43201418
+    M13: O24              0.80000000 10.501443 0.38197357
+    M13: abs(C1 - C2)     0.73333333  3.555489 0.55234873
+    M13: log(C1)          0.66666667  1.079058 0.18257419
+    M13: O22:abs(C1 - C2) 0.13333333  7.713585 0.84263391
+    M13: O23:abs(C1 - C2) 0.93333333  6.776591 0.47720008
+    M13: O24:abs(C1 - C2) 0.33333333  7.425203 0.43375932
+    M14: (Intercept)      0.13333333  1.136720 0.11718853
+    M14: M22              0.26666667  1.207036 0.18257419
+    M14: M23              0.40000000  1.345356 0.01344461
+    M14: M24              0.00000000  1.086096 0.18257419
+    M14: O22              0.66666667  3.003594         NA
+    M14: O23              0.66666667 10.797183 0.64204124
+    M14: O24              0.00000000  2.874967 0.24491961
+    M14: abs(C1 - C2)     0.80000000  7.238403 0.66292910
+    M14: log(C1)          0.20000000  1.273801 0.31963550
+    M14: O22:abs(C1 - C2) 0.20000000  3.752860 0.51097579
+    M14: O23:abs(C1 - C2) 0.66666667  9.665714 0.54403404
+    M14: O24:abs(C1 - C2) 0.00000000  1.676271 0.18257419
     
     
     $m4b
     $m4b$M1
                                                                             Mean
-    M12: (Intercept)                                                -22.53907646
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.10523577
-    M12: abs(C1 - C2)                                                -0.07470987
-    M12: log(C1)                                                     62.27820635
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.02377362
-    M13: (Intercept)                                                -11.07412937
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -2.57136519
-    M13: abs(C1 - C2)                                                 0.03347797
-    M13: log(C1)                                                     29.27693848
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   1.85307040
-    M14: (Intercept)                                                -20.68562171
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -1.08794022
-    M14: abs(C1 - C2)                                                 0.20118313
-    M14: log(C1)                                                     55.60500754
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.49990928
+    M12: (Intercept)                                                -22.09524153
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                0.06125530
+    M12: abs(C1 - C2)                                                -0.19562932
+    M12: log(C1)                                                     61.44513454
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.06421625
+    M13: (Intercept)                                                -13.61385657
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.28306044
+    M13: abs(C1 - C2)                                                 0.46615341
+    M13: log(C1)                                                     34.32017835
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.36805757
+    M14: (Intercept)                                                -20.30981490
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.01631328
+    M14: abs(C1 - C2)                                                 0.23825387
+    M14: log(C1)                                                     54.35012696
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.21945670
                                                                             SD
-    M12: (Intercept)                                                 8.8472808
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               2.2488068
-    M12: abs(C1 - C2)                                                0.9043762
-    M12: log(C1)                                                    23.5896736
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.4322455
-    M13: (Intercept)                                                 8.4822909
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               1.8372615
-    M13: abs(C1 - C2)                                                1.1414992
-    M13: log(C1)                                                    23.1431032
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.1998544
-    M14: (Intercept)                                                10.6990182
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               1.5705425
-    M14: abs(C1 - C2)                                                0.9670115
-    M14: log(C1)                                                    29.2530679
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.9346769
-                                                                           2.5%
-    M12: (Intercept)                                                -38.8397077
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -3.3249186
-    M12: abs(C1 - C2)                                                -1.7092604
-    M12: log(C1)                                                     28.2209057
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -1.7032701
-    M13: (Intercept)                                                -26.1059198
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -5.6090827
-    M13: abs(C1 - C2)                                                -1.9283175
-    M13: log(C1)                                                    -14.3925900
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0.3703952
-    M14: (Intercept)                                                -36.6482691
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -4.1299778
-    M14: abs(C1 - C2)                                                -1.4725941
-    M14: log(C1)                                                      8.5026011
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -0.8327012
-                                                                         97.5%
-    M12: (Intercept)                                                 -7.940490
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                2.578032
-    M12: abs(C1 - C2)                                                 1.443114
-    M12: log(C1)                                                    103.527683
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   2.142452
-    M13: (Intercept)                                                  5.711713
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -0.204273
-    M13: abs(C1 - C2)                                                 2.403744
-    M13: log(C1)                                                     66.522255
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   3.767392
-    M14: (Intercept)                                                 -3.793041
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                1.150053
-    M14: abs(C1 - C2)                                                 1.787078
-    M14: log(C1)                                                    102.640628
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   2.174837
+    M12: (Intercept)                                                12.6412719
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               1.1676990
+    M12: abs(C1 - C2)                                                0.7323947
+    M12: log(C1)                                                    34.7489528
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.7622403
+    M13: (Intercept)                                                14.7087117
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               2.9411394
+    M13: abs(C1 - C2)                                                1.0982616
+    M13: log(C1)                                                    40.4881784
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.7843237
+    M14: (Intercept)                                                12.2887964
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               1.9380103
+    M14: abs(C1 - C2)                                                0.9937627
+    M14: log(C1)                                                    34.7440692
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  1.2744197
+                                                                          2.5%
+    M12: (Intercept)                                                -47.023626
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -2.176296
+    M12: abs(C1 - C2)                                                -1.399176
+    M12: log(C1)                                                     -3.592702
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -1.317628
+    M13: (Intercept)                                                -43.457165
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -3.679506
+    M13: abs(C1 - C2)                                                -1.375353
+    M13: log(C1)                                                    -14.675154
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -2.557767
+    M14: (Intercept)                                                -41.017133
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               -2.859442
+    M14: abs(C1 - C2)                                                -1.855139
+    M14: log(C1)                                                    -13.374327
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  -1.689889
+                                                                          97.5%
+    M12: (Intercept)                                                  0.8370506
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                1.9941190
+    M12: abs(C1 - C2)                                                 1.2785425
+    M12: log(C1)                                                    132.2114856
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   1.2683075
+    M13: (Intercept)                                                  3.1452971
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                4.3453034
+    M13: abs(C1 - C2)                                                 2.7990898
+    M13: log(C1)                                                    115.7492231
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   2.4683213
+    M14: (Intercept)                                                  4.0883466
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                2.2099937
+    M14: abs(C1 - C2)                                                 2.1009215
+    M14: log(C1)                                                    109.5992574
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   1.7876031
                                                                     tail-prob.
-    M12: (Intercept)                                                 0.0000000
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               0.8000000
-    M12: abs(C1 - C2)                                                0.8666667
-    M12: log(C1)                                                     0.0000000
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.7333333
-    M13: (Intercept)                                                 0.1333333
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               0.0000000
-    M13: abs(C1 - C2)                                                0.8666667
-    M13: log(C1)                                                     0.2666667
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.0000000
-    M14: (Intercept)                                                 0.0000000
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               0.4666667
-    M14: abs(C1 - C2)                                                0.8666667
-    M14: log(C1)                                                     0.0000000
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.6000000
+    M12: (Intercept)                                                 0.1333333
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               0.9333333
+    M12: abs(C1 - C2)                                                0.7333333
+    M12: log(C1)                                                     0.1333333
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.8000000
+    M13: (Intercept)                                                 0.3333333
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               0.6666667
+    M13: abs(C1 - C2)                                                0.6666667
+    M13: log(C1)                                                     0.3333333
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.6666667
+    M14: (Intercept)                                                 0.1333333
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               0.8000000
+    M14: abs(C1 - C2)                                                0.7333333
+    M14: log(C1)                                                     0.2000000
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  0.8000000
                                                                       GR-crit
-    M12: (Intercept)                                                 1.139539
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              18.712066
-    M12: abs(C1 - C2)                                                2.520000
-    M12: log(C1)                                                     1.272897
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 20.337425
-    M13: (Intercept)                                                 1.625384
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              10.335413
-    M13: abs(C1 - C2)                                                2.441857
-    M13: log(C1)                                                     1.579611
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 17.908771
-    M14: (Intercept)                                                 1.051927
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               9.135040
-    M14: abs(C1 - C2)                                                1.013078
-    M14: log(C1)                                                     1.043293
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  7.555883
+    M12: (Intercept)                                                 1.847270
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)               6.150186
+    M12: abs(C1 - C2)                                                1.993053
+    M12: log(C1)                                                     1.897443
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  7.126056
+    M13: (Intercept)                                                 1.893915
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              16.987207
+    M13: abs(C1 - C2)                                                3.002665
+    M13: log(C1)                                                     2.042686
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 16.728065
+    M14: (Intercept)                                                 1.943806
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              12.382896
+    M14: abs(C1 - C2)                                                3.185968
+    M14: log(C1)                                                     1.827031
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)  8.579698
                                                                        MCE/SD
-    M12: (Intercept)                                                0.1825742
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              0.5187946
-    M12: abs(C1 - C2)                                               0.6639484
-    M12: log(C1)                                                    0.1825742
-    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 0.8888170
+    M12: (Intercept)                                                0.2689255
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              0.5982204
+    M12: abs(C1 - C2)                                               0.1825742
+    M12: log(C1)                                                    0.2721714
+    M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 0.5632222
     M13: (Intercept)                                                0.1825742
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              0.5674710
-    M13: abs(C1 - C2)                                               0.4518497
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              1.0413550
+    M13: abs(C1 - C2)                                               0.2413320
     M13: log(C1)                                                    0.1825742
-    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 0.5068755
-    M14: (Intercept)                                                0.0759189
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              0.5933684
-    M14: abs(C1 - C2)                                               0.2131117
-    M14: log(C1)                                                    0.1136399
-    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 0.4370537
+    M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 1.0661362
+    M14: (Intercept)                                                0.1825742
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)              0.9122230
+    M14: abs(C1 - C2)                                               0.5606580
+    M14: log(C1)                                                    0.1825742
+    M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 1.0809518
     
     
 
