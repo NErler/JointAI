@@ -51,6 +51,11 @@ residuals.JointAI <- function(object,
 
   # select the correct function calculating residuals for each model
   resids <- sapply(names(object$fixed), function(varname) {
+    if (!is.null(object$info_list[[varname]]$hc_list) & warn) {
+      warnmsg("It is not yet possible to obtain residuals conditional on the
+             random effects in multi-level settings.")
+    }
+
     resid_fun <- switch(object$info_list[[varname]]$modeltype,
                         glm = resid_glm,
                         glmm = resid_glm,
