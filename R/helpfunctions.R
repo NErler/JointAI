@@ -598,3 +598,16 @@ get_survinfo <- function(info_list, Mlist) {
 }
 
 
+
+
+# seed value
+set_seed <- function(seed, ...) {
+  if (R.version$major < 3 |
+      (R.version$major == 3 & R.version$minor < 6.0) |
+      Sys.getenv("IS_CHECK") != "true") {
+    set.seed(seed, ...)
+  } else {
+    suppressWarnings(set.seed(seed, sample.kind = "Rounding"))
+  }
+}
+

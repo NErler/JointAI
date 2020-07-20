@@ -77,7 +77,9 @@ get_initial_values <- function(inits, seed, n.chains, warn) {
       if (inherits(inits, "function")) {
         # if the initial values are supplied as a function, evaluate the
         # function
-        if (!is.null(seed)) set.seed(seed)
+        if (!is.null(seed)) {
+          set_seed(seed)
+        }
         inits <- replicate(n.chains, inits(), simplify = FALSE)
       }
 

@@ -5,7 +5,9 @@ get_rng <- function(seed, n.chains) {
   # - n.chains: the number of MCMC chains for which starting values need to be
   #             generated
 
-  if (!is.null(seed)) set.seed(seed)
+  if (!is.null(seed)) {
+    set_seed(seed)
+  }
   seeds <- sample.int(1e5, size = n.chains)
 
   # available random number generators
