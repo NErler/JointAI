@@ -23,7 +23,6 @@ BugReports: https://github.com/nerler/JointAI/issues
 LazyData: TRUE
 RoxygenNote: 7.1.1
 Roxygen: list(old_usage = TRUE)
-Depends: R
 Imports: rjags, MASS, mcmcse, coda, rlang, foreach, doParallel, survival, mathjaxr
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
 Suggests: 
