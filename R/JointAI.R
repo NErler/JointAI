@@ -38,12 +38,8 @@
 #' specification of widely used functions for the analysis of complete data,
 #' such as
 #' \code{\link[stats]{lm}}, \code{\link[stats]{glm}},
-#' \code{\link[ordinal]{clm}} (from the package
-#' \href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
 #' \code{\link[nlme]{lme}} (from the package
 #' \href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}}),
-#' \code{\link[ordinal:clmmOld]{clmm2}} (from the package
-#' \href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
 #' \code{\link[survival]{survreg}} (from the package
 #' \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}) and
 #' \code{\link[survival]{coxph}} (from the package
