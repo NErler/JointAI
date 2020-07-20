@@ -6,25 +6,29 @@
 ^\.travis\.yml$
 ^README\.Rmd$
 ^README-.*\.png$
+
 ^inst/WORDLIST$
 ^inst/Ideas\.*$
+
+
 ^cran-comments\.md$
 ^docs$
-^_pkgdown.yml$
+
+^_pkgdown\.yml$
+^pkgdown$
+
 ^vignettes/SelectingParameters_cache$
 ^vignettes/SelectingParameters_files$
 ^vignettes/ModelSpecification_cache$
 ^vignettes/ModelSpecification_files$
-data/simLong_old.RData_
-data/simWide_old.RData_
-pkgdown
 
 R/samplers.R
 R/plots_ppc.R
-^_pkgdown\.yml$
-^pkgdown$
 
 ^\.lintr$
 ^\.covrignore$
 ^\.github$
 ^codecov\.yml$
+
+tests/testthat/test-aaaaa_setenv.R
+tests/testthat/test_zzzzz_rmenv.R
