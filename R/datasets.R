@@ -272,7 +272,7 @@ NULL
 #' @name PBC
 NULL
 
-
+#
 # PBC <- merge(survival::pbcseq,
 #              subset(survival::pbc, select = c(id, copper, trig))
 # )
@@ -287,4 +287,4 @@ NULL
 # PBC$status <- factor(PBC$status, levels = 0:2,
 #                      labels = c('censored', 'transplant', 'dead'))
 #
-# save(PBC, file = 'data/PBC.RData')
+# save(PBC, file = 'data/PBC.RData', version = 2)
