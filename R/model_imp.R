@@ -645,7 +645,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                       inits = inits, thin = thin,
                       data_list = data_list, var.names = var.names,
                       modelfile = modelfile, quiet = quiet,
-                      progress.bar = progress.bar, mess = TRUE)
+                      progress.bar = progress.bar, mess = mess, warn = warn)
   adapt <- jags_res$adapt
   mcmc <- jags_res$mcmc
 

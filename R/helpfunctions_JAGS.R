@@ -105,17 +105,36 @@ run_parallel <- function(n.adapt, n.iter, n.cores, n.chains, inits, thin = 1,
 
 run_seq <- function(n.adapt, n.iter, n.cores, n.chains, inits, thin = 1,
                     data_list, var.names, modelfile, quiet = TRUE,
-                    progress.bar = "text", mess = TRUE, ...) {
+                    progress.bar = "text", mess = TRUE, warn = TRUE, ...) {
 
   adapt <- if (any(n.adapt > 0, n.iter > 0)) {
-    try(rjags::jags.model(file = modelfile, data = data_list,
-                          inits = inits, quiet = quiet,
-                          n.chains = n.chains, n.adapt = n.adapt))
+    if (warn == FALSE) {
+      suppressWarnings({
+        try(rjags::jags.model(file = modelfile, data = data_list,
+                              inits = inits, quiet = quiet,
+                              n.chains = n.chains, n.adapt = n.adapt))
+      })
+    } else {
+      try(rjags::jags.model(file = modelfile, data = data_list,
+                            inits = inits, quiet = quiet,
+                            n.chains = n.chains, n.adapt = n.adapt))
+    }
   }
   mcmc <- if (n.iter > 0 & !inherits(adapt, "try-error")) {
-    try(rjags::coda.samples(adapt, n.iter = n.iter, thin = thin,
-                            variable.names = var.names,
-                            progress.bar = progress.bar))
+    if (mess == FALSE) {
+      sink(tempfile())
+      on.exit(sink())
+      force(suppressMessages(
+        try(rjags::coda.samples(adapt, n.iter = n.iter, thin = thin,
+                                variable.names = var.names,
+                                progress.bar = progress.bar))
+      ))
+    } else {
+      try(rjags::coda.samples(adapt, n.iter = n.iter, thin = thin,
+                              variable.names = var.names,
+                              progress.bar = progress.bar))
+
+    }
   }
 
   list(adapt = adapt, mcmc = mcmc)
