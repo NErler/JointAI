@@ -31,6 +31,9 @@ test_that('model included when specified via models', {
 
 
 test_that("error when unknown variable or missing part", {
+  expect_error(get_models(fixed = y ~ M1 + O1, data = wideDF,
+                          models = c(C2 = 'lognorm')))
+
   expect_error(get_models(fixed = y ~ Bb1 + M1 + O1, data = wideDF))
 
   expect_error(get_models(fixed = y ~ B1 + M1 + O1, data = wideDF,

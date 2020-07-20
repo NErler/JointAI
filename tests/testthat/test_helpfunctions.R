@@ -61,6 +61,29 @@ test_that('extract_outcome works', {
   }
 })
 
+
+
+
+#
+# test_that("parameter selection work", {
+#   mod <- betareg_imp(x ~ C1 + B2 + O1 + C2, data = wideDF, n.iter = 2, n.adapt = 1)
+#   expect_equal(mod$mcmc_settings$variable.names, c("beta", "tau_x"))
+#
+#   mod2 <- betareg_imp(x ~ C1 + B2 + O1 + C2, data = wideDF, n.adapt = 0,
+#                       monitor_params = c(analysis_main = TRUE, tau_main = FALSE))
+#   expect_equal(mod2$mcmc_settings$variable.names, c("beta"))
+#
+#   mod3 <- betareg_imp(x ~ C1 + B2 + O1 + C2, data = wideDF, n.adapt = 0,
+#                       monitor_params = c(tau_main = TRUE, analysis_main = FALSE,
+#                                          sigma_main = TRUE))
+#   expect_equal(mod3$mcmc_settings$variable.names, c("tau_x"))
+#
+# })
+
+
+
+
+
 # f1 <- Surv(time, status) ~ sex + age
 # f2 <- cbind(time, status) ~ sex + age
 # f3 <- I(time + age) ~ sex

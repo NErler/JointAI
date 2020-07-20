@@ -4,6 +4,14 @@ library("JointAI")
 
 run_clmm_models <- function() {
   cat('\nRunning clmm models...\n')
+
+  set.seed(1234)
+  longDF <- JointAI::longDF
+  longDF$x <- factor(sample(1:4, nrow(longDF), replace = TRUE),
+                     ordered = TRUE)
+  longDF$x[sample(seq_len(nrow(longDF)), 50)] <- NA
+
+
   sink(tempfile())
   on.exit(sink())
   invisible(force(suppressWarnings({
@@ -103,18 +111,23 @@ run_clmm_models <- function() {
     models$m6c <- update(models$m5c, rev = "o1")
     models$m6d <- update(models$m5d, rev = "o1")
     models$m6e <- update(models$m5e, rev = "o1")
+
+
+    # bugfixes -----------------------------------------------------------------
+    # bugfix in model with ordinal longitudinal covariate"
+    models$m7a = lme_imp(y ~ C1 + o1 + o2 + x + time, random = ~ 1|id,
+                         data = longDF, n.iter = 10, n.adapt = 5, seed = 2020)
+
+    # parameters for clmm models without baseline covariates work
+    models$m7b = lme_imp(y ~ o2 + o1 + c2 + b2, data = longDF,
+                        random = ~ 1|id, n.iter = 10, n.adapt = 5, seed = 2020)
+
   }
-  )
-  ))
+  )))
   models
 }
 
 models <- run_clmm_models()
-
-# models <- list(m0a, m0b, m1a, m1b, m1c, m1d, m2a, m2b, m2c, m2d,
-#                cov1 = m3a, cov2 = m3b, m4a, m4b, m4c, m4d, m4e,
-#                m5a, m5b, m5c, m5d, m5e,
-#                m6a, m6b, m6c, m6d, m6e)
 
 
 test_that("models run", {

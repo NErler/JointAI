@@ -143,6 +143,24 @@
     D_Srv_ftm_stts_cn_center[1,1]      1.399       2.33
     
     
+    $m4d
+    Potential scale reduction factors:
+    
+                                  Point est. Upper C.I.
+    age                                 1.64       3.29
+    sexfemale                           1.10       1.45
+    albumin                             2.06       4.30
+    ns(platelet, df = 2)1               2.79       6.00
+    ns(platelet, df = 2)2               1.75       4.08
+    beta_Bh0_Srv_ftm_stts_cn[1]         5.18      11.91
+    beta_Bh0_Srv_ftm_stts_cn[2]         1.49       4.29
+    beta_Bh0_Srv_ftm_stts_cn[3]         2.07       4.44
+    beta_Bh0_Srv_ftm_stts_cn[4]         1.90       4.42
+    beta_Bh0_Srv_ftm_stts_cn[5]         1.72       3.32
+    beta_Bh0_Srv_ftm_stts_cn[6]         1.10       1.54
+    D_Srv_ftm_stts_cn_center[1,1]       1.29       2.15
+    
+    
 
 ---
 
@@ -262,6 +280,21 @@
     beta_Bh0_Srv_ftm_stts_cn[6]   -10.367    Inf  3.951     Inf
     D_Srv_ftm_stts_cn_center[1,1]  16.941 5.0741 27.792    0.18
     
+    $m4d
+                                     est   MCSE    SD MCSE/SD
+    age                           -0.011 0.0029 0.016    0.18
+    sexfemale                     -1.797 0.2364 1.295    0.18
+    albumin                       -2.229 0.1521 0.457    0.33
+    ns(platelet, df = 2)1         -2.195 0.4078 1.069    0.38
+    ns(platelet, df = 2)2         -1.151 0.5255 2.878    0.18
+    beta_Bh0_Srv_ftm_stts_cn[1]   -4.639 0.3237 0.912    0.36
+    beta_Bh0_Srv_ftm_stts_cn[2]   -5.437 0.4162 1.191    0.35
+    beta_Bh0_Srv_ftm_stts_cn[3]   -3.367 0.4028 1.264    0.32
+    beta_Bh0_Srv_ftm_stts_cn[4]   -7.433 0.3342 0.871    0.38
+    beta_Bh0_Srv_ftm_stts_cn[5]   -2.779 0.3872 1.745    0.22
+    beta_Bh0_Srv_ftm_stts_cn[6]   -7.887 0.8652 3.112    0.28
+    D_Srv_ftm_stts_cn_center[1,1] 15.726 1.7016 9.320    0.18
+    
 
 # summary output remained the same
 
@@ -373,6 +406,20 @@
     Coefficients:
               age     sexfemale       albumin log(platelet) 
          -0.01064      -1.43379      -2.09582      -0.67477 
+    
+    Call:
+    coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+        sex + albumin + ns(platelet, df = 2) + (1 | id) + (1 | center), 
+        data = PBC, n.adapt = 2, n.iter = 10, seed = 2020, timevar = "day")
+    
+     Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+    
+    
+    Coefficients:
+                      age             sexfemale               albumin 
+                  -0.0106               -1.7973               -2.2295 
+    ns(platelet, df = 2)1 ns(platelet, df = 2)2 
+                  -2.1948               -1.1507 
     $m0a
     
     Call:
@@ -499,6 +546,22 @@
               age     sexfemale       albumin log(platelet) 
          -0.01064      -1.43379      -2.09582      -0.67477 
     
+    $m4d
+    
+    Call:
+    coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+        sex + albumin + ns(platelet, df = 2) + (1 | id) + (1 | center), 
+        data = PBC, n.adapt = 2, n.iter = 10, seed = 2020, timevar = "day")
+    
+     Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+    
+    
+    Coefficients:
+                      age             sexfemale               albumin 
+                  -0.0106               -1.7973               -2.2295 
+    ns(platelet, df = 2)1 ns(platelet, df = 2)2 
+                  -2.1948               -1.1507 
+    
 
 ---
 
@@ -561,6 +624,14 @@
     $m4c$`Surv(futime, status != "censored")`
               age     sexfemale       albumin log(platelet) 
       -0.01063719   -1.43378996   -2.09582152   -0.67476804 
+    
+    
+    $m4d
+    $m4d$`Surv(futime, status != "censored")`
+                      age             sexfemale               albumin 
+              -0.01060027           -1.79727637           -2.22948405 
+    ns(platelet, df = 2)1 ns(platelet, df = 2)2 
+              -2.19477826           -1.15072530 
     
     
 
@@ -642,6 +713,16 @@
     sexfemale     -3.11969841 -0.62428256
     albumin       -2.71638106 -0.64632059
     log(platelet) -1.40706765 -0.25379730
+    
+    
+    $m4d
+    $m4d$`Surv(futime, status != "censored")`
+                                 2.5%      97.5%
+    age                   -0.04620629  0.0135690
+    sexfemale             -5.62406175 -0.6799098
+    albumin               -2.84912297 -1.1693968
+    ns(platelet, df = 2)1 -3.47384950  0.2220275
+    ns(platelet, df = 2)2 -6.77424948  5.3216798
     
     
 
@@ -1005,6 +1086,51 @@
      - center: 10
      - id: 312
     
+    $m4d
+    
+    Bayesian proportional hazards model fitted with JointAI
+    
+    Call:
+    coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
+        sex + albumin + ns(platelet, df = 2) + (1 | id) + (1 | center), 
+        data = PBC, n.adapt = 2, n.iter = 10, seed = 2020, timevar = "day")
+    
+    
+    Number of events: 169 
+    
+    Posterior summary:
+                             Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+    age                   -0.0106 0.0157 -0.0462  0.0136      0.467    1.62  0.183
+    sexfemale             -1.7973 1.2946 -5.6241 -0.6799      0.000    1.18  0.183
+    albumin               -2.2295 0.4574 -2.8491 -1.1694      0.000    1.36  0.333
+    ns(platelet, df = 2)1 -2.1948 1.0693 -3.4738  0.2220      0.133    3.49  0.381
+    ns(platelet, df = 2)2 -1.1507 2.8782 -6.7742  5.3217      0.467    2.40  0.183
+    
+    Posterior summary of random effects covariance matrix:
+                                  Mean   SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+    D_Srv_ftm_stts_cn_center[1,1] 15.7 9.32 4.67  40.5               2.27  0.183
+    
+    Posterior summary of other parameters:
+                                 Mean    SD   2.5% 97.5% tail-prob. GR-crit MCE/SD
+    beta_Bh0_Srv_ftm_stts_cn[1] -4.64 0.912  -6.08 -2.74      0.000    2.82  0.355
+    beta_Bh0_Srv_ftm_stts_cn[2] -5.44 1.191  -6.96 -2.77      0.000    1.93  0.349
+    beta_Bh0_Srv_ftm_stts_cn[3] -3.37 1.264  -4.99 -1.32      0.000    1.96  0.319
+    beta_Bh0_Srv_ftm_stts_cn[4] -7.43 0.871  -9.09 -5.90      0.000    2.93  0.384
+    beta_Bh0_Srv_ftm_stts_cn[5] -2.78 1.745  -4.91  2.63      0.133    2.82  0.222
+    beta_Bh0_Srv_ftm_stts_cn[6] -7.89 3.112 -13.15 -2.17      0.000    1.15  0.278
+    
+    
+    MCMC settings:
+    Iterations = 3:12
+    Sample size per chain = 10 
+    Thinning interval = 1 
+    Number of chains = 3 
+    
+    Number of observations: 2257 
+    Number of groups:
+     - center: 10
+     - id: 312
+    
 
 ---
 
@@ -1125,6 +1251,22 @@
     sexfemale     1.261232 0.2628998
     albumin       2.549584 0.4132439
     log(platelet) 1.086660 0.3157542
+    
+    
+    $m4d
+    $m4d$`Surv(futime, status != "censored")`
+                                 Mean         SD        2.5%      97.5% tail-prob.
+    age                   -0.01060027 0.01565656 -0.04620629  0.0135690  0.4666667
+    sexfemale             -1.79727637 1.29459141 -5.62406175 -0.6799098  0.0000000
+    albumin               -2.22948405 0.45735907 -2.84912297 -1.1693968  0.0000000
+    ns(platelet, df = 2)1 -2.19477826 1.06929377 -3.47384950  0.2220275  0.1333333
+    ns(platelet, df = 2)2 -1.15072530 2.87823313 -6.77424948  5.3216798  0.4666667
+                           GR-crit    MCE/SD
+    age                   1.615337 0.1825742
+    sexfemale             1.180529 0.1825742
+    albumin               1.359666 0.3325924
+    ns(platelet, df = 2)1 3.493549 0.3813915
+    ns(platelet, df = 2)2 2.395869 0.1825742
     
     
 

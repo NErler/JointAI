@@ -1,301 +1,359 @@
 context("GLMM")
 library("JointAI")
+library("splines")
+
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
+
+set.seed(1234)
+longDF <- JointAI::longDF
+# gamma variables
+longDF$L1 <- rgamma(nrow(longDF), 2, 4)
+longDF$L1mis <- rgamma(nrow(longDF), 2, 4)
+longDF$L1mis[sample.int(nrow(longDF), 20)] <- NA
+
+# beta variables
+longDF$Be1 <- plogis(rnorm(nrow(longDF)))
+longDF$Be2 <- plogis(rnorm(nrow(longDF)))
+longDF$Be2[sample.int(nrow(longDF), 50)] <- NA
 
 
-wideDF$x <- plogis(wideDF$y)
-longDF$x <- plogis(longDF$y)
+run_glmm_models <- function() {
+  cat("\nRunning glm models...\n")
+  sink(tempfile())
+  on.exit(sink())
+  invisible(force(suppressWarnings({
 
-test_that('minimal models work', {
-  # no covariates
-  expect_s3_class(betamm_imp(x ~ 1 + (1 | id), data = longDF, n.adapt = 1),
-                  'JointAI')
+    models = list(
+      # no covariates
+      m0a1 = lme_imp(y ~ 1 + (1 | id), data = longDF, n.adapt = 5, n.iter = 10,
+                     seed = 2020),
+      m0a2 = glme_imp(y ~ 1 + (1 | id), family = gaussian(link = "identity"),
+                      data = longDF, n.adapt = 5, n.iter = 10, seed = 2020),
+      m0a3 = glme_imp(y ~ 1 + (1 | id), family = gaussian(link = "log"),
+                      data = longDF, n.adapt = 5, n.iter = 10, seed = 2020),
+      m0a4 = glme_imp(y ~ 1 + (1 | id), family = gaussian(link = "inverse"),
+                      data = longDF, n.adapt = 5, n.iter = 10, seed = 2020),
 
-  # one complete covariate
-  expect_s3_class(betamm_imp(x ~ C1 + (1 | id), data = longDF, n.adapt = 1),
-                  'JointAI')
+      m0b1 = glme_imp(b1 ~ 1 + (1 | id), family = binomial(link = "logit"), data = longDF,
+                      n.adapt = 5, n.iter = 10, seed = 2020),
+      m0b2 = glme_imp(b1 ~ 1 + (1 | id), family = binomial(link = "probit"), data = longDF,
+                      n.adapt = 5, n.iter = 10, seed = 2020),
+      m0b3 = glme_imp(b1 ~ 1 + (1 | id), family = binomial(link = "log"), data = longDF,
+                      n.adapt = 5, n.iter = 10, seed = 2020),
+      m0b4 = glme_imp(b1 ~ 1 + (1 | id), family = binomial(link = "cloglog"), data = longDF,
+                      n.adapt = 5, n.iter = 10, seed = 2020),
 
-  # one incomplete covariate
-  expect_s3_class(betamm_imp(x ~ C2 + (1 | id), data = longDF, n.adapt = 1),
-                  'JointAI')
+      m0c1 = glme_imp(L1 ~ 1 + (1 | id), family = Gamma(link = "inverse"), data = longDF,
+                      n.adapt = 5, n.iter = 10, seed = 2020),
+      m0c2 = glme_imp(L1 ~ 1 + (1 | id), family = Gamma(link = "log"), data = longDF,
+                      n.adapt = 5, n.iter = 10, seed = 2020),
 
-  # no intercept
-  expect_s3_class(betareg_imp(x ~ C1 - 1, data = wideDF, n.adapt = 1), 'JointAI')
-  expect_s3_class(betamm_imp(x ~ C1 - 1 + (1 | id), data = longDF, n.adapt = 1),
-                  'JointAI')
+      m0d1 = glme_imp(p1 ~ 1 + (1 | id), family = poisson(link = "log"), data = longDF,
+                      n.adapt = 5, n.iter = 10, seed = 2020),
+      m0d2 = glme_imp(p1 ~ 1 + (1 | id), family = poisson(link = "identity"), data = longDF,
+                      n.adapt = 5, n.iter = 10, seed = 2020),
 
-  # no random intercept
-  expect_s3_class(betamm_imp(x ~ C1 - 1 + (time + 0 | id), data = longDF,
-                             n.adapt = 1), 'JointAI')
+      m0e1 = lognormmm_imp(L1 ~ 1 + (1 | id), data = longDF,
+                           n.adapt = 5, n.iter = 10, seed = 2020),
+      m0f1 = betamm_imp(Be1 ~ 1 + (1 | id), data = longDF,
+                        n.adapt = 5, n.iter = 10, seed = 2020),
+
+      # only complete
+      m1a = lme_imp(y ~ C1 + (1 | id), data = longDF, n.adapt = 5, n.iter = 10,
+                    seed = 2020),
+      m1b = glme_imp(b1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, n.iter = 10,
+                     seed = 2020,
+                     family = binomial()),
+      m1c = glme_imp(L1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, n.iter = 10,
+                     seed = 2020,
+                     family = Gamma()),
+      m1d = glme_imp(p1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, n.iter = 10,
+                     seed = 2020,
+                     family = poisson()),
+
+      m1e = lognormmm_imp(L1 ~ C1 + (1 | id), data = longDF,
+                          n.adapt = 5, n.iter = 10, seed = 2020),
+      m1f = betamm_imp(Be1 ~ C1 + (1 | id), data = longDF,
+                       n.adapt = 5, n.iter = 10, seed = 2020),
+
+
+      # only incomplete
+      m2a = lme_imp(y ~ c2 + (1 | id), data = longDF, n.adapt = 5, n.iter = 10,
+                    seed = 2020),
+      m2b = glme_imp(b2 ~ c2 + (1 | id), data = longDF, n.adapt = 5, n.iter = 10,
+                     seed = 2020,
+                     family = binomial()),
+      m2c = glme_imp(L1mis ~ c2 + (1 | id), data = longDF, n.adapt = 5, n.iter = 10,
+                     seed = 2020,
+                     family = Gamma()),
+      m2d = glme_imp(p2 ~ c2 + (1 | id), data = longDF, n.adapt = 5, n.iter = 10,
+                     seed = 2020,
+                     family = poisson()),
+
+      m2e = lognormmm_imp(L1mis ~ c2 + (1 | id), data = longDF,
+                          n.adapt = 5, n.iter = 10, seed = 2020),
+      m2f = betamm_imp(Be2 ~ c2 + (1 | id), data = longDF,
+                       n.adapt = 5, n.iter = 10, seed = 2020),
+
+      # no intercept
+      m3a = lme_imp(y ~ 0 + C2 + (1 | id), data = longDF,
+                    n.adapt = 5, n.iter = 10, seed = 2020),
+      m3b = glme_imp(b2 ~ 0 + C2 + (1 | id), data = longDF, family = binomial(),
+                     n.adapt = 5, n.iter = 10, seed = 2020),
+      m3c = glme_imp(L1mis ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5, n.iter = 10,
+                     seed = 2020, family = Gamma()),
+      m3d = glme_imp(p2 ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5, n.iter = 10,
+                     seed = 2020, family = poisson()),
+
+      m3e = lognormmm_imp(L1mis ~ 0 + C2 + (1 | id), data = longDF,
+                          n.adapt = 5, n.iter = 10, seed = 2020),
+      m3f = betamm_imp(Be2 ~ 0 + C2 + (1 | id), data = longDF,
+                       n.adapt = 5, n.iter = 10, seed = 2020),
+
+
+      # as covariate
+      m4a = lme_imp(c1 ~ c2 + B2 + p2 + L1mis + Be2 + (1 | id), data = longDF,
+                    n.adapt = 5, n.iter = 10, seed = 2020,
+                    models = c(p2 = "glmm_poisson_log",
+                               L1mis = "glmm_gamma_inverse",
+                               Be2 = "glmm_beta")),
+
+      m4b = lme_imp(c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF,
+                    n.adapt = 5, n.iter = 10, seed = 2020,
+                    models = c(c2 = "glmm_gaussian_inverse",
+                               p2 = "glmm_poisson_identity",
+                               b2 = "glmm_binomial_probit",
+                               L1mis = "glmm_lognorm"),
+      ),
+
+      m4c = lme_imp(c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF,
+                    n.adapt = 5, n.iter = 10, seed = 2020, no_model = "time",
+                    models = c(c2 = "glmm_gaussian_log",
+                               p2 = "glmm_poisson_identity",
+                               L1mis = "glmm_gamma_log",
+                               b2 = "glmm_binomial_log")),
+
+      m4d = lme_imp(c1 ~ c2 + b2 + p2 + L1mis + Be2 + (1 | id), data = longDF,
+                    n.adapt = 5, n.iter = 10, seed = 2020,
+                    trunc = list(Be2 = c(0, 1)),
+                    shrinkage = "ridge",
+                    models = c(c2 = "glmm_gaussian_log",
+                               p2 = "glmm_poisson_identity",
+                               L1mis = "glmm_gamma_log",
+                               b2 = "glmm_binomial_log")),
+
+
+      # complex structures
+      m5a = lme_imp(y ~ M2 + o2 * abs(C1 - c2) + log(C1) + time + I(time^2) +
+                      (time | id), data = longDF,
+                    n.adapt = 5, n.iter = 10, seed = 2020),
+
+      m5b = glme_imp(b1 ~ L1mis + abs(c1 - C2) + log(Be2) + time +
+                       (time + I(time^2) | id),
+                     data = longDF, warn = FALSE,
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     models = c(C2 = "glm_gaussian_log",
+                                L1mis = "glmm_gamma_inverse",
+                                Be2 = "glmm_beta"), shrinkage = "ridge",
+                     family = binomial()),
+
+
+      # no random intercept
+      m6a = lme_imp(y ~ b2 + C1 + C2 + time + (0 + time | id), data = longDF,
+                    n.adapt = 5, n.iter = 10, seed = 2020, no_model = "time"),
+
+      m6b = glme_imp(b1 ~ c1 + C2 + B1 + time + (0 + time + I(time^2) | id),
+                     data = longDF, warn = FALSE,
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     shrinkage = "ridge",
+                     family = binomial()),
+
+      # spline random effects
+      m7a = lme_imp(y ~ ns(time, df = 2), random = ~ ns(time, df = 2)|id,
+                    data = longDF, n.iter = 10, adapt = 5, seed = 2020),
+      m7b = lme_imp(y ~ bs(time, df = 3), random = ~ bs(time, df = 3)|id,
+                    data = longDF, n.iter = 10, n.adapt = 5, seed = 2020),
+
+      m7c = lme_imp(y ~ C1 + c1 + ns(time, df = 3),
+                    random = ~ ns(time, df = 3)|id, data = longDF,
+                    n.iter = 10, nadapt = 5, seed = 2020),
+      m7d = lme_imp(y ~ C1 + C2 + c1 + ns(time, df = 3), random = ~ time|id,
+                    data = longDF, n.iter = 10, n.adapt = 5, seed = 2020),
+
+      m7e = lme_imp(y ~ C1 + C2 + c1 + ns(time, df = 3),
+                    random = ~ ns(time, df = 3)|id, data = longDF,
+                    no_model = "time", n.iter = 10, n.adapt = 5, seed = 2020),
+      m7f = lme_imp(y ~ C1 + C2 + c1 + ns(time, df = 3), random = ~ time|id,
+                    data = longDF,n.iter = 10, n.adapt = 5, seed = 2020),
+
+      # complex random effects
+      m8a = lme_imp(y ~ c1 + c2 + time, random = ~ time + c2|id,
+                    no_model = "time", data = longDF,
+                    n.iter = 10, n.adapt = 5, seed = 2020),
+      m8b = lme_imp(y ~ c1 + c2 + time, random = ~ time + c2|id, data = longDF,
+                    n.iter = 10, n.adapt = 5, seed = 2020),
+      m8c = lme_imp(y ~ B2 * c1 + c2 + time, random = ~ time + c1|id,
+                    data = longDF, no_model = "time",
+                    n.iter = 10, n.adapt = 5, seed = 2020),
+      m8d = lme_imp(y ~ B2 * c1 + c2 + time, random = ~ time + c1|id,
+                    data = longDF, n.iter = 10, n.adapt = 5, seed = 2020),
+      m8e = lme_imp(y ~ C1 + B2 * c1 + c2 + time, random = ~ time + c2|id,
+                    data = longDF, n.iter = 10, n.adapt = 5, seed = 2020),
+      m8f = lme_imp(y ~ C1 + B2 * c1 + c2 + time, random = ~ time + c2|id,
+                    data = longDF, no_model = "time",
+                    n.iter = 10, n.adapt = 5, seed = 2020),
+      m8g = lme_imp(y ~ C1 + B2 * c1 + c2 + time, random = ~ time + c2|id,
+                    data = longDF, no_model = c("time", "c1"),
+                    n.iter = 10, n.adapt = 5, seed = 2020),
+      m8h = lme_imp(y ~ C1 + B2 * c2 + c1 + time, random = ~ time + c1|id,
+                    data = longDF, n.iter = 10, n.adapt = 5, seed = 2020),
+      m8i = lme_imp(y ~ C1 + B2 * c2 + c1 + time, no_model = "time",
+                    random = ~ time + c1|id,  data = longDF,
+                    n.iter = 10, n.adapt = 5, seed = 2020),
+
+      m8j = lme_imp(y ~ C1 + B2 * c2 + c1 + time, random = ~ time + c2 | id,
+                    data = longDF, n.iter = 10, n.adapt = 5, seed = 2020),
+
+      m8k = lme_imp(y ~ C1 + B2 * c2 + c1 + time, random = ~ time + c2 | id,
+                    data = longDF, n.iter = 10, n.adapt = 5, seed = 2020),
+
+      # 3-fold interaction on different levels with random slope variable
+       m8l = lme_imp(y ~ C1 + B2 * c1 * time, random = ~ time + I(time^2) | id,
+                    data = longDF, n.iter = 10, n.adapt = 5, seed = 2020),
+
+      m8m = lme_imp(y ~ c1 * b1 + o1, random = ~b1|id, data = longDF,
+                    n.iter = 10, n.adapt = 5, seed = 2020)
+    )
+  }
+  )))
+}
+
+
+models <- run_glmm_models()
+
+
+
+test_that("models run", {
+  for (k in seq_along(models)) {
+    expect_s3_class(models[[k]], "JointAI")
+  }
 })
 
 
-test_that('parameter selection work', {
-  mod <- betareg_imp(x ~ C1 + B2 + O1 + C2, data = wideDF, n.iter = 2, n.adapt = 1)
-  expect_equal(mod$mcmc_settings$variable.names, c('beta', 'tau_x'))
+test_that("models have the correct model and analysis model type", {
+  for (i in seq_along(models)) {
+    expect_false(any(sapply(compare_modeltype(models), isFALSE)))
+  }
+})
 
-  mod2 <- betareg_imp(x ~ C1 + B2 + O1 + C2, data = wideDF, n.adapt = 0,
-                      monitor_params = c(analysis_main = TRUE, tau_main = FALSE))
-  expect_equal(mod2$mcmc_settings$variable.names, c('beta'))
 
-  mod3 <- betareg_imp(x ~ C1 + B2 + O1 + C2, data = wideDF, n.adapt = 0,
-                      monitor_params = c(tau_main = TRUE, analysis_main = FALSE,
-                                         sigma_main = TRUE))
-  expect_equal(mod3$mcmc_settings$variable.names, c('tau_x'))
+test_that("there are no duplicate betas/alphas in the JAGSmodel", {
+  expect_null(unlist(lapply(models, find_dupl_parms)))
+})
 
+test_that("MCMC is mcmc.list", {
+  for (i in seq_along(models)) {
+    expect_s3_class(models[[i]]$MCMC, "mcmc.list")
+  }
+})
+
+
+test_that("MCMC samples can be plottet", {
+  for (k in seq_along(models)) {
+    expect_silent(traceplot(models[[k]]))
+    expect_silent(densplot(models[[k]]))
+    expect_silent(plot(MC_error(models[[k]])))
+  }
+})
+
+test_that("GRcrit and MCerror give same result", {
+  expect_snapshot_output(lapply(models, GR_crit, multivariate = FALSE))
+  expect_snapshot_output(lapply(models, MC_error))
+})
+
+
+test_that("summary output remained the same", {
+  expect_snapshot_output(lapply(models, print))
+  expect_snapshot_output(lapply(models, coef))
+  expect_snapshot_output(lapply(models, confint))
+  expect_snapshot_output(lapply(models, summary, missinfo = TRUE))
+  expect_snapshot_output(lapply(models, function(x) coef(summary(x))))
 })
 
 
 
+test_that("prediction works", {
+  for (k in seq_along(models)) {
+    expect_s3_class(predict(models[[k]], type = "link", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models[[k]], type = "response",
+                            warn = FALSE)$fitted,
+                    "data.frame")
+  }
 
+  # prediction without specifying the type
+  expect_s3_class(predict(models$m5a, warn = FALSE)$fitted, "data.frame")
 
-
-
-test_that("bugfix in model with ordinal longitudinal covariate", {
-  newlongDF <- longDF
-  newlongDF$x <- factor(sample(1:4, nrow(longDF), replace = TRUE),
-                        ordered = TRUE)
-  newlongDF$x[sample(seq_len(nrow(longDF)), 50)] <- NA
-  expect_s3_class(lme_imp(y ~ C1 + o1 + o2 + x + time, random = ~ 1|id,
-                          data = newlongDF), 'JointAI')
-})
-
-test_that('parmeters for clmm models without baseline covarites work', {
-  expect_s3_class(lme_imp(y ~ o2 + o1 + c2 + b2, data = longDF,
-                          random = ~ 1|id),
-                  'JointAI')
-})
-
-
-
-
-
-
-test_that("model with no covariates work", {
-  expect_equal(class(lme_imp(y ~ 1, random = ~1|id, data = longDF)), "JointAI")
-  expect_equal(class(glme_imp(b1 ~ 1, random = ~1|id, data = longDF,
-                              family = 'binomial')), "JointAI")
-  expect_equal(class(glme_imp(p1 ~ 1, random = ~1|id, data = longDF,
-                              family = poisson())), "JointAI")
-  expect_equal(class(clmm_imp(o1 ~ 1, random = ~1|id, data = longDF)),
-               "JointAI")
+  # prediction with newdata
+  ndf <- predDF(models$m5a, vars = ~ c2)
+  expect_s3_class(ndf, "data.frame")
+  expect_s3_class(predict(models$m5a, newdata = ndf)$fitted, "data.frame")
 })
 
 
-context("Longitudinal Models standard rd effects")
-test_that("models with standard random effects structure work", {
-  testthat::skip_on_cran()
-  expect_equal(class(lme_imp(y ~ c1 + c2 + C1 + C2 + O2 + M2,
-                             random = ~1|id, data = longDF, warn = FALSE)),
-               "JointAI")
 
-  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1),
-                             random = ~ 1|id, data = longDF, warn = FALSE)),
-               "JointAI")
+test_that("residuals", {
+  for (k in seq_along(models)) {
+    expect_is(residuals(models[[k]], type = "response"),
+              "numeric")
 
-  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1),
-                             random = ~ time|id, data = longDF, warn = FALSE)),
-               "JointAI")
-
-  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1) + time,
-                             random = ~ time|id, data = longDF, warn = FALSE)),
-               "JointAI")
-
-  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1) + time +
-                               I(time^2),
-                             random = ~ time|id, data = longDF, warn = FALSE,
-                             no_model = 'time')),
-               "JointAI")
-
-  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 - C2) + log(C1) + time +
-                               I(time^2), warn = FALSE,
-                             random = ~ time|id, data = longDF)),
-               "JointAI")
-
-  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 -C2) + log(C1) + time,
-                             random = ~ time + I(time^2)|id, data = longDF,
-                             no_model = 'time')),
-               "JointAI")
-
-  expect_equal(class(lme_imp(y ~ M2 + O2 * abs(C1 -C2) + log(C1) + time,
-                             warn = FALSE,
-                             random = ~ time + I(time^2)|id, data = longDF)),
-               "JointAI")
+    if (models[[k]]$analysis_type %in% c("beta", "glmm_beta")) {
+      expect_error(residuals(models[[k]], type = "working"))
+      expect_error(residuals(models[[k]], type = "pearson"))
+    } else {
+      expect_is(residuals(models[[k]], type = "working"),
+                "numeric")
+      expect_is(residuals(models[[k]], type = "pearson"),
+                "numeric")
+    }
+  }
+  expect_is(residuals(models$m5a), "numeric")
 })
 
 
-context("Longitudinal Models spline rd effects")
-test_that('models with spline random effects work', {
-  testthat::skip_on_cran()
-  library(splines)
-  expect_equal(class(lme_imp(y ~ ns(time, df = 2),
-                             random = ~ ns(time, df = 2)|id,
-                             data = longDF)),
-               "JointAI")
-
-  expect_equal(class(lme_imp(y ~ bs(time, df = 3),
-                             random = ~ bs(time, df = 3)|id,
-                             data = longDF)),
-               "JointAI")
-
-  expect_equal(class(lme_imp(y ~ C1 + c1 + ns(time, df = 3),
-                             random = ~ ns(time, df = 3)|id,
-                             data = longDF)),
-               "JointAI")
-
-  expect_equal(class(lme_imp(y ~ C1 + C2 + c1 + ns(time, df = 3),
-                             random = ~ time|id,
-                             data = longDF)),
-               "JointAI")
-
-  expect_equal(class(lme_imp(y ~ C1 + C2 + c1 + ns(time, df = 3),
-                             random = ~ ns(time, df = 3)|id,
-                             data = longDF, no_model = 'time')),
-               "JointAI")
-
-  testmod <- lme_imp(y ~ C1 + C2 + c1 + ns(time, df = 3),
-                     random = ~ time|id,
-                     data = longDF)
-  #
-  #   expect_equal(testmod$K, matrix(nrow = 5, ncol = 2, byrow = TRUE,
-  #                                  data = c(1, 3, rep(NA, 4), 4, 7, rep(NA, 2)),
-  #                                  dimnames = list(c('Xc', 'Xic', 'time',
-  #                                   'Xl', 'Xil'),
-  #                                                  c("start", 'end')))
-  #   )
-  #
-  #   expect_equal(testmod$K_imp, matrix(nrow = 3, ncol = 2, byrow = TRUE,
-  #                                      data = c(1, 2, 3, 5, 6, 9),
-  #                                      dimnames = list(c('C2', 'c1', 'time'),
-  #                                                      c("start", 'end')))
-  #   )
-
-  # expect_equal(testmod$imp_par_list$c1$par_elmts,
-  #              matrix(nrow = 2, ncol = 2, byrow = TRUE,
-  #                     data = c(3, 5, rep(NA, 2)),
-  #                     dimnames = list(c('Xc', 'Xl'),
-  #                                     c("start", 'end')))
-  # )
-  #
-  # expect_equal(testmod$imp_par_list$time$par_elmts,
-  #              matrix(nrow = 2, ncol = 2, byrow = TRUE,
-  #                     data = c(6, 8, 9, 9),
-  #                     dimnames = list(c('Xc', 'Xl'),
-  #                                     c("start", 'end')))
-  # )
-
-  # fixed <- y ~ C1 + C2 + c1 + ns(time, df = 3)
-  # random = ~ ns(time, df = 3)|id
-  # models <- get_models(fixed, random, data = longDF)$models
-  # Mlist <- JointAI:::divide_matrices(data = longDF, fixed = fixed,
-  #                                    analysis_type = 'lme', models = models)
-  #
-  # K <- JointAI:::get_model_dim(Mlist$cols_main, Mlist$hc_list)
-  # K_imp <- JointAI:::get_imp_dim(models, JointAI:::get_imp_pos(models, Mlist),
-  #  Mlist)
-
-
+test_that("model can be plottet", {
+  for (i in seq_along(models)[names(models) == "pred"]) {
+    if (models[[i]]$analysis_type %in% c("lognorm", "glmm_lognorm",
+                                         "beta", "glmm_beta")) {
+      expect_error(plot(models[[i]]))
+    } else {
+      expect_silent(plot(models[[i]]))
+    }
+  }
 })
 
+}
 
-context("Longitudinal Models complex rd effects")
-test_that("models with complex random effects structure work", {
-  testthat::skip_on_cran()
-  expect_equal(class(lme_imp(y ~ c1 + c2 + time, random = ~ time + c2|id,
-                             no_model = 'time', data = longDF)), "JointAI")
-
-  expect_equal(class(lme_imp(y ~ c1 + c2 + time, random = ~ time + c2|id,
-                             data = longDF)), "JointAI")
-
-  expect_equal(class(lme_imp(y ~ B2 * c1 + c2 + time, random = ~ time + c1|id,
-                             data = longDF, no_model = 'time')), "JointAI")
-
-  expect_equal(class(lme_imp(y ~ B2 * c1 + c2 + time, random = ~ time + c1|id,
-                             data = longDF)), "JointAI")
-
-  expect_equal(class(lme_imp(y ~ C1 + B2 * c1 + c2 + time,
-                             random = ~ time + c2|id,
-                             data = longDF)), "JointAI")
-
-  expect_equal(class(lme_imp(y ~ C1 + B2 * c1 + c2 + time,
-                             random = ~ time + c2|id,
-                             data = longDF, no_model = 'time')), "JointAI")
-
-  expect_equal(class(lme_imp(y ~ C1 + B2 * c1 + c2 + time,
-                             random = ~ time + c2|id,
-                             data = longDF, no_model = c('time', 'c1'))),
-               "JointAI")
-
-  expect_equal(class(lme_imp(y ~ C1 + B2 * c2 + c1 + time,
-                             random = ~ time + c1|id,  data = longDF)),
-               "JointAI")
-
-  expect_equal(class(lme_imp(y ~ C1 + B2 * c2 + c1 + time, no_model = "time",
-                             random = ~ time + c1|id,  data = longDF)),
-               "JointAI")
-
-  expect_equal(class(lme_imp(y ~ C1 + B2 * c2 + c1 + time,
-                             random = ~ time + c2|id,
-                             data = longDF)), "JointAI")
-
-  expect_equal(class(lme_imp(y ~ C1 + B2 * c2 + c1 + time,
-                             random = ~ time + c2|id,
-                             data = longDF)), "JointAI", no_model = "time")
-
-  expect_equal(class(lme_imp(y ~ C1 + B2 * c1 * time,
-                             random = ~ time + I(time^2)|id,
-                             data = longDF)), "JointAI")
-
-  expect_s3_class(lme_imp(y ~ c1 * b1 + o1, random = ~b1|id, data = longDF),
-                  "JointAI")
-})
-
-
-context("Longitudinal Models glme")
-
-test_that('glme_imp', {
-  testthat::skip_on_cran()
-  expect_equal(class(glme_imp(b1 ~ C1 + B1, random = ~1 | id,
-                              data = longDF,
-                              family = 'binomial')), 'JointAI')
-
-  expect_equal(class(glme_imp(b1 ~ C1 + B1 + time, random = ~1 | id,
-                              data = longDF,
-                              family = 'binomial')), 'JointAI')
-
-  expect_equal(class(glme_imp(b1 ~ C1 + B1 + time, random = ~time | id,
-                              data = longDF,
-                              family = 'binomial')), 'JointAI')
-
-  expect_equal(class(glme_imp(b1 ~ C2 + B1 + time, random = ~time | id,
-                              data = longDF,
-                              family = 'binomial')), 'JointAI')
-
-  expect_equal(class(glme_imp(b1 ~ C2 + B1 + time + c2 + c1,
-                              random = ~time | id, data = longDF,
-                              family = 'binomial')), 'JointAI')
-
-  expect_equal(class(glme_imp(b1 ~ C2 + B1 + time + c2 + c1 + b2,
-                              random = ~time | id, data = longDF,
-                              family = 'binomial')), 'JointAI')
-
-  expect_equal(class(glme_imp(b1 ~ C2 + B1 + time + c2 + c1 + o2,
-                              random = ~time | id, data = longDF, warn = FALSE,
-                              family = 'binomial')), 'JointAI')
-
-  expect_error(glme_imp(b1 ~ C2 + B1 + time + c2 + c1 + m2,
-                        random = ~time | id, data = longDF,
-                        family = 'binomial'))
-
-})
-
-
-test_that('poisson imputation', {
-  testthat::skip_on_cran()
-  expect_equal(class(lme_imp(y ~ C1 + C2 + p2 + time, random = ~time|id,
-                             data = longDF,
-                             models = c(p2 = "glmm_poisson_log"),
-                             n.iter = 100)),
-               "JointAI")
-})
-
+# test_that("wrong models give errors", {
+#
+#   # cauchit link is not implemented
+#   expect_error(glm_imp(B1 ~ 1, family = binomial(link = "cauchit"),
+#                        data = wideDF, seed = 2020))
+#
+#   # sqrt is not an allowed link (not implemented)
+#   expect_error(glm_imp(P1 ~ 1, family = poisson(link = "sqrt"), data = wideDF,
+#                        seed = 2020))
+#
+#   # gives JAGS model error (no dedicated error message)
+#   # glm_imp(time ~ 1, family = Gamma(link = "identity"), data = wideDF,
+#   #                 n.adapt = 5, n.iter = 10, seed = 2020)
+#
+#   # no family specified
+#   expect_error(glm_imp(B1 ~ C1, data = wideDF, seed = 2020))
+#
+#   # unknown covariate model type
+#   expect_error(lm_imp(C1 ~ C2 + Be2, data = wideDF,
+#                       n.adapt = 5, n.iter = 10, seed = 2020,
+#                       models = c(Be2 = "betareg")))
+# })
 

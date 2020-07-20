@@ -27,7 +27,6 @@ test_that('JM', {
 })
 
 
-
 test_that("fill_locf works", {
   locfdat <- JointAI:::fill_locf(data = JointAI::PBC,
                                  fixed = list(Surv(futime, status != "censored") ~

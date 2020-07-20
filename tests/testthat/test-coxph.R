@@ -1,5 +1,6 @@
 context("coxph models")
 library("JointAI")
+library("splines")
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
@@ -48,23 +49,31 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
                         n.adapt = 2, n.iter = 10, seed = 2020),
 
 
-        # time-varying covariates
+        # time-varying covariates ---------------------------------------------
+        # time-dep variables of different types
         m4a = coxph_imp(Surv(futime, status != "censored") ~ age + sex + trt +
                           albumin + platelet + stage + (1 | id), data = PBC,
                         timevar = "day", n.adapt = 2, n.iter = 10, seed = 2020
         ),
 
+        # interaction between complete baseline and time-dep variable.
+        # Note: interaction with incomplete baseline does not work!
         m4b = coxph_imp(Surv(futime, status != "censored") ~ age + sex * trt +
                           albumin + log(platelet) + (1 | id), data = PBC,
                         timevar = "day",
-                        n.adapt = 2, n.iter = 10, seed = 2020
-        ),
+                        n.adapt = 2, n.iter = 10, seed = 2020),
 
+        # transformation of incomplete time-dep variable
         m4c = coxph_imp(Surv(futime, status != "censored") ~ age + sex +
                           albumin + log(platelet) + (1 | id) + (1 | center),
                         data = PBC, timevar = "day",
-                        n.adapt = 2, n.iter = 10, seed = 2020
-        )
+                        n.adapt = 2, n.iter = 10, seed = 2020),
+
+        m4d = coxph_imp(Surv(futime, status != "censored") ~ age + sex +
+                          albumin + ns(platelet, df = 2) + (1 | id) +
+                          (1 | center),
+                        data = PBC, timevar = "day",
+                        n.adapt = 2, n.iter = 10, seed = 2020)
       )
     }
     )))

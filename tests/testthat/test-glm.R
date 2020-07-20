@@ -3,6 +3,8 @@ library("JointAI")
 library("splines")
 
 set.seed(1234)
+wideDF <- JointAI::wideDF
+
 # poisson variables
 wideDF$P1 <- rpois(nrow(wideDF), 3)
 wideDF$P2 <- rpois(nrow(wideDF), 2)
@@ -14,8 +16,7 @@ wideDF$L1mis[sample.int(nrow(wideDF), 20)] <- NA
 
 wideDF$Be1 <- plogis(rnorm(nrow(wideDF)))
 wideDF$Be2 <- plogis(rnorm(nrow(wideDF)))
-
-
+wideDF$Be2[sample.int(nrow(wideDF), size = 20)] <- NA
 
 
 run_glm_models <- function() {
@@ -227,7 +228,7 @@ test_that("models run", {
 
 test_that("models have the correct model and analysis model type", {
   for (i in seq_along(models)) {
-    expect_false(any(sapply(compare_modeltype(models[[2]]), isFALSE)))
+    expect_false(any(sapply(compare_modeltype(models), isFALSE)))
   }
 })
 
@@ -288,10 +289,9 @@ test_that("prediction works", {
 
 
 test_that("residuals", {
-  for (k in seq_along(models)[38]) {
-    # expect_is(residuals(models[[k]], type = "response"),
-    #           "numeric")
-
+  for (k in seq_along(models)) {
+    expect_is(residuals(models[[k]], type = "response"),
+              "numeric")
 
     if (models[[k]]$analysis_type == "beta") {
       expect_error(residuals(models[[k]], type = "working"))
