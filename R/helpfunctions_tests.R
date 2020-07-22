@@ -71,9 +71,9 @@ compare_modeltype <- function(mod) {
     # compare models element
     if (type %in% c("glm", "glmm")) {
       list(
-        models_type = all.equal(JointAI:::get_modeltype(m), type),
-        models_family = all.equal(JointAI:::get_family(m), family$family),
-        models_link = all.equal(JointAI:::get_link(m), family$link)
+        models_type = all.equal(get_modeltype(m), type),
+        models_family = all.equal(get_family(m), family$family),
+        models_link = all.equal(get_link(m), family$link)
       )
     } else {
       list(

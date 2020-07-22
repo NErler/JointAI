@@ -311,8 +311,20 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     }
   })
 
+
+  test_that("data_list remaines the same", {
+    skip_on_cran()
+    expect_snapshot_output(lapply(models, "[[", "data_list"))
+  })
+
+  test_that("JAGSmodel remaines the same", {
+    skip_on_cran()
+    expect_snapshot_output(lapply(models, "[[", "JAGSmodel"))
+  })
+
   test_that("GRcrit and MCerror give same result", {
     skip_on_cran()
+    skip_if(rjags::jags.version() < "4.3.0")
     expect_snapshot_output(lapply(models, GR_crit, multivariate = FALSE))
     expect_snapshot_output(lapply(models, MC_error))
   })
@@ -320,6 +332,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   test_that("summary output remained the same", {
     skip_on_cran()
+    skip_if(rjags::jags.version() < "4.3.0")
     expect_snapshot_output(lapply(models, print))
     expect_snapshot_output(lapply(models, coef))
     expect_snapshot_output(lapply(models, confint))
