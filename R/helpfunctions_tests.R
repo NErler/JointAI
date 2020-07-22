@@ -77,9 +77,9 @@ compare_modeltype <- function(mod) {
       )
     } else {
       list(
-        models_type = !inherits(JointAI:::get_modeltype(m), "try-error"),
-        models_family = !inherits(JointAI:::get_family(m), "try-error"),
-        models_link = !inherits(JointAI:::get_link(m), "try-error")
+        models_type = !inherits(get_modeltype(m), "try-error"),
+        models_family = !inherits(get_family(m), "try-error"),
+        models_link = !inherits(get_link(m), "try-error")
       )
     }
   )
