@@ -2,6 +2,7 @@ context("GLMM")
 library("JointAI")
 library("splines")
 
+Sys.setenv(IS_CHECK = "true")
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   set_seed(1234)
@@ -418,3 +419,4 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 #                       models = c(Be2 = "betareg")))
 # })
 
+Sys.setenv(IS_CHECK = NULL)
