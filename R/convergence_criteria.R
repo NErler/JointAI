@@ -205,7 +205,7 @@ print.MCElist <- function(x, ...) {
 #'                   \code{keep_scaled_mcmc = TRUE} to be set when fitting the
 #'                   model)
 #' @param plotpars optional; list of parameters passed to
-#'                 \code{\link[base]{plot}()}
+#'                 \code{plot()}
 #' @param ablinepars optional; list of parameters passed to
 #'                   \code{\link[graphics]{abline}()}
 #' @param minlength number of characters the variable names are abbreviated to

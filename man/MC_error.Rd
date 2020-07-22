@@ -61,7 +61,7 @@ on the sampling scale (this requires the argument
 model)}
 
 \item{plotpars}{optional; list of parameters passed to
-\code{\link[base]{plot}()}}
+\code{plot()}}
 
 \item{ablinepars}{optional; list of parameters passed to
 \code{\link[graphics]{abline}()}}

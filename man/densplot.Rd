@@ -15,7 +15,7 @@ densplot(object, ...)
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
-\item{...}{additional parameters passed to \code{\link[base]{plot}}}
+\item{...}{additional parameters passed to \code{plot()}}
 
 \item{start}{the first iteration of interest
 (see \code{\link[coda]{window.mcmc}})}
@@ -37,7 +37,7 @@ sample). Follows the same principle as the argument
 should be excluded}
 
 \item{vlines}{list, where each element is a named list of parameters that
-can be passed to \code{\link[graphics]{abline}} to create
+can be passed to \code{\link[graphics]{abline}()} to create
 vertical lines.
 Each of the list elements needs to contain at least
 \code{v = <x location>}, where <x location> is a vector of the
