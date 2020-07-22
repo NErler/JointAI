@@ -89,11 +89,12 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   t0 <- Sys.time()
   if (object$mcmc_settings$parallel) {
     n.cores <- object$mcmc_settings$n.cores
-    cl <- parallel::makeCluster(n.cores,
-                                type = ifelse(grepl("linux",
-                                                    R.Version()$platform),
-                                              "FORK", "PSOCK"))
-    doParallel::registerDoParallel(cl)
+    # cl <- parallel::makeCluster(n.cores,
+    #                             type = ifelse(grepl("linux",
+    #                                                 R.Version()$platform),
+    #                                           "FORK", "PSOCK"))
+    # doParallel::registerDoParallel(cl)
+    doFuture::registerDoFuture()
 
     if (mess)
       msg("Parallel sampling on %s cores started (%s).", n.cores, Sys.time())
@@ -103,7 +104,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                           thin = thin, var.names = var.names)
     )
 
-    parallel::stopCluster(cl)
+    # parallel::stopCluster(cl)
     mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
     adapt <- lapply(res, function(x) x$adapt)
   } else {

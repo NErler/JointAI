@@ -153,6 +153,8 @@
 #' @import utils
 #' @import stats
 #' @importFrom rjags coda.samples jags.model
+#' @import future
+#' @importFrom foreach foreach %dopar%
 #'
 #'
 #' @docType package

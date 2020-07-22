@@ -107,7 +107,6 @@
 #'                regular model formula, and the names of the list should be
 #'                the names of the ordinal response variables.
 #' @param ... additional, optional arguments (not used)
-#' @importFrom foreach foreach %dopar%
 #' @name model_imp
 #'
 #' @return An object of class \link[=JointAIObject]{JointAI}.
@@ -636,8 +635,24 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
       msg("Note: No MCMC sample will be created when n.iter is set to 0.")
   }
 
+  oplan <- future::plan(future::sequential)
+  theplan <- attr(oplan[[1]], "call")
+  future::plan(oplan)
 
-  runJAGS <- ifelse(isTRUE(parallel), run_parallel, run_seq)
+  strategies <- sapply(oplan, function(o) {
+    setdiff(class(o), c("tweaked", "function"))[1]
+  })
+
+  if (length(strategies) > 1) {
+    warnmsg("There is a list of future strategies.
+            I will use the first element, %s.",
+            strategies[1])
+  }
+
+  runJAGS <- ifelse(strategies[1] %in% c("sequential", "transparent"),
+                    run_seq, run_parallel)
+
+  # runJAGS <- ifelse(isTRUE(parallel), run_parallel, run_seq)
 
   t0 <- Sys.time()
   jags_res <- runJAGS(n.adapt = n.adapt, n.iter = n.iter,
@@ -682,6 +697,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                         variable.names = if (exists("var.names")) var.names,
                         thin = thin,
                         inits = inits,
+                        plan = theplan,
+                        oplan = oplan,
                         parallel = parallel,
                         n.cores = if (parallel) n.cores,
                         seed = seed)

@@ -68,31 +68,31 @@ run_samples <- function(adapt, n.iter, var.names, thin) {
 
 run_parallel <- function(n.adapt, n.iter, n.cores, n.chains, inits, thin = 1,
                          data_list, var.names, modelfile, mess = TRUE, ...) {
-  if (!requireNamespace("foreach", quietly = TRUE))
-    errormsg("Parallel sampling requires the %s package to
-               be installed.", sQuote("foreach"))
-
-  if (!requireNamespace("doParallel", quietly = TRUE))
-    errormsg("Parallel sampling requires the %s package
-               to be installed.", sQuote("doParallel"))
+  # if (!requireNamespace("foreach", quietly = TRUE))
+  #   errormsg("Parallel sampling requires the %s package to
+  #              be installed.", sQuote("foreach"))
+  #
+  # if (!requireNamespace("doParallel", quietly = TRUE))
+  #   errormsg("Parallel sampling requires the %s package
+  #              to be installed.", sQuote("doParallel"))
 
   if (any(n.adapt > 0, n.iter > 0)) {
     if (is.null(n.cores))
       n.cores <- min(parallel::detectCores() - 2, n.chains)
+    # doParallel::registerDoParallel(cores = n.cores)
+    doFuture::registerDoFuture()
 
-
-    doParallel::registerDoParallel(cores = n.cores)
     if (mess)
       msg("Parallel sampling on %s cores started (%s).", n.cores, Sys.time())
 
-    res <- foreach(i = seq_along(inits),
-                   .export = "run_jags") %dopar% {
-      run_jags(inits[[i]], data_list = data_list,
-               modelfile = modelfile,
-               n.adapt = n.adapt, n.iter = n.iter, thin = thin,
-               var.names = var.names)
-      }
-    doParallel::stopImplicitCluster()
+    res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(inits)),
+                              run_jags(inits[[i]], data_list = data_list,
+                                       modelfile = modelfile,
+                                       n.adapt = n.adapt, n.iter = n.iter,
+                                       thin = thin,
+                                       var.names = var.names)
+    )
+    # doParallel::stopImplicitCluster()
 
 
     mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
