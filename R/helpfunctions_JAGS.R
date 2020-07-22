@@ -85,7 +85,8 @@ run_parallel <- function(n.adapt, n.iter, n.cores, n.chains, inits, thin = 1,
     if (mess)
       msg("Parallel sampling on %s cores started (%s).", n.cores, Sys.time())
 
-    res <- foreach(i = seq_along(inits)) %dopar% {
+    res <- foreach(i = seq_along(inits), .packages = "JointAI",
+                   .export = "run_jags") %dopar% {
       run_jags(inits[[i]], data_list = data_list,
                modelfile = modelfile,
                n.adapt = n.adapt, n.iter = n.iter, thin = thin,
