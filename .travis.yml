@@ -8,8 +8,7 @@ warnings_are_errors: false
 r_check_args: '--as-cran'
 
 env:
-  - NOT_CRAN=true
-  - IS_CHECK=true
+  - NOT_CRAN=true IS_CHECK=true
 
 before_install:
   - sudo apt-get install jags
