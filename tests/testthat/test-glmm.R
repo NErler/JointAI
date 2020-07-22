@@ -419,4 +419,4 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 #                       models = c(Be2 = "betareg")))
 # })
 
-Sys.setenv(IS_CHECK = NULL)
+Sys.setenv(IS_CHECK = "")
