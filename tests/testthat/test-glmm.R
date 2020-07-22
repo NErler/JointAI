@@ -137,12 +137,12 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
         # as covariate
-        m4a = lme_imp(c1 ~ c2 + B2 + p2 + L1mis + Be2 + (1 | id), data = longDF,
-                      n.adapt = 5, n.iter = 10, seed = 2020,
-                      models = c(p2 = "glmm_poisson_log",
-                                 L1mis = "glmm_gamma_inverse",
-                                 Be2 = "glmm_beta"),
-                      warn = FALSE, mess = FALSE),
+        # m4a = lme_imp(c1 ~ c2 + B2 + p2 + L1mis + Be2 + (1 | id), data = longDF,
+        #               n.adapt = 5, n.iter = 10, seed = 2020,
+        #               models = c(p2 = "glmm_poisson_log",
+        #                          L1mis = "glmm_gamma_inverse",
+        #                          Be2 = "glmm_beta"),
+        #               warn = FALSE, mess = FALSE),
 
         m4b = lme_imp(c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF,
                       n.adapt = 5, n.iter = 10, seed = 2020,

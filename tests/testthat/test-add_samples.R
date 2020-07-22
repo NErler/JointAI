@@ -9,7 +9,7 @@ test_that('add_samples works in simple setting',{
                               n.iter = 50))
 })
 
-test_that('add_samples works in parallel',{
+test_that('add_samples works in parallel', {
   lm2 <- lm_imp(y ~ C1 + C2 + B2, data = wideDF, n.iter = 50, parallel = TRUE,
                 n.cores = 2)
   expect_s3_class(add_samples(lm2, add = TRUE, n.iter = 50), class = "JointAI")
