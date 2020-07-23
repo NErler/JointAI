@@ -385,6 +385,40 @@
 #' the response variable has to be specified in the argument `rev`, e.g., `rev =
 #' c("y")`.
 #'
+#' By default, proportional odds are assumed and only the intercepts differ
+#' per category of the ordinal response. To allow for non-proportional odds,
+#' i.e.,
+#' \mjdeqn{\log\left(\frac{P(y_i > k)}{P(y_i \leq k)}\right) =
+#' \gamma_k + \eta_i + \eta_{ki}, \quad k = 1, \ldots, K-1,}{ascii}
+#' the argument `nonprop` can be specified. It takes a one-sided formula or
+#' a list of one-sided formulas. When a single formula is supplied, or a
+#' unnamed list with just one element, it is assumed that the formula
+#' corresponds to the main model.
+#' To specify non-proportional effects for linear predictors in models for
+#' ordinal covariates, the list has to be named with the names of the
+#' ordinal response variables.
+#'
+#' For example, the following three specifications are equivalent and assume a
+#' non-proportional effect of `C1` on `O1`, but `C1` is assumed to have a
+#' proportional effect on the incomplete ordinal covariate `O2`:
+#' ```{r, eval = FALSE}
+#' clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = ~ C1)
+#' clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = list(~ C1))
+#' clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = list(O1 = ~ C1))
+#' ```
+#'
+#' To specify non-proportional effects on `O2`, a named list has to be provided:
+#' ```{r, eval = FALSE}
+#' clm_imp(O1 ~ C1 + C2 + B2 + O2 + B1, data = wideDF,
+#'         nonprop = list(O1 = ~ C1,
+#'                        O2 = ~ C1 + B1))
+#' ```
+#' The variables for which a non-proportional effect is assumed also have to be
+#' part of the regular model formula.
+#'
+#'
+#'
+#'
 #' @section Note:
 #' ## Coding of variables:
 #' The default covariate (imputation) models are chosen based on the
@@ -400,7 +434,7 @@
 #' Variables of type \code{logical} are automatically converted to unordered
 #' factors.\cr
 #'
-#' #### Contrasts
+#' ### Contrasts
 #' **JointAI** version \mjeqn{\geq}{ascii} 1.0.0 uses the globally (via
 #' `options("contrasts")`) specified contrasts. However, for incomplete
 #' categorical variables, for which the contrasts need to be re-calculated
@@ -459,7 +493,6 @@
 #'
 #'
 #'
-#'
 #' ## Not (yet) possible:
 #' \itemize{
 #' \item prediction (using \code{predict}) conditional on random effects
@@ -486,6 +519,7 @@
 #' * \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 #' * \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{MCMC Settings}
 #' * \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{After Fitting}
+#' * \href{https://nerler.github.io/JointAI/articles/TheoreticalBackground.html}{Theoretical Background}
 #'
 #'
 #'

@@ -626,6 +626,34 @@ are defined as \mjdeqn{\log\left(\frac{P(y_i > k)}{P(y_i \leq k)}\right) =
 To reverse the odds to \mjdeqn{\log\left(\frac{P(y_i \leq k)}{P(y_i >
 k)}\right) = \gamma_k + \eta_i, \quad k = 1, \ldots, K-1,}{ascii} the name of
 the response variable has to be specified in the argument \code{rev}, e.g., \code{rev = c("y")}.
+
+By default, proportional odds are assumed and only the intercepts differ
+per category of the ordinal response. To allow for non-proportional odds,
+i.e.,
+\mjdeqn{\log\left(\frac{P(y_i > k)}{P(y_i \leq k)}\right) =
+\gamma_k + \eta_i + \eta_{ki}, \quad k = 1, \ldots, K-1,}{ascii}
+the argument \code{nonprop} can be specified. It takes a one-sided formula or
+a list of one-sided formulas. When a single formula is supplied, or a
+unnamed list with just one element, it is assumed that the formula
+corresponds to the main model.
+To specify non-proportional effects for linear predictors in models for
+ordinal covariates, the list has to be named with the names of the
+ordinal response variables.
+
+For example, the following three specifications are equivalent and assume a
+non-proportional effect of \code{C1} on \code{O1}, but \code{C1} is assumed to have a
+proportional effect on the incomplete ordinal covariate \code{O2}:\if{html}{\out{<div class="r">}}\preformatted{clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = ~ C1)
+clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = list(~ C1))
+clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = list(O1 = ~ C1))
+}\if{html}{\out{</div>}}
+
+To specify non-proportional effects on \code{O2}, a named list has to be provided:\if{html}{\out{<div class="r">}}\preformatted{clm_imp(O1 ~ C1 + C2 + B2 + O2 + B1, data = wideDF,
+        nonprop = list(O1 = ~ C1,
+                       O2 = ~ C1 + B1))
+}\if{html}{\out{</div>}}
+
+The variables for which a non-proportional effect is assumed also have to be
+part of the regular model formula.
 }
 
 \section{Note}{
@@ -784,5 +812,6 @@ Vignettes
 \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 \item \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{MCMC Settings}
 \item \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{After Fitting}
+\item \href{https://nerler.github.io/JointAI/articles/TheoreticalBackground.html}{Theoretical Background}
 }
 }
