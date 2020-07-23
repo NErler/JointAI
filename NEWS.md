@@ -113,6 +113,13 @@ file](https://nerler.github.io/JointAI/reference/model_imp.html).
       time-stamp the model was fitted, the duration of the computation, the
       JointAI version number and the R session info.
     * The JAGS model is stored as character string in the element `JAGSmodel`.
+* The arguments `warn` and `mess` now also affect the output of **rjags**.
+* The **doFuture** package is used for parallel computation instead of
+  **doParallel**. Parallel computation is specified by setting a
+  `future::plan()` for how the "future" should be handled. As a consequence,
+  the arguments `parallel` and `n.cores` are no longer used. Information on the
+  setting that was used with regards to parallel computation is returned in a
+  `JointAI object` via `comp_list$future`.
     
   
 ## Bug fixes

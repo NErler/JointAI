@@ -83,25 +83,19 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
     errormsg("When %s it is not possible to monitor different parameters than
              were monitored in the original model.", dQuote("add = TRUE"))
 
-  t0 <- Sys.time()
-  if (object$mcmc_settings$parallel) {
-    n.cores <- object$mcmc_settings$n.cores
-    # cl <- parallel::makeCluster(n.cores,
-    #                             type = ifelse(grepl("linux",
-    #                                                 R.Version()$platform),
-    #                                           "FORK", "PSOCK"))
-    # doParallel::registerDoParallel(cl)
-    doFuture::registerDoFuture()
+  future_info <- get_future_info()
 
+  t0 <- Sys.time()
+  if (future_info$parallel) {
+    doFuture::registerDoFuture()
     if (mess)
-      msg("Parallel sampling on %s cores started (%s).", n.cores, Sys.time())
+      msg("Parallel sampling with %s workers started (%s).",
+          eval(future_info$workers), Sys.time())
 
     res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(object$model)),
                               run_samples(object$model[[i]], n.iter = n.iter,
                                           thin = thin, var.names = var.names)
     )
-
-    # parallel::stopCluster(cl)
     mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
     adapt <- lapply(res, function(x) x$adapt)
   } else {
@@ -157,6 +151,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   newobject$MCMC <- newMCMC
   newobject$call <- list(object$call, match.call())
   newobject$mcmc_settings$variable.names <- var.names
+  newobject$comp_info$future <- c(object$comp_info$future,
+                                  future_info$call)
   newobject$model <- if (object$mcmc_settings$parallel) {
     adapt
   } else {

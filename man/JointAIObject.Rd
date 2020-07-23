@@ -99,6 +99,9 @@
                         started, \code{duration}: computational time of the
                         model (adaptive + sampling phase),
                         \code{JointAI_version}: package version,
+                        \code{future}: the call to \code{future::plan()}, if
+                        any was found (i.e., the specification for parallel
+                        computation),
                         \code{sessionInfo}: session information obtained with
                         \code{sessionInfo()})}
 \item{\code{fitted.values}}{fitted/predicted values (if available)}

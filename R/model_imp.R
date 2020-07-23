@@ -527,6 +527,20 @@
 #'
 #' }
 #'
+#' # Example 8: Parallel computation
+#' # If no strategy how the "future" should be handled is specified, the
+#' # MCMC chains are run sequentially.
+#' # To run MCMC chains in parallel, a strategy can be specified using the
+#' # package \pkg{future} (see ?future::plan), for example:
+#' future::plan(future::multisession, workers = 4)
+#' mod8 <- lm_imp(y ~ C1 + C2 + B2, data = wideDF, n.iter = 500, n.chains = 8)
+#' mod8$comp_info$future
+#' # To re-set the strategy to sequential computation, the sequential strategy
+#' # can be specified:
+#' future::plan(future::sequential)
+#'
+#'
+#'
 NULL
 
 model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
@@ -557,11 +571,13 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
     random <- split_formula_list(formula)$random
   }
 
-  # check if the argument meth is provided (no longer used)
+  # check if the arguments meth, n.cores or parallel are provided
+  # (no longer used)
   args <- as.list(match.call())
   if (!is.null(args$meth))
-    warnmsg('The argument "meth" has been changed to "models".
-              Please use "models".')
+    errormsg("The argument %s has been replaced by the argument %s.",
+              dQuote("meth"), dQuote("models"))
+
   if (!is.null(args$parallel) | !is.null(args$n.cores)) {
     errormsg('The arguments %s and %s are no longer used. To perform the
              computation in parallel, specify future::plan().
@@ -640,29 +656,14 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
       msg("Note: No MCMC sample will be created when n.iter is set to 0.")
   }
 
-  oplan <- future::plan(future::sequential)
-  theplan <- attr(oplan[[1]], "call")
-  future::plan(oplan)
+  future_info <- get_future_info()
 
-  strategies <- sapply(oplan, function(o) {
-    setdiff(class(o), c("tweaked", "function"))[1]
-  })
-
-  if (length(strategies) > 1) {
-    warnmsg("There is a list of future strategies.
-            I will use the first element, %s.",
-            strategies[1])
-  }
-
-  runJAGS <- ifelse(strategies[1] %in% c("sequential", "transparent"),
-                    run_seq, run_parallel)
-
-  # runJAGS <- ifelse(isTRUE(parallel), run_parallel, run_seq)
+  runJAGS <- ifelse(future_info$parallel, run_parallel, run_seq)
 
   t0 <- Sys.time()
-  jags_res <- runJAGS(n.adapt = n.adapt, n.iter = n.iter,
-                      n.cores = n.cores, n.chains = n.chains,
+  jags_res <- runJAGS(n.adapt = n.adapt, n.iter = n.iter, n.chains = n.chains,
                       inits = inits, thin = thin,
+                      n_workers = future_info$workers,
                       data_list = data_list, var.names = var.names,
                       modelfile = modelfile, quiet = quiet,
                       progress.bar = progress.bar, mess = mess, warn = warn)
@@ -702,10 +703,6 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                         variable.names = if (exists("var.names")) var.names,
                         thin = thin,
                         inits = inits,
-                        plan = theplan,
-                        oplan = oplan,
-                        parallel = parallel,
-                        n.cores = if (parallel) n.cores,
                         seed = seed)
 
 
@@ -736,6 +733,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
          comp_info = list(start_time = t0,
                           duration = t1 - t0,
                           JointAI_version = packageVersion("JointAI"),
+                          future = future_info$call,
                           sessionInfo = sessionInfo()),
          call = modimpcall$thecall
     ), class = "JointAI")

@@ -66,24 +66,16 @@ run_samples <- function(adapt, n.iter, var.names, thin) {
 
 
 
-run_parallel <- function(n.adapt, n.iter, n.cores, n.chains, inits, thin = 1,
-                         data_list, var.names, modelfile, mess = TRUE, ...) {
-  # if (!requireNamespace("foreach", quietly = TRUE))
-  #   errormsg("Parallel sampling requires the %s package to
-  #              be installed.", sQuote("foreach"))
-  #
-  # if (!requireNamespace("doParallel", quietly = TRUE))
-  #   errormsg("Parallel sampling requires the %s package
-  #              to be installed.", sQuote("doParallel"))
+run_parallel <- function(n.adapt, n.iter, n.chains, inits, thin = 1,
+                         data_list, var.names, modelfile, mess = TRUE,
+                         n_workers, ...) {
 
   if (any(n.adapt > 0, n.iter > 0)) {
-    if (is.null(n.cores))
-      n.cores <- min(parallel::detectCores() - 2, n.chains)
-    # doParallel::registerDoParallel(cores = n.cores)
     doFuture::registerDoFuture()
 
     if (mess)
-      msg("Parallel sampling on %s cores started (%s).", n.cores, Sys.time())
+      msg("Parallel sampling with %s workers started (%s).",
+          eval(n_workers), Sys.time())
 
     res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(inits)),
                               run_jags(inits[[i]], data_list = data_list,
@@ -92,8 +84,6 @@ run_parallel <- function(n.adapt, n.iter, n.cores, n.chains, inits, thin = 1,
                                        thin = thin,
                                        var.names = var.names)
     )
-    # doParallel::stopImplicitCluster()
-
 
     mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
     adapt <- lapply(res, function(x) x$adapt)
@@ -139,4 +129,27 @@ run_seq <- function(n.adapt, n.iter, n.cores, n.chains, inits, thin = 1,
   }
 
   list(adapt = adapt, mcmc = mcmc)
+}
+
+
+get_future_info <- function() {
+  oplan <- future::plan(future::sequential)
+  theplan <- attr(oplan[[1]], "call")
+  future::plan(oplan)
+
+  strategies <- sapply(oplan, function(o) {
+    setdiff(class(o), c("tweaked", "function"))[1]
+  })
+
+  if (length(strategies) > 1) {
+    warnmsg("There is a list of future strategies.
+            I will use the first element, %s.",
+            strategies[1])
+  }
+
+  list(strategy = strategies[1],
+       parallel = !strategies[1] %in% c("sequential", "transparent"),
+       workers = formals(oplan[[1]])$workers,
+       call = theplan
+  )
 }

@@ -753,6 +753,20 @@ mod7 <- coxph_imp(Surv(futime, status != 'censored') ~ age + sex + copper +
 
 }
 
+# Example 8: Parallel computation
+# If no strategy how the "future" should be handled is specified, the
+# MCMC chains are run sequentially.
+# To run MCMC chains in parallel, a strategy can be specified using the
+# package \pkg{future} (see ?future::plan), for example:
+future::plan(future::multisession, workers = 4)
+mod8 <- lm_imp(y ~ C1 + C2 + B2, data = wideDF, n.iter = 500, n.chains = 8)
+mod8$comp_info$future
+# To re-set the strategy to sequential computation, the sequential strategy
+# can be specified:
+future::plan(future::sequential)
+
+
+
 }
 \seealso{
 \code{\link{set_refcat}},
