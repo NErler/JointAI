@@ -61,6 +61,7 @@ run_survreg_models <- function() {
 }
 
 models <- run_survreg_models()
+models0 <- set0_list(models)
 
 
 test_that("models run", {
@@ -92,31 +93,29 @@ test_that("MCMC samples can be plottet", {
 
 test_that("data_list remaines the same", {
   skip_on_cran()
-  expect_snapshot_output(lapply(models, "[[", "data_list"))
+  print_output(lapply(models, "[[", "data_list"))
 })
 
 test_that("JAGSmodel remaines the same", {
   skip_on_cran()
-  expect_snapshot_output(lapply(models, "[[", "JAGSmodel"))
+  print_output(lapply(models, "[[", "JAGSmodel"))
 })
 
 
 test_that("GRcrit and MCerror give same result", {
   skip_on_cran()
-  skip_if(rjags::jags.version() < "4.3.0")
-  expect_snapshot_output(lapply(models, GR_crit, multivariate = FALSE))
-  expect_snapshot_output(lapply(models, MC_error))
+  print_output(lapply(models0, GR_crit, multivariate = FALSE))
+  print_output(lapply(models0, MC_error))
 })
 
 
 test_that("summary output remained the same", {
   skip_on_cran()
-  skip_if(rjags::jags.version() < "4.3.0")
-  expect_snapshot_output(lapply(models, print))
-  expect_snapshot_output(lapply(models, coef))
-  expect_snapshot_output(lapply(models, confint))
-  expect_snapshot_output(lapply(models, summary))
-  expect_snapshot_output(lapply(models, function(x) coef(summary(x))))
+  print_output(lapply(models0, print))
+  print_output(lapply(models0, coef))
+  print_output(lapply(models0, confint))
+  print_output(lapply(models0, summary))
+  print_output(lapply(models0, function(x) coef(summary(x))))
 })
 
 

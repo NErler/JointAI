@@ -34,8 +34,6 @@ Suggests:
     ggpubr,
     testthat,
     covr
-Remotes: 
-    r-lib/testthat
 VignetteBuilder: knitr
 Encoding: UTF-8
 RdMacros: mathjaxr

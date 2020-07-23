@@ -84,3 +84,28 @@ compare_modeltype <- function(mod) {
     }
   )
 }
+
+print_output <- function(x, dir = 'testout') {
+  call = as.list(match.call())$x
+  input <- make.names(
+    paste0(deparse(call, width.cutoff = 500), collapse = "")
+  )
+  abbr <- abbreviate(gsub("\\.+", ".", input), minlength = 30,
+                     method = "both.sides", use.classes = FALSE)
+
+  nam <- paste0(gsub(" ", "_", testthat::get_reporter()$.context),
+                "_", abbr, ".txt")
+  testthat::expect_known_output(print(x),
+                                file = file.path(dir, nam))
+}
+
+set0 <- function(object) {
+  object$MCMC <- coda::as.mcmc.list(lapply(object$MCMC, function(x) {
+    x * 0
+  }))
+  object
+}
+
+set0_list <- function(lst) {
+  lapply(lst, set0)
+}

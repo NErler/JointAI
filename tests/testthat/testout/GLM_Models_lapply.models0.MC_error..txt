@@ -1,0 +1,413 @@
+$m0a1
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+sigma_y       0    0  0     NaN
+
+$m0a2
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+sigma_y       0    0  0     NaN
+
+$m0a3
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+sigma_y       0    0  0     NaN
+
+$m0a4
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+sigma_y       0    0  0     NaN
+
+$m0b1
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+
+$m0b2
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+
+$m0b3
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+
+$m0b4
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+
+$m0c1
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+sigma_L1      0    0  0     NaN
+
+$m0c2
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+sigma_L1      0    0  0     NaN
+
+$m0d1
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+
+$m0d2
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+
+$m0e1
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+sigma_L1      0    0  0     NaN
+
+$m0f1
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+tau_Be1       0    0  0     NaN
+
+$m1a
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C1            0    0  0     NaN
+sigma_y       0    0  0     NaN
+
+$m1b
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C1            0    0  0     NaN
+
+$m1c
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C1            0    0  0     NaN
+sigma_L1      0    0  0     NaN
+
+$m1d
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C1            0    0  0     NaN
+
+$m1e
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C1            0    0  0     NaN
+sigma_L1      0    0  0     NaN
+
+$m1f
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C1            0    0  0     NaN
+tau_Be1       0    0  0     NaN
+
+$m2a
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+sigma_y       0    0  0     NaN
+
+$m2b
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+
+$m2c
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+sigma_L1mis   0    0  0     NaN
+
+$m2d
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+
+$m2e
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+sigma_L1mis   0    0  0     NaN
+
+$m2f
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+tau_Be2       0    0  0     NaN
+
+$m3a
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+P2            0    0  0     NaN
+L1mis         0    0  0     NaN
+Be2           0    0  0     NaN
+sigma_C1      0    0  0     NaN
+
+$m3b
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+P2            0    0  0     NaN
+L1mis         0    0  0     NaN
+sigma_C1      0    0  0     NaN
+
+$m3c
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+P2            0    0  0     NaN
+L1mis         0    0  0     NaN
+sigma_C1      0    0  0     NaN
+
+$m3d
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+P2            0    0  0     NaN
+L1mis         0    0  0     NaN
+Be2           0    0  0     NaN
+sigma_C1      0    0  0     NaN
+
+$m4a
+                 est MCSE SD MCSE/SD
+(Intercept)        0    0  0     NaN
+M22                0    0  0     NaN
+M23                0    0  0     NaN
+M24                0    0  0     NaN
+O22                0    0  0     NaN
+O23                0    0  0     NaN
+O24                0    0  0     NaN
+abs(C1 - C2)       0    0  0     NaN
+log(C1)            0    0  0     NaN
+O22:abs(C1 - C2)   0    0  0     NaN
+O23:abs(C1 - C2)   0    0  0     NaN
+O24:abs(C1 - C2)   0    0  0     NaN
+sigma_y            0    0  0     NaN
+
+$m4b
+             est MCSE SD MCSE/SD
+(Intercept)    0    0  0     NaN
+L1mis          0    0  0     NaN
+abs(C1 - C2)   0    0  0     NaN
+log(Be2)       0    0  0     NaN
+
+$m5a1
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+B11           0    0  0     NaN
+O1.L          0    0  0     NaN
+O1.Q          0    0  0     NaN
+O1.C          0    0  0     NaN
+sigma_y       0    0  0     NaN
+
+$m5a2
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+B11           0    0  0     NaN
+O1.L          0    0  0     NaN
+O1.Q          0    0  0     NaN
+O1.C          0    0  0     NaN
+sigma_y       0    0  0     NaN
+
+$m5a3
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+B11           0    0  0     NaN
+O1.L          0    0  0     NaN
+O1.Q          0    0  0     NaN
+O1.C          0    0  0     NaN
+sigma_y       0    0  0     NaN
+
+$m5b1
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+C1            0    0  0     NaN
+O1.L          0    0  0     NaN
+O1.Q          0    0  0     NaN
+O1.C          0    0  0     NaN
+
+$m5b2
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+C1            0    0  0     NaN
+O1.L          0    0  0     NaN
+O1.Q          0    0  0     NaN
+O1.C          0    0  0     NaN
+
+$m5b3
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+C1            0    0  0     NaN
+O1.L          0    0  0     NaN
+O1.Q          0    0  0     NaN
+O1.C          0    0  0     NaN
+
+$m5b4
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+C1            0    0  0     NaN
+O1.L          0    0  0     NaN
+O1.Q          0    0  0     NaN
+O1.C          0    0  0     NaN
+
+$m5c1
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+B11           0    0  0     NaN
+O1.L          0    0  0     NaN
+O1.Q          0    0  0     NaN
+O1.C          0    0  0     NaN
+sigma_L1      0    0  0     NaN
+
+$m5c2
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+B11           0    0  0     NaN
+O1.L          0    0  0     NaN
+O1.Q          0    0  0     NaN
+O1.C          0    0  0     NaN
+sigma_L1      0    0  0     NaN
+
+$m5d1
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+B11           0    0  0     NaN
+O1.L          0    0  0     NaN
+O1.Q          0    0  0     NaN
+O1.C          0    0  0     NaN
+
+$m5d2
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+B11           0    0  0     NaN
+O1.L          0    0  0     NaN
+O1.Q          0    0  0     NaN
+O1.C          0    0  0     NaN
+
+$m5e1
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+B11           0    0  0     NaN
+O1.L          0    0  0     NaN
+O1.Q          0    0  0     NaN
+O1.C          0    0  0     NaN
+sigma_L1      0    0  0     NaN
+
+$m5f1
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C2            0    0  0     NaN
+B21           0    0  0     NaN
+B11           0    0  0     NaN
+O1.L          0    0  0     NaN
+O1.Q          0    0  0     NaN
+O1.C          0    0  0     NaN
+tau_Be1       0    0  0     NaN
+
+$m6a
+                 est MCSE SD MCSE/SD
+(Intercept)        0    0  0     NaN
+M22                0    0  0     NaN
+M23                0    0  0     NaN
+M24                0    0  0     NaN
+O22                0    0  0     NaN
+O23                0    0  0     NaN
+O24                0    0  0     NaN
+abs(C1 - C2)       0    0  0     NaN
+log(C1)            0    0  0     NaN
+O22:abs(C1 - C2)   0    0  0     NaN
+O23:abs(C1 - C2)   0    0  0     NaN
+O24:abs(C1 - C2)   0    0  0     NaN
+sigma_y            0    0  0     NaN
+
+$m6b
+                 est MCSE SD MCSE/SD
+(Intercept)        0    0  0     NaN
+M22                0    0  0     NaN
+M23                0    0  0     NaN
+M24                0    0  0     NaN
+O22                0    0  0     NaN
+O23                0    0  0     NaN
+O24                0    0  0     NaN
+abs(C1 - C2)       0    0  0     NaN
+log(C1)            0    0  0     NaN
+O22:abs(C1 - C2)   0    0  0     NaN
+O23:abs(C1 - C2)   0    0  0     NaN
+O24:abs(C1 - C2)   0    0  0     NaN
+
+$m6c
+                est MCSE SD MCSE/SD
+(Intercept)       0    0  0     NaN
+M22               0    0  0     NaN
+M23               0    0  0     NaN
+M24               0    0  0     NaN
+O22               0    0  0     NaN
+O23               0    0  0     NaN
+O24               0    0  0     NaN
+abs(y - C2)       0    0  0     NaN
+O22:abs(y - C2)   0    0  0     NaN
+O23:abs(y - C2)   0    0  0     NaN
+O24:abs(y - C2)   0    0  0     NaN
+sigma_C1          0    0  0     NaN
+
+$m6d
+             est MCSE SD MCSE/SD
+(Intercept)    0    0  0     NaN
+age            0    0  0     NaN
+genderfemale   0    0  0     NaN
+log(bili)      0    0  0     NaN
+exp(creat)     0    0  0     NaN
+sigma_SBP      0    0  0     NaN
+
+$m6e
+             est MCSE SD MCSE/SD
+(Intercept)    0    0  0     NaN
+age            0    0  0     NaN
+genderfemale   0    0  0     NaN
+log(bili)      0    0  0     NaN
+exp(creat)     0    0  0     NaN
+sigma_SBP      0    0  0     NaN
+
+$m6f
+             est MCSE SD MCSE/SD
+(Intercept)    0    0  0     NaN
+age            0    0  0     NaN
+genderfemale   0    0  0     NaN
+log(bili)      0    0  0     NaN
+exp(creat)     0    0  0     NaN
+sigma_SBP      0    0  0     NaN
+
+$mod7a
+                 est MCSE SD MCSE/SD
+(Intercept)        0    0  0     NaN
+ns(age, df = 2)1   0    0  0     NaN
+ns(age, df = 2)2   0    0  0     NaN
+genderfemale       0    0  0     NaN
+I(bili^2)          0    0  0     NaN
+I(bili^3)          0    0  0     NaN
+sigma_SBP          0    0  0     NaN
+

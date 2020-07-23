@@ -137,12 +137,12 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
         # as covariate
-        # m4a = lme_imp(c1 ~ c2 + B2 + p2 + L1mis + Be2 + (1 | id), data = longDF,
-        #               n.adapt = 5, n.iter = 10, seed = 2020,
-        #               models = c(p2 = "glmm_poisson_log",
-        #                          L1mis = "glmm_gamma_inverse",
-        #                          Be2 = "glmm_beta"),
-        #               warn = FALSE, mess = FALSE),
+        m4a = lme_imp(c1 ~ c2 + B2 + p2 + L1mis + Be2 + (1 | id), data = longDF,
+                      n.adapt = 5, n.iter = 10, seed = 2020,
+                      models = c(p2 = "glmm_poisson_log",
+                                 L1mis = "glmm_gamma_inverse",
+                                 Be2 = "glmm_beta"),
+                      warn = FALSE, mess = FALSE),
 
         m4b = lme_imp(c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF,
                       n.adapt = 5, n.iter = 10, seed = 2020,
@@ -150,7 +150,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
                                  p2 = "glmm_poisson_identity",
                                  b2 = "glmm_binomial_probit",
                                  L1mis = "glmm_lognorm"),
-                                 warn = FALSE, mess = FALSE),
+                      warn = FALSE, mess = FALSE),
 
         m4c = lme_imp(c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF,
                       n.adapt = 5, n.iter = 10, seed = 2020, no_model = "time",
@@ -276,6 +276,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
   models <- run_glmm_models()
+  models0 <- set0_list(models)
 
 
 
@@ -315,30 +316,28 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   test_that("data_list remaines the same", {
     skip_on_cran()
-    expect_snapshot_output(lapply(models, "[[", "data_list"))
+    print_output(lapply(models, "[[", "data_list"))
   })
 
   test_that("JAGSmodel remaines the same", {
     skip_on_cran()
-    expect_snapshot_output(lapply(models, "[[", "JAGSmodel"))
+    print_output(lapply(models, "[[", "JAGSmodel"))
   })
 
   test_that("GRcrit and MCerror give same result", {
     skip_on_cran()
-    skip_if(rjags::jags.version() < "4.3.0")
-    expect_snapshot_output(lapply(models, GR_crit, multivariate = FALSE))
-    expect_snapshot_output(lapply(models, MC_error))
+    print_output(lapply(models, GR_crit, multivariate = FALSE))
+    print_output(lapply(models, MC_error))
   })
 
 
   test_that("summary output remained the same", {
     skip_on_cran()
-    skip_if(rjags::jags.version() < "4.3.0")
-    expect_snapshot_output(lapply(models, print))
-    expect_snapshot_output(lapply(models, coef))
-    expect_snapshot_output(lapply(models, confint))
-    expect_snapshot_output(lapply(models, summary, missinfo = TRUE))
-    expect_snapshot_output(lapply(models, function(x) coef(summary(x))))
+    print_output(lapply(models, print))
+    print_output(lapply(models, coef))
+    print_output(lapply(models, confint))
+    print_output(lapply(models, summary, missinfo = TRUE))
+    print_output(lapply(models, function(x) coef(summary(x))))
   })
 
 
@@ -384,7 +383,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
   test_that("model can be plottet", {
-    for (i in seq_along(models)[names(models) == "pred"]) {
+    for (i in seq_along(models)) {
       if (models[[i]]$analysis_type %in% c("lognorm", "glmm_lognorm",
                                            "beta", "glmm_beta")) {
         expect_error(plot(models[[i]]))

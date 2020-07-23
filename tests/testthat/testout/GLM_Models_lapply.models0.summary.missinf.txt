@@ -1,0 +1,2121 @@
+$m0a1
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = y ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+        Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 1:10
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+  # NA % NA
+y    0    0
+
+
+$m0a2
+
+Bayesian linear model fitted with JointAI
+
+Call:
+glm_imp(formula = y ~ 1, family = gaussian(link = "identity"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+        Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 1:10
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+  # NA % NA
+y    0    0
+
+
+$m0a3
+
+Bayesian linear model fitted with JointAI
+
+Call:
+glm_imp(formula = y ~ 1, family = gaussian(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+        Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+  # NA % NA
+y    0    0
+
+
+$m0a4
+
+Bayesian linear model fitted with JointAI
+
+Call:
+glm_imp(formula = y ~ 1, family = gaussian(link = "inverse"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+        Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+  # NA % NA
+y    0    0
+
+
+$m0b1
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "logit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+B1    0    0
+
+
+$m0b2
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "probit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+B1    0    0
+
+
+$m0b3
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+B1    0    0
+
+
+$m0b4
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "cloglog"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+B1    0    0
+
+
+$m0c1
+
+Bayesian Gamma model fitted with JointAI
+
+Call:
+glm_imp(formula = L1 ~ 1, family = Gamma(link = "inverse"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_L1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+L1    0    0
+
+
+$m0c2
+
+Bayesian Gamma model fitted with JointAI
+
+Call:
+glm_imp(formula = L1 ~ 1, family = Gamma(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_L1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+L1    0    0
+
+
+$m0d1
+
+Bayesian poisson model fitted with JointAI
+
+Call:
+glm_imp(formula = P1 ~ 1, family = poisson(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+P1    0    0
+
+
+$m0d2
+
+Bayesian poisson model fitted with JointAI
+
+Call:
+glm_imp(formula = P1 ~ 1, family = poisson(link = "identity"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+P1    0    0
+
+
+$m0e1
+
+Bayesian log-normal model fitted with JointAI
+
+Call:
+lognorm_imp(formula = L1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_L1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+L1    0    0
+
+
+$m0f1
+
+Bayesian beta model fitted with JointAI
+
+Call:
+betareg_imp(formula = Be1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+Posterior summary of other parameters:
+        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+tau_Be1    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+    # NA % NA
+Be1    0    0
+
+
+$m1a
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = y ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+        Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 1:10
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+y     0    0
+C1    0    0
+
+
+$m1b
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ C1, family = binomial(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+B1    0    0
+C1    0    0
+
+
+$m1c
+
+Bayesian Gamma model fitted with JointAI
+
+Call:
+glm_imp(formula = L1 ~ C1, family = Gamma(), data = wideDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_L1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+L1    0    0
+C1    0    0
+
+
+$m1d
+
+Bayesian poisson model fitted with JointAI
+
+Call:
+glm_imp(formula = P1 ~ C1, family = poisson(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+P1    0    0
+C1    0    0
+
+
+$m1e
+
+Bayesian log-normal model fitted with JointAI
+
+Call:
+lognorm_imp(formula = L1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_L1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+   # NA % NA
+L1    0    0
+C1    0    0
+
+
+$m1f
+
+Bayesian beta model fitted with JointAI
+
+Call:
+betareg_imp(formula = Be1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+
+Posterior summary of other parameters:
+        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+tau_Be1    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+         #   %
+lvlone 100 100
+
+Number and proportion of missing values:
+    # NA % NA
+Be1    0    0
+C1     0    0
+
+
+$m2a
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = y ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+        Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 1:10
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 96 96
+
+Number and proportion of missing values:
+   # NA % NA
+y     0    0
+C2    4    4
+
+
+$m2b
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B2 ~ C2, family = binomial(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+C2    4    4
+B2   20   20
+
+
+$m2c
+
+Bayesian Gamma model fitted with JointAI
+
+Call:
+glm_imp(formula = L1mis ~ C2, family = Gamma(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+            Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_L1mis    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 76 76
+
+Number and proportion of missing values:
+      # NA % NA
+C2       4    4
+L1mis   20   20
+
+
+$m2d
+
+Bayesian poisson model fitted with JointAI
+
+Call:
+glm_imp(formula = P2 ~ C2, family = poisson(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+C2    4    4
+P2   20   20
+
+
+$m2e
+
+Bayesian log-normal model fitted with JointAI
+
+Call:
+lognorm_imp(formula = L1mis ~ C2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+            Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_L1mis    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 76 76
+
+Number and proportion of missing values:
+      # NA % NA
+C2       4    4
+L1mis   20   20
+
+
+$m2f
+
+Bayesian beta model fitted with JointAI
+
+Call:
+betareg_imp(formula = Be2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+
+Posterior summary of other parameters:
+        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+tau_Be2    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+    # NA % NA
+C2     4    4
+Be2   20   20
+
+
+$m3a
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF, 
+    n.adapt = 5, n.iter = 10, models = c(P2 = "glm_poisson_log", 
+        L1mis = "glm_gamma_inverse", Be2 = "beta"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+P2             0  0    0     0          0     NaN    NaN
+L1mis          0  0    0     0          0     NaN    NaN
+Be2            0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_C1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 36 36
+
+Number and proportion of missing values:
+      # NA % NA
+C1       0    0
+C2       4    4
+B2      20   20
+P2      20   20
+L1mis   20   20
+Be2     20   20
+
+
+$m3b
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis, data = wideDF, n.adapt = 5, 
+    n.iter = 10, models = c(C2 = "glm_gaussian_inverse", P2 = "glm_poisson_identity", 
+        B2 = "glm_binomial_probit", L1mis = "lognorm"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+P2             0  0    0     0          0     NaN    NaN
+L1mis          0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_C1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 48 48
+
+Number and proportion of missing values:
+      # NA % NA
+C1       0    0
+C2       4    4
+B2      20   20
+P2      20   20
+L1mis   20   20
+
+
+$m3c
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis, data = wideDF, n.adapt = 5, 
+    n.iter = 10, models = c(C2 = "glm_gaussian_log", P2 = "glm_poisson_identity", 
+        L1mis = "glm_gamma_log", B2 = "glm_binomial_log"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+P2             0  0    0     0          0     NaN    NaN
+L1mis          0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_C1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 48 48
+
+Number and proportion of missing values:
+      # NA % NA
+C1       0    0
+C2       4    4
+B2      20   20
+P2      20   20
+L1mis   20   20
+
+
+$m3d
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF, 
+    n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
+        P2 = "glm_poisson_identity", L1mis = "glm_gamma_log", 
+        B2 = "glm_binomial_log"), trunc = list(Be2 = c(0, 1)), 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+P2             0  0    0     0          0     NaN    NaN
+L1mis          0  0    0     0          0     NaN    NaN
+Be2            0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_C1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 36 36
+
+Number and proportion of missing values:
+      # NA % NA
+C1       0    0
+C2       4    4
+B2      20   20
+P2      20   20
+L1mis   20   20
+Be2     20   20
+
+
+$m4a
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = y ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+                 Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)         0  0    0     0          0     NaN    NaN
+M22                 0  0    0     0          0     NaN    NaN
+M23                 0  0    0     0          0     NaN    NaN
+M24                 0  0    0     0          0     NaN    NaN
+O22                 0  0    0     0          0     NaN    NaN
+O23                 0  0    0     0          0     NaN    NaN
+O24                 0  0    0     0          0     NaN    NaN
+abs(C1 - C2)        0  0    0     0          0     NaN    NaN
+log(C1)             0  0    0     0          0     NaN    NaN
+O22:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+O23:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+O24:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+        Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 91 91
+
+Number and proportion of missing values:
+   # NA % NA
+y     0    0
+C1    0    0
+O2    2    2
+M2    3    3
+C2    4    4
+
+
+$m4b
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ L1mis + abs(C1 - C2) + log(Be2), family = binomial(), 
+    data = wideDF, n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
+        L1mis = "glm_gamma_inverse", Be2 = "beta"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+             Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)     0  0    0     0          0     NaN    NaN
+L1mis           0  0    0     0          0     NaN    NaN
+abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+log(Be2)        0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 60 60
+
+Number and proportion of missing values:
+      # NA % NA
+B1       0    0
+C1       0    0
+C2       4    4
+L1mis   20   20
+Be2     20   20
+
+
+$m5a1
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = y ~ C2 + B2 + B1 + O1, data = wideDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+B11            0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+        Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+y     0    0
+B1    0    0
+O1    0    0
+C2    4    4
+B2   20   20
+
+
+$m5a2
+
+Bayesian linear model fitted with JointAI
+
+Call:
+glm_imp(formula = y ~ C2 + B2 + B1 + O1, family = gaussian(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+B11            0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+        Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+y     0    0
+B1    0    0
+O1    0    0
+C2    4    4
+B2   20   20
+
+
+$m5a3
+
+Bayesian linear model fitted with JointAI
+
+Call:
+glm_imp(formula = y ~ C2 + B2 + B1 + O1, family = gaussian(link = "inverse"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+B11            0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+        Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+y     0    0
+B1    0    0
+O1    0    0
+C2    4    4
+B2   20   20
+
+
+$m5b1
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "logit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+B1    0    0
+C1    0    0
+O1    0    0
+C2    4    4
+B2   20   20
+
+
+$m5b2
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "probit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+B1    0    0
+C1    0    0
+O1    0    0
+C2    4    4
+B2   20   20
+
+
+$m5b3
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+B1    0    0
+C1    0    0
+O1    0    0
+C2    4    4
+B2   20   20
+
+
+$m5b4
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "cloglog"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+B1    0    0
+C1    0    0
+O1    0    0
+C2    4    4
+B2   20   20
+
+
+$m5c1
+
+Bayesian Gamma model fitted with JointAI
+
+Call:
+glm_imp(formula = L1 ~ C2 + B2 + B1 + O1, family = Gamma(link = "inverse"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+B11            0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_L1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+L1    0    0
+B1    0    0
+O1    0    0
+C2    4    4
+B2   20   20
+
+
+$m5c2
+
+Bayesian Gamma model fitted with JointAI
+
+Call:
+glm_imp(formula = L1 ~ C2 + B2 + B1 + O1, family = Gamma(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+B11            0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_L1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+L1    0    0
+B1    0    0
+O1    0    0
+C2    4    4
+B2   20   20
+
+
+$m5d1
+
+Bayesian poisson model fitted with JointAI
+
+Call:
+glm_imp(formula = P1 ~ C2 + B2 + B1 + O1, family = poisson(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+B11            0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+P1    0    0
+B1    0    0
+O1    0    0
+C2    4    4
+B2   20   20
+
+
+$m5d2
+
+Bayesian poisson model fitted with JointAI
+
+Call:
+glm_imp(formula = P1 ~ C2 + B2 + B1 + O1, family = poisson(link = "identity"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+B11            0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+P1    0    0
+B1    0    0
+O1    0    0
+C2    4    4
+B2   20   20
+
+
+$m5e1
+
+Bayesian log-normal model fitted with JointAI
+
+Call:
+lognorm_imp(formula = L1 ~ C2 + B2 + B1 + O1, data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+B11            0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_L1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+   # NA % NA
+L1    0    0
+B1    0    0
+O1    0    0
+C2    4    4
+B2   20   20
+
+
+$m5f1
+
+Bayesian beta model fitted with JointAI
+
+Call:
+betareg_imp(formula = Be1 ~ C2 + B2 + B1 + O1, data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B21            0  0    0     0          0     NaN    NaN
+B11            0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+Posterior summary of other parameters:
+        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+tau_Be1    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 77 77
+
+Number and proportion of missing values:
+    # NA % NA
+Be1    0    0
+B1     0    0
+O1     0    0
+C2     4    4
+B2    20   20
+
+
+$m6a
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = y ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
+    n.adapt = 5, n.iter = 5, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+                 Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)         0  0    0     0          0     NaN    NaN
+M22                 0  0    0     0          0     NaN    NaN
+M23                 0  0    0     0          0     NaN    NaN
+M24                 0  0    0     0          0     NaN    NaN
+O22                 0  0    0     0          0     NaN    NaN
+O23                 0  0    0     0          0     NaN    NaN
+O24                 0  0    0     0          0     NaN    NaN
+abs(C1 - C2)        0  0    0     0          0     NaN    NaN
+log(C1)             0  0    0     0          0     NaN    NaN
+O22:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+O23:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+O24:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+        Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:10
+Sample size per chain = 5 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 91 91
+
+Number and proportion of missing values:
+   # NA % NA
+y     0    0
+C1    0    0
+O2    2    2
+M2    3    3
+C2    4    4
+
+
+$m6b
+
+Bayesian binomial model fitted with JointAI
+
+Call:
+glm_imp(formula = B1 ~ M2 + O2 * abs(C1 - C2) + log(C1), family = "binomial", 
+    data = wideDF, n.adapt = 5, n.iter = 5, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+                 Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)         0  0    0     0          0     NaN    NaN
+M22                 0  0    0     0          0     NaN    NaN
+M23                 0  0    0     0          0     NaN    NaN
+M24                 0  0    0     0          0     NaN    NaN
+O22                 0  0    0     0          0     NaN    NaN
+O23                 0  0    0     0          0     NaN    NaN
+O24                 0  0    0     0          0     NaN    NaN
+abs(C1 - C2)        0  0    0     0          0     NaN    NaN
+log(C1)             0  0    0     0          0     NaN    NaN
+O22:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+O23:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+O24:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:10
+Sample size per chain = 5 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 91 91
+
+Number and proportion of missing values:
+   # NA % NA
+B1    0    0
+C1    0    0
+O2    2    2
+M2    3    3
+C2    4    4
+
+
+$m6c
+
+Bayesian Gamma model fitted with JointAI
+
+Call:
+glm_imp(formula = C1 ~ M2 + O2 * abs(y - C2), family = Gamma(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 5, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+                Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)        0  0    0     0          0     NaN    NaN
+M22                0  0    0     0          0     NaN    NaN
+M23                0  0    0     0          0     NaN    NaN
+M24                0  0    0     0          0     NaN    NaN
+O22                0  0    0     0          0     NaN    NaN
+O23                0  0    0     0          0     NaN    NaN
+O24                0  0    0     0          0     NaN    NaN
+abs(y - C2)        0  0    0     0          0     NaN    NaN
+O22:abs(y - C2)    0  0    0     0          0     NaN    NaN
+O23:abs(y - C2)    0  0    0     0          0     NaN    NaN
+O24:abs(y - C2)    0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_C1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:10
+Sample size per chain = 5 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+
+Number and proportion of complete cases:
+        #  %
+lvlone 91 91
+
+Number and proportion of missing values:
+   # NA % NA
+C1    0    0
+y     0    0
+O2    2    2
+M2    3    3
+C2    4    4
+
+
+$m6d
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+    data = NHANES, n.adapt = 5, n.iter = 5, trunc = list(bili = c(1e-05, 
+        1e+10)), seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+             Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)     0  0    0     0          0     NaN    NaN
+age             0  0    0     0          0     NaN    NaN
+genderfemale    0  0    0     0          0     NaN    NaN
+log(bili)       0  0    0     0          0     NaN    NaN
+exp(creat)      0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+          Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_SBP    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:10
+Sample size per chain = 5 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 186 
+
+
+Number and proportion of complete cases:
+         #    %
+lvlone 178 95.7
+
+Number and proportion of missing values:
+       # NA % NA
+SBP       0  0.0
+age       0  0.0
+gender    0  0.0
+bili      8  4.3
+creat     8  4.3
+
+
+$m6e
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+    data = NHANES, n.adapt = 5, n.iter = 5, models = c(bili = "lognorm", 
+        creat = "lm"), seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+             Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)     0  0    0     0          0     NaN    NaN
+age             0  0    0     0          0     NaN    NaN
+genderfemale    0  0    0     0          0     NaN    NaN
+log(bili)       0  0    0     0          0     NaN    NaN
+exp(creat)      0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+          Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_SBP    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:10
+Sample size per chain = 5 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 186 
+
+
+Number and proportion of complete cases:
+         #    %
+lvlone 178 95.7
+
+Number and proportion of missing values:
+       # NA % NA
+SBP       0  0.0
+age       0  0.0
+gender    0  0.0
+bili      8  4.3
+creat     8  4.3
+
+
+$m6f
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+    data = NHANES, n.adapt = 5, n.iter = 5, models = c(bili = "glm_gamma_inverse", 
+        creat = "lm"), seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+             Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)     0  0    0     0          0     NaN    NaN
+age             0  0    0     0          0     NaN    NaN
+genderfemale    0  0    0     0          0     NaN    NaN
+log(bili)       0  0    0     0          0     NaN    NaN
+exp(creat)      0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+          Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_SBP    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:10
+Sample size per chain = 5 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 186 
+
+
+Number and proportion of complete cases:
+         #    %
+lvlone 178 95.7
+
+Number and proportion of missing values:
+       # NA % NA
+SBP       0  0.0
+age       0  0.0
+gender    0  0.0
+bili      8  4.3
+creat     8  4.3
+
+
+$mod7a
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = SBP ~ ns(age, df = 2) + gender + I(bili^2) + 
+    I(bili^3), data = NHANES, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+                 Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)         0  0    0     0          0     NaN    NaN
+ns(age, df = 2)1    0  0    0     0          0     NaN    NaN
+ns(age, df = 2)2    0  0    0     0          0     NaN    NaN
+genderfemale        0  0    0     0          0     NaN    NaN
+I(bili^2)           0  0    0     0          0     NaN    NaN
+I(bili^3)           0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+          Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_SBP    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 186 
+
+
+Number and proportion of complete cases:
+         #    %
+lvlone 178 95.7
+
+Number and proportion of missing values:
+       # NA % NA
+SBP       0  0.0
+age       0  0.0
+gender    0  0.0
+bili      8  4.3
+
+
