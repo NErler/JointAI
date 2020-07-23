@@ -3,6 +3,11 @@
 
 # JointAI: Joint Analysis and Imputation of Incomplete Data <img src="man/figures/logo.png" align="right" alt="" width="160" />
 
+<!-- badges: start -->
+
+[![R build
+status](https://github.com/NErler/JointAI/workflows/R-CMD-check/badge.svg)](https://github.com/NErler/JointAI/actions)
+
 [![Travis-CI Build
 Status](https://travis-ci.org/NErler/JointAI.svg?branch=master)](https://travis-ci.org/NErler/JointAI)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version-last-release/JointAI)](https://CRAN.R-project.org/package=JointAI)
@@ -10,7 +15,9 @@ Status](https://travis-ci.org/NErler/JointAI.svg?branch=master)](https://travis-
 [![Download
 counter](http://cranlogs.r-pkg.org/badges/JointAI)](https://cran.r-project.org/package=JointAI)
 [![Rdoc](http://www.rdocumentation.org/badges/version/JointAI)](http://www.rdocumentation.org/packages/JointAI)
-[![](https://codecov.io/gh/NErler/JointAI/branch/JMdevel/graph/badge.svg)](https://codecov.io/gh/NErler/JointAI)
+[![Codecov test
+coverage](https://codecov.io/gh/NErler/JointAI/branch/master/graph/badge.svg)](https://codecov.io/gh/NErler/JointAI?branch=master)
+<!-- badges: end -->
 
 The package **JointAI** provides functionality to perform joint analysis
 and imputation of a range of model types in the Bayesian framework.
@@ -70,11 +77,11 @@ JM_imp()                 # joint model for longitudinal and survival data
 ```
 
 The functions use specification similar to that of well known standard
-functions like `lm()` and `glm()` from base R, `lme()` (from the package
-[**nlme**](https://CRAN.R-project.org/package=nlme)) , `lmer()` or
-`glmer()` (from the package
-[**lme4**](https://CRAN.R-project.org/package=lme4)) and `survreg()` and
-`coxph()` (from the package
+functions like `lm()` and `glm()` from base R, `nlme::lme()` (from the
+package [**nlme**](https://CRAN.R-project.org/package=nlme)) ,
+`lme4::lmer()` or `lme4::glmer()` (from the package
+[**lme4**](https://CRAN.R-project.org/package=lme4)) and
+`survival::survreg()` and `survival::coxph()` (from the package
 [**survival**](https://CRAN.R-project.org/package=survival)).
 
 Functions `summary()`, `coef()`, `traceplot()` and `densplot()` provide
@@ -93,21 +100,16 @@ of the data and missing values, export of imputed values and prediction.
 ``` r
 library(JointAI)
 
-op <- par(mar = c(2.5, 3, 2.5, 1), mgp = c(2, 0.8, 0))
-plot_all(NHANES[c(1, 5:6, 8:12)], fill = '#e30f41', border = '#34111b', ncol = 4, breaks = 30)
-```
-
-<img src="man/figures/README-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
-
-``` r
-par(op)
-```
-
-``` r
-md_pattern(NHANES, color = c('#34111b', '#e30f41'))
+plot_all(NHANES[c(1, 5:6, 8:12)], fill = '#D10E3B', border = '#460E1B', ncol = 4, breaks = 30)
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+
+``` r
+md_pattern(NHANES, color = c('#460E1B', '#D10E3B'))
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 ### Fit a linear regression model with incomplete covariates
 
@@ -119,23 +121,23 @@ lm1 <- lm_imp(SBP ~ gender + age + WC + alc + educ + bili,
 ### Visualize the MCMC sample
 
 ``` r
-traceplot(lm1, col = c('#d4af37', '#34111b', '#e30f41'), ncol = 4)
-```
-
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;" />
-
-``` r
-densplot(lm1, col = c('#d4af37', '#34111b', '#e30f41'), ncol = 4, lwd = 2)
+traceplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4)
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" />
+
+``` r
+densplot(lm1, col = c('#d4af37', '#460E1B', '#D10E3B'), ncol = 4, lwd = 2)
+```
+
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" />
 
 ### Summarize the Result
 
 ``` r
 summary(lm1)
 #> 
-#> Linear model fitted with JointAI
+#> Bayesian linear model fitted with JointAI
 #> 
 #> Call:
 #> lm_imp(formula = SBP ~ gender + age + WC + alc + educ + bili, 
@@ -163,22 +165,7 @@ summary(lm1)
 #> Thinning interval = 1 
 #> Number of chains = 3 
 #> 
-#> Number of observations: 186 
-#> 
-#> 
-#> Number and proportion of complete cases:
-#>          #    %
-#> lvlone 146 78.5
-#> 
-#> Number and proportion of missing values:
-#>        # NA  % NA
-#> SBP       0  0.00
-#> gender    0  0.00
-#> age       0  0.00
-#> educ      0  0.00
-#> WC        2  1.08
-#> bili      8  4.30
-#> alc      34 18.28
+#> Number of observations: 186
 ```
 
 ``` r
