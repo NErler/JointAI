@@ -59,5 +59,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Test coverage
+        env:
+          IS_CHECK: true
         run: covr::codecov()
         shell: Rscript {0}
