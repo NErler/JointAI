@@ -696,15 +696,15 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
   future_info <- get_future_info()
 
-  runJAGS <- ifelse(future_info$parallel, run_parallel, run_seq)
+  run_jags <- ifelse(future_info$parallel, run_parallel, run_seq)
 
   t0 <- Sys.time()
-  jags_res <- runJAGS(n.adapt = n.adapt, n.iter = n.iter, n.chains = n.chains,
-                      inits = inits, thin = thin,
-                      n_workers = future_info$workers,
-                      data_list = data_list, var.names = var.names,
-                      modelfile = modelfile, quiet = quiet,
-                      progress.bar = progress.bar, mess = mess, warn = warn)
+  jags_res <- run_jags(n.adapt = n.adapt, n.iter = n.iter, n.chains = n.chains,
+                       inits = inits, thin = thin,
+                       n_workers = future_info$workers,
+                       data_list = data_list, var.names = var.names,
+                       modelfile = modelfile, quiet = quiet,
+                       progress.bar = progress.bar, mess = mess, warn = warn)
   adapt <- jags_res$adapt
   mcmc <- jags_res$mcmc
 
