@@ -311,7 +311,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
   op <- options(na.action = na.pass)
 
-  X <- model.matrix(mt, data = newdata,
+  desgn_mat <- model.matrix(mt, data = newdata,
                     contrasts.arg = contr_list[intersect(
                       names(contr_list),
                       vapply(attr(mt, "variables")[-1], deparse,
@@ -320,7 +320,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   )
 
 
-  if (mess & any(is.na(X)))
+  if (mess & any(is.na(desgn_mat)))
     msg("Note: Prediction for cases with missing covariates is not yet
         implemented.
         I will report %s instead of predicted values for those cases.",
@@ -329,9 +329,9 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
   # linear predictor values for the selected iterations of the MCMC sample
   pred <- calc_lp(
-    regcoefs = MCMC[, coefs$coef[match(colnames(X),
+    regcoefs = MCMC[, coefs$coef[match(colnames(desgn_mat),
                                        coefs$varname)], drop = FALSE],
-    design_mat = X,
+    design_mat = desgn_mat,
     scale_pars)
 
   # fitted values: mean over the (transformed) predicted values
@@ -392,7 +392,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
   mt <- attr(mf, "terms")
 
   op <- options(na.action = na.pass)
-  X <- model.matrix(mt, data = newdata,
+  desgn_mat <- model.matrix(mt, data = newdata,
                     contr_list[intersect(
                       names(contr_list),
                       vapply(attr(mt, "variables")[-1], deparse,
@@ -401,15 +401,15 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
   )
 
 
-  if (warn & any(is.na(X)))
+  if (warn & any(is.na(desgn_mat)))
     warnmsg("Prediction for cases with missing covariates is not yet
             implemented.")
 
 
   # linear predictor values for the selected iterations of the MCMC sample
-  pred <- vapply(seq_len(nrow(des_mat)), function(i) {
-    MCMC[, coefs$coef[match(colnames(des_mat), coefs$varname)],
-         drop = FALSE] %*% des_mat[i, ]
+  pred <- vapply(seq_len(nrow(desgn_mat)), function(i) {
+    MCMC[, coefs$coef[match(colnames(desgn_mat), coefs$varname)],
+         drop = FALSE] %*% desgn_mat[i, ]
   }, FUN.VALUE = numeric(nrow(MCMC)))
 
   # fitted values: mean over the (transformed) predicted values
@@ -465,7 +465,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
   op <- options(na.action = na.pass)
 
-  X0 <- model.matrix(mt, data = newdata,
+  desgn_mat_sub <- model.matrix(mt, data = newdata,
                      contr_list[intersect(
                        names(contr_list),
                        vapply(attr(mt, "variables")[-1], deparse,
@@ -473,13 +473,13 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                      )]
   )[, -1, drop = FALSE]
 
-  des_mat <- setNames(lapply(names(Mlist$M), function(lvl) {
-    des_mat_sub[, colnames(des_mat_sub) %in% colnames(Mlist$M[[lvl]]),
+  desgn_mat <- setNames(lapply(names(Mlist$M), function(lvl) {
+    desgn_mat_sub[, colnames(desgn_mat_sub) %in% colnames(Mlist$M[[lvl]]),
                 drop = FALSE]
   }), names(Mlist$M))
 
 
-  if (mess & any(is.na(X)))
+  if (mess & any(is.na(desgn_mat)))
     msg("Prediction for cases with missing covariates is not yet
             implemented.")
 
@@ -488,7 +488,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     scale_pars$center[is.na(scale_pars$center)] <- 0
   }
 
-  lp_list <- lapply(des_mat, function(x) {
+  lp_list <- lapply(desgn_mat, function(x) {
     vapply(seq_len(nrow(x)), function(i) {
       if (!is.null(scale_pars)) {
         MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*%
@@ -503,7 +503,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   lps <- array(unlist(lp_list), dim = c(nrow(lp_list[[1]]),
                                         ncol(lp_list[[1]]),
                                         length(lp_list)),
-               dimnames = list(c(), c(), gsub("M_", "", names(lp_list))))
+               dimnames = list(NULL, NULL, gsub("M_", "", names(lp_list))))
 
 
   eta_surv <- if (any(Mlist$group_lvls >=
@@ -670,7 +670,7 @@ predict_clm <- function(formula, newdata,
   mt <- attr(mf, "terms")
 
   op <- options(na.action = na.pass)
-  X <- model.matrix(mt,
+  desgn_mat <- model.matrix(mt,
                     data = newdata,
                     contrasts.arg = contr_list[intersect(
                       names(contr_list),
@@ -679,25 +679,26 @@ predict_clm <- function(formula, newdata,
                     )]
   )[, -1, drop = FALSE]
 
-  if (warn & any(is.na(X)))
+  if (warn & any(is.na(desgn_mat)))
     warnmsg("Prediction for cases with missing covariates is not yet
             implemented.")
 
   # multiply MCMC sample with design matrix to get linear predictor
-  coefs_prop <- coefs[is.na(coefs$outcat) & coefs$varname %in% colnames(X), ]
+  coefs_prop <- coefs[is.na(coefs$outcat) &
+                        coefs$varname %in% colnames(desgn_mat), ]
   coefs_nonprop <- coefs[!is.na(coefs$outcat) &
-                           coefs$varname %in% colnames(X), ]
+                           coefs$varname %in% colnames(desgn_mat), ]
   coefs_nonprop <- split(coefs_nonprop, coefs_nonprop$outcat)
 
 
   eta <- calc_lp(regcoefs = MCMC[, coefs_prop$coef, drop = FALSE],
-                 design_mat = X[, coefs_prop$varname, drop = FALSE],
+                 design_mat = desgn_mat[, coefs_prop$varname, drop = FALSE],
                  scale_pars)
 
   eta_nonprop <- if (length(coefs_nonprop) > 0) {
     lapply(coefs_nonprop, function(c_np_k) {
       calc_lp(regcoefs = MCMC[, c_np_k$coef, drop = FALSE],
-              design_mat = X[, c_np_k$varname, drop = FALSE],
+              design_mat = desgn_mat[, c_np_k$varname, drop = FALSE],
               scale_pars = scale_pars)
     })
   }
@@ -819,7 +820,7 @@ predict_mlogit <- function(formula, newdata,
   mt <- attr(mf, "terms")
 
   op <- options(na.action = na.pass)
-  X <- model.matrix(mt,
+  desgn_mat <- model.matrix(mt,
                     data = newdata,
                     contrasts.arg = contr_list[intersect(
                       names(contr_list),
@@ -828,7 +829,7 @@ predict_mlogit <- function(formula, newdata,
                     )]
   )
 
-  if (warn & any(is.na(X)))
+  if (warn & any(is.na(desgn_mat)))
     warnmsg("Prediction for cases with missing covariates is not yet
             implemented.")
 
@@ -837,7 +838,7 @@ predict_mlogit <- function(formula, newdata,
 
   etas <- lapply(coefs_nonprop, function(c_np_k) {
     calc_lp(regcoefs = MCMC[, c_np_k$coef, drop = FALSE],
-            design_mat = X[, c_np_k$varname, drop = FALSE],
+            design_mat = desgn_mat[, c_np_k$varname, drop = FALSE],
             scale_pars = NULL)
   })
 
