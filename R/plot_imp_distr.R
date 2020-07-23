@@ -31,8 +31,8 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id',
   if (!"ggplot2" %in% pkgs)
     msg("This function requires the package ggplot2 to be installed.")
 
-  if (!"ggpubr"%in% pkgs)
-    errormsg("This function requires the package ggpubr to be installed.")
+  if (!"ggpubr" %in% pkgs)
+    msg("This function requires the package ggpubr to be installed.")
 
   if (any(!c("ggpubr", "ggplot2") %in% pkgs)) {
     return(NULL)
