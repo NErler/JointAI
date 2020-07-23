@@ -244,10 +244,6 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #'               structure
 #' @param ridge logical; should the parameters of the main model be penalized
 #'              using ridge regression? Default is \code{FALSE}
-#' @param parallel logical; should the chains be sampled using parallel
-#'                 computation? Default is \code{FALSE}
-#' @param n.cores number of cores to use for parallel computation; if left
-#'                empty all except two cores will be used
 #' @param seed optional; seed value (for reproducibility)
 #' @param ppc logical: should monitors for posterior predictive checks be
 #'                     set? (not yet used)

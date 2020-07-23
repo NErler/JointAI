@@ -82,12 +82,6 @@ structure}
 \item{ridge}{logical; should the parameters of the main model be penalized
 using ridge regression? Default is \code{FALSE}}
 
-\item{parallel}{logical; should the chains be sampled using parallel
-computation? Default is \code{FALSE}}
-
-\item{n.cores}{number of cores to use for parallel computation; if left
-empty all except two cores will be used}
-
 \item{seed}{optional; seed value (for reproducibility)}
 
 \item{ppc}{logical: should monitors for posterior predictive checks be

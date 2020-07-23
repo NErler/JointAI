@@ -2,9 +2,6 @@
 #'
 #' This function continues the sampling from the MCMC chains of an existing
 #' object of class 'JointAI'.\cr
-#' If the original sample was created using parallel computation, the
-#' separate 'JAGS' objects will be recompiled and sampling will again be
-#' performed in parallel.
 #'
 #' @inheritParams sharedParams
 #' @inheritParams model_imp

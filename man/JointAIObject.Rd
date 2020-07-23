@@ -78,9 +78,6 @@
      \item{\code{thin}: }{thinning interval of the MCMC sample}
      \item{\code{inits}: }{a list containing the initial values that were
                            passed to \strong{rjags}}
-     \item{\code{parallel}: }{a logical indicator whether parallel sampling
-                              was used}
-     \item{\code{n.cores}: }{the number of cores used in parallel sampling}
      }}
 \item{\code{monitor_params}}{the named list of parameter groups to be
                              monitored}
