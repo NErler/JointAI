@@ -326,18 +326,18 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   test_that("GRcrit and MCerror give same result", {
     skip_on_cran()
-    print_output(lapply(models, GR_crit, multivariate = FALSE))
-    print_output(lapply(models, MC_error))
+    print_output(lapply(models0, GR_crit, multivariate = FALSE))
+    print_output(lapply(models0, MC_error))
   })
 
 
   test_that("summary output remained the same", {
     skip_on_cran()
-    print_output(lapply(models, print))
-    print_output(lapply(models, coef))
-    print_output(lapply(models, confint))
-    print_output(lapply(models, summary, missinfo = TRUE))
-    print_output(lapply(models, function(x) coef(summary(x))))
+    print_output(lapply(models0, print))
+    print_output(lapply(models0, coef))
+    print_output(lapply(models0, confint))
+    print_output(lapply(models0, summary, missinfo = TRUE))
+    print_output(lapply(models0, function(x) coef(summary(x))))
   })
 
 

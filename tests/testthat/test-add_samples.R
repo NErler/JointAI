@@ -10,6 +10,7 @@ test_that('add_samples works in simple setting',{
 })
 
 test_that('add_samples works in parallel', {
+  skip_on_os("windows")
   future::plan(future::cluster, workers = 2)
   lm2 <- lm_imp(y ~ C1 + C2 + B2, data = wideDF, n.iter = 50, parallel = TRUE,
                 n.cores = 2)
