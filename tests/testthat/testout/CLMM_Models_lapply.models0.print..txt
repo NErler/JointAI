@@ -1,7 +1,7 @@
 
 Call:
 clmm_imp(fixed = o1 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -18,7 +18,7 @@ $id
 
 Call:
 clmm_imp(fixed = o2 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o2" 
 
@@ -35,7 +35,7 @@ $id
 
 Call:
 clmm_imp(fixed = o1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -52,7 +52,7 @@ $id
 
 Call:
 clmm_imp(fixed = o2 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o2" 
 
@@ -69,7 +69,7 @@ $id
 
 Call:
 clmm_imp(fixed = o1 ~ c1 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -86,7 +86,7 @@ $id
 
 Call:
 clmm_imp(fixed = o2 ~ c1 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o2" 
 
@@ -103,7 +103,7 @@ $id
 
 Call:
 clmm_imp(fixed = o1 ~ C2 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -120,7 +120,7 @@ $id
 
 Call:
 clmm_imp(fixed = o2 ~ C2 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o2" 
 
@@ -137,7 +137,7 @@ $id
 
 Call:
 clmm_imp(fixed = o1 ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -154,7 +154,7 @@ $id
 
 Call:
 clmm_imp(fixed = o2 ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o2" 
 
@@ -215,7 +215,8 @@ sigma_c1
 
 Call:
 clmm_imp(fixed = o1 ~ M2 + o2 * abs(C1 - C2) + log(C1) + (1 | 
-    id), data = longDF, n.adapt = 5, n.iter = 10, seed = 2020)
+    id), data = longDF, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -239,7 +240,7 @@ $id
 Call:
 clmm_imp(fixed = o1 ~ ifelse(as.numeric(o2) > as.numeric(M1), 
     1, 0) * abs(C1 - C2) + log(C1) + (1 | id), data = longDF, 
-    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE)
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -266,7 +267,8 @@ $id
 
 Call:
 clmm_imp(fixed = o1 ~ time + c1 + C1 + B2 + (c1 * time | id), 
-    data = longDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE)
+    data = longDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -286,7 +288,8 @@ c1:time               0  0    0       0
 
 Call:
 clmm_imp(fixed = o1 ~ C1 * time + I(time^2) + b2 * c1, data = longDF, 
-    random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020)
+    random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -307,7 +310,7 @@ time                  0    0
 Call:
 clmm_imp(fixed = o1 ~ C1 + log(time) + I(time^2) + p1, data = longDF, 
     random = ~1 | id, n.adapt = 5, n.iter = 10, shrinkage = "ridge", 
-    seed = 2020, parallel = TRUE, n.cores = 2)
+    seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -325,7 +328,8 @@ $id
 Call:
 clmm_imp(fixed = o1 ~ C1 + C2 + b2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~C1 + C2 + b2), seed = 2020)
+    nonprop = list(o1 = ~C1 + C2 + b2), seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -343,7 +347,8 @@ $id
 Call:
 clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~c1 + C2), seed = 2020)
+    nonprop = list(o1 = ~c1 + C2), seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -363,7 +368,8 @@ $id
 Call:
 clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~c1 * C2), seed = 2020)
+    nonprop = list(o1 = ~c1 * C2), seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -383,7 +389,8 @@ $id
 Call:
 clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~c1 + C2), seed = 2020)
+    nonprop = list(o1 = ~c1 + C2), seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -403,7 +410,8 @@ $id
 Call:
 clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = ~c1 + M2 * C2 + O2, seed = 2020)
+    nonprop = ~c1 + M2 * C2 + O2, seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -423,7 +431,8 @@ $id
 Call:
 clmm_imp(fixed = o1 ~ C1 + C2 + b2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~C1 + C2 + b2), rev = "o1", seed = 2020)
+    nonprop = list(o1 = ~C1 + C2 + b2), rev = "o1", seed = 2020, 
+    warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -441,7 +450,8 @@ $id
 Call:
 clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~c1 + C2), rev = "o1", seed = 2020)
+    nonprop = list(o1 = ~c1 + C2), rev = "o1", seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -461,7 +471,8 @@ $id
 Call:
 clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~c1 * C2), rev = "o1", seed = 2020)
+    nonprop = list(o1 = ~c1 * C2), rev = "o1", seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -481,7 +492,8 @@ $id
 Call:
 clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~c1 + C2), rev = "o1", seed = 2020)
+    nonprop = list(o1 = ~c1 + C2), rev = "o1", seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -501,7 +513,8 @@ $id
 Call:
 clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = ~c1 + M2 * C2 + O2, rev = "o1", seed = 2020)
+    nonprop = ~c1 + M2 * C2 + O2, rev = "o1", seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -569,7 +582,7 @@ $m0a
 
 Call:
 clmm_imp(fixed = o1 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -588,7 +601,7 @@ $m0b
 
 Call:
 clmm_imp(fixed = o2 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o2" 
 
@@ -607,7 +620,7 @@ $m1a
 
 Call:
 clmm_imp(fixed = o1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -626,7 +639,7 @@ $m1b
 
 Call:
 clmm_imp(fixed = o2 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o2" 
 
@@ -645,7 +658,7 @@ $m1c
 
 Call:
 clmm_imp(fixed = o1 ~ c1 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -664,7 +677,7 @@ $m1d
 
 Call:
 clmm_imp(fixed = o2 ~ c1 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o2" 
 
@@ -683,7 +696,7 @@ $m2a
 
 Call:
 clmm_imp(fixed = o1 ~ C2 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -702,7 +715,7 @@ $m2b
 
 Call:
 clmm_imp(fixed = o2 ~ C2 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o2" 
 
@@ -721,7 +734,7 @@ $m2c
 
 Call:
 clmm_imp(fixed = o1 ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -740,7 +753,7 @@ $m2d
 
 Call:
 clmm_imp(fixed = o2 ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o2" 
 
@@ -807,7 +820,8 @@ $m4a
 
 Call:
 clmm_imp(fixed = o1 ~ M2 + o2 * abs(C1 - C2) + log(C1) + (1 | 
-    id), data = longDF, n.adapt = 5, n.iter = 10, seed = 2020)
+    id), data = longDF, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -833,7 +847,7 @@ $m4b
 Call:
 clmm_imp(fixed = o1 ~ ifelse(as.numeric(o2) > as.numeric(M1), 
     1, 0) * abs(C1 - C2) + log(C1) + (1 | id), data = longDF, 
-    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE)
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -862,7 +876,8 @@ $m4c
 
 Call:
 clmm_imp(fixed = o1 ~ time + c1 + C1 + B2 + (c1 * time | id), 
-    data = longDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE)
+    data = longDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -884,7 +899,8 @@ $m4d
 
 Call:
 clmm_imp(fixed = o1 ~ C1 * time + I(time^2) + b2 * c1, data = longDF, 
-    random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020)
+    random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -907,7 +923,7 @@ $m4e
 Call:
 clmm_imp(fixed = o1 ~ C1 + log(time) + I(time^2) + p1, data = longDF, 
     random = ~1 | id, n.adapt = 5, n.iter = 10, shrinkage = "ridge", 
-    seed = 2020, parallel = TRUE, n.cores = 2)
+    seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -927,7 +943,8 @@ $m5a
 Call:
 clmm_imp(fixed = o1 ~ C1 + C2 + b2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~C1 + C2 + b2), seed = 2020)
+    nonprop = list(o1 = ~C1 + C2 + b2), seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -947,7 +964,8 @@ $m5b
 Call:
 clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~c1 + C2), seed = 2020)
+    nonprop = list(o1 = ~c1 + C2), seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -969,7 +987,8 @@ $m5c
 Call:
 clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~c1 * C2), seed = 2020)
+    nonprop = list(o1 = ~c1 * C2), seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -991,7 +1010,8 @@ $m5d
 Call:
 clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~c1 + C2), seed = 2020)
+    nonprop = list(o1 = ~c1 + C2), seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -1013,7 +1033,8 @@ $m5e
 Call:
 clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = ~c1 + M2 * C2 + O2, seed = 2020)
+    nonprop = ~c1 + M2 * C2 + O2, seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -1035,7 +1056,8 @@ $m6a
 Call:
 clmm_imp(fixed = o1 ~ C1 + C2 + b2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~C1 + C2 + b2), rev = "o1", seed = 2020)
+    nonprop = list(o1 = ~C1 + C2 + b2), rev = "o1", seed = 2020, 
+    warn = FALSE, mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -1055,7 +1077,8 @@ $m6b
 Call:
 clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~c1 + C2), rev = "o1", seed = 2020)
+    nonprop = list(o1 = ~c1 + C2), rev = "o1", seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -1077,7 +1100,8 @@ $m6c
 Call:
 clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~c1 * C2), rev = "o1", seed = 2020)
+    nonprop = list(o1 = ~c1 * C2), rev = "o1", seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -1099,7 +1123,8 @@ $m6d
 Call:
 clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = list(o1 = ~c1 + C2), rev = "o1", seed = 2020)
+    nonprop = list(o1 = ~c1 + C2), rev = "o1", seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 
@@ -1121,7 +1146,8 @@ $m6e
 Call:
 clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_o1"), 
-    nonprop = ~c1 + M2 * C2 + O2, rev = "o1", seed = 2020)
+    nonprop = ~c1 + M2 * C2 + O2, rev = "o1", seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
  Bayesian cumulative logit mixed model for "o1" 
 

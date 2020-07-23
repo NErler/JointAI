@@ -1,0 +1,485 @@
+$m0a
+model { 
+
+   # Cox PH model for Srv_ftm_stts_cn ----------------------------------------------
+  for (i in 1:312) {
+    logh0_Srv_ftm_stts_cn[i] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bh0_Srv_ftm_stts_cn[i, ])
+    eta_Srv_ftm_stts_cn[i] <- 0
+    logh_Srv_ftm_stts_cn[i] <- logh0_Srv_ftm_stts_cn[i] + eta_Srv_ftm_stts_cn[i]
+
+    for (k in 1:15) {
+      logh0s_Srv_ftm_stts_cn[i, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (i - 1) + k, ])
+      Surv_Srv_ftm_stts_cn[i, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[i, k])
+    }
+
+    log.surv_Srv_ftm_stts_cn[i] <- -exp(eta_Srv_ftm_stts_cn[i]) * M_lvlone[i, 1]/2 * sum(Surv_Srv_ftm_stts_cn[i, ])
+    phi_Srv_ftm_stts_cn[i] <- 5000 - ((M_lvlone[i, 2] * logh_Srv_ftm_stts_cn[i])) - (log.surv_Srv_ftm_stts_cn[i])
+    zeros_Srv_ftm_stts_cn[i] ~ dpois(phi_Srv_ftm_stts_cn[i])
+  }
+
+
+  # Priors for the coefficients in the model for Srv_ftm_stts_cn
+  for (k in 1:6) {
+    beta_Bh0_Srv_ftm_stts_cn[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+ 
+ 
+}
+$m1a
+model { 
+
+   # Cox PH model for Srv_ftm_stts_cn ----------------------------------------------
+  for (i in 1:312) {
+    logh0_Srv_ftm_stts_cn[i] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bh0_Srv_ftm_stts_cn[i, ])
+    eta_Srv_ftm_stts_cn[i] <- (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * beta[1] +
+                              M_lvlone[i, 5] * beta[2]
+    logh_Srv_ftm_stts_cn[i] <- logh0_Srv_ftm_stts_cn[i] + eta_Srv_ftm_stts_cn[i]
+
+    for (k in 1:15) {
+      logh0s_Srv_ftm_stts_cn[i, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (i - 1) + k, ])
+      Surv_Srv_ftm_stts_cn[i, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[i, k])
+    }
+
+    log.surv_Srv_ftm_stts_cn[i] <- -exp(eta_Srv_ftm_stts_cn[i]) * M_lvlone[i, 1]/2 * sum(Surv_Srv_ftm_stts_cn[i, ])
+    phi_Srv_ftm_stts_cn[i] <- 5000 - ((M_lvlone[i, 2] * logh_Srv_ftm_stts_cn[i])) - (log.surv_Srv_ftm_stts_cn[i])
+    zeros_Srv_ftm_stts_cn[i] ~ dpois(phi_Srv_ftm_stts_cn[i])
+  }
+
+
+  # Priors for the coefficients in the model for Srv_ftm_stts_cn
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  for (k in 1:6) {
+    beta_Bh0_Srv_ftm_stts_cn[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+ 
+ 
+}
+$m1b
+model { 
+
+   # Cox PH model for Srv_ftm_stts_cn ----------------------------------------------
+  for (i in 1:312) {
+    logh0_Srv_ftm_stts_cn[i] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bh0_Srv_ftm_stts_cn[i, ])
+    eta_Srv_ftm_stts_cn[i] <- (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * beta[1] +
+                              M_lvlone[i, 5] * beta[2]
+    logh_Srv_ftm_stts_cn[i] <- logh0_Srv_ftm_stts_cn[i] + eta_Srv_ftm_stts_cn[i]
+
+    for (k in 1:15) {
+      logh0s_Srv_ftm_stts_cn[i, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (i - 1) + k, ])
+      Surv_Srv_ftm_stts_cn[i, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[i, k])
+    }
+
+    log.surv_Srv_ftm_stts_cn[i] <- -exp(eta_Srv_ftm_stts_cn[i]) * M_lvlone[i, 1]/2 * sum(Surv_Srv_ftm_stts_cn[i, ])
+    phi_Srv_ftm_stts_cn[i] <- 5000 - ((M_lvlone[i, 2] * logh_Srv_ftm_stts_cn[i])) - (log.surv_Srv_ftm_stts_cn[i])
+    zeros_Srv_ftm_stts_cn[i] ~ dpois(phi_Srv_ftm_stts_cn[i])
+  }
+
+
+  # Priors for the coefficients in the model for Srv_ftm_stts_cn
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  for (k in 1:6) {
+    beta_Bh0_Srv_ftm_stts_cn[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+ 
+ 
+}
+$m2a
+model { 
+
+   # Cox PH model for Srv_ftm_stts_cn ----------------------------------------------
+  for (i in 1:312) {
+    logh0_Srv_ftm_stts_cn[i] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bh0_Srv_ftm_stts_cn[i, ])
+    eta_Srv_ftm_stts_cn[i] <- (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[1]
+    logh_Srv_ftm_stts_cn[i] <- logh0_Srv_ftm_stts_cn[i] + eta_Srv_ftm_stts_cn[i]
+
+    for (k in 1:15) {
+      logh0s_Srv_ftm_stts_cn[i, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (i - 1) + k, ])
+      Surv_Srv_ftm_stts_cn[i, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[i, k])
+    }
+
+    log.surv_Srv_ftm_stts_cn[i] <- -exp(eta_Srv_ftm_stts_cn[i]) * M_lvlone[i, 1]/2 * sum(Surv_Srv_ftm_stts_cn[i, ])
+    phi_Srv_ftm_stts_cn[i] <- 5000 - ((M_lvlone[i, 2] * logh_Srv_ftm_stts_cn[i])) - (log.surv_Srv_ftm_stts_cn[i])
+    zeros_Srv_ftm_stts_cn[i] ~ dpois(phi_Srv_ftm_stts_cn[i])
+  }
+
+
+  # Priors for the coefficients in the model for Srv_ftm_stts_cn
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  for (k in 1:6) {
+    beta_Bh0_Srv_ftm_stts_cn[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+
+
+
+  # Normal model for copper -------------------------------------------------------
+  for (i in 1:312) {
+    M_lvlone[i, 3] ~ dnorm(mu_copper[i], tau_copper)
+    mu_copper[i] <- M_lvlone[i, 4] * alpha[1]
+  }
+
+  # Priors for the model for copper
+  for (k in 1:1) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_copper ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_copper <- sqrt(1/tau_copper)
+ 
+ 
+}
+$m3a
+model { 
+
+   # Cox PH model for Srv_ftm_stts_cn ----------------------------------------------
+  for (i in 1:312) {
+    logh0_Srv_ftm_stts_cn[i] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bh0_Srv_ftm_stts_cn[i, ])
+    eta_Srv_ftm_stts_cn[i] <- (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * beta[1] +
+                              M_lvlone[i, 6] * beta[2] +
+                              (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] * beta[3] +
+                              (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2] * beta[4] +
+                              (M_lvlone[i, 9] - spM_lvlone[9, 1])/spM_lvlone[9, 2] * beta[5]
+    logh_Srv_ftm_stts_cn[i] <- logh0_Srv_ftm_stts_cn[i] + eta_Srv_ftm_stts_cn[i]
+
+    for (k in 1:15) {
+      logh0s_Srv_ftm_stts_cn[i, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (i - 1) + k, ])
+      Surv_Srv_ftm_stts_cn[i, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[i, k])
+    }
+
+    log.surv_Srv_ftm_stts_cn[i] <- -exp(eta_Srv_ftm_stts_cn[i]) * M_lvlone[i, 1]/2 * sum(Surv_Srv_ftm_stts_cn[i, ])
+    phi_Srv_ftm_stts_cn[i] <- 5000 - ((M_lvlone[i, 2] * logh_Srv_ftm_stts_cn[i])) - (log.surv_Srv_ftm_stts_cn[i])
+    zeros_Srv_ftm_stts_cn[i] ~ dpois(phi_Srv_ftm_stts_cn[i])
+  }
+
+
+  # Priors for the coefficients in the model for Srv_ftm_stts_cn
+  for (k in 1:5) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  for (k in 1:6) {
+    beta_Bh0_Srv_ftm_stts_cn[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+
+
+
+  # Normal model for trig ---------------------------------------------------------
+  for (i in 1:312) {
+    M_lvlone[i, 3] ~ dnorm(mu_trig[i], tau_trig)T(1e-04, )
+    mu_trig[i] <- M_lvlone[i, 5] * alpha[1] +
+                  (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * alpha[2] +
+                  M_lvlone[i, 6] * alpha[3] +
+                  (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] * alpha[4]
+
+    M_lvlone[i, 9] <- log(M_lvlone[i, 3])
+
+
+  }
+
+  # Priors for the model for trig
+  for (k in 1:4) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_trig ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_trig <- sqrt(1/tau_trig)
+
+
+
+
+  # Normal model for copper -------------------------------------------------------
+  for (i in 1:312) {
+    M_lvlone[i, 4] ~ dnorm(mu_copper[i], tau_copper)
+    mu_copper[i] <- M_lvlone[i, 5] * alpha[5] + M_lvlone[i, 6] * alpha[6] +
+                    (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] * alpha[7]
+
+    M_lvlone[i, 8] <- abs(M_lvlone[i, 7] - M_lvlone[i, 4])
+
+
+  }
+
+  # Priors for the model for copper
+  for (k in 5:7) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_copper ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_copper <- sqrt(1/tau_copper)
+ 
+ 
+}
+$m3b
+model { 
+
+   # Cox PH model for Srv_ftm_stts_cn ----------------------------------------------
+  for (i in 1:312) {
+    logh0_Srv_ftm_stts_cn[i] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bh0_Srv_ftm_stts_cn[i, ])
+    eta_Srv_ftm_stts_cn[i] <- b_Srv_ftm_stts_cn_center[group_center[i], 1] +
+                              beta[1] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] +
+                              beta[2] * M_lvlone[i, 5] +
+                              beta[3] * (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] +
+                              beta[4] * (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] +
+                              beta[5] * (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2]
+    logh_Srv_ftm_stts_cn[i] <- logh0_Srv_ftm_stts_cn[i] + eta_Srv_ftm_stts_cn[i]
+
+    for (k in 1:15) {
+      logh0s_Srv_ftm_stts_cn[i, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (i - 1) + k, ])
+      Surv_Srv_ftm_stts_cn[i, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[i, k])
+    }
+
+    log.surv_Srv_ftm_stts_cn[i] <- -exp(eta_Srv_ftm_stts_cn[i]) * M_lvlone[i, 1]/2 * sum(Surv_Srv_ftm_stts_cn[i, ])
+    phi_Srv_ftm_stts_cn[i] <- 5000 - ((M_lvlone[i, 2] * logh_Srv_ftm_stts_cn[i])) - (log.surv_Srv_ftm_stts_cn[i])
+    zeros_Srv_ftm_stts_cn[i] ~ dpois(phi_Srv_ftm_stts_cn[i])
+  }
+
+  for (ii in 1:10) {
+    b_Srv_ftm_stts_cn_center[ii, 1:1] ~ dnorm(mu_b_Srv_ftm_stts_cn_center[ii, ], invD_Srv_ftm_stts_cn_center[ , ])
+    mu_b_Srv_ftm_stts_cn_center[ii, 1] <- 0
+  }
+
+
+  # Priors for the coefficients in the model for Srv_ftm_stts_cn
+  for (k in 1:5) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  for (k in 1:6) {
+    beta_Bh0_Srv_ftm_stts_cn[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  invD_Srv_ftm_stts_cn_center[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Srv_ftm_stts_cn_center[1:1, 1:1] <- inverse(invD_Srv_ftm_stts_cn_center[ , ])
+
+
+  # Normal mixed effects model for trig -------------------------------------------
+  for (i in 1:312) {
+    M_lvlone[i, 3] ~ dnorm(mu_trig[i], tau_trig)T(1e-04, )
+    mu_trig[i] <- b_trig_center[group_center[i], 1] +
+                  alpha[2] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] +
+                  alpha[3] * M_lvlone[i, 5] +
+                  alpha[4] * (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2]
+
+
+    M_lvlone[i, 8] <- log(M_lvlone[i, 3])
+
+  }
+
+  for (ii in 1:10) {
+    b_trig_center[ii, 1:1] ~ dnorm(mu_b_trig_center[ii, ], invD_trig_center[ , ])
+    mu_b_trig_center[ii, 1] <- M_center[ii, 1] * alpha[1]
+  }
+
+  # Priors for the model for trig
+  for (k in 1:4) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_trig ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_trig <- sqrt(1/tau_trig)
+
+  invD_trig_center[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_trig_center[1:1, 1:1] <- inverse(invD_trig_center[ , ])
+
+
+  # Normal mixed effects model for copper -----------------------------------------
+  for (i in 1:312) {
+    M_lvlone[i, 4] ~ dnorm(mu_copper[i], tau_copper)
+    mu_copper[i] <- b_copper_center[group_center[i], 1] + alpha[6] * M_lvlone[i, 5] +
+                    alpha[7] * (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2]
+
+
+    M_lvlone[i, 7] <- abs(M_lvlone[i, 6] - M_lvlone[i, 4])
+
+  }
+
+  for (ii in 1:10) {
+    b_copper_center[ii, 1:1] ~ dnorm(mu_b_copper_center[ii, ], invD_copper_center[ , ])
+    mu_b_copper_center[ii, 1] <- M_center[ii, 1] * alpha[5]
+  }
+
+  # Priors for the model for copper
+  for (k in 5:7) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_copper ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_copper <- sqrt(1/tau_copper)
+
+  invD_copper_center[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_copper_center[1:1, 1:1] <- inverse(invD_copper_center[ , ]) 
+ 
+}
+$m4a
+model { 
+
+   # Cox PH model for Srv_ftm_stts_cn ----------------------------------------------
+  for (ii in 1:312) {
+    logh0_Srv_ftm_stts_cn[ii] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bh0_Srv_ftm_stts_cn[ii, ])
+    eta_Srv_ftm_stts_cn[ii] <- (M_id[ii, 4] - spM_id[4, 1])/spM_id[4, 2] * beta[1] +
+                               M_id[ii, 5] * beta[2] + M_id[ii, 6] * beta[3]
+    logh_Srv_ftm_stts_cn[ii] <- logh0_Srv_ftm_stts_cn[ii] + eta_Srv_ftm_stts_cn[ii] +
+                                (M_lvlone[srow_Srv_ftm_stts_cn[ii], 1] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[4] +
+                                (M_lvlone[srow_Srv_ftm_stts_cn[ii], 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[5] +
+                                M_lvlone[srow_Srv_ftm_stts_cn[ii], 3] * beta[6] +
+                                M_lvlone[srow_Srv_ftm_stts_cn[ii], 4] * beta[7] +
+                                M_lvlone[srow_Srv_ftm_stts_cn[ii], 5] * beta[8]
+
+    for (k in 1:15) {
+      logh0s_Srv_ftm_stts_cn[ii, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (ii - 1) + k, ])
+      Surv_Srv_ftm_stts_cn[ii, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[ii, k] +
+                                     (M_lvlonegk[ii, 1, k] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[4] +
+                                     (M_lvlonegk[ii, 2, k] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[5] +
+                                     M_lvlonegk[ii, 3, k] * beta[6] +
+                                     M_lvlonegk[ii, 4, k] * beta[7] +
+                                     M_lvlonegk[ii, 5, k] * beta[8])
+    }
+
+    log.surv_Srv_ftm_stts_cn[ii] <- -exp(eta_Srv_ftm_stts_cn[ii]) * M_id[ii, 1]/2 * sum(Surv_Srv_ftm_stts_cn[ii, ])
+    phi_Srv_ftm_stts_cn[ii] <- 5000 - ((M_id[ii, 2] * logh_Srv_ftm_stts_cn[ii])) - (log.surv_Srv_ftm_stts_cn[ii])
+    zeros_Srv_ftm_stts_cn[ii] ~ dpois(phi_Srv_ftm_stts_cn[ii])
+  }
+
+
+  # Priors for the coefficients in the model for Srv_ftm_stts_cn
+  for (k in 1:8) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  for (k in 1:6) {
+    beta_Bh0_Srv_ftm_stts_cn[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+ 
+ 
+}
+$m4b
+model { 
+
+   # Cox PH model for Srv_ftm_stts_cn ----------------------------------------------
+  for (ii in 1:312) {
+    logh0_Srv_ftm_stts_cn[ii] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bh0_Srv_ftm_stts_cn[ii, ])
+    eta_Srv_ftm_stts_cn[ii] <- (M_id[ii, 4] - spM_id[4, 1])/spM_id[4, 2] * beta[1] +
+                               M_id[ii, 5] * beta[2] + M_id[ii, 6] * beta[3] +
+                               M_id[ii, 7] * beta[4]
+    logh_Srv_ftm_stts_cn[ii] <- logh0_Srv_ftm_stts_cn[ii] + eta_Srv_ftm_stts_cn[ii] +
+                                (M_lvlone[srow_Srv_ftm_stts_cn[ii], 1] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[5] +
+                                (M_lvlone[srow_Srv_ftm_stts_cn[ii], 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[6]
+
+    for (k in 1:15) {
+      logh0s_Srv_ftm_stts_cn[ii, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (ii - 1) + k, ])
+      Surv_Srv_ftm_stts_cn[ii, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[ii, k] +
+                                     (M_lvlonegk[ii, 1, k] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[5] +
+                                     (M_lvlonegk[ii, 2, k] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[6])
+    }
+
+    log.surv_Srv_ftm_stts_cn[ii] <- -exp(eta_Srv_ftm_stts_cn[ii]) * M_id[ii, 1]/2 * sum(Surv_Srv_ftm_stts_cn[ii, ])
+    phi_Srv_ftm_stts_cn[ii] <- 5000 - ((M_id[ii, 2] * logh_Srv_ftm_stts_cn[ii])) - (log.surv_Srv_ftm_stts_cn[ii])
+    zeros_Srv_ftm_stts_cn[ii] ~ dpois(phi_Srv_ftm_stts_cn[ii])
+  }
+
+
+  # Priors for the coefficients in the model for Srv_ftm_stts_cn
+  for (k in 1:6) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  for (k in 1:6) {
+    beta_Bh0_Srv_ftm_stts_cn[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+ 
+ 
+}
+$m4c
+model { 
+
+   # Cox PH model for Srv_ftm_stts_cn ----------------------------------------------
+  for (ii in 1:312) {
+    logh0_Srv_ftm_stts_cn[ii] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bh0_Srv_ftm_stts_cn[ii, ])
+    eta_Srv_ftm_stts_cn[ii] <- b_Srv_ftm_stts_cn_center[group_center[pos_id[ii]], 1] +
+                               beta[1] * (M_id[ii, 3] - spM_id[3, 1])/spM_id[3, 2] +
+                               beta[2] * M_id[ii, 4]
+    logh_Srv_ftm_stts_cn[ii] <- logh0_Srv_ftm_stts_cn[ii] + eta_Srv_ftm_stts_cn[ii] +
+                                (M_lvlone[srow_Srv_ftm_stts_cn[ii], 1] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[3] +
+                                (M_lvlone[srow_Srv_ftm_stts_cn[ii], 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[4]
+
+    for (k in 1:15) {
+      logh0s_Srv_ftm_stts_cn[ii, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (ii - 1) + k, ])
+      Surv_Srv_ftm_stts_cn[ii, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[ii, k] +
+                                     (M_lvlonegk[ii, 1, k] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[3] +
+                                     (M_lvlonegk[ii, 2, k] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[4])
+    }
+
+    log.surv_Srv_ftm_stts_cn[ii] <- -exp(eta_Srv_ftm_stts_cn[ii]) * M_id[ii, 1]/2 * sum(Surv_Srv_ftm_stts_cn[ii, ])
+    phi_Srv_ftm_stts_cn[ii] <- 5000 - ((M_id[ii, 2] * logh_Srv_ftm_stts_cn[ii])) - (log.surv_Srv_ftm_stts_cn[ii])
+    zeros_Srv_ftm_stts_cn[ii] ~ dpois(phi_Srv_ftm_stts_cn[ii])
+  }
+
+  for (iii in 1:10) {
+    b_Srv_ftm_stts_cn_center[iii, 1:1] ~ dnorm(mu_b_Srv_ftm_stts_cn_center[iii, ], invD_Srv_ftm_stts_cn_center[ , ])
+    mu_b_Srv_ftm_stts_cn_center[iii, 1] <- 0
+  }
+
+
+  # Priors for the coefficients in the model for Srv_ftm_stts_cn
+  for (k in 1:4) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  for (k in 1:6) {
+    beta_Bh0_Srv_ftm_stts_cn[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  invD_Srv_ftm_stts_cn_center[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Srv_ftm_stts_cn_center[1:1, 1:1] <- inverse(invD_Srv_ftm_stts_cn_center[ , ]) 
+ 
+}
+$m4d
+model { 
+
+   # Cox PH model for Srv_ftm_stts_cn ----------------------------------------------
+  for (ii in 1:312) {
+    logh0_Srv_ftm_stts_cn[ii] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bh0_Srv_ftm_stts_cn[ii, ])
+    eta_Srv_ftm_stts_cn[ii] <- b_Srv_ftm_stts_cn_center[group_center[pos_id[ii]], 1] +
+                               beta[1] * (M_id[ii, 3] - spM_id[3, 1])/spM_id[3, 2] +
+                               beta[2] * M_id[ii, 4]
+    logh_Srv_ftm_stts_cn[ii] <- logh0_Srv_ftm_stts_cn[ii] + eta_Srv_ftm_stts_cn[ii] +
+                                (M_lvlone[srow_Srv_ftm_stts_cn[ii], 1] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[3] +
+                                (M_lvlone[srow_Srv_ftm_stts_cn[ii], 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[4] +
+                                (M_lvlone[srow_Srv_ftm_stts_cn[ii], 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[5]
+
+    for (k in 1:15) {
+      logh0s_Srv_ftm_stts_cn[ii, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (ii - 1) + k, ])
+      Surv_Srv_ftm_stts_cn[ii, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[ii, k] +
+                                     (M_lvlonegk[ii, 1, k] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[3] +
+                                     (M_lvlonegk[ii, 2, k] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[4] +
+                                     (M_lvlonegk[ii, 3, k] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[5])
+    }
+
+    log.surv_Srv_ftm_stts_cn[ii] <- -exp(eta_Srv_ftm_stts_cn[ii]) * M_id[ii, 1]/2 * sum(Surv_Srv_ftm_stts_cn[ii, ])
+    phi_Srv_ftm_stts_cn[ii] <- 5000 - ((M_id[ii, 2] * logh_Srv_ftm_stts_cn[ii])) - (log.surv_Srv_ftm_stts_cn[ii])
+    zeros_Srv_ftm_stts_cn[ii] ~ dpois(phi_Srv_ftm_stts_cn[ii])
+  }
+
+  for (iii in 1:10) {
+    b_Srv_ftm_stts_cn_center[iii, 1:1] ~ dnorm(mu_b_Srv_ftm_stts_cn_center[iii, ], invD_Srv_ftm_stts_cn_center[ , ])
+    mu_b_Srv_ftm_stts_cn_center[iii, 1] <- 0
+  }
+
+
+  # Priors for the coefficients in the model for Srv_ftm_stts_cn
+  for (k in 1:5) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  for (k in 1:6) {
+    beta_Bh0_Srv_ftm_stts_cn[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  invD_Srv_ftm_stts_cn_center[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Srv_ftm_stts_cn_center[1:1, 1:1] <- inverse(invD_Srv_ftm_stts_cn_center[ , ]) 
+ 
+}
