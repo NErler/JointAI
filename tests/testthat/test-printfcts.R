@@ -20,8 +20,7 @@ test_that('mlogitmm', {
   mmod <- mlogitmm_imp(x ~ C1 + p1 + B2 + O2 + c2 + y * time + (time | id),
                        data = longDF,
                        n.adapt = 10, n.iter = 10,
-                       monitor_parms = c(other_models = TRUE),
-                       parallel = TRUE, n.cores = 2, n.chains = 2,
+                       monitor_parms = c(other_models = TRUE), n.chains = 2,
                        models = c(p1 = 'glmm_poisson_log'),
                        refcats = c(O2 = 3), warn = FALSE)
 
