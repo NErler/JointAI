@@ -613,9 +613,9 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
               dQuote("meth"), dQuote("models"))
 
   if (!is.null(args$parallel) | !is.null(args$n.cores)) {
-    errormsg('The arguments %s and %s are no longer used. To perform the
+    errormsg("The arguments %s and %s are no longer used. To perform the
              computation in parallel, specify future::plan().
-             For an example, see ?model_imp.',
+             For an example, see ?model_imp.",
              dQuote("parallel"), dQuote("n.cores"))
   }
 
@@ -663,7 +663,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                               warn = warn)
 
   # parameters to monitor ------------------------------------------------------
-  if (any(grepl('^beta\\[', unlist(monitor_params))) &
+  if (any(grepl("^beta\\[", unlist(monitor_params))) &
       any(!is.na(unlist(Mlist$scale_pars)))) {
 
     monitor_params <- c(sapply(monitor_params, function(x) {
@@ -706,8 +706,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
 
   t1 <- Sys.time()
 
-  if (n.iter > 0 & class(mcmc) != 'mcmc.list')
-    warnmsg('There is no mcmc sample. Something went wrong.')
+  if (n.iter > 0 & class(mcmc) != "mcmc.list")
+    warnmsg("There is no mcmc sample. Something went wrong.")
 
   # post processing ------------------------------------------------------------
   if (n.iter > 0 & !is.null(mcmc)) {
@@ -723,7 +723,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                   coefs = do.call(rbind, coefs),
                   scale_pars = do.call(rbind, unname(Mlist$scale_pars)),
                   info_list))
-        attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
+        attr(MCMC[[k]], "mcpar") <- attr(mcmc[[k]], "mcpar")
       }
     }
   }
@@ -752,11 +752,11 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
          K_imp = K_imp,
          JAGSmodel = structure(readChar(modelfile,
                                         file.info(modelfile)$size),
-                               class = 'modelstring'),
+                               class = "modelstring"),
          mcmc_settings = mcmc_settings,
          monitor_params = c(monitor_params,
-                            if (!'analysis_main' %in% names(monitor_params))
-                              setNames(TRUE, 'analysis_main')),
+                            if (!"analysis_main" %in% names(monitor_params))
+                              setNames(TRUE, "analysis_main")),
          data_list = data_list,
          hyperpars = if (is.null(hyperpars)) default_hyperpars() else hyperpars,
          info_list = info_list,
@@ -776,18 +776,20 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   object$fitted.values <- try(fitted_values(object, mess = FALSE, warn = FALSE),
                               silent = TRUE)
 
-  object$residuals <- try(residuals(object, type = 'working', warn = FALSE),
+  object$residuals <- try(residuals(object, type = "working", warn = FALSE),
                           silent = TRUE)
 
-  if (inherits(object$fitted.values, 'try-error'))
+  if (inherits(object$fitted.values, "try-error"))
     object$fitted.values <- NULL
-  if (inherits(object$residuals, 'try-error'))
+  if (inherits(object$residuals, "try-error"))
     object$residuals <- NULL
 
-  if (inherits(adapt, 'try-error'))
+  if (inherits(adapt, "try-error"))
     class(object) <- "JointAI_errored"
 
-  if (!attr(modelfile, "keep_model")) {file.remove(modelfile)}
+  if (!attr(modelfile, "keep_model")) {
+    file.remove(modelfile)
+  }
 
   return(object)
 }
@@ -806,12 +808,12 @@ lm_imp <- function(formula, data,
                    keep_model = FALSE, overwrite = NULL,
                    quiet = TRUE, progress.bar = "text",
                    warn = TRUE, mess = TRUE,
-                   keep_scaled_mcmc = FALSE, ...){
+                   keep_scaled_mcmc = FALSE, ...) {
 
 
   if (missing(formula)) errormsg("No model formula specified.")
 
-  arglist <- prep_arglist(analysis_type = 'lm',
+  arglist <- prep_arglist(analysis_type = "lm",
                           family = gaussian(),
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
@@ -835,13 +837,13 @@ glm_imp <- function(formula, family, data,
                     keep_model = FALSE, overwrite = NULL,
                     quiet = TRUE, progress.bar = "text",
                     warn = TRUE, mess = TRUE,
-                    keep_scaled_mcmc = FALSE, ...){
+                    keep_scaled_mcmc = FALSE, ...) {
 
   if (missing(formula)) errormsg("No model formula specified.")
   if (missing(family))
     errormsg("The argument %s needs to be specified.", dQuote("family"))
 
-  arglist <- prep_arglist(analysis_type = 'glm',
+  arglist <- prep_arglist(analysis_type = "glm",
                           family = family,
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
@@ -863,11 +865,11 @@ clm_imp <- function(formula, data,
                     keep_model = FALSE, overwrite = NULL,
                     quiet = TRUE, progress.bar = "text",
                     warn = TRUE, mess = TRUE,
-                    keep_scaled_mcmc = FALSE, ...){
+                    keep_scaled_mcmc = FALSE, ...) {
 
   if (missing(formula)) errormsg("No model formula specified.")
 
-  arglist <- prep_arglist(analysis_type = 'clm',
+  arglist <- prep_arglist(analysis_type = "clm",
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
 
@@ -890,11 +892,11 @@ lognorm_imp <- function(formula, data,
                         keep_model = FALSE, overwrite = NULL,
                         quiet = TRUE, progress.bar = "text",
                         warn = TRUE, mess = TRUE,
-                        keep_scaled_mcmc = FALSE, ...){
+                        keep_scaled_mcmc = FALSE, ...) {
 
   if (missing(formula)) errormsg("No model formula specified.")
 
-  arglist <- prep_arglist(analysis_type = 'lognorm',
+  arglist <- prep_arglist(analysis_type = "lognorm",
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
 
@@ -918,11 +920,11 @@ betareg_imp <- function(formula, data,
                         keep_model = FALSE, overwrite = NULL,
                         quiet = TRUE, progress.bar = "text",
                         warn = TRUE, mess = TRUE,
-                        keep_scaled_mcmc = FALSE, ...){
+                        keep_scaled_mcmc = FALSE, ...) {
 
   if (missing(formula)) errormsg("No model formula specified.")
 
-  arglist <- prep_arglist(analysis_type = 'beta',
+  arglist <- prep_arglist(analysis_type = "beta",
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
 
@@ -943,11 +945,11 @@ mlogit_imp <- function(formula, data,
                        keep_model = FALSE, overwrite = NULL,
                        quiet = TRUE, progress.bar = "text",
                        warn = TRUE, mess = TRUE,
-                       keep_scaled_mcmc = FALSE, ...){
+                       keep_scaled_mcmc = FALSE, ...) {
 
   if (missing(formula)) errormsg("No model formula specified.")
 
-  arglist <- prep_arglist(analysis_type = 'mlogit',
+  arglist <- prep_arglist(analysis_type = "mlogit",
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
 
@@ -968,9 +970,9 @@ lme_imp <- function(fixed, data, random,
                     keep_model = FALSE, overwrite = NULL,
                     quiet = TRUE, progress.bar = "text",
                     warn = TRUE, mess = TRUE,
-                    keep_scaled_mcmc = FALSE, ...){
+                    keep_scaled_mcmc = FALSE, ...) {
 
-  arglist <- prep_arglist(analysis_type = 'lme',
+  arglist <- prep_arglist(analysis_type = "lme",
                           family = gaussian(),
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
@@ -1002,12 +1004,12 @@ glme_imp <- function(fixed, data, random, family,
                      keep_model = FALSE, overwrite = NULL,
                      quiet = TRUE, progress.bar = "text",
                      warn = TRUE, mess = TRUE,
-                     keep_scaled_mcmc = FALSE, ...){
+                     keep_scaled_mcmc = FALSE, ...) {
 
   if (missing(family))
     errormsg("The argument %s needs to be specified.", dQuote(family))
 
-  arglist <- prep_arglist(analysis_type = 'glme',
+  arglist <- prep_arglist(analysis_type = "glme",
                           family = family,
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
@@ -1041,9 +1043,9 @@ betamm_imp <- function(fixed, random, data,
                        keep_model = FALSE, overwrite = NULL,
                        quiet = TRUE, progress.bar = "text",
                        warn = TRUE, mess = TRUE,
-                       keep_scaled_mcmc = FALSE, ...){
+                       keep_scaled_mcmc = FALSE, ...) {
 
-  arglist <- prep_arglist(analysis_type = 'glmm_beta',
+  arglist <- prep_arglist(analysis_type = "glmm_beta",
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
 
@@ -1069,9 +1071,9 @@ lognormmm_imp <- function(fixed, random, data,
                           keep_model = FALSE, overwrite = NULL,
                           quiet = TRUE, progress.bar = "text",
                           warn = TRUE, mess = TRUE,
-                          keep_scaled_mcmc = FALSE, ...){
+                          keep_scaled_mcmc = FALSE, ...) {
 
-  arglist <- prep_arglist(analysis_type = 'glmm_lognorm',
+  arglist <- prep_arglist(analysis_type = "glmm_lognorm",
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
 
@@ -1094,9 +1096,9 @@ clmm_imp <- function(fixed, data, random,
                      keep_model = FALSE, overwrite = NULL,
                      quiet = TRUE, progress.bar = "text",
                      warn = TRUE, mess = TRUE,
-                     keep_scaled_mcmc = FALSE, ...){
+                     keep_scaled_mcmc = FALSE, ...) {
 
-  arglist <- prep_arglist(analysis_type = 'clmm',
+  arglist <- prep_arglist(analysis_type = "clmm",
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
 
@@ -1120,9 +1122,9 @@ mlogitmm_imp <- function(fixed, data, random,
                          keep_model = FALSE, overwrite = NULL,
                          quiet = TRUE, progress.bar = "text",
                          warn = TRUE, mess = TRUE,
-                         keep_scaled_mcmc = FALSE, ...){
+                         keep_scaled_mcmc = FALSE, ...) {
 
-  arglist <- prep_arglist(analysis_type = 'mlogitmm',
+  arglist <- prep_arglist(analysis_type = "mlogitmm",
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
 
@@ -1146,7 +1148,7 @@ survreg_imp <- function(formula, data,
                         keep_model = FALSE, overwrite = NULL,
                         quiet = TRUE, progress.bar = "text",
                         warn = TRUE, mess = TRUE,
-                        keep_scaled_mcmc = FALSE, ...){
+                        keep_scaled_mcmc = FALSE, ...) {
 
 
   if (missing(formula)) errormsg("No model formula specified.")
@@ -1184,7 +1186,7 @@ coxph_imp <- function(formula, data, df_basehaz = 6,
                       keep_model = FALSE, overwrite = NULL,
                       quiet = TRUE, progress.bar = "text",
                       warn = TRUE, mess = TRUE,
-                      keep_scaled_mcmc = FALSE, ...){
+                      keep_scaled_mcmc = FALSE, ...) {
 
 
   if (missing(formula)) errormsg("No model formula specified.")
@@ -1200,7 +1202,7 @@ coxph_imp <- function(formula, data, df_basehaz = 6,
   }
 
 
-  arglist <- prep_arglist(analysis_type = 'coxph',
+  arglist <- prep_arglist(analysis_type = "coxph",
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
 
@@ -1224,7 +1226,7 @@ JM_imp <- function(formula, data, df_basehaz = 6,
                    keep_model = FALSE, overwrite = NULL,
                    quiet = TRUE, progress.bar = "text",
                    warn = TRUE, mess = TRUE,
-                   keep_scaled_mcmc = FALSE, ...){
+                   keep_scaled_mcmc = FALSE, ...) {
 
 
   if (missing(timevar))
@@ -1235,7 +1237,7 @@ JM_imp <- function(formula, data, df_basehaz = 6,
   if (!is.numeric(data[[timevar]]))
     errormsg("The time variable (specified via the argument %s) must
              be numeric.",
-             dQuote('timevar'))
+             dQuote("timevar"))
 
 
   if (missing(formula)) errormsg("No model formula specified.")
@@ -1251,7 +1253,7 @@ JM_imp <- function(formula, data, df_basehaz = 6,
   }
 
 
-  arglist <- prep_arglist(analysis_type = 'JM',
+  arglist <- prep_arglist(analysis_type = "JM",
                           formals = formals(), call = match.call(),
                           sframe = sys.frame(sys.nframe()))
 

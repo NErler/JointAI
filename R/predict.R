@@ -199,12 +199,6 @@ predict.JointAI <- function(object, outcome = 1, newdata,
 
   if (!inherits(object, "JointAI")) errormsg("Use only with 'JointAI' objects.")
 
-  # if (any(sapply(object$info_list, "[[", "modeltype") %in%
-  #         c("glmm", "clmm", "mlogitmm")) & warn) {
-  #   warnmsg("Prediction for multi-level models is currently only possible on
-  #           the population level (not using random effects).")
-  # }
-
   if (missing(newdata)) {
     newdata <- object$data
   } else {
@@ -301,7 +295,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
 
   coefs <- coef_list[[varname]]
 
-  scale_pars <- if (attr(terms(formula), 'intercept') == 0) {
+  scale_pars <- if (attr(terms(formula), "intercept") == 0) {
     scale_pars <- do.call(rbind, unname(Mlist$scale_pars))
     if (!is.null(scale_pars)) {
       scale_pars$center[is.na(scale_pars$center)] <- 0
@@ -460,7 +454,6 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
   resp_mat <- info_list[[varname]]$resp_mat[2]
   surv_lvl <- survinfo[[1]]$surv_lvl
-  # surv_colnames <- names(Mlist$outcomes$outcomes[[varname]])
 
   mf <- model.frame(as.formula(paste(Mlist$fixed[[varname]][-2],
                                      collapse = " ")),

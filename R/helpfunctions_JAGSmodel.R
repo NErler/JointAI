@@ -11,7 +11,7 @@ add_dashes <- function(x, width = 95) {
   # add separation lines between sub-models in JAGS model for readability
   # - x: name of the sub-model
 
-  paste(x, paste0(rep('-', 80 - nchar(x)), collapse = ''))
+  paste(x, paste0(rep("-", 80 - nchar(x)), collapse = ""))
 }
 
 
@@ -38,8 +38,8 @@ add_linebreaks <- function(string, indent, width = 90) {
 
 
   # check how many sub-strings (and the indent) can be combined until reaching
-  # the maximal width, and create a string of ' + ' (no break) and
-  # ' +\n' (break) to be pasted in afterwards
+  # the maximal width, and create a string of " + " (no break) and
+  # " +\n" (break) to be pasted in afterwards
   # (there is probably a more elegant way to do this)
   i <- 1
   br <- c()
@@ -70,7 +70,7 @@ paste_linpred <- function(parname, parelmts, matnam, index, cols, scale_pars,
   # - cols: index of the columns of the design matrix to be used,
   #         e.g. c(1, 4, 2, 10)
   # - scale_pars: a matrix with row names according to the columns of the
-  #               design matrix and columns 'center' and 'scale'.
+  #               design matrix and columns "center" and "scale".
   #               Contains NA if a variable should not be scaled
   #               (could also be NULL instead of a matrix)
   # - isgk: logical indicator of this is for within the Gauss-Kronrod quadrature
@@ -79,7 +79,7 @@ paste_linpred <- function(parname, parelmts, matnam, index, cols, scale_pars,
     paste_scaling(x = paste_data(matnam, index, cols, isgk),
                   rows = cols,
                   scale_pars = scale_pars,
-                  scalemat = paste0('sp', matnam)
+                  scalemat = paste0("sp", matnam)
     ),
     paste_coef(parname, parelmts),
     sep = " * ", collapse = " + ")
@@ -94,7 +94,7 @@ paste_data <- function(matnam, index, col, isgk = FALSE) {
   # - col: the column (or vector of columns) of the design matrix
   # - isgk: is this whithin the Gauss-Kronrod quadrature?
 
-  paste0(matnam, ifelse(isgk, "gk", ''), "[", index, ", ", col,
+  paste0(matnam, ifelse(isgk, "gk", ""), "[", index, ", ", col,
          ifelse(isgk, ", k]", "]"))
 }
 
@@ -106,7 +106,7 @@ paste_coef <- function(parname, parelmts) {
   # - parelmts: vector of integers giving the elements of the parameter to be
   #             used
 
-  paste0(parname, '[', parelmts, ']')
+  paste0(parname, "[", parelmts, "]")
 }
 
 
@@ -189,7 +189,7 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
             paste_coef(parname = info$parname,
                        parelmts = rds[[x]]$parelmts)
           } else {
-            '0'
+            "0"
           }
         },
 
@@ -205,7 +205,7 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
                                            col = rdsi[[x]]$cols, isgk),
                             rows = rdsi[[x]]$cols,
                             scale_pars = info$scale_pars[[mat]],
-                            scalemat = paste0('sp', mat)
+                            scalemat = paste0("sp", mat)
               ),
               paste_coef(parname = info$parname,
                          parelmts = rdsi[[x]]$parelmts),
@@ -254,7 +254,7 @@ paste_rdintercept_lp <- function(info) {
                     cols = x$cols,
                     scale_pars = info$scale_pars[[mat]],
                     isgk = FALSE)
-    } else if (attr(info$hc_list$hcvars[[lvl]], 'rd_intercept')) {
+    } else if (attr(info$hc_list$hcvars[[lvl]], "rd_intercept")) {
       "0"
     } else {
       NULL
@@ -309,7 +309,7 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
                      index = index,
                      out_index = if (!isgk) info$index[[resplvl]] else index,
                      has_rdintercept = attr(info$hc_list$hcvars[[lvl]],
-                                            'rd_intercept'),
+                                            "rd_intercept"),
                      scale_pars = info$scale_pars,
                      isgk = isgk)
 
@@ -326,7 +326,7 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
       rdis <- if (any(!is.null(rdi), !is.null(rds))) {
         paste0(unlist(Filter(Negate(is.null),
                              list(rdi = rdi, rds = rds))),
-               collapse = ' + ')
+               collapse = " + ")
       }
 
       Filter(Negate(is.null),
@@ -389,7 +389,7 @@ get_index <- function(lvl, resplvl, indices, surv_lvl, isgk = FALSE) {
   #             with time-dependent covariate
   # - isgk: is the output used within the Gauss-Kronrod quadrature?
 
-  if (!isgk & resplvl == 'lvlone') {
+  if (!isgk & resplvl == "lvlone") {
     # if the outcome is the lowest level and not in GK, use
     # - the index of the outcome level if the random effect is on the same
     #   level
@@ -398,7 +398,7 @@ get_index <- function(lvl, resplvl, indices, surv_lvl, isgk = FALSE) {
     if (lvl == resplvl) {
       indices[resplvl]
     } else {
-      paste0('group_', lvl, "[", indices[resplvl], "]")
+      paste0("group_", lvl, "[", indices[resplvl], "]")
     }
   } else if (!isgk & lvl == resplvl) {
     # if the outcome is not on the lowest level, but the  random effect has
@@ -411,9 +411,9 @@ get_index <- function(lvl, resplvl, indices, surv_lvl, isgk = FALSE) {
     # (relating rd. effect level to lvlone), indexed by the position of
     # the outcome level (position in lvlone that corresponds to the
     # current index value)
-    paste0('group_', lvl, "[",
+    paste0("group_", lvl, "[",
            "pos_", resplvl, "[", indices[resplvl], "]]")
-  } else if (isgk & (lvl == surv_lvl | lvl == 'lvlone')) {
+  } else if (isgk & (lvl == surv_lvl | lvl == "lvlone")) {
     # if we are in the quadrature part, and the random effects
     # level is either the same as the outcome level or the lowest
     # level, use the index of the level of the survival outcome
@@ -423,7 +423,7 @@ get_index <- function(lvl, resplvl, indices, surv_lvl, isgk = FALSE) {
     # the same as the outcome level and not the lowest level, use group and
     # pos to relate the level of the survival outcome and the level of the
     # random effect, via lvlone
-    paste0('group_', lvl, "[",
+    paste0("group_", lvl, "[",
            "pos_", surv_lvl, "[", indices[surv_lvl], "]]")
   }
 }
@@ -455,7 +455,7 @@ get_rds <- function(rd_slope_coefs, lvl, varname, index, out_index,
           rows = rdsc$cols,
           scale_pars = scale_pars[[unique(rdsc$matrix)]],
           scalemat = paste0("sp", unique(rdsc$matrix))),
-        sep = ' * ')
+        sep = " * ")
     })
   }
 }
@@ -482,7 +482,7 @@ paste_other <- function(othervars, parname, index, scale_pars, scale_mat,
 
 # used in paste_other() (2020-07-09)
 paste_o <- function(x, parname, index, scale_pars, scale_mat, isgk = FALSE) {
-  # -x: a matrix with columns 'term', 'matrix', 'cols', 'parelmts',
+  # -x: a matrix with columns "term", "matrix", "cols", "parelmts",
   # - parname: characters string, e.g. "beta"
   # - index: character string, e.g., "i"
   # - scale_pars: a matrix of scaling parameters
@@ -643,7 +643,7 @@ paste_linpred_JM <- function(varname, parname, parelmts, matnam, index, cols,
   # - cols: index of the columns of the design matrix to be used,
   #         e.g. c(1, 4, 2, 10)
   # - scale_pars: a matrix with rownames according to the columns of the design
-  #               matrix and columns 'center' and 'scale'.
+  #               matrix and columns "center" and "scale".
   #               Contains NA if a variable should not be scaled (could also be
   #               NULL instead of a matrix)
   # - assoc_type: vector of association types to be used for the time_varying
@@ -663,7 +663,7 @@ paste_linpred_JM <- function(varname, parname, parelmts, matnam, index, cols,
     paste_scaling(x = pastedat,
                   rows = cols,
                   scale_pars = scale_pars,
-                  scalemat = paste0('sp', matnam)
+                  scalemat = paste0("sp", matnam)
     ),
     paste_coef(parname, parelmts),
     sep = " * ", collapse = " + ")
@@ -735,7 +735,7 @@ paste_underlvalue <- function(varname, covname, index, isgk, ...) {
   if (isgk) # "mugk_covname[i, k]"
     paste0("mugk_", covname, "[", index, ", k]")
   else # "mu_covname[srow_varname[i]]"
-    paste0('mu_', covname, "[srow_", varname, "[", index, "]]")
+    paste0("mu_", covname, "[srow_", varname, "[", index, "]]")
 }
 
 
@@ -763,15 +763,15 @@ paste_dummies <- function(resp_mat, resp_col, dummy_cols, index, refs, ...) {
   paste0(tab(4), resp_mat, "[", index, ", ", dummy_cols, "] <- ifelse(",
          resp_mat, "[", index, ", ", resp_col, "] == ",
          categories[apply(cmat == 1, 2, which)], ", 1",
-         if (attr(refs, 'contrasts') == 'contr.treatment') {
+         if (attr(refs, "contrasts") == "contr.treatment") {
            ", 0)"
-         } else if (attr(refs, 'contrasts') == 'contr.sum') {
+         } else if (attr(refs, "contrasts") == "contr.sum") {
            paste0(", ifelse(", resp_mat, "[", index, ", ", resp_col, "] == ",
                   refs, ", -1, 0))")
          } else {
            errormsg("It is currently not possible to use contrasts of type
                       %s for incomplete variables.",
-                    dQuote(attr(refs, 'contrasts')))
+                    dQuote(attr(refs, "contrasts")))
          })
 }
 
@@ -792,7 +792,7 @@ paste_interactions <- function(interactions, group_lvls, N) {
 
   # determine which index should be used for each of the levels
   index <- setNames(sapply(seq_along(sort(group_lvls)),
-                           function(k) paste0(rep('i', k), collapse = '')),
+                           function(k) paste0(rep("i", k), collapse = "")),
                     names(sort(group_lvls)))
 
   # select only those interactions in which incomplete variables are involved
@@ -848,14 +848,14 @@ get_priordistr <- function(shrinkage, type, family = NULL, link = NULL,
   # write specification fo the prior distribution for the regression parameters,
   # using the specified type of shrinkage (or no shrinkage)
 
-  if (type %in% c('glm', 'glmm')) {
+  if (type %in% c("glm", "glmm")) {
     type <- switch(family,
-                   gaussian = 'norm',
-                   binomial = 'binom',
-                   Gamma = 'gamma',
-                   poisson = 'poisson',
-                   lognorm = 'norm',
-                   beta = 'beta'
+                   gaussian = "norm",
+                   binomial = "binom",
+                   Gamma = "gamma",
+                   poisson = "poisson",
+                   lognorm = "norm",
+                   beta = "beta"
     )
   }
 
@@ -956,7 +956,7 @@ get_repar <- function(family, varname, index, isgk = FALSE) {
   switch(family,
          "gaussian" = NULL,
          "binomial" = NULL,
-         "Gamma" = paste0('\n',
+         "Gamma" = paste0("\n",
                           tab(4), "shape", if (isgk) "gk", "_", varname,
                           "[", index, if (isgk) ", k", "] <- pow(mu",
                           if (isgk) "gk", "_", varname, "[", index,
@@ -969,7 +969,7 @@ get_repar <- function(family, varname, index, isgk = FALSE) {
                           if (isgk) ", k", "] / pow(sigma_", varname, ", 2)",
                           "\n\n"),
          "poisson" = NULL,
-         'lognorm' = NULL,
+         "lognorm" = NULL,
          "beta" <- paste0(
            "\n",
            tab(4), "shape1", if (isgk) "gk", "_", varname,
@@ -1030,12 +1030,12 @@ get_GLM_modelname <- function(family) {
   if (is.null(family)) return(NULL)
 
   switch(family,
-         "gaussian" = 'Normal',
-         "binomial" = 'Binomial',
-         "Gamma" = 'Gamma',
-         "poisson" = 'Poisson',
-         "lognorm" = 'Log-normal',
-         "beta" = 'Beta'
+         "gaussian" = "Normal",
+         "binomial" = "Binomial",
+         "Gamma" = "Gamma",
+         "poisson" = "Poisson",
+         "lognorm" = "Log-normal",
+         "beta" = "Beta"
   )
 }
 
@@ -1143,7 +1143,7 @@ write_priors_clm <- function(info) {
     }
   })
 
-  paste0(c(deltas, '', gammas), collapse = "\n")
+  paste0(c(deltas, "", gammas), collapse = "\n")
 }
 
 
