@@ -17,7 +17,12 @@ test_that('plot_imp_distr', {
   impDF <- get_MIdat(mod, m = 5, minspace = 1)
 
   expect_s3_class(get_MIdat(mod, m = 5, minspace = 1), 'data.frame')
-  expect_s3_class(plot_imp_distr(impDF, id = "id", ncol = 3), 'ggplot')
+
+  if ("ggpubr" %in% installed.packages()[, "Package"]) {
+    expect_s3_class(plot_imp_distr(impDF, id = "id", ncol = 3), 'ggplot')
+  } else {
+    expect_null(plot_imp_distr(impDF, id = "id", ncol = 3))
+  }
 })
 
 
