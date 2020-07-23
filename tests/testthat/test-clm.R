@@ -140,9 +140,9 @@ test_that("GRcrit and MCerror give same result", {
 })
 
 
-test_that("summary output remained the same on non-Windows", {
+test_that("summary output remained the same on Windows", {
   skip_on_cran()
-  skip_on_os(c("windows"))
+  skip_on_os(c("mac", "linux", "solaris"))
   print_output(lapply(models0, print))
   print_output(lapply(models0, coef))
   print_output(lapply(models0, confint))
@@ -150,10 +150,9 @@ test_that("summary output remained the same on non-Windows", {
   print_output(lapply(models0, function(x) coef(summary(x))))
 })
 
-
-test_that("summary output remained the same on Windows", {
+test_that("summary output remained the same on non-Windows", {
   skip_on_cran()
-  skip_on_os(c("mac", "linux", "solaris"))
+  skip_on_os(c("windows"))
   print_output(lapply(models0, print), extra = "nonWin")
   print_output(lapply(models0, coef), extra = "nonWin")
   print_output(lapply(models0, confint), extra = "nonWin")

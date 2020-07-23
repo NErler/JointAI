@@ -4,7 +4,7 @@ Bayesian cumulative logit model fitted with JointAI
 
 Call:
 clm_imp(formula = O1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
-    seed = 2020)
+    seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -31,7 +31,7 @@ Bayesian cumulative logit model fitted with JointAI
 
 Call:
 clm_imp(formula = O2 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
-    seed = 2020)
+    seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -58,7 +58,7 @@ Bayesian cumulative logit model fitted with JointAI
 
 Call:
 clm_imp(formula = O1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
-    seed = 2020)
+    seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -86,7 +86,7 @@ Bayesian cumulative logit model fitted with JointAI
 
 Call:
 clm_imp(formula = O2 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
-    seed = 2020)
+    seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -114,7 +114,7 @@ Bayesian cumulative logit model fitted with JointAI
 
 Call:
 clm_imp(formula = O1 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
-    seed = 2020)
+    seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -142,7 +142,7 @@ Bayesian cumulative logit model fitted with JointAI
 
 Call:
 clm_imp(formula = O2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
-    seed = 2020)
+    seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -170,7 +170,7 @@ Bayesian linear model fitted with JointAI
 
 Call:
 lm_imp(formula = C1 ~ O1, data = wideDF, n.adapt = 5, n.iter = 10, 
-    seed = 2020)
+    seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -199,7 +199,7 @@ Bayesian linear model fitted with JointAI
 
 Call:
 lm_imp(formula = C1 ~ O2, data = wideDF, n.adapt = 5, n.iter = 10, 
-    seed = 2020)
+    seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -228,7 +228,7 @@ Bayesian cumulative logit model fitted with JointAI
 
 Call:
 clm_imp(formula = O1 ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
-    n.adapt = 5, n.iter = 10, seed = 2020)
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -267,7 +267,7 @@ Bayesian cumulative logit model fitted with JointAI
 Call:
 clm_imp(formula = O1 ~ ifelse(as.numeric(O2) > as.numeric(M1), 
     1, 0) * abs(C1 - C2) + log(C1), data = wideDF, n.adapt = 5, 
-    n.iter = 10, seed = 2020, warn = FALSE)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -309,7 +309,7 @@ Bayesian cumulative logit model fitted with JointAI
 Call:
 clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5, 
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
-        C2), seed = 2020)
+        C2), seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -349,7 +349,7 @@ Bayesian cumulative logit model fitted with JointAI
 Call:
 clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
-        C2), seed = 2020)
+        C2), seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -390,7 +390,7 @@ Bayesian cumulative logit model fitted with JointAI
 Call:
 clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 * 
-        C2), seed = 2020)
+        C2), seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -433,7 +433,7 @@ Bayesian cumulative logit model fitted with JointAI
 Call:
 clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
-        C2), seed = 2020)
+        C2), seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -476,7 +476,7 @@ Bayesian cumulative logit model fitted with JointAI
 Call:
 clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = ~C1 + 
-        M2 * C2 + O2, seed = 2020)
+        M2 * C2 + O2, seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -537,7 +537,7 @@ Bayesian cumulative logit model fitted with JointAI
 Call:
 clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5, 
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
-        C2), rev = "O1", seed = 2020)
+        C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -577,7 +577,7 @@ Bayesian cumulative logit model fitted with JointAI
 Call:
 clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
-        C2), rev = "O1", seed = 2020)
+        C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -618,7 +618,7 @@ Bayesian cumulative logit model fitted with JointAI
 Call:
 clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 * 
-        C2), rev = "O1", seed = 2020)
+        C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -661,7 +661,7 @@ Bayesian cumulative logit model fitted with JointAI
 Call:
 clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
-        C2), rev = "O1", seed = 2020)
+        C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -704,7 +704,8 @@ Bayesian cumulative logit model fitted with JointAI
 Call:
 clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = ~C1 + 
-        M2 * C2 + O2, rev = "O1", seed = 2020)
+        M2 * C2 + O2, rev = "O1", seed = 2020, warn = FALSE, 
+    mess = FALSE)
 
 
 Posterior summary:
