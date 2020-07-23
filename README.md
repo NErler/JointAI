@@ -11,7 +11,7 @@
 counter](http://cranlogs.r-pkg.org/badges/JointAI)](https://cran.r-project.org/package=JointAI)
 [![Rdoc](http://www.rdocumentation.org/badges/version/JointAI)](http://www.rdocumentation.org/packages/JointAI)
 [![Codecov test
-coverage](https://codecov.io/gh/NErler/JointAI/branch/master/graph/badge.svg)](https://codecov.io/gh/NErler/JointAI?branch=master)
+coverage](https://img.shields.io/codecov/c/github/NErler/JointAI)](https://codecov.io/gh/NErler/JointAI?branch=master)
 [![Travis-CI Build
 Status](https://travis-ci.org/NErler/JointAI.svg?branch=master)](https://travis-ci.org/NErler/JointAI)
 [![R build
