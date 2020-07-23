@@ -14,7 +14,7 @@ run_mlogit_models <- function() {
       m0a = mlogit_imp(M1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10,
                        seed = 2020, mess = FALSE, warn = FALSE),
       m0b = mlogit_imp(M2 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10,
-                       seed = 2020),
+                       seed = 2020, mess = FALSE, warn = FALSE),
 
       # only complete
       m1a = mlogit_imp(M1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,

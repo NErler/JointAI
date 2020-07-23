@@ -28,7 +28,7 @@ Bayesian multinomial logit model fitted with JointAI
 
 Call:
 mlogit_imp(formula = M2 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
-    seed = 2020)
+    seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
