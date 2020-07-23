@@ -1,6 +1,7 @@
 context("CLMM Models")
 library("JointAI")
 
+Sys.setenv(IS_CHECK = "true")
 
 run_clmm_models <- function() {
   cat('\nRunning clmm models...\n')
@@ -20,29 +21,39 @@ run_clmm_models <- function() {
 
       # no covariates
       m0a = clmm_imp(o1 ~ 1 + (1 | id), data = longDF,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
       m0b = clmm_imp(o2 ~ 1 + (1 | id), data = longDF,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
 
       # only complete
       m1a = clmm_imp(o1 ~ C1 + (1 | id), data = longDF,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
       m1b = clmm_imp(o2 ~ C1 + (1 | id), data = longDF,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
       m1c = clmm_imp(o1 ~ c1 + (1 | id), data = longDF,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
       m1d = clmm_imp(o2 ~ c1 + (1 | id), data = longDF,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
 
       # only incomplete
       m2a = clmm_imp(o1 ~ C2 + (1 | id), data = longDF,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
       m2b = clmm_imp(o2 ~ C2 + (1 | id), data = longDF,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
       m2c = clmm_imp(o1 ~ c2 + (1 | id), data = longDF,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
       m2d = clmm_imp(o2 ~ c2 + (1 | id), data = longDF,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
 
       # as covariate
       m3a = lme_imp(c1 ~ o1 + (1 | id), data = longDF,
@@ -53,24 +64,26 @@ run_clmm_models <- function() {
 
       # complex structures
       m4a = clmm_imp(o1 ~ M2 + o2 * abs(C1 - C2) + log(C1) + (1 | id), data = longDF,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
       m4b = clmm_imp(o1 ~ ifelse(as.numeric(o2) > as.numeric(M1), 1, 0) *
                        abs(C1 - C2) + log(C1) + (1 | id),
-                     data = longDF, warn = FALSE,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     data = longDF, n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
 
       m4c = clmm_imp(o1 ~ time + c1 + C1 + B2 + (c1 * time | id),
-                     data = longDF, warn = FALSE,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     data = longDF, n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
 
       m4d = clmm_imp(o1 ~ C1 * time + I(time^2) + b2 * c1,
                      random = ~ time | id, data = longDF,
-                     n.adapt = 5, n.iter = 10, seed = 2020),
+                     n.adapt = 5, n.iter = 10, seed = 2020,
+                     warn = FALSE, mess = FALSE),
 
       m4e = clmm_imp(o1 ~ C1 + log(time) + I(time^2) + p1,
                      random = ~ 1 | id, data = longDF,
                      n.adapt = 5, n.iter = 10, shrinkage = "ridge",
-                     parallel = TRUE, n.cores = 2, seed = 2020),
+                     seed = 2020, warn = FALSE, mess = FALSE),
 
 
 
@@ -79,31 +92,36 @@ run_clmm_models <- function() {
       m5a = clmm_imp(o1 ~ C1 + C2 + b2 + O2 + (1 | id), data = longDF,
                      n.adapt = 5, n.iter = 10, seed = 2020,
                      nonprop = list(o1 = ~ C1 + C2 + b2),
-                     monitor_params = list(other = "p_o1")),
+                     monitor_params = list(other = "p_o1"),
+                     warn = FALSE, mess = FALSE),
 
       # - interaction in prop. effects
       m5b = clmm_imp(o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF,
                      n.adapt = 5, n.iter = 10, seed = 2020,
                      nonprop = list(o1 = ~ c1 + C2),
-                     monitor_params = list(other = "p_o1")),
+                     monitor_params = list(other = "p_o1"),
+                     warn = FALSE, mess = FALSE),
 
       # - interaction in non-prop effects
       m5c = clmm_imp(o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF,
                      n.adapt = 5, n.iter = 10, seed = 2020,
                      nonprop = list(o1 = ~ c1 * C2),
-                     monitor_params = list(other = "p_o1")),
+                     monitor_params = list(other = "p_o1"),
+                     warn = FALSE, mess = FALSE),
 
       # - interaction between non-prop and prop effects
       m5d = clmm_imp(o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF,
                      n.adapt = 5, n.iter = 10, seed = 2020,
                      nonprop = list(o1 = ~ c1 + C2),
-                     monitor_params = list(other = "p_o1")),
+                     monitor_params = list(other = "p_o1"),
+                     warn = FALSE, mess = FALSE),
 
       # - all effects non-proportional
       m5e = clmm_imp(o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF,
                      n.adapt = 5, n.iter = 10, seed = 2020,
                      nonprop = ~ c1 + M2 * C2 + O2,
-                     monitor_params = list(other = "p_o1"))
+                     monitor_params = list(other = "p_o1"),
+                     warn = FALSE, mess = FALSE)
     )
 
     models$m6a <- update(models$m5a, rev = "o1")
@@ -188,11 +206,11 @@ test_that("summary output remained the same on Windows", {
 test_that("summary output remained the same on non-Windows", {
   skip_on_cran()
   skip_on_os(c("windows"))
-  print_output(lapply(models0, print))
-  print_output(lapply(models0, coef))
-  print_output(lapply(models0, confint))
-  print_output(lapply(models0, summary))
-  print_output(lapply(models0, function(x) coef(summary(x))))
+  print_output(lapply(models0, print), extra = "nonWin")
+  print_output(lapply(models0, coef), extra = "nonWin")
+  print_output(lapply(models0, confint), extra = "nonWin")
+  print_output(lapply(models0, summary), extra = "nonWin")
+  print_output(lapply(models0, function(x) coef(summary(x))), extra = "nonWin")
 })
 
 
@@ -280,3 +298,4 @@ test_that("wrong models give errors", {
   expect_error(clmm_imp(o2 ~ O1 + C1 + (1 | id), data = longDF,
                         nonprop = list(o2 = ~ C2)))
 })
+Sys.setenv(IS_CHECK = "")

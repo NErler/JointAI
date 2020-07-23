@@ -1,0 +1,137 @@
+$m0a
+                 est MCSE SD MCSE/SD
+M12: (Intercept)   0    0  0     NaN
+M13: (Intercept)   0    0  0     NaN
+M14: (Intercept)   0    0  0     NaN
+
+$m0b
+                 est MCSE SD MCSE/SD
+M22: (Intercept)   0    0  0     NaN
+M23: (Intercept)   0    0  0     NaN
+M24: (Intercept)   0    0  0     NaN
+
+$m1a
+                 est MCSE SD MCSE/SD
+M12: (Intercept)   0    0  0     NaN
+M12: C1            0    0  0     NaN
+M13: (Intercept)   0    0  0     NaN
+M13: C1            0    0  0     NaN
+M14: (Intercept)   0    0  0     NaN
+M14: C1            0    0  0     NaN
+
+$m1b
+                 est MCSE SD MCSE/SD
+M22: (Intercept)   0    0  0     NaN
+M22: C1            0    0  0     NaN
+M23: (Intercept)   0    0  0     NaN
+M23: C1            0    0  0     NaN
+M24: (Intercept)   0    0  0     NaN
+M24: C1            0    0  0     NaN
+
+$m2a
+                 est MCSE SD MCSE/SD
+M12: (Intercept)   0    0  0     NaN
+M12: C2            0    0  0     NaN
+M13: (Intercept)   0    0  0     NaN
+M13: C2            0    0  0     NaN
+M14: (Intercept)   0    0  0     NaN
+M14: C2            0    0  0     NaN
+
+$m2b
+                 est MCSE SD MCSE/SD
+M22: (Intercept)   0    0  0     NaN
+M22: C2            0    0  0     NaN
+M23: (Intercept)   0    0  0     NaN
+M23: C2            0    0  0     NaN
+M24: (Intercept)   0    0  0     NaN
+M24: C2            0    0  0     NaN
+
+$m3a
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+M12           0    0  0     NaN
+M13           0    0  0     NaN
+M14           0    0  0     NaN
+sigma_C1      0    0  0     NaN
+
+$m3b
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+M22           0    0  0     NaN
+M23           0    0  0     NaN
+M24           0    0  0     NaN
+sigma_C1      0    0  0     NaN
+
+$m4a
+                      est MCSE SD MCSE/SD
+M12: (Intercept)        0    0  0     NaN
+M12: M22                0    0  0     NaN
+M12: M23                0    0  0     NaN
+M12: M24                0    0  0     NaN
+M12: O22                0    0  0     NaN
+M12: O23                0    0  0     NaN
+M12: O24                0    0  0     NaN
+M12: abs(C1 - C2)       0    0  0     NaN
+M12: log(C1)            0    0  0     NaN
+M12: O22:abs(C1 - C2)   0    0  0     NaN
+M12: O23:abs(C1 - C2)   0    0  0     NaN
+M12: O24:abs(C1 - C2)   0    0  0     NaN
+M13: (Intercept)        0    0  0     NaN
+M13: M22                0    0  0     NaN
+M13: M23                0    0  0     NaN
+M13: M24                0    0  0     NaN
+M13: O22                0    0  0     NaN
+M13: O23                0    0  0     NaN
+M13: O24                0    0  0     NaN
+M13: abs(C1 - C2)       0    0  0     NaN
+M13: log(C1)            0    0  0     NaN
+M13: O22:abs(C1 - C2)   0    0  0     NaN
+M13: O23:abs(C1 - C2)   0    0  0     NaN
+M13: O24:abs(C1 - C2)   0    0  0     NaN
+M14: (Intercept)        0    0  0     NaN
+M14: M22                0    0  0     NaN
+M14: M23                0    0  0     NaN
+M14: M24                0    0  0     NaN
+M14: O22                0    0  0     NaN
+M14: O23                0    0  0     NaN
+M14: O24                0    0  0     NaN
+M14: abs(C1 - C2)       0    0  0     NaN
+M14: log(C1)            0    0  0     NaN
+M14: O22:abs(C1 - C2)   0    0  0     NaN
+M14: O23:abs(C1 - C2)   0    0  0     NaN
+M14: O24:abs(C1 - C2)   0    0  0     NaN
+
+$m4b
+                                                                est MCSE SD
+M12: (Intercept)                                                  0    0  0
+M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                0    0  0
+M12: abs(C1 - C2)                                                 0    0  0
+M12: log(C1)                                                      0    0  0
+M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0    0  0
+M13: (Intercept)                                                  0    0  0
+M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                0    0  0
+M13: abs(C1 - C2)                                                 0    0  0
+M13: log(C1)                                                      0    0  0
+M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0    0  0
+M14: (Intercept)                                                  0    0  0
+M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                0    0  0
+M14: abs(C1 - C2)                                                 0    0  0
+M14: log(C1)                                                      0    0  0
+M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)   0    0  0
+                                                                MCSE/SD
+M12: (Intercept)                                                    NaN
+M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                  NaN
+M12: abs(C1 - C2)                                                   NaN
+M12: log(C1)                                                        NaN
+M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)     NaN
+M13: (Intercept)                                                    NaN
+M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                  NaN
+M13: abs(C1 - C2)                                                   NaN
+M13: log(C1)                                                        NaN
+M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)     NaN
+M14: (Intercept)                                                    NaN
+M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                  NaN
+M14: abs(C1 - C2)                                                   NaN
+M14: log(C1)                                                        NaN
+M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)     NaN
+

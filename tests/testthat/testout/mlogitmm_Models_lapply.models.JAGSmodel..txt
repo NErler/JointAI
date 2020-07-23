@@ -1,0 +1,1044 @@
+$m0a
+model { 
+
+   # Multinomial logit mixed model for m1 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m1[i, 1:3])
+
+    p_m1[i, 1] <- min(1-1e-7, max(1e-7, phi_m1[i, 1] / sum(phi_m1[i, ])))
+    p_m1[i, 2] <- min(1-1e-7, max(1e-7, phi_m1[i, 2] / sum(phi_m1[i, ])))
+    p_m1[i, 3] <- min(1-1e-7, max(1e-7, phi_m1[i, 3] / sum(phi_m1[i, ])))
+
+    log(phi_m1[i, 1]) <- 0
+    log(phi_m1[i, 2]) <- b_m1_id[group_id[i], 1] +
+                         beta[1] * M_id[group_id[i], 1]
+    log(phi_m1[i, 3]) <- b_m1_id[group_id[i], 1] +
+                         beta[2] * M_id[group_id[i], 1]
+  }
+
+  for (ii in 1:100) {
+    b_m1_id[ii, 1:1] ~ dnorm(mu_b_m1_id[ii, ], invD_m1_id[ , ])
+    mu_b_m1_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m1
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m1_id[1:1, 1:1] <- inverse(invD_m1_id[ , ]) 
+ 
+}
+$m0b
+model { 
+
+   # Multinomial logit mixed model for m2 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m2[i, 1:3])
+
+    p_m2[i, 1] <- min(1-1e-7, max(1e-7, phi_m2[i, 1] / sum(phi_m2[i, ])))
+    p_m2[i, 2] <- min(1-1e-7, max(1e-7, phi_m2[i, 2] / sum(phi_m2[i, ])))
+    p_m2[i, 3] <- min(1-1e-7, max(1e-7, phi_m2[i, 3] / sum(phi_m2[i, ])))
+
+    log(phi_m2[i, 1]) <- 0
+    log(phi_m2[i, 2]) <- b_m2_id[group_id[i], 1] +
+                         beta[1] * M_id[group_id[i], 1]
+    log(phi_m2[i, 3]) <- b_m2_id[group_id[i], 1] +
+                         beta[2] * M_id[group_id[i], 1]
+  }
+
+  for (ii in 1:100) {
+    b_m2_id[ii, 1:1] ~ dnorm(mu_b_m2_id[ii, ], invD_m2_id[ , ])
+    mu_b_m2_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m2
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m2_id[1:1, 1:1] <- inverse(invD_m2_id[ , ]) 
+ 
+}
+$m1a
+model { 
+
+   # Multinomial logit mixed model for m1 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m1[i, 1:3])
+
+    p_m1[i, 1] <- min(1-1e-7, max(1e-7, phi_m1[i, 1] / sum(phi_m1[i, ])))
+    p_m1[i, 2] <- min(1-1e-7, max(1e-7, phi_m1[i, 2] / sum(phi_m1[i, ])))
+    p_m1[i, 3] <- min(1-1e-7, max(1e-7, phi_m1[i, 3] / sum(phi_m1[i, ])))
+
+    log(phi_m1[i, 1]) <- 0
+    log(phi_m1[i, 2]) <- b_m1_id[group_id[i], 1] +
+                         beta[1] * M_id[group_id[i], 1] +
+                         beta[2] * (M_id[group_id[i], 2] - spM_id[2, 1])/spM_id[2, 2]
+    log(phi_m1[i, 3]) <- b_m1_id[group_id[i], 1] +
+                         beta[3] * M_id[group_id[i], 1] +
+                         beta[4] * (M_id[group_id[i], 2] - spM_id[2, 1])/spM_id[2, 2]
+  }
+
+  for (ii in 1:100) {
+    b_m1_id[ii, 1:1] ~ dnorm(mu_b_m1_id[ii, ], invD_m1_id[ , ])
+    mu_b_m1_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m1
+  for (k in 1:4) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m1_id[1:1, 1:1] <- inverse(invD_m1_id[ , ]) 
+ 
+}
+$m1b
+model { 
+
+   # Multinomial logit mixed model for m2 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m2[i, 1:3])
+
+    p_m2[i, 1] <- min(1-1e-7, max(1e-7, phi_m2[i, 1] / sum(phi_m2[i, ])))
+    p_m2[i, 2] <- min(1-1e-7, max(1e-7, phi_m2[i, 2] / sum(phi_m2[i, ])))
+    p_m2[i, 3] <- min(1-1e-7, max(1e-7, phi_m2[i, 3] / sum(phi_m2[i, ])))
+
+    log(phi_m2[i, 1]) <- 0
+    log(phi_m2[i, 2]) <- b_m2_id[group_id[i], 1] +
+                         beta[1] * M_id[group_id[i], 1] +
+                         beta[2] * (M_id[group_id[i], 2] - spM_id[2, 1])/spM_id[2, 2]
+    log(phi_m2[i, 3]) <- b_m2_id[group_id[i], 1] +
+                         beta[3] * M_id[group_id[i], 1] +
+                         beta[4] * (M_id[group_id[i], 2] - spM_id[2, 1])/spM_id[2, 2]
+  }
+
+  for (ii in 1:100) {
+    b_m2_id[ii, 1:1] ~ dnorm(mu_b_m2_id[ii, ], invD_m2_id[ , ])
+    mu_b_m2_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m2
+  for (k in 1:4) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m2_id[1:1, 1:1] <- inverse(invD_m2_id[ , ]) 
+ 
+}
+$m1c
+model { 
+
+   # Multinomial logit mixed model for m1 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m1[i, 1:3])
+
+    p_m1[i, 1] <- min(1-1e-7, max(1e-7, phi_m1[i, 1] / sum(phi_m1[i, ])))
+    p_m1[i, 2] <- min(1-1e-7, max(1e-7, phi_m1[i, 2] / sum(phi_m1[i, ])))
+    p_m1[i, 3] <- min(1-1e-7, max(1e-7, phi_m1[i, 3] / sum(phi_m1[i, ])))
+
+    log(phi_m1[i, 1]) <- 0
+    log(phi_m1[i, 2]) <- b_m1_id[group_id[i], 1] +
+                         beta[1] * M_id[group_id[i], 1] +
+                         beta[3] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2]
+    log(phi_m1[i, 3]) <- b_m1_id[group_id[i], 1] +
+                         beta[2] * M_id[group_id[i], 1] +
+                         beta[4] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2]
+  }
+
+  for (ii in 1:100) {
+    b_m1_id[ii, 1:1] ~ dnorm(mu_b_m1_id[ii, ], invD_m1_id[ , ])
+    mu_b_m1_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m1
+  for (k in 1:4) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m1_id[1:1, 1:1] <- inverse(invD_m1_id[ , ]) 
+ 
+}
+$m1d
+model { 
+
+   # Multinomial logit mixed model for m2 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m2[i, 1:3])
+
+    p_m2[i, 1] <- min(1-1e-7, max(1e-7, phi_m2[i, 1] / sum(phi_m2[i, ])))
+    p_m2[i, 2] <- min(1-1e-7, max(1e-7, phi_m2[i, 2] / sum(phi_m2[i, ])))
+    p_m2[i, 3] <- min(1-1e-7, max(1e-7, phi_m2[i, 3] / sum(phi_m2[i, ])))
+
+    log(phi_m2[i, 1]) <- 0
+    log(phi_m2[i, 2]) <- b_m2_id[group_id[i], 1] +
+                         beta[1] * M_id[group_id[i], 1] +
+                         beta[3] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2]
+    log(phi_m2[i, 3]) <- b_m2_id[group_id[i], 1] +
+                         beta[2] * M_id[group_id[i], 1] +
+                         beta[4] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2]
+  }
+
+  for (ii in 1:100) {
+    b_m2_id[ii, 1:1] ~ dnorm(mu_b_m2_id[ii, ], invD_m2_id[ , ])
+    mu_b_m2_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m2
+  for (k in 1:4) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m2_id[1:1, 1:1] <- inverse(invD_m2_id[ , ]) 
+ 
+}
+$m2a
+model { 
+
+   # Multinomial logit mixed model for m1 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m1[i, 1:3])
+
+    p_m1[i, 1] <- min(1-1e-7, max(1e-7, phi_m1[i, 1] / sum(phi_m1[i, ])))
+    p_m1[i, 2] <- min(1-1e-7, max(1e-7, phi_m1[i, 2] / sum(phi_m1[i, ])))
+    p_m1[i, 3] <- min(1-1e-7, max(1e-7, phi_m1[i, 3] / sum(phi_m1[i, ])))
+
+    log(phi_m1[i, 1]) <- 0
+    log(phi_m1[i, 2]) <- b_m1_id[group_id[i], 1] +
+                         beta[1] * M_id[group_id[i], 2] +
+                         beta[2] * (M_id[group_id[i], 1] - spM_id[1, 1])/spM_id[1, 2]
+    log(phi_m1[i, 3]) <- b_m1_id[group_id[i], 1] +
+                         beta[3] * M_id[group_id[i], 2] +
+                         beta[4] * (M_id[group_id[i], 1] - spM_id[1, 1])/spM_id[1, 2]
+  }
+
+  for (ii in 1:100) {
+    b_m1_id[ii, 1:1] ~ dnorm(mu_b_m1_id[ii, ], invD_m1_id[ , ])
+    mu_b_m1_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m1
+  for (k in 1:4) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m1_id[1:1, 1:1] <- inverse(invD_m1_id[ , ])
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (ii in 1:100) {
+    M_id[ii, 1] ~ dnorm(mu_C2[ii], tau_C2)
+    mu_C2[ii] <- M_id[ii, 2] * alpha[1]
+  }
+
+  # Priors for the model for C2
+  for (k in 1:1) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m2b
+model { 
+
+   # Multinomial logit mixed model for m2 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m2[i, 1:3])
+
+    p_m2[i, 1] <- min(1-1e-7, max(1e-7, phi_m2[i, 1] / sum(phi_m2[i, ])))
+    p_m2[i, 2] <- min(1-1e-7, max(1e-7, phi_m2[i, 2] / sum(phi_m2[i, ])))
+    p_m2[i, 3] <- min(1-1e-7, max(1e-7, phi_m2[i, 3] / sum(phi_m2[i, ])))
+
+    log(phi_m2[i, 1]) <- 0
+    log(phi_m2[i, 2]) <- b_m2_id[group_id[i], 1] +
+                         beta[1] * M_id[group_id[i], 2] +
+                         beta[2] * (M_id[group_id[i], 1] - spM_id[1, 1])/spM_id[1, 2]
+    log(phi_m2[i, 3]) <- b_m2_id[group_id[i], 1] +
+                         beta[3] * M_id[group_id[i], 2] +
+                         beta[4] * (M_id[group_id[i], 1] - spM_id[1, 1])/spM_id[1, 2]
+  }
+
+  for (ii in 1:100) {
+    b_m2_id[ii, 1:1] ~ dnorm(mu_b_m2_id[ii, ], invD_m2_id[ , ])
+    mu_b_m2_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m2
+  for (k in 1:4) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m2_id[1:1, 1:1] <- inverse(invD_m2_id[ , ])
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (ii in 1:100) {
+    M_id[ii, 1] ~ dnorm(mu_C2[ii], tau_C2)
+    mu_C2[ii] <- M_id[ii, 2] * alpha[1]
+  }
+
+  # Priors for the model for C2
+  for (k in 1:1) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m2c
+model { 
+
+   # Multinomial logit mixed model for m1 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m1[i, 1:3])
+
+    p_m1[i, 1] <- min(1-1e-7, max(1e-7, phi_m1[i, 1] / sum(phi_m1[i, ])))
+    p_m1[i, 2] <- min(1-1e-7, max(1e-7, phi_m1[i, 2] / sum(phi_m1[i, ])))
+    p_m1[i, 3] <- min(1-1e-7, max(1e-7, phi_m1[i, 3] / sum(phi_m1[i, ])))
+
+    log(phi_m1[i, 1]) <- 0
+    log(phi_m1[i, 2]) <- b_m1_id[group_id[i], 1] +
+                         beta[1] * M_id[group_id[i], 1] +
+                         beta[3] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2]
+    log(phi_m1[i, 3]) <- b_m1_id[group_id[i], 1] +
+                         beta[2] * M_id[group_id[i], 1] +
+                         beta[4] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2]
+  }
+
+  for (ii in 1:100) {
+    b_m1_id[ii, 1:1] ~ dnorm(mu_b_m1_id[ii, ], invD_m1_id[ , ])
+    mu_b_m1_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m1
+  for (k in 1:4) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m1_id[1:1, 1:1] <- inverse(invD_m1_id[ , ])
+
+
+  # Normal mixed effects model for c2 ---------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 2] ~ dnorm(mu_c2[i], tau_c2)
+    mu_c2[i] <- b_c2_id[group_id[i], 1]
+  }
+
+  for (ii in 1:100) {
+    b_c2_id[ii, 1:1] ~ dnorm(mu_b_c2_id[ii, ], invD_c2_id[ , ])
+    mu_b_c2_id[ii, 1] <- M_id[ii, 1] * alpha[1]
+  }
+
+  # Priors for the model for c2
+  for (k in 1:1) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_c2 <- sqrt(1/tau_c2)
+
+  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ]) 
+ 
+}
+$m2d
+model { 
+
+   # Multinomial logit mixed model for m2 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m2[i, 1:3])
+
+    p_m2[i, 1] <- min(1-1e-7, max(1e-7, phi_m2[i, 1] / sum(phi_m2[i, ])))
+    p_m2[i, 2] <- min(1-1e-7, max(1e-7, phi_m2[i, 2] / sum(phi_m2[i, ])))
+    p_m2[i, 3] <- min(1-1e-7, max(1e-7, phi_m2[i, 3] / sum(phi_m2[i, ])))
+
+    log(phi_m2[i, 1]) <- 0
+    log(phi_m2[i, 2]) <- b_m2_id[group_id[i], 1] +
+                         beta[1] * M_id[group_id[i], 1] +
+                         beta[3] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2]
+    log(phi_m2[i, 3]) <- b_m2_id[group_id[i], 1] +
+                         beta[2] * M_id[group_id[i], 1] +
+                         beta[4] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2]
+  }
+
+  for (ii in 1:100) {
+    b_m2_id[ii, 1:1] ~ dnorm(mu_b_m2_id[ii, ], invD_m2_id[ , ])
+    mu_b_m2_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m2
+  for (k in 1:4) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m2_id[1:1, 1:1] <- inverse(invD_m2_id[ , ])
+
+
+  # Normal mixed effects model for c2 ---------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 2] ~ dnorm(mu_c2[i], tau_c2)
+    mu_c2[i] <- b_c2_id[group_id[i], 1]
+  }
+
+  for (ii in 1:100) {
+    b_c2_id[ii, 1:1] ~ dnorm(mu_b_c2_id[ii, ], invD_c2_id[ , ])
+    mu_b_c2_id[ii, 1] <- M_id[ii, 1] * alpha[1]
+  }
+
+  # Priors for the model for c2
+  for (k in 1:1) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_c2 <- sqrt(1/tau_c2)
+
+  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ]) 
+ 
+}
+$m3a
+model { 
+
+   # Normal mixed effects model for c1 ---------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dnorm(mu_c1[i], tau_c1)
+    mu_c1[i] <- b_c1_id[group_id[i], 1] + beta[2] * M_lvlone[i, 2] +
+                beta[3] * M_lvlone[i, 3]
+  }
+
+  for (ii in 1:100) {
+    b_c1_id[ii, 1:1] ~ dnorm(mu_b_c1_id[ii, ], invD_c1_id[ , ])
+    mu_b_c1_id[ii, 1] <- M_id[ii, 1] * beta[1]
+  }
+
+  # Priors for the model for c1
+  for (k in 1:3) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_c1 <- sqrt(1/tau_c1)
+
+  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ]) 
+ 
+}
+$m3b
+model { 
+
+   # Normal mixed effects model for c1 ---------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dnorm(mu_c1[i], tau_c1)
+    mu_c1[i] <- b_c1_id[group_id[i], 1] + beta[2] * M_lvlone[i, 3] +
+                beta[3] * M_lvlone[i, 4]
+  }
+
+  for (ii in 1:100) {
+    b_c1_id[ii, 1:1] ~ dnorm(mu_b_c1_id[ii, ], invD_c1_id[ , ])
+    mu_b_c1_id[ii, 1] <- M_id[ii, 1] * beta[1]
+  }
+
+  # Priors for the model for c1
+  for (k in 1:3) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_c1 <- sqrt(1/tau_c1)
+
+  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+
+
+  # Multinomial logit mixed model for m2 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 2] ~ dcat(p_m2[i, 1:3])
+
+    p_m2[i, 1] <- min(1-1e-7, max(1e-7, phi_m2[i, 1] / sum(phi_m2[i, ])))
+    p_m2[i, 2] <- min(1-1e-7, max(1e-7, phi_m2[i, 2] / sum(phi_m2[i, ])))
+    p_m2[i, 3] <- min(1-1e-7, max(1e-7, phi_m2[i, 3] / sum(phi_m2[i, ])))
+
+    log(phi_m2[i, 1]) <- 0
+    log(phi_m2[i, 2]) <- b_m2_id[group_id[i], 1] +
+                         alpha[1] * M_id[group_id[i], 1]
+    log(phi_m2[i, 3]) <- b_m2_id[group_id[i], 1] +
+                         alpha[2] * M_id[group_id[i], 1]
+
+    M_lvlone[i, 3] <- ifelse(M_lvlone[i, 2] == 2, 1, 0)
+    M_lvlone[i, 4] <- ifelse(M_lvlone[i, 2] == 3, 1, 0)
+
+  }
+
+  for (ii in 1:100) {
+    b_m2_id[ii, 1:1] ~ dnorm(mu_b_m2_id[ii, ], invD_m2_id[ , ])
+    mu_b_m2_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m2
+  for (k in 1:2) {
+    alpha[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m2_id[1:1, 1:1] <- inverse(invD_m2_id[ , ]) 
+ 
+}
+$m4a
+model { 
+
+   # Multinomial logit mixed model for m1 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m1[i, 1:3])
+
+    p_m1[i, 1] <- min(1-1e-7, max(1e-7, phi_m1[i, 1] / sum(phi_m1[i, ])))
+    p_m1[i, 2] <- min(1-1e-7, max(1e-7, phi_m1[i, 2] / sum(phi_m1[i, ])))
+    p_m1[i, 3] <- min(1-1e-7, max(1e-7, phi_m1[i, 3] / sum(phi_m1[i, ])))
+
+    log(phi_m1[i, 1]) <- 0
+    log(phi_m1[i, 2]) <- b_m1_id[group_id[i], 1] +
+                         beta[1] * M_id[group_id[i], 3] +
+                         beta[2] * M_id[group_id[i], 4] +
+                         beta[3] * M_id[group_id[i], 5] +
+                         beta[4] * M_id[group_id[i], 6] +
+                         beta[5] * (M_id[group_id[i], 7] - spM_id[7, 1])/spM_id[7, 2] +
+                         beta[6] * (M_id[group_id[i], 8] - spM_id[8, 1])/spM_id[8, 2] +
+                         beta[13] * M_lvlone[i, 3] + beta[14] * M_lvlone[i, 4] +
+                         beta[15] * (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] +
+                         beta[16] * (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2]
+    log(phi_m1[i, 3]) <- b_m1_id[group_id[i], 1] +
+                         beta[7] * M_id[group_id[i], 3] +
+                         beta[8] * M_id[group_id[i], 4] +
+                         beta[9] * M_id[group_id[i], 5] +
+                         beta[10] * M_id[group_id[i], 6] +
+                         beta[11] * (M_id[group_id[i], 7] - spM_id[7, 1])/spM_id[7, 2] +
+                         beta[12] * (M_id[group_id[i], 8] - spM_id[8, 1])/spM_id[8, 2] +
+                         beta[17] * M_lvlone[i, 3] + beta[18] * M_lvlone[i, 4] +
+                         beta[19] * (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] +
+                         beta[20] * (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2]
+  }
+
+  for (ii in 1:100) {
+    b_m1_id[ii, 1:1] ~ dnorm(mu_b_m1_id[ii, ], invD_m1_id[ , ])
+    mu_b_m1_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m1
+  for (k in 1:20) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m1_id[1:1, 1:1] <- inverse(invD_m1_id[ , ])
+
+
+  # Multinomial logit mixed model for m2 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 2] ~ dcat(p_m2[i, 1:3])
+
+    p_m2[i, 1] <- min(1-1e-7, max(1e-7, phi_m2[i, 1] / sum(phi_m2[i, ])))
+    p_m2[i, 2] <- min(1-1e-7, max(1e-7, phi_m2[i, 2] / sum(phi_m2[i, ])))
+    p_m2[i, 3] <- min(1-1e-7, max(1e-7, phi_m2[i, 3] / sum(phi_m2[i, ])))
+
+    log(phi_m2[i, 1]) <- 0
+    log(phi_m2[i, 2]) <- b_m2_id[group_id[i], 1] +
+                         alpha[1] * M_id[group_id[i], 3] +
+                         alpha[2] * M_id[group_id[i], 4] +
+                         alpha[3] * M_id[group_id[i], 5] +
+                         alpha[4] * M_id[group_id[i], 6] +
+                         alpha[5] * (M_id[group_id[i], 9] - spM_id[9, 1])/spM_id[9, 2] +
+                         alpha[6] * (M_id[group_id[i], 2] - spM_id[2, 1])/spM_id[2, 2]
+    log(phi_m2[i, 3]) <- b_m2_id[group_id[i], 1] +
+                         alpha[7] * M_id[group_id[i], 3] +
+                         alpha[8] * M_id[group_id[i], 4] +
+                         alpha[9] * M_id[group_id[i], 5] +
+                         alpha[10] * M_id[group_id[i], 6] +
+                         alpha[11] * (M_id[group_id[i], 9] - spM_id[9, 1])/spM_id[9, 2] +
+                         alpha[12] * (M_id[group_id[i], 2] - spM_id[2, 1])/spM_id[2, 2]
+
+    M_lvlone[i, 3] <- ifelse(M_lvlone[i, 2] == 2, 1, 0)
+    M_lvlone[i, 4] <- ifelse(M_lvlone[i, 2] == 3, 1, 0)
+
+  }
+
+  for (ii in 1:100) {
+    b_m2_id[ii, 1:1] ~ dnorm(mu_b_m2_id[ii, ], invD_m2_id[ , ])
+    mu_b_m2_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m2
+  for (k in 1:12) {
+    alpha[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m2_id[1:1, 1:1] <- inverse(invD_m2_id[ , ])
+
+
+  # Multinomial logit model for M2 ------------------------------------------------
+  for (ii in 1:100) {
+    M_id[ii, 1] ~ dcat(p_M2[ii, 1:4])
+
+    p_M2[ii, 1] <- min(1-1e-7, max(1e-7, phi_M2[ii, 1] / sum(phi_M2[ii, ])))
+    p_M2[ii, 2] <- min(1-1e-7, max(1e-7, phi_M2[ii, 2] / sum(phi_M2[ii, ])))
+    p_M2[ii, 3] <- min(1-1e-7, max(1e-7, phi_M2[ii, 3] / sum(phi_M2[ii, ])))
+    p_M2[ii, 4] <- min(1-1e-7, max(1e-7, phi_M2[ii, 4] / sum(phi_M2[ii, ])))
+
+    log(phi_M2[ii, 1]) <- 0
+    log(phi_M2[ii, 2]) <- M_id[ii, 3] * alpha[13] +
+                         (M_id[ii, 9] - spM_id[9, 1])/spM_id[9, 2] * alpha[14] +
+                         (M_id[ii, 2] - spM_id[2, 1])/spM_id[2, 2] * alpha[15]
+    log(phi_M2[ii, 3]) <- M_id[ii, 3] * alpha[16] +
+                         (M_id[ii, 9] - spM_id[9, 1])/spM_id[9, 2] * alpha[17] +
+                         (M_id[ii, 2] - spM_id[2, 1])/spM_id[2, 2] * alpha[18]
+    log(phi_M2[ii, 4]) <- M_id[ii, 3] * alpha[19] +
+                         (M_id[ii, 9] - spM_id[9, 1])/spM_id[9, 2] * alpha[20] +
+                         (M_id[ii, 2] - spM_id[2, 1])/spM_id[2, 2] * alpha[21]
+
+    M_id[ii, 4] <- ifelse(M_id[ii, 1] == 2, 1, 0)
+    M_id[ii, 5] <- ifelse(M_id[ii, 1] == 3, 1, 0)
+    M_id[ii, 6] <- ifelse(M_id[ii, 1] == 4, 1, 0)
+
+  }
+
+  # Priors for the model for M2
+  for (k in 13:21) {
+    alpha[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (ii in 1:100) {
+    M_id[ii, 2] ~ dnorm(mu_C2[ii], tau_C2)
+    mu_C2[ii] <- M_id[ii, 3] * alpha[22] +
+                (M_id[ii, 9] - spM_id[9, 1])/spM_id[9, 2] * alpha[23]
+
+    M_id[ii, 7] <- abs(M_id[ii, 9] - M_id[ii, 2])
+
+
+  }
+
+  # Priors for the model for C2
+  for (k in 22:23) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+  # Re-calculate interaction terms
+  for (i in 1:329) {
+    M_lvlone[i, 5] <- M_lvlone[i, 3] * M_id[group_id[i], 7]
+    M_lvlone[i, 6] <- M_lvlone[i, 4] * M_id[group_id[i], 7]
+  }
+
+ 
+}
+$m4b
+model { 
+
+   # Multinomial logit mixed model for m1 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m1[i, 1:3])
+
+    p_m1[i, 1] <- min(1-1e-7, max(1e-7, phi_m1[i, 1] / sum(phi_m1[i, ])))
+    p_m1[i, 2] <- min(1-1e-7, max(1e-7, phi_m1[i, 2] / sum(phi_m1[i, ])))
+    p_m1[i, 3] <- min(1-1e-7, max(1e-7, phi_m1[i, 3] / sum(phi_m1[i, ])))
+
+    log(phi_m1[i, 1]) <- 0
+    log(phi_m1[i, 2]) <- b_m1_id[group_id[i], 1] +
+                         beta[1] * M_id[group_id[i], 2] +
+                         beta[2] * (M_id[group_id[i], 3] - spM_id[3, 1])/spM_id[3, 2] +
+                         beta[3] * (M_id[group_id[i], 4] - spM_id[4, 1])/spM_id[4, 2] +
+                         beta[7] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] +
+                         beta[8] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2]
+    log(phi_m1[i, 3]) <- b_m1_id[group_id[i], 1] +
+                         beta[4] * M_id[group_id[i], 2] +
+                         beta[5] * (M_id[group_id[i], 3] - spM_id[3, 1])/spM_id[3, 2] +
+                         beta[6] * (M_id[group_id[i], 4] - spM_id[4, 1])/spM_id[4, 2] +
+                         beta[9] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] +
+                         beta[10] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2]
+  }
+
+  for (ii in 1:100) {
+    b_m1_id[ii, 1:1] ~ dnorm(mu_b_m1_id[ii, ], invD_m1_id[ , ])
+    mu_b_m1_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m1
+  for (k in 1:10) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m1_id[1:1, 1:1] <- inverse(invD_m1_id[ , ])
+
+
+  # Multinomial logit mixed model for m2 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 2] ~ dcat(p_m2[i, 1:3])
+
+    p_m2[i, 1] <- min(1-1e-7, max(1e-7, phi_m2[i, 1] / sum(phi_m2[i, ])))
+    p_m2[i, 2] <- min(1-1e-7, max(1e-7, phi_m2[i, 2] / sum(phi_m2[i, ])))
+    p_m2[i, 3] <- min(1-1e-7, max(1e-7, phi_m2[i, 3] / sum(phi_m2[i, ])))
+
+    log(phi_m2[i, 1]) <- 0
+    log(phi_m2[i, 2]) <- b_m2_id[group_id[i], 1] +
+                         alpha[1] * M_id[group_id[i], 2] +
+                         alpha[2] * M_id[group_id[i], 5] +
+                         alpha[3] * M_id[group_id[i], 6] +
+                         alpha[4] * M_id[group_id[i], 7] +
+                         alpha[5] * (M_id[group_id[i], 8] - spM_id[8, 1])/spM_id[8, 2] +
+                         alpha[6] * (M_id[group_id[i], 1] - spM_id[1, 1])/spM_id[1, 2]
+    log(phi_m2[i, 3]) <- b_m2_id[group_id[i], 1] +
+                         alpha[7] * M_id[group_id[i], 2] +
+                         alpha[8] * M_id[group_id[i], 5] +
+                         alpha[9] * M_id[group_id[i], 6] +
+                         alpha[10] * M_id[group_id[i], 7] +
+                         alpha[11] * (M_id[group_id[i], 8] - spM_id[8, 1])/spM_id[8, 2] +
+                         alpha[12] * (M_id[group_id[i], 1] - spM_id[1, 1])/spM_id[1, 2]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 2, 1, 0)
+    M_lvlone[i, 6] <- ifelse(M_lvlone[i, 2] == 3, 1, 0)
+
+
+
+    M_lvlone[i, 3] <- ifelse((M_lvlone[i, 2]) > (M_id[group_id[i], 9]), 1, 0)
+
+  }
+
+  for (ii in 1:100) {
+    b_m2_id[ii, 1:1] ~ dnorm(mu_b_m2_id[ii, ], invD_m2_id[ , ])
+    mu_b_m2_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m2
+  for (k in 1:12) {
+    alpha[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  invD_m2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m2_id[1:1, 1:1] <- inverse(invD_m2_id[ , ])
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (ii in 1:100) {
+    M_id[ii, 1] ~ dnorm(mu_C2[ii], tau_C2)
+    mu_C2[ii] <- M_id[ii, 2] * alpha[13] + M_id[ii, 5] * alpha[14] +
+                M_id[ii, 6] * alpha[15] + M_id[ii, 7] * alpha[16] +
+                (M_id[ii, 8] - spM_id[8, 1])/spM_id[8, 2] * alpha[17]
+
+    M_id[ii, 3] <- abs(M_id[ii, 8] - M_id[ii, 1])
+
+
+  }
+
+  # Priors for the model for C2
+  for (k in 13:17) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+  # Re-calculate interaction terms
+  for (i in 1:329) {
+    M_lvlone[i, 4] <- M_lvlone[i, 3] * M_id[group_id[i], 3]
+  }
+
+ 
+}
+$m4c
+model { 
+
+   # Multinomial logit mixed model for m1 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m1[i, 1:3])
+
+    p_m1[i, 1] <- min(1-1e-7, max(1e-7, phi_m1[i, 1] / sum(phi_m1[i, ])))
+    p_m1[i, 2] <- min(1-1e-7, max(1e-7, phi_m1[i, 2] / sum(phi_m1[i, ])))
+    p_m1[i, 3] <- min(1-1e-7, max(1e-7, phi_m1[i, 3] / sum(phi_m1[i, ])))
+
+    log(phi_m1[i, 1]) <- 0
+    log(phi_m1[i, 2]) <- b_m1_id[group_id[i], 1] +
+                         b_m1_id[group_id[i], 2] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] +
+                         b_m1_id[group_id[i], 3] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] +
+                         b_m1_id[group_id[i], 4] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] +
+                         beta[1] * M_id[group_id[i], 2] +
+                         beta[2] * (M_id[group_id[i], 3] - spM_id[3, 1])/spM_id[3, 2] +
+                         beta[3] * M_id[group_id[i], 4] +
+                         beta[7] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] +
+                         beta[8] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2]
+    log(phi_m1[i, 3]) <- b_m1_id[group_id[i], 1] +
+                         b_m1_id[group_id[i], 2] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] +
+                         b_m1_id[group_id[i], 3] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] +
+                         b_m1_id[group_id[i], 4] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] +
+                         beta[4] * M_id[group_id[i], 2] +
+                         beta[5] * (M_id[group_id[i], 3] - spM_id[3, 1])/spM_id[3, 2] +
+                         beta[6] * M_id[group_id[i], 4] +
+                         beta[9] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] +
+                         beta[10] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2]
+  }
+
+  for (ii in 1:100) {
+    b_m1_id[ii, 1:4] ~ dmnorm(mu_b_m1_id[ii, ], invD_m1_id[ , ])
+    mu_b_m1_id[ii, 1] <- 0
+    mu_b_m1_id[ii, 2] <- 0
+    mu_b_m1_id[ii, 3] <- 0
+    mu_b_m1_id[ii, 4] <- 0
+  }
+
+
+
+  # Priors for the model for m1
+  for (k in 1:10) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  for (k in 1:4) {
+    RinvD_m1_id[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)
+  }
+  invD_m1_id[1:4, 1:4] ~ dwish(RinvD_m1_id[ , ], KinvD_m1_id)
+  D_m1_id[1:4, 1:4] <- inverse(invD_m1_id[ , ])
+
+
+  # Normal mixed effects model for time -------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 2] ~ dnorm(mu_time[i], tau_time)
+    mu_time[i] <- b_time_id[group_id[i], 1] +
+                  alpha[4] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2]
+  }
+
+  for (ii in 1:100) {
+    b_time_id[ii, 1:1] ~ dnorm(mu_b_time_id[ii, ], invD_time_id[ , ])
+    mu_b_time_id[ii, 1] <- M_id[ii, 2] * alpha[1] +
+                           (M_id[ii, 3] - spM_id[3, 1])/spM_id[3, 2] * alpha[2] +
+                           M_id[ii, 4] * alpha[3]
+  }
+
+  # Priors for the model for time
+  for (k in 1:4) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_time <- sqrt(1/tau_time)
+
+  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+
+
+  # Normal mixed effects model for c1 ---------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 3] ~ dnorm(mu_c1[i], tau_c1)
+    mu_c1[i] <- b_c1_id[group_id[i], 1]
+  }
+
+  for (ii in 1:100) {
+    b_c1_id[ii, 1:1] ~ dnorm(mu_b_c1_id[ii, ], invD_c1_id[ , ])
+    mu_b_c1_id[ii, 1] <- M_id[ii, 2] * alpha[5] +
+                         (M_id[ii, 3] - spM_id[3, 1])/spM_id[3, 2] * alpha[6] +
+                         M_id[ii, 4] * alpha[7]
+  }
+
+  # Priors for the model for c1
+  for (k in 5:7) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_c1 <- sqrt(1/tau_c1)
+
+  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (ii in 1:100) {
+    M_id[ii, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[ii])))
+    logit(mu_B2[ii]) <- M_id[ii, 2] * alpha[8] +
+                       (M_id[ii, 3] - spM_id[3, 1])/spM_id[3, 2] * alpha[9]
+
+    M_id[ii, 4] <- ifelse(M_id[ii, 1] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 8:9) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+ 
+ 
+}
+$m4d
+model { 
+
+   # Multinomial logit mixed model for m1 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m1[i, 1:3])
+
+    p_m1[i, 1] <- min(1-1e-7, max(1e-7, phi_m1[i, 1] / sum(phi_m1[i, ])))
+    p_m1[i, 2] <- min(1-1e-7, max(1e-7, phi_m1[i, 2] / sum(phi_m1[i, ])))
+    p_m1[i, 3] <- min(1-1e-7, max(1e-7, phi_m1[i, 3] / sum(phi_m1[i, ])))
+
+    log(phi_m1[i, 1]) <- 0
+    log(phi_m1[i, 2]) <- b_m1_id[group_id[i], 1] +
+                         b_m1_id[group_id[i], 2] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] +
+                         beta[1] * M_id[group_id[i], 1] +
+                         beta[2] * (M_id[group_id[i], 2] - spM_id[2, 1])/spM_id[2, 2] +
+                         beta[5] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] +
+                         beta[6] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] +
+                         beta[7] * M_lvlone[i, 5] +
+                         beta[8] * (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] +
+                         beta[9] * (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] +
+                         beta[10] * (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2]
+    log(phi_m1[i, 3]) <- b_m1_id[group_id[i], 1] +
+                         b_m1_id[group_id[i], 2] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] +
+                         beta[3] * M_id[group_id[i], 1] +
+                         beta[4] * (M_id[group_id[i], 2] - spM_id[2, 1])/spM_id[2, 2] +
+                         beta[11] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] +
+                         beta[12] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] +
+                         beta[13] * M_lvlone[i, 5] +
+                         beta[14] * (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] +
+                         beta[15] * (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] +
+                         beta[16] * (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2]
+  }
+
+  for (ii in 1:100) {
+    b_m1_id[ii, 1:2] ~ dmnorm(mu_b_m1_id[ii, ], invD_m1_id[ , ])
+    mu_b_m1_id[ii, 1] <- 0
+    mu_b_m1_id[ii, 2] <- 0
+  }
+
+
+
+  # Priors for the model for m1
+  for (k in 1:16) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+  for (k in 1:2) {
+    RinvD_m1_id[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)
+  }
+  invD_m1_id[1:2, 1:2] ~ dwish(RinvD_m1_id[ , ], KinvD_m1_id)
+  D_m1_id[1:2, 1:2] <- inverse(invD_m1_id[ , ])
+
+
+  # Binomial mixed effects model for b2 -------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_b2[i])))
+    logit(mu_b2[i]) <- b_b2_id[group_id[i], 1] +
+                       alpha[3] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] +
+                       alpha[4] * (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2]
+
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+  }
+
+  for (ii in 1:100) {
+    b_b2_id[ii, 1:1] ~ dnorm(mu_b_b2_id[ii, ], invD_b2_id[ , ])
+    mu_b_b2_id[ii, 1] <- M_id[ii, 1] * alpha[1] +
+                         (M_id[ii, 2] - spM_id[2, 1])/spM_id[2, 2] * alpha[2]
+  }
+
+  # Priors for the model for b2
+  for (k in 1:4) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+  invD_b2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_b2_id[1:1, 1:1] <- inverse(invD_b2_id[ , ]) 
+ 
+  # Re-calculate interaction terms
+  for (i in 1:329) {
+    M_lvlone[i, 8] <- M_lvlone[i, 5] * M_lvlone[i, 6]
+  }
+
+ 
+}
+$m4e
+model { 
+
+   # Multinomial logit mixed model for m1 ------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dcat(p_m1[i, 1:3])
+
+    p_m1[i, 1] <- min(1-1e-7, max(1e-7, phi_m1[i, 1] / sum(phi_m1[i, ])))
+    p_m1[i, 2] <- min(1-1e-7, max(1e-7, phi_m1[i, 2] / sum(phi_m1[i, ])))
+    p_m1[i, 3] <- min(1-1e-7, max(1e-7, phi_m1[i, 3] / sum(phi_m1[i, ])))
+
+    log(phi_m1[i, 1]) <- 0
+    log(phi_m1[i, 2]) <- b_m1_id[group_id[i], 1] +
+                         beta[1] * M_id[group_id[i], 1] +
+                         beta[2] * (M_id[group_id[i], 2] - spM_id[2, 1])/spM_id[2, 2] +
+                         beta[5] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] +
+                         beta[6] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] +
+                         beta[7] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2]
+    log(phi_m1[i, 3]) <- b_m1_id[group_id[i], 1] +
+                         beta[3] * M_id[group_id[i], 1] +
+                         beta[4] * (M_id[group_id[i], 2] - spM_id[2, 1])/spM_id[2, 2] +
+                         beta[8] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] +
+                         beta[9] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] +
+                         beta[10] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2]
+  }
+
+  for (ii in 1:100) {
+    b_m1_id[ii, 1:1] ~ dnorm(mu_b_m1_id[ii, ], invD_m1_id[ , ])
+    mu_b_m1_id[ii, 1] <- 0
+  }
+
+
+
+  # Priors for the model for m1
+  for (k in 1:10) {
+    beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial_ridge_beta[k])
+    tau_reg_multinomial_ridge_beta[k] ~ dgamma(0.01, 0.01)
+  }
+
+  invD_m1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_m1_id[1:1, 1:1] <- inverse(invD_m1_id[ , ]) 
+ 
+}

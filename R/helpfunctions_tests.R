@@ -85,7 +85,7 @@ compare_modeltype <- function(mod) {
   )
 }
 
-print_output <- function(x, dir = 'testout') {
+print_output <- function(x, dir = 'testout', extra = NULL) {
   call = as.list(match.call())$x
   input <- make.names(
     paste0(deparse(call, width.cutoff = 500), collapse = "")
@@ -93,8 +93,12 @@ print_output <- function(x, dir = 'testout') {
   abbr <- abbreviate(gsub("\\.+", ".", input), minlength = 30,
                      method = "both.sides", use.classes = FALSE)
 
+  if (!is.null(extra)) {
+    extra <- paste0("_", extra)
+  }
+
   nam <- paste0(gsub(" ", "_", testthat::get_reporter()$.context),
-                "_", abbr, ".txt")
+                "_", abbr, extra, ".txt")
   testthat::expect_known_output(print(x),
                                 file = file.path(dir, nam))
 }

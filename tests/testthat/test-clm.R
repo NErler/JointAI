@@ -1,6 +1,7 @@
 context("CLM Models")
 library("JointAI")
 
+Sys.setenv(IS_CHECK = "true")
 
 run_clm_models <- function() {
   cat('\nRunning clm models...\n')
@@ -10,59 +11,74 @@ run_clm_models <- function() {
 
     models <- list(
       # no covariates
-      m0a = clm_imp(O1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020),
-      m0b = clm_imp(O2 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020),
+      m0a = clm_imp(O1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10,
+                    seed = 2020, warn = FALSE, mess = FALSE),
+      m0b = clm_imp(O2 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10,
+                    seed = 2020, warn = FALSE, mess = FALSE),
 
       # only complete
-      m1a = clm_imp(O1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020),
-      m1b = clm_imp(O2 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020),
+      m1a = clm_imp(O1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
+                    seed = 2020, warn = FALSE, mess = FALSE),
+      m1b = clm_imp(O2 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
+                    seed = 2020, warn = FALSE, mess = FALSE),
 
       # only incomplete
-      m2a = clm_imp(O1 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020),
-      m2b = clm_imp(O2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020),
+      m2a = clm_imp(O1 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10,
+                    seed = 2020, warn = FALSE, mess = FALSE),
+      m2b = clm_imp(O2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10,
+                    seed = 2020, warn = FALSE, mess = FALSE),
 
       # as covariate
-      m3a = lm_imp(C1 ~ O1, data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020),
-      m3b = lm_imp(C1 ~ O2, data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020),
+      m3a = lm_imp(C1 ~ O1, data = wideDF, n.adapt = 5, n.iter = 10,
+                   seed = 2020, warn = FALSE, mess = FALSE),
+      m3b = lm_imp(C1 ~ O2, data = wideDF, n.adapt = 5, n.iter = 10,
+                   seed = 2020, warn = FALSE, mess = FALSE),
 
 
       # complex structures
       m4a = clm_imp(O1 ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF,
-                    n.adapt = 5, n.iter = 10, seed = 2020),
+                    n.adapt = 5, n.iter = 10, seed = 2020,
+                    warn = FALSE, mess = FALSE),
       m4b = clm_imp(O1 ~ ifelse(as.numeric(O2) > as.numeric(M1), 1, 0) *
-                      abs(C1 - C2) + log(C1), data = wideDF, warn = FALSE,
-                    n.adapt = 5, n.iter = 10, seed = 2020),
+                      abs(C1 - C2) + log(C1), data = wideDF,
+                    n.adapt = 5, n.iter = 10, seed = 2020,
+                    warn = FALSE, mess = FALSE),
 
       # non-proportional effects
       # - basic model
       m5a = clm_imp(O1 ~ C1 + C2 + M2 + O2, data = wideDF,
                     n.adapt = 5, n.iter = 10, seed = 2020,
                     nonprop = list(O1 = ~ C1 + C2),
-                    monitor_params = list(other = "p_O1")),
+                    monitor_params = list(other = "p_O1"),
+                    warn = FALSE, mess = FALSE),
 
       # - interaction in prop. effects
       m5b = clm_imp(O1 ~ C1 * C2 + M2 + O2, data = wideDF,
                     n.adapt = 5, n.iter = 10, seed = 2020,
                     nonprop = list(O1 = ~ C1 + C2),
-                    monitor_params = list(other = "p_O1")),
+                    monitor_params = list(other = "p_O1"),
+                    warn = FALSE, mess = FALSE),
 
       # - interaction in non-prop effects
       m5c = clm_imp(O1 ~ C1 * C2 + M2 + O2, data = wideDF,
                     n.adapt = 5, n.iter = 10, seed = 2020,
                     nonprop = list(O1 = ~ C1 * C2),
-                    monitor_params = list(other = "p_O1")),
+                    monitor_params = list(other = "p_O1"),
+                    warn = FALSE, mess = FALSE),
 
       # - interaction between non-prop and prop effects
       m5d = clm_imp(O1 ~ C1 + M2 * C2 + O2, data = wideDF,
                     n.adapt = 5, n.iter = 10, seed = 2020,
                     nonprop = list(O1 = ~ C1 + C2),
-                    monitor_params = list(other = "p_O1")),
+                    monitor_params = list(other = "p_O1"),
+                    warn = FALSE, mess = FALSE),
 
       # - all effects non-proportional
       m5e = clm_imp(O1 ~ C1 + M2 * C2 + O2, data = wideDF,
                     n.adapt = 5, n.iter = 10, seed = 2020,
                     nonprop = ~ C1 + M2 * C2 + O2,
-                    monitor_params = list(other = "p_O1"))
+                    monitor_params = list(other = "p_O1"),
+                    warn = FALSE, mess = FALSE)
     )
 
     models$m6a <- update(models$m5a, rev = "O1")
@@ -138,11 +154,11 @@ test_that("summary output remained the same on non-Windows", {
 test_that("summary output remained the same on Windows", {
   skip_on_cran()
   skip_on_os(c("mac", "linux", "solaris"))
-  print_output(lapply(models0, print))
-  print_output(lapply(models0, coef))
-  print_output(lapply(models0, confint))
-  print_output(lapply(models0, summary))
-  print_output(lapply(models0, function(x) coef(summary(x))))
+  print_output(lapply(models0, print), extra = "nonWin")
+  print_output(lapply(models0, coef), extra = "nonWin")
+  print_output(lapply(models0, confint), extra = "nonWin")
+  print_output(lapply(models0, summary), extra = "nonWin")
+  print_output(lapply(models0, function(x) coef(summary(x))), extra = "nonWin")
 })
 
 
@@ -224,3 +240,4 @@ test_that("wrong models give errors", {
   expect_error(clm_imp(O2 ~ O1 + C1, data = wideDF,
                        nonprop = list(O2 = ~ C2)))
 })
+Sys.setenv(IS_CHECK = "")
