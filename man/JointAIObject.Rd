@@ -62,10 +62,10 @@
               example, splines are used to model time in a joint model
               (\code{terms_list})
 }}
-\item{\code{K}}{a list of matrices specifying the indices of the regression
-                coefficients for each of the main models per design matrix}
-\item{\code{K_imp}}{a list of matrices specifying the indices of regression
-      coefficients for each covariate model per design matrix}
+\item{\code{par_index_main}}{a list of matrices specifying the indices of the
+regression coefficients for each of the main models per design matrix}
+\item{\code{par_index_other}}{a list of matrices specifying the indices of
+regression coefficients for each covariate model per design matrix}
 \item{\code{JAGSmodel}}{The JAGS model as character string.}
 \item{\code{mcmc_settings}}{a list containing MCMC sampling related
                             information with elements

@@ -4,7 +4,7 @@
 get_1model_dim <- function(lp_cols, modeltype, ncat, lp_nonprop) {
 
   # prepare matrix to save parameter indices in
-  K <- matrix(NA,
+  par_index_main <- matrix(NA,
               nrow = length(lp_cols),
               ncol = 2,
               dimnames = list(names(lp_cols), c("start", "end")))
@@ -20,13 +20,15 @@ get_1model_dim <- function(lp_cols, modeltype, ncat, lp_nonprop) {
         # given in lp_cols plus extra parameters for the non-proportional
         # effects (which are already included in lp_cols once, therefore ncat -
         # 2)
-        K[i, ] <- c(1, length(lp_cols[[i]]) + length(lp_nonprop[[i]]) *
-                      (ncat - 2)) + max(c(K, 0), na.rm = TRUE)
+        par_index_main[i, ] <- c(1, length(lp_cols[[i]]) +
+                                   length(lp_nonprop[[i]]) *
+                      (ncat - 2)) + max(c(par_index_main, 0), na.rm = TRUE)
       } else {
-        K[i, ] <- c(1, nlp * length(lp_cols[[i]])) + max(c(K, 0), na.rm = TRUE)
+        par_index_main[i, ] <- c(1, nlp * length(lp_cols[[i]])) +
+          max(c(par_index_main, 0), na.rm = TRUE)
       }
     }
-  K
+  par_index_main
 }
 
 
@@ -36,15 +38,16 @@ get_model_dim <- function(lp_cols, Mlist) {
   if (!is.list(lp_cols))
     errormsg("%s is not a list, but I expected a list!", dQuote("lp_cols"))
 
-    Klist <- sapply(names(lp_cols), function(i) {
+    par_index_list <- sapply(names(lp_cols), function(i) {
       get_1model_dim(lp_cols = lp_cols[[i]], modeltype = Mlist$models[i],
                      ncat = length(levels(Mlist$refs[[i]])),
                      lp_nonprop = Mlist$lp_nonprop[[i]])
     }, simplify = FALSE)
 
-    for (i in seq_along(Klist)[-1]) {
-      Klist[[i]] <- Klist[[i]] + max(Klist[[i - 1]], na.rm = TRUE)
+    for (i in seq_along(par_index_list)[-1]) {
+      par_index_list[[i]] <- par_index_list[[i]] +
+        max(par_index_list[[i - 1]], na.rm = TRUE)
     }
 
-    Klist
+    par_index_list
 }

@@ -634,15 +634,16 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                            shrinkage = shrinkage, df_basehaz = df_basehaz)
 
   # * model dimensions ---------------------------------------------------------
-  K <- get_model_dim(Mlist$lp_cols[names(Mlist$lp_cols) %in%
+  par_index_main <- get_model_dim(Mlist$lp_cols[names(Mlist$lp_cols) %in%
                                      names(Mlist$fixed)],
                      Mlist = Mlist)
-  K_imp <- get_model_dim(Mlist$lp_cols[!names(Mlist$lp_cols) %in%
+  par_index_other <- get_model_dim(Mlist$lp_cols[!names(Mlist$lp_cols) %in%
                                          names(Mlist$fixed)],
                          Mlist = Mlist)
 
   # * model info ---------------------------------------------------------------
-  info_list <- get_model_info(Mlist, K = K, K_imp = K_imp,
+  info_list <- get_model_info(Mlist, par_index_main = par_index_main,
+                              par_index_other = par_index_other,
                               trunc = trunc, assoc_type = assoc_type)
 
   # * data list ----------------------------------------------------------------
@@ -748,8 +749,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
          random = Mlist$random,
          Mlist = Mlist[setdiff(names(Mlist), c('data', 'models',
                                                'fixed', 'random'))],
-         K = K,
-         K_imp = K_imp,
+         par_index_main = par_index_main,
+         par_index_other = par_index_other,
          JAGSmodel = structure(readChar(modelfile,
                                         file.info(modelfile)$size),
                                class = "modelstring"),

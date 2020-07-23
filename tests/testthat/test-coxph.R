@@ -108,20 +108,20 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
     expect_equal(
       find_dupl_parms(models[[7]]),
-      paste0("beta[", models[[7]]$K[[1]]["M_lvlone", 'start'] :
-               models[[7]]$K[[1]]["M_lvlone", 'end'], "]")
+      paste0("beta[", models[[7]]$par_index_main[[1]]["M_lvlone", 'start'] :
+               models[[7]]$par_index_main[[1]]["M_lvlone", 'end'], "]")
     )
 
     expect_equal(
       find_dupl_parms(models[[8]]),
-      paste0("beta[", models[[8]]$K[[1]]["M_lvlone", 'start'] :
-               models[[8]]$K[[1]]["M_lvlone", 'end'], "]")
+      paste0("beta[", models[[8]]$par_index_main[[1]]["M_lvlone", 'start'] :
+               models[[8]]$par_index_main[[1]]["M_lvlone", 'end'], "]")
     )
 
     expect_equal(
       find_dupl_parms(models[[9]]),
-      paste0("beta[", models[[9]]$K[[1]]["M_lvlone", 'start'] :
-               models[[9]]$K[[1]]["M_lvlone", 'end'], "]")
+      paste0("beta[", models[[9]]$par_index_main[[1]]["M_lvlone", 'start'] :
+               models[[9]]$par_index_main[[1]]["M_lvlone", 'end'], "]")
     )
   })
 

@@ -1,5 +1,6 @@
 # get model info for a list of models
-get_model_info <- function(Mlist, K, K_imp, trunc = NULL, assoc_type = NULL) {
+get_model_info <- function(Mlist, par_index_main, par_index_other, trunc = NULL,
+                           assoc_type = NULL) {
   args <- as.list(match.call())[-1L]
 
   sapply(names(Mlist$lp_cols), function(k) {
@@ -9,7 +10,7 @@ get_model_info <- function(Mlist, K, K_imp, trunc = NULL, assoc_type = NULL) {
 
 
 # get model info for a single model
-get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
+get_model1_info <- function(k, Mlist, par_index_main, par_index_other, trunc = NULL, assoc_type = NULL,
                             isgk = FALSE) {
 
   arglist <- as.list(match.call())[-1L]
@@ -74,7 +75,7 @@ get_model1_info <- function(k, Mlist, K, K_imp, trunc = NULL, assoc_type = NULL,
 
 
   # parameter elements ------------------------------------------------------
-  parelmts <- get_parelmts(k, Mlist, K, K_imp, lp)
+  parelmts <- get_parelmts(k, Mlist, par_index_main, par_index_other, lp)
 
 
   # scaling parameter matrices -----------------------------------------------
@@ -414,13 +415,17 @@ get_lp <- function(k, Mlist) {
 
 
 
-get_parelmts <- function(k, Mlist, K, K_imp, lp) {
+get_parelmts <- function(k, Mlist, par_index_main, par_index_other, lp) {
 
-  Kmat <- if (k %in% names(Mlist$fixed)) K else K_imp
+  Kmat <- if (k %in% names(Mlist$fixed)) {
+    par_index_main
+  } else {
+    par_index_other
+  }
 
   if (any(is.na(Kmat)))
     errormsg("There are missing values in the matrix %s.",
-             if (k %in% names(Mlist$fixed)) "K" else "K_imp")
+             if (k %in% names(Mlist$fixed)) "par_index_main" else "par_index_other")
 
   sapply(rownames(Kmat[[k]]), function(lvl) {
     parnums <- Kmat[[k]][lvl, 1]:Kmat[[k]][lvl, 2]
