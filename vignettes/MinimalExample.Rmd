@@ -1,6 +1,12 @@
 ---
 title: "Minimal Example"
+description: "A minimal example to demonstrate the usage of the R package JointAI."
+author: "Nicole Erler"
 date: "2020-06-20"
+opengraph:
+  twitter:
+    card: summary
+    creator: "@NErler"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -126,10 +132,10 @@ for (i in seq_along(mus)) {
   
   if (mus[i] > 0) {
     polygon(x = c(x[x < 0], max(x[x < 0])),
-            y = c(y[x < 0], min(y)), col = "#e30f41", border = NA)
+            y = c(y[x < 0], min(y)), col = "#D10E3B", border = NA)
   } else {
     polygon(x = c(x[x > 0], min(x[x > 0])),
-            y = c(y[x > 0], min(y)), col = "#e30f41", border = NA)
+            y = c(y[x > 0], min(y)), col = "#D10E3B", border = NA)
   }
   lines(x,y)
   axis(side = 1, at = 0)
