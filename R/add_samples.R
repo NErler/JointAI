@@ -153,7 +153,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   newobject$mcmc_settings$variable.names <- var.names
   newobject$comp_info$future <- c(object$comp_info$future,
                                   future_info$call)
-  newobject$model <- if (object$mcmc_settings$parallel) {
+  newobject$model <- if (future_info$parallel) {
     adapt
   } else {
     object$model
