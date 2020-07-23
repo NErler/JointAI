@@ -9,6 +9,10 @@ jobs:
   render:
     name: Render README
     runs-on: macOS-latest
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@v1
@@ -21,7 +25,7 @@ jobs:
           brew install jags
 
       - name: Install rmarkdown and remotes
-        run: Rscript -e 'install.packages("rmarkdown", "remotes")'
+        run: Rscript -e 'install.packages(c("rmarkdown", "remotes")'
       - name: Install package
         run: remotes::install_local(".")
       - name: Render README
