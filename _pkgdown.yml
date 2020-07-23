@@ -1,5 +1,6 @@
 development:
   mode: auto
+  destination:
 template:
   params:
     bootswatch: flatly
