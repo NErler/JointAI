@@ -33,8 +33,7 @@ Note: when sampling is performed in parallel it is
 currently not possible to display a progress bar.}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. (Note: this applies only to messages
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 }
 \description{
 This function continues the sampling from the MCMC chains of an existing

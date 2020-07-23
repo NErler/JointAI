@@ -76,12 +76,10 @@ automatically chosen if unspecified}
 graphics?}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. (Note: this applies only to warnings
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. (Note: this applies only to messages
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 }
 \description{
 Creates a set of traceplots from the MCMC sample of an object of class

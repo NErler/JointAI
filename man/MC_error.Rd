@@ -36,12 +36,10 @@ iteration.}
 \item{digits}{number of digits for the printed output}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. (Note: this applies only to warnings
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. (Note: this applies only to messages
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{...}{
   Arguments passed on to \code{\link[mcmcse:mcse.mat]{mcmcse::mcse.mat}}

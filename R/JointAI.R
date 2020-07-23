@@ -236,11 +236,9 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #' @param use_ggplot logical; Should ggplot be used instead of the base
 #'                   graphics?
 #' @param warn logical; should warnings be given? Default is
-#'             \code{TRUE}. (Note: this applies only to warnings
-#'             given directly by \strong{JointAI}.)
+#'             \code{TRUE}.
 #' @param mess logical; should messages be given? Default is
-#'             \code{TRUE}. (Note: this applies only to messages
-#'             given directly by \strong{JointAI}.)
+#'             \code{TRUE}.
 #' @param xlab,ylab labels for the x- and y-axis
 #' @param idvars name of the column that specifies the multi-level grouping
 #'               structure

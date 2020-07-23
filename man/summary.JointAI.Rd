@@ -51,12 +51,10 @@ should be excluded}
 missing values be included in the summary?}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. (Note: this applies only to warnings
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. (Note: this applies only to messages
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{\dots}{currently not used}
 

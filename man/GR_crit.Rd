@@ -49,12 +49,10 @@ from all iterations; \code{thin = 5} would only keep every 5th
 iteration.}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. (Note: this applies only to warnings
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. (Note: this applies only to messages
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{...}{currently not used}
 }

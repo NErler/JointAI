@@ -42,12 +42,10 @@ iteration.}
 should be excluded}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. (Note: this applies only to messages
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. (Note: this applies only to warnings
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{...}{currently not used}
 }
