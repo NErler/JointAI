@@ -667,13 +667,14 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   if (any(grepl("^beta\\[", unlist(monitor_params))) &
       any(!is.na(unlist(Mlist$scale_pars)))) {
 
-    monitor_params <- c(sapply(monitor_params, function(x) {
-      betas = TRUE)
+    monitor_params <- c(lapply(monitor_params, function(x) {
       if (any(grepl("^beta[", x, fixed = TRUE))) {
         x[-grep("^beta[", x, fixed = TRUE)]
       } else {
         x
       }
+    }),
+    betas = TRUE)
 
     if (mess)
       msg("Note: %s was set in %s because re-scaling of the effects of
@@ -716,7 +717,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   if (n.iter > 0 & !is.null(mcmc)) {
     MCMC <- mcmc
 
-    if (any(!sapply(Mlist$scale_pars, is.null),
+    if (any(!vapply(Mlist$scale_pars, is.null, FUN.VALUE = logical(1)),
             !is.na(unlist(Mlist$scale_pars)))) {
       coefs <- try(get_coef_names(info_list))
 

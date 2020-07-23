@@ -232,7 +232,7 @@ predict.JointAI <- function(object, outcome = 1, newdata,
     types[names(type)] <- type
   }
 
-  preds <- sapply(names(object$fixed)[outcome], function(varname) {
+  preds <- lapply(names(object$fixed)[outcome], function(varname) {
 
     if (!is.null(object$info_list[[varname]]$hc_list) & warn) {
       warnmsg("Prediction in multi-level settings currently only takes into
@@ -263,7 +263,8 @@ predict.JointAI <- function(object, outcome = 1, newdata,
       errormsg("Prediction is not yet implemented for a model of type %s.",
                dQuote(object$info_list[[varname]]$modeltype))
     }
-  },  simplify = FALSE)
+  })
+  names(preds) <- names(object$fixed)[outcome]
 
 
   list(
@@ -313,8 +314,8 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   X <- model.matrix(mt, data = newdata,
                     contrasts.arg = contr_list[intersect(
                       names(contr_list),
-                      sapply(attr(mt, "variables")[-1], deparse,
-                             width.cutoff = 500)
+                      vapply(attr(mt, "variables")[-1], deparse,
+                             width.cutoff = 500, FUN.VALUE = character(1))
                     )]
   )
 
@@ -394,8 +395,8 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
   X <- model.matrix(mt, data = newdata,
                     contr_list[intersect(
                       names(contr_list),
-                      sapply(attr(mt, "variables")[-1], deparse,
-                             width.cutoff = 500)
+                      vapply(attr(mt, "variables")[-1], deparse,
+                             width.cutoff = 500, FUN.VALUE = character(1))
                     )]
   )
 
@@ -406,9 +407,10 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
 
 
   # linear predictor values for the selected iterations of the MCMC sample
-  pred <- sapply(seq_len(nrow(X)), function(i)
-    MCMC[, coefs$coef[match(colnames(X), coefs$varname)],
-         drop = FALSE] %*% X[i, ])
+  pred <- vapply(seq_len(nrow(des_mat)), function(i) {
+    MCMC[, coefs$coef[match(colnames(des_mat), coefs$varname)],
+         drop = FALSE] %*% des_mat[i, ]
+  }, FUN.VALUE = numeric(nrow(MCMC)))
 
   # fitted values: mean over the (transformed) predicted values
   fit <- if (type == "response") {
@@ -466,14 +468,15 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   X0 <- model.matrix(mt, data = newdata,
                      contr_list[intersect(
                        names(contr_list),
-                       sapply(attr(mt, "variables")[-1], deparse,
-                              width.cutoff = 500)
+                       vapply(attr(mt, "variables")[-1], deparse,
+                              width.cutoff = 500, FUN.VALUE = character(1))
                      )]
   )[, -1, drop = FALSE]
 
-  X <- sapply(names(Mlist$M), function(lvl) {
-    X0[, colnames(X0) %in% colnames(Mlist$M[[lvl]]), drop = FALSE]
-  }, simplify = FALSE)
+  des_mat <- setNames(lapply(names(Mlist$M), function(lvl) {
+    des_mat_sub[, colnames(des_mat_sub) %in% colnames(Mlist$M[[lvl]]),
+                drop = FALSE]
+  }), names(Mlist$M))
 
 
   if (mess & any(is.na(X)))
@@ -485,8 +488,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     scale_pars$center[is.na(scale_pars$center)] <- 0
   }
 
-  lp_list <- sapply(X, function(x) {
-    sapply(seq_len(nrow(x)), function(i)
+  lp_list <- lapply(des_mat, function(x) {
+    vapply(seq_len(nrow(x)), function(i) {
       if (!is.null(scale_pars)) {
         MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*%
           (x[i, ] - scale_pars$center[match(colnames(x), rownames(scale_pars))])
@@ -494,8 +497,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
         MCMC[, coefs$coef[match(colnames(x),
                                 coefs$varname)], drop = FALSE] %*% x[i, ]
       }
-    )
-  }, simplify = FALSE)
+    }, FUN.VALUE = numeric(nrow(MCMC)))
+  })
 
   lps <- array(unlist(lp_list), dim = c(nrow(lp_list[[1]]),
                                         ncol(lp_list[[1]]),
@@ -562,8 +565,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                               survinfo = survinfo, data = newdata,
                               rows = seq_len(nrow(newdata)),
                               td_cox = unique(
-                                sapply(survinfo,
-                                       "[[", "modeltype")) == "coxph"))
+                                vapply(survinfo, "[[", "modeltype",
+                                       FUN.VALUE = character(1))) == "coxph"))
 
       vars <- coefs$varname[na.omit(match(dimnames(Mgk)[[2]], coefs$varname))]
 
@@ -585,11 +588,11 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
       0
     }
 
-    surv <- mapply(function(logh0s, tvpred) {
+    surv <- Map(function(logh0s, tvpred) {
       exp(logh0s + tvpred) %*% gkw
     }, logh0s = logh0s, tvpred = tvpred)
 
-    log_surv <- -exp(t(eta_surv)) * surv *
+    log_surv <- -exp(t(eta_surv)) * do.call(cbind, surv) *
       outer(newdata[, survinfo[[1]]$time_name],
             rep(1, nrow(MCMC))) / 2
 
@@ -598,9 +601,9 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     Bh0 <- splines::splineDesign(h0knots, newdata[, survinfo[[1]]$time_name],
                                  ord = 4, outer.ok = TRUE)
 
-    logh0 <- sapply(seq_len(nrow(Bh0)), function(i) {
+    logh0 <- vapply(seq_len(nrow(Bh0)), function(i) {
       MCMC[, grep("beta_Bh0", colnames(MCMC))] %*% Bh0[i, ]
-    })
+    }, FUN.VALUE = numeric(nrow(MCMC)))
 
 
     logh <- logh0 + eta_surv + eta_surv_long
@@ -671,8 +674,8 @@ predict_clm <- function(formula, newdata,
                     data = newdata,
                     contrasts.arg = contr_list[intersect(
                       names(contr_list),
-                      sapply(attr(mt, "variables")[-1], deparse,
-                             width.cutoff = 500)
+                      vapply(attr(mt, "variables")[-1], deparse,
+                             width.cutoff = 500, FUN.VALUE = character(1))
                     )]
   )[, -1, drop = FALSE]
 
@@ -710,10 +713,10 @@ predict_clm <- function(formula, newdata,
 
 
   # add the category specific intercepts to the linear predictor
-  lp <- sapply(seq_along(gammas), function(k) {
+  lp <- lapply(seq_along(gammas), function(k) {
                    gammas[[k]] + eta +
       if (is.null(eta_nonprop)) 0 else eta_nonprop[[k]]
-  }, simplify = FALSE)
+  })
 
   mat1 <- matrix(nrow = nrow(eta), ncol = ncol(eta), data = 1)
   mat0 <- mat1 * 0
@@ -756,16 +759,16 @@ predict_clm <- function(formula, newdata,
   if (type == "lp") {
     fit <- lapply(lp, colMeans)
     quants <- if (!is.null(quantiles)) {
-      sapply(lp, function(x) {
+      lapply(lp, function(x) {
         t(apply(x, 2, quantile, probs = quantiles, na.rm = TRUE))
-      }, simplify = FALSE)
+      })
     }
   } else if (type == "prob") {
     fit <- lapply(probs, colMeans)
     quants <- if (!is.null(quantiles)) {
-      sapply(probs, function(x) {
+      lapply(probs, function(x) {
         t(apply(x, 2, quantile, probs = quantiles, na.rm = TRUE))
-      }, simplify = FALSE)
+      })
     }
   } else if (type == "class") {
     fit <- apply(do.call(cbind, lapply(probs, colMeans)), 1,
@@ -774,9 +777,9 @@ predict_clm <- function(formula, newdata,
   }
 
   res_df <- if (!is.null(quants)) {
-    res <- mapply(function(f, q) {
-      cbind(fit = f, q)
-    }, f = fit, q = quants, SIMPLIFY = FALSE)
+    res <- Map(function(fit, quants) {
+      cbind(fit = fit, quants)
+    }, fit = fit, quants = quants)
 
     array(dim = c(dim(res[[1]]), length(res)),
           dimnames = list(c(), colnames(res[[1]]), names(res)),
@@ -820,8 +823,8 @@ predict_mlogit <- function(formula, newdata,
                     data = newdata,
                     contrasts.arg = contr_list[intersect(
                       names(contr_list),
-                      sapply(attr(mt, "variables")[-1], deparse,
-                             width.cutoff = 500)
+                      vapply(attr(mt, "variables")[-1], deparse,
+                             width.cutoff = 500, FUN.VALUE = character(1))
                     )]
   )
 
@@ -857,16 +860,16 @@ predict_mlogit <- function(formula, newdata,
   if (type == "lp") {
     fit <- lapply(lp, colMeans)
     quants <- if (!is.null(quantiles)) {
-      sapply(lp, function(x) {
+      lapply(lp, function(x) {
         t(apply(x, 2, quantile, probs = quantiles, na.rm = TRUE))
-      }, simplify = FALSE)
+      })
     }
   } else if (type == "prob") {
     fit <- lapply(probs, colMeans)
     quants <- if (!is.null(quantiles)) {
-      sapply(probs, function(x) {
+      lapply(probs, function(x) {
         t(apply(x, 2, quantile, probs = quantiles, na.rm = TRUE))
-      }, simplify = FALSE)
+      })
     }
   } else if (type == "class") {
     fit <- apply(do.call(cbind, lapply(probs, colMeans)), 1,
@@ -875,9 +878,9 @@ predict_mlogit <- function(formula, newdata,
   }
 
   res_df <- if (!is.null(quants)) {
-    res <- mapply(function(f, q) {
-      cbind(fit = f, q)
-    }, f = fit, q = quants, SIMPLIFY = FALSE)
+    res <- Map(function(fit, quants) {
+      cbind(fit = fit, quants)
+    }, fit = fit, quants = quants)
 
     array(dim = c(dim(res[[1]]), length(res)),
           dimnames = list(c(), colnames(res[[1]]), names(res)),
@@ -901,7 +904,7 @@ predict_JM <- function(...) {
 
 fitted_values <- function(object, ...) {
 
-  types <- sapply(names(object$fixed), function(k) {
+  types <- vapply(names(object$fixed), function(k) {
     switch(object$info_list[[k]]$modeltype,
            glm = "response",
            glmm = "response",
@@ -909,7 +912,7 @@ fitted_values <- function(object, ...) {
            clmm = "prob",
            survreg = "response",
            coxph = "lp")
-  })
+  }, FUN.VALUE = character(1))
 
 
   fit <- predict(object, outcome = seq_along(object$fixed), quantiles = NULL,
