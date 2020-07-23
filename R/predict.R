@@ -782,7 +782,7 @@ predict_clm <- function(formula, newdata,
     }, fit = fit, quants = quants)
 
     array(dim = c(dim(res[[1]]), length(res)),
-          dimnames = list(c(), colnames(res[[1]]), names(res)),
+          dimnames = list(NULL, colnames(res[[1]]), names(res)),
           unlist(res))
   } else {
     data.frame(fit, check.names = FALSE)

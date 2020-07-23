@@ -42,7 +42,7 @@ add_linebreaks <- function(string, indent, width = 90) {
   # " +\n" (break) to be pasted in afterwards
   # (there is probably a more elegant way to do this)
   i <- 1
-  br <- c()
+  br <- character(0)
   while (i < length(len)) {
     cs <- cumsum(len[i:length(len)])
     nfit <- max(1, which(cs <= (width - indent)))
