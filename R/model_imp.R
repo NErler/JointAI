@@ -668,15 +668,17 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
       any(!is.na(unlist(Mlist$scale_pars)))) {
 
     monitor_params <- c(sapply(monitor_params, function(x) {
-      if (any(grepl('^beta[', x, fixed = TRUE)))
-        x[-grep('^beta[', x, fixed = TRUE)]
-      else x}, simplify = FALSE),
       betas = TRUE)
+      if (any(grepl("^beta[", x, fixed = TRUE))) {
+        x[-grep("^beta[", x, fixed = TRUE)]
+      } else {
+        x
+      }
 
     if (mess)
-      msg('Note: %s was set in %s because re-scaling of the effects of
+      msg("Note: %s was set in %s because re-scaling of the effects of
              the regression coefficients in the main model(s) requires all
-             of them to be monitored.',
+             of them to be monitored.",
           dQuote("betas = TRUE"), dQuote("monitor_params"))
   }
 
@@ -747,8 +749,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
          models = Mlist$models,
          fixed = Mlist$fixed,
          random = Mlist$random,
-         Mlist = Mlist[setdiff(names(Mlist), c('data', 'models',
-                                               'fixed', 'random'))],
+         Mlist = Mlist[setdiff(names(Mlist), c("data", "models",
+                                               "fixed", "random"))],
          par_index_main = par_index_main,
          par_index_other = par_index_other,
          JAGSmodel = structure(readChar(modelfile,
