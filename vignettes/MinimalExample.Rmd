@@ -4,6 +4,8 @@ description: "A minimal example to demonstrate the usage of the R package JointA
 author: "Nicole Erler"
 date: "2020-06-20"
 opengraph:
+  image: 
+    src: "man/figures/JointAI_square.png"
   twitter:
     card: summary
     creator: "@NErler"
