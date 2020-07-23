@@ -15,7 +15,7 @@ JAGSmodel_clmm <- function(info) {
   # linear predictor of baseline covariates (including interaction terms)
   rdintercept <- paste_rdintercept_lp(info)
   rdslopes <- paste_rdslope_lp(info)
-  Z_predictor <- paste_lp_Zpart(info)
+  Z_predictor <- paste_lp_ranef_part(info)
 
   linpred_nonprop <- if (!is.null(attr(info$parelmts[[info$resp_mat]],
                                        'nonprop'))) {
@@ -138,7 +138,7 @@ clmm_in_JM <- function(info) {
   indent <- 4 + 4 + nchar(info$varname) + 7
 
   # main model parts -----------------------------------------------------------
-  Z_predictor <- paste_lp_Zpart(info, isgk = TRUE)
+  Z_predictor <- paste_lp_ranef_part(info, isgk = TRUE)
 
   # syntax to set values of dummy variables,
   # e.g. "M_lvlone[i, 8] <- ifelse(M_lvlone[i, 4] == 2, 1, 0)"

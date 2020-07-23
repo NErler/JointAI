@@ -264,7 +264,7 @@ paste_rdintercept_lp <- function(info) {
 
 
 
-paste_lp_Zpart <- function(info, isgk = FALSE) {
+paste_lp_ranef_part <- function(info, isgk = FALSE) {
   # write the random effects part of the linear predictor of the analysis
   # model
   # - info: element of info_list, containing all the info necessary to write

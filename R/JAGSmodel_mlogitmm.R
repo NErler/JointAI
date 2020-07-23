@@ -9,7 +9,7 @@ JAGSmodel_mlogitmm <- function(info) {
   # linear predictor of baseline covariates (including interaction terms)
   rdintercept <- paste_rdintercept_lp(info)
   rdslopes <- paste_rdslope_lp(info)
-  Z_predictor <- paste_lp_Zpart(info)
+  Z_predictor <- paste_lp_ranef_part(info)
 
   # syntax for probabilities, using min-max-trick for numeric stability
   # i.e.,

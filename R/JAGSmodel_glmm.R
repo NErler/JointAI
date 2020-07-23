@@ -31,7 +31,7 @@ JAGSmodel_glmm <- function(info) {
   # model parts ----------------------------------------------------------------
   rdintercept <- paste_rdintercept_lp(info)
   rdslopes <- paste_rdslope_lp(info)
-  Z_predictor <- paste_lp_Zpart(info)
+  Z_predictor <- paste_lp_ranef_part(info)
 
   dummies <- if (!is.null(info$dummy_cols)) {
     paste0('\n\n', paste0(
@@ -129,7 +129,7 @@ glmm_in_JM <- function(info) {
 
 
   # model parts ----------------------------------------------------------------
-  Z_predictor <- paste_lp_Zpart(info, isgk = TRUE)
+  Z_predictor <- paste_lp_ranef_part(info, isgk = TRUE)
 
   trunc <- if (!is.null(info$trunc)) {
     paste0('T(', if (!is.na(info$trunc[1])) info$trunc[1], ', ',

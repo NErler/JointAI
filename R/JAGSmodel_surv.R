@@ -10,7 +10,7 @@ JAGSmodel_survreg <- function(info) {
   # random effects
   rdintercept <- paste_rdintercept_lp(info)
   rdslopes <- paste_rdslope_lp(info)
-  hc_predictor <- paste_lp_Zpart(info)
+  hc_predictor <- paste_lp_ranef_part(info)
 
 
   # linear predictor
@@ -130,7 +130,7 @@ JAGSmodel_coxph <- function(info) {
   # random effects
   rdintercept <- paste_rdintercept_lp(info)
   rdslopes <- paste_rdslope_lp(info)
-  hc_predictor <- paste_lp_Zpart(info)
+  hc_predictor <- paste_lp_ranef_part(info)
 
   # linear predictor
   eta <- if (!is.null(hc_predictor)) {
@@ -284,7 +284,7 @@ JAGSmodel_JM <- function(info) {
   # random effects
   rdintercept <- paste_rdintercept_lp(info)
   rdslopes <- paste_rdslope_lp(info)
-  hc_predictor <- paste_lp_Zpart(info)
+  hc_predictor <- paste_lp_ranef_part(info)
 
   # linear predictor
   eta <- if (!is.null(hc_predictor)) {
