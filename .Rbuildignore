@@ -22,6 +22,9 @@
 ^vignettes/ModelSpecification_cache$
 ^vignettes/ModelSpecification_files$
 
+## Exclude large vignette
+^vignettes/TheoreticalBackground.Rmd$
+
 R/samplers.R
 R/plots_ppc.R
 

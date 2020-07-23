@@ -1,7 +1,7 @@
 ---
 title: "Theoretical Background"
 date: "2020-06-20"
-output: 
+output:
   bookdown::html_document2:
     toc: true
     toc_depth: 4
