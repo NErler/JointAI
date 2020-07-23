@@ -25,7 +25,7 @@ jobs:
           brew install jags
 
       - name: Install rmarkdown and remotes
-        run: Rscript -e 'install.packages(c("rmarkdown", "remotes")'
+        run: Rscript -e 'install.packages(c("rmarkdown", "remotes"))'
       - name: Install package
         run: remotes::install_local(".")
       - name: Render README
