@@ -3,9 +3,12 @@ title: "Minimal Example"
 description: "A minimal example to demonstrate the usage of the R package JointAI."
 author: "Nicole Erler"
 date: "2020-06-20"
+resource_files:
+  - man/figures/JointAI_square.png
 opengraph:
   image: 
     src: "man/figures/JointAI_square.png"
+    alt: "JointAI: An R package for Joint Analysis and Imputation"
   twitter:
     card: summary
     creator: "@NErler"
