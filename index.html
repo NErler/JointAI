@@ -22,7 +22,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="JointAI">
 <meta property="og:description" content="An R package for Bayesian analysis of incomplete data.">
-<meta property="og:image" content="https://nerler.github.io/JointAI/logo.png">
+<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/logo.png">
+<meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@N_Erler">
+<meta name="twitter:site" content="@N_Erler">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -132,7 +136,9 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#jointai-joint-analysis-and-imputation-of-incomplete-data-" class="anchor"></a>JointAI: Joint Analysis and Imputation of Incomplete Data <img src="reference/figures/logo.png" align="right" alt="" width="160">
 </h1></div>
+<!-- badges: start -->
 
+<p><a href="https://travis-ci.org/NErler/JointAI"><img src="https://travis-ci.org/NErler/JointAI.svg?branch=master" alt="Travis-CI Build Status"></a> <a href="https://CRAN.R-project.org/package=JointAI"><img src="https://www.r-pkg.org/badges/version-last-release/JointAI" alt="CRAN_Status_Badge"></a> <a href="https://CRAN.R-project.org/package=JointAI"><img src="https://cranlogs.r-pkg.org/badges/grand-total/JointAI"></a> <a href="https://cran.r-project.org/package=JointAI"><img src="http://cranlogs.r-pkg.org/badges/JointAI" alt="Download counter"></a> <a href="http://www.rdocumentation.org/packages/JointAI"><img src="http://www.rdocumentation.org/badges/version/JointAI" alt="Rdoc"></a> <a href="https://codecov.io/gh/NErler/JointAI?branch=master"><img src="https://codecov.io/gh/NErler/JointAI/branch/master/graph/badge.svg" alt="Codecov test coverage"></a> <!-- badges: end --></p>
 <p>The package <strong>JointAI</strong> provides functionality to perform joint analysis and imputation of a range of model types in the Bayesian framework. Implemented are (generalized) linear regression models and extensions thereof, models for (un-/ordered) categorical data, as well as multi-level (mixed) versions of these model types.</p>
 <p>Moreover, survival models and joint models for longitudinal and survival data are available. It is also possible to fit multiple models of mixed types simultaneously. Missing values in (if present) will be imputed automatically.</p>
 <p><strong>JointAI</strong> performs some preprocessing of the data and creates a <a href="http://mcmc-jags.sourceforge.net">JAGS</a> model, which will then automatically be passed to <a href="http://mcmc-jags.sourceforge.net">JAGS</a> with the help of the R package <a href="https://CRAN.R-project.org/package=rjags"><strong>rjags</strong></a>.</p>
@@ -165,7 +171,7 @@
 <span class="fu"><a href="reference/model_imp.html">survreg_imp</a></span>()            <span class="co"># parametric (Weibull) survival model</span>
 <span class="fu"><a href="reference/model_imp.html">coxph_imp</a></span>()              <span class="co"># proportional hazards survival model</span>
 <span class="fu"><a href="reference/model_imp.html">JM_imp</a></span>()                 <span class="co"># joint model for longitudinal and survival data</span></pre></div>
-<p>The functions use specification similar to that of well known standard functions like <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> from base R, <code>lme()</code> (from the package <a href="https://CRAN.R-project.org/package=nlme"><strong>nlme</strong></a>) , <code>lmer()</code> or <code>glmer()</code> (from the package <a href="https://CRAN.R-project.org/package=lme4"><strong>lme4</strong></a>) and <code>survreg()</code> and <code>coxph()</code> (from the package <a href="https://CRAN.R-project.org/package=survival"><strong>survival</strong></a>).</p>
+<p>The functions use specification similar to that of well known standard functions like <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> from base R, <code><a href="https://rdrr.io/pkg/nlme/man/lme.html">nlme::lme()</a></code> (from the package <a href="https://CRAN.R-project.org/package=nlme"><strong>nlme</strong></a>) , <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> or <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html">lme4::glmer()</a></code> (from the package <a href="https://CRAN.R-project.org/package=lme4"><strong>lme4</strong></a>) and <code><a href="https://rdrr.io/pkg/survival/man/survreg.html">survival::survreg()</a></code> and <code><a href="https://rdrr.io/pkg/survival/man/coxph.html">survival::coxph()</a></code> (from the package <a href="https://CRAN.R-project.org/package=survival"><strong>survival</strong></a>).</p>
 <p>Functions <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, <code><a href="https://rdrr.io/r/stats/coef.html">coef()</a></code>, <code><a href="reference/traceplot.html">traceplot()</a></code> and <code><a href="reference/densplot.html">densplot()</a></code> provide a summary of the posterior distribution and its visualization.</p>
 <p><code><a href="reference/GR_crit.html">GR_crit()</a></code> and <code><a href="reference/MC_error.html">MC_error()</a></code> implement the Gelman-Rubin diagnostic for convergence and the Monte Carlo error of the MCMC sample, respectively.</p>
 <p><strong>JointAI</strong> also provides functions for exploration of the distribution of the data and missing values, export of imputed values and prediction.</p>
@@ -178,33 +184,31 @@
 <a href="#visualize-the-observed-data-and-missing-data-pattern" class="anchor"></a>Visualize the observed data and missing data pattern</h3>
 <div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">JointAI</span>)
 
-<span class="no">op</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="kw">mar</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2.5</span>, <span class="fl">3</span>, <span class="fl">2.5</span>, <span class="fl">1</span>), <span class="kw">mgp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">0.8</span>, <span class="fl">0</span>))
-<span class="fu"><a href="reference/plot_all.html">plot_all</a></span>(<span class="no">NHANES</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">5</span>:<span class="fl">6</span>, <span class="fl">8</span>:<span class="fl">12</span>)], <span class="kw">fill</span> <span class="kw">=</span> <span class="st">'#e30f41'</span>, <span class="kw">border</span> <span class="kw">=</span> <span class="st">'#34111b'</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="kw">breaks</span> <span class="kw">=</span> <span class="fl">30</span>)</pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-2-1.png" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="no">op</span>)</pre></div>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="fu"><a href="reference/md_pattern.html">md_pattern</a></span>(<span class="no">NHANES</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span>))</pre></div>
+<span class="fu"><a href="reference/plot_all.html">plot_all</a></span>(<span class="no">NHANES</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">5</span>:<span class="fl">6</span>, <span class="fl">8</span>:<span class="fl">12</span>)], <span class="kw">fill</span> <span class="kw">=</span> <span class="st">'#D10E3B'</span>, <span class="kw">border</span> <span class="kw">=</span> <span class="st">'#460E1B'</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="kw">breaks</span> <span class="kw">=</span> <span class="fl">30</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-3-1.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb5"><pre class="r"><span class="fu"><a href="reference/md_pattern.html">md_pattern</a></span>(<span class="no">NHANES</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#460E1B'</span>, <span class="st">'#D10E3B'</span>))</pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png" style="display: block; margin: auto;"></p>
 </div>
 <div id="fit-a-linear-regression-model-with-incomplete-covariates" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fit-a-linear-regression-model-with-incomplete-covariates" class="anchor"></a>Fit a linear regression model with incomplete covariates</h3>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="no">lm1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">age</span> + <span class="no">WC</span> + <span class="no">alc</span> + <span class="no">educ</span> + <span class="no">bili</span>,
+<div class="sourceCode" id="cb6"><pre class="r"><span class="no">lm1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">age</span> + <span class="no">WC</span> + <span class="no">alc</span> + <span class="no">educ</span> + <span class="no">bili</span>,
               <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>, <span class="kw">n.iter</span> <span class="kw">=</span> <span class="fl">500</span>, <span class="kw">progress.bar</span> <span class="kw">=</span> <span class="st">'none'</span>, <span class="kw">seed</span> <span class="kw">=</span> <span class="fl">2020</span>)</pre></div>
 </div>
 <div id="visualize-the-mcmc-sample" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visualize-the-mcmc-sample" class="anchor"></a>Visualize the MCMC sample</h3>
-<div class="sourceCode" id="cb8"><pre class="r"><span class="fu"><a href="reference/traceplot.html">traceplot</a></span>(<span class="no">lm1</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#d4af37'</span>, <span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span>), <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span>)</pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb9"><pre class="r"><span class="fu"><a href="reference/densplot.html">densplot</a></span>(<span class="no">lm1</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#d4af37'</span>, <span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span>), <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></div>
+<div class="sourceCode" id="cb7"><pre class="r"><span class="fu"><a href="reference/traceplot.html">traceplot</a></span>(<span class="no">lm1</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#d4af37'</span>, <span class="st">'#460E1B'</span>, <span class="st">'#D10E3B'</span>), <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span>)</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb8"><pre class="r"><span class="fu"><a href="reference/densplot.html">densplot</a></span>(<span class="no">lm1</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'#d4af37'</span>, <span class="st">'#460E1B'</span>, <span class="st">'#D10E3B'</span>), <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div id="summarize-the-result" class="section level3">
 <h3 class="hasAnchor">
 <a href="#summarize-the-result" class="anchor"></a>Summarize the Result</h3>
-<div class="sourceCode" id="cb10"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">lm1</span>)
+<div class="sourceCode" id="cb9"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">lm1</span>)
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Linear model fitted with JointAI</span>
+<span class="co">#&gt; Bayesian linear model fitted with JointAI</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm_imp(formula = SBP ~ gender + age + WC + alc + educ + bili, </span>
@@ -232,23 +236,8 @@
 <span class="co">#&gt; Thinning interval = 1 </span>
 <span class="co">#&gt; Number of chains = 3 </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Number of observations: 186 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Number and proportion of complete cases:</span>
-<span class="co">#&gt;          #    %</span>
-<span class="co">#&gt; lvlone 146 78.5</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Number and proportion of missing values:</span>
-<span class="co">#&gt;        # NA  % NA</span>
-<span class="co">#&gt; SBP       0  0.00</span>
-<span class="co">#&gt; gender    0  0.00</span>
-<span class="co">#&gt; age       0  0.00</span>
-<span class="co">#&gt; educ      0  0.00</span>
-<span class="co">#&gt; WC        2  1.08</span>
-<span class="co">#&gt; bili      8  4.30</span>
-<span class="co">#&gt; alc      34 18.28</span></pre></div>
-<div class="sourceCode" id="cb11"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span>(<span class="no">lm1</span>)
+<span class="co">#&gt; Number of observations: 186</span></pre></div>
+<div class="sourceCode" id="cb10"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span>(<span class="no">lm1</span>)
 <span class="co">#&gt; $SBP</span>
 <span class="co">#&gt;  (Intercept) genderfemale          age           WC       alc&gt;=1     educhigh </span>
 <span class="co">#&gt;   87.6622381   -3.4873104    0.3335133    0.2302755    6.4194926   -2.8054874 </span>
@@ -304,12 +293,7 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/NErler/JointAI"><img src="https://travis-ci.org/NErler/JointAI.svg?branch=master" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://CRAN.R-project.org/package=JointAI"><img src="https://www.r-pkg.org/badges/version-last-release/JointAI" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://CRAN.R-project.org/package=JointAI"><img src="https://cranlogs.r-pkg.org/badges/grand-total/JointAI"></a></li>
-<li><a href="https://cran.r-project.org/package=JointAI"><img src="http://cranlogs.r-pkg.org/badges/JointAI" alt="Download counter"></a></li>
-<li><a href="http://www.rdocumentation.org/packages/JointAI"><img src="http://www.rdocumentation.org/badges/version/JointAI" alt="Rdoc"></a></li>
-<li><a href="https://codecov.io/gh/NErler/JointAI"><img src="https://codecov.io/gh/NErler/JointAI/branch/JMdevel/graph/badge.svg"></a></li>
+<li><a href="https://github.com/NErler/JointAI/actions"><img src="https://github.com/NErler/JointAI/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
 </div>

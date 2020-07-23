@@ -6,12 +6,14 @@ link color turquoise (#18bc9c;)
 
 
 :root {
-  --light-red: #e30f41;
-  --dark-red: #710720;
+  --light-red: #D10E3B;
+  --mid-red: #991433;
+  --dark-red: #460E1B; /*#710720;*/
+  --dark-gray: #101010;
 }
 
 code a, pre a {
-  color: var(--dark-red);
+  color: var(--mid-red);
 }
 
 
@@ -42,14 +44,34 @@ body {
 
 
 a {
-  color: var(--light-red);
+  color: var(--mid-red);
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: var(--dark-red);
+  color: var(--light-red);
   text-decoration: underline;
 }
+
+
+code {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: var(--mid-red);
+  background-color: #f9f2f4;
+  border-radius: 4px;
+}
+
+
+.label-danger {
+  background-color: var(--mid-red); /*#5c1121;*/
+}
+.label-danger[href]:hover,
+.label-danger[href]:focus {
+  background-color: #d62c1a;
+}
+
+
 
 .img-thumbnail {
   padding: 4px;
@@ -166,13 +188,7 @@ address {
   font-style: normal;
   line-height: 1.42857143;
 }
-code {
-  padding: 2px 4px;
-  font-size: 90%;
-  color: #c7254e;
-  background-color: #f9f2f4;
-  border-radius: 4px;
-}
+
 kbd {
   padding: 2px 4px;
   font-size: 90%;
@@ -2248,7 +2264,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #ffffff;
-  background-color: var(--dark-red);
+  background-color: var(--mid-red);
 }
 .navbar-default .navbar-nav > .disabled > a,
 .navbar-default .navbar-nav > .disabled > a:hover,
@@ -2634,13 +2650,6 @@ a.label:focus {
 .label-warning[href]:hover,
 .label-warning[href]:focus {
   background-color: #c87f0a;
-}
-.label-danger {
-  background-color: #e74c3c;
-}
-.label-danger[href]:hover,
-.label-danger[href]:focus {
-  background-color: #d62c1a;
 }
 .badge {
   display: inline-block;
