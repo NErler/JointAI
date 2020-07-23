@@ -7,6 +7,13 @@ home:
   description: An R package for Bayesian analysis of incomplete data.
 
 template:
+  opengraph:
+    image:
+      src: man/figures/logo.png
+      alt: "JointAI: An R package for Joint Analysis and Imputation"
+    twitter:
+      creator: "@N_Erler"
+      card: summary_large_image
   params:
     bootswatch: flatly
     ganalytics: UA-127879026-4
