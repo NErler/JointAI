@@ -46,7 +46,7 @@
 #' \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}).
 #'
 #' Computations can be performed in parallel to reduce computational time,
-#' using the argument \code{parallel = TRUE},
+#' using the packages \pkg{future} (and \pkg{doFuture}),
 #' the argument \code{shrinkage} allows the user to impose a penalty on the
 #' regression coefficients of some or all models involved,
 #' and hyper-parameters can be changed via the argument \code{hyperpars}.

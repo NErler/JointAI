@@ -779,7 +779,7 @@ mod7 <- coxph_imp(Surv(futime, status != 'censored') ~ age + sex + copper +
                   trig + stage + (1 | id),
                   timevar = 'day', data = PBC, n.iter = 100)
 
-}
+
 
 # Example 8: Parallel computation
 # If no strategy how the "future" should be handled is specified, the
@@ -793,7 +793,7 @@ mod8$comp_info$future
 # can be specified:
 future::plan(future::sequential)
 
-
+}
 
 }
 \seealso{

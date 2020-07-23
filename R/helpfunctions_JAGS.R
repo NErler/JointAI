@@ -94,7 +94,7 @@ run_parallel <- function(n.adapt, n.iter, n.chains, inits, thin = 1,
 
 
 
-run_seq <- function(n.adapt, n.iter, n.cores, n.chains, inits, thin = 1,
+run_seq <- function(n.adapt, n.iter, n.chains, inits, thin = 1,
                     data_list, var.names, modelfile, quiet = TRUE,
                     progress.bar = "text", mess = TRUE, warn = TRUE, ...) {
 
