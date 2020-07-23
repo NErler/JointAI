@@ -5,11 +5,6 @@
 
 <!-- badges: start -->
 
-[![R build
-status](https://github.com/NErler/JointAI/workflows/R-CMD-check/badge.svg)](https://github.com/NErler/JointAI/actions)
-
-[![Travis-CI Build
-Status](https://travis-ci.org/NErler/JointAI.svg?branch=master)](https://travis-ci.org/NErler/JointAI)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version-last-release/JointAI)](https://CRAN.R-project.org/package=JointAI)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/JointAI)](https://CRAN.R-project.org/package=JointAI)
 [![Download
@@ -17,6 +12,10 @@ counter](http://cranlogs.r-pkg.org/badges/JointAI)](https://cran.r-project.org/p
 [![Rdoc](http://www.rdocumentation.org/badges/version/JointAI)](http://www.rdocumentation.org/packages/JointAI)
 [![Codecov test
 coverage](https://codecov.io/gh/NErler/JointAI/branch/master/graph/badge.svg)](https://codecov.io/gh/NErler/JointAI?branch=master)
+[![Travis-CI Build
+Status](https://travis-ci.org/NErler/JointAI.svg?branch=master)](https://travis-ci.org/NErler/JointAI)
+[![R build
+status](https://github.com/NErler/JointAI/workflows/R-CMD-check/badge.svg)](https://github.com/NErler/JointAI/actions)
 <!-- badges: end -->
 
 The package **JointAI** provides functionality to perform joint analysis

@@ -24,7 +24,8 @@ knitr::opts_chunk$set(
 [![Rdoc](http://www.rdocumentation.org/badges/version/JointAI)](http://www.rdocumentation.org/packages/JointAI)
 [![Codecov test coverage](https://codecov.io/gh/NErler/JointAI/branch/master/graph/badge.svg)](https://codecov.io/gh/NErler/JointAI?branch=master)
 [![Travis-CI Build Status](https://travis-ci.org/NErler/JointAI.svg?branch=master)](https://travis-ci.org/NErler/JointAI)
-[![R build status](https://github.com/NErler/JointAI/workflows/R-CMD-check/badge.svg)](https://github.com/NErler/JointAI/actions)<!-- badges: end -->
+[![R build status](https://github.com/NErler/JointAI/workflows/R-CMD-check/badge.svg)](https://github.com/NErler/JointAI/actions)
+<!-- badges: end -->
 
 
 The package **JointAI** provides functionality to perform joint analysis and
