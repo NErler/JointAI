@@ -1,6 +1,11 @@
 development:
   mode: auto
-  destination:
+  destination: ./
+
+home:
+  title: JointAI
+  description: An R package for Bayesian analysis of incomplete data.
+
 template:
   params:
     bootswatch: flatly
@@ -8,6 +13,7 @@ template:
     docsearch:
       api_key: 0d21d69e7c3eb00e029f5b8d9424cd56
       index_name: jointal
+
 navbar:
   structure:
     left:
