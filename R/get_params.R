@@ -42,14 +42,20 @@ get_params <- function(analysis_main = TRUE,
     "D_main",
     "basehaz"
   )) {
-    args[[k]] <-
-      ifelse(is.null(args[[k]]), isTRUE(args$analysis_main), args[[k]])
+    args[[k]] <- if (is.null(args[[k]])) {
+      isTRUE(args$analysis_main)
+    } else {
+      args[[k]]
+    }
   }
 
   # update analysis_random parameters
   for (k in c("D_main", "invD_main", "RinvD_main", "ranef_main")) {
-    args[[k]] <-
-      ifelse(is.null(args[[k]]), isTRUE(args$analysis_random), args[[k]])
+    args[[k]] <- if (is.null(args[[k]])) {
+      isTRUE(args$analysis_random)
+    } else {
+      args[[k]]
+    }
   }
 
   # update other_models parameters
@@ -61,23 +67,26 @@ get_params <- function(analysis_main = TRUE,
     "shape_other",
     "D_other"
   )) {
-    args[[k]] <-
-      ifelse(is.null(args[[k]]), isTRUE(args$other_models), args[[k]])
+    args[[k]] <- if (is.null(args[[k]])) {
+      isTRUE(args$other_models)
+    } else {
+      args[[k]]
+    }
   }
 
   # imps
   impvals <- if (isTRUE(args$imps)) {
-    unlist(unname(sapply(names(Mlist$M), function(k) {
+    unlist(unname(lapply(names(Mlist$M), function(k) {
       if (any(is.na(Mlist$M[[k]]))) {
         misvals <- which(is.na(Mlist$M[[k]][, colnames(Mlist$M[[k]]) %in%
-                                           names(Mlist$data), drop = FALSE]),
-                      arr.ind = TRUE)
+                                              names(Mlist$data), drop = FALSE]),
+                         arr.ind = TRUE)
 
         apply(misvals, 1L, function(x) {
           paste0(k, "[", x[1L], ",", x[2L], "]")
         })
       }
-    }, simplify = FALSE)))
+    })))
   }
 
 
@@ -103,8 +112,8 @@ get_modelpars <- function(info_list, Mlist, args, set = "main") {
     info_list[!names(info_list) %in% names(Mlist$fixed)]
   }
 
-  modeltypes <- sapply(sublist, "[[", "modeltype")
-  families <- sapply(sublist, "[[", "family")
+  modeltypes <- cvapply(sublist, "[[", "modeltype")
+  families <- unlist(nlapply(sublist, "[[", "family"))
 
 
   params <- NULL
@@ -124,8 +133,8 @@ get_modelpars <- function(info_list, Mlist, args, set = "main") {
 
   # parameters basehaz
   if (args$basehaz & any(modeltypes %in% c("coxph", "JM"))) {
-    survnams <- sapply(sublist[modeltypes %in% c("coxph", "JM")],
-                       "[[", "varname")
+    survnams <- cvapply(sublist[modeltypes %in% c("coxph", "JM")],
+                        "[[", "varname")
     params <- c(params, paste0("beta_Bh0_", survnams))
   }
 
@@ -159,8 +168,8 @@ get_modelpars <- function(info_list, Mlist, args, set = "main") {
       isTRUE(args$analysis_main) &
       set == "main")
     params <- c(params,
-                paste0("shape_", sapply(sublist[modeltypes %in% "survreg"],
-                                        "[[", "varname")))
+                paste0("shape_", cvapply(sublist[modeltypes %in% "survreg"],
+                                         "[[", "varname")))
 
   params
 }
@@ -181,7 +190,9 @@ get_ranefpars <- function(info_list, Mlist, args, set = "main") {
            nranef = x$nranef)
   )
 
-  if (all(sapply(ranef_info, is.null))) return(NULL)
+  if (all(lvapply(ranef_info, is.null))) {
+    return(NULL)
+  }
 
   params <- NULL
 
@@ -189,28 +200,31 @@ get_ranefpars <- function(info_list, Mlist, args, set = "main") {
   # ranef
   if (args[[paste0("ranef_", set)]]) {
     params <- c(params,
-                sapply(ranef_info, function(k)
+                cvapply(ranef_info, function(k)
                   paste0("b_", k$varname, "_", k$lvls)))
   }
 
   # invD
   if (args[[paste0("invD_", set)]]) {
     params <- c(params,
-                unlist(sapply(ranef_info, function(x) {
-                  sapply(x$lvls, function(lvl) {
-                    sapply(1L:max(1L, x$nranef[lvl]), function(i)
-                      paste0("invD_", x$varname, "_", lvl, "[", 1L:i, ",", i, "]"))
+                unlist(lapply(ranef_info, function(x) {
+                  lapply(x$lvls, function(lvl) {
+                    lapply(seq.int(max(1L, x$nranef[lvl])), function(i) {
+                      paste0("invD_", x$varname, "_", lvl, "[", 1L:i, ",", i, "]")
+                    })
                   })
-                })))
+                })
+                ))
   }
 
   # D
   if (args[[paste0("D_", set)]]) {
     params <- c(params,
-                unlist(sapply(ranef_info, function(x) {
-                  sapply(x$lvls, function(lvl) {
-                    sapply(1L:max(1L, x$nranef[lvl]), function(i)
-                      paste0("D_", x$varname, "_", lvl, "[", 1L:i, ",", i, "]"))
+                unlist(lapply(ranef_info, function(x) {
+                  lapply(x$lvls, function(lvl) {
+                    lapply(seq.int(max(1L, x$nranef[lvl])), function(i) {
+                      paste0("D_", x$varname, "_", lvl, "[", 1L:i, ",", i, "]")
+                    })
                   })
                 })))
   }
@@ -218,11 +232,11 @@ get_ranefpars <- function(info_list, Mlist, args, set = "main") {
   # RinvD
   if (args[[paste0("RinvD_", set)]]) {
     params <- c(params,
-                unlist(sapply(ranef_info, function(x) {
-                  sapply(x$lvls, function(lvl) {
+                unlist(lapply(ranef_info, function(x) {
+                  lapply(x$lvls, function(lvl) {
                     paste0("RinvD_", x$varname, "_", lvl,
-                           "[", 1L:max(1L, x$nranef[lvl]), ",",
-                           1L:max(1L, x$nranef[lvl]), "]")
+                           "[", seq.int(max(1L, x$nranef[lvl])), ",",
+                           seq.int(max(1L, x$nranef[lvl])), "]")
                   })
                 })))
   }
