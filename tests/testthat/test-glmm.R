@@ -319,9 +319,9 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     print_output(lapply(models, "[[", "data_list"))
   })
 
-  test_that("JAGSmodel remaines the same", {
+  test_that("jagsmodel remaines the same", {
     skip_on_cran()
-    print_output(lapply(models, "[[", "JAGSmodel"))
+    print_output(lapply(models, "[[", "jagsmodel"))
   })
 
   test_that("GRcrit and MCerror give same result", {

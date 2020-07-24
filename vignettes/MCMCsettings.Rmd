@@ -318,7 +318,7 @@ mod4c <- lme_imp(bmi ~ time + HEIGHT_M + hc + SMOKE, random = ~ time | ID,
 
 options(max.print = 1e5)
 a4 <- capture.output(coef(mod4c$model))
-a4mod <- capture.output(mod4c$JAGSmodel)
+a4mod <- capture.output(mod4c$jagsmodel)
 ```
 
 `M_ID` and `M_lvlone` are design matrices containing the the parts of the
