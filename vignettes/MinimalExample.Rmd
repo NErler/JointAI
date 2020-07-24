@@ -7,7 +7,7 @@ resource_files:
   - man/figures/JointAI_square.png
 opengraph:
   image: 
-    src: "man/figures/JointAI_square.png"
+    src: "https://nerler.github.io/JointAI/reference/figures/JointAI_square.png"
     alt: "JointAI: An R package for Joint Analysis and Imputation"
   twitter:
     card: summary
