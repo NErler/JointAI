@@ -107,7 +107,7 @@ get_modelpars <- function(info_list, Mlist, args, set = 'main') {
   families <- sapply(sublist, "[[", 'family')
 
 
-  params <- character(1)
+  params <- NULL
 
 
   # regcoef
@@ -183,7 +183,7 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
 
   if (all(sapply(ranef_info, is.null))) return(NULL)
 
-  params <- character(1)
+  params <- NULL
 
 
   # ranef
