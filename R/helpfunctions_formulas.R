@@ -276,20 +276,6 @@ split_formula_list <- function(formulas) {
 }
 
 
-# can probably be deleted!!!
-# prep_string <- function(x) {
-#   p <- gsub("\\.", "\\\\.", x)
-#   # p <- gsub("\\.", "\\\\.", paste0("^", x, "$"))
-#   p <- gsub("\\?", ".", gsub("\\*", ".*", p))
-#   p <- gsub("\\+", "\\\\+", p)
-#   p <- gsub("([^\\])\\(", "\\1\\\\(", p)
-#   p <- gsub("([^\\])\\[", "\\1\\\\[", p)
-#   p <- gsub("([^\\])\\{", "\\1\\\\{", p)
-#   p
-# }
-
-
-
 
 # used in various functions (2020-06-09)
 all_vars <- function(fmla) {
@@ -410,8 +396,6 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
 
         fct_df$dupl[eq[ord]] <- duplicated(p[eq[ord]])
       }
-
-      # fct_df$dupl <- duplicated(fct_df[, -which(names(fct_df) == 'var')])
 
       p <- apply(fct_df[, -which(names(fct_df) %in% c('var', 'dupl', 'compl',
                                                     'matrix'))],
