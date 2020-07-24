@@ -27,7 +27,7 @@ get_params <- function(analysis_main = TRUE,
                        Mlist,
                        info_list) {
 
-  args <- as.list(match.call())[-1]
+  args <- as.list(match.call())[-1L]
   fmls <- formals()
   args <- c(args, fmls[setdiff(names(fmls), names(args))])
 
@@ -73,8 +73,8 @@ get_params <- function(analysis_main = TRUE,
                                            names(Mlist$data), drop = FALSE]),
                       arr.ind = TRUE)
 
-        apply(M_NA, 1, function(x) {
-          paste0(k, "[", x[1], ",", x[2], "]")
+        apply(M_NA, 1L, function(x) {
+          paste0(k, "[", x[1L], ",", x[2L], "]")
         })
       }
     }, simplify = FALSE)))
@@ -151,8 +151,8 @@ get_modelpars <- function(info_list, Mlist, args, set = 'main') {
   }
 
   params <- c(params,
-              if (length(sigvars) > 0) paste0('sigma_', sigvars),
-              if (length(tauvars) > 0) paste0("tau_", tauvars))
+              if (length(sigvars) > 0L) paste0('sigma_', sigvars),
+              if (length(tauvars) > 0L) paste0("tau_", tauvars))
 
 
   if (any(modeltypes %in% c('survreg')) &
@@ -198,8 +198,8 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
     params <- c(params,
                 unlist(sapply(ranef_info, function(x) {
                   sapply(x$lvls, function(lvl) {
-                    sapply(1:max(1, x$nranef[lvl]), function(i)
-                      paste0("invD_", x$varname, "_", lvl, "[", 1:i, ",", i, "]"))
+                    sapply(1L:max(1L, x$nranef[lvl]), function(i)
+                      paste0("invD_", x$varname, "_", lvl, "[", 1L:i, ",", i, "]"))
                   })
                 })))
   }
@@ -209,8 +209,8 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
     params <- c(params,
                 unlist(sapply(ranef_info, function(x) {
                   sapply(x$lvls, function(lvl) {
-                    sapply(1:max(1, x$nranef[lvl]), function(i)
-                      paste0("D_", x$varname, "_", lvl, "[", 1:i, ",", i, "]"))
+                    sapply(1L:max(1L, x$nranef[lvl]), function(i)
+                      paste0("D_", x$varname, "_", lvl, "[", 1L:i, ",", i, "]"))
                   })
                 })))
   }
@@ -221,8 +221,8 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
                 unlist(sapply(ranef_info, function(x) {
                   sapply(x$lvls, function(lvl) {
                     paste0("RinvD_", x$varname, "_", lvl,
-                           "[", 1:max(1, x$nranef[lvl]), ",",
-                           1:max(1, x$nranef[lvl]), "]")
+                           "[", 1L:max(1L, x$nranef[lvl]), ",",
+                           1L:max(1L, x$nranef[lvl]), "]")
                   })
                 })))
   }
@@ -414,24 +414,24 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
 #         if (isTRUE(invD_main))
 #           unlist(sapply(ranef_info_main, function(x)
 #             sapply(x$lvls, function(lvl) {
-#               sapply(1:max(1, x$nranef[lvl]), function(i)
-#                 paste0("invD_", x$varname, "_", lvl, "[", 1:i, ",", i, "]")
+#               sapply(1L:max(1L, x$nranef[lvl]), function(i)
+#                 paste0("invD_", x$varname, "_", lvl, "[", 1L:i, ",", i, "]")
 #               )}))),
 #
 #         # D_main
 #         if (isTRUE(D_main))
 #           unlist(sapply(ranef_info_main, function(x)
 #             sapply(x$lvls, function(lvl) {
-#               sapply(1:max(1, x$nranef[lvl]), function(i)
-#                 paste0("D_", x$varname, "_", lvl, "[", 1:i, ",", i, "]")
+#               sapply(1L:max(1L, x$nranef[lvl]), function(i)
+#                 paste0("D_", x$varname, "_", lvl, "[", 1L:i, ",", i, "]")
 #               )}))),
 #
 #         # RinvD_main
 #         if (isTRUE(RinvD_main))
 #           unlist(sapply(ranef_info_main, function(x)
 #             sapply(x$lvls, function(lvl) {
-#             paste0("RinvD_", x$varname, "_", lvl, "[", 1:max(1, x$nranef[lvl]),
-#                    ",", 1:max(1, x$nranef[lvl]), "]")
+#             paste0("RinvD_", x$varname, "_", lvl, "[", 1L:max(1L, x$nranef[lvl]),
+#                    ",", 1L:max(1L, x$nranef[lvl]), "]")
 #             })))
 #       )
 #     },
@@ -468,16 +468,16 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
 #         if (isTRUE(invD_other))
 #           unlist(sapply(ranef_info_other, function(x)
 #             sapply(x$lvls, function(lvl) {
-#               sapply(1:max(1, x$nranef[lvl]), function(i)
-#                 paste0("invD_", x$varname, "_", lvl, "[", 1:i, ",", i, "]")
+#               sapply(1L:max(1L, x$nranef[lvl]), function(i)
+#                 paste0("invD_", x$varname, "_", lvl, "[", 1L:i, ",", i, "]")
 #               )}))),
 #
 #         # D_other
 #         if (isTRUE(D_other))
 #           unlist(sapply(ranef_info_other, function(x)
 #             sapply(x$lvls, function(lvl) {
-#               sapply(1:max(1, x$nranef[lvl]), function(i)
-#                 paste0("D_", x$varname, "_", lvl, "[", 1:i, ",", i, "]")
+#               sapply(1L:max(1L, x$nranef[lvl]), function(i)
+#                 paste0("D_", x$varname, "_", lvl, "[", 1L:i, ",", i, "]")
 #               )}))),
 #
 #         # RinvD_other
@@ -485,7 +485,7 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
 #           unlist(sapply(ranef_info_other, function(x)
 #             sapply(x$lvls, function(lvl) {
 #               paste0("RinvD_", x$varname, "_", lvl, "[",
-#                      1:max(1, x$nranef[lvl]), ",", 1:max(1, x$nranef[lvl]), "]")
+#                      1L:max(1L, x$nranef[lvl]), ",", 1L:max(1L, x$nranef[lvl]), "]")
 #             })))
 #       )
 #     },
@@ -502,8 +502,8 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
 #                                              names(Mlist$data), drop = FALSE]),
 #                         arr.ind = TRUE)
 #
-#           apply(M_NA, 1, function(x) {
-#             paste0(k, "[", x[1], ",", x[2], "]")
+#           apply(M_NA, 1L, function(x) {
+#             paste0(k, "[", x[1L], ",", x[2L], "]")
 #           })
 #         }
 #       }, simplify = FALSE)
