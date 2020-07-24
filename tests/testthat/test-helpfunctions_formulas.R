@@ -216,7 +216,7 @@ test_that('identify_functions works', {
 # !!! test for get_varlist --------------------------------------------------
 
 
-# !!! test for get_fctDFList ------------------------------------------------
+# !!! test for get_fct_dfList ------------------------------------------------
 # funlist <- list(log = c('log(p1)', "log(C1 + p1)"),
 #                 sqrt = c("sqrt(C1)"),
 #                 bs = c("bs(C1, df = 3)"),
@@ -230,10 +230,10 @@ test_that('identify_functions works', {
 # DFlist <- list(log = data.frame(X_var = ))
 #
 # for(i in seq_along(varlist)) {
-#   get_fctDFList(varlist[[i]], data = longDF)
+#   get_fct_dfList(varlist[[i]], data = longDF)
 # }
 #
-# get_fctDFList(varlist, data = longDF)
+# get_fct_dfList(varlist, data = longDF)
 
 
 # !!! tests for extract_fcts() -----------------------------------------------

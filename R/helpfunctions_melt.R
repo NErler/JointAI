@@ -1,5 +1,5 @@
 
-# used in extract_fcts() and make_fctDF() (2020-06-11)
+# used in extract_fcts() and make_fct_df() (2020-06-11)
 melt_list <- function(l, varname = "L1", valname = NULL) {
 
   do.call(rbind,

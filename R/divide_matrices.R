@@ -136,9 +136,11 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
     MX[, Mlvls == k, drop = FALSE], simplify = FALSE)
 
   fcts_mis <- extract_fcts(fixed = fixed, data, random = random,
-                           auxvars = auxvars, complete = FALSE, Mlvls = Mlvls)
+                           auxvars = auxvars, complete = FALSE,
+                           extract_fcts = Mlvls)
   fcts_all <- extract_fcts(fixed = fixed, data, random = random,
-                           auxvars = auxvars, complete = TRUE, Mlvls = Mlvls)
+                           auxvars = auxvars, complete = TRUE,
+                           extract_fcts = Mlvls)
 
 
   if (any(fcts_mis$type %in% c("ns", "bs")))
