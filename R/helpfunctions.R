@@ -4,11 +4,11 @@ errormsg <- function(x, ...) {
 }
 
 
-msg <- function(x, ..., exdent = 0) {
+msg <- function(x, ..., exdent = 0L) {
   message(strwrap(gettextf(x, ...), prefix = "\n", exdent = exdent))
 }
 
-warnmsg <- function(x, ..., exdent = 0) {
+warnmsg <- function(x, ..., exdent = 0L) {
   warning(strwrap(gettextf(x, ...), prefix = "\n", exdent = exdent),
           call. = FALSE, immediate. = TRUE)
 }
@@ -16,7 +16,7 @@ warnmsg <- function(x, ..., exdent = 0) {
 paste_and <- function(x) {
   x1 <- paste0(x[-length(x)], collapse = ", ")
 
-  if (length(x) > 1) {
+  if (length(x) > 1L) {
     paste(x1, x[length(x)], sep = " and ")
   } else {
     x
@@ -71,7 +71,7 @@ get_groups <- function(idvar, data) {
     # check for unnecessary nesting levels
     gr_length <- sapply(groups, function(x)length(unique(x))) == nrow(data)
     if (any(gr_length)) {
-      if (sum(gr_length) == 1) {
+      if (sum(gr_length) == 1L) {
         errormsg("The grouping level %s seem to be unnecessary.
                  There are only unique observations at this level.",
                  names(gr_length[gr_length]))
@@ -131,7 +131,7 @@ identify_level_relations <- function(grouping) {
   # turn the list into a matrix, with the different levels as columns
   g <- do.call(cbind, grouping)
   # check if the grouping information varies within each of the clusters
-  res <- apply(g, 2, check_cluster, grouping = grouping)
+  res <- apply(g, 2L, check_cluster, grouping = grouping)
 
   if (!is.matrix(res))
     res <- t(res)
@@ -163,14 +163,14 @@ check_varlevel <- function(x, groups, group_lvls = NULL) {
   # FALSE when x is constant in the level
 
 
-  if (sum(!clus) > 1) {
+  if (sum(!clus) > 1L) {
     # if the variable is constant in more than one level, the exact level needs
     # to be determined using the level structure of the grouping
     if (is.null(group_lvls))
       group_lvls <- identify_level_relations(groups)
 
     names(which.max(colSums(!group_lvls[!clus, !clus, drop = FALSE])))
-  } else if (sum(!clus) == 1) {
+  } else if (sum(!clus) == 1L) {
     # if the variable is constant in exactly one level, that level is the
     # level of the variable
     names(clus)[!clus]
@@ -279,7 +279,7 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
       for (k in seq_along(vars)) {
         if (lvls[k] == min(lvls)) {
           theindex <- index
-        } else if (min(lvls) == 1) {
+        } else if (min(lvls) == 1L) {
           theindex <- paste0('group_', names(lvls)[k], '[', index, ']')
         } else {
           theindex <- paste0('group_', names(lvls)[k], '[',
@@ -298,7 +298,7 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
         }
       }
 
-      paste0(tab(4),
+      paste0(tab(4L),
              dest_mat, if (isgk) "gk", "[", index, ", ", dest_col,
              if (isgk) ", k", "] <- ", fct, '\n')
     }
@@ -350,7 +350,7 @@ clean_survname <- function(x) {
   x <- gsub(' *, *', "_", x)
   x <- gsub("\\(", "_", x)
 
-  abbreviate(x, minlength = 15, use.classes = TRUE)
+  abbreviate(x, minlength = 15L, use.classes = TRUE)
 }
 
 
@@ -380,12 +380,12 @@ get_coef_names <- function(info_list) {
     }
 
 
-    out <- if (any(sapply(info$lp, length) > 0)) {
+    out <- if (any(sapply(info$lp, length) > 0L)) {
       data.frame(outcome = unname(info$varname),
                  outcat = rep(names(parelmts), sapply(parelmts, length)),
                  varname = names(unlist(unname(parelmts))),
                  coef = paste0(info$parname,
-                               if (length(unlist(pars)) > 1)
+                               if (length(unlist(pars)) > 1L)
                                  paste0("[", unlist(parelmts), "]")
                  ),
                  stringsAsFactors = FALSE
@@ -432,7 +432,7 @@ get_matgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
   # - data: the original data when used in get_data_list, and the newdata when
   #          used in prediction
   # - rows: the rows of the longitudinal variables corresponding to the survival
-  #         times (or 1:nrow(newdata when used in prediction)
+  #         times (or 1L:nrow(newdata when used in prediction)
   # - td_cox: logical; is this for a time-dependent cox model?
 
   # rows to replicate when setting up gk_data
@@ -448,7 +448,7 @@ get_matgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
 
   # replace the survival time with the Gauss-Kronrod version of it
   surv_time_name <- unique(sapply(survinfo, "[[", "time_name"))
-  gk_data[, Mlist$timevar] <- c(t(outer(data[rows, surv_time_name]/2, gkx + 1)))
+  gk_data[, Mlist$timevar] <- c(t(outer(data[rows, surv_time_name]/2L, gkx + 1L)))
 
 
   # for a time-dependent cox model: use last-observation carried forward to fill
@@ -488,7 +488,7 @@ get_matgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
     X[, colnames(X)[colnames(X) %in% colnames(Xnew)]]
 
   lapply(seq_len(length(gkx)), function(k) {
-    Xnew[length(gkx) * ((seq_len(length(rows))) - 1) + k, ]
+    Xnew[length(gkx) * ((seq_len(length(rows))) - 1L) + k, ]
   })
 }
 
@@ -501,7 +501,7 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
   # Fill in the longitudinal covariate values in the Gauss-Kronrod version of
   # the design matrix for level one using last-observation-carried-forward.
   # !!! If there is no observation of the longitudinal covariate at baseline
-  #     (at timevar = 0) the first available value will be used.
+  #     (at timevar = 0L) the first available value will be used.
   # - fixed: a list of fixed effects formulas
   # - data: the original or newdata (in case of prediction)
   # - idvar: the level of the survival outcome
@@ -518,7 +518,7 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
   ld <- ld[order(ld[, idvar]), ]
   # add column with observation time indicator ("visit number" per patient)
   ld$obstime <- unlist(lapply(table(droplevels(ld[, idvar, drop = FALSE])),
-                              function(k) 1:k))
+                              function(k) 1L:k))
 
   # turn long data into wide format, one column per visit
   wd <- reshape(ld, direction = 'wide', v.names = c(timevar, longvars),
@@ -528,7 +528,7 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
   anymis <- sapply(longvars, function(v) {
     obs <- rowSums(!is.na(wd[, grep(paste0("^", v, ".[[:digit:]]*$"),
                                     names(wd))]))
-    any(obs == 0)
+    any(obs == 0L)
   })
 
   if (any(anymis)) {
@@ -549,7 +549,7 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
     # if there is no baseline visit (i.e., the first time with an observed value
     # is larger than the time in the Gauss-Kronrod version of the time) the
     # first available measurement will be used ('first value carried backward')
-    valcol <- max(1, which(
+    valcol <- max(1L, which(
       c(md[i, timevar] > md[i, grep(paste0("^", timevar, "."), colnames(md))])
     ), na.rm = TRUE)
 
@@ -588,7 +588,7 @@ get_survinfo <- function(info_list, Mlist) {
 
     x <- info_list[[k]]
 
-    surv_lvl <- gsub("M_", "" , x$resp_mat[2])
+    surv_lvl <- gsub("M_", "" , x$resp_mat[2L])
     longlvls <- names(Mlist$group_lvls)[Mlist$group_lvls <
                                           Mlist$group_lvls[surv_lvl]]
 
@@ -603,9 +603,9 @@ get_survinfo <- function(info_list, Mlist) {
                          group_lvls = identify_level_relations(Mlist$groups))
     longvars <- names(covar_lvls)[covar_lvls %in% longlvls]
 
-    survevent = Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]
+    survevent = Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]]
 
-    if (any(!survevent %in% c(0, 1))) {
+    if (any(!survevent %in% c(0L, 1L))) {
       errormsg("The event indicator should only contain 2 distinct values
                  but I found %s. Note that it is currently not possible to fit
                  survival models with competing risks.",
@@ -622,9 +622,9 @@ get_survinfo <- function(info_list, Mlist) {
          tv_vars = names(x$tv_vars),
 
          # name of the variable containing time of the repeated measurements:
-         time_name = Mlist$outcomes$outnams[[k]][1],
-         survtime = Mlist$M[[x$resp_mat[1]]][, x$resp_col[1]],
-         survevent = Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]
+         time_name = Mlist$outcomes$outnams[[k]][1L],
+         survtime = Mlist$M[[x$resp_mat[1L]]][, x$resp_col[1L]],
+         survevent = Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]]
 
     )
   }, simplify = FALSE)
@@ -634,8 +634,8 @@ get_survinfo <- function(info_list, Mlist) {
 
 # seed value
 set_seed <- function(seed) {
-  if ((R.version$major > 3 |
-       (R.version$major == 3 & R.version$minor >= 6.0)) &
+  if ((R.version$major > 3L |
+       (R.version$major == 3L & R.version$minor >= 6.0)) &
       Sys.getenv("IS_CHECK") == "true") {
     suppressWarnings(set.seed(seed, sample.kind = "Rounding"))
   } else {
