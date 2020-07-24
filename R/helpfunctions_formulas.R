@@ -36,11 +36,11 @@ extract_id <- function(random, warn = TRUE) {
   ids <- lapply(random, function(x) {
     # match (...|...)
     rdmatch <- gregexpr(pattern = "\\([^|]*\\|[^)]*\\)",
-                        deparse(x, width.cutoff = 500))
+                        deparse(x, width.cutoff = 500L))
 
-    if (any(rdmatch[[1]] > 0)) {
+    if (any(rdmatch[[1L]] > 0L)) {
       # remove "(... | " from the formula
-      rd <- unlist(regmatches(deparse(x, width.cutoff = 500),
+      rd <- unlist(regmatches(deparse(x, width.cutoff = 500L),
                               rdmatch, invert = FALSE))
       rdid <- gregexpr(pattern = "[[:print:]]*\\|[[:space:]]*", rd)
 
@@ -52,11 +52,11 @@ extract_id <- function(random, warn = TRUE) {
                                    split = "[[:space:]]*[+*:/][[:space:]]*")))
     } else {
       rdmatch <- gregexpr(pattern = "[[:print:]]*\\|[ ]*",
-                          deparse(x, width.cutoff = 500))
+                          deparse(x, width.cutoff = 500L))
 
-      if (any(rdmatch[[1]] > 0)) {
+      if (any(rdmatch[[1L]] > 0L)) {
         # remove "... | " from the formula
-        id <- unlist(regmatches(deparse(x, width.cutoff = 500),
+        id <- unlist(regmatches(deparse(x, width.cutoff = 500L),
                                 rdmatch, invert = TRUE))
         id <- unique(unlist(strsplit(id[id != ""],
                                      split = "[[:space:]]*[+*:/][[:space:]]*")))
@@ -94,7 +94,7 @@ extract_outcome <- function(fixed) {
     # names of the outcome variables
     outnam <- all.vars(as.formula(paste0(LHS, "~ 1")))
 
-    if (any(length(outnam) == 0, is.na(outnam), is.null(outnam))) {
+    if (any(length(outnam) == 0L, is.na(outnam), is.null(outnam))) {
       errormsg("Unable to extract the outcome variable.")
     }
     outnam
@@ -121,13 +121,13 @@ extract_lhs <- function(formula) {
 
 
   # check that the formula has a LHS
-  if (attr(terms(formula), "response") != 1)
+  if (attr(terms(formula), "response") != 1L)
     errormsg("Unable to extract response from the formula.")
 
 
   # get the LHS of the formula
   LHS <- sub("[[:space:]]*\\~[[:print:]]*", "",
-             deparse(formula, width.cutoff = 500))
+             deparse(formula, width.cutoff = 500L))
 
   return(LHS)
 }
@@ -150,7 +150,7 @@ remove_lhs <- function(fmla) {
       } else {
         clean_lhs <- gsub("([^\\])\\(", "\\1\\\\(", extract_lhs(x))
         as.formula(gsub(paste0("^", clean_lhs, "[[ ]]*~"), '~',
-                        deparse(x, width.cutoff = 500)))
+                        deparse(x, width.cutoff = 500L)))
       }
     }
   })
@@ -170,10 +170,10 @@ remove_grouping <- function(fmla) {
   fl <- lapply(fmla, function(x) {
     if (!is.null(x)) {
       rdmatch <- gregexpr(pattern = "\\([^|]*\\|[^)]*\\)",
-                          deparse(x, width.cutoff = 500))
+                          deparse(x, width.cutoff = 500L))
 
-      if (any(rdmatch[[1]] > 0)) {
-        rd <- unlist(regmatches(deparse(x, width.cutoff = 500),
+      if (any(rdmatch[[1L]] > 0L)) {
+        rd <- unlist(regmatches(deparse(x, width.cutoff = 500L),
                                 rdmatch, invert = FALSE))
         # remove "|...) " from the formula
         rdid <- gregexpr(pattern = " *\\|[[:print:]]*", rd)
@@ -185,9 +185,9 @@ remove_grouping <- function(fmla) {
 
         nam <- extract_id(x, warn = FALSE)
 
-        if (length(nam) > 1 & length(ranef) == 1) {
+        if (length(nam) > 1L & length(ranef) == 1L) {
           ranef <- rep(ranef, length(nam))
-        } else if (length(nam) != length(ranef) & length(ranef) != 0) {
+        } else if (length(nam) != length(ranef) & length(ranef) != 0L) {
           errormsg("The number of grouping variables in the random effects
                    formula does not match the number of separate formulas.
                    This may be a problem with the specification of multiple
@@ -200,7 +200,7 @@ remove_grouping <- function(fmla) {
       } else {
       # remove " | ..." from the formula
       ranef <- sub("[[:space:]]*\\|[[:print:]]*", "",
-                   deparse(x, width.cutoff = 500))
+                   deparse(x, width.cutoff = 500L))
 
       nam <- extract_id(x, warn = FALSE)
 
@@ -211,7 +211,7 @@ remove_grouping <- function(fmla) {
     }
   })
 
-  if (length(fl) == 1) fl[[1]] else fl
+  if (length(fl) == 1L) fl[[1L]] else fl
 }
 
 
@@ -221,7 +221,7 @@ remove_grouping <- function(fmla) {
 #   as.formula(paste0("~ ",
 #                     paste0(unique(unlist(
 #                       lapply(fmlas, function(x)
-#                         gsub("~", '', deparse(x, width.cutoff = 500))))),
+#                         gsub("~", '', deparse(x, width.cutoff = 500L))))),
 #                       collapse = " + ")
 #   ))
 # }
@@ -241,11 +241,11 @@ split_formula <- function(formula) {
   # build fixed effects formula by combining all non-random effects terms with
   # a "+", and combine with the LHS
   RHS <- paste(c(term_labels[!which_ranef],
-                 if (attr(terms(formula), 'intercept') == 0) "0"),
+                 if (attr(terms(formula), 'intercept') == 0L) "0"),
                collapse = " + ")
 
   fixed <- paste0(as.character(formula)[2L], " ~ ",
-                  ifelse(RHS == '', 1, RHS)
+                  ifelse(RHS == '', 1L, RHS)
   )
 
   # build random effects formula by pasting all random effects terms in brackets
@@ -372,7 +372,7 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
     fctDF <- subset(fctDF, select = which(!names(fctDF) %in% "rowID"))
 
     # if chosen, remove functions only involving complete variables
-    compl <- colSums(is.na(data[, fctDF$var, drop = FALSE])) == 0
+    compl <- colSums(is.na(data[, fctDF$var, drop = FALSE])) == 0L
     partners <- sapply(fctDF$colname,
                        function(x) which(fctDF$colname %in% x),
                        simplify = FALSE)
@@ -400,7 +400,7 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
 
       # identify which rows relate to the same expression in the formula
       p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'compl', 'matrix'))],
-                 1, paste, collapse = "")
+                 1L, paste, collapse = "")
 
       for (k in which(dupl)) {
         eq <- which(p == p[k])
@@ -415,7 +415,7 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
 
       p <- apply(fctDF[, -which(names(fctDF) %in% c('var', 'dupl', 'compl',
                                                     'matrix'))],
-                 1, paste, collapse = "")
+                 1L, paste, collapse = "")
       fctDF$dupl_rows <- NA
       fctDF$dupl_rows[which(dupl)] <- lapply(which(dupl), function(i) {
         m <- unname(which(p == p[i]))
@@ -461,7 +461,7 @@ identify_functions <- function(formula) {
                                      "/", "Surv",
                                      all_vars(formula)) & isfun]
 
-  if (length(funs) > 0) {
+  if (length(funs) > 0L) {
     # for each function, extract formula elements containing it
     funlist <- sapply(names(funs), function(f) {
       fl <- c(
@@ -469,7 +469,7 @@ identify_functions <- function(formula) {
         grep(paste0("[(+\\-\\*/] *", f, "\\("), x = termlabs, value = TRUE)
       )
 
-      if (length(fl) > 0) fl
+      if (length(fl) > 0L) fl
     }, simplify = FALSE)
 
     # remove NULL elements
@@ -505,7 +505,7 @@ get_varlist <- function(funlist) {
 make_fctDF <- function(varlist_elmt, data) {
 
   X_vars <- sapply(names(varlist_elmt), function(k)
-    colnames(model.matrix(as.formula(paste0("~", k)), data))[-1],
+    colnames(model.matrix(as.formula(paste0("~", k)), data))[-1L],
     simplify = FALSE)
 
 
