@@ -11,7 +11,7 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
   # scaling parameters ---------------------------------------------------------
   incl_sp <- lvapply(Mlist$scale_pars, function(x) {
     # identify all variables on the RHS of any formula
-    predvars <- unique(c(unlist(lapply(Mlist$lp_cols, cvapply, names)),
+    predvars <- unique(c(unlist(lapply(Mlist$lp_cols, nlapply, names)),
                          all_vars(remove_grouping(Mlist$random))))
 
     # check if there are scaling parameters available for these predictor

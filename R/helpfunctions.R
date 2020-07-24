@@ -411,10 +411,10 @@ get_coef_names <- function(info_list) {
       )
     }
 
-    out$varnam_print <- cvapply(out$outcat, function(k) {
-      switch(as.character(is.na(k)),
-             "TRUE" = out$varname,
-             "FALSE" = paste0(out$outcat, ": ", out$varname)
+    out$varnam_print <- cvapply(seq_along(out$outcat), function(k) {
+      switch(as.character(is.na(out$outcat[k])),
+             "TRUE" = out$varname[k],
+             "FALSE" = paste0(out$outcat[k], ": ", out$varname[k])
       )
     })
 
