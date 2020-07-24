@@ -11,7 +11,7 @@ name: test-coverage
 
 jobs:
   test-coverage:
-    runs-on: ubuntu-16.04
+    runs-on: windows-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -50,6 +50,15 @@ jobs:
           rm '/usr/local/bin/gfortran'
           brew install jags
 
+      - name: Download JAGS Windows
+        if: runner.os == 'Windows'
+        run: (New-Object System.Net.WebClient).DownloadFile('https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Windows/JAGS-4.3.0.exe', 'C:\JAGS-4.3.0.exe')
+        shell: powershell
+
+      - name: Install JAGS Windows
+        if: runner.os == 'Windows'
+        run: C:\JAGS-4.3.0.exe /S
+        shell: cmd
 
       - name: Install dependencies
         run: |
@@ -61,5 +70,5 @@ jobs:
       - name: Test coverage
         env:
           IS_CHECK: true
-        run: covr::codecov()
+        run: covr::codecov(quiet = FALSE)
         shell: Rscript {0}
