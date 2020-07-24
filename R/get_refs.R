@@ -150,7 +150,7 @@ set_refcat <- function(data, formula, covars, auxvars = NULL) {
   if (missing(formula) & missing(covars) & is.null(auxvars)) {
     covars <- colnames(data)
   } else  if (missing(covars) & !missing(formula)) {
-    covars <- all_vars(remove_LHS(formula))
+    covars <- all_vars(remove_lhs(formula))
   }
   if (!is.null(auxvars))
     covars <- unique(c(covars, all_vars(auxvars)))

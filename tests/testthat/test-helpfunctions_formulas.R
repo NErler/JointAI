@@ -114,20 +114,20 @@ test_that('extract_outcome works', {
 })
 
 
-# extract_LHS ------------------------------------------------------------------
-test_that('extract_LHS works', {
+# extract_lhs ------------------------------------------------------------------
+test_that('extract_lhs works', {
   for (i in seq_along(ys)) {
-    expect_equal( extract_LHS(ys[[i]]$fixed), ys[[i]]$LHS)
+    expect_equal( extract_lhs(ys[[i]]$fixed), ys[[i]]$LHS)
   }
 })
 
-# remove_LHS -------------------------------------------------------------------
-test_that('remove_LHS works', {
+# remove_lhs -------------------------------------------------------------------
+test_that('remove_lhs works', {
   for (i in seq_along(ys)) {
-    expect_equal(remove_LHS(ys[[i]]$fixed), ys[[i]]$RHS)
+    expect_equal(remove_lhs(ys[[i]]$fixed), ys[[i]]$RHS)
   }
   for (i in seq_along(runs)) {
-    expect_equal(remove_LHS(runs[[i]]$random), runs[[i]]$RHS)
+    expect_equal(remove_lhs(runs[[i]]$random), runs[[i]]$RHS)
   }
 })
 
@@ -276,9 +276,9 @@ test_that("extract_outcome_data works", {
                lapply(fmla, "[[", 'outcome'))
 })
 
-# model.matrix_combi() ---------------------------------------------------------
+# model_matrix_combi() ---------------------------------------------------------
 
-# test_that('model.matrix_combi works', {
+# test_that('model_matrix_combi works', {
 #   opt <- options(contrasts = rep("contr.treatment", 2))
 #
 #   fmla_combi <- as.formula(paste("~", paste0(unique(unlist(
@@ -294,7 +294,7 @@ test_that("extract_outcome_data works", {
 #   attr(X, 'contrasts') <- NULL
 #
 #   expect_equal(
-#     model.matrix_combi(fmla = lapply(fmla, "[[", 'fixed'), data = longDF),
+#     model_matrix_combi(fmla = lapply(fmla, "[[", 'fixed'), data = longDF),
 #     X
 #   )
 #   options(opt)

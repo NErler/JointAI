@@ -118,7 +118,7 @@ check_classes <- function(data, fixed = NULL, random = NULL, auxvars = NULL,
   vars <- unique(c(all_vars(c(fixed, remove_grouping(random), auxvars)),
                    timevar))
 
-  covars <- unique(c(all_vars(c(remove_LHS(fixed), remove_grouping(random),
+  covars <- unique(c(all_vars(c(remove_lhs(fixed), remove_grouping(random),
                                 auxvars)),
                      timevar))
 

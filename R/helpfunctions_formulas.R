@@ -89,7 +89,7 @@ extract_outcome <- function(fixed) {
 
   out_nam_list <- lapply(fixed, function(x) {
     # get the LHS of the formula
-    LHS <- extract_LHS(x)
+    LHS <- extract_lhs(x)
 
     # names of the outcome variables
     outnam <- all.vars(as.formula(paste0(LHS, "~ 1")))
@@ -100,14 +100,14 @@ extract_outcome <- function(fixed) {
     outnam
   })
 
-  names(out_nam_list) <- sapply(fixed, extract_LHS)
+  names(out_nam_list) <- sapply(fixed, extract_lhs)
 
   out_nam_list
 }
 
 
 # used in various help functions (2020-06-09)
-extract_LHS <- function(formula) {
+extract_lhs <- function(formula) {
   # Extract the outcome formula from a formula
   # (relevant for example for survival formulas, where Surv(...) is a formula)
   # - formula: two-sided formula (no list of formulas!!!)
@@ -134,7 +134,7 @@ extract_LHS <- function(formula) {
 
 
 # used in divide_matrices, get_models and help functions (2020-06-09)
-remove_LHS <- function(fmla) {
+remove_lhs <- function(fmla) {
   # Remove the left hand side from a (list of) formula(s)
 
   # if fmla is not a list, turn into list
@@ -144,12 +144,12 @@ remove_LHS <- function(fmla) {
 
   lapply(fmla, function(x) {
     if (!is.null(x)) {
-      LHS <- try(extract_LHS(x), silent = TRUE)
+      LHS <- try(extract_lhs(x), silent = TRUE)
       if (inherits(LHS, "try-error")) {
         x
       } else {
-        clean_LHS <- gsub("([^\\])\\(", "\\1\\\\(", extract_LHS(x))
-        as.formula(gsub(paste0("^", clean_LHS, "[[ ]]*~"), '~',
+        clean_lhs <- gsub("([^\\])\\(", "\\1\\\\(", extract_lhs(x))
+        as.formula(gsub(paste0("^", clean_lhs, "[[ ]]*~"), '~',
                         deparse(x, width.cutoff = 500)))
       }
     }
@@ -327,10 +327,10 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
                   c("survreg", "coxph"))) {
     lapply(
       fixed[!sapply(fixed, attr, "type") %in% c("survreg", "coxph")],
-      extract_LHS
+      extract_lhs
     )
   } else {
-    lapply(fixed, extract_LHS)
+    lapply(fixed, extract_lhs)
   }
 
   # convert the LHSs in RHSs formulas to be able to extract the functions
@@ -345,7 +345,7 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
 
 
   # list of functions in covariates and random effects variables
-  funlist <- list(covars = identify_functions(remove_LHS(c(fixed, auxvars))),
+  funlist <- list(covars = identify_functions(remove_lhs(c(fixed, auxvars))),
                   ranef = identify_functions(unlist(remove_grouping(random)))
   )
 

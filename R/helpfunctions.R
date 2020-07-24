@@ -441,7 +441,7 @@ get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
 
 
 
-  X <- model.matrix_combi(fmla = c(Mlist$fixed,
+  X <- model_matrix_combi(fmla = c(Mlist$fixed,
                                    unlist(remove_grouping(Mlist$random)),
                                    Mlist$auxvars),
                           data = gk_data, refs = Mlist$refs,
@@ -564,7 +564,7 @@ get_survinfo <- function(info_list, Mlist) {
                on which survival is measured.")
 
 
-    covars <- all_vars(remove_LHS(Mlist$fixed[[k]]))
+    covars <- all_vars(remove_lhs(Mlist$fixed[[k]]))
     covar_lvls <- sapply(Mlist$data[, covars], check_varlevel,
                          groups = Mlist$groups,
                          group_lvls = identify_level_relations(Mlist$groups))

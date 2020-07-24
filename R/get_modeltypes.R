@@ -61,7 +61,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
 
   # new version of allvars, without the grouping variable
   allvars <- unique(c(names(fixed),
-                      all_vars(c(remove_LHS(fixed), random2, auxvars)),
+                      all_vars(c(remove_lhs(fixed), random2, auxvars)),
                       names(models), timevar))
 
   group_lvls <- colSums(!identify_level_relations(groups))

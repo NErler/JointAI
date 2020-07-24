@@ -38,7 +38,7 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
 
     # check if there are time-varying covariates in the survival models
     haslong <- sapply(names(survinfo), function(k) {
-      covar_lvls <- datlvls[all_vars(remove_LHS(fixed[[k]]))]
+      covar_lvls <- datlvls[all_vars(remove_lhs(fixed[[k]]))]
       any(covar_lvls %in% longlvls)
     })
 
@@ -111,7 +111,7 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
   # identify covariates in the survival models
   covars <- unique(
     unlist(lapply(seq_along(survout), function(k) {
-      all_vars(remove_LHS(fixed[[k]]))
+      all_vars(remove_lhs(fixed[[k]]))
     })
     ))
 
@@ -216,7 +216,7 @@ extract_outcome_data <- function(fixed, random = NULL, data,
       } else if (analysis_type == "JM") "JM" else "survreg"
       names(fixed)[i] <- names(outnams[i])
     } else {
-      outcomes[[i]] <- split_outcome(LHS = extract_LHS(fixed[[i]]), data = data)
+      outcomes[[i]] <- split_outcome(lhs = extract_lhs(fixed[[i]]), data = data)
       nlev <- sapply(outcomes[[i]], function(x) length(levels(x)))
       varlvl <- sapply(outcomes[[i]], check_varlevel, groups = groups)
 
@@ -270,15 +270,15 @@ extract_outcome_data <- function(fixed, random = NULL, data,
 
 
 # used in extract_outcome_data() (2020-06-10)
-split_outcome <- function(LHS, data) {
+split_outcome <- function(lhs, data) {
   if (missing(data))
     stop("No data provided")
 
 
-  if (grepl("^cbind\\(", LHS)) {
-    LHS2 <- gsub("\\)$", '', gsub('^cbind\\(', '', LHS))
+  if (grepl("^cbind\\(", lhs)) {
+    lhs2 <- gsub("\\)$", '', gsub('^cbind\\(', '', lhs))
 
-    splitpos <- c(gregexpr(',', text = LHS2)[[1L]], nchar(LHS2) + 1L)
+    splitpos <- c(gregexpr(',', text = lhs2)[[1L]], nchar(lhs2) + 1L)
 
     if (splitpos[1L] > 0L) {
       start <- 1L
@@ -287,7 +287,7 @@ split_outcome <- function(LHS, data) {
       outlist <- list()
 
       while (start <= splitpos[length(splitpos)]) {
-        fct <- substr(LHS2, start, end)
+        fct <- substr(lhs2, start, end)
         fct <- gsub(" $", '', gsub("^ ", '', fct))
         var <- try(eval(parse(text = fct), envir = data), silent = TRUE)
 
@@ -298,7 +298,7 @@ split_outcome <- function(LHS, data) {
           } else fct
           outlist <- c(outlist, var)
           start <- splitpos[i] + 1L
-          end <- splitpos[i + 1L] - ifelse(splitpos[i + 1L] == nchar(LHS2), 0L, 1L)
+          end <- splitpos[i + 1L] - ifelse(splitpos[i + 1L] == nchar(lhs2), 0L, 1L)
           i <- i + 1L
         } else {
           end <- splitpos[i + 1L] - 1L
@@ -309,8 +309,8 @@ split_outcome <- function(LHS, data) {
       names(outdat) <- names(outlist)
 
     }} else {
-      outdat <- as.data.frame(eval(parse(text = LHS), envir = data))
-      names(outdat) <- LHS
+      outdat <- as.data.frame(eval(parse(text = lhs), envir = data))
+      names(outdat) <- lhs
     }
 
   return(outdat)
@@ -374,7 +374,7 @@ prep_covoutcomes <- function(dat) {
 # * model matrix combi ---------------------------------------------------------
 
 # used in divide_matrices and get_Mgk (2020-06-10)
-model.matrix_combi <- function(fmla, data, terms_list, refs) {
+model_matrix_combi <- function(fmla, data, terms_list, refs) {
   # list of model.frames
   mf_list <- lapply(terms_list, model.frame, data = data, na.action = na.pass)
 
@@ -382,7 +382,7 @@ model.matrix_combi <- function(fmla, data, terms_list, refs) {
   mats <- mapply(function(object, data, contr) {
     # get the subset of contrast matrices corresponding to the current formula
     # to avoid warning messages
-    covars <- sapply(attr(terms(as.formula(remove_LHS(object)[[1L]])),
+    covars <- sapply(attr(terms(as.formula(remove_lhs(object)[[1L]])),
                           "variables")[-1L], deparse, width.cutoff = 500L)
     contr_list <- contr[intersect(covars, names(contr))]
 
@@ -393,15 +393,15 @@ model.matrix_combi <- function(fmla, data, terms_list, refs) {
   SIMPLIFY = FALSE)
 
 
-  X <- mats[[1L]]
+  desgn_mat <- mats[[1L]]
 
 
   if (length(mats) > 1L) {
     for (i in seq_along(mats)[-1L]) {
-      X <- cbind(X, mats[[i]][, setdiff(colnames(mats[[i]]), colnames(X)),
+      desgn_mat <- cbind(desgn_mat, mats[[i]][, setdiff(colnames(mats[[i]]), colnames(desgn_mat)),
                               drop = FALSE])
 
-      if (length(setdiff(colnames(mf_list[[i]]), colnames(X))) > 0L) {
+      if (length(setdiff(colnames(mf_list[[i]]), colnames(desgn_mat))) > 0L) {
         # need to create matrix and check number of columns, because a spline
         # is one variable in the mf_list, but consists of multiple columns.
         # This gives an error when used in data.matrix(), and, moreover, is not
@@ -410,20 +410,20 @@ model.matrix_combi <- function(fmla, data, terms_list, refs) {
 
 
         mf_mat <- mf_list[[i]][, setdiff(colnames(mf_list[[i]]),
-                                         colnames(X)),
+                                         colnames(desgn_mat)),
                                drop = FALSE]
         mf_mat <- mf_mat[, sapply(mf_mat, function(k)
           !inherits(k, c("matrix", "Surv"))),
           drop = FALSE]
 
         if (ncol(mf_mat) > 0L) {
-          X <- cbind(X, data.matrix(mf_mat))
+          desgn_mat <- cbind(desgn_mat, data.matrix(mf_mat))
         }
       }
     }
   }
 
-  return(X)
+  return(desgn_mat)
 }
 
 
@@ -450,30 +450,30 @@ get_terms_list <- function(fmla, data) {
 # interactions -----------------------------------------------------------------
 
 # used in divide_matrices (2020-03-04)
-match_interaction <- function(inter, M) {
+match_interaction <- function(inter, desgn_mat_list) {
   # match interaction terms to their separate elements and check if any of these
   # elements have missing values
   # - inter: character vector of interaction terms
-  # - M: list of design matrices of different levels
+  # - desgn_mat_list: list of design matrices of different levels
 
-  Mnam <- sapply(M, colnames, simplify = FALSE)
+  desgn_mat_listnam <- sapply(desgn_mat_list, colnames, simplify = FALSE)
 
   out <- sapply(inter, function(i) {
     elmts <- strsplit(i, ":")[[1L]]
 
-    if (!any(is.na(c(match(i, unlist(Mnam)),
-                     sapply(elmts, match, unlist(Mnam)))))) {
+    if (!any(is.na(c(match(i, unlist(desgn_mat_listnam)),
+                     sapply(elmts, match, unlist(desgn_mat_listnam)))))) {
 
       # find matrix and column containing the interaction term
-      inter_match <- sapply(names(M), function(k) {
-        if (!is.na(match(i, Mnam[[k]]))) match(i, Mnam[[k]])
+      inter_match <- sapply(names(desgn_mat_list), function(k) {
+        if (!is.na(match(i, desgn_mat_listnam[[k]]))) match(i, desgn_mat_listnam[[k]])
       })
 
 
       # find matrices and columns of the elements
       elmt_match <- lapply(elmts, function(j) {
-        sapply(names(M), function(k) {
-          if (!is.na(match(j, Mnam[[k]]))) match(j, Mnam[[k]])
+        sapply(names(desgn_mat_list), function(k) {
+          if (!is.na(match(j, desgn_mat_listnam[[k]]))) match(j, desgn_mat_listnam[[k]])
         })
       })
 
@@ -484,7 +484,7 @@ match_interaction <- function(inter, M) {
           elmts = unlist(elmt_match)
         ),
         interaction = i, elements = elmts,
-        has_NAs = ifelse(any(sapply(M, function(x)
+        has_NAs = ifelse(any(sapply(desgn_mat_list, function(x)
           any(is.na(x[, elmts[elmts %in% colnames(x)]])))
         ), TRUE, FALSE)
       )
@@ -527,7 +527,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   # term labels.
   auxterms <- if (!is.null(auxvars)) attr(terms(auxvars), 'term.labels')
 
-  covar_terms <- c(all_vars(c(remove_LHS(fixed),
+  covar_terms <- c(all_vars(c(remove_lhs(fixed),
                               remove_grouping(random))),
                    auxterms)
 
@@ -547,7 +547,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   # for each fixed effects (main model) formula, get the column names of the
   # design matrix of the fixed effects
   lp <- sapply(fixed, function(fmla) {
-    covars <- sapply(attr(terms(as.formula(remove_LHS(fmla)[[1L]])),
+    covars <- sapply(attr(terms(as.formula(remove_lhs(fmla)[[1L]])),
                           "variables")[-1L], deparse, width.cutoff = 500L)
 
 
@@ -601,7 +601,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
     # get the names of the columns of the corresponding design matrix
     lp[[out]] <- colnames(
       model.matrix(fmla, subdat,
-                   contrasts.arg = contr_list[intersect(all_vars(remove_LHS(fmla)),
+                   contrasts.arg = contr_list[intersect(all_vars(remove_lhs(fmla)),
                                                         names(contr_list))]))
 
     # if the linear predictor is empty, create an empty object, to make the
@@ -616,7 +616,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
 
 
 
-get_nonprop_lp <- function(nonprop, Mlvls, data, refs, fixed) {
+get_nonprop_lp <- function(nonprop, dsgn_mat_lvls, data, refs, fixed) {
   # get the linear predictors of covariates with non-proportional effects in
   # cumulative logit (mixed) models
 
@@ -666,8 +666,8 @@ get_nonprop_lp <- function(nonprop, Mlvls, data, refs, fixed) {
                                  contrasts.arg = contr_list0))[-1L]
 
     # divide the names by the hierarchical level of the variable
-    sapply(unique(Mlvls), function(k) {
-      intersect(nam, names(Mlvls)[Mlvls == k])
+    sapply(unique(dsgn_mat_lvls), function(k) {
+      intersect(nam, names(dsgn_mat_lvls)[dsgn_mat_lvls == k])
     }, simplify = FALSE)
 
   }, simplify = FALSE)

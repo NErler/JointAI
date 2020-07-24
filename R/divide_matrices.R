@@ -67,14 +67,14 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # covariates -----------------------------------------------------------------
   # * preliminary design matrix ------------------------------------------------
-  X <- model.matrix_combi(fmla = c(fixed, auxvars), data = data, refs = refs,
+  X <- model_matrix_combi(fmla = c(fixed, auxvars), data = data, refs = refs,
                           terms_list = get_terms_list(fmla = c(fixed, auxvars),
                                                       data = data))
 
   # add auxiliary variables
   # - dummies for categorical variables
   # - timevar for survival model with time-varying covariates
-  av <- sapply(all_vars(remove_LHS(fixed)), function(i) {
+  av <- sapply(all_vars(remove_lhs(fixed)), function(i) {
     if (i %in% names(refs)) {
       all(attr(refs[[i]], "dummies") %in% colnames(X))
     } else {
@@ -95,7 +95,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
   # design matrix with updated auxiliary variables
   terms_list <- get_terms_list(
     fmla = c(fixed, unlist(remove_grouping(random)), auxvars), data = data)
-  X2 <- model.matrix_combi(
+  X2 <- model_matrix_combi(
     fmla = c(fixed, unlist(remove_grouping(random)), auxvars),
     data = data, refs = refs, terms_list = terms_list)
 
@@ -232,7 +232,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   # get the linear predictor variables that have non-proportional effects in
   # cumulative logit models
-  lp_nonprop <- get_nonprop_lp(nonprop, Mlvls, data, refs, fixed)
+  lp_nonprop <- get_nonprop_lp(nonprop, dsgn_mat_lvls = Mlvls,
+                               data, refs, fixed)
 
 
   # reduce the design matrices to the correct rows, according to their levels
