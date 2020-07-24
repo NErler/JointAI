@@ -24,11 +24,11 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
                     group_lvls = identify_level_relations(groups))
 
   # if there are multiple survival variables and some time-varying variables
-  if (length(survinfo) > 0 & any(datlvls[unlist(survinfo)] != 'lvlone')) {
+  if (length(survinfo) > 0L & any(datlvls[unlist(survinfo)] != 'lvlone')) {
 
     surv_lvls <- sapply(survinfo, function(x) {
       lvls <- datlvls[unlist(x)]
-      if (length(unique(lvls)) > 1)
+      if (length(unique(lvls)) > 1L)
         errormsg('The event time and status do not have the same level.')
 
       unique(lvls)
@@ -50,10 +50,10 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
         errormsg("For survival models with time-varying covariates the
                  argument %s needs to be specified.", dQuote("timevar"))
 
-      survtimes <- sapply(survinfo[haslong], "[[", 1)
+      survtimes <- sapply(survinfo[haslong], "[[", 1L)
 
       datsurv <- unique(subset(data, select = c(idvar, unique(survtimes))))
-      if (length(unique(survtimes)) > 1) {
+      if (length(unique(survtimes)) > 1L) {
         datsurv <- reshape(datsurv, direction = 'long',
                            varying = unique(survtimes),
                            v.names = timevar, idvar = unique(surv_lvls),
@@ -118,7 +118,7 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
   # identify which of the covariates are time-varying
   longvars <- intersect(covars, names(datlvls)[datlvls == 'lvlone'])
 
-  if (length(longvars) == 0)
+  if (length(longvars) == 0L)
     return(data)
 
   # add a variable identifying the original ordering of the rows in the data
@@ -152,7 +152,7 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
         })
       }
 
-      if (length(lastobs) > 0) x[isna, k] <- x[lastobs, k]
+      if (length(lastobs) > 0L) x[isna, k] <- x[lastobs, k]
     }
     x
   })
@@ -197,17 +197,17 @@ extract_outcome_data <- function(fixed, random = NULL, data,
 
       names(outcomes[[i]]) <- idSurv(names(outnams[i]))[c("time", "status")]
       nlev <- sapply(outcomes[[i]], function(x) length(levels(x)))
-      if (any(nlev > 2)) {
+      if (any(nlev > 2L)) {
         # ordinal variables have values 1, 2, 3, ...
-        outcomes[[i]][which(nlev > 2)] <- lapply(
-          outcomes[[i]][which(nlev > 2)],
+        outcomes[[i]][which(nlev > 2L)] <- lapply(
+          outcomes[[i]][which(nlev > 2L)],
           function(x) as.numeric(x)
         )
-      } else if (any(nlev == 2)) {
+      } else if (any(nlev == 2L)) {
         # binary variables have values 0, 1
-        outcomes[[i]][nlev == 2] <- lapply(
-          outcomes[[i]][nlev == 2],
-          function(x) as.numeric(x) - 1
+        outcomes[[i]][nlev == 2L] <- lapply(
+          outcomes[[i]][nlev == 2L],
+          function(x) as.numeric(x) - 1L
         )
       }
 
@@ -220,30 +220,30 @@ extract_outcome_data <- function(fixed, random = NULL, data,
       nlev <- sapply(outcomes[[i]], function(x) length(levels(x)))
       varlvl <- sapply(outcomes[[i]], check_varlevel, groups = groups)
 
-      if (any(nlev > 2)) {
+      if (any(nlev > 2L)) {
         # ordinal variables have values 1, 2, 3, ...
-        outcomes[[i]][which(nlev > 2)] <- lapply(
-          outcomes[[i]][which(nlev > 2)],
+        outcomes[[i]][which(nlev > 2L)] <- lapply(
+          outcomes[[i]][which(nlev > 2L)],
           function(x) as.numeric(x)
         )
         attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls),
                                            "clmm", "clm")
-      } else if (any(nlev == 2)) {
+      } else if (any(nlev == 2L)) {
         # binary variables have values 0, 1
-        outcomes[[i]][nlev == 2] <- lapply(
-          outcomes[[i]][nlev == 2],
-          function(x) as.numeric(x) - 1
+        outcomes[[i]][nlev == 2L] <- lapply(
+          outcomes[[i]][nlev == 2L],
+          function(x) as.numeric(x) - 1L
         )
 
         attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls),
           "glmm_binomial_logit", "glm_binomial_logit"
         )
-      } else if (any(nlev == 0)) {
+      } else if (any(nlev == 0L)) {
         # continuous variables
         attr(fixed[[i]], "type") <- ifelse(lvls[varlvl] < max(lvls),
                                            "lmm", "lm")
       }
-      if (i == 1) {
+      if (i == 1L) {
         attr(fixed[[i]], "type") <- if (
           isTRUE(analysis_type %in% c("glm", "lm"))) {
           paste(gsub("^lm$", "glm", analysis_type),
@@ -278,12 +278,12 @@ split_outcome <- function(LHS, data) {
   if (grepl("^cbind\\(", LHS)) {
     LHS2 <- gsub("\\)$", '', gsub('^cbind\\(', '', LHS))
 
-    splitpos <- c(gregexpr(',', text = LHS2)[[1]], nchar(LHS2) + 1)
+    splitpos <- c(gregexpr(',', text = LHS2)[[1L]], nchar(LHS2) + 1L)
 
-    if (splitpos[1] > 0) {
-      start <- 1
-      end <- splitpos[1] - 1
-      i <- 1
+    if (splitpos[1L] > 0L) {
+      start <- 1L
+      end <- splitpos[1L] - 1L
+      i <- 1L
       outlist <- list()
 
       while (start <= splitpos[length(splitpos)]) {
@@ -293,16 +293,16 @@ split_outcome <- function(LHS, data) {
 
         if (!inherits(var, 'try-error')) {
           var <- data.frame(var)
-          names(var) <- if (ncol(var) > 1) {
+          names(var) <- if (ncol(var) > 1L) {
             paste0(fct, seq_len(ncol(var)))
           } else fct
           outlist <- c(outlist, var)
-          start <- splitpos[i] + 1
-          end <- splitpos[i + 1] - ifelse(splitpos[i + 1] == nchar(LHS2), 0, 1)
-          i <- i + 1
+          start <- splitpos[i] + 1L
+          end <- splitpos[i + 1L] - ifelse(splitpos[i + 1L] == nchar(LHS2), 0L, 1L)
+          i <- i + 1L
         } else {
-          end <- splitpos[i + 1] - 1
-          i <- i + 1
+          end <- splitpos[i + 1L] - 1L
+          i <- i + 1L
         }
       }
       outdat <- as.data.frame(outlist)
@@ -335,7 +335,7 @@ outcomes_to_mat <- function(outcomes) {
     d2 <- duplicated(outlist_nosurv, fromLast = TRUE)
 
     d <- unique(unlist(outcomes$outnams[nosurv])[d1 | d2])
-    if (length(d) == 1) {
+    if (length(d) == 1L) {
       errormsg("You can only specify one model per outcome.
                The variable %s is used on the left hand side of more than one
                of the model formulas.", paste0(dQuote(d), collapse = ", "))
@@ -358,13 +358,13 @@ prep_covoutcomes <- function(dat) {
 
   nlev <- sapply(dat, function(x) length(levels(x)))
 
-  if (any(nlev > 2))
+  if (any(nlev > 2L))
     # ordinal/multinomial variables have values 1, 2, 3, ...
-    dat[nlev > 2] <- sapply(dat[nlev > 2], as.numeric)
+    dat[nlev > 2L] <- sapply(dat[nlev > 2L], as.numeric)
 
-  if (any(nlev == 2))
+  if (any(nlev == 2L))
     # binary variables have values 0, 1
-    dat[nlev == 2] <- sapply(dat[nlev == 2], as.numeric) - 1
+    dat[nlev == 2L] <- sapply(dat[nlev == 2L], as.numeric) - 1L
 
   data.matrix(dat)
 }
@@ -382,8 +382,8 @@ model.matrix_combi <- function(fmla, data, terms_list, refs) {
   mats <- mapply(function(object, data, contr) {
     # get the subset of contrast matrices corresponding to the current formula
     # to avoid warning messages
-    covars <- sapply(attr(terms(as.formula(remove_LHS(object)[[1]])),
-                          "variables")[-1], deparse, width.cutoff = 500)
+    covars <- sapply(attr(terms(as.formula(remove_LHS(object)[[1L]])),
+                          "variables")[-1L], deparse, width.cutoff = 500L)
     contr_list <- contr[intersect(covars, names(contr))]
 
     # obtain the model matrix using the pre-specified contrast matrices
@@ -393,15 +393,15 @@ model.matrix_combi <- function(fmla, data, terms_list, refs) {
   SIMPLIFY = FALSE)
 
 
-  X <- mats[[1]]
+  X <- mats[[1L]]
 
 
-  if (length(mats) > 1) {
-    for (i in seq_along(mats)[-1]) {
+  if (length(mats) > 1L) {
+    for (i in seq_along(mats)[-1L]) {
       X <- cbind(X, mats[[i]][, setdiff(colnames(mats[[i]]), colnames(X)),
                               drop = FALSE])
 
-      if (length(setdiff(colnames(mf_list[[i]]), colnames(X))) > 0) {
+      if (length(setdiff(colnames(mf_list[[i]]), colnames(X))) > 0L) {
         # need to create matrix and check number of columns, because a spline
         # is one variable in the mf_list, but consists of multiple columns.
         # This gives an error when used in data.matrix(), and, moreover, is not
@@ -416,7 +416,7 @@ model.matrix_combi <- function(fmla, data, terms_list, refs) {
           !inherits(k, c("matrix", "Surv"))),
           drop = FALSE]
 
-        if (ncol(mf_mat) > 0) {
+        if (ncol(mf_mat) > 0L) {
           X <- cbind(X, data.matrix(mf_mat))
         }
       }
@@ -459,7 +459,7 @@ match_interaction <- function(inter, M) {
   Mnam <- sapply(M, colnames, simplify = FALSE)
 
   out <- sapply(inter, function(i) {
-    elmts <- strsplit(i, ":")[[1]]
+    elmts <- strsplit(i, ":")[[1L]]
 
     if (!any(is.na(c(match(i, unlist(Mnam)),
                      sapply(elmts, match, unlist(Mnam)))))) {
@@ -547,8 +547,8 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   # for each fixed effects (main model) formula, get the column names of the
   # design matrix of the fixed effects
   lp <- sapply(fixed, function(fmla) {
-    covars <- sapply(attr(terms(as.formula(remove_LHS(fmla)[[1]])),
-                          "variables")[-1], deparse, width.cutoff = 500)
+    covars <- sapply(attr(terms(as.formula(remove_LHS(fmla)[[1L]])),
+                          "variables")[-1L], deparse, width.cutoff = 500L)
 
 
     contr_list0 <- contr_list[intersect(covars, names(contr_list))]
@@ -557,8 +557,8 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
     if (attr(fmla, 'type') %in% c('clm', 'clmm', 'coxph', "JM")) {
       # for ordinal and cox models, exclude the intercept
       colnam <- colnames(
-        model.matrix(fmla, data, contrasts.arg = contr_list0))[-1]
-      if (length(colnam) > 0) colnam
+        model.matrix(fmla, data, contrasts.arg = contr_list0))[-1L]
+      if (length(colnam) > 0L) colnam
     } else {
       colnames(model.matrix(fmla, data, contrasts.arg = contr_list0))
     }
@@ -593,7 +593,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
     covar_terms <- covar_terms[keep_terms]
 
     fmla <- as.formula(paste0(out, " ~ ",
-                              ifelse(length(covar_terms) == 0, '1',
+                              ifelse(length(covar_terms) == 0L, '1',
                                      paste0(covar_terms, collapse = " + ")),
                               if (nointercept) '-1'))
 
@@ -625,10 +625,10 @@ get_nonprop_lp <- function(nonprop, Mlvls, data, refs, fixed) {
   if (is.null(nonprop)) return(NULL)
 
   if (is.null(names(nonprop))) {
-    if (length(fixed) == 1 & inherits(nonprop, 'formula')) {
+    if (length(fixed) == 1L & inherits(nonprop, 'formula')) {
       nonprop <- list(nonprop)
       names(nonprop) <- names(fixed)
-    } else if (length(fixed) == 1 & inherits(nonprop, 'list')) {
+    } else if (length(fixed) == 1L & inherits(nonprop, 'list')) {
       names(nonprop) <- names(fixed)
     } else {
       errormsg("Please provide a named list of formulas to the argument %s,
@@ -663,7 +663,7 @@ get_nonprop_lp <- function(nonprop, Mlvls, data, refs, fixed) {
     contr_list0 <- contr_list[intersect(all_vars(fmla), names(contr_list))]
     # get the column names of the design matrix
     nam <- colnames(model.matrix(fmla, data = data,
-                                 contrasts.arg = contr_list0))[-1]
+                                 contrasts.arg = contr_list0))[-1L]
 
     # divide the names by the hierarchical level of the variable
     sapply(unique(Mlvls), function(k) {
