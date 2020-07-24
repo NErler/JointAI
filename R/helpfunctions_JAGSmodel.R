@@ -316,10 +316,10 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
 
       # write the syntax for other longitudinal variables
       other <- if (!is.null(info$hc_list$othervars[[lvl]])) {
-          paste_other(othervars = info$hc_list$othervars[[lvl]],
-                      parname = info$parname, index = index,
-                      scale_pars = info$scale_pars[[paste0("M_", lvl)]],
-                      scale_mat = paste0("spM_", lvl), isgk = isgk)
+        paste_other(othervars = info$hc_list$othervars[[lvl]],
+                    parname = info$parname, index = index,
+                    scale_pars = info$scale_pars[[paste0("M_", lvl)]],
+                    scale_mat = paste0("spM_", lvl), isgk = isgk)
       }
 
       # combine random intercept and slope
@@ -370,7 +370,7 @@ write_nonprop <- function(info, isgk = FALSE) {
                     scale_pars = info$scale_pars[[paste0("M_", lvl)]],
                     scale_mat = paste0("spM_", lvl), isgk = isgk)
       }
-  }, simplify = FALSE)
+    }, simplify = FALSE)
 
 
   apply(as.data.frame(nonprop), 1, paste0, collapse = " + ")
@@ -502,7 +502,7 @@ paste_o <- function(x, parname, index, scale_pars, scale_mat, isgk = FALSE) {
         rows = x$cols,
         scale_pars = scale_pars,
         scalemat = scale_mat),
-      sep = " * " ),
+      sep = " * "),
     collapse = " + ")
 }
 
@@ -511,8 +511,8 @@ paste_o <- function(x, parname, index, scale_pars, scale_mat, isgk = FALSE) {
 
 # used in JAGSmodels that use random effects (2020-06-10)
 write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
-  # This function writes the JAGSmodel part for the random effects
-  # distribution (b ~ N(..., ...))
+  # This function writes the JAGS model part for the random effects
+  # distribution
   # - lvl: the grouping level for the random effects
   # - info: element of info_list, containing all necessary information to
   #         write a JAGS sub-model for a given variable
@@ -520,7 +520,7 @@ write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
   # - rdslopes: list of list of random slope linear predictors as strings
 
   # specify distribution for the random effects, based on their dimension
-  norm.distr  <- if (info$nranef[lvl] < 2) {"dnorm"} else {"dmnorm"}
+  norm.distr  <- ifelse(info$nranef[lvl] < 2, "dnorm", "dmnorm")
 
   # write the model part for the random effects distribution
   paste0(
@@ -542,9 +542,7 @@ write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
 
 # used in write_ranefs() (2020-06-10)
 paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
-  # write the mean structure of the random effects specification, i.e.
-  # mu_b[i, 1] <- ...
-  # mu_b[i, 2] <- ... etc.
+  # write the specification for the mean  of the random effects
 
   # - rdintercept: string of random intercept linear predictor (one string)
   # - rdslopes: list of random slope linear predictors (as strings)
@@ -622,9 +620,9 @@ ranef_priors <- function(nranef, varname) {
              "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)", "\n",
              tab(), "}", "\n")
          },
-         tab(), "invD_", varname, "[1:", nranef, ", 1:", nranef,"] ~ ",
+         tab(), "invD_", varname, "[1:", nranef, ", 1:", nranef, "] ~ ",
          invD_distr, "\n",
-         tab(), "D_", varname, "[1:", nranef,", 1:", nranef,
+         tab(), "D_", varname, "[1:", nranef, ", 1:", nranef,
          "] <- inverse(invD_", varname, "[ , ])"
   )
 }
@@ -732,9 +730,9 @@ paste_underlvalue <- function(varname, covname, index, isgk, ...) {
   # - ...: for compatibility of syntax with other association structure type
   #        functions
 
-  if (isgk) # "mugk_covname[i, k]"
+  if (isgk)
     paste0("mugk_", covname, "[", index, ", k]")
-  else # "mu_covname[srow_varname[i]]"
+  else
     paste0("mu_", covname, "[srow_", varname, "[", index, "]]")
 }
 
@@ -998,28 +996,31 @@ get_secndpar <- function(family, varname) {
   }
 
   switch(family,
-    "gaussian" = paste0(
-      "\n",
-      tab(), "tau_", varname, " ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
-      tab(), "sigma_", varname, " <- sqrt(1/tau_", varname, ")"
-    ),
-    "binomial" = NULL,
-    "Gamma" = paste0(
-      "\n",
-      tab(), "tau_", varname, " ~ dgamma(shape_tau_gamma, rate_tau_gamma)",
-      "\n",
-      tab(), "sigma_", varname, " <- sqrt(1/tau_", varname, ")"
-    ),
-    "poisson" = NULL,
-    "lognorm" = paste0(
-      "\n",
-      tab(), "tau_", varname, " ~ dgamma(shape_tau_norm, rate_tau_norm)", "\n",
-      tab(), "sigma_", varname, " <- sqrt(1/tau_", varname, ")"
-    ),
-    "beta" = paste0(
-      "\n",
-      tab(), "tau_", varname, " ~ dgamma(shape_tau_beta, rate_tau_beta)", "\n"
-    )
+         "gaussian" = paste0(
+           "\n",
+           tab(), "tau_", varname, " ~ dgamma(shape_tau_norm, rate_tau_norm)",
+           "\n",
+           tab(), "sigma_", varname, " <- sqrt(1/tau_", varname, ")"
+         ),
+         "binomial" = NULL,
+         "Gamma" = paste0(
+           "\n",
+           tab(), "tau_", varname, " ~ dgamma(shape_tau_gamma, rate_tau_gamma)",
+           "\n",
+           tab(), "sigma_", varname, " <- sqrt(1/tau_", varname, ")"
+         ),
+         "poisson" = NULL,
+         "lognorm" = paste0(
+           "\n",
+           tab(), "tau_", varname, " ~ dgamma(shape_tau_norm, rate_tau_norm)",
+           "\n",
+           tab(), "sigma_", varname, " <- sqrt(1/tau_", varname, ")"
+         ),
+         "beta" = paste0(
+           "\n",
+           tab(), "tau_", varname, " ~ dgamma(shape_tau_beta, rate_tau_beta)",
+           "\n"
+         )
   )
 }
 
@@ -1092,7 +1093,7 @@ write_probs <- function(info, index, isgk = FALSE, indent = 4) {
          tab(indent), paste_p(info$ncat), " <- ",
          if (isTRUE(info$rev)) {
            paste0("1 - ", minmax(paste0("sum(", paste_p(1:(info$ncat - 1)), ")")
-                                 ))
+           ))
          } else {
            minmax(paste_ps(info$ncat - 1))
          }
@@ -1112,7 +1113,7 @@ write_logits <- function(info, index, nonprop = FALSE, isgk = FALSE,
                             .isgk = isgk) {
                      paste0(tab(indent), "logit(", paste_ps(k),
                             ") <- gamma_", info$varname, "[", k, "]",
-                            " + eta_", info$varname,"[", index, "]",
+                            " + eta_", info$varname, "[", index, "]",
                             if (nonprop) {
                               paste0(" + eta_", info$varname, "_", k,
                                      "[", index, "]")
