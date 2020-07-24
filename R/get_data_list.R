@@ -3,15 +3,15 @@
 # # # # # # # # # # # # # # # # # # # # #
 
 get_data_list <- function(Mlist, info_list, hyperpars) {
-  modeltypes <- sapply(info_list, "[[", "modeltype")
+  modeltypes <- cvapply(info_list, "[[", "modeltype")
 
   # data matrices --------------------------------------------------------------
   l <- Mlist$M
 
   # scaling parameters ---------------------------------------------------------
-  incl_sp <- sapply(Mlist$scale_pars, function(x) {
+  incl_sp <- lvapply(Mlist$scale_pars, function(x) {
     # identify all variables on the RHS of any formula
-    predvars <- unique(c(unlist(sapply(Mlist$lp_cols, sapply, names)),
+    predvars <- unique(c(unlist(lapply(Mlist$lp_cols, cvapply, names)),
                          all_vars(remove_grouping(Mlist$random))))
 
     # check if there are scaling parameters available for these predictor
@@ -38,12 +38,12 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 
   l <- c(l, unlist(unname(hyp[
     c(
-      if (any(sapply(info_list, "[[", "family") %in% c("gaussian", "lognorm")))
+      if (any(cvapply(info_list, "[[", "family") %in% c("gaussian", "lognorm")))
         "norm",
-      if (any(sapply(info_list, "[[", "family") %in% "Gamma")) "gamma",
-      if (any(sapply(info_list, "[[", "family") %in% "beta")) "beta",
-      if (any(sapply(info_list, "[[", "family") %in% "binomial")) "binom",
-      if (any(sapply(info_list, "[[", "family") %in% "poisson")) "poisson",
+      if (any(cvapply(info_list, "[[", "family") %in% "Gamma")) "gamma",
+      if (any(cvapply(info_list, "[[", "family") %in% "beta")) "beta",
+      if (any(cvapply(info_list, "[[", "family") %in% "binomial")) "binom",
+      if (any(cvapply(info_list, "[[", "family") %in% "poisson")) "poisson",
       if (any(modeltypes %in% c("mlogit", "mlogitmm"))) "multinomial",
       if (any(modeltypes %in% c("clm", "clmm"))) "ordinal",
       if (any(modeltypes %in% c("survreg", "coxph", "JM"))) "surv"
@@ -54,11 +54,11 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
   # if there are no regression coefficients in the ordinal models, remove the
   # hyperpars for regression coefficients in ordinal models to prevent warning
   # message from JAGS
-  clm_parelmts <- sapply(info_list[modeltypes %in% c("clm", "clmm")],
-                         "[[", "parelmts")
+  clm_parelmts <- nlapply(info_list[modeltypes %in% c("clm", "clmm")],
+                          "[[", "parelmts")
 
   if (length(
-    unlist(c(clm_parelmts, sapply(clm_parelmts, lapply, "attr", "nonprop")))
+    unlist(c(clm_parelmts, lapply(clm_parelmts, lapply, "attr", "nonprop")))
   ) == 0L) {
     l[c("mu_reg_ordinal", "tau_reg_ordinal")] <- NULL
   }
@@ -75,11 +75,11 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
     # get the position (row) of a given observation
     # - to identify the correct rows between different sub-levels
     # - pos is only needed when there are multiple grouping levels
-    pos <- sapply(groups[!names(groups) %in%
+    pos <- nlapply(groups[!names(groups) %in%
                            names(which.max(Mlist$group_lvls))],
                   function(x) {
                     match(unique(x), x)
-                  }, simplify = FALSE)
+                  })
 
     names(groups) <- paste0("group_", names(groups))
     names(pos) <- if (length(pos) > 0L) paste0("pos_", names(pos))
@@ -104,8 +104,8 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
                         lapply(names(x$hc_list$hcvars), function(k) {
                           nranef <- x$nranef[k]
                           setNames(get_RinvD(nranef, hyp$ranef["KinvD_expr"]),
-                            paste(c("RinvD", "KinvD"), x$varname,
-                                  k, sep = "_")
+                                   paste(c("RinvD", "KinvD"), x$varname,
+                                         k, sep = "_")
                           )
                         })), recursive = FALSE)
                     })
@@ -129,10 +129,11 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
         )
       }
 
-      l[[x$varname]] <- ifelse(Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]] == 1L,
-                               Mlist$M[[x$resp_mat[1L]]][, x$resp_col[1L]],
-                               NA
-      )
+      l[[x$varname]] <- if (Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]] == 1L) {
+        Mlist$M[[x$resp_mat[1L]]][, x$resp_col[1L]]
+      } else {
+        NA
+      }
     }
   }
 
@@ -154,11 +155,11 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
     survinfo <- get_survinfo(info_list, Mlist)
 
     for (x in survinfo) {
-    # if there are time-varying covariates, identify the rows of the
-    # longitudinal variable that correspond to the event times
+      # if there are time-varying covariates, identify the rows of the
+      # longitudinal variable that correspond to the event times
       if (x$haslong) {
         srow <- which(Mlist$M$M_lvlone[, Mlist$timevar] ==
-                           x$survtime[Mlist$groups[[x$surv_lvl]]])
+                        x$survtime[Mlist$groups[[x$surv_lvl]]])
 
         if (length(srow) != length(unique(Mlist$groups[[x$surv_lvl]])))
           errormsg("The number of observations for survival differs from the
@@ -184,20 +185,20 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
     }
 
 
-    if (any(sapply(survinfo, "[[", "haslong"))) {
+    if (any(lvapply(survinfo, "[[", "haslong"))) {
 
       # what is the level of the survival outcome?
-      surv_lvl <- unique(sapply(survinfo, "[[", "surv_lvl"))
+      surv_lvl <- unique(cvapply(survinfo, "[[", "surv_lvl"))
 
       if (length(surv_lvl) > 1L)
         errormsg("It is not possible to fit survival models on different
                  levels of the data.")
 
-      if (length(unique(sapply(survinfo, "[[", "time_name"))) > 1L)
+      if (length(unique(cvapply(survinfo, "[[", "time_name"))) > 1L)
         errormsg("It is currently not possible to fit multiple survival
                   models with different event time variables.")
 
-      if (length(unique(sapply(survinfo, "[[", "modeltype"))) > 1L)
+      if (length(unique(cvapply(survinfo, "[[", "modeltype"))) > 1L)
         errormsg("It is not possible to simultaneously fit coxph and JM
                  models.")
 
@@ -205,16 +206,16 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
       # create the design matrix of time-varying data using the Gauss-Kronrod
       # quadrature points for time
       mat_gk <- get_matgk(Mlist, gkx, surv_lvl, survinfo, data = Mlist$data,
-                          td_cox = unique(sapply(survinfo, "[[", "modeltype")) ==
+                          td_cox = unique(cvapply(survinfo, "[[", "modeltype")) ==
                             "coxph")
 
       # for survival models, there can only be one level below the level of the
       # survival outcome (i.e., time-varying variables have level 1, survival
       # outcome has level 2)
       l$M_lvlonegk <- array(data = unlist(mat_gk),
-                              dim = c(nrow(mat_gk[[1L]]), ncol(mat_gk[[1L]]),
-                                      length(gkx)),
-                              dimnames = list(NULL, dimnames(mat_gk)[[2L]], NULL)
+                            dim = c(nrow(mat_gk[[1L]]), ncol(mat_gk[[1L]]),
+                                    length(gkx)),
+                            dimnames = list(NULL, dimnames(mat_gk)[[2L]], NULL)
       )
     }
 
@@ -251,7 +252,7 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
   #   }
   # }
 
-  return(l[!sapply(l, is.null)])
+  l[!lvapply(l, is.null)]
 }
 
 
