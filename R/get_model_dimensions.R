@@ -38,11 +38,11 @@ get_model_dim <- function(lp_cols, Mlist) {
   if (!is.list(lp_cols))
     errormsg("%s is not a list, but I expected a list!", dQuote("lp_cols"))
 
-    par_index_list <- sapply(names(lp_cols), function(i) {
+    par_index_list <- nlapply(names(lp_cols), function(i) {
       get_1model_dim(lp_cols = lp_cols[[i]], modeltype = Mlist$models[i],
                      ncat = length(levels(Mlist$refs[[i]])),
                      lp_nonprop = Mlist$lp_nonprop[[i]])
-    }, simplify = FALSE)
+    })
 
     for (i in seq_along(par_index_list)[-1]) {
       par_index_list[[i]] <- par_index_list[[i]] +

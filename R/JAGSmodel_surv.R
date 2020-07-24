@@ -33,7 +33,7 @@ JAGSmodel_survreg <- function(info) {
   # predictor. This is necessary to detect if a time-varying covariate is
   # used. This is not implemented for parametric survival models, but there is
   # currently no other check for this.
-  check_lp_in_eta <- sapply(names(info$lp), function(k) {
+  check_lp_in_eta <- lvapply(names(info$lp), function(k) {
     (grepl(k, eta) |
        grepl(paste0("\\bb_", info$varname, "_", gsub("M_", "", k), "\\b"), eta))
   })
