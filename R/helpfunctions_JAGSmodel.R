@@ -797,7 +797,7 @@ paste_interactions <- function(interactions, group_lvls, N) {
 
   # select only those interactions in which incomplete variables are involved
   interactions <- interactions[vapply(interactions, "attr", "has_NAs",
-                                      FUN.VALUE = character(1))]
+                                      FUN.VALUE = logical(1))]
 
   # determine the minimal level for each interaction (this is the level on
   # which the interaction has to be calculated; observations from higher level
