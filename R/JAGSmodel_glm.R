@@ -25,7 +25,7 @@ JAGSmodel_glm <- function(info) {
                    beta = nchar(info$varname) + 14 + linkindent
   )
 
-  modelname <- get_GLM_modelname(info$family)
+  modelname <- get_glm_modelname(info$family)
 
   # * truncation ---------------------------------------------------------------
   trunc <- if (!is.null(info$trunc)) {

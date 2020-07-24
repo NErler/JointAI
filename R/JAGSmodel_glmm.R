@@ -14,7 +14,7 @@ JAGSmodel_glmm <- function(info) {
 
   secndpar <- get_secndpar(family = info$family, varname = info$varname)
 
-  modelname <- get_GLM_modelname(info$family)
+  modelname <- get_glm_modelname(info$family)
 
   linkindent <- get_linkindent(info$link)
 

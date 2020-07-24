@@ -282,7 +282,7 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
 
 
   # for all grouping levels above or equal to the outcome level do:
-  Zlp <- sapply(
+  lp_ranef <- sapply(
     names(info$group_lvls)[info$group_lvls >= info$group_lvls[resplvl]],
     function(lvl) {
       # find the correct specification of the index. This depends on the level
@@ -334,8 +334,8 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
       )
     }, simplify = FALSE)
 
-  if (any(!vapply(Zlp, is.null, FUN.VALUE = logical(1)))) {
-    apply(as.data.frame(unlist(Zlp, recursive = FALSE)),
+  if (any(!vapply(lp_ranef, is.null, FUN.VALUE = logical(1)))) {
+    apply(as.data.frame(unlist(lp_ranef, recursive = FALSE)),
           1, paste0, collapse = " + ")
   } else {
     "0"
@@ -632,7 +632,7 @@ ranef_priors <- function(nranef, varname) {
 
 # Joint model ------------------------------------------------------------------
 
-paste_linpred_JM <- function(varname, parname, parelmts, matnam, index, cols,
+paste_linpred_jm <- function(varname, parname, parelmts, matnam, index, cols,
                              scale_pars, assoc_type, covnames, isgk = FALSE) {
   # - varname: name of the survival outcome
   # - parname: name of the parameter, e.g. "beta"
@@ -670,7 +670,7 @@ paste_linpred_JM <- function(varname, parname, parelmts, matnam, index, cols,
 }
 
 
-# used in paste_linpred_JM() (2020-06-10)
+# used in paste_linpred_jm() (2020-06-10)
 paste_association <- function(varname, covnames, matname, index, columns,
                               assoc_type, isgk) {
 
@@ -780,14 +780,14 @@ paste_dummies <- function(resp_mat, resp_col, dummy_cols, index, refs, ...) {
 
 
 # used in write_model() (2020-06-11)
-paste_interactions <- function(interactions, group_lvls, N) {
+paste_interactions <- function(interactions, group_lvls, n) {
   #
   # - interactions: list with interaction information (names of matrices and
   #                 column numbers of the  interaction term and the elements
   #                 of the interaction, and the info if missing values are
-  #                 infolved; obtained from Mlist)
+  #                 involved; obtained from Mlist)
   # - group_lvls: vector of order of the grouping levels
-  # - N: vector of the number of observations per grouping level
+  # - n: vector of the number of observations per grouping level
 
 
   # determine which index should be used for each of the levels
@@ -812,7 +812,7 @@ paste_interactions <- function(interactions, group_lvls, N) {
     sapply(unique(minlvl), function(lvl) {
       paste0(
         tab(),
-        "for (", index[lvl], " in 1:", N[lvl], ") {\n",
+        "for (", index[lvl], " in 1:", n[lvl], ") {\n",
         paste0(
           sapply(interactions[which(minlvl == lvl)], function(x) {
             paste0(
@@ -1025,7 +1025,7 @@ get_secndpar <- function(family, varname) {
 
 
 # used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
-get_GLM_modelname <- function(family) {
+get_glm_modelname <- function(family) {
   # obtain model name to be printed in JAGSmodel for GLM(M)
 
   if (is.null(family)) return(NULL)

@@ -153,7 +153,7 @@ JAGSmodel_coxph <- function(info) {
     c(paste0("logh0_", info$varname, "[", index, "] + eta_", info$varname,
              "[", index, "]"),
       if (info$resp_mat[2] != "M_lvlone") {
-        paste_linpred_JM(varname = info$varname,
+        paste_linpred_jm(varname = info$varname,
                          parname = info$parname,
                          parelmts = info$parelmts[["M_lvlone"]],
                          matnam = "M_lvlone",
@@ -172,7 +172,7 @@ JAGSmodel_coxph <- function(info) {
     paste0(
       c(paste0("gkw[k] * exp(logh0s_", info$varname, "[", index, ", k]"),
         if (info$resp_mat[2] != "M_lvlone") {
-          paste_linpred_JM(varname = info$varname,
+          paste_linpred_jm(varname = info$varname,
                            parname = info$parname,
                            parelmts = info$parelmts[["M_lvlone"]],
                            matnam = "M_lvlone",
@@ -307,7 +307,7 @@ JAGSmodel_JM <- function(info) {
     c(paste0("logh0_", info$varname, "[", index, "] + eta_", info$varname,
              "[", index, "]"),
       if (info$resp_mat[2] != "M_lvlone") {
-        paste_linpred_JM(varname = info$varname,
+        paste_linpred_jm(varname = info$varname,
                          parname = info$parname,
                          parelmts = info$parelmts[["M_lvlone"]],
                          matnam = "M_lvlone",
@@ -325,7 +325,7 @@ JAGSmodel_JM <- function(info) {
     paste0(
       c(paste0("gkw[k] * exp(logh0s_", info$varname, "[", index, ", k]"),
         if (info$resp_mat[2] != "M_lvlone") {
-          paste_linpred_JM(varname = info$varname,
+          paste_linpred_jm(varname = info$varname,
                            parname = info$parname,
                            parelmts = info$parelmts[["M_lvlone"]],
                            matnam = "M_lvlone",
