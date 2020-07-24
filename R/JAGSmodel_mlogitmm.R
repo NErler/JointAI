@@ -1,4 +1,4 @@
-JAGSmodel_mlogitmm <- function(info) {
+jagsmodel_mlogitmm <- function(info) {
 
   # specify indent width and index character to be used
   indent <- 4 + 8 + nchar(info$varname) + 11

@@ -148,9 +148,9 @@ paste_scale <- function(x, row, scalemat) {
 
 
 
-# paste rd. effects into JAGSmodel ---------------------------------------------
+# paste rd. effects into jagsmodel ---------------------------------------------
 
-# used in JAGSmodels that use random effects (2020-06-10)
+# used in jagsmodels that use random effects (2020-06-10)
 paste_rdslope_lp <- function(info, isgk = FALSE) {
   # Create a list of lists containing the linear predictors of the random
   # effects (slopes + interactions with slopes, no random intercept here).
@@ -223,7 +223,7 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
 }
 
 
-# used in JAGSmodels that use random effects (2020-06-10)
+# used in jagsmodels that use random effects (2020-06-10)
 paste_rdintercept_lp <- function(info) {
   # returns a list with an element per grouping level, containing the linear
   # predictor (or 0) which is the mean of the random intercept distribution
@@ -509,7 +509,7 @@ paste_o <- function(x, parname, index, scale_pars, scale_mat, isgk = FALSE) {
 
 
 
-# used in JAGSmodels that use random effects (2020-06-10)
+# used in jagsmodels that use random effects (2020-06-10)
 write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
   # This function writes the JAGS model part for the random effects
   # distribution
@@ -595,7 +595,7 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
 
 
 
-# used in JAGSmodels that use random effects (2020-06-10)
+# used in jagsmodels that use random effects (2020-06-10)
 ranef_priors <- function(nranef, varname) {
   # write prior distribution part for random effects variance parameters
   # - nranef: number/dimension of the random effects
@@ -744,7 +744,7 @@ paste_underlvalue <- function(varname, covname, index, isgk, ...) {
 
 # paste other model parts ------------------------------------------------------
 
-# used in JAGSmodels with categorical outcomes (2020-06-16)
+# used in jagsmodels with categorical outcomes (2020-06-16)
 paste_dummies <- function(resp_mat, resp_col, dummy_cols, index, refs, ...) {
   # write the syntax assigning values to the dummies based on the values of a
   # categorical variable
@@ -841,7 +841,7 @@ paste_interactions <- function(interactions, group_lvls, n) {
 }
 
 
-# used in JAGSmodels (2020-06-11)
+# used in jagsmodels (2020-06-11)
 get_priordistr <- function(shrinkage, type, family = NULL, link = NULL,
                            parname) {
   # write specification fo the prior distribution for the regression parameters,
@@ -884,7 +884,7 @@ get_priordistr <- function(shrinkage, type, family = NULL, link = NULL,
 
 # * distribution ---------------------------------------------------------------
 
-# used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
+# used in jagsmodel_glm and jagsmodel_glmm (2020-06-11)
 get_distr <- function(family, varname, index, isgk = FALSE) {
   # write the outcome distribution model (right hand side) for a GLM(M)
   # JAGS model
@@ -924,7 +924,7 @@ get_distr <- function(family, varname, index, isgk = FALSE) {
 
 # * link -----------------------------------------------------------------------
 
-# used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
+# used in jagsmodel_glm and jagsmodel_glmm (2020-06-11)
 get_linkfun <- function(link) {
   # write the link function string for a GLM(M) JAGS model
 
@@ -946,7 +946,7 @@ get_linkfun <- function(link) {
 
 # * re-parametrization ---------------------------------------------------------
 
-# used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
+# used in jagsmodel_glm and jagsmodel_glmm (2020-06-11)
 get_repar <- function(family, varname, index, isgk = FALSE) {
   # write the syntax to calculate the re-parametrization in GLM(M) JAGS model
 
@@ -986,7 +986,7 @@ get_repar <- function(family, varname, index, isgk = FALSE) {
 
 # * prior for a second parameter -----------------------------------------------
 
-# used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
+# used in jagsmodel_glm and jagsmodel_glmm (2020-06-11)
 get_secndpar <- function(family, varname) {
   # write syntax for second parameter (typically precision or variance) in
   # GLM(M) JAGS model
@@ -1025,9 +1025,9 @@ get_secndpar <- function(family, varname) {
 }
 
 
-# used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
+# used in jagsmodel_glm and jagsmodel_glmm (2020-06-11)
 get_glm_modelname <- function(family) {
-  # obtain model name to be printed in JAGSmodel for GLM(M)
+  # obtain model name to be printed in jagsmodel for GLM(M)
 
   if (is.null(family)) return(NULL)
 
@@ -1042,7 +1042,7 @@ get_glm_modelname <- function(family) {
 }
 
 
-# used in JAGSmodel_glm and JAGSmodel_glmm (2020-06-11)
+# used in jagsmodel_glm and jagsmodel_glmm (2020-06-11)
 get_linkindent <- function(link) {
   # get number of characters that lines after a line break in the  linear
   # predictor of a GLM(M) JAGS model should be indented

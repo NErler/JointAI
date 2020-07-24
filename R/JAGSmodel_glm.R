@@ -1,4 +1,4 @@
-JAGSmodel_glm <- function(info) {
+jagsmodel_glm <- function(info) {
 
   index <- info$index[gsub('M_', '', info$resp_mat)]
   N <- info$N[gsub("M_", '', info$resp_mat)]

@@ -1,4 +1,4 @@
-JAGSmodel_clmm <- function(info) {
+jagsmodel_clmm <- function(info) {
 
   if (info$ncat < 3)
     errormsg("A cumulative logit mixed model is supposed to be fitted for the
@@ -131,7 +131,7 @@ JAGSmodel_clmm <- function(info) {
 }
 
 
-clmm_in_JM <- function(info) {
+clmm_in_jm <- function(info) {
 
   # specify indent width and index character to be used
   index <- info$index[info$surv_lvl]

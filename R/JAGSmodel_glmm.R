@@ -1,5 +1,5 @@
 
-JAGSmodel_glmm <- function(info) {
+jagsmodel_glmm <- function(info) {
 
   index <- info$index[gsub('M_', '', info$resp_mat)]
 
@@ -109,7 +109,7 @@ JAGSmodel_glmm <- function(info) {
 
 
 
-glmm_in_JM <- function(info) {
+glmm_in_jm <- function(info) {
   index <- info$index[info$surv_lvl]
 
 

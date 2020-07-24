@@ -102,7 +102,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   })
 
 
-  test_that("there are no duplicate betas/alphas in the JAGSmodel", {
+  test_that("there are no duplicate betas/alphas in the jagsmodel", {
     expect_null(unlist(lapply(models[!grepl("m4[[:alpha:]]+", names(models))],
                               find_dupl_parms)))
 
@@ -146,9 +146,9 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     print_output(lapply(models, "[[", "data_list"))
   })
 
-  test_that("JAGSmodel remaines the same", {
+  test_that("jagsmodel remaines the same", {
     skip_on_cran()
-    print_output(lapply(models, "[[", "JAGSmodel"))
+    print_output(lapply(models, "[[", "jagsmodel"))
   })
 
 

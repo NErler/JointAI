@@ -1,5 +1,5 @@
 
-JAGSmodel_mlogit <- function(info) {
+jagsmodel_mlogit <- function(info) {
 
   # specify indent width and index character to be used
   index <- info$index[gsub("M_", "", info$resp_mat)]

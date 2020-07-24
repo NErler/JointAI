@@ -1,8 +1,8 @@
 find_dupl_parms <- function(mod) {
-  betas <- unlist(regmatches(mod$JAGSmodel,
-                             gregexpr('beta[[[:digit:]]+]', mod$JAGSmodel)))
-  alphas <- unlist(regmatches(mod$JAGSmodel,
-                              gregexpr('alpha[[[:digit:]]+]', mod$JAGSmodel)))
+  betas <- unlist(regmatches(mod$jagsmodel,
+                             gregexpr('beta[[[:digit:]]+]', mod$jagsmodel)))
+  alphas <- unlist(regmatches(mod$jagsmodel,
+                              gregexpr('alpha[[[:digit:]]+]', mod$jagsmodel)))
 
   c(if (any(duplicated(betas)))
     betas[duplicated(betas)],

@@ -1,5 +1,5 @@
 # parametric survival model ---------------------------------------------------
-JAGSmodel_survreg <- function(info) {
+jagsmodel_survreg <- function(info) {
 
   # specify indent width and index
   indent <- 4L + 9L + nchar(info$varname) + 10L
@@ -119,7 +119,7 @@ JAGSmodel_survreg <- function(info) {
 
 
 # Cox PH model ----------------------------------------------------------------
-JAGSmodel_coxph <- function(info) {
+jagsmodel_coxph <- function(info) {
 
   # specify indent width and index
   index <- info$index[gsub("M_", "", info$resp_mat[2L])]
@@ -262,7 +262,7 @@ JAGSmodel_coxph <- function(info) {
 
 
 # Joint model ------------------------------------------------------------------
-JAGSmodel_JM <- function(info) {
+jagsmodel_jm <- function(info) {
 
   # check if a transformation of time-dependent covariate is used
   # (not yet implemented)
@@ -363,7 +363,7 @@ JAGSmodel_JM <- function(info) {
          tab(6L), "Surv_", info$varname, "[", index, ", k] <- ",
          add_linebreaks(surv_predictor, indent = indent + 6L),
          "\n\n",
-         paste0(unlist(lapply(info$tv_vars, gkmodel_in_JM, index = index)),
+         paste0(unlist(lapply(info$tv_vars, gkmodel_in_jm, index = index)),
                 collapse = "\n"),
          tab(4L), "}", "\n\n",
 
@@ -414,8 +414,8 @@ JAGSmodel_JM <- function(info) {
 
 }
 
-gkmodel_in_JM <- function(info, index) {
+gkmodel_in_jm <- function(info, index) {
   switch(info$modeltype,
-         "glmm" = glmm_in_JM(info),
-         "clmm" = clmm_in_JM(info))
+         "glmm" = glmm_in_jm(info),
+         "clmm" = clmm_in_jm(info))
 }

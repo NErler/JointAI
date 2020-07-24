@@ -112,7 +112,7 @@ file](https://nerler.github.io/JointAI/reference/model_imp.html).
       environment they were run in: the element `comp_info` contains the
       time-stamp the model was fitted, the duration of the computation, the
       JointAI version number and the R session info.
-    * The JAGS model is stored as character string in the element `JAGSmodel`.
+    * The JAGS model is stored as character string in the element `jagsmodel`.
 * The arguments `warn` and `mess` now also affect the output of **rjags**.
 * The **doFuture** package is used for parallel computation instead of
   **doParallel**. Parallel computation is specified by setting a

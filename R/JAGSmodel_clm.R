@@ -1,5 +1,5 @@
 # Cumulative logit model
-JAGSmodel_clm <- function(info) {
+jagsmodel_clm <- function(info) {
 
   if (info$ncat < 3) {
     errormsg("A cumulative logit mixed model is supposed to be fitted for the

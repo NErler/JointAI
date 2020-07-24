@@ -12,7 +12,7 @@ make_filename <- function(modeldir, modelname, keep_model, overwrite, mess) {
   # generate default name for model file if not specified
   if (is.null(modeldir)) modeldir <- tempdir()
   if (is.null(modelname)) {
-    modelname <- paste0("JointAI_JAGSmodel_",
+    modelname <- paste0("JointAI_jagsmodel_",
                         format(Sys.time(), "%Y-%m-%d_%H-%M"),
                         "_", sample.int(1e6, 1), ".R")
   } else {
