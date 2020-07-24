@@ -14,7 +14,7 @@ make_filename <- function(modeldir, modelname, keep_model, overwrite, mess) {
   if (is.null(modelname)) {
     modelname <- paste0("JointAI_jagsmodel_",
                         format(Sys.time(), "%Y-%m-%d_%H-%M"),
-                        "_", sample.int(1e6, 1), ".R")
+                        "_", sample.int(1.0e6, 1L), ".R")
   } else {
     keep_model <- TRUE
   }
@@ -30,7 +30,7 @@ make_filename <- function(modeldir, modelname, keep_model, overwrite, mess) {
     reply <- menu(c("yes", "no"),
                   title = "\nDo you want me to overwrite this file?")
 
-    if (reply == 1) {
+    if (reply == 1L) {
       if (mess) msg("The modelfile was overwritten.")
       overwrite <- TRUE
     } else {
