@@ -2,8 +2,8 @@
 JAGSmodel_survreg <- function(info) {
 
   # specify indent width and index
-  indent <- 4 + 9 + nchar(info$varname) + 10
-  index <- info$index[gsub("M_", "", info$resp_mat[2])]
+  indent <- 4L + 9L + nchar(info$varname) + 10L
+  index <- info$index[gsub("M_", "", info$resp_mat[2L])]
 
   # main model elements --------------------------------------------------------
 
@@ -16,13 +16,13 @@ JAGSmodel_survreg <- function(info) {
   # linear predictor
   eta <- if (!is.null(hc_predictor)) {
     paste0(hc_predictor, collapse = " + ")
-  } else if (!is.null(info$lp[[info$resp_mat[2]]])) {
+  } else if (!is.null(info$lp[[info$resp_mat[2L]]])) {
     paste_linpred(parname = info$parname,
-                  parelmts = info$parelmts[[info$resp_mat[2]]],
-                  matnam = info$resp_mat[2],
+                  parelmts = info$parelmts[[info$resp_mat[2L]]],
+                  matnam = info$resp_mat[2L],
                   index = index,
-                  cols = info$lp[[info$resp_mat[2]]],
-                  scale_pars = info$scale_pars[[info$resp_mat[2]]],
+                  cols = info$lp[[info$resp_mat[2L]]],
+                  scale_pars = info$scale_pars[[info$resp_mat[2L]]],
                   isgk = FALSE)
   } else {
     "0"
@@ -52,9 +52,9 @@ JAGSmodel_survreg <- function(info) {
   # currently not used !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   # paste_ppc <- if (info$ppc) {
   #   paste0(
-  #     tab(4), info$varname, "_ppc[", index, "] ~ dgen.gamma(1, rate_",
+  #     tab(4L), info$varname, "_ppc[", index, "] ~ dgen.gamma(1, rate_",
   #     info$varname, "[", index, "], shape_", info$vaname, ")", "\n",
-  #     tab(4), "mu_", info$varname, "[", index, "] <- 1/rate_", info$varname,
+  #     tab(4L), "mu_", info$varname, "[", index, "] <- 1/rate_", info$varname,
   #     "[", index, "] * exp(loggam(1 + 1/shape_", info$varname, "))", "\n"
   #   )
   # }
@@ -66,30 +66,30 @@ JAGSmodel_survreg <- function(info) {
   #          info$varname, "\n",
   #          tab(), "ppc_", info$varname, "_o <-
   #          pow(", info$varname, "[] - mu_",
-  #          info$varname, "[], 2)", "\n",
+  #          info$varname, "[], 2L)", "\n",
   #          tab(), "ppc_", info$varname, "_e <- pow(", info$varname,
   #          "_ppc[] - mu_",
-  #          info$varname, "[], 2)", "\n",
+  #          info$varname, "[], 2L)", "\n",
   #          tab(), "ppc_", info$varname, " <- mean(step(ppc_", info$varname,
   #          "_o - ppc_", info$varname, "_e)) - 0.5", "\n"
   #   )
   # }
 
 
-  paste0(tab(2), add_dashes(paste0("# Weibull survival model for ",
+  paste0(tab(2L), add_dashes(paste0("# Weibull survival model for ",
                                    info$varname)), "\n",
          tab(), "for (", index, " in 1:", info$N[gsub("M_", "",
-                                                      info$resp_mat[2])],
+                                                      info$resp_mat[2L])],
          ") {", "\n",
-         tab(4), info$varname, "[", index,
+         tab(4L), info$varname, "[", index,
          "] ~ dgen.gamma(1, rate_", info$varname, "[", index,
          "], shape_", info$varname, ")", "\n",
          # paste_ppc,
-         tab(4), "cens_", info$varname, "[", index, "] ~ dinterval(",
+         tab(4L), "cens_", info$varname, "[", index, "] ~ dinterval(",
          info$varname, "[",
-         index, "], ", info$resp_mat[1], "[", index, ", ", info$resp_col[1],
+         index, "], ", info$resp_mat[1L], "[", index, ", ", info$resp_col[1L],
          "])", "\n",
-         tab(4), "log(rate_", info$varname, "[", index, "]) <- -(",
+         tab(4L), "log(rate_", info$varname, "[", index, "]) <- -(",
          add_linebreaks(eta, indent = indent), ")", "\n",
          tab(), "}\n\n",
          paste0(sapply(names(rdintercept), write_ranefs, info = info,
@@ -122,8 +122,8 @@ JAGSmodel_survreg <- function(info) {
 JAGSmodel_coxph <- function(info) {
 
   # specify indent width and index
-  index <- info$index[gsub("M_", "", info$resp_mat[2])]
-  indent <- 4 + 4 + nchar(info$varname) + 1 + nchar(index) + 5
+  index <- info$index[gsub("M_", "", info$resp_mat[2L])]
+  indent <- 4L + 4L + nchar(info$varname) + 1L + nchar(index) + 5L
 
   # main model elements --------------------------------------------------------
 
@@ -135,13 +135,13 @@ JAGSmodel_coxph <- function(info) {
   # linear predictor
   eta <- if (!is.null(hc_predictor)) {
     paste0(hc_predictor, collapse = " + ")
-  } else if (!is.null(info$lp[[info$resp_mat[2]]])) {
+  } else if (!is.null(info$lp[[info$resp_mat[2L]]])) {
     paste_linpred(parname = info$parname,
-                  parelmts = info$parelmts[[info$resp_mat[2]]],
-                  matnam = info$resp_mat[2],
+                  parelmts = info$parelmts[[info$resp_mat[2L]]],
+                  matnam = info$resp_mat[2L],
                   index = index,
-                  cols = info$lp[[info$resp_mat[2]]],
-                  scale_pars = info$scale_pars[[info$resp_mat[2]]],
+                  cols = info$lp[[info$resp_mat[2L]]],
+                  scale_pars = info$scale_pars[[info$resp_mat[2L]]],
                   isgk = FALSE)
   } else {
     "0"
@@ -152,7 +152,7 @@ JAGSmodel_coxph <- function(info) {
   logh_pred <- paste(
     c(paste0("logh0_", info$varname, "[", index, "] + eta_", info$varname,
              "[", index, "]"),
-      if (info$resp_mat[2] != "M_lvlone") {
+      if (info$resp_mat[2L] != "M_lvlone") {
         paste_linpred_jm(varname = info$varname,
                          parname = info$parname,
                          parelmts = info$parelmts[["M_lvlone"]],
@@ -171,7 +171,7 @@ JAGSmodel_coxph <- function(info) {
   surv_predictor <- paste0(
     paste0(
       c(paste0("gkw[k] * exp(logh0s_", info$varname, "[", index, ", k]"),
-        if (info$resp_mat[2] != "M_lvlone") {
+        if (info$resp_mat[2L] != "M_lvlone") {
           paste_linpred_jm(varname = info$varname,
                            parname = info$parname,
                            parelmts = info$parelmts[["M_lvlone"]],
@@ -192,38 +192,38 @@ JAGSmodel_coxph <- function(info) {
 
   paste0(tab(), add_dashes(paste0("# Cox PH model for ", info$varname)), "\n",
          tab(), "for (", index, " in 1:", info$N[gsub("M_", "",
-                                                      info$resp_mat[2])],
+                                                      info$resp_mat[2L])],
          ") {", "\n",
-         tab(4), "logh0_", info$varname, "[", index, "] <- inprod(",
+         tab(4L), "logh0_", info$varname, "[", index, "] <- inprod(",
          info$parname, "_Bh0_", info$varname, "[], Bh0_", info$varname, "[",
          index, ", ])", "\n",
-         tab(4), "eta_", info$varname, "[", index, "] <- ",
+         tab(4L), "eta_", info$varname, "[", index, "] <- ",
          add_linebreaks(eta, indent = indent), "\n",
-         tab(4), "logh_", info$varname, "[", index, "] <- ",
-         add_linebreaks(logh_pred, indent = indent + 1),
+         tab(4L), "logh_", info$varname, "[", index, "] <- ",
+         add_linebreaks(logh_pred, indent = indent + 1L),
          "\n\n",
 
          # Gauss-Kronrod quadrature
-         tab(4), "for (k in 1:15) {", "\n",
-         tab(6), "logh0s_", info$varname, "[", index, ", k] <- inprod(",
+         tab(4L), "for (k in 1:15) {", "\n",
+         tab(6L), "logh0s_", info$varname, "[", index, ", k] <- inprod(",
          info$parname,
          "_Bh0_", info$varname, "[], Bsh0_", info$varname, "[15 * (", index,
          " - 1) + k, ])", "\n",
-         tab(6), "Surv_", info$varname, "[", index, ", k] <- ",
-         add_linebreaks(surv_predictor, indent = indent + 6), "\n",
-         tab(4), "}", "\n\n",
+         tab(6L), "Surv_", info$varname, "[", index, ", k] <- ",
+         add_linebreaks(surv_predictor, indent = indent + 6L), "\n",
+         tab(4L), "}", "\n\n",
 
          # integration
-         tab(4), "log.surv_", info$varname, "[", index, "] <- -exp(eta_",
+         tab(4L), "log.surv_", info$varname, "[", index, "] <- -exp(eta_",
          info$varname, "[", index,
-         "]) * ", info$resp_mat[1], "[", index, ", ",
-         info$resp_col[1], "]/2 * sum(Surv_", info$varname, "[", index, ", ])",
+         "]) * ", info$resp_mat[1L], "[", index, ", ",
+         info$resp_col[1L], "]/2 * sum(Surv_", info$varname, "[", index, ", ])",
          "\n",
-         tab(4), "phi_", info$varname, "[", index, "] <- 5000 - ((",
-         info$resp_mat[2], "[", index, ", ", info$resp_col[2], "] * logh_",
+         tab(4L), "phi_", info$varname, "[", index, "] <- 5000 - ((",
+         info$resp_mat[2L], "[", index, ", ", info$resp_col[2L], "] * logh_",
          info$varname, "[",
          index, "])) - (log.surv_", info$varname, "[", index, "])", "\n",
-         tab(4), "zeros_", info$varname, "[", index, "] ~ dpois(phi_",
+         tab(4L), "zeros_", info$varname, "[", index, "] ~ dpois(phi_",
          info$varname,
          "[", index, "])", "\n",
          tab(), "}\n\n",
@@ -247,7 +247,7 @@ JAGSmodel_coxph <- function(info) {
 
          # baseline hazard
          tab(), "for (k in 1:", info$df_basehaz, ") {", "\n",
-         tab(4), info$parname, "_Bh0_", info$varname,
+         tab(4L), info$parname, "_Bh0_", info$varname,
          "[k] ~ dnorm(mu_reg_surv, tau_reg_surv)",
          "\n",
          tab(), "}", "\n",
@@ -276,8 +276,8 @@ JAGSmodel_JM <- function(info) {
 
 
   # specify indent width and index
-  index <- info$index[gsub("M_", "", info$resp_mat[2])]
-  indent <- 4 + 4 + nchar(info$varname) + 1 + nchar(index) + 5
+  index <- info$index[gsub("M_", "", info$resp_mat[2L])]
+  indent <- 4L + 4L + nchar(info$varname) + 1L + nchar(index) + 5L
 
   # main model elements --------------------------------------------------------
 
@@ -289,13 +289,13 @@ JAGSmodel_JM <- function(info) {
   # linear predictor
   eta <- if (!is.null(hc_predictor)) {
     paste0(hc_predictor, collapse = " + ")
-  } else if (!is.null(info$lp[[info$resp_mat[2]]])) {
+  } else if (!is.null(info$lp[[info$resp_mat[2L]]])) {
     paste_linpred(parname = info$parname,
-                  parelmts = info$parelmts[[info$resp_mat[2]]],
-                  matnam = info$resp_mat[2],
+                  parelmts = info$parelmts[[info$resp_mat[2L]]],
+                  matnam = info$resp_mat[2L],
                   index = index,
-                  cols = info$lp[[info$resp_mat[2]]],
-                  scale_pars = info$scale_pars[[info$resp_mat[2]]],
+                  cols = info$lp[[info$resp_mat[2L]]],
+                  scale_pars = info$scale_pars[[info$resp_mat[2L]]],
                   isgk = FALSE)
   } else {
     "0"
@@ -306,7 +306,7 @@ JAGSmodel_JM <- function(info) {
   logh_pred <- paste(
     c(paste0("logh0_", info$varname, "[", index, "] + eta_", info$varname,
              "[", index, "]"),
-      if (info$resp_mat[2] != "M_lvlone") {
+      if (info$resp_mat[2L] != "M_lvlone") {
         paste_linpred_jm(varname = info$varname,
                          parname = info$parname,
                          parelmts = info$parelmts[["M_lvlone"]],
@@ -324,7 +324,7 @@ JAGSmodel_JM <- function(info) {
   surv_predictor <- paste0(
     paste0(
       c(paste0("gkw[k] * exp(logh0s_", info$varname, "[", index, ", k]"),
-        if (info$resp_mat[2] != "M_lvlone") {
+        if (info$resp_mat[2L] != "M_lvlone") {
           paste_linpred_jm(varname = info$varname,
                            parname = info$parname,
                            parelmts = info$parelmts[["M_lvlone"]],
@@ -343,41 +343,41 @@ JAGSmodel_JM <- function(info) {
 
   paste0(tab(), add_dashes(paste0("# Cox PH model for ", info$varname)), "\n",
          tab(), "for (", index, " in 1:", info$N[gsub("M_", "",
-                                                      info$resp_mat[2])],
+                                                      info$resp_mat[2L])],
          ") {", "\n",
-         tab(4), "logh0_", info$varname, "[", index, "] <- inprod(",
+         tab(4L), "logh0_", info$varname, "[", index, "] <- inprod(",
          info$parname, "_Bh0_", info$varname, "[], Bh0_", info$varname, "[",
          index, ", ])", "\n",
-         tab(4), "eta_", info$varname, "[", index, "] <- ",
+         tab(4L), "eta_", info$varname, "[", index, "] <- ",
          add_linebreaks(eta, indent = indent), "\n",
-         tab(4), "logh_", info$varname, "[", index, "] <- ",
-         add_linebreaks(logh_pred, indent = indent + 1),
+         tab(4L), "logh_", info$varname, "[", index, "] <- ",
+         add_linebreaks(logh_pred, indent = indent + 1L),
          "\n\n",
 
          # Gauss-Kronrod quadrature
-         tab(4), "for (k in 1:15) {", "\n",
-         tab(6), "logh0s_", info$varname, "[", index, ", k] <- inprod(",
+         tab(4L), "for (k in 1:15) {", "\n",
+         tab(6L), "logh0s_", info$varname, "[", index, ", k] <- inprod(",
          info$parname,
          "_Bh0_", info$varname, "[], Bsh0_", info$varname, "[15 * (",
          index, " - 1) + k, ])", "\n",
-         tab(6), "Surv_", info$varname, "[", index, ", k] <- ",
-         add_linebreaks(surv_predictor, indent = indent + 6),
+         tab(6L), "Surv_", info$varname, "[", index, ", k] <- ",
+         add_linebreaks(surv_predictor, indent = indent + 6L),
          "\n\n",
          paste0(unlist(lapply(info$tv_vars, gkmodel_in_JM, index = index)),
                 collapse = "\n"),
-         tab(4), "}", "\n\n",
+         tab(4L), "}", "\n\n",
 
          # integration
-         tab(4), "log.surv_", info$varname, "[", index, "] <- -exp(eta_",
+         tab(4L), "log.surv_", info$varname, "[", index, "] <- -exp(eta_",
          info$varname, "[",
-         index, "]) * ", info$resp_mat[1], "[", index, ", ",
-         info$resp_col[1], "]/2 * sum(Surv_", info$varname, "[", index, ", ])",
+         index, "]) * ", info$resp_mat[1L], "[", index, ", ",
+         info$resp_col[1L], "]/2 * sum(Surv_", info$varname, "[", index, ", ])",
          "\n",
-         tab(4), "phi_", info$varname, "[", index, "] <- 5000 - ((",
-         info$resp_mat[2], "[", index, ", ", info$resp_col[2], "] * logh_",
+         tab(4L), "phi_", info$varname, "[", index, "] <- 5000 - ((",
+         info$resp_mat[2L], "[", index, ", ", info$resp_col[2L], "] * logh_",
          info$varname, "[",
          index, "])) - (log.surv_", info$varname, "[", index, "])", "\n",
-         tab(4), "zeros_", info$varname, "[", index, "] ~ dpois(phi_",
+         tab(4L), "zeros_", info$varname, "[", index, "] ~ dpois(phi_",
          info$varname,
          "[", index, "])", "\n",
          tab(), "}\n\n",
@@ -401,7 +401,7 @@ JAGSmodel_JM <- function(info) {
 
          # baseline hazard
          tab(), "for (k in 1:", info$df_basehaz, ") {", "\n",
-         tab(4), info$parname, "_Bh0_", info$varname,
+         tab(4L), info$parname, "_Bh0_", info$varname,
          "[k] ~ dnorm(mu_reg_surv, tau_reg_surv)", "\n",
          tab(), "}", "\n",
 
