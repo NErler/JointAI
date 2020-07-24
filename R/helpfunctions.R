@@ -603,7 +603,7 @@ get_survinfo <- function(info_list, Mlist) {
                          group_lvls = identify_level_relations(Mlist$groups))
     longvars <- names(covar_lvls)[covar_lvls %in% longlvls]
 
-    survevent = Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]]
+    survevent <- Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]]
 
     if (any(!survevent %in% c(0L, 1L))) {
       errormsg("The event indicator should only contain 2 distinct values
