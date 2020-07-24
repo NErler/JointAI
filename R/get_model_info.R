@@ -35,7 +35,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
     } else {
       errormsg("I have identified %s as a survival outcome, but I cannot find
                some of its elements in any of the matrices %s.",
-                 dQuote(k), dQuote("M"))
+               dQuote(k), dQuote("M"))
     }
   } else {
     errormsg("I cannot find the variable %s in any of the matrices %s.",
@@ -61,16 +61,18 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
       !is.null(Mlist$interactions) &
       !is.null(lp$M_lvlone)) {
 
-    sapply(Mlist$interactions[intersect(names(Mlist$interactions),
-                                        names(lp$M_lvlone))], function(x) {
-      if (any(names(x$elmts) == "M_lvlone") &
-          any(names(x$elmts) != "M_lvlone") &
-          attr(x, "has_NAs")) {
-        errormsg("It seems that there is an interaction between a time-varying
+    lapply(Mlist$interactions[intersect(names(Mlist$interactions),
+                                        names(lp$M_lvlone))],
+           function(x) {
+             if (any(names(x$elmts) == "M_lvlone") &
+                 any(names(x$elmts) != "M_lvlone") &
+                 attr(x, "has_NAs")
+             ) {
+               errormsg("It seems that there is an interaction between a time-varying
                  covariate and a incomplete baseline covariate. This is not
                  yet implemented for proportional hazards models.")
-      }
-    })
+             }
+           })
   }
 
 
@@ -84,7 +86,9 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
   # dummy columns -------------------------------------------------------------
   dummy_cols <- if (k %in% names(Mlist$refs) &
                     (any(is.na(Mlist$M[[resp_mat[1L]]][, resp_col[1L]])) |
-                     any(sapply(Mlist$fixed, "attr", "type") %in% "JM"))) {
+                     any(vapply(Mlist$fixed, "attr", "type",
+                                FUN.VALUE = character(1L)
+                     ) %in% "JM"))) {
     match(attr(Mlist$refs[[k]], "dummies"), colnames(Mlist$M[[resp_mat[[1L]]]]))
   }
 
@@ -93,8 +97,9 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
 
 
   # index name -----------------------------------------------------------------
-  index <- setNames(sapply(seq_along(sort(Mlist$group_lvls)),
-                           function(k) paste0(rep("i", k), collapse = "")),
+  index <- setNames(vapply(seq_along(sort(Mlist$group_lvls)),
+                           function(k) paste0(rep("i", k), collapse = ""),
+                           FUN.VALUE = character(1L)),
                     names(sort(Mlist$group_lvls)))
 
 
@@ -107,24 +112,31 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
   # JM settings ----------------------------------------------------------------
   # * covariate names ----------------------------------------------------------
   covnames <- if (modeltype %in% "JM") {
-    unique(unlist(sapply(lp, function(x) sapply(names(x), replace_dummy,
-                                                refs = Mlist$refs))))
+    unique(unlist(
+      lapply(lp, function(x) {
+        vapply(names(x), replace_dummy, refs = Mlist$refs,
+               FUN.VALUE = character(1L))
+      })
+    ))
   }
 
   # * time-varying covariates --------------------------------------------------
   tv_vars <- if (modeltype %in% "JM") {
 
     # find the (longitudinal) covariates involved in the lp of the survival part
-    covars <- unlist(sapply(unlist(sapply(lp, names)),
-                            replace_trafo, Mlist$fcts_all))
-    covars <- sapply(covars, replace_dummy, refs = Mlist$refs)
-    covars <- covars[covars %in% unlist(sapply(Mlist$M, colnames))]
+    covars <- unlist(
+      lapply(unlist(lapply(lp, names)),
+             replace_trafo, Mlist$fcts_all)
+    )
+    covars <- vapply(covars, replace_dummy, refs = Mlist$refs,
+                     FUN.VALUE = character(1L))
+    covars <- covars[covars %in% unlist(lapply(Mlist$M, colnames))]
 
 
     rep_lvls <- names(which(Mlist$group_lvls < Mlist$group_lvls[
       gsub("M_", "", resp_mat[2L])]))
 
-    tvars <- unique(unlist(c(sapply(lp[paste0("M_", rep_lvls)], names),
+    tvars <- unique(unlist(c(lapply(lp[paste0("M_", rep_lvls)], names),
                              lapply(Mlist$lp_cols[covars], function(x)
                                names(unlist(unname(x[paste0("M_", rep_lvls)]))))
     )))
@@ -132,20 +144,22 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
 
     # get the variables needed to re-fit the models for "covars" in the
     # Gauss-Kronrod quadrature
-    tvars <- unlist(sapply(tvars, replace_trafo, Mlist$fcts_all))
+    tvars <- unlist(lapply(tvars, replace_trafo, Mlist$fcts_all))
 
-    tvars <- unique(sapply(tvars[!tvars %in% Mlist$timevar],
-                           replace_dummy, refs = Mlist$refs))
+    tvars <- unique(vapply(tvars[!tvars %in% Mlist$timevar],
+                           replace_dummy, refs = Mlist$refs,
+                           FUN.VALUE = character(1L))
+    )
 
     # get the model info for these variables
-    sapply(tvars, function(i) {
+    setNames(lapply(tvars, function(i) {
       arglist_new <- arglist
       arglist_new$k <- replace_dummy(i, refs = Mlist$refs)
       arglist_new$isgk <- TRUE
       subinfo <- do.call(get_model1_info, arglist_new)
       subinfo$surv_lvl <- gsub("M_", "", resp_mat[2L])
       subinfo
-    },  simplify = FALSE)
+    }), tvars)
   }
 
 
@@ -154,10 +168,15 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
   hc_list <- get_hc_info(varname = k,
                          resplvl = gsub("M_", "", resp_mat[length(resp_mat)]),
                          Mlist, parelmts, lp)
-  nranef <- sapply(hc_list$hcvars, function(x)
-    as.numeric(attr(x, "rd_intercept")) +
-      ifelse(any(!sapply(x$rd_slope_coefs, is.null)),
-             nrow(do.call(rbind, x$rd_slope_coefs)), 0L))
+
+  nranef <- vapply(hc_list$hcvars, function(x) {
+    as.integer(attr(x, "rd_intercept")) +
+      if (any(!vapply(x$rd_slope_coefs, is.null, FUN.VALUE = logical(1L)))) {
+        nrow(do.call(rbind, x$rd_slope_coefs))
+      } else {
+        0L
+      }
+  }, FUN.VALUE = integer(1L))
 
 
   # shrinkage ------------------------------------------------------------------
@@ -187,7 +206,9 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
     parelmts = parelmts,
     scale_pars = scale_pars,
     index = index,
-    parname = ifelse(k %in% names(Mlist$fixed), "beta", "alpha"),
+    parname = switch(as.character(k %in% names(Mlist$fixed)),
+                     "TRUE" = "beta",
+                     "FALSE" = "alpha"),
     hc_list = if (length(hc_list) > 0L) hc_list,
     nranef = nranef,
     group_lvls = Mlist$group_lvls,
@@ -211,154 +232,155 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
 
 
 get_modeltype <- function(model) {
-  if (is.null(model))
-    return(NULL)
 
-  modtype <- switch(model,
-         lm = "glm",
-         glm_gaussian_identity = "glm",
-         glm_gaussian_log = "glm",
-         glm_gaussian_inverse = "glm",
-         glm_binomial_logit = "glm",
-         glm_binomial_probit = "glm",
-         glm_binomial_log = "glm",
-         glm_binomial_cloglog = "glm",
-         glm_logit = "glm",
-         glm_probit = "glm",
-         glm_gamma_inverse = "glm",
-         glm_gamma_identity = "glm",
-         glm_gamma_log = "glm",
-         glm_poisson_log = "glm",
-         glm_poisson_identity = "glm",
-         lognorm = "glm",
-         beta = "glm",
-         lmm = "glmm",
-         glmm_gaussian_identity = "glmm",
-         glmm_gaussian_log = "glmm",
-         glmm_gaussian_inverse = "glmm",
-         glmm_binomial_logit = "glmm",
-         glmm_binomial_probit = "glmm",
-         glmm_binomial_log = "glmm",
-         glmm_binomial_cloglog = "glmm",
-         glmm_logit = "glmm",
-         glmm_probit = "glmm",
-         glmm_gamma_inverse = "glmm",
-         glmm_gamma_identity = "glmm",
-         glmm_gamma_log = "glmm",
-         glmm_poisson_log = "glmm",
-         glmm_poisson_identity = "glmm",
-         glmm_lognorm = "glmm",
-         glmm_beta = "glmm",
-         clm = "clm",
-         clmm = "clmm",
-         mlogit = "mlogit",
-         mlogitmm = "mlogitmm",
-         coxph = "coxph",
-         survreg = "survreg",
-         JM = "JM")
-
-  if (is.null(modtype)) {
-    errormsg("I do not know the model type %s.", dQuote(model))
+  modtype <- if (!is.null(model)) {
+    switch(model,
+           lm = "glm",
+           glm_gaussian_identity = "glm",
+           glm_gaussian_log = "glm",
+           glm_gaussian_inverse = "glm",
+           glm_binomial_logit = "glm",
+           glm_binomial_probit = "glm",
+           glm_binomial_log = "glm",
+           glm_binomial_cloglog = "glm",
+           glm_logit = "glm",
+           glm_probit = "glm",
+           glm_gamma_inverse = "glm",
+           glm_gamma_identity = "glm",
+           glm_gamma_log = "glm",
+           glm_poisson_log = "glm",
+           glm_poisson_identity = "glm",
+           lognorm = "glm",
+           beta = "glm",
+           lmm = "glmm",
+           glmm_gaussian_identity = "glmm",
+           glmm_gaussian_log = "glmm",
+           glmm_gaussian_inverse = "glmm",
+           glmm_binomial_logit = "glmm",
+           glmm_binomial_probit = "glmm",
+           glmm_binomial_log = "glmm",
+           glmm_binomial_cloglog = "glmm",
+           glmm_logit = "glmm",
+           glmm_probit = "glmm",
+           glmm_gamma_inverse = "glmm",
+           glmm_gamma_identity = "glmm",
+           glmm_gamma_log = "glmm",
+           glmm_poisson_log = "glmm",
+           glmm_poisson_identity = "glmm",
+           glmm_lognorm = "glmm",
+           glmm_beta = "glmm",
+           clm = "clm",
+           clmm = "clmm",
+           mlogit = "mlogit",
+           mlogitmm = "mlogitmm",
+           coxph = "coxph",
+           survreg = "survreg",
+           JM = "JM",
+           errormsg("I do not know the model type %s.", dQuote(model))
+    )
   }
 
-  return(modtype)
+  modtype
 }
 
 
 get_family <- function(model) {
-  if (is.null(model))
-    return(NULL)
 
-  switch(model,
-         lm = "gaussian",
-         glm_gaussian_identity = "gaussian",
-         glm_gaussian_log = "gaussian",
-         glm_gaussian_inverse = "gaussian",
-         glm_binomial_logit = "binomial",
-         glm_binomial_probit = "binomial",
-         glm_binomial_log = "binomial",
-         glm_binomial_cloglog = "binomial",
-         glm_logit = "binomial",
-         glm_probit = "binomial",
-         glm_gamma_inverse = "Gamma",
-         glm_gamma_identity = "Gamma",
-         glm_gamma_log = "Gamma",
-         glm_poisson_log = "poisson",
-         glm_poisson_identity = "poisson",
-         lognorm = "lognorm",
-         beta = "beta",
-         lmm = "gaussian",
-         glmm_gaussian_identity = "gaussian",
-         glmm_gaussian_log = "gaussian",
-         glmm_gaussian_inverse = "gaussian",
-         glmm_binomial_logit = "binomial",
-         glmm_binomial_probit = "binomial",
-         glmm_binomial_log = "binomial",
-         glmm_binomial_cloglog = "binomial",
-         glmm_logit = "binomial",
-         glmm_probit = "binomial",
-         glmm_gamma_inverse = "Gamma",
-         glmm_gamma_identity = "Gamma",
-         glmm_gamma_log = "Gamma",
-         glmm_poisson_log = "poisson",
-         glmm_poisson_identity = "poisson",
-         glmm_lognorm = "lognorm",
-         glmm_beta = "beta",
-         clm = NULL,
-         clmm = NULL,
-         mlogit = NULL,
-         mlogitmm = NULL,
-         coxph = NULL,
-         survreg = NULL,
-         JM = NULL)
+  if (!is.null(model)) {
+    switch(model,
+           lm = "gaussian",
+           glm_gaussian_identity = "gaussian",
+           glm_gaussian_log = "gaussian",
+           glm_gaussian_inverse = "gaussian",
+           glm_binomial_logit = "binomial",
+           glm_binomial_probit = "binomial",
+           glm_binomial_log = "binomial",
+           glm_binomial_cloglog = "binomial",
+           glm_logit = "binomial",
+           glm_probit = "binomial",
+           glm_gamma_inverse = "Gamma",
+           glm_gamma_identity = "Gamma",
+           glm_gamma_log = "Gamma",
+           glm_poisson_log = "poisson",
+           glm_poisson_identity = "poisson",
+           lognorm = "lognorm",
+           beta = "beta",
+           lmm = "gaussian",
+           glmm_gaussian_identity = "gaussian",
+           glmm_gaussian_log = "gaussian",
+           glmm_gaussian_inverse = "gaussian",
+           glmm_binomial_logit = "binomial",
+           glmm_binomial_probit = "binomial",
+           glmm_binomial_log = "binomial",
+           glmm_binomial_cloglog = "binomial",
+           glmm_logit = "binomial",
+           glmm_probit = "binomial",
+           glmm_gamma_inverse = "Gamma",
+           glmm_gamma_identity = "Gamma",
+           glmm_gamma_log = "Gamma",
+           glmm_poisson_log = "poisson",
+           glmm_poisson_identity = "poisson",
+           glmm_lognorm = "lognorm",
+           glmm_beta = "beta",
+           clm = NULL,
+           clmm = NULL,
+           mlogit = NULL,
+           mlogitmm = NULL,
+           coxph = NULL,
+           survreg = NULL,
+           JM = NULL,
+           errormsg("I do not know the model type %s.", dQuote(model))
+    )
+  }
 }
 
 get_link <- function(model) {
-  if (is.null(model))
-    return(NULL)
-
-  switch(model,
-         lm = "identity",
-         glm_gaussian_identity = "identity",
-         glm_gaussian_log = "log",
-         glm_gaussian_inverse = "inverse",
-         glm_binomial_logit = "logit",
-         glm_binomial_probit = "probit",
-         glm_binomial_log = "log",
-         glm_binomial_cloglog = "cloglog",
-         glm_logit = "logit",
-         glm_probit = "probit",
-         glm_gamma_inverse = "inverse",
-         glm_gamma_identity = "identity",
-         glm_gamma_log = "log",
-         glm_poisson_log = "log",
-         glm_poisson_identity = "identity",
-         lognorm = "identity",
-         beta = "logit",
-         lmm = "identity",
-         glmm_gaussian_identity = "identity",
-         glmm_gaussian_log = "log",
-         glmm_gaussian_inverse = "inverse",
-         glmm_binomial_logit = "logit",
-         glmm_binomial_probit = "probit",
-         glmm_binomial_log = "log",
-         glmm_binomial_cloglog = "log",
-         glmm_logit = "logit",
-         glmm_probit = "probit",
-         glmm_gamma_inverse = "inverse",
-         glmm_gamma_identity = "identity",
-         glmm_gamma_log = "log",
-         glmm_poisson_log = "log",
-         glmm_poisson_identity = "identity",
-         glmm_lognorm = "identity",
-         glmm_beta = "logit",
-         clm = NULL,
-         clmm = NULL,
-         mlogit = NULL,
-         mlogitmm = NULL,
-         coxph = NULL,
-         survreg = NULL,
-         JM = NULL)
+  if (!is.null(model)) {
+    switch(model,
+           lm = "identity",
+           glm_gaussian_identity = "identity",
+           glm_gaussian_log = "log",
+           glm_gaussian_inverse = "inverse",
+           glm_binomial_logit = "logit",
+           glm_binomial_probit = "probit",
+           glm_binomial_log = "log",
+           glm_binomial_cloglog = "cloglog",
+           glm_logit = "logit",
+           glm_probit = "probit",
+           glm_gamma_inverse = "inverse",
+           glm_gamma_identity = "identity",
+           glm_gamma_log = "log",
+           glm_poisson_log = "log",
+           glm_poisson_identity = "identity",
+           lognorm = "identity",
+           beta = "logit",
+           lmm = "identity",
+           glmm_gaussian_identity = "identity",
+           glmm_gaussian_log = "log",
+           glmm_gaussian_inverse = "inverse",
+           glmm_binomial_logit = "logit",
+           glmm_binomial_probit = "probit",
+           glmm_binomial_log = "log",
+           glmm_binomial_cloglog = "log",
+           glmm_logit = "logit",
+           glmm_probit = "probit",
+           glmm_gamma_inverse = "inverse",
+           glmm_gamma_identity = "identity",
+           glmm_gamma_log = "log",
+           glmm_poisson_log = "log",
+           glmm_poisson_identity = "identity",
+           glmm_lognorm = "identity",
+           glmm_beta = "logit",
+           clm = NULL,
+           clmm = NULL,
+           mlogit = NULL,
+           mlogitmm = NULL,
+           coxph = NULL,
+           survreg = NULL,
+           JM = NULL,
+           errormsg("I do not know the model type %s.", dQuote(model))
+    )
+  }
 }
 
 
@@ -366,7 +388,7 @@ get_link <- function(model) {
 get_assoc_type <- function(covnames, models, assoc_type, refs) {
   assoc_type_user <- assoc_type
 
-  fmlys <- sapply(models[covnames], get_family)
+  fmlys <- lapply(models[covnames], get_family)
 
   assoc_type <- setNames(rep("obs.value", length(covnames)),
                          covnames)
@@ -398,12 +420,12 @@ get_lp <- function(k, Mlist) {
   # k: the name of the response
   # Mlist: obtained from divide_matrices()
 
-  lplist <- sapply(names(Mlist$lp_cols[[k]]), function(lvl) {
+  lplist <- setNames(lapply(names(Mlist$lp_cols[[k]]), function(lvl) {
     lpc <- Mlist$lp_cols[[k]][[lvl]]
     list(prop = lpc[!names(lpc) %in% Mlist$lp_nonprop[[k]][[lvl]]],
          nonprop = lpc[names(lpc) %in% Mlist$lp_nonprop[[k]][[lvl]]]
     )
-  }, simplify = FALSE)
+  }), names(Mlist$lp_cols[[k]]))
 
   lp <- lapply(lplist, "[[", "prop")
 
@@ -425,7 +447,12 @@ get_parelmts <- function(k, Mlist, par_index_main, par_index_other, lp) {
 
   if (any(is.na(Kmat)))
     errormsg("There are missing values in the matrix %s.",
-             if (k %in% names(Mlist$fixed)) "par_index_main" else "par_index_other")
+             switch(as.character(k %in% names(Mlist$fixed)),
+                    "TRUE" = "par_index_main",
+                    "FALSE" = "par_index_other"
+             )
+    )
+  }
 
   sapply(rownames(Kmat[[k]]), function(lvl) {
     parnums <- Kmat[[k]][lvl, 1L]:Kmat[[k]][lvl, 2L]
