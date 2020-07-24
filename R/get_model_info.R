@@ -49,7 +49,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
       match(x, colnames(Mlist$M[[resp_mat[x]]]))
     }, FUN.VALUE = numeric(1L))
   } else {
-    match(k, colnames(Mlist$M[[resp_mat[1]]]))
+    match(k, colnames(Mlist$M[[resp_mat[1L]]]))
   }
 
   # linear predictor columns -------------------------------------------------
@@ -83,9 +83,9 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
 
   # dummy columns -------------------------------------------------------------
   dummy_cols <- if (k %in% names(Mlist$refs) &
-                    (any(is.na(Mlist$M[[resp_mat[1]]][, resp_col[1]])) |
+                    (any(is.na(Mlist$M[[resp_mat[1L]]][, resp_col[1L]])) |
                      any(sapply(Mlist$fixed, "attr", "type") %in% "JM"))) {
-    match(attr(Mlist$refs[[k]], "dummies"), colnames(Mlist$M[[resp_mat[1]]]))
+    match(attr(Mlist$refs[[k]], "dummies"), colnames(Mlist$M[[resp_mat[[1L]]]]))
   }
 
   if (all(is.na(dummy_cols)))
@@ -101,7 +101,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
 
   # transformations ------------------------------------------------------------
   trafos <- paste_trafos(Mlist, varname = k,
-                         index = index[gsub("M_", "", resp_mat[1])],
+                         index = index[gsub("M_", "", resp_mat[1L])],
                          isgk = isgk)
 
   # JM settings ----------------------------------------------------------------
@@ -122,7 +122,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
 
 
     rep_lvls <- names(which(Mlist$group_lvls < Mlist$group_lvls[
-      gsub("M_", "", resp_mat[2])]))
+      gsub("M_", "", resp_mat[2L])]))
 
     tvars <- unique(unlist(c(sapply(lp[paste0("M_", rep_lvls)], names),
                              lapply(Mlist$lp_cols[covars], function(x)
@@ -143,7 +143,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
       arglist_new$k <- replace_dummy(i, refs = Mlist$refs)
       arglist_new$isgk <- TRUE
       subinfo <- do.call(get_model1_info, arglist_new)
-      subinfo$surv_lvl <- gsub("M_", "", resp_mat[2])
+      subinfo$surv_lvl <- gsub("M_", "", resp_mat[2L])
       subinfo
     },  simplify = FALSE)
   }
@@ -157,7 +157,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
   nranef <- sapply(hc_list$hcvars, function(x)
     as.numeric(attr(x, "rd_intercept")) +
       ifelse(any(!sapply(x$rd_slope_coefs, is.null)),
-             nrow(do.call(rbind, x$rd_slope_coefs)), 0))
+             nrow(do.call(rbind, x$rd_slope_coefs)), 0L))
 
 
   # shrinkage ------------------------------------------------------------------
@@ -188,7 +188,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
     scale_pars = scale_pars,
     index = index,
     parname = ifelse(k %in% names(Mlist$fixed), "beta", "alpha"),
-    hc_list = if (length(hc_list) > 0) hc_list,
+    hc_list = if (length(hc_list) > 0L) hc_list,
     nranef = nranef,
     group_lvls = Mlist$group_lvls,
     trafos = trafos,
@@ -428,26 +428,26 @@ get_parelmts <- function(k, Mlist, par_index_main, par_index_other, lp) {
              if (k %in% names(Mlist$fixed)) "par_index_main" else "par_index_other")
 
   sapply(rownames(Kmat[[k]]), function(lvl) {
-    parnums <- Kmat[[k]][lvl, 1]:Kmat[[k]][lvl, 2]
+    parnums <- Kmat[[k]][lvl, 1L]:Kmat[[k]][lvl, 2L]
 
     if (Mlist$models[k] %in% c("mlogit", "mlogitmm")) {
-      if (length(levels(Mlist$refs[[k]])) == 0) {
+      if (length(levels(Mlist$refs[[k]])) == 0L) {
         errormsg("It seems the variable %s is numeric, but to fit a multinomial
                  logit model the response variable must be a factor with at
                  least three levels.", dQuote(k))
-      } else if (length(levels(Mlist$refs[[k]])) < 3) {
+      } else if (length(levels(Mlist$refs[[k]])) < 3L) {
         errormsg("The variable %s has less than three levels. You should use
                  a binomial model for this variable instead of a multinomial
                  model.", dQuote(k))
       }
 
-      parnums <- setNames(Kmat[[k]][lvl, 1]:Kmat[[k]][lvl, 2],
+      parnums <- setNames(Kmat[[k]][lvl, 1L]:Kmat[[k]][lvl, 2L],
                           rep(names(lp[[lvl]]),
-                              length(levels(Mlist$refs[[k]])) - 1)
+                              length(levels(Mlist$refs[[k]])) - 1L)
       )
 
       split(parnums,
-            rep(paste0(k, levels(Mlist$refs[[k]])[-1]),
+            rep(paste0(k, levels(Mlist$refs[[k]])[-1L]),
                 each = length(lp[[lvl]])))
 
     } else if (Mlist$models[[k]] %in% c("clm", "clmm")) {
@@ -461,10 +461,10 @@ get_parelmts <- function(k, Mlist, par_index_main, par_index_other, lp) {
       )
 
       parnums_nonprop <- split(parnums_nonprop,
-                               rep(paste0(k, levels(Mlist$refs[[k]])[-1]),
+                               rep(paste0(k, levels(Mlist$refs[[k]])[-1L]),
                                    each = length(attr(lp, "nonprop")[[lvl]])))
 
-      if (length(parnums_nonprop) > 0) {
+      if (length(parnums_nonprop) > 0L) {
         attr(parnums_prop, "nonprop") <- parnums_nonprop
       }
       parnums_prop
