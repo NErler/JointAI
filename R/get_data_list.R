@@ -76,10 +76,10 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
     # - to identify the correct rows between different sub-levels
     # - pos is only needed when there are multiple grouping levels
     pos <- nlapply(groups[!names(groups) %in%
-                           names(which.max(Mlist$group_lvls))],
-                  function(x) {
-                    match(unique(x), x)
-                  })
+                            names(which.max(Mlist$group_lvls))],
+                   function(x) {
+                     match(unique(x), x)
+                   })
 
     names(groups) <- paste0("group_", names(groups))
     names(pos) <- if (length(pos) > 0L) paste0("pos_", names(pos))
@@ -206,8 +206,8 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
       # create the design matrix of time-varying data using the Gauss-Kronrod
       # quadrature points for time
       mat_gk <- get_matgk(Mlist, gkx, surv_lvl, survinfo, data = Mlist$data,
-                          td_cox = unique(cvapply(survinfo, "[[", "modeltype")) ==
-                            "coxph")
+                          td_cox = unique(cvapply(survinfo, "[[",
+                                                  "modeltype")) == "coxph")
 
       # for survival models, there can only be one level below the level of the
       # survival outcome (i.e., time-varying variables have level 1, survival
@@ -304,7 +304,8 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 #' \strong{poisson:} hyper-parameters for poisson models
 #' \tabular{ll}{
 #' \code{mu_reg_poisson} \tab mean in the priors for regression coefficients\cr
-#' \code{tau_reg_poisson} \tab precision in the priors for regression coefficients
+#' \code{tau_reg_poisson} \tab precision in the priors for regression
+#' coefficients
 #' }
 #'
 #' \strong{multinomial:} hyper-parameters for multinomial models
@@ -350,7 +351,8 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 #'
 #' @note
 #' \strong{From the
-#' \href{https://sourceforge.net/projects/mcmc-jags/files/Manuals/}{JAGS user manual}
+#' \href{https://sourceforge.net/projects/mcmc-jags/files/Manuals/}{JAGS user
+#' manual}
 #' on the specification of the Wishart distribution:}\cr
 #' For \code{KinvD} larger than the dimension of the variance-covariance matrix
 #' the prior on the correlation between the random effects is concentrated
