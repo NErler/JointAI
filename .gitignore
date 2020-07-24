@@ -11,3 +11,5 @@ vignettes/ModelSpecification_cache
 docs
 
 tests/testthat/*.pdf
+
+man/figures/README*.png
