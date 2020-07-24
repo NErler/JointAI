@@ -3,15 +3,15 @@ get_model_info <- function(Mlist, par_index_main, par_index_other, trunc = NULL,
                            assoc_type = NULL) {
   args <- as.list(match.call())[-1L]
 
-  sapply(names(Mlist$lp_cols), function(k) {
+  setNames(lapply(names(Mlist$lp_cols), function(k) {
     do.call(get_model1_info, c(k = replace_dummy(k, refs = Mlist$refs), args))
-  },  simplify = FALSE)
+  }), names(Mlist$lp_cols))
 }
 
 
 # get model info for a single model
-get_model1_info <- function(k, Mlist, par_index_main, par_index_other, trunc = NULL, assoc_type = NULL,
-                            isgk = FALSE) {
+get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
+                            trunc = NULL, assoc_type = NULL, isgk = FALSE) {
 
   arglist <- as.list(match.call())[-1L]
 
@@ -45,9 +45,9 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other, trunc = N
   resp_col <- if (k %in% names(Mlist$fixed) &&
                   attr(Mlist$fixed[[k]], "type") %in%
                   c("survreg", "coxph", "JM")) {
-    sapply(names(Mlist$outcomes$outcomes[[k]]), function(x) {
+    vapply(names(Mlist$outcomes$outcomes[[k]]), function(x) {
       match(x, colnames(Mlist$M[[resp_mat[x]]]))
-    })
+    }, FUN.VALUE = numeric(1L))
   } else {
     match(k, colnames(Mlist$M[[resp_mat[1]]]))
   }
