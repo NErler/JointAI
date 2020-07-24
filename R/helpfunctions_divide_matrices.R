@@ -248,10 +248,12 @@ extract_outcome_data <- function(fixed, random = NULL, data,
           })
       } else if (any(nlev == 0L)) {
         # continuous variables
-        attr(fixed[[i]], "type") <- switch(
-          as.character(lvls[varlvl] < max(lvls)),
-          "TRUE" = "lmm",
-          "FALSE" = "lm")
+        attr(fixed[[i]], "type") <- cvapply(
+          lvls[varlvl] < max(lvls), function(q) {
+            switch(as.character(q),
+                   "TRUE" = "lmm",
+                   "FALSE" = "lm")
+          })
       }
       if (i == 1L) {
         attr(fixed[[i]], "type") <- if (
@@ -339,7 +341,7 @@ outcomes_to_mat <- function(outcomes) {
   outlist <- unlist(unname(lapply(outcomes$outcomes, as.list)),
                     recursive = FALSE)
 
-  nosurv <- !cvapply(outcomes$fixed, "attr", "type") %in% c("coxph", "JM")
+  nosurv <- !lapply(outcomes$fixed, "attr", "type") %in% c("coxph", "JM")
   outlist_nosurv <- unlist(unname(lapply(outcomes$outcomes[nosurv], as.list)),
                            recursive = FALSE)
 
