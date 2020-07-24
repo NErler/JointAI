@@ -13,8 +13,8 @@ check_formula_list <- function(formula) {
 
   # check that all elements of formula are either formulas or NULL
   if (!all(sapply(formula, function(x) inherits(x, "formula") | is.null(x))))
-    errormsg('At least one element of the provided formula is not of class
-             "formula".')
+    errormsg("At least one element of the provided formula is not of class
+             %s.", dQuote("formula"))
 
   return(formula)
 }
@@ -31,10 +31,11 @@ extract_id <- function(random, warn = TRUE) {
 
   # check if random is a list of formulas
   if (!all(sapply(random, function(x) inherits(x, "formula") | is.null(x))))
-    errormsg('At least one element of "random" is not of class "formula".')
+    errormsg("At least one element of %s is not of class %s.",
+             dQuote("random"), dQuote("formula"))
 
   ids <- lapply(random, function(x) {
-    # match (...|...)
+    # match the vertical bar (...|...)
     rdmatch <- gregexpr(pattern = "\\([^|]*\\|[^)]*\\)",
                         deparse(x, width.cutoff = 500L))
 
@@ -45,7 +46,7 @@ extract_id <- function(random, warn = TRUE) {
       rdid <- gregexpr(pattern = "[[:print:]]*\\|[[:space:]]*", rd)
 
       # extract and remove )
-      id <- gsub(')', '', unlist(regmatches(rd, rdid, invert = TRUE)))
+      id <- gsub(")", "", unlist(regmatches(rd, rdid, invert = TRUE)))
 
       # split by + * : /
       id <- unique(unlist(strsplit(id[id != ""],
@@ -70,8 +71,8 @@ extract_id <- function(random, warn = TRUE) {
 
   if (is.null(unlist(ids)) & !is.null(unlist(random)))
     if (warn)
-      warnmsg('No "id" variable could be identified. I will assume that all
-              observations are independent.')
+      warnmsg("No %s variable could be identified. I will assume that all
+              observations are independent.", dQuote("id"))
 
   unique(unlist(ids))
 }
@@ -117,7 +118,8 @@ extract_lhs <- function(formula) {
 
   # check that formula is a formula object
   if (!inherits(formula, "formula"))
-    errormsg('The provided formula is not a "formula" object')
+    errormsg("The provided formula is not a %s object.",
+             dQuote("formula"))
 
 
   # check that the formula has a LHS
@@ -149,7 +151,7 @@ remove_lhs <- function(fmla) {
         x
       } else {
         clean_lhs <- gsub("([^\\])\\(", "\\1\\\\(", extract_lhs(x))
-        as.formula(gsub(paste0("^", clean_lhs, "[[ ]]*~"), '~',
+        as.formula(gsub(paste0("^", clean_lhs, "[[ ]]*~"), "~",
                         deparse(x, width.cutoff = 500L)))
       }
     }
@@ -180,7 +182,7 @@ remove_grouping <- function(fmla) {
 
         # extract and remove (
         ranef <- lapply(regmatches(rd, rdid, invert = TRUE), gsub,
-                        pattern = '^\\(', replacement =  '~ ' )
+                        pattern = "^\\(", replacement =  "~ " )
         ranef <- lapply(ranef, function(k) as.formula(k[k != ""]))
 
         nam <- extract_id(x, warn = FALSE)
@@ -221,7 +223,7 @@ remove_grouping <- function(fmla) {
 #   as.formula(paste0("~ ",
 #                     paste0(unique(unlist(
 #                       lapply(fmlas, function(x)
-#                         gsub("~", '', deparse(x, width.cutoff = 500L))))),
+#                         gsub("~", "", deparse(x, width.cutoff = 500L))))),
 #                       collapse = " + ")
 #   ))
 # }
@@ -241,11 +243,11 @@ split_formula <- function(formula) {
   # build fixed effects formula by combining all non-random effects terms with
   # a "+", and combine with the LHS
   rhs <- paste(c(term_labels[!which_ranef],
-                 if (attr(terms(formula), 'intercept') == 0L) "0"),
+                 if (attr(terms(formula), "intercept") == 0L) "0"),
                collapse = " + ")
 
   fixed <- paste0(as.character(formula)[2L], " ~ ",
-                  ifelse(rhs == '', 1L, rhs)
+                  ifelse(rhs == "", 1L, rhs)
   )
 
   # build random effects formula by pasting all random effects terms in brackets
@@ -326,8 +328,8 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
 
   # if there are any functions in non-survival outcomes, give an error since
   # this cannot be handled by JAGS
-  if (any(names(identify_functions(fmla_outcomes)) != 'identity'))
-    errormsg('Functions in the outcome are not allowed.')
+  if (any(names(identify_functions(fmla_outcomes)) != "identity"))
+    errormsg("Functions in the outcome are not allowed.")
 
 
   # list of functions in covariates and random effects variables
@@ -343,7 +345,7 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
     fct_list <- get_fct_df_list(varlist = get_varlist(fl), data = data)
 
     # convert to data.frame
-    fct_df <- melt_list(fct_list, varname = 'type')
+    fct_df <- melt_list(fct_list, varname = "type")
 
     # remove duplicates
     subset(fct_df,
@@ -354,7 +356,7 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
 
   if (any(!sapply(fct_df_list, is.null))) {
     fct_df <- melt_data.frame_list(fct_df_list,
-                                  id.vars = c('var', 'colname', 'fct', 'type'))
+                                  id.vars = c("var", "colname", "fct", "type"))
     fct_df <- subset(fct_df, select = which(!names(fct_df) %in% "rowID"))
 
     # if chosen, remove functions only involving complete variables
@@ -377,15 +379,15 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
       # times in fct_df
       dupl <-
         duplicated(fct_df[, -which(names(fct_df) %in%
-                                    c('var', 'compl', 'matrix'))]) |
+                                    c("var", "compl", "matrix"))]) |
         duplicated(fct_df[, -which(names(fct_df) %in%
-                                    c('var', 'compl', 'matrix'))],
+                                    c("var", "compl", "matrix"))],
                    fromLast = TRUE)
 
       fct_df$dupl <- FALSE
 
       # identify which rows relate to the same expression in the formula
-      p <- apply(fct_df[, -which(names(fct_df) %in% c('var', 'compl', 'matrix'))],
+      p <- apply(fct_df[, -which(names(fct_df) %in% c("var", "compl", "matrix"))],
                  1L, paste, collapse = "")
 
       for (k in which(dupl)) {
@@ -397,8 +399,8 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
         fct_df$dupl[eq[ord]] <- duplicated(p[eq[ord]])
       }
 
-      p <- apply(fct_df[, -which(names(fct_df) %in% c('var', 'dupl', 'compl',
-                                                    'matrix'))],
+      p <- apply(fct_df[, -which(names(fct_df) %in% c("var", "dupl", "compl",
+                                                    "matrix"))],
                  1L, paste, collapse = "")
       fct_df$dupl_rows <- NA
       fct_df$dupl_rows[which(dupl)] <- lapply(which(dupl), function(i) {
@@ -433,7 +435,7 @@ identify_functions <- function(formula) {
   isfun <- sapply(unique(unlist(lapply(formula, all.names, unique = TRUE))),
                   function(x) {
                     g <- try(get(x, envir = .GlobalEnv), silent = TRUE)
-                    if (!inherits(g, 'try-error'))
+                    if (!inherits(g, "try-error"))
                       is.function(g)
                     else
                       FALSE
@@ -493,14 +495,14 @@ make_fct_df <- function(varlist_elmt, data) {
     simplify = FALSE)
 
 
-  df <- melt_list(varlist_elmt, varname = 'fct', valname = 'var')
+  df <- melt_list(varlist_elmt, varname = "fct", valname = "var")
 
   if (any(sapply(vars, length) > sapply(varlist_elmt, length)))
     df <- df[match(rep(names(vars), sapply(vars, length)), df$fct), ]
 
   df$colname <- unlist(vars)
 
-  df[, c("var", "colname", 'fct')]
+  df[, c("var", "colname", "fct")]
 }
 
 
