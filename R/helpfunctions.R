@@ -151,10 +151,10 @@ check_varlevel <- function(x, groups, group_lvls = NULL) {
   # - group_lvls: the grouping level matrix
   #               (obtained from identify_level_relations())
 
-  # if there are no groups, make a list with group name 'no_levels' so that the
+  # if there are no groups, make a list with group name "no_levels" so that the
   # syntax does not fail for single-level models
   if (!is.list(groups))
-    groups <- list('no_levels' = groups)
+    groups <- list("no_levels" = groups)
 
   # check the clustering of the variable
   clus <- check_cluster(x, grouping = groups)
@@ -176,7 +176,7 @@ check_varlevel <- function(x, groups, group_lvls = NULL) {
     names(clus)[!clus]
   } else {
     # if the variable varies in all levels, it is from level one
-    'lvlone'
+    "lvlone"
   }
 }
 
@@ -213,7 +213,7 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
   # - Mlist: info on design matrices etc., obtained from divide_matrices()
   # - varname: name of the variabel for which the transformation syntax is being
   #            determined
-  # - index: character string determining the index, i.e., 'i" or "ii"
+  # - index: character string determining the index, i.e., "i" or "ii"
   # - isgk: is this syntax part of the Gauss-Kronrod quadrature part?
 
   # if the output is being written in the Gauss-Kronrod quadrature part,
@@ -261,12 +261,12 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
       }
 
       # remove the "as.numeric" used for comparing factors
-      fct <- gsub('\\bas.numeric\\(', '(', fct)
+      fct <- gsub("\\bas.numeric\\(", "(", fct)
 
-      # if (x$type %in% c('ps', 'bs')) {
+      # if (x$type %in% c("ps", "bs")) {
       #   sB <- eval(parse(text = fct), envir = Mlist$data)
-      #   fct <- splineBas(x$var, degree = attr(sB, 'degree'), index = index,
-      #                    nkn = length(attr(sB, 'knots')))
+      #   fct <- splineBas(x$var, degree = attr(sB, "degree"), index = index,
+      #                    nkn = length(attr(sB, "knots")))
       #
       #   dcols <- grep(gsub("[[:digit:]]+$", "", x$colname),
       #                 colnames(Mlist$M[[dest_mat]]), fixed = TRUE)
@@ -274,25 +274,25 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
       # }
 
 
-      lvls <- Mlist$group_lvls[gsub('M_', '', Mlist$Mlvls[vars])]
+      lvls <- Mlist$group_lvls[gsub("M_", "", Mlist$Mlvls[vars])]
 
       for (k in seq_along(vars)) {
         if (lvls[k] == min(lvls)) {
           theindex <- index
         } else if (min(lvls) == 1L) {
-          theindex <- paste0('group_', names(lvls)[k], '[', index, ']')
+          theindex <- paste0("group_", names(lvls)[k], "[", index, "]")
         } else {
-          theindex <- paste0('group_', names(lvls)[k], '[',
-                             'pos_', names(lvls)[which.min(lvls)], "[",
-                             index, ']]')
+          theindex <- paste0("group_", names(lvls)[k], "[",
+                             "pos_", names(lvls)[which.min(lvls)], "[",
+                             index, "]]")
         }
 
         fct <- if (isgk) {
-          gsub(paste0('\\b', vars[k], '\\b'),
+          gsub(paste0("\\b", vars[k], "\\b"),
                paste0(vars_mat[k], "gk[", theindex, ", ",
                       vars_cols[k], ", k]"), fct)
         } else {
-          gsub(paste0('\\b', vars[k], '\\b'),
+          gsub(paste0("\\b", vars[k], "\\b"),
                paste0(vars_mat[k], "[", theindex, ", ",
                       vars_cols[k], "]"), fct)
         }
@@ -300,13 +300,13 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
 
       paste0(tab(4L),
              dest_mat, if (isgk) "gk", "[", index, ", ", dest_col,
-             if (isgk) ", k", "] <- ", fct, '\n')
+             if (isgk) ", k", "] <- ", fct, "\n")
     }
   })
 
-  paste0('\n\n',
-         paste0(Filter(Negate(is.null), unique(trafolist)), collapse = ''),
-         '\n')
+  paste0("\n\n",
+         paste0(Filter(Negate(is.null), unique(trafolist)), collapse = ""),
+         "\n")
 }
 
 
@@ -340,14 +340,14 @@ replace_trafo <- function(nam, trafos) {
 clean_survname <- function(x) {
   # replace symbols not allowed in variable names to create a valid variable
   # name replacing the survival model outcome string in the JAGS model.
-  x <- gsub(',* *type * = * [[:print:]]*', '', x)
-  x <- gsub("[)\'\"]", '', x)
+  x <- gsub(",* *type * = * [[:print:]]*", "", x)
+  x <- gsub("[)\'\"]", "", x)
   x <- gsub("[[:punct:]]* *I\\(", "_", x)
-  x <- gsub(' *== *', '_', x)
-  x <- gsub(' *!= *', '_', x)
-  x <- gsub(' *<=* *', '_', x)
-  x <- gsub(' *>=* *', '_', x)
-  x <- gsub(' *, *', "_", x)
+  x <- gsub(" *== *", "_", x)
+  x <- gsub(" *!= *", "_", x)
+  x <- gsub(" *<=* *", "_", x)
+  x <- gsub(" *>=* *", "_", x)
+  x <- gsub(" *, *", "_", x)
   x <- gsub("\\(", "_", x)
 
   abbreviate(x, minlength = 15L, use.classes = TRUE)
@@ -392,7 +392,7 @@ get_coef_names <- function(info_list) {
       )
     }
 
-    nonprop <- unlist(unname(lapply(info$parelmts, attr, 'nonprop')),
+    nonprop <- unlist(unname(lapply(info$parelmts, attr, "nonprop")),
                       recursive = FALSE)
 
     if (!is.null(unlist(nonprop))) {
@@ -460,7 +460,7 @@ get_matgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
                         group_lvls = Mlist$group_lvls, groups = Mlist$groups,
                         timevar = Mlist$timevar,
                         longvars = unique(unlist(lapply(survinfo, "[[",
-                                                        'longvars'))),
+                                                        "longvars"))),
                         gk_data)
   } else {
 
@@ -523,8 +523,8 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
                               function(k) 1L:k))
 
   # turn long data into wide format, one column per visit
-  wd <- reshape(ld, direction = 'wide', v.names = c(timevar, longvars),
-                timevar = 'obstime', idvar = idvar)
+  wd <- reshape(ld, direction = "wide", v.names = c(timevar, longvars),
+                timevar = "obstime", idvar = idvar)
 
   # check if there are variables for which some subjects have no observation
   anymis <- sapply(longvars, function(v) {
@@ -534,15 +534,15 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
   })
 
   if (any(anymis)) {
-    errormsg('There are subjects without any observations in the time-varying
-             variable(s) %s.', paste_and(dQuote(names(anymis)[anymis])))
+    errormsg("There are subjects without any observations in the time-varying
+             variable(s) %s.", paste_and(dQuote(names(anymis)[anymis])))
   }
 
   # add a column identifying the original ordering of the rows to gk_data
   gk_data$rowid <- seq_len(nrow(gk_data))
 
   # merge gk_data with wide format version of the time-varying covariates
-  md <- merge(subset(gk_data, select = c(idvar, timevar, 'rowid')), wd)
+  md <- merge(subset(gk_data, select = c(idvar, timevar, "rowid")), wd)
 
 
   locf <- sapply(seq_len(nrow(md)), function(i) {
@@ -550,7 +550,7 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # if there is no baseline visit (i.e., the first time with an observed value
     # is larger than the time in the Gauss-Kronrod version of the time) the
-    # first available measurement will be used ('first value carried backward')
+    # first available measurement will be used ("first value carried backward")
     valcol <- max(1L, which(
       c(md[i, timevar] > md[i, grep(paste0("^", timevar, "."), colnames(md))])
     ), na.rm = TRUE)
@@ -569,7 +569,7 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
   md[, longvars] <- do.call(rbind, locf)
 
   gk_data_new <- merge(subset(gk_data, select = !names(gk_data) %in% longvars),
-                       subset(md, select = c(idvar, timevar, longvars, 'rowid'))
+                       subset(md, select = c(idvar, timevar, longvars, "rowid"))
   )
   gk_data_new[order(gk_data_new$rowid), ]
 }
@@ -584,9 +584,9 @@ get_survinfo <- function(info_list, Mlist) {
   # - info_list: list of model info as obtained from get_model info()
   # - Mlist: as obtained from divide_matrics()
 
-  modeltypes <- sapply(info_list, "[[", 'modeltype')
+  modeltypes <- sapply(info_list, "[[", "modeltype")
 
-  sapply(names(info_list[modeltypes %in% c('coxph', 'JM')]), function(k) {
+  sapply(names(info_list[modeltypes %in% c("coxph", "JM")]), function(k) {
 
     x <- info_list[[k]]
 
@@ -620,7 +620,7 @@ get_survinfo <- function(info_list, Mlist) {
          surv_lvl = surv_lvl,
          longlvls = longlvls,
          longvars = longvars,
-         haslong = isTRUE(!is.null(unlist(x$lp[paste0('M_', longlvls)]))),
+         haslong = isTRUE(!is.null(unlist(x$lp[paste0("M_", longlvls)]))),
          tv_vars = names(x$tv_vars),
 
          # name of the variable containing time of the repeated measurements:
