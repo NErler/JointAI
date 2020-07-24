@@ -439,13 +439,13 @@ get_lp <- function(k, Mlist) {
 
 get_parelmts <- function(k, Mlist, par_index_main, par_index_other, lp) {
 
-  Kmat <- if (k %in% names(Mlist$fixed)) {
+  par_ind_mat <- if (k %in% names(Mlist$fixed)) {
     par_index_main
   } else {
     par_index_other
   }
 
-  if (any(is.na(Kmat)))
+  if (any(is.na(par_ind_mat))) {
     errormsg("There are missing values in the matrix %s.",
              switch(as.character(k %in% names(Mlist$fixed)),
                     "TRUE" = "par_index_main",
@@ -454,8 +454,8 @@ get_parelmts <- function(k, Mlist, par_index_main, par_index_other, lp) {
     )
   }
 
-  sapply(rownames(Kmat[[k]]), function(lvl) {
-    parnums <- Kmat[[k]][lvl, 1L]:Kmat[[k]][lvl, 2L]
+  sapply(rownames(par_ind_mat[[k]]), function(lvl) {
+    parnums <- par_ind_mat[[k]][lvl, 1L]:par_ind_mat[[k]][lvl, 2L]
 
     if (Mlist$models[k] %in% c("mlogit", "mlogitmm")) {
       if (length(levels(Mlist$refs[[k]])) == 0L) {
@@ -468,7 +468,7 @@ get_parelmts <- function(k, Mlist, par_index_main, par_index_other, lp) {
                  model.", dQuote(k))
       }
 
-      parnums <- setNames(Kmat[[k]][lvl, 1L]:Kmat[[k]][lvl, 2L],
+      parnums <- setNames(par_ind_mat[[k]][lvl, 1L]:par_ind_mat[[k]][lvl, 2L],
                           rep(names(lp[[lvl]]),
                               length(levels(Mlist$refs[[k]])) - 1L)
       )
