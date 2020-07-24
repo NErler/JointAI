@@ -369,7 +369,7 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
   if (any(!sapply(fctDFlist, is.null))) {
     fctDF <- melt_data.frame_list(fctDFlist,
                                   id.vars = c('var', 'colname', 'fct', 'type'))
-    fctDF <- subset(fctDF, select = which(!names(fctDF) %in% c("rowID")))
+    fctDF <- subset(fctDF, select = which(!names(fctDF) %in% "rowID"))
 
     # if chosen, remove functions only involving complete variables
     compl <- colSums(is.na(data[, fctDF$var, drop = FALSE])) == 0
