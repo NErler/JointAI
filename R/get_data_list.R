@@ -59,13 +59,13 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 
   if (length(
     unlist(c(clm_parelmts, sapply(clm_parelmts, lapply, "attr", "nonprop")))
-  ) == 0) {
+  ) == 0L) {
     l[c("mu_reg_ordinal", "tau_reg_ordinal")] <- NULL
   }
 
 
   # random effects groupings ---------------------------------------------------
-  if (sum(unlist(lapply(info_list, "[[", "nranef"))) > 0) {
+  if (sum(unlist(lapply(info_list, "[[", "nranef"))) > 0L) {
 
     # Obtain groups from Mlist, except for the group "lvlone" (never used).
     # The groups are vectors of length nrow(data) that indicate which rows
@@ -82,7 +82,7 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
                   }, simplify = FALSE)
 
     names(groups) <- paste0("group_", names(groups))
-    names(pos) <- if (length(pos) > 0) paste0("pos_", names(pos))
+    names(pos) <- if (length(pos) > 0L) paste0("pos_", names(pos))
 
     l <- c(l,
            groups,
@@ -119,18 +119,18 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
     for (x in info_list[modeltypes %in% c("survreg")]) {
 
       l[[paste0("cens_", x$varname)]] <-
-        1 - Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]
+        1L - Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]]
 
-      if (any(!Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]] %in% c(0, 1))) {
+      if (any(!Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]] %in% c(0L, 1L))) {
         errormsg("The event indicator should only contain 2 distinct values
                  but I found %s. Note that it is currently not possible to fit
                  survival models with competing risks.",
-                 length(unique(Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]]))
+                 length(unique(Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]]))
         )
       }
 
-      l[[x$varname]] <- ifelse(Mlist$M[[x$resp_mat[2]]][, x$resp_col[2]] == 1,
-                               Mlist$M[[x$resp_mat[1]]][, x$resp_col[1]],
+      l[[x$varname]] <- ifelse(Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]] == 1L,
+                               Mlist$M[[x$resp_mat[1L]]][, x$resp_col[1L]],
                                NA
       )
     }
@@ -169,15 +169,15 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 
 
       # B-spline specification for the baseline hazard
-      h0knots <- get_knots_h0(nkn = Mlist$df_basehaz - 4, Time = x$survtime,
+      h0knots <- get_knots_h0(nkn = Mlist$df_basehaz - 4L, Time = x$survtime,
                               event = x$survevent, gkx = gkx)
 
 
       l[[paste0("Bh0_", x$varname)]] <-
-        splines::splineDesign(h0knots, x$survtime, ord = 4)
+        splines::splineDesign(h0knots, x$survtime, ord = 4L)
       l[[paste0("Bsh0_", x$varname)]] <-
-        splines::splineDesign(h0knots, c(t(outer(x$survtime / 2, gkx + 1))),
-                              ord = 4)
+        splines::splineDesign(h0knots, c(t(outer(x$survtime / 2L, gkx + 1L))),
+                              ord = 4L)
 
       # vector of zeros for the "zeros trick" in JAGS
       l[[paste0("zeros_", x$varname)]] <- numeric(length(x$survtime))
@@ -189,15 +189,15 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
       # what is the level of the survival outcome?
       surv_lvl <- unique(sapply(survinfo, "[[", "surv_lvl"))
 
-      if (length(surv_lvl) > 1)
+      if (length(surv_lvl) > 1L)
         errormsg("It is not possible to fit survival models on different
                  levels of the data.")
 
-      if (length(unique(sapply(survinfo, "[[", "time_name"))) > 1)
+      if (length(unique(sapply(survinfo, "[[", "time_name"))) > 1L)
         errormsg("It is currently not possible to fit multiple survival
                   models with different event time variables.")
 
-      if (length(unique(sapply(survinfo, "[[", "modeltype"))) > 1)
+      if (length(unique(sapply(survinfo, "[[", "modeltype"))) > 1L)
         errormsg("It is not possible to simultaneously fit coxph and JM
                  models.")
 
@@ -212,9 +212,9 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
       # survival outcome (i.e., time-varying variables have level 1, survival
       # outcome has level 2)
       l$M_lvlonegk <- array(data = unlist(Mgk),
-                              dim = c(nrow(Mgk[[1]]), ncol(Mgk[[1]]),
+                              dim = c(nrow(Mgk[[1L]]), ncol(Mgk[[1L]]),
                                       length(gkx)),
-                              dimnames = list(NULL, dimnames(Mgk)[[2]], NULL)
+                              dimnames = list(NULL, dimnames(Mgk)[[2L]], NULL)
       )
     }
 
@@ -235,8 +235,8 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
   #     l[[paste0("kn_", trafo_sub$var[k])]] <- attr(sB, "knots")
   #
   #     sD <- diff(diag(length(attr(sB, "knots"))),
-  #                diff = attr(sB, "degree") + 1) /
-  #       (gamma(attr(sB, "degree") + 1) * attr(sB, "dx")^attr(sB, "degree"))
+  #                diff = attr(sB, "degree") + 1L) /
+  #       (gamma(attr(sB, "degree") + 1L) * attr(sB, "dx")^attr(sB, "degree"))
   #
   #     l[[paste0("sD_", trafo_sub$var[k])]] <- sD
   #
@@ -246,7 +246,7 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
   #         crossprod(diff(DDal, diff = 2)) + 1e-06 * DDal
   #       l[[paste0("priorMean_", trafo_sub$var[k])]] <- rep(0, ncol(sB))
   #
-  #       l <- c(l,  shape_ps = 1, rate_ps = 0.0005)
+  #       l <- c(l,  shape_ps = 1.0, rate_ps = 0.0005)
   #     }
   #   }
   # }
@@ -374,47 +374,47 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 default_hyperpars <- function() {
   list(
     norm = c(
-      mu_reg_norm = 0,
+      mu_reg_norm = 0.0,
       tau_reg_norm = 0.0001,
       shape_tau_norm = 0.01,
       rate_tau_norm = 0.01
     ),
 
     gamma = c(
-      mu_reg_gamma = 0,
+      mu_reg_gamma = 0.0,
       tau_reg_gamma = 0.0001,
       shape_tau_gamma = 0.01,
       rate_tau_gamma = 0.01
     ),
 
     beta = c(
-      mu_reg_beta = 0,
+      mu_reg_beta = 0.0,
       tau_reg_beta = 0.0001,
       shape_tau_beta = 0.01,
       rate_tau_beta = 0.01
     ),
 
     binom = c(
-      mu_reg_binom = 0,
+      mu_reg_binom = 0.0,
       tau_reg_binom = 0.0001
     ),
 
 
     poisson = c(
-      mu_reg_poisson = 0,
+      mu_reg_poisson = 0.0,
       tau_reg_poisson = 0.0001
     ),
 
 
     multinomial = c(
-      mu_reg_multinomial = 0,
+      mu_reg_multinomial = 0.0,
       tau_reg_multinomial = 0.0001
     ),
 
     ordinal = c(
-      mu_reg_ordinal = 0,
+      mu_reg_ordinal = 0.0,
       tau_reg_ordinal = 0.0001,
-      mu_delta_ordinal = 0,
+      mu_delta_ordinal = 0.0,
       tau_delta_ordinal = 0.0001
     ),
 
@@ -422,17 +422,17 @@ default_hyperpars <- function() {
 
     ranef = c(shape_diag_RinvD = 0.01,
               rate_diag_RinvD = 0.001,
-              KinvD_expr = "nranef + 1"
+              KinvD_expr = "nranef + 1.0"
     ),
 
-    surv = c(mu_reg_surv = 0,
+    surv = c(mu_reg_surv = 0.0,
              tau_reg_surv = 0.001)
   )
 }
 
 
-get_RinvD <- function(nranef, KinvD_expr = "nranef + 1") {
-  if (nranef > 1) {
+get_RinvD <- function(nranef, KinvD_expr = "nranef + 1.0") {
+  if (nranef > 1L) {
     RinvD <- diag(as.numeric(rep(NA, nranef)))
     KinvD <- eval(parse(text = KinvD_expr))
   } else {
