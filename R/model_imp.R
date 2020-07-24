@@ -660,7 +660,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   }
 
   # initial values -------------------------------------------------------------
-  inits <- get_initial_values(inits = inits, seed = seed, n.chains = n.chains,
+  inits <- get_initial_values(inits = inits, seed = seed, n_chains = n.chains,
                               warn = warn)
 
   # parameters to monitor ------------------------------------------------------

@@ -52,7 +52,7 @@ make_filename <- function(modeldir, modelname, keep_model, overwrite, mess) {
 
 
 
-get_initial_values <- function(inits, seed, n.chains, warn) {
+get_initial_values <- function(inits, seed, n_chains, warn) {
   # check if initial values are supplied or should be generated
 
   oldseed <- .Random.seed
@@ -61,7 +61,7 @@ get_initial_values <- function(inits, seed, n.chains, warn) {
   })
 
   if (is.null(inits)) {
-    inits <- get_rng(seed, n.chains)
+    inits <- get_rng(seed, n_chains)
 
   } else {
     # if initial values are supplied, but they are not a function nor a list,
@@ -70,7 +70,7 @@ get_initial_values <- function(inits, seed, n.chains, warn) {
       if (warn)
         warnmsg("The object supplied to %s could not be recognized.
               Initial values are set by JAGS.", sQuote("inits"))
-      inits <- get_rng(seed, n.chains)
+      inits <- get_rng(seed, n_chains)
 
     } else {
 
@@ -80,7 +80,7 @@ get_initial_values <- function(inits, seed, n.chains, warn) {
         if (!is.null(seed)) {
           set_seed(seed)
         }
-        inits <- replicate(n.chains, inits(), simplify = FALSE)
+        inits <- replicate(n_chains, inits(), simplify = FALSE)
       }
 
       # if initial values are supplied as a list, or were evaluated from a
