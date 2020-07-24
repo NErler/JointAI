@@ -34,32 +34,32 @@ get_params <- function(analysis_main = TRUE,
 
   # update analysis_main parameters
   for (k in c(
-    'betas',
-    'sigma_main',
-    'tau_main',
-    'gamma_main',
-    'shape_main',
-    'D_main',
-    'basehaz'
+    "betas",
+    "sigma_main",
+    "tau_main",
+    "gamma_main",
+    "shape_main",
+    "D_main",
+    "basehaz"
   )) {
     args[[k]] <-
       ifelse(is.null(args[[k]]), isTRUE(args$analysis_main), args[[k]])
   }
 
   # update analysis_random parameters
-  for (k in c('D_main', 'invD_main', 'RinvD_main', 'ranef_main')) {
+  for (k in c("D_main", "invD_main", "RinvD_main", "ranef_main")) {
     args[[k]] <-
       ifelse(is.null(args[[k]]), isTRUE(args$analysis_random), args[[k]])
   }
 
   # update other_models parameters
   for (k in c(
-    'alphas',
-    'sigma_other',
-    'tau_other',
-    'gamma_other',
-    'shape_other',
-    'D_other'
+    "alphas",
+    "sigma_other",
+    "tau_other",
+    "gamma_other",
+    "shape_other",
+    "D_other"
   )) {
     args[[k]] <-
       ifelse(is.null(args[[k]]), isTRUE(args$other_models), args[[k]])
@@ -85,8 +85,8 @@ get_params <- function(analysis_main = TRUE,
   params <- c(
     get_modelpars(info_list, Mlist = Mlist, args = args, set = "main"),
     get_modelpars(info_list, Mlist = Mlist, args = args, set = "other"),
-    get_ranefpars(info_list, Mlist = Mlist, args, set = 'main'),
-    get_ranefpars(info_list, Mlist = Mlist, args, set = 'other'),
+    get_ranefpars(info_list, Mlist = Mlist, args, set = "main"),
+    get_ranefpars(info_list, Mlist = Mlist, args, set = "other"),
     other,
     impvals
   )
@@ -95,7 +95,7 @@ get_params <- function(analysis_main = TRUE,
 }
 
 
-get_modelpars <- function(info_list, Mlist, args, set = 'main') {
+get_modelpars <- function(info_list, Mlist, args, set = "main") {
 
   sublist <- if (set == "main") {
     info_list[names(info_list) %in% names(Mlist$fixed)]
@@ -103,8 +103,8 @@ get_modelpars <- function(info_list, Mlist, args, set = 'main') {
     info_list[!names(info_list) %in% names(Mlist$fixed)]
   }
 
-  modeltypes <- sapply(sublist, "[[", 'modeltype')
-  families <- sapply(sublist, "[[", 'family')
+  modeltypes <- sapply(sublist, "[[", "modeltype")
+  families <- sapply(sublist, "[[", "family")
 
 
   params <- NULL
@@ -112,8 +112,8 @@ get_modelpars <- function(info_list, Mlist, args, set = 'main') {
 
   # regcoef
   coefnam <- switch(set,
-                    main = 'betas',
-                    other = 'alphas')
+                    main = "betas",
+                    other = "alphas")
 
   if (args[[coefnam]] &
       any(grepl(paste0("^", gsub("s$", "", coefnam), "\\b"),
@@ -123,15 +123,15 @@ get_modelpars <- function(info_list, Mlist, args, set = 'main') {
 
 
   # basehaz
-  if (args$basehaz & any(modeltypes %in% c('coxph', 'JM'))) {
-    survnams <- sapply(sublist[modeltypes %in% c('coxph', 'JM')],
-                       "[[", 'varname')
+  if (args$basehaz & any(modeltypes %in% c("coxph", "JM"))) {
+    survnams <- sapply(sublist[modeltypes %in% c("coxph", "JM")],
+                       "[[", "varname")
     params <- c(params, paste0("beta_Bh0_", survnams))
   }
 
   # gamma & delta
-  if (any(modeltypes %in% c('clm', 'clmm'))) {
-    ord_mods <- names(sublist)[modeltypes %in% c('clm', 'clmm')]
+  if (any(modeltypes %in% c("clm", "clmm"))) {
+    ord_mods <- names(sublist)[modeltypes %in% c("clm", "clmm")]
     params <- c(params,
                 if (args[[paste0("gamma_", set)]]) paste0("gamma_", ord_mods),
                 if (isTRUE(args[[paste0("delta_", set)]]))
@@ -142,31 +142,31 @@ get_modelpars <- function(info_list, Mlist, args, set = 'main') {
 
   # sigma & tau
   sigvars <- if (args[[paste0("sigma_", set)]]) {
-    names(sublist)[families %in% c('gaussian', 'Gamma', 'lognorm')]
+    names(sublist)[families %in% c("gaussian", "Gamma", "lognorm")]
   }
   tauvars <- if (args[[paste0("tau_", set)]]) {
     setdiff(names(sublist)[families %in%
-                             c('gaussian', 'Gamma', 'lognorm', 'beta')],
+                             c("gaussian", "Gamma", "lognorm", "beta")],
             sigvars)
   }
 
   params <- c(params,
-              if (length(sigvars) > 0L) paste0('sigma_', sigvars),
+              if (length(sigvars) > 0L) paste0("sigma_", sigvars),
               if (length(tauvars) > 0L) paste0("tau_", tauvars))
 
 
-  if (any(modeltypes %in% 'survreg') &
+  if (any(modeltypes %in% "survreg") &
       isTRUE(args$analysis_main) &
-      set == 'main')
+      set == "main")
     params <- c(params,
-                paste0("shape_", sapply(sublist[modeltypes %in% 'survreg'],
-                                        "[[", 'varname')))
+                paste0("shape_", sapply(sublist[modeltypes %in% "survreg"],
+                                        "[[", "varname")))
 
   params
 }
 
 
-get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
+get_ranefpars <- function(info_list, Mlist, args, set = "main") {
 
   sublist <- if (set == "main") {
     info_list[names(info_list) %in% names(Mlist$fixed)]
@@ -190,7 +190,7 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
   if (args[[paste0("ranef_", set)]]) {
     params <- c(params,
                 sapply(ranef_info, function(k)
-                  paste0('b_', k$varname, "_", k$lvls)))
+                  paste0("b_", k$varname, "_", k$lvls)))
   }
 
   # invD
@@ -259,11 +259,11 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
 #   list_main <- info_list[names(Mlist$fixed)]
 #   list_other <- info_list[!names(info_list) %in% names(Mlist$fixed)]
 #
-#   modeltypes_main <- sapply(list_main, "[[", 'modeltype')
-#   modeltypes_other <- sapply(list_other, "[[", 'modeltype')
+#   modeltypes_main <- sapply(list_main, "[[", "modeltype")
+#   modeltypes_other <- sapply(list_other, "[[", "modeltype")
 #
-#   families_main <- sapply(list_main, "[[", 'family')
-#   families_other <- sapply(list_other, "[[", 'family')
+#   families_main <- sapply(list_main, "[[", "family")
+#   families_other <- sapply(list_other, "[[", "family")
 #
 #
 #   # get random effects info for the main models and other models
@@ -289,7 +289,7 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
 #
 #     # sigma
 #     if ((any(families_main %in% c("gaussian", "Gamma", "lognorm")) |
-#          any(modeltypes_main %in% c('survreg'))) &
+#          any(modeltypes_main %in% c("survreg"))) &
 #         is.null(sigma_main)) {
 #       sigma_main <- TRUE
 #     }
@@ -302,14 +302,14 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
 #
 #     # sigma_main
 #     sigvars <- if (isTRUE(sigma_main)) {
-#       names(list_main)[families_main %in% c('gaussian', 'Gamma', 'lognorm')]
+#       names(list_main)[families_main %in% c("gaussian", "Gamma", "lognorm")]
 #     }
 #
 #     # tau_main
 #     tauvars <- if (isTRUE(tau_main)) {
 #       setdiff(
-#         names(list_main)[families_main %in% c('gaussian', 'Gamma',
-#                                               'lognorm', 'beta')],
+#         names(list_main)[families_main %in% c("gaussian", "Gamma",
+#                                               "lognorm", "beta")],
 #         sigvars
 #       )
 #     }
@@ -317,12 +317,12 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
 #
 #
 #     # gamma
-#     gamma_main <- any(modeltypes_main %in% c('clmm', 'clm')) &
+#     gamma_main <- any(modeltypes_main %in% c("clmm", "clm")) &
 #       !isFALSE(gamma_main)
 #
 #
 #     # basehaz
-#     if (any(modeltypes_main %in% c('coxph', "JM")) & !isFALSE(basehaz))
+#     if (any(modeltypes_main %in% c("coxph", "JM")) & !isFALSE(basehaz))
 #       # for a cox model with no betas, something needs to be monitored to
 #       # prevent JAGS error "No valid monitors set".
 #       basehaz <- TRUE
@@ -347,8 +347,8 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
 #   if (other_models) {
 #     if (length(setdiff(names(info_list), names(Mlist$fixed))) == 0) {
 #       if (mess)
-#         msg('There are no missing values in covariates. I will set
-#             "other_models = FALSE".')
+#         msg("There are no missing values in covariates. I will set
+#             "other_models = FALSE".")
 #       other_models <- FALSE
 #     } else {
 #       if (is.null(alphas)) alphas <- TRUE
@@ -376,23 +376,23 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
 #     # basehaz
 #     if (isTRUE(basehaz))
 #       paste0("beta_Bh0_",
-#              sapply(list_main[modeltypes_main %in% c('coxph', 'JM')],
-#                     "[[", 'varname')),
+#              sapply(list_main[modeltypes_main %in% c("coxph", "JM")],
+#                     "[[", "varname")),
 #     # gamma_main
 #     if (isTRUE(gamma_main))
-#       paste0("gamma_", names(list_main)[modeltypes_main %in% c('clm', 'clmm')]),
+#       paste0("gamma_", names(list_main)[modeltypes_main %in% c("clm", "clmm")]),
 #
 #     # delta_main
 #     if (isTRUE(delta_main))
-#       paste0("delta_", names(list_main)[modeltypes_main %in% c('clm', 'clmm')]),
+#       paste0("delta_", names(list_main)[modeltypes_main %in% c("clm", "clmm")]),
 #
 #     # sigma_main
 #     if (isTRUE(sigma_main)) {
-#       c(if (length(sigvars) > 0) paste0('sigma_', sigvars),
+#       c(if (length(sigvars) > 0) paste0("sigma_", sigvars),
 #
-#         if (any(modeltypes_main %in% c('survreg')))
-#           paste0("shape_", sapply(list_main[modeltypes_main %in% c('survreg')],
-#                                   "[[", 'varname'))
+#         if (any(modeltypes_main %in% c("survreg")))
+#           paste0("shape_", sapply(list_main[modeltypes_main %in% c("survreg")],
+#                                   "[[", "varname"))
 #       )
 #     },
 #
@@ -408,7 +408,7 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
 #         # ranef_main
 #         if (isTRUE(ranef_main))
 #           sapply(ranef_info_main, function(k)
-#             paste0('b_', k$varname, "_", k$lvls)),
+#             paste0("b_", k$varname, "_", k$lvls)),
 #
 #         # invD_main
 #         if (isTRUE(invD_main))
@@ -462,7 +462,7 @@ get_ranefpars <- function(info_list, Mlist, args, set = 'main') {
 #         # ranef_other
 #         if (isTRUE(ranef_other))
 #           sapply(ranef_info_other, function(k)
-#             paste0('b_', k$varname, "_", k$lvls)),
+#             paste0("b_", k$varname, "_", k$lvls)),
 #
 #         # invD_other
 #         if (isTRUE(invD_other))
