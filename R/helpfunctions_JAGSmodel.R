@@ -1,5 +1,5 @@
 # help functions ---------------------------------------------------------------
-tab <- function(times = 2) {
+tab <- function(times = 2L) {
   # creates a vector of spaces to facilitate indentation
 
   tb <- " "
@@ -7,15 +7,15 @@ tab <- function(times = 2) {
 }
 
 
-add_dashes <- function(x, width = 95) {
+add_dashes <- function(x, width = 95L) {
   # add separation lines between sub-models in JAGS model for readability
   # - x: name of the sub-model
 
-  paste(x, paste0(rep("-", 80 - nchar(x)), collapse = ""))
+  paste(x, paste0(rep("-", 80L - nchar(x)), collapse = ""))
 }
 
 
-add_linebreaks <- function(string, indent, width = 90) {
+add_linebreaks <- function(string, indent, width = 90L) {
   # add linebreaks to a string, breaking it after a "+" sign
   # - string: the linear predictor string to be broken
   # - indent: in case of a linebreak, how much should the new line be indented?
@@ -26,34 +26,34 @@ add_linebreaks <- function(string, indent, width = 90) {
   }
 
   # identify position of "+"
-  m <- gregexpr(" \\+ ", string)[[1]]
+  m <- gregexpr(" \\+ ", string)[[1L]]
 
   # if there is no "+", return the original string
-  if (all(m < 0)) {
+  if (all(m < 0L)) {
     return(string)
   }
 
   # calculate the lengths of the sub-strings
-  len <- c(as.numeric(m)[1], diff(c(as.numeric(m), nchar(string))))
+  len <- c(as.numeric(m)[1L], diff(c(as.numeric(m), nchar(string))))
 
 
   # check how many sub-strings (and the indent) can be combined until reaching
   # the maximal width, and create a string of " + " (no break) and
   # " +\n" (break) to be pasted in afterwards
   # (there is probably a more elegant way to do this)
-  i <- 1
-  br <- character(0)
+  i <- 1L
+  br <- character(0L)
   while (i < length(len)) {
     cs <- cumsum(len[i:length(len)])
-    nfit <- max(1, which(cs <= (width - indent)))
+    nfit <- max(1L, which(cs <= (width - indent)))
     br <- c(
-      br, rep(" + ", nfit - 1),
-      if ((i + nfit - 1) < length(len)) paste0(" +\n", tab(indent))
+      br, rep(" + ", nfit - 1L),
+      if ((i + nfit - 1L) < length(len)) paste0(" +\n", tab(indent))
     )
     i <- i + nfit
   }
 
-  paste0(strsplit(string, " \\+ ")[[1]], c(br, ""), collapse = "")
+  paste0(strsplit(string, " \\+ ")[[1L]], c(br, ""), collapse = "")
 }
 
 
@@ -246,7 +246,7 @@ paste_rdintercept_lp <- function(info) {
     # if there are parameter elements in this linear predictor, create a
     # linear predictor, otherwise the mean of the random effect distribution
     # should be 0
-    if (length(x$parelmts) > 0) {
+    if (length(x$parelmts) > 0L) {
       paste_linpred(parname = info$parname,
                     parelmts = x$parelmts,
                     matnam = unique(x$mat),
@@ -298,7 +298,7 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
       rdi <- if (isTRUE(attr(info$hc_list$hcvars[[lvl]], "rd_intercept"))) {
         paste_data(matnam = paste0("b_", info$varname, "_", lvl),
                    index = index,
-                   col = 1)
+                   col = 1L)
       }
 
       # generate the random slope part to enter the linear predictor of
@@ -336,7 +336,7 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
 
   if (any(!vapply(lp_ranef, is.null, FUN.VALUE = logical(1)))) {
     apply(as.data.frame(unlist(lp_ranef, recursive = FALSE)),
-          1, paste0, collapse = " + ")
+          1L, paste0, collapse = " + ")
   } else {
     "0"
   }
@@ -373,7 +373,7 @@ write_nonprop <- function(info, isgk = FALSE) {
     })
 
 
-  apply(as.data.frame(nonprop), 1, paste0, collapse = " + ")
+  apply(as.data.frame(nonprop), 1L, paste0, collapse = " + ")
 }
 
 
@@ -520,14 +520,14 @@ write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
   # - rdslopes: list of list of random slope linear predictors as strings
 
   # specify distribution for the random effects, based on their dimension
-  norm.distr  <- ifelse(info$nranef[lvl] < 2, "dnorm", "dmnorm")
+  norm.distr  <- if (info$nranef[lvl] < 2L) {"dnorm"} else {"dmnorm"}
 
   # write the model part for the random effects distribution
   paste0(
     tab(), "for (", info$index[lvl], " in 1:", info$N[lvl], ") {", "\n",
 
     # distribution specification
-    tab(4), "b_", info$varname, "_", lvl, "[", info$index[lvl], ", 1:",
+    tab(4L), "b_", info$varname, "_", lvl, "[", info$index[lvl], ", 1:",
     info$nranef[lvl], "] ~ ", norm.distr,
     "(mu_b_", info$varname, "_", lvl, "[", info$index[lvl], ", ], invD_",
     info$varname, "_", lvl, "[ , ])", "\n",
@@ -558,14 +558,14 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
   # - 1 underscore
   # - the number of characters of the index
   # - 8 ", 1] <- "
-  rdi <- if (length(rdintercept) > 0)
-    paste0(tab(4),
+  rdi <- if (length(rdintercept) > 0L)
+    paste0(tab(4L),
            paste_data(matnam = paste0("mu_b_", varname), index = index,
-                      col = 1),
+                      col = 1L),
            " <- ",
            add_linebreaks(rdintercept,
-                          indent = 4 + 5 + nchar(varname) + 1 +
-                            nchar(index) + 8)
+                          indent = 4L + 5L + nchar(varname) + 1L +
+                            nchar(index) + 8L)
     )
 
   # paste the rd. slope part, a vector of "mu_b_varname[i, k] <- lin.predictor"
@@ -578,14 +578,14 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
   # - 1 underscore
   # - the number of characters of the index
   # - 8 ", 1] <- "
-  rds <- if (length(rdslopes) > 0) {
+  rds <- if (length(rdslopes) > 0L) {
     paste0(
-      tab(4),
+      tab(4L),
       paste_data(matnam = paste0("mu_b_", varname), index = index,
-                 col = seq_along(rdslopes) + as.numeric(length(rdi) > 0)),
+                 col = seq_along(rdslopes) + as.numeric(length(rdi) > 0L)),
       " <- ",
-      sapply(rdslopes, add_linebreaks,
-             indent = 4 + 5 + nchar(varname) + 1 + nchar(index) + 8)
+      cvapply(rdslopes, add_linebreaks,
+              indent = 4L + 5L + nchar(varname) + 1L + nchar(index) + 8L)
     )
   }
 
@@ -605,7 +605,7 @@ ranef_priors <- function(nranef, varname) {
   # based on number of random effects, use Gamma or Wishart distribution
   # (Truncation in Gamma to prevent JAGS error when values get too small or
   # too large)
-  invD_distr <- if (nranef == 1) {
+  invD_distr <- if (nranef == 1L) {
     "dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)"
   } else {
     paste0("dwish(RinvD_", varname, "[ , ], KinvD_", varname, ")")
@@ -613,10 +613,10 @@ ranef_priors <- function(nranef, varname) {
 
 
   paste0("\n",
-         if (nranef > 1) {
+         if (nranef > 1L) {
            paste0(
              tab(), "for (k in 1:", nranef, ") {", "\n",
-             tab(4), "RinvD_", varname,
+             tab(4L), "RinvD_", varname,
              "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)", "\n",
              tab(), "}", "\n")
          },
@@ -756,11 +756,11 @@ paste_dummies <- function(resp_mat, resp_col, dummy_cols, index, refs, ...) {
   #         originally from Mlist$refs
 
   cmat <- attr(refs, "contr_matrix")
-  categories <- seq_along(levels(refs)) - as.numeric(length(levels(refs)) == 2)
+  categories <- seq_along(levels(refs)) - as.numeric(length(levels(refs)) == 2L)
 
-  paste0(tab(4), resp_mat, "[", index, ", ", dummy_cols, "] <- ifelse(",
+  paste0(tab(4L), resp_mat, "[", index, ", ", dummy_cols, "] <- ifelse(",
          resp_mat, "[", index, ", ", resp_col, "] == ",
-         categories[apply(cmat == 1, 2, which)], ", 1",
+         categories[apply(cmat == 1L, 2L, which)], ", 1",
          if (attr(refs, "contrasts") == "contr.treatment") {
            ", 0)"
          } else if (attr(refs, "contrasts") == "contr.sum") {
@@ -862,15 +862,15 @@ get_priordistr <- function(shrinkage, type, family = NULL, link = NULL,
   if (is.null(shrinkage) | isFALSE(shrinkage)) {
     # no shrinkage
     paste0(
-      tab(4), parname, "[k] ~ dnorm(mu_reg_", type,
+      tab(4L), parname, "[k] ~ dnorm(mu_reg_", type,
       ", tau_reg_", type, ")", "\n"
     )
   } else if (shrinkage == "ridge") {
     # ridge shrinkage
     paste0(
-      tab(4), parname, "[k] ~ dnorm(mu_reg_", type,
+      tab(4L), parname, "[k] ~ dnorm(mu_reg_", type,
       ", tau_reg_", type, "_ridge_", parname, "[k])", "\n",
-      tab(4), "tau_reg_", type, "_ridge_", parname, "[k] ~ dgamma(0.01, 0.01)",
+      tab(4L), "tau_reg_", type, "_ridge_", parname, "[k] ~ dgamma(0.01, 0.01)",
       "\n"
     )
   } else {
@@ -940,7 +940,7 @@ get_linkfun <- function(link) {
          # "cauchit is not available in JAGS
          "inverse"  = function(x)
            paste0(x, " <- 1/max(1e-10, inv_", x, ")", "\n",
-                  tab(4), "inv_", x)
+                  tab(4L), "inv_", x)
   )
 }
 
@@ -956,13 +956,13 @@ get_repar <- function(family, varname, index, isgk = FALSE) {
          "gaussian" = NULL,
          "binomial" = NULL,
          "Gamma" = paste0("\n",
-                          tab(4), "shape", if (isgk) "gk", "_", varname,
+                          tab(4L), "shape", if (isgk) "gk", "_", varname,
                           "[", index, if (isgk) ", k", "] <- pow(mu",
                           if (isgk) "gk", "_", varname, "[", index,
                           if (isgk) ", k", "], 2) / pow(sigma_", varname,
                           ", 2)",
                           "\n",
-                          tab(4), "rate", if (isgk) "gk", "_", varname,
+                          tab(4L), "rate", if (isgk) "gk", "_", varname,
                           "[", index, if (isgk) ", k", "] <- mu",
                           if (isgk) "gk", "_", varname, "[", index,
                           if (isgk) ", k", "] / pow(sigma_", varname, ", 2)",
@@ -971,12 +971,12 @@ get_repar <- function(family, varname, index, isgk = FALSE) {
          "lognorm" = NULL,
          "beta" <- paste0(
            "\n",
-           tab(4), "shape1", if (isgk) "gk", "_", varname,
+           tab(4L), "shape1", if (isgk) "gk", "_", varname,
            "[", index, if (isgk) ", k", "] <- mu",
            if (isgk) "gk", "_", varname, "[", index,
            if (isgk) ", k", "] * tau_",
            varname, "\n",
-           tab(4), "shape2", if (isgk) "gk", "_", varname,
+           tab(4L), "shape2", if (isgk) "gk", "_", varname,
            "[", index, if (isgk) ", k", "] <- (1 - mu", if (isgk) "gk", "_",
            varname, "[", index, if (isgk) ", k", "]) * tau_",
            varname, "\n\n"
@@ -1047,20 +1047,20 @@ get_linkindent <- function(link) {
   # get number of characters that lines after a line break in the  linear
   # predictor of a GLM(M) JAGS model should be indented
 
-  if (is.null(link)) 0
+  if (is.null(link)) 0L
   else
     switch(link,
-           identity = 0,
-           logit = 7,
-           probit = 8,
-           log = 5,
-           cloglog = 9,
-           inverse = 4)
+           identity = 0L,
+           logit = 7L,
+           probit = 8L,
+           log = 5L,
+           cloglog = 9L,
+           inverse = 4L)
 }
 
 
 # functions for ordinal models -------------------------------------------------
-write_probs <- function(info, index, isgk = FALSE, indent = 4) {
+write_probs <- function(info, index, isgk = FALSE, indent = 4L) {
   # syntax for probabilities, using min-max-trick for numeric stability
   # i.e., "p_O2[i, 2] <- psum_O2[i, 2] - psum_O2[i, 1]"
 
@@ -1073,29 +1073,29 @@ write_probs <- function(info, index, isgk = FALSE, indent = 4) {
                     paste0(tab(indent), paste_p(k), " <- ",
                            minmax(
                              if (isTRUE(.info$rev)) {
-                               paste0(paste_ps(k), " - ", paste_ps(k - 1))
+                               paste0(paste_ps(k), " - ", paste_ps(k - 1L))
                              } else {
-                               paste0(paste_ps(k - 1), " - ", paste_ps(k))
+                               paste0(paste_ps(k - 1L), " - ", paste_ps(k))
                              })
                     )
                   }, FUN.VALUE = character(1))
 
 
   paste0(tab(indent),
-         paste_p(1), " <- ",
+         paste_p(1L), " <- ",
          if (isTRUE(info$rev)) {
-           minmax(paste_ps(1))
+           minmax(paste_ps(1L))
          } else {
-           paste0("1 - ", minmax(paste0("sum(", paste_p(2:info$ncat), ")")))
+           paste0("1 - ", minmax(paste0("sum(", paste_p(2L:info$ncat), ")")))
          },
          "\n",
          paste(probs, collapse = "\n"), "\n",
          tab(indent), paste_p(info$ncat), " <- ",
          if (isTRUE(info$rev)) {
-           paste0("1 - ", minmax(paste0("sum(", paste_p(1:(info$ncat - 1)), ")")
+           paste0("1 - ", minmax(paste0("sum(", paste_p(1L:(info$ncat - 1L)), ")")
            ))
          } else {
-           minmax(paste_ps(info$ncat - 1))
+           minmax(paste_ps(info$ncat - 1L))
          }
   )
 }
@@ -1103,10 +1103,10 @@ write_probs <- function(info, index, isgk = FALSE, indent = 4) {
 
 
 write_logits <- function(info, index, nonprop = FALSE, isgk = FALSE,
-                         indent = 4) {
+                         indent = 4L) {
   # syntax for logits, e.g., "logit(psum_O2[i, 1]) <- gamma_O2[1] + eta_O2[i]"
 
-  logits <- vapply(1:(info$ncat - 1),
+  logits <- cvapply(1L:(info$ncat - 1L),
                    function(k,
                             .info = info,
                             .index = index,
@@ -1140,8 +1140,8 @@ write_priors_clm <- function(info) {
              "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
     } else {
       paste0(tab(), "gamma_", info$varname, "[", k, "] <- gamma_",
-             info$varname, "[", k - 1, "]", sign, "exp(delta_", info$varname,
-             "[", k - 1, "])")
+             info$varname, "[", k - 1L, "]", sign, "exp(delta_", info$varname,
+             "[", k - 1L, "])")
     }
   }, FUN.VALUE = character(1))
 
@@ -1155,7 +1155,7 @@ paste_p <- function(nr, env = parent.frame()) {
   ind = env$.index
   gk = env$.isgk
 
-  if (length(nr) > 1)
+  if (length(nr) > 1L)
     nr <- paste0(min(nr), ":", max(nr))
   paste0("p", if (gk) "gk", "_", vn, "[", ind, ", ", nr, if (gk) ", k", "]")
 }
