@@ -34,7 +34,7 @@ jagsmodel_clm <- function(info) {
 
   linpred_nonprop <- if (!is.null(attr(info$parelmts[[info$resp_mat]],
                                        "nonprop"))) {
-    RHS <- sapply(
+    rhs <- cvapply(
       attr(info$parelmts[[info$resp_mat]], "nonprop"),
       function(par_elmts) {
         add_linebreaks(

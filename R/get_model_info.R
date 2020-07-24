@@ -454,7 +454,7 @@ get_parelmts <- function(k, Mlist, par_index_main, par_index_other, lp) {
     )
   }
 
-  sapply(rownames(par_ind_mat[[k]]), function(lvl) {
+  nlapply(rownames(par_ind_mat[[k]]), function(lvl) {
     parnums <- par_ind_mat[[k]][lvl, 1L]:par_ind_mat[[k]][lvl, 2L]
 
     if (Mlist$models[k] %in% c("mlogit", "mlogitmm")) {
@@ -498,5 +498,5 @@ get_parelmts <- function(k, Mlist, par_index_main, par_index_other, lp) {
     } else {
       setNames(parnums, names(lp[[lvl]]))
     }
-  }, simplify = FALSE)
+  })
 }

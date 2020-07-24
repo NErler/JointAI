@@ -88,9 +88,9 @@ get_initial_values <- function(inits, seed, n_chains, warn) {
       # specified
       if (inherits(inits, "list")) {
         if (!any(c(".RNG.name", ".RNG.seed") %in% unlist(lapply(inits, names))))
-          inits <- mapply(function(inits, rng) c(inits, rng), inits = inits,
-                          rng = get_rng(seed, n.chains),
-                          SIMPLIFY = FALSE)
+          inits <- Map(function(inits, rng) c(inits, rng),
+                       inits = inits,
+                       rng = get_rng(seed, n_chains))
       }
     }
   }
