@@ -24,12 +24,12 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
                     group_lvls = identify_level_relations(groups))
 
   # if there are multiple survival variables and some time-varying variables
-  if (length(survinfo) > 0L & any(datlvls[unlist(survinfo)] != 'lvlone')) {
+  if (length(survinfo) > 0L & any(datlvls[unlist(survinfo)] != "lvlone")) {
 
     surv_lvls <- sapply(survinfo, function(x) {
       lvls <- datlvls[unlist(x)]
       if (length(unique(lvls)) > 1L)
-        errormsg('The event time and status do not have the same level.')
+        errormsg("The event time and status do not have the same level.")
 
       unique(lvls)
     })
@@ -54,11 +54,11 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
 
       datsurv <- unique(subset(data, select = c(idvar, unique(survtimes))))
       if (length(unique(survtimes)) > 1L) {
-        datsurv <- reshape(datsurv, direction = 'long',
+        datsurv <- reshape(datsurv, direction = "long",
                            varying = unique(survtimes),
                            v.names = timevar, idvar = unique(surv_lvls),
                            times = names(survtimes)[duplicated(survtimes)],
-                           timevar = 'eventtime')
+                           timevar = "eventtime")
       } else {
         names(datsurv) <- gsub(unique(survtimes), timevar, names(datsurv))
       }
@@ -116,7 +116,7 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
     ))
 
   # identify which of the covariates are time-varying
-  longvars <- intersect(covars, names(datlvls)[datlvls == 'lvlone'])
+  longvars <- intersect(covars, names(datlvls)[datlvls == "lvlone"])
 
   if (length(longvars) == 0L)
     return(data)
@@ -144,9 +144,9 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
           } else if (any(isobs > i)) {
             min(isobs[isobs > i])
           } else {
-            errormsg('There are no observed values of %s for %s. When using
+            errormsg("There are no observed values of %s for %s. When using
                      last observation carried forward to model time-varying
-                     covariates at least one value has to be observed.',
+                     covariates at least one value has to be observed.",
                      dQuote(k), paste(surv_lvl, "==", unique(x[surv_lvl])))
           }
         })
@@ -276,9 +276,9 @@ split_outcome <- function(lhs, data) {
 
 
   if (grepl("^cbind\\(", lhs)) {
-    lhs2 <- gsub("\\)$", '', gsub('^cbind\\(', '', lhs))
+    lhs2 <- gsub("\\)$", "", gsub("^cbind\\(", "", lhs))
 
-    splitpos <- c(gregexpr(',', text = lhs2)[[1L]], nchar(lhs2) + 1L)
+    splitpos <- c(gregexpr(",", text = lhs2)[[1L]], nchar(lhs2) + 1L)
 
     if (splitpos[1L] > 0L) {
       start <- 1L
@@ -288,10 +288,10 @@ split_outcome <- function(lhs, data) {
 
       while (start <= splitpos[length(splitpos)]) {
         fct <- substr(lhs2, start, end)
-        fct <- gsub(" $", '', gsub("^ ", '', fct))
+        fct <- gsub(" $", "", gsub("^ ", "", fct))
         var <- try(eval(parse(text = fct), envir = data), silent = TRUE)
 
-        if (!inherits(var, 'try-error')) {
+        if (!inherits(var, "try-error")) {
           var <- data.frame(var)
           names(var) <- if (ncol(var) > 1L) {
             paste0(fct, seq_len(ncol(var)))
@@ -326,7 +326,7 @@ outcomes_to_mat <- function(outcomes) {
   outlist <- unlist(unname(lapply(outcomes$outcomes, as.list)),
                     recursive = FALSE)
 
-  nosurv <- !sapply(outcomes$fixed, 'attr', 'type') %in% c('coxph', 'JM')
+  nosurv <- !sapply(outcomes$fixed, "attr", "type") %in% c("coxph", "JM")
   outlist_nosurv <- unlist(unname(lapply(outcomes$outcomes[nosurv], as.list)),
                            recursive = FALSE)
 
@@ -525,7 +525,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   # extract the term labels from auxvars and build the formula used
   # to create the design matrices for the covariate models using these
   # term labels.
-  auxterms <- if (!is.null(auxvars)) attr(terms(auxvars), 'term.labels')
+  auxterms <- if (!is.null(auxvars)) attr(terms(auxvars), "term.labels")
 
   covar_terms <- c(all_vars(c(remove_lhs(fixed),
                               remove_grouping(random))),
@@ -542,7 +542,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   subdat <- subset(data,
                    select = setdiff(allvars, unlist(extract_outcome(fixed))))
 
-  contr_list <- lapply(refs, attr, 'contr_matrix')
+  contr_list <- lapply(refs, attr, "contr_matrix")
 
   # for each fixed effects (main model) formula, get the column names of the
   # design matrix of the fixed effects
@@ -554,7 +554,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
     contr_list0 <- contr_list[intersect(covars, names(contr_list))]
 
 
-    if (attr(fmla, 'type') %in% c('clm', 'clmm', 'coxph', "JM")) {
+    if (attr(fmla, "type") %in% c("clm", "clmm", "coxph", "JM")) {
       # for ordinal and cox models, exclude the intercept
       colnam <- colnames(
         model.matrix(fmla, data, contrasts.arg = contr_list0))[-1L]
@@ -570,7 +570,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   #  - generate a RHS formula
   for (out in names(models)[!names(models) %in% names(fixed)]) {
 
-    nointercept <- models[out] %in% c('clmm', 'clm', 'coxph')
+    nointercept <- models[out] %in% c("clmm", "clm", "coxph")
 
     # identify variables that have
     # - level higher than the level of the outcome, or
@@ -587,15 +587,15 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
 
     keep_terms <- sapply(covar_terms, function(k) {
       check_effect <- try(model.frame(paste0("~", k), testdat), silent = TRUE)
-      !inherits(check_effect, 'try-error')
+      !inherits(check_effect, "try-error")
     })
 
     covar_terms <- covar_terms[keep_terms]
 
     fmla <- as.formula(paste0(out, " ~ ",
-                              ifelse(length(covar_terms) == 0L, '1',
+                              ifelse(length(covar_terms) == 0L, "1",
                                      paste0(covar_terms, collapse = " + ")),
-                              if (nointercept) '-1'))
+                              if (nointercept) "-1"))
 
 
     # get the names of the columns of the corresponding design matrix
@@ -625,10 +625,10 @@ get_nonprop_lp <- function(nonprop, dsgn_mat_lvls, data, refs, fixed) {
   if (is.null(nonprop)) return(NULL)
 
   if (is.null(names(nonprop))) {
-    if (length(fixed) == 1L & inherits(nonprop, 'formula')) {
+    if (length(fixed) == 1L & inherits(nonprop, "formula")) {
       nonprop <- list(nonprop)
       names(nonprop) <- names(fixed)
-    } else if (length(fixed) == 1L & inherits(nonprop, 'list')) {
+    } else if (length(fixed) == 1L & inherits(nonprop, "list")) {
       names(nonprop) <- names(fixed)
     } else {
       errormsg("Please provide a named list of formulas to the argument %s,
@@ -642,15 +642,15 @@ get_nonprop_lp <- function(nonprop, dsgn_mat_lvls, data, refs, fixed) {
   sapply(names(nonprop), function(k) {
     if (any(!all_vars(nonprop[[k]]) %in% all_vars(fixed[[k]]))) {
       errormsg(
-        'All variables that have non-proportional effect (specified via the
-        argument %s also need to be part of the main model formula.',
+        "All variables that have non-proportional effect (specified via the
+        argument %s also need to be part of the main model formula.",
         dQuote("nonprop")
       )
     }
   })
 
   # get the list of contrast matrices from refs
-  contr_list <- lapply(refs, attr, 'contr_matrix')
+  contr_list <- lapply(refs, attr, "contr_matrix")
 
   # for each element of nonprop (i.e., per ordinal outcome):
   sapply(nonprop, function(fmla) {
