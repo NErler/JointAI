@@ -52,7 +52,8 @@ This function returns a list of default values for the hyper-parameters.
 \strong{poisson:} hyper-parameters for poisson models
 \tabular{ll}{
 \code{mu_reg_poisson} \tab mean in the priors for regression coefficients\cr
-\code{tau_reg_poisson} \tab precision in the priors for regression coefficients
+\code{tau_reg_poisson} \tab precision in the priors for regression
+coefficients
 }
 
 \strong{multinomial:} hyper-parameters for multinomial models
@@ -98,7 +99,8 @@ This function returns a list of default values for the hyper-parameters.
 }
 \note{
 \strong{From the
-\href{https://sourceforge.net/projects/mcmc-jags/files/Manuals/}{JAGS user manual}
+\href{https://sourceforge.net/projects/mcmc-jags/files/Manuals/}{JAGS user
+manual}
 on the specification of the Wishart distribution:}\cr
 For \code{KinvD} larger than the dimension of the variance-covariance matrix
 the prior on the correlation between the random effects is concentrated
