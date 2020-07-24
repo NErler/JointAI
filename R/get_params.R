@@ -155,11 +155,11 @@ get_modelpars <- function(info_list, Mlist, args, set = 'main') {
               if (length(tauvars) > 0L) paste0("tau_", tauvars))
 
 
-  if (any(modeltypes %in% c('survreg')) &
+  if (any(modeltypes %in% 'survreg') &
       isTRUE(args$analysis_main) &
       set == 'main')
     params <- c(params,
-                paste0("shape_", sapply(sublist[modeltypes %in% c('survreg')],
+                paste0("shape_", sapply(sublist[modeltypes %in% 'survreg'],
                                         "[[", 'varname')))
 
   params
