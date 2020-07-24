@@ -40,10 +40,10 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
     c(
       if (any(sapply(info_list, "[[", "family") %in% c("gaussian", "lognorm")))
         "norm",
-      if (any(sapply(info_list, "[[", "family") %in% c("Gamma"))) "gamma",
-      if (any(sapply(info_list, "[[", "family") %in% c("beta"))) "beta",
-      if (any(sapply(info_list, "[[", "family") %in% c("binomial"))) "binom",
-      if (any(sapply(info_list, "[[", "family") %in% c("poisson"))) "poisson",
+      if (any(sapply(info_list, "[[", "family") %in% "Gamma")) "gamma",
+      if (any(sapply(info_list, "[[", "family") %in% "beta")) "beta",
+      if (any(sapply(info_list, "[[", "family") %in% "binomial")) "binom",
+      if (any(sapply(info_list, "[[", "family") %in% "poisson")) "poisson",
       if (any(modeltypes %in% c("mlogit", "mlogitmm"))) "multinomial",
       if (any(modeltypes %in% c("clm", "clmm"))) "ordinal",
       if (any(modeltypes %in% c("survreg", "coxph", "JM"))) "surv"
@@ -115,8 +115,8 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 
 
   # survreg models -------------------------------------------------------------
-  if (any(modeltypes %in% c("survreg"))) {
-    for (x in info_list[modeltypes %in% c("survreg")]) {
+  if (any(modeltypes %in% "survreg")) {
+    for (x in info_list[modeltypes %in% "survreg"]) {
 
       l[[paste0("cens_", x$varname)]] <-
         1L - Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]]
