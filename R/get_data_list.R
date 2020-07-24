@@ -4,6 +4,8 @@
 
 get_data_list <- function(Mlist, info_list, hyperpars) {
   modeltypes <- cvapply(info_list, "[[", "modeltype")
+  families <- unlist(nlapply(info_list, "[[", "family"))
+
 
   # data matrices --------------------------------------------------------------
   l <- Mlist$M
@@ -36,14 +38,15 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
     hyperpars
   }
 
+
+
   l <- c(l, unlist(unname(hyp[
     c(
-      if (any(cvapply(info_list, "[[", "family") %in% c("gaussian", "lognorm")))
-        "norm",
-      if (any(cvapply(info_list, "[[", "family") %in% "Gamma")) "gamma",
-      if (any(cvapply(info_list, "[[", "family") %in% "beta")) "beta",
-      if (any(cvapply(info_list, "[[", "family") %in% "binomial")) "binom",
-      if (any(cvapply(info_list, "[[", "family") %in% "poisson")) "poisson",
+      if (any(families %in% c("gaussian", "lognorm"))) "norm",
+      if (any(families %in% "Gamma")) "gamma",
+      if (any(families %in% "beta")) "beta",
+      if (any(families %in% "binomial")) "binom",
+      if (any(families %in% "poisson")) "poisson",
       if (any(modeltypes %in% c("mlogit", "mlogitmm"))) "multinomial",
       if (any(modeltypes %in% c("clm", "clmm"))) "ordinal",
       if (any(modeltypes %in% c("survreg", "coxph", "JM"))) "surv"
@@ -129,11 +132,15 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
         )
       }
 
-      l[[x$varname]] <- if (Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]] == 1L) {
-        Mlist$M[[x$resp_mat[1L]]][, x$resp_col[1L]]
-      } else {
-        NA
-      }
+      l[[x$varname]] <- nvapply(
+        seq.int(nrow(Mlist$M[[x$resp_mat[2L]]])),
+        function(k) {
+          if (Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]][k] == 1L) {
+            Mlist$M[[x$resp_mat[1L]]][, x$resp_col[1L]][k]
+          } else {
+            NA
+          }
+        })
     }
   }
 
