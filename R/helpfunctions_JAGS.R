@@ -50,7 +50,7 @@ run_jags <- function(i, data_list, modelfile, n_adapt, n_iter, var_names,
     thin = thin, progress.bar = "none"
   )
 
-  return(list(adapt = adapt, mcmc = mcmc))
+  list(adapt = adapt, mcmc = mcmc)
 }
 
 
@@ -63,7 +63,7 @@ run_samples <- function(adapt, n_iter, var_names, thin) {
     progress.bar = "none", thin = thin
   )
 
-  return(list(adapt = adapt, mcmc = mcmc))
+ list(adapt = adapt, mcmc = mcmc)
 }
 
 
