@@ -23,6 +23,39 @@ paste_and <- function(x) {
   }
 }
 
+
+
+
+nlapply <- function(x, fun, ...) {
+  # a named version of lapply, intended to replace sapply(..., simplify = FALSE)
+
+  l <- lapply(x, fun, ...)
+  if (is.null(names(l)))
+    if (!is.null(names(x))) {
+      names(l) <- names(x)
+    } else if (is.character(x)) {
+      names(l) <- x
+    }
+  l
+}
+
+lvapply <- function(x, fun, ...) {
+  vapply(x, fun, FUN.VALUE = logical(1L), ..., USE.NAMES = TRUE)
+}
+
+ivapply <- function(x, fun, ...) {
+  vapply(x, fun, FUN.VALUE = integer(1L), ..., USE.NAMES = TRUE)
+}
+
+nvapply <- function(x, fun, ...) {
+  vapply(x, fun, FUN.VALUE = numeric(1L), ..., USE.NAMES = TRUE)
+}
+
+cvapply <- function(x, fun, ...) {
+  vapply(x, fun, FUN.VALUE = character(1L), ..., USE.NAMES = TRUE)
+}
+
+
 # variable levels and grouping -------------------------------------------------
 
 get_groups <- function(idvar, data) {
