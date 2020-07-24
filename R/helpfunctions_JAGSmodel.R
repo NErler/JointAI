@@ -164,7 +164,7 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
 
 
   # for each of the grouping levels for which there are random effects do:
-  sapply(names(info$hc_list$hcvars), function(lvl) {
+  nlapply(names(info$hc_list$hcvars), function(lvl) {
 
     # name of the corresponding data matrix
     mat <- paste0("M_", lvl)
@@ -176,7 +176,7 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
     rdsi <- info$hc_list$hcvars[[lvl]]$rd_slope_interact_coefs
 
 
-    sapply(unique(names(rds), names(rdsi)), function(x) {
+    nlapply(unique(names(rds), names(rdsi)), function(x) {
 
       rds_rdsi_vec <- c(
         # random slope coefficients (if rds[[x]] == NULL there are no random
@@ -218,8 +218,8 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
       # linear predictor
       paste(rds_rdsi_vec, collapse = " + ")
 
-    }, simplify = FALSE)
-  }, simplify = FALSE)
+    })
+  })
 }
 
 
@@ -234,7 +234,7 @@ paste_rdintercept_lp <- function(info) {
   if (is.null(info$hc_list)) return(NULL)
 
   # for each of the grouping levels for which there are random effects do:
-  sapply(names(info$hc_list$hcvars), function(lvl) {
+  nlapply(names(info$hc_list$hcvars), function(lvl) {
 
     # name of the corresponding data matrix
     mat <- paste0("M_", lvl)
@@ -259,7 +259,7 @@ paste_rdintercept_lp <- function(info) {
     } else {
       NULL
     }
-  }, simplify = FALSE)
+  })
 }
 
 
@@ -282,7 +282,7 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
 
 
   # for all grouping levels above or equal to the outcome level do:
-  lp_ranef <- sapply(
+  lp_ranef <- nlapply(
     names(info$group_lvls)[info$group_lvls >= info$group_lvls[resplvl]],
     function(lvl) {
       # find the correct specification of the index. This depends on the level
@@ -332,7 +332,7 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
       Filter(Negate(is.null),
              list(rdis = rdis, other = other)
       )
-    }, simplify = FALSE)
+    })
 
   if (any(!vapply(lp_ranef, is.null, FUN.VALUE = logical(1)))) {
     apply(as.data.frame(unlist(lp_ranef, recursive = FALSE)),
@@ -353,7 +353,7 @@ write_nonprop <- function(info, isgk = FALSE) {
 
 
   # for all grouping levels above or equal to the outcome level do:
-  nonprop <- sapply(
+  nonprop <- nlapply(
     names(info$group_lvls)[info$group_lvls >= info$group_lvls[resplvl]],
     function(lvl) {
       # find the correct specification of the index. This depends on the level
@@ -370,7 +370,7 @@ write_nonprop <- function(info, isgk = FALSE) {
                     scale_pars = info$scale_pars[[paste0("M_", lvl)]],
                     scale_mat = paste0("spM_", lvl), isgk = isgk)
       }
-    }, simplify = FALSE)
+    })
 
 
   apply(as.data.frame(nonprop), 1, paste0, collapse = " + ")

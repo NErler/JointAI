@@ -74,7 +74,7 @@ predDF.list <- function(formulas, dat, vars, length = 100, idvar = NULL, ...) {
     errormsg("%s was not used in the model formula.", varying)
   }
 
-  vals <- sapply(allvars, function(k) {
+  vals <- nlapply(allvars, function(k) {
     if (k %in% varying) {
       if (is.factor(dat[, k])) {
         if (k %in% names(list(...))) {
@@ -314,8 +314,8 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   desgn_mat <- model.matrix(mt, data = newdata,
                     contrasts.arg = contr_list[intersect(
                       names(contr_list),
-                      vapply(attr(mt, "variables")[-1], deparse,
-                             width.cutoff = 500, FUN.VALUE = character(1))
+                      vapply(attr(mt, "variables")[-1L], deparse,
+                             width.cutoff = 500L, FUN.VALUE = character(1L))
                     )]
   )
 
@@ -395,8 +395,8 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
   desgn_mat <- model.matrix(mt, data = newdata,
                     contr_list[intersect(
                       names(contr_list),
-                      vapply(attr(mt, "variables")[-1], deparse,
-                             width.cutoff = 500, FUN.VALUE = character(1))
+                      cvapply(attr(mt, "variables")[-1L], deparse,
+                             width.cutoff = 500L)
                     )]
   )
 
@@ -468,8 +468,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   desgn_mat_sub <- model.matrix(mt, data = newdata,
                      contr_list[intersect(
                        names(contr_list),
-                       vapply(attr(mt, "variables")[-1], deparse,
-                              width.cutoff = 500, FUN.VALUE = character(1))
+                       cvapply(attr(mt, "variables")[-1L], deparse,
+                              width.cutoff = 500L)
                      )]
   )[, -1, drop = FALSE]
 
@@ -565,8 +565,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                               survinfo = survinfo, data = newdata,
                               rows = seq_len(nrow(newdata)),
                               td_cox = unique(
-                                vapply(survinfo, "[[", "modeltype",
-                                       FUN.VALUE = character(1))) == "coxph"))
+                                cvapply(survinfo, "[[", "modeltype")
+                              ) == "coxph"))
 
       vars <- coefs$varname[na.omit(match(dimnames(Mgk)[[2]], coefs$varname))]
 
@@ -674,8 +674,8 @@ predict_clm <- function(formula, newdata,
                     data = newdata,
                     contrasts.arg = contr_list[intersect(
                       names(contr_list),
-                      vapply(attr(mt, "variables")[-1], deparse,
-                             width.cutoff = 500, FUN.VALUE = character(1))
+                      cvapply(attr(mt, "variables")[-1L], deparse,
+                             width.cutoff = 500L)
                     )]
   )[, -1, drop = FALSE]
 
@@ -824,8 +824,8 @@ predict_mlogit <- function(formula, newdata,
                     data = newdata,
                     contrasts.arg = contr_list[intersect(
                       names(contr_list),
-                      vapply(attr(mt, "variables")[-1], deparse,
-                             width.cutoff = 500, FUN.VALUE = character(1))
+                      cvapply(attr(mt, "variables")[-1L], deparse,
+                             width.cutoff = 500L)
                     )]
   )
 
@@ -905,7 +905,7 @@ predict_jm <- function(...) {
 
 fitted_values <- function(object, ...) {
 
-  types <- vapply(names(object$fixed), function(k) {
+  types <- cvapply(names(object$fixed), function(k) {
     switch(object$info_list[[k]]$modeltype,
            glm = "response",
            glmm = "response",
@@ -913,7 +913,7 @@ fitted_values <- function(object, ...) {
            clmm = "prob",
            survreg = "response",
            coxph = "lp")
-  }, FUN.VALUE = character(1))
+  })
 
 
   fit <- predict(object, outcome = seq_along(object$fixed), quantiles = NULL,
