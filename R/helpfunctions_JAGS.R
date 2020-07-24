@@ -13,7 +13,7 @@ get_rng <- function(seed, n_chains) {
   if (!is.null(seed)) {
     set_seed(seed)
   }
-  seeds <- sample.int(1e5, size = n_chains)
+  seeds <- sample.int(1.0e5L, size = n_chains)
 
   # available random number generators
   rng <- c("base::Mersenne-Twister",
@@ -38,7 +38,7 @@ run_jags <- function(i, data_list, modelfile, n_adapt, n_iter, var_names,
   adapt <- rjags::jags.model(
     file = modelfile,
     n.adapt = n_adapt,
-    n.chains = 1,
+    n.chains = 1L,
     inits = i,
     data = data_list,
     quiet = TRUE
@@ -69,11 +69,11 @@ run_samples <- function(adapt, n_iter, var_names, thin) {
 
 
 
-run_parallel <- function(n_adapt, n_iter, n_chains, inits, thin = 1,
+run_parallel <- function(n_adapt, n_iter, n_chains, inits, thin = 1L,
                          data_list, var_names, modelfile, mess = TRUE,
                          n_workers, ...) {
 
-  if (any(n_adapt > 0, n_iter > 0)) {
+  if (any(n_adapt > 0L, n_iter > 0L)) {
     doFuture::registerDoFuture()
 
     if (mess)
@@ -88,7 +88,7 @@ run_parallel <- function(n_adapt, n_iter, n_chains, inits, thin = 1,
                                        var_names = var_names)
     )
 
-    mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
+    mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1L]]))
     adapt <- lapply(res, function(x) x$adapt)
 
     list(adapt = adapt, mcmc = mcmc)
@@ -97,11 +97,11 @@ run_parallel <- function(n_adapt, n_iter, n_chains, inits, thin = 1,
 
 
 
-run_seq <- function(n_adapt, n_iter, n_chains, inits, thin = 1,
+run_seq <- function(n_adapt, n_iter, n_chains, inits, thin = 1L,
                     data_list, var_names, modelfile, quiet = TRUE,
                     progress_bar = "text", mess = TRUE, warn = TRUE, ...) {
 
-  adapt <- if (any(n_adapt > 0, n_iter > 0)) {
+  adapt <- if (any(n_adapt > 0L, n_iter > 0L)) {
     if (warn == FALSE) {
       suppressWarnings({
         try(rjags::jags.model(file = modelfile, data = data_list,
@@ -114,7 +114,7 @@ run_seq <- function(n_adapt, n_iter, n_chains, inits, thin = 1,
                             n.chains = n_chains, n.adapt = n_adapt))
     }
   }
-  mcmc <- if (n_iter > 0 & !inherits(adapt, "try-error")) {
+  mcmc <- if (n_iter > 0L & !inherits(adapt, "try-error")) {
     if (mess == FALSE) {
       sink(tempfile())
       on.exit(sink())
@@ -137,22 +137,22 @@ run_seq <- function(n_adapt, n_iter, n_chains, inits, thin = 1,
 
 get_future_info <- function() {
   oplan <- future::plan(future::sequential)
-  theplan <- attr(oplan[[1]], "call")
+  theplan <- attr(oplan[[1L]], "call")
   future::plan(oplan)
 
-  strategies <- sapply(oplan, function(o) {
-    setdiff(class(o), c("tweaked", "function"))[1]
-  })
+  strategies <- vapply(oplan, function(o) {
+    setdiff(class(o), c("tweaked", "function"))[1L]
+  }, FUN.VALUE = character(1L))
 
-  if (length(strategies) > 1) {
+  if (length(strategies) > 1L) {
     warnmsg("There is a list of future strategies.
             I will use the first element, %s.",
-            strategies[1])
+            strategies[1L])
   }
 
-  list(strategy = strategies[1],
-       parallel = !strategies[1] %in% c("sequential", "transparent"),
-       workers = formals(oplan[[1]])$workers,
+  list(strategy = strategies[1L],
+       parallel = !strategies[1L] %in% c("sequential", "transparent"),
+       workers = formals(oplan[[1L]])$workers,
        call = theplan
   )
 }
