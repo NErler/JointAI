@@ -78,7 +78,7 @@ get_groups <- function(idvar, data) {
       } else {
         errormsg("The grouping levels %s seem to be unnecessary.
                  There are only unique observations at these levels.",
-             names(gr_length[gr_length]))
+                 names(gr_length[gr_length]))
       }
     }
 
@@ -421,7 +421,7 @@ get_coef_names <- function(info_list) {
 
 # used in get_data_list and predict (2020-06-09)
 get_matgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
-                    td_cox = FALSE) {
+                      td_cox = FALSE) {
   # get the Gauss-Kronrod quadrature version of the level one design matrix,
   # needed for a JM and coxph with time-varying covariates
   # - Mlist: the output of divide_matrices()
@@ -474,21 +474,23 @@ get_matgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
 
 
 
-  X <- model_matrix_combi(fmla = c(Mlist$fixed,
-                                   unlist(remove_grouping(Mlist$random)),
-                                   Mlist$auxvars),
-                          data = gk_data, refs = Mlist$refs,
-                          terms_list = Mlist$terms_list)
+  dsgn_mat <- model_matrix_combi(fmla = c(Mlist$fixed,
+                                          unlist(remove_grouping(Mlist$random)),
+                                          Mlist$auxvars),
+                                 data = gk_data, refs = Mlist$refs,
+                                 terms_list = Mlist$terms_list)
 
-  Xnew <- matrix(nrow = length(rows) * length(gkx),
-                 ncol = ncol(Mlist$M$M_lvlone),
-                 dimnames = list(NULL, colnames(Mlist$M$M_lvlone)))
+  dsgn_mat_new <- matrix(nrow = length(rows) * length(gkx),
+                         ncol = ncol(Mlist$M$M_lvlone),
+                         dimnames = list(NULL, colnames(Mlist$M$M_lvlone)))
 
-  Xnew[, colnames(X)[colnames(X) %in% colnames(Xnew)]] <-
-    X[, colnames(X)[colnames(X) %in% colnames(Xnew)]]
+  dsgn_mat_new[, colnames(dsgn_mat)[
+    colnames(dsgn_mat) %in% colnames(dsgn_mat_new)]] <-
+    dsgn_mat[, colnames(dsgn_mat)[
+      colnames(dsgn_mat) %in% colnames(dsgn_mat_new)]]
 
   lapply(seq_len(length(gkx)), function(k) {
-    Xnew[length(gkx) * ((seq_len(length(rows))) - 1L) + k, ]
+    dsgn_mat_new[length(gkx) * ((seq_len(length(rows))) - 1L) + k, ]
   })
 }
 
