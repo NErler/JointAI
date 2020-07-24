@@ -64,12 +64,12 @@ get_groups <- function(idvar, data) {
   # - data: a data.frame
 
   if (!is.null(idvar)) {
-    groups <- sapply(idvar, function(i) {
+    groups <- nlapply(idvar, function(i) {
       match(data[, i], unique(data[, i]))
-    }, simplify = FALSE)
+    })
 
     # check for unnecessary nesting levels
-    gr_length <- sapply(groups, function(x)length(unique(x))) == nrow(data)
+    gr_length <- ivapply(groups, function(x) length(unique(x))) == nrow(data)
     if (any(gr_length)) {
       if (sum(gr_length) == 1L) {
         errormsg("The grouping level %s seem to be unnecessary.
@@ -105,7 +105,7 @@ check_cluster <- function(x, grouping) {
   # - grouping: a list of grouping information (obtained from get_groups())
 
 
-  sapply(grouping, function(k) {
+  lvapply(grouping, function(k) {
     # for each level of grouping, compare the original vector with a
     # reconstructed vector in which the first element per group is repeated
     # for each group member
@@ -194,15 +194,17 @@ replace_dummy <- function(nam, refs) {
   # - nam: one variable name
   # - refs: list of reference category information (part of Mlist)
 
-  if (is.null(refs))
+  if (is.null(refs)) {
     return(nam)
+  }
 
   dummies <- lapply(refs, "attr",  "dummies")
 
-  if (any(sapply(dummies, function(k) nam %in% k)))
-    names(dummies)[sapply(dummies, function(k) nam %in% k)]
-  else
+  if (any(lvapply(dummies, function(k) nam %in% k))) {
+    names(dummies)[lvapply(dummies, function(k) nam %in% k)]
+  } else {
     nam
+  }
 }
 
 
@@ -222,7 +224,9 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
   # incomplete variables)
   trafos <- if (isgk) Mlist$fcts_all else Mlist$trafos
 
-  if (!any(trafos$var %in% varname)) return(NULL)
+  if (!any(trafos$var %in% varname)) {
+    return(NULL)
+  }
 
 
   trafolist <- sapply(which(trafos$var == varname), function(i) {
@@ -248,7 +252,7 @@ paste_trafos <- function(Mlist, varname, index, isgk = FALSE) {
       vars <- xx$var
       vars_mat <- xx$matrix
       # obtain the numbers of the columns containing the original variables
-      vars_cols <- sapply(seq_along(vars), function(k)
+      vars_cols <- ivapply(seq_along(vars), function(k)
         match(vars[k], colnames(Mlist$M[[vars_mat[k]]]))
       )
 
@@ -362,11 +366,11 @@ get_coef_names <- function(info_list) {
   # variable names
   # - info_list: a model info list (obtained from get_model_info())
 
-  sapply(info_list, function(info) {
+  nlapply(info_list, function(info) {
 
     # find all parameter elements with the same parameter name to find
     # out if this parameter needs to get indexed or not
-    pars <- sapply(info_list, function(k) {
+    pars <- nlapply(info_list, function(k) {
       if (k$parname %in% info$parname)
         unlist(c(k$parelmts, lapply(k$parelmts, "attr", "nonprop")))
     })
@@ -380,9 +384,9 @@ get_coef_names <- function(info_list) {
     }
 
 
-    out <- if (any(sapply(info$lp, length) > 0L)) {
+    out <- if (any(ivapply(info$lp, length) > 0L)) {
       data.frame(outcome = unname(info$varname),
-                 outcat = rep(names(parelmts), sapply(parelmts, length)),
+                 outcat = rep(names(parelmts), ivapply(parelmts, length)),
                  varname = names(unlist(unname(parelmts))),
                  coef = paste0(info$parname,
                                if (length(unlist(pars)) > 1L)
@@ -399,7 +403,7 @@ get_coef_names <- function(info_list) {
       out <- rbind(out,
                    data.frame(outcome = unname(info$varname),
                               outcat = rep(names(nonprop),
-                                           sapply(nonprop, length)),
+                                           ivapply(nonprop, length)),
                               varname = unlist(lapply(nonprop, names)),
                               coef = paste0(info$parname,
                                             paste0("[", unlist(nonprop), "]")),
@@ -407,12 +411,16 @@ get_coef_names <- function(info_list) {
       )
     }
 
-    out$varnam_print <- ifelse(is.na(out$outcat), out$varname,
-                               paste0(out$outcat, ": ", out$varname))
+    out$varnam_print <- cvapply(out$outcat, function(k) {
+      switch(as.character(is.na(k)),
+             "TRUE" = out$varname,
+             "FALSE" = paste0(out$outcat, ": ", out$varname)
+      )
+    })
 
     rownames(out) <- NULL
     out
-  }, simplify = FALSE)
+  })
 }
 
 
@@ -447,8 +455,9 @@ get_matgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
 
 
   # replace the survival time with the Gauss-Kronrod version of it
-  surv_time_name <- unique(sapply(survinfo, "[[", "time_name"))
-  gk_data[, Mlist$timevar] <- c(t(outer(data[rows, surv_time_name]/2L, gkx + 1L)))
+  surv_time_name <- unique(cvapply(survinfo, "[[", "time_name"))
+  gk_data[, Mlist$timevar] <- c(t(outer(data[rows, surv_time_name] / 2L,
+                                        gkx + 1L)))
 
 
   # for a time-dependent cox model: use last-observation carried forward to fill
@@ -527,7 +536,7 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
                 timevar = "obstime", idvar = idvar)
 
   # check if there are variables for which some subjects have no observation
-  anymis <- sapply(longvars, function(v) {
+  anymis <- lvapply(longvars, function(v) {
     obs <- rowSums(!is.na(wd[, grep(paste0("^", v, ".[[:digit:]]*$"),
                                     names(wd))]))
     any(obs == 0L)
@@ -545,7 +554,7 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
   md <- merge(subset(gk_data, select = c(idvar, timevar, "rowid")), wd)
 
 
-  locf <- sapply(seq_len(nrow(md)), function(i) {
+  locf <- nlapply(seq_len(nrow(md)), function(i) {
     # identify which visit should be used
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     # if there is no baseline visit (i.e., the first time with an observed value
@@ -557,14 +566,14 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
 
 
     # identify which columns have the covariate values of the correct visit
-    covcols <- sapply(longvars, function(k) {
+    covcols <- ivapply(longvars, function(k) {
       grep(paste0("^", k, "."), colnames(md))[valcol]
     })
 
     out <- md[i, covcols, drop = FALSE]
     names(out) <- longvars
     out
-  }, simplify = FALSE)
+  })
 
   md[, longvars] <- do.call(rbind, locf)
 
@@ -584,13 +593,13 @@ get_survinfo <- function(info_list, Mlist) {
   # - info_list: list of model info as obtained from get_model info()
   # - Mlist: as obtained from divide_matrics()
 
-  modeltypes <- sapply(info_list, "[[", "modeltype")
+  modeltypes <- cvapply(info_list, "[[", "modeltype")
 
-  sapply(names(info_list[modeltypes %in% c("coxph", "JM")]), function(k) {
+  nlapply(names(info_list[modeltypes %in% c("coxph", "JM")]), function(k) {
 
     x <- info_list[[k]]
 
-    surv_lvl <- gsub("M_", "" , x$resp_mat[2L])
+    surv_lvl <- gsub("M_", "", x$resp_mat[2L])
     longlvls <- names(Mlist$group_lvls)[Mlist$group_lvls <
                                           Mlist$group_lvls[surv_lvl]]
 
@@ -600,9 +609,9 @@ get_survinfo <- function(info_list, Mlist) {
 
 
     covars <- all_vars(remove_lhs(Mlist$fixed[[k]]))
-    covar_lvls <- sapply(Mlist$data[, covars], check_varlevel,
-                         groups = Mlist$groups,
-                         group_lvls = identify_level_relations(Mlist$groups))
+    covar_lvls <- cvapply(Mlist$data[, covars], check_varlevel,
+                          groups = Mlist$groups,
+                          group_lvls = identify_level_relations(Mlist$groups))
     longvars <- names(covar_lvls)[covar_lvls %in% longlvls]
 
     survevent <- Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]]
@@ -629,7 +638,7 @@ get_survinfo <- function(info_list, Mlist) {
          survevent = Mlist$M[[x$resp_mat[2L]]][, x$resp_col[2L]]
 
     )
-  }, simplify = FALSE)
+  })
 }
 
 
