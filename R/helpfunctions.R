@@ -420,7 +420,7 @@ get_coef_names <- function(info_list) {
 # data_list helpers --------------------------------------------------------
 
 # used in get_data_list and predict (2020-06-09)
-get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
+get_matgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
                     td_cox = FALSE) {
   # get the Gauss-Kronrod quadrature version of the level one design matrix,
   # needed for a JM and coxph with time-varying covariates
@@ -494,7 +494,7 @@ get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
 
 
 
-# used here, in get_Mgk() (2020-06-09)
+# used here, in get_matgk() (2020-06-09)
 get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
                      longvars, gk_data) {
 

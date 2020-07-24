@@ -561,7 +561,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     tvpred <- if (any(Mlist$group_lvls <
                       Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
       Mgk <- do.call(rbind,
-                      get_Mgk(Mlist, gkx, surv_lvl = gsub("M_", "", resp_mat),
+                      get_matgk(Mlist, gkx, surv_lvl = gsub("M_", "", resp_mat),
                               survinfo = survinfo, data = newdata,
                               rows = seq_len(nrow(newdata)),
                               td_cox = unique(

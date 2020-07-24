@@ -390,7 +390,7 @@ prep_covoutcomes <- function(dat) {
 
 # * model matrix combi ---------------------------------------------------------
 
-# used in divide_matrices and get_Mgk (2020-06-10)
+# used in divide_matrices and get_matgk (2020-06-10)
 model_matrix_combi <- function(fmla, data, terms_list, refs) {
   # list of model.frames
   mf_list <- lapply(terms_list, model.frame, data = data, na.action = na.pass)

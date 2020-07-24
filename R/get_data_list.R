@@ -204,17 +204,17 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 
       # create the design matrix of time-varying data using the Gauss-Kronrod
       # quadrature points for time
-      Mgk <- get_Mgk(Mlist, gkx, surv_lvl, survinfo, data = Mlist$data,
-                     td_cox = unique(sapply(survinfo, "[[", "modeltype")) ==
-                       "coxph")
+      mat_gk <- get_matgk(Mlist, gkx, surv_lvl, survinfo, data = Mlist$data,
+                          td_cox = unique(sapply(survinfo, "[[", "modeltype")) ==
+                            "coxph")
 
       # for survival models, there can only be one level below the level of the
       # survival outcome (i.e., time-varying variables have level 1, survival
       # outcome has level 2)
-      l$M_lvlonegk <- array(data = unlist(Mgk),
-                              dim = c(nrow(Mgk[[1L]]), ncol(Mgk[[1L]]),
+      l$M_lvlonegk <- array(data = unlist(mat_gk),
+                              dim = c(nrow(mat_gk[[1L]]), ncol(mat_gk[[1L]]),
                                       length(gkx)),
-                              dimnames = list(NULL, dimnames(Mgk)[[2L]], NULL)
+                              dimnames = list(NULL, dimnames(mat_gk)[[2L]], NULL)
       )
     }
 
