@@ -214,7 +214,7 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
       l$M_lvlonegk <- array(data = unlist(Mgk),
                               dim = c(nrow(Mgk[[1]]), ncol(Mgk[[1]]),
                                       length(gkx)),
-                              dimnames = list(c(), dimnames(Mgk)[[2]], c())
+                              dimnames = list(NULL, dimnames(Mgk)[[2]], NULL)
       )
     }
 

@@ -30,7 +30,7 @@ get_predprob <- function(mod, varname) {
 
 
   array(dim = c(dim(problist[[1]]), length(problist)),
-        dimnames = list(c(), colnames(problist[[1]]), names(problist)),
+        dimnames = list(NULL, colnames(problist[[1]]), names(problist)),
         unlist(problist))
 }
 

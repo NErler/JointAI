@@ -304,7 +304,7 @@ test_that("extract_outcome_data works", {
 # outcomes_to_mat() ------------------------------------------------------------
 test_that("outcomes_to_mat works", {
   mat <- data.matrix(do.call(cbind, unname(lapply(fmla, "[[", "outcome"))))
-  dimnames(mat) <- list(c(), dimnames(mat)[[2]])
+  dimnames(mat) <- list(NULL, dimnames(mat)[[2]])
   expect_equal(outcomes_to_mat(
     extract_outcome_data(lapply(fmla, "[[", "fixed"),
                          data = longDF,

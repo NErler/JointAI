@@ -449,7 +449,7 @@ get_Mgk <- function(Mlist, gkx, surv_lvl, survinfo, data, rows = NULL,
 
   Xnew <- matrix(nrow = length(rows) * length(gkx),
                  ncol = ncol(Mlist$M$M_lvlone),
-                 dimnames = list(c(), colnames(Mlist$M$M_lvlone)))
+                 dimnames = list(NULL, colnames(Mlist$M$M_lvlone)))
 
   Xnew[, colnames(X)[colnames(X) %in% colnames(Xnew)]] <-
     X[, colnames(X)[colnames(X) %in% colnames(Xnew)]]

@@ -170,7 +170,7 @@ convert_variables <- function(data, allvars, mess = TRUE, data_orig = NULL) {
 # * convert logical variables to a factor
 # * convert factor labels (exclude special characters)
 
-  converted1 <- c()
+  converted1 <- chrarcter(1)
 
   # convert binary continuous variable to factor
   for (k in allvars) {
