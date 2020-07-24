@@ -683,7 +683,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
           dQuote("betas = TRUE"), dQuote("monitor_params"))
   }
 
-  var.names <- do.call(get_params, c(list(Mlist = Mlist, info_list = info_list,
+  var_names <- do.call(get_params, c(list(Mlist = Mlist, info_list = info_list,
                                           mess = mess),
                                      monitor_params))
 
@@ -699,12 +699,12 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   run_jags <- ifelse(future_info$parallel, run_parallel, run_seq)
 
   t0 <- Sys.time()
-  jags_res <- run_jags(n.adapt = n.adapt, n.iter = n.iter, n.chains = n.chains,
+  jags_res <- run_jags(n_adapt = n.adapt, n_iter = n.iter, n_chains = n.chains,
                        inits = inits, thin = thin,
                        n_workers = future_info$workers,
-                       data_list = data_list, var.names = var.names,
+                       data_list = data_list, var_names = var_names,
                        modelfile = modelfile, quiet = quiet,
-                       progress.bar = progress.bar, mess = mess, warn = warn)
+                       progress_bar = progress.bar, mess = mess, warn = warn)
   adapt <- jags_res$adapt
   mcmc <- jags_res$mcmc
 
@@ -738,7 +738,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                         n.chains = n.chains,
                         n.adapt = n.adapt,
                         n.iter = n.iter,
-                        variable.names = if (exists("var.names")) var.names,
+                        variable.names = if (exists("var_names")) var_names,
                         thin = thin,
                         inits = inits,
                         seed = seed)

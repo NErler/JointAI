@@ -1,8 +1,8 @@
 
-get_rng <- function(seed, n.chains) {
+get_rng <- function(seed, n_chains) {
   # get starting values for the random number generator
   # - seed: an optional seed value
-  # - n.chains: the number of MCMC chains for which starting values need to be
+  # - n_chains: the number of MCMC chains for which starting values need to be
   #             generated
 
   oldseed <- .Random.seed
@@ -13,7 +13,7 @@ get_rng <- function(seed, n.chains) {
   if (!is.null(seed)) {
     set_seed(seed)
   }
-  seeds <- sample.int(1e5, size = n.chains)
+  seeds <- sample.int(1e5, size = n_chains)
 
   # available random number generators
   rng <- c("base::Mersenne-Twister",
@@ -21,10 +21,10 @@ get_rng <- function(seed, n.chains) {
            "base::Wichmann-Hill",
            "base::Marsaglia-Multicarry")
 
-  RNGs <- sample(rng, size = n.chains, replace = TRUE)
+  rngs <- sample(rng, size = n_chains, replace = TRUE)
 
-  lapply(seq_along(RNGs), function(k) {
-    list(.RNG.name = RNGs[k],
+  lapply(seq_along(rngs), function(k) {
+    list(.RNG.name = rngs[k],
          .RNG.seed = seeds[k]
     )
   })
@@ -33,17 +33,20 @@ get_rng <- function(seed, n.chains) {
 
 
 # functions for parallel computation -------------------------------------------
-run_jags <- function(i, data_list, modelfile, n.adapt, n.iter, var.names,
+run_jags <- function(i, data_list, modelfile, n_adapt, n_iter, var_names,
                      thin) {
   adapt <- rjags::jags.model(
-    file = modelfile, n.adapt = n.adapt,
-    n.chains = 1, inits = i, data = data_list,
+    file = modelfile,
+    n.adapt = n_adapt,
+    n.chains = 1,
+    inits = i,
+    data = data_list,
     quiet = TRUE
   )
 
   mcmc <- rjags::coda.samples(adapt,
-    n.iter = n.iter,
-    variable.names = var.names,
+    n.iter = n_iter,
+    variable.names = var_names,
     thin = thin, progress.bar = "none"
   )
 
@@ -52,11 +55,11 @@ run_jags <- function(i, data_list, modelfile, n.adapt, n.iter, var.names,
 
 
 
-run_samples <- function(adapt, n.iter, var.names, thin) {
+run_samples <- function(adapt, n_iter, var_names, thin) {
   adapt$recompile()
   mcmc <- rjags::coda.samples(adapt,
-    n.iter = n.iter,
-    variable.names = var.names,
+    n.iter = n_iter,
+    variable.names = var_names,
     progress.bar = "none", thin = thin
   )
 
@@ -66,11 +69,11 @@ run_samples <- function(adapt, n.iter, var.names, thin) {
 
 
 
-run_parallel <- function(n.adapt, n.iter, n.chains, inits, thin = 1,
-                         data_list, var.names, modelfile, mess = TRUE,
+run_parallel <- function(n_adapt, n_iter, n_chains, inits, thin = 1,
+                         data_list, var_names, modelfile, mess = TRUE,
                          n_workers, ...) {
 
-  if (any(n.adapt > 0, n.iter > 0)) {
+  if (any(n_adapt > 0, n_iter > 0)) {
     doFuture::registerDoFuture()
 
     if (mess)
@@ -80,9 +83,9 @@ run_parallel <- function(n.adapt, n.iter, n.chains, inits, thin = 1,
     res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(inits)),
                               run_jags(inits[[i]], data_list = data_list,
                                        modelfile = modelfile,
-                                       n.adapt = n.adapt, n.iter = n.iter,
+                                       n_adapt = n_adapt, n_iter = n_iter,
                                        thin = thin,
-                                       var.names = var.names)
+                                       var_names = var_names)
     )
 
     mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
@@ -94,36 +97,36 @@ run_parallel <- function(n.adapt, n.iter, n.chains, inits, thin = 1,
 
 
 
-run_seq <- function(n.adapt, n.iter, n.chains, inits, thin = 1,
-                    data_list, var.names, modelfile, quiet = TRUE,
-                    progress.bar = "text", mess = TRUE, warn = TRUE, ...) {
+run_seq <- function(n_adapt, n_iter, n_chains, inits, thin = 1,
+                    data_list, var_names, modelfile, quiet = TRUE,
+                    progress_bar = "text", mess = TRUE, warn = TRUE, ...) {
 
-  adapt <- if (any(n.adapt > 0, n.iter > 0)) {
+  adapt <- if (any(n_adapt > 0, n_iter > 0)) {
     if (warn == FALSE) {
       suppressWarnings({
         try(rjags::jags.model(file = modelfile, data = data_list,
                               inits = inits, quiet = quiet,
-                              n.chains = n.chains, n.adapt = n.adapt))
+                              n.chains = n_chains, n.adapt = n_adapt))
       })
     } else {
       try(rjags::jags.model(file = modelfile, data = data_list,
                             inits = inits, quiet = quiet,
-                            n.chains = n.chains, n.adapt = n.adapt))
+                            n.chains = n_chains, n.adapt = n_adapt))
     }
   }
-  mcmc <- if (n.iter > 0 & !inherits(adapt, "try-error")) {
+  mcmc <- if (n_iter > 0 & !inherits(adapt, "try-error")) {
     if (mess == FALSE) {
       sink(tempfile())
       on.exit(sink())
       force(suppressMessages(
-        try(rjags::coda.samples(adapt, n.iter = n.iter, thin = thin,
-                                variable.names = var.names,
-                                progress.bar = progress.bar))
+        try(rjags::coda.samples(adapt, n.iter = n_iter, thin = thin,
+                                variable.names = var_names,
+                                progress.bar = progress_bar))
       ))
     } else {
-      try(rjags::coda.samples(adapt, n.iter = n.iter, thin = thin,
-                              variable.names = var.names,
-                              progress.bar = progress.bar))
+      try(rjags::coda.samples(adapt, n.iter = n_iter, thin = thin,
+                              variable.names = var_names,
+                              progress.bar = progress_bar))
 
     }
   }

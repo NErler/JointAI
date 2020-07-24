@@ -13,7 +13,7 @@ write_model <- function(info_list, Mlist, modelfile = "") {
         paste0("\n", tab(), "# Re-calculate interaction terms\n",
                paste_interactions(Mlist$interactions,
                                   group_lvls = Mlist$group_lvls,
-                                  N = Mlist$N), "\n"
+                                  n = Mlist$N), "\n"
         )
       },
       "\r}", file = modelfile

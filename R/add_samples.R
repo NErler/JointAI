@@ -69,9 +69,9 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   }
 
   if (is.null(monitor_params)) {
-    var.names <- object$mcmc_settings$variable.names
+    var_names <- object$mcmc_settings$variable.names
   } else {
-    var.names <- do.call(get_params,
+    var_names <- do.call(get_params,
                          c(list(Mlist = get_Mlist(object),
                                 info_list = object$info_list,
                                 mess = mess),
@@ -79,7 +79,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   }
 
 
-  if (!identical(var.names, object$mcmc_settings$variable.names) & add)
+  if (!identical(var_names, object$mcmc_settings$variable.names) & add)
     errormsg("When %s it is not possible to monitor different parameters than
              were monitored in the original model.", dQuote("add = TRUE"))
 
@@ -93,13 +93,13 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
           eval(future_info$workers), Sys.time())
 
     res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(object$model)),
-                              run_samples(object$model[[i]], n.iter = n.iter,
-                                          thin = thin, var.names = var.names)
+                              run_samples(object$model[[i]], n_iter = n.iter,
+                                          thin = thin, var_names = var_names)
     )
     mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
     adapt <- lapply(res, function(x) x$adapt)
   } else {
-    mcmc <- rjags::coda.samples(object$model, variable.names = var.names,
+    mcmc <- rjags::coda.samples(object$model, variable.names = var_names,
                                 n.iter = n.iter, thin = thin,
                                 progress.bar = progress.bar)
   }
@@ -150,7 +150,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   newobject$sample <- newmcmc
   newobject$MCMC <- newMCMC
   newobject$call <- list(object$call, match.call())
-  newobject$mcmc_settings$variable.names <- var.names
+  newobject$mcmc_settings$variable.names <- var_names
   newobject$comp_info$future <- c(object$comp_info$future,
                                   future_info$call)
   newobject$model <- if (future_info$parallel) {
