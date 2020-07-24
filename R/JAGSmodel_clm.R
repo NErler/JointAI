@@ -1,7 +1,7 @@
 # Cumulative logit model
 jagsmodel_clm <- function(info) {
 
-  if (info$ncat < 3) {
+  if (info$ncat < 3L) {
     errormsg("A cumulative logit mixed model is supposed to be fitted for the
              variable %s but %s only has %s categories.",
              dQuote(info$varname), dQuote(info$varname), info$ncat)
@@ -13,14 +13,14 @@ jagsmodel_clm <- function(info) {
   }
 
   # specify indent width and index character to be used
-  indent <- 4 + 4 + nchar(info$varname) + 7
+  indent <- 4L + 4L + nchar(info$varname) + 7L
   index <- info$index[gsub("M_", "", info$resp_mat)]
 
 
   # main model elements --------------------------------------------------------
 
   # linear predictor of baseline covariates (including interaction terms)
-  linpred <- if (length(info$lp[[info$resp_mat]]) > 0) {
+  linpred <- if (length(info$lp[[info$resp_mat]]) > 0L) {
     paste_linpred(info$parname,
                   info$parelmts[[info$resp_mat]],
                   matnam = info$resp_mat,
@@ -51,8 +51,8 @@ jagsmodel_clm <- function(info) {
     )
 
     paste0("\n\n",
-           paste0(tab(4), "eta_", info$varname, "_", seq_along(RHS),
-                  "[", index, "] <- ", RHS, collapse = "\n")
+           paste0(tab(4L), "eta_", info$varname, "_", seq_along(rhs),
+                  "[", index, "] <- ", rhs, collapse = "\n")
     )
   }
 
@@ -116,10 +116,10 @@ jagsmodel_clm <- function(info) {
     "\n",
     tab(), "for (", index, " in 1:", info$N[gsub("M_", "",
                                                  info$resp_mat)], ") {", "\n",
-    tab(4), info$resp_mat, "[", index, ", ", info$resp_col,
+    tab(4L), info$resp_mat, "[", index, ", ", info$resp_col,
     "] ~ dcat(p_", info$varname, "[", index, ", 1:", info$ncat, "])", "\n",
     # paste_ppc,
-    tab(4), "eta_", info$varname, "[", index, "] <- ",
+    tab(4L), "eta_", info$varname, "[", index, "] <- ",
     add_linebreaks(linpred, indent = indent),
     linpred_nonprop,
     "\n\n",
