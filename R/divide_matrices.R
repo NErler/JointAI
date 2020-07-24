@@ -137,10 +137,10 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
 
   fcts_mis <- extract_fcts(fixed = fixed, data, random = random,
                            auxvars = auxvars, complete = FALSE,
-                           extract_fcts = Mlvls)
+                           dsgn_mat_lvls = Mlvls)
   fcts_all <- extract_fcts(fixed = fixed, data, random = random,
                            auxvars = auxvars, complete = TRUE,
-                           extract_fcts = Mlvls)
+                           dsgn_mat_lvls = Mlvls)
 
 
   if (any(fcts_mis$type %in% c("ns", "bs")))
