@@ -340,7 +340,7 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
       )
     })
 
-  if (any(!vapply(lp_ranef, is.null, FUN.VALUE = logical(1)))) {
+  if (any(!lvapply(lp_ranef, is.null))) {
     apply(as.data.frame(unlist(lp_ranef, recursive = FALSE)),
           1L, paste0, collapse = " + ")
   } else {
@@ -439,7 +439,7 @@ get_index <- function(lvl, resplvl, indices, surv_lvl, isgk = FALSE) {
 get_rds <- function(rd_slope_coefs, lvl, varname, index, out_index,
                     has_rdintercept = TRUE,
                     scale_pars, isgk = FALSE) {
-  if (any(!sapply(rd_slope_coefs, is.null))) {
+  if (any(!lvapply(rd_slope_coefs, is.null))) {
     # if there are any random slope variables for this random effect level,
     # do:
     sapply(seq_along(rd_slope_coefs), function(q) {
@@ -795,21 +795,20 @@ paste_interactions <- function(interactions, group_lvls, n) {
 
 
   # determine which index should be used for each of the levels
-  index <- setNames(sapply(seq_along(sort(group_lvls)),
+  index <- setNames(cvapply(seq_along(sort(group_lvls)),
                            function(k) paste0(rep("i", k), collapse = "")),
                     names(sort(group_lvls)))
 
   # select only those interactions in which incomplete variables are involved
-  interactions <- interactions[vapply(interactions, "attr", "has_NAs",
-                                      FUN.VALUE = logical(1))]
+  interactions <- interactions[lvapply(interactions, "attr", "has_NAs")]
 
   # determine the minimal level for each interaction (this is the level on
   # which the interaction has to be calculated; observations from higher level
   # variables are then repeated to obtain a fitting vector)
-  minlvl <- vapply(interactions, function(x) {
+  minlvl <- cvapply(interactions, function(x) {
     lvls <- gsub("M_", "", unique(names(unlist(unname(x)))))
     lvls[which.min(group_lvls[lvls])]
-  }, FUN.VALUE = character(1))
+  })
 
   paste0(
     # for each of the levels on which interactions have to be written:
@@ -1082,7 +1081,7 @@ write_probs <- function(info, index, isgk = FALSE, indent = 4L) {
   .index <- index
   .isgk <- isgk
 
-  probs <- vapply(2:(info$ncat - 1),
+  probs <- cvapply(2L:(info$ncat - 1L),
                   function(k, .info = info, .index = index, .isgk = isgk) {
                     paste0(tab(indent), paste_p(k), " <- ",
                            minmax(
@@ -1092,7 +1091,7 @@ write_probs <- function(info, index, isgk = FALSE, indent = 4L) {
                                paste0(paste_ps(k - 1L), " - ", paste_ps(k))
                              })
                     )
-                  }, FUN.VALUE = character(1))
+                  })
 
 
   paste0(tab(indent),
@@ -1132,7 +1131,7 @@ write_logits <- function(info, index, nonprop = FALSE, isgk = FALSE,
                               paste0(" + eta_", info$varname, "_", k,
                                      "[", index, "]")
                             })
-                   }, FUN.VALUE = character(1))
+                   })
 
   paste0(logits, collapse = "\n")
 }
@@ -1140,16 +1139,16 @@ write_logits <- function(info, index, nonprop = FALSE, isgk = FALSE,
 
 write_priors_clm <- function(info) {
 
-  deltas <- vapply(1:(info$ncat - 2), function(k) {
+  deltas <- cvapply(1L:(info$ncat - 2L), function(k) {
     paste0(tab(), "delta_", info$varname, "[", k,
            "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
-  }, FUN.VALUE = character(1))
+  })
 
   sign <- ifelse(isTRUE(info$rev), " + ", " - ")
 
 
-  gammas <- vapply(1:(info$ncat - 1), function(k) {
-    if (k == 1) {
+  gammas <- cvapply(1L:(info$ncat - 1L), function(k) {
+    if (k == 1L) {
       paste0(tab(), "gamma_", info$varname, "[", k,
              "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
     } else {
@@ -1157,7 +1156,7 @@ write_priors_clm <- function(info) {
              info$varname, "[", k - 1L, "]", sign, "exp(delta_", info$varname,
              "[", k - 1L, "])")
     }
-  }, FUN.VALUE = character(1))
+  })
 
   paste0(c(deltas, "", gammas), collapse = "\n")
 }
