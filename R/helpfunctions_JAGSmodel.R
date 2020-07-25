@@ -160,7 +160,9 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
   #         the JAGS sub-model for a given variable
 
   # if there are no random effects in this model (hc_list is NULL), return NULL
-  if (is.null(info$hc_list)) return(NULL)
+  if (is.null(info$hc_list)) {
+    return(NULL)
+  }
 
 
   # for each of the grouping levels for which there are random effects do:
@@ -231,7 +233,9 @@ paste_rdintercept_lp <- function(info) {
   #         the JAGS sub-model for a given variable
 
   # if there are no random effects in this model (hc_list = NULL), return NULL
-  if (is.null(info$hc_list)) return(NULL)
+  if (is.null(info$hc_list)) {
+    return(NULL)
+  }
 
   # for each of the grouping levels for which there are random effects do:
   nlapply(names(info$hc_list$hcvars), function(lvl) {
@@ -274,7 +278,9 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
 
 
   # if there are no random effects (hc_list = NULL), return NULL
-  if (is.null(info$hc_list)) return(NULL)
+  if (is.null(info$hc_list)) {
+    return(NULL)
+  }
 
 
   # identify grouping level of the outcome
@@ -889,7 +895,9 @@ get_distr <- function(family, varname, index, isgk = FALSE) {
   # write the outcome distribution model (right hand side) for a GLM(M)
   # JAGS model
 
-  if (is.null(family))   return(NULL)
+  if (is.null(family)) {
+    return(NULL)
+  }
 
   switch(family,
          "gaussian" = paste0(
@@ -928,7 +936,9 @@ get_distr <- function(family, varname, index, isgk = FALSE) {
 get_linkfun <- function(link) {
   # write the link function string for a GLM(M) JAGS model
 
-  if (is.null(link)) return(NULL)
+  if (is.null(link)) {
+    return(NULL)
+  }
 
   switch(link,
          "identity" = function(x) x,
@@ -950,7 +960,9 @@ get_linkfun <- function(link) {
 get_repar <- function(family, varname, index, isgk = FALSE) {
   # write the syntax to calculate the re-parametrization in GLM(M) JAGS model
 
-  if (is.null(family)) return(NULL)
+  if (is.null(family)) {
+    return(NULL)
+  }
 
   switch(family,
          "gaussian" = NULL,
@@ -1029,7 +1041,9 @@ get_secndpar <- function(family, varname) {
 get_glm_modelname <- function(family) {
   # obtain model name to be printed in jagsmodel for GLM(M)
 
-  if (is.null(family)) return(NULL)
+  if (is.null(family)) {
+    return(NULL)
+  }
 
   switch(family,
          "gaussian" = "Normal",
