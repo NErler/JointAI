@@ -554,26 +554,39 @@ get_locf <- function(fixed, data, idvar, group_lvls, groups, timevar,
   md <- merge(subset(gk_data, select = c(idvar, timevar, "rowid")), wd)
 
 
-  locf <- nlapply(seq_len(nrow(md)), function(i) {
-    # identify which visit should be used
-    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    # if there is no baseline visit (i.e., the first time with an observed value
-    # is larger than the time in the Gauss-Kronrod version of the time) the
-    # first available measurement will be used ("first value carried backward")
-    valcol <- max(1L, which(
-      c(md[i, timevar] > md[i, grep(paste0("^", timevar, "."), colnames(md))])
-    ), na.rm = TRUE)
+
+  valcol_nrs = vapply(longvars, function(k) {
+    grep(paste0("^", k, "."), colnames(md))
+  }, FUN.VALUE = integer(max(ld$obstime)))
 
 
-    # identify which columns have the covariate values of the correct visit
-    covcols <- ivapply(longvars, function(k) {
-      grep(paste0("^", k, "."), colnames(md))[valcol]
-    })
+  md_list <- lapply(seq_len(nrow(md)), get_row, dat = md)
+  locf <- lapply(md_list, find_locf_cols,
+              gk_time = which(names(md) == timevar),
+              time_cols = grep(paste0("^", timevar, "."), colnames(md)),
+              val_cols = valcol_nrs, longvars = longvars)
 
-    out <- md[i, covcols, drop = FALSE]
-    names(out) <- longvars
-    out
-  })
+
+  # locf <- nlapply(seq_len(nrow(md)), function(i) {
+  #   # identify which visit should be used
+  #   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  #   # if there is no baseline visit (i.e., the first time with an observed value
+  #   # is larger than the time in the Gauss-Kronrod version of the time) the
+  #   # first available measurement will be used ("first value carried backward")
+  #   valcol <- max(1L, which(
+  #     c(md[i, timevar] >= md[i, grep(paste0("^", timevar, "."), colnames(md))])
+  #   ), na.rm = TRUE)
+  #
+  #
+  #   # identify which columns have the covariate values of the correct visit
+  #   covcols <- ivapply(longvars, function(k) {
+  #     grep(paste0("^", k, "."), colnames(md))[valcol]
+  #   })
+  #
+  #   out <- md[i, covcols, drop = FALSE]
+  #   names(out) <- longvars
+  #   out
+  # })
 
   md[, longvars] <- do.call(rbind, locf)
 
@@ -641,6 +654,21 @@ get_survinfo <- function(info_list, Mlist) {
   })
 }
 
+
+find_locf_cols <- function(vec, gk_time, time_cols, val_cols, longvars) {
+  valcol <- max(1L, which(c(as.numeric(vec[gk_time]) >=
+                              as.numeric(vec[time_cols]))), na.rm = TRUE)
+  setNames(vec[val_cols[valcol, ]], longvars)
+}
+
+
+get_row <- function(dat, i) {
+  row <- lapply(1:ncol(dat), function(j) {.subset2(dat, j)[i]})
+  names(row) <- names(dat)
+  attr(row, "class") <- "data.frame"
+  attr(row, "row.names") <- 1L
+  row
+}
 
 
 # seed value
