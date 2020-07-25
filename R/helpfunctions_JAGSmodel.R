@@ -352,7 +352,9 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
 
 write_nonprop <- function(info, isgk = FALSE) {
   # if there are no random effects (hc_list = NULL), return NULL
-  if (is.null(info$hc_list)) return(NULL)
+  if (is.null(info$hc_list)) {
+    return(NULL)
+  }
 
   # identify grouping level of the outcome
   resplvl <- gsub("M_", "", info$resp_mat[length(info$resp_mat)])
