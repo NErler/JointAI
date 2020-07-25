@@ -94,8 +94,9 @@ paste_data <- function(matnam, index, col, isgk = FALSE) {
   # - col: the column (or vector of columns) of the design matrix
   # - isgk: is this whithin the Gauss-Kronrod quadrature?
 
-  paste0(matnam, ifelse(isgk, "gk", ""), "[", index, ", ", col,
-         ifelse(isgk, ", k]", "]"))
+  paste0(matnam, if (isgk) {"gk"} else {""},
+         "[", index, ", ", col,
+         if (isgk) {", k]"} else {"]"})
 }
 
 
@@ -122,10 +123,13 @@ paste_scaling <- function(x, rows, scale_pars, scalemat) {
   if (is.null(scale_pars)) {
     x
   } else {
-    ifelse(rowSums(is.na(scale_pars[rows, ])) > 0,
-           x,
-           paste_scale(x, row = rows, scalemat = scalemat)
-    )
+    cvapply(seq_along(x), function(k) {
+      if (rowSums(is.na(scale_pars[rows, ]))[k] > 0L) {
+        x[k]
+      } else {
+        paste_scale(x, row = rows, scalemat = scalemat)[k]
+      }
+    })
   }
 }
 
@@ -1146,7 +1150,7 @@ write_priors_clm <- function(info) {
            "] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)")
   })
 
-  sign <- ifelse(isTRUE(info$rev), " + ", " - ")
+  sign <- if (isTRUE(info$rev)) {" + "} else {" - "}
 
 
   gammas <- cvapply(1L:(info$ncat - 1L), function(k) {
