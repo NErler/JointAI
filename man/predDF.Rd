@@ -7,7 +7,7 @@
 \usage{
 predDF(object, ...)
 
-\method{predDF}{JointAI}(object, vars, length = 100, ...)
+\method{predDF}{JointAI}(object, vars, length = 100L, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}

@@ -825,7 +825,7 @@ paste_interactions <- function(interactions, group_lvls, n) {
         paste0(
           sapply(interactions[which(minlvl == lvl)], function(x) {
             paste0(
-              tab(4),
+              tab(4L),
               paste_data(names(x$interterm), index = index[lvl],
                          col = x$interterm),
               " <- ",
@@ -833,10 +833,8 @@ paste_interactions <- function(interactions, group_lvls, n) {
                 names(x$elmts),
                 index = ifelse(names(x$elmts) == paste0("M_", lvl),
                                index[lvl],
-                               paste0(
-                                 "group_",
-                                 gsub("M_", "", names(x$elmts)),
-                                 "[", index[lvl], "]"
+                               paste0("group_", gsub("M_", "", names(x$elmts)),
+                                      "[", index[lvl], "]"
                                )
                 ),
                 x$elmts
