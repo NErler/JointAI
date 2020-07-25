@@ -1064,9 +1064,9 @@ write_probs <- function(info, index, isgk = FALSE, indent = 4L) {
   # syntax for probabilities, using min-max-trick for numeric stability
   # i.e., "p_O2[i, 2] <- psum_O2[i, 2] - psum_O2[i, 1]"
 
-  .info = info
-  .index = index
-  .isgk = isgk
+  .info <- info
+  .index <- index
+  .isgk <- isgk
 
   probs <- vapply(2:(info$ncat - 1),
                   function(k, .info = info, .index = index, .isgk = isgk) {
@@ -1151,9 +1151,9 @@ write_priors_clm <- function(info) {
 
 # * helpfunctions --------------------------------------------------------------
 paste_p <- function(nr, env = parent.frame()) {
-  vn = env$.info$varname
-  ind = env$.index
-  gk = env$.isgk
+  vn <- env$.info$varname
+  ind <- env$.index
+  gk <- env$.isgk
 
   if (length(nr) > 1L)
     nr <- paste0(min(nr), ":", max(nr))
@@ -1161,9 +1161,9 @@ paste_p <- function(nr, env = parent.frame()) {
 }
 
 paste_ps <- function(nr, env = parent.frame()) {
-  vn = env$.info$varname
-  ind = env$.index
-  gk = env$.isgk
+  vn <- env$.info$varname
+  ind <- env$.index
+  gk <- env$.isgk
 
   paste0("psum", if (gk) "gk", "_", vn, "[", ind, ", ", nr, if (gk) ", k", "]")
 }
