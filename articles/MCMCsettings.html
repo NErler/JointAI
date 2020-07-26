@@ -168,10 +168,6 @@
 <code>seed</code>: optional seed value for reproducibility</li>
 <li>
 <code>inits</code>: initial values</li>
-<li>
-<code>parallel</code>: whether the MCMC chains should be sampled in parallel</li>
-<li>
-<code>n.cores</code>: how many cores are used for parallel sampling</li>
 </ul>
 <p>And some other parameters passed to functions from <strong>rjags</strong>:</p>
 <ul>
@@ -293,7 +289,7 @@
 <li>a function.</li>
 </ul>
 <p>Initial values can be specified for every unobserved node, that is, parameters and missing values, but it is possible to only specify initial values for a subset of nodes.</p>
-<p>Unless the user-specified initial values contain initial values for the random number generator (named <code>.RNG.name</code> and <code>.RNG.seed</code>), <strong>JointAI</strong> will add these to the initial values. This is necessary for reproducibility of the results but also when the MCMC chains are sampled in parallel (i.e, when the argument <code>parallel = TRUE</code>).</p>
+<p>Unless the user-specified initial values contain initial values for the random number generator (named <code>.RNG.name</code> and <code>.RNG.seed</code>), <strong>JointAI</strong> will add these to the initial values. This is necessary for reproducibility of the results but also when the MCMC chains are sampled in parallel.</p>
 <div id="initial-values-in-a-list-of-lists" class="section level4">
 <h4 class="hasAnchor">
 <a href="#initial-values-in-a-list-of-lists" class="anchor"></a>Initial values in a list of lists</h4>
@@ -307,26 +303,26 @@
 <span class="no">init_list</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; [[1]]$beta</span>
-<span class="co">#&gt; [1] -0.9465981 -0.4742045  0.5635365  0.7000468</span>
+<span class="co">#&gt; [1]  0.5890191 -0.6386767 -1.2917588 -0.8967146</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$tau_SBP</span>
-<span class="co">#&gt; [1] 0.03439098</span>
+<span class="co">#&gt; [1] 0.2603077</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
 <span class="co">#&gt; [[2]]$beta</span>
-<span class="co">#&gt; [1] -0.9610467 -0.8134517  0.7781596 -0.5568792</span>
+<span class="co">#&gt; [1] 1.532627586 0.004767093 0.448549302 1.494494652</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$tau_SBP</span>
-<span class="co">#&gt; [1] 0.9203029</span>
+<span class="co">#&gt; [1] 0.1454959</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
 <span class="co">#&gt; [[3]]$beta</span>
-<span class="co">#&gt; [1] -0.33692531 -1.19490004  0.08696651 -0.61766059</span>
+<span class="co">#&gt; [1]  1.1975949 -0.2545436  1.3570250  0.9752587</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$tau_SBP</span>
-<span class="co">#&gt; [1] 0.03320123</span></pre></body></html></div>
+<span class="co">#&gt; [1] 0.3254451</span></pre></body></html></div>
 <p>The list is then passed to the argument <code>inits</code>. The amended version of the user provided lists of initial values are stored in the JointAI object:</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">mod4a</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">age</span> + <span class="no">WC</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>, <span class="kw">progress.bar</span> <span class="kw">=</span> <span class="st">'none'</span>,
                 <span class="kw">inits</span> <span class="kw">=</span> <span class="no">init_list</span>)
@@ -334,44 +330,44 @@
 <span class="no">mod4a</span>$<span class="no">mcmc_settings</span>$<span class="no">inits</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; [[1]]$beta</span>
-<span class="co">#&gt; [1] -0.9465981 -0.4742045  0.5635365  0.7000468</span>
+<span class="co">#&gt; [1]  0.5890191 -0.6386767 -1.2917588 -0.8967146</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$tau_SBP</span>
-<span class="co">#&gt; [1] 0.03439098</span>
+<span class="co">#&gt; [1] 0.2603077</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$.RNG.name</span>
-<span class="co">#&gt; [1] "base::Mersenne-Twister"</span>
+<span class="co">#&gt; [1] "base::Super-Duper"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$.RNG.seed</span>
-<span class="co">#&gt; [1] 56218</span>
+<span class="co">#&gt; [1] 80248</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
 <span class="co">#&gt; [[2]]$beta</span>
-<span class="co">#&gt; [1] -0.9610467 -0.8134517  0.7781596 -0.5568792</span>
+<span class="co">#&gt; [1] 1.532627586 0.004767093 0.448549302 1.494494652</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$tau_SBP</span>
-<span class="co">#&gt; [1] 0.9203029</span>
+<span class="co">#&gt; [1] 0.1454959</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$.RNG.name</span>
-<span class="co">#&gt; [1] "base::Mersenne-Twister"</span>
+<span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$.RNG.seed</span>
-<span class="co">#&gt; [1] 98222</span>
+<span class="co">#&gt; [1] 5626</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
 <span class="co">#&gt; [[3]]$beta</span>
-<span class="co">#&gt; [1] -0.33692531 -1.19490004  0.08696651 -0.61766059</span>
+<span class="co">#&gt; [1]  1.1975949 -0.2545436  1.3570250  0.9752587</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$tau_SBP</span>
-<span class="co">#&gt; [1] 0.03320123</span>
+<span class="co">#&gt; [1] 0.3254451</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$.RNG.name</span>
 <span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$.RNG.seed</span>
-<span class="co">#&gt; [1] 86983</span></pre></body></html></div>
+<span class="co">#&gt; [1] 56527</span></pre></body></html></div>
 </div>
 <div id="initial-values-as-a-function" class="section level4">
 <h4 class="hasAnchor">
@@ -385,10 +381,10 @@
 
 <span class="fu">inits_fun</span>()
 <span class="co">#&gt; $beta</span>
-<span class="co">#&gt; [1]  0.1702921 -1.1633530 -0.3390236  0.1350627</span>
+<span class="co">#&gt; [1] -0.02229478 -1.04179297  0.06185423  0.62393817</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $alpha</span>
-<span class="co">#&gt; [1] -0.5701211 -0.6259627 -1.0152980</span>
+<span class="co">#&gt; [1]  0.01204871 -0.24454335 -0.77674120</span>
 
 
 <span class="no">mod4b</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">age</span> + <span class="no">WC</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>, <span class="kw">progress.bar</span> <span class="kw">=</span> <span class="st">'none'</span>,
@@ -397,44 +393,44 @@
 <span class="no">mod4b</span>$<span class="no">mcmc_settings</span>$<span class="no">inits</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; [[1]]$beta</span>
-<span class="co">#&gt; [1]  1.2370202 -1.2073931 -1.4477797 -0.3840891</span>
+<span class="co">#&gt; [1] 0.1541449 1.4005541 0.7515143 0.9087137</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$alpha</span>
-<span class="co">#&gt; [1] -0.9370580 -0.2540888 -1.4313250</span>
+<span class="co">#&gt; [1] 0.22264557 1.24377322 0.06128382</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$.RNG.name</span>
-<span class="co">#&gt; [1] "base::Wichmann-Hill"</span>
+<span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[1]]$.RNG.seed</span>
-<span class="co">#&gt; [1] 33120</span>
+<span class="co">#&gt; [1] 46042</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]</span>
 <span class="co">#&gt; [[2]]$beta</span>
-<span class="co">#&gt; [1]  1.81026599 -2.09636464 -1.21104300  0.01026257</span>
+<span class="co">#&gt; [1] -0.1479028  0.2461769  1.8513413  0.8675720</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$alpha</span>
-<span class="co">#&gt; [1] -0.6880926  0.7115409  0.8470719</span>
+<span class="co">#&gt; [1]  1.1034470 -1.0086346  0.5702882</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$.RNG.name</span>
-<span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span>
+<span class="co">#&gt; [1] "base::Super-Duper"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[2]]$.RNG.seed</span>
-<span class="co">#&gt; [1] 25978</span>
+<span class="co">#&gt; [1] 99417</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
 <span class="co">#&gt; [[3]]$beta</span>
-<span class="co">#&gt; [1] -1.1683133  0.5666325  0.3043914  0.1296736</span>
+<span class="co">#&gt; [1]  0.2320423 -0.2223860  0.4783391  0.8244481</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$alpha</span>
-<span class="co">#&gt; [1] -0.3462675 -1.5360171  1.1580632</span>
+<span class="co">#&gt; [1] 0.5826869 0.7295749 1.3345395</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$.RNG.name</span>
-<span class="co">#&gt; [1] "base::Super-Duper"</span>
+<span class="co">#&gt; [1] "base::Mersenne-Twister"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]$.RNG.seed</span>
-<span class="co">#&gt; [1] 27038</span></pre></body></html></div>
+<span class="co">#&gt; [1] 20259</span></pre></body></html></div>
 <p>When a function is supplied, the function will be evaluated once per chain and the resulting list is stored.</p>
 </div>
 </div>
@@ -450,21 +446,21 @@
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span>(<span class="no">mod4c</span>$<span class="no">model</span>))
 <span class="co">#&gt; List of 15</span>
-<span class="co">#&gt;  $ M_ID        : num [1:200, 1:5] NA NA NA NA NA 3 NA NA NA NA ...</span>
+<span class="co">#&gt;  $ M_ID        : num [1:200, 1:5] NA NA NA NA NA 1 NA NA NA NA ...</span>
 <span class="co">#&gt;  $ M_lvlone    : num [1:2400, 1:3] NA NA 0 0 NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ RinvD_bmi_ID: num [1:2, 1:2] 1.003 NA NA 0.275</span>
-<span class="co">#&gt;  $ alpha       : num [1:7] 45.3725 0.0247 -0.4546 0.3578 3.8407 ...</span>
-<span class="co">#&gt;  $ b_bmi_ID    : num [1:200, 1:2] 16.6 16.8 14.9 15.9 17.9 ...</span>
-<span class="co">#&gt;  $ b_hc_ID     : num [1:200, 1] 44 44.7 47 48.9 45.5 ...</span>
-<span class="co">#&gt;  $ beta        : num [1:6] 16.4185 0.0397 -0.0464 -0.0537 -1.3506 ...</span>
-<span class="co">#&gt;  $ delta_SMOKE : num -0.546</span>
-<span class="co">#&gt;  $ gamma_SMOKE : num [1:2] -0.934 NA</span>
-<span class="co">#&gt;  $ invD_bmi_ID : num [1:2, 1:2] 1.82 -1.95 -1.95 9.8</span>
-<span class="co">#&gt;  $ invD_hc_ID  : num [1, 1] 0.478</span>
+<span class="co">#&gt;  $ RinvD_bmi_ID: num [1:2, 1:2] 1.75 NA NA 0.31</span>
+<span class="co">#&gt;  $ alpha       : num [1:7] 45.5473 0.0827 -0.971 -0.2796 3.8368 ...</span>
+<span class="co">#&gt;  $ b_bmi_ID    : num [1:200, 1:2] 16 16.6 15 15.7 17.1 ...</span>
+<span class="co">#&gt;  $ b_hc_ID     : num [1:200, 1] 43.6 44.6 49.1 47.9 44.5 ...</span>
+<span class="co">#&gt;  $ beta        : num [1:6] 16.4519 0.0326 -0.4337 0.1129 -1.3928 ...</span>
+<span class="co">#&gt;  $ delta_SMOKE : num -0.367</span>
+<span class="co">#&gt;  $ gamma_SMOKE : num [1:2] -1.62 NA</span>
+<span class="co">#&gt;  $ invD_bmi_ID : num [1:2, 1:2] 1.77 -1.09 -1.09 7.02</span>
+<span class="co">#&gt;  $ invD_hc_ID  : num [1, 1] 0.484</span>
 <span class="co">#&gt;  $ mu_b_bmi_ID : num [1:200, 1:2] NA NA NA NA NA NA NA NA NA NA ...</span>
-<span class="co">#&gt;  $ tau_HEIGHT_M: num 0.0215</span>
-<span class="co">#&gt;  $ tau_bmi     : num 4.49</span>
-<span class="co">#&gt;  $ tau_hc      : num 0.242</span></pre></body></html></div>
+<span class="co">#&gt;  $ tau_HEIGHT_M: num 0.0187</span>
+<span class="co">#&gt;  $ tau_bmi     : num 4.68</span>
+<span class="co">#&gt;  $ tau_hc      : num 0.229</span></pre></body></html></div>
 <p><code>M_ID</code> and <code>M_lvlone</code> are design matrices containing the the parts of the variables that belong to a given level of the hierarchy. In this example, <code>M_ID</code> contains all the subject specific variables, <code>M_lvlone</code> the time-varying variables. In <strong>JointAI</strong>, design matrices are always named <code>M_&lt;level&gt;</code>, and <code>lvlone</code> refers to the lowest level, the level for which there is no grouping variable.</p>
 <p>The first eight rows of <code>M_ID</code> in the data that is passed to JAGS (which is stored in <code>data_list</code> in a JointAI object) are:</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">mod4c</span>$<span class="no">data_list</span>$<span class="no">M_ID</span>, <span class="fl">8</span>)</pre></body></html></div>
@@ -485,7 +481,7 @@
 <span class="co">#&gt; [3,]   NA   NA   NA   NA   NA</span>
 <span class="co">#&gt; [4,]   NA   NA   NA   NA   NA</span>
 <span class="co">#&gt; [5,]   NA   NA   NA   NA   NA</span>
-<span class="co">#&gt; [6,]    3   NA   NA   NA   NA</span>
+<span class="co">#&gt; [6,]    1   NA   NA   NA   NA</span>
 <span class="co">#&gt; [7,]   NA   NA   NA   NA   NA</span>
 <span class="co">#&gt; [8,]   NA   NA   NA   NA   NA</span></pre></body></html></div>
 <p>The matrix for the initial values has to have the same dimension as the matrix containing the data, but has <code>NA</code> wherever the value in the data is observed (e.g., the first 5 elements of the first column) and a numeric value where data is missing (e.g., the 6th value of the first column).</p>
@@ -519,17 +515,27 @@
 #&gt; [...]</code></pre>
 <p>The element <code>RinvD_bmi_ID</code> in the initial values has to be a 2 <span class="math inline">\(\times\)</span> 2 matrix, with positive values on the diagonal and <code>NA</code> as off-diagonal elements, since these are fixed in the data:</p>
 <div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span>(<span class="no">mod4c</span>$<span class="no">model</span>)$<span class="no">RinvD_bmi_ID</span>
-<span class="co">#&gt;          [,1]      [,2]</span>
-<span class="co">#&gt; [1,] 1.003471        NA</span>
-<span class="co">#&gt; [2,]       NA 0.2753713</span></pre></body></html></div>
+<span class="co">#&gt;           [,1]      [,2]</span>
+<span class="co">#&gt; [1,] 0.5439119        NA</span>
+<span class="co">#&gt; [2,]        NA 0.8887236</span></pre></body></html></div>
 <p>Elements that are completely unobserved, like the parameter vectors <code>alpha</code> and <code>beta</code>, the random effects <code>b_&lt;response&gt;_&lt;level&gt;</code> (e.g. <code>b_bmi_ID</code> and <code>b_hc_ID</code>) or scalar parameters <code>delta_&lt;response&gt;</code> or <code>tau_&lt;response&gt;</code> are entirely specified in the initial values.</p>
 </div>
 </div>
 <div id="parallel-sampling" class="section level2">
 <h2 class="hasAnchor">
 <a href="#parallel-sampling" class="anchor"></a>Parallel sampling</h2>
-<p>To reduce computational time, it is possible to perform sampling of multiple MCMC chains in parallel on multiple cores. This can be specified by setting the argument <code>parallel = TRUE</code>. The maximum number of cores to be used can be set with the argument <code>n.cores</code>. By default, this is two less than the number of cores available on the machine, but never more than the number of MCMC chains.</p>
-<p>Parallel computation is done using the R packages <a href="https://CRAN.R-project.org/package=foreach"><strong>foreach</strong></a> and <a href="https://CRAN.R-project.org/package=doParallel"><strong>doParallel</strong></a>. Unfortunately, currently it is not possible to obtain a progress bar when using parallel computation and warning messages produced during the sampling are not returned.</p>
+<p>To reduce computational time, it is possible to perform sampling of multiple MCMC chains in parallel on multiple cores. This can be achieved with the help of the packages <a href="https://CRAN.R-project.org/package=future"><strong>future</strong></a> and <a href="https://CRAN.R-project.org/package=doFuture"><strong>doFuture</strong></a>.</p>
+<p>To perform parallel sampling, a parallel adapter has to be registered</p>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="kw pkg">doFuture</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/doFuture/man/registerDoFuture.html">registerDoFuture</a></span>()</pre></body></html></div>
+<p>and a plan how to “resolve futures” needs to be specified; this is the specification that determines if sampling is performed sequentially or in parallel. For example,</p>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="kw pkg">future</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html">plan</a></span>(<span class="kw pkg">future</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/future/man/multisession.html">multisession</a></span>, <span class="kw">workers</span> <span class="kw">=</span> <span class="fl">4</span>)</pre></body></html></div>
+<p>specifies that the different MCMC chains are sampled in 4 different R sessions.</p>
+<p>This specification has to be done before the <strong>JointAI</strong> model function is called and remains in place until it is overwritten.</p>
+<p>To re-set to sequential evaluation,</p>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="kw pkg">future</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html">plan</a></span>(<span class="kw pkg">future</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/future/man/sequential.html">sequential</a></span>())</pre></body></html></div>
+<p>can be used.</p>
+<p>More information on parallel computation can be found in the help files and the <a href="https://CRAN.R-project.org/package=future">vignette of the package <strong>future</strong></a>.</p>
+<p>Unfortunately, currently it is not possible to obtain a progress bar when using parallel computation and warning messages produced during the sampling are not returned.</p>
 </div>
 <div id="other-arguments" class="section level2">
 <h2 class="hasAnchor">

@@ -557,7 +557,7 @@
 <div id="why-do-we-need-models-for-completely-observed-covariates" class="section level4">
 <h4 class="hasAnchor">
 <a href="#why-do-we-need-models-for-completely-observed-covariates" class="anchor"></a>Why do we need models for completely observed covariates?</h4>
-<p>The joint distribution of an outcome <span class="math inline">\(y\)</span>, covariates <span class="math inline">\(x\)</span>, random effects <span class="math inline">\(b\)</span> and parameters <span class="math inline">\(\theta\)</span>, <span class="math inline">\(p(y, x, b, \theta)\)</span>, is modeled as the product of univariate conditional distributions. To facilitate the specification of these distributions they are ordered so that longitudinal (level-1) variables may have baseline (level-2) variables in their linear predictors but not vice versa.</p>
+<p>The joint distribution of an outcome <span class="math inline">\(y\)</span>, covariates <span class="math inline">\(x\)</span>, random effects <span class="math inline">\(b\)</span> and parameters <span class="math inline">\(\theta\)</span>, <span class="math inline">\(p(y, x, b, \theta)\)</span>, is modelled as the product of univariate conditional distributions. To facilitate the specification of these distributions they are ordered so that longitudinal (level-1) variables may have baseline (level-2) variables in their linear predictors but not vice versa.</p>
 <p>For example: <span class="math display">\[\begin{align}
 p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \text{analysis model}\\
 &amp; p(x_1\mid \theta_{x1}) &amp;&amp; \text{model for a complete baseline covariate}\\
@@ -566,8 +566,8 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 &amp; p(x_4\mid x_1, x_2, x_3, b_{x4}, \theta_{x4}) &amp;&amp; \text{model for an incomplete longitudinal covariate}\\
 &amp; p(b_y|\theta_b) p(b_{x3}|\theta_b) p(b_{x4}|\theta_b) &amp;&amp; \text{models for the random effects}\\
 &amp; p(\theta_y) p(\theta_{x1}) \ldots p(\theta_{x4}) p(\theta_b) &amp;&amp; \text{prior distributions}\end{align}\]</span></p>
-<p>Since the parameter vectors <span class="math inline">\(\theta_{x1}\)</span>, <span class="math inline">\(\theta_{x2}\)</span>, … are assumed to be a priori independent, and furthermore <span class="math inline">\(x_1\)</span> is completely observed and modeled independently of incomplete variables, estimation of the other model parts is not affected by <span class="math inline">\(p(x_1\mid \theta_{x1})\)</span> and, hence, this model can be omitted.</p>
-<p><span class="math inline">\(p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})\)</span>, on the other hand is modeled conditional on the incomplete covariate <span class="math inline">\(x_2\)</span> and can therefore not be omitted.</p>
+<p>Since the parameter vectors <span class="math inline">\(\theta_{x1}\)</span>, <span class="math inline">\(\theta_{x2}\)</span>, … are assumed to be a priori independent, and furthermore <span class="math inline">\(x_1\)</span> is completely observed and modelled independently of incomplete variables, estimation of the other model parts is not affected by <span class="math inline">\(p(x_1\mid \theta_{x1})\)</span> and, hence, this model can be omitted.</p>
+<p><span class="math inline">\(p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})\)</span>, on the other hand is modelled conditional on the incomplete covariate <span class="math inline">\(x_2\)</span> and can therefore not be omitted.</p>
 <p>If there were no incomplete baseline covariates, i.e., if <span class="math inline">\(x_2\)</span> was completely observed, <span class="math inline">\(p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})\)</span> would also not affect the estimation of parameters in the other parts of the model and could be omitted.</p>
 </div>
 </div>
