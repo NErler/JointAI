@@ -66,9 +66,6 @@ have a number of arguments that specify settings for the MCMC sampling:
 * `monitor_params`: parameters/nodes to be monitored
 * `seed`: optional seed value for reproducibility
 * `inits`: initial values
-* `parallel`: whether the MCMC chains should be sampled in parallel
-* `n.cores`: how many cores are used for parallel sampling
-
 
 And some other parameters passed to functions from **rjags**:
 
@@ -233,8 +230,7 @@ subset of nodes.
 Unless the user-specified initial values contain initial values for the
 random number generator (named `.RNG.name` and `.RNG.seed`), **JointAI** will
 add these to the initial values. This is necessary for reproducibility of the
-results but also when the MCMC chains are sampled in parallel (i.e, when 
-the argument `parallel = TRUE`). 
+results but also when the MCMC chains are sampled in parallel. 
 
 
 #### Initial values in a list of lists
@@ -408,15 +404,37 @@ and `beta`, the random effects `b_<response>_<level>` (e.g. `b_bmi_ID` and
 
 ## Parallel sampling
 To reduce computational time, it is possible to perform sampling of multiple
-MCMC chains in parallel on multiple cores. This can be specified by setting
-the argument `parallel = TRUE`. The maximum number of cores to be used can be
-set with the argument `n.cores`. By default, this is two less than the number of
-cores available on the machine, but never more than the number of MCMC chains.
+MCMC chains in parallel on multiple cores. This can be achieved with the help
+of the packages [**future**](https://CRAN.R-project.org/package=future) and
+[**doFuture**](https://CRAN.R-project.org/package=doFuture).
 
-Parallel computation is done using the R packages [**foreach**](https://CRAN.R-project.org/package=foreach) and [**doParallel**](https://CRAN.R-project.org/package=doParallel).
-Unfortunately, currently it is not possible to obtain a progress bar when using
-parallel computation and warning messages produced during the sampling are 
-not returned.
+To perform parallel sampling, a parallel adapter has to be registered
+```{r, eval = FALSE}
+doFuture::registerDoFuture()
+```
+and a plan how to "resolve futures" needs to be specified; this is the
+specification that determines if sampling is performed sequentially or in
+parallel. For example,
+```{r, eval = FALSE}
+future::plan(future::multisession, workers = 4)
+```
+specifies that the different MCMC chains are sampled in 4 different R sessions.
+
+This specification has to be done before the **JointAI** model function is
+called and remains in place until it is overwritten.
+
+To re-set to sequential evaluation, 
+```{r, eval = FALSE}
+future::plan(future::sequential())
+```
+can be used.
+
+More information on parallel computation can be found in the help files and the 
+[vignette of the package **future**](https://CRAN.R-project.org/package=future).
+
+Unfortunately, currently it is not possible to obtain a progress bar
+when using parallel computation and warning messages produced during the
+sampling are not returned.
 
 
 ## Other arguments
