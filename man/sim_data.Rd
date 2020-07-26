@@ -68,6 +68,6 @@ Simulate dataset
 \details{
 The time variable has a uniform distribution between tmin and tmax.
          At the moment only the integer option is implemented for the
-         parameters norm, bin, multi, etc.
+         parameters norm, bin, multi, ...
 }
 \keyword{internal}

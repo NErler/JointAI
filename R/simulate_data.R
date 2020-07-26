@@ -37,7 +37,7 @@
 #'
 #' @details The time variable has a uniform distribution between tmin and tmax.
 #'          At the moment only the integer option is implemented for the
-#'          parameters norm, bin, multi, etc.
+#'          parameters norm, bin, multi, ...
 #' @export
 #' @keywords internal
 sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,

@@ -60,7 +60,7 @@ status.
   \item{hc}{child head circumference in cm}
   \item{hgt}{child height in cm}
   \item{wgt}{child weight in gram}
-  \item{sleep}{sleeping behavior of the child (3 ordered categories)}
+  \item{sleep}{sleeping behaviour of the child (3 ordered categories)}
 }
 }
 

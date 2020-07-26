@@ -267,7 +267,7 @@ parameters(lm4)
 ```
 
 
-## Subsets of Parameters for Plots, Summaries, etc.
+## Subsets of Parameters for Plots, Summaries, ...
 The functions 
 [`summary()`](https://nerler.github.io/JointAI/reference/summary.JointAI.html),
 [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html),

@@ -70,7 +70,7 @@ reached and more iterations are necessary (e.g., using [`add_samples()`](https:/
 
 Graphical aspects of the traceplot can be controlled by specifying 
 standard graphical arguments via the dots argument `"..."`, which are passed to [`matplot()`](https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/matplot.html).
-This allows changing colour, line type and -width, limits, etc.
+This allows changing colour, line type and -width, limits, and so forth.
 Arguments `nrow` and/or `ncol` can be supplied to set specific numbers of 
 rows and columns for the layout of the grid of plots.
 

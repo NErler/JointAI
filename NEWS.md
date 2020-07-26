@@ -317,7 +317,7 @@ file](https://nerler.github.io/JointAI/reference/model_imp.html).
 
 ## Bug fixes
 * `plot_all()` uses correct level-2 %NA in title
-* `simWide`: case with no observed bmi values removed
+* `simWide`: case with no observed `bmi` values removed
 * `traceplot()`, `densplot()`: `ncol` and `nrow` now work with `use_ggplot = TRUE`
 * `traceplot()`, `densplot()`: error in specification of `nrow` fixed
 * `densplot()`: use of color fixed

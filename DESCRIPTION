@@ -9,7 +9,7 @@ Description: The package facilitates a range of functions to perform analysis
     Available model types include (generalized) linear, log-normal, beta,
     cumulative logit and multinomial logit regression models as well as
     multi-level (mixed model) versions of these models.
-    Moreove, parametric (Weibull) and proportional hazards survival models and
+    Moreover, parametric (Weibull) and proportional hazards survival models and
     joint models of longitudinal and survival data are implemented and it is
     possible to fit multiple models of mixed types simultaneously.
     Incomplete covariates, if present, are automatically imputed.
@@ -38,4 +38,4 @@ Suggests:
 VignetteBuilder: knitr
 Encoding: UTF-8
 RdMacros: mathjaxr
-Language: en-UK
+Language: en-GB

@@ -529,7 +529,7 @@ models need to be specified for all level-1 variables.
 
 #### Why do we need models for completely observed covariates?
 The joint distribution of an outcome $y$, covariates $x$, random effects $b$ 
-and parameters $\theta$,  $p(y, x, b, \theta)$, is modeled as the product of
+and parameters $\theta$,  $p(y, x, b, \theta)$, is modelled as the product of
 univariate conditional distributions. To facilitate the specification of these
 distributions they are ordered so that longitudinal (level-1) variables may have
 baseline (level-2) variables in their linear predictors but not vice versa.
@@ -545,12 +545,12 @@ p(y, x, b, \theta) = & p(y \mid x_1, ..., x_4, b_y, \theta_y) && \text{analysis 
 & p(\theta_y) p(\theta_{x1}) \ldots p(\theta_{x4}) p(\theta_b) && \text{prior distributions}\end{align}$$
 
 Since the parameter vectors $\theta_{x1}$, $\theta_{x2}$, ... are assumed to be
-a priori independent, and furthermore $x_1$ is completely observed and modeled
+a priori independent, and furthermore $x_1$ is completely observed and modelled
 independently of incomplete variables,
 estimation of the other model parts is not affected by $p(x_1\mid \theta_{x1})$ 
 and, hence, this model can be omitted.
 
-$p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})$, on the other hand is modeled
+$p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})$, on the other hand is modelled
 conditional on the incomplete covariate $x_2$ and can therefore not be omitted.
 
 
