@@ -23,7 +23,7 @@ BugReports: https://github.com/nerler/JointAI/issues
 LazyData: TRUE
 RoxygenNote: 7.1.1
 Roxygen: list(old_usage = TRUE)
-Imports: rjags, MASS, mcmcse, coda, rlang, doFuture, future, foreach, survival, mathjaxr
+Imports: rjags, MASS, mcmcse, coda, rlang, future, foreach, survival, mathjaxr
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
 Suggests: 
     knitr,
@@ -33,7 +33,8 @@ Suggests:
     ggplot2,
     ggpubr,
     testthat,
-    covr
+    covr,
+    doFuture
 VignetteBuilder: knitr
 Encoding: UTF-8
 RdMacros: mathjaxr

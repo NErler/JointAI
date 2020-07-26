@@ -74,7 +74,6 @@ run_parallel <- function(n_adapt, n_iter, n_chains, inits, thin = 1L,
                          n_workers, ...) {
 
   if (any(n_adapt > 0L, n_iter > 0L)) {
-    doFuture::registerDoFuture()
 
     if (mess)
       msg("Parallel sampling with %s workers started (%s).",

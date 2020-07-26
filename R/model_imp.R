@@ -566,6 +566,7 @@
 #' # MCMC chains are run sequentially.
 #' # To run MCMC chains in parallel, a strategy can be specified using the
 #' # package \pkg{future} (see ?future::plan), for example:
+#' doFuture::registerDoFuture()
 #' future::plan(future::multisession, workers = 4)
 #' mod8 <- lm_imp(y ~ C1 + C2 + B2, data = wideDF, n.iter = 500, n.chains = 8)
 #' mod8$comp_info$future
