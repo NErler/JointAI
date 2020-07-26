@@ -88,7 +88,7 @@ get_groups <- function(idvar, data) {
     gr_dupl <- duplicated(groups)
     if (any(gr_dupl)) {
       gr_dupl2 <- duplicated(groups, fromLast = TRUE)
-      errormsg("The grouping levels %s are duplicats.",
+      errormsg("The grouping levels %s are duplicates.",
                unique(names(groups)[gr_dupl], names(groups)[gr_dupl2]))
     }
   } else {
