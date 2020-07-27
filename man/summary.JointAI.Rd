@@ -6,76 +6,55 @@
 \alias{coef.JointAI}
 \alias{confint.JointAI}
 \alias{print.JointAI}
-\title{Summary of an object of class JointAI}
+\title{Summarize the results from an object of class JointAI}
 \usage{
-\method{summary}{JointAI}(
-  object,
-  start = NULL,
-  end = NULL,
-  thin = NULL,
-  quantiles = c(0.025, 0.975),
-  subset = NULL,
-  exclude_chains = NULL,
-  warn = TRUE,
-  mess = TRUE,
-  ...
-)
+\method{summary}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
+  quantiles = c(0.025, 0.975), subset = NULL, exclude_chains = NULL,
+  missinfo = FALSE, warn = TRUE, mess = TRUE, ...)
 
 \method{print}{summary.JointAI}(x, digits = max(3, .Options$digits - 4), ...)
 
-\method{coef}{JointAI}(
-  object,
-  start = NULL,
-  end = NULL,
-  thin = NULL,
-  subset = NULL,
-  exclude_chains = NULL,
-  warn = TRUE,
-  mess = TRUE,
-  ...
-)
+\method{coef}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
+  subset = NULL, exclude_chains = NULL, warn = TRUE, mess = TRUE, ...)
 
-\method{confint}{JointAI}(
-  object,
-  parm = NULL,
-  level = 0.95,
-  quantiles = NULL,
-  start = NULL,
-  end = NULL,
-  thin = NULL,
-  subset = NULL,
-  exclude_chains = NULL,
-  warn = TRUE,
-  mess = TRUE,
-  ...
-)
+\method{confint}{JointAI}(object, parm = NULL, level = 0.95,
+  quantiles = NULL, start = NULL, end = NULL, thin = NULL,
+  subset = NULL, exclude_chains = NULL, warn = TRUE, mess = TRUE, ...)
 
 \method{print}{JointAI}(x, digits = max(4, getOption("digits") - 4), ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
-\item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{start}{the first iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
-\item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{end}{the last iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
-\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
+\item{thin}{thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
+For example, \code{thin = 1} (default) will keep the MCMC samples
+from all iterations; \code{thin = 5} would only keep every 5th
+iteration.}
 
 \item{quantiles}{posterior quantiles}
 
-\item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
-Uses the same logic as the argument \code{monitor_params} in
+\item{subset}{subset of parameters/variables/nodes (columns in the MCMC
+sample). Follows the same principle as the argument
+\code{monitor_params} in
 \code{\link[JointAI:model_imp]{*_imp}}.}
 
-\item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
+\item{exclude_chains}{optional vector of the index numbers of chains that
+should be excluded}
+
+\item{missinfo}{logical; should information on the number and proportion of
+missing values be included in the summary?}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. (Note: this applies only to warnings
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. (Note: this applies only to messages
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{\dots}{currently not used}
 
@@ -89,13 +68,14 @@ given directly by \strong{JointAI}.)}
 \item{level}{confidence level (default is 0.95)}
 }
 \description{
-Obtain and print the \code{summary}, (fixed effects) coefficients (\code{coef})
-and credible interval (\code{confint}) for an object of class 'JointAI'.
+Obtain and print the \code{summary}, (fixed effects) coefficients
+(\code{coef}) and credible interval (\code{confint}) for an object of
+class 'JointAI'.
 }
 \examples{
 mod1 <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 
-summary(mod1)
+summary(mod1, missinfo = TRUE)
 coef(mod1)
 confint(mod1)
 
@@ -104,7 +84,8 @@ confint(mod1)
 \seealso{
 The model fitting functions \code{\link{lm_imp}},
          \code{\link{glm_imp}}, \code{\link{clm_imp}}, \code{\link{lme_imp}},
-         \code{\link{glme_imp}}, \code{\link{survreg_imp}} and \code{\link{coxph_imp}},
+         \code{\link{glme_imp}}, \code{\link{survreg_imp}} and
+         \code{\link{coxph_imp}},
          and the vignette
          \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
          for examples how to specify the parameter \code{subset}.

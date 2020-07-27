@@ -4,18 +4,16 @@
 \alias{parameters}
 \title{Parameter names of an JointAI object}
 \usage{
-parameters(object, mess = TRUE, warn = TRUE)
+parameters(object, mess = TRUE, warn = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. (Note: this applies only to messages
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. (Note: this applies only to warnings
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{...}{currently not used}
 }
@@ -24,9 +22,10 @@ Returns the names of the parameters/nodes of an object of class 'JointAI' for
 which a monitor is set.
 }
 \examples{
-# (does not need MCMC samples to work, so we will set n.adapt = 0 and
-# n.iter = 0 to reduce computational time)
-mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0, mess = FALSE)
+# (This function does not need MCMC samples to work, so we will set
+# n.adapt = 0 and n.iter = 0 to reduce computational time)
+mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0,
+               n.iter = 0, mess = FALSE)
 
 parameters(mod1)
 

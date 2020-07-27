@@ -1,123 +1,133 @@
 
-scale_matrix <- function(X, scale_vars, scale_pars, models) {
-  Xsc <- X
-  if (!is.null(X)) {
-    Xsub <- X[, apply(X, 2, function(x)(any(!is.na(x)))), drop = FALSE]
+# used in divide_matrices() (2020-06-13)
+get_scale_pars <- function(mat, groups, scale_vars, refs, fcts_all,
+                           interactions, data) {
+  # create a list of matrices containing the scaling parameters corresponding
+  # to each of the design matrices
 
-    if (any(scale_vars %in% colnames(Xsub))) {
+  if (is.null(mat) | (!is.null(scale_vars) && !scale_vars))
+    return(NULL)
 
-      if (is.null(scale_pars)) {
-        scale_pars <- matrix(nrow = 2,
-                             ncol = length(scale_vars[scale_vars %in% colnames(Xsub)]),
-                             dimnames = list(c("scale", "center"),
-                                             scale_vars[scale_vars %in% colnames(Xsub)]))
-        for (k in scale_vars[scale_vars %in% colnames(Xsub)]) {
-          usecenter <- if (!k %in% names(models)) {
-            TRUE
-          } else {
-            !models[k] %in% c("lognorm", "gamma", "beta", 'glmm_lognorm', 'glmm_gamma', 'glmm_poisson')
-          }
+  vars <- find_scalevars(mat, refs, fcts_all, interactions, data)
 
-          usescale <- if (!k %in% names(models)) {
-            TRUE
-          } else {
-            !models[k] %in% c("gamma", "beta", 'glmm_gamma', 'glmm_poisson')
-          }
+  if (!is.null(scale_vars))
+    vars <- intersect(vars, scale_vars)
 
-          xsc <- scale(X[, k], center = usecenter, scale = usescale)
-          Xsc[, k] <- xsc
-          scale_pars["scale", k] <- ifelse(!is.null(attr(xsc, "scaled:scale")),
-                                           attr(xsc, "scaled:scale"), 1)
-          scale_pars["center", k] <- ifelse(!is.null(attr(xsc, "scaled:center")),
-                                            attr(xsc, "scaled:center"), 0)
-        }
-      } else {
-        if (is.matrix(scale_pars)) {
-          for (k in colnames(scale_pars)) {
-            Xsc[, k] <- (X[, k] - scale_pars["center", k])/scale_pars["scale", k]
-          }
-        } else stop("Scale matrix could not be recognized.")
-      }
+  rows <- match(unique(groups), groups)
+
+  do.call(rbind, sapply(colnames(mat), function(k) {
+  if (k %in% vars) {
+      scaled <- scale(mat[rows, k])
+      data.frame(center = attr(scaled, 'scaled:center'),
+                 scale = attr(scaled, 'scaled:scale')
+      )
+    } else {
+      data.frame(center = NA, scale = NA)
     }
-  }
-  return(list(X = Xsc,
-              scale_pars = scale_pars))
+  }, simplify = FALSE))
 }
 
 
+# used in get_scale_pars() (2020-06-13)
+find_scalevars <- function(mat, refs, fcts_all, interactions, data) {
+  # Find the names of columns in the model matrix that are not integers
+  # or have many different values
 
+  vars <- lapply(colnames(mat), function(k) {
 
+    k <- replace_dummy(k, refs)
 
+    if (k %in% names(data)) {
+      if (is.numeric(data[, k])) k
+    } else if (k %in% fcts_all$colname) {
+      # When splines are used, "k" can't be evaluated, so we use the column
+      # 'fct' instead. The result of "eval" for splines is then a matrix,
+      # but since this is also numeric the test "is.numeric()" works.
+      # This might not work though for some other functions....
+      fct <- unique(fcts_all$fct[fcts_all$colname == k])
+      if (is.numeric(eval(parse(text = fct), envir = data))) k
+    } else if (k %in% names(interactions)) {
+      elmts <- sapply(attr(interactions[[k]], 'elements'), replace_dummy, refs)
 
-get_scaling <- function(Mlist, scale_pars, models, data) {
-  ##### bugfix
-  # varnams <- unique(unlist(strsplit(colnames(model.matrix(Mlist$fixed2, data)),
-  #                                   "[:|*]")))
-
-  varnams <- unique(c(unlist(strsplit(unlist(Mlist$names_main), "[:|*]")),
-                      if (!is.null(Mlist$auxvars))
-                        attr(terms(Mlist$auxvars), 'term.labels')))
-
-  ##### end bugfix
-  scale_pars_new <- if (!is.null(Mlist$scale_vars))
-    matrix(nrow = 2, ncol = length(varnams),
-           data = c(1, 0),
-           dimnames = list(c("scale", "center"),
-                           varnams))
-
-
-  scaled_dat <- sapply(Mlist[c("Xc", "Xtrafo", "Xl", "Z", "Xltrafo")], scale_matrix,
-                       scale_vars = Mlist$scale_vars,
-                       scale_pars = scale_pars,
-                       models = models, simplify = FALSE)
-
-
-  scale_pars <- do.call(cbind, lapply(scaled_dat, "[[", 2))
-
-  # remove identical duplicate columns
-  dupl <- lapply(unique(colnames(scale_pars)), function(x) {
-    t(unique(t(scale_pars[, which(colnames(scale_pars) == x), drop = FALSE])))
+      isnum <- sapply(elmts, function(x) {
+        if (x %in% names(data)) {
+          is.numeric(data[, x])
+        } else {
+          if (x %in% fcts_all$colname) {
+            fct <- unique(fcts_all$fct[fcts_all$colname == x])
+            is.numeric(eval(parse(text = fct), envir = data))
+          }
+        }
+      })
+      if (any(isnum)) k
+    }
   })
 
-  if (any(sapply(dupl, ncol) > 1)) {
-    stop("Duplicate scale parameters found.")
-  } else {
-    scale_pars <- do.call(cbind, dupl)
-  }
-
-  if (!is.null(scale_pars) & !is.null(scale_pars_new)) {
-    if (!any(colnames(scale_pars) %in% colnames(scale_pars_new)))
-      stop("Scale parameters could not be matched to variables.")
-
-    scale_pars_new[c("scale", "center"), colnames(scale_pars)] <-
-      scale_pars[c("scale", "center"), ]
-  } else {scale_pars_new <- NULL}
-
-  if (any(Mlist$trafos$fct == paste0(Mlist$trafos$var, "^2"))) {
-    sqrs <- which(Mlist$trafos$fct == paste0(Mlist$trafos$var, "^2"))
-    xvars <- Mlist$trafos$var[sqrs]
-    xsqr <- Mlist$trafos$X_var[sqrs]
-    scale_pars_new[, xsqr] <- scale_pars_new[, xvars]^2
-    scale_pars_new["center", xsqr] <- -scale_pars_new["center", xsqr]
-  }
-
-  return(list(scaled_matrices = sapply(scaled_dat, "[[", 1, simplify = FALSE),
-              scale_pars = scale_pars_new))
+  unlist(vars)
 }
 
 
+# re-scale ---------------------------------------------------------------------
+rescale <- function(MCMC, coefs, scale_pars, info_list) {
+  # After the MCMC has been obtained from rjags, regression coefficients
+  # relating to variables that were scaled in the JAGS model need to be scaled
+  # back to the scale of the original variables
+  # - MCMC: a mcmc object (only one element of the mcmc.list)
+  # - coefs: combined coef_list (do.call(rbind, coef_list))
+  # - scale_pars: combined scaling parameters
+  #               (do.call(rbind, unname(Mlist$scale_pars)))
+  # - info_list: list of model info used to create the JAGS syntax; used here
+  #              to get the names of the covariates used in each sub-model
 
+  scale_pars$center[is.na(scale_pars$center)] <- 0
+  scale_pars$scale[is.na(scale_pars$scale)] <- 1
 
-# Function to find the names of columns in the model matrix that involve
-# continuous covariates (and hence may need to be scaled) - only main effects
-find_continuous_main <- function(fixed, DF) {
-  # remove left side of formula
-  fmla <- as.formula(sub("[[:print:]]*\\~", "~",
-                         deparse(fixed, width.cutoff = 500)))
+  sapply(colnames(MCMC), function(k) {
+    if (k %in% coefs$coef) {
 
-  # check which variables involved are continuous
-  is_continuous <- !sapply(model.frame(fmla, DF), is.factor)
-  # Note: does this have to be so complicated? can't I just take the columns of DF???
+      # variable name
+      varnam <- coefs$varname[which(coefs$coef == k)]
 
-  names(is_continuous)[is_continuous]
+      if (varnam == "(Intercept)") {
+        outcome <- coefs$outcome[which(coefs$coef == k)]
+        k_nr <- gsub("[[:alpha:]]+\\[*|\\]*", "", k)
+
+        parelmts <- info_list[[outcome]]$parelmts
+
+        parelmts <- if (any(sapply(parelmts, is.list))) {
+          lapply(1:max(sapply(parelmts, length)), function(j) {
+            pe <- unlist(unname(lapply(parelmts, "[[", j)))
+            if (k_nr %in% pe)
+              pe
+          })
+        } else {
+          unlist(unname(parelmts))
+        }
+
+        parnames <- if (length(parelmts) > 1) {
+          parnames <- sapply(unlist(parelmts), gsub, pattern = k_nr, x = k)
+          setdiff(parnames, k)
+        }
+
+        if (length(parnames) > 0) {
+          scaled_covs <- sapply(parnames, function(j) {
+            covname <- coefs$varname[coefs$coef == j]
+            MCMC[, j, drop = FALSE] * scale_pars[covname, 'center'] /
+              scale_pars[covname, 'scale']
+          })
+
+          MCMC[, k] - rowSums(scaled_covs)
+        } else {
+          MCMC[, k]
+        }
+      } else {
+        # scaling parameters
+        sp <- scale_pars[varnam, ]
+
+        MCMC[, k] / sp$scale
+      }
+    } else {
+      MCMC[, k]
+    }
+  })
 }

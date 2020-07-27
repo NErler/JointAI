@@ -1,0 +1,1702 @@
+
+Call:
+lm_imp(formula = y ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+glm_imp(formula = y ~ 1, family = gaussian(link = "identity"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+glm_imp(formula = y ~ 1, family = gaussian(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+glm_imp(formula = y ~ 1, family = gaussian(link = "inverse"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "logit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "probit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "cloglog"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+Call:
+glm_imp(formula = L1 ~ 1, family = Gamma(link = "inverse"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian Gamma model for "L1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+Call:
+glm_imp(formula = L1 ~ 1, family = Gamma(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian Gamma model for "L1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+Call:
+glm_imp(formula = P1 ~ 1, family = poisson(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian poisson model for "P1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+Call:
+glm_imp(formula = P1 ~ 1, family = poisson(link = "identity"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian poisson model for "P1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+Call:
+lognorm_imp(formula = L1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian log-normal model for "L1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+Call:
+betareg_imp(formula = Be1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian beta model for "Be1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+Call:
+lm_imp(formula = y ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept)          C1 
+          0           0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+glm_imp(formula = B1 ~ C1, family = binomial(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept)          C1 
+          0           0 
+
+Call:
+glm_imp(formula = L1 ~ C1, family = Gamma(), data = wideDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian Gamma model for "L1" 
+
+
+Coefficients:
+(Intercept)          C1 
+          0           0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+Call:
+glm_imp(formula = P1 ~ C1, family = poisson(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian poisson model for "P1" 
+
+
+Coefficients:
+(Intercept)          C1 
+          0           0 
+
+Call:
+lognorm_imp(formula = L1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian log-normal model for "L1" 
+
+
+Coefficients:
+(Intercept)          C1 
+          0           0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+Call:
+betareg_imp(formula = Be1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian beta model for "Be1" 
+
+
+Coefficients:
+(Intercept)          C1 
+          0           0 
+
+Call:
+lm_imp(formula = y ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept)          C2 
+          0           0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+glm_imp(formula = B2 ~ C2, family = binomial(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian binomial model for "B2" 
+
+
+Coefficients:
+(Intercept)          C2 
+          0           0 
+
+Call:
+glm_imp(formula = L1mis ~ C2, family = Gamma(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian Gamma model for "L1mis" 
+
+
+Coefficients:
+(Intercept)          C2 
+          0           0 
+
+
+Residual standard deviation:
+sigma_L1mis 
+          0 
+
+Call:
+glm_imp(formula = P2 ~ C2, family = poisson(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian poisson model for "P2" 
+
+
+Coefficients:
+(Intercept)          C2 
+          0           0 
+
+Call:
+lognorm_imp(formula = L1mis ~ C2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian log-normal model for "L1mis" 
+
+
+Coefficients:
+(Intercept)          C2 
+          0           0 
+
+
+Residual standard deviation:
+sigma_L1mis 
+          0 
+
+Call:
+betareg_imp(formula = Be2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian beta model for "Be2" 
+
+
+Coefficients:
+(Intercept)          C2 
+          0           0 
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF, 
+    n.adapt = 5, n.iter = 10, models = c(P2 = "glm_poisson_log", 
+        L1mis = "glm_gamma_inverse", Be2 = "beta"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "C1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          P2       L1mis         Be2 
+          0           0           0           0           0           0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis, data = wideDF, n.adapt = 5, 
+    n.iter = 10, models = c(C2 = "glm_gaussian_inverse", P2 = "glm_poisson_identity", 
+        B2 = "glm_binomial_probit", L1mis = "lognorm"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "C1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          P2       L1mis 
+          0           0           0           0           0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis, data = wideDF, n.adapt = 5, 
+    n.iter = 10, models = c(C2 = "glm_gaussian_log", P2 = "glm_poisson_identity", 
+        L1mis = "glm_gamma_log", B2 = "glm_binomial_log"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "C1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          P2       L1mis 
+          0           0           0           0           0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF, 
+    n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
+        P2 = "glm_poisson_identity", L1mis = "glm_gamma_log", 
+        B2 = "glm_binomial_log"), trunc = list(Be2 = c(0, 1)), 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "C1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          P2       L1mis         Be2 
+          0           0           0           0           0           0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+Call:
+lm_imp(formula = y ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+             O22              O23              O24     abs(C1 - C2) 
+               0                0                0                0 
+         log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+               0                0                0                0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+glm_imp(formula = B1 ~ L1mis + abs(C1 - C2) + log(Be2), family = binomial(), 
+    data = wideDF, n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
+        L1mis = "glm_gamma_inverse", Be2 = "beta"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+ (Intercept)        L1mis abs(C1 - C2)     log(Be2) 
+           0            0            0            0 
+
+Call:
+lm_imp(formula = y ~ C2 + B2 + B1 + O1, data = wideDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+glm_imp(formula = y ~ C2 + B2 + B1 + O1, family = gaussian(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+glm_imp(formula = y ~ C2 + B2 + B1 + O1, family = gaussian(link = "inverse"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "logit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          C1        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "probit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          C1        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          C1        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "cloglog"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          C1        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+Call:
+glm_imp(formula = L1 ~ C2 + B2 + B1 + O1, family = Gamma(link = "inverse"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian Gamma model for "L1" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+Call:
+glm_imp(formula = L1 ~ C2 + B2 + B1 + O1, family = Gamma(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian Gamma model for "L1" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+Call:
+glm_imp(formula = P1 ~ C2 + B2 + B1 + O1, family = poisson(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian poisson model for "P1" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+Call:
+glm_imp(formula = P1 ~ C2 + B2 + B1 + O1, family = poisson(link = "identity"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian poisson model for "P1" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+Call:
+lognorm_imp(formula = L1 ~ C2 + B2 + B1 + O1, data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian log-normal model for "L1" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+Call:
+betareg_imp(formula = Be1 ~ C2 + B2 + B1 + O1, data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian beta model for "Be1" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+Call:
+lm_imp(formula = y ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
+    n.adapt = 5, n.iter = 5, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+             O22              O23              O24     abs(C1 - C2) 
+               0                0                0                0 
+         log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+               0                0                0                0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+glm_imp(formula = B1 ~ M2 + O2 * abs(C1 - C2) + log(C1), family = "binomial", 
+    data = wideDF, n.adapt = 5, n.iter = 5, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+             O22              O23              O24     abs(C1 - C2) 
+               0                0                0                0 
+         log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+               0                0                0                0 
+
+Call:
+glm_imp(formula = C1 ~ M2 + O2 * abs(y - C2), family = Gamma(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 5, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian Gamma model for "C1" 
+
+
+Coefficients:
+    (Intercept)             M22             M23             M24             O22 
+              0               0               0               0               0 
+            O23             O24     abs(y - C2) O22:abs(y - C2) O23:abs(y - C2) 
+              0               0               0               0               0 
+O24:abs(y - C2) 
+              0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+Call:
+lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+    data = NHANES, n.adapt = 5, n.iter = 5, trunc = list(bili = c(1e-05, 
+        1e+10)), seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "SBP" 
+
+
+Coefficients:
+ (Intercept)          age genderfemale    log(bili)   exp(creat) 
+           0            0            0            0            0 
+
+
+Residual standard deviation:
+sigma_SBP 
+        0 
+
+Call:
+lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+    data = NHANES, n.adapt = 5, n.iter = 5, models = c(bili = "lognorm", 
+        creat = "lm"), seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "SBP" 
+
+
+Coefficients:
+ (Intercept)          age genderfemale    log(bili)   exp(creat) 
+           0            0            0            0            0 
+
+
+Residual standard deviation:
+sigma_SBP 
+        0 
+
+Call:
+lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+    data = NHANES, n.adapt = 5, n.iter = 5, models = c(bili = "glm_gamma_inverse", 
+        creat = "lm"), seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "SBP" 
+
+
+Coefficients:
+ (Intercept)          age genderfemale    log(bili)   exp(creat) 
+           0            0            0            0            0 
+
+
+Residual standard deviation:
+sigma_SBP 
+        0 
+
+Call:
+lm_imp(formula = SBP ~ ns(age, df = 2) + gender + I(bili^2) + 
+    I(bili^3), data = NHANES, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "SBP" 
+
+
+Coefficients:
+     (Intercept) ns(age, df = 2)1 ns(age, df = 2)2     genderfemale 
+               0                0                0                0 
+       I(bili^2)        I(bili^3) 
+               0                0 
+
+
+Residual standard deviation:
+sigma_SBP 
+        0 
+$m0a1
+
+Call:
+lm_imp(formula = y ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m0a2
+
+Call:
+glm_imp(formula = y ~ 1, family = gaussian(link = "identity"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m0a3
+
+Call:
+glm_imp(formula = y ~ 1, family = gaussian(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m0a4
+
+Call:
+glm_imp(formula = y ~ 1, family = gaussian(link = "inverse"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m0b1
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "logit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+$m0b2
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "probit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+$m0b3
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+$m0b4
+
+Call:
+glm_imp(formula = B1 ~ 1, family = binomial(link = "cloglog"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+$m0c1
+
+Call:
+glm_imp(formula = L1 ~ 1, family = Gamma(link = "inverse"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian Gamma model for "L1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+$m0c2
+
+Call:
+glm_imp(formula = L1 ~ 1, family = Gamma(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian Gamma model for "L1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+$m0d1
+
+Call:
+glm_imp(formula = P1 ~ 1, family = poisson(link = "log"), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian poisson model for "P1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+$m0d2
+
+Call:
+glm_imp(formula = P1 ~ 1, family = poisson(link = "identity"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian poisson model for "P1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+$m0e1
+
+Call:
+lognorm_imp(formula = L1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian log-normal model for "L1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+$m0f1
+
+Call:
+betareg_imp(formula = Be1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian beta model for "Be1" 
+
+
+Coefficients:
+(Intercept) 
+          0 
+
+$m1a
+
+Call:
+lm_imp(formula = y ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept)          C1 
+          0           0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m1b
+
+Call:
+glm_imp(formula = B1 ~ C1, family = binomial(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept)          C1 
+          0           0 
+
+$m1c
+
+Call:
+glm_imp(formula = L1 ~ C1, family = Gamma(), data = wideDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian Gamma model for "L1" 
+
+
+Coefficients:
+(Intercept)          C1 
+          0           0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+$m1d
+
+Call:
+glm_imp(formula = P1 ~ C1, family = poisson(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian poisson model for "P1" 
+
+
+Coefficients:
+(Intercept)          C1 
+          0           0 
+
+$m1e
+
+Call:
+lognorm_imp(formula = L1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian log-normal model for "L1" 
+
+
+Coefficients:
+(Intercept)          C1 
+          0           0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+$m1f
+
+Call:
+betareg_imp(formula = Be1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian beta model for "Be1" 
+
+
+Coefficients:
+(Intercept)          C1 
+          0           0 
+
+$m2a
+
+Call:
+lm_imp(formula = y ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept)          C2 
+          0           0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m2b
+
+Call:
+glm_imp(formula = B2 ~ C2, family = binomial(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian binomial model for "B2" 
+
+
+Coefficients:
+(Intercept)          C2 
+          0           0 
+
+$m2c
+
+Call:
+glm_imp(formula = L1mis ~ C2, family = Gamma(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian Gamma model for "L1mis" 
+
+
+Coefficients:
+(Intercept)          C2 
+          0           0 
+
+
+Residual standard deviation:
+sigma_L1mis 
+          0 
+
+$m2d
+
+Call:
+glm_imp(formula = P2 ~ C2, family = poisson(), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian poisson model for "P2" 
+
+
+Coefficients:
+(Intercept)          C2 
+          0           0 
+
+$m2e
+
+Call:
+lognorm_imp(formula = L1mis ~ C2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian log-normal model for "L1mis" 
+
+
+Coefficients:
+(Intercept)          C2 
+          0           0 
+
+
+Residual standard deviation:
+sigma_L1mis 
+          0 
+
+$m2f
+
+Call:
+betareg_imp(formula = Be2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian beta model for "Be2" 
+
+
+Coefficients:
+(Intercept)          C2 
+          0           0 
+
+$m3a
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF, 
+    n.adapt = 5, n.iter = 10, models = c(P2 = "glm_poisson_log", 
+        L1mis = "glm_gamma_inverse", Be2 = "beta"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "C1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          P2       L1mis         Be2 
+          0           0           0           0           0           0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+$m3b
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis, data = wideDF, n.adapt = 5, 
+    n.iter = 10, models = c(C2 = "glm_gaussian_inverse", P2 = "glm_poisson_identity", 
+        B2 = "glm_binomial_probit", L1mis = "lognorm"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "C1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          P2       L1mis 
+          0           0           0           0           0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+$m3c
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis, data = wideDF, n.adapt = 5, 
+    n.iter = 10, models = c(C2 = "glm_gaussian_log", P2 = "glm_poisson_identity", 
+        L1mis = "glm_gamma_log", B2 = "glm_binomial_log"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "C1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          P2       L1mis 
+          0           0           0           0           0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+$m3d
+
+Call:
+lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF, 
+    n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
+        P2 = "glm_poisson_identity", L1mis = "glm_gamma_log", 
+        B2 = "glm_binomial_log"), trunc = list(Be2 = c(0, 1)), 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "C1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          P2       L1mis         Be2 
+          0           0           0           0           0           0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+$m4a
+
+Call:
+lm_imp(formula = y ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+             O22              O23              O24     abs(C1 - C2) 
+               0                0                0                0 
+         log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+               0                0                0                0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m4b
+
+Call:
+glm_imp(formula = B1 ~ L1mis + abs(C1 - C2) + log(Be2), family = binomial(), 
+    data = wideDF, n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
+        L1mis = "glm_gamma_inverse", Be2 = "beta"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+ (Intercept)        L1mis abs(C1 - C2)     log(Be2) 
+           0            0            0            0 
+
+$m5a1
+
+Call:
+lm_imp(formula = y ~ C2 + B2 + B1 + O1, data = wideDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m5a2
+
+Call:
+glm_imp(formula = y ~ C2 + B2 + B1 + O1, family = gaussian(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m5a3
+
+Call:
+glm_imp(formula = y ~ C2 + B2 + B1 + O1, family = gaussian(link = "inverse"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m5b1
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "logit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          C1        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+$m5b2
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "probit"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          C1        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+$m5b3
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          C1        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+$m5b4
+
+Call:
+glm_imp(formula = B1 ~ C2 + B2 + C1 + O1, family = binomial(link = "cloglog"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+(Intercept)          C2         B21          C1        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+$m5c1
+
+Call:
+glm_imp(formula = L1 ~ C2 + B2 + B1 + O1, family = Gamma(link = "inverse"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian Gamma model for "L1" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+$m5c2
+
+Call:
+glm_imp(formula = L1 ~ C2 + B2 + B1 + O1, family = Gamma(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian Gamma model for "L1" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+$m5d1
+
+Call:
+glm_imp(formula = P1 ~ C2 + B2 + B1 + O1, family = poisson(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian poisson model for "P1" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+$m5d2
+
+Call:
+glm_imp(formula = P1 ~ C2 + B2 + B1 + O1, family = poisson(link = "identity"), 
+    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian poisson model for "P1" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+$m5e1
+
+Call:
+lognorm_imp(formula = L1 ~ C2 + B2 + B1 + O1, data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian log-normal model for "L1" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+
+Residual standard deviation:
+sigma_L1 
+       0 
+
+$m5f1
+
+Call:
+betareg_imp(formula = Be1 ~ C2 + B2 + B1 + O1, data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian beta model for "Be1" 
+
+
+Coefficients:
+(Intercept)          C2         B21         B11        O1.L        O1.Q 
+          0           0           0           0           0           0 
+       O1.C 
+          0 
+
+$m6a
+
+Call:
+lm_imp(formula = y ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
+    n.adapt = 5, n.iter = 5, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "y" 
+
+
+Coefficients:
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+             O22              O23              O24     abs(C1 - C2) 
+               0                0                0                0 
+         log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+               0                0                0                0 
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m6b
+
+Call:
+glm_imp(formula = B1 ~ M2 + O2 * abs(C1 - C2) + log(C1), family = "binomial", 
+    data = wideDF, n.adapt = 5, n.iter = 5, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian binomial model for "B1" 
+
+
+Coefficients:
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+             O22              O23              O24     abs(C1 - C2) 
+               0                0                0                0 
+         log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+               0                0                0                0 
+
+$m6c
+
+Call:
+glm_imp(formula = C1 ~ M2 + O2 * abs(y - C2), family = Gamma(link = "log"), 
+    data = wideDF, n.adapt = 5, n.iter = 5, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+ Bayesian Gamma model for "C1" 
+
+
+Coefficients:
+    (Intercept)             M22             M23             M24             O22 
+              0               0               0               0               0 
+            O23             O24     abs(y - C2) O22:abs(y - C2) O23:abs(y - C2) 
+              0               0               0               0               0 
+O24:abs(y - C2) 
+              0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+$m6d
+
+Call:
+lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+    data = NHANES, n.adapt = 5, n.iter = 5, trunc = list(bili = c(1e-05, 
+        1e+10)), seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "SBP" 
+
+
+Coefficients:
+ (Intercept)          age genderfemale    log(bili)   exp(creat) 
+           0            0            0            0            0 
+
+
+Residual standard deviation:
+sigma_SBP 
+        0 
+
+$m6e
+
+Call:
+lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+    data = NHANES, n.adapt = 5, n.iter = 5, models = c(bili = "lognorm", 
+        creat = "lm"), seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "SBP" 
+
+
+Coefficients:
+ (Intercept)          age genderfemale    log(bili)   exp(creat) 
+           0            0            0            0            0 
+
+
+Residual standard deviation:
+sigma_SBP 
+        0 
+
+$m6f
+
+Call:
+lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
+    data = NHANES, n.adapt = 5, n.iter = 5, models = c(bili = "glm_gamma_inverse", 
+        creat = "lm"), seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "SBP" 
+
+
+Coefficients:
+ (Intercept)          age genderfemale    log(bili)   exp(creat) 
+           0            0            0            0            0 
+
+
+Residual standard deviation:
+sigma_SBP 
+        0 
+
+$mod7a
+
+Call:
+lm_imp(formula = SBP ~ ns(age, df = 2) + gender + I(bili^2) + 
+    I(bili^3), data = NHANES, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "SBP" 
+
+
+Coefficients:
+     (Intercept) ns(age, df = 2)1 ns(age, df = 2)2     genderfemale 
+               0                0                0                0 
+       I(bili^2)        I(bili^3) 
+               0                0 
+
+
+Residual standard deviation:
+sigma_SBP 
+        0 
+

@@ -1,0 +1,46 @@
+$m0a
+                      est MCSE SD MCSE/SD
+(Intercept)             0    0  0     NaN
+shape_Srv_ftm_stts_cn   0    0  0     NaN
+
+$m1a
+                      est MCSE SD MCSE/SD
+(Intercept)             0    0  0     NaN
+age                     0    0  0     NaN
+sexfemale               0    0  0     NaN
+shape_Srv_ftm_stts_cn   0    0  0     NaN
+
+$m1b
+                      est MCSE SD MCSE/SD
+(Intercept)             0    0  0     NaN
+age                     0    0  0     NaN
+sexfemale               0    0  0     NaN
+shape_Srv_ftm_stts_cn   0    0  0     NaN
+
+$m2a
+                      est MCSE SD MCSE/SD
+(Intercept)             0    0  0     NaN
+copper                  0    0  0     NaN
+shape_Srv_ftm_stts_cn   0    0  0     NaN
+
+$m3a
+                      est MCSE SD MCSE/SD
+(Intercept)             0    0  0     NaN
+copper                  0    0  0     NaN
+sexfemale               0    0  0     NaN
+age                     0    0  0     NaN
+abs(age - copper)       0    0  0     NaN
+log(trig)               0    0  0     NaN
+shape_Srv_ftm_stts_cn   0    0  0     NaN
+
+$m3b
+                              est MCSE SD MCSE/SD
+(Intercept)                     0    0  0     NaN
+copper                          0    0  0     NaN
+sexfemale                       0    0  0     NaN
+age                             0    0  0     NaN
+abs(age - copper)               0    0  0     NaN
+log(trig)                       0    0  0     NaN
+shape_Srv_ftm_stts_cn           0    0  0     NaN
+D_Srv_ftm_stts_cn_center[1,1]   0    0  0     NaN
+

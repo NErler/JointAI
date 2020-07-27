@@ -9,11 +9,16 @@
 #'        create or list of parameters to create normally distributed variables
 #'        from. If norm is an integer, the mean and standard deviation are
 #'        drawn from distributions.
-#' @param bin integer giving the number of binary variables or a character vector containing their names
-#' @param multi integer giving the number of multinomial variables or a character vector containing their names
-#' @param ord integer giving the number of ordinal variables or a character vector containing their names
-#' @param count integer giving the number of count variables or a character vector containing their names
-#' @param longnorm integer giving the number of longitudinal (normally distributed)
+#' @param bin integer giving the number of binary variables or a character
+#'            vector containing their names
+#' @param multi integer giving the number of multinomial variables or a
+#'              character vector containing their names
+#' @param ord integer giving the number of ordinal variables or a character
+#'            vector containing their names
+#' @param count integer giving the number of count variables or a character
+#'              vector containing their names
+#' @param longnorm integer giving the number of longitudinal
+#'                 (normally distributed)
 #'        variables or a character vector containing their names
 #' @param longbin integer giving the number of longitudinal binary
 #'        variables or a character vector containing their names
@@ -32,7 +37,7 @@
 #'
 #' @details The time variable has a uniform distribution between tmin and tmax.
 #'          At the moment only the integer option is implemented for the
-#'          parameters norm, bin, multi, etc.
+#'          parameters norm, bin, multi, ...
 #' @export
 #' @keywords internal
 sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
@@ -41,10 +46,16 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
                      coef = NULL, misvar = NULL, nmisvar = 7,
                      seed = NULL) {
 
-  if (!is.null(seed))
-    set.seed(seed)
+  oldseed <- .Random.seed
+  on.exit({
+    .Random.seed <<- oldseed
+  })
 
-  # time-constant covariates -------------------------------------------------------------
+  if (!is.null(seed)) {
+    set_seed(seed)
+  }
+
+  # time-constant covariates --------------------------------------------------
   if (length(norm) > 0) {
     if (is.character(norm)) {
       norm.names <- norm
@@ -115,19 +126,21 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
       count.names <- paste0("Xcount", 1:n.count)
     }
     lambda.count <- runif(n.count, 0.5, 5)
-    DF.count <- sapply(1:n.count, function(i) rpois(N, lambda = lambda.count[i]))
+    DF.count <- sapply(1:n.count, function(i)
+      rpois(N, lambda = lambda.count[i]))
     colnames(DF.count) <- count.names
   }
 
   DF <- data.frame(DF.norm, DF.bin, DF.multi, DF.ord, DF.count)
   covars <- names(DF)
 
-  # observation times of outcome ---------------------------------------------------------
+  # observation times of outcome ---------------------------------------------
   nrep <- sample(Jmin:Jmax, N, replace = TRUE)
   DF <- DF[rep(1:N, times = nrep), ]
 
   if (is.list(longnorm)) {
-    stop("Not yet implemented")
+    errormsg("Not yet implemented")
+
   } else {
     if (is.character(longnorm)) {
       longnorm.names <- longnorm
@@ -140,12 +153,14 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
     mu.longnorm <- rnorm(n.longnorm)
     sig.longnorm <- rgamma(n.longnorm, 0.8, 2)
     DF.longnorm <- sapply(1:n.longnorm,
-                      function(i) rnorm(nrow(DF), mu.longnorm[i], sig.longnorm[i]))
+                      function(i) rnorm(nrow(DF), mu.longnorm[i],
+                                        sig.longnorm[i]))
     colnames(DF.longnorm) <- longnorm.names
   }
 
   if (is.list(longbin)) {
-    stop("Not yet implemented")
+    errormsg("Not yet implemented")
+
   } else {
     if (is.character(longbin)) {
       longbin.names <- longbin
@@ -157,12 +172,14 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
     }
     plongbin <- runif(n.longbin)
     DF.longbin <- sapply(1:n.longbin,
-                         function(i) factor(rbinom(nrow(DF), size = 1, plongbin[i])))
+                         function(i) factor(rbinom(nrow(DF), size = 1,
+                                                   plongbin[i])))
     colnames(DF.longbin) <- longbin.names
   }
 
   if (is.list(longord)) {
-    stop("Not yet implemented")
+    errormsg("Not yet implemented")
+
   } else {
     if (is.character(longord)) {
       longord.names <- longord
@@ -190,7 +207,8 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
     }
     lambda.longcount <- runif(n.longcount, 0.5, 5)
     DF.longcount <- sapply(1:n.longcount,
-                           function(i) rpois(nrow(DF), lambda = lambda.longcount[i]))
+                           function(i) rpois(nrow(DF),
+                                             lambda = lambda.longcount[i]))
     colnames(DF.longcount) <- longcount.names
   }
 
@@ -200,7 +218,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   DF$time <- unlist(sapply(1:N, function(i) sort(runif(nrep[i], tmin, tmax))))
 
 
-  # fixed effects ------------------------------------------------------------------------
+  # fixed effects -------------------------------------------------------------
   fmla <- as.formula(paste("~", paste(names(DF)[names(DF) != "id"],
                                       collapse = "+")))
 
@@ -212,7 +230,7 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
     coef <- rnorm(ncol(X))
   }
 
-  # random effects -----------------------------------------------------------------------
+  # random effects ------------------------------------------------------------
   D <- rWishart(1, df = 2, Sigma = diag(rep(0.1, 2)))[, , 1]
   b <- MASS::mvrnorm(N, c(0,0), Sigma = D)
   Z <- model.matrix(~time, DF)
@@ -227,13 +245,13 @@ sim_data <- function(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5,
   }
   misperc <- runif(n = length(misvar), max = 0.5)
 
-  misid <- lapply(1:length(misvar),
+  misid <- lapply(seq_len(length(misvar)),
                   function(i) sample(unique(DF$id), size = N * misperc[i])
   )
 
   DF.mis <- DF
   for (i in seq_along(misvar)) {
-    if (check_tvar(DF[, misvar[i]], DF$id)) {
+    if (check_varlevel(DF[, misvar[i]], DF$id) == 'lvlone') {
       DF.mis[sample.int(nrow(DF), nrow(DF) * misperc[i]), misvar[i]] <- NA
     } else {
       DF.mis[DF.mis$id %in% misid[[i]], misvar[i]] <- NA

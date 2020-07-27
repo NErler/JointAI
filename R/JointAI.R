@@ -1,48 +1,67 @@
 #' JointAI: Joint Analysis and Imputation of Incomplete Data
 #'
-#' The \strong{JointAI} package performs simultaneous imputation and inference for
-#' incomplete data using the Bayesian framework.
-#' Distributions of incomplete variables, conditional on other covariates,
-#' are specified automatically and modeled jointly with the analysis model.
+#' The \strong{JointAI} package performs simultaneous imputation and inference
+#' for incomplete or complete data under the Bayesian framework.
+#' Models for incomplete covariates, conditional on other covariates,
+#' are specified automatically and modelled jointly with the analysis model.
 #' MCMC sampling is performed in \href{http://mcmc-jags.sourceforge.net}{'JAGS'}
-#' via the R package \href{https://CRAN.R-project.org/package=rjags}{\strong{rjags}}.
+#' via the R package
+#' \href{https://CRAN.R-project.org/package=rjags}{\strong{rjags}}.
 #'
 #'
 #' @section Main functions:
-#' The package has the following main functions that allow analysis in different
-#' settings:
+#' \strong{JointAI} provides the following main functions that facilitate
+#' analysis with different models:
 #' \itemize{
 #' \item \code{\link{lm_imp}} for linear regression
 #' \item \code{\link{glm_imp}} for generalized linear regression
+#' \item \code{\link{betareg_imp}} for regression using a beta distribution
+#' \item \code{\link{lognorm_imp}} for regression using a log-normal
+#'                                   distribution
 #' \item \code{\link{clm_imp}} for (ordinal) cumulative logit models
-#' \item \code{\link{lme_imp}} for linear mixed models
-#' \item \code{\link{glme_imp}} for generalized linear mixed models
+#' \item \code{\link{mlogit_imp}} for multinomial models
+#'
+#' \item \code{\link{lme_imp}} or \code{\link{lmer_imp}} for linear mixed models
+#' \item \code{\link{glme_imp}} or \code{\link{glmer_imp}} for generalized
+#'                                 linear mixed models
+#' \item \code{\link{betamm_imp}} for mixed models using a beta distribution
+#' \item \code{\link{lognormmm_imp}} for mixed models using a log-normal
+#'                                   distribution
 #' \item \code{\link{clmm_imp}} for (ordinal) cumulative logit mixed models
+#'
 #' \item \code{\link{survreg_imp}} for parametric (Weibull) survival models
-#' \item \code{\link{coxph_imp}} for Cox proportional hazard models
+#' \item \code{\link{coxph_imp}} for (Cox) proportional hazard models
+#' \item \code{\link{JM_imp}} for joint models of longitudinal and survival data
 #' }
 #'
-#' As far as possible, the specification of these functions is analogue to the
-#' specification of their complete data versions
+#' As far as possible, the specification of these functions is analogous to the
+#' specification of widely used functions for the analysis of complete data,
+#' such as
 #' \code{\link[stats]{lm}}, \code{\link[stats]{glm}},
-#' \code{\link[ordinal]{clm}} (from the package \href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
-#' \code{\link[nlme]{lme}} (from the package \href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}}),
-#' \code{\link[ordinal:clmmOld]{clmm2}} (from the package \href{https://CRAN.R-project.org/package=ordinal}{\strong{ordinal}}),
-#' \code{\link[survival]{survreg}} (from the package \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}) and
-#' \code{\link[survival]{coxph}} (from the package \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}).
+#' \code{\link[nlme]{lme}} (from the package
+#' \href{https://CRAN.R-project.org/package=nlme}{\strong{nlme}}),
+#' \code{\link[survival]{survreg}} (from the package
+#' \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}) and
+#' \code{\link[survival]{coxph}} (from the package
+#' \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}).
 #'
-#' Computations can be performed in parallel using the argument \code{parallel = TRUE},
-#' the argument \code{ridge} allows the user to impose a ridge penalty on the
-#' regression coefficients of the analysis model, and hyperparameters can be
-#' changed via the argument \code{hyperpars} and the function \code{\link{default_hyperpars}}.
+#' Computations can be performed in parallel to reduce computational time,
+#' using the packages \pkg{future} (and \pkg{doFuture}),
+#' the argument \code{shrinkage} allows the user to impose a penalty on the
+#' regression coefficients of some or all models involved,
+#' and hyper-parameters can be changed via the argument \code{hyperpars}.
 #'
 #'
-#' Results can be summarized and printed with \code{\link[JointAI:summary.JointAI]{summary()}},
-#' \code{\link[JointAI:summary.JointAI]{coef()}} and \code{\link[JointAI:summary.JointAI]{confint()}},
-#' and visualized using
-#' \code{\link[JointAI:traceplot]{traceplot()}} or \code{\link[JointAI:densplot]{densplot()}}.
-#' The function \code{\link[JointAI:predict.JointAI]{predict()}} allows prediction (including credible intervals)
-#' from \code{JointAI} models.
+#' To obtain summaries of the results, the functions
+#' \code{\link[JointAI:summary.JointAI]{summary()}},
+#' \code{\link[JointAI:summary.JointAI]{coef()}} and
+#' \code{\link[JointAI:summary.JointAI]{confint()}} are available, and
+#' results can be visualized with the help of
+#' \code{\link[JointAI:traceplot]{traceplot()}} or
+#' \code{\link[JointAI:densplot]{densplot()}}.
+#'
+#' The function \code{\link[JointAI:predict.JointAI]{predict()}} allows
+#' prediction (including credible intervals) from \code{JointAI} models.
 #'
 #'
 #' @section Evaluation and export:
@@ -79,36 +98,38 @@
 #'                            and \code{\link{densplot}}.
 #' \item \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{\emph{Visualizing Incomplete Data}}:\cr
 #' Demonstrations of the options in \code{\link{plot_all}} (plotting histograms
-#'      and barplots for all variables in the data)  and \code{\link{md_pattern}}
-#'      (plotting or printing the missing data pattern).
+#' and bar plots for all variables in the data)  and \code{\link{md_pattern}}
+#' (plotting or printing the missing data pattern).
 #'
 #' \item \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{\emph{Model Specification}}:\cr
 #' Explanation and demonstration of all parameters that are required or optional
-#' to specify the model structure in \code{\link{lm_imp}}, \code{\link{glm_imp}}
-#' and \code{\link{lme_imp}}.
-#' Among others, the functions \code{\link{parameters}}, \code{\link{list_models}},
-#' \code{\link{get_models}} and \code{\link{set_refcat}} are used.
+#' to specify the model structure in \code{\link{lm_imp}},
+#' \code{\link{glm_imp}} and \code{\link{lme_imp}}.
+#' Among others, the functions \code{\link{parameters}},
+#' \code{\link{list_models}} and \code{\link{set_refcat}} are used.
 #'
 #' \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{\emph{Parameter Selection}}:\cr
-#' Examples on how to select the parameters/variables/nodes
-#'                                 to follow using the argument \code{monitor_params}
-#'                                 and the parameters/variables/nodes displayed
-#'                                 in the \code{\link{summary}}, \code{\link{traceplot}},
-#'                                 \code{\link{densplot}} or when using
-#'                                 \code{\link{GR_crit}} or \code{\link{MC_error}}.
+#'       Examples on how to select the parameters/variables/nodes
+#'       to follow using the argument \code{monitor_params} and the
+#'       parameters/variables/nodes displayed in the \code{\link{summary}},
+#'       \code{\link{traceplot}}, \code{\link{densplot}} or when using
+#'       \code{\link{GR_crit}} or \code{\link{MC_error}}.
 #'
 #' \item \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{\emph{MCMC Settings}}:\cr
-#' Examples demonstrating how to set the arguments controlling settings of the MCMC sampling,
-#' i.e., \code{n.adapt}, \code{n.iter}, \code{n.chains}, \code{thin}, \code{inits}.
+#'       Examples demonstrating how to set the arguments controlling settings
+#'       of the MCMC sampling,
+#'       i.e., \code{n.adapt}, \code{n.iter}, \code{n.chains}, \code{thin},
+#'        \code{inits}.
 #'
 #' \item \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{\emph{After Fitting}}:\cr
-#' Examples on the use of functions to be applied after the model has been fitted,
-#' including \code{\link{traceplot}}, \code{\link{densplot}}, \code{\link{summary}},
-#' \code{\link{GR_crit}}, \code{\link{MC_error}}, \code{\link{predict}},
-#' \code{\link{predDF}} and \code{\link{get_MIdat}}.
+#'       Examples on the use of functions to be applied after the model has
+#'       been fitted, including \code{\link{traceplot}}, \code{\link{densplot}},
+#'       \code{\link{summary}}, \code{\link{GR_crit}}, \code{\link{MC_error}},
+#'       \code{\link{predict}}, \code{\link{predDF}} and
+#'       \code{\link{get_MIdat}}.
 #'
 #' \item \href{https://nerler.github.io/JointAI/articles/TheoreticalBackground.html}{\emph{Theoretical Background}}:\cr
-#' Explanation of the statistical method implemented in \strong{JointAI}.
+#'       Explanation of the statistical method implemented in \strong{JointAI}.
 #'}
 #' @references
 #' Nicole S. Erler, Dimitris Rizopoulos and Emmanuel M.E.H. Lesaffre (2019).
@@ -129,10 +150,11 @@
 #' doi: \href{https://doi.org/10.1177/0962280217730851}{10.1177/0962280217730851}
 #'
 #' @import graphics
-#' @import coda
 #' @import utils
-#' @import rjags
 #' @import stats
+#' @importFrom rjags coda.samples jags.model
+#' @import future
+#' @importFrom foreach foreach %dopar%
 #'
 #'
 #' @docType package
@@ -140,13 +162,23 @@
 NULL
 
 
+#' Create a Survival Object
+#'
+#' This function just calls \code{Surv()} from the
+#' \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}
+#' package.
+#'
+#' @inheritParams survival::Surv
+#' @export
+Surv <- survival::Surv
+
 .onLoad <- function(libname, pkgname) {
   rjags::load.module("glm", quiet = TRUE)
 }
 
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage(
-    "This is new software. Please report any bugs to the package maintainer (https://github.com/NErler/JointAI/issues)."
+    "Please report any bugs to the package maintainer (https://github.com/NErler/JointAI/issues)."
   )
 }
 
@@ -154,69 +186,67 @@ NULL
 utils::globalVariables(c("i", "value", "chain", "iteration"))
 
 
-#' Parameters used by several functions in JointAI.
+#' Parameters used by several functions in JointAI
 #' @param object object inheriting from class 'JointAI'
-#' @param no_model names of variables for which no model should be specified.
+#' @param no_model optional; vector of names of variables for which no model
+#'                 should be specified.
 #'                 Note that this is only possible for completely observed
 #'                 variables and implies the assumptions of independence between
 #'                 the excluded variable and the incomplete variables.
-#' @param subset subset of parameters/variables/nodes (columns in the MCMC sample).
-#'               Uses the same logic as the argument \code{monitor_params} in
+#' @param timevar name of the variable indicating the time of the measurement of
+#'                a time-varying covariate in a proportional hazards survival
+#'                model (also in a joint model).
+#'                The variable specified in
+#'                "timevar" will automatically be added to "no_model".
+#' @param assoc_type named vector specifying the type of the association used
+#'                   for a time-varying covariate in the linear predictor of the
+#'                   survival model when using a "JM" model.
+#'                   Implemented options are "underl.value"
+#'                   (linear predictor; default for covariates modelled using a
+#'                   Gaussian, Gamma, beta or log-normal distribution)
+#'                   covariates) and "obs.value" (the observed/imputed value;
+#'                   default for covariates modelled using other distributions).
+#' @param subset subset of parameters/variables/nodes (columns in the MCMC
+#'               sample). Follows the same principle as the argument
+#'               \code{monitor_params} in
 #'               \code{\link[JointAI:model_imp]{*_imp}}.
-#' @param exclude_chains optional vector of the index numbers of chains that should be excluded
-#' @param start the first iteration of interest (see \code{\link[coda]{window.mcmc}})
-#' @param end the last iteration of interest (see \code{\link[coda]{window.mcmc}})
-#' @param n.adapt the number of iterations for adaptation of the MCMC samplers
-#'                (see also \code{\link[rjags]{adapt}})
-#' @param n.iter the number of iterations of the MCMC chain (after adaptation;
-#'               see also \code{\link[rjags]{coda.samples}})
-#' @param n.chains the number of MCMC chains to be used
-#' @param quiet if \code{TRUE} then messages generated during compilation
-#'                      will be suppressed, as well as the progress bar during adaptation
-#'                      (see \code{\link[rjags]{jags.model}})
-#' @param thin thinning interval (see \code{\link[coda]{window.mcmc}})
-#' @param nrow,ncol optional number of rows and columns in the plot layout;
+#' @param exclude_chains optional vector of the index numbers of chains that
+#'                       should be excluded
+#' @param start the first iteration of interest
+#'              (see \code{\link[coda]{window.mcmc}})
+#' @param end the last iteration of interest
+#'            (see \code{\link[coda]{window.mcmc}})
+#' @param n.adapt number of iterations for adaptation of the MCMC samplers
+#'                (see \code{\link[rjags]{adapt}})
+#' @param n.iter number of iterations of the MCMC chain (after adaptation;
+#'               see \code{\link[rjags]{coda.samples}})
+#' @param n.chains number of MCMC chains
+#' @param quiet logical; if \code{TRUE} then messages generated by
+#'              \strong{rjags} during compilation as well as the progress bar
+#'              for the adaptive phase will be suppressed,
+#'              (see \code{\link[rjags]{jags.model}})
+#' @param thin thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
+#'             For example, \code{thin = 1} (default) will keep the MCMC samples
+#'             from all iterations; \code{thin = 5} would only keep every 5th
+#'             iteration.
+#' @param nrow optional; number of rows in the plot layout;
 #'                  automatically chosen if unspecified
-#' @param use_ggplot logical; Should ggplot be used instead of the base graphics?
+#' @param ncol optional; number of columns in the plot layout;
+#'                  automatically chosen if unspecified
+#' @param use_ggplot logical; Should ggplot be used instead of the base
+#'                   graphics?
 #' @param warn logical; should warnings be given? Default is
-#'             \code{TRUE}. (Note: this applies only to warnings
-#'             given directly by \strong{JointAI}.)
+#'             \code{TRUE}.
 #' @param mess logical; should messages be given? Default is
-#'             \code{TRUE}. (Note: this applies only to messages
-#'             given directly by \strong{JointAI}.)
+#'             \code{TRUE}.
 #' @param xlab,ylab labels for the x- and y-axis
-#' @param use_level logical; should the multi-level structure be taken into account?
-#'        This requires specification of the argument \code{idvar}.
-#' @param idvar name of the column that specifies the multi-level grouping structure
-#' @param keep_aux logical; Should constant effects of auxiliary variables be kept in the output?
-#' @param ridge logical; should the parameters of the main model be penalized using ridge regression? Default is \code{FALSE}
-#' @param parallel logical; should the chains be sampled using parallel computation? Default is \code{FALSE}
-#' @param n.cores number of cores to use for parallel computation; if left empty all except two cores will be used
-#' @param seed optional seed value for reproducibility
-#' @param ppc logical: should monitors for posterior predictive checks be set? (not yet used)
+#' @param idvars name of the column that specifies the multi-level grouping
+#'               structure
+#' @param ridge logical; should the parameters of the main model be penalized
+#'              using ridge regression? Default is \code{FALSE}
+#' @param seed optional; seed value (for reproducibility)
+#' @param ppc logical: should monitors for posterior predictive checks be
+#'                     set? (not yet used)
 #' @name sharedParams
 NULL
 
-
-
-
-
-# define family weibull
-weibull <- function(link = 'log') {
-  structure(list(family = "weibull", link = 'log',
-                 linkinv = function(eta, shape) exp(eta) * gamma(1 + 1/shape)),
-                 #mu.eta = function(eta, shape) exp(eta) * gamma(1 + 1/shape)),
-            class = "family")
-}
-
-ordinal <- function(link = 'identity') {
-  structure(list(family = "ordinal", link = 'identity'),
-            class = "family")
-}
-
-# define family coxph
-prophaz <- function(link = 'log') {
-  structure(list(family = "prophaz", link = 'log',
-                 linkinv = exp),
-            class = "family")
-}

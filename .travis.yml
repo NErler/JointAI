@@ -8,7 +8,7 @@ warnings_are_errors: false
 r_check_args: '--as-cran'
 
 env:
-  - NOT_CRAN=true
+  - NOT_CRAN=true IS_CHECK=true
 
 before_install:
   - sudo apt-get install jags
@@ -31,4 +31,4 @@ r_packages:
   - covr
 
 after_success:
-  - Rscript -e 'library(covr); codecov()'
+  - Rscript -e 'library(covr); codecov(quiet = FALSE, type = "all")'

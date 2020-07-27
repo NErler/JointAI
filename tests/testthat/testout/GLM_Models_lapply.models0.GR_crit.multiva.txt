@@ -1,0 +1,569 @@
+$m0a1
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+sigma_y            NaN        NaN
+
+
+$m0a2
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+sigma_y            NaN        NaN
+
+
+$m0a3
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+sigma_y            NaN        NaN
+
+
+$m0a4
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+sigma_y            NaN        NaN
+
+
+$m0b1
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+
+
+$m0b2
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+
+
+$m0b3
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+
+
+$m0b4
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+
+
+$m0c1
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+sigma_L1           NaN        NaN
+
+
+$m0c2
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+sigma_L1           NaN        NaN
+
+
+$m0d1
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+
+
+$m0d2
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+
+
+$m0e1
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+sigma_L1           NaN        NaN
+
+
+$m0f1
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+tau_Be1            NaN        NaN
+
+
+$m1a
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C1                 NaN        NaN
+sigma_y            NaN        NaN
+
+
+$m1b
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C1                 NaN        NaN
+
+
+$m1c
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C1                 NaN        NaN
+sigma_L1           NaN        NaN
+
+
+$m1d
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C1                 NaN        NaN
+
+
+$m1e
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C1                 NaN        NaN
+sigma_L1           NaN        NaN
+
+
+$m1f
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C1                 NaN        NaN
+tau_Be1            NaN        NaN
+
+
+$m2a
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+sigma_y            NaN        NaN
+
+
+$m2b
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+
+
+$m2c
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+sigma_L1mis        NaN        NaN
+
+
+$m2d
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+
+
+$m2e
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+sigma_L1mis        NaN        NaN
+
+
+$m2f
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+tau_Be2            NaN        NaN
+
+
+$m3a
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+P2                 NaN        NaN
+L1mis              NaN        NaN
+Be2                NaN        NaN
+sigma_C1           NaN        NaN
+
+
+$m3b
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+P2                 NaN        NaN
+L1mis              NaN        NaN
+sigma_C1           NaN        NaN
+
+
+$m3c
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+P2                 NaN        NaN
+L1mis              NaN        NaN
+sigma_C1           NaN        NaN
+
+
+$m3d
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+P2                 NaN        NaN
+L1mis              NaN        NaN
+Be2                NaN        NaN
+sigma_C1           NaN        NaN
+
+
+$m4a
+Potential scale reduction factors:
+
+                 Point est. Upper C.I.
+(Intercept)             NaN        NaN
+M22                     NaN        NaN
+M23                     NaN        NaN
+M24                     NaN        NaN
+O22                     NaN        NaN
+O23                     NaN        NaN
+O24                     NaN        NaN
+abs(C1 - C2)            NaN        NaN
+log(C1)                 NaN        NaN
+O22:abs(C1 - C2)        NaN        NaN
+O23:abs(C1 - C2)        NaN        NaN
+O24:abs(C1 - C2)        NaN        NaN
+sigma_y                 NaN        NaN
+
+
+$m4b
+Potential scale reduction factors:
+
+             Point est. Upper C.I.
+(Intercept)         NaN        NaN
+L1mis               NaN        NaN
+abs(C1 - C2)        NaN        NaN
+log(Be2)            NaN        NaN
+
+
+$m5a1
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+B11                NaN        NaN
+O1.L               NaN        NaN
+O1.Q               NaN        NaN
+O1.C               NaN        NaN
+sigma_y            NaN        NaN
+
+
+$m5a2
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+B11                NaN        NaN
+O1.L               NaN        NaN
+O1.Q               NaN        NaN
+O1.C               NaN        NaN
+sigma_y            NaN        NaN
+
+
+$m5a3
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+B11                NaN        NaN
+O1.L               NaN        NaN
+O1.Q               NaN        NaN
+O1.C               NaN        NaN
+sigma_y            NaN        NaN
+
+
+$m5b1
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+C1                 NaN        NaN
+O1.L               NaN        NaN
+O1.Q               NaN        NaN
+O1.C               NaN        NaN
+
+
+$m5b2
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+C1                 NaN        NaN
+O1.L               NaN        NaN
+O1.Q               NaN        NaN
+O1.C               NaN        NaN
+
+
+$m5b3
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+C1                 NaN        NaN
+O1.L               NaN        NaN
+O1.Q               NaN        NaN
+O1.C               NaN        NaN
+
+
+$m5b4
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+C1                 NaN        NaN
+O1.L               NaN        NaN
+O1.Q               NaN        NaN
+O1.C               NaN        NaN
+
+
+$m5c1
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+B11                NaN        NaN
+O1.L               NaN        NaN
+O1.Q               NaN        NaN
+O1.C               NaN        NaN
+sigma_L1           NaN        NaN
+
+
+$m5c2
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+B11                NaN        NaN
+O1.L               NaN        NaN
+O1.Q               NaN        NaN
+O1.C               NaN        NaN
+sigma_L1           NaN        NaN
+
+
+$m5d1
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+B11                NaN        NaN
+O1.L               NaN        NaN
+O1.Q               NaN        NaN
+O1.C               NaN        NaN
+
+
+$m5d2
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+B11                NaN        NaN
+O1.L               NaN        NaN
+O1.Q               NaN        NaN
+O1.C               NaN        NaN
+
+
+$m5e1
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+B11                NaN        NaN
+O1.L               NaN        NaN
+O1.Q               NaN        NaN
+O1.C               NaN        NaN
+sigma_L1           NaN        NaN
+
+
+$m5f1
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C2                 NaN        NaN
+B21                NaN        NaN
+B11                NaN        NaN
+O1.L               NaN        NaN
+O1.Q               NaN        NaN
+O1.C               NaN        NaN
+tau_Be1            NaN        NaN
+
+
+$m6a
+Potential scale reduction factors:
+
+                 Point est. Upper C.I.
+(Intercept)             NaN        NaN
+M22                     NaN        NaN
+M23                     NaN        NaN
+M24                     NaN        NaN
+O22                     NaN        NaN
+O23                     NaN        NaN
+O24                     NaN        NaN
+abs(C1 - C2)            NaN        NaN
+log(C1)                 NaN        NaN
+O22:abs(C1 - C2)        NaN        NaN
+O23:abs(C1 - C2)        NaN        NaN
+O24:abs(C1 - C2)        NaN        NaN
+sigma_y                 NaN        NaN
+
+
+$m6b
+Potential scale reduction factors:
+
+                 Point est. Upper C.I.
+(Intercept)             NaN        NaN
+M22                     NaN        NaN
+M23                     NaN        NaN
+M24                     NaN        NaN
+O22                     NaN        NaN
+O23                     NaN        NaN
+O24                     NaN        NaN
+abs(C1 - C2)            NaN        NaN
+log(C1)                 NaN        NaN
+O22:abs(C1 - C2)        NaN        NaN
+O23:abs(C1 - C2)        NaN        NaN
+O24:abs(C1 - C2)        NaN        NaN
+
+
+$m6c
+Potential scale reduction factors:
+
+                Point est. Upper C.I.
+(Intercept)            NaN        NaN
+M22                    NaN        NaN
+M23                    NaN        NaN
+M24                    NaN        NaN
+O22                    NaN        NaN
+O23                    NaN        NaN
+O24                    NaN        NaN
+abs(y - C2)            NaN        NaN
+O22:abs(y - C2)        NaN        NaN
+O23:abs(y - C2)        NaN        NaN
+O24:abs(y - C2)        NaN        NaN
+sigma_C1               NaN        NaN
+
+
+$m6d
+Potential scale reduction factors:
+
+             Point est. Upper C.I.
+(Intercept)         NaN        NaN
+age                 NaN        NaN
+genderfemale        NaN        NaN
+log(bili)           NaN        NaN
+exp(creat)          NaN        NaN
+sigma_SBP           NaN        NaN
+
+
+$m6e
+Potential scale reduction factors:
+
+             Point est. Upper C.I.
+(Intercept)         NaN        NaN
+age                 NaN        NaN
+genderfemale        NaN        NaN
+log(bili)           NaN        NaN
+exp(creat)          NaN        NaN
+sigma_SBP           NaN        NaN
+
+
+$m6f
+Potential scale reduction factors:
+
+             Point est. Upper C.I.
+(Intercept)         NaN        NaN
+age                 NaN        NaN
+genderfemale        NaN        NaN
+log(bili)           NaN        NaN
+exp(creat)          NaN        NaN
+sigma_SBP           NaN        NaN
+
+
+$mod7a
+Potential scale reduction factors:
+
+                 Point est. Upper C.I.
+(Intercept)             NaN        NaN
+ns(age, df = 2)1        NaN        NaN
+ns(age, df = 2)2        NaN        NaN
+genderfemale            NaN        NaN
+I(bili^2)               NaN        NaN
+I(bili^3)               NaN        NaN
+sigma_SBP               NaN        NaN
+
+

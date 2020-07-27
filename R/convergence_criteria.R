@@ -14,7 +14,8 @@
 #' \emph{Journal of Computational and Graphical Statistics}, \strong{7}, 434-455.
 #'
 #' @seealso
-#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#' The vignette
+#' \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 #' contains some examples how to specify the argument \code{subset}.
 #'
 #'
@@ -25,15 +26,16 @@
 #'
 #'
 #' @export
-GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = TRUE,
-                    multivariate = TRUE, subset = NULL, exclude_chains = NULL,
-                    start = NULL, end = NULL, thin = NULL, warn = TRUE, mess = TRUE, ...) {
+GR_crit <- function(object, confidence = 0.95, transform = FALSE,
+                    autoburnin = TRUE, multivariate = TRUE, subset = NULL,
+                    exclude_chains = NULL, start = NULL, end = NULL,
+                    thin = NULL, warn = TRUE, mess = TRUE, ...) {
 
   if (!inherits(object, "JointAI"))
-    stop('Object must be of class "JointAI".')
+    errormsg('Object must be of class "JointAI".')
 
   if (is.null(object$MCMC))
-    stop("No MCMC sample.")
+    errormsg("No MCMC sample.")
 
 
   if (is.null(start))
@@ -43,7 +45,7 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
     end <- end(object$MCMC)
 
   if (is.null(thin))
-    thin <- thin(object$MCMC)
+    thin <- coda::thin(object$MCMC)
 
   MCMC <- get_subset(object, subset, warn = warn, mess = mess)
 
@@ -53,19 +55,24 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
   }
 
   MCMC <- window(MCMC[chains], start = start, end = end, thin = thin)
+  plotnams <- get_plotmain(object, colnames(MCMC[[1]]), ylab = TRUE)
+
+  for (i in seq_len(length(MCMC)))
+    colnames(MCMC[[i]]) <- plotnams
 
 
-  gelman.diag(x = MCMC, confidence = confidence, transform = transform,
-              autoburnin = autoburnin, multivariate = multivariate)
+  coda::gelman.diag(x = MCMC, confidence = confidence, transform = transform,
+                    autoburnin = autoburnin, multivariate = multivariate)
 }
 
 
 
-#' Monte Carlo error
+#' Calculate and plot the Monte Carlo error
 #'
-#' Calculate, print and plot the Monte Carlo error of the samples from a JointAI model.
+#' Calculate, print and plot the Monte Carlo error of the samples from a
+#' 'JointAI' model, combining the samples from all MCMC chains.
 #' @param x object inheriting from class 'JointAI'
-#' @param digits number of digits for output
+#' @param digits number of digits for the printed output
 #' @inheritParams sharedParams
 #' @inheritDotParams mcmcse::mcse.mat -x
 #'
@@ -79,6 +86,11 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #'       parameter should not be more than 5\% of the posterior standard
 #'       deviation of this parameter (i.e., \eqn{MCSE/SD \le 0.05}).
 #'
+#' \strong{Long variable names:}\cr
+#' The default plot margins may not be wide enough when variable names are
+#' longer than a few characters. The plot margin can be adjusted (globally)
+#' using the argument \code{"mar"} in \code{\link[graphics]{par}}.
+#'
 #'
 #' @references
 #' Lesaffre, E., & Lawson, A. B. (2012).
@@ -86,7 +98,8 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #' John Wiley & Sons.
 #'
 #' @seealso
-#' The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#' The vignette
+#' \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 #' provides some examples how to specify the argument \code{subset}.
 #'
 #' @examples
@@ -94,7 +107,8 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE, autoburnin = T
 #'
 #' MC_error(mod)
 #'
-#' plot(MC_error(mod), ablinepars = list(lty = 2))
+#' plot(MC_error(mod), ablinepars = list(lty = 2),
+#'      plotpars = list(pch = 19, col = 'blue'))
 #'
 #' @export
 MC_error <- function(x, subset = NULL, exclude_chains = NULL,
@@ -102,13 +116,13 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
                      digits = 2, warn = TRUE, mess = TRUE, ...) {
 
   if (!inherits(x, "JointAI"))
-    stop('x must be of class "JointAI".')
+    errormsg("%s must be of class %s.", dQuote("x"), sQuote("JointAI"))
 
-  if (is.null(x$MCMC))
-    stop("No MCMC sample.")
+  if (is.null(x$MCMC)) errormsg("No MCMC sample.")
 
   if (!"mcmcse" %in% installed.packages()[, "Package"])
-    stop("The package 'mcmcse' needs to be installed for 'MC_error' to work.")
+    errormsg("The package 'mcmcse' needs to be installed to use the function
+             %s.", dQuote("MC_error()"))
 
   if (is.null(start))
     start <- start(x$MCMC)
@@ -117,42 +131,57 @@ MC_error <- function(x, subset = NULL, exclude_chains = NULL,
     end <- end(x$MCMC)
 
   if (is.null(thin))
-    thin <- thin(x$MCMC)
+    thin <- coda::thin(x$MCMC)
 
   # MC error for MCMC sample scaled back to data scale
   MCMC <- get_subset(object = x, subset = subset, warn = warn, mess = mess)
+
   chains <- seq_along(MCMC)
   if (!is.null(exclude_chains)) {
     chains <- chains[-exclude_chains]
   }
 
-  MCMC <- do.call(rbind, window(MCMC[chains], start = start, end = end, thin = thin))
+  MCMC <- do.call(rbind, window(MCMC[chains],
+                                start = start, end = end, thin = thin))
+  plotnams <- get_plotmain(x, colnames(MCMC), ylab = TRUE)
+  colnames(MCMC) <- plotnams
 
-  MCE1 <- mcmcse::mcse.mat(x = MCMC, ...)
-  colnames(MCE1) <- gsub("se", "MCSE", colnames(MCE1))
+  MCE1 <- t(apply(MCMC, 2, function(k) {
+    mce <- try(mcmcse::mcse(k, ...), silent = TRUE)
+    if (inherits(mce, "try-error")) {
+      c(NA, NA)
+    } else {
+      unlist(mce)
+    }
+  }))
+
+  colnames(MCE1) <- c("est", "MCSE")
 
   MCE1 <- cbind(MCE1,
                 SD = apply(MCMC, 2, sd)[match(colnames(MCMC), row.names(MCE1))]
   )
   MCE1 <- cbind(MCE1,
-                'MCSE/SD' = MCE1[, "MCSE"]/MCE1[, "SD"])
+                "MCSE/SD" = MCE1[, "MCSE"] / MCE1[, "SD"])
 
 
   # MC error for scaled MCMC sample
   if (!is.null(x$sample)) {
-  mcmc <- do.call(rbind, window(x$sample[chains], start = start, end = end, thin = thin))
-  mcmc <- mcmc[match(colnames(MCMC), colnames(x$MCMC[[1]])), ]
+    mcmc <- do.call(rbind, window(x$sample[chains],
+                                  start = start, end = end, thin = thin))
 
-  MCE2 <- mcmcse::mcse.mat(x = do.call(rbind,
-                                       window(x$sample[chains], start = start,
-                                              end = end,  thin = thin)), ...)
-  colnames(MCE2) <- gsub("se", "MCSE", colnames(MCE2))
+    MCE2 <- t(apply(mcmc, 2, function(k) {
+      mce <- try(mcmcse::mcse(k, ...), silent = TRUE)
+      if (inherits(mce, "try-error")) {
+        c(NA, NA)
+      } else {
+        unlist(mce)
+      }
+    }))
+    colnames(MCE2) <- c("est", "MCSE")
 
-  MCE2 <- cbind(MCE2,
-                SD = apply(mcmc, 2, sd)
-  )
-  MCE2 <- cbind(MCE2,
-                'MCSE/SD' = MCE2[, "MCSE"]/MCE2[, "SD"])
+
+    MCE2 <- cbind(MCE2, SD = apply(mcmc, 2, sd))
+    MCE2 <- cbind(MCE2, "MCSE/SD" = MCE2[, "MCSE"] / MCE2[, "SD"])
   } else {
     MCE2 <- NULL
   }
@@ -170,16 +199,21 @@ print.MCElist <- function(x, ...) {
 
 
 # Plot Monte Carlo error
-#' @param data_scale show the Monte Carlo error of the sample transformed back
-#' to the scale of the data (\code{TRUE}) or on the sampling scale (this
-#' requires the argument \code{keep_scaled_mcmc = TRUE} in the JointAI model)
-#' @param plotpars optional; list of parameters passed to \code{\link[graphics]{plot}()}
-#' @param ablinepars optional; list of parameters passed to \code{\link[graphics]{abline}()}
+#' @param data_scale logical; show the Monte Carlo error of the sample
+#'                   transformed back to the scale of the data (\code{TRUE}) or
+#'                   on the sampling scale (this requires the argument
+#'                   \code{keep_scaled_mcmc = TRUE} to be set when fitting the
+#'                   model)
+#' @param plotpars optional; list of parameters passed to
+#'                 \code{plot()}
+#' @param ablinepars optional; list of parameters passed to
+#'                   \code{\link[graphics]{abline}()}
+#' @param minlength number of characters the variable names are abbreviated to
 #' @describeIn MC_error plot Monte Carlo error
 #' @export
 
 plot.MCElist <- function(x, data_scale = TRUE, plotpars = NULL,
-                         ablinepars = list(v = 0.05), ...) {
+                         ablinepars = list(v = 0.05), minlength = 20, ...) {
 
   mce <- if (data_scale == TRUE) {
     x$data_scale
@@ -189,20 +223,22 @@ plot.MCElist <- function(x, data_scale = TRUE, plotpars = NULL,
 
   theaxis <- NULL
   names <- rownames(x$data_scale)
-  names <- abbreviate(names, minlength = 12)
+  names <- abbreviate(names, minlength = minlength)
 
   plotpars$x <- mce[, 4]
-  plotpars$y <- nrow(mce):1
+  plotpars$y <- rev(seq_len(nrow(mce)))
 
   if (is.null(plotpars$xlim))
-    plotpars$xlim <- range(0, plotpars$x)
+    plotpars$xlim <- range(0, plotpars$x[!is.infinite(plotpars$x)],
+                           na.rm = TRUE)
   if (is.null(plotpars$xlab))
     plotpars$xlab <- "MCE/SD"
   if (is.null(plotpars$ylab))
     plotpars$ylab <- ""
   if (is.null(plotpars$yaxt)) {
     plotpars$yaxt <- "n"
-    theaxis <- expression(axis(side = 2, at = nrow(mce):1, labels = names,
+    theaxis <- expression(axis(side = 2, at = rev(seq_len(nrow(mce))),
+                               labels = names,
                                las = 2, cex.axis = 0.8))
   }
   if (is.null(ablinepars$v))

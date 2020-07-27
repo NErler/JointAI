@@ -2,34 +2,33 @@
 % Please edit documentation in R/print_functions.R
 \name{list_models}
 \alias{list_models}
-\title{List covariate models}
+\title{List model details}
 \usage{
-list_models(
-  object,
-  predvars = TRUE,
-  regcoef = TRUE,
-  otherpars = TRUE,
-  priors = TRUE,
-  refcat = TRUE
-)
+list_models(object, predvars = TRUE, regcoef = TRUE, otherpars = TRUE,
+  priors = TRUE, refcat = TRUE)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
-\item{predvars}{logical; should information on the predictor variables be printed? (default is \code{TRUE})}
+\item{predvars}{logical; should information on the predictor variables be
+printed? (default is \code{TRUE})}
 
-\item{regcoef}{logical; should information on the regression coefficients be printed? (default is \code{TRUE})}
-
-\item{otherpars}{logical; should information on other parameters be printed? (default is \code{TRUE})}
-
-\item{priors}{logical; should information on the priors (and hyperparameters)
+\item{regcoef}{logical; should information on the regression coefficients
 be printed? (default is \code{TRUE})}
 
-\item{refcat}{logical; should information on the reference category be printed? (default is \code{TRUE})}
+\item{otherpars}{logical; should information on other parameters be printed?
+(default is \code{TRUE})}
+
+\item{priors}{logical; should information on the priors
+(and hyper-parameters) be printed? (default is \code{TRUE})}
+
+\item{refcat}{logical; should information on the reference category be
+printed? (default is \code{TRUE})}
 }
 \description{
-This function prints information on models specified for (incomplete) covariates in a JointAI object,
-including the model type, names of the parameters used and hyperparameters.
+This function prints information on all models, those explicitly specified
+by the user and those specified automatically by JointAI for (incomplete)
+covariates in a JointAI object.
 }
 \section{Note}{
 
@@ -38,9 +37,13 @@ but the conditional models that are part of the specification of the joint
 distribution.
 Briefly, the joint distribution is specified as a sequence of conditional
 models
-\deqn{p(y | x_1, x_2, x_3, ..., \theta) p(x_1|x_2, x_3, ..., \theta) p(x_2|x_3, ..., \theta) ...}
+
+\loadmathjax
+
+\mjdeqn{p(y | x_1, x_2, x_3, ..., \theta) p(x_1|x_2, x_3, ..., \theta)
+p(x_2|x_3, ..., \theta) ...}{ascii}
 The actual imputation models are the full conditional distributions
-\eqn{p(x_1 | \cdot)} derived from this joint distribution.
+\mjeqn{p(x_1 | \cdot)}{ascii} derived from this joint distribution.
 Even though the conditional distributions do not contain the outcome and all
 other covariates in their linear predictor, outcome and other covariates are
 taken into account implicitly, since imputations are sampled
@@ -56,7 +59,8 @@ during imputation.
 
 \examples{
 # (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save time)
-mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0, mess = FALSE)
+mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0,
+               n.iter = 0, mess = FALSE)
 
 list_models(mod1)
 

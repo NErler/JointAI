@@ -1,0 +1,187 @@
+$m0a
+$m0a$M1
+                 Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M12: (Intercept)    0  0    0     0          0     NaN    NaN
+M13: (Intercept)    0  0    0     0          0     NaN    NaN
+M14: (Intercept)    0  0    0     0          0     NaN    NaN
+
+
+$m0b
+$m0b$M2
+                 Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M22: (Intercept)    0  0    0     0          0     NaN    NaN
+M23: (Intercept)    0  0    0     0          0     NaN    NaN
+M24: (Intercept)    0  0    0     0          0     NaN    NaN
+
+
+$m1a
+$m1a$M1
+                 Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M12: (Intercept)    0  0    0     0          0     NaN    NaN
+M12: C1             0  0    0     0          0     NaN    NaN
+M13: (Intercept)    0  0    0     0          0     NaN    NaN
+M13: C1             0  0    0     0          0     NaN    NaN
+M14: (Intercept)    0  0    0     0          0     NaN    NaN
+M14: C1             0  0    0     0          0     NaN    NaN
+
+
+$m1b
+$m1b$M2
+                 Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M22: (Intercept)    0  0    0     0          0     NaN    NaN
+M22: C1             0  0    0     0          0     NaN    NaN
+M23: (Intercept)    0  0    0     0          0     NaN    NaN
+M23: C1             0  0    0     0          0     NaN    NaN
+M24: (Intercept)    0  0    0     0          0     NaN    NaN
+M24: C1             0  0    0     0          0     NaN    NaN
+
+
+$m2a
+$m2a$M1
+                 Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M12: (Intercept)    0  0    0     0          0     NaN    NaN
+M12: C2             0  0    0     0          0     NaN    NaN
+M13: (Intercept)    0  0    0     0          0     NaN    NaN
+M13: C2             0  0    0     0          0     NaN    NaN
+M14: (Intercept)    0  0    0     0          0     NaN    NaN
+M14: C2             0  0    0     0          0     NaN    NaN
+
+
+$m2b
+$m2b$M2
+                 Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M22: (Intercept)    0  0    0     0          0     NaN    NaN
+M22: C2             0  0    0     0          0     NaN    NaN
+M23: (Intercept)    0  0    0     0          0     NaN    NaN
+M23: C2             0  0    0     0          0     NaN    NaN
+M24: (Intercept)    0  0    0     0          0     NaN    NaN
+M24: C2             0  0    0     0          0     NaN    NaN
+
+
+$m3a
+$m3a$C1
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+M12            0  0    0     0          0     NaN    NaN
+M13            0  0    0     0          0     NaN    NaN
+M14            0  0    0     0          0     NaN    NaN
+
+
+$m3b
+$m3b$C1
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+M22            0  0    0     0          0     NaN    NaN
+M23            0  0    0     0          0     NaN    NaN
+M24            0  0    0     0          0     NaN    NaN
+
+
+$m4a
+$m4a$M1
+                      Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M12: (Intercept)         0  0    0     0          0     NaN    NaN
+M12: M22                 0  0    0     0          0     NaN    NaN
+M12: M23                 0  0    0     0          0     NaN    NaN
+M12: M24                 0  0    0     0          0     NaN    NaN
+M12: O22                 0  0    0     0          0     NaN    NaN
+M12: O23                 0  0    0     0          0     NaN    NaN
+M12: O24                 0  0    0     0          0     NaN    NaN
+M12: abs(C1 - C2)        0  0    0     0          0     NaN    NaN
+M12: log(C1)             0  0    0     0          0     NaN    NaN
+M12: O22:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+M12: O23:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+M12: O24:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+M13: (Intercept)         0  0    0     0          0     NaN    NaN
+M13: M22                 0  0    0     0          0     NaN    NaN
+M13: M23                 0  0    0     0          0     NaN    NaN
+M13: M24                 0  0    0     0          0     NaN    NaN
+M13: O22                 0  0    0     0          0     NaN    NaN
+M13: O23                 0  0    0     0          0     NaN    NaN
+M13: O24                 0  0    0     0          0     NaN    NaN
+M13: abs(C1 - C2)        0  0    0     0          0     NaN    NaN
+M13: log(C1)             0  0    0     0          0     NaN    NaN
+M13: O22:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+M13: O23:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+M13: O24:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+M14: (Intercept)         0  0    0     0          0     NaN    NaN
+M14: M22                 0  0    0     0          0     NaN    NaN
+M14: M23                 0  0    0     0          0     NaN    NaN
+M14: M24                 0  0    0     0          0     NaN    NaN
+M14: O22                 0  0    0     0          0     NaN    NaN
+M14: O23                 0  0    0     0          0     NaN    NaN
+M14: O24                 0  0    0     0          0     NaN    NaN
+M14: abs(C1 - C2)        0  0    0     0          0     NaN    NaN
+M14: log(C1)             0  0    0     0          0     NaN    NaN
+M14: O22:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+M14: O23:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+M14: O24:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+
+
+$m4b
+$m4b$M1
+                                                                Mean SD 2.5%
+M12: (Intercept)                                                   0  0    0
+M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                 0  0    0
+M12: abs(C1 - C2)                                                  0  0    0
+M12: log(C1)                                                       0  0    0
+M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)    0  0    0
+M13: (Intercept)                                                   0  0    0
+M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                 0  0    0
+M13: abs(C1 - C2)                                                  0  0    0
+M13: log(C1)                                                       0  0    0
+M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)    0  0    0
+M14: (Intercept)                                                   0  0    0
+M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                 0  0    0
+M14: abs(C1 - C2)                                                  0  0    0
+M14: log(C1)                                                       0  0    0
+M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)    0  0    0
+                                                                97.5%
+M12: (Intercept)                                                    0
+M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                  0
+M12: abs(C1 - C2)                                                   0
+M12: log(C1)                                                        0
+M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)     0
+M13: (Intercept)                                                    0
+M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                  0
+M13: abs(C1 - C2)                                                   0
+M13: log(C1)                                                        0
+M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)     0
+M14: (Intercept)                                                    0
+M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                  0
+M14: abs(C1 - C2)                                                   0
+M14: log(C1)                                                        0
+M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)     0
+                                                                tail-prob.
+M12: (Intercept)                                                         0
+M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                       0
+M12: abs(C1 - C2)                                                        0
+M12: log(C1)                                                             0
+M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)          0
+M13: (Intercept)                                                         0
+M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                       0
+M13: abs(C1 - C2)                                                        0
+M13: log(C1)                                                             0
+M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)          0
+M14: (Intercept)                                                         0
+M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                       0
+M14: abs(C1 - C2)                                                        0
+M14: log(C1)                                                             0
+M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)          0
+                                                                GR-crit MCE/SD
+M12: (Intercept)                                                    NaN    NaN
+M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                  NaN    NaN
+M12: abs(C1 - C2)                                                   NaN    NaN
+M12: log(C1)                                                        NaN    NaN
+M12: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)     NaN    NaN
+M13: (Intercept)                                                    NaN    NaN
+M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                  NaN    NaN
+M13: abs(C1 - C2)                                                   NaN    NaN
+M13: log(C1)                                                        NaN    NaN
+M13: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)     NaN    NaN
+M14: (Intercept)                                                    NaN    NaN
+M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0)                  NaN    NaN
+M14: abs(C1 - C2)                                                   NaN    NaN
+M14: log(C1)                                                        NaN    NaN
+M14: ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2)     NaN    NaN
+
+

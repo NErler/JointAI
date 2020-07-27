@@ -2,75 +2,63 @@
 % Please edit documentation in R/plots.R
 \name{densplot}
 \alias{densplot}
-\alias{densplot.mcmc.list}
 \alias{densplot.JointAI}
 \title{Plot the posterior density from object of class JointAI}
 \usage{
 densplot(object, ...)
 
-\method{densplot}{mcmc.list}(object, start = NULL, end = NULL, thin = NULL, ...)
-
-\method{densplot}{JointAI}(
-  object,
-  start = NULL,
-  end = NULL,
-  thin = NULL,
-  subset = c(analysis_main = TRUE),
-  exclude_chains = NULL,
-  vlines = NULL,
-  nrow = NULL,
-  ncol = NULL,
-  joined = FALSE,
-  use_ggplot = FALSE,
-  keep_aux = FALSE,
-  warn = TRUE,
-  mess = TRUE,
-  ...
-)
+\method{densplot}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
+  subset = c(analysis_main = TRUE), exclude_chains = NULL, vlines = NULL,
+  nrow = NULL, ncol = NULL, joined = FALSE, use_ggplot = FALSE,
+  warn = TRUE, mess = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
-\item{...}{additional parameters passed to \code{\link[graphics]{plot}}}
+\item{...}{additional parameters passed to \code{plot()}}
 
-\item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{start}{the first iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
-\item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{end}{the last iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
-\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
+\item{thin}{thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
+For example, \code{thin = 1} (default) will keep the MCMC samples
+from all iterations; \code{thin = 5} would only keep every 5th
+iteration.}
 
-\item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
-Uses the same logic as the argument \code{monitor_params} in
+\item{subset}{subset of parameters/variables/nodes (columns in the MCMC
+sample). Follows the same principle as the argument
+\code{monitor_params} in
 \code{\link[JointAI:model_imp]{*_imp}}.}
 
-\item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
+\item{exclude_chains}{optional vector of the index numbers of chains that
+should be excluded}
 
 \item{vlines}{list, where each element is a named list of parameters that
-can be passed to \code{\link[graphics]{abline}} to create
+can be passed to \code{\link[graphics]{abline}()} to create
 vertical lines.
 Each of the list elements needs to contain at least
 \code{v = <x location>}, where <x location> is a vector of the
 same length as the number of plots (see examples).}
 
-\item{nrow}{optional number of rows and columns in the plot layout;
+\item{nrow}{optional; number of rows in the plot layout;
 automatically chosen if unspecified}
 
-\item{ncol}{optional number of rows and columns in the plot layout;
+\item{ncol}{optional; number of columns in the plot layout;
 automatically chosen if unspecified}
 
 \item{joined}{logical; should the chains be combined before plotting?}
 
-\item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
-
-\item{keep_aux}{logical; Should constant effects of auxiliary variables be kept in the output?}
+\item{use_ggplot}{logical; Should ggplot be used instead of the base
+graphics?}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. (Note: this applies only to warnings
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. (Note: this applies only to messages
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 }
 \description{
 The function plots a set of densities (per chain and coefficient) from
@@ -88,21 +76,25 @@ densplot(mod, exclude_chains = 2)
 
 # Example 2: use vlines to mark zero
 densplot(mod, col = c("darkred", "darkblue", "darkgreen"),
-         vlines = list(list(v = rep(0, nrow(summary(mod)$stats)),
+         vlines = list(list(v = rep(0, nrow(summary(mod)$res$y$regcoef)),
                             col = grey(0.8))))
 
 
-# Example 3: use vlines to visualize the posterior mean and 2.5\% and 97.5\% quantiles
-densplot(mod, vlines = list(list(v = summary(mod)$stats[, "Mean"], lty = 1, lwd = 2),
-                            list(v = summary(mod)$stats[, "2.5\%"], lty = 2),
-                            list(v = summary(mod)$stats[, "97.5\%"], lty = 2)))
+# Example 3: use vlines to visualize posterior mean and 2.5\%/97.5\% quantiles
+res <- rbind(summary(mod)$res$y$regcoef[, c('Mean', '2.5\%', '97.5\%')],
+             summary(mod)$res$y$sigma[, c('Mean', '2.5\%', '97.5\%'),
+             drop = FALSE]
+             )
+densplot(mod, vlines = list(list(v = res[, "Mean"], lty = 1, lwd = 2),
+                            list(v = res[, "2.5\%"], lty = 2),
+                            list(v = res[, "97.5\%"], lty = 2)))
 
 
 # Example 4: ggplot version
 densplot(mod, use_ggplot = TRUE)
 
 
-# Example 5: changing how the ggplot version looks (using standard ggplot syntax)
+# Example 5: change how the ggplot version looks
 library(ggplot2)
 
 densplot(mod, use_ggplot = TRUE) +
@@ -113,6 +105,7 @@ densplot(mod, use_ggplot = TRUE) +
 
 }
 \seealso{
-The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+The vignette
+\href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 contains some examples how to specify the argument \code{subset}.
 }

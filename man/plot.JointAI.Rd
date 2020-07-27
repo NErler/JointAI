@@ -14,6 +14,10 @@
 \description{
 Plot an object object inheriting from class 'JointAI'
 }
+\note{
+Currently, \code{plot()} can only be used with (generalized) linear (mixed)
+models.
+}
 \examples{
 mod <- lm_imp(y ~ C1 + C2 + B1, data = wideDF, n.iter = 100)
 plot(mod)

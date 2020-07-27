@@ -4,41 +4,29 @@
 \alias{plot_all}
 \title{Visualize the distribution of all variables in the dataset}
 \usage{
-plot_all(
-  data,
-  nrow = NULL,
-  ncol = NULL,
-  fill = grDevices::grey(0.8),
-  border = "black",
-  allNA = FALSE,
-  use_level = FALSE,
-  idvar,
-  xlab = "",
-  ylab = "frequency",
-  ...
-)
+plot_all(data, nrow = NULL, ncol = NULL, fill = grDevices::grey(0.8),
+  border = "black", allNA = FALSE, idvars = NULL, xlab = "",
+  ylab = "frequency", ...)
 }
 \arguments{
 \item{data}{a \code{data.frame} (or a \code{matrix})}
 
-\item{nrow}{optional number of rows and columns in the plot layout;
+\item{nrow}{optional; number of rows in the plot layout;
 automatically chosen if unspecified}
 
-\item{ncol}{optional number of rows and columns in the plot layout;
+\item{ncol}{optional; number of columns in the plot layout;
 automatically chosen if unspecified}
 
-\item{fill}{color the histograms and bars are filled with}
+\item{fill}{colour the histograms and bars are filled with}
 
-\item{border}{color of the borders of the histograms and bars}
+\item{border}{colour of the borders of the histograms and bars}
 
 \item{allNA}{logical; if \code{FALSE} (default) the proportion of missing
 values is only given for variables that have missing values,
 if \code{TRUE} it is given for all variables}
 
-\item{use_level}{logical; should the multi-level structure be taken into account?
-This requires specification of the argument \code{idvar}.}
-
-\item{idvar}{name of the column that specifies the multi-level grouping structure}
+\item{idvars}{name of the column that specifies the multi-level grouping
+structure}
 
 \item{xlab}{labels for the x- and y-axis}
 
@@ -48,9 +36,9 @@ This requires specification of the argument \code{idvar}.}
 and \code{\link[graphics]{hist}}}
 }
 \description{
-This function plots a grid of histograms (for continuous variables) and barplots (for
-categorical variables) and labels it with the proportion of missing values in
-each variable.
+This function plots a grid of histograms (for continuous variables) and
+bar plots (for categorical variables) and labels it with the proportion of
+missing values in each variable.
 }
 \examples{
 op <- par(mar = c(2,2,3,1), mgp = c(2, 0.6, 0))

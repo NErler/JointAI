@@ -4,56 +4,41 @@
 \alias{add_samples}
 \title{Continue sampling from an object of class JointAI}
 \usage{
-add_samples(
-  object,
-  n.iter,
-  add = TRUE,
-  thin = NULL,
-  monitor_params = NULL,
-  progress.bar = "text",
-  mess = TRUE
-)
+add_samples(object, n.iter, add = TRUE, thin = NULL,
+  monitor_params = NULL, progress.bar = "text", mess = TRUE)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
-\item{n.iter}{the number of iterations of the MCMC chain (after adaptation;
-see also \code{\link[rjags]{coda.samples}})}
+\item{n.iter}{the number of additional iterations of the MCMC chain}
 
 \item{add}{logical; should the new MCMC samples be added to the existing
-samples or replace them? If samples are added,
-\code{var.names} is ignored.}
+samples (\code{TRUE}; default) or replace them?
+If samples are added the arguments \code{monitor_params} and
+\code{thin} are ignored.}
 
-\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
+\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}});
+ignored when \code{add = TRUE}.}
 
-\item{monitor_params}{named vector specifying which parameters should be
-monitored (see details)}
+\item{monitor_params}{named list or vector specifying which parameters should
+be monitored. For details, see
+\code{\link[JointAI:model_imp]{*_imp}} and the vignette
+ \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}.
+ Ignored when \code{add = TRUE}.}
 
 \item{progress.bar}{character string specifying the type of progress bar.
 Possible values are "text", "gui", and "none" (see
-\code{\link[rjags]{update}}). Note: when sampling is performed
-in parallel it is currently not possible to display a
-progress bar.}
+\code{\link[rjags]{update}}).
+Note: when sampling is performed in parallel it is
+currently not possible to display a progress bar.}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. (Note: this applies only to messages
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 }
 \description{
-This function allows to continue sampling from an existing object of class 'JointAI'.\cr
-If the original sample was created using parallel computation, the
-separate 'jags' objects will be recompiled and sampling will again be
-performed in parallel.
+This function continues the sampling from the MCMC chains of an existing
+object of class 'JointAI'.\cr
 }
-\section{Note}{
-
-When the thinning interval differs between the original model and the added
-samples, the resulting, new, 'JointAI' object does not yet record this information.
-Moreover, when \code{add_samples()} is used with \code{add = FALSE} the
-indices of iterations (for example given in the \code{summary()}) may not be
-correct.
-}
-
 \examples{
 # Example 1:
 # Run an initial JointAI model:
@@ -74,6 +59,7 @@ imps <- add_samples(mod, n.iter = 200, monitor_params = c("imps" = TRUE),
 \seealso{
 \code{\link[JointAI:model_imp]{*_imp}}
 
-The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+The vignette
+\href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
 contains some examples on how to specify the argument \code{monitor_params}.
 }

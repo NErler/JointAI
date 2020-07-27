@@ -1,0 +1,69 @@
+$m0a
+$m0a$`Surv(futime, status != "censored")`
+NULL
+
+
+$m1a
+$m1a$`Surv(futime, status != "censored")`
+      age sexfemale 
+        0         0 
+
+
+$m1b
+$m1b$`Surv(futime, I(status != "censored"))`
+      age sexfemale 
+        0         0 
+
+
+$m2a
+$m2a$`Surv(futime, status != "censored")`
+copper 
+     0 
+
+
+$m3a
+$m3a$`Surv(futime, status != "censored")`
+           copper         sexfemale               age abs(age - copper) 
+                0                 0                 0                 0 
+        log(trig) 
+                0 
+
+
+$m3b
+$m3b$`Surv(futime, status != "censored")`
+           copper         sexfemale               age abs(age - copper) 
+                0                 0                 0                 0 
+        log(trig) 
+                0 
+
+
+$m4a
+$m4a$`Surv(futime, status != "censored")`
+       age  sexfemale trtplacebo    albumin   platelet    stage.L    stage.Q 
+         0          0          0          0          0          0          0 
+   stage.C 
+         0 
+
+
+$m4b
+$m4b$`Surv(futime, status != "censored")`
+                 age            sexfemale           trtplacebo 
+                   0                    0                    0 
+sexfemale:trtplacebo              albumin        log(platelet) 
+                   0                    0                    0 
+
+
+$m4c
+$m4c$`Surv(futime, status != "censored")`
+          age     sexfemale       albumin log(platelet) 
+            0             0             0             0 
+
+
+$m4d
+$m4d$`Surv(futime, status != "censored")`
+                  age             sexfemale               albumin 
+                    0                     0                     0 
+ns(platelet, df = 2)1 ns(platelet, df = 2)2 
+                    0                     0 
+
+

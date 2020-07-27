@@ -1,0 +1,354 @@
+
+Call:
+mlogit_imp(formula = M1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M1" 
+
+
+Coefficients:
+(Intercept) (Intercept) (Intercept) 
+          0           0           0 
+
+Call:
+mlogit_imp(formula = M2 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M2" 
+
+
+Coefficients:
+(Intercept) (Intercept) (Intercept) 
+          0           0           0 
+
+Call:
+mlogit_imp(formula = M1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M1" 
+
+
+Coefficients:
+(Intercept)          C1 (Intercept)          C1 (Intercept)          C1 
+          0           0           0           0           0           0 
+
+Call:
+mlogit_imp(formula = M2 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M2" 
+
+
+Coefficients:
+(Intercept)          C1 (Intercept)          C1 (Intercept)          C1 
+          0           0           0           0           0           0 
+
+Call:
+mlogit_imp(formula = M1 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M1" 
+
+
+Coefficients:
+(Intercept)          C2 (Intercept)          C2 (Intercept)          C2 
+          0           0           0           0           0           0 
+
+Call:
+mlogit_imp(formula = M2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M2" 
+
+
+Coefficients:
+(Intercept)          C2 (Intercept)          C2 (Intercept)          C2 
+          0           0           0           0           0           0 
+
+Call:
+lm_imp(formula = C1 ~ M1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "C1" 
+
+
+Coefficients:
+(Intercept)         M12         M13         M14 
+          0           0           0           0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+Call:
+lm_imp(formula = C1 ~ M2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "C1" 
+
+
+Coefficients:
+(Intercept)         M22         M23         M24 
+          0           0           0           0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+Call:
+mlogit_imp(formula = M1 ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_M1"), 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M1" 
+
+
+Coefficients:
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+             O22              O23              O24     abs(C1 - C2) 
+               0                0                0                0 
+         log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+               0                0                0                0 
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+             O22              O23              O24     abs(C1 - C2) 
+               0                0                0                0 
+         log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+               0                0                0                0 
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+             O22              O23              O24     abs(C1 - C2) 
+               0                0                0                0 
+         log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+               0                0                0                0 
+
+Call:
+mlogit_imp(formula = M1 ~ ifelse(as.numeric(M2) > as.numeric(O1), 
+    1, 0) * abs(C1 - C2) + log(C1), data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_M1"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M1" 
+
+
+Coefficients:
+                                               (Intercept) 
+                                                         0 
+             ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                         0 
+                                              abs(C1 - C2) 
+                                                         0 
+                                                   log(C1) 
+                                                         0 
+ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                         0 
+                                               (Intercept) 
+                                                         0 
+             ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                         0 
+                                              abs(C1 - C2) 
+                                                         0 
+                                                   log(C1) 
+                                                         0 
+ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                         0 
+                                               (Intercept) 
+                                                         0 
+             ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                         0 
+                                              abs(C1 - C2) 
+                                                         0 
+                                                   log(C1) 
+                                                         0 
+ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                         0 
+$m0a
+
+Call:
+mlogit_imp(formula = M1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M1" 
+
+
+Coefficients:
+(Intercept) (Intercept) (Intercept) 
+          0           0           0 
+
+$m0b
+
+Call:
+mlogit_imp(formula = M2 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M2" 
+
+
+Coefficients:
+(Intercept) (Intercept) (Intercept) 
+          0           0           0 
+
+$m1a
+
+Call:
+mlogit_imp(formula = M1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M1" 
+
+
+Coefficients:
+(Intercept)          C1 (Intercept)          C1 (Intercept)          C1 
+          0           0           0           0           0           0 
+
+$m1b
+
+Call:
+mlogit_imp(formula = M2 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M2" 
+
+
+Coefficients:
+(Intercept)          C1 (Intercept)          C1 (Intercept)          C1 
+          0           0           0           0           0           0 
+
+$m2a
+
+Call:
+mlogit_imp(formula = M1 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M1" 
+
+
+Coefficients:
+(Intercept)          C2 (Intercept)          C2 (Intercept)          C2 
+          0           0           0           0           0           0 
+
+$m2b
+
+Call:
+mlogit_imp(formula = M2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M2" 
+
+
+Coefficients:
+(Intercept)          C2 (Intercept)          C2 (Intercept)          C2 
+          0           0           0           0           0           0 
+
+$m3a
+
+Call:
+lm_imp(formula = C1 ~ M1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "C1" 
+
+
+Coefficients:
+(Intercept)         M12         M13         M14 
+          0           0           0           0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+$m3b
+
+Call:
+lm_imp(formula = C1 ~ M2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear model for "C1" 
+
+
+Coefficients:
+(Intercept)         M22         M23         M24 
+          0           0           0           0 
+
+
+Residual standard deviation:
+sigma_C1 
+       0 
+
+$m4a
+
+Call:
+mlogit_imp(formula = M1 ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = list(other = "p_M1"), 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M1" 
+
+
+Coefficients:
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+             O22              O23              O24     abs(C1 - C2) 
+               0                0                0                0 
+         log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+               0                0                0                0 
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+             O22              O23              O24     abs(C1 - C2) 
+               0                0                0                0 
+         log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+               0                0                0                0 
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+             O22              O23              O24     abs(C1 - C2) 
+               0                0                0                0 
+         log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
+               0                0                0                0 
+
+$m4b
+
+Call:
+mlogit_imp(formula = M1 ~ ifelse(as.numeric(M2) > as.numeric(O1), 
+    1, 0) * abs(C1 - C2) + log(C1), data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_M1"), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit model for "M1" 
+
+
+Coefficients:
+                                               (Intercept) 
+                                                         0 
+             ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                         0 
+                                              abs(C1 - C2) 
+                                                         0 
+                                                   log(C1) 
+                                                         0 
+ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                         0 
+                                               (Intercept) 
+                                                         0 
+             ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                         0 
+                                              abs(C1 - C2) 
+                                                         0 
+                                                   log(C1) 
+                                                         0 
+ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                         0 
+                                               (Intercept) 
+                                                         0 
+             ifelse(as.numeric(M2) > as.numeric(O1), 1, 0) 
+                                                         0 
+                                              abs(C1 - C2) 
+                                                         0 
+                                                   log(C1) 
+                                                         0 
+ifelse(as.numeric(M2) > as.numeric(O1), 1, 0):abs(C1 - C2) 
+                                                         0 
+

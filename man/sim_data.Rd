@@ -4,26 +4,10 @@
 \alias{sim_data}
 \title{Simulate dataset}
 \usage{
-sim_data(
-  N = 100,
-  Jmin = 1,
-  Jmax = 6,
-  tmin = 0,
-  tmax = 5,
-  norm = 2,
-  bin = 2,
-  multi = 2,
-  ord = 2,
-  count = 2,
-  longnorm = 2,
-  longbin = 2,
-  longord = 2,
-  longcount = 2,
-  coef = NULL,
-  misvar = NULL,
-  nmisvar = 7,
-  seed = NULL
-)
+sim_data(N = 100, Jmin = 1, Jmax = 6, tmin = 0, tmax = 5, norm = 2,
+  bin = 2, multi = 2, ord = 2, count = 2, longnorm = 2,
+  longbin = 2, longord = 2, longcount = 2, coef = NULL,
+  misvar = NULL, nmisvar = 7, seed = NULL)
 }
 \arguments{
 \item{N}{sample size (integer)}
@@ -41,15 +25,20 @@ create or list of parameters to create normally distributed variables
 from. If norm is an integer, the mean and standard deviation are
 drawn from distributions.}
 
-\item{bin}{integer giving the number of binary variables or a character vector containing their names}
+\item{bin}{integer giving the number of binary variables or a character
+vector containing their names}
 
-\item{multi}{integer giving the number of multinomial variables or a character vector containing their names}
+\item{multi}{integer giving the number of multinomial variables or a
+character vector containing their names}
 
-\item{ord}{integer giving the number of ordinal variables or a character vector containing their names}
+\item{ord}{integer giving the number of ordinal variables or a character
+vector containing their names}
 
-\item{count}{integer giving the number of count variables or a character vector containing their names}
+\item{count}{integer giving the number of count variables or a character
+vector containing their names}
 
-\item{longnorm}{integer giving the number of longitudinal (normally distributed)
+\item{longnorm}{integer giving the number of longitudinal
+         (normally distributed)
 variables or a character vector containing their names}
 
 \item{longbin}{integer giving the number of longitudinal binary
@@ -79,6 +68,6 @@ Simulate dataset
 \details{
 The time variable has a uniform distribution between tmin and tmax.
          At the moment only the integer option is implemented for the
-         parameters norm, bin, multi, etc.
+         parameters norm, bin, multi, ...
 }
 \keyword{internal}

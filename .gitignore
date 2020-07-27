@@ -8,3 +8,6 @@ inst/doc
 vignettes/SelectingParameters_cache
 vignettes/SelectingParameters_files
 vignettes/ModelSpecification_cache
+docs
+
+tests/testthat/*.pdf

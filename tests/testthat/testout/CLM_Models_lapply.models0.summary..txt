@@ -1,0 +1,761 @@
+$m0a
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+     Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 > 1    0  0    0     0          0     NaN    NaN
+O1 > 2    0  0    0     0          0     NaN    NaN
+O1 > 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m0b
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O2 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+     Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O2 > 1    0  0    0     0          0     NaN    NaN
+O2 > 2    0  0    0     0          0     NaN    NaN
+O2 > 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m1a
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+C1    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 > 1    0  0    0     0          0     NaN    NaN
+O1 > 2    0  0    0     0          0     NaN    NaN
+O1 > 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m1b
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O2 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+C1    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O2 > 1    0  0    0     0          0     NaN    NaN
+O2 > 2    0  0    0     0          0     NaN    NaN
+O2 > 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m2a
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+C2    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 > 1    0  0    0     0          0     NaN    NaN
+O1 > 2    0  0    0     0          0     NaN    NaN
+O1 > 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m2b
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+   Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+C2    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O2 > 1    0  0    0     0          0     NaN    NaN
+O2 > 2    0  0    0     0          0     NaN    NaN
+O2 > 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m3a
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = C1 ~ O1, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+O1.L           0  0    0     0          0     NaN    NaN
+O1.Q           0  0    0     0          0     NaN    NaN
+O1.C           0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_C1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 1:10
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m3b
+
+Bayesian linear model fitted with JointAI
+
+Call:
+lm_imp(formula = C1 ~ O2, data = wideDF, n.adapt = 5, n.iter = 10, 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+O22            0  0    0     0          0     NaN    NaN
+O23            0  0    0     0          0     NaN    NaN
+O24            0  0    0     0          0     NaN    NaN
+
+Posterior summary of residual std. deviation:
+         Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_C1    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m4a
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+                 Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M22                 0  0    0     0          0     NaN    NaN
+M23                 0  0    0     0          0     NaN    NaN
+M24                 0  0    0     0          0     NaN    NaN
+O22                 0  0    0     0          0     NaN    NaN
+O23                 0  0    0     0          0     NaN    NaN
+O24                 0  0    0     0          0     NaN    NaN
+abs(C1 - C2)        0  0    0     0          0     NaN    NaN
+log(C1)             0  0    0     0          0     NaN    NaN
+O22:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+O23:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+O24:abs(C1 - C2)    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 > 1    0  0    0     0          0     NaN    NaN
+O1 > 2    0  0    0     0          0     NaN    NaN
+O1 > 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m4b
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ ifelse(as.numeric(O2) > as.numeric(M1), 
+    1, 0) * abs(C1 - C2) + log(C1), data = wideDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+                                                           Mean SD 2.5% 97.5%
+ifelse(as.numeric(O2) > as.numeric(M1), 1, 0)                 0  0    0     0
+abs(C1 - C2)                                                  0  0    0     0
+log(C1)                                                       0  0    0     0
+ifelse(as.numeric(O2) > as.numeric(M1), 1, 0):abs(C1 - C2)    0  0    0     0
+                                                           tail-prob. GR-crit
+ifelse(as.numeric(O2) > as.numeric(M1), 1, 0)                       0     NaN
+abs(C1 - C2)                                                        0     NaN
+log(C1)                                                             0     NaN
+ifelse(as.numeric(O2) > as.numeric(M1), 1, 0):abs(C1 - C2)          0     NaN
+                                                           MCE/SD
+ifelse(as.numeric(O2) > as.numeric(M1), 1, 0)                 NaN
+abs(C1 - C2)                                                  NaN
+log(C1)                                                       NaN
+ifelse(as.numeric(O2) > as.numeric(M1), 1, 0):abs(C1 - C2)    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 > 1    0  0    0     0          0     NaN    NaN
+O1 > 2    0  0    0     0          0     NaN    NaN
+O1 > 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m5a
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M22        0  0    0     0          0     NaN    NaN
+M23        0  0    0     0          0     NaN    NaN
+M24        0  0    0     0          0     NaN    NaN
+O22        0  0    0     0          0     NaN    NaN
+O23        0  0    0     0          0     NaN    NaN
+O24        0  0    0     0          0     NaN    NaN
+O12: C1    0  0    0     0          0     NaN    NaN
+O12: C2    0  0    0     0          0     NaN    NaN
+O13: C1    0  0    0     0          0     NaN    NaN
+O13: C2    0  0    0     0          0     NaN    NaN
+O14: C1    0  0    0     0          0     NaN    NaN
+O14: C2    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 > 1    0  0    0     0          0     NaN    NaN
+O1 > 2    0  0    0     0          0     NaN    NaN
+O1 > 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m5b
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M22        0  0    0     0          0     NaN    NaN
+M23        0  0    0     0          0     NaN    NaN
+M24        0  0    0     0          0     NaN    NaN
+O22        0  0    0     0          0     NaN    NaN
+O23        0  0    0     0          0     NaN    NaN
+O24        0  0    0     0          0     NaN    NaN
+C1:C2      0  0    0     0          0     NaN    NaN
+O12: C1    0  0    0     0          0     NaN    NaN
+O12: C2    0  0    0     0          0     NaN    NaN
+O13: C1    0  0    0     0          0     NaN    NaN
+O13: C2    0  0    0     0          0     NaN    NaN
+O14: C1    0  0    0     0          0     NaN    NaN
+O14: C2    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 > 1    0  0    0     0          0     NaN    NaN
+O1 > 2    0  0    0     0          0     NaN    NaN
+O1 > 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m5c
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 * 
+        C2), seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+           Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M22           0  0    0     0          0     NaN    NaN
+M23           0  0    0     0          0     NaN    NaN
+M24           0  0    0     0          0     NaN    NaN
+O22           0  0    0     0          0     NaN    NaN
+O23           0  0    0     0          0     NaN    NaN
+O24           0  0    0     0          0     NaN    NaN
+O12: C1       0  0    0     0          0     NaN    NaN
+O12: C2       0  0    0     0          0     NaN    NaN
+O12: C1:C2    0  0    0     0          0     NaN    NaN
+O13: C1       0  0    0     0          0     NaN    NaN
+O13: C2       0  0    0     0          0     NaN    NaN
+O13: C1:C2    0  0    0     0          0     NaN    NaN
+O14: C1       0  0    0     0          0     NaN    NaN
+O14: C2       0  0    0     0          0     NaN    NaN
+O14: C1:C2    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 > 1    0  0    0     0          0     NaN    NaN
+O1 > 2    0  0    0     0          0     NaN    NaN
+O1 > 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m5d
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M22        0  0    0     0          0     NaN    NaN
+M23        0  0    0     0          0     NaN    NaN
+M24        0  0    0     0          0     NaN    NaN
+O22        0  0    0     0          0     NaN    NaN
+O23        0  0    0     0          0     NaN    NaN
+O24        0  0    0     0          0     NaN    NaN
+M22:C2     0  0    0     0          0     NaN    NaN
+M23:C2     0  0    0     0          0     NaN    NaN
+M24:C2     0  0    0     0          0     NaN    NaN
+O12: C1    0  0    0     0          0     NaN    NaN
+O12: C2    0  0    0     0          0     NaN    NaN
+O13: C1    0  0    0     0          0     NaN    NaN
+O13: C2    0  0    0     0          0     NaN    NaN
+O14: C1    0  0    0     0          0     NaN    NaN
+O14: C2    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 > 1    0  0    0     0          0     NaN    NaN
+O1 > 2    0  0    0     0          0     NaN    NaN
+O1 > 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m5e
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = ~C1 + 
+        M2 * C2 + O2, seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O12: C1        0  0    0     0          0     NaN    NaN
+O12: M22       0  0    0     0          0     NaN    NaN
+O12: M23       0  0    0     0          0     NaN    NaN
+O12: M24       0  0    0     0          0     NaN    NaN
+O12: C2        0  0    0     0          0     NaN    NaN
+O12: O22       0  0    0     0          0     NaN    NaN
+O12: O23       0  0    0     0          0     NaN    NaN
+O12: O24       0  0    0     0          0     NaN    NaN
+O12: M22:C2    0  0    0     0          0     NaN    NaN
+O12: M23:C2    0  0    0     0          0     NaN    NaN
+O12: M24:C2    0  0    0     0          0     NaN    NaN
+O13: C1        0  0    0     0          0     NaN    NaN
+O13: M22       0  0    0     0          0     NaN    NaN
+O13: M23       0  0    0     0          0     NaN    NaN
+O13: M24       0  0    0     0          0     NaN    NaN
+O13: C2        0  0    0     0          0     NaN    NaN
+O13: O22       0  0    0     0          0     NaN    NaN
+O13: O23       0  0    0     0          0     NaN    NaN
+O13: O24       0  0    0     0          0     NaN    NaN
+O13: M22:C2    0  0    0     0          0     NaN    NaN
+O13: M23:C2    0  0    0     0          0     NaN    NaN
+O13: M24:C2    0  0    0     0          0     NaN    NaN
+O14: C1        0  0    0     0          0     NaN    NaN
+O14: M22       0  0    0     0          0     NaN    NaN
+O14: M23       0  0    0     0          0     NaN    NaN
+O14: M24       0  0    0     0          0     NaN    NaN
+O14: C2        0  0    0     0          0     NaN    NaN
+O14: O22       0  0    0     0          0     NaN    NaN
+O14: O23       0  0    0     0          0     NaN    NaN
+O14: O24       0  0    0     0          0     NaN    NaN
+O14: M22:C2    0  0    0     0          0     NaN    NaN
+O14: M23:C2    0  0    0     0          0     NaN    NaN
+O14: M24:C2    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 > 1    0  0    0     0          0     NaN    NaN
+O1 > 2    0  0    0     0          0     NaN    NaN
+O1 > 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m6a
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M22        0  0    0     0          0     NaN    NaN
+M23        0  0    0     0          0     NaN    NaN
+M24        0  0    0     0          0     NaN    NaN
+O22        0  0    0     0          0     NaN    NaN
+O23        0  0    0     0          0     NaN    NaN
+O24        0  0    0     0          0     NaN    NaN
+O12: C1    0  0    0     0          0     NaN    NaN
+O12: C2    0  0    0     0          0     NaN    NaN
+O13: C1    0  0    0     0          0     NaN    NaN
+O13: C2    0  0    0     0          0     NaN    NaN
+O14: C1    0  0    0     0          0     NaN    NaN
+O14: C2    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 = 1    0  0    0     0          0     NaN    NaN
+O1 = 2    0  0    0     0          0     NaN    NaN
+O1 = 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m6b
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M22        0  0    0     0          0     NaN    NaN
+M23        0  0    0     0          0     NaN    NaN
+M24        0  0    0     0          0     NaN    NaN
+O22        0  0    0     0          0     NaN    NaN
+O23        0  0    0     0          0     NaN    NaN
+O24        0  0    0     0          0     NaN    NaN
+C1:C2      0  0    0     0          0     NaN    NaN
+O12: C1    0  0    0     0          0     NaN    NaN
+O12: C2    0  0    0     0          0     NaN    NaN
+O13: C1    0  0    0     0          0     NaN    NaN
+O13: C2    0  0    0     0          0     NaN    NaN
+O14: C1    0  0    0     0          0     NaN    NaN
+O14: C2    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 = 1    0  0    0     0          0     NaN    NaN
+O1 = 2    0  0    0     0          0     NaN    NaN
+O1 = 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m6c
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 * 
+        C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+           Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M22           0  0    0     0          0     NaN    NaN
+M23           0  0    0     0          0     NaN    NaN
+M24           0  0    0     0          0     NaN    NaN
+O22           0  0    0     0          0     NaN    NaN
+O23           0  0    0     0          0     NaN    NaN
+O24           0  0    0     0          0     NaN    NaN
+O12: C1       0  0    0     0          0     NaN    NaN
+O12: C2       0  0    0     0          0     NaN    NaN
+O12: C1:C2    0  0    0     0          0     NaN    NaN
+O13: C1       0  0    0     0          0     NaN    NaN
+O13: C2       0  0    0     0          0     NaN    NaN
+O13: C1:C2    0  0    0     0          0     NaN    NaN
+O14: C1       0  0    0     0          0     NaN    NaN
+O14: C2       0  0    0     0          0     NaN    NaN
+O14: C1:C2    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 = 1    0  0    0     0          0     NaN    NaN
+O1 = 2    0  0    0     0          0     NaN    NaN
+O1 = 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m6d
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
+        C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+M22        0  0    0     0          0     NaN    NaN
+M23        0  0    0     0          0     NaN    NaN
+M24        0  0    0     0          0     NaN    NaN
+O22        0  0    0     0          0     NaN    NaN
+O23        0  0    0     0          0     NaN    NaN
+O24        0  0    0     0          0     NaN    NaN
+M22:C2     0  0    0     0          0     NaN    NaN
+M23:C2     0  0    0     0          0     NaN    NaN
+M24:C2     0  0    0     0          0     NaN    NaN
+O12: C1    0  0    0     0          0     NaN    NaN
+O12: C2    0  0    0     0          0     NaN    NaN
+O13: C1    0  0    0     0          0     NaN    NaN
+O13: C2    0  0    0     0          0     NaN    NaN
+O14: C1    0  0    0     0          0     NaN    NaN
+O14: C2    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 = 1    0  0    0     0          0     NaN    NaN
+O1 = 2    0  0    0     0          0     NaN    NaN
+O1 = 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+
+$m6e
+
+Bayesian cumulative logit model fitted with JointAI
+
+Call:
+clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = ~C1 + 
+        M2 * C2 + O2, rev = "O1", seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O12: C1        0  0    0     0          0     NaN    NaN
+O12: M22       0  0    0     0          0     NaN    NaN
+O12: M23       0  0    0     0          0     NaN    NaN
+O12: M24       0  0    0     0          0     NaN    NaN
+O12: C2        0  0    0     0          0     NaN    NaN
+O12: O22       0  0    0     0          0     NaN    NaN
+O12: O23       0  0    0     0          0     NaN    NaN
+O12: O24       0  0    0     0          0     NaN    NaN
+O12: M22:C2    0  0    0     0          0     NaN    NaN
+O12: M23:C2    0  0    0     0          0     NaN    NaN
+O12: M24:C2    0  0    0     0          0     NaN    NaN
+O13: C1        0  0    0     0          0     NaN    NaN
+O13: M22       0  0    0     0          0     NaN    NaN
+O13: M23       0  0    0     0          0     NaN    NaN
+O13: M24       0  0    0     0          0     NaN    NaN
+O13: C2        0  0    0     0          0     NaN    NaN
+O13: O22       0  0    0     0          0     NaN    NaN
+O13: O23       0  0    0     0          0     NaN    NaN
+O13: O24       0  0    0     0          0     NaN    NaN
+O13: M22:C2    0  0    0     0          0     NaN    NaN
+O13: M23:C2    0  0    0     0          0     NaN    NaN
+O13: M24:C2    0  0    0     0          0     NaN    NaN
+O14: C1        0  0    0     0          0     NaN    NaN
+O14: M22       0  0    0     0          0     NaN    NaN
+O14: M23       0  0    0     0          0     NaN    NaN
+O14: M24       0  0    0     0          0     NaN    NaN
+O14: C2        0  0    0     0          0     NaN    NaN
+O14: O22       0  0    0     0          0     NaN    NaN
+O14: O23       0  0    0     0          0     NaN    NaN
+O14: O24       0  0    0     0          0     NaN    NaN
+O14: M22:C2    0  0    0     0          0     NaN    NaN
+O14: M23:C2    0  0    0     0          0     NaN    NaN
+O14: M24:C2    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the intercepts:
+       Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+O1 = 1    0  0    0     0          0     NaN    NaN
+O1 = 2    0  0    0     0          0     NaN    NaN
+O1 = 3    0  0    0     0          0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 100 
+

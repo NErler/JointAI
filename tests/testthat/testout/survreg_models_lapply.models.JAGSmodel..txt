@@ -1,0 +1,258 @@
+$m0a
+model { 
+
+   # Weibull survival model for Srv_ftm_stts_cn ------------------------------------
+  for (i in 1:312) {
+    Srv_ftm_stts_cn[i] ~ dgen.gamma(1, rate_Srv_ftm_stts_cn[i], shape_Srv_ftm_stts_cn)
+    cens_Srv_ftm_stts_cn[i] ~ dinterval(Srv_ftm_stts_cn[i], M_lvlone[i, 1])
+    log(rate_Srv_ftm_stts_cn[i]) <- -(M_lvlone[i, 3] * beta[1])
+  }
+
+
+  # Priors for the model for Srv_ftm_stts_cn
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  shape_Srv_ftm_stts_cn ~ dexp(0.01)
+ 
+ 
+}
+$m1a
+model { 
+
+   # Weibull survival model for Srv_ftm_stts_cn ------------------------------------
+  for (i in 1:312) {
+    Srv_ftm_stts_cn[i] ~ dgen.gamma(1, rate_Srv_ftm_stts_cn[i], shape_Srv_ftm_stts_cn)
+    cens_Srv_ftm_stts_cn[i] ~ dinterval(Srv_ftm_stts_cn[i], M_lvlone[i, 1])
+    log(rate_Srv_ftm_stts_cn[i]) <- -(M_lvlone[i, 3] * beta[1] +
+                                      (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * beta[2] +
+                                      M_lvlone[i, 5] * beta[3])
+  }
+
+
+  # Priors for the model for Srv_ftm_stts_cn
+  for (k in 1:3) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  shape_Srv_ftm_stts_cn ~ dexp(0.01)
+ 
+ 
+}
+$m1b
+model { 
+
+   # Weibull survival model for Srv_ftm_stts_cn ------------------------------------
+  for (i in 1:312) {
+    Srv_ftm_stts_cn[i] ~ dgen.gamma(1, rate_Srv_ftm_stts_cn[i], shape_Srv_ftm_stts_cn)
+    cens_Srv_ftm_stts_cn[i] ~ dinterval(Srv_ftm_stts_cn[i], M_lvlone[i, 1])
+    log(rate_Srv_ftm_stts_cn[i]) <- -(M_lvlone[i, 3] * beta[1] +
+                                      (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * beta[2] +
+                                      M_lvlone[i, 5] * beta[3])
+  }
+
+
+  # Priors for the model for Srv_ftm_stts_cn
+  for (k in 1:3) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  shape_Srv_ftm_stts_cn ~ dexp(0.01)
+ 
+ 
+}
+$m2a
+model { 
+
+   # Weibull survival model for Srv_ftm_stts_cn ------------------------------------
+  for (i in 1:312) {
+    Srv_ftm_stts_cn[i] ~ dgen.gamma(1, rate_Srv_ftm_stts_cn[i], shape_Srv_ftm_stts_cn)
+    cens_Srv_ftm_stts_cn[i] ~ dinterval(Srv_ftm_stts_cn[i], M_lvlone[i, 1])
+    log(rate_Srv_ftm_stts_cn[i]) <- -(M_lvlone[i, 4] * beta[1] +
+                                      (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2])
+  }
+
+
+  # Priors for the model for Srv_ftm_stts_cn
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  shape_Srv_ftm_stts_cn ~ dexp(0.01)
+
+
+
+
+  # Normal model for copper -------------------------------------------------------
+  for (i in 1:312) {
+    M_lvlone[i, 3] ~ dnorm(mu_copper[i], tau_copper)
+    mu_copper[i] <- M_lvlone[i, 4] * alpha[1]
+  }
+
+  # Priors for the model for copper
+  for (k in 1:1) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_copper ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_copper <- sqrt(1/tau_copper)
+ 
+ 
+}
+$m3a
+model { 
+
+   # Weibull survival model for Srv_ftm_stts_cn ------------------------------------
+  for (i in 1:312) {
+    Srv_ftm_stts_cn[i] ~ dgen.gamma(1, rate_Srv_ftm_stts_cn[i], shape_Srv_ftm_stts_cn)
+    cens_Srv_ftm_stts_cn[i] ~ dinterval(Srv_ftm_stts_cn[i], M_lvlone[i, 1])
+    log(rate_Srv_ftm_stts_cn[i]) <- -(M_lvlone[i, 5] * beta[1] +
+                                      (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * beta[2] +
+                                      M_lvlone[i, 6] * beta[3] +
+                                      (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] * beta[4] +
+                                      (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2] * beta[5] +
+                                      (M_lvlone[i, 9] - spM_lvlone[9, 1])/spM_lvlone[9, 2] * beta[6])
+  }
+
+
+  # Priors for the model for Srv_ftm_stts_cn
+  for (k in 1:6) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  shape_Srv_ftm_stts_cn ~ dexp(0.01)
+
+
+
+
+  # Normal model for trig ---------------------------------------------------------
+  for (i in 1:312) {
+    M_lvlone[i, 3] ~ dnorm(mu_trig[i], tau_trig)T(1e-04, )
+    mu_trig[i] <- M_lvlone[i, 5] * alpha[1] +
+                  (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * alpha[2] +
+                  M_lvlone[i, 6] * alpha[3] +
+                  (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] * alpha[4]
+
+    M_lvlone[i, 9] <- log(M_lvlone[i, 3])
+
+
+  }
+
+  # Priors for the model for trig
+  for (k in 1:4) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_trig ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_trig <- sqrt(1/tau_trig)
+
+
+
+
+  # Normal model for copper -------------------------------------------------------
+  for (i in 1:312) {
+    M_lvlone[i, 4] ~ dnorm(mu_copper[i], tau_copper)
+    mu_copper[i] <- M_lvlone[i, 5] * alpha[5] + M_lvlone[i, 6] * alpha[6] +
+                    (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] * alpha[7]
+
+    M_lvlone[i, 8] <- abs(M_lvlone[i, 7] - M_lvlone[i, 4])
+
+
+  }
+
+  # Priors for the model for copper
+  for (k in 5:7) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_copper ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_copper <- sqrt(1/tau_copper)
+ 
+ 
+}
+$m3b
+model { 
+
+   # Weibull survival model for Srv_ftm_stts_cn ------------------------------------
+  for (i in 1:312) {
+    Srv_ftm_stts_cn[i] ~ dgen.gamma(1, rate_Srv_ftm_stts_cn[i], shape_Srv_ftm_stts_cn)
+    cens_Srv_ftm_stts_cn[i] ~ dinterval(Srv_ftm_stts_cn[i], M_lvlone[i, 1])
+    log(rate_Srv_ftm_stts_cn[i]) <- -(b_Srv_ftm_stts_cn_center[group_center[i], 1] +
+                                      beta[2] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] +
+                                      beta[3] * M_lvlone[i, 5] +
+                                      beta[4] * (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] +
+                                      beta[5] * (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] +
+                                      beta[6] * (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2])
+  }
+
+  for (ii in 1:10) {
+    b_Srv_ftm_stts_cn_center[ii, 1:1] ~ dnorm(mu_b_Srv_ftm_stts_cn_center[ii, ], invD_Srv_ftm_stts_cn_center[ , ])
+    mu_b_Srv_ftm_stts_cn_center[ii, 1] <- M_center[ii, 1] * beta[1]
+  }
+
+
+  # Priors for the model for Srv_ftm_stts_cn
+  for (k in 1:6) {
+    beta[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
+  }
+
+  shape_Srv_ftm_stts_cn ~ dexp(0.01)
+
+  invD_Srv_ftm_stts_cn_center[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Srv_ftm_stts_cn_center[1:1, 1:1] <- inverse(invD_Srv_ftm_stts_cn_center[ , ])
+
+
+  # Normal mixed effects model for trig -------------------------------------------
+  for (i in 1:312) {
+    M_lvlone[i, 3] ~ dnorm(mu_trig[i], tau_trig)T(1e-04, )
+    mu_trig[i] <- b_trig_center[group_center[i], 1] +
+                  alpha[2] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] +
+                  alpha[3] * M_lvlone[i, 5] +
+                  alpha[4] * (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2]
+
+
+    M_lvlone[i, 8] <- log(M_lvlone[i, 3])
+
+  }
+
+  for (ii in 1:10) {
+    b_trig_center[ii, 1:1] ~ dnorm(mu_b_trig_center[ii, ], invD_trig_center[ , ])
+    mu_b_trig_center[ii, 1] <- M_center[ii, 1] * alpha[1]
+  }
+
+  # Priors for the model for trig
+  for (k in 1:4) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_trig ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_trig <- sqrt(1/tau_trig)
+
+  invD_trig_center[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_trig_center[1:1, 1:1] <- inverse(invD_trig_center[ , ])
+
+
+  # Normal mixed effects model for copper -----------------------------------------
+  for (i in 1:312) {
+    M_lvlone[i, 4] ~ dnorm(mu_copper[i], tau_copper)
+    mu_copper[i] <- b_copper_center[group_center[i], 1] + alpha[6] * M_lvlone[i, 5] +
+                    alpha[7] * (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2]
+
+
+    M_lvlone[i, 7] <- abs(M_lvlone[i, 6] - M_lvlone[i, 4])
+
+  }
+
+  for (ii in 1:10) {
+    b_copper_center[ii, 1:1] ~ dnorm(mu_b_copper_center[ii, ], invD_copper_center[ , ])
+    mu_b_copper_center[ii, 1] <- M_center[ii, 1] * alpha[5]
+  }
+
+  # Priors for the model for copper
+  for (k in 5:7) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_copper ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_copper <- sqrt(1/tau_copper)
+
+  invD_copper_center[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_copper_center[1:1, 1:1] <- inverse(invD_copper_center[ , ]) 
+ 
+}

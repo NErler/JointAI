@@ -1,6 +1,17 @@
 ---
 title: "Minimal Example"
-date: "2019-08-29"
+description: "A minimal example to demonstrate the usage of the R package JointAI."
+author: "Nicole Erler"
+date: "2020-06-20"
+resource_files:
+  - man/figures/JointAI_square.png
+opengraph:
+  image: 
+    src: "https://nerler.github.io/JointAI/reference/figures/JointAI_square.png"
+    alt: "JointAI: An R package for Joint Analysis and Imputation"
+  twitter:
+    card: summary
+    creator: "@NErler"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -37,29 +48,30 @@ in which the NHANES data is explored.
 
 ##  Fitting a linear regression model
 Fitting a linear regression model with **JointAI** is straightforward with the
-function `lm_imp()`:
-```{r fit_lm1, message = F}
+function [`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
+```{r fit_lm1, message = FALSE}
 lm1 <- lm_imp(SBP ~ gender + age + race + WC + alc + educ + albu + bili,
-              data = NHANES, n.iter = 500, progress.bar = 'none')
+              data = NHANES, n.iter = 500)
 ```
 
 The specification of `lm_imp()` is similar to the specification of a
 linear regression model for complete data using `lm()`.
-In this minimal example the only difference is that for `lm_imp()` the number
+In this minimal example, the only difference is that for `lm_imp()` the number
 of iterations `n.iter` has to be specified.
-Of course there are many more parameters that can or should
+Of course, there are many more parameters that can (and sometimes should)
 be specified.
-In the vignette [*Model Specification*](https://nerler.github.io/JointAI/articles/ModelSpecification.html) 
+In the vignette
+[*Model Specification*](https://nerler.github.io/JointAI/articles/ModelSpecification.html), 
 many of these parameters are explained in detail.
 
-`n.iter` specifies the length of the [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain),
+`n.iter` specifies the length of the [Markov chain](https://en.wikipedia.org/wiki/Markov_chain),
 i.e., the number of draws from the posterior distribution of the parameter
 or unobserved value.
 How many iterations are necessary depends on the data and complexity of the
 model and can vary from as few as 100 up to thousands or millions. 
 
 One important criterion is that the Markov chains need to have converged.
-This can be evaluated visually with a traceplot.
+Convergence can be evaluated visually with a trace plot.
 
 ## Traceplot
 ```{r results_lm1, fig.width = 8, fig.height = 5, out.width = '100%'}
@@ -68,21 +80,20 @@ traceplot(lm1)
 
 The function [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html)
 produces a plot of the sampled values across 
-iterations per parameter. By default, three^[The number of chains can be changed with the argument `n.chain`.] Markov chains are produced for
-each parameter and represented by different colors.
+iterations per parameter. Different chains are represented by different colours.
 
-When the sampler has converged the chains show a horizontal band, as in the
+When the sampler has converged, the chains show a horizontal band, as in the
 above figure. Consequently, when traces show a trend, convergence has not been
-reached  and more iterations are necessary (e.g., using the function
+reached, and more iterations are necessary (e.g., using the function
 [`add_samples()`](https://nerler.github.io/JointAI/reference/add_samples.html)).
 
-When convergence has been achieved, we can obtain the result of the model
+When the chains have converged, we can obtain the result of the model
 from the model summary.
 
 ## Model Summary
 Results from a model fitted with **JointAI** can be printed using `summary()`:
 ```{r, echo = FALSE}
-options(width = 80)
+options(width = 90)
 ```
 
 ```{r}
@@ -91,19 +102,20 @@ summary(lm1)
 
 The output gives the posterior summary, i.e., the summary of the 
 MCMC ([Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo))
-sample (which consists of all chains combined).
+sample, which consists of all chains combined.
 
 By default, [`summary()`](https://nerler.github.io/JointAI/reference/summary.JointAI.html)
 will only print the posterior summary for the main
-model parameters of the analysis model. How to select which parameters are shown
-is described in the vignette 
+model parameters of the analysis model. How one can select which parameters are
+shown is described in the vignette
 [*Selecting Parameters*](https://nerler.github.io/JointAI/articles/SelectingParameters.html).
 
-The summary consists of the posterior mean, the standard deviation and the 
-2.5% and 97.5% quantiles of the MCMC sample, the tail probability and the 
-Gelman-Rubin criterion for convergence.
+The summary consists of the posterior mean, the standard deviation, 2.5% and
+97.5% quantiles of the MCMC sample, the tail probability, the
+Gelman-Rubin criterion for convergence and the ratio of the Monte Carlo error
+to the standard deviation of the posterior sample.
 
-
+#### Tail probability
 The tail probability is a measure of how likely the value 0 is under the 
 estimated posterior distribution, and is calculated as 
 $$2\times\min\left\{Pr(\theta > 0), Pr(\theta < 0)\right\}$$
@@ -120,15 +132,15 @@ for (i in seq_along(mus)) {
   y <- dnorm(x, mean = mus[i])
   
   plot(x,y, type  = 'l', yaxt = 'n', xaxt = 'n',
-       xlab = expression(theta), ylab = "",
+       xlab = expression(theta), ylab = "", cex.lab = 1.5,
        main = paste0('tail prob. = ', round(2*pnorm(0, abs(mus[i])), 3)))
   
   if (mus[i] > 0) {
     polygon(x = c(x[x < 0], max(x[x < 0])),
-            y = c(y[x < 0], min(y)), col = "#18bc9c", border = NA)
+            y = c(y[x < 0], min(y)), col = "#D10E3B", border = NA)
   } else {
     polygon(x = c(x[x > 0], min(x[x > 0])),
-            y = c(y[x > 0], min(y)), col = "#18bc9c", border = NA)
+            y = c(y[x > 0], min(y)), col = "#D10E3B", border = NA)
   }
   lines(x,y)
   axis(side = 1, at = 0)
@@ -137,13 +149,27 @@ for (i in seq_along(mus)) {
 par(op)
 ```
 
-The Gelman-Rubin^[Gelman, A and Rubin, DB (1992) Inference from iterative simulation using multiple sequences, Statistical Science, 7, 457-511.<br>
-Brooks, SP. and Gelman, A. (1998) General methods for monitoring convergence of iterative simulations. Journal of Computational and Graphical Statistics, 7, 434-455.] criterion,
-also available via the function [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.html),
+#### Gelman-Rubin criterion
+The Gelman-Rubin^[Gelman, A and Rubin, DB (1992) Inference from iterative 
+simulation using multiple sequences, Statistical Science, 7, 457-511.<br>
+Brooks, SP. and Gelman, A. (1998) General methods for monitoring convergence of 
+iterative simulations. Journal of Computational and Graphical Statistics,
+7, 434-455.] criterion,
+also available via the function
+[`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.html),
 compares the within and between chain variation. When it is close enough to
 1^[for example < 1.1; but this is not a generally accepted cut-off], the chains
 can be assumed to have converged.
 
+#### Monte Carlo error
+The Monte Carlo error is a measure of the error that is made because the
+estimate is based on a finite sample. It can also be obtained using the function
+[`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html).
+Ideally, the Monte Carlo error should be small compared to the standard error 
+of the posterior sample. The values shown in the model summary are the Monte 
+Carlo error divided by the posterior standard deviation.
+
+#### Additional information
 In the model summary, additionally, some important characteristics of the MCMC
 samples on which the summary is based, are given.
 This includes the range and number of iterations
@@ -159,6 +185,9 @@ When the traceplot shows that the chains only converged after
 1500 iterations, `start = 1500` should be specified in
 [`summary()`](https://nerler.github.io/JointAI/reference/summary.JointAI.html).
 
+A summary of the missing values in all variables involved in the model can
+be added to the summary by setting `missinfo = TRUE`.
+
 ## Plot of the posterior distributions
 The posterior distributions can be visualized using the function `densplot()`:
 ```{r, fig.width = 8, fig.height = 5}
@@ -173,19 +202,43 @@ are plotted.
 ## Other types of models
 Besides linear regression models, it is also possible to fit
 
-* **generalized linear models**: `glm_imp()` (follows the specification of
-[`glm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html))
-* **cumulative logit models** for ordinal outcomes: `clm_imp()` (follows the
-specification of `clm()` from package [**ordinal**](https://CRAN.R-project.org/package=ordinal))
-* **linear mixed models**: `lme_imp()` (follows the specification of [`lme()`](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html)
-from package [**nlme**](https://CRAN.R-project.org/package=nlme))
-* **generalized linear mixed models**: `glme_imp()` (analogue the specification used
-in `lme_imp()` and `glm_imp()`)
-* **cumulative logit mixed models** for longitudinal ordinal outcomes: `clmm_imp()` (follows the
-specification of `clmm2()` from package [**ordinal**](https://CRAN.R-project.org/package=ordinal))
-* **parametric (Weibull) survival models**: `survreg_imp()` (follows the specification
-of [`survreg()`](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/survreg.html)
-from package [**survival**](https://CRAN.R-project.org/package=survival))
-* **Cox proportional hazards survival models**: `coxph_imp()` (follows the specification
-of [`coxph()`](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/coxph.html)
-from package [**survival**](https://CRAN.R-project.org/package=survival))
+* **generalized linear models**: 
+  [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+* **log-normal models**:
+  [`lognorm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+* **beta models** for continuous outcomes between 0 and 1 (proportions):
+  [`betareg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+* **cumulative logit models** for ordinal outcomes: 
+  [`clm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+* **multinomial logit models** for unordered factors with multiple levels:
+  [`mlogit_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+
+  
+* **linear mixed models**: 
+  [`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) or 
+  [`lmer_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+  (identical)
+* **generalized linear mixed models**: 
+  [`glme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) or
+  [`glmer_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+  (identical)
+* **log-normal mixed models**: 
+  [`lognormmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+* **beta mixed models**: 
+  [`betamm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+* **cumulative logit mixed models**: 
+  [`clmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+* **multinomial logit mixed models**: 
+  [`mlogitmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+
+
+* **parametric (Weibull) survival models**: 
+  [`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+* **proportional hazards survival models**: 
+  [`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+* **joint models for longitudinal and survival data**: 
+  [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+
+
+It is also possible to specify multiple analysis models at the same time, by 
+providing a list of model formulas.

@@ -1,0 +1,197 @@
+$m0a
+
+Bayesian weibull survival model fitted with JointAI
+
+Call:
+survreg_imp(formula = Surv(futime, status != "censored") ~ 1, 
+    data = PBC2, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Number of events: 169 
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+
+Posterior summary of the shape of the Weibull distribution:
+                      Mean SD 2.5% 97.5% GR-crit MCE/SD
+shape_Srv_ftm_stts_cn    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 312 
+
+$m1a
+
+Bayesian weibull survival model fitted with JointAI
+
+Call:
+survreg_imp(formula = Surv(futime, status != "censored") ~ age + 
+    sex, data = PBC2, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+
+Number of events: 169 
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+age            0  0    0     0          0     NaN    NaN
+sexfemale      0  0    0     0          0     NaN    NaN
+
+Posterior summary of the shape of the Weibull distribution:
+                      Mean SD 2.5% 97.5% GR-crit MCE/SD
+shape_Srv_ftm_stts_cn    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 312 
+
+$m1b
+
+Bayesian weibull survival model fitted with JointAI
+
+Call:
+survreg_imp(formula = Surv(futime, I(status != "censored")) ~ 
+    age + sex, data = PBC2, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+
+Number of events: 169 
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+age            0  0    0     0          0     NaN    NaN
+sexfemale      0  0    0     0          0     NaN    NaN
+
+Posterior summary of the shape of the Weibull distribution:
+                      Mean SD 2.5% 97.5% GR-crit MCE/SD
+shape_Srv_ftm_stts_cn    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 312 
+
+$m2a
+
+Bayesian weibull survival model fitted with JointAI
+
+Call:
+survreg_imp(formula = Surv(futime, status != "censored") ~ copper, 
+    data = PBC2, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE)
+
+
+Number of events: 169 
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+copper         0  0    0     0          0     NaN    NaN
+
+Posterior summary of the shape of the Weibull distribution:
+                      Mean SD 2.5% 97.5% GR-crit MCE/SD
+shape_Srv_ftm_stts_cn    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 312 
+
+$m3a
+
+Bayesian weibull survival model fitted with JointAI
+
+Call:
+survreg_imp(formula = Surv(futime, status != "censored") ~ copper + 
+    sex + age + abs(age - copper) + log(trig), data = PBC2, n.adapt = 5, 
+    n.iter = 10, trunc = list(trig = c(1e-04, NA)), seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+
+Number of events: 169 
+
+Posterior summary:
+                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)          0  0    0     0          0     NaN    NaN
+copper               0  0    0     0          0     NaN    NaN
+sexfemale            0  0    0     0          0     NaN    NaN
+age                  0  0    0     0          0     NaN    NaN
+abs(age - copper)    0  0    0     0          0     NaN    NaN
+log(trig)            0  0    0     0          0     NaN    NaN
+
+Posterior summary of the shape of the Weibull distribution:
+                      Mean SD 2.5% 97.5% GR-crit MCE/SD
+shape_Srv_ftm_stts_cn    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 312 
+
+$m3b
+
+Bayesian weibull survival model fitted with JointAI
+
+Call:
+survreg_imp(formula = Surv(futime, status != "censored") ~ copper + 
+    sex + age + abs(age - copper) + log(trig) + (1 | center), 
+    data = PBC2, n.adapt = 5, n.iter = 10, trunc = list(trig = c(1e-04, 
+        NA)), seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Number of events: 169 
+
+Posterior summary:
+                  Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)          0  0    0     0          0     NaN    NaN
+copper               0  0    0     0          0     NaN    NaN
+sexfemale            0  0    0     0          0     NaN    NaN
+age                  0  0    0     0          0     NaN    NaN
+abs(age - copper)    0  0    0     0          0     NaN    NaN
+log(trig)            0  0    0     0          0     NaN    NaN
+
+Posterior summary of random effects covariance matrix:
+                              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+D_Srv_ftm_stts_cn_center[1,1]    0  0    0     0                NaN    NaN
+
+Posterior summary of the shape of the Weibull distribution:
+                      Mean SD 2.5% 97.5% GR-crit MCE/SD
+shape_Srv_ftm_stts_cn    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 312 
+Number of groups:
+ - center: 10
+

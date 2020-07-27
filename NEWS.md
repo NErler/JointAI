@@ -1,10 +1,144 @@
+# JointAI (development version)
+
+This version of **JointAI** contains some major changes. To extend the package
+it was necessary to change the internal structure and it was not possible to 
+assure backward compatibility.
+
+## New features
+### New analysis model types
+* `betareg_imp()`: beta regression
+* `betamm_imp()`: beta mixed model
+* `lognorm_imp()`: log-normal regression model
+* `lognormmm_imp()`: log-normal mixed model
+* `mlogit_imp()`: multinomial logit model
+* `mlogitmm_imp()`: multinomial mixed model
+* `JM_imp()`: joint model for longitudinal and survival data
+
+### Hierarchical models with multiple levels of grouping
+It is now possible to fit **hierarchical models with more than one level of
+grouping**, with nested as well as crossed random effects (check [the help
+file](https://nerler.github.io/JointAI/reference/model_imp.html)) of the main
+model function for details on how to specify such random effects structures.
+
+This does also apply to survival models, i.e., it is possible to specify a
+random effects structure to model survival outcomes in data with a hierarchical
+structure, e.g., in a multi-centre setting.
+
+### Proportional hazards model with time-dependent covariates
+`coxph_imp()` can now handle **time-dependent covariates** using
+last-observation-carried-forward. This requires to add `(1 | <id variable>)` to
+the model formula to identify which rows belong to the same subject, and to
+specify the argument `timevar` to identify the variable that contains the
+observation time of the longitudinal measurements.
+
+### Multivariate models
+By providing a list of model formulas it is possible to fit multiple 
+analysis models (of different types) simultaneously. The models can share
+covariates and it is possible to have the response of one model as covariate
+in another model (in a sequential manner, however, not circular).
+
+### Partial proportional odds models for ordinal responses
+As before, proportional odds are assumed by default for all covariates of a 
+cumulative logit model. The argument `nonprop` accepts a one-sided formula or 
+a named list of one-sided formulas in which the covariates are specified for
+which non-proportional odds should be assumed.
+
+Additionally, the argument `rev` is available to specify a vector of 
+names of ordinal responses for which the odds should be inverted.
+For details, see the [the help
+file](https://nerler.github.io/JointAI/reference/model_imp.html).
+
+
+### Other new features
+* The functions `lmer_imp()` and `glmer_imp()` are aliases for `lme_imp()` 
+  and `glme_imp()`.
+* All mixed models can be specified using the **nlme** type specification
+  (using `fixed` and `random`) as well as using specification as in **lme4**
+  (with a combined model formula for fixed and random effects).
+* The argument `df_basehaz` in `coxph_imp()` and `JM_imp()` allows setting the
+  number of degrees of freedom in the B-spline basis used to model the 
+  baseline hazard.
+* The global setting `options("contrasts")` is no longer ignored. For completely
+  observed covariates, any of the contrasts available in base R are possible
+  and `options("contrasts")` is used to determine which contrasts to use.
+  For covariates with missing values, effect coding (`contr.sum`) and 
+  dummy coding (`contr.treatment`) are possible. 
+  This means that for completely observed ordered factors the default is
+  `contr.poly`, but for incomplete ordered factors the default is
+  `contr.treatment`.
+  
+
+## Other changes
+* Within `summary()`, the argument `multivariate` to the function `GR_crit()` is
+  now set to `FALSE` to avoid issues. The multivariate version can still be 
+  obtained by using `GR_crit()` directly.
+* The parameters of the baseline hazard for `coxph_imp()` and `JM_imp()`
+  are monitored automatically when "analysis_main = TRUE".
+* The function `get_models()` is no longer exported because it now requires 
+  more input variables and is no longer convenient to use. To obtain the default
+  specification of the model types use one of the main functions (`*_imp()`),
+  set `n.adapt = 0` (and `n.iter = 0`), and obtain the model types as
+  `<mymodel>$models`.
+* `list_models()` now returns information on all sub-models, including the 
+  main analysis models (previously it included only information on covariates).
+* The output of `parameters()` has changed. The function returns a list of 
+  matrices, one per analysis model, with information on the response variable,
+  response category, name of the regression coefficient and its associated
+  covariate.
+* The argument `missinfo = TRUE` in `summar()` adds information on the missing
+  values in the data involved in a JointAI model (number and proportion of 
+  complete cases, number and proportion of missing values per variable).
+* The argument `ridge` has changed to `shrinkage`. If `shrinkage = "ridge"`,
+  a ridge prior is used for all regression coefficients in all sub-models.
+  If a vector of response variable names is provided to `shinkage`, ridge 
+  priors are only used for the coefficients in these models.
+* `default_hyperpars()`: The default hyper-parameters for random effects are no
+  longer provided as a function but more consistently with the hyper-parameters
+  for other model parts, as a vector (within the list of all hyper-parameters).
+* `default_hyperpars()`: **the default number of degrees of freedom in the
+  Wishart distribution used for the inverse of the random effects covariance
+  matrix is now the number of random effects + 1 (was the number of random
+  effects before).**
+* The effect of using a `seed` in **JointAI** is now only local, i.e., in
+  functions in which `set.seed()` is called, the random number generator state
+  `.Random.seed` before setting the seed is recorded, and re-set to that value
+  on exiting the function.
+* In `predDF()` the argument `var` has changed to `vars` and expects a 
+  formula. This extends the functionality of `predDF()` to let multiple
+  variables vary.
+* Some of the elements of a `JointAI` object have changed. Potentially relevant
+  for users:
+    * `JointAI` objects now contain information on the computational time and
+      environment they were run in: the element `comp_info` contains the
+      time-stamp the model was fitted, the duration of the computation, the
+      JointAI version number and the R session info.
+    * The JAGS model is stored as character string in the element `jagsmodel`.
+* The arguments `warn` and `mess` now also affect the output of **rjags**.
+* The **doFuture** package is used for parallel computation instead of
+  **doParallel**. Parallel computation is specified by setting a
+  `future::plan()` for how the "future" should be handled. As a consequence,
+  the arguments `parallel` and `n.cores` are no longer used. Information on the
+  setting that was used with regards to parallel computation is returned in a
+  `JointAI object` via `comp_list$future`.
+    
+  
+## Bug fixes
+* Scaling of continuous covariates is no longer done in the data, but in the 
+  JAGS model. This fixes the issue that previously the estimated variance 
+  parameters of continuous covariates and variance parameters of their random
+  effects were incorrect (this issue only affected the covariate models, not the
+  main analysis model).
+
+
+--------------------------------------------------------------------------------
+
 # JointAI 0.6.1
 
 ## Bug fixes
 * Fixed bug that messed up coefficients in `clmm` covariate model when there are
   no baseline covariates in the model
 * enable `newdata` for `predict()` that does not contain the outcome variable
-* `add_samples()`: calculation of `end()` of mcmc samples fixed
+* `add_samples()`: calculation of `end()` of MCMC samples fixed
 
 --------------------------------------------------------------------------------
 
@@ -148,7 +282,7 @@
 * `confint()` method added for `JointAI` object
 * `print()` method added for `JointAI` object
 * `survreg_imp()` added to perform analysis of parametric (Weibull) survival models
-* `glme_imp()` added to perform generalized linear mixed modeling
+* `glme_imp()` added to perform generalized linear mixed modelling
 * extended documentation; two new vignettes on MCMC parameters and functions for after the model is estimated;
   added messages about coding of ordinal variables
 
@@ -158,19 +292,22 @@
 # JointAI 0.3.4
 
 ## Bug fixes
-* `traceplot()`, `densplot()`: specification of `nrow` AND `ncol` possible; fixed bug when only `nrow` specified
+* `traceplot()`, `densplot()`: specification of `nrow` AND `ncol` possible;
+  fixed bug when only `nrow` specified
 
 # JointAI 0.3.3
 
 ## Bug fixes
 * remove deprecated code specifying `contrast.arg` that now in some cases cause error
-* fixed problem identifying non-linear functions in formula when the name of another variable contains the function name
+* fixed problem identifying non-linear functions in formula when the name of
+  another variable contains the function name
 
 --------------------------------------------------------------------------------
 # JointAI 0.3.2
 
 ## Bug fixes
-* `lme_imp()`: fixed error in JAGS model when interaction between random slope variable and longitudinal variable 
+* `lme_imp()`: fixed error in JAGS model when interaction between random slope
+   variable and longitudinal variable 
 
 ## Minor changes
 * unused levels of factors are dropped 
@@ -180,19 +317,20 @@
 
 ## Bug fixes
 * `plot_all()` uses correct level-2 %NA in title
-* `simWide`: case with no observed bmi values removed
+* `simWide`: case with no observed `bmi` values removed
 * `traceplot()`, `densplot()`: `ncol` and `nrow` now work with `use_ggplot = TRUE`
 * `traceplot()`, `densplot()`: error in specification of `nrow` fixed
 * `densplot()`: use of color fixed
 * functions with argument `subset` now return random effects covariance matrix correctly
-* `summary()` displays output with rowname when only one node is returned and fixed display of `D` matrix
+* `summary()` displays output with row name when only one node is returned and
+  fixed display of `D` matrix
 * `GR_crit()`: Literature reference corrected
 * `predict()`: prediction with varying factor fixed
 * no scaling for variables involved in a function to avoid problems with re-scaling
 
 ## Minor changes
 * `plot_all()` uses `xpd = TRUE` when printing text for character variables
-* `list_impmodels()` uses linebreak when output of predictor variables exceeds
+* `list_impmodels()` uses line break when output of predictor variables exceeds
   `getOption("width")`
 * `summary()` now displays tail-probabilities for off-diagonal elements of `D`
 * added option to show/hide constant effects of auxiliary variables in plots
@@ -203,8 +341,10 @@
 # JointAI 0.3.0
 
 ## Bug fixes
-* `monitor_params` is now checked to avoid problems when only part of the main parameters is selected
-* categorical imputation models now use min-max trick to prevent probabilities outside [0, 1]
+* `monitor_params` is now checked to avoid problems when only part of the main
+  parameters is selected
+* categorical imputation models now use min-max trick to prevent probabilities
+  outside [0, 1]
 * initial value generation for logistic analysis model fixed
 * bug-fix in re-ordering columns when a function is part of the linear predictor
 * bug-fix in initial values for categorical covariates
@@ -231,7 +371,7 @@
 * `densplot()` and `traceplot()` optional with ggplot
 * `densplot()` option to combine chains before plotting
 * example datasets `NHANES`, `simLong` and `simWide` added
-* `list_impmodels` to print information on the imputation models and hyperparameters
+* `list_impmodels` to print information on the imputation models and hyper-parameters
 * `parameters()` added to display the parameters to be/that were monitored
 * `set_refcat()` added to guide specification of reference categories
 * extension of possible functions of variables in model formula to (almost all)

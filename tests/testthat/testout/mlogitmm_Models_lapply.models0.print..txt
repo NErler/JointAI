@@ -1,0 +1,718 @@
+
+Call:
+mlogitmm_imp(fixed = m1 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept) (Intercept) 
+          0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+Call:
+mlogitmm_imp(fixed = m2 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m2" 
+
+Fixed effects:
+(Intercept) (Intercept) 
+          0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+Call:
+mlogitmm_imp(fixed = m1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept)          C1 (Intercept)          C1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+Call:
+mlogitmm_imp(fixed = m2 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m2" 
+
+Fixed effects:
+(Intercept)          C1 (Intercept)          C1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+Call:
+mlogitmm_imp(fixed = m1 ~ c1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept) (Intercept)          c1          c1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+Call:
+mlogitmm_imp(fixed = m2 ~ c1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m2" 
+
+Fixed effects:
+(Intercept) (Intercept)          c1          c1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+Call:
+mlogitmm_imp(fixed = m1 ~ C2 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept)          C2 (Intercept)          C2 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+Call:
+mlogitmm_imp(fixed = m2 ~ C2 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m2" 
+
+Fixed effects:
+(Intercept)          C2 (Intercept)          C2 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+Call:
+mlogitmm_imp(fixed = m1 ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept) (Intercept)          c2          c2 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+Call:
+mlogitmm_imp(fixed = m2 ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m2" 
+
+Fixed effects:
+(Intercept) (Intercept)          c2          c2 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+Call:
+lme_imp(fixed = c1 ~ m1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear mixed model for "c1" 
+
+Fixed effects:
+(Intercept)         m1B         m1C 
+          0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+
+Residual standard deviation:
+sigma_c1 
+       0 
+
+Call:
+lme_imp(fixed = c1 ~ m2 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear mixed model for "c1" 
+
+Fixed effects:
+(Intercept)         m2B         m2C 
+          0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+
+Residual standard deviation:
+sigma_c1 
+       0 
+
+Call:
+mlogitmm_imp(fixed = m1 ~ M2 + m2 * abs(C1 - C2) + log(C1) + 
+    (1 | id), data = longDF, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+    abs(C1 - C2)          log(C1)      (Intercept)              M22 
+               0                0                0                0 
+             M23              M24     abs(C1 - C2)          log(C1) 
+               0                0                0                0 
+             m2B              m2C m2B:abs(C1 - C2) m2C:abs(C1 - C2) 
+               0                0                0                0 
+             m2B              m2C m2B:abs(C1 - C2) m2C:abs(C1 - C2) 
+               0                0                0                0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+Call:
+mlogitmm_imp(fixed = m1 ~ ifelse(as.numeric(m2) > as.numeric(M1), 
+    1, 0) * abs(C1 - C2) + log(C1) + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+                                               (Intercept) 
+                                                         0 
+                                              abs(C1 - C2) 
+                                                         0 
+                                                   log(C1) 
+                                                         0 
+                                               (Intercept) 
+                                                         0 
+                                              abs(C1 - C2) 
+                                                         0 
+                                                   log(C1) 
+                                                         0 
+             ifelse(as.numeric(m2) > as.numeric(M1), 1, 0) 
+                                                         0 
+ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 
+                                                         0 
+             ifelse(as.numeric(m2) > as.numeric(M1), 1, 0) 
+                                                         0 
+ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 
+                                                         0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+Call:
+mlogitmm_imp(fixed = m1 ~ time + c1 + C1 + B2 + (c1 * time | 
+    id), data = longDF, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept)          C1         B21 (Intercept)          C1         B21 
+          0           0           0           0           0           0 
+       time          c1        time          c1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept) c1 time c1:time
+(Intercept)           0  0    0       0
+c1                    0  0    0       0
+time                  0  0    0       0
+c1:time               0  0    0       0
+
+
+Call:
+mlogitmm_imp(fixed = m1 ~ C1 * time + I(time^2) + b2 * c1, data = longDF, 
+    random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept)          C1 (Intercept)          C1        time   I(time^2) 
+          0           0           0           0           0           0 
+        b21          c1     C1:time      b21:c1        time   I(time^2) 
+          0           0           0           0           0           0 
+        b21          c1     C1:time      b21:c1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept) time
+(Intercept)           0    0
+time                  0    0
+
+
+Call:
+mlogitmm_imp(fixed = m1 ~ C1 + log(time) + I(time^2) + p1, data = longDF, 
+    random = ~1 | id, n.adapt = 5, n.iter = 10, shrinkage = "ridge", 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept)          C1 (Intercept)          C1   log(time)   I(time^2) 
+          0           0           0           0           0           0 
+         p1   log(time)   I(time^2)          p1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+$m0a
+
+Call:
+mlogitmm_imp(fixed = m1 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept) (Intercept) 
+          0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+$m0b
+
+Call:
+mlogitmm_imp(fixed = m2 ~ 1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m2" 
+
+Fixed effects:
+(Intercept) (Intercept) 
+          0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+$m1a
+
+Call:
+mlogitmm_imp(fixed = m1 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept)          C1 (Intercept)          C1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+$m1b
+
+Call:
+mlogitmm_imp(fixed = m2 ~ C1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m2" 
+
+Fixed effects:
+(Intercept)          C1 (Intercept)          C1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+$m1c
+
+Call:
+mlogitmm_imp(fixed = m1 ~ c1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept) (Intercept)          c1          c1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+$m1d
+
+Call:
+mlogitmm_imp(fixed = m2 ~ c1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m2" 
+
+Fixed effects:
+(Intercept) (Intercept)          c1          c1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+$m2a
+
+Call:
+mlogitmm_imp(fixed = m1 ~ C2 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept)          C2 (Intercept)          C2 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+$m2b
+
+Call:
+mlogitmm_imp(fixed = m2 ~ C2 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m2" 
+
+Fixed effects:
+(Intercept)          C2 (Intercept)          C2 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+$m2c
+
+Call:
+mlogitmm_imp(fixed = m1 ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept) (Intercept)          c2          c2 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+$m2d
+
+Call:
+mlogitmm_imp(fixed = m2 ~ c2 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m2" 
+
+Fixed effects:
+(Intercept) (Intercept)          c2          c2 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+$m3a
+
+Call:
+lme_imp(fixed = c1 ~ m1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear mixed model for "c1" 
+
+Fixed effects:
+(Intercept)         m1B         m1C 
+          0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+
+Residual standard deviation:
+sigma_c1 
+       0 
+
+$m3b
+
+Call:
+lme_imp(fixed = c1 ~ m2 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear mixed model for "c1" 
+
+Fixed effects:
+(Intercept)         m2B         m2C 
+          0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+
+Residual standard deviation:
+sigma_c1 
+       0 
+
+$m4a
+
+Call:
+mlogitmm_imp(fixed = m1 ~ M2 + m2 * abs(C1 - C2) + log(C1) + 
+    (1 | id), data = longDF, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+     (Intercept)              M22              M23              M24 
+               0                0                0                0 
+    abs(C1 - C2)          log(C1)      (Intercept)              M22 
+               0                0                0                0 
+             M23              M24     abs(C1 - C2)          log(C1) 
+               0                0                0                0 
+             m2B              m2C m2B:abs(C1 - C2) m2C:abs(C1 - C2) 
+               0                0                0                0 
+             m2B              m2C m2B:abs(C1 - C2) m2C:abs(C1 - C2) 
+               0                0                0                0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+$m4b
+
+Call:
+mlogitmm_imp(fixed = m1 ~ ifelse(as.numeric(m2) > as.numeric(M1), 
+    1, 0) * abs(C1 - C2) + log(C1) + (1 | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+                                               (Intercept) 
+                                                         0 
+                                              abs(C1 - C2) 
+                                                         0 
+                                                   log(C1) 
+                                                         0 
+                                               (Intercept) 
+                                                         0 
+                                              abs(C1 - C2) 
+                                                         0 
+                                                   log(C1) 
+                                                         0 
+             ifelse(as.numeric(m2) > as.numeric(M1), 1, 0) 
+                                                         0 
+ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 
+                                                         0 
+             ifelse(as.numeric(m2) > as.numeric(M1), 1, 0) 
+                                                         0 
+ifelse(as.numeric(m2) > as.numeric(M1), 1, 0):abs(C1 - C2) 
+                                                         0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+$m4c
+
+Call:
+mlogitmm_imp(fixed = m1 ~ time + c1 + C1 + B2 + (c1 * time | 
+    id), data = longDF, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept)          C1         B21 (Intercept)          C1         B21 
+          0           0           0           0           0           0 
+       time          c1        time          c1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept) c1 time c1:time
+(Intercept)           0  0    0       0
+c1                    0  0    0       0
+time                  0  0    0       0
+c1:time               0  0    0       0
+
+
+$m4d
+
+Call:
+mlogitmm_imp(fixed = m1 ~ C1 * time + I(time^2) + b2 * c1, data = longDF, 
+    random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept)          C1 (Intercept)          C1        time   I(time^2) 
+          0           0           0           0           0           0 
+        b21          c1     C1:time      b21:c1        time   I(time^2) 
+          0           0           0           0           0           0 
+        b21          c1     C1:time      b21:c1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept) time
+(Intercept)           0    0
+time                  0    0
+
+
+$m4e
+
+Call:
+mlogitmm_imp(fixed = m1 ~ C1 + log(time) + I(time^2) + p1, data = longDF, 
+    random = ~1 | id, n.adapt = 5, n.iter = 10, shrinkage = "ridge", 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian multinomial logit mixed model for "m1" 
+
+Fixed effects:
+(Intercept)          C1 (Intercept)          C1   log(time)   I(time^2) 
+          0           0           0           0           0           0 
+         p1   log(time)   I(time^2)          p1 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+

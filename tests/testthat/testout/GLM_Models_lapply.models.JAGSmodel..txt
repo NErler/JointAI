@@ -1,0 +1,2697 @@
+$m0a1
+model { 
+
+ 
+  # Normal model for y ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
+    mu_y[i] <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for y
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_y <- sqrt(1/tau_y)
+ 
+ 
+}
+$m0a2
+model { 
+
+ 
+  # Normal model for y ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
+    mu_y[i] <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for y
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_y <- sqrt(1/tau_y)
+ 
+ 
+}
+$m0a3
+model { 
+
+ 
+  # Normal model for y ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
+    log(mu_y[i]) <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for y
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_y <- sqrt(1/tau_y)
+ 
+ 
+}
+$m0a4
+model { 
+
+ 
+  # Normal model for y ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
+    mu_y[i] <- 1/max(1e-10, inv_mu_y[i])
+    inv_mu_y[i] <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for y
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_y <- sqrt(1/tau_y)
+ 
+ 
+}
+$m0b1
+model { 
+
+ 
+  # Binomial model for B1 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B1[i])))
+    logit(mu_B1[i]) <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for B1
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+ 
+ 
+}
+$m0b2
+model { 
+
+ 
+  # Binomial model for B1 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B1[i])))
+    probit(mu_B1[i]) <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for B1
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+ 
+ 
+}
+$m0b3
+model { 
+
+ 
+  # Binomial model for B1 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B1[i])))
+    log(mu_B1[i]) <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for B1
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+ 
+ 
+}
+$m0b4
+model { 
+
+ 
+  # Binomial model for B1 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B1[i])))
+    cloglog(mu_B1[i]) <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for B1
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+ 
+ 
+}
+$m0c1
+model { 
+
+ 
+  # Gamma model for L1 ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dgamma(shape_L1[i], rate_L1[i])
+
+    shape_L1[i] <- pow(mu_L1[i], 2) / pow(sigma_L1, 2)
+    rate_L1[i] <- mu_L1[i] / pow(sigma_L1, 2)
+
+    mu_L1[i] <- 1/max(1e-10, inv_mu_L1[i])
+    inv_mu_L1[i] <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for L1
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_gamma, tau_reg_gamma)
+  }
+  tau_L1 ~ dgamma(shape_tau_gamma, rate_tau_gamma)
+  sigma_L1 <- sqrt(1/tau_L1)
+ 
+ 
+}
+$m0c2
+model { 
+
+ 
+  # Gamma model for L1 ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dgamma(shape_L1[i], rate_L1[i])
+
+    shape_L1[i] <- pow(mu_L1[i], 2) / pow(sigma_L1, 2)
+    rate_L1[i] <- mu_L1[i] / pow(sigma_L1, 2)
+
+    log(mu_L1[i]) <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for L1
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_gamma, tau_reg_gamma)
+  }
+  tau_L1 ~ dgamma(shape_tau_gamma, rate_tau_gamma)
+  sigma_L1 <- sqrt(1/tau_L1)
+ 
+ 
+}
+$m0d1
+model { 
+
+ 
+  # Poisson model for P1 ----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dpois(max(1e-10, mu_P1[i]))
+    log(mu_P1[i]) <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for P1
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
+  }
+ 
+ 
+}
+$m0d2
+model { 
+
+ 
+  # Poisson model for P1 ----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dpois(max(1e-10, mu_P1[i]))
+    mu_P1[i] <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for P1
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
+  }
+ 
+ 
+}
+$m0e1
+model { 
+
+ 
+  # Log-normal model for L1 -------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dlnorm(mu_L1[i], tau_L1)
+    mu_L1[i] <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for L1
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_L1 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_L1 <- sqrt(1/tau_L1)
+ 
+ 
+}
+$m0f1
+model { 
+
+ 
+  # Beta model for Be1 ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbeta(shape1_Be1[i], shape2_Be1[i])T(1e-15, 1 - 1e-15)
+
+    shape1_Be1[i] <- mu_Be1[i] * tau_Be1
+    shape2_Be1[i] <- (1 - mu_Be1[i]) * tau_Be1
+
+    logit(mu_Be1[i]) <- M_lvlone[i, 2] * beta[1]
+  }
+
+  # Priors for the model for Be1
+  for (k in 1:1) {
+    beta[k] ~ dnorm(mu_reg_beta, tau_reg_beta)
+  }
+  tau_Be1 ~ dgamma(shape_tau_beta, rate_tau_beta)
+
+ 
+ 
+}
+$m1a
+model { 
+
+ 
+  # Normal model for y ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
+    mu_y[i] <- M_lvlone[i, 2] * beta[1] +
+               (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2]
+  }
+
+  # Priors for the model for y
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_y <- sqrt(1/tau_y)
+ 
+ 
+}
+$m1b
+model { 
+
+ 
+  # Binomial model for B1 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B1[i])))
+    logit(mu_B1[i]) <- M_lvlone[i, 2] * beta[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2]
+  }
+
+  # Priors for the model for B1
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+ 
+ 
+}
+$m1c
+model { 
+
+ 
+  # Gamma model for L1 ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dgamma(shape_L1[i], rate_L1[i])
+
+    shape_L1[i] <- pow(mu_L1[i], 2) / pow(sigma_L1, 2)
+    rate_L1[i] <- mu_L1[i] / pow(sigma_L1, 2)
+
+    mu_L1[i] <- 1/max(1e-10, inv_mu_L1[i])
+    inv_mu_L1[i] <- M_lvlone[i, 2] * beta[1] +
+                    (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2]
+  }
+
+  # Priors for the model for L1
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_gamma, tau_reg_gamma)
+  }
+  tau_L1 ~ dgamma(shape_tau_gamma, rate_tau_gamma)
+  sigma_L1 <- sqrt(1/tau_L1)
+ 
+ 
+}
+$m1d
+model { 
+
+ 
+  # Poisson model for P1 ----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dpois(max(1e-10, mu_P1[i]))
+    log(mu_P1[i]) <- M_lvlone[i, 2] * beta[1] +
+                     (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2]
+  }
+
+  # Priors for the model for P1
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
+  }
+ 
+ 
+}
+$m1e
+model { 
+
+ 
+  # Log-normal model for L1 -------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dlnorm(mu_L1[i], tau_L1)
+    mu_L1[i] <- M_lvlone[i, 2] * beta[1] +
+                (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2]
+  }
+
+  # Priors for the model for L1
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_L1 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_L1 <- sqrt(1/tau_L1)
+ 
+ 
+}
+$m1f
+model { 
+
+ 
+  # Beta model for Be1 ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbeta(shape1_Be1[i], shape2_Be1[i])T(1e-15, 1 - 1e-15)
+
+    shape1_Be1[i] <- mu_Be1[i] * tau_Be1
+    shape2_Be1[i] <- (1 - mu_Be1[i]) * tau_Be1
+
+    logit(mu_Be1[i]) <- M_lvlone[i, 2] * beta[1] +
+                        (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2]
+  }
+
+  # Priors for the model for Be1
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_beta, tau_reg_beta)
+  }
+  tau_Be1 ~ dgamma(shape_tau_beta, rate_tau_beta)
+
+ 
+ 
+}
+$m2a
+model { 
+
+ 
+  # Normal model for y ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
+    mu_y[i] <- M_lvlone[i, 3] * beta[1] +
+               (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[2]
+  }
+
+  # Priors for the model for y
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_y <- sqrt(1/tau_y)
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 3] * alpha[1]
+  }
+
+  # Priors for the model for C2
+  for (k in 1:1) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m2b
+model { 
+
+ 
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 3] * beta[1] +
+                       (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[2]
+  }
+
+  # Priors for the model for B2
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 3] * alpha[1]
+  }
+
+  # Priors for the model for C2
+  for (k in 1:1) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m2c
+model { 
+
+ 
+  # Gamma model for L1mis ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dgamma(shape_L1mis[i], rate_L1mis[i])
+
+    shape_L1mis[i] <- pow(mu_L1mis[i], 2) / pow(sigma_L1mis, 2)
+    rate_L1mis[i] <- mu_L1mis[i] / pow(sigma_L1mis, 2)
+
+    mu_L1mis[i] <- 1/max(1e-10, inv_mu_L1mis[i])
+    inv_mu_L1mis[i] <- M_lvlone[i, 3] * beta[1] +
+                       (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[2]
+  }
+
+  # Priors for the model for L1mis
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_gamma, tau_reg_gamma)
+  }
+  tau_L1mis ~ dgamma(shape_tau_gamma, rate_tau_gamma)
+  sigma_L1mis <- sqrt(1/tau_L1mis)
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 3] * alpha[1]
+  }
+
+  # Priors for the model for C2
+  for (k in 1:1) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m2d
+model { 
+
+ 
+  # Poisson model for P2 ----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dpois(max(1e-10, mu_P2[i]))
+    log(mu_P2[i]) <- M_lvlone[i, 3] * beta[1] +
+                     (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[2]
+  }
+
+  # Priors for the model for P2
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 3] * alpha[1]
+  }
+
+  # Priors for the model for C2
+  for (k in 1:1) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m2e
+model { 
+
+ 
+  # Log-normal model for L1mis ----------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dlnorm(mu_L1mis[i], tau_L1mis)
+    mu_L1mis[i] <- M_lvlone[i, 3] * beta[1] +
+                   (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[2]
+  }
+
+  # Priors for the model for L1mis
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_L1mis ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_L1mis <- sqrt(1/tau_L1mis)
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 3] * alpha[1]
+  }
+
+  # Priors for the model for C2
+  for (k in 1:1) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m2f
+model { 
+
+ 
+  # Beta model for Be2 ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbeta(shape1_Be2[i], shape2_Be2[i])T(1e-15, 1 - 1e-15)
+
+    shape1_Be2[i] <- mu_Be2[i] * tau_Be2
+    shape2_Be2[i] <- (1 - mu_Be2[i]) * tau_Be2
+
+    logit(mu_Be2[i]) <- M_lvlone[i, 3] * beta[1] +
+                        (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[2]
+  }
+
+  # Priors for the model for Be2
+  for (k in 1:2) {
+    beta[k] ~ dnorm(mu_reg_beta, tau_reg_beta)
+  }
+  tau_Be2 ~ dgamma(shape_tau_beta, rate_tau_beta)
+
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 3] * alpha[1]
+  }
+
+  # Priors for the model for C2
+  for (k in 1:1) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m3a
+model { 
+
+ 
+  # Normal model for C1 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_C1[i], tau_C1)
+    mu_C1[i] <- M_lvlone[i, 7] * beta[1] +
+                (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * beta[2] +
+                M_lvlone[i, 8] * beta[3] +
+                (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[4] +
+                (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * beta[5] +
+                (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * beta[6]
+  }
+
+  # Priors for the model for C1
+  for (k in 1:6) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C1 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C1 <- sqrt(1/tau_C1)
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 7] * alpha[1] +
+                       (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[2] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[3] +
+                       (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * alpha[4] +
+                       (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[5]
+
+    M_lvlone[i, 8] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:5) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Poisson model for P2 ----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dpois(max(1e-10, mu_P2[i]))
+    log(mu_P2[i]) <- M_lvlone[i, 7] * alpha[6] +
+                     (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[7] +
+                     (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * alpha[8] +
+                     (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[9]
+  }
+
+  # Priors for the model for P2
+  for (k in 6:9) {
+    alpha[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
+  }
+
+
+
+
+  # Gamma model for L1mis ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 4] ~ dgamma(shape_L1mis[i], rate_L1mis[i])
+
+    shape_L1mis[i] <- pow(mu_L1mis[i], 2) / pow(sigma_L1mis, 2)
+    rate_L1mis[i] <- mu_L1mis[i] / pow(sigma_L1mis, 2)
+
+    mu_L1mis[i] <- 1/max(1e-10, inv_mu_L1mis[i])
+    inv_mu_L1mis[i] <- M_lvlone[i, 7] * alpha[10] +
+                       (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[11] +
+                       (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[12]
+  }
+
+  # Priors for the model for L1mis
+  for (k in 10:12) {
+    alpha[k] ~ dnorm(mu_reg_gamma, tau_reg_gamma)
+  }
+  tau_L1mis ~ dgamma(shape_tau_gamma, rate_tau_gamma)
+  sigma_L1mis <- sqrt(1/tau_L1mis)
+
+
+
+
+  # Beta model for Be2 ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 5] ~ dbeta(shape1_Be2[i], shape2_Be2[i])T(1e-15, 1 - 1e-15)
+
+    shape1_Be2[i] <- mu_Be2[i] * tau_Be2
+    shape2_Be2[i] <- (1 - mu_Be2[i]) * tau_Be2
+
+    logit(mu_Be2[i]) <- M_lvlone[i, 7] * alpha[13] +
+                        (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[14]
+  }
+
+  # Priors for the model for Be2
+  for (k in 13:14) {
+    alpha[k] ~ dnorm(mu_reg_beta, tau_reg_beta)
+  }
+  tau_Be2 ~ dgamma(shape_tau_beta, rate_tau_beta)
+
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 6] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 7] * alpha[15]
+  }
+
+  # Priors for the model for C2
+  for (k in 15:15) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m3b
+model { 
+
+ 
+  # Normal model for C1 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_C1[i], tau_C1)
+    mu_C1[i] <- M_lvlone[i, 6] * beta[1] +
+                (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * beta[2] +
+                M_lvlone[i, 7] * beta[3] +
+                (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[4] +
+                (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * beta[5]
+  }
+
+  # Priors for the model for C1
+  for (k in 1:5) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C1 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C1 <- sqrt(1/tau_C1)
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    probit(mu_B2[i]) <- M_lvlone[i, 6] * alpha[1] +
+                        (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[2] +
+                        (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[3] +
+                        (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * alpha[4]
+
+    M_lvlone[i, 7] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:4) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Poisson model for P2 ----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dpois(max(1e-10, mu_P2[i]))
+    mu_P2[i] <- M_lvlone[i, 6] * alpha[5] +
+                (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[6] +
+                (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * alpha[7]
+  }
+
+  # Priors for the model for P2
+  for (k in 5:7) {
+    alpha[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
+  }
+
+
+
+
+  # Log-normal model for L1mis ----------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 4] ~ dlnorm(mu_L1mis[i], tau_L1mis)
+    mu_L1mis[i] <- M_lvlone[i, 6] * alpha[8] +
+                   (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[9]
+  }
+
+  # Priors for the model for L1mis
+  for (k in 8:9) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_L1mis ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_L1mis <- sqrt(1/tau_L1mis)
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 5] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- 1/max(1e-10, inv_mu_C2[i])
+    inv_mu_C2[i] <- M_lvlone[i, 6] * alpha[10]
+  }
+
+  # Priors for the model for C2
+  for (k in 10:10) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m3c
+model { 
+
+ 
+  # Normal model for C1 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_C1[i], tau_C1)
+    mu_C1[i] <- M_lvlone[i, 6] * beta[1] +
+                (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * beta[2] +
+                M_lvlone[i, 7] * beta[3] +
+                (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[4] +
+                (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * beta[5]
+  }
+
+  # Priors for the model for C1
+  for (k in 1:5) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C1 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C1 <- sqrt(1/tau_C1)
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    log(mu_B2[i]) <- M_lvlone[i, 6] * alpha[1] +
+                     (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[2] +
+                     (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[3] +
+                     (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * alpha[4]
+
+    M_lvlone[i, 7] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:4) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Poisson model for P2 ----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dpois(max(1e-10, mu_P2[i]))
+    mu_P2[i] <- M_lvlone[i, 6] * alpha[5] +
+                (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[6] +
+                (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * alpha[7]
+  }
+
+  # Priors for the model for P2
+  for (k in 5:7) {
+    alpha[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
+  }
+
+
+
+
+  # Gamma model for L1mis ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 4] ~ dgamma(shape_L1mis[i], rate_L1mis[i])
+
+    shape_L1mis[i] <- pow(mu_L1mis[i], 2) / pow(sigma_L1mis, 2)
+    rate_L1mis[i] <- mu_L1mis[i] / pow(sigma_L1mis, 2)
+
+    log(mu_L1mis[i]) <- M_lvlone[i, 6] * alpha[8] +
+                        (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[9]
+  }
+
+  # Priors for the model for L1mis
+  for (k in 8:9) {
+    alpha[k] ~ dnorm(mu_reg_gamma, tau_reg_gamma)
+  }
+  tau_L1mis ~ dgamma(shape_tau_gamma, rate_tau_gamma)
+  sigma_L1mis <- sqrt(1/tau_L1mis)
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 5] ~ dnorm(mu_C2[i], tau_C2)
+    log(mu_C2[i]) <- M_lvlone[i, 6] * alpha[10]
+  }
+
+  # Priors for the model for C2
+  for (k in 10:10) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m3d
+model { 
+
+ 
+  # Normal model for C1 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_C1[i], tau_C1)
+    mu_C1[i] <- M_lvlone[i, 7] * beta[1] +
+                (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * beta[2] +
+                M_lvlone[i, 8] * beta[3] +
+                (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[4] +
+                (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * beta[5] +
+                (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * beta[6]
+  }
+
+  # Priors for the model for C1
+  for (k in 1:6) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C1 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C1 <- sqrt(1/tau_C1)
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    log(mu_B2[i]) <- M_lvlone[i, 7] * alpha[1] +
+                     (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[2] +
+                     (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[3] +
+                     (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * alpha[4] +
+                     (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[5]
+
+    M_lvlone[i, 8] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:5) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Poisson model for P2 ----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dpois(max(1e-10, mu_P2[i]))
+    mu_P2[i] <- M_lvlone[i, 7] * alpha[6] +
+                (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[7] +
+                (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * alpha[8] +
+                (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[9]
+  }
+
+  # Priors for the model for P2
+  for (k in 6:9) {
+    alpha[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
+  }
+
+
+
+
+  # Gamma model for L1mis ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 4] ~ dgamma(shape_L1mis[i], rate_L1mis[i])
+
+    shape_L1mis[i] <- pow(mu_L1mis[i], 2) / pow(sigma_L1mis, 2)
+    rate_L1mis[i] <- mu_L1mis[i] / pow(sigma_L1mis, 2)
+
+    log(mu_L1mis[i]) <- M_lvlone[i, 7] * alpha[10] +
+                        (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[11] +
+                        (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[12]
+  }
+
+  # Priors for the model for L1mis
+  for (k in 10:12) {
+    alpha[k] ~ dnorm(mu_reg_gamma, tau_reg_gamma)
+  }
+  tau_L1mis ~ dgamma(shape_tau_gamma, rate_tau_gamma)
+  sigma_L1mis <- sqrt(1/tau_L1mis)
+
+
+
+
+  # Normal model for Be2 ----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 5] ~ dnorm(mu_Be2[i], tau_Be2)T(0, 1)
+    mu_Be2[i] <- M_lvlone[i, 7] * alpha[13] +
+                 (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[14]
+  }
+
+  # Priors for the model for Be2
+  for (k in 13:14) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_Be2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_Be2 <- sqrt(1/tau_Be2)
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 6] ~ dnorm(mu_C2[i], tau_C2)
+    log(mu_C2[i]) <- M_lvlone[i, 7] * alpha[15]
+  }
+
+  # Priors for the model for C2
+  for (k in 15:15) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m4a
+model { 
+
+ 
+  # Normal model for y ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
+    mu_y[i] <- M_lvlone[i, 5] * beta[1] + M_lvlone[i, 6] * beta[2] +
+               M_lvlone[i, 7] * beta[3] + M_lvlone[i, 8] * beta[4] +
+               M_lvlone[i, 9] * beta[5] + M_lvlone[i, 10] * beta[6] +
+               M_lvlone[i, 11] * beta[7] +
+               (M_lvlone[i, 12] - spM_lvlone[12, 1])/spM_lvlone[12, 2] * beta[8] +
+               (M_lvlone[i, 13] - spM_lvlone[13, 1])/spM_lvlone[13, 2] * beta[9] +
+               (M_lvlone[i, 14] - spM_lvlone[14, 1])/spM_lvlone[14, 2] * beta[10] +
+               (M_lvlone[i, 15] - spM_lvlone[15, 1])/spM_lvlone[15, 2] * beta[11] +
+               (M_lvlone[i, 16] - spM_lvlone[16, 1])/spM_lvlone[16, 2] * beta[12]
+  }
+
+  # Priors for the model for y
+  for (k in 1:12) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_y <- sqrt(1/tau_y)
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 5] * alpha[1] + M_lvlone[i, 6] * alpha[2] +
+                M_lvlone[i, 7] * alpha[3] + M_lvlone[i, 8] * alpha[4] +
+                M_lvlone[i, 9] * alpha[5] + M_lvlone[i, 10] * alpha[6] +
+                M_lvlone[i, 11] * alpha[7] +
+                (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[8]
+
+    M_lvlone[i, 12] <- abs(M_lvlone[i, 17] - M_lvlone[i, 2])
+
+
+  }
+
+  # Priors for the model for C2
+  for (k in 1:8) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+
+
+
+  # Multinomial logit model for M2 ------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dcat(p_M2[i, 1:4])
+
+    p_M2[i, 1] <- min(1-1e-7, max(1e-7, phi_M2[i, 1] / sum(phi_M2[i, ])))
+    p_M2[i, 2] <- min(1-1e-7, max(1e-7, phi_M2[i, 2] / sum(phi_M2[i, ])))
+    p_M2[i, 3] <- min(1-1e-7, max(1e-7, phi_M2[i, 3] / sum(phi_M2[i, ])))
+    p_M2[i, 4] <- min(1-1e-7, max(1e-7, phi_M2[i, 4] / sum(phi_M2[i, ])))
+
+    log(phi_M2[i, 1]) <- 0
+    log(phi_M2[i, 2]) <- M_lvlone[i, 5] * alpha[9] + M_lvlone[i, 9] * alpha[10] +
+                         M_lvlone[i, 10] * alpha[11] + M_lvlone[i, 11] * alpha[12] +
+                         (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[13]
+    log(phi_M2[i, 3]) <- M_lvlone[i, 5] * alpha[14] + M_lvlone[i, 9] * alpha[15] +
+                         M_lvlone[i, 10] * alpha[16] + M_lvlone[i, 11] * alpha[17] +
+                         (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[18]
+    log(phi_M2[i, 4]) <- M_lvlone[i, 5] * alpha[19] + M_lvlone[i, 9] * alpha[20] +
+                         M_lvlone[i, 10] * alpha[21] + M_lvlone[i, 11] * alpha[22] +
+                         (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[23]
+
+    M_lvlone[i, 6] <- ifelse(M_lvlone[i, 3] == 2, 1, 0)
+    M_lvlone[i, 7] <- ifelse(M_lvlone[i, 3] == 3, 1, 0)
+    M_lvlone[i, 8] <- ifelse(M_lvlone[i, 3] == 4, 1, 0)
+
+  }
+
+  # Priors for the model for M2
+  for (k in 9:23) {
+    alpha[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+
+
+
+  # Cumulative logit model for O2 -------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
+    eta_O2[i] <- (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[24]
+
+    p_O2[i, 1] <- 1 - max(1e-10, min(1-1e-10, sum(p_O2[i, 2:4])))
+    p_O2[i, 2] <- max(1e-10, min(1-1e-10, psum_O2[i, 1] - psum_O2[i, 2]))
+    p_O2[i, 3] <- max(1e-10, min(1-1e-10, psum_O2[i, 2] - psum_O2[i, 3]))
+    p_O2[i, 4] <- max(1e-10, min(1-1e-10, psum_O2[i, 3]))
+
+    logit(psum_O2[i, 1]) <- gamma_O2[1] + eta_O2[i]
+    logit(psum_O2[i, 2]) <- gamma_O2[2] + eta_O2[i]
+    logit(psum_O2[i, 3]) <- gamma_O2[3] + eta_O2[i]
+
+    M_lvlone[i, 9] <- ifelse(M_lvlone[i, 4] == 2, 1, 0)
+    M_lvlone[i, 10] <- ifelse(M_lvlone[i, 4] == 3, 1, 0)
+    M_lvlone[i, 11] <- ifelse(M_lvlone[i, 4] == 4, 1, 0)
+  }
+
+  # Priors for the model for O2
+  for (k in 24:24) {
+    alpha[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal)
+  }
+
+  delta_O2[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
+  delta_O2[2] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
+
+  gamma_O2[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
+  gamma_O2[2] <- gamma_O2[1] - exp(delta_O2[1])
+  gamma_O2[3] <- gamma_O2[2] - exp(delta_O2[2]) 
+ 
+  # Re-calculate interaction terms
+  for (i in 1:100) {
+    M_lvlone[i, 14] <- M_lvlone[i, 9] * M_lvlone[i, 12]
+    M_lvlone[i, 15] <- M_lvlone[i, 10] * M_lvlone[i, 12]
+    M_lvlone[i, 16] <- M_lvlone[i, 11] * M_lvlone[i, 12]
+  }
+
+ 
+}
+$m4b
+model { 
+
+ 
+  # Binomial model for B1 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B1[i])))
+    logit(mu_B1[i]) <- M_lvlone[i, 5] * beta[1] +
+                       (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[2] +
+                       (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * beta[3] +
+                       (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] * beta[4]
+  }
+
+  # Priors for the model for B1
+  for (k in 1:4) {
+    beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Gamma model for L1mis ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dgamma(shape_L1mis[i], rate_L1mis[i])
+
+    shape_L1mis[i] <- pow(mu_L1mis[i], 2) / pow(sigma_L1mis, 2)
+    rate_L1mis[i] <- mu_L1mis[i] / pow(sigma_L1mis, 2)
+
+    mu_L1mis[i] <- 1/max(1e-10, inv_mu_L1mis[i])
+    inv_mu_L1mis[i] <- M_lvlone[i, 5] * alpha[1] +
+                       (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2] * alpha[2] +
+                       (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * alpha[3] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[4]
+  }
+
+  # Priors for the model for L1mis
+  for (k in 1:4) {
+    alpha[k] ~ dnorm(mu_reg_gamma, tau_reg_gamma)
+  }
+  tau_L1mis ~ dgamma(shape_tau_gamma, rate_tau_gamma)
+  sigma_L1mis <- sqrt(1/tau_L1mis)
+
+
+
+
+  # Beta model for Be2 ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dbeta(shape1_Be2[i], shape2_Be2[i])T(1e-15, 1 - 1e-15)
+
+    shape1_Be2[i] <- mu_Be2[i] * tau_Be2
+    shape2_Be2[i] <- (1 - mu_Be2[i]) * tau_Be2
+
+    logit(mu_Be2[i]) <- M_lvlone[i, 5] * alpha[5] +
+                        (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2] * alpha[6] +
+                        (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * alpha[7]
+
+    M_lvlone[i, 7] <- log(M_lvlone[i, 3])
+
+
+  }
+
+  # Priors for the model for Be2
+  for (k in 5:7) {
+    alpha[k] ~ dnorm(mu_reg_beta, tau_reg_beta)
+  }
+  tau_Be2 ~ dgamma(shape_tau_beta, rate_tau_beta)
+
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 4] ~ dnorm(mu_C2[i], tau_C2)
+    log(mu_C2[i]) <- M_lvlone[i, 5] * alpha[8] +
+                     (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2] * alpha[9]
+
+    M_lvlone[i, 6] <- abs(M_lvlone[i, 8] - M_lvlone[i, 4])
+
+
+  }
+
+  # Priors for the model for C2
+  for (k in 8:9) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m5a1
+model { 
+
+ 
+  # Normal model for y ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
+    mu_y[i] <- M_lvlone[i, 4] * beta[1] +
+               (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2] +
+               M_lvlone[i, 5] * beta[3] + M_lvlone[i, 6] * beta[4] +
+               M_lvlone[i, 7] * beta[5] + M_lvlone[i, 8] * beta[6] +
+               M_lvlone[i, 9] * beta[7]
+  }
+
+  # Priors for the model for y
+  for (k in 1:7) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_y <- sqrt(1/tau_y)
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 4] * alpha[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[2] +
+                       M_lvlone[i, 6] * alpha[3] + M_lvlone[i, 7] * alpha[4] +
+                       M_lvlone[i, 8] * alpha[5] + M_lvlone[i, 9] * alpha[6]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:6) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 4] * alpha[7] + M_lvlone[i, 6] * alpha[8] +
+                M_lvlone[i, 7] * alpha[9] + M_lvlone[i, 8] * alpha[10] +
+                M_lvlone[i, 9] * alpha[11]
+  }
+
+  # Priors for the model for C2
+  for (k in 7:11) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m5a2
+model { 
+
+ 
+  # Normal model for y ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
+    log(mu_y[i]) <- M_lvlone[i, 4] * beta[1] +
+                    (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2] +
+                    M_lvlone[i, 5] * beta[3] + M_lvlone[i, 6] * beta[4] +
+                    M_lvlone[i, 7] * beta[5] + M_lvlone[i, 8] * beta[6] +
+                    M_lvlone[i, 9] * beta[7]
+  }
+
+  # Priors for the model for y
+  for (k in 1:7) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_y <- sqrt(1/tau_y)
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 4] * alpha[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[2] +
+                       M_lvlone[i, 6] * alpha[3] + M_lvlone[i, 7] * alpha[4] +
+                       M_lvlone[i, 8] * alpha[5] + M_lvlone[i, 9] * alpha[6]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:6) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 4] * alpha[7] + M_lvlone[i, 6] * alpha[8] +
+                M_lvlone[i, 7] * alpha[9] + M_lvlone[i, 8] * alpha[10] +
+                M_lvlone[i, 9] * alpha[11]
+  }
+
+  # Priors for the model for C2
+  for (k in 7:11) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m5a3
+model { 
+
+ 
+  # Normal model for y ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
+    mu_y[i] <- 1/max(1e-10, inv_mu_y[i])
+    inv_mu_y[i] <- M_lvlone[i, 4] * beta[1] +
+                   (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2] +
+                   M_lvlone[i, 5] * beta[3] + M_lvlone[i, 6] * beta[4] +
+                   M_lvlone[i, 7] * beta[5] + M_lvlone[i, 8] * beta[6] +
+                   M_lvlone[i, 9] * beta[7]
+  }
+
+  # Priors for the model for y
+  for (k in 1:7) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_y <- sqrt(1/tau_y)
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 4] * alpha[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[2] +
+                       M_lvlone[i, 6] * alpha[3] + M_lvlone[i, 7] * alpha[4] +
+                       M_lvlone[i, 8] * alpha[5] + M_lvlone[i, 9] * alpha[6]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:6) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 4] * alpha[7] + M_lvlone[i, 6] * alpha[8] +
+                M_lvlone[i, 7] * alpha[9] + M_lvlone[i, 8] * alpha[10] +
+                M_lvlone[i, 9] * alpha[11]
+  }
+
+  # Priors for the model for C2
+  for (k in 7:11) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m5b1
+model { 
+
+ 
+  # Binomial model for B1 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B1[i])))
+    logit(mu_B1[i]) <- M_lvlone[i, 4] * beta[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2] +
+                       M_lvlone[i, 5] * beta[3] +
+                       (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * beta[4] +
+                       M_lvlone[i, 7] * beta[5] + M_lvlone[i, 8] * beta[6] +
+                       M_lvlone[i, 9] * beta[7]
+  }
+
+  # Priors for the model for B1
+  for (k in 1:7) {
+    beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 4] * alpha[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[2] +
+                       (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[3] +
+                       M_lvlone[i, 7] * alpha[4] + M_lvlone[i, 8] * alpha[5] +
+                       M_lvlone[i, 9] * alpha[6]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:6) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 4] * alpha[7] +
+                (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[8] +
+                M_lvlone[i, 7] * alpha[9] + M_lvlone[i, 8] * alpha[10] +
+                M_lvlone[i, 9] * alpha[11]
+  }
+
+  # Priors for the model for C2
+  for (k in 7:11) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m5b2
+model { 
+
+ 
+  # Binomial model for B1 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B1[i])))
+    probit(mu_B1[i]) <- M_lvlone[i, 4] * beta[1] +
+                        (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2] +
+                        M_lvlone[i, 5] * beta[3] +
+                        (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * beta[4] +
+                        M_lvlone[i, 7] * beta[5] + M_lvlone[i, 8] * beta[6] +
+                        M_lvlone[i, 9] * beta[7]
+  }
+
+  # Priors for the model for B1
+  for (k in 1:7) {
+    beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 4] * alpha[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[2] +
+                       (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[3] +
+                       M_lvlone[i, 7] * alpha[4] + M_lvlone[i, 8] * alpha[5] +
+                       M_lvlone[i, 9] * alpha[6]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:6) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 4] * alpha[7] +
+                (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[8] +
+                M_lvlone[i, 7] * alpha[9] + M_lvlone[i, 8] * alpha[10] +
+                M_lvlone[i, 9] * alpha[11]
+  }
+
+  # Priors for the model for C2
+  for (k in 7:11) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m5b3
+model { 
+
+ 
+  # Binomial model for B1 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B1[i])))
+    log(mu_B1[i]) <- M_lvlone[i, 4] * beta[1] +
+                     (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2] +
+                     M_lvlone[i, 5] * beta[3] +
+                     (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * beta[4] +
+                     M_lvlone[i, 7] * beta[5] + M_lvlone[i, 8] * beta[6] +
+                     M_lvlone[i, 9] * beta[7]
+  }
+
+  # Priors for the model for B1
+  for (k in 1:7) {
+    beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 4] * alpha[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[2] +
+                       (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[3] +
+                       M_lvlone[i, 7] * alpha[4] + M_lvlone[i, 8] * alpha[5] +
+                       M_lvlone[i, 9] * alpha[6]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:6) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 4] * alpha[7] +
+                (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[8] +
+                M_lvlone[i, 7] * alpha[9] + M_lvlone[i, 8] * alpha[10] +
+                M_lvlone[i, 9] * alpha[11]
+  }
+
+  # Priors for the model for C2
+  for (k in 7:11) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m5b4
+model { 
+
+ 
+  # Binomial model for B1 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B1[i])))
+    cloglog(mu_B1[i]) <- M_lvlone[i, 4] * beta[1] +
+                         (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2] +
+                         M_lvlone[i, 5] * beta[3] +
+                         (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * beta[4] +
+                         M_lvlone[i, 7] * beta[5] + M_lvlone[i, 8] * beta[6] +
+                         M_lvlone[i, 9] * beta[7]
+  }
+
+  # Priors for the model for B1
+  for (k in 1:7) {
+    beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 4] * alpha[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[2] +
+                       (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[3] +
+                       M_lvlone[i, 7] * alpha[4] + M_lvlone[i, 8] * alpha[5] +
+                       M_lvlone[i, 9] * alpha[6]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:6) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 4] * alpha[7] +
+                (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[8] +
+                M_lvlone[i, 7] * alpha[9] + M_lvlone[i, 8] * alpha[10] +
+                M_lvlone[i, 9] * alpha[11]
+  }
+
+  # Priors for the model for C2
+  for (k in 7:11) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m5c1
+model { 
+
+ 
+  # Gamma model for L1 ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dgamma(shape_L1[i], rate_L1[i])
+
+    shape_L1[i] <- pow(mu_L1[i], 2) / pow(sigma_L1, 2)
+    rate_L1[i] <- mu_L1[i] / pow(sigma_L1, 2)
+
+    mu_L1[i] <- 1/max(1e-10, inv_mu_L1[i])
+    inv_mu_L1[i] <- M_lvlone[i, 4] * beta[1] +
+                    (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2] +
+                    M_lvlone[i, 5] * beta[3] + M_lvlone[i, 6] * beta[4] +
+                    M_lvlone[i, 7] * beta[5] + M_lvlone[i, 8] * beta[6] +
+                    M_lvlone[i, 9] * beta[7]
+  }
+
+  # Priors for the model for L1
+  for (k in 1:7) {
+    beta[k] ~ dnorm(mu_reg_gamma, tau_reg_gamma)
+  }
+  tau_L1 ~ dgamma(shape_tau_gamma, rate_tau_gamma)
+  sigma_L1 <- sqrt(1/tau_L1)
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 4] * alpha[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[2] +
+                       M_lvlone[i, 6] * alpha[3] + M_lvlone[i, 7] * alpha[4] +
+                       M_lvlone[i, 8] * alpha[5] + M_lvlone[i, 9] * alpha[6]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:6) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 4] * alpha[7] + M_lvlone[i, 6] * alpha[8] +
+                M_lvlone[i, 7] * alpha[9] + M_lvlone[i, 8] * alpha[10] +
+                M_lvlone[i, 9] * alpha[11]
+  }
+
+  # Priors for the model for C2
+  for (k in 7:11) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m5c2
+model { 
+
+ 
+  # Gamma model for L1 ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dgamma(shape_L1[i], rate_L1[i])
+
+    shape_L1[i] <- pow(mu_L1[i], 2) / pow(sigma_L1, 2)
+    rate_L1[i] <- mu_L1[i] / pow(sigma_L1, 2)
+
+    log(mu_L1[i]) <- M_lvlone[i, 4] * beta[1] +
+                     (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2] +
+                     M_lvlone[i, 5] * beta[3] + M_lvlone[i, 6] * beta[4] +
+                     M_lvlone[i, 7] * beta[5] + M_lvlone[i, 8] * beta[6] +
+                     M_lvlone[i, 9] * beta[7]
+  }
+
+  # Priors for the model for L1
+  for (k in 1:7) {
+    beta[k] ~ dnorm(mu_reg_gamma, tau_reg_gamma)
+  }
+  tau_L1 ~ dgamma(shape_tau_gamma, rate_tau_gamma)
+  sigma_L1 <- sqrt(1/tau_L1)
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 4] * alpha[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[2] +
+                       M_lvlone[i, 6] * alpha[3] + M_lvlone[i, 7] * alpha[4] +
+                       M_lvlone[i, 8] * alpha[5] + M_lvlone[i, 9] * alpha[6]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:6) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 4] * alpha[7] + M_lvlone[i, 6] * alpha[8] +
+                M_lvlone[i, 7] * alpha[9] + M_lvlone[i, 8] * alpha[10] +
+                M_lvlone[i, 9] * alpha[11]
+  }
+
+  # Priors for the model for C2
+  for (k in 7:11) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m5d1
+model { 
+
+ 
+  # Poisson model for P1 ----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dpois(max(1e-10, mu_P1[i]))
+    log(mu_P1[i]) <- M_lvlone[i, 4] * beta[1] +
+                     (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2] +
+                     M_lvlone[i, 5] * beta[3] + M_lvlone[i, 6] * beta[4] +
+                     M_lvlone[i, 7] * beta[5] + M_lvlone[i, 8] * beta[6] +
+                     M_lvlone[i, 9] * beta[7]
+  }
+
+  # Priors for the model for P1
+  for (k in 1:7) {
+    beta[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
+  }
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 4] * alpha[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[2] +
+                       M_lvlone[i, 6] * alpha[3] + M_lvlone[i, 7] * alpha[4] +
+                       M_lvlone[i, 8] * alpha[5] + M_lvlone[i, 9] * alpha[6]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:6) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 4] * alpha[7] + M_lvlone[i, 6] * alpha[8] +
+                M_lvlone[i, 7] * alpha[9] + M_lvlone[i, 8] * alpha[10] +
+                M_lvlone[i, 9] * alpha[11]
+  }
+
+  # Priors for the model for C2
+  for (k in 7:11) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m5d2
+model { 
+
+ 
+  # Poisson model for P1 ----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dpois(max(1e-10, mu_P1[i]))
+    mu_P1[i] <- M_lvlone[i, 4] * beta[1] +
+                (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2] +
+                M_lvlone[i, 5] * beta[3] + M_lvlone[i, 6] * beta[4] +
+                M_lvlone[i, 7] * beta[5] + M_lvlone[i, 8] * beta[6] +
+                M_lvlone[i, 9] * beta[7]
+  }
+
+  # Priors for the model for P1
+  for (k in 1:7) {
+    beta[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
+  }
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 4] * alpha[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[2] +
+                       M_lvlone[i, 6] * alpha[3] + M_lvlone[i, 7] * alpha[4] +
+                       M_lvlone[i, 8] * alpha[5] + M_lvlone[i, 9] * alpha[6]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:6) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 4] * alpha[7] + M_lvlone[i, 6] * alpha[8] +
+                M_lvlone[i, 7] * alpha[9] + M_lvlone[i, 8] * alpha[10] +
+                M_lvlone[i, 9] * alpha[11]
+  }
+
+  # Priors for the model for C2
+  for (k in 7:11) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m5e1
+model { 
+
+ 
+  # Log-normal model for L1 -------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dlnorm(mu_L1[i], tau_L1)
+    mu_L1[i] <- M_lvlone[i, 4] * beta[1] +
+                (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2] +
+                M_lvlone[i, 5] * beta[3] + M_lvlone[i, 6] * beta[4] +
+                M_lvlone[i, 7] * beta[5] + M_lvlone[i, 8] * beta[6] +
+                M_lvlone[i, 9] * beta[7]
+  }
+
+  # Priors for the model for L1
+  for (k in 1:7) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_L1 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_L1 <- sqrt(1/tau_L1)
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 4] * alpha[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[2] +
+                       M_lvlone[i, 6] * alpha[3] + M_lvlone[i, 7] * alpha[4] +
+                       M_lvlone[i, 8] * alpha[5] + M_lvlone[i, 9] * alpha[6]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:6) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 4] * alpha[7] + M_lvlone[i, 6] * alpha[8] +
+                M_lvlone[i, 7] * alpha[9] + M_lvlone[i, 8] * alpha[10] +
+                M_lvlone[i, 9] * alpha[11]
+  }
+
+  # Priors for the model for C2
+  for (k in 7:11) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m5f1
+model { 
+
+ 
+  # Beta model for Be1 ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbeta(shape1_Be1[i], shape2_Be1[i])T(1e-15, 1 - 1e-15)
+
+    shape1_Be1[i] <- mu_Be1[i] * tau_Be1
+    shape2_Be1[i] <- (1 - mu_Be1[i]) * tau_Be1
+
+    logit(mu_Be1[i]) <- M_lvlone[i, 4] * beta[1] +
+                        (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[2] +
+                        M_lvlone[i, 5] * beta[3] + M_lvlone[i, 6] * beta[4] +
+                        M_lvlone[i, 7] * beta[5] + M_lvlone[i, 8] * beta[6] +
+                        M_lvlone[i, 9] * beta[7]
+  }
+
+  # Priors for the model for Be1
+  for (k in 1:7) {
+    beta[k] ~ dnorm(mu_reg_beta, tau_reg_beta)
+  }
+  tau_Be1 ~ dgamma(shape_tau_beta, rate_tau_beta)
+
+
+
+
+
+  # Binomial model for B2 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[i])))
+    logit(mu_B2[i]) <- M_lvlone[i, 4] * alpha[1] +
+                       (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[2] +
+                       M_lvlone[i, 6] * alpha[3] + M_lvlone[i, 7] * alpha[4] +
+                       M_lvlone[i, 8] * alpha[5] + M_lvlone[i, 9] * alpha[6]
+
+    M_lvlone[i, 5] <- ifelse(M_lvlone[i, 2] == 1, 1, 0)
+
+  }
+
+  # Priors for the model for B2
+  for (k in 1:6) {
+    alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 4] * alpha[7] + M_lvlone[i, 6] * alpha[8] +
+                M_lvlone[i, 7] * alpha[9] + M_lvlone[i, 8] * alpha[10] +
+                M_lvlone[i, 9] * alpha[11]
+  }
+
+  # Priors for the model for C2
+  for (k in 7:11) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m6a
+model { 
+
+ 
+  # Normal model for y ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
+    mu_y[i] <- M_lvlone[i, 5] * beta[1] + M_lvlone[i, 6] * beta[2] +
+               M_lvlone[i, 7] * beta[3] + M_lvlone[i, 8] * beta[4] +
+               M_lvlone[i, 9] * beta[5] + M_lvlone[i, 10] * beta[6] +
+               M_lvlone[i, 11] * beta[7] +
+               (M_lvlone[i, 12] - spM_lvlone[12, 1])/spM_lvlone[12, 2] * beta[8] +
+               (M_lvlone[i, 13] - spM_lvlone[13, 1])/spM_lvlone[13, 2] * beta[9] +
+               (M_lvlone[i, 14] - spM_lvlone[14, 1])/spM_lvlone[14, 2] * beta[10] +
+               (M_lvlone[i, 15] - spM_lvlone[15, 1])/spM_lvlone[15, 2] * beta[11] +
+               (M_lvlone[i, 16] - spM_lvlone[16, 1])/spM_lvlone[16, 2] * beta[12]
+  }
+
+  # Priors for the model for y
+  for (k in 1:12) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_y <- sqrt(1/tau_y)
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 5] * alpha[1] + M_lvlone[i, 6] * alpha[2] +
+                M_lvlone[i, 7] * alpha[3] + M_lvlone[i, 8] * alpha[4] +
+                M_lvlone[i, 9] * alpha[5] + M_lvlone[i, 10] * alpha[6] +
+                M_lvlone[i, 11] * alpha[7] +
+                (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[8]
+
+    M_lvlone[i, 12] <- abs(M_lvlone[i, 17] - M_lvlone[i, 2])
+
+
+  }
+
+  # Priors for the model for C2
+  for (k in 1:8) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+
+
+
+  # Multinomial logit model for M2 ------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dcat(p_M2[i, 1:4])
+
+    p_M2[i, 1] <- min(1-1e-7, max(1e-7, phi_M2[i, 1] / sum(phi_M2[i, ])))
+    p_M2[i, 2] <- min(1-1e-7, max(1e-7, phi_M2[i, 2] / sum(phi_M2[i, ])))
+    p_M2[i, 3] <- min(1-1e-7, max(1e-7, phi_M2[i, 3] / sum(phi_M2[i, ])))
+    p_M2[i, 4] <- min(1-1e-7, max(1e-7, phi_M2[i, 4] / sum(phi_M2[i, ])))
+
+    log(phi_M2[i, 1]) <- 0
+    log(phi_M2[i, 2]) <- M_lvlone[i, 5] * alpha[9] + M_lvlone[i, 9] * alpha[10] +
+                         M_lvlone[i, 10] * alpha[11] + M_lvlone[i, 11] * alpha[12] +
+                         (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[13]
+    log(phi_M2[i, 3]) <- M_lvlone[i, 5] * alpha[14] + M_lvlone[i, 9] * alpha[15] +
+                         M_lvlone[i, 10] * alpha[16] + M_lvlone[i, 11] * alpha[17] +
+                         (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[18]
+    log(phi_M2[i, 4]) <- M_lvlone[i, 5] * alpha[19] + M_lvlone[i, 9] * alpha[20] +
+                         M_lvlone[i, 10] * alpha[21] + M_lvlone[i, 11] * alpha[22] +
+                         (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[23]
+
+    M_lvlone[i, 6] <- ifelse(M_lvlone[i, 3] == 2, 1, 0)
+    M_lvlone[i, 7] <- ifelse(M_lvlone[i, 3] == 3, 1, 0)
+    M_lvlone[i, 8] <- ifelse(M_lvlone[i, 3] == 4, 1, 0)
+
+  }
+
+  # Priors for the model for M2
+  for (k in 9:23) {
+    alpha[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+
+
+
+  # Cumulative logit model for O2 -------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
+    eta_O2[i] <- (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[24]
+
+    p_O2[i, 1] <- 1 - max(1e-10, min(1-1e-10, sum(p_O2[i, 2:4])))
+    p_O2[i, 2] <- max(1e-10, min(1-1e-10, psum_O2[i, 1] - psum_O2[i, 2]))
+    p_O2[i, 3] <- max(1e-10, min(1-1e-10, psum_O2[i, 2] - psum_O2[i, 3]))
+    p_O2[i, 4] <- max(1e-10, min(1-1e-10, psum_O2[i, 3]))
+
+    logit(psum_O2[i, 1]) <- gamma_O2[1] + eta_O2[i]
+    logit(psum_O2[i, 2]) <- gamma_O2[2] + eta_O2[i]
+    logit(psum_O2[i, 3]) <- gamma_O2[3] + eta_O2[i]
+
+    M_lvlone[i, 9] <- ifelse(M_lvlone[i, 4] == 2, 1, 0)
+    M_lvlone[i, 10] <- ifelse(M_lvlone[i, 4] == 3, 1, 0)
+    M_lvlone[i, 11] <- ifelse(M_lvlone[i, 4] == 4, 1, 0)
+  }
+
+  # Priors for the model for O2
+  for (k in 24:24) {
+    alpha[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal)
+  }
+
+  delta_O2[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
+  delta_O2[2] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
+
+  gamma_O2[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
+  gamma_O2[2] <- gamma_O2[1] - exp(delta_O2[1])
+  gamma_O2[3] <- gamma_O2[2] - exp(delta_O2[2]) 
+ 
+  # Re-calculate interaction terms
+  for (i in 1:100) {
+    M_lvlone[i, 14] <- M_lvlone[i, 9] * M_lvlone[i, 12]
+    M_lvlone[i, 15] <- M_lvlone[i, 10] * M_lvlone[i, 12]
+    M_lvlone[i, 16] <- M_lvlone[i, 11] * M_lvlone[i, 12]
+  }
+
+ 
+}
+$m6b
+model { 
+
+ 
+  # Binomial model for B1 ---------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B1[i])))
+    logit(mu_B1[i]) <- M_lvlone[i, 5] * beta[1] + M_lvlone[i, 6] * beta[2] +
+                       M_lvlone[i, 7] * beta[3] + M_lvlone[i, 8] * beta[4] +
+                       M_lvlone[i, 9] * beta[5] + M_lvlone[i, 10] * beta[6] +
+                       M_lvlone[i, 11] * beta[7] +
+                       (M_lvlone[i, 12] - spM_lvlone[12, 1])/spM_lvlone[12, 2] * beta[8] +
+                       (M_lvlone[i, 13] - spM_lvlone[13, 1])/spM_lvlone[13, 2] * beta[9] +
+                       (M_lvlone[i, 14] - spM_lvlone[14, 1])/spM_lvlone[14, 2] * beta[10] +
+                       (M_lvlone[i, 15] - spM_lvlone[15, 1])/spM_lvlone[15, 2] * beta[11] +
+                       (M_lvlone[i, 16] - spM_lvlone[16, 1])/spM_lvlone[16, 2] * beta[12]
+  }
+
+  # Priors for the model for B1
+  for (k in 1:12) {
+    beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
+  }
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 5] * alpha[1] + M_lvlone[i, 6] * alpha[2] +
+                M_lvlone[i, 7] * alpha[3] + M_lvlone[i, 8] * alpha[4] +
+                M_lvlone[i, 9] * alpha[5] + M_lvlone[i, 10] * alpha[6] +
+                M_lvlone[i, 11] * alpha[7] +
+                (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[8]
+
+    M_lvlone[i, 12] <- abs(M_lvlone[i, 17] - M_lvlone[i, 2])
+
+
+  }
+
+  # Priors for the model for C2
+  for (k in 1:8) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+
+
+
+  # Multinomial logit model for M2 ------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dcat(p_M2[i, 1:4])
+
+    p_M2[i, 1] <- min(1-1e-7, max(1e-7, phi_M2[i, 1] / sum(phi_M2[i, ])))
+    p_M2[i, 2] <- min(1-1e-7, max(1e-7, phi_M2[i, 2] / sum(phi_M2[i, ])))
+    p_M2[i, 3] <- min(1-1e-7, max(1e-7, phi_M2[i, 3] / sum(phi_M2[i, ])))
+    p_M2[i, 4] <- min(1-1e-7, max(1e-7, phi_M2[i, 4] / sum(phi_M2[i, ])))
+
+    log(phi_M2[i, 1]) <- 0
+    log(phi_M2[i, 2]) <- M_lvlone[i, 5] * alpha[9] + M_lvlone[i, 9] * alpha[10] +
+                         M_lvlone[i, 10] * alpha[11] + M_lvlone[i, 11] * alpha[12] +
+                         (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[13]
+    log(phi_M2[i, 3]) <- M_lvlone[i, 5] * alpha[14] + M_lvlone[i, 9] * alpha[15] +
+                         M_lvlone[i, 10] * alpha[16] + M_lvlone[i, 11] * alpha[17] +
+                         (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[18]
+    log(phi_M2[i, 4]) <- M_lvlone[i, 5] * alpha[19] + M_lvlone[i, 9] * alpha[20] +
+                         M_lvlone[i, 10] * alpha[21] + M_lvlone[i, 11] * alpha[22] +
+                         (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[23]
+
+    M_lvlone[i, 6] <- ifelse(M_lvlone[i, 3] == 2, 1, 0)
+    M_lvlone[i, 7] <- ifelse(M_lvlone[i, 3] == 3, 1, 0)
+    M_lvlone[i, 8] <- ifelse(M_lvlone[i, 3] == 4, 1, 0)
+
+  }
+
+  # Priors for the model for M2
+  for (k in 9:23) {
+    alpha[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+
+
+
+  # Cumulative logit model for O2 -------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
+    eta_O2[i] <- (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[24]
+
+    p_O2[i, 1] <- 1 - max(1e-10, min(1-1e-10, sum(p_O2[i, 2:4])))
+    p_O2[i, 2] <- max(1e-10, min(1-1e-10, psum_O2[i, 1] - psum_O2[i, 2]))
+    p_O2[i, 3] <- max(1e-10, min(1-1e-10, psum_O2[i, 2] - psum_O2[i, 3]))
+    p_O2[i, 4] <- max(1e-10, min(1-1e-10, psum_O2[i, 3]))
+
+    logit(psum_O2[i, 1]) <- gamma_O2[1] + eta_O2[i]
+    logit(psum_O2[i, 2]) <- gamma_O2[2] + eta_O2[i]
+    logit(psum_O2[i, 3]) <- gamma_O2[3] + eta_O2[i]
+
+    M_lvlone[i, 9] <- ifelse(M_lvlone[i, 4] == 2, 1, 0)
+    M_lvlone[i, 10] <- ifelse(M_lvlone[i, 4] == 3, 1, 0)
+    M_lvlone[i, 11] <- ifelse(M_lvlone[i, 4] == 4, 1, 0)
+  }
+
+  # Priors for the model for O2
+  for (k in 24:24) {
+    alpha[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal)
+  }
+
+  delta_O2[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
+  delta_O2[2] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
+
+  gamma_O2[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
+  gamma_O2[2] <- gamma_O2[1] - exp(delta_O2[1])
+  gamma_O2[3] <- gamma_O2[2] - exp(delta_O2[2]) 
+ 
+  # Re-calculate interaction terms
+  for (i in 1:100) {
+    M_lvlone[i, 14] <- M_lvlone[i, 9] * M_lvlone[i, 12]
+    M_lvlone[i, 15] <- M_lvlone[i, 10] * M_lvlone[i, 12]
+    M_lvlone[i, 16] <- M_lvlone[i, 11] * M_lvlone[i, 12]
+  }
+
+ 
+}
+$m6c
+model { 
+
+ 
+  # Gamma model for C1 ------------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 1] ~ dgamma(shape_C1[i], rate_C1[i])
+
+    shape_C1[i] <- pow(mu_C1[i], 2) / pow(sigma_C1, 2)
+    rate_C1[i] <- mu_C1[i] / pow(sigma_C1, 2)
+
+    log(mu_C1[i]) <- M_lvlone[i, 5] * beta[1] + M_lvlone[i, 6] * beta[2] +
+                     M_lvlone[i, 7] * beta[3] + M_lvlone[i, 8] * beta[4] +
+                     M_lvlone[i, 9] * beta[5] + M_lvlone[i, 10] * beta[6] +
+                     M_lvlone[i, 11] * beta[7] +
+                     (M_lvlone[i, 12] - spM_lvlone[12, 1])/spM_lvlone[12, 2] * beta[8] +
+                     (M_lvlone[i, 13] - spM_lvlone[13, 1])/spM_lvlone[13, 2] * beta[9] +
+                     (M_lvlone[i, 14] - spM_lvlone[14, 1])/spM_lvlone[14, 2] * beta[10] +
+                     (M_lvlone[i, 15] - spM_lvlone[15, 1])/spM_lvlone[15, 2] * beta[11]
+  }
+
+  # Priors for the model for C1
+  for (k in 1:11) {
+    beta[k] ~ dnorm(mu_reg_gamma, tau_reg_gamma)
+  }
+  tau_C1 ~ dgamma(shape_tau_gamma, rate_tau_gamma)
+  sigma_C1 <- sqrt(1/tau_C1)
+
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
+    mu_C2[i] <- M_lvlone[i, 5] * alpha[1] + M_lvlone[i, 6] * alpha[2] +
+                M_lvlone[i, 7] * alpha[3] + M_lvlone[i, 8] * alpha[4] +
+                M_lvlone[i, 9] * alpha[5] + M_lvlone[i, 10] * alpha[6] +
+                M_lvlone[i, 11] * alpha[7] +
+                (M_lvlone[i, 16] - spM_lvlone[16, 1])/spM_lvlone[16, 2] * alpha[8]
+
+    M_lvlone[i, 12] <- abs(M_lvlone[i, 16] - M_lvlone[i, 2])
+
+
+  }
+
+  # Priors for the model for C2
+  for (k in 1:8) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+
+
+
+  # Multinomial logit model for M2 ------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 3] ~ dcat(p_M2[i, 1:4])
+
+    p_M2[i, 1] <- min(1-1e-7, max(1e-7, phi_M2[i, 1] / sum(phi_M2[i, ])))
+    p_M2[i, 2] <- min(1-1e-7, max(1e-7, phi_M2[i, 2] / sum(phi_M2[i, ])))
+    p_M2[i, 3] <- min(1-1e-7, max(1e-7, phi_M2[i, 3] / sum(phi_M2[i, ])))
+    p_M2[i, 4] <- min(1-1e-7, max(1e-7, phi_M2[i, 4] / sum(phi_M2[i, ])))
+
+    log(phi_M2[i, 1]) <- 0
+    log(phi_M2[i, 2]) <- M_lvlone[i, 5] * alpha[9] + M_lvlone[i, 9] * alpha[10] +
+                         M_lvlone[i, 10] * alpha[11] + M_lvlone[i, 11] * alpha[12] +
+                         (M_lvlone[i, 16] - spM_lvlone[16, 1])/spM_lvlone[16, 2] * alpha[13]
+    log(phi_M2[i, 3]) <- M_lvlone[i, 5] * alpha[14] + M_lvlone[i, 9] * alpha[15] +
+                         M_lvlone[i, 10] * alpha[16] + M_lvlone[i, 11] * alpha[17] +
+                         (M_lvlone[i, 16] - spM_lvlone[16, 1])/spM_lvlone[16, 2] * alpha[18]
+    log(phi_M2[i, 4]) <- M_lvlone[i, 5] * alpha[19] + M_lvlone[i, 9] * alpha[20] +
+                         M_lvlone[i, 10] * alpha[21] + M_lvlone[i, 11] * alpha[22] +
+                         (M_lvlone[i, 16] - spM_lvlone[16, 1])/spM_lvlone[16, 2] * alpha[23]
+
+    M_lvlone[i, 6] <- ifelse(M_lvlone[i, 3] == 2, 1, 0)
+    M_lvlone[i, 7] <- ifelse(M_lvlone[i, 3] == 3, 1, 0)
+    M_lvlone[i, 8] <- ifelse(M_lvlone[i, 3] == 4, 1, 0)
+
+  }
+
+  # Priors for the model for M2
+  for (k in 9:23) {
+    alpha[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
+  }
+
+
+
+
+  # Cumulative logit model for O2 -------------------------------------------------
+  for (i in 1:100) {
+    M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
+    eta_O2[i] <- (M_lvlone[i, 16] - spM_lvlone[16, 1])/spM_lvlone[16, 2] * alpha[24]
+
+    p_O2[i, 1] <- 1 - max(1e-10, min(1-1e-10, sum(p_O2[i, 2:4])))
+    p_O2[i, 2] <- max(1e-10, min(1-1e-10, psum_O2[i, 1] - psum_O2[i, 2]))
+    p_O2[i, 3] <- max(1e-10, min(1-1e-10, psum_O2[i, 2] - psum_O2[i, 3]))
+    p_O2[i, 4] <- max(1e-10, min(1-1e-10, psum_O2[i, 3]))
+
+    logit(psum_O2[i, 1]) <- gamma_O2[1] + eta_O2[i]
+    logit(psum_O2[i, 2]) <- gamma_O2[2] + eta_O2[i]
+    logit(psum_O2[i, 3]) <- gamma_O2[3] + eta_O2[i]
+
+    M_lvlone[i, 9] <- ifelse(M_lvlone[i, 4] == 2, 1, 0)
+    M_lvlone[i, 10] <- ifelse(M_lvlone[i, 4] == 3, 1, 0)
+    M_lvlone[i, 11] <- ifelse(M_lvlone[i, 4] == 4, 1, 0)
+  }
+
+  # Priors for the model for O2
+  for (k in 24:24) {
+    alpha[k] ~ dnorm(mu_reg_ordinal, tau_reg_ordinal)
+  }
+
+  delta_O2[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
+  delta_O2[2] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
+
+  gamma_O2[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
+  gamma_O2[2] <- gamma_O2[1] - exp(delta_O2[1])
+  gamma_O2[3] <- gamma_O2[2] - exp(delta_O2[2]) 
+ 
+  # Re-calculate interaction terms
+  for (i in 1:100) {
+    M_lvlone[i, 13] <- M_lvlone[i, 9] * M_lvlone[i, 12]
+    M_lvlone[i, 14] <- M_lvlone[i, 10] * M_lvlone[i, 12]
+    M_lvlone[i, 15] <- M_lvlone[i, 11] * M_lvlone[i, 12]
+  }
+
+ 
+}
+$m6d
+model { 
+
+ 
+  # Normal model for SBP ----------------------------------------------------------
+  for (i in 1:186) {
+    M_lvlone[i, 1] ~ dnorm(mu_SBP[i], tau_SBP)
+    mu_SBP[i] <- M_lvlone[i, 4] * beta[1] +
+                 (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * beta[2] +
+                 M_lvlone[i, 6] * beta[3] +
+                 (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] * beta[4] +
+                 (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2] * beta[5]
+  }
+
+  # Priors for the model for SBP
+  for (k in 1:5) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_SBP ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_SBP <- sqrt(1/tau_SBP)
+
+
+
+
+  # Normal model for bili ---------------------------------------------------------
+  for (i in 1:186) {
+    M_lvlone[i, 2] ~ dnorm(mu_bili[i], tau_bili)T(1e-05, 1e+10)
+    mu_bili[i] <- M_lvlone[i, 4] * alpha[1] +
+                  (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[2] +
+                  M_lvlone[i, 6] * alpha[3] +
+                  (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[4]
+
+    M_lvlone[i, 7] <- log(M_lvlone[i, 2])
+
+
+  }
+
+  # Priors for the model for bili
+  for (k in 1:4) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_bili ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_bili <- sqrt(1/tau_bili)
+
+
+
+
+  # Normal model for creat --------------------------------------------------------
+  for (i in 1:186) {
+    M_lvlone[i, 3] ~ dnorm(mu_creat[i], tau_creat)
+    mu_creat[i] <- M_lvlone[i, 4] * alpha[5] +
+                   (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[6] +
+                   M_lvlone[i, 6] * alpha[7]
+
+    M_lvlone[i, 8] <- exp(M_lvlone[i, 3])
+
+
+  }
+
+  # Priors for the model for creat
+  for (k in 5:7) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_creat ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_creat <- sqrt(1/tau_creat)
+ 
+ 
+}
+$m6e
+model { 
+
+ 
+  # Normal model for SBP ----------------------------------------------------------
+  for (i in 1:186) {
+    M_lvlone[i, 1] ~ dnorm(mu_SBP[i], tau_SBP)
+    mu_SBP[i] <- M_lvlone[i, 4] * beta[1] +
+                 (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * beta[2] +
+                 M_lvlone[i, 6] * beta[3] +
+                 (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] * beta[4] +
+                 (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2] * beta[5]
+  }
+
+  # Priors for the model for SBP
+  for (k in 1:5) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_SBP ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_SBP <- sqrt(1/tau_SBP)
+
+
+
+
+  # Log-normal model for bili -----------------------------------------------------
+  for (i in 1:186) {
+    M_lvlone[i, 2] ~ dlnorm(mu_bili[i], tau_bili)
+    mu_bili[i] <- M_lvlone[i, 4] * alpha[1] +
+                  (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[2] +
+                  M_lvlone[i, 6] * alpha[3] +
+                  (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[4]
+
+    M_lvlone[i, 7] <- log(M_lvlone[i, 2])
+
+
+  }
+
+  # Priors for the model for bili
+  for (k in 1:4) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_bili ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_bili <- sqrt(1/tau_bili)
+
+
+
+
+  # Normal model for creat --------------------------------------------------------
+  for (i in 1:186) {
+    M_lvlone[i, 3] ~ dnorm(mu_creat[i], tau_creat)
+    mu_creat[i] <- M_lvlone[i, 4] * alpha[5] +
+                   (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[6] +
+                   M_lvlone[i, 6] * alpha[7]
+
+    M_lvlone[i, 8] <- exp(M_lvlone[i, 3])
+
+
+  }
+
+  # Priors for the model for creat
+  for (k in 5:7) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_creat ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_creat <- sqrt(1/tau_creat)
+ 
+ 
+}
+$m6f
+model { 
+
+ 
+  # Normal model for SBP ----------------------------------------------------------
+  for (i in 1:186) {
+    M_lvlone[i, 1] ~ dnorm(mu_SBP[i], tau_SBP)
+    mu_SBP[i] <- M_lvlone[i, 4] * beta[1] +
+                 (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * beta[2] +
+                 M_lvlone[i, 6] * beta[3] +
+                 (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] * beta[4] +
+                 (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2] * beta[5]
+  }
+
+  # Priors for the model for SBP
+  for (k in 1:5) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_SBP ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_SBP <- sqrt(1/tau_SBP)
+
+
+
+
+  # Gamma model for bili ----------------------------------------------------------
+  for (i in 1:186) {
+    M_lvlone[i, 2] ~ dgamma(shape_bili[i], rate_bili[i])
+
+    shape_bili[i] <- pow(mu_bili[i], 2) / pow(sigma_bili, 2)
+    rate_bili[i] <- mu_bili[i] / pow(sigma_bili, 2)
+
+    mu_bili[i] <- 1/max(1e-10, inv_mu_bili[i])
+    inv_mu_bili[i] <- M_lvlone[i, 4] * alpha[1] +
+                      (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[2] +
+                      M_lvlone[i, 6] * alpha[3] +
+                      (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * alpha[4]
+
+    M_lvlone[i, 7] <- log(M_lvlone[i, 2])
+
+
+  }
+
+  # Priors for the model for bili
+  for (k in 1:4) {
+    alpha[k] ~ dnorm(mu_reg_gamma, tau_reg_gamma)
+  }
+  tau_bili ~ dgamma(shape_tau_gamma, rate_tau_gamma)
+  sigma_bili <- sqrt(1/tau_bili)
+
+
+
+
+  # Normal model for creat --------------------------------------------------------
+  for (i in 1:186) {
+    M_lvlone[i, 3] ~ dnorm(mu_creat[i], tau_creat)
+    mu_creat[i] <- M_lvlone[i, 4] * alpha[5] +
+                   (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * alpha[6] +
+                   M_lvlone[i, 6] * alpha[7]
+
+    M_lvlone[i, 8] <- exp(M_lvlone[i, 3])
+
+
+  }
+
+  # Priors for the model for creat
+  for (k in 5:7) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_creat ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_creat <- sqrt(1/tau_creat)
+ 
+ 
+}
+$mod7a
+model { 
+
+ 
+  # Normal model for SBP ----------------------------------------------------------
+  for (i in 1:186) {
+    M_lvlone[i, 1] ~ dnorm(mu_SBP[i], tau_SBP)
+    mu_SBP[i] <- M_lvlone[i, 3] * beta[1] +
+                 (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] * beta[2] +
+                 (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * beta[3] +
+                 M_lvlone[i, 6] * beta[4] +
+                 (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2] * beta[5] +
+                 (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2] * beta[6]
+  }
+
+  # Priors for the model for SBP
+  for (k in 1:6) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_SBP ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_SBP <- sqrt(1/tau_SBP)
+
+
+
+
+  # Normal model for bili ---------------------------------------------------------
+  for (i in 1:186) {
+    M_lvlone[i, 2] ~ dnorm(mu_bili[i], tau_bili)
+    mu_bili[i] <- M_lvlone[i, 3] * alpha[1] +
+                  (M_lvlone[i, 9] - spM_lvlone[9, 1])/spM_lvlone[9, 2] * alpha[2] +
+                  M_lvlone[i, 6] * alpha[3]
+
+    M_lvlone[i, 7] <- M_lvlone[i, 2]^2
+    M_lvlone[i, 8] <- M_lvlone[i, 2]^3
+
+
+  }
+
+  # Priors for the model for bili
+  for (k in 1:3) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_bili ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_bili <- sqrt(1/tau_bili)
+ 
+ 
+}

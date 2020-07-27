@@ -2,29 +2,15 @@
 % Please edit documentation in R/plots.R
 \name{traceplot}
 \alias{traceplot}
-\alias{traceplot.mcmc.list}
 \alias{traceplot.JointAI}
-\title{Traceplot of a JointAI model}
+\title{Create traceplots for a MCMC sample}
 \usage{
 traceplot(object, ...)
 
-\method{traceplot}{mcmc.list}(object, start = NULL, end = NULL, thin = NULL, ...)
-
-\method{traceplot}{JointAI}(
-  object,
-  start = NULL,
-  end = NULL,
-  thin = NULL,
-  subset = c(analysis_main = TRUE),
-  exclude_chains = NULL,
-  nrow = NULL,
-  ncol = NULL,
-  keep_aux = FALSE,
-  use_ggplot = FALSE,
-  warn = TRUE,
-  mess = TRUE,
-  ...
-)
+\method{traceplot}{JointAI}(object, start = NULL, end = NULL,
+  thin = NULL, subset = c(analysis_main = TRUE), exclude_chains = NULL,
+  nrow = NULL, ncol = NULL, use_ggplot = FALSE, warn = TRUE,
+  mess = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -55,46 +41,49 @@ traceplot(object, ...)
     symbols given by \code{pch = 21:25} as in \code{\link[graphics]{points}}.  The
     default \code{NA} corresponds to the one of the underlying function
     \code{\link[graphics]{plot.xy}}.}
-    \item{\code{xlim}}{ranges of x and y axes, as in \code{\link[graphics]{plot}}.}
-    \item{\code{ylim}}{ranges of x and y axes, as in \code{\link[graphics]{plot}}.}
     \item{\code{add}}{logical.  If \code{TRUE}, plots are added to current one,
     using \code{\link[graphics]{points}} and \code{\link[graphics]{lines}}.}
     \item{\code{verbose}}{logical.  If \code{TRUE}, write one line of what is
     done.}
   }}
 
-\item{start}{the first iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{start}{the first iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
-\item{end}{the last iteration of interest (see \code{\link[coda]{window.mcmc}})}
+\item{end}{the last iteration of interest
+(see \code{\link[coda]{window.mcmc}})}
 
-\item{thin}{thinning interval (see \code{\link[coda]{window.mcmc}})}
+\item{thin}{thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
+For example, \code{thin = 1} (default) will keep the MCMC samples
+from all iterations; \code{thin = 5} would only keep every 5th
+iteration.}
 
-\item{subset}{subset of parameters/variables/nodes (columns in the MCMC sample).
-Uses the same logic as the argument \code{monitor_params} in
+\item{subset}{subset of parameters/variables/nodes (columns in the MCMC
+sample). Follows the same principle as the argument
+\code{monitor_params} in
 \code{\link[JointAI:model_imp]{*_imp}}.}
 
-\item{exclude_chains}{optional vector of the index numbers of chains that should be excluded}
+\item{exclude_chains}{optional vector of the index numbers of chains that
+should be excluded}
 
-\item{nrow}{optional number of rows and columns in the plot layout;
+\item{nrow}{optional; number of rows in the plot layout;
 automatically chosen if unspecified}
 
-\item{ncol}{optional number of rows and columns in the plot layout;
+\item{ncol}{optional; number of columns in the plot layout;
 automatically chosen if unspecified}
 
-\item{keep_aux}{logical; Should constant effects of auxiliary variables be kept in the output?}
-
-\item{use_ggplot}{logical; Should ggplot be used instead of the base graphics?}
+\item{use_ggplot}{logical; Should ggplot be used instead of the base
+graphics?}
 
 \item{warn}{logical; should warnings be given? Default is
-\code{TRUE}. (Note: this applies only to warnings
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 
 \item{mess}{logical; should messages be given? Default is
-\code{TRUE}. (Note: this applies only to messages
-given directly by \strong{JointAI}.)}
+\code{TRUE}.}
 }
 \description{
-Creates a set of traceplots from the MCMC sample of an object of class "JointAI".
+Creates a set of traceplots from the MCMC sample of an object of class
+'JointAI'.
 }
 \examples{
 # fit a JointAI model
@@ -109,11 +98,11 @@ traceplot(mod)
 traceplot(mod, use_ggplot = TRUE)
 
 
-# Example 5: changing how the ggplot version looks (using standard ggplot syntax)
+# Example 5: changing how the ggplot version looks (using ggplot syntax)
 library(ggplot2)
 
 traceplot(mod, use_ggplot = TRUE) +
-  theme(legend.position = 'botto') +
+  theme(legend.position = 'bottom') +
   xlab('iteration') +
   ylab('value') +
   scale_color_discrete(name = 'chain')
@@ -121,8 +110,10 @@ traceplot(mod, use_ggplot = TRUE) +
 
 }
 \seealso{
-\code{\link{summary.JointAI}}, \code{\link{lme_imp}}, \code{\link{glm_imp}},
-         \code{\link{lm_imp}}, \code{\link{densplot}}
-         The vignette \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+\code{\link{summary.JointAI}},
+         \code{\link[JointAI:model_imp]{*_imp}},
+         \code{\link{densplot}}\cr
+         The vignette
+         \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
          contains some examples how to specify the parameter \code{subset}.
 }

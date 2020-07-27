@@ -4,14 +4,8 @@
 \alias{plot_imp_distr}
 \title{Plot the distribution of observed and imputed values}
 \usage{
-plot_imp_distr(
-  data,
-  imp = "Imputation_",
-  id = ".id",
-  rownr = ".rownr",
-  ncol = NULL,
-  nrow = NULL
-)
+plot_imp_distr(data, imp = "Imputation_", id = ".id", rownr = ".rownr",
+  ncol = NULL, nrow = NULL, labeller = NULL)
 }
 \arguments{
 \item{data}{a \code{data.frame} containing multiple imputations
@@ -22,16 +16,20 @@ and the original incomplete data stacked onto each other}
 \item{id}{the name of the variable specifying the subject indicator}
 
 \item{rownr}{the name of a variable identifying which rows correspond to the
-same observation in the original (unimputed) data}
+same observation in the original (un-imputed) data}
 
-\item{ncol}{optional number of rows and columns in the plot layout;
+\item{ncol}{optional; number of columns in the plot layout;
 automatically chosen if unspecified}
 
-\item{nrow}{optional number of rows and columns in the plot layout;
+\item{nrow}{optional; number of rows in the plot layout;
 automatically chosen if unspecified}
+
+\item{labeller}{optional labeller to be passed to
+\code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}
+to change the facet labels}
 }
 \description{
-Plots densities and barplots of the observed and imputed values in a
+Plots densities and bar plots of the observed and imputed values in a
 long-format dataset (multiple imputed datasets stacked onto each other).
 }
 \examples{

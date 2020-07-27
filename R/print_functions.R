@@ -1,15 +1,21 @@
-#' List covariate models
+#' List model details
 #'
-#' This function prints information on models specified for (incomplete) covariates in a JointAI object,
-#' including the model type, names of the parameters used and hyperparameters.
+#' This function prints information on all models, those explicitly specified
+#' by the user and those specified automatically by JointAI for (incomplete)
+#' covariates in a JointAI object.
 #'
+#' @md
 #' @inheritParams sharedParams
-#' @param predvars logical; should information on the predictor variables be printed? (default is \code{TRUE})
-#' @param regcoef logical; should information on the regression coefficients be printed? (default is \code{TRUE})
-#' @param otherpars logical; should information on other parameters be printed? (default is \code{TRUE})
-#' @param priors logical; should information on the priors (and hyperparameters)
-#'               be printed? (default is \code{TRUE})
-#' @param refcat logical; should information on the reference category be printed? (default is \code{TRUE})
+#' @param predvars logical; should information on the predictor variables be
+#'                 printed? (default is \code{TRUE})
+#' @param regcoef logical; should information on the regression coefficients
+#'                be printed? (default is \code{TRUE})
+#' @param otherpars logical; should information on other parameters be printed?
+#'                  (default is \code{TRUE})
+#' @param priors logical; should information on the priors
+#'               (and hyper-parameters) be printed? (default is \code{TRUE})
+#' @param refcat logical; should information on the reference category be
+#'               printed? (default is \code{TRUE})
 #'
 #' @section Note:
 #' The models listed by this function are not the actual imputation models,
@@ -17,9 +23,13 @@
 #' distribution.
 #' Briefly, the joint distribution is specified as a sequence of conditional
 #' models
-#' \deqn{p(y | x_1, x_2, x_3, ..., \theta) p(x_1|x_2, x_3, ..., \theta) p(x_2|x_3, ..., \theta) ...}
+#'
+#' \loadmathjax
+#'
+#' \mjdeqn{p(y | x_1, x_2, x_3, ..., \theta) p(x_1|x_2, x_3, ..., \theta)
+#' p(x_2|x_3, ..., \theta) ...}{ascii}
 #' The actual imputation models are the full conditional distributions
-#' \eqn{p(x_1 | \cdot)} derived from this joint distribution.
+#' \mjeqn{p(x_1 | \cdot)}{ascii} derived from this joint distribution.
 #' Even though the conditional distributions do not contain the outcome and all
 #' other covariates in their linear predictor, outcome and other covariates are
 #' taken into account implicitly, since imputations are sampled
@@ -48,234 +58,162 @@
 #'
 #' @examples
 #' # (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save time)
-#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0, mess = FALSE)
+#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0,
+#'                n.iter = 0, mess = FALSE)
 #'
 #' list_models(mod1)
 #'
 #' @export
 
+
 list_models <- function(object, predvars = TRUE, regcoef = TRUE,
-                           otherpars = TRUE, priors = TRUE, refcat = TRUE) {
+                        otherpars = TRUE, priors = TRUE, refcat = TRUE) {
+
   if (!inherits(object, "JointAI"))
-    stop("Use only with 'JointAI' objects.\n")
+    errormsg("Use only with 'JointAI' objects.\n")
 
-  for (i in seq_along(object$models)) {
-    pars <- switch(object$models[i],
-                   norm = list(name = 'Linear regression', pars = 'norm'),
-                   lognorm = list(name = "Log-normal regression", pars = 'norm'),
-                   logit = list(name = 'Logistic regression', pars = 'logit'),
-                   gamma = list(name = 'Gamma regression', pars = 'gamma'),
-                   beta = list(name = "Beta regression", pars = 'beta'),
-                   multilogit = list(name = "Multinomial logit", pars = 'multinomial'),
-                   lmm = list(name = "Linear mixed", pars = 'norm'),
-                   glmm_lognorm = list(name = 'Log-normal mixed', pars = 'norm'),
-                   glmm_logit = list(name = "Logistic mixed", pars = 'logit'),
-                   glmm_gamma = list(name = "Gamma mixed", pars = 'gamma'),
-                   glmm_poisson = list(name = 'Poisson mixed', pars = 'poisson'),
-                   cumlogit = list(name = 'Cumulative logit', pars = 'ordinal'),
-                   clmm = list(name = "Cumulative logit mixed", pars = 'ordinal')
-    )
+  for (i in object$info_list) {
+    cat(print_type(i$modeltype, i$family, upper = TRUE), "for",
+        dQuote(i$varname), '\n')
+    if (!is.null(i$family))
+      cat(tab(), "family:", i$family, "\n")
+    if (!is.null(i$link))
+      cat(tab(), "link:", i$link, "\n")
 
-    if (is.null(pars))
-      warning(gettextf("Info for model of type %s is not known. Please contact the package maintainer.",
-                       dQuote(object$models[i])))
+    # * parametrization --------------------------------------------------------
+    if (i$family %in% c('Gamma', 'beta') && !is.null(i$family)) {
+      cat("* Parametrization:\n")
 
-    pv <- paste0("* Predictor variables: \n",
-             tab(), add_breaks(
-               paste(
-                 c(colnames(object$data_list$Xc)[object$imp_par_list[[names(object$models[i])]]$Xc_cols],
-                   colnames(object$data_list$Xl)[object$imp_par_list[[names(object$models[i])]]$Xl_cols],
-                   colnames(object$data_list$Z)[object$imp_par_list[[names(object$models[i])]]$Z_cols[-1]]),
-                 collapse = ", ")), "\n")
-
-    rc <- paste0(if (object$models[i] %in% c('cumlog', 'clmm')) {
-      paste0("* Regression coefficients (with",
-             if (!object$imp_par_list[[names(object$models[i])]]$intercept) "out",
-             " intercept): \n")
-    } else {
-      paste0("* Regression coefficients: \n")
-    },
-    tab(), "alpha[",
-    if (object$models[i] == 'multilogit') {
-      NULL
-    } else {
-      print_seq(object$K_imp[names(object$models)[i], "start"],
-                object$K_imp[names(object$models)[i], "end"])
-    },
-    "] ",
-    if (priors) {
-      paste0("(normal prior(s) with mean ",
-             object$data_list[[paste0("mu_reg_", pars$pars)]],
-             " and precision ",
-             object$data_list[[paste0("tau_reg_", pars$pars)]], ")")
-    }, "\n")
-
-
-    opar <- paste0("* Precision of '", names(object$models)[i], "':\n",
-                   tab(), "tau_", names(object$models)[i], " ",
-                   if (priors) {
-                     paste0("(Gamma prior with shape parameter ",
-                            object$data_list[[paste0("shape_tau_", pars$pars)]],
-                            " and rate parameter ",
-                            object$data_list[[paste0("rate_tau_", pars$pars)]], ")")
-                   }, "\n")
-
-
-    if (i > 1) cat("\n")
-
-    # norm & lognorm ----------------------------------------------------------
-    if (object$models[i] %in% c("norm", "lognorm")) {
-      type <- switch(object$models[i],
-                     norm = list(lab = 'norm', name = "Normal"),
-                     lognorm = list(lab = 'lognorm', name = "Log-normal"))
-
-      print_title(pars$name, names(object$models[i]))
-      if (predvars) cat(pv)
-      if (regcoef) cat(rc)
-      if (otherpars) cat(opar)
+      if (i$family %in% 'beta')
+        cat(paste0(tab(), "- shape 1: shape1_", i$varname,
+                   " = mu_", i$varname, " * tau_", i$varname, "\n",
+                   tab(), "- shape 2: shape2_", i$varname,
+                   " = (1 - mu_", i$varname, ") * tau_", i$varname, "\n")
+        )
+      if (i$family %in% 'Gamma')
+        cat(paste0(
+          tab(), "- shape: shape_", i$varname,
+          " = mu_", i$varname, "^2 * tau_", i$varname, "\n",
+          tab(), "- rate: rate_", i$varname,
+          " = mu_", i$varname, " * tau_", i$varname, "\n")
+        )
     }
 
-    # Gamma imputation model ----------------------------------------------------
-    if (object$models[i] %in% c("gamma")) {
-      print_title(pars$name, names(object$models[i]))
-      cat(paste0("* Parametrization:\n",
-                 tab(), "- shape: shape_", names(object$models)[i],
-                 " = mu_", names(object$models)[i], "^2 * tau_", names(object$models)[i], "\n",
-                 tab(), "- rate: rate_", names(object$models)[i],
-                 " = mu_", names(object$models)[i], " * tau_", names(object$models)[i], "\n"))
-      if (predvars) cat(pv)
-      if (regcoef) cat(rc)
-      if (otherpars) cat(opar)
+    # refcat -------------------------------------------------------------------
+    if (refcat & i$varname %in% names(object$Mlist$refs)) {
+      print_refcat(object$Mlist$refs[[i$varname]])
     }
 
-    # beta imputation model ----------------------------------------------------
-    if (object$models[i] %in% c("beta")) {
-      print_title(pars$name, names(object$models[i]))
-      cat(paste0("* Parametrization:\n",
-                 tab(), "- shape 1: shape1_", names(object$models)[i],
-                 " = mu_", names(object$models)[i], " * tau_", names(object$models)[i], "\n",
-                 tab(), "- shape 2: shape2_", names(object$models)[i],
-                 " = (1 - mu_", names(object$models)[i], ") * tau_", names(object$models)[i], "\n"))
-      if (predvars) cat(pv)
-      if (regcoef) cat(rc)
-      if (otherpars) cat(opar)
+    # * predvars ---------------------------------------------------------------
+    if (predvars) {
+      cat("* Predictor variables:\n")
+      if (length(unlist(i$lp)) > 0)
+        cat(strwrap(paste0(names(unlist(unname(i$lp))), collapse = ", "),
+                    prefix = "\n", initial = '', exdent = 2, indent = 2),
+          "\n")
+      else
+        cat(' (no predictor variables)', '\n')
     }
 
-    # logit imputation model ---------------------------------------------------
-    if (object$models[i] == "logit") {
-      print_title(pars$name, names(object$models[i]))
-      if (refcat) print_refcat(object$Mlist$refs[[names(object$models[i])]])
-      if (predvars) cat(pv)
-      if (regcoef) cat(rc)
-    }
-
-    # multinomial logit imputation model ---------------------------------------
-    if (object$models[i] == "multilogit") {
-      print_title(pars$name, names(object$models[i]))
-      if (refcat) print_refcat(object$Mlist$refs[[names(object$models[i])]])
-      if (predvars) cat(pv)
-      if (regcoef) {
-        cat(paste0("* Regression coefficients: \n"))
-        for (j in seq_along(attr(object$Mlist$refs[[names(object$models)[i]]], "dummies"))) {
-          cat(paste0(tab(), "- '",
-                     attr(object$Mlist$refs[[names(object$models)[i]]], "dummies")[j],
-                     "': alpha[",
-                     print_seq(object$K_imp[attr(object$Mlist$refs[[names(object$models)[i]]],
-                                                 "dummies")[j], "start"],
-                               object$K_imp[attr(object$Mlist$refs[[names(object$models)[i]]],
-                                                 "dummies")[j],  "end"]),
-                     "] ",
-                     if (priors) {
-                       paste0("(normal prior(s) with mean ", object$data_list$mu_reg_multinomial,
-                              " and precision ", object$data_list$tau_reg_multinomial, ")")
-                     }, "\n"))
-        }
+    # * regcoef ---------------------------------------------------------------
+    if (regcoef & any(!sapply(i$parelmts, is.null))) {
+      cat("* Regression coefficients:\n")
+      if (i$modeltype %in% c('mlogit', 'mlogitmm')) {
+        cat(
+          paste0(tab(), attr(object$Mlist$refs[[i$varname]], "dummies"), ": ",
+                 i$parname, "[",
+                 sapply(unlist(i$parelmts, recursive = FALSE), function(x) {
+                   print_seq(min(x), max(x))
+                 }),
+                 "]", collapse = "\n"),
+          if (priors) {
+            paste_regcoef_prior(object$data_list, i$modeltype, i$family)
+          }, "\n")
+      } else {
+        cat(paste0(tab(),
+                   i$parname, "[", print_seq(min(unlist(i$parelmts)),
+                                             max(unlist(i$parelmts))),
+                   "]"),
+            if (priors) {
+              paste_regcoef_prior(object$data_list, i$modeltype, i$family)
+            }, "\n")
       }
     }
 
-    # cumlogit -----------------------------------------------------------------
-    if (object$models[i] == "cumlogit") {
-      print_title(pars$name, names(object$models[i]))
-      if (refcat) print_refcat(object$Mlist$refs[[names(object$models[i])]])
-      if (predvars) cat(pv)
-      if (regcoef) cat(rc)
-      if (otherpars) {
+    # * opar -------------------------------------------------------------------
+    if (otherpars) {
+      if (i$family %in% c('gaussian', 'lognorm', 'Gamma') &&
+          !is.null(i$family)) {
+        cat("* Precision of ", dQuote(i$varname), ":\n")
+        cat(paste0(tab(), "tau_", i$varname, " ",
+
+            if (priors) {
+              paste0("(Gamma prior with shape parameter ",
+                     object$data_list[[paste0("shape_tau_",
+                                              get_priortype(i$modeltype,
+                                                            i$family))]],
+                    " and rate parameter ",
+                    object$data_list[[paste0("rate_tau_",
+                                             get_priortype(i$modeltype,
+                                                           i$family))]],
+                    ")")
+           }, "\n"))
+      }
+      if (i$modeltype %in% c('clm', 'clmm')) {
         cat(paste0("* Intercepts:\n",
-                   tab(), "- ", levels(object$Mlist$refs[[names(object$models)[i]]])[1],
-                   ": gamma_", names(object$models)[i],
+                   tab(), "- ", levels(object$Mlist$refs[[i$varname]])[1],
+                   ": gamma_", i$varname,
                    "[1] ",
                    if (priors) {
-                     paste0("(normal prior with mean ",  object$data_list$mu_delta_ordinal,
-                            " and precision ", object$data_list$tau_delta_ordinal, ")")
+                     paste0("(normal prior with mean ",
+                            object$data_list$mu_delta_ordinal,
+                            " and precision ",
+                            object$data_list$tau_delta_ordinal, ")")
                    }, "\n"))
-        for (j in 2:length(attr(object$Mlist$refs[[names(object$models)[i]]], "dummies"))) {
-          cat(paste0(tab(), "- ", levels(object$Mlist$refs[[names(object$models)[i]]])[j],
-                     ": gamma_", names(object$models)[i], "[", j, "] = gamma_",
-                     names(object$models)[i], "[", j - 1, "] + exp(delta_",
-                     names(object$models)[i], "[", j - 1, "])\n"))
-        }
+        for (j in 2:length(attr(object$Mlist$refs[[i$varname]], "dummies"))) {
+          cat(paste0(tab(), "- ", levels(object$Mlist$refs[[i$varname]])[j],
+                     ": gamma_", i$varname, "[", j, "] = gamma_",
+                     i$varname, "[", j - 1, "] + exp(delta_",
+                       i$varname, "[", j - 1, "])\n"))
+          }
         cat(paste0("* Increments:\n",
-                   tab(), "delta_", names(object$models)[i],
-                   "[",print_seq(1, length(levels(object$Mlist$refs[[names(object$models)[i]]])) - 2),
+                   tab(), "delta_", i$varname,
+                   "[",print_seq(1,
+                                 length(
+                                   levels(object$Mlist$refs[[i$varname]])) - 2),
                    "] ",
                    if (priors) {
-                     paste0("(normal prior(s) with mean ",  object$data_list$mu_delta_ordinal,
-                            " and precision ", object$data_list$tau_delta_ordinal, ")")
+                     paste0("(normal prior(s) with mean ",
+                            object$data_list$mu_delta_ordinal,
+                            " and precision ",
+                            object$data_list$tau_delta_ordinal, ")")
                    }, "\n"))
       }
+      if (i$modeltype %in% c('survreg')) {
+        cat(paste0('* Shape parameter:\n',
+                   tab(), 'shape_', i$varname,
+                   if (priors) {
+                     ' (exponential prior with rate 0.01)'
+                     }, "\n"))
+      }
+      if (i$modeltype %in% c('coxph', 'JM')) {
+        cat(paste0('* Regression coefficients of the baseline hazard:\n',
+                   tab(), 'beta_Bh0_', i$varname, "[",
+                   print_seq(1, i$df_basehaz),
+                   "]",
+            if (priors) {
+              paste0(" (normal priors with mean ", object$data_list$mu_reg_surv,
+                     " and precision ", object$data_list$tau_reg_surv, ")")
+            }, "\n"))
+        if (i$modeltype %in% 'JM') {
+          cat(paste0("* association types:\n",
+                     paste0(tab(), "- ", names(i$assoc_type), ": ",
+                            i$assoc_type, collapse = "\n")
+          ))
+        }
+      }
     }
-
-    # lmm ----------------------------------------------------------------------
-    if (object$models[i] == 'lmm') {
-      print_title(pars$name, names(object$models[i]))
-      if (predvars) cat(pv)
-      if (regcoef) cat(rc)
-      if (otherpars) cat(opar)
-    }
-
-    # glmm_lognorm -------------------------------------------------------------
-    if (object$models[i] == 'glmm_lognorm') {
-      print_title(pars$name, names(object$models[i]))
-      if (predvars) cat(pv)
-      if (regcoef) cat(rc)
-      if (otherpars) cat(opar)
-    }
-
-    # glmm_logit ---------------------------------------------------------------
-    if (object$models[i] == 'glmm_logit') {
-      print_title(pars$name, names(object$models[i]))
-      if (refcat) print_refcat(object$Mlist$refs[[names(object$models[i])]])
-      if (predvars) cat(pv)
-      if (regcoef) cat(rc)
-    }
-
-    # glmm_gamma ---------------------------------------------------------------
-    if (object$models[i] == 'glmm_gamma') {
-      print_title(pars$name, names(object$models[i]))
-      cat(paste0("* Parametrization:\n",
-                 tab(), "- shape: shape_", names(object$models)[i],
-                 " = mu_", names(object$models)[i], "^2 * tau_", names(object$models)[i], "\n",
-                 tab(), "- rate: rate_", names(object$models)[i],
-                 " = mu_", names(object$models)[i], " * tau_", names(object$models)[i], "\n"))
-      if (predvars) cat(pv)
-      if (regcoef) cat(rc)
-      if (otherpars) cat(opar)
-    }
-
-    # glmm_poisson -------------------------------------------------------------
-    if (object$models[i] == 'glmm_poisson') {
-      print_title(pars$name, names(object$models[i]))
-      if (predvars) cat(pv)
-      if (regcoef) cat(rc)
-    }
-
-    # clmm ---------------------------------------------------------------------
-    if (object$models[i] == 'clmm') {
-      print_title(pars$name, names(object$models[i]))
-      if (refcat) print_refcat(object$Mlist$refs[[names(object$models[i])]])
-      if (predvars) cat(pv)
-      if (regcoef) cat(rc)
-    }
+    cat("\n\n")
   }
 }
 
@@ -290,35 +228,124 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 #' @param ... currently not used
 #'
 #' @examples
-#' # (does not need MCMC samples to work, so we will set n.adapt = 0 and
-#' # n.iter = 0 to reduce computational time)
-#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0, n.iter = 0, mess = FALSE)
+#' # (This function does not need MCMC samples to work, so we will set
+#' # n.adapt = 0 and n.iter = 0 to reduce computational time)
+#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0,
+#'                n.iter = 0, mess = FALSE)
 #'
 #' parameters(mod1)
 #'
 #' @export
 #'
-parameters <- function(object, mess = TRUE, warn = TRUE) {
+parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
+
   if (!inherits(object, "JointAI"))
-    stop("Use only with 'JointAI' objects.\n")
+    errormsg("Use only with 'JointAI' objects.")
 
   args <- as.list(match.call())
 
-  if (is.null(object$MCMC)) {
-    if (mess)
-    message(paste0("Note: '", args$object, "' does not contain MCMC samples."))
-  }
+  if (is.null(object$MCMC) & mess)
+    msg("Note: %s does not contain MCMC samples.", dQuote(args$object))
 
   vnam <- object$mcmc_settings$variable.names
-  if ('beta' %in% vnam) {
-    pos <- grep('beta', vnam)
-    vnam <- append(vnam, unique(c(colnames(object$data_list$Xc)[object$Mlist$cols_main$Xc],
-                                  colnames(object$data_list$Xl)[object$Mlist$cols_main$Xl],
-                                  colnames(object$data_list$Xic)[object$Mlist$cols_main$Xic],
-                                  colnames(object$data_list$Xil)[object$Mlist$cols_main$Xil],
-                                  colnames(object$data_list$Z)[object$Mlist$cols_main$Z])),
-                   after = pos)[-pos]
+  coefs <- do.call(rbind, object$coef_list)
+
+  rows <- unlist(sapply(paste0('\\b', vnam, '\\b'), grep, x = coefs$coef))
+  add <- sapply(vnam, function(x) {
+    !any(grepl(paste0('\\b', x, '\\b'), coefs$coef))
+  })
+
+  add_pars <- as.list(setNames(rep(NA, ncol(coefs)), names(coefs)))
+  add_pars$coef <- vnam[add]
+
+
+  params <- if (any(add)) {
+    rbind(coefs[rows, , drop = FALSE],
+          as.data.frame(add_pars))
+  } else {
+    coefs[rows, setdiff(names(coefs), 'varnam_print'), drop = FALSE]
   }
 
-  return(vnam)
+  rownames(params) <- NULL
+
+  params[, setdiff(names(coefs), 'varnam_print')]
+
+
+
+  # if ('beta' %in% vnam) {
+  #   pos <- grep('\\bbeta\\b', vnam)
+  #   vnam <- append(vnam,
+  #                  unlist(sapply(object$coef_list, function(x)
+  #                    grep("^beta\\b", x$coef, value = TRUE)
+  #                  )),
+  #                  after = pos)[-pos]
+  # }
+  # if ('alpha' %in% vnam) {
+  #   pos <- grep('\\balpha\\b', vnam)
+  #   vnam <- append(vnam,
+  #                  unlist(sapply(object$coef_list, function(x)
+  #                    grep("^alpha\\b", x$coef, value = TRUE)
+  #                  )),
+  #                  after = pos)[-pos]
+  # }
+  # return(unname(vnam))
+}
+
+
+# help functions ---------------------------------------------------------------
+
+# used in print_functions.R (2020-06-12)
+print_seq <- function(min, max) {
+  if (min == max)
+    max
+  else
+    paste0(min, ":", max)
+}
+
+
+
+# used in print_functions.R
+print_title <- function(name, var) {
+  cat(paste0(name, " model for ", dQuote(var), "\n"))
+}
+
+# used in print_functions.R
+print_refcat <- function(rc) {
+  cat(paste0("* Reference category: ", dQuote(rc), "\n"))
+}
+
+
+get_priortype <- function(modeltype, family) {
+  switch(modeltype,
+         'glm' = switch(family,
+                        'gaussian' = 'norm',
+                        'lognorm' = 'norm',
+                        'Gamma' = 'gamma',
+                        'beta' = 'beta',
+                        'poisson' = 'poisson',
+                        'binomial' = 'binom'),
+         'glmm' = switch(family,
+                         'gaussian' = 'norm',
+                         'lognorm' = 'norm',
+                         'Gamma' = 'gamma',
+                         'beta' = 'beta',
+                         'poisson' = 'poisson',
+                         'binomial' = 'binom'),
+         'clm' = 'ordinal',
+         'clmm' = 'ordinal',
+         'mlogit' = 'multinomial',
+         'mlogitmm' = 'multinomial',
+        'survreg' = 'surv',
+        'coxph' = 'surv',
+        'JM' = 'surv')
+}
+
+
+
+paste_regcoef_prior <- function(data_list, modeltype, family) {
+  paste0("(normal prior(s) with mean ",
+         data_list[[paste0('mu_reg_', get_priortype(modeltype, family))]],
+         " and precision ",
+         data_list[[paste0('tau_reg_', get_priortype(modeltype, family))]],
+         ")")
 }

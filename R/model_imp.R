@@ -1,252 +1,511 @@
-#' Joint analysis and imputation of incomplete data
+#' Joint Analysis and Imputation of incomplete data
 #'
-#' Functions to estimate (generalized) linear and (generalized) linear mixed models,
-#' ordinal and ordinal mixed models,
-#' and parametric (Weibull) as well as Cox proportional hazards
-#' survival models using MCMC sampling, while imputing missing values.
+#' Main analysis functions to estimate different types of models using MCMC
+#' sampling, while imputing missing values.
 #'
+#' @md
 #' @param formula a two sided model formula (see \code{\link[stats]{formula}})
+#'                or a list of such formulas; (more details below).
 #' @param fixed a two sided formula describing the fixed-effects part of the
 #'              model (see \code{\link[stats]{formula}})
 #' @param random only for multi-level models:
 #'               a one-sided formula of the form \code{~x1 + ... + xn | g},
 #'               where \code{x1 + ... + xn} specifies the model for the random
 #'               effects and \code{g} the grouping variable
-#' @param data a \code{data.frame}
-#' @param family only for \code{glm_imp} and \code{glmm_imp}:
+#' @param data a \code{data.frame} containing the original data
+#'             (more details below)
+#' @param family only for \code{glm_imp} and \code{glmm_imp}/\code{glmer_imp}:
 #'               a description of the distribution and link function to
 #'               be used in the model. This can be a character string naming a
 #'               family function, a family function or the result of a call to
-#'               a family function. (See \code{\link[stats]{family}} and the
-#'               `Details` section below.)
-#' @param monitor_params named vector specifying which parameters should be
-#'                       monitored (see details)
-#' @param inits optional specification of initial values in the form of a list
+#'               a family function. (For more details see below and
+#'               \code{\link[stats]{family}}.)
+#' @param monitor_params named list or vector specifying which parameters
+#'                       should be monitored (more details below)
+#' @param inits optional; specification of initial values in the form of a list
 #'              or a function (see \code{\link[rjags]{jags.model}}).
-#'              If omitted, initial values will be generated automatically by JAGS.
+#'              If omitted, starting values for the random number generator are
+#'              created by \strong{JointAI}, initial values are then generated
+#'              by JAGS.
 #'              It is an error to supply an initial value for an observed node.
 #' @param progress.bar character string specifying the type of progress bar.
 #'                     Possible values are "text", "gui", and "none" (see
-#'                     \code{\link[rjags]{update}}). Note: when sampling is performed
-#'                     in parallel it is currently not possible to display a
-#'                     progress bar.
+#'                     \code{\link[rjags]{update}}).
+#'                     Note: when sampling is performed in parallel it is
+#'                     currently not possible to display a progress bar.
 #' @inheritParams sharedParams
-#' @param modelname optional; character string specifying the name of the model file
-#'                  (including the ending, either .R or .txt).
+#' @param modelname optional; character string specifying the name of the model
+#'                  file (including the ending, either .R or .txt).
 #'                  If unspecified a random name will be generated.
-#' @param modeldir optional; directory containing the model file or directory in which
-#'                 the model file should be written. If unspecified a
+#' @param modeldir optional; directory containing the model file or directory
+#'                 in which the model file should be written. If unspecified a
 #'                 temporary directory will be created.
 #' @param overwrite logical; whether an existing model file with the specified
-#'                  \code{<modeldir>/<modelname>} should be overwritten. If set to
-#'                  \code{FALSE} and a model already exists, that model will be used.
+#'                  \code{<modeldir>/<modelname>} should be overwritten.
+#'                  If set to \code{FALSE} and a model already exists, that
+#'                  model will be used.
 #'                  If unspecified (\code{NULL}) and a file exists, the user is
 #'                  asked for input on how to proceed.
-#' @param keep_model logical; whether the created JAGS model should be saved
-#'                   or removed from the disk (\code{FALSE}; default) when the
+#' @param keep_model logical; whether the created JAGS model file should be
+#'                   saved or removed from (\code{FALSE}; default) when the
 #'                   sampling has finished.
-#' @param auxvars optional one-sided formula of variables that should be used as
-#'                predictors in the imputation procedure (and will be imputed
-#'                if necessary) but are not part of the analysis model
-#' @param models optional named vector specifying the types of models for
+#' @param auxvars optional; one-sided formula of variables that should be used
+#'                as predictors in the imputation procedure (and will be imputed
+#'                if necessary) but are not part of the analysis model(s).
+#'                For more details with regards to the behaviour with
+#'                non-linear effects see the vignette on
+#'                [Model Specification](https://nerler.github.io/JointAI/articles/ModelSpecification.html#auxvars)
+#' @param models optional; named vector specifying the types of models for
 #'               (incomplete) covariates.
-#'               This arguments replaces the argument \code{meth} used in earlier versions.
+#'               This arguments replaces the argument \code{meth} used in
+#'               earlier versions.
 #'               If \code{NULL} (default) models will be determined
-#'             automatically based on the class of the respective columns of \code{data}.
-#' @param refcats optional; either one of \code{"first"}, \code{"last"}, \code{"largest"}
-#'                (which sets the category for all categorical variables)
-#'                or a named list specifying which category should be
-#'                used as reference category for each of the categorical variables.
-#'                Options are the category label, the category number, or one of
-#'                "first" (the first category), "last" (the last category)
-#'                or "largest" (chooses the category with the most observations).
-#'                Default is "first". (See also \code{\link{set_refcat}})
-#' @param trunc optional named list specifying the limits of truncation for the
+#'               automatically based on the class of the respective columns of
+#'               \code{data}.
+#' @param refcats optional; either one of \code{"first"}, \code{"last"},
+#'                \code{"largest"} (which sets the category for all categorical
+#'                variables) or a named list specifying which category should
+#'                be used as reference category per categorical variable.
+#'                Options are the category label, the category number,
+#'                or one of "first" (the first category),
+#'                "last" (the last category) or "largest" (chooses the category
+#'                with the most observations).
+#'                Default is "first". If reference categories are specified for
+#'                a subset of the categorical variables the default will be
+#'                used for the remaining variables.
+#'                (See also \code{\link{set_refcat}})
+#' @param trunc optional; named list specifying limits of truncation for the
 #'              distribution of the named incomplete variables (see the vignette
 #'              \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support}{ModelSpecification})
-#' @param hyperpars list of hyperparameters, as obtained by \code{\link{default_hyperpars}()};
-#'                  only needs to be supplied if hyperparameters other than the
-#'                  default should be used
+#' @param hyperpars optional; list of hyper-parameters, as obtained by
+#'                  \code{\link{default_hyperpars}()}
 #' @param scale_vars optional; named vector of (continuous) variables that will
-#'                   be scaled (such that mean = 0 and sd = 1) to improve
+#'                   be centred and scaled (such that mean = 0 and sd = 1)
+#'                   when they enter a linear predictor to improve
 #'                   convergence of the MCMC sampling. Default is that all
-#'                   continuous variables that are not transformed by a function
-#'                   (e.g. \code{log(), ns()}) will be scaled. Variables
-#'                   for which a log-normal model is used are
-#'                   only scaled with regards to the standard deviation, but not
-#'                   centered. Variables modeled with a Gamma or beta distribution
-#'                   are not scaled.
+#'                   numeric variables and integer variables with >20 different
+#'                   values will be scaled.
 #'                   If set to \code{FALSE} no scaling will be done.
-#' @param scale_pars optional matrix of parameters used for centering and
-#'                   scaling of continuous covariates. If not specified, this will
-#'                   be calculated automatically. If \code{FALSE}, no scaling
-#'                   will be done.
 #' @param keep_scaled_mcmc should the "original" MCMC sample
-#'                         (i.e., the scaled version returned by \code{coda.samples()}) be kept?
-#'                         (The MCMC sample that is re-scaled to the scale of the
-#'                         data is always kept.)
-#' @param ... additional, optional arguments
-#' @importFrom foreach foreach %dopar%
-#'
-#'
-#'
-#' @section Details:
-#' See also the vignettes
-#' \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification},
-#' \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{MCMC Settings} and
-#' \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}.
-#'
-#' \subsection{Implemented distribution families and link functions for \code{glm_imp()}
-#' and \code{glme_imp()}}{
-#' \tabular{ll}{
-# \emph{family} \tab \emph{link}\cr
-#' \code{gaussian} \tab with links: \code{identity}, \code{log}\cr
-#' \code{binomial} \tab with links: \code{logit}, \code{probit}, \code{log}, \code{cloglog}\cr
-#' \code{Gamma}    \tab with links: \code{inverse}, \code{identity}, \code{log}\cr
-#' \code{poisson}  \tab with links: \code{log}, \code{identity}
-#' }
-#' }
-#'
-#'
-#'
-#' \subsection{Imputation methods}{
-#' Implemented imputation models that can be chosen in the argument \code{models} are:
-#' \tabular{ll}{
-#' \code{norm} \tab linear model\cr
-#' \code{lognorm} \tab log-normal model for skewed continuous data\cr
-#' \code{gamma} \tab gamma model (with log-link) for skewed continuous data\cr
-#' \code{beta} \tab beta model (with logit-link) for skewed continuous data in (0, 1)\cr
-#' \code{logit} \tab logistic model for binary data\cr
-#' \code{multilogit} \tab multinomial logit model for unordered categorical variables\cr
-#' \code{cumlogit} \tab cumulative logit model for ordered categorical variables\cr
-#' \code{lmm} \tab linear mixed model for continuous longitudinal covariates\cr
-#' \code{glmm_lognorm} \tab log-normal mixed model for skewed longitudinal covariates\cr
-#' \code{glmm_gamma} \tab Gamma mixed model for skewed longitudinal covariates\cr
-#' \code{glmm_logit} \tab logit mixed model for binary longitudinal covariates\cr
-#' \code{glmm_poisson} \tab Poisson mixed model for longitudinal count covariates\cr
-#' \code{clmm} \tab cumulative logit mixed model for longitudinal ordered factors
-#' }
-#' When models are specified for only a subset of the incomplete or longitudinal
-#' covariates involved in a model, the default choices are used for the unspecified
-#' variables.
-#' }
-#'
-#' \subsection{Parameters to follow (\code{monitor_params})}{
-#' See also the vignette: \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}\cr
-#'
-#' Named vector specifying which parameters should be monitored. This can be done
-#' either directly by specifying the name of the parameter or indirectly by one
-#' of the key words selecting a set of parameters. Except for \code{other},
-#' in which parameter names are specified directly, parameter (groups) are just
-#' set as \code{TRUE} or \code{FALSE}.
-#' If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)} will be used.
-#' \tabular{ll}{
-#' \strong{name/key word} \tab \strong{what is monitored}\cr
-#' \code{analysis_main} \tab \code{betas} and \code{sigma_y} (and \code{D} in multi-level models)\cr
-#' \code{analysis_random} \tab \code{ranef}, \code{D}, \code{invD}, \code{RinvD}\cr
-#' \code{imp_pars} \tab \code{alphas}, \code{tau_imp}, \code{gamma_imp}, \code{delta_imp}\cr
-#' \code{imps} \tab imputed values\cr
-#' \code{betas} \tab regression coefficients of the analysis model\cr
-#' \code{tau_y} \tab precision of the residuals from the analysis model\cr
-#' \code{sigma_y} \tab standard deviation of the residuals from the analysis model\cr
-#' \code{ranef} \tab random effects \code{b}\cr
-#' \code{D} \tab covariance matrix of the random effects\cr
-#' \code{invD} \tab inverse of \code{D}\cr
-#' \code{RinvD} \tab matrix in the prior for \code{invD}\cr
-#' \code{alphas} \tab regression coefficients in the covariate models\cr
-#' \code{tau_imp} \tab precision parameters of the residuals from covariate models\cr
-#' \code{gamma_imp} \tab intercepts in ordinal covariate models\cr
-#' \code{delta_imp} \tab increments of ordinal intercepts\cr
-#' \code{other} \tab additional parameters
-#' }
-#' \strong{For example:}\cr
-#' \code{monitor_params = c(analysis_main = TRUE, tau_y = TRUE, sigma_y = FALSE)}
-#' would monitor the regression parameters \code{betas} and the
-#' residual precision \code{tau_y} instead of the residual standard
-#' deviation \code{sigma_y}.
-#'
-#' \code{monitor_params = c(imps = TRUE)} would monitor \code{betas}, \code{tau_y},
-#' and \code{sigma_y} (because \code{analysis_main = TRUE} by default) as well as
-#' the imputed values.
-#'}
-#'
+#'                         (i.e., the scaled version returned by
+#'                         \code{coda.samples()}) be kept?
+#'                         (The MCMC sample that is re-scaled to the scale of
+#'                         the data is always kept.)
+#' @param df_basehaz degrees of freedom for the B-spline used to model the
+#'                   baseline hazard in proportional hazards models
+#'                  (\code{coxph_imp} and \code{JM_imp})
+#' @param shrinkage optional; either a character string naming the shrinkage
+#'                  method to be used for regression coefficients in all models
+#'                  or a named vector specifying the type of shrinkage to be
+#'                  used in the models given as names.
+#' @param rev optional character vector; vector of ordinal outcome variable
+#'   names for which the odds should be reversed, i.e., logit(y <= k) instead
+#'   of logit(y > k).
+#' @param nonprop optional named list of one-sided formulas specifying
+#'                covariates that have non-proportional effects in cumulative
+#'                logit models. These covariates should also be part of the
+#'                regular model formula, and the names of the list should be
+#'                the names of the ordinal response variables.
+#' @param ... additional, optional arguments (not used)
+#' @name model_imp
 #'
 #' @return An object of class \link[=JointAIObject]{JointAI}.
 #'
+#'
+#'
+#' @details # Model formulas
+#' ## Random effects
+#' It is possible to specify multi-level models as it is done in the package
+#' \href{https://CRAN.R-project.org/package=nlme}{\pkg{nlme}},
+#' using `fixed` and `random`, or as it is done in the package
+#' \href{https://CRAN.R-project.org/package=lme4}{\pkg{lme4}},
+#' using `formula` and specifying the random effects in brackets:
+#' ```{r}
+#' formula = y ~ x1 + x2 + x3 + (1 | id)
+#' ```
+#' is equivalent to
+#' ```{r, eval = FALSE}
+#' fixed = y ~ x1 + x2 + x3, random = ~ 1|id
+#' ```
+#'
+#' ## Multiple levels of grouping
+#' For multiple levels of grouping the specification using `formula`
+#' should be used. There is no distinction between nested and crossed random
+#' effects, i.e., `... + (1 | id) + (1 | center)` is treated the same as
+#' `... + (1 | center/id)`.
+#'
+#' ## Nested vs crossed random effects
+#' The distinction between nested and crossed random effects should come from
+#' the levels of the grouping variables, i.e., if \code{id} is nested in
+#' \code{center}, then there cannot be observations with the same \code{id}
+#' but different values for \code{center}.
+#'
+#' ## Modelling multiple models simultaneously & joint models
+#' To fit multiple main models at the same time, a \code{list} of \code{fomula}
+#' objects can be passed to the argument \code{formula}.
+#' Outcomes of one model may be contained as covariates in another model and
+#' it is possible to combine models for variables on different levels,
+#' for example:
+#' ```{r}
+#' formula = list(y ~ x1 + x2 + x3 + x4 + time + (time | id),
+#'                      x2 ~ x3 + x4 + x5)
+#' ```
+#'
+#' This principle is also used for the specification of a joint model for
+#' longitudinal and survival data.
+#'
+#' Note that it is not possible to specify multiple models for the same outcome
+#' variable.
+#'
+#' ## Survival models with frailties or time-varying covariates
+#' Random effects specified in brackets can also be used to indicate a
+#' multi-level structure in survival models, as would, for instance be needed
+#' in a multicentre setting, where patients are from multiple hospitals.
+#'
+#' It also allows to model time-dependent covariates in a proportional
+#' hazards survival model (using \code{coxph_imp}), also in combination with
+#' additional grouping levels.
+#'
+#' In time-dependent proportional hazards models,
+#' last-observation-carried-forward is used to fill in missing values in the
+#' time-varying covariates, and to determine the value of the covariate at the
+#' event time. Preferably, all time-varying covariates should be measured at
+#' baseline (`timevar = 0`). If a value for a time-varying covariate needs to be
+#' filled in and there is no previous observation, the next observation will be
+#' carried backward.
+#'
+#'
+#' ## Differences to basic regression models
+#' It is not possible to specify transformations of outcome variables, i.e.,
+#' it is not possible to use a model formula like
+#' ```{r, eval = FALSE}
+#' log(y) ~ x1 + x2 + ...
+#' ```
+#' In the specific case of a transformation with the natural logarithm,
+#' a log-normal model can be used instead of a normal model.
+#'
+#' Moreover, it is not possible to use `.` to indicate that all variables in a
+#' `data.frame` other than the outcome variable should be used as covariates.
+#' I.e., a formula `y ~ .` is valid in **JointAI**.
+#'
+#'
+#' @details # Data structure
+#' For multi-level settings, the data must be in long format, so that repeated
+#' measurements are recorded in separate rows.
+#'
+#' For survival data with time-varying covariates (\code{coxph_imp} and
+#' \code{JM_imp}) the data should also be in long format. The
+#' survival/censoring times and event indicator variables must be stored in
+#' separate variables in the same data and should be constant across all rows
+#' referring to the same subject.
+#'
+#' During the pre-processing of the data the survival/censoring times will
+#' automatically be merged with the observation times of the  time-varying
+#' covariates (which must be supplied via the argument \code{timevar}).
+#'
+#' It is possible to have multiple time-varying covariates, which do not
+#' have to be measured at the same time points, but there can only be one
+#' \code{timevar}.
+#'
+#'
+#'
+#'
+#' @details # Distribution families and link functions
+#' \tabular{ll}{
+# \emph{family} \tab \emph{link}\cr
+#' \code{gaussian} \tab with links: \code{identity}, \code{log}\cr
+#' \code{binomial} \tab with links: \code{logit}, \code{probit}, \code{log},
+#'                                  \code{cloglog}\cr
+#' \code{Gamma}    \tab with links: \code{inverse}, \code{identity},
+#'                                  \code{log}\cr
+#' \code{poisson}  \tab with links: \code{log}, \code{identity}
+#' }
+#'
+#'
+#'
+#'
+#' @details # Imputation methods / model types
+#' Implemented model types that can be chosen in the argument \code{models}
+#' for baseline covariates (not repeatedly measured) are:
+#' \tabular{ll}{
+#' \code{lm} \tab linear (normal) model with identity link
+#'                (alternatively: \code{glm_gaussian_identity}); default for
+#'                continuous variables\cr
+#' \code{glm_gaussian_log} \tab linear (normal) model with log link\cr
+#' \code{glm_gaussian_inverse} \tab linear (normal) model with inverse link\cr
+#' \code{glm_logit} \tab logistic model for binary data
+#'                       (alternatively: \code{glm_binomial_logit});
+#'                       default for binary variables\cr
+#' \code{glm_probit} \tab probit model for binary data
+#'                       (alternatively: \code{glm_binomial_probit})\cr
+#' \code{glm_binomial_log} \tab binomial model with log link\cr
+#' \code{glm_binomial_cloglog} \tab binomial model with complementary
+#'                                  log-log link\cr
+#' \code{glm_gamma_inverse} \tab gamma model with inverse link for skewed
+#'                               continuous data\cr
+#' \code{glm_gamma_identity} \tab gamma model with identity link for skewed
+#'                                continuous data\cr
+#' \code{glm_gamma_log} \tab gamma model with log link for skewed continuous
+#'                           data\cr
+#' \code{glm_poisson_log} \tab Poisson model with log link for count data\cr
+#' \code{glm_poisson_identity} \tab Poisson model with identity link for count
+#'                                  data\cr
+#' \code{lognorm} \tab log-normal model for skewed continuous data\cr
+#' \code{beta} \tab beta model (with logit link) for skewed continuous
+#'                  data in (0, 1)\cr
+#' \code{mlogit} \tab multinomial logit model for unordered categorical
+#'                    variables;
+#'                    default for unordered factors with >2 levels\cr
+#' \code{clm} \tab cumulative logit model for ordered categorical variables;
+#'                 default for ordered factors\cr
+#' }
+#'
+#' For repeatedly measured variables the following model types are available:
+#' \tabular{ll}{
+#' \code{lmm} \tab linear (normal) mixed model with identity link
+#'                (alternatively: \code{glmm_gaussian_identity});
+#'                default for continuous variables\cr
+#' \code{glmm_gaussian_log} \tab linear (normal) mixed model with log link\cr
+#' \code{glmm_gaussian_inverse} \tab linear (normal) mixed model with
+#'                                   inverse link\cr
+#' \code{glmm_logit} \tab logistic mixed model for binary data
+#'                       (alternatively: \code{glmm_binomial_logit});
+#'                       default for binary variables\cr
+#' \code{glmm_probit} \tab probit model for binary data
+#'                       (alternatively: \code{glmm_binomial_probit})\cr
+#' \code{glmm_binomial_log} \tab binomial mixed model with log link\cr
+#' \code{glmm_binomial_cloglog} \tab binomial mixed model with complementary
+#'                                   log-log link\cr
+#' \code{glmm_gamma_inverse} \tab gamma mixed model with inverse link for
+#'                                skewed continuous data\cr
+#' \code{glmm_gamma_identity} \tab gamma mixed model with identity link for
+#'                                 skewed continuous data\cr
+#' \code{glmm_gamma_log} \tab gamma mixed model with log link for skewed
+#'                            continuous data\cr
+#' \code{glmm_poisson_log} \tab Poisson mixed model with log link for
+#'                              count data\cr
+#' \code{glmm_poisson_identity} \tab Poisson mixed model with identity link for
+#'                                   count data\cr
+#' \code{glmm_lognorm} \tab log-normal mixed model for skewed covariates\cr
+#' \code{glmm_beta} \tab beta mixed model for continuous data in (0, 1)\cr
+#' \code{clmm} \tab cumulative logit mixed model for ordered factors;
+#'                  default for ordered factors
+#' }
+#'
+#' When models are specified for only a subset of the variables for which a
+#' model is needed, the default model choices (as indicated in the tables)
+#' are used for the unspecified variables.
+#'
+#'
+#'
+#'
+#' @details # Parameters to follow (`monitor_params`)
+#' See also the vignette:
+#' \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}\cr
+#'
+#' Named vector specifying which parameters should be monitored. This can be
+#' done either directly by specifying the name of the parameter or indirectly
+#' by one of the key words selecting a set of parameters.
+#' Except for \code{other}, in which parameter names are specified directly,
+#' parameter (groups) are just set as \code{TRUE} or \code{FALSE}.
+#'
+#' Models are divided into two groups, the main models, which are the models
+#' for which the user has explicitly specified a formula (via \code{formula}
+#' or \code{fixed}), and all other models, for which models were specified
+#' automatically.
+#'
+#'
+#' If left unspecified, \code{monitor_params = c("analysis_main" = TRUE)}
+#' will be used.
+#'
+#'
+#' \tabular{ll}{
+#' \strong{name/key word} \tab \strong{what is monitored}\cr
+#' \code{analysis_main} \tab \code{betas} and \code{sigma_main}, \code{tau_main}
+#'                           (for beta regression) or \code{shape_main}
+#'                           (for parametric survival models), \code{gamma_main}
+#'                           (for cumulative logit models),
+#'                           code{D_main} (for multi-level models) and
+#'                           \code{basehaz} in proportional hazards models)\cr
+#' \code{analysis_random} \tab \code{ranef_main}, \code{D_main},
+#'                             \code{invD_main}, \code{RinvD_main}\cr
+#' \code{other_models} \tab \code{alphas}, \code{tau_other}, \code{gamma_other},
+#'                      \code{delta_other}\cr
+#' \code{imps} \tab imputed values\cr
+#' \code{betas} \tab regression coefficients of the main analysis model\cr
+#' \code{tau_main} \tab precision of the residuals from the main analysis
+#'                      model(s)\cr
+#' \code{sigma_main} \tab standard deviation of the residuals from the main
+#'                        analysis model(s)\cr
+#' \code{gamma_main} \tab intercepts in ordinal main model(s)\cr
+#' \code{delta_main} \tab increments of ordinal main model(s)\cr
+#' \code{ranef_main} \tab random effects from the main analysis model(s)
+#'                        \code{b}\cr
+#' \code{D_main} \tab covariance matrix of the random effects from the
+#'                    main model(s)\cr
+#' \code{invD_main} \tab inverse(s) of \code{D_main}\cr
+#' \code{RinvD_main} \tab matrices in the priors for \code{invD_main}\cr
+#' \code{alphas} \tab regression coefficients in the covariate models\cr
+#' \code{tau_other} \tab precision parameters of the residuals from
+#'                       covariate models\cr
+#' \code{gamma_other} \tab intercepts in ordinal covariate models\cr
+#' \code{delta_other} \tab increments of ordinal intercepts\cr
+#' \code{ranef_other} \tab random effects from the other  models \code{b}\cr
+#' \code{D_other} \tab covariance matrix of the random effects from the
+#'                     other models\cr
+#' \code{invD_other} \tab inverses of \code{D_other}\cr
+#' \code{RinvD_other} \tab matrices in the priors for \code{invD_other}\cr
+#' \code{other} \tab additional parameters
+#' }
+#'
+#' **For example:**\cr
+#' \code{monitor_params = c(analysis_main = TRUE, tau_main = TRUE,
+#' sigma_main = FALSE)}
+#' would monitor the regression parameters \code{betas} and the
+#' residual precision \code{tau_main} instead of the residual standard
+#' deviation \code{sigma_main}.
+#'
+#' For a linear model, \code{monitor_params = c(imps = TRUE)} would monitor
+#' \code{betas}, and \code{sigma_main} (because \code{analysis_main = TRUE} by
+#' default) as well as the imputed values.
+#'
+#'
+#' \loadmathjax
+#'
+#' @section Cumulative logit (mixed) models:
+#' In the default setting for cumulative logit models, i.e, `rev = NULL`, the
+#' odds for a variable \mjeqn{y}{ascii} with \mjeqn{K}{ascii} ordered categories
+#' are defined as \mjdeqn{\log\left(\frac{P(y_i > k)}{P(y_i \leq k)}\right) =
+#' \gamma_k + \eta_i, \quad k = 1, \ldots, K-1,}{ascii} where
+#' \mjeqn{\gamma_k}{ascii} is a category specific intercept and
+#' \mjeqn{\eta_i}{ascii} the subject specific linear predictor.
+#'
+#' To reverse the odds to \mjdeqn{\log\left(\frac{P(y_i \leq k)}{P(y_i >
+#' k)}\right) = \gamma_k + \eta_i, \quad k = 1, \ldots, K-1,}{ascii} the name of
+#' the response variable has to be specified in the argument `rev`, e.g., `rev =
+#' c("y")`.
+#'
+#' By default, proportional odds are assumed and only the intercepts differ
+#' per category of the ordinal response. To allow for non-proportional odds,
+#' i.e.,
+#' \mjdeqn{\log\left(\frac{P(y_i > k)}{P(y_i \leq k)}\right) =
+#' \gamma_k + \eta_i + \eta_{ki}, \quad k = 1, \ldots, K-1,}{ascii}
+#' the argument `nonprop` can be specified. It takes a one-sided formula or
+#' a list of one-sided formulas. When a single formula is supplied, or a
+#' unnamed list with just one element, it is assumed that the formula
+#' corresponds to the main model.
+#' To specify non-proportional effects for linear predictors in models for
+#' ordinal covariates, the list has to be named with the names of the
+#' ordinal response variables.
+#'
+#' For example, the following three specifications are equivalent and assume a
+#' non-proportional effect of `C1` on `O1`, but `C1` is assumed to have a
+#' proportional effect on the incomplete ordinal covariate `O2`:
+#' ```{r, eval = FALSE}
+#' clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = ~ C1)
+#' clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = list(~ C1))
+#' clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = list(O1 = ~ C1))
+#' ```
+#'
+#' To specify non-proportional effects on `O2`, a named list has to be provided:
+#' ```{r, eval = FALSE}
+#' clm_imp(O1 ~ C1 + C2 + B2 + O2 + B1, data = wideDF,
+#'         nonprop = list(O1 = ~ C1,
+#'                        O2 = ~ C1 + B1))
+#' ```
+#' The variables for which a non-proportional effect is assumed also have to be
+#' part of the regular model formula.
+#'
+#'
+#'
+#'
 #' @section Note:
-#' \subsection{Coding of variables:}{
-#' The default imputation methods are chosen based on the \code{class} of each
-#' of the incomplete variables, distinguishing between \code{numeric},
+#' ## Coding of variables:
+#' The default covariate (imputation) models are chosen based on the
+#' \code{class} of each of the variables, distinguishing between \code{numeric},
 #' \code{factor} with two levels, unordered \code{factor} with >2 levels and
 #' ordered \code{factor} with >2 levels.\cr
 #'
 #' When a continuous variable has only two different values it is
 #' assumed to be binary and its coding and default (imputation) model will be
-#' changed accordingly. This behavior can be overwritten specifying a model type
-#' via the argument \code{models}.\cr
+#' changed accordingly. This behaviour can be overwritten specifying a model
+#' type via the argument \code{models}.\cr
 #'
-#' Variables of type \code{logical} are automatically converted to unordered factors.\cr
+#' Variables of type \code{logical} are automatically converted to unordered
+#' factors.\cr
 #'
-#' Contrary to base R behavior, dummy coding (i.e., \code{contr.treatment} contrasts)
-#' are used for ordered factors in any linear predictor.
-#' It is not possible to overwrite this behavior using the base R contrasts specification.
-#' However, since the order of levels in an ordered factor contains information relevant
-#' to the imputation of missing values, it is important that incomplete ordinal
-#' variables are coded as such.
-#' }
+#' ### Contrasts
+#' **JointAI** version \mjeqn{\geq}{ascii} 1.0.0 uses the globally (via
+#' `options("contrasts")`) specified contrasts. However, for incomplete
+#' categorical variables, for which the contrasts need to be re-calculated
+#' within the JAGS model, currently only `contr.treatment` and `contr.sum` are
+#' possible. Therefore, when an in complete ordinal covariate is used and the
+#' default contrasts (`contr.poly()`) are set to be used for ordered factors, a
+#' warning message is printed and dummy coding (`contr.treatment()`) is used for
+#' that variable instead.
 #'
-#' \subsection{Non-linear effects and transformation of variables:}{
-#' \strong{JointAI} handles non-linear effects, transformation of covariates and
-#' interactions the following way:\cr
-#' When, for instance, the model formula contains the function \code{log(x)} and
+#'
+#'
+#'
+#' ## Non-linear effects and transformation of variables:
+#' \strong{JointAI} handles non-linear effects, transformation of covariates
+#' and interactions the following way:\cr
+#' When, for instance, a model formula contains the function \code{log(x)} and
 #' \code{x} has missing values, \code{x} will be imputed and used in the linear
-#' predictor of models for covariates, i.e., it is assumed that
-#' the other variables have a linear association with \code{x} but not with
-#' \code{log(x)}. The \code{log()} of the observed and imputed values of
-#' \code{x} is calculated and used in the linear predictor of the analysis model.\cr
+#' predictor of models for which no formula was specified,
+#' i.e., it is assumed that the other variables have a linear association with
+#' \code{x}. The \code{log()} of the observed and imputed values of
+#' \code{x} is calculated and used in the linear predictor of the main
+#' analysis model.\cr
 #'
 #' If, instead of using \code{log(x)} in the model formula, a pre-calculated
-#' variable \code{logx} is used instead, this variable is imputed directly
+#' variable \code{logx} is used, this variable is imputed directly
 #' and used in the linear predictors of all models, implying that
 #' variables that have \code{logx} in their linear predictors have a linear
 #' association with \code{logx} but not with \code{x}.\cr
 #'
 #' When different transformations of the same incomplete variable are used in
-#' one model it is strongly discouraged to calculate these transformations beforehand
-#' and supply them as different variables.
+#' one model it is strongly discouraged to calculate these transformations
+#' beforehand and supply them as different variables.
 #' If, for example, a model formula contains both \code{x} and \code{x2} (where
 #' \code{x2} = \code{x^2}), they are treated as separate variables and imputed
 #' with separate models. Imputed values of \code{x2} are thus not equal to the
 #' square of imputed values of \code{x}.
-#' Instead, \code{x} and \code{I(x^2)} should be used in the model formula. Then only
-#' \code{x} is imputed and used in the linear predictor of models for other
-#' incomplete variables, and \code{x^2} is calculated from the imputed values
-#' of \code{x} internally.
+#' Instead, \code{x} and \code{I(x^2)} should be used in the model formula.
+#' Then only \code{x} is imputed and \code{x^2} is calculated from the imputed
+#' values of \code{x} internally.
 #'
 #' The same applies to interactions involving incomplete variables.
-#' }
 #'
-#' \subsection{Sequence of covariate models:}{
-#'             The default order is incomplete baseline covariates, complete
-#'             longitudinal covariates, incomplete longitudinal covariates,
-#'             and within each group variables are ordered according to the
-#'             proportion of missing values (increasing).
-#' }
 #'
-#' \subsection{Not (yet) possible:}{
+#'
+#'
+#' ## Sequence of models:
+#' Models generated automatically (i.e., not mentioned in `formula` or `fixed`
+#' are specified in a sequence based on the level of the outcome of the
+#' respective model in the multi-level hierarchy and within each level
+#' according to the number of missing values.
+#' This means that level-1 variables have all level-2, level-3, ... variables
+#' in their linear predictor, and variables on the highest level only have
+#' variables from the same level in their linear predictor.
+#' Within each level, the variable with the most missing values has the most
+#' variables in its linear predictor.
+#'
+#'
+#'
+#' ## Not (yet) possible:
 #' \itemize{
-#' \item multiple nesting levels of random effects (nested or crossed)
 #' \item prediction (using \code{predict}) conditional on random effects
 #' \item the use of splines for incomplete variables
-#' \item the use of \code{\link[survival]{pspline}},
-#'       \code{\link[survival]{frailty}}, \code{\link[survival]{cluster}}
+#' \item the use of (or equivalents for) \code{\link[survival]{pspline}},
 #'       or \code{\link[survival]{strata}} in survival models
 #' \item left censored or interval censored data
 #' }
-#' }
 #'
 #'
-#' @seealso \code{\link{set_refcat}}, \code{\link{get_models}},
+#'
+#'
+#' @seealso \code{\link{set_refcat}},
 #'          \code{\link{traceplot}}, \code{\link{densplot}},
 #'          \code{\link{summary.JointAI}}, \code{\link{MC_error}},
 #'          \code{\link{GR_crit}},
@@ -255,12 +514,13 @@
 #'          \code{\link{parameters}}, \code{\link{list_models}}
 #'
 #' Vignettes
-#' \itemize{
-#'   \item \href{https://nerler.github.io/JointAI/articles/MinimalExample.html}{Minimal Example}
-#'   \item \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification}
-#'   \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
-#'   \item \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{After Fitting}
-#'}
+#' * \href{https://nerler.github.io/JointAI/articles/MinimalExample.html}{Minimal Example}
+#' * \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html}{Model Specification}
+#' * \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+#' * \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{MCMC Settings}
+#' * \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{After Fitting}
+#' * \href{https://nerler.github.io/JointAI/articles/TheoreticalBackground.html}{Theoretical Background}
+#'
 #'
 #'
 #' @examples
@@ -278,422 +538,263 @@
 #'                 data = longDF, n.iter = 300)
 #'
 #'
-#' @name model_imp
+#' # Example 4: Parametric Weibull survival model
+#' mod4 <- survreg_imp(Surv(time, status) ~ age + sex + meal.cal + wt.loss,
+#'                     data = survival::lung, n.iter = 200)
+#'
+#'
+#' \dontrun{
+#' # Example 5: Proportional hazards survival model
+#' mod5 <- coxph_imp(Surv(time, status) ~ age + sex + meal.cal + wt.loss,
+#'                     data = survival::lung, n.iter = 200)
+#'
+#' # Example 6: Joint model for longitudinal and survival data
+#' mod6 <- JM_imp(list(Surv(futime, status != 'censored') ~ age + sex +
+#'                     albumin + copper + trig + (1 | id),
+#'                     albumin ~ day + age + sex + (day | id)),
+#'                     timevar = 'day', data = PBC, n.iter = 100)
+#'
+#' # Example 7: Proportional hazards  model with a time-dependent covariate
+#' mod7 <- coxph_imp(Surv(futime, status != 'censored') ~ age + sex + copper +
+#'                   trig + stage + (1 | id),
+#'                   timevar = 'day', data = PBC, n.iter = 100)
+#'
+#'
+#'
+#' # Example 8: Parallel computation
+#' # If no strategy how the "future" should be handled is specified, the
+#' # MCMC chains are run sequentially.
+#' # To run MCMC chains in parallel, a strategy can be specified using the
+#' # package \pkg{future} (see ?future::plan), for example:
+#' doFuture::registerDoFuture()
+#' future::plan(future::multisession, workers = 4)
+#' mod8 <- lm_imp(y ~ C1 + C2 + B2, data = wideDF, n.iter = 500, n.chains = 8)
+#' mod8$comp_info$future
+#' # To re-set the strategy to sequential computation, the sequential strategy
+#' # can be specified:
+#' future::plan(future::sequential)
+#'
+#' }
+#'
 NULL
 
-model_imp <- function(fixed, data, random = NULL, link, family,
+model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
+                      family = NULL, df_basehaz = NULL,
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                      monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                      monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+                      timevar = NULL, refcats = NULL,
                       models = NULL, no_model = NULL, trunc = NULL,
-                      ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                      parallel = FALSE, n.cores = NULL,
-                      scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                      shrinkage = FALSE,
+                      nonprop = NULL, rev = NULL,
+                      ppc = TRUE, seed = NULL, inits = NULL,
+                      scale_vars = NULL, hyperpars = NULL,
                       modelname = NULL, modeldir = NULL,
                       keep_model = FALSE, overwrite = NULL,
                       quiet = TRUE, progress.bar = "text",
                       warn = TRUE, mess = TRUE,
                       keep_scaled_mcmc = FALSE,
-                      analysis_type,
-                      Mlist = NULL, K = NULL, K_imp = NULL, imp_pos = NULL,
-                      dest_cols = NULL, imp_par_list = NULL,  data_list = NULL, ...) {
+                      analysis_type, assoc_type = NULL,
+                      data_list = NULL, ...) {
+
+  modimpcall <- as.list(match.call())[-1L]
 
 
-  # Checks & warnings -------------------------------------------------------
-  if (missing(fixed)) {
-    stop("A fixed effects structure needs to be specified.")
+  # checks & warnings -------------------------------------------------------
+  if (!is.null(formula) & is.null(fixed) & is.null(random)) {
+    formula <- check_formula_list(formula)
+    fixed <- split_formula_list(formula)$fixed
+    random <- split_formula_list(formula)$random
   }
 
-  if (!analysis_type %in% c("lme", "glme", "clmm") & !is.null(random)) {
-    if (warn)
-      warning(gettextf("Random effects structure not used in a model of type %s.",
-                       sQuote(analysis_type)), immediate. = TRUE, call. = FALSE)
-    random <- NULL
-  }
-
-  if (analysis_type %in% c("lme", "glme", "clmm") & is.null(random)) {
-    stop(gettextf("A random effects structure needs to be specified when using a model of type %s.",
-                  sQuote(analysis_type)))
-    random <- NULL
-  }
-
-  if (n.iter == 0) {
-    if (mess)
-      message("Note: No MCMC sample will be created when n.iter is set to 0.")
-  }
-
-  # check if the argument meth is provided (no longer used)
+  # check if the arguments meth, n.cores or parallel are provided
+  # (no longer used)
   args <- as.list(match.call())
   if (!is.null(args$meth))
-      warning('The argument "meth" has been changed to "models". Please use "models".',
-              call. = FALSE, immediate. = TRUE)
+    errormsg("The argument %s has been replaced by the argument %s.",
+              dQuote("meth"), dQuote("models"))
 
+  if (!is.null(args$parallel) | !is.null(args$n.cores)) {
+    errormsg("The arguments %s and %s are no longer used. To perform the
+             computation in parallel, specify future::plan().
+             For an example, see ?model_imp.",
+             dQuote("parallel"), dQuote("n.cores"))
+  }
 
 
   # data pre-processing --------------------------------------------------------
-  # * set contrasts to dummies -------------------------------------------------
-  opt <- options(contrasts = rep("contr.treatment", 2))
-
-  allvars <- unique(c(all.vars(fixed),
-                      all.vars(random),
-                      all.vars(auxvars))
-  )
-
-  if (any(!allvars %in% names(data))) {
-    stop(gettextf("Variable(s) %s were not found in the data." ,
-                  paste(dQuote(allvars[!allvars %in% names(data)]), collapse = ", ")),
-         call. = FALSE)
-  }
+  data <- check_data(data, fixed, random, auxvars, timevar, mess)
 
 
-  # * check classes of covariates ----------------------------------------------
-  covars <- unique(c(all.vars(fixed),
-                     all.vars(remove_grouping(random)),
-                     all.vars(auxvars)))
-  classes <- unique(unlist(sapply(data[covars], class)))
+  # * divide matrices ----------------------------------------------------------
+  Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
+                           random = random, models = models, auxvars = auxvars,
+                           timevar = timevar, no_model = no_model,
+                           scale_vars = scale_vars, refcats = refcats,
+                           nonprop = nonprop, rev = rev,
+                           warn = warn, mess = mess, ppc = ppc,
+                           shrinkage = shrinkage, df_basehaz = df_basehaz)
 
-  if (any(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))) {
-    w <- which(!classes %in% c('numeric', 'ordered', 'factor', 'logical', 'integer'))
-    stop(gettextf("Variables of type %s can not be handled.",
-                  paste(dQuote(classes[w]), collapse = ', ')))
-  }
+  # * model dimensions ---------------------------------------------------------
+  par_index_main <- get_model_dim(Mlist$lp_cols[names(Mlist$lp_cols) %in%
+                                     names(Mlist$fixed)],
+                     Mlist = Mlist)
+  par_index_other <- get_model_dim(Mlist$lp_cols[!names(Mlist$lp_cols) %in%
+                                         names(Mlist$fixed)],
+                         Mlist = Mlist)
 
+  # * model info ---------------------------------------------------------------
+  info_list <- get_model_info(Mlist, par_index_main = par_index_main,
+                              par_index_other = par_index_other,
+                              trunc = trunc, assoc_type = assoc_type)
 
-  # * drop empty categories ----------------------------------------------------
-  data_orig <- data
-  data[allvars] <- droplevels(data[allvars])
-
-  if (mess) {
-    lvl1 <- sapply(data_orig[allvars], function(x) length(levels(x)))
-    lvl2 <- sapply(data[allvars], function(x) length(levels(x)))
-    if (any(lvl1 != lvl2)) {
-      message(gettextf('Empty levels were dropped from %s.',
-                       dQuote(names(lvl1)[which(lvl1 != lvl2)])))
-    }
-  }
-
-
-  # * convert continuous variable with 2 different values to factor ------------
-  for (k in allvars) {
-    if (all(class(data[, k]) != 'factor') & length(unique(na.omit(data[, k]))) == 2) {
-      data[, k] <- factor(data[, k])
-      if (mess)
-        message(gettextf('The variable %s was converted to a factor.',
-                         dQuote(k)))
-    }
-  }
-
-
-  # * convert logicals to factors ----------------------------------------------
-  # if (any(unlist(sapply(data[allvars], class)) == 'logical')) {
-  #   for (x in allvars) {
-  #     if ('logical' %in% class(data[, x])) {
-  #       data[, x] <- factor(data[, x])
-  #       if (mess)
-  #         message(gettextf('%s was converted to a factor.', dQuote(x)))
-  #     }
-  for (x in allvars) {
-    if ('logical' %in% class(data[, x])) {
-      data[, x] <- factor(data[, x])
-      if (mess)
-        message(gettextf('%s was converted to a factor.', dQuote(x)))
-    }
-    if (is.factor(data[, x])) {
-      levels(data[, x]) <- clean_names(levels(data[, x]))
-    }
-  }
-
-
-
-  # imputation method ----------------------------------------------------------
-  models <- get_models(fixed = fixed, random = random, data = data,
-                       auxvars = auxvars, no_model = no_model, models)$models
-
-  # if (is.null(models)) {
-  #   models <- models_default
-  #   models_user <- NULL
-  # } else {
-  #   models_user <- models
-  #   if (!setequal(names(models_user), names(models_default))) {
-  #     models <- models_default
-  #     models[names(models_user)] <- models_user
-  #
-  #   }
-  # }
-
-  # warning if JointAI set imputation method for a continuous variable with only
-  # two different values to "logit"
-  for (k in names(models)[models == 'logit']) {
-    if (is.numeric(data[, k]) & !k %in% names(models) & warn) {
-      data[, k] <- factor(data[, k])
-      warning(
-        gettextf("\nThe variable %s is coded as continuous but has only two different values. I will consider it binary.\nTo overwrite this behavior, specify a different imputation modelsod for %s using the argument %s.",
-                 dQuote(k), dQuote(k), dQuote("models")),
-        call. = FALSE, immediate. = TRUE)
-    }
-  }
-
-
-  # divide matrices ------------------------------------------------------------
-  if (is.null(Mlist)) {
-    Mlist <- divide_matrices(data, fixed, analysis_type = analysis_type,
-                             random = random, auxvars = auxvars,
-                             scale_vars = scale_vars, refcats = refcats,
-                             models = models, warn = warn, mess = mess, ppc = ppc,
-                             ridge = ridge)
-  }
-
-
-  # model dimensions -----------------------------------------------------------
-
-  if (is.null(K)) {
-    K <- get_model_dim(Mlist$cols_main, Mlist$hc_list)
-  }
-
-  if (is.null(imp_pos)) {
-    # position of the variables to be imputed in Xc, Xic, Xl, Xil, Xcat
-    imp_pos <- get_imp_pos(models, Mlist)
-  }
-
-  if (is.null(K_imp)) {
-    K_imp <- get_imp_dim(models, imp_pos, Mlist)
-  }
-
-  # imputation parameters/specifications ---------------------------------------
-  if (is.null(dest_cols)) {
-    dest_cols <- sapply(unique(c(names(models), colnames(Mlist$Xtrafo), colnames(Mlist$Xltrafo))),
-                        get_dest_column, Mlist = Mlist, simplify = FALSE)
-  }
-
-  if (is.null(imp_par_list)) {
-    imp_par_list <- mapply(get_imp_par_list, models, names(models),
-                           MoreArgs = list(Mlist, K_imp, dest_cols, trunc, models),
-                           SIMPLIFY = FALSE)
-  }
-
-
-  # data list ------------------------------------------------------------------
-  if (is.null(data_list)) {
-    data_list <- try(get_data_list(analysis_type, family, link, models, Mlist,
-                                   scale_pars = scale_pars, hyperpars = hyperpars,
-                                   data = data, imp_par_list = imp_par_list))
-    scale_pars <- data_list$scale_pars
-    hyperpars <- data_list$hyperpars
-    data_list <- data_list$data_list
-  }
-
+  # * data list ----------------------------------------------------------------
+  data_list <- get_data_list(Mlist, info_list, hyperpars)
 
   # write model ----------------------------------------------------------------
-  # generate default name for model file if not specified
-  if (is.null(modeldir)) modeldir <- tempdir()
-  if (is.null(modelname)) {
-    modelname <- paste0("JointAI_JAGSmodel_",
-                        format(Sys.time(), "%Y-%m-%d_%H-%M"),
-                        "_", sample.int(1e6, 1), ".R")
-  } else {
-    keep_model <- TRUE
+  modelfile <- make_filename(modeldir = modeldir, modelname = modelname,
+                             keep_model = keep_model, overwrite = overwrite,
+                             mess = mess)
+
+  if (!file.exists(modelfile) || (file.exists(modelfile) &
+                                  attr(modelfile, "overwrite") == TRUE)) {
+    write_model(info_list = info_list, Mlist = Mlist, modelfile = modelfile)
   }
-  modelfile <- file.path(modeldir, modelname)
-
-
-  if (file.exists(modelfile) & is.null(overwrite)) {
-    question_asked <- TRUE
-    # This warning can not be switched off by warn = FALSE, because an input is required.
-    warning(gettextf("\nThe file %s already exists in %s.",
-                     dQuote(modelname), dQuote(modeldir)),
-              call. = FALSE, immediate. = TRUE)
-    reply <- menu(c('yes', 'no'),
-                  title = "\nDo you want me to overwrite this file?")
-    if (reply == 1) {
-      if (mess)
-        message('The modelfile was overwritten.')
-    overwrite = TRUE
-    } else {
-      overwrite = FALSE
-      if (mess)
-        message('The old model will be used.')
-    }
-    if (mess)
-    message("To skip this question in the future, set 'overwrite = TRUE' or 'overwrite = FALSE'.")
-  }
-
-  if (!file.exists(modelfile) || (file.exists(modelfile) & overwrite == TRUE)) {
-    Ntot <- #ifelse(analysis_type == 'coxph',
-           #sum(data_list$RiskSet != 0),
-           length(data_list[[names(Mlist$y)]])#)
-
-    write_model(analysis_type = analysis_type, family = family,
-                link = link, models = models,
-                Ntot = Ntot, Mlist = Mlist, K = K,
-                imp_par_list = imp_par_list,
-                file = modelfile)
-  }
-
 
   # initial values -------------------------------------------------------------
-  # * check if initial values are supplied or should be generated
-  if (!(is.null(inits) | inherits(inits, c("function", "list")))) {
-    if (warn)
-      warning("The object supplied to 'inits' could not be recognized.
-            Initial values are set by JAGS.")
-    inits <- NULL
-  }
+  inits <- get_initial_values(inits = inits, seed = seed, n_chains = n.chains,
+                              warn = warn)
 
-if (!is.null(inits)) {
-  if (inherits(inits, 'function')) {
-    # if (!is.null(seed) | parallel) {
-      if (!is.null(seed)) set.seed(seed)
-      inits <- replicate(n.chains, inits(), simplify = FALSE)
-    # }
-  }
-  if (inherits(inits, "list")) {
-    if (!any(c('.RNG.name', '.RNG.seed') %in% unlist(lapply(inits, names))))
-      inits <- mapply(function(inits, rng) c(inits, rng), inits = inits,
-                      rng = get_RNG(seed, n.chains),
-                      SIMPLIFY = FALSE)
-  }
-} else {
-  inits <- get_RNG(seed, n.chains)
-}
   # parameters to monitor ------------------------------------------------------
+  if (any(grepl("^beta\\[", unlist(monitor_params))) &
+      any(!is.na(unlist(Mlist$scale_pars)))) {
 
-  if (is.null(monitor_params)) {
-    monitor_params <- c("analysis_main" = TRUE)
-  } else {
-    if (!is.null(scale_pars) & any(grepl('beta[', unlist(monitor_params), fixed = T))) {
-      monitor_params <- c(sapply(monitor_params, function(x) {
-        if (any(grepl('beta[', x, fixed = TRUE)))
-          x[-grep('beta[', x, fixed = TRUE)]
-        else x}, simplify = F),
-        analysis_main = TRUE)
-      if (mess)
-        message('Note: Main model parameter were added to the list of parameters to follow.')
-    }}
-  var.names <- do.call(get_params, c(list(models = models, analysis_type = analysis_type,
-                                          family = family, Mlist,
-                                          imp_par_list = imp_par_list,
-                                          ppc = ppc, mess = mess),
+    monitor_params <- c(lapply(monitor_params, function(x) {
+      if (any(grepl("^beta[", x, fixed = TRUE))) {
+        x[-grep("^beta[", x, fixed = TRUE)]
+      } else {
+        x
+      }
+    }),
+    betas = TRUE)
+
+    if (mess)
+      msg("Note: %s was set in %s because re-scaling of the effects of
+             the regression coefficients in the main model(s) requires all
+             of them to be monitored.",
+          dQuote("betas = TRUE"), dQuote("monitor_params"))
+  }
+
+  var_names <- do.call(get_params, c(list(Mlist = Mlist, info_list = info_list,
+                                          mess = mess),
                                      monitor_params))
 
-
   # run JAGS -----------------------------------------------------------------
-  t0 <- Sys.time()
-  if (parallel == TRUE) {
-    if (!requireNamespace('foreach', quietly = TRUE))
-      stop("Parallel sampling requires the 'foreach' package to be installed.")
-
-    if (!requireNamespace('doParallel', quietly = TRUE))
-      stop("Parallel sampling requires the 'doParallel' package to be installed.")
-
-    if (any(n.adapt > 0, n.iter > 0)) {
-      if (is.null(n.cores)) n.cores <- min(parallel::detectCores() - 2, n.chains)
-
-      doParallel::registerDoParallel(cores = n.cores)
-      if (mess)
-        message(paste0("Parallel sampling on ", n.cores, " cores started (",
-                       Sys.time(), ")."))
-
-      res <- foreach(i = seq_along(inits)) %dopar% {run_jags(inits[[i]], data_list = data_list,
-                          modelfile = modelfile,
-                          n.adapt = n.adapt, n.iter = n.iter, thin = thin,
-                          var.names = var.names)}
-      doParallel::stopImplicitCluster()
-      mcmc <- as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
-      adapt <- lapply(res, function(x) x$adapt)
-    }
-  } else {
-    if (any(n.adapt > 0, n.iter > 0)) {
-      adapt <- try(rjags::jags.model(file = modelfile, data = data_list,
-                                     inits = inits, quiet = quiet,
-                                     n.chains = n.chains, n.adapt = n.adapt))
-    }
-    mcmc <- if (n.iter > 0 & !inherits(adapt, 'try-error')) {
-      try(rjags::coda.samples(adapt, n.iter = n.iter, thin = thin,
-                              variable.names = var.names,
-                              na.rm = FALSE, progress.bar = progress.bar))
-    }
+  # Message if no MCMC sample will be produced.
+  if (n.iter == 0) {
+    if (mess)
+      msg("Note: No MCMC sample will be created when n.iter is set to 0.")
   }
+
+  future_info <- get_future_info()
+
+  run_jags <- ifelse(future_info$parallel, run_parallel, run_seq)
+
+  t0 <- Sys.time()
+  jags_res <- run_jags(n_adapt = n.adapt, n_iter = n.iter, n_chains = n.chains,
+                       inits = inits, thin = thin,
+                       n_workers = future_info$workers,
+                       data_list = data_list, var_names = var_names,
+                       modelfile = modelfile, quiet = quiet,
+                       progress_bar = progress.bar, mess = mess, warn = warn)
+  adapt <- jags_res$adapt
+  mcmc <- jags_res$mcmc
+
   t1 <- Sys.time()
 
-  if (n.iter > 0 & class(mcmc) != 'mcmc.list')
-    warning('There is no mcmc sample. Something went wrong.',
-            call. = FALSE, immediate. = TRUE)
+  if (n.iter > 0 & class(mcmc) != "mcmc.list")
+    warnmsg("There is no mcmc sample. Something went wrong.")
 
   # post processing ------------------------------------------------------------
   if (n.iter > 0 & !is.null(mcmc)) {
     MCMC <- mcmc
 
-    coefs <- try(get_coef_names(Mlist, K))
+    if (any(!vapply(Mlist$scale_pars, is.null, FUN.VALUE = logical(1)),
+            !is.na(unlist(Mlist$scale_pars)))) {
+      coefs <- try(get_coef_names(info_list))
 
-    if (!inherits(coefs, "try-error")) {
-    for (k in 1:length(MCMC)) {
-      # change names of MCMC to variable names where possible
-      colnames(MCMC[[k]])[na.omit(match(coefs[, 1], colnames(MCMC[[k]])))] <-
-        coefs[na.omit(match(colnames(MCMC[[k]]), coefs[, 1])), 2]
-
-      if (!is.null(scale_pars)) {
-        # re-scale parameters
-        MCMC[[k]] <- as.mcmc(sapply(colnames(MCMC[[k]]), rescale, Mlist$fixed2,
-                                    scale_pars, MCMC[[k]], Mlist$refs,
-                                    unlist(Mlist$names_main)))
-        attr(MCMC[[k]], 'mcpar') <- attr(mcmc[[k]], 'mcpar')
+      for (k in seq_len(length(MCMC))) {
+        MCMC[[k]] <- coda::as.mcmc(
+          rescale(MCMC[[k]],
+                  coefs = do.call(rbind, coefs),
+                  scale_pars = do.call(rbind, unname(Mlist$scale_pars)),
+                  info_list))
+        attr(MCMC[[k]], "mcpar") <- attr(mcmc[[k]], "mcpar")
       }
-    }
     }
   }
 
 
   # prepare output -------------------------------------------------------------
-  if (!keep_model) {file.remove(modelfile)}
-
   mcmc_settings <- list(modelfile = modelfile,
                         n.chains = n.chains,
                         n.adapt = n.adapt,
                         n.iter = n.iter,
-                        variable.names = if (exists("var.names")) var.names,
+                        variable.names = if (exists("var_names")) var_names,
                         thin = thin,
                         inits = inits,
-                        parallel = parallel,
-                        n.cores = if (parallel) n.cores)
+                        seed = seed)
 
-  attr(analysis_type, "family") <- family
-  attr(analysis_type, "link") <- link
-
-  # set contrasts back to what they were
-  on.exit(options(opt))
 
   object <- structure(
     list(analysis_type = analysis_type,
-         data = data, models = models, fixed = fixed, random = random,
-         Mlist = Mlist,
-         K = K,
-         K_imp = K_imp,
+         data = Mlist$data,
+         models = Mlist$models,
+         fixed = Mlist$fixed,
+         random = Mlist$random,
+         Mlist = Mlist[setdiff(names(Mlist), c("data", "models",
+                                               "fixed", "random"))],
+         par_index_main = par_index_main,
+         par_index_other = par_index_other,
+         jagsmodel = structure(readChar(modelfile,
+                                        file.info(modelfile)$size),
+                               class = "modelstring"),
          mcmc_settings = mcmc_settings,
          monitor_params = c(monitor_params,
-                            if (!'analysis_main' %in% names(monitor_params))
-                              setNames(TRUE, 'analysis_main')),
+                            if (!"analysis_main" %in% names(monitor_params))
+                              setNames(TRUE, "analysis_main")),
          data_list = data_list,
-         scale_pars = scale_pars,
-         hyperpars = hyperpars,
-         imp_par_list = imp_par_list,
+         hyperpars = if (is.null(hyperpars)) default_hyperpars() else hyperpars,
+         info_list = info_list,
+         coef_list = get_coef_names(info_list),
          model = if (n.adapt > 0) adapt,
          sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
-         MCMC = if (n.iter > 0 & !is.null(mcmc)) as.mcmc.list(MCMC),
-         time = t1 - t0
+         MCMC = if (n.iter > 0 & !is.null(mcmc)) coda::as.mcmc.list(MCMC),
+         comp_info = list(start_time = t0,
+                          duration = t1 - t0,
+                          JointAI_version = packageVersion("JointAI"),
+                          future = future_info$call,
+                          sessionInfo = sessionInfo()),
+         call = modimpcall$thecall
     ), class = "JointAI")
 
-  object$fitted.values <- try(predict(object, type = 'response')$fit, silent = TRUE)
-  object$residuals <- try(residuals(object, type = 'working'),
+
+  object$fitted.values <- try(fitted_values(object, mess = FALSE, warn = FALSE),
+                              silent = TRUE)
+
+  object$residuals <- try(residuals(object, type = "working", warn = FALSE),
                           silent = TRUE)
 
-  if (!inherits(object$residuals, 'try-error')) {
-    if (!object$analysis_type %in% c('clm', 'clmm'))
-      names(object$fitted.values) <- names(object$residuals) <- rownames(object$Mlist$y)
-  }
-
-  if (inherits(object$fitted.values, 'try-error'))
+  if (inherits(object$fitted.values, "try-error"))
     object$fitted.values <- NULL
-  if (inherits(object$residuals, 'try-error'))
+  if (inherits(object$residuals, "try-error"))
     object$residuals <- NULL
+
+  if (inherits(adapt, "try-error"))
+    class(object) <- "JointAI_errored"
+
+  if (!attr(modelfile, "keep_model")) {
+    file.remove(modelfile)
+  }
 
   return(object)
 }
@@ -703,42 +804,27 @@ if (!is.null(inits)) {
 #' @export
 lm_imp <- function(formula, data,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                   monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                   monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+                   refcats = NULL,
                    models = NULL, no_model = NULL, trunc = NULL,
-                   ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                   parallel = FALSE, n.cores = NULL,
-                   scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                   shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                   scale_vars = NULL, hyperpars = NULL,
                    modelname = NULL, modeldir = NULL,
                    keep_model = FALSE, overwrite = NULL,
                    quiet = TRUE, progress.bar = "text",
                    warn = TRUE, mess = TRUE,
-                   keep_scaled_mcmc = FALSE, ...){
-
-  if (missing(formula))
-    stop("No model formula specified.")
-
-  if (missing(data))
-    stop("No dataset given.")
+                   keep_scaled_mcmc = FALSE, ...) {
 
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$fixed <- arglist$formula
-  arglist$analysis_type <- "lm"
-  arglist$family <- "gaussian"
-  arglist$link <- "identity"
+  if (missing(formula)) errormsg("No model formula specified.")
 
-  thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+  arglist <- prep_arglist(analysis_type = "lm",
+                          family = gaussian(),
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
 
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
@@ -747,109 +833,132 @@ lm_imp <- function(formula, data,
 #' @export
 glm_imp <- function(formula, family, data,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                    monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+                    refcats = NULL,
                     models = NULL, no_model = NULL, trunc = NULL,
-                    ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                    parallel = FALSE, n.cores = NULL,
-                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                    shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                    scale_vars = NULL, hyperpars = NULL,
                     modelname = NULL, modeldir = NULL,
                     keep_model = FALSE, overwrite = NULL,
                     quiet = TRUE, progress.bar = "text",
                     warn = TRUE, mess = TRUE,
-                    keep_scaled_mcmc = FALSE, ...){
+                    keep_scaled_mcmc = FALSE, ...) {
 
-  if (missing(formula))
-    stop("No model formula specified.")
-  if (missing(data))
-    stop("No dataset given.")
+  if (missing(formula)) errormsg("No model formula specified.")
   if (missing(family))
-    stop("The family needs to be specified.")
+    errormsg("The argument %s needs to be specified.", dQuote("family"))
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$fixed <- arglist$formula
+  arglist <- prep_arglist(analysis_type = "glm",
+                          family = family,
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-
-  arglist$analysis_type <- "glm"
-
-
-  if (is.character(family)) {
-    family <- get(family, mode = "function", envir = parent.frame())
-    arglist$family <- family()$family
-    arglist$link <- family()$link
-  }
-
-  if (is.function(family)) {
-    arglist$family <- family()$family
-    arglist$link <- family()$link
-  }
-
-  if (inherits(family, "family")) {
-    arglist$family <- family$family
-    arglist$link <- family$link
-  }
-
-  arglist$fixed <- formula
-
-  thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
-
-
-  if (!arglist$link %in% c("identity", "log", "logit", "probit", "log",
-                           "cloglog", "inverse"))
-    stop(gettextf("%s is not an allowed link function.",
-                  dQuote(arglist$link)))
-
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  do.call(model_imp, arglist)
 }
 
 
 #' @rdname model_imp
 #' @export
-clm_imp <- function(fixed, data,
+clm_imp <- function(formula, data,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                    monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+                    refcats = NULL, nonprop = NULL, rev = NULL,
                     models = NULL, no_model = NULL, trunc = NULL,
-                    ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                    parallel = FALSE, n.cores = NULL,
-                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                    shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                    scale_vars = NULL, hyperpars = NULL,
                     modelname = NULL, modeldir = NULL,
                     keep_model = FALSE, overwrite = NULL,
                     quiet = TRUE, progress.bar = "text",
                     warn = TRUE, mess = TRUE,
-                    keep_scaled_mcmc = FALSE, ...){
+                    keep_scaled_mcmc = FALSE, ...) {
 
-  if (missing(fixed))
-    stop("No fixed effects structure specified.")
-  if (missing(data))
-    stop("No dataset given.")
+  if (missing(formula)) errormsg("No model formula specified.")
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$analysis_type <- "clm"
-  arglist$family <- "ordinal"
-  arglist$link <- "logit"
+  arglist <- prep_arglist(analysis_type = "clm",
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
 
-  thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+  do.call(model_imp, arglist)
+}
 
 
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
+#' @rdname model_imp
+#' @export
+lognorm_imp <- function(formula, data,
+                        n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                        monitor_params = c(analysis_main = TRUE),
+                        auxvars = NULL, refcats = NULL,
+                        models = NULL, no_model = NULL, trunc = NULL,
+                        shrinkage = FALSE, ppc = TRUE, seed = NULL,
+                        inits = NULL,
+                        scale_vars = NULL, hyperpars = NULL,
+                        modelname = NULL, modeldir = NULL,
+                        keep_model = FALSE, overwrite = NULL,
+                        quiet = TRUE, progress.bar = "text",
+                        warn = TRUE, mess = TRUE,
+                        keep_scaled_mcmc = FALSE, ...) {
 
-  return(res)
+  if (missing(formula)) errormsg("No model formula specified.")
+
+  arglist <- prep_arglist(analysis_type = "lognorm",
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
+
+
+  do.call(model_imp, arglist)
+}
+
+
+
+#' @rdname model_imp
+#' @export
+betareg_imp <- function(formula, data,
+                        n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                        monitor_params = c(analysis_main = TRUE),
+                        auxvars = NULL, refcats = NULL,
+                        models = NULL, no_model = NULL, trunc = NULL,
+                        shrinkage = FALSE, ppc = TRUE, seed = NULL,
+                        inits = NULL,
+                        scale_vars = NULL, hyperpars = NULL,
+                        modelname = NULL, modeldir = NULL,
+                        keep_model = FALSE, overwrite = NULL,
+                        quiet = TRUE, progress.bar = "text",
+                        warn = TRUE, mess = TRUE,
+                        keep_scaled_mcmc = FALSE, ...) {
+
+  if (missing(formula)) errormsg("No model formula specified.")
+
+  arglist <- prep_arglist(analysis_type = "beta",
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
+
+  do.call(model_imp, arglist)
+}
+
+
+#' @rdname model_imp
+#' @export
+mlogit_imp <- function(formula, data,
+                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                       monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+                       refcats = NULL,
+                       models = NULL, no_model = NULL, trunc = NULL,
+                       shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                       scale_vars = NULL, hyperpars = NULL,
+                       modelname = NULL, modeldir = NULL,
+                       keep_model = FALSE, overwrite = NULL,
+                       quiet = TRUE, progress.bar = "text",
+                       warn = TRUE, mess = TRUE,
+                       keep_scaled_mcmc = FALSE, ...) {
+
+  if (missing(formula)) errormsg("No model formula specified.")
+
+  arglist <- prep_arglist(analysis_type = "mlogit",
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
+
+  do.call(model_imp, arglist)
 }
 
 
@@ -857,46 +966,33 @@ clm_imp <- function(fixed, data,
 #' @export
 lme_imp <- function(fixed, data, random,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                    monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                    monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+                    refcats = NULL,
                     models = NULL, no_model = NULL, trunc = NULL,
-                    ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                    parallel = FALSE, n.cores = NULL,
-                    scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                    shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                    scale_vars = NULL, hyperpars = NULL,
                     modelname = NULL, modeldir = NULL,
                     keep_model = FALSE, overwrite = NULL,
                     quiet = TRUE, progress.bar = "text",
                     warn = TRUE, mess = TRUE,
-                    keep_scaled_mcmc = FALSE, ...){
+                    keep_scaled_mcmc = FALSE, ...) {
 
-  if (missing(fixed))
-    stop("No fixed effects structure specified.")
-  if (missing(random))
-    stop("No random effects structure specified.")
-  if (missing(data))
-    stop("No dataset given.")
+  arglist <- prep_arglist(analysis_type = "lme",
+                          family = gaussian(),
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$analysis_type <- "lme"
-  arglist$family <- "gaussian"
-  arglist$link <- "identity"
+  arglist <- check_fixed_random(arglist)
 
-
-  thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) {
-  #     eval(x)
-  #     } else x
-  # })
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
-
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-
-  return(res)
+  do.call(model_imp, arglist)
 }
+
+
+
+#' @rdname model_imp
+#' @aliases lme_imp
+#' @export
+lmer_imp <- lme_imp
 
 
 #' @rdname model_imp
@@ -904,63 +1000,91 @@ lme_imp <- function(fixed, data, random,
 #' @export
 glme_imp <- function(fixed, data, random, family,
                      n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                     monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                     monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+                     refcats = NULL,
                      models = NULL, no_model = NULL, trunc = NULL,
-                     ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                     parallel = FALSE, n.cores = NULL,
-                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                     shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                     scale_vars = NULL, hyperpars = NULL,
                      modelname = NULL, modeldir = NULL,
                      keep_model = FALSE, overwrite = NULL,
                      quiet = TRUE, progress.bar = "text",
                      warn = TRUE, mess = TRUE,
-                     keep_scaled_mcmc = FALSE, ...){
+                     keep_scaled_mcmc = FALSE, ...) {
 
-  if (missing(fixed))
-    stop("No fixed effects structure specified.")
-  if (missing(random))
-    stop("No random effects structure specified.")
-  if (missing(data))
-    stop("No dataset given.")
+  if (missing(family))
+    errormsg("The argument %s needs to be specified.", dQuote(family))
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$analysis_type <- "glme"
+  arglist <- prep_arglist(analysis_type = "glme",
+                          family = family,
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-  if (is.character(family)) {
-    family <- get(family, mode = "function", envir = parent.frame())
-    arglist$family <- family()$family
-    arglist$link <- family()$link
-  }
+  arglist <- check_fixed_random(arglist)
 
-  if (is.function(family)) {
-    arglist$family <- family()$family
-    arglist$link <- family()$link
-  }
+  do.call(model_imp, arglist)
 
-  if (inherits(family, "family")) {
-    arglist$family <- family$family
-    arglist$link <- family$link
-  }
+}
 
-  if (!arglist$link %in% c("identity", "log", "logit", "probit", "log",
-                           "cloglog", "inverse"))
-    stop(gettextf("%s is not an allowed link function.",
-                  dQuote(arglist$link)))
+
+#' @rdname model_imp
+#' @aliases glme_imp
+#' @export
+glmer_imp <- glme_imp
 
 
 
-  thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
 
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+#' @rdname model_imp
+#' @export
+betamm_imp <- function(fixed, random, data,
+                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                       monitor_params = c(analysis_main = TRUE),
+                       auxvars = NULL, refcats = NULL,
+                       models = NULL, no_model = NULL, trunc = NULL,
+                       shrinkage = FALSE, ppc = TRUE, seed = NULL,
+                       inits = NULL,
+                       scale_vars = NULL, hyperpars = NULL,
+                       modelname = NULL, modeldir = NULL,
+                       keep_model = FALSE, overwrite = NULL,
+                       quiet = TRUE, progress.bar = "text",
+                       warn = TRUE, mess = TRUE,
+                       keep_scaled_mcmc = FALSE, ...) {
+
+  arglist <- prep_arglist(analysis_type = "glmm_beta",
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
+
+  arglist <- check_fixed_random(arglist)
+
+  do.call(model_imp, arglist)
+}
 
 
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
 
-  return(res)
+
+#' @rdname model_imp
+#' @export
+lognormmm_imp <- function(fixed, random, data,
+                          n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                          monitor_params = c(analysis_main = TRUE),
+                          auxvars = NULL, refcats = NULL,
+                          models = NULL, no_model = NULL, trunc = NULL,
+                          shrinkage = FALSE, ppc = TRUE, seed = NULL,
+                          inits = NULL,
+                          scale_vars = NULL, hyperpars = NULL,
+                          modelname = NULL, modeldir = NULL,
+                          keep_model = FALSE, overwrite = NULL,
+                          quiet = TRUE, progress.bar = "text",
+                          warn = TRUE, mess = TRUE,
+                          keep_scaled_mcmc = FALSE, ...) {
+
+  arglist <- prep_arglist(analysis_type = "glmm_lognorm",
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
+
+  arglist <- check_fixed_random(arglist)
+
+  do.call(model_imp, arglist)
 }
 
 
@@ -968,131 +1092,176 @@ glme_imp <- function(fixed, data, random, family,
 #' @export
 clmm_imp <- function(fixed, data, random,
                      n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                     monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                     monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+                     refcats = NULL, nonprop = NULL, rev = NULL,
                      models = NULL, no_model = NULL, trunc = NULL,
-                     ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                     parallel = FALSE, n.cores = NULL,
-                     scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                     shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                     scale_vars = NULL, hyperpars = NULL,
                      modelname = NULL, modeldir = NULL,
                      keep_model = FALSE, overwrite = NULL,
                      quiet = TRUE, progress.bar = "text",
                      warn = TRUE, mess = TRUE,
-                     keep_scaled_mcmc = FALSE, ...){
+                     keep_scaled_mcmc = FALSE, ...) {
 
-  if (missing(fixed))
-    stop("No fixed effects structure specified.")
-  if (missing(random))
-    stop("No random effects structure specified.")
-  if (missing(data))
-    stop("No dataset given.")
+  arglist <- prep_arglist(analysis_type = "clmm",
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$analysis_type <- "clmm"
-  arglist$family <- "ordinal"
-  arglist$link <- "logit"
+  arglist <- check_fixed_random(arglist)
 
-
-  thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
-
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
-
-
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-
-  return(res)
+  do.call(model_imp, arglist)
 }
 
+
+#' @rdname model_imp
+#' @export
+mlogitmm_imp <- function(fixed, data, random,
+                         n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                         monitor_params = c(analysis_main = TRUE),
+                         auxvars = NULL, refcats = NULL,
+                         models = NULL, no_model = NULL, trunc = NULL,
+                         shrinkage = FALSE, ppc = TRUE, seed = NULL,
+                         inits = NULL,
+                         scale_vars = NULL, hyperpars = NULL,
+                         modelname = NULL, modeldir = NULL,
+                         keep_model = FALSE, overwrite = NULL,
+                         quiet = TRUE, progress.bar = "text",
+                         warn = TRUE, mess = TRUE,
+                         keep_scaled_mcmc = FALSE, ...) {
+
+  arglist <- prep_arglist(analysis_type = "mlogitmm",
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
+
+  arglist <- check_fixed_random(arglist)
+
+  do.call(model_imp, arglist)
+}
 
 
 #' @rdname model_imp
 #' @export
 survreg_imp <- function(formula, data,
                         n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                        monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                        monitor_params = c(analysis_main = TRUE),
+                        auxvars = NULL, refcats = NULL,
                         models = NULL, no_model = NULL, trunc = NULL,
-                        ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                        parallel = FALSE, n.cores = NULL,
-                        scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                        shrinkage = FALSE, ppc = TRUE, seed = NULL,
+                        inits = NULL,
+                        scale_vars = NULL, hyperpars = NULL,
                         modelname = NULL, modeldir = NULL,
                         keep_model = FALSE, overwrite = NULL,
                         quiet = TRUE, progress.bar = "text",
                         warn = TRUE, mess = TRUE,
-                        keep_scaled_mcmc = FALSE, ...){
-
-  if (missing(formula))
-    stop("No model formula specified.")
-
-  if (missing(data))
-    stop("No dataset given.")
+                        keep_scaled_mcmc = FALSE, ...) {
 
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$fixed <- arglist$formula
-  arglist$analysis_type <- "survreg"
-  arglist$family <- 'weibull'
-  arglist$link <- "log"
-  arglist$fixed <- formula
+  if (missing(formula)) errormsg("No model formula specified.")
 
-  thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
 
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
+  fmla <- if (is.list(formula)) {
+    deparse(formula[[1]], width.cutoff = 500)
+  } else {
+    deparse(formula, width.cutoff = 500)
+  }
+  if (!grepl("^Surv\\(", fmla)) {
+    errormsg("For a survival model, the left hand side of the model formula
+             should be a survival object (using %s).", dQuote("Surv()"))
+  }
 
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  arglist <- prep_arglist(analysis_type = "survreg",
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
+
+  do.call(model_imp, arglist)
 }
-
 
 
 
 #' @rdname model_imp
 #' @export
-coxph_imp <- function(formula, data,
+coxph_imp <- function(formula, data, df_basehaz = 6,
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
-                      monitor_params = NULL,  auxvars = NULL, refcats = NULL,
+                      monitor_params = c(analysis_main = TRUE),  auxvars = NULL,
+                      refcats = NULL,
                       models = NULL, no_model = NULL, trunc = NULL,
-                      ridge = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                      parallel = FALSE, n.cores = NULL,
-                      scale_vars = NULL, scale_pars = NULL, hyperpars = NULL,
+                      shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                      scale_vars = NULL, hyperpars = NULL,
                       modelname = NULL, modeldir = NULL,
                       keep_model = FALSE, overwrite = NULL,
                       quiet = TRUE, progress.bar = "text",
                       warn = TRUE, mess = TRUE,
-                      keep_scaled_mcmc = FALSE, ...){
-
-  if (missing(formula))
-    stop("No model formula specified.")
-
-  if (missing(data))
-    stop("No dataset given.")
+                      keep_scaled_mcmc = FALSE, ...) {
 
 
-  arglist <- mget(names(formals()), sys.frame(sys.nframe()))
-  arglist$fixed <- arglist$formula
-  arglist$analysis_type <- "coxph"
-  arglist$family <- 'prophaz'
-  arglist$link <- "log"
-  arglist$fixed <- formula
+  if (missing(formula)) errormsg("No model formula specified.")
 
-  thiscall <- as.list(match.call())[-1L]
-  # thiscall <- lapply(thiscall, function(x) {
-  #   if (is.language(x)) eval(x) else x
-  # })
+  fmla <- if (is.list(formula)) {
+    deparse(formula[[1]], width.cutoff = 500)
+  } else {
+    deparse(formula, width.cutoff = 500)
+  }
+  if (!grepl("^Surv\\(", fmla)) {
+    errormsg("For a survival model, the left hand side of the model formula
+             should be a survival object (using %s).", dQuote("Surv()"))
+  }
 
-  arglist <- c(arglist,
-               thiscall[!names(thiscall) %in% names(arglist)])
 
-  res <- do.call(model_imp, arglist)
-  res$call <- match.call()
-  return(res)
+  arglist <- prep_arglist(analysis_type = "coxph",
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
+
+
+  do.call(model_imp, arglist)
 }
 
+
+
+#' @rdname model_imp
+#' @export
+JM_imp <- function(formula, data, df_basehaz = 6,
+                   n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
+                   monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+                   timevar = NULL, refcats = NULL,
+                   models = NULL, no_model = timevar,
+                   assoc_type = NULL, trunc = NULL,
+                   shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+                   scale_vars = NULL, hyperpars = NULL,
+                   modelname = NULL, modeldir = NULL,
+                   keep_model = FALSE, overwrite = NULL,
+                   quiet = TRUE, progress.bar = "text",
+                   warn = TRUE, mess = TRUE,
+                   keep_scaled_mcmc = FALSE, ...) {
+
+
+  if (missing(timevar))
+    errormsg("The name of the %s variable of the longitudinal outcome(s) must
+             be specified via the argument %s.",
+             dQuote("time"), dQuote("timevar"))
+
+  if (!is.numeric(data[[timevar]]))
+    errormsg("The time variable (specified via the argument %s) must
+             be numeric.",
+             dQuote("timevar"))
+
+
+  if (missing(formula)) errormsg("No model formula specified.")
+
+  fmla <- if (is.list(formula)) {
+    deparse(formula[[1]], width.cutoff = 500)
+  } else {
+    deparse(formula, width.cutoff = 500)
+  }
+  if (!grepl("^Surv\\(", fmla)) {
+    errormsg("For a survival model, the left hand side of the model formula
+             should be a survival object (using %s).", dQuote("Surv()"))
+  }
+
+
+  arglist <- prep_arglist(analysis_type = "JM",
+                          formals = formals(), call = match.call(),
+                          sframe = sys.frame(sys.nframe()))
+
+
+  do.call(model_imp, arglist)
+}
