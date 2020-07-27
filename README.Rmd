@@ -87,7 +87,8 @@ functions like `lm()` and `glm()` from base R,
 `nlme::lme()` (from the package [**nlme**](https://CRAN.R-project.org/package=nlme))
 , `lme4::lmer()` or `lme4::glmer()`
 (from the package [**lme4**](https://CRAN.R-project.org/package=lme4)) and
-`survival::survreg()` and `survival::coxph()` (from the package [**survival**](https://CRAN.R-project.org/package=survival)).
+`survival::survreg()` and `survival::coxph()` (from the package 
+[**survival**](https://CRAN.R-project.org/package=survival)).
 
 
 Functions `summary()`, `coef()`, `traceplot()` and `densplot()` provide a
