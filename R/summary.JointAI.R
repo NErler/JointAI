@@ -101,8 +101,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
         stats[, "GR-crit"] <- grcrit
 
       if (length(object$MCMC) - length(exclude_chains) > 1) {
-        if (!inherits(mcerror, 'try-error'))
-          stats[, "MCE/SD"] <- mcerror$data_scale[, 'MCSE/SD']
+        if (!inherits(mcerror, "try-error"))
+          stats[, "MCE/SD"] <- mcerror$data_scale[, "MCSE/SD"]
       }
 
       regcoef <- stats[intersect(rownames(stats),
@@ -121,7 +121,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       }
 
       intercepts <- if (object$info_list[[varname]]$modeltype %in%
-                        c('clm', 'clmm'))
+                        c("clm", "clmm"))
         get_intercepts(stats, varname, levels(object$Mlist$refs[[varname]]),
                        rev = object$info_list[[varname]]$rev)
 
@@ -134,12 +134,12 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                          rownames(stats), value = TRUE), , drop = FALSE]
 
         if (nrow(Ds) > 0) {
-          Ddiag <- sapply(strsplit(sub("\\]", '',
-                                       sub("^[[:print:]]*\\[", '', rownames(Ds))
+          Ddiag <- sapply(strsplit(sub("\\]", "",
+                                       sub("^[[:print:]]*\\[", "", rownames(Ds))
           ), ","),
           function(i) length(unique(i)) == 1)
 
-          Ds[Ddiag, 'tail-prob.'] <- NA
+          Ds[Ddiag, "tail-prob."] <- NA
           Ds
         }
       }
@@ -149,13 +149,13 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                                        "[[", "modeltype") == "JM")]]$assoc_type
       }
 
-      wb_shape <- if (object$info_list[[varname]]$modeltype %in% c('survreg')) {
+      wb_shape <- if (object$info_list[[varname]]$modeltype %in% c("survreg")) {
         stats[c(paste0("shape_", object$info_list[[varname]]$varname)),
-              -which(colnames(stats) == 'tail-prob.'), drop = FALSE]
+              -which(colnames(stats) == "tail-prob."), drop = FALSE]
       }
 
       events <- if (object$info_list[[varname]]$modeltype %in%
-                    c('survreg', 'coxph', 'JM')) {
+                    c("survreg", "coxph", "JM")) {
         mat <- object$info_list[[1]]$resp_mat[2]
         col <- object$info_list[[1]]$resp_col[2]
         sum(object$data_list[[mat]][, col])
@@ -164,7 +164,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       other <- setdiff(rownames(stats),
                        c(rownames(regcoef),
                          rownames(sigma),
-                         attr(intercepts, 'rownames_orig'),
+                         attr(intercepts, "rownames_orig"),
                          rownames(rd_vcov),
                          rownames(wb_shape))
       )
@@ -210,15 +210,15 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
                                   ...) {
 
   if (!inherits(x, "summary.JointAI"))
-    errormsg("Use only with 'summary.JointAI' objects.")
+    errormsg("Use only with objects.", sQuote("summary.JointAI"))
 
   cat("\n")
 
   if (sum(!sapply(x$res, is.null)) > 1)
     cat("Bayesian joint model fitted with JointAI", "\n")
   else
-    cat('Bayesian', print_type(x$res[[1]]$modeltype, x$res[[1]]$family),
-        'fitted with JointAI\n')
+    cat("Bayesian", print_type(x$res[[1]]$modeltype, x$res[[1]]$family),
+        "fitted with JointAI\n")
 
   cat("\nCall:\n", paste(deparse(x$call), sep = "\n", collapse = "\n"),
       "\n", sep = "")
@@ -228,11 +228,11 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
       cat("\n\n")
       if (sum(!sapply(x$res, is.null)) > 1)
         cat(paste0(
-          '# ', paste0(c(rep('-', 69)), collapse = ''), ' #\n',
-          '  ', 'Bayesian ',
-          print_type(x$res[[k]]$modeltype, x$res[[k]]$family), ' for ',
-          dQuote(names(x$res)[k]), '\n',
-          '# ', paste0(c(rep('-', 35)), collapse = ' '), ' #\n\n'
+          "# ", paste0(c(rep("-", 69)), collapse = ""), " #\n",
+          "  ", "Bayesian ",
+          print_type(x$res[[k]]$modeltype, x$res[[k]]$family), " for ",
+          dQuote(names(x$res)[k]), "\n",
+          "# ", paste0(c(rep("-", 35)), collapse = " "), " #\n\n"
         ))
 
 
@@ -247,7 +247,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
 
       if (!is.null(x$res[[k]]$intercepts)) {
         # remove the attributes to avoid printing them
-        attr(x$res[[k]]$intercepts, 'rownames_orig') <- NULL
+        attr(x$res[[k]]$intercepts, "rownames_orig") <- NULL
 
         cat("\nPosterior summary of the intercepts:\n")
         print(x$res[[k]]$intercepts, digits = digits, na.print = "")
@@ -273,8 +273,8 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
         cat(paste0(names(x$res[[k]]$assoc_type), ": ",
                    sapply(x$res[[k]]$assoc_type, function(i)
                      switch(i,
-                            'underl.value' = "underlying value",
-                            'obs.value' = 'observed value')
+                            "underl.value" = "underlying value",
+                            "obs.value" = "observed value")
                    ), collapse = "\n"), "\n")
 
       }
@@ -286,33 +286,33 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
     }
   }
 
-  cat('\n\n')
+  cat("\n\n")
   if (sum(!sapply(x$res, is.null)) > 1)
-    cat('#', paste0(c(rep('-', 59)), collapse = ''), '#\n\n')
+    cat("#", paste0(c(rep("-", 59)), collapse = ""), "#\n\n")
 
   cat("MCMC settings:\n")
   cat("Iterations = ", x$start, ":", x$end, "\n", sep = "")
-  cat("Sample size per chain =", (x$end - x$start)/x$thin +
+  cat("Sample size per chain =", (x$end - x$start) / x$thin +
         1, "\n")
   cat("Thinning interval =", x$thin, "\n")
   cat("Number of chains =", x$nchain, "\n")
   cat("\n")
-  cat("Number of observations:", x$size['lvlone'], "\n")
+  cat("Number of observations:", x$size["lvlone"], "\n")
   if (length(x$size) > 1) {
-    i <- which(!names(x$size) %in% 'lvlone')
+    i <- which(!names(x$size) %in% "lvlone")
     cat("Number of groups:\n",
-        paste0('- ', names(x$size)[i], ": ", x$size[i], "\n")
+        paste0("- ", names(x$size)[i], ": ", x$size[i], "\n")
     )
   }
 
   if (!is.null(x$missinfo)) {
-    cat('\n\n')
-    cat('Number and proportion of complete cases:\n')
+    cat("\n\n")
+    cat("Number and proportion of complete cases:\n")
     print(x$missinfo$complete_cases, digits = digits)
-    cat('\nNumber and proportion of missing values:\n')
+    cat("\nNumber and proportion of missing values:\n")
     for (k in seq_along(x$missinfo$miss_list)) {
       print(x$missinfo$miss_list[[k]], digits = digits)
-      cat('\n')
+      cat("\n")
     }
   }
 
@@ -329,7 +329,9 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                          subset = NULL, exclude_chains = NULL,
                          warn = TRUE, mess = TRUE, ...) {
 
-  if (!inherits(object, "JointAI")) errormsg("Use only with 'JointAI' objects.")
+  if (!inherits(object, "JointAI")) {
+    errormsg("Use only with %s objects.", sQuote("JointAI"))
+  }
 
   if (is.null(object$MCMC)) errormsg("There is no MCMC sample.")
 
@@ -348,8 +350,8 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
     c(
-      if (object$info_list[[k]]$modeltype %in% c('clm', 'clmm')) {
-        interc <- colMeans(MCMC)[grep(paste0('gamma_', k, "\\["),
+      if (object$info_list[[k]]$modeltype %in% c("clm", "clmm")) {
+        interc <- colMeans(MCMC)[grep(paste0("gamma_", k, "\\["),
                                       colnames(MCMC))]
 
         lvl <- levels(object$Mlist$refs[[k]])
@@ -373,10 +375,10 @@ coef.summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                                  warn = TRUE, mess = TRUE, ...) {
 
   if (!inherits(object, "summary.JointAI"))
-    errormsg("Use only with 'summary.JointAI' objects.")
+    errormsg("Use only with %s objects.", sQuote("summary.JointAI"))
 
   Filter(Negate(is.null),
-         lapply(object$res, "[[", 'regcoef')
+         lapply(object$res, "[[", "regcoef")
   )
 }
 
@@ -393,7 +395,9 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
                             subset = NULL, exclude_chains = NULL,
                             warn = TRUE, mess = TRUE, ...) {
 
-  if (!inherits(object, "JointAI")) errormsg("Use only with 'JointAI' objects.")
+  if (!inherits(object, "JointAI")) {
+    errormsg("Use only with %s objects.", sQuote("JointAI"))
+  }
 
   if (is.null(object$MCMC)) errormsg("There is no MCMC sample.")
 
@@ -401,10 +405,11 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
   if (is.null(subset) & !is.null(parm)) subset <- parm
 
   if (!is.null(subset) & !is.null(parm))
-    errormsg('At least one of "parm" and "subset" should be NULL.')
+    errormsg("At least one of %s and should be NULL.",
+             dQuote("parm"), dQuote("subset"))
 
   if (is.null(quantiles) & !is.null(level))
-    quantiles <- c((1 - level)/2, 1 - (1 - level)/2)
+    quantiles <- c((1 - level) / 2, 1 - (1 - level) / 2)
 
   MCMC <- prep_MCMC(object, start, end, thin, subset,
                     exclude_chains = exclude_chains,
@@ -422,9 +427,9 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
       x$varname[match(intersect(colnames(MCMC), x$coef), x$coef)]
 
     rbind(
-      if (object$info_list[[k]]$modeltype %in% c('clm', 'clmm')) {
+      if (object$info_list[[k]]$modeltype %in% c("clm", "clmm")) {
         lvl <- levels(object$Mlist$refs[[k]])
-        interc <- apply(MCMC[, grep(paste0('gamma_', k, "\\["),
+        interc <- apply(MCMC[, grep(paste0("gamma_", k, "\\["),
                                     colnames(MCMC))], 2, quantile, quantiles)
 
         if (isTRUE(rev)) {
@@ -445,7 +450,9 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
 #' @export
 print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
 
-  if (!inherits(x, "JointAI")) errormsg("Use only with 'JointAI' objects.")
+  if (!inherits(x, "JointAI")) {
+    errormsg("Use only with %s objects.", sQuote("JointAI"))
+  }
 
 
   MCMC <- if (!is.null(x$MCMC)) {
@@ -468,9 +475,9 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
       cat("\n", "Bayesian",
           print_type(x$info_list[[varname]]$modeltype,
                      x$info_list[[varname]]$family), "for",
-          dQuote(varname), '\n')
+          dQuote(varname), "\n")
       if (x$info_list[[names(coefs)[k]]]$modeltype %in%
-          c('glmm', 'clmm', 'mlogitmm')) {
+          c("glmm", "clmm", "mlogitmm")) {
         cat("\nFixed effects:\n")
         print(coefs[[k]], digits = digits)
 
@@ -503,7 +510,7 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
 print.modelstring <- function(x, ...) {
 
   if (!inherits(x, "modelstring"))
-    errormsg("Use only with 'modelstring' objects.")
+    errormsg("Use only with %s objects.", sQuote("modelstring"))
 
   cat(x)
 }
@@ -549,8 +556,8 @@ get_missinfo <- function(object) {
       Filter(Negate(is.null),
              list(
                level = if (length(object$Mlist$groups) > 1) k,
-               '#' = sum(cc0),
-               '%' = mean(cc0) * 100
+               "#" = sum(cc0),
+               "%" = mean(cc0) * 100
              )
       ), check.names = FALSE, row.names = k)
   })
@@ -567,8 +574,8 @@ get_missinfo <- function(object) {
              list(
                # variable = names(subdat),
                level = if (length(unique(dat_lvls)) > 1) lvl,
-               '# NA' = colSums(is.na(subdat)),
-               '% NA' = colMeans(is.na(subdat)) * 100
+               "# NA" = colSums(is.na(subdat)),
+               "% NA" = colMeans(is.na(subdat)) * 100
              )
       ),
       check.names = FALSE
@@ -576,7 +583,7 @@ get_missinfo <- function(object) {
     missinfo[order(missinfo$`# NA`), ]
   }, simplify = FALSE)
 
-  list('complete_cases' = do.call(rbind, complcases),
+  list("complete_cases" = do.call(rbind, complcases),
        miss_list = miss_list
   )
 }
