@@ -35,8 +35,7 @@ model types.
 
 Moreover, survival models and joint models for longitudinal and survival data
 are available. It is also possible to fit multiple models of mixed types
-simultaneously.
-Missing values in (if present) will be imputed automatically.
+simultaneously. Missing values in (if present) will be imputed automatically.
 
 **JointAI** performs some preprocessing of the data and creates a
 [JAGS](http://mcmc-jags.sourceforge.net) model, which will then automatically be
