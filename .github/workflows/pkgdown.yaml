@@ -7,6 +7,7 @@ name: pkgdown
 jobs:
   pkgdown:
     runs-on: macOS-latest
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip-pkgdown]')"
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:

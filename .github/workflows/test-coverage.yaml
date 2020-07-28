@@ -12,6 +12,8 @@ name: test-coverage
 jobs:
   test-coverage:
     runs-on: windows-latest
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip-covr]')"
+
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
