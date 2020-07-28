@@ -338,9 +338,14 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                     exclude_chains = exclude_chains, mess = mess, warn = warn)
 
 
-  coefs <- sapply(names(object$fixed), function(k) {
+  coefs <- nlapply(names(object$fixed), function(k) {
     x <- object$coef_list[[k]]
     rev <- object$info_list[[k]]$rev
+
+    cfs <- colMeans(MCMC)
+    names(cfs)[match(intersect(colnames(MCMC), x$coef), names(cfs))] <-
+      x$varname[match(intersect(colnames(MCMC), x$coef), x$coef)]
+
 
     c(
       if (object$info_list[[k]]$modeltype %in% c('clm', 'clmm')) {
@@ -355,13 +360,9 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
         }
         interc
       },
-      if (length(intersect(colnames(MCMC), x$coef)))
-        setNames(colMeans(MCMC[, intersect(colnames(MCMC), x$coef),
-                               drop = FALSE]),
-                 x$varname[match(x$coef, intersect(colnames(MCMC), x$coef))]
-        )
+      cfs
     )
-  }, simplify = FALSE)
+  })
 
   return(coefs)
 }
@@ -382,7 +383,8 @@ coef.summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
 #' @rdname summary.JointAI
-#' @param parm same as \code{subset}
+#' @param parm same as \code{subset} (for consistency with \code{confint}
+#'             method for other types of objects)
 #' @param level confidence level (default is 0.95)
 #' @export
 confint.JointAI <- function(object, parm = NULL, level = 0.95,
@@ -410,9 +412,14 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
 
 
 
-  sapply(names(object$fixed), function(k) {
+  nlapply(names(object$fixed), function(k) {
     x <- object$coef_list[[k]]
     rev <- object$info_list[[k]]$rev
+
+    quants <- t(apply(MCMC, 2, quantile, quantiles))
+    rownames(quants)[match(intersect(colnames(MCMC), x$coef),
+                           rownames(quants))] <-
+      x$varname[match(intersect(colnames(MCMC), x$coef), x$coef)]
 
     rbind(
       if (object$info_list[[k]]$modeltype %in% c('clm', 'clmm')) {
@@ -427,16 +434,10 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
         }
         t(interc)
       },
-      if (length(intersect(colnames(MCMC), x$coef))) {
-        quants <- t(apply(MCMC[, intersect(colnames(MCMC), x$coef),
-                               drop = FALSE], 2, quantile, quantiles))
 
-        rownames(quants) <- x$varname[match(x$coef,
-                                            intersect(colnames(MCMC), x$coef))]
-        quants
-      }
+      quants
     )
-  }, simplify = FALSE)
+  })
 }
 
 
