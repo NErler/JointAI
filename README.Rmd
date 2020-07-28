@@ -28,10 +28,10 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 The package **JointAI** provides functionality to perform joint analysis and
-imputation of a range of model types in the Bayesian framework.
-Implemented are (generalized) linear regression models and extensions thereof,
-models for (un-/ordered) categorical data, as well as multi-level (mixed)
-versions of these model types.
+imputation of a range of model types in the Bayesian framework. Implemented are
+(generalized) linear regression models and extensions thereof, models for
+(un-/ordered) categorical data, as well as multi-level (mixed) versions of these
+model types.
 
 Moreover, survival models and joint models for longitudinal and survival data
 are available. It is also possible to fit multiple models of mixed types
