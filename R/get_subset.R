@@ -31,16 +31,20 @@ get_subset <- function(object, subset, warn = TRUE, mess = TRUE) {
                                   info_list = object$info_list),
                              subset, mess = mess))
 
-sub <- unique(unlist(
-  c(
-    sapply(paste0("^", s, "\\["), grep,
-      colnames(object$MCMC[[1]]),
-      value = TRUE
-    ),
-    colnames(object$MCMC[[1]])[na.omit(
-      sapply(s, match, table = colnames(object$MCMC[[1]])))]
-  )
-))
+  if (is.null(s)) {
+    errormsg("You have selected an empty subset of parameters.")
+  }
+
+  sub <- unique(unlist(
+    c(
+      sapply(paste0("^", s, "\\["), grep,
+             colnames(object$MCMC[[1]]),
+             value = TRUE
+      ),
+      colnames(object$MCMC[[1]])[na.omit(
+        sapply(s, match, table = colnames(object$MCMC[[1]])))]
+    )
+  ))
 
 
   if (length(sub) == 0) sub <- colnames(object$MCMC[[1]])
