@@ -6,8 +6,8 @@ lme_imp(fixed = y ~ 1 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept) 
-          0 
+(Intercept)     sigma_y D_y_id[1,1] 
+          0           0           0 
 
 
 Random effects covariance matrix:
@@ -28,8 +28,8 @@ glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "iden
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept) 
-          0 
+(Intercept)     sigma_y D_y_id[1,1] 
+          0           0           0 
 
 
 Random effects covariance matrix:
@@ -50,8 +50,8 @@ glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "log"
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept) 
-          0 
+(Intercept)     sigma_y D_y_id[1,1] 
+          0           0           0 
 
 
 Random effects covariance matrix:
@@ -72,8 +72,8 @@ glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "inve
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept) 
-          0 
+(Intercept)     sigma_y D_y_id[1,1] 
+          0           0           0 
 
 
 Random effects covariance matrix:
@@ -94,8 +94,8 @@ glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "log
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept) D_b1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -111,8 +111,8 @@ glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "pro
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept) D_b1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -128,8 +128,8 @@ glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "log
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept) D_b1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -145,8 +145,8 @@ glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "clo
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept) D_b1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -162,8 +162,8 @@ glme_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, family = Gamma(link = "invers
  Bayesian Gamma mixed model for "L1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept)     sigma_L1 D_L1_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -184,8 +184,8 @@ glme_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, family = Gamma(link = "log"),
  Bayesian Gamma mixed model for "L1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept)     sigma_L1 D_L1_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -206,8 +206,8 @@ glme_imp(fixed = p1 ~ 1 + (1 | id), data = longDF, family = poisson(link = "log"
  Bayesian poisson mixed model for "p1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept) D_p1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -223,8 +223,8 @@ glme_imp(fixed = p1 ~ 1 + (1 | id), data = longDF, family = poisson(link = "iden
  Bayesian poisson mixed model for "p1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept) D_p1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -240,8 +240,8 @@ lognormmm_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian log-normal mixed model for "L1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept)     sigma_L1 D_L1_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -262,8 +262,8 @@ betamm_imp(fixed = Be1 ~ 1 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian beta mixed model for "Be1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+  (Intercept)       tau_Be1 D_Be1_id[1,1] 
+            0             0             0 
 
 
 Random effects covariance matrix:
@@ -279,8 +279,8 @@ lme_imp(fixed = y ~ C1 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept)          C1 
-          0           0 
+(Intercept)          C1     sigma_y D_y_id[1,1] 
+          0           0           0           0 
 
 
 Random effects covariance matrix:
@@ -301,8 +301,8 @@ glme_imp(fixed = b1 ~ C1 + (1 | id), data = longDF, family = binomial(),
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
-(Intercept)          C1 
-          0           0 
+ (Intercept)           C1 D_b1_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -318,8 +318,8 @@ glme_imp(fixed = L1 ~ C1 + (1 | id), data = longDF, family = Gamma(),
  Bayesian Gamma mixed model for "L1" 
 
 Fixed effects:
-(Intercept)          C1 
-          0           0 
+ (Intercept)           C1     sigma_L1 D_L1_id[1,1] 
+           0            0            0            0 
 
 
 Random effects covariance matrix:
@@ -340,8 +340,8 @@ glme_imp(fixed = p1 ~ C1 + (1 | id), data = longDF, family = poisson(),
  Bayesian poisson mixed model for "p1" 
 
 Fixed effects:
-(Intercept)          C1 
-          0           0 
+ (Intercept)           C1 D_p1_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -357,8 +357,8 @@ lognormmm_imp(fixed = L1 ~ C1 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian log-normal mixed model for "L1" 
 
 Fixed effects:
-(Intercept)          C1 
-          0           0 
+ (Intercept)           C1     sigma_L1 D_L1_id[1,1] 
+           0            0            0            0 
 
 
 Random effects covariance matrix:
@@ -379,8 +379,8 @@ betamm_imp(fixed = Be1 ~ C1 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian beta mixed model for "Be1" 
 
 Fixed effects:
-(Intercept)          C1 
-          0           0 
+  (Intercept)            C1       tau_Be1 D_Be1_id[1,1] 
+            0             0             0             0 
 
 
 Random effects covariance matrix:
@@ -396,8 +396,8 @@ lme_imp(fixed = y ~ c2 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept)          c2 
-          0           0 
+(Intercept)          c2     sigma_y D_y_id[1,1] 
+          0           0           0           0 
 
 
 Random effects covariance matrix:
@@ -418,8 +418,8 @@ glme_imp(fixed = b2 ~ c2 + (1 | id), data = longDF, family = binomial(),
  Bayesian binomial mixed model for "b2" 
 
 Fixed effects:
-(Intercept)          c2 
-          0           0 
+ (Intercept)           c2 D_b2_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -435,8 +435,8 @@ glme_imp(fixed = L1mis ~ c2 + (1 | id), data = longDF, family = Gamma(),
  Bayesian Gamma mixed model for "L1mis" 
 
 Fixed effects:
-(Intercept)          c2 
-          0           0 
+    (Intercept)              c2     sigma_L1mis D_L1mis_id[1,1] 
+              0               0               0               0 
 
 
 Random effects covariance matrix:
@@ -457,8 +457,8 @@ glme_imp(fixed = p2 ~ c2 + (1 | id), data = longDF, family = poisson(),
  Bayesian poisson mixed model for "p2" 
 
 Fixed effects:
-(Intercept)          c2 
-          0           0 
+ (Intercept)           c2 D_p2_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -474,8 +474,8 @@ lognormmm_imp(fixed = L1mis ~ c2 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian log-normal mixed model for "L1mis" 
 
 Fixed effects:
-(Intercept)          c2 
-          0           0 
+    (Intercept)              c2     sigma_L1mis D_L1mis_id[1,1] 
+              0               0               0               0 
 
 
 Random effects covariance matrix:
@@ -496,8 +496,8 @@ betamm_imp(fixed = Be2 ~ c2 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian beta mixed model for "Be2" 
 
 Fixed effects:
-(Intercept)          c2 
-          0           0 
+  (Intercept)            c2       tau_Be2 D_Be2_id[1,1] 
+            0             0             0             0 
 
 
 Random effects covariance matrix:
@@ -513,8 +513,8 @@ lme_imp(fixed = y ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-C2 
- 0 
+         C2     sigma_y D_y_id[1,1] 
+          0           0           0 
 
 
 Random effects covariance matrix:
@@ -535,8 +535,8 @@ glme_imp(fixed = b2 ~ 0 + C2 + (1 | id), data = longDF, family = binomial(),
  Bayesian binomial mixed model for "b2" 
 
 Fixed effects:
-C2 
- 0 
+          C2 D_b2_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -552,8 +552,8 @@ glme_imp(fixed = L1mis ~ 0 + C2 + (1 | id), data = longDF, family = Gamma(),
  Bayesian Gamma mixed model for "L1mis" 
 
 Fixed effects:
-C2 
- 0 
+             C2     sigma_L1mis D_L1mis_id[1,1] 
+              0               0               0 
 
 
 Random effects covariance matrix:
@@ -574,8 +574,8 @@ glme_imp(fixed = p2 ~ 0 + C2 + (1 | id), data = longDF, family = poisson(),
  Bayesian poisson mixed model for "p2" 
 
 Fixed effects:
-C2 
- 0 
+          C2 D_p2_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -591,8 +591,8 @@ lognormmm_imp(fixed = L1mis ~ 0 + C2 + (1 | id), data = longDF,
  Bayesian log-normal mixed model for "L1mis" 
 
 Fixed effects:
-C2 
- 0 
+             C2     sigma_L1mis D_L1mis_id[1,1] 
+              0               0               0 
 
 
 Random effects covariance matrix:
@@ -613,8 +613,8 @@ betamm_imp(fixed = Be2 ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian beta mixed model for "Be2" 
 
 Fixed effects:
-C2 
- 0 
+           C2       tau_Be2 D_Be2_id[1,1] 
+            0             0             0 
 
 
 Random effects covariance matrix:
@@ -632,8 +632,10 @@ lme_imp(fixed = c1 ~ c2 + B2 + p2 + L1mis + Be2 + (1 | id), data = longDF,
  Bayesian linear mixed model for "c1" 
 
 Fixed effects:
-(Intercept)         B21          c2          p2       L1mis         Be2 
-          0           0           0           0           0           0 
+ (Intercept)          B21           c2           p2        L1mis          Be2 
+           0            0            0            0            0            0 
+    sigma_c1 D_c1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -656,8 +658,10 @@ lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF,
  Bayesian linear mixed model for "c1" 
 
 Fixed effects:
-(Intercept)          c2         b21          p2       L1mis 
-          0           0           0           0           0 
+ (Intercept)           c2          b21           p2        L1mis     sigma_c1 
+           0            0            0            0            0            0 
+D_c1_id[1,1] 
+           0 
 
 
 Random effects covariance matrix:
@@ -681,8 +685,10 @@ lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF,
  Bayesian linear mixed model for "c1" 
 
 Fixed effects:
-(Intercept)          c2         b21          p2       L1mis 
-          0           0           0           0           0 
+ (Intercept)           c2          b21           p2        L1mis     sigma_c1 
+           0            0            0            0            0            0 
+D_c1_id[1,1] 
+           0 
 
 
 Random effects covariance matrix:
@@ -706,8 +712,10 @@ lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + Be2 + (1 | id), data = longDF,
  Bayesian linear mixed model for "c1" 
 
 Fixed effects:
-(Intercept)          c2         b21          p2       L1mis         Be2 
-          0           0           0           0           0           0 
+ (Intercept)           c2          b21           p2        L1mis          Be2 
+           0            0            0            0            0            0 
+    sigma_c1 D_c1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -735,7 +743,9 @@ Fixed effects:
                0                0                0                0 
     abs(C1 - c2)             time        I(time^2) o22:abs(C1 - c2) 
                0                0                0                0 
-o23:abs(C1 - c2) o24:abs(C1 - c2) 
+o23:abs(C1 - c2) o24:abs(C1 - c2)          sigma_y      D_y_id[1,1] 
+               0                0                0                0 
+     D_y_id[1,2]      D_y_id[2,2] 
                0                0 
 
 
@@ -761,7 +771,9 @@ glme_imp(fixed = b1 ~ L1mis + abs(c1 - C2) + log(Be2) + time +
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
- (Intercept)        L1mis abs(c1 - C2)     log(Be2)         time 
+ (Intercept)        L1mis abs(c1 - C2)     log(Be2)         time D_b1_id[1,1] 
+           0            0            0            0            0            0 
+D_b1_id[1,2] D_b1_id[2,2] D_b1_id[1,3] D_b1_id[2,3] D_b1_id[3,3] 
            0            0            0            0            0 
 
 
@@ -781,8 +793,10 @@ lme_imp(fixed = y ~ b2 + C1 + C2 + time + (0 + time | id), data = longDF,
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept)          C1          C2         b21        time 
-          0           0           0           0           0 
+(Intercept)          C1          C2         b21        time     sigma_y 
+          0           0           0           0           0           0 
+D_y_id[1,1] 
+          0 
 
 
 Random effects covariance matrix:
@@ -804,8 +818,10 @@ glme_imp(fixed = b1 ~ c1 + C2 + B1 + time + (0 + time + I(time^2) |
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
-(Intercept)          C2         B11          c1        time 
-          0           0           0           0           0 
+ (Intercept)           C2          B11           c1         time D_b1_id[1,1] 
+           0            0            0            0            0            0 
+D_b1_id[1,2] D_b1_id[2,2] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -822,8 +838,12 @@ lme_imp(fixed = y ~ ns(time, df = 2), data = longDF, random = ~ns(time,
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-      (Intercept) ns(time, df = 2)1 ns(time, df = 2)2 
-                0                 0                 0 
+      (Intercept) ns(time, df = 2)1 ns(time, df = 2)2           sigma_y 
+                0                 0                 0                 0 
+      D_y_id[1,1]       D_y_id[1,2]       D_y_id[2,2]       D_y_id[1,3] 
+                0                 0                 0                 0 
+      D_y_id[2,3]       D_y_id[3,3] 
+                0                 0 
 
 
 Random effects covariance matrix:
@@ -849,6 +869,12 @@ lme_imp(fixed = y ~ bs(time, df = 3), data = longDF, random = ~bs(time,
 Fixed effects:
       (Intercept) bs(time, df = 3)1 bs(time, df = 3)2 bs(time, df = 3)3 
                 0                 0                 0                 0 
+          sigma_y       D_y_id[1,1]       D_y_id[1,2]       D_y_id[2,2] 
+                0                 0                 0                 0 
+      D_y_id[1,3]       D_y_id[2,3]       D_y_id[3,3]       D_y_id[1,4] 
+                0                 0                 0                 0 
+      D_y_id[2,4]       D_y_id[3,4]       D_y_id[4,4] 
+                0                 0                 0 
 
 
 Random effects covariance matrix:
@@ -880,7 +906,80 @@ lme_imp(fixed = y ~ C1 + c1 + ns(time, df = 3), data = longDF,
 Fixed effects:
       (Intercept)                C1                c1 ns(time, df = 3)1 
                 0                 0                 0                 0 
-ns(time, df = 3)2 ns(time, df = 3)3 
+ns(time, df = 3)2 ns(time, df = 3)3           sigma_y       D_y_id[1,1] 
+                0                 0                 0                 0 
+      D_y_id[1,2]       D_y_id[2,2]       D_y_id[1,3]       D_y_id[2,3] 
+                0                 0                 0                 0 
+      D_y_id[3,3]       D_y_id[1,4]       D_y_id[2,4]       D_y_id[3,4] 
+                0                 0                 0                 0 
+      D_y_id[4,4] 
+                0 
+
+
+Random effects covariance matrix:
+$id
+                  (Intercept) ns(time, df = 3)1 ns(time, df = 3)2
+(Intercept)                 0                 0                 0
+ns(time, df = 3)1           0                 0                 0
+ns(time, df = 3)2           0                 0                 0
+ns(time, df = 3)3           0                 0                 0
+                  ns(time, df = 3)3
+(Intercept)                       0
+ns(time, df = 3)1                 0
+ns(time, df = 3)2                 0
+ns(time, df = 3)3                 0
+
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
+    random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian linear mixed model for "y" 
+
+Fixed effects:
+      (Intercept)                C1                C2                c1 
+                0                 0                 0                 0 
+ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3           sigma_y 
+                0                 0                 0                 0 
+      D_y_id[1,1]       D_y_id[1,2]       D_y_id[2,2] 
+                0                 0                 0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept) time
+(Intercept)           0    0
+time                  0    0
+
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
+    random = ~ns(time, df = 3) | id, n.adapt = 5, n.iter = 10, 
+    no_model = "time", seed = 2020)
+
+ Bayesian linear mixed model for "y" 
+
+Fixed effects:
+      (Intercept)                C1                C2                c1 
+                0                 0                 0                 0 
+ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3           sigma_y 
+                0                 0                 0                 0 
+      D_y_id[1,1]       D_y_id[1,2]       D_y_id[2,2]       D_y_id[1,3] 
+                0                 0                 0                 0 
+      D_y_id[2,3]       D_y_id[3,3]       D_y_id[1,4]       D_y_id[2,4] 
+                0                 0                 0                 0 
+      D_y_id[3,4]       D_y_id[4,4] 
                 0                 0 
 
 
@@ -913,66 +1012,9 @@ lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF,
 Fixed effects:
       (Intercept)                C1                C2                c1 
                 0                 0                 0                 0 
-ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
-                0                 0                 0 
-
-
-Random effects covariance matrix:
-$id
-            (Intercept) time
-(Intercept)           0    0
-time                  0    0
-
-
-
-Residual standard deviation:
-sigma_y 
-      0 
-
-Call:
-lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
-    random = ~ns(time, df = 3) | id, n.adapt = 5, n.iter = 10, 
-    no_model = "time", seed = 2020)
-
- Bayesian linear mixed model for "y" 
-
-Fixed effects:
-      (Intercept)                C1                C2                c1 
+ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3           sigma_y 
                 0                 0                 0                 0 
-ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
-                0                 0                 0 
-
-
-Random effects covariance matrix:
-$id
-                  (Intercept) ns(time, df = 3)1 ns(time, df = 3)2
-(Intercept)                 0                 0                 0
-ns(time, df = 3)1           0                 0                 0
-ns(time, df = 3)2           0                 0                 0
-ns(time, df = 3)3           0                 0                 0
-                  ns(time, df = 3)3
-(Intercept)                       0
-ns(time, df = 3)1                 0
-ns(time, df = 3)2                 0
-ns(time, df = 3)3                 0
-
-
-
-Residual standard deviation:
-sigma_y 
-      0 
-
-Call:
-lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF, 
-    random = ~time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
-    warn = FALSE, mess = FALSE)
-
- Bayesian linear mixed model for "y" 
-
-Fixed effects:
-      (Intercept)                C1                C2                c1 
-                0                 0                 0                 0 
-ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
+      D_y_id[1,1]       D_y_id[1,2]       D_y_id[2,2] 
                 0                 0                 0 
 
 
@@ -996,8 +1038,10 @@ lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time +
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept)          c1          c2        time 
-          0           0           0           0 
+(Intercept)          c1          c2        time     sigma_y D_y_id[1,1] 
+          0           0           0           0           0           0 
+D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] D_y_id[2,3] D_y_id[3,3] 
+          0           0           0           0           0 
 
 
 Random effects covariance matrix:
@@ -1021,8 +1065,10 @@ lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time +
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept)          c1          c2        time 
-          0           0           0           0 
+(Intercept)          c1          c2        time     sigma_y D_y_id[1,1] 
+          0           0           0           0           0           0 
+D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] D_y_id[2,3] D_y_id[3,3] 
+          0           0           0           0           0 
 
 
 Random effects covariance matrix:
@@ -1048,6 +1094,10 @@ lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time +
 Fixed effects:
 (Intercept)         B21          c1          c2        time      B21:c1 
           0           0           0           0           0           0 
+    sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] D_y_id[2,3] 
+          0           0           0           0           0           0 
+D_y_id[3,3] 
+          0 
 
 
 Random effects covariance matrix:
@@ -1073,6 +1123,10 @@ lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time +
 Fixed effects:
 (Intercept)         B21          c1          c2        time      B21:c1 
           0           0           0           0           0           0 
+    sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] D_y_id[2,3] 
+          0           0           0           0           0           0 
+D_y_id[3,3] 
+          0 
 
 
 Random effects covariance matrix:
@@ -1098,8 +1152,10 @@ lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c1          c2        time 
           0           0           0           0           0           0 
-     B21:c1 
-          0 
+     B21:c1     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -1125,8 +1181,10 @@ lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c1          c2        time 
           0           0           0           0           0           0 
-     B21:c1 
-          0 
+     B21:c1     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -1152,8 +1210,10 @@ lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c1          c2        time 
           0           0           0           0           0           0 
-     B21:c1 
-          0 
+     B21:c1     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -1179,8 +1239,10 @@ lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c2          c1        time 
           0           0           0           0           0           0 
-     B21:c2 
-          0 
+     B21:c2     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -1206,8 +1268,10 @@ lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c2          c1        time 
           0           0           0           0           0           0 
-     B21:c2 
-          0 
+     B21:c2     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -1233,8 +1297,10 @@ lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c2          c1        time 
           0           0           0           0           0           0 
-     B21:c2 
-          0 
+     B21:c2     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -1260,8 +1326,10 @@ lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c2          c1        time 
           0           0           0           0           0           0 
-     B21:c2 
-          0 
+     B21:c2     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -1287,8 +1355,10 @@ lme_imp(fixed = y ~ C1 + B2 * c1 * time, data = longDF, random = ~time +
 Fixed effects:
 (Intercept)          C1         B21          c1        time      B21:c1 
           0           0           0           0           0           0 
-   B21:time     c1:time B21:c1:time 
-          0           0           0 
+   B21:time     c1:time B21:c1:time     sigma_y D_y_id[1,1] D_y_id[1,2] 
+          0           0           0           0           0           0 
+D_y_id[2,2] D_y_id[1,3] D_y_id[2,3] D_y_id[3,3] 
+          0           0           0           0 
 
 
 Random effects covariance matrix:
@@ -1314,6 +1384,8 @@ lme_imp(fixed = y ~ c1 * b1 + o1, data = longDF, random = ~b1 |
 Fixed effects:
 (Intercept)          c1         b11        o1.L        o1.Q      c1:b11 
           0           0           0           0           0           0 
+    sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] 
+          0           0           0           0 
 
 
 Random effects covariance matrix:
@@ -1336,8 +1408,8 @@ lme_imp(fixed = y ~ 1 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept) 
-          0 
+(Intercept)     sigma_y D_y_id[1,1] 
+          0           0           0 
 
 
 Random effects covariance matrix:
@@ -1360,8 +1432,8 @@ glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "iden
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept) 
-          0 
+(Intercept)     sigma_y D_y_id[1,1] 
+          0           0           0 
 
 
 Random effects covariance matrix:
@@ -1384,8 +1456,8 @@ glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "log"
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept) 
-          0 
+(Intercept)     sigma_y D_y_id[1,1] 
+          0           0           0 
 
 
 Random effects covariance matrix:
@@ -1408,8 +1480,8 @@ glme_imp(fixed = y ~ 1 + (1 | id), data = longDF, family = gaussian(link = "inve
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept) 
-          0 
+(Intercept)     sigma_y D_y_id[1,1] 
+          0           0           0 
 
 
 Random effects covariance matrix:
@@ -1432,8 +1504,8 @@ glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "log
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept) D_b1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -1451,8 +1523,8 @@ glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "pro
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept) D_b1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -1470,8 +1542,8 @@ glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "log
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept) D_b1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -1489,8 +1561,8 @@ glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "clo
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept) D_b1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -1508,8 +1580,8 @@ glme_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, family = Gamma(link = "invers
  Bayesian Gamma mixed model for "L1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept)     sigma_L1 D_L1_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -1532,8 +1604,8 @@ glme_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, family = Gamma(link = "log"),
  Bayesian Gamma mixed model for "L1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept)     sigma_L1 D_L1_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -1556,8 +1628,8 @@ glme_imp(fixed = p1 ~ 1 + (1 | id), data = longDF, family = poisson(link = "log"
  Bayesian poisson mixed model for "p1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept) D_p1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -1575,8 +1647,8 @@ glme_imp(fixed = p1 ~ 1 + (1 | id), data = longDF, family = poisson(link = "iden
  Bayesian poisson mixed model for "p1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept) D_p1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -1594,8 +1666,8 @@ lognormmm_imp(fixed = L1 ~ 1 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian log-normal mixed model for "L1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+ (Intercept)     sigma_L1 D_L1_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -1618,8 +1690,8 @@ betamm_imp(fixed = Be1 ~ 1 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian beta mixed model for "Be1" 
 
 Fixed effects:
-(Intercept) 
-          0 
+  (Intercept)       tau_Be1 D_Be1_id[1,1] 
+            0             0             0 
 
 
 Random effects covariance matrix:
@@ -1637,8 +1709,8 @@ lme_imp(fixed = y ~ C1 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept)          C1 
-          0           0 
+(Intercept)          C1     sigma_y D_y_id[1,1] 
+          0           0           0           0 
 
 
 Random effects covariance matrix:
@@ -1661,8 +1733,8 @@ glme_imp(fixed = b1 ~ C1 + (1 | id), data = longDF, family = binomial(),
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
-(Intercept)          C1 
-          0           0 
+ (Intercept)           C1 D_b1_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -1680,8 +1752,8 @@ glme_imp(fixed = L1 ~ C1 + (1 | id), data = longDF, family = Gamma(),
  Bayesian Gamma mixed model for "L1" 
 
 Fixed effects:
-(Intercept)          C1 
-          0           0 
+ (Intercept)           C1     sigma_L1 D_L1_id[1,1] 
+           0            0            0            0 
 
 
 Random effects covariance matrix:
@@ -1704,8 +1776,8 @@ glme_imp(fixed = p1 ~ C1 + (1 | id), data = longDF, family = poisson(),
  Bayesian poisson mixed model for "p1" 
 
 Fixed effects:
-(Intercept)          C1 
-          0           0 
+ (Intercept)           C1 D_p1_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -1723,8 +1795,8 @@ lognormmm_imp(fixed = L1 ~ C1 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian log-normal mixed model for "L1" 
 
 Fixed effects:
-(Intercept)          C1 
-          0           0 
+ (Intercept)           C1     sigma_L1 D_L1_id[1,1] 
+           0            0            0            0 
 
 
 Random effects covariance matrix:
@@ -1747,8 +1819,8 @@ betamm_imp(fixed = Be1 ~ C1 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian beta mixed model for "Be1" 
 
 Fixed effects:
-(Intercept)          C1 
-          0           0 
+  (Intercept)            C1       tau_Be1 D_Be1_id[1,1] 
+            0             0             0             0 
 
 
 Random effects covariance matrix:
@@ -1766,8 +1838,8 @@ lme_imp(fixed = y ~ c2 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept)          c2 
-          0           0 
+(Intercept)          c2     sigma_y D_y_id[1,1] 
+          0           0           0           0 
 
 
 Random effects covariance matrix:
@@ -1790,8 +1862,8 @@ glme_imp(fixed = b2 ~ c2 + (1 | id), data = longDF, family = binomial(),
  Bayesian binomial mixed model for "b2" 
 
 Fixed effects:
-(Intercept)          c2 
-          0           0 
+ (Intercept)           c2 D_b2_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -1809,8 +1881,8 @@ glme_imp(fixed = L1mis ~ c2 + (1 | id), data = longDF, family = Gamma(),
  Bayesian Gamma mixed model for "L1mis" 
 
 Fixed effects:
-(Intercept)          c2 
-          0           0 
+    (Intercept)              c2     sigma_L1mis D_L1mis_id[1,1] 
+              0               0               0               0 
 
 
 Random effects covariance matrix:
@@ -1833,8 +1905,8 @@ glme_imp(fixed = p2 ~ c2 + (1 | id), data = longDF, family = poisson(),
  Bayesian poisson mixed model for "p2" 
 
 Fixed effects:
-(Intercept)          c2 
-          0           0 
+ (Intercept)           c2 D_p2_id[1,1] 
+           0            0            0 
 
 
 Random effects covariance matrix:
@@ -1852,8 +1924,8 @@ lognormmm_imp(fixed = L1mis ~ c2 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian log-normal mixed model for "L1mis" 
 
 Fixed effects:
-(Intercept)          c2 
-          0           0 
+    (Intercept)              c2     sigma_L1mis D_L1mis_id[1,1] 
+              0               0               0               0 
 
 
 Random effects covariance matrix:
@@ -1876,8 +1948,8 @@ betamm_imp(fixed = Be2 ~ c2 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian beta mixed model for "Be2" 
 
 Fixed effects:
-(Intercept)          c2 
-          0           0 
+  (Intercept)            c2       tau_Be2 D_Be2_id[1,1] 
+            0             0             0             0 
 
 
 Random effects covariance matrix:
@@ -1895,8 +1967,8 @@ lme_imp(fixed = y ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-C2 
- 0 
+         C2     sigma_y D_y_id[1,1] 
+          0           0           0 
 
 
 Random effects covariance matrix:
@@ -1919,8 +1991,8 @@ glme_imp(fixed = b2 ~ 0 + C2 + (1 | id), data = longDF, family = binomial(),
  Bayesian binomial mixed model for "b2" 
 
 Fixed effects:
-C2 
- 0 
+          C2 D_b2_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -1938,8 +2010,8 @@ glme_imp(fixed = L1mis ~ 0 + C2 + (1 | id), data = longDF, family = Gamma(),
  Bayesian Gamma mixed model for "L1mis" 
 
 Fixed effects:
-C2 
- 0 
+             C2     sigma_L1mis D_L1mis_id[1,1] 
+              0               0               0 
 
 
 Random effects covariance matrix:
@@ -1962,8 +2034,8 @@ glme_imp(fixed = p2 ~ 0 + C2 + (1 | id), data = longDF, family = poisson(),
  Bayesian poisson mixed model for "p2" 
 
 Fixed effects:
-C2 
- 0 
+          C2 D_p2_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -1981,8 +2053,8 @@ lognormmm_imp(fixed = L1mis ~ 0 + C2 + (1 | id), data = longDF,
  Bayesian log-normal mixed model for "L1mis" 
 
 Fixed effects:
-C2 
- 0 
+             C2     sigma_L1mis D_L1mis_id[1,1] 
+              0               0               0 
 
 
 Random effects covariance matrix:
@@ -2005,8 +2077,8 @@ betamm_imp(fixed = Be2 ~ 0 + C2 + (1 | id), data = longDF, n.adapt = 5,
  Bayesian beta mixed model for "Be2" 
 
 Fixed effects:
-C2 
- 0 
+           C2       tau_Be2 D_Be2_id[1,1] 
+            0             0             0 
 
 
 Random effects covariance matrix:
@@ -2026,8 +2098,10 @@ lme_imp(fixed = c1 ~ c2 + B2 + p2 + L1mis + Be2 + (1 | id), data = longDF,
  Bayesian linear mixed model for "c1" 
 
 Fixed effects:
-(Intercept)         B21          c2          p2       L1mis         Be2 
-          0           0           0           0           0           0 
+ (Intercept)          B21           c2           p2        L1mis          Be2 
+           0            0            0            0            0            0 
+    sigma_c1 D_c1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -2052,8 +2126,10 @@ lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF,
  Bayesian linear mixed model for "c1" 
 
 Fixed effects:
-(Intercept)          c2         b21          p2       L1mis 
-          0           0           0           0           0 
+ (Intercept)           c2          b21           p2        L1mis     sigma_c1 
+           0            0            0            0            0            0 
+D_c1_id[1,1] 
+           0 
 
 
 Random effects covariance matrix:
@@ -2079,8 +2155,10 @@ lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + (1 | id), data = longDF,
  Bayesian linear mixed model for "c1" 
 
 Fixed effects:
-(Intercept)          c2         b21          p2       L1mis 
-          0           0           0           0           0 
+ (Intercept)           c2          b21           p2        L1mis     sigma_c1 
+           0            0            0            0            0            0 
+D_c1_id[1,1] 
+           0 
 
 
 Random effects covariance matrix:
@@ -2106,8 +2184,10 @@ lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + Be2 + (1 | id), data = longDF,
  Bayesian linear mixed model for "c1" 
 
 Fixed effects:
-(Intercept)          c2         b21          p2       L1mis         Be2 
-          0           0           0           0           0           0 
+ (Intercept)           c2          b21           p2        L1mis          Be2 
+           0            0            0            0            0            0 
+    sigma_c1 D_c1_id[1,1] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -2137,7 +2217,9 @@ Fixed effects:
                0                0                0                0 
     abs(C1 - c2)             time        I(time^2) o22:abs(C1 - c2) 
                0                0                0                0 
-o23:abs(C1 - c2) o24:abs(C1 - c2) 
+o23:abs(C1 - c2) o24:abs(C1 - c2)          sigma_y      D_y_id[1,1] 
+               0                0                0                0 
+     D_y_id[1,2]      D_y_id[2,2] 
                0                0 
 
 
@@ -2165,7 +2247,9 @@ glme_imp(fixed = b1 ~ L1mis + abs(c1 - C2) + log(Be2) + time +
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
- (Intercept)        L1mis abs(c1 - C2)     log(Be2)         time 
+ (Intercept)        L1mis abs(c1 - C2)     log(Be2)         time D_b1_id[1,1] 
+           0            0            0            0            0            0 
+D_b1_id[1,2] D_b1_id[2,2] D_b1_id[1,3] D_b1_id[2,3] D_b1_id[3,3] 
            0            0            0            0            0 
 
 
@@ -2187,8 +2271,10 @@ lme_imp(fixed = y ~ b2 + C1 + C2 + time + (0 + time | id), data = longDF,
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept)          C1          C2         b21        time 
-          0           0           0           0           0 
+(Intercept)          C1          C2         b21        time     sigma_y 
+          0           0           0           0           0           0 
+D_y_id[1,1] 
+          0 
 
 
 Random effects covariance matrix:
@@ -2212,8 +2298,10 @@ glme_imp(fixed = b1 ~ c1 + C2 + B1 + time + (0 + time + I(time^2) |
  Bayesian binomial mixed model for "b1" 
 
 Fixed effects:
-(Intercept)          C2         B11          c1        time 
-          0           0           0           0           0 
+ (Intercept)           C2          B11           c1         time D_b1_id[1,1] 
+           0            0            0            0            0            0 
+D_b1_id[1,2] D_b1_id[2,2] 
+           0            0 
 
 
 Random effects covariance matrix:
@@ -2232,8 +2320,12 @@ lme_imp(fixed = y ~ ns(time, df = 2), data = longDF, random = ~ns(time,
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-      (Intercept) ns(time, df = 2)1 ns(time, df = 2)2 
-                0                 0                 0 
+      (Intercept) ns(time, df = 2)1 ns(time, df = 2)2           sigma_y 
+                0                 0                 0                 0 
+      D_y_id[1,1]       D_y_id[1,2]       D_y_id[2,2]       D_y_id[1,3] 
+                0                 0                 0                 0 
+      D_y_id[2,3]       D_y_id[3,3] 
+                0                 0 
 
 
 Random effects covariance matrix:
@@ -2261,6 +2353,12 @@ lme_imp(fixed = y ~ bs(time, df = 3), data = longDF, random = ~bs(time,
 Fixed effects:
       (Intercept) bs(time, df = 3)1 bs(time, df = 3)2 bs(time, df = 3)3 
                 0                 0                 0                 0 
+          sigma_y       D_y_id[1,1]       D_y_id[1,2]       D_y_id[2,2] 
+                0                 0                 0                 0 
+      D_y_id[1,3]       D_y_id[2,3]       D_y_id[3,3]       D_y_id[1,4] 
+                0                 0                 0                 0 
+      D_y_id[2,4]       D_y_id[3,4]       D_y_id[4,4] 
+                0                 0                 0 
 
 
 Random effects covariance matrix:
@@ -2294,8 +2392,14 @@ lme_imp(fixed = y ~ C1 + c1 + ns(time, df = 3), data = longDF,
 Fixed effects:
       (Intercept)                C1                c1 ns(time, df = 3)1 
                 0                 0                 0                 0 
-ns(time, df = 3)2 ns(time, df = 3)3 
-                0                 0 
+ns(time, df = 3)2 ns(time, df = 3)3           sigma_y       D_y_id[1,1] 
+                0                 0                 0                 0 
+      D_y_id[1,2]       D_y_id[2,2]       D_y_id[1,3]       D_y_id[2,3] 
+                0                 0                 0                 0 
+      D_y_id[3,3]       D_y_id[1,4]       D_y_id[2,4]       D_y_id[3,4] 
+                0                 0                 0                 0 
+      D_y_id[4,4] 
+                0 
 
 
 Random effects covariance matrix:
@@ -2329,7 +2433,9 @@ lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF,
 Fixed effects:
       (Intercept)                C1                C2                c1 
                 0                 0                 0                 0 
-ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
+ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3           sigma_y 
+                0                 0                 0                 0 
+      D_y_id[1,1]       D_y_id[1,2]       D_y_id[2,2] 
                 0                 0                 0 
 
 
@@ -2357,8 +2463,14 @@ lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF,
 Fixed effects:
       (Intercept)                C1                C2                c1 
                 0                 0                 0                 0 
-ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
-                0                 0                 0 
+ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3           sigma_y 
+                0                 0                 0                 0 
+      D_y_id[1,1]       D_y_id[1,2]       D_y_id[2,2]       D_y_id[1,3] 
+                0                 0                 0                 0 
+      D_y_id[2,3]       D_y_id[3,3]       D_y_id[1,4]       D_y_id[2,4] 
+                0                 0                 0                 0 
+      D_y_id[3,4]       D_y_id[4,4] 
+                0                 0 
 
 
 Random effects covariance matrix:
@@ -2392,7 +2504,9 @@ lme_imp(fixed = y ~ C1 + C2 + c1 + ns(time, df = 3), data = longDF,
 Fixed effects:
       (Intercept)                C1                C2                c1 
                 0                 0                 0                 0 
-ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3 
+ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3           sigma_y 
+                0                 0                 0                 0 
+      D_y_id[1,1]       D_y_id[1,2]       D_y_id[2,2] 
                 0                 0                 0 
 
 
@@ -2418,8 +2532,10 @@ lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time +
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept)          c1          c2        time 
-          0           0           0           0 
+(Intercept)          c1          c2        time     sigma_y D_y_id[1,1] 
+          0           0           0           0           0           0 
+D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] D_y_id[2,3] D_y_id[3,3] 
+          0           0           0           0           0 
 
 
 Random effects covariance matrix:
@@ -2445,8 +2561,10 @@ lme_imp(fixed = y ~ c1 + c2 + time, data = longDF, random = ~time +
  Bayesian linear mixed model for "y" 
 
 Fixed effects:
-(Intercept)          c1          c2        time 
-          0           0           0           0 
+(Intercept)          c1          c2        time     sigma_y D_y_id[1,1] 
+          0           0           0           0           0           0 
+D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] D_y_id[2,3] D_y_id[3,3] 
+          0           0           0           0           0 
 
 
 Random effects covariance matrix:
@@ -2474,6 +2592,10 @@ lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time +
 Fixed effects:
 (Intercept)         B21          c1          c2        time      B21:c1 
           0           0           0           0           0           0 
+    sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] D_y_id[2,3] 
+          0           0           0           0           0           0 
+D_y_id[3,3] 
+          0 
 
 
 Random effects covariance matrix:
@@ -2501,6 +2623,10 @@ lme_imp(fixed = y ~ B2 * c1 + c2 + time, data = longDF, random = ~time +
 Fixed effects:
 (Intercept)         B21          c1          c2        time      B21:c1 
           0           0           0           0           0           0 
+    sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] D_y_id[2,3] 
+          0           0           0           0           0           0 
+D_y_id[3,3] 
+          0 
 
 
 Random effects covariance matrix:
@@ -2528,8 +2654,10 @@ lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c1          c2        time 
           0           0           0           0           0           0 
-     B21:c1 
-          0 
+     B21:c1     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -2557,8 +2685,10 @@ lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c1          c2        time 
           0           0           0           0           0           0 
-     B21:c1 
-          0 
+     B21:c1     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -2586,8 +2716,10 @@ lme_imp(fixed = y ~ C1 + B2 * c1 + c2 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c1          c2        time 
           0           0           0           0           0           0 
-     B21:c1 
-          0 
+     B21:c1     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -2615,8 +2747,10 @@ lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c2          c1        time 
           0           0           0           0           0           0 
-     B21:c2 
-          0 
+     B21:c2     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -2644,8 +2778,10 @@ lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c2          c1        time 
           0           0           0           0           0           0 
-     B21:c2 
-          0 
+     B21:c2     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -2673,8 +2809,10 @@ lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c2          c1        time 
           0           0           0           0           0           0 
-     B21:c2 
-          0 
+     B21:c2     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -2702,8 +2840,10 @@ lme_imp(fixed = y ~ C1 + B2 * c2 + c1 + time, data = longDF,
 Fixed effects:
 (Intercept)          C1         B21          c2          c1        time 
           0           0           0           0           0           0 
-     B21:c2 
-          0 
+     B21:c2     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] 
+          0           0 
 
 
 Random effects covariance matrix:
@@ -2731,8 +2871,10 @@ lme_imp(fixed = y ~ C1 + B2 * c1 * time, data = longDF, random = ~time +
 Fixed effects:
 (Intercept)          C1         B21          c1        time      B21:c1 
           0           0           0           0           0           0 
-   B21:time     c1:time B21:c1:time 
-          0           0           0 
+   B21:time     c1:time B21:c1:time     sigma_y D_y_id[1,1] D_y_id[1,2] 
+          0           0           0           0           0           0 
+D_y_id[2,2] D_y_id[1,3] D_y_id[2,3] D_y_id[3,3] 
+          0           0           0           0 
 
 
 Random effects covariance matrix:
@@ -2760,6 +2902,8 @@ lme_imp(fixed = y ~ c1 * b1 + o1, data = longDF, random = ~b1 |
 Fixed effects:
 (Intercept)          c1         b11        o1.L        o1.Q      c1:b11 
           0           0           0           0           0           0 
+    sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] 
+          0           0           0           0 
 
 
 Random effects covariance matrix:

@@ -73,8 +73,8 @@ lm_imp(formula = C1 ~ M1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)         M12         M13         M14 
-          0           0           0           0 
+(Intercept)         M12         M13         M14    sigma_C1 
+          0           0           0           0           0 
 
 
 Residual standard deviation:
@@ -89,8 +89,8 @@ lm_imp(formula = C1 ~ M2, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)         M22         M23         M24 
-          0           0           0           0 
+(Intercept)         M22         M23         M24    sigma_C1 
+          0           0           0           0           0 
 
 
 Residual standard deviation:
@@ -253,8 +253,8 @@ lm_imp(formula = C1 ~ M1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)         M12         M13         M14 
-          0           0           0           0 
+(Intercept)         M12         M13         M14    sigma_C1 
+          0           0           0           0           0 
 
 
 Residual standard deviation:
@@ -271,8 +271,8 @@ lm_imp(formula = C1 ~ M2, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)         M22         M23         M24 
-          0           0           0           0 
+(Intercept)         M22         M23         M24    sigma_C1 
+          0           0           0           0           0 
 
 
 Residual standard deviation:

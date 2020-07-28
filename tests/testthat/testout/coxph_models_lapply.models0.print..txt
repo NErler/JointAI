@@ -5,6 +5,15 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ 1, data = PBC2,
 
  Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
 
+
+Coefficients:
+beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0                           0 
+
 Call:
 coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
     sex, data = PBC2, n.adapt = 2, n.iter = 4, seed = 2020, warn = FALSE, 
@@ -14,8 +23,14 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ age +
 
 
 Coefficients:
-      age sexfemale 
-        0         0 
+                        age                   sexfemale 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0                           0 
 
 Call:
 coxph_imp(formula = Surv(futime, I(status != "censored")) ~ age + 
@@ -26,8 +41,14 @@ coxph_imp(formula = Surv(futime, I(status != "censored")) ~ age +
 
 
 Coefficients:
-      age sexfemale 
-        0         0 
+                        age                   sexfemale 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0                           0 
 
 Call:
 coxph_imp(formula = Surv(futime, status != "censored") ~ copper, 
@@ -38,8 +59,14 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ copper,
 
 
 Coefficients:
-copper 
-     0 
+beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0                           0 
+                     copper 
+                          0 
 
 Call:
 coxph_imp(formula = Surv(futime, status != "censored") ~ copper + 
@@ -51,10 +78,18 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ copper +
 
 
 Coefficients:
-           copper         sexfemale               age abs(age - copper) 
-                0                 0                 0                 0 
-        log(trig) 
-                0 
+                     copper                   sexfemale 
+                          0                           0 
+                        age           abs(age - copper) 
+                          0                           0 
+                  log(trig) beta_Bh0_Srv_ftm_stts_cn[1] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[2] beta_Bh0_Srv_ftm_stts_cn[3] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[4] beta_Bh0_Srv_ftm_stts_cn[5] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0 
 
 Call:
 coxph_imp(formula = Surv(futime, status != "censored") ~ copper + 
@@ -66,10 +101,18 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ copper +
 
 
 Coefficients:
-           copper         sexfemale               age abs(age - copper) 
-                0                 0                 0                 0 
-        log(trig) 
-                0 
+                       copper                     sexfemale 
+                            0                             0 
+                          age             abs(age - copper) 
+                            0                             0 
+                    log(trig)   beta_Bh0_Srv_ftm_stts_cn[1] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[2]   beta_Bh0_Srv_ftm_stts_cn[3] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[4]   beta_Bh0_Srv_ftm_stts_cn[5] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[6] D_Srv_ftm_stts_cn_center[1,1] 
+                            0                             0 
 
 Call:
 coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
@@ -81,10 +124,20 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ age +
 
 
 Coefficients:
-       age  sexfemale trtplacebo    albumin   platelet    stage.L    stage.Q 
-         0          0          0          0          0          0          0 
-   stage.C 
-         0 
+                        age                   sexfemale 
+                          0                           0 
+                 trtplacebo                     albumin 
+                          0                           0 
+                   platelet                     stage.L 
+                          0                           0 
+                    stage.Q                     stage.C 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0                           0 
 
 Call:
 coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
@@ -96,10 +149,18 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ age +
 
 
 Coefficients:
-                 age            sexfemale           trtplacebo 
-                   0                    0                    0 
-sexfemale:trtplacebo              albumin        log(platelet) 
-                   0                    0                    0 
+                        age                   sexfemale 
+                          0                           0 
+                 trtplacebo        sexfemale:trtplacebo 
+                          0                           0 
+                    albumin               log(platelet) 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0                           0 
 
 Call:
 coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
@@ -111,8 +172,18 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ age +
 
 
 Coefficients:
-          age     sexfemale       albumin log(platelet) 
-            0             0             0             0 
+                          age                     sexfemale 
+                            0                             0 
+                      albumin                 log(platelet) 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[1]   beta_Bh0_Srv_ftm_stts_cn[2] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[3]   beta_Bh0_Srv_ftm_stts_cn[4] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[5]   beta_Bh0_Srv_ftm_stts_cn[6] 
+                            0                             0 
+D_Srv_ftm_stts_cn_center[1,1] 
+                            0 
 
 Call:
 coxph_imp(formula = Surv(futime, status != "censored") ~ age + 
@@ -124,10 +195,18 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ age +
 
 
 Coefficients:
-                  age             sexfemale               albumin 
-                    0                     0                     0 
-ns(platelet, df = 2)1 ns(platelet, df = 2)2 
-                    0                     0 
+                          age                     sexfemale 
+                            0                             0 
+                      albumin         ns(platelet, df = 2)1 
+                            0                             0 
+        ns(platelet, df = 2)2   beta_Bh0_Srv_ftm_stts_cn[1] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[2]   beta_Bh0_Srv_ftm_stts_cn[3] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[4]   beta_Bh0_Srv_ftm_stts_cn[5] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[6] D_Srv_ftm_stts_cn_center[1,1] 
+                            0                             0 
 $m0a
 
 Call:
@@ -135,6 +214,15 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ 1, data = PBC2,
     n.adapt = 1, n.iter = 4, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian proportional hazards model for "Surv(futime, status != "censored")" 
+
+
+Coefficients:
+beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0                           0 
 
 $m1a
 
@@ -147,8 +235,14 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ age +
 
 
 Coefficients:
-      age sexfemale 
-        0         0 
+                        age                   sexfemale 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0                           0 
 
 $m1b
 
@@ -161,8 +255,14 @@ coxph_imp(formula = Surv(futime, I(status != "censored")) ~ age +
 
 
 Coefficients:
-      age sexfemale 
-        0         0 
+                        age                   sexfemale 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0                           0 
 
 $m2a
 
@@ -175,8 +275,14 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ copper,
 
 
 Coefficients:
-copper 
-     0 
+beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0                           0 
+                     copper 
+                          0 
 
 $m3a
 
@@ -190,10 +296,18 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ copper +
 
 
 Coefficients:
-           copper         sexfemale               age abs(age - copper) 
-                0                 0                 0                 0 
-        log(trig) 
-                0 
+                     copper                   sexfemale 
+                          0                           0 
+                        age           abs(age - copper) 
+                          0                           0 
+                  log(trig) beta_Bh0_Srv_ftm_stts_cn[1] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[2] beta_Bh0_Srv_ftm_stts_cn[3] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[4] beta_Bh0_Srv_ftm_stts_cn[5] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0 
 
 $m3b
 
@@ -207,10 +321,18 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ copper +
 
 
 Coefficients:
-           copper         sexfemale               age abs(age - copper) 
-                0                 0                 0                 0 
-        log(trig) 
-                0 
+                       copper                     sexfemale 
+                            0                             0 
+                          age             abs(age - copper) 
+                            0                             0 
+                    log(trig)   beta_Bh0_Srv_ftm_stts_cn[1] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[2]   beta_Bh0_Srv_ftm_stts_cn[3] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[4]   beta_Bh0_Srv_ftm_stts_cn[5] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[6] D_Srv_ftm_stts_cn_center[1,1] 
+                            0                             0 
 
 $m4a
 
@@ -224,10 +346,20 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ age +
 
 
 Coefficients:
-       age  sexfemale trtplacebo    albumin   platelet    stage.L    stage.Q 
-         0          0          0          0          0          0          0 
-   stage.C 
-         0 
+                        age                   sexfemale 
+                          0                           0 
+                 trtplacebo                     albumin 
+                          0                           0 
+                   platelet                     stage.L 
+                          0                           0 
+                    stage.Q                     stage.C 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0                           0 
 
 $m4b
 
@@ -241,10 +373,18 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ age +
 
 
 Coefficients:
-                 age            sexfemale           trtplacebo 
-                   0                    0                    0 
-sexfemale:trtplacebo              albumin        log(platelet) 
-                   0                    0                    0 
+                        age                   sexfemale 
+                          0                           0 
+                 trtplacebo        sexfemale:trtplacebo 
+                          0                           0 
+                    albumin               log(platelet) 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+                          0                           0 
+beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+                          0                           0 
 
 $m4c
 
@@ -258,8 +398,18 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ age +
 
 
 Coefficients:
-          age     sexfemale       albumin log(platelet) 
-            0             0             0             0 
+                          age                     sexfemale 
+                            0                             0 
+                      albumin                 log(platelet) 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[1]   beta_Bh0_Srv_ftm_stts_cn[2] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[3]   beta_Bh0_Srv_ftm_stts_cn[4] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[5]   beta_Bh0_Srv_ftm_stts_cn[6] 
+                            0                             0 
+D_Srv_ftm_stts_cn_center[1,1] 
+                            0 
 
 $m4d
 
@@ -273,8 +423,16 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ age +
 
 
 Coefficients:
-                  age             sexfemale               albumin 
-                    0                     0                     0 
-ns(platelet, df = 2)1 ns(platelet, df = 2)2 
-                    0                     0 
+                          age                     sexfemale 
+                            0                             0 
+                      albumin         ns(platelet, df = 2)1 
+                            0                             0 
+        ns(platelet, df = 2)2   beta_Bh0_Srv_ftm_stts_cn[1] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[2]   beta_Bh0_Srv_ftm_stts_cn[3] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[4]   beta_Bh0_Srv_ftm_stts_cn[5] 
+                            0                             0 
+  beta_Bh0_Srv_ftm_stts_cn[6] D_Srv_ftm_stts_cn_center[1,1] 
+                            0                             0 
 

@@ -36,14 +36,14 @@ $m2b$M2
 
 $m3a
 $m3a$C1
-(Intercept)         M12         M13         M14 
-          0           0           0           0 
+(Intercept)         M12         M13         M14    sigma_C1 
+          0           0           0           0           0 
 
 
 $m3b
 $m3b$C1
-(Intercept)         M22         M23         M24 
-          0           0           0           0 
+(Intercept)         M22         M23         M24    sigma_C1 
+          0           0           0           0           0 
 
 
 $m4a

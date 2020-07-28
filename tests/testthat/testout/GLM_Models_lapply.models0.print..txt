@@ -7,8 +7,8 @@ lm_imp(formula = y ~ 1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -24,8 +24,8 @@ glm_imp(formula = y ~ 1, family = gaussian(link = "identity"),
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -40,8 +40,8 @@ glm_imp(formula = y ~ 1, family = gaussian(link = "log"), data = wideDF,
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -57,8 +57,8 @@ glm_imp(formula = y ~ 1, family = gaussian(link = "inverse"),
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -120,8 +120,8 @@ glm_imp(formula = L1 ~ 1, family = Gamma(link = "inverse"), data = wideDF,
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)    sigma_L1 
+          0           0 
 
 
 Residual standard deviation:
@@ -136,8 +136,8 @@ glm_imp(formula = L1 ~ 1, family = Gamma(link = "log"), data = wideDF,
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)    sigma_L1 
+          0           0 
 
 
 Residual standard deviation:
@@ -175,8 +175,8 @@ lognorm_imp(formula = L1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)    sigma_L1 
+          0           0 
 
 
 Residual standard deviation:
@@ -191,8 +191,8 @@ betareg_imp(formula = Be1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)     tau_Be1 
+          0           0 
 
 Call:
 lm_imp(formula = y ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
@@ -202,8 +202,8 @@ lm_imp(formula = y ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)          C1 
-          0           0 
+(Intercept)          C1     sigma_y 
+          0           0           0 
 
 
 Residual standard deviation:
@@ -229,8 +229,8 @@ glm_imp(formula = L1 ~ C1, family = Gamma(), data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-(Intercept)          C1 
-          0           0 
+(Intercept)          C1    sigma_L1 
+          0           0           0 
 
 
 Residual standard deviation:
@@ -256,8 +256,8 @@ lognorm_imp(formula = L1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)          C1 
-          0           0 
+(Intercept)          C1    sigma_L1 
+          0           0           0 
 
 
 Residual standard deviation:
@@ -272,8 +272,8 @@ betareg_imp(formula = Be1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)          C1 
-          0           0 
+(Intercept)          C1     tau_Be1 
+          0           0           0 
 
 Call:
 lm_imp(formula = y ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
@@ -283,8 +283,8 @@ lm_imp(formula = y ~ C2, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)          C2 
-          0           0 
+(Intercept)          C2     sigma_y 
+          0           0           0 
 
 
 Residual standard deviation:
@@ -310,8 +310,8 @@ glm_imp(formula = L1mis ~ C2, family = Gamma(), data = wideDF,
 
 
 Coefficients:
-(Intercept)          C2 
-          0           0 
+(Intercept)          C2 sigma_L1mis 
+          0           0           0 
 
 
 Residual standard deviation:
@@ -337,8 +337,8 @@ lognorm_imp(formula = L1mis ~ C2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-(Intercept)          C2 
-          0           0 
+(Intercept)          C2 sigma_L1mis 
+          0           0           0 
 
 
 Residual standard deviation:
@@ -353,8 +353,8 @@ betareg_imp(formula = Be2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)          C2 
-          0           0 
+(Intercept)          C2     tau_Be2 
+          0           0           0 
 
 Call:
 lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF, 
@@ -368,6 +368,8 @@ lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF,
 Coefficients:
 (Intercept)          C2         B21          P2       L1mis         Be2 
           0           0           0           0           0           0 
+   sigma_C1 
+          0 
 
 
 Residual standard deviation:
@@ -384,8 +386,8 @@ lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-(Intercept)          C2         B21          P2       L1mis 
-          0           0           0           0           0 
+(Intercept)          C2         B21          P2       L1mis    sigma_C1 
+          0           0           0           0           0           0 
 
 
 Residual standard deviation:
@@ -402,8 +404,8 @@ lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-(Intercept)          C2         B21          P2       L1mis 
-          0           0           0           0           0 
+(Intercept)          C2         B21          P2       L1mis    sigma_C1 
+          0           0           0           0           0           0 
 
 
 Residual standard deviation:
@@ -423,6 +425,8 @@ lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF,
 Coefficients:
 (Intercept)          C2         B21          P2       L1mis         Be2 
           0           0           0           0           0           0 
+   sigma_C1 
+          0 
 
 
 Residual standard deviation:
@@ -443,6 +447,8 @@ Coefficients:
                0                0                0                0 
          log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
                0                0                0                0 
+         sigma_y 
+               0 
 
 
 Residual standard deviation:
@@ -472,8 +478,8 @@ lm_imp(formula = y ~ C2 + B2 + B1 + O1, data = wideDF, n.adapt = 5,
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -491,8 +497,8 @@ glm_imp(formula = y ~ C2 + B2 + B1 + O1, family = gaussian(link = "log"),
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -510,8 +516,8 @@ glm_imp(formula = y ~ C2 + B2 + B1 + O1, family = gaussian(link = "inverse"),
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -585,8 +591,8 @@ glm_imp(formula = L1 ~ C2 + B2 + B1 + O1, family = Gamma(link = "inverse"),
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C    sigma_L1 
+          0           0 
 
 
 Residual standard deviation:
@@ -604,8 +610,8 @@ glm_imp(formula = L1 ~ C2 + B2 + B1 + O1, family = Gamma(link = "log"),
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C    sigma_L1 
+          0           0 
 
 
 Residual standard deviation:
@@ -650,8 +656,8 @@ lognorm_imp(formula = L1 ~ C2 + B2 + B1 + O1, data = wideDF,
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C    sigma_L1 
+          0           0 
 
 
 Residual standard deviation:
@@ -668,8 +674,8 @@ betareg_imp(formula = Be1 ~ C2 + B2 + B1 + O1, data = wideDF,
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C     tau_Be1 
+          0           0 
 
 Call:
 lm_imp(formula = y ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
@@ -685,6 +691,8 @@ Coefficients:
                0                0                0                0 
          log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
                0                0                0                0 
+         sigma_y 
+               0 
 
 
 Residual standard deviation:
@@ -720,8 +728,8 @@ Coefficients:
               0               0               0               0               0 
             O23             O24     abs(y - C2) O22:abs(y - C2) O23:abs(y - C2) 
               0               0               0               0               0 
-O24:abs(y - C2) 
-              0 
+O24:abs(y - C2)        sigma_C1 
+              0               0 
 
 
 Residual standard deviation:
@@ -737,8 +745,8 @@ lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat),
 
 
 Coefficients:
- (Intercept)          age genderfemale    log(bili)   exp(creat) 
-           0            0            0            0            0 
+ (Intercept)          age genderfemale    log(bili)   exp(creat)    sigma_SBP 
+           0            0            0            0            0            0 
 
 
 Residual standard deviation:
@@ -754,8 +762,8 @@ lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat),
 
 
 Coefficients:
- (Intercept)          age genderfemale    log(bili)   exp(creat) 
-           0            0            0            0            0 
+ (Intercept)          age genderfemale    log(bili)   exp(creat)    sigma_SBP 
+           0            0            0            0            0            0 
 
 
 Residual standard deviation:
@@ -771,8 +779,8 @@ lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat),
 
 
 Coefficients:
- (Intercept)          age genderfemale    log(bili)   exp(creat) 
-           0            0            0            0            0 
+ (Intercept)          age genderfemale    log(bili)   exp(creat)    sigma_SBP 
+           0            0            0            0            0            0 
 
 
 Residual standard deviation:
@@ -790,8 +798,8 @@ lm_imp(formula = SBP ~ ns(age, df = 2) + gender + I(bili^2) +
 Coefficients:
      (Intercept) ns(age, df = 2)1 ns(age, df = 2)2     genderfemale 
                0                0                0                0 
-       I(bili^2)        I(bili^3) 
-               0                0 
+       I(bili^2)        I(bili^3)        sigma_SBP 
+               0                0                0 
 
 
 Residual standard deviation:
@@ -807,8 +815,8 @@ lm_imp(formula = y ~ 1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -826,8 +834,8 @@ glm_imp(formula = y ~ 1, family = gaussian(link = "identity"),
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -844,8 +852,8 @@ glm_imp(formula = y ~ 1, family = gaussian(link = "log"), data = wideDF,
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -863,8 +871,8 @@ glm_imp(formula = y ~ 1, family = gaussian(link = "inverse"),
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -936,8 +944,8 @@ glm_imp(formula = L1 ~ 1, family = Gamma(link = "inverse"), data = wideDF,
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)    sigma_L1 
+          0           0 
 
 
 Residual standard deviation:
@@ -954,8 +962,8 @@ glm_imp(formula = L1 ~ 1, family = Gamma(link = "log"), data = wideDF,
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)    sigma_L1 
+          0           0 
 
 
 Residual standard deviation:
@@ -999,8 +1007,8 @@ lognorm_imp(formula = L1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)    sigma_L1 
+          0           0 
 
 
 Residual standard deviation:
@@ -1017,8 +1025,8 @@ betareg_imp(formula = Be1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept) 
-          0 
+(Intercept)     tau_Be1 
+          0           0 
 
 $m1a
 
@@ -1030,8 +1038,8 @@ lm_imp(formula = y ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)          C1 
-          0           0 
+(Intercept)          C1     sigma_y 
+          0           0           0 
 
 
 Residual standard deviation:
@@ -1061,8 +1069,8 @@ glm_imp(formula = L1 ~ C1, family = Gamma(), data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-(Intercept)          C1 
-          0           0 
+(Intercept)          C1    sigma_L1 
+          0           0           0 
 
 
 Residual standard deviation:
@@ -1092,8 +1100,8 @@ lognorm_imp(formula = L1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)          C1 
-          0           0 
+(Intercept)          C1    sigma_L1 
+          0           0           0 
 
 
 Residual standard deviation:
@@ -1110,8 +1118,8 @@ betareg_imp(formula = Be1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)          C1 
-          0           0 
+(Intercept)          C1     tau_Be1 
+          0           0           0 
 
 $m2a
 
@@ -1123,8 +1131,8 @@ lm_imp(formula = y ~ C2, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)          C2 
-          0           0 
+(Intercept)          C2     sigma_y 
+          0           0           0 
 
 
 Residual standard deviation:
@@ -1154,8 +1162,8 @@ glm_imp(formula = L1mis ~ C2, family = Gamma(), data = wideDF,
 
 
 Coefficients:
-(Intercept)          C2 
-          0           0 
+(Intercept)          C2 sigma_L1mis 
+          0           0           0 
 
 
 Residual standard deviation:
@@ -1185,8 +1193,8 @@ lognorm_imp(formula = L1mis ~ C2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-(Intercept)          C2 
-          0           0 
+(Intercept)          C2 sigma_L1mis 
+          0           0           0 
 
 
 Residual standard deviation:
@@ -1203,8 +1211,8 @@ betareg_imp(formula = Be2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)          C2 
-          0           0 
+(Intercept)          C2     tau_Be2 
+          0           0           0 
 
 $m3a
 
@@ -1220,6 +1228,8 @@ lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF,
 Coefficients:
 (Intercept)          C2         B21          P2       L1mis         Be2 
           0           0           0           0           0           0 
+   sigma_C1 
+          0 
 
 
 Residual standard deviation:
@@ -1238,8 +1248,8 @@ lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-(Intercept)          C2         B21          P2       L1mis 
-          0           0           0           0           0 
+(Intercept)          C2         B21          P2       L1mis    sigma_C1 
+          0           0           0           0           0           0 
 
 
 Residual standard deviation:
@@ -1258,8 +1268,8 @@ lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-(Intercept)          C2         B21          P2       L1mis 
-          0           0           0           0           0 
+(Intercept)          C2         B21          P2       L1mis    sigma_C1 
+          0           0           0           0           0           0 
 
 
 Residual standard deviation:
@@ -1281,6 +1291,8 @@ lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF,
 Coefficients:
 (Intercept)          C2         B21          P2       L1mis         Be2 
           0           0           0           0           0           0 
+   sigma_C1 
+          0 
 
 
 Residual standard deviation:
@@ -1303,6 +1315,8 @@ Coefficients:
                0                0                0                0 
          log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
                0                0                0                0 
+         sigma_y 
+               0 
 
 
 Residual standard deviation:
@@ -1336,8 +1350,8 @@ lm_imp(formula = y ~ C2 + B2 + B1 + O1, data = wideDF, n.adapt = 5,
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -1357,8 +1371,8 @@ glm_imp(formula = y ~ C2 + B2 + B1 + O1, family = gaussian(link = "log"),
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -1378,8 +1392,8 @@ glm_imp(formula = y ~ C2 + B2 + B1 + O1, family = gaussian(link = "inverse"),
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C     sigma_y 
+          0           0 
 
 
 Residual standard deviation:
@@ -1463,8 +1477,8 @@ glm_imp(formula = L1 ~ C2 + B2 + B1 + O1, family = Gamma(link = "inverse"),
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C    sigma_L1 
+          0           0 
 
 
 Residual standard deviation:
@@ -1484,8 +1498,8 @@ glm_imp(formula = L1 ~ C2 + B2 + B1 + O1, family = Gamma(link = "log"),
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C    sigma_L1 
+          0           0 
 
 
 Residual standard deviation:
@@ -1536,8 +1550,8 @@ lognorm_imp(formula = L1 ~ C2 + B2 + B1 + O1, data = wideDF,
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C    sigma_L1 
+          0           0 
 
 
 Residual standard deviation:
@@ -1556,8 +1570,8 @@ betareg_imp(formula = Be1 ~ C2 + B2 + B1 + O1, data = wideDF,
 Coefficients:
 (Intercept)          C2         B21         B11        O1.L        O1.Q 
           0           0           0           0           0           0 
-       O1.C 
-          0 
+       O1.C     tau_Be1 
+          0           0 
 
 $m6a
 
@@ -1575,6 +1589,8 @@ Coefficients:
                0                0                0                0 
          log(C1) O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2) 
                0                0                0                0 
+         sigma_y 
+               0 
 
 
 Residual standard deviation:
@@ -1614,8 +1630,8 @@ Coefficients:
               0               0               0               0               0 
             O23             O24     abs(y - C2) O22:abs(y - C2) O23:abs(y - C2) 
               0               0               0               0               0 
-O24:abs(y - C2) 
-              0 
+O24:abs(y - C2)        sigma_C1 
+              0               0 
 
 
 Residual standard deviation:
@@ -1633,8 +1649,8 @@ lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat),
 
 
 Coefficients:
- (Intercept)          age genderfemale    log(bili)   exp(creat) 
-           0            0            0            0            0 
+ (Intercept)          age genderfemale    log(bili)   exp(creat)    sigma_SBP 
+           0            0            0            0            0            0 
 
 
 Residual standard deviation:
@@ -1652,8 +1668,8 @@ lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat),
 
 
 Coefficients:
- (Intercept)          age genderfemale    log(bili)   exp(creat) 
-           0            0            0            0            0 
+ (Intercept)          age genderfemale    log(bili)   exp(creat)    sigma_SBP 
+           0            0            0            0            0            0 
 
 
 Residual standard deviation:
@@ -1671,8 +1687,8 @@ lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat),
 
 
 Coefficients:
- (Intercept)          age genderfemale    log(bili)   exp(creat) 
-           0            0            0            0            0 
+ (Intercept)          age genderfemale    log(bili)   exp(creat)    sigma_SBP 
+           0            0            0            0            0            0 
 
 
 Residual standard deviation:
@@ -1692,8 +1708,8 @@ lm_imp(formula = SBP ~ ns(age, df = 2) + gender + I(bili^2) +
 Coefficients:
      (Intercept) ns(age, df = 2)1 ns(age, df = 2)2     genderfemale 
                0                0                0                0 
-       I(bili^2)        I(bili^3) 
-               0                0 
+       I(bili^2)        I(bili^3)        sigma_SBP 
+               0                0                0 
 
 
 Residual standard deviation:
