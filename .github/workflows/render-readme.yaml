@@ -17,11 +17,12 @@ jobs:
       - name: Install JAGS
         run: sudo apt-get install jags
 
-      - name: Install rmarkdown
-        run: Rscript -e 'install.packages("rmarkdown")'
-
-      - name: Install package
-        run: R CMD INSTALL .
+      - name: Install rmarkdown, remotes, and the local package
+        run: |
+          install.packages("remotes")
+          remotes::install_local(".")
+          remotes::install_cran("rmarkdown")
+        shell: Rscript {0}
 
       - name: Render README
         run: Rscript -e 'rmarkdown::render("README.Rmd")'
