@@ -113,7 +113,7 @@ get_modelpars <- function(info_list, Mlist, args, set = "main") {
   }
 
   modeltypes <- cvapply(sublist, "[[", "modeltype")
-  families <- unlist(nlapply(sublist, "[[", "family"))
+  families <- nlapply(sublist, "[[", "family")
 
 
   params <- NULL
