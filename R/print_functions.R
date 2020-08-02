@@ -247,16 +247,33 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
   if (is.null(object$MCMC) & mess)
     msg("Note: %s does not contain MCMC samples.", dQuote(args$object))
 
+  # the variable.names that were passed to JAGS
   vnam <- object$mcmc_settings$variable.names
+  # the coef_list, containing the regression coefficient info
   coefs <- do.call(rbind, object$coef_list)
 
-  rows <- unlist(sapply(paste0('\\b', vnam, '\\b'), grep, x = coefs$coef))
+  # figure out which part of vnam is already included in "coefs" and which part
+  # needs to be added
+  rows <- unlist(lapply(paste0('\\b', vnam, '\\b'), grep, x = coefs$coef))
   add <- sapply(vnam, function(x) {
     !any(grepl(paste0('\\b', x, '\\b'), coefs$coef))
   })
 
   add_pars <- as.list(setNames(rep(NA, ncol(coefs)), names(coefs)))
   add_pars$coef <- vnam[add]
+
+
+  # identify which outcome the remaining parameters belong to by matching the
+  # outcome names with the parameter names
+  patterns <- lapply(unique(coefs$outcome), function(out) {
+    paste0("_", out, "$|_", out, "_")
+  })
+
+  out_match <- regmatches(add_pars$coef,
+                          regexpr(paste0(patterns, collapse = "|"),
+                                  add_pars$coef))
+
+  add_pars$outcome <- gsub("^_|_$", "", out_match)
 
 
   params <- if (any(add)) {
@@ -268,27 +285,9 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
 
   rownames(params) <- NULL
 
-  params[, setdiff(names(coefs), 'varnam_print')]
+  params <- params[, setdiff(names(coefs), 'varnam_print')]
 
-
-
-  # if ('beta' %in% vnam) {
-  #   pos <- grep('\\bbeta\\b', vnam)
-  #   vnam <- append(vnam,
-  #                  unlist(sapply(object$coef_list, function(x)
-  #                    grep("^beta\\b", x$coef, value = TRUE)
-  #                  )),
-  #                  after = pos)[-pos]
-  # }
-  # if ('alpha' %in% vnam) {
-  #   pos <- grep('\\balpha\\b', vnam)
-  #   vnam <- append(vnam,
-  #                  unlist(sapply(object$coef_list, function(x)
-  #                    grep("^alpha\\b", x$coef, value = TRUE)
-  #                  )),
-  #                  after = pos)[-pos]
-  # }
-  # return(unname(vnam))
+  params[order(match(params$outcome, unique(coefs$outcome))), ]
 }
 
 
