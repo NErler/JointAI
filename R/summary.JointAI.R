@@ -327,9 +327,9 @@ formula.JointAI <- function(x, ...) {
     errormsg("Use only %s with objects.", sQuote("JointAI"))
 
   if (is.null(x$call$formula)) {
-    x$call$fixed
+    as.formula(x$call$fixed)
   } else {
-    x$call$formula
+    as.formula(x$call$formula)
   }
 }
 
