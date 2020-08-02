@@ -17,6 +17,14 @@ prep_arglist <- function(analysis_type, family = NULL, formals = formals(),
 
   arglist$thecall <- call
 
+  if (inherits(arglist$thecall$formula, "name")) {
+    arglist$thecall$formula <- eval(arglist$thecall$formula)
+  }
+  if (inherits(arglist$thecall$fixed, "name")) {
+    arglist$thecall$fixed <- eval(arglist$thecall$fixed)
+  }
+
+
   if (!inherits(arglist$data, 'data.frame'))
     errormsg("Please provide a %s to the argument %s.",
              sQuote('data.frame'), dQuote('data'))
@@ -47,7 +55,10 @@ prep_arglist <- function(analysis_type, family = NULL, formals = formals(),
     if (is.null(arglist[[arg]]) | is.list(arglist[[arg]])) {
 
     } else if (is.symbol(arglist[[arg]])) {
-      arglist[[arg]] <- NULL
+      arglist[[arg]] <- try(eval(arglist[[arg]]), silent = TRUE)
+      if (inherits(arglist[[arg]], "try-error")) {
+        arglist[[arg]] <- NULL
+      }
     } else {
       arglist[[arg]] <- check_formula_list(as.formula(arglist[[arg]]))
     }
@@ -72,7 +83,6 @@ check_fixed_random <- function(arglist) {
     }
   } else if (!is.null(arglist$formula) & is.null(arglist$random)) {
     can_split <- try(split_formula_list(check_formula_list(arglist$formula)))
-    print(can_split)
 
     if (inherits(can_split, 'try-error')) {
       errormsg("I cannot split the %s into a fixed and random effects part.",

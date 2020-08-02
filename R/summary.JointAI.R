@@ -320,6 +320,18 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
 }
 
 
+#' @export
+formula.JointAI <- function(x, ...) {
+
+  if (!(inherits(x, "JointAI") | inherits(x, "JointAI_errored")))
+    errormsg("Use only %s with objects.", sQuote("JointAI"))
+
+  if (is.null(x$call$formula)) {
+    x$call$fixed
+  } else {
+    x$call$formula
+  }
+}
 
 
 
