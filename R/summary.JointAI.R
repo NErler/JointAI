@@ -353,8 +353,8 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
   params <- parameters(object)
 
-  coefs <- nlapply(names(object$fixed), function(k) {
-    x <- subset(params, outcome == clean_survname(k))
+  nlapply(names(object$fixed), function(k) {
+    x <- params[params$outcome == clean_survname(k), , drop = FALSE]
     rev <- object$info_list[[k]]$rev
 
 
@@ -366,7 +366,7 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
       })
     )
 
-    cfs <- colMeans(MCMC[, cols])
+    cfs <- colMeans(MCMC[, cols, drop = FALSE])
 
     # replace the regression coefficient parameters with the corresponding
     # variable names
@@ -374,24 +374,19 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     names(cfs)[match(reg_coefs, names(cfs))] <- x$varname[match(reg_coefs, x$coef)]
 
 
-    c(
-      if (object$info_list[[k]]$modeltype %in% c("clm", "clmm")) {
-        interc <- colMeans(MCMC)[grep(paste0("gamma_", k, "\\["),
-                                      colnames(MCMC))]
 
-        lvl <- levels(object$Mlist$refs[[k]])
-        if (isTRUE(rev)) {
-          names(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
-        } else {
-          names(interc) <- paste(k, ">", lvl[-length(lvl)])
-        }
-        interc
-      },
-      cfs
-    )
+    if (object$info_list[[k]]$modeltype %in% c("clm", "clmm")) {
+      interc <- grep(paste0("gamma_", k, "\\["), names(cfs))
+
+      lvl <- levels(object$Mlist$refs[[k]])
+      if (isTRUE(rev)) {
+        names(cfs)[interc] <- paste(k, "\u2264", lvl[-length(lvl)])
+      } else {
+        names(cfs)[interc] <- paste(k, ">", lvl[-length(lvl)])
+      }
+    }
+    cfs
   })
-
-  return(coefs)
 }
 
 #' @export
@@ -443,7 +438,7 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
   params <- parameters(object)
 
   nlapply(names(object$fixed), function(k) {
-    x <- subset(params, outcome == clean_survname(k))
+    x <- params[params$outcome == clean_survname(k), , drop = FALSE]
     rev <- object$info_list[[k]]$rev
 
     cols <- unlist(
@@ -464,22 +459,17 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
     rownames(quants)[match(reg_coefs, rownames(quants))] <-
       x$varname[match(reg_coefs, x$coef)]
 
-    rbind(
-      if (object$info_list[[k]]$modeltype %in% c("clm", "clmm")) {
-        lvl <- levels(object$Mlist$refs[[k]])
-        interc <- apply(MCMC_sub[, grep(paste0("gamma_", k, "\\["),
-                                    colnames(MCMC_sub))], 2, quantile, quantiles)
+    if (object$info_list[[k]]$modeltype %in% c("clm", "clmm")) {
+      lvl <- levels(object$Mlist$refs[[k]])
+      interc <- grep(paste0("gamma_", k, "\\["), rownames(quants))
 
-        if (isTRUE(rev)) {
-          colnames(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
-        } else {
-          colnames(interc) <- paste(k, ">", lvl[-length(lvl)])
-        }
-        t(interc)
-      },
-
-      quants
-    )
+      if (isTRUE(rev)) {
+        rownames(quants)[interc] <- paste(k, "\u2264", lvl[-length(lvl)])
+      } else {
+        rownames(quants)[interc] <- paste(k, ">", lvl[-length(lvl)])
+      }
+    }
+    quants
   })
 }
 
