@@ -63,7 +63,8 @@ missing values be included in the summary?}
 \item{digits}{minimal number of \emph{significant} digits, see
     \code{\link[base]{print.default}}.}
 
-\item{parm}{same as \code{subset}}
+\item{parm}{same as \code{subset} (for consistency with \code{confint}
+method for other types of objects)}
 
 \item{level}{confidence level (default is 0.95)}
 }

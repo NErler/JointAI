@@ -351,14 +351,27 @@ coef.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   MCMC <- prep_MCMC(object, start, end, thin, subset,
                     exclude_chains = exclude_chains, mess = mess, warn = warn)
 
+  params <- parameters(object)
 
   coefs <- nlapply(names(object$fixed), function(k) {
-    x <- object$coef_list[[k]]
+    x <- subset(params, outcome == clean_survname(k))
     rev <- object$info_list[[k]]$rev
 
-    cfs <- colMeans(MCMC)
-    names(cfs)[match(intersect(colnames(MCMC), x$coef), names(cfs))] <-
-      x$varname[match(intersect(colnames(MCMC), x$coef), x$coef)]
+
+    cols <- unlist(
+      lapply(x$coef, function(var) {
+        grep(paste0(glob2rx(var), "|^",
+                    gsub("\\[", "\\\\[", var), "\\[[[:digit:]]+\\]$"),
+             colnames(MCMC), value = TRUE)
+      })
+    )
+
+    cfs <- colMeans(MCMC[, cols])
+
+    # replace the regression coefficient parameters with the corresponding
+    # variable names
+    reg_coefs <- intersect(names(cfs), x$coef[!is.na(x$varname)])
+    names(cfs)[match(reg_coefs, names(cfs))] <- x$varname[match(reg_coefs, x$coef)]
 
 
     c(
@@ -427,22 +440,35 @@ confint.JointAI <- function(object, parm = NULL, level = 0.95,
                     exclude_chains = exclude_chains,
                     mess = mess, warn = warn)
 
-
+  params <- parameters(object)
 
   nlapply(names(object$fixed), function(k) {
-    x <- object$coef_list[[k]]
+    x <- subset(params, outcome == clean_survname(k))
     rev <- object$info_list[[k]]$rev
 
-    quants <- t(apply(MCMC, 2, quantile, quantiles))
-    rownames(quants)[match(intersect(colnames(MCMC), x$coef),
-                           rownames(quants))] <-
-      x$varname[match(intersect(colnames(MCMC), x$coef), x$coef)]
+    cols <- unlist(
+      lapply(x$coef, function(var) {
+        grep(paste0(glob2rx(var), "|^",
+                    gsub("\\[", "\\\\[", var), "\\[[[:digit:]]+\\]$"),
+             colnames(MCMC), value = TRUE)
+      })
+    )
+
+    MCMC_sub <- MCMC[, cols, drop = FALSE]
+
+    quants <- t(apply(MCMC_sub, 2, quantile, quantiles))
+
+    # replace the regression coefficient parameters with the corresponding
+    # variable names
+    reg_coefs <- intersect(rownames(quants), x$coef[!is.na(x$varname)])
+    rownames(quants)[match(reg_coefs, rownames(quants))] <-
+      x$varname[match(reg_coefs, x$coef)]
 
     rbind(
       if (object$info_list[[k]]$modeltype %in% c("clm", "clmm")) {
         lvl <- levels(object$Mlist$refs[[k]])
-        interc <- apply(MCMC[, grep(paste0("gamma_", k, "\\["),
-                                    colnames(MCMC))], 2, quantile, quantiles)
+        interc <- apply(MCMC_sub[, grep(paste0("gamma_", k, "\\["),
+                                    colnames(MCMC_sub))], 2, quantile, quantiles)
 
         if (isTRUE(rev)) {
           colnames(interc) <- paste(k, "\u2264", lvl[-length(lvl)])
