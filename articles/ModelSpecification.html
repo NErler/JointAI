@@ -282,7 +282,14 @@
 <span class="co">#&gt; 7     educ   &lt;NA&gt;          genderfemale:age  beta[7]</span>
 <span class="co">#&gt; 8     educ   &lt;NA&gt;  genderfemale:smokeformer  beta[8]</span>
 <span class="co">#&gt; 9     educ   &lt;NA&gt; genderfemale:smokecurrent  beta[9]</span>
-<span class="co">#&gt; 10    educ   &lt;NA&gt;        genderfemale:creat beta[10]</span></pre></body></html></div>
+<span class="co">#&gt; 10    educ   &lt;NA&gt;        genderfemale:creat beta[10]</span>
+<span class="co">#&gt; 11   creat   &lt;NA&gt;               (Intercept) alpha[1]</span>
+<span class="co">#&gt; 12   creat   &lt;NA&gt;              genderfemale alpha[2]</span>
+<span class="co">#&gt; 13   creat   &lt;NA&gt;                       age alpha[3]</span>
+<span class="co">#&gt; 14   creat   &lt;NA&gt;               smokeformer alpha[4]</span>
+<span class="co">#&gt; 15   creat   &lt;NA&gt;              smokecurrent alpha[5]</span>
+<span class="co">#&gt; 16   smoke   &lt;NA&gt;              genderfemale alpha[6]</span>
+<span class="co">#&gt; 17   smoke   &lt;NA&gt;                       age alpha[7]</span></pre></body></html></div>
 </div>
 <div id="higher-level-interactions" class="section level4">
 <h4 class="hasAnchor">
@@ -305,6 +312,13 @@
 <span class="co">#&gt; 9     educ   &lt;NA&gt;          age:creat  beta[9]</span>
 <span class="co">#&gt; 10    educ   &lt;NA&gt;  smokeformer:creat beta[10]</span>
 <span class="co">#&gt; 11    educ   &lt;NA&gt; smokecurrent:creat beta[11]</span>
+<span class="co">#&gt; 12   creat   &lt;NA&gt;        (Intercept) alpha[1]</span>
+<span class="co">#&gt; 13   creat   &lt;NA&gt;       genderfemale alpha[2]</span>
+<span class="co">#&gt; 14   creat   &lt;NA&gt;                age alpha[3]</span>
+<span class="co">#&gt; 15   creat   &lt;NA&gt;        smokeformer alpha[4]</span>
+<span class="co">#&gt; 16   creat   &lt;NA&gt;       smokecurrent alpha[5]</span>
+<span class="co">#&gt; 17   smoke   &lt;NA&gt;       genderfemale alpha[6]</span>
+<span class="co">#&gt; 18   smoke   &lt;NA&gt;                age alpha[7]</span>
 
 <span class="co"># all two- and three-way interactions:</span>
 <span class="no">mod2c</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span>(<span class="no">educ</span> ~ <span class="no">gender</span> + (<span class="no">age</span> + <span class="no">smoke</span> + <span class="no">creat</span>)^<span class="fl">3</span>,
@@ -324,7 +338,14 @@
 <span class="co">#&gt; 10    educ   &lt;NA&gt;      smokeformer:creat beta[10]</span>
 <span class="co">#&gt; 11    educ   &lt;NA&gt;     smokecurrent:creat beta[11]</span>
 <span class="co">#&gt; 12    educ   &lt;NA&gt;  age:smokeformer:creat beta[12]</span>
-<span class="co">#&gt; 13    educ   &lt;NA&gt; age:smokecurrent:creat beta[13]</span></pre></body></html></div>
+<span class="co">#&gt; 13    educ   &lt;NA&gt; age:smokecurrent:creat beta[13]</span>
+<span class="co">#&gt; 14   creat   &lt;NA&gt;            (Intercept) alpha[1]</span>
+<span class="co">#&gt; 15   creat   &lt;NA&gt;           genderfemale alpha[2]</span>
+<span class="co">#&gt; 16   creat   &lt;NA&gt;                    age alpha[3]</span>
+<span class="co">#&gt; 17   creat   &lt;NA&gt;            smokeformer alpha[4]</span>
+<span class="co">#&gt; 18   creat   &lt;NA&gt;           smokecurrent alpha[5]</span>
+<span class="co">#&gt; 19   smoke   &lt;NA&gt;           genderfemale alpha[6]</span>
+<span class="co">#&gt; 20   smoke   &lt;NA&gt;                    age alpha[7]</span></pre></body></html></div>
 <p>In <strong>JointAI</strong>, interactions between any variables, observed or incomplete, variables on different levels of a hierarchical structure, can be handled. When an incomplete variable is involved, the interaction term is re-calculated within each iteration of the MCMC sampling, using the imputed values from the current iteration.</p>
 <p>It is <strong>important</strong> not to pre-calculate interactions with incomplete variables as extra variables in the dataset, but to specify them in the model formula. Otherwise, imputed values of the main effect and interaction term will not match, and results may be incorrect.</p>
 </div>

@@ -279,7 +279,7 @@
 <span class="co">#&gt; 3     SBP   &lt;NA&gt;           WC   beta[3]</span>
 <span class="co">#&gt; 4     SBP   &lt;NA&gt;       alc&gt;=1   beta[4]</span>
 <span class="co">#&gt; 5     SBP   &lt;NA&gt;        creat   beta[5]</span>
-<span class="co">#&gt; 6    &lt;NA&gt;   &lt;NA&gt;         &lt;NA&gt; sigma_SBP</span></pre></body></html></div>
+<span class="co">#&gt; 6     SBP   &lt;NA&gt;         &lt;NA&gt; sigma_SBP</span></pre></body></html></div>
 <p>The column <code>outcome</code> refers to the response variable of a particular model, to distinguish between the regression coefficients in different sub-models, and the column <code>outcat</code> will contain the category of the response variable that a particular linear predictor corresponds to in multinomial logit models.</p>
 </div>
 <div id="imputed-values-parameters-of-the-imputation-models" class="section level3">
@@ -407,10 +407,10 @@
 <span class="co">#&gt; 17   occup      occupnot working          smokecurrent   alpha[17]</span>
 <span class="co">#&gt; 18   smoke                  &lt;NA&gt;                   age   alpha[18]</span>
 <span class="co">#&gt; 19   smoke                  &lt;NA&gt;                    WC   alpha[19]</span>
+<span class="co">#&gt; 22   smoke                  &lt;NA&gt;                  &lt;NA&gt; gamma_smoke</span>
 <span class="co">#&gt; 20      WC                  &lt;NA&gt;           (Intercept)   alpha[20]</span>
 <span class="co">#&gt; 21      WC                  &lt;NA&gt;                   age   alpha[21]</span>
-<span class="co">#&gt; 22    &lt;NA&gt;                  &lt;NA&gt;                  &lt;NA&gt; gamma_smoke</span>
-<span class="co">#&gt; 23    &lt;NA&gt;                  &lt;NA&gt;                  &lt;NA&gt;    sigma_WC</span></pre></body></html></div>
+<span class="co">#&gt; 23      WC                  &lt;NA&gt;                  &lt;NA&gt;    sigma_WC</span></pre></body></html></div>
 <div id="side-note-getting-information-about-of-the-imputation-models" class="section level4">
 <h4 class="hasAnchor">
 <a href="#side-note-getting-information-about-of-the-imputation-models" class="anchor"></a>Side note: Getting information about of the imputation models</h4>
@@ -540,10 +540,10 @@
 <span class="co">#&gt; 2     bmi   &lt;NA&gt;     EDUCmid       beta[2]</span>
 <span class="co">#&gt; 3     bmi   &lt;NA&gt;     EDUClow       beta[3]</span>
 <span class="co">#&gt; 4     bmi   &lt;NA&gt;         age       beta[4]</span>
-<span class="co">#&gt; 5    &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;     sigma_bmi</span>
-<span class="co">#&gt; 6    &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt; D_bmi_ID[1,1]</span>
-<span class="co">#&gt; 7    &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt; D_bmi_ID[1,2]</span>
-<span class="co">#&gt; 8    &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt; D_bmi_ID[2,2]</span></pre></body></html></div>
+<span class="co">#&gt; 5     bmi   &lt;NA&gt;        &lt;NA&gt;     sigma_bmi</span>
+<span class="co">#&gt; 6     bmi   &lt;NA&gt;        &lt;NA&gt; D_bmi_ID[1,1]</span>
+<span class="co">#&gt; 7     bmi   &lt;NA&gt;        &lt;NA&gt; D_bmi_ID[1,2]</span>
+<span class="co">#&gt; 8     bmi   &lt;NA&gt;        &lt;NA&gt; D_bmi_ID[2,2]</span></pre></body></html></div>
 <p>Setting <code>analysis_random = TRUE</code> will switch on monitoring for the random effects (<code>ranef</code>), random effects covariance matrix (<code>D</code>), inverse of the random effects covariance matrix (<code>invD</code>) and the diagonal of the scale matrix of the Wishart-prior of <code>invD</code> (<code>RinvD</code>).</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">lme2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lme_imp</a></span>(<span class="no">bmi</span> ~ <span class="no">age</span> + <span class="no">EDUC</span>, <span class="kw">random</span> <span class="kw">=</span> ~<span class="no">age</span> <span class="kw">|</span> <span class="no">ID</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">simLong</span>, <span class="kw">n.adapt</span> <span class="kw">=</span> <span class="fl">0</span>,
                 <span class="kw">monitor_params</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">analysis_random</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
@@ -554,16 +554,16 @@
 <span class="co">#&gt; 2      bmi   &lt;NA&gt;     EDUCmid           beta[2]</span>
 <span class="co">#&gt; 3      bmi   &lt;NA&gt;     EDUClow           beta[3]</span>
 <span class="co">#&gt; 4      bmi   &lt;NA&gt;         age           beta[4]</span>
-<span class="co">#&gt; 5     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;         sigma_bmi</span>
-<span class="co">#&gt; 6     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;          b_bmi_ID</span>
-<span class="co">#&gt; 7     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;  invD_bmi_ID[1,1]</span>
-<span class="co">#&gt; 8     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;  invD_bmi_ID[1,2]</span>
-<span class="co">#&gt; 9     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;  invD_bmi_ID[2,2]</span>
-<span class="co">#&gt; 10    &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;     D_bmi_ID[1,1]</span>
-<span class="co">#&gt; 11    &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;     D_bmi_ID[1,2]</span>
-<span class="co">#&gt; 12    &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;     D_bmi_ID[2,2]</span>
-<span class="co">#&gt; 13    &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt; RinvD_bmi_ID[1,1]</span>
-<span class="co">#&gt; 14    &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt; RinvD_bmi_ID[2,2]</span></pre></body></html></div>
+<span class="co">#&gt; 5      bmi   &lt;NA&gt;        &lt;NA&gt;         sigma_bmi</span>
+<span class="co">#&gt; 6      bmi   &lt;NA&gt;        &lt;NA&gt;          b_bmi_ID</span>
+<span class="co">#&gt; 7      bmi   &lt;NA&gt;        &lt;NA&gt;  invD_bmi_ID[1,1]</span>
+<span class="co">#&gt; 8      bmi   &lt;NA&gt;        &lt;NA&gt;  invD_bmi_ID[1,2]</span>
+<span class="co">#&gt; 9      bmi   &lt;NA&gt;        &lt;NA&gt;  invD_bmi_ID[2,2]</span>
+<span class="co">#&gt; 10     bmi   &lt;NA&gt;        &lt;NA&gt;     D_bmi_ID[1,1]</span>
+<span class="co">#&gt; 11     bmi   &lt;NA&gt;        &lt;NA&gt;     D_bmi_ID[1,2]</span>
+<span class="co">#&gt; 12     bmi   &lt;NA&gt;        &lt;NA&gt;     D_bmi_ID[2,2]</span>
+<span class="co">#&gt; 13     bmi   &lt;NA&gt;        &lt;NA&gt; RinvD_bmi_ID[1,1]</span>
+<span class="co">#&gt; 14     bmi   &lt;NA&gt;        &lt;NA&gt; RinvD_bmi_ID[2,2]</span></pre></body></html></div>
 <p>It is possible to select only a subset of the random effects parameters by specifying them directly, e.g.</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">lme3a</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lme_imp</a></span>(<span class="no">bmi</span> ~ <span class="no">age</span> + <span class="no">EDUC</span>, <span class="kw">random</span> <span class="kw">=</span> ~<span class="no">age</span> <span class="kw">|</span> <span class="no">ID</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">simLong</span>, <span class="kw">n.adapt</span> <span class="kw">=</span> <span class="fl">0</span>,
                  <span class="kw">monitor_params</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">analysis_main</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">RinvD_main</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
@@ -574,12 +574,12 @@
 <span class="co">#&gt; 2      bmi   &lt;NA&gt;     EDUCmid           beta[2]</span>
 <span class="co">#&gt; 3      bmi   &lt;NA&gt;     EDUClow           beta[3]</span>
 <span class="co">#&gt; 4      bmi   &lt;NA&gt;         age           beta[4]</span>
-<span class="co">#&gt; 5     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;         sigma_bmi</span>
-<span class="co">#&gt; 6     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;     D_bmi_ID[1,1]</span>
-<span class="co">#&gt; 7     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;     D_bmi_ID[1,2]</span>
-<span class="co">#&gt; 8     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;     D_bmi_ID[2,2]</span>
-<span class="co">#&gt; 9     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt; RinvD_bmi_ID[1,1]</span>
-<span class="co">#&gt; 10    &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt; RinvD_bmi_ID[2,2]</span></pre></body></html></div>
+<span class="co">#&gt; 5      bmi   &lt;NA&gt;        &lt;NA&gt;         sigma_bmi</span>
+<span class="co">#&gt; 6      bmi   &lt;NA&gt;        &lt;NA&gt;     D_bmi_ID[1,1]</span>
+<span class="co">#&gt; 7      bmi   &lt;NA&gt;        &lt;NA&gt;     D_bmi_ID[1,2]</span>
+<span class="co">#&gt; 8      bmi   &lt;NA&gt;        &lt;NA&gt;     D_bmi_ID[2,2]</span>
+<span class="co">#&gt; 9      bmi   &lt;NA&gt;        &lt;NA&gt; RinvD_bmi_ID[1,1]</span>
+<span class="co">#&gt; 10     bmi   &lt;NA&gt;        &lt;NA&gt; RinvD_bmi_ID[2,2]</span></pre></body></html></div>
 <p>or by switching unwanted parts of <code>analysis_random</code> off, e.g.</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">lme3b</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lme_imp</a></span>(<span class="no">bmi</span> ~ <span class="no">age</span> + <span class="no">EDUC</span>, <span class="kw">random</span> <span class="kw">=</span> ~<span class="no">age</span> <span class="kw">|</span> <span class="no">ID</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">simLong</span>, <span class="kw">n.adapt</span> <span class="kw">=</span> <span class="fl">0</span>,
                 <span class="kw">monitor_params</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">analysis_main</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
@@ -598,13 +598,13 @@
 <span class="co">#&gt; 2      bmi   &lt;NA&gt;     EDUCmid          beta[2]</span>
 <span class="co">#&gt; 3      bmi   &lt;NA&gt;     EDUClow          beta[3]</span>
 <span class="co">#&gt; 4      bmi   &lt;NA&gt;         age          beta[4]</span>
-<span class="co">#&gt; 5     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;        sigma_bmi</span>
-<span class="co">#&gt; 6     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt; invD_bmi_ID[1,1]</span>
-<span class="co">#&gt; 7     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt; invD_bmi_ID[1,2]</span>
-<span class="co">#&gt; 8     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt; invD_bmi_ID[2,2]</span>
-<span class="co">#&gt; 9     &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;    D_bmi_ID[1,1]</span>
-<span class="co">#&gt; 10    &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;    D_bmi_ID[1,2]</span>
-<span class="co">#&gt; 11    &lt;NA&gt;   &lt;NA&gt;        &lt;NA&gt;    D_bmi_ID[2,2]</span></pre></body></html></div>
+<span class="co">#&gt; 5      bmi   &lt;NA&gt;        &lt;NA&gt;        sigma_bmi</span>
+<span class="co">#&gt; 6      bmi   &lt;NA&gt;        &lt;NA&gt; invD_bmi_ID[1,1]</span>
+<span class="co">#&gt; 7      bmi   &lt;NA&gt;        &lt;NA&gt; invD_bmi_ID[1,2]</span>
+<span class="co">#&gt; 8      bmi   &lt;NA&gt;        &lt;NA&gt; invD_bmi_ID[2,2]</span>
+<span class="co">#&gt; 9      bmi   &lt;NA&gt;        &lt;NA&gt;    D_bmi_ID[1,1]</span>
+<span class="co">#&gt; 10     bmi   &lt;NA&gt;        &lt;NA&gt;    D_bmi_ID[1,2]</span>
+<span class="co">#&gt; 11     bmi   &lt;NA&gt;        &lt;NA&gt;    D_bmi_ID[2,2]</span></pre></body></html></div>
 </div>
 <div id="other-parameters" class="section level3">
 <h3 class="hasAnchor">
@@ -642,16 +642,16 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
-<span class="co">#&gt;                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD</span>
-<span class="co">#&gt; (Intercept)  81.034 9.6778 61.139 97.757     0.0000    1.05 0.0577</span>
-<span class="co">#&gt; genderfemale  0.779 2.6016 -4.509  5.491     0.7800    1.02 0.0577</span>
-<span class="co">#&gt; WC            0.299 0.0696  0.154  0.437     0.0000    1.07 0.0727</span>
-<span class="co">#&gt; alc&gt;=1        6.368 2.6325  1.081 11.217     0.0267    1.07 0.0811</span>
-<span class="co">#&gt; creat         8.343 7.9969 -6.799 25.037     0.2400    1.03 0.0628</span>
+<span class="co">#&gt;                Mean      SD   2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
+<span class="co">#&gt; (Intercept)  81.117 10.1657 61.764 100.946      0.000    1.04 0.0577</span>
+<span class="co">#&gt; genderfemale  0.536  2.5627 -4.261   5.229      0.847    1.01 0.0577</span>
+<span class="co">#&gt; WC            0.304  0.0762  0.134   0.457      0.000    1.09 0.0577</span>
+<span class="co">#&gt; alc&gt;=1        6.472  2.4626  2.170  11.627      0.000    1.01 0.0577</span>
+<span class="co">#&gt; creat         7.907  7.9569 -6.257  24.351      0.307    1.05 0.0597</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary of residual std. deviation:</span>
-<span class="co">#&gt;           Mean   SD 2.5% 97.5% GR-crit MCE/SD</span>
-<span class="co">#&gt; sigma_SBP 14.5 0.74   13  15.9    1.06 0.0622</span>
+<span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span>
+<span class="co">#&gt; sigma_SBP 14.4 0.798 12.9  16.1    1.07 0.0577</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; MCMC settings:</span>
@@ -675,12 +675,12 @@
 <span class="co">#&gt; Potential scale reduction factors:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;              Point est. Upper C.I.</span>
-<span class="co">#&gt; (Intercept)        1.01       1.05</span>
-<span class="co">#&gt; genderfemale       1.00       1.02</span>
-<span class="co">#&gt; WC                 1.02       1.07</span>
-<span class="co">#&gt; alc&gt;=1             1.02       1.07</span>
-<span class="co">#&gt; creat              1.01       1.03</span>
-<span class="co">#&gt; sigma_SBP          1.01       1.06</span>
+<span class="co">#&gt; (Intercept)       1.009       1.04</span>
+<span class="co">#&gt; genderfemale      0.999       1.01</span>
+<span class="co">#&gt; WC                1.022       1.09</span>
+<span class="co">#&gt; alc&gt;=1            1.000       1.01</span>
+<span class="co">#&gt; creat             1.016       1.05</span>
+<span class="co">#&gt; sigma_SBP         1.016       1.07</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Multivariate psrf</span>
 <span class="co">#&gt; </span>
@@ -688,13 +688,13 @@
 
 <span class="co"># Monte Carlo Error of the MCMC sample</span>
 <span class="fu"><a href="../reference/MC_error.html">MC_error</a></span>(<span class="no">lm5</span>)
-<span class="co">#&gt;                est   MCSE   SD MCSE/SD</span>
-<span class="co">#&gt; (Intercept)  81.03 0.5587 9.68   0.058</span>
-<span class="co">#&gt; genderfemale  0.78 0.1502 2.60   0.058</span>
-<span class="co">#&gt; WC            0.30 0.0051 0.07   0.073</span>
-<span class="co">#&gt; alc&gt;=1        6.37 0.2134 2.63   0.081</span>
-<span class="co">#&gt; creat         8.34 0.5021 8.00   0.063</span>
-<span class="co">#&gt; sigma_SBP    14.47 0.0460 0.74   0.062</span></pre></body></html></div>
+<span class="co">#&gt;                est   MCSE     SD MCSE/SD</span>
+<span class="co">#&gt; (Intercept)  81.12 0.5869 10.166   0.058</span>
+<span class="co">#&gt; genderfemale  0.54 0.1480  2.563   0.058</span>
+<span class="co">#&gt; WC            0.30 0.0044  0.076   0.058</span>
+<span class="co">#&gt; alc&gt;=1        6.47 0.1422  2.463   0.058</span>
+<span class="co">#&gt; creat         7.91 0.4751  7.957   0.060</span>
+<span class="co">#&gt; sigma_SBP    14.41 0.0461  0.798   0.058</span></pre></body></html></div>
 <p>When <code>analysis_main</code> was not switched on the default behaviour is that all parameters are displayed:</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># Re-run the model from above, now creating MCMC samples</span>
 <span class="no">lm4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">WC</span> + <span class="no">alc</span> + <span class="no">creat</span>,
@@ -713,21 +713,21 @@
 <span class="co">#&gt; Potential scale reduction factors:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                     Point est. Upper C.I.</span>
-<span class="co">#&gt; alc: (Intercept)         1.019      1.065</span>
-<span class="co">#&gt; alc: genderfemale        1.033      1.113</span>
-<span class="co">#&gt; alc: WC                  1.019      1.044</span>
-<span class="co">#&gt; alc: creat               1.009      1.034</span>
-<span class="co">#&gt; creat: (Intercept)       1.015      1.060</span>
-<span class="co">#&gt; creat: genderfemale      1.010      1.041</span>
-<span class="co">#&gt; creat: WC                1.013      1.057</span>
-<span class="co">#&gt; WC: (Intercept)          1.001      1.003</span>
-<span class="co">#&gt; WC: genderfemale         0.997      0.999</span>
-<span class="co">#&gt; sigma_creat              0.997      1.000</span>
-<span class="co">#&gt; sigma_WC                 1.003      1.021</span>
+<span class="co">#&gt; alc: (Intercept)         1.026      1.097</span>
+<span class="co">#&gt; alc: genderfemale        1.023      1.090</span>
+<span class="co">#&gt; alc: WC                  1.096      1.306</span>
+<span class="co">#&gt; alc: creat               1.010      1.028</span>
+<span class="co">#&gt; creat: (Intercept)       0.996      0.999</span>
+<span class="co">#&gt; creat: genderfemale      1.013      1.058</span>
+<span class="co">#&gt; creat: WC                0.996      0.996</span>
+<span class="co">#&gt; WC: (Intercept)          1.011      1.045</span>
+<span class="co">#&gt; WC: genderfemale         1.007      1.024</span>
+<span class="co">#&gt; sigma_creat              1.003      1.022</span>
+<span class="co">#&gt; sigma_WC                 1.004      1.025</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Multivariate psrf</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; 1.07</span></pre></body></html></div>
+<span class="co">#&gt; 1.11</span></pre></body></html></div>
 <p>To select only some of the parameters, they can be specified directly by name via the <code>other</code> element of <code>subset</code>:</p>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">lm5</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">other</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'creat'</span>, <span class="st">'alc&gt;=1'</span>)))
 <span class="co">#&gt; </span>
@@ -739,16 +739,16 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
-<span class="co">#&gt;                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD</span>
-<span class="co">#&gt; (Intercept)  81.034 9.6778 61.139 97.757     0.0000    1.05 0.0577</span>
-<span class="co">#&gt; genderfemale  0.779 2.6016 -4.509  5.491     0.7800    1.02 0.0577</span>
-<span class="co">#&gt; WC            0.299 0.0696  0.154  0.437     0.0000    1.07 0.0727</span>
-<span class="co">#&gt; alc&gt;=1        6.368 2.6325  1.081 11.217     0.0267    1.07 0.0811</span>
-<span class="co">#&gt; creat         8.343 7.9969 -6.799 25.037     0.2400    1.03 0.0628</span>
+<span class="co">#&gt;                Mean      SD   2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
+<span class="co">#&gt; (Intercept)  81.117 10.1657 61.764 100.946      0.000    1.04 0.0577</span>
+<span class="co">#&gt; genderfemale  0.536  2.5627 -4.261   5.229      0.847    1.01 0.0577</span>
+<span class="co">#&gt; WC            0.304  0.0762  0.134   0.457      0.000    1.09 0.0577</span>
+<span class="co">#&gt; alc&gt;=1        6.472  2.4626  2.170  11.627      0.000    1.01 0.0577</span>
+<span class="co">#&gt; creat         7.907  7.9569 -6.257  24.351      0.307    1.05 0.0597</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary of residual std. deviation:</span>
-<span class="co">#&gt;           Mean   SD 2.5% 97.5% GR-crit MCE/SD</span>
-<span class="co">#&gt; sigma_SBP 14.5 0.74   13  15.9    1.06 0.0622</span>
+<span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span>
+<span class="co">#&gt; sigma_SBP 14.4 0.798 12.9  16.1    1.07 0.0577</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; MCMC settings:</span>
