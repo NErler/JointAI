@@ -7,7 +7,7 @@
 6        y   <NA>          c1     beta[6]
 7        y   <NA>          c2     beta[7]
 8        y   <NA>        time     beta[8]
-9     <NA>   <NA>        <NA>     sigma_y
-10    <NA>   <NA>        <NA> D_y_id[1,1]
-11    <NA>   <NA>        <NA> D_y_id[1,2]
-12    <NA>   <NA>        <NA> D_y_id[2,2]
+9        y   <NA>        <NA>     sigma_y
+10       y   <NA>        <NA> D_y_id[1,1]
+11       y   <NA>        <NA> D_y_id[1,2]
+12       y   <NA>        <NA> D_y_id[2,2]

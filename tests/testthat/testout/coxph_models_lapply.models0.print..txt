@@ -59,13 +59,13 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ copper,
 
 
 Coefficients:
-beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                     copper beta_Bh0_Srv_ftm_stts_cn[1] 
                           0                           0 
-beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+beta_Bh0_Srv_ftm_stts_cn[2] beta_Bh0_Srv_ftm_stts_cn[3] 
                           0                           0 
-beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+beta_Bh0_Srv_ftm_stts_cn[4] beta_Bh0_Srv_ftm_stts_cn[5] 
                           0                           0 
-                     copper 
+beta_Bh0_Srv_ftm_stts_cn[6] 
                           0 
 
 Call:
@@ -275,13 +275,13 @@ coxph_imp(formula = Surv(futime, status != "censored") ~ copper,
 
 
 Coefficients:
-beta_Bh0_Srv_ftm_stts_cn[1] beta_Bh0_Srv_ftm_stts_cn[2] 
+                     copper beta_Bh0_Srv_ftm_stts_cn[1] 
                           0                           0 
-beta_Bh0_Srv_ftm_stts_cn[3] beta_Bh0_Srv_ftm_stts_cn[4] 
+beta_Bh0_Srv_ftm_stts_cn[2] beta_Bh0_Srv_ftm_stts_cn[3] 
                           0                           0 
-beta_Bh0_Srv_ftm_stts_cn[5] beta_Bh0_Srv_ftm_stts_cn[6] 
+beta_Bh0_Srv_ftm_stts_cn[4] beta_Bh0_Srv_ftm_stts_cn[5] 
                           0                           0 
-                     copper 
+beta_Bh0_Srv_ftm_stts_cn[6] 
                           0 
 
 $m3a

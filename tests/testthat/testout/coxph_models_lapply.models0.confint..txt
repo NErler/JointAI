@@ -38,13 +38,13 @@ beta_Bh0_Srv_ftm_stts_cn[6]    0     0
 $m2a
 $m2a$`Surv(futime, status != "censored")`
                             2.5% 97.5%
+copper                         0     0
 beta_Bh0_Srv_ftm_stts_cn[1]    0     0
 beta_Bh0_Srv_ftm_stts_cn[2]    0     0
 beta_Bh0_Srv_ftm_stts_cn[3]    0     0
 beta_Bh0_Srv_ftm_stts_cn[4]    0     0
 beta_Bh0_Srv_ftm_stts_cn[5]    0     0
 beta_Bh0_Srv_ftm_stts_cn[6]    0     0
-copper                         0     0
 
 
 $m3a
