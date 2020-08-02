@@ -259,13 +259,18 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
     !any(grepl(paste0('\\b', x, '\\b'), coefs$coef))
   })
 
-  add_pars <- as.list(setNames(rep(NA, ncol(coefs)), names(coefs)))
+  df_names <- if (is.null(coefs)) {
+    c("outcome", "outcat", "varname", "coef")
+  } else {
+    names(coefs)
+  }
+  add_pars <- as.list(setNames(rep(NA, length(df_names)), df_names))
   add_pars$coef <- vnam[add]
 
 
   # identify which outcome the remaining parameters belong to by matching the
   # outcome names with the parameter names
-  patterns <- lapply(unique(coefs$outcome), function(out) {
+  patterns <- lapply(clean_survname(names(object$coef_list)), function(out) {
     paste0("_", out, "$|_", out, "_")
   })
 
@@ -273,21 +278,26 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
                           regexpr(paste0(patterns, collapse = "|"),
                                   add_pars$coef))
 
-  add_pars$outcome <- gsub("^_|_$", "", out_match)
+  if (length(out_match) > 0) {
+    add_pars$outcome <- gsub("^_|_$", "", out_match)
+  }
 
 
   params <- if (any(add)) {
     rbind(coefs[rows, , drop = FALSE],
           as.data.frame(add_pars))
   } else {
-    coefs[rows, setdiff(names(coefs), 'varnam_print'), drop = FALSE]
+    coefs
   }
 
   rownames(params) <- NULL
 
-  params <- params[, setdiff(names(coefs), 'varnam_print')]
+  params <- params[, setdiff(names(params), 'varnam_print')]
 
-  params[order(match(params$outcome, unique(coefs$outcome))), ]
+  # has to be sorted so that the additional parameters are together with the
+  # regression coefficients
+  params[order(match(params$outcome,
+                     clean_survname(names(object$coef_list)))), ]
 }
 
 
