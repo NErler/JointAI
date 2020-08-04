@@ -105,13 +105,13 @@ Coefficients:
                             0                             0 
                           age             abs(age - copper) 
                             0                             0 
-                    log(trig)   beta_Bh0_Srv_ftm_stts_cn[1] 
+                    log(trig) D_Srv_ftm_stts_cn_center[1,1] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[2]   beta_Bh0_Srv_ftm_stts_cn[3] 
+  beta_Bh0_Srv_ftm_stts_cn[1]   beta_Bh0_Srv_ftm_stts_cn[2] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[4]   beta_Bh0_Srv_ftm_stts_cn[5] 
+  beta_Bh0_Srv_ftm_stts_cn[3]   beta_Bh0_Srv_ftm_stts_cn[4] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[6] D_Srv_ftm_stts_cn_center[1,1] 
+  beta_Bh0_Srv_ftm_stts_cn[5]   beta_Bh0_Srv_ftm_stts_cn[6] 
                             0                             0 
 
 Call:
@@ -176,13 +176,13 @@ Coefficients:
                             0                             0 
                       albumin                 log(platelet) 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[1]   beta_Bh0_Srv_ftm_stts_cn[2] 
+D_Srv_ftm_stts_cn_center[1,1]   beta_Bh0_Srv_ftm_stts_cn[1] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[3]   beta_Bh0_Srv_ftm_stts_cn[4] 
+  beta_Bh0_Srv_ftm_stts_cn[2]   beta_Bh0_Srv_ftm_stts_cn[3] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[5]   beta_Bh0_Srv_ftm_stts_cn[6] 
+  beta_Bh0_Srv_ftm_stts_cn[4]   beta_Bh0_Srv_ftm_stts_cn[5] 
                             0                             0 
-D_Srv_ftm_stts_cn_center[1,1] 
+  beta_Bh0_Srv_ftm_stts_cn[6] 
                             0 
 
 Call:
@@ -199,13 +199,13 @@ Coefficients:
                             0                             0 
                       albumin         ns(platelet, df = 2)1 
                             0                             0 
-        ns(platelet, df = 2)2   beta_Bh0_Srv_ftm_stts_cn[1] 
+        ns(platelet, df = 2)2 D_Srv_ftm_stts_cn_center[1,1] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[2]   beta_Bh0_Srv_ftm_stts_cn[3] 
+  beta_Bh0_Srv_ftm_stts_cn[1]   beta_Bh0_Srv_ftm_stts_cn[2] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[4]   beta_Bh0_Srv_ftm_stts_cn[5] 
+  beta_Bh0_Srv_ftm_stts_cn[3]   beta_Bh0_Srv_ftm_stts_cn[4] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[6] D_Srv_ftm_stts_cn_center[1,1] 
+  beta_Bh0_Srv_ftm_stts_cn[5]   beta_Bh0_Srv_ftm_stts_cn[6] 
                             0                             0 
 $m0a
 
@@ -325,13 +325,13 @@ Coefficients:
                             0                             0 
                           age             abs(age - copper) 
                             0                             0 
-                    log(trig)   beta_Bh0_Srv_ftm_stts_cn[1] 
+                    log(trig) D_Srv_ftm_stts_cn_center[1,1] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[2]   beta_Bh0_Srv_ftm_stts_cn[3] 
+  beta_Bh0_Srv_ftm_stts_cn[1]   beta_Bh0_Srv_ftm_stts_cn[2] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[4]   beta_Bh0_Srv_ftm_stts_cn[5] 
+  beta_Bh0_Srv_ftm_stts_cn[3]   beta_Bh0_Srv_ftm_stts_cn[4] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[6] D_Srv_ftm_stts_cn_center[1,1] 
+  beta_Bh0_Srv_ftm_stts_cn[5]   beta_Bh0_Srv_ftm_stts_cn[6] 
                             0                             0 
 
 $m4a
@@ -402,13 +402,13 @@ Coefficients:
                             0                             0 
                       albumin                 log(platelet) 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[1]   beta_Bh0_Srv_ftm_stts_cn[2] 
+D_Srv_ftm_stts_cn_center[1,1]   beta_Bh0_Srv_ftm_stts_cn[1] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[3]   beta_Bh0_Srv_ftm_stts_cn[4] 
+  beta_Bh0_Srv_ftm_stts_cn[2]   beta_Bh0_Srv_ftm_stts_cn[3] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[5]   beta_Bh0_Srv_ftm_stts_cn[6] 
+  beta_Bh0_Srv_ftm_stts_cn[4]   beta_Bh0_Srv_ftm_stts_cn[5] 
                             0                             0 
-D_Srv_ftm_stts_cn_center[1,1] 
+  beta_Bh0_Srv_ftm_stts_cn[6] 
                             0 
 
 $m4d
@@ -427,12 +427,12 @@ Coefficients:
                             0                             0 
                       albumin         ns(platelet, df = 2)1 
                             0                             0 
-        ns(platelet, df = 2)2   beta_Bh0_Srv_ftm_stts_cn[1] 
+        ns(platelet, df = 2)2 D_Srv_ftm_stts_cn_center[1,1] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[2]   beta_Bh0_Srv_ftm_stts_cn[3] 
+  beta_Bh0_Srv_ftm_stts_cn[1]   beta_Bh0_Srv_ftm_stts_cn[2] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[4]   beta_Bh0_Srv_ftm_stts_cn[5] 
+  beta_Bh0_Srv_ftm_stts_cn[3]   beta_Bh0_Srv_ftm_stts_cn[4] 
                             0                             0 
-  beta_Bh0_Srv_ftm_stts_cn[6] D_Srv_ftm_stts_cn_center[1,1] 
+  beta_Bh0_Srv_ftm_stts_cn[5]   beta_Bh0_Srv_ftm_stts_cn[6] 
                             0                             0 
 

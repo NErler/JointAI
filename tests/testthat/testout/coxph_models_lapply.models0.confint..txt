@@ -71,13 +71,13 @@ sexfemale                        0     0
 age                              0     0
 abs(age - copper)                0     0
 log(trig)                        0     0
+D_Srv_ftm_stts_cn_center[1,1]    0     0
 beta_Bh0_Srv_ftm_stts_cn[1]      0     0
 beta_Bh0_Srv_ftm_stts_cn[2]      0     0
 beta_Bh0_Srv_ftm_stts_cn[3]      0     0
 beta_Bh0_Srv_ftm_stts_cn[4]      0     0
 beta_Bh0_Srv_ftm_stts_cn[5]      0     0
 beta_Bh0_Srv_ftm_stts_cn[6]      0     0
-D_Srv_ftm_stts_cn_center[1,1]    0     0
 
 
 $m4a
@@ -123,13 +123,13 @@ age                              0     0
 sexfemale                        0     0
 albumin                          0     0
 log(platelet)                    0     0
+D_Srv_ftm_stts_cn_center[1,1]    0     0
 beta_Bh0_Srv_ftm_stts_cn[1]      0     0
 beta_Bh0_Srv_ftm_stts_cn[2]      0     0
 beta_Bh0_Srv_ftm_stts_cn[3]      0     0
 beta_Bh0_Srv_ftm_stts_cn[4]      0     0
 beta_Bh0_Srv_ftm_stts_cn[5]      0     0
 beta_Bh0_Srv_ftm_stts_cn[6]      0     0
-D_Srv_ftm_stts_cn_center[1,1]    0     0
 
 
 $m4d
@@ -140,12 +140,12 @@ sexfemale                        0     0
 albumin                          0     0
 ns(platelet, df = 2)1            0     0
 ns(platelet, df = 2)2            0     0
+D_Srv_ftm_stts_cn_center[1,1]    0     0
 beta_Bh0_Srv_ftm_stts_cn[1]      0     0
 beta_Bh0_Srv_ftm_stts_cn[2]      0     0
 beta_Bh0_Srv_ftm_stts_cn[3]      0     0
 beta_Bh0_Srv_ftm_stts_cn[4]      0     0
 beta_Bh0_Srv_ftm_stts_cn[5]      0     0
 beta_Bh0_Srv_ftm_stts_cn[6]      0     0
-D_Srv_ftm_stts_cn_center[1,1]    0     0
 
 
