@@ -583,20 +583,20 @@ get_missinfo <- function(object) {
   allvars <- all_vars(c(object$fixed, object$random, object$Mlist$auxvars,
                         object$Mlist$timevar))
 
-  cc <- complete.cases(object$data[, allvars])
-
   groups <- object$Mlist$groups
 
+  data_lvls <- cvapply(object$data[, allvars], check_varlevel, groups = groups)
 
   complcases <- lapply(names(groups), function(k) {
-    cc0 <- cc[match(unique(groups[[k]]), groups[[k]])]
+    cc <- complete.cases(object$data[match(unique(groups[[k]]), groups[[k]]),
+                               names(data_lvls[data_lvls == k])])
 
     as.data.frame(
       Filter(Negate(is.null),
              list(
                level = if (length(object$Mlist$groups) > 1) k,
-               "#" = sum(cc0),
-               "%" = mean(cc0) * 100
+               "#" = sum(cc),
+               "%" = mean(cc) * 100
              )
       ), check.names = FALSE, row.names = k)
   })
@@ -611,7 +611,6 @@ get_missinfo <- function(object) {
     missinfo <- as.data.frame(
       Filter(Negate(is.null),
              list(
-               # variable = names(subdat),
                level = if (length(unique(dat_lvls)) > 1) lvl,
                "# NA" = colSums(is.na(subdat)),
                "% NA" = colMeans(is.na(subdat)) * 100
