@@ -340,7 +340,11 @@ formula.JointAI <- function(x, ...) {
   if (is.null(x$call$formula)) {
     as.formula(x$call$fixed)
   } else {
-    as.formula(x$call$formula)
+    if (inherits(x$call$formula, "list")) {
+      x$call$formula
+    } else {
+      as.formula(x$call$formula)
+    }
   }
 }
 

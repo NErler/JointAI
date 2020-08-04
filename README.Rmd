@@ -27,6 +27,9 @@ knitr::opts_chunk$set(
 [![R build status](https://github.com/NErler/JointAI/workflows/R-CMD-check/badge.svg)](https://github.com/NErler/JointAI/actions)
 <!-- badges: end -->
 
+
+
+
 The package **JointAI** provides functionality to perform joint analysis and
 imputation of a range of model types in the Bayesian framework. Implemented are
 (generalized) linear regression models and extensions thereof, models for
