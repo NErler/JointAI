@@ -10,7 +10,7 @@
 \usage{
 \method{summary}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
   quantiles = c(0.025, 0.975), subset = NULL, exclude_chains = NULL,
-  missinfo = FALSE, warn = TRUE, mess = TRUE, ...)
+  outcome = NULL, missinfo = FALSE, warn = TRUE, mess = TRUE, ...)
 
 \method{print}{summary.JointAI}(x, digits = max(3, .Options$digits - 4), ...)
 
@@ -46,6 +46,11 @@ sample). Follows the same principle as the argument
 
 \item{exclude_chains}{optional vector of the index numbers of chains that
 should be excluded}
+
+\item{outcome}{optional; vector identifying for which outcomes the summary
+should be given, either by specifying their indices, or their
+names (LHS of the respective model formulas as character
+string).}
 
 \item{missinfo}{logical; should information on the number and proportion of
 missing values be included in the summary?}

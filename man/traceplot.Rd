@@ -8,9 +8,9 @@
 traceplot(object, ...)
 
 \method{traceplot}{JointAI}(object, start = NULL, end = NULL,
-  thin = NULL, subset = c(analysis_main = TRUE), exclude_chains = NULL,
-  nrow = NULL, ncol = NULL, use_ggplot = FALSE, warn = TRUE,
-  mess = TRUE, ...)
+  thin = NULL, subset = c(analysis_main = TRUE), outcome = NULL,
+  exclude_chains = NULL, nrow = NULL, ncol = NULL, use_ggplot = FALSE,
+  warn = TRUE, mess = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -62,6 +62,12 @@ iteration.}
 sample). Follows the same principle as the argument
 \code{monitor_params} in
 \code{\link[JointAI:model_imp]{*_imp}}.}
+
+\item{outcome}{optional; vector identifying a subset of sub-models included
+in the output, either by specifying their indices (using the
+order used in the list of model formulas), or their
+names (LHS of the respective model formula as character
+string)}
 
 \item{exclude_chains}{optional vector of the index numbers of chains that
 should be excluded}

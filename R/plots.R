@@ -6,6 +6,11 @@
 #' @inheritParams sharedParams
 #' @inheritDotParams graphics::matplot -x -y -type -xlab -ylab -pch -log -xlim -ylim
 #' @inheritParams base::plot
+#' @param outcome optional; vector identifying a subset of sub-models included
+#'                in the output, either by specifying their indices (using the
+#'                order used in the list of model formulas), or their
+#'                names (LHS of the respective model formula as character
+#'                string)
 #' @name traceplot
 #'
 #' @seealso \code{\link{summary.JointAI}},
@@ -62,14 +67,15 @@ traceplot.mcmc.list <- function(object, start = NULL, end = NULL,
 #' @export
 traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                               subset = c(analysis_main = TRUE),
-                              exclude_chains = NULL,
+                              outcome = NULL, exclude_chains = NULL,
                               nrow = NULL, ncol = NULL, use_ggplot = FALSE,
                               warn = TRUE, mess = TRUE, ...) {
 
 
   # prepare the MCMC sample and obtain plotting parameters
   prep <- plot_prep(object, start = start, end = end, thin = thin,
-                    subset = subset, exclude_chains = exclude_chains,
+                    subset = subset, outcome = outcome,
+                    exclude_chains = exclude_chains,
                     nrow = nrow, ncol = ncol, warn = warn, mess = mess)
 
   # get the variable names to use for each sub-plot
@@ -191,13 +197,15 @@ densplot.mcmc.list <- function(object, start = NULL, end = NULL,
 #' @export
 densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                              subset = c(analysis_main = TRUE),
+                             outcome = NULL,
                              exclude_chains = NULL, vlines = NULL, nrow = NULL,
                              ncol = NULL, joined = FALSE, use_ggplot = FALSE,
                              warn = TRUE, mess = TRUE, ...) {
 
   # prepare the MCMC sample and obtain plotting parameters
   prep <- plot_prep(object, start = start, end = end, thin = thin,
-                    subset = subset, exclude_chains = exclude_chains,
+                    subset = subset, outcome = outcome,
+                    exclude_chains = exclude_chains,
                     nrow = nrow, ncol = ncol, warn = warn,
                     mess = mess)
 
@@ -288,8 +296,9 @@ densplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 # used in traceplot and densplot (2020-06-13)
 plot_prep <- function(object, start = NULL, end = NULL, thin = NULL,
-                      subset = NULL, exclude_chains = NULL, nrow = NULL,
-                      ncol = NULL, warn = TRUE, mess = TRUE, ...) {
+                      subset = NULL, outcome = NULL, exclude_chains = NULL,
+                      nrow = NULL, ncol = NULL, warn = TRUE, mess = TRUE,
+                      ...) {
 
   # Help function for densityplot and traceplot
 
@@ -304,6 +313,23 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL,
   # create a subset of the MCMC sample based on the user-selected set of
   # parameters
   MCMC <- get_subset(object, subset, warn = warn, mess = mess)
+
+  if (!is.null(outcome)) {
+    outcomes <- clean_survname(names(object$fixed)[outcome])
+    params <- parameters(object)
+    selected_params <- params$coef[params$outcome %in% outcomes]
+
+    if (any(!selected_params %in% colnames(MCMC[[1]]))) {
+      errormsg("Not all of the that were selected are present in the MCMC sample
+             (%s). Please contact the package maintainer.",
+               paste_and(dQuote(
+                 selected_params[!selected_params %in% colnames(MCMC[[1]])]
+               ))
+      )
+    } else {
+      MCMC <- MCMC[, selected_params, drop = FALSE]
+    }
+  }
 
   # set MCMC chains to be excluded from the output
   chains <- seq_along(MCMC)

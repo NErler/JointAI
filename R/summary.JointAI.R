@@ -7,6 +7,10 @@
 #' @inheritParams base::print
 #' @param quantiles posterior quantiles
 #' @inheritParams sharedParams
+#' @param outcome optional; vector identifying for which outcomes the summary
+#'                should be given, either by specifying their indices, or their
+#'                names (LHS of the respective model formulas as character
+#'                string).
 #' @param missinfo logical; should information on the number and proportion of
 #'                 missing values be included in the summary?
 #' @param \dots currently not used
@@ -30,7 +34,8 @@
 #' @export
 summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                             quantiles = c(0.025, 0.975), subset = NULL,
-                            exclude_chains = NULL, missinfo = FALSE,
+                            exclude_chains = NULL, outcome = NULL,
+                            missinfo = FALSE,
                             warn = TRUE, mess = TRUE, ...) {
 
   if (is.null(object$MCMC)) errormsg("There is no MCMC sample.")
@@ -46,7 +51,12 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   statnames <- c("Mean", "SD", paste0(quantiles * 100, "%"), "tail-prob.",
                  "GR-crit", "MCE/SD")
 
-  res_list <- sapply(names(object$coef_list), function(varname) {
+  vars <- if (is.null(outcome)) {
+    names(object$coef_list)
+  } else {
+    names(object$fixed[outcome])
+  }
+  res_list <- sapply(vars, function(varname) {
     MCMCsub <- MCMC[, intersect(
       colnames(MCMC),
       c(
@@ -192,6 +202,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   out$nchain <- coda::nchain(object$MCMC) - sum(exclude_chains %in%
                                                   seq_along(object$MCMC))
   out$res <- res_list
+  out$outcome <- outcome
   out$missinfo <- if (missinfo) get_missinfo(object)
 
 
@@ -214,7 +225,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
 
   cat("\n")
 
-  if (sum(!sapply(x$res, is.null)) > 1)
+  if (sum(!sapply(x$res, is.null)) > 1 | !is.null(x$outcome))
     cat("Bayesian joint model fitted with JointAI", "\n")
   else
     cat("Bayesian", print_type(x$res[[1]]$modeltype, x$res[[1]]$family),
@@ -226,7 +237,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
   for (k in seq_along(x$res)) {
     if (!is.null(x$res[[k]])) {
       cat("\n\n")
-      if (sum(!sapply(x$res, is.null)) > 1)
+      if (sum(!sapply(x$res, is.null)) > 1 | !is.null(x$outcome))
         cat(paste0(
           "# ", paste0(c(rep("-", 69)), collapse = ""), " #\n",
           "  ", "Bayesian ",
