@@ -249,6 +249,19 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
 
   # the variable.names that were passed to JAGS
   vnam <- object$mcmc_settings$variable.names
+
+  if (any(grepl("^beta_Bh0", vnam))) {
+    basehaz_pars <- grep("^beta_Bh0", vnam)
+
+    for (k in basehaz_pars) {
+      vnam <- c(vnam,
+                paste0(vnam[basehaz_pars],
+                       "[", seq_len(object$Mlist$df_basehaz), "]")
+      )
+    }
+    vnam <- vnam[-basehaz_pars]
+  }
+
   # the coef_list, containing the regression coefficient info
   coefs <- do.call(rbind, object$coef_list)
 
@@ -258,6 +271,9 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
   add <- sapply(vnam, function(x) {
     !any(grepl(paste0('\\b', x, '\\b'), coefs$coef))
   })
+
+
+
 
   df_names <- if (is.null(coefs)) {
     c("outcome", "outcat", "varname", "coef")
@@ -271,7 +287,7 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
   # identify which outcome the remaining parameters belong to by matching the
   # outcome names with the parameter names
   patterns <- lapply(clean_survname(names(object$coef_list)), function(out) {
-    paste0("_", out, "$|_", out, "_")
+    paste0("_", out, "$|_", out, "_|_", out, "\\[")
   })
 
   out_match <- regmatches(add_pars$coef,
@@ -279,7 +295,7 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
                                   add_pars$coef))
 
   if (length(out_match) > 0) {
-    add_pars$outcome <- gsub("^_|_$", "", out_match)
+    add_pars$outcome <- gsub("^_|_$|\\[$", "", out_match)
   }
 
 
