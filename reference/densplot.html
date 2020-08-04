@@ -198,9 +198,9 @@ the MCMC sample of an object of class "JointAI".</p>
 
 <span class='co'># S3 method for JointAI</span>
 <span class='fu'>densplot</span>(<span class='no'>object</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>exclude_chains</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vlines</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>joined</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exclude_chains</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vlines</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>joined</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>use_ggplot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -236,6 +236,14 @@ iteration.</p></td>
 sample). Follows the same principle as the argument
 <code>monitor_params</code> in
 <code><a href='model_imp.html'>*_imp</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>outcome</th>
+      <td><p>optional; vector identifying a subset of sub-models included
+in the output, either by specifying their indices (using the
+order used in the list of model formulas), or their
+names (LHS of the respective model formula as character
+string)</p></td>
     </tr>
     <tr>
       <th>exclude_chains</th>

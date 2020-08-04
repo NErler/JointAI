@@ -199,7 +199,7 @@ class 'JointAI'.</p>
     <pre class="usage"><span class='co'># S3 method for JointAI</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>object</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>), <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude_chains</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>missinfo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+  <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>missinfo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for summary.JointAI</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='fl'>3</span>, <span class='no'>.Options</span>$<span class='no'>digits</span> - <span class='fl'>4</span>), <span class='no'>...</span>)
@@ -255,6 +255,13 @@ sample). Follows the same principle as the argument
       <th>exclude_chains</th>
       <td><p>optional vector of the index numbers of chains that
 should be excluded</p></td>
+    </tr>
+    <tr>
+      <th>outcome</th>
+      <td><p>optional; vector identifying for which outcomes the summary
+should be given, either by specifying their indices, or their
+names (LHS of the respective model formulas as character
+string).</p></td>
     </tr>
     <tr>
       <th>missinfo</th>
