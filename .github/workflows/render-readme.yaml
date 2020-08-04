@@ -22,6 +22,7 @@ jobs:
           install.packages("remotes")
           remotes::install_local(".")
           remotes::install_cran("rmarkdown")
+          remotes::install_cran("ggplot2")
         shell: Rscript {0}
 
       - name: Render README
