@@ -319,7 +319,7 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL,
     params <- parameters(object)
     selected_params <- params$coef[params$outcome %in% outcomes]
 
-    if (any(!selected_params %in% colnames(MCMC[[1]]))) {
+    if (any(!selected_params %in% colnames(object$MCMC[[1]]))) {
       errormsg("Not all of the that were selected are present in the MCMC sample
              (%s). Please contact the package maintainer.",
                paste_and(dQuote(
@@ -327,7 +327,8 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL,
                ))
       )
     } else {
-      MCMC <- MCMC[, selected_params, drop = FALSE]
+      MCMC <- MCMC[, intersect(selected_params, colnames(MCMC[[1]])),
+                   drop = FALSE]
     }
   }
 
