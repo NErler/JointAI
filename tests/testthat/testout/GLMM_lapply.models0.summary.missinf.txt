@@ -933,9 +933,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  81 81.0
-lvlone lvlone 263 79.9
+        level   #     %
+id         id 100 100.0
+lvlone lvlone 263  79.9
 
 Number and proportion of missing values:
     level # NA % NA
@@ -977,9 +977,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  56 56.0
-lvlone lvlone 189 57.4
+        level   #     %
+id         id 100 100.0
+lvlone lvlone 189  57.4
 
 Number and proportion of missing values:
     level # NA % NA
@@ -1025,9 +1025,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  73 73.0
-lvlone lvlone 246 74.8
+        level   #     %
+id         id 100 100.0
+lvlone lvlone 246  74.8
 
 Number and proportion of missing values:
        level # NA  % NA
@@ -1069,9 +1069,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  44 44.0
-lvlone lvlone 142 43.2
+        level   #     %
+id         id 100 100.0
+lvlone lvlone 142  43.2
 
 Number and proportion of missing values:
     level # NA % NA
@@ -1117,9 +1117,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  73 73.0
-lvlone lvlone 246 74.8
+        level   #     %
+id         id 100 100.0
+lvlone lvlone 246  74.8
 
 Number and proportion of missing values:
        level # NA  % NA
@@ -1165,9 +1165,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  73 73.0
-lvlone lvlone 246 74.8
+        level   #     %
+id         id 100 100.0
+lvlone lvlone 246  74.8
 
 Number and proportion of missing values:
      level # NA  % NA
@@ -1212,9 +1212,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  58 58.0
-lvlone lvlone 180 54.7
+        level   #   %
+id         id  58  58
+lvlone lvlone 329 100
 
 Number and proportion of missing values:
    level # NA % NA
@@ -1256,8 +1256,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  41 41.0
-lvlone lvlone 129 39.2
+id         id  58 58.0
+lvlone lvlone 230 69.9
 
 Number and proportion of missing values:
     level # NA % NA
@@ -1302,9 +1302,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #  %
-id         id  56 56
-lvlone lvlone 171 52
+        level   #    %
+id         id  58 58.0
+lvlone lvlone 309 93.9
 
 Number and proportion of missing values:
        level # NA % NA
@@ -1346,8 +1346,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  28 28.0
-lvlone lvlone 100 30.4
+id         id  58 58.0
+lvlone lvlone 167 50.8
 
 Number and proportion of missing values:
     level # NA % NA
@@ -1392,9 +1392,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #  %
-id         id  56 56
-lvlone lvlone 171 52
+        level   #    %
+id         id  58 58.0
+lvlone lvlone 309 93.9
 
 Number and proportion of missing values:
        level # NA % NA
@@ -1440,8 +1440,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  52 52.0
-lvlone lvlone 169 51.4
+id         id  58 58.0
+lvlone lvlone 309 93.9
 
 Number and proportion of missing values:
      level # NA % NA
@@ -1493,9 +1493,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  31 31.0
-lvlone lvlone 114 34.7
+        level   #  %
+id         id  90 90
+lvlone lvlone 125 38
 
 Number and proportion of missing values:
        level # NA  % NA
@@ -1550,9 +1550,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level  #    %
-id         id 30 30.0
-lvlone lvlone 96 29.2
+        level   #     %
+id         id 100 100.0
+lvlone lvlone  96  29.2
 
 Number and proportion of missing values:
        level # NA  % NA
@@ -1607,9 +1607,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level  #    %
-id         id 30 30.0
-lvlone lvlone 96 29.2
+        level   #     %
+id         id 100 100.0
+lvlone lvlone  96  29.2
 
 Number and proportion of missing values:
        level # NA  % NA
@@ -1665,9 +1665,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level  #  %
-id         id 27 27
-lvlone lvlone 92 28
+        level   #   %
+id         id 100 100
+lvlone lvlone  92  28
 
 Number and proportion of missing values:
        level # NA  % NA
@@ -1733,8 +1733,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #  %
-id         id  41 41
-lvlone lvlone 125 38
+id         id  56 56
+lvlone lvlone 217 66
 
 Number and proportion of missing values:
       level # NA % NA
@@ -1792,8 +1792,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  51 51.0
-lvlone lvlone 162 49.2
+id         id  58 58.0
+lvlone lvlone 291 88.4
 
 Number and proportion of missing values:
        level # NA % NA
@@ -1848,8 +1848,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  41 41.0
-lvlone lvlone 129 39.2
+id         id  58 58.0
+lvlone lvlone 230 69.9
 
 Number and proportion of missing values:
       level # NA % NA
@@ -1900,9 +1900,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  58 58.0
-lvlone lvlone 180 54.7
+        level   #   %
+id         id  58  58
+lvlone lvlone 329 100
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2137,9 +2137,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  58 58.0
-lvlone lvlone 180 54.7
+        level   #   %
+id         id  58  58
+lvlone lvlone 329 100
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2203,9 +2203,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  58 58.0
-lvlone lvlone 180 54.7
+        level   #   %
+id         id  58  58
+lvlone lvlone 329 100
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2262,9 +2262,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  58 58.0
-lvlone lvlone 180 54.7
+        level   #   %
+id         id  58  58
+lvlone lvlone 329 100
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2321,9 +2321,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  81 81.0
-lvlone lvlone 263 79.9
+        level   #     %
+id         id 100 100.0
+lvlone lvlone 263  79.9
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2379,9 +2379,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #    %
-id         id  81 81.0
-lvlone lvlone 263 79.9
+        level   #     %
+id         id 100 100.0
+lvlone lvlone 263  79.9
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2440,8 +2440,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  72 72.0
-lvlone lvlone 235 71.4
+id         id  90 90.0
+lvlone lvlone 263 79.9
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2501,8 +2501,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  72 72.0
-lvlone lvlone 235 71.4
+id         id  90 90.0
+lvlone lvlone 263 79.9
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2563,8 +2563,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  72 72.0
-lvlone lvlone 235 71.4
+id         id  90 90.0
+lvlone lvlone 263 79.9
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2626,8 +2626,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  72 72.0
-lvlone lvlone 235 71.4
+id         id  90 90.0
+lvlone lvlone 263 79.9
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2689,8 +2689,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  72 72.0
-lvlone lvlone 235 71.4
+id         id  90 90.0
+lvlone lvlone 263 79.9
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2752,8 +2752,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  72 72.0
-lvlone lvlone 235 71.4
+id         id  90 90.0
+lvlone lvlone 263 79.9
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2815,8 +2815,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  72 72.0
-lvlone lvlone 235 71.4
+id         id  90 90.0
+lvlone lvlone 263 79.9
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2878,8 +2878,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  72 72.0
-lvlone lvlone 235 71.4
+id         id  90 90.0
+lvlone lvlone 263 79.9
 
 Number and proportion of missing values:
       level # NA % NA
@@ -2941,8 +2941,8 @@ Number of groups:
 
 Number and proportion of complete cases:
         level   #    %
-id         id  72 72.0
-lvlone lvlone 235 71.4
+id         id  90 90.0
+lvlone lvlone 263 79.9
 
 Number and proportion of missing values:
       level # NA % NA
@@ -3005,9 +3005,9 @@ Number of groups:
 
 
 Number and proportion of complete cases:
-        level   #  %
-id         id  90 90
-lvlone lvlone 296 90
+        level   #   %
+id         id  90  90
+lvlone lvlone 329 100
 
 Number and proportion of missing values:
       level # NA % NA
