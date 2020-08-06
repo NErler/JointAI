@@ -6,29 +6,29 @@
 \title{Longitudinal example dataset}
 \format{
 A simulated data frame with 329 rows and 21 variables with data from
-        100 subjects:
+100 subjects:
 \describe{
-  \item{C1}{continuous, complete baseline variable}
-  \item{C2}{continuous, incomplete baseline variable}
-  \item{B1}{binary, complete baseline variable}
-  \item{B2}{binary, incomplete baseline variable}
-  \item{M1}{unordered factor; complete baseline variable}
-  \item{M2}{unordered factor; incomplete baseline variable}
-  \item{O1}{ordered factor; complete baseline variable}
-  \item{O2}{ordered factor; incomplete baseline variable}
-  \item{P1}{count variable; complete baseline variable}
-  \item{P2}{count variable; incomplete baseline variable}
-  \item{c1}{continuous, complete longitudinal variable}
-  \item{c2}{continuous incomplete longitudinal variable}
-  \item{b1}{binary, complete longitudinal variable}
-  \item{b2}{binary incomplete longitudinal variable}
-  \item{o1}{ordered factor; complete longitudinal variable}
-  \item{o2}{ordered factor; incomplete longitudinal variable}
-  \item{p1}{count variable; complete longitudinal variable}
-  \item{p2}{count variable; incomplete longitudinal variable}
-  \item{id}{id (grouping) variable}
-  \item{time}{continuous complete longitudinal variable}
-  \item{y}{continuous, longitudinal (outcome) variable}
+\item{C1}{continuous, complete baseline variable}
+\item{C2}{continuous, incomplete baseline variable}
+\item{B1}{binary, complete baseline variable}
+\item{B2}{binary, incomplete baseline variable}
+\item{M1}{unordered factor; complete baseline variable}
+\item{M2}{unordered factor; incomplete baseline variable}
+\item{O1}{ordered factor; complete baseline variable}
+\item{O2}{ordered factor; incomplete baseline variable}
+\item{P1}{count variable; complete baseline variable}
+\item{P2}{count variable; incomplete baseline variable}
+\item{c1}{continuous, complete longitudinal variable}
+\item{c2}{continuous incomplete longitudinal variable}
+\item{b1}{binary, complete longitudinal variable}
+\item{b2}{binary incomplete longitudinal variable}
+\item{o1}{ordered factor; complete longitudinal variable}
+\item{o2}{ordered factor; incomplete longitudinal variable}
+\item{p1}{count variable; complete longitudinal variable}
+\item{p2}{count variable; incomplete longitudinal variable}
+\item{id}{id (grouping) variable}
+\item{time}{continuous complete longitudinal variable}
+\item{y}{continuous, longitudinal (outcome) variable}
 }
 }
 \usage{

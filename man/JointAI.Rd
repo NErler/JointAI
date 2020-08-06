@@ -22,16 +22,16 @@ analysis with different models:
 \item \code{\link{glm_imp}} for generalized linear regression
 \item \code{\link{betareg_imp}} for regression using a beta distribution
 \item \code{\link{lognorm_imp}} for regression using a log-normal
-                                  distribution
+distribution
 \item \code{\link{clm_imp}} for (ordinal) cumulative logit models
 \item \code{\link{mlogit_imp}} for multinomial models
 
 \item \code{\link{lme_imp}} or \code{\link{lmer_imp}} for linear mixed models
 \item \code{\link{glme_imp}} or \code{\link{glmer_imp}} for generalized
-                                linear mixed models
+linear mixed models
 \item \code{\link{betamm_imp}} for mixed models using a beta distribution
 \item \code{\link{lognormmm_imp}} for mixed models using a log-normal
-                                  distribution
+distribution
 \item \code{\link{clmm_imp}} for (ordinal) cumulative logit mixed models
 
 \item \code{\link{survreg_imp}} for parametric (Weibull) survival models
@@ -56,7 +56,6 @@ the argument \code{shrinkage} allows the user to impose a penalty on the
 regression coefficients of some or all models involved,
 and hyper-parameters can be changed via the argument \code{hyperpars}.
 
-
 To obtain summaries of the results, the functions
 \code{\link[JointAI:summary.JointAI]{summary()}},
 \code{\link[JointAI:summary.JointAI]{coef()}} and
@@ -75,9 +74,9 @@ Two criteria for evaluation of convergence and precision of the posterior
 estimate are available:
 \itemize{
 \item \code{\link{GR_crit}} implements the Gelman-Rubin criterion
-      ('potential scale reduction factor') for convergence
+('potential scale reduction factor') for convergence
 \item \code{\link{MC_error}} calculates the Monte Carlo error to evaluate
-      the precision of the MCMC sample
+the precision of the MCMC sample
 }
 
 Imputed data can be extracted (and exported to SPSS) using
@@ -90,9 +89,9 @@ visual comparison of the distribution of observed and imputed values.
 
 \itemize{
 \item \code{\link{parameters}} and \code{\link{list_models}} to gain
-      insight in the specified model
+insight in the specified model
 \item \code{\link{plot_all}} and \code{\link{md_pattern}} to visualize the
-      distribution of the data and the missing data pattern
+distribution of the data and the missing data pattern
 }
 }
 
@@ -102,10 +101,10 @@ The following vignettes are available
 \itemize{
 \item \href{https://nerler.github.io/JointAI/articles/MinimalExample.html}{\emph{Minimal Example}}:\cr
 A minimal example demonstrating the use of
-                           \code{\link{lm_imp}},
-                           \code{\link{summary.JointAI}},
-                           \code{\link{traceplot}}
-                           and \code{\link{densplot}}.
+\code{\link{lm_imp}},
+\code{\link{summary.JointAI}},
+\code{\link{traceplot}}
+and \code{\link{densplot}}.
 \item \href{https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html}{\emph{Visualizing Incomplete Data}}:\cr
 Demonstrations of the options in \code{\link{plot_all}} (plotting histograms
 and bar plots for all variables in the data)  and \code{\link{md_pattern}}
@@ -119,27 +118,27 @@ Among others, the functions \code{\link{parameters}},
 \code{\link{list_models}} and \code{\link{set_refcat}} are used.
 
 \item \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{\emph{Parameter Selection}}:\cr
-      Examples on how to select the parameters/variables/nodes
-      to follow using the argument \code{monitor_params} and the
-      parameters/variables/nodes displayed in the \code{\link{summary}},
-      \code{\link{traceplot}}, \code{\link{densplot}} or when using
-      \code{\link{GR_crit}} or \code{\link{MC_error}}.
+Examples on how to select the parameters/variables/nodes
+to follow using the argument \code{monitor_params} and the
+parameters/variables/nodes displayed in the \code{\link{summary}},
+\code{\link{traceplot}}, \code{\link{densplot}} or when using
+\code{\link{GR_crit}} or \code{\link{MC_error}}.
 
 \item \href{https://nerler.github.io/JointAI/articles/MCMCsettings.html}{\emph{MCMC Settings}}:\cr
-      Examples demonstrating how to set the arguments controlling settings
-      of the MCMC sampling,
-      i.e., \code{n.adapt}, \code{n.iter}, \code{n.chains}, \code{thin},
-       \code{inits}.
+Examples demonstrating how to set the arguments controlling settings
+of the MCMC sampling,
+i.e., \code{n.adapt}, \code{n.iter}, \code{n.chains}, \code{thin},
+\code{inits}.
 
 \item \href{https://nerler.github.io/JointAI/articles/AfterFitting.html}{\emph{After Fitting}}:\cr
-      Examples on the use of functions to be applied after the model has
-      been fitted, including \code{\link{traceplot}}, \code{\link{densplot}},
-      \code{\link{summary}}, \code{\link{GR_crit}}, \code{\link{MC_error}},
-      \code{\link{predict}}, \code{\link{predDF}} and
-      \code{\link{get_MIdat}}.
+Examples on the use of functions to be applied after the model has
+been fitted, including \code{\link{traceplot}}, \code{\link{densplot}},
+\code{\link{summary}}, \code{\link{GR_crit}}, \code{\link{MC_error}},
+\code{\link{predict}}, \code{\link{predDF}} and
+\code{\link{get_MIdat}}.
 
 \item \href{https://nerler.github.io/JointAI/articles/TheoreticalBackground.html}{\emph{Theoretical Background}}:\cr
-      Explanation of the statistical method implemented in \strong{JointAI}.
+Explanation of the statistical method implemented in \strong{JointAI}.
 }
 }
 

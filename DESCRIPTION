@@ -22,7 +22,7 @@ License: GPL (>= 2)
 BugReports: https://github.com/nerler/JointAI/issues
 LazyData: TRUE
 RoxygenNote: 7.1.1
-Roxygen: list(old_usage = TRUE)
+Roxygen: list(old_usage = TRUE, markdown = TRUE)
 Imports: rjags, MASS, mcmcse, coda, rlang, future, foreach, survival, mathjaxr
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
 Suggests: 

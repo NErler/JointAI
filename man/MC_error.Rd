@@ -68,10 +68,10 @@ model)}
 }
 \value{
 An object of class \code{MCElist} with elements \code{unscaled},
-        \code{scaled} and \code{digits}. The first two are matrices with
-        columns \code{est} (posterior mean), \code{MCSE} (Monte Carlo error),
-        \code{SD} (posterior standard deviation) and \code{MCSE/SD}
-        (Monte Carlo error divided by post. standard deviation.)
+\code{scaled} and \code{digits}. The first two are matrices with
+columns \code{est} (posterior mean), \code{MCSE} (Monte Carlo error),
+\code{SD} (posterior standard deviation) and \code{MCSE/SD}
+(Monte Carlo error divided by post. standard deviation.)
 }
 \description{
 Calculate, print and plot the Monte Carlo error of the samples from a
@@ -83,9 +83,9 @@ Calculate, print and plot the Monte Carlo error of the samples from a
 }}
 
 \note{
-Lesaffre & Lawson (2012) [p. 195] suggest the Monte Carlo error of a
-      parameter should not be more than 5\% of the posterior standard
-      deviation of this parameter (i.e., \eqn{MCSE/SD \le 0.05}).
+Lesaffre & Lawson (2012; p. 195) suggest the Monte Carlo error of a
+parameter should not be more than 5\% of the posterior standard
+deviation of this parameter (i.e., \eqn{MCSE/SD \le 0.05}).
 
 \strong{Long variable names:}\cr
 The default plot margins may not be wide enough when variable names are

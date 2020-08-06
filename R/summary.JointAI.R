@@ -567,7 +567,7 @@ print.modelstring <- function(x, ...) {
 #' This function returns a \code{data.frame} or a \code{list} of
 #' \code{data.frame}s per grouping level. Each of the \code{data.frames}
 #' has columns \code{variable}, \code{#NA} (number of missing values) and
-#' \code{\%NA} (proportion of missing values in percent).
+#' \code{%NA} (proportion of missing values in percent).
 #'
 #' @param object object inheriting from class JointAI
 #'

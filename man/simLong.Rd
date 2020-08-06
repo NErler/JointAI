@@ -32,54 +32,54 @@ status.
 \section{Baseline covariates}{
  (in \code{simLong} and \code{simWide})
 \describe{
-  \item{GESTBIR}{gestational age at birth (in weeks)}
-  \item{ETHN}{ethnicity (binary: European vs. other)}
-  \item{AGE_M}{age of the mother at intake}
-  \item{HEIGHT_M}{height of the mother (in cm)}
-  \item{PARITY}{number of times the mother has given birth
-                (binary: 0 vs. >=1)}
-  \item{SMOKE}{smoking status of the mother during pregnancy
-               (3 ordered categories: never smoked during pregnancy,
-                smoked until pregnancy was known, continued smoking in
-                pregnancy)}
-  \item{EDUC}{educational level of the mother (3 ordered categories: low,
-             mid, high)}
-  \item{MARITAL}{marital status (3 categories)}
-  \item{ID}{subject identifier}
-  }
+\item{GESTBIR}{gestational age at birth (in weeks)}
+\item{ETHN}{ethnicity (binary: European vs. other)}
+\item{AGE_M}{age of the mother at intake}
+\item{HEIGHT_M}{height of the mother (in cm)}
+\item{PARITY}{number of times the mother has given birth
+(binary: 0 vs. >=1)}
+\item{SMOKE}{smoking status of the mother during pregnancy
+(3 ordered categories: never smoked during pregnancy,
+smoked until pregnancy was known, continued smoking in
+pregnancy)}
+\item{EDUC}{educational level of the mother (3 ordered categories: low,
+mid, high)}
+\item{MARITAL}{marital status (3 categories)}
+\item{ID}{subject identifier}
+}
 }
 
 \section{Long-format variables}{
  (only in \code{simLong})
 \describe{
-   \item{time}{measurement occasion/visit
-              (by design, children should be measured at/around
-              1, 2, 3, 4, 7, 11, 15, 20, 26, 32, 40 and 50 months of age)}
-  \item{age}{child age at measurement time in months}
-  \item{bmi}{child BMI}
-  \item{hc}{child head circumference in cm}
-  \item{hgt}{child height in cm}
-  \item{wgt}{child weight in gram}
-  \item{sleep}{sleeping behaviour of the child (3 ordered categories)}
+\item{time}{measurement occasion/visit
+(by design, children should be measured at/around
+1, 2, 3, 4, 7, 11, 15, 20, 26, 32, 40 and 50 months of age)}
+\item{age}{child age at measurement time in months}
+\item{bmi}{child BMI}
+\item{hc}{child head circumference in cm}
+\item{hgt}{child height in cm}
+\item{wgt}{child weight in gram}
+\item{sleep}{sleeping behaviour of the child (3 ordered categories)}
 }
 }
 
 \section{Wide-format variables}{
  (only in \code{simWide})
 \describe{
-  \item{age1, age2, age3, age4, age7, age11, age15, age20, age26, age32,
-   age40, age50}{child age at the repeated measurements in months}
-  \item{bmi1, bmi2, bmi3, bmi4, bmi7, bmi11, bmi15, bmi20, bmi26, bmi32,
-   bmi40, bmi50}{repeated measurements of child BMI}
-  \item{hc1, hc2, hc3, hc4, hc7, hc11, hc15, hc20, hc26, hc32,
-   hc40, hc50}{repeated measurements of child head circumference in cm}
-  \item{hgt1, hgt2, hgt3, hgt4, hgt7, hgt11, hgt15, hgt20, hgt26, hgt32,
-   hgt40, hgt50}{repeated measurements of child height in cm}
-  \item{wgt1, wgt2, wgt3, wgt4, wgt7, wgt11, wgt15, wgt20, wgt26, wgt32,
-   wgt40, wgt50}{repeated measurements of child weight in gram}
-  \item{sleep1, sleep2, sleep3, sleep4, sleep7, sleep11, sleep15, sleep20,
-   sleep26, sleep32, sleep40, sleep50}{repeated measurements of child sleep
-   behaviour (3 ordered categories)}
+\item{age1, age2, age3, age4, age7, age11, age15, age20, age26, age32,
+age40, age50}{child age at the repeated measurements in months}
+\item{bmi1, bmi2, bmi3, bmi4, bmi7, bmi11, bmi15, bmi20, bmi26, bmi32,
+bmi40, bmi50}{repeated measurements of child BMI}
+\item{hc1, hc2, hc3, hc4, hc7, hc11, hc15, hc20, hc26, hc32,
+hc40, hc50}{repeated measurements of child head circumference in cm}
+\item{hgt1, hgt2, hgt3, hgt4, hgt7, hgt11, hgt15, hgt20, hgt26, hgt32,
+hgt40, hgt50}{repeated measurements of child height in cm}
+\item{wgt1, wgt2, wgt3, wgt4, wgt7, wgt11, wgt15, wgt20, wgt26, wgt32,
+wgt40, wgt50}{repeated measurements of child weight in gram}
+\item{sleep1, sleep2, sleep3, sleep4, sleep7, sleep11, sleep15, sleep20,
+sleep26, sleep32, sleep40, sleep50}{repeated measurements of child sleep
+behaviour (3 ordered categories)}
 }
 }
 

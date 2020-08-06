@@ -24,9 +24,9 @@ Extract residuals from an object of class JointAI
 
 \itemize{
 \item For mixed models residuals are currently calculated using the fixed
-      effects only.
+effects only.
 \item For ordinal (mixed) models and parametric survival models only
-      \code{type = "response"} is available.
+\code{type = "response"} is available.
 \item For Cox proportional hazards models residuals are not yet implemented.
 }
 }

@@ -38,7 +38,7 @@ vector containing their names}
 vector containing their names}
 
 \item{longnorm}{integer giving the number of longitudinal
-         (normally distributed)
+(normally distributed)
 variables or a character vector containing their names}
 
 \item{longbin}{integer giving the number of longitudinal binary
@@ -67,7 +67,7 @@ Simulate dataset
 }
 \details{
 The time variable has a uniform distribution between tmin and tmax.
-         At the moment only the integer option is implemented for the
-         parameters norm, bin, multi, ...
+At the moment only the integer option is implemented for the
+parameters norm, bin, multi, ...
 }
 \keyword{internal}

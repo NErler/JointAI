@@ -7,26 +7,26 @@
 \format{
 A data frame with 186 rows and 13 variables:
 \describe{
-  \item{SBP}{systolic blood pressure}
-  \item{gender}{male or female}
-  \item{age}{in years}
-  \item{race}{race / Hispanic origin (5 categories)}
-  \item{WC}{waist circumference in cm}
-  \item{alc}{alcohol consumption (binary: <1 drink per week vs. >= 1 drink
-             per week)}
-  \item{educ}{educational level (binary: low vs. high)}
-  \item{creat}{creatinine concentration in mg/dL}
-  \item{albu}{albumin concentration in g/dL}
-  \item{uricacid}{uric acid concentration in mg/dL}
-  \item{bili}{bilirubin concentration in mg/dL}
-  \item{occup}{occupational status (3 categories)}
-  \item{smoke}{smoking status (3 ordered categories)}
-  }
+\item{SBP}{systolic blood pressure}
+\item{gender}{male or female}
+\item{age}{in years}
+\item{race}{race / Hispanic origin (5 categories)}
+\item{WC}{waist circumference in cm}
+\item{alc}{alcohol consumption (binary: <1 drink per week vs. >= 1 drink
+per week)}
+\item{educ}{educational level (binary: low vs. high)}
+\item{creat}{creatinine concentration in mg/dL}
+\item{albu}{albumin concentration in g/dL}
+\item{uricacid}{uric acid concentration in mg/dL}
+\item{bili}{bilirubin concentration in mg/dL}
+\item{occup}{occupational status (3 categories)}
+\item{smoke}{smoking status (3 ordered categories)}
+}
 }
 \source{
 National Center for Health Statistics (NCHS) (2011 - 2012).
-        National Health and Nutrition Examination Survey Data.
-        URL \href{https://www.cdc.gov/nchs/nhanes/}{https://www.cdc.gov/nchs/nhanes/}.
+National Health and Nutrition Examination Survey Data.
+URL \href{https://www.cdc.gov/nchs/nhanes/}{https://www.cdc.gov/nchs/nhanes/}.
 }
 \usage{
 data(NHANES)

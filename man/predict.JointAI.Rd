@@ -51,17 +51,17 @@ should be excluded}
 }
 \value{
 A list with entries \code{dat}, \code{fit} and \code{quantiles},
-        where
-        \code{fit} contains the predicted values (mean over the values
-        calculated from the iterations of the MCMC sample),
-        \code{quantiles} contain the specified quantiles (by default 2.5\%
-        and 97.5\%),
-        and \code{dat} is \code{newdata}, extended with \code{fit} and
-        \code{quantiles}
-        (unless prediction for an ordinal outcome is done with
-        \code{type = "prob"},
-        in which case the quantiles are an array with three dimensions and
-        are therefore not included in \code{dat}).
+where
+\code{fit} contains the predicted values (mean over the values
+calculated from the iterations of the MCMC sample),
+\code{quantiles} contain the specified quantiles (by default 2.5\%
+and 97.5\%),
+and \code{dat} is \code{newdata}, extended with \code{fit} and
+\code{quantiles}
+(unless prediction for an ordinal outcome is done with
+\code{type = "prob"},
+in which case the quantiles are an array with three dimensions and
+are therefore not included in \code{dat}).
 }
 \description{
 Obtains predictions and corresponding credible intervals from an object of
@@ -69,22 +69,22 @@ class 'JointAI'.
 }
 \details{
 A \code{model.matrix} \eqn{X} is created from the model formula
-         (currently fixed effects only) and \code{newdata}. \eqn{X\beta}
-         is then calculated for
-         each iteration of the MCMC sample in \code{object}, i.e.,
-         \eqn{X\beta} has \code{n.iter} rows and \code{nrow(newdata)}
-         columns.
-         A subset of the MCMC sample can be selected using \code{start},
-         \code{end} and  \code{thin}.
+(currently fixed effects only) and \code{newdata}. \eqn{X\beta}
+is then calculated for
+each iteration of the MCMC sample in \code{object}, i.e.,
+\eqn{X\beta} has \code{n.iter} rows and \code{nrow(newdata)}
+columns.
+A subset of the MCMC sample can be selected using \code{start},
+\code{end} and  \code{thin}.
 }
 \section{Note}{
 
 \itemize{
 \item So far, \code{predict} cannot calculate predicted values for cases
-      with missing values in covariates. Predicted values for such cases are
-      \code{NA}.
+with missing values in covariates. Predicted values for such cases are
+\code{NA}.
 \item For repeated measures models prediction currently only uses fixed
-      effects.
+effects.
 }
 Functionality will be extended in the future.
 }

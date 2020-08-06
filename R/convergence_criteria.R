@@ -82,8 +82,8 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE,
 #'         \code{SD} (posterior standard deviation) and \code{MCSE/SD}
 #'         (Monte Carlo error divided by post. standard deviation.)
 #'
-#' @note Lesaffre & Lawson (2012) [p. 195] suggest the Monte Carlo error of a
-#'       parameter should not be more than 5\% of the posterior standard
+#' @note Lesaffre & Lawson (2012; p. 195) suggest the Monte Carlo error of a
+#'       parameter should not be more than 5% of the posterior standard
 #'       deviation of this parameter (i.e., \eqn{MCSE/SD \le 0.05}).
 #'
 #' \strong{Long variable names:}\cr

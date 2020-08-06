@@ -43,10 +43,10 @@ string)}
 should be excluded}
 
 \item{vlines}{list, where each element is a named list of parameters that
-can be passed to \code{\link[graphics]{abline}()} to create
+can be passed to \code{graphics::abline()} to create
 vertical lines.
 Each of the list elements needs to contain at least
-\code{v = <x location>}, where <x location> is a vector of the
+\verb{v = <x location>}, where <x location> is a vector of the
 same length as the number of plots (see examples).}
 
 \item{nrow}{optional; number of rows in the plot layout;

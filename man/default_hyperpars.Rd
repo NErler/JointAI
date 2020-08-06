@@ -14,33 +14,33 @@ This function returns a list of default values for the hyper-parameters.
 \tabular{ll}{
 \code{mu_reg_norm} \tab mean in the priors for regression coefficients\cr
 \code{tau_reg_norm} \tab precision in the priors for regression
-                         coefficients\cr
+coefficients\cr
 \code{shape_tau_norm} \tab shape parameter in Gamma prior for the precision
-                           of the (log-)normal distribution\cr
+of the (log-)normal distribution\cr
 \code{rate_tau_norm} \tab rate parameter in Gamma prior for the precision
-                          of the (log-)normal distribution\cr
+of the (log-)normal distribution\cr
 }
 
 \strong{gamma:} hyper-parameters for Gamma models
 \tabular{ll}{
 \code{mu_reg_gamma} \tab mean in the priors for regression coefficients\cr
 \code{tau_reg_gamma} \tab precision in the priors for regression
-                          coefficients\cr
+coefficients\cr
 \code{shape_tau_gamma} \tab shape parameter in Gamma prior for the precision
-                            of the Gamma distribution\cr
+of the Gamma distribution\cr
 \code{rate_tau_gamma} \tab rate parameter in Gamma prior for the precision
-                           of the Gamma distribution
+of the Gamma distribution
 }
 
 \strong{beta:} hyper-parameters for beta models
 \tabular{ll}{
 \code{mu_reg_beta} \tab mean in the priors for regression coefficients\cr
 \code{tau_reg_beta} \tab precision in the priors for regression
-                         coefficients\cr
+coefficients\cr
 \code{shape_tau_beta} \tab shape parameter in Gamma prior for the precision
-                           of the beta distribution\cr
+of the beta distribution\cr
 \code{rate_tau_beta} \tab rate parameter in Gamma prior for precision of the
-                          of the beta distribution
+of the beta distribution
 }
 
 \strong{binom:} hyper-parameters for binomial models
@@ -59,39 +59,39 @@ coefficients
 \strong{multinomial:} hyper-parameters for multinomial models
 \tabular{ll}{
 \code{mu_reg_multinomial} \tab mean in the priors for regression
-                               coefficients\cr
+coefficients\cr
 \code{tau_reg_multinomial} \tab precision in the priors for regression
-                                coefficients
+coefficients
 }
 
 \strong{ordinal:} hyper-parameters for ordinal models
 \tabular{ll}{
 \code{mu_reg_ordinal} \tab mean in the priors for regression coefficients\cr
 \code{tau_reg_ordinal} \tab precision in the priors for regression
-                            coefficients\cr
+coefficients\cr
 \code{mu_delta_ordinal} \tab mean in the prior for the intercepts\cr
 \code{tau_delta_ordinal} \tab precision in the priors for the intercepts
 }
 
 \strong{ranef:} hyper-parameters for the random effects variance-covariance
-                matrices (*)
+matrices (\emph{)
 \tabular{ll}{
 \code{shape_diag_RinvD} \tab shape parameter in Gamma prior for the diagonal
-                             elements of \code{RinvD}\cr
+elements of \code{RinvD}\cr
 \code{rate_diag_RinvD} \tab rate parameter in Gamma prior for the diagonal
-                            elements of \code{RinvD}\cr
+elements of \code{RinvD}\cr
 \code{KinvD_expr} \tab a character string that can be evaluated to calculate
-                       the number of degrees of freedom in the Wishart
-                       distribution used for the inverse of the
-                       variance-covariance matrix for random effects,
-                       depending on the number of random effects
-                       \code{nranef}
+the number of degrees of freedom in the Wishart
+distribution used for the inverse of the
+variance-covariance matrix for random effects,
+depending on the number of random effects
+\code{nranef}
 }
-(*) when there is only one random effect a Gamma distribution is used instead
-    of the Wishart distribution
+(}) when there is only one random effect a Gamma distribution is used instead
+of the Wishart distribution
 
 \strong{surv:} parameters for survival models (\code{survreg}, \code{coxph}
-               and \code{JM})
+and \code{JM})
 \tabular{ll}{
 \code{mu_reg_surv} \tab mean in the priors for regression coefficients\cr
 \code{tau_reg_surv} \tab precision in the priors for regression coefficients

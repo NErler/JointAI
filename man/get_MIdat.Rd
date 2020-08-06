@@ -37,12 +37,12 @@ automatically.}
 }
 \value{
 A \code{data.frame} in which the original data (if
-        \code{include = TRUE}) and the imputed datasets are stacked onto
-        each other.\cr
-        The variable \code{Imputation_} indexes the imputation, while
-        \code{.rownr} links the rows to the rows of the original data.
-        In cross-sectional datasets the
-        variable \code{.id} is added as subject identifier.
+\code{include = TRUE}) and the imputed datasets are stacked onto
+each other.\cr
+The variable \code{Imputation_} indexes the imputation, while
+\code{.rownr} links the rows to the rows of the original data.
+In cross-sectional datasets the
+variable \code{.id} is added as subject identifier.
 }
 \description{
 This function returns a dataset containing multiple imputed datasets stacked
@@ -52,7 +52,7 @@ These data can be automatically exported to SPSS (as a .txt file containing
 the data and a .sps file containing syntax to generate a .sav file).
 For the export function the
 \href{https://CRAN.R-project.org/package=foreign}{\strong{foreign}} package
- needs to be installed.
+needs to be installed.
 }
 \section{Note}{
 

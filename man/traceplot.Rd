@@ -117,9 +117,9 @@ traceplot(mod, use_ggplot = TRUE) +
 }
 \seealso{
 \code{\link{summary.JointAI}},
-         \code{\link[JointAI:model_imp]{*_imp}},
-         \code{\link{densplot}}\cr
-         The vignette
-         \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
-         contains some examples how to specify the parameter \code{subset}.
+\code{\link[JointAI:model_imp]{*_imp}},
+\code{\link{densplot}}\cr
+The vignette
+\href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}
+contains some examples how to specify the parameter \code{subset}.
 }

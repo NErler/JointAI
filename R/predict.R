@@ -149,8 +149,8 @@ predDF.list <- function(formulas, dat, vars, length = 100L, idvar = NULL, ...) {
 #'         where
 #'         \code{fit} contains the predicted values (mean over the values
 #'         calculated from the iterations of the MCMC sample),
-#'         \code{quantiles} contain the specified quantiles (by default 2.5\%
-#'         and 97.5\%),
+#'         \code{quantiles} contain the specified quantiles (by default 2.5%
+#'         and 97.5%),
 #'         and \code{dat} is \code{newdata}, extended with \code{fit} and
 #'         \code{quantiles}
 #'         (unless prediction for an ordinal outcome is done with
