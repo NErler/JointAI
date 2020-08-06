@@ -138,17 +138,20 @@ extract_lhs <- function(formula) {
 
 
 # used in divide_matrices, get_models and help functions (2020-06-09)
-remove_lhs <- function(fmla) {
-  # Remove the left hand side from a (list of) formula(s)
+#' Remove the left hand side of a (list of) formula(s)
+#' @param formula a formula object or a list of formula objects
+#' @export
+#' @keywords internal
+remove_lhs <- function(formula) {
 
-  # if fmla is not a list, turn into list
-  fmla <- check_formula_list(fmla)
-  if (is.null(fmla)) {
+  # if formula is not a list, turn into list
+  formula <- check_formula_list(formula)
+  if (is.null(formula)) {
     return(NULL)
   }
 
 
-  lapply(fmla, function(x) {
+  lapply(formula, function(x) {
     if (!is.null(x)) {
       lhs <- try(extract_lhs(x), silent = TRUE)
       if (inherits(lhs, "try-error")) {
@@ -284,13 +287,19 @@ split_formula_list <- function(formulas) {
 
 
 # used in various functions (2020-06-09)
+#' Version of `all.vars()` that can handle lists of formulas
+#' @param a formula or list of formulas
+#' @export
+#' @keywords internal
 all_vars <- function(fmla) {
   # extract all variables involved in a formula or list of formulas
   # - fmla: formula or list of formulas
 
-  if (is.list(fmla))
+  if (is.list(fmla)) {
     unique(unlist(lapply(fmla, all.vars)))
-  else all.vars(fmla)
+  } else {
+    all.vars(fmla)
+  }
 }
 
 
