@@ -230,7 +230,10 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
 }
 
 
-
+#' Identify the general model type from the covariate model type
+#' @param model character string; the covariate model type
+#' @export
+#' @keywords internal
 get_modeltype <- function(model) {
 
   modtype <- if (!is.null(model)) {
@@ -283,7 +286,10 @@ get_modeltype <- function(model) {
   modtype
 }
 
-
+#' Identify the family from the covariate model type
+#' @param model character string; the covariate model type
+#' @export
+#' @keywords internal
 get_family <- function(model) {
 
   if (!is.null(model)) {
