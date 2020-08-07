@@ -50,3 +50,4 @@ This function just calls \code{Surv()} from the
 \href{https://CRAN.R-project.org/package=survival}{\strong{survival}}
 package.
 }
+\keyword{internal}

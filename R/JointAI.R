@@ -155,7 +155,7 @@
 #' @importFrom rjags coda.samples jags.model
 #' @import future
 #' @importFrom foreach foreach %dopar%
-#'
+#' @importFrom splines bs ns
 #'
 #' @docType package
 #' @name JointAI
@@ -170,7 +170,35 @@ NULL
 #'
 #' @inheritParams survival::Surv
 #' @export
+#' @keywords internal
 Surv <- survival::Surv
+
+
+
+#' Generate a Basis Matrix for Natural Cubic Splines
+#'
+#' This function just calls \code{ns()} from the
+#' \href{https://CRAN.R-project.org/package=splines}{\strong{splines}}
+#' package.
+#'
+#' @inheritParams splines::ns
+#' @export
+#' @keywords internal
+ns <- splines::ns
+
+
+#' Generate a Basis Matrix for Natural Cubic Splines
+#'
+#' This function just calls \code{bs()} from the
+#' \href{https://CRAN.R-project.org/package=splines}{\strong{splines}}
+#' package.
+#'
+#' @inheritParams splines::bs
+#' @export
+#' @keywords internal
+bs <- splines::bs
+
+
 
 .onLoad <- function(libname, pkgname) {
   rjags::load.module("glm", quiet = TRUE)
