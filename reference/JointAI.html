@@ -216,15 +216,15 @@ analysis with different models:</p><ul>
 <li><p><code><a href='model_imp.html'>glm_imp</a></code> for generalized linear regression</p></li>
 <li><p><code><a href='model_imp.html'>betareg_imp</a></code> for regression using a beta distribution</p></li>
 <li><p><code><a href='model_imp.html'>lognorm_imp</a></code> for regression using a log-normal
-                                  distribution</p></li>
+distribution</p></li>
 <li><p><code><a href='model_imp.html'>clm_imp</a></code> for (ordinal) cumulative logit models</p></li>
 <li><p><code><a href='model_imp.html'>mlogit_imp</a></code> for multinomial models</p></li>
 <li><p><code><a href='model_imp.html'>lme_imp</a></code> or <code><a href='model_imp.html'>lmer_imp</a></code> for linear mixed models</p></li>
 <li><p><code><a href='model_imp.html'>glme_imp</a></code> or <code><a href='model_imp.html'>glmer_imp</a></code> for generalized
-                                linear mixed models</p></li>
+linear mixed models</p></li>
 <li><p><code><a href='model_imp.html'>betamm_imp</a></code> for mixed models using a beta distribution</p></li>
 <li><p><code><a href='model_imp.html'>lognormmm_imp</a></code> for mixed models using a log-normal
-                                  distribution</p></li>
+distribution</p></li>
 <li><p><code><a href='model_imp.html'>clmm_imp</a></code> for (ordinal) cumulative logit mixed models</p></li>
 <li><p><code><a href='model_imp.html'>survreg_imp</a></code> for parametric (Weibull) survival models</p></li>
 <li><p><code><a href='model_imp.html'>coxph_imp</a></code> for (Cox) proportional hazard models</p></li>
@@ -246,7 +246,6 @@ using the packages <span class="pkg">future</span> (and <span class="pkg">doFutu
 the argument <code>shrinkage</code> allows the user to impose a penalty on the
 regression coefficients of some or all models involved,
 and hyper-parameters can be changed via the argument <code>hyperpars</code>.</p>
-
 <p>To obtain summaries of the results, the functions
 <code><a href='summary.JointAI.html'>summary()</a></code>,
 <code><a href='summary.JointAI.html'>coef()</a></code> and
@@ -263,9 +262,9 @@ prediction (including credible intervals) from <code>JointAI</code> models.</p>
 <p>Two criteria for evaluation of convergence and precision of the posterior
 estimate are available:</p><ul>
 <li><p><code><a href='GR_crit.html'>GR_crit</a></code> implements the Gelman-Rubin criterion
-      ('potential scale reduction factor') for convergence</p></li>
+('potential scale reduction factor') for convergence</p></li>
 <li><p><code><a href='MC_error.html'>MC_error</a></code> calculates the Monte Carlo error to evaluate
-      the precision of the MCMC sample</p></li>
+the precision of the MCMC sample</p></li>
 </ul>
 
 <p>Imputed data can be extracted (and exported to SPSS) using
@@ -278,9 +277,9 @@ visual comparison of the distribution of observed and imputed values.</p>
 
 <ul>
 <li><p><code><a href='parameters.html'>parameters</a></code> and <code><a href='list_models.html'>list_models</a></code> to gain
-      insight in the specified model</p></li>
+insight in the specified model</p></li>
 <li><p><code><a href='plot_all.html'>plot_all</a></code> and <code><a href='md_pattern.html'>md_pattern</a></code> to visualize the
-      distribution of the data and the missing data pattern</p></li>
+distribution of the data and the missing data pattern</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="vignettes"><a class="anchor" href="#vignettes"></a>Vignettes</h2>
@@ -290,10 +289,10 @@ visual comparison of the distribution of observed and imputed values.</p>
 <p>The following vignettes are available</p><ul>
 <li><p><a href='https://nerler.github.io/JointAI/articles/MinimalExample.html'><em>Minimal Example</em></a>:<br />
 A minimal example demonstrating the use of
-                           <code><a href='model_imp.html'>lm_imp</a></code>,
-                           <code><a href='summary.JointAI.html'>summary.JointAI</a></code>,
-                           <code><a href='traceplot.html'>traceplot</a></code>
-                           and <code><a href='densplot.html'>densplot</a></code>.</p></li>
+<code><a href='model_imp.html'>lm_imp</a></code>,
+<code><a href='summary.JointAI.html'>summary.JointAI</a></code>,
+<code><a href='traceplot.html'>traceplot</a></code>
+and <code><a href='densplot.html'>densplot</a></code>.</p></li>
 <li><p><a href='https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html'><em>Visualizing Incomplete Data</em></a>:<br />
 Demonstrations of the options in <code><a href='plot_all.html'>plot_all</a></code> (plotting histograms
 and bar plots for all variables in the data)  and <code><a href='md_pattern.html'>md_pattern</a></code>
@@ -305,24 +304,24 @@ to specify the model structure in <code><a href='model_imp.html'>lm_imp</a></cod
 Among others, the functions <code><a href='parameters.html'>parameters</a></code>,
 <code><a href='list_models.html'>list_models</a></code> and <code><a href='set_refcat.html'>set_refcat</a></code> are used.</p></li>
 <li><p><a href='https://nerler.github.io/JointAI/articles/SelectingParameters.html'><em>Parameter Selection</em></a>:<br />
-      Examples on how to select the parameters/variables/nodes
-      to follow using the argument <code>monitor_params</code> and the
-      parameters/variables/nodes displayed in the <code><a href='https://rdrr.io/r/base/summary.html'>summary</a></code>,
-      <code><a href='traceplot.html'>traceplot</a></code>, <code><a href='densplot.html'>densplot</a></code> or when using
-      <code><a href='GR_crit.html'>GR_crit</a></code> or <code><a href='MC_error.html'>MC_error</a></code>.</p></li>
+Examples on how to select the parameters/variables/nodes
+to follow using the argument <code>monitor_params</code> and the
+parameters/variables/nodes displayed in the <code><a href='https://rdrr.io/r/base/summary.html'>summary</a></code>,
+<code><a href='traceplot.html'>traceplot</a></code>, <code><a href='densplot.html'>densplot</a></code> or when using
+<code><a href='GR_crit.html'>GR_crit</a></code> or <code><a href='MC_error.html'>MC_error</a></code>.</p></li>
 <li><p><a href='https://nerler.github.io/JointAI/articles/MCMCsettings.html'><em>MCMC Settings</em></a>:<br />
-      Examples demonstrating how to set the arguments controlling settings
-      of the MCMC sampling,
-      i.e., <code>n.adapt</code>, <code>n.iter</code>, <code>n.chains</code>, <code>thin</code>,
-       <code>inits</code>.</p></li>
+Examples demonstrating how to set the arguments controlling settings
+of the MCMC sampling,
+i.e., <code>n.adapt</code>, <code>n.iter</code>, <code>n.chains</code>, <code>thin</code>,
+<code>inits</code>.</p></li>
 <li><p><a href='https://nerler.github.io/JointAI/articles/AfterFitting.html'><em>After Fitting</em></a>:<br />
-      Examples on the use of functions to be applied after the model has
-      been fitted, including <code><a href='traceplot.html'>traceplot</a></code>, <code><a href='densplot.html'>densplot</a></code>,
-      <code><a href='https://rdrr.io/r/base/summary.html'>summary</a></code>, <code><a href='GR_crit.html'>GR_crit</a></code>, <code><a href='MC_error.html'>MC_error</a></code>,
-      <code><a href='https://rdrr.io/r/stats/predict.html'>predict</a></code>, <code><a href='predDF.html'>predDF</a></code> and
-      <code><a href='get_MIdat.html'>get_MIdat</a></code>.</p></li>
+Examples on the use of functions to be applied after the model has
+been fitted, including <code><a href='traceplot.html'>traceplot</a></code>, <code><a href='densplot.html'>densplot</a></code>,
+<code><a href='https://rdrr.io/r/base/summary.html'>summary</a></code>, <code><a href='GR_crit.html'>GR_crit</a></code>, <code><a href='MC_error.html'>MC_error</a></code>,
+<code><a href='https://rdrr.io/r/stats/predict.html'>predict</a></code>, <code><a href='predDF.html'>predDF</a></code> and
+<code><a href='get_MIdat.html'>get_MIdat</a></code>.</p></li>
 <li><p><a href='https://nerler.github.io/JointAI/articles/TheoreticalBackground.html'><em>Theoretical Background</em></a>:<br />
-      Explanation of the statistical method implemented in <strong>JointAI</strong>.</p></li>
+Explanation of the statistical method implemented in <strong>JointAI</strong>.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

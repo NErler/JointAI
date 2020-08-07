@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • JointAI</title>
+<title>Identify the family from the covariate model type — get_family • JointAI</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,7 +54,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Identify the family from the covariate model type — get_family" />
+<meta property="og:description" content="Identify the family from the covariate model type" />
 <meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/logo.png" />
 <meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -88,7 +89,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -180,210 +181,30 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Identify the family from the covariate model type</h1>
+    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/get_model_info.R'><code>R/get_model_info.R</code></a></small>
+    <div class="hidden name"><code>get_family.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Identify the family from the covariate model type</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>get_family</span>(<span class='no'>model</span>)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="GR_crit.html">GR_crit()</a></code> </p>
-        </td>
-        <td><p>Gelman-Rubin criterion for convergence</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="JointAI.html">JointAI</a></code> </p>
-        </td>
-        <td><p>JointAI: Joint Analysis and Imputation of Incomplete Data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="JointAIObject.html">JointAIObject</a></code> </p>
-        </td>
-        <td><p>Fitted object of class 'JointAI'</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="MC_error.html">MC_error()</a></code> <code><a href="MC_error.html">plot(<i>&lt;MCElist&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Calculate and plot the Monte Carlo error</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="NHANES.html">NHANES</a></code> </p>
-        </td>
-        <td><p>National Health and Nutrition Examination Survey (NHANES) Data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="add_samples.html">add_samples()</a></code> </p>
-        </td>
-        <td><p>Continue sampling from an object of class JointAI</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="clean_survname.html">clean_survname()</a></code> </p>
-        </td>
-        <td><p>Convert a survival outcome to a model name</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="default_hyperpars.html">default_hyperpars()</a></code> </p>
-        </td>
-        <td><p>Get the default values for hyper-parameters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="densplot.html">densplot()</a></code> </p>
-        </td>
-        <td><p>Plot the posterior density from object of class JointAI</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_MIdat.html">get_MIdat()</a></code> </p>
-        </td>
-        <td><p>Extract multiple imputed datasets from an object of class JointAI</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_missinfo.html">get_missinfo()</a></code> </p>
-        </td>
-        <td><p>Obtain a summary of the missing values involved in an object of class JointAI</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="list_models.html">list_models()</a></code> </p>
-        </td>
-        <td><p>List model details</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="longDF.html">longDF</a></code> </p>
-        </td>
-        <td><p>Longitudinal example dataset</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="md_pattern.html">md_pattern()</a></code> </p>
-        </td>
-        <td><p>Missing data pattern</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="model_imp.html">lm_imp()</a></code> <code><a href="model_imp.html">glm_imp()</a></code> <code><a href="model_imp.html">clm_imp()</a></code> <code><a href="model_imp.html">lognorm_imp()</a></code> <code><a href="model_imp.html">betareg_imp()</a></code> <code><a href="model_imp.html">mlogit_imp()</a></code> <code><a href="model_imp.html">lme_imp()</a></code> <code><a href="model_imp.html">lmer_imp()</a></code> <code><a href="model_imp.html">glme_imp()</a></code> <code><a href="model_imp.html">glmer_imp()</a></code> <code><a href="model_imp.html">betamm_imp()</a></code> <code><a href="model_imp.html">lognormmm_imp()</a></code> <code><a href="model_imp.html">clmm_imp()</a></code> <code><a href="model_imp.html">mlogitmm_imp()</a></code> <code><a href="model_imp.html">survreg_imp()</a></code> <code><a href="model_imp.html">coxph_imp()</a></code> <code><a href="model_imp.html">JM_imp()</a></code> </p>
-        </td>
-        <td><p>Joint Analysis and Imputation of incomplete data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="parameters.html">parameters()</a></code> </p>
-        </td>
-        <td><p>Parameter names of an JointAI object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pbc.html">PBC</a></code> </p>
-        </td>
-        <td><p>PBC data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot.JointAI.html">plot(<i>&lt;JointAI&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Plot an object object inheriting from class 'JointAI'</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_all.html">plot_all()</a></code> </p>
-        </td>
-        <td><p>Visualize the distribution of all variables in the dataset</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_imp_distr.html">plot_imp_distr()</a></code> </p>
-        </td>
-        <td><p>Plot the distribution of observed and imputed values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="predDF.html">predDF()</a></code> </p>
-        </td>
-        <td><p>Create a new data frame for prediction</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="predict.JointAI.html">predict(<i>&lt;JointAI&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Predict values from an object of class JointAI</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="residuals.JointAI.html">residuals(<i>&lt;JointAI&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Extract residuals from an object of class JointAI</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="set_refcat.html">set_refcat()</a></code> </p>
-        </td>
-        <td><p>Specify reference categories for all categorical covariates in the model</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sharedParams.html">sharedParams</a></code> </p>
-        </td>
-        <td><p>Parameters used by several functions in JointAI</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="simLong.html">simLong</a></code> <code><a href="simLong.html">simWide</a></code> </p>
-        </td>
-        <td><p>Simulated Longitudinal Data in Long and Wide Format</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="summary.JointAI.html">summary(<i>&lt;JointAI&gt;</i>)</a></code> <code><a href="summary.JointAI.html">print(<i>&lt;summary.JointAI&gt;</i>)</a></code> <code><a href="summary.JointAI.html">coef(<i>&lt;JointAI&gt;</i>)</a></code> <code><a href="summary.JointAI.html">confint(<i>&lt;JointAI&gt;</i>)</a></code> <code><a href="summary.JointAI.html">print(<i>&lt;JointAI&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Summarize the results from an object of class JointAI</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="traceplot.html">traceplot()</a></code> </p>
-        </td>
-        <td><p>Create traceplots for a MCMC sample</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wideDF.html">wideDF</a></code> </p>
-        </td>
-        <td><p>Cross-sectional example dataset</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>model</th>
+      <td><p>character string; the covariate model type</p></td>
+    </tr>
     </table>
-  </div>
 
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

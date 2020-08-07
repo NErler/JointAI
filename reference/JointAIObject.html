@@ -201,62 +201,60 @@
     
 
 <dt><code>analysis_type</code></dt><dd><p><code>lm</code>, <code>glm</code>, <code>clm</code>, <code>lme</code>,
-                            <code>glme</code>, <code>clmm</code>, <code>survreg</code> or
-                            <code>coxph</code> (with attributes
-                            <code>family</code> and <code>link</code> for GLM-type
-                            models</p></dd>
+<code>glme</code>, <code>clmm</code>, <code>survreg</code> or
+<code>coxph</code> (with attributes
+<code>family</code> and <code>link</code> for GLM-type
+models</p></dd>
 <dt><code>data</code></dt><dd><p>original (incomplete, but pre-processed) data</p></dd>
 <dt><code>models</code></dt><dd><p>named vector specifying the the types of all sub-models</p></dd>
 <dt><code>fixed</code></dt><dd><p>a list of the fixed effects formulas of the sub-model(s)
-                    for which the use had specified a formula</p></dd>
+for which the use had specified a formula</p></dd>
 <dt><code>random</code></dt><dd><p>a list of the random effects formulas of the
-                     sub-model(s) for which the use had specified a formula</p></dd>
+sub-model(s) for which the use had specified a formula</p></dd>
 <dt><code>Mlist</code></dt><dd><p>a list (for internal use) containing the data and
-                    information extracted from the data and model formulas,
-                    split up into
-      <ul>
-<li><p>a list of design matrices, one for each level of the data
-              (<code>M</code>)</p></li>
+information extracted from the data and model formulas,
+split up into
+<ul>
 <li><p>a named vector identifying the levels (in the hierarchy)
-              of all variables (<code>Mlvls</code>)</p></li>
+of all variables (<code>Mlvls</code>)</p></li>
 <li><p>a vector of the id variables that were extracted from the
-              random effects formulas (<code>idvar</code>)</p></li>
+random effects formulas (<code>idvar</code>)</p></li>
 <li><p>a list of grouping information for each grouping level of the
-              data (<code>groups</code>)</p></li>
+data (<code>groups</code>)</p></li>
 <li><p>a named vector identifying the hierarchy of the grouping levels
-              (<code>group_lvls</code>)</p></li>
+(<code>group_lvls</code>)</p></li>
 <li><p>a named vector giving the number of observations on each
-              level of the hierarchy (<code>N</code>)</p></li>
+level of the hierarchy (<code>N</code>)</p></li>
 <li><p>the name of the time variable (only for survival models with
-              time-varying covariates) (<code>timevar</code>)</p></li>
+time-varying covariates) (<code>timevar</code>)</p></li>
 <li><p>a formula of auxiliary variables (<code>auxvars</code>)</p></li>
 <li><p>a list specifying the reference categories and dummy variables
-              for all factors involved in the models (<code>refs</code>)</p></li>
+for all factors involved in the models (<code>refs</code>)</p></li>
 <li><p>a list of linear predictor information (column numbers per
-              design matrix) for all sub-models (<code>lp_cols</code>)</p></li>
+design matrix) for all sub-models (<code>lp_cols</code>)</p></li>
 <li><p>a list identifying information for interaction terms found in
-              the model formulas (<code>interactions</code>)</p></li>
+the model formulas (<code>interactions</code>)</p></li>
 <li><p>a <code>data.frame</code> containing information on transformations
-              of incomplete variables (<code>trafos</code>)</p></li>
+of incomplete variables (<code>trafos</code>)</p></li>
 <li><p>a <code>data.frame</code> containing information on transformations
-              of all variables (<code>fcts_all</code>)</p></li>
+of all variables (<code>fcts_all</code>)</p></li>
 <li><p>a logical indicator if parameter for posterior predictive
-              checks should be monitored (<code>ppc</code>; not yet used)</p></li>
+checks should be monitored (<code>ppc</code>; not yet used)</p></li>
 <li><p>a vector specifying if shrinkage of regression coefficients
-              should be performed, and if so for which models and what type
-              of shrinkage (<code>shrinkage</code>)</p></li>
+should be performed, and if so for which models and what type
+of shrinkage (<code>shrinkage</code>)</p></li>
 <li><p>the number of degrees of freedom to be used in the spline
-              specification of the baseline hazard in proportional hazards
-              survival models (<code>df_basehaz</code>)</p></li>
+specification of the baseline hazard in proportional hazards
+survival models (<code>df_basehaz</code>)</p></li>
 <li><p>a list of matrices, one per level of the data, specifying
-              centring and scaling parameters for the data
-              (<code>scale_pars</code>)</p></li>
+centring and scaling parameters for the data
+(<code>scale_pars</code>)</p></li>
 <li><p>a list containing information on the outcomes (mostly relevant
-              for survival outcomes; <code>outcomes</code>)</p></li>
+for survival outcomes; <code>outcomes</code>)</p></li>
 <li><p>a list of terms objects, needed to be able to build correct
-              design matrices for the Gauss-Kronrod quadrature when, for
-              example, splines are used to model time in a joint model
-              (<code>terms_list</code>)</p></li>
+design matrices for the Gauss-Kronrod quadrature when, for
+example, splines are used to model time in a joint model
+(<code>terms_list</code>)</p></li>
 </ul></p></dd>
 <dt><code>par_index_main</code></dt><dd><p>a list of matrices specifying the indices of the
 regression coefficients for each of the main models per design matrix</p></dd>
@@ -264,8 +262,8 @@ regression coefficients for each of the main models per design matrix</p></dd>
 regression coefficients for each covariate model per design matrix</p></dd>
 <dt><code>jagsmodel</code></dt><dd><p>The JAGS model as character string.</p></dd>
 <dt><code>mcmc_settings</code></dt><dd><p>a list containing MCMC sampling related
-                            information with elements
-     <ul>
+information with elements
+<ul>
 <li><p><code>modelfile</code>: path and name of the JAGS model file</p></li>
 <li><p><code>n.chains</code>: number of MCMC chains</p></li>
 <li><p><code>n.adapt</code>: number of iterations in the adaptive phase</p></li>
@@ -273,33 +271,31 @@ regression coefficients for each covariate model per design matrix</p></dd>
 <li><p><code>variable.names</code>: monitored nodes</p></li>
 <li><p><code>thin</code>: thinning interval of the MCMC sample</p></li>
 <li><p><code>inits</code>: a list containing the initial values that were
-                           passed to <strong>rjags</strong></p></li>
+passed to <strong>rjags</strong></p></li>
 </ul></p></dd>
 <dt><code>monitor_params</code></dt><dd><p>the named list of parameter groups to be
-                             monitored</p></dd>
+monitored</p></dd>
 <dt><code>data_list</code></dt><dd><p>list with data that was passed to <strong>rjags</strong></p></dd>
 <dt><code>hyperpars</code></dt><dd><p>a list containing the values of the hyper-parameters
-                        used</p></dd>
+used</p></dd>
 <dt><code>info_list</code></dt><dd><p>a list with information used to write the imputation
-                        model syntax</p></dd>
+model syntax</p></dd>
 <dt><code>coef_list</code></dt><dd><p>a list relating the regression coefficient vectors
-                        used in the JAGS model to the names of the
-                        corresponding covariates</p></dd>
+used in the JAGS model to the names of the
+corresponding covariates</p></dd>
 <dt><code>model</code></dt><dd><p>the JAGS model (an object of class 'jags', created by
-                    <b>rjags</b>)</p></dd>
+<b>rjags</b>)</p></dd>
 <dt><code>sample</code></dt><dd><p>MCMC sample on the sampling scale (included only if
-                     <code>keep_scaled_sample = TRUE</code>)</p></dd>
+<code>keep_scaled_sample = TRUE</code>)</p></dd>
 <dt><code>MCMC</code></dt><dd><p>MCMC sample, scaled back to the scale of the data</p></dd>
 <dt><code>comp_info</code></dt><dd><p>a list with information on the computational setting
-                        (<code>start_ime</code>: date and time the calculation was
-                        started, <code>duration</code>: computational time of the
-                        model (adaptive + sampling phase),
-                        <code>JointAI_version</code>: package version,
-                        <code>future</code>: the call to <code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code>, if
-                        any was found (i.e., the specification for parallel
-                        computation),
-                        <code>sessionInfo</code>: session information obtained with
-                        <code><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo()</a></code>)</p></dd>
+(<code>start_ime</code>: date and time the calculation was
+started, <code>duration</code>: computational time of the
+model (adaptive + sampling phase),
+<code>JointAI_version</code>: package version,
+<code>future</code>: the call to <code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code>, if
+any was found (i.e., the specification for parallel
+computation))</p></dd>
 <dt><code>fitted.values</code></dt><dd><p>fitted/predicted values (if available)</p></dd>
 <dt><code>residuals</code></dt><dd><p>residuals (if available)</p></dd>
 <dt><code>call</code></dt><dd><p>the original call</p></dd>

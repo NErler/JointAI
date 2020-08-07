@@ -25,6 +25,12 @@
     <loc>https://nerler.github.io/JointAI//reference/add_samples.html</loc>
   </url>
   <url>
+    <loc>https://nerler.github.io/JointAI//reference/all_vars.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI//reference/bs.html</loc>
+  </url>
+  <url>
     <loc>https://nerler.github.io/JointAI//reference/clean_survname.html</loc>
   </url>
   <url>
@@ -37,7 +43,16 @@
     <loc>https://nerler.github.io/JointAI//reference/get_MIdat.html</loc>
   </url>
   <url>
+    <loc>https://nerler.github.io/JointAI//reference/get_Mlist.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI//reference/get_family.html</loc>
+  </url>
+  <url>
     <loc>https://nerler.github.io/JointAI//reference/get_missinfo.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI//reference/get_modeltype.html</loc>
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/list_models.html</loc>
@@ -50,6 +65,9 @@
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/model_imp.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI//reference/ns.html</loc>
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/parameters.html</loc>
@@ -73,6 +91,9 @@
     <loc>https://nerler.github.io/JointAI//reference/predict.JointAI.html</loc>
   </url>
   <url>
+    <loc>https://nerler.github.io/JointAI//reference/remove_lhs.html</loc>
+  </url>
+  <url>
     <loc>https://nerler.github.io/JointAI//reference/residuals.JointAI.html</loc>
   </url>
   <url>
@@ -83,9 +104,6 @@
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/simLong.html</loc>
-  </url>
-  <url>
-    <loc>https://nerler.github.io/JointAI//reference/sim_data.html</loc>
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/summary.JointAI.html</loc>

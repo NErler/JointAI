@@ -271,37 +271,37 @@ should be excluded</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list with entries <code>dat</code>, <code>fit</code> and <code>quantiles</code>,
-        where
-        <code>fit</code> contains the predicted values (mean over the values
-        calculated from the iterations of the MCMC sample),
-        <code>quantiles</code> contain the specified quantiles (by default 2.5%
-        and 97.5%),
-        and <code>dat</code> is <code>newdata</code>, extended with <code>fit</code> and
-        <code>quantiles</code>
-        (unless prediction for an ordinal outcome is done with
-        <code>type = "prob"</code>,
-        in which case the quantiles are an array with three dimensions and
-        are therefore not included in <code>dat</code>).</p>
+where
+<code>fit</code> contains the predicted values (mean over the values
+calculated from the iterations of the MCMC sample),
+<code>quantiles</code> contain the specified quantiles (by default 2.5%
+and 97.5%),
+and <code>dat</code> is <code>newdata</code>, extended with <code>fit</code> and
+<code>quantiles</code>
+(unless prediction for an ordinal outcome is done with
+<code>type = "prob"</code>,
+in which case the quantiles are an array with three dimensions and
+are therefore not included in <code>dat</code>).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>A <code>model.matrix</code> \(X\) is created from the model formula
-         (currently fixed effects only) and <code>newdata</code>. \(X\beta\)
-         is then calculated for
-         each iteration of the MCMC sample in <code>object</code>, i.e.,
-         \(X\beta\) has <code>n.iter</code> rows and <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(newdata)</a></code>
-         columns.
-         A subset of the MCMC sample can be selected using <code>start</code>,
-         <code>end</code> and  <code>thin</code>.</p>
+(currently fixed effects only) and <code>newdata</code>. \(X\beta\)
+is then calculated for
+each iteration of the MCMC sample in <code>object</code>, i.e.,
+\(X\beta\) has <code>n.iter</code> rows and <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(newdata)</a></code>
+columns.
+A subset of the MCMC sample can be selected using <code>start</code>,
+<code>end</code> and  <code>thin</code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     
 
 <ul>
 <li><p>So far, <code>predict</code> cannot calculate predicted values for cases
-      with missing values in covariates. Predicted values for such cases are
-      <code>NA</code>.</p></li>
+with missing values in covariates. Predicted values for such cases are
+<code>NA</code>.</p></li>
 <li><p>For repeated measures models prediction currently only uses fixed
-      effects.</p></li>
+effects.</p></li>
 </ul><p>Functionality will be extended in the future.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

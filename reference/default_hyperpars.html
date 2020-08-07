@@ -200,33 +200,33 @@
     <p><strong>norm:</strong> hyper-parameters for normal and log-normal models</p><table class='table'>
 <tr><td><code>mu_reg_norm</code></td><td>mean in the priors for regression coefficients</td></tr>
 <tr><td><code>tau_reg_norm</code></td><td>precision in the priors for regression
-                         coefficients</td></tr>
+coefficients</td></tr>
 <tr><td><code>shape_tau_norm</code></td><td>shape parameter in Gamma prior for the precision
-                           of the (log-)normal distribution</td></tr>
+of the (log-)normal distribution</td></tr>
 <tr><td><code>rate_tau_norm</code></td><td>rate parameter in Gamma prior for the precision
-                          of the (log-)normal distribution</td></tr>
+of the (log-)normal distribution</td></tr>
 </table>
 
 
 <p><strong>gamma:</strong> hyper-parameters for Gamma models</p><table class='table'>
 <tr><td><code>mu_reg_gamma</code></td><td>mean in the priors for regression coefficients</td></tr>
 <tr><td><code>tau_reg_gamma</code></td><td>precision in the priors for regression
-                          coefficients</td></tr>
+coefficients</td></tr>
 <tr><td><code>shape_tau_gamma</code></td><td>shape parameter in Gamma prior for the precision
-                            of the Gamma distribution</td></tr>
+of the Gamma distribution</td></tr>
 <tr><td><code>rate_tau_gamma</code></td><td>rate parameter in Gamma prior for the precision
-                           of the Gamma distribution</td></tr>
+of the Gamma distribution</td></tr>
 </table>
 
 
 <p><strong>beta:</strong> hyper-parameters for beta models</p><table class='table'>
 <tr><td><code>mu_reg_beta</code></td><td>mean in the priors for regression coefficients</td></tr>
 <tr><td><code>tau_reg_beta</code></td><td>precision in the priors for regression
-                         coefficients</td></tr>
+coefficients</td></tr>
 <tr><td><code>shape_tau_beta</code></td><td>shape parameter in Gamma prior for the precision
-                           of the beta distribution</td></tr>
+of the beta distribution</td></tr>
 <tr><td><code>rate_tau_beta</code></td><td>rate parameter in Gamma prior for precision of the
-                          of the beta distribution</td></tr>
+of the beta distribution</td></tr>
 </table>
 
 
@@ -245,38 +245,38 @@ coefficients</td></tr>
 
 <p><strong>multinomial:</strong> hyper-parameters for multinomial models</p><table class='table'>
 <tr><td><code>mu_reg_multinomial</code></td><td>mean in the priors for regression
-                               coefficients</td></tr>
+coefficients</td></tr>
 <tr><td><code>tau_reg_multinomial</code></td><td>precision in the priors for regression
-                                coefficients</td></tr>
+coefficients</td></tr>
 </table>
 
 
 <p><strong>ordinal:</strong> hyper-parameters for ordinal models</p><table class='table'>
 <tr><td><code>mu_reg_ordinal</code></td><td>mean in the priors for regression coefficients</td></tr>
 <tr><td><code>tau_reg_ordinal</code></td><td>precision in the priors for regression
-                            coefficients</td></tr>
+coefficients</td></tr>
 <tr><td><code>mu_delta_ordinal</code></td><td>mean in the prior for the intercepts</td></tr>
 <tr><td><code>tau_delta_ordinal</code></td><td>precision in the priors for the intercepts</td></tr>
 </table>
 
 
 <p><strong>ranef:</strong> hyper-parameters for the random effects variance-covariance
-                matrices (*)</p><table class='table'>
+matrices (<em>)
+<table class='table'>
 <tr><td><code>shape_diag_RinvD</code></td><td>shape parameter in Gamma prior for the diagonal
-                             elements of <code>RinvD</code></td></tr>
+elements of <code>RinvD</code></td></tr>
 <tr><td><code>rate_diag_RinvD</code></td><td>rate parameter in Gamma prior for the diagonal
-                            elements of <code>RinvD</code></td></tr>
+elements of <code>RinvD</code></td></tr>
 <tr><td><code>KinvD_expr</code></td><td>a character string that can be evaluated to calculate
-                       the number of degrees of freedom in the Wishart
-                       distribution used for the inverse of the
-                       variance-covariance matrix for random effects,
-                       depending on the number of random effects
-                       <code>nranef</code></td></tr>
-</table>
-<p>(*) when there is only one random effect a Gamma distribution is used instead
-    of the Wishart distribution</p>
+the number of degrees of freedom in the Wishart
+distribution used for the inverse of the
+variance-covariance matrix for random effects,
+depending on the number of random effects
+<code>nranef</code></td></tr>
+</table>(</em>) when there is only one random effect a Gamma distribution is used instead
+of the Wishart distribution</p>
 <p><strong>surv:</strong> parameters for survival models (<code>survreg</code>, <code>coxph</code>
-               and <code>JM</code>)</p><table class='table'>
+and <code>JM</code>)</p><table class='table'>
 <tr><td><code>mu_reg_surv</code></td><td>mean in the priors for regression coefficients</td></tr>
 <tr><td><code>tau_reg_surv</code></td><td>precision in the priors for regression coefficients</td></tr>
 </table>
