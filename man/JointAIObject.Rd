@@ -19,8 +19,6 @@ sub-model(s) for which the use had specified a formula}
 information extracted from the data and model formulas,
 split up into
 \itemize{
-\item a list of design matrices, one for each level of the data
-(\code{M})
 \item a named vector identifying the levels (in the hierarchy)
 of all variables (\code{Mlvls})
 \item a vector of the id variables that were extracted from the
@@ -101,9 +99,7 @@ model (adaptive + sampling phase),
 \code{JointAI_version}: package version,
 \code{future}: the call to \code{future::plan()}, if
 any was found (i.e., the specification for parallel
-computation),
-\code{sessionInfo}: session information obtained with
-\code{sessionInfo()})}
+computation))}
 \item{\code{fitted.values}}{fitted/predicted values (if available)}
 \item{\code{residuals}}{residuals (if available)}
 \item{\code{call}}{the original call}
