@@ -115,7 +115,9 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
       MCMC[[k]] <- coda::as.mcmc(
         rescale(MCMC[[k]], coefs = do.call(rbind, coefs),
                 scale_pars = do.call(rbind, unname(object$Mlist$scale_pars)),
-                object$info_list))
+                info_list = object$info_list,
+                data_list = object$data_list,
+                groups = object$Mlist$groups))
       attr(MCMC[[k]], "mcpar") <- attr(mcmc[[k]], "mcpar")
     }
   }
@@ -136,10 +138,10 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
     newMCMC <- coda::as.mcmc.list(
       lapply(seq_len(length(MCMC)), function(k)
         coda::mcmc(rbind(object$MCMC[[k]], MCMC[[k]]),
-             start = start(object$MCMC),
-             end = end(object$MCMC) + coda::niter(mcmc[[k]]) *
-               coda::thin(mcmc[[k]]),
-             thin = coda::thin(mcmc[[k]]))
+                   start = start(object$MCMC),
+                   end = end(object$MCMC) + coda::niter(mcmc[[k]]) *
+                     coda::thin(mcmc[[k]]),
+                   thin = coda::thin(mcmc[[k]]))
       ))
   } else {
     newmcmc <- if (!is.null(object$sample)) mcmc

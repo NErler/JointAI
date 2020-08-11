@@ -727,7 +727,9 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
           rescale(MCMC[[k]],
                   coefs = do.call(rbind, coefs),
                   scale_pars = do.call(rbind, unname(Mlist$scale_pars)),
-                  info_list))
+                  info_list = info_list,
+                  data_list = data_list,
+                  groups = Mlist$groups))
         attr(MCMC[[k]], "mcpar") <- attr(mcmc[[k]], "mcpar")
       }
     }
