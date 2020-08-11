@@ -261,8 +261,8 @@ coefficients</td></tr>
 
 
 <p><strong>ranef:</strong> hyper-parameters for the random effects variance-covariance
-matrices (<em>)
-<table class='table'>
+matrices (when there is only one random effect a Gamma distribution is used
+instead of the Wishart distribution)</p><table class='table'>
 <tr><td><code>shape_diag_RinvD</code></td><td>shape parameter in Gamma prior for the diagonal
 elements of <code>RinvD</code></td></tr>
 <tr><td><code>rate_diag_RinvD</code></td><td>rate parameter in Gamma prior for the diagonal
@@ -273,8 +273,9 @@ distribution used for the inverse of the
 variance-covariance matrix for random effects,
 depending on the number of random effects
 <code>nranef</code></td></tr>
-</table>(</em>) when there is only one random effect a Gamma distribution is used instead
-of the Wishart distribution</p>
+</table>
+
+
 <p><strong>surv:</strong> parameters for survival models (<code>survreg</code>, <code>coxph</code>
 and <code>JM</code>)</p><table class='table'>
 <tr><td><code>mu_reg_surv</code></td><td>mean in the priors for regression coefficients</td></tr>
