@@ -74,7 +74,8 @@ coefficients\cr
 }
 
 \strong{ranef:} hyper-parameters for the random effects variance-covariance
-matrices (\emph{)
+matrices (when there is only one random effect a Gamma distribution is used
+instead of the Wishart distribution)
 \tabular{ll}{
 \code{shape_diag_RinvD} \tab shape parameter in Gamma prior for the diagonal
 elements of \code{RinvD}\cr
@@ -87,8 +88,6 @@ variance-covariance matrix for random effects,
 depending on the number of random effects
 \code{nranef}
 }
-(}) when there is only one random effect a Gamma distribution is used instead
-of the Wishart distribution
 
 \strong{surv:} parameters for survival models (\code{survreg}, \code{coxph}
 and \code{JM})
