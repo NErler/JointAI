@@ -169,7 +169,7 @@ get_rdvcov_scalemat <- function(scale_pars, info_list, data_list, groups) {
 
 
 rescale_rd_vcov <- function(MCMC, rdvcov_scale) {
-  if (!is.null(rdvcov_scale)) {
+  if (!is.null(unlist(rdvcov_scale))) {
     for (var in names(rdvcov_scale)) {
       for(lvl in names(rdvcov_scale[[var]])) {
         colnams <- grep(paste0("D_", var, "_", lvl, "\\["),
