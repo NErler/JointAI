@@ -146,22 +146,24 @@ get_rdvcov_scalemat <- function(scale_pars, info_list, data_list, groups) {
   lapply(info_list, function(hc) {
     if (!is.null(hc)) {
       lapply(hc$hc_list$hcvars, function(lvl) {
-        rd_desgn_mat <- do.call(cbind,
-                                lapply(lvl$rd_slope_coefs, function(rds_info) {
-                                  data_list[[rds_info$matrix]][
-                                    groups[[gsub("M_", "", rds_info$matrix)]],
-                                    rds_info$cols, drop = FALSE]
-                                }))
-        if (attr(lvl, "rd_intercept")) {
-          rd_desgn_mat <- cbind("(Intercept)" = 1, rd_desgn_mat)
+        if (all(!attr(lvl, "incomplete")) & length(lvl$rd_slope_coefs) > 0) {
+          rd_desgn_mat <- do.call(cbind,
+                                  lapply(lvl$rd_slope_coefs, function(rds_info) {
+                                    data_list[[rds_info$matrix]][
+                                      groups[[gsub("M_", "", rds_info$matrix)]],
+                                      rds_info$cols, drop = FALSE]
+                                  }))
+          if (attr(lvl, "rd_intercept")) {
+            rd_desgn_mat <- cbind("(Intercept)" = 1, rd_desgn_mat)
+          }
+
+          scle <- t(scale_pars[colnames(rd_desgn_mat), "scale", drop = FALSE]
+          )[rep(1L, nrow(rd_desgn_mat)), , drop = FALSE]
+          centr <- t(scale_pars[colnames(rd_desgn_mat), "center", drop = FALSE]
+          )[rep(1L, nrow(rd_desgn_mat)), , drop = FALSE]
+
+          MASS::ginv(rd_desgn_mat) %*% ((rd_desgn_mat - centr)/scle)
         }
-
-        scle <- t(scale_pars[colnames(rd_desgn_mat), "scale", drop = FALSE]
-        )[rep(1L, nrow(rd_desgn_mat)), , drop = FALSE]
-        centr <- t(scale_pars[colnames(rd_desgn_mat), "center", drop = FALSE]
-        )[rep(1L, nrow(rd_desgn_mat)), , drop = FALSE]
-
-        MASS::ginv(rd_desgn_mat) %*% ((rd_desgn_mat - centr)/scle)
       })
     }
   })
