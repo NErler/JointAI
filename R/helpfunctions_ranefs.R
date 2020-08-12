@@ -61,12 +61,13 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
 
     incompl <- lapply(hc_list, attr, "incomplete")
 
-    for (lvl in names(incompl)) {
+
+    warnings <- nlapply(names(incompl), function(lvl) {
       if (any(incompl[[lvl]]) &&
           any(!is.na(do.call(rbind, unname(
             Mlist$scale_pars
           )))[names(incompl[[lvl]]), ])) {
-        warnmsg(
+        w <- warnmsg(
           "There are missing values in a variable for which a random effect
           is specified (%s). It will not be possible to re-scale the
           random effects %s and their variance covariance matrix %s back
@@ -81,17 +82,20 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
           paste_and(dQuote(names(incompl[[lvl]]))),
           dQuote("scale_params")
         )
+        w
       }
-    }
+    })
 
-    orga_hc_parelmts(
+    structure(
+      orga_hc_parelmts(
       resplvl,
       lvls,
       all_lvls = all_lvls,
       hc_list = hc_list,
       parelmts = parelmts,
       lp = lp
-    )
+    ),
+    warnings = warnings)
   }
 }
 

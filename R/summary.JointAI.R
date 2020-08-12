@@ -150,6 +150,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
           function(i) length(unique(i)) == 1)
 
           Ds[Ddiag, "tail-prob."] <- NA
+          attr(Ds, "warnings") <- attr(object$info_list[[varname]]$hc_list, "warnings")
           Ds
         }
       }
@@ -266,7 +267,10 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
 
       if (!is.null(x$res[[k]]$rd_vcov)) {
         cat("\nPosterior summary of random effects covariance matrix:\n")
+        warnings <- attr(x$res[[k]]$rd_vcov, "warnings")
+        attr(x$res[[k]]$rd_vcov, "warnings") <- NULL
         print(x$res[[k]]$rd_vcov, digits = digits, na.print = "")
+        warnmsg(warnings)
       }
 
       if (!is.null(x$res[[k]]$sigma)) {
