@@ -117,6 +117,8 @@ get_hc_list <- function(lvl, rdfmla, Mlist) {
                  contrasts.arg = contr_list[intersect(all_vars(rdfmla),
                                                       names(contr_list))]))
 
+
+
   # check for involvement in interactions
   inters <- Mlist$interactions
 
@@ -139,7 +141,9 @@ get_hc_list <- function(lvl, rdfmla, Mlist) {
         }
       )
     }, simplify = FALSE),
-    intercept = attr(terms(rdfmla), 'intercept')
+    intercept = attr(terms(rdfmla), 'intercept'),
+    incomplete = lvapply(Mlist$data[, all_vars(rdfmla), drop = FALSE],
+                         function(x) any(is.na(x)))
   )
 }
 
@@ -234,7 +238,8 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_list, parelmts, lp) {
            rd_slope_coefs = rd_slope_coefs,
            rd_slope_interact_coefs = rd_slope_interact_coefs
       ),
-      'rd_intercept' = "(Intercept)" %in% names(hc_list[[k]])
+      'rd_intercept' = "(Intercept)" %in% names(hc_list[[k]]),
+      "incomplete" = attr(hc_list[[k]], "incomplete")
     )
   }, simplify = FALSE)
 
