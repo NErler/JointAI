@@ -29,7 +29,7 @@
 R/samplers.R
 R/plots_ppc.R
 R/simulate_data.R
-R/sim_mldata.R
+sim_mldata.R
 
 ^\.lintr$
 ^\.covrignore$
