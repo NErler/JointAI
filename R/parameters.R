@@ -29,17 +29,17 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
 
   # the variable.names that were passed to JAGS
   vnam <- object$mcmc_settings$variable.names
+  # expand baseline hazard parameters
+  vnam <- expand_params(pattern = "^beta_Bh0",
+                        vnam = vnam,
+                        n = object$Mlist$df_basehaz)
 
-  if (any(grepl("^beta_Bh0", vnam))) {
-    basehaz_pars <- grep("^beta_Bh0", vnam)
-
-    for (k in basehaz_pars) {
-      vnam <- c(vnam,
-                paste0(vnam[basehaz_pars],
-                       "[", seq_len(object$Mlist$df_basehaz), "]")
-      )
-    }
-    vnam <- vnam[-basehaz_pars]
+  # expand ordinal intercepts
+  gammas <- grep("^gamma_", vnam, value = TRUE)
+  for (k in gammas) {
+    vnam <- expand_params(pattern = k,
+                          vnam = vnam,
+                          n = object$info_list[[gsub("gamma_", "", k)]]$ncat - 1)
   }
 
   # the coef_list, containing the regression coefficient info
@@ -95,3 +95,19 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
   params[order(match(params$outcome,
                      clean_survname(names(object$coef_list)))), ]
 }
+
+
+
+
+expand_params <- function(pattern, vnam, n) {
+  if (any(grepl(pattern, vnam))) {
+    pars <- grep(pattern, vnam)
+
+    for (k in pars) {
+      vnam <- c(vnam, paste0(vnam[pars], "[", seq_len(n), "]"))
+    }
+    vnam <- vnam[-pars]
+  }
+  vnam
+}
+
