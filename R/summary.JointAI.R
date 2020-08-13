@@ -270,7 +270,9 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
         warnings <- attr(x$res[[k]]$rd_vcov, "warnings")
         attr(x$res[[k]]$rd_vcov, "warnings") <- NULL
         print(x$res[[k]]$rd_vcov, digits = digits, na.print = "")
-        warnmsg(warnings)
+        if (!is.null(warnings)) {
+          warnmsg(warnings)
+        }
       }
 
       if (!is.null(x$res[[k]]$sigma)) {
@@ -526,7 +528,7 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
       if (x$info_list[[names(coefs)[k]]]$modeltype %in%
           c("glmm", "clmm", "mlogitmm")) {
         cat("\nFixed effects:\n")
-        print(coefs[[k]], digits = digits)
+        print(coefs[[k]][x$coef_list[[varname]]$varname], digits = digits)
 
         cat("\n\nRandom effects covariance matrix:\n")
         print(get_Dmat(object = x, varname = varname), digits = digits)
@@ -534,7 +536,7 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
       } else {
         if (length(coefs[[k]] > 0)) {
           cat("\n\nCoefficients:\n")
-          print(coefs[[k]], digits = digits)
+          print(coefs[[k]][x$coef_list[[varname]]$varname], digits = digits)
         }
       }
 
