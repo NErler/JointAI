@@ -776,3 +776,27 @@ D_y_id[1,2]        NaN        NaN
 D_y_id[2,2]        NaN        NaN
 
 
+$m8n
+Potential scale reduction factors:
+
+            Point est. Upper C.I.
+(Intercept)        NaN        NaN
+C1                 NaN        NaN
+B21                NaN        NaN
+c1                 NaN        NaN
+time               NaN        NaN
+b11                NaN        NaN
+C1:time            NaN        NaN
+sigma_y            NaN        NaN
+D_y_id[1,1]        NaN        NaN
+D_y_id[1,2]        NaN        NaN
+D_y_id[2,2]        NaN        NaN
+D_y_id[1,3]        NaN        NaN
+D_y_id[2,3]        NaN        NaN
+D_y_id[3,3]        NaN        NaN
+D_y_id[1,4]        NaN        NaN
+D_y_id[2,4]        NaN        NaN
+D_y_id[3,4]        NaN        NaN
+D_y_id[4,4]        NaN        NaN
+
+

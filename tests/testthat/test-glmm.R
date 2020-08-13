@@ -268,6 +268,11 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
         m8m = lme_imp(y ~ c1 * b1 + o1, random = ~b1|id, data = longDF,
                       n.iter = 10, n.adapt = 5, seed = 2020,
+                      warn = FALSE, mess = FALSE),
+
+        m8n = lme_imp(y ~ c1 + C1 * time + b1 + B2,
+                      random = ~C1 * time|id, data = longDF,
+                      n.iter = 10, n.adapt = 5, seed = 2020,
                       warn = FALSE, mess = FALSE)
       )
     }

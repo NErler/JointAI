@@ -1399,6 +1399,34 @@ b11                   0   0
 Residual standard deviation:
 sigma_y 
       0 
+
+Call:
+lme_imp(fixed = y ~ c1 + C1 * time + b1 + B2, data = longDF, 
+    random = ~C1 * time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian linear mixed model for "y" 
+
+Fixed effects:
+(Intercept)          C1         B21          c1        time         b11 
+          0           0           0           0           0           0 
+    C1:time 
+          0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept) C1 time C1:time
+(Intercept)           0  0    0       0
+C1                    0  0    0       0
+time                  0  0    0       0
+C1:time               0  0    0       0
+
+
+
+Residual standard deviation:
+sigma_y 
+      0 
 $m0a1
 
 Call:
@@ -2911,6 +2939,36 @@ $id
             (Intercept) b11
 (Intercept)           0   0
 b11                   0   0
+
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m8n
+
+Call:
+lme_imp(fixed = y ~ c1 + C1 * time + b1 + B2, data = longDF, 
+    random = ~C1 * time | id, n.adapt = 5, n.iter = 10, seed = 2020, 
+    warn = FALSE, mess = FALSE)
+
+ Bayesian linear mixed model for "y" 
+
+Fixed effects:
+(Intercept)          C1         B21          c1        time         b11 
+          0           0           0           0           0           0 
+    C1:time 
+          0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept) C1 time C1:time
+(Intercept)           0  0    0       0
+C1                    0  0    0       0
+time                  0  0    0       0
+C1:time               0  0    0       0
 
 
 
