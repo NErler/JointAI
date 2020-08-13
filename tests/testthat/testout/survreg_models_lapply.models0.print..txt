@@ -8,8 +8,8 @@ survreg_imp(formula = Surv(futime, status != "censored") ~ 1,
 
 
 Coefficients:
-          (Intercept) shape_Srv_ftm_stts_cn 
-                    0                     0 
+(Intercept) 
+          0 
 
 Call:
 survreg_imp(formula = Surv(futime, status != "censored") ~ age + 
@@ -20,10 +20,8 @@ survreg_imp(formula = Surv(futime, status != "censored") ~ age +
 
 
 Coefficients:
-          (Intercept)                   age             sexfemale 
-                    0                     0                     0 
-shape_Srv_ftm_stts_cn 
-                    0 
+(Intercept)         age   sexfemale 
+          0           0           0 
 
 Call:
 survreg_imp(formula = Surv(futime, I(status != "censored")) ~ 
@@ -34,10 +32,8 @@ survreg_imp(formula = Surv(futime, I(status != "censored")) ~
 
 
 Coefficients:
-          (Intercept)                   age             sexfemale 
-                    0                     0                     0 
-shape_Srv_ftm_stts_cn 
-                    0 
+(Intercept)         age   sexfemale 
+          0           0           0 
 
 Call:
 survreg_imp(formula = Surv(futime, status != "censored") ~ copper, 
@@ -48,8 +44,8 @@ survreg_imp(formula = Surv(futime, status != "censored") ~ copper,
 
 
 Coefficients:
-          (Intercept)                copper shape_Srv_ftm_stts_cn 
-                    0                     0                     0 
+(Intercept)      copper 
+          0           0 
 
 Call:
 survreg_imp(formula = Surv(futime, status != "censored") ~ copper + 
@@ -61,12 +57,10 @@ survreg_imp(formula = Surv(futime, status != "censored") ~ copper +
 
 
 Coefficients:
-          (Intercept)                copper             sexfemale 
-                    0                     0                     0 
-                  age     abs(age - copper)             log(trig) 
-                    0                     0                     0 
-shape_Srv_ftm_stts_cn 
-                    0 
+      (Intercept)            copper         sexfemale               age 
+                0                 0                 0                 0 
+abs(age - copper)         log(trig) 
+                0                 0 
 
 Call:
 survreg_imp(formula = Surv(futime, status != "censored") ~ copper + 
@@ -78,14 +72,10 @@ survreg_imp(formula = Surv(futime, status != "censored") ~ copper +
 
 
 Coefficients:
-                  (Intercept)                        copper 
-                            0                             0 
-                    sexfemale                           age 
-                            0                             0 
-            abs(age - copper)                     log(trig) 
-                            0                             0 
-        shape_Srv_ftm_stts_cn D_Srv_ftm_stts_cn_center[1,1] 
-                            0                             0 
+      (Intercept)            copper         sexfemale               age 
+                0                 0                 0                 0 
+abs(age - copper)         log(trig) 
+                0                 0 
 $m0a
 
 Call:
@@ -97,8 +87,8 @@ survreg_imp(formula = Surv(futime, status != "censored") ~ 1,
 
 
 Coefficients:
-          (Intercept) shape_Srv_ftm_stts_cn 
-                    0                     0 
+(Intercept) 
+          0 
 
 $m1a
 
@@ -111,10 +101,8 @@ survreg_imp(formula = Surv(futime, status != "censored") ~ age +
 
 
 Coefficients:
-          (Intercept)                   age             sexfemale 
-                    0                     0                     0 
-shape_Srv_ftm_stts_cn 
-                    0 
+(Intercept)         age   sexfemale 
+          0           0           0 
 
 $m1b
 
@@ -127,10 +115,8 @@ survreg_imp(formula = Surv(futime, I(status != "censored")) ~
 
 
 Coefficients:
-          (Intercept)                   age             sexfemale 
-                    0                     0                     0 
-shape_Srv_ftm_stts_cn 
-                    0 
+(Intercept)         age   sexfemale 
+          0           0           0 
 
 $m2a
 
@@ -143,8 +129,8 @@ survreg_imp(formula = Surv(futime, status != "censored") ~ copper,
 
 
 Coefficients:
-          (Intercept)                copper shape_Srv_ftm_stts_cn 
-                    0                     0                     0 
+(Intercept)      copper 
+          0           0 
 
 $m3a
 
@@ -158,12 +144,10 @@ survreg_imp(formula = Surv(futime, status != "censored") ~ copper +
 
 
 Coefficients:
-          (Intercept)                copper             sexfemale 
-                    0                     0                     0 
-                  age     abs(age - copper)             log(trig) 
-                    0                     0                     0 
-shape_Srv_ftm_stts_cn 
-                    0 
+      (Intercept)            copper         sexfemale               age 
+                0                 0                 0                 0 
+abs(age - copper)         log(trig) 
+                0                 0 
 
 $m3b
 
@@ -177,12 +161,8 @@ survreg_imp(formula = Surv(futime, status != "censored") ~ copper +
 
 
 Coefficients:
-                  (Intercept)                        copper 
-                            0                             0 
-                    sexfemale                           age 
-                            0                             0 
-            abs(age - copper)                     log(trig) 
-                            0                             0 
-        shape_Srv_ftm_stts_cn D_Srv_ftm_stts_cn_center[1,1] 
-                            0                             0 
+      (Intercept)            copper         sexfemale               age 
+                0                 0                 0                 0 
+abs(age - copper)         log(trig) 
+                0                 0 
 
