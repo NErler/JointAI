@@ -132,7 +132,8 @@ rescale <- function(MCMC, coefs, scale_pars, info_list, data_list, groups) {
   })
 
   rdvcov_scale <- get_rdvcov_scalemat(scale_pars, info_list, data_list, groups)
-  rescale_rd_vcov(MCMC, rdvcov_scale)
+  MCMC <- rescale_rd_vcov(MCMC, rdvcov_scale)
+  rescale_ranefs(MCMC, rdvcov_scale, groups)
 }
 
 
@@ -162,7 +163,10 @@ get_rdvcov_scalemat <- function(scale_pars, info_list, data_list, groups) {
           centr <- t(scale_pars[colnames(rd_desgn_mat), "center", drop = FALSE]
           )[rep(1L, nrow(rd_desgn_mat)), , drop = FALSE]
 
-          MASS::ginv(rd_desgn_mat) %*% ((rd_desgn_mat - centr)/scle)
+          list(z = rd_desgn_mat,
+               z_inv = MASS::ginv(rd_desgn_mat),
+               z_scaled = ((rd_desgn_mat - centr)/scle)
+          )
         }
       })
     }
@@ -184,13 +188,16 @@ rescale_rd_vcov <- function(MCMC, rdvcov_scale) {
                                   split = ",")
           )
 
-          pos <- data.frame(apply(pos, 2, as.numeric))
+          pos <- data.frame(t(vapply(seq_len(nrow(pos)), function(j) {
+            as.numeric(pos[j, ])
+          }, FUN.VALUE = numeric(2))))
           pos$name <- colnams
 
 
-          vcov <- array(dim = c(nrow(MCMC),
-                                nrow(rdvcov_scale[[var]][[lvl]]),
-                                ncol(rdvcov_scale[[var]][[lvl]])))
+          scale_mat <- rdvcov_scale[[var]][[lvl]]$z_inv %*%
+            rdvcov_scale[[var]][[lvl]]$z_scaled
+
+          vcov <- array(dim = c(nrow(MCMC), nrow(scale_mat), ncol(scale_mat)))
 
           for (k in seq_len(nrow(pos))) {
             vcov[, pos[k, "X1"], pos[k, "X2"]] <- MCMC[, pos[k, "name"]]
@@ -200,15 +207,48 @@ rescale_rd_vcov <- function(MCMC, rdvcov_scale) {
           }
 
           vcov_new <- vapply(seq_len(nrow(MCMC)), function(k) {
-            rdvcov_scale[[var]][[lvl]] %*% vcov[k, , ] %*%
-              t(rdvcov_scale[[var]][[lvl]])
+            scale_mat %*% vcov[k, , ] %*% t(scale_mat)
           }, FUN.VALUE = matrix(data = NA_real_,
                                 nrow = dim(vcov)[2],
                                 ncol = dim(vcov)[3]))
+          if (!inherits(vcov_new, "array")) {
+            vcov_new <- array(vcov_new, dim = dim(vcov))
+          }
 
 
           for (k in seq_len(nrow(pos))) {
             MCMC[, pos[k, "name"]] <- vcov_new[pos[k, "X1"], pos[k, "X2"], ]
+          }
+        }
+      }
+    }
+  }
+  MCMC
+}
+
+
+
+rescale_ranefs <- function(MCMC, rdvcov_scale, groups) {
+  if (!is.null(unlist(rdvcov_scale))) {
+    for (var in names(rdvcov_scale)) {
+      for(lvl in names(rdvcov_scale[[var]])) {
+        colnams <- grep(paste0("b_", var, "_", lvl, "\\["),
+                        colnames(MCMC), value = TRUE)
+
+        if (length(colnams) > 0) {
+          pos <- do.call(rbind,
+                         strsplit(gsub("[[:print:]]+\\[|]", "", colnams),
+                                  split = ",")
+          )
+
+          pos <- data.frame(apply(pos, 2, as.numeric))
+          pos$name <- colnams
+
+          for(i in unique(groups[[lvl]])) {
+            MCMC[, pos$name[pos$X1 == i]] <-
+              MCMC[, pos$name[pos$X1 == i]] %*%
+              t(MASS::ginv(rdvcov_scale[[var]][[lvl]]$z[groups[[lvl]] == i,]) %*%
+                  rdvcov_scale[[var]][[lvl]]$z_scaled[groups[[lvl]] == i,])
           }
         }
       }
