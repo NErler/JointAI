@@ -124,7 +124,7 @@ get_hc_list <- function(lvl, rdfmla, Mlist) {
 
 
   # check for involvement in interactions
-  inters <- Mlist$interactions
+  inters <- Mlist$interactions[!names(Mlist$interactions) %in% Znam]
 
   # identify if there are elements of interaction in Z
   inZ <- if (length(inters) > 0)
