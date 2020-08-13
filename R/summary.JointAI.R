@@ -521,23 +521,41 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
 
     for (k in seq_along(coefs)) {
       varname <- names(coefs)[k]
+
+      intercepts <- if (x$info_list[[varname]]$modeltype %in%
+                        c("clm", "clmm")) {
+        stats <- t(t(colMeans(MCMC[, grep(paste0("gamma_", varname),
+                                          colnames(MCMC))])))
+        get_intercepts(stats, varname,
+                       lvls = levels(x$Mlist$refs[[varname]]),
+                       rev = x$info_list[[varname]]$rev)
+      }
+
       cat("\n", "Bayesian",
           print_type(x$info_list[[varname]]$modeltype,
                      x$info_list[[varname]]$family), "for",
           dQuote(varname), "\n")
       if (x$info_list[[names(coefs)[k]]]$modeltype %in%
           c("glmm", "clmm", "mlogitmm")) {
-        cat("\nFixed effects:\n")
-        print(coefs[[k]][x$coef_list[[varname]]$varname], digits = digits)
+
+        if (!is.null(intercepts) |
+            length(coefs[[k]][x$coef_list[[varname]]$varname]) > 0) {
+          cat("\nFixed effects:\n")
+          print(c(setNames(c(intercepts), rownames(intercepts)),
+                  coefs[[k]][x$coef_list[[varname]]$varname]),
+                digits = digits)
+        }
 
         cat("\n\nRandom effects covariance matrix:\n")
         print(get_Dmat(object = x, varname = varname), digits = digits)
 
       } else {
-        if (length(coefs[[k]] > 0)) {
+        if (length(coefs[[k]][x$coef_list[[varname]]$varname] > 0) |
+            !is.null(intercepts)) {
           cat("\n\nCoefficients:\n")
-          print(coefs[[k]][x$coef_list[[varname]]$varname], digits = digits)
-        }
+          print(c(setNames(c(intercepts), rownames(intercepts)),
+                  coefs[[k]][x$coef_list[[varname]]$varname]),
+                digits = digits)        }
       }
 
       if (paste0("sigma_", varname) %in% colnames(MCMC)) {

@@ -29,7 +29,7 @@ clm_imp(formula = O1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-    C1 O1 > 1 O1 > 2 O1 > 3 
+O1 > 1 O1 > 2 O1 > 3     C1 
      0      0      0      0 
 
 Call:
@@ -40,7 +40,7 @@ clm_imp(formula = O2 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-    C1 O2 > 1 O2 > 2 O2 > 3 
+O2 > 1 O2 > 2 O2 > 3     C1 
      0      0      0      0 
 
 Call:
@@ -51,7 +51,7 @@ clm_imp(formula = O1 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-    C2 O1 > 1 O1 > 2 O1 > 3 
+O1 > 1 O1 > 2 O1 > 3     C2 
      0      0      0      0 
 
 Call:
@@ -62,7 +62,7 @@ clm_imp(formula = O2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-    C2 O2 > 1 O2 > 2 O2 > 3 
+O2 > 1 O2 > 2 O2 > 3     C2 
      0      0      0      0 
 
 Call:
@@ -73,8 +73,8 @@ lm_imp(formula = C1 ~ O1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)        O1.L        O1.Q        O1.C    sigma_C1 
-          0           0           0           0           0 
+(Intercept)        O1.L        O1.Q        O1.C 
+          0           0           0           0 
 
 
 Residual standard deviation:
@@ -89,8 +89,8 @@ lm_imp(formula = C1 ~ O2, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)         O22         O23         O24    sigma_C1 
-          0           0           0           0           0 
+(Intercept)         O22         O23         O24 
+          0           0           0           0 
 
 
 Residual standard deviation:
@@ -105,13 +105,13 @@ clm_imp(formula = O1 ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF,
 
 
 Coefficients:
-             M22              M23              M24              O22 
+          O1 > 1           O1 > 2           O1 > 3              M22 
                0                0                0                0 
-             O23              O24     abs(C1 - C2)          log(C1) 
+             M23              M24              O22              O23 
                0                0                0                0 
-O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2)           O1 > 1 
+             O24     abs(C1 - C2)          log(C1) O22:abs(C1 - C2) 
                0                0                0                0 
-          O1 > 2           O1 > 3 
+O23:abs(C1 - C2) O24:abs(C1 - C2) 
                0                0 
 
 Call:
@@ -123,6 +123,12 @@ clm_imp(formula = O1 ~ ifelse(as.numeric(O2) > as.numeric(M1),
 
 
 Coefficients:
+                                                    O1 > 1 
+                                                         0 
+                                                    O1 > 2 
+                                                         0 
+                                                    O1 > 3 
+                                                         0 
              ifelse(as.numeric(O2) > as.numeric(M1), 1, 0) 
                                                          0 
                                               abs(C1 - C2) 
@@ -130,12 +136,6 @@ Coefficients:
                                                    log(C1) 
                                                          0 
 ifelse(as.numeric(O2) > as.numeric(M1), 1, 0):abs(C1 - C2) 
-                                                         0 
-                                                    O1 > 1 
-                                                         0 
-                                                    O1 > 2 
-                                                         0 
-                                                    O1 > 3 
                                                          0 
 
 Call:
@@ -147,9 +147,9 @@ clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24     C1     C2     C1     C2     C1 
+O1 > 1 O1 > 2 O1 > 3    M22    M23    M24    O22    O23    O24     C1     C2 
      0      0      0      0      0      0      0      0      0      0      0 
-    C2 O1 > 1 O1 > 2 O1 > 3 
+    C1     C2     C1     C2 
      0      0      0      0 
 
 Call:
@@ -161,9 +161,9 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24  C1:C2     C1     C2     C1     C2 
+O1 > 1 O1 > 2 O1 > 3    M22    M23    M24    O22    O23    O24  C1:C2     C1 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1     C2 O1 > 1 O1 > 2 O1 > 3 
+    C2     C1     C2     C1     C2 
      0      0      0      0      0 
 
 Call:
@@ -175,9 +175,9 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24     C1     C2  C1:C2     C1     C2 
+O1 > 1 O1 > 2 O1 > 3    M22    M23    M24    O22    O23    O24     C1     C2 
      0      0      0      0      0      0      0      0      0      0      0 
- C1:C2     C1     C2  C1:C2 O1 > 1 O1 > 2 O1 > 3 
+ C1:C2     C1     C2  C1:C2     C1     C2  C1:C2 
      0      0      0      0      0      0      0 
 
 Call:
@@ -189,9 +189,9 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24 M22:C2 M23:C2 M24:C2     C1     C2 
+O1 > 1 O1 > 2 O1 > 3    M22    M23    M24    O22    O23    O24 M22:C2 M23:C2 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1     C2     C1     C2 O1 > 1 O1 > 2 O1 > 3 
+M24:C2     C1     C2     C1     C2     C1     C2 
      0      0      0      0      0      0      0 
 
 Call:
@@ -203,13 +203,13 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-    C1    M22    M23    M24     C2    O22    O23    O24 M22:C2 M23:C2 M24:C2 
+O1 > 1 O1 > 2 O1 > 3     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1    M22    M23    M24     C2    O22    O23    O24 M22:C2 M23:C2 M24:C2 
+M22:C2 M23:C2 M24:C2     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1    M22    M23    M24     C2    O22    O23    O24 M22:C2 M23:C2 M24:C2 
+M22:C2 M23:C2 M24:C2     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
-O1 > 1 O1 > 2 O1 > 3 
+M22:C2 M23:C2 M24:C2 
      0      0      0 
 
 Call:
@@ -221,9 +221,9 @@ clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24     C1     C2     C1     C2     C1 
+O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24     C1     C2 
      0      0      0      0      0      0      0      0      0      0      0 
-    C2 O1 = 1 O1 = 2 O1 = 3 
+    C1     C2     C1     C2 
      0      0      0      0 
 
 Call:
@@ -235,9 +235,9 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24  C1:C2     C1     C2     C1     C2 
+O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24  C1:C2     C1 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1     C2 O1 = 1 O1 = 2 O1 = 3 
+    C2     C1     C2     C1     C2 
      0      0      0      0      0 
 
 Call:
@@ -249,9 +249,9 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24     C1     C2  C1:C2     C1     C2 
+O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24     C1     C2 
      0      0      0      0      0      0      0      0      0      0      0 
- C1:C2     C1     C2  C1:C2 O1 = 1 O1 = 2 O1 = 3 
+ C1:C2     C1     C2  C1:C2     C1     C2  C1:C2 
      0      0      0      0      0      0      0 
 
 Call:
@@ -263,9 +263,9 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24 M22:C2 M23:C2 M24:C2     C1     C2 
+O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24 M22:C2 M23:C2 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1     C2     C1     C2 O1 = 1 O1 = 2 O1 = 3 
+M24:C2     C1     C2     C1     C2     C1     C2 
      0      0      0      0      0      0      0 
 
 Call:
@@ -278,13 +278,13 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-    C1    M22    M23    M24     C2    O22    O23    O24 M22:C2 M23:C2 M24:C2 
+O1 = 1 O1 = 2 O1 = 3     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1    M22    M23    M24     C2    O22    O23    O24 M22:C2 M23:C2 M24:C2 
+M22:C2 M23:C2 M24:C2     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1    M22    M23    M24     C2    O22    O23    O24 M22:C2 M23:C2 M24:C2 
+M22:C2 M23:C2 M24:C2     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
-O1 = 1 O1 = 2 O1 = 3 
+M22:C2 M23:C2 M24:C2 
      0      0      0 
 $m0a
 
@@ -322,7 +322,7 @@ clm_imp(formula = O1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-    C1 O1 > 1 O1 > 2 O1 > 3 
+O1 > 1 O1 > 2 O1 > 3     C1 
      0      0      0      0 
 
 $m1b
@@ -335,7 +335,7 @@ clm_imp(formula = O2 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-    C1 O2 > 1 O2 > 2 O2 > 3 
+O2 > 1 O2 > 2 O2 > 3     C1 
      0      0      0      0 
 
 $m2a
@@ -348,7 +348,7 @@ clm_imp(formula = O1 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-    C2 O1 > 1 O1 > 2 O1 > 3 
+O1 > 1 O1 > 2 O1 > 3     C2 
      0      0      0      0 
 
 $m2b
@@ -361,7 +361,7 @@ clm_imp(formula = O2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-    C2 O2 > 1 O2 > 2 O2 > 3 
+O2 > 1 O2 > 2 O2 > 3     C2 
      0      0      0      0 
 
 $m3a
@@ -374,8 +374,8 @@ lm_imp(formula = C1 ~ O1, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)        O1.L        O1.Q        O1.C    sigma_C1 
-          0           0           0           0           0 
+(Intercept)        O1.L        O1.Q        O1.C 
+          0           0           0           0 
 
 
 Residual standard deviation:
@@ -392,8 +392,8 @@ lm_imp(formula = C1 ~ O2, data = wideDF, n.adapt = 5, n.iter = 10,
 
 
 Coefficients:
-(Intercept)         O22         O23         O24    sigma_C1 
-          0           0           0           0           0 
+(Intercept)         O22         O23         O24 
+          0           0           0           0 
 
 
 Residual standard deviation:
@@ -410,13 +410,13 @@ clm_imp(formula = O1 ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF,
 
 
 Coefficients:
-             M22              M23              M24              O22 
+          O1 > 1           O1 > 2           O1 > 3              M22 
                0                0                0                0 
-             O23              O24     abs(C1 - C2)          log(C1) 
+             M23              M24              O22              O23 
                0                0                0                0 
-O22:abs(C1 - C2) O23:abs(C1 - C2) O24:abs(C1 - C2)           O1 > 1 
+             O24     abs(C1 - C2)          log(C1) O22:abs(C1 - C2) 
                0                0                0                0 
-          O1 > 2           O1 > 3 
+O23:abs(C1 - C2) O24:abs(C1 - C2) 
                0                0 
 
 $m4b
@@ -430,6 +430,12 @@ clm_imp(formula = O1 ~ ifelse(as.numeric(O2) > as.numeric(M1),
 
 
 Coefficients:
+                                                    O1 > 1 
+                                                         0 
+                                                    O1 > 2 
+                                                         0 
+                                                    O1 > 3 
+                                                         0 
              ifelse(as.numeric(O2) > as.numeric(M1), 1, 0) 
                                                          0 
                                               abs(C1 - C2) 
@@ -437,12 +443,6 @@ Coefficients:
                                                    log(C1) 
                                                          0 
 ifelse(as.numeric(O2) > as.numeric(M1), 1, 0):abs(C1 - C2) 
-                                                         0 
-                                                    O1 > 1 
-                                                         0 
-                                                    O1 > 2 
-                                                         0 
-                                                    O1 > 3 
                                                          0 
 
 $m5a
@@ -456,9 +456,9 @@ clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24     C1     C2     C1     C2     C1 
+O1 > 1 O1 > 2 O1 > 3    M22    M23    M24    O22    O23    O24     C1     C2 
      0      0      0      0      0      0      0      0      0      0      0 
-    C2 O1 > 1 O1 > 2 O1 > 3 
+    C1     C2     C1     C2 
      0      0      0      0 
 
 $m5b
@@ -472,9 +472,9 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24  C1:C2     C1     C2     C1     C2 
+O1 > 1 O1 > 2 O1 > 3    M22    M23    M24    O22    O23    O24  C1:C2     C1 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1     C2 O1 > 1 O1 > 2 O1 > 3 
+    C2     C1     C2     C1     C2 
      0      0      0      0      0 
 
 $m5c
@@ -488,9 +488,9 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24     C1     C2  C1:C2     C1     C2 
+O1 > 1 O1 > 2 O1 > 3    M22    M23    M24    O22    O23    O24     C1     C2 
      0      0      0      0      0      0      0      0      0      0      0 
- C1:C2     C1     C2  C1:C2 O1 > 1 O1 > 2 O1 > 3 
+ C1:C2     C1     C2  C1:C2     C1     C2  C1:C2 
      0      0      0      0      0      0      0 
 
 $m5d
@@ -504,9 +504,9 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24 M22:C2 M23:C2 M24:C2     C1     C2 
+O1 > 1 O1 > 2 O1 > 3    M22    M23    M24    O22    O23    O24 M22:C2 M23:C2 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1     C2     C1     C2 O1 > 1 O1 > 2 O1 > 3 
+M24:C2     C1     C2     C1     C2     C1     C2 
      0      0      0      0      0      0      0 
 
 $m5e
@@ -520,13 +520,13 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-    C1    M22    M23    M24     C2    O22    O23    O24 M22:C2 M23:C2 M24:C2 
+O1 > 1 O1 > 2 O1 > 3     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1    M22    M23    M24     C2    O22    O23    O24 M22:C2 M23:C2 M24:C2 
+M22:C2 M23:C2 M24:C2     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1    M22    M23    M24     C2    O22    O23    O24 M22:C2 M23:C2 M24:C2 
+M22:C2 M23:C2 M24:C2     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
-O1 > 1 O1 > 2 O1 > 3 
+M22:C2 M23:C2 M24:C2 
      0      0      0 
 
 $m6a
@@ -540,9 +540,9 @@ clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24     C1     C2     C1     C2     C1 
+O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24     C1     C2 
      0      0      0      0      0      0      0      0      0      0      0 
-    C2 O1 = 1 O1 = 2 O1 = 3 
+    C1     C2     C1     C2 
      0      0      0      0 
 
 $m6b
@@ -556,9 +556,9 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24  C1:C2     C1     C2     C1     C2 
+O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24  C1:C2     C1 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1     C2 O1 = 1 O1 = 2 O1 = 3 
+    C2     C1     C2     C1     C2 
      0      0      0      0      0 
 
 $m6c
@@ -572,9 +572,9 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24     C1     C2  C1:C2     C1     C2 
+O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24     C1     C2 
      0      0      0      0      0      0      0      0      0      0      0 
- C1:C2     C1     C2  C1:C2 O1 = 1 O1 = 2 O1 = 3 
+ C1:C2     C1     C2  C1:C2     C1     C2  C1:C2 
      0      0      0      0      0      0      0 
 
 $m6d
@@ -588,9 +588,9 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-   M22    M23    M24    O22    O23    O24 M22:C2 M23:C2 M24:C2     C1     C2 
+O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24 M22:C2 M23:C2 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1     C2     C1     C2 O1 = 1 O1 = 2 O1 = 3 
+M24:C2     C1     C2     C1     C2     C1     C2 
      0      0      0      0      0      0      0 
 
 $m6e
@@ -605,12 +605,12 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-    C1    M22    M23    M24     C2    O22    O23    O24 M22:C2 M23:C2 M24:C2 
+O1 = 1 O1 = 2 O1 = 3     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1    M22    M23    M24     C2    O22    O23    O24 M22:C2 M23:C2 M24:C2 
+M22:C2 M23:C2 M24:C2     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
-    C1    M22    M23    M24     C2    O22    O23    O24 M22:C2 M23:C2 M24:C2 
+M22:C2 M23:C2 M24:C2     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
-O1 = 1 O1 = 2 O1 = 3 
+M22:C2 M23:C2 M24:C2 
      0      0      0 
 
