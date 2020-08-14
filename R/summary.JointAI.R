@@ -275,7 +275,7 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
         }
       }
 
-if (!is.null(x$randomes[[k]]$sigma))  {
+      if (!is.null(x$res[[k]]$sigma))  {
         cat("\nPosterior summary of residual std. deviation:\n")
         print(x$res[[k]]$sigma, digits = digits, na.print = "")
       }
@@ -617,7 +617,7 @@ get_missinfo <- function(object) {
 
   complcases <- lapply(names(groups), function(k) {
     cc <- complete.cases(object$data[match(unique(groups[[k]]), groups[[k]]),
-                               names(data_lvls[data_lvls == k])])
+                                     names(data_lvls[data_lvls == k])])
 
     as.data.frame(
       Filter(Negate(is.null),
