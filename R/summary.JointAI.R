@@ -270,12 +270,12 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
         warnings <- attr(x$res[[k]]$rd_vcov, "warnings")
         attr(x$res[[k]]$rd_vcov, "warnings") <- NULL
         print(x$res[[k]]$rd_vcov, digits = digits, na.print = "")
-        if (!is.null(warnings)) {
+        if (!is.null(unlist(warnings))) {
           warnmsg(warnings)
         }
       }
 
-      if (!is.null(x$res[[k]]$sigma)) {
+if (!is.null(x$randomes[[k]]$sigma))  {
         cat("\nPosterior summary of residual std. deviation:\n")
         print(x$res[[k]]$sigma, digits = digits, na.print = "")
       }
