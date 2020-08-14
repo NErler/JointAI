@@ -387,30 +387,31 @@
 )
 
 <span class="fu"><a href="../reference/parameters.html">parameters</a></span>(<span class="no">lm3</span>)
-<span class="co">#&gt;    outcome                outcat               varname        coef</span>
-<span class="co">#&gt; 1      alc                  &lt;NA&gt;           (Intercept)    alpha[1]</span>
-<span class="co">#&gt; 2      alc                  &lt;NA&gt;                   age    alpha[2]</span>
-<span class="co">#&gt; 3      alc                  &lt;NA&gt;                    WC    alpha[3]</span>
-<span class="co">#&gt; 4      alc                  &lt;NA&gt;           smokeformer    alpha[4]</span>
-<span class="co">#&gt; 5      alc                  &lt;NA&gt;          smokecurrent    alpha[5]</span>
-<span class="co">#&gt; 6      alc                  &lt;NA&gt; occuplooking for work    alpha[6]</span>
-<span class="co">#&gt; 7      alc                  &lt;NA&gt;      occupnot working    alpha[7]</span>
-<span class="co">#&gt; 8    occup occuplooking for work           (Intercept)    alpha[8]</span>
-<span class="co">#&gt; 9    occup occuplooking for work                   age    alpha[9]</span>
-<span class="co">#&gt; 10   occup occuplooking for work                    WC   alpha[10]</span>
-<span class="co">#&gt; 11   occup occuplooking for work           smokeformer   alpha[11]</span>
-<span class="co">#&gt; 12   occup occuplooking for work          smokecurrent   alpha[12]</span>
-<span class="co">#&gt; 13   occup      occupnot working           (Intercept)   alpha[13]</span>
-<span class="co">#&gt; 14   occup      occupnot working                   age   alpha[14]</span>
-<span class="co">#&gt; 15   occup      occupnot working                    WC   alpha[15]</span>
-<span class="co">#&gt; 16   occup      occupnot working           smokeformer   alpha[16]</span>
-<span class="co">#&gt; 17   occup      occupnot working          smokecurrent   alpha[17]</span>
-<span class="co">#&gt; 18   smoke                  &lt;NA&gt;                   age   alpha[18]</span>
-<span class="co">#&gt; 19   smoke                  &lt;NA&gt;                    WC   alpha[19]</span>
-<span class="co">#&gt; 22   smoke                  &lt;NA&gt;                  &lt;NA&gt; gamma_smoke</span>
-<span class="co">#&gt; 20      WC                  &lt;NA&gt;           (Intercept)   alpha[20]</span>
-<span class="co">#&gt; 21      WC                  &lt;NA&gt;                   age   alpha[21]</span>
-<span class="co">#&gt; 23      WC                  &lt;NA&gt;                  &lt;NA&gt;    sigma_WC</span></pre></body></html></div>
+<span class="co">#&gt;    outcome                outcat               varname           coef</span>
+<span class="co">#&gt; 1      alc                  &lt;NA&gt;           (Intercept)       alpha[1]</span>
+<span class="co">#&gt; 2      alc                  &lt;NA&gt;                   age       alpha[2]</span>
+<span class="co">#&gt; 3      alc                  &lt;NA&gt;                    WC       alpha[3]</span>
+<span class="co">#&gt; 4      alc                  &lt;NA&gt;           smokeformer       alpha[4]</span>
+<span class="co">#&gt; 5      alc                  &lt;NA&gt;          smokecurrent       alpha[5]</span>
+<span class="co">#&gt; 6      alc                  &lt;NA&gt; occuplooking for work       alpha[6]</span>
+<span class="co">#&gt; 7      alc                  &lt;NA&gt;      occupnot working       alpha[7]</span>
+<span class="co">#&gt; 8    occup occuplooking for work           (Intercept)       alpha[8]</span>
+<span class="co">#&gt; 9    occup occuplooking for work                   age       alpha[9]</span>
+<span class="co">#&gt; 10   occup occuplooking for work                    WC      alpha[10]</span>
+<span class="co">#&gt; 11   occup occuplooking for work           smokeformer      alpha[11]</span>
+<span class="co">#&gt; 12   occup occuplooking for work          smokecurrent      alpha[12]</span>
+<span class="co">#&gt; 13   occup      occupnot working           (Intercept)      alpha[13]</span>
+<span class="co">#&gt; 14   occup      occupnot working                   age      alpha[14]</span>
+<span class="co">#&gt; 15   occup      occupnot working                    WC      alpha[15]</span>
+<span class="co">#&gt; 16   occup      occupnot working           smokeformer      alpha[16]</span>
+<span class="co">#&gt; 17   occup      occupnot working          smokecurrent      alpha[17]</span>
+<span class="co">#&gt; 18   smoke                  &lt;NA&gt;                   age      alpha[18]</span>
+<span class="co">#&gt; 19   smoke                  &lt;NA&gt;                    WC      alpha[19]</span>
+<span class="co">#&gt; 23   smoke                  &lt;NA&gt;                  &lt;NA&gt; gamma_smoke[1]</span>
+<span class="co">#&gt; 24   smoke                  &lt;NA&gt;                  &lt;NA&gt; gamma_smoke[2]</span>
+<span class="co">#&gt; 20      WC                  &lt;NA&gt;           (Intercept)      alpha[20]</span>
+<span class="co">#&gt; 21      WC                  &lt;NA&gt;                   age      alpha[21]</span>
+<span class="co">#&gt; 22      WC                  &lt;NA&gt;                  &lt;NA&gt;       sigma_WC</span></pre></body></html></div>
 <div id="side-note-getting-information-about-of-the-imputation-models" class="section level4">
 <h4 class="hasAnchor">
 <a href="#side-note-getting-information-about-of-the-imputation-models" class="anchor"></a>Side note: Getting information about of the imputation models</h4>
@@ -642,16 +643,12 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
-<span class="co">#&gt;                Mean     SD  2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
-<span class="co">#&gt; (Intercept)  81.886 9.5544 64.72 100.989    0.00000    1.01 0.0577</span>
-<span class="co">#&gt; genderfemale  0.435 2.6140 -4.96   5.790    0.88667    1.02 0.0593</span>
-<span class="co">#&gt; WC            0.305 0.0729  0.17   0.443    0.00000    1.01 0.0577</span>
-<span class="co">#&gt; alc&gt;=1        6.323 2.3885  1.64  11.100    0.00667    1.04 0.0720</span>
-<span class="co">#&gt; creat         6.944 7.4622 -6.47  20.903    0.38000    1.03 0.0577</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Posterior summary of residual std. deviation:</span>
-<span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span>
-<span class="co">#&gt; sigma_SBP 14.4 0.826   13  16.2    1.04 0.0577</span>
+<span class="co">#&gt;                Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
+<span class="co">#&gt; (Intercept)  82.044 9.8109 62.934 100.854    0.00000    1.00 0.0551</span>
+<span class="co">#&gt; genderfemale  0.270 2.8400 -5.016   6.029    0.89333    1.07 0.0577</span>
+<span class="co">#&gt; WC            0.301 0.0702  0.158   0.438    0.00000    1.01 0.0577</span>
+<span class="co">#&gt; alc&gt;=1        6.422 2.4808  1.501  11.197    0.00667    1.00 0.0577</span>
+<span class="co">#&gt; creat         7.306 7.6346 -6.965  21.891    0.36667    1.03 0.0577</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; MCMC settings:</span>
@@ -675,26 +672,26 @@
 <span class="co">#&gt; Potential scale reduction factors:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;              Point est. Upper C.I.</span>
-<span class="co">#&gt; (Intercept)       0.999       1.01</span>
-<span class="co">#&gt; genderfemale      1.004       1.02</span>
+<span class="co">#&gt; (Intercept)       0.997       1.00</span>
+<span class="co">#&gt; genderfemale      1.021       1.07</span>
 <span class="co">#&gt; WC                0.999       1.01</span>
-<span class="co">#&gt; alc&gt;=1            1.010       1.04</span>
+<span class="co">#&gt; alc&gt;=1            0.998       1.00</span>
 <span class="co">#&gt; creat             1.005       1.03</span>
-<span class="co">#&gt; sigma_SBP         1.010       1.04</span>
+<span class="co">#&gt; sigma_SBP         1.011       1.05</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Multivariate psrf</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; 1.02</span>
+<span class="co">#&gt; 1.03</span>
 
 <span class="co"># Monte Carlo Error of the MCMC sample</span>
 <span class="fu"><a href="../reference/MC_error.html">MC_error</a></span>(<span class="no">lm5</span>)
-<span class="co">#&gt;                est   MCSE    SD MCSE/SD</span>
-<span class="co">#&gt; (Intercept)  81.89 0.5516 9.554   0.058</span>
-<span class="co">#&gt; genderfemale  0.43 0.1551 2.614   0.059</span>
-<span class="co">#&gt; WC            0.31 0.0042 0.073   0.058</span>
-<span class="co">#&gt; alc&gt;=1        6.32 0.1720 2.388   0.072</span>
-<span class="co">#&gt; creat         6.94 0.4308 7.462   0.058</span>
-<span class="co">#&gt; sigma_SBP    14.45 0.0477 0.826   0.058</span></pre></body></html></div>
+<span class="co">#&gt;                est   MCSE   SD MCSE/SD</span>
+<span class="co">#&gt; (Intercept)  82.04 0.5410 9.81   0.055</span>
+<span class="co">#&gt; genderfemale  0.27 0.1640 2.84   0.058</span>
+<span class="co">#&gt; WC            0.30 0.0041 0.07   0.058</span>
+<span class="co">#&gt; alc&gt;=1        6.42 0.1432 2.48   0.058</span>
+<span class="co">#&gt; creat         7.31 0.4408 7.63   0.058</span>
+<span class="co">#&gt; sigma_SBP    14.39 0.0446 0.77   0.058</span></pre></body></html></div>
 <p>When <code>analysis_main</code> was not switched on the default behaviour is that all parameters are displayed:</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># Re-run the model from above, now creating MCMC samples</span>
 <span class="no">lm4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">WC</span> + <span class="no">alc</span> + <span class="no">creat</span>,
@@ -713,17 +710,17 @@
 <span class="co">#&gt; Potential scale reduction factors:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                     Point est. Upper C.I.</span>
-<span class="co">#&gt; alc: (Intercept)         1.038      1.127</span>
-<span class="co">#&gt; alc: genderfemale        1.067      1.219</span>
-<span class="co">#&gt; alc: WC                  1.006      1.023</span>
-<span class="co">#&gt; alc: creat               1.037      1.106</span>
-<span class="co">#&gt; creat: (Intercept)       1.005      1.007</span>
-<span class="co">#&gt; creat: genderfemale      1.015      1.057</span>
-<span class="co">#&gt; creat: WC                1.007      1.016</span>
-<span class="co">#&gt; WC: (Intercept)          1.005      1.010</span>
-<span class="co">#&gt; WC: genderfemale         0.999      0.999</span>
-<span class="co">#&gt; sigma_creat              1.000      1.002</span>
-<span class="co">#&gt; sigma_WC                 1.002      1.003</span>
+<span class="co">#&gt; alc: (Intercept)         1.046       1.16</span>
+<span class="co">#&gt; alc: genderfemale        1.043       1.15</span>
+<span class="co">#&gt; alc: WC                  1.006       1.01</span>
+<span class="co">#&gt; alc: creat               1.074       1.25</span>
+<span class="co">#&gt; creat: (Intercept)       1.010       1.05</span>
+<span class="co">#&gt; creat: genderfemale      1.017       1.06</span>
+<span class="co">#&gt; creat: WC                1.012       1.05</span>
+<span class="co">#&gt; WC: (Intercept)          1.000       1.01</span>
+<span class="co">#&gt; WC: genderfemale         1.006       1.02</span>
+<span class="co">#&gt; sigma_creat              1.007       1.03</span>
+<span class="co">#&gt; sigma_WC                 0.999       1.01</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Multivariate psrf</span>
 <span class="co">#&gt; </span>
@@ -739,16 +736,12 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
-<span class="co">#&gt;                Mean     SD  2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
-<span class="co">#&gt; (Intercept)  81.886 9.5544 64.72 100.989    0.00000    1.01 0.0577</span>
-<span class="co">#&gt; genderfemale  0.435 2.6140 -4.96   5.790    0.88667    1.02 0.0593</span>
-<span class="co">#&gt; WC            0.305 0.0729  0.17   0.443    0.00000    1.01 0.0577</span>
-<span class="co">#&gt; alc&gt;=1        6.323 2.3885  1.64  11.100    0.00667    1.04 0.0720</span>
-<span class="co">#&gt; creat         6.944 7.4622 -6.47  20.903    0.38000    1.03 0.0577</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Posterior summary of residual std. deviation:</span>
-<span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span>
-<span class="co">#&gt; sigma_SBP 14.4 0.826   13  16.2    1.04 0.0577</span>
+<span class="co">#&gt;                Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
+<span class="co">#&gt; (Intercept)  82.044 9.8109 62.934 100.854    0.00000    1.00 0.0551</span>
+<span class="co">#&gt; genderfemale  0.270 2.8400 -5.016   6.029    0.89333    1.07 0.0577</span>
+<span class="co">#&gt; WC            0.301 0.0702  0.158   0.438    0.00000    1.01 0.0577</span>
+<span class="co">#&gt; alc&gt;=1        6.422 2.4808  1.501  11.197    0.00667    1.00 0.0577</span>
+<span class="co">#&gt; creat         7.306 7.6346 -6.965  21.891    0.36667    1.03 0.0577</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; MCMC settings:</span>

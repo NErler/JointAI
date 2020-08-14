@@ -19,6 +19,9 @@
     <loc>https://nerler.github.io/JointAI//reference/NHANES.html</loc>
   </url>
   <url>
+    <loc>https://nerler.github.io/JointAI//reference/PBC.html</loc>
+  </url>
+  <url>
     <loc>https://nerler.github.io/JointAI//reference/Surv.html</loc>
   </url>
   <url>
@@ -71,9 +74,6 @@
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/parameters.html</loc>
-  </url>
-  <url>
-    <loc>https://nerler.github.io/JointAI//reference/pbc.html</loc>
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/plot.JointAI.html</loc>
