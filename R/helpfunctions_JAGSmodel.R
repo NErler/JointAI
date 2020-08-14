@@ -327,7 +327,8 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
           get_index,
           resplvl = resplvl,
           indices = info$index,
-          isgk = F
+          surv_lvl = info$surv_lvl,
+          isgk = isgk
         ),
         has_rdintercept = attr(info$hc_list$hcvars[[lvl]],
                                "rd_intercept"),
