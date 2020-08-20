@@ -74,11 +74,11 @@ get_groups <- function(idvar, data) {
       if (sum(gr_length) == 1L) {
         errormsg("The grouping level %s seem to be unnecessary.
                  There are only unique observations at this level.",
-                 names(gr_length[gr_length]))
+                 dQuote(names(gr_length[gr_length])))
       } else {
         errormsg("The grouping levels %s seem to be unnecessary.
                  There are only unique observations at these levels.",
-                 names(gr_length[gr_length]))
+                 paste_and(dQuote(names(gr_length[gr_length]))))
       }
     }
 
@@ -89,7 +89,8 @@ get_groups <- function(idvar, data) {
     if (any(gr_dupl)) {
       gr_dupl2 <- duplicated(groups, fromLast = TRUE)
       errormsg("The grouping levels %s are duplicates.",
-               unique(names(groups)[gr_dupl], names(groups)[gr_dupl2]))
+               paste_and(dQuote(unique(c(names(groups)[gr_dupl],
+                                         names(groups)[gr_dupl2])))))
     }
   } else {
     groups <- list(lvlone = seq_len(nrow(data)))
