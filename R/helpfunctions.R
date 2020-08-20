@@ -335,7 +335,7 @@ replace_trafo <- function(nam, trafos) {
 #' (the \code{"Surv(time, status)"} specification) into a valid variable name
 #' so that it can be used in the JAGS model syntax.
 #'
-#' @param x a character string
+#' @param x a character string or vector of character strings
 #'
 #' @examples
 #' clean_survname("Surv(eventtime, event != 'censored')")
@@ -343,19 +343,30 @@ replace_trafo <- function(nam, trafos) {
 #' @export
 
 clean_survname <- function(x) {
-  # replace symbols not allowed in variable names to create a valid variable
-  # name replacing the survival model outcome string in the JAGS model.
-  x <- gsub(",* *type * = * [[:print:]]*", "", x)
-  x <- gsub("[)\'\"]", "", x)
-  x <- gsub("[[:punct:]]* *I\\(", "_", x)
-  x <- gsub(" *== *", "_", x)
-  x <- gsub(" *!= *", "_", x)
-  x <- gsub(" *<=* *", "_", x)
-  x <- gsub(" *>=* *", "_", x)
-  x <- gsub(" *, *", "_", x)
-  x <- gsub("\\(", "_", x)
 
-  abbreviate(x, minlength = 15L, use.classes = TRUE)
+  # use cvapply in case x is a vector of variable names
+  cvapply(x, function(z) {
+    is_surv <- grepl("^Surv\\(", z)
+
+    if (is_surv) {
+
+      # replace symbols not allowed in variable names to create a valid variable
+      # name replacing the survival model outcome string in the JAGS model.
+      z <- gsub(",* *type * = * [[:print:]]*", "", z)
+      z <- gsub("[)\'\"]", "", z)
+      z <- gsub("[[:punct:]]* *I\\(", "_", z)
+      z <- gsub(" *== *", "_", z)
+      z <- gsub(" *!= *", "_", z)
+      z <- gsub(" *<=* *", "_", z)
+      z <- gsub(" *>=* *", "_", z)
+      z <- gsub(" *, *", "_", z)
+      z <- gsub("\\(", "_", z)
+
+      abbreviate(z, minlength = 15L, use.classes = TRUE)
+    } else {
+      z
+    }
+  })
 }
 
 
