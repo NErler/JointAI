@@ -599,3 +599,13 @@ D_y_id[1,1]   0    0  0     NaN
 D_y_id[1,2]   0    0  0     NaN
 D_y_id[2,2]   0    0  0     NaN
 
+$m9a
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+c1            0    0  0     NaN
+b11           0    0  0     NaN
+time          0    0  0     NaN
+sigma_y       0    0  0     NaN
+D_y_id[1,1]   0    0  0     NaN
+D_y_o1[1,1]   0    0  0     NaN
+

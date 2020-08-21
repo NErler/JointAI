@@ -506,3 +506,12 @@ o1.Q           0  0    0     0          0     NaN    NaN
 c1:b11         0  0    0     0          0     NaN    NaN
 
 
+$m9a
+$m9a$y
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+c1             0  0    0     0          0     NaN    NaN
+b11            0  0    0     0          0     NaN    NaN
+time           0  0    0     0          0     NaN    NaN
+
+
