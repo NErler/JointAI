@@ -996,7 +996,7 @@ or <code><a href='https://rdrr.io/pkg/survival/man/strata.html'>strata</a></code
 
 <span class='co'># Example 4: Parametric Weibull survival model</span>
 <span class='no'>mod4</span> <span class='kw'>&lt;-</span> <span class='fu'>survreg_imp</span>(<span class='fu'><a href='Surv.html'>Surv</a></span>(<span class='no'>time</span>, <span class='no'>status</span>) ~ <span class='no'>age</span> + <span class='no'>sex</span> + <span class='no'>meal.cal</span> + <span class='no'>wt.loss</span>,
-                    <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw pkg'>survival</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/survival/man/lung.html'>lung</a></span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+                    <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw pkg'>survival</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/survival/man/lung.html'>lung</a></span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>The variables “status”, “sex” were converted to factors.</span></div><div class='input'>
 
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {

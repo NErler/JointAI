@@ -203,14 +203,14 @@ so that it can be used in the JAGS model syntax.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a character string</p></td>
+      <td><p>a character string or vector of character strings</p></td>
     </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>clean_survname</span>(<span class='st'>"Surv(eventtime, event != 'censored')"</span>)</div><div class='output co'>#&gt; Surv_eventtime_event_censored 
-#&gt;             "Srv_vnttm_vnt_c" </div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>clean_survname</span>(<span class='st'>"Surv(eventtime, event != 'censored')"</span>)</div><div class='output co'>#&gt; Surv(eventtime, event != 'censored') 
+#&gt;                    "Srv_vnttm_vnt_c" </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
