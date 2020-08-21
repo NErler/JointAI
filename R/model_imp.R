@@ -540,7 +540,7 @@
 #'
 #' # Example 4: Parametric Weibull survival model
 #' mod4 <- survreg_imp(Surv(time, status) ~ age + sex + meal.cal + wt.loss,
-#'                     data = survival::lung, n.iter = 200)
+#'                     data = survival::lung, n.iter = 100)
 #'
 #'
 #' \dontrun{
