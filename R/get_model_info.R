@@ -21,6 +21,12 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
   link <- get_link(Mlist$models[k])
 
 
+  if (modeltype %in% c("glm", "clm", "mlogit") & !is.null(Mlist$random[[k]])) {
+    errormsg("There is a random effects structure specified for the variable %s,
+             but %s is being modeled with a model of type %s.",
+             dQuote(k), dQuote(k), dQuote(modeltype))
+  }
+
   # response matrix and column(s) --------------------------------------------
   resp_mat <- if (k %in% names(Mlist$Mlvls)) {
     # if the variable is a column of one of the design matrices, use the level
