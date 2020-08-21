@@ -7,7 +7,7 @@
 clean_survname(x)
 }
 \arguments{
-\item{x}{a character string}
+\item{x}{a character string or vector of character strings}
 }
 \description{
 A helper function that converts the "name of a survival model"
