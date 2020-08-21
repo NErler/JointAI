@@ -270,6 +270,11 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
                       n.iter = 10, n.adapt = 5, seed = 2020,
                       warn = FALSE, mess = FALSE),
 
+        m8n = lme_imp(y ~ c1 + C1 * time + b1 + B2,
+                      random = ~C1 * time|id, data = longDF,
+                      n.iter = 10, n.adapt = 5, seed = 2020,
+                      warn = FALSE, mess = FALSE),
+
         # only lvl-1 variables, crossed random effects
         m9a = lme_imp(y ~ c1 + b1 + time + (1|id) + (1 | o1), data = longDF,
                       n.iter = 10, n.adapt = 5, seed = 2020,

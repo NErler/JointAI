@@ -313,16 +313,28 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
 
       # generate the random slope part to enter the linear predictor of
       # the outcome
-      rds <- get_rds(info$hc_list$hcvars[[lvl]]$rd_slope_coefs,
-                     lvl = lvl,
-                     varname = info$varname,
-                     index = index,
-                     out_index = if (!isgk) info$index[[resplvl]] else index,
-                     has_rdintercept = attr(info$hc_list$hcvars[[lvl]],
-                                            "rd_intercept"),
-                     scale_pars = info$scale_pars,
-                     isgk = isgk)
-
+      rds_data_lvls <- gsub("M_",
+                            "",
+                            cvapply(info$hc_list$hcvars[[lvl]]$rd_slope_coefs,
+                                    "[[", "matrix"))
+      rds <- get_rds(
+        rd_slope_coefs = info$hc_list$hcvars[[lvl]]$rd_slope_coefs,
+        lvl = lvl,
+        varname = info$varname,
+        index = index,
+        out_index = cvapply(
+          rds_data_lvls,
+          get_index,
+          resplvl = resplvl,
+          indices = info$index,
+          surv_lvl = info$surv_lvl,
+          isgk = isgk
+        ),
+        has_rdintercept = attr(info$hc_list$hcvars[[lvl]],
+                               "rd_intercept"),
+        scale_pars = info$scale_pars,
+        isgk = isgk
+      )
 
       # write the syntax for other longitudinal variables
       other <- if (!is.null(info$hc_list$othervars[[lvl]])) {
@@ -462,7 +474,7 @@ get_rds <- function(rd_slope_coefs, lvl, varname, index, out_index,
         paste_scaling(
           paste_data(
             matnam = rdsc$matrix,
-            index = out_index,
+            index = out_index[q],
             col = rdsc$cols, isgk = isgk),
           rows = rdsc$cols,
           scale_pars = scale_pars[[unique(rdsc$matrix)]],

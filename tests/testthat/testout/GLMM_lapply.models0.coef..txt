@@ -454,6 +454,16 @@ $m8m$y
           0           0           0           0 
 
 
+$m8n
+$m8n$y
+(Intercept)          C1         B21          c1        time         b11 
+          0           0           0           0           0           0 
+    C1:time     sigma_y D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] D_y_id[1,3] 
+          0           0           0           0           0           0 
+D_y_id[2,3] D_y_id[3,3] D_y_id[1,4] D_y_id[2,4] D_y_id[3,4] D_y_id[4,4] 
+          0           0           0           0           0           0 
+
+
 $m9a
 $m9a$y
 (Intercept)          c1         b11        time     sigma_y D_y_id[1,1] 

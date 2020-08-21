@@ -110,7 +110,7 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
       if (length(unlist(i$lp)) > 0)
         cat(strwrap(paste0(names(unlist(unname(i$lp))), collapse = ", "),
                     prefix = "\n", initial = '', exdent = 2, indent = 2),
-          "\n")
+            "\n")
       else
         cat(' (no predictor variables)', '\n')
     }
@@ -147,17 +147,17 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
         cat("* Precision of ", dQuote(i$varname), ":\n")
         cat(paste0(tab(), "tau_", i$varname, " ",
 
-            if (priors) {
-              paste0("(Gamma prior with shape parameter ",
-                     object$data_list[[paste0("shape_tau_",
-                                              get_priortype(i$modeltype,
-                                                            i$family))]],
-                    " and rate parameter ",
-                    object$data_list[[paste0("rate_tau_",
-                                             get_priortype(i$modeltype,
-                                                           i$family))]],
-                    ")")
-           }, "\n"))
+                   if (priors) {
+                     paste0("(Gamma prior with shape parameter ",
+                            object$data_list[[paste0("shape_tau_",
+                                                     get_priortype(i$modeltype,
+                                                                   i$family))]],
+                            " and rate parameter ",
+                            object$data_list[[paste0("rate_tau_",
+                                                     get_priortype(i$modeltype,
+                                                                   i$family))]],
+                            ")")
+                   }, "\n"))
       }
       if (i$modeltype %in% c('clm', 'clmm')) {
         cat(paste0("* Intercepts:\n",
@@ -174,8 +174,8 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
           cat(paste0(tab(), "- ", levels(object$Mlist$refs[[i$varname]])[j],
                      ": gamma_", i$varname, "[", j, "] = gamma_",
                      i$varname, "[", j - 1, "] + exp(delta_",
-                       i$varname, "[", j - 1, "])\n"))
-          }
+                     i$varname, "[", j - 1, "])\n"))
+        }
         cat(paste0("* Increments:\n",
                    tab(), "delta_", i$varname,
                    "[",print_seq(1,
@@ -194,17 +194,17 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
                    tab(), 'shape_', i$varname,
                    if (priors) {
                      ' (exponential prior with rate 0.01)'
-                     }, "\n"))
+                   }, "\n"))
       }
       if (i$modeltype %in% c('coxph', 'JM')) {
         cat(paste0('* Regression coefficients of the baseline hazard:\n',
                    tab(), 'beta_Bh0_', i$varname, "[",
                    print_seq(1, i$df_basehaz),
                    "]",
-            if (priors) {
-              paste0(" (normal priors with mean ", object$data_list$mu_reg_surv,
-                     " and precision ", object$data_list$tau_reg_surv, ")")
-            }, "\n"))
+                   if (priors) {
+                     paste0(" (normal priors with mean ", object$data_list$mu_reg_surv,
+                            " and precision ", object$data_list$tau_reg_surv, ")")
+                   }, "\n"))
         if (i$modeltype %in% 'JM') {
           cat(paste0("* association types:\n",
                      paste0(tab(), "- ", names(i$assoc_type), ": ",
@@ -219,107 +219,10 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 
 
 
-#' Parameter names of an JointAI object
-#'
-#' Returns the names of the parameters/nodes of an object of class 'JointAI' for
-#' which a monitor is set.
-#'
-#' @inheritParams sharedParams
-#' @param ... currently not used
-#'
-#' @examples
-#' # (This function does not need MCMC samples to work, so we will set
-#' # n.adapt = 0 and n.iter = 0 to reduce computational time)
-#' mod1 <- lm_imp(y ~ C1 + C2 + M2 + O2 + B2, data = wideDF, n.adapt = 0,
-#'                n.iter = 0, mess = FALSE)
-#'
-#' parameters(mod1)
-#'
-#' @export
-#'
-parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
-
-  if (!inherits(object, "JointAI"))
-    errormsg("Use only with 'JointAI' objects.")
-
-  args <- as.list(match.call())
-
-  if (is.null(object$MCMC) & mess)
-    msg("Note: %s does not contain MCMC samples.", dQuote(args$object))
-
-  # the variable.names that were passed to JAGS
-  vnam <- object$mcmc_settings$variable.names
-
-  if (any(grepl("^beta_Bh0", vnam))) {
-    basehaz_pars <- grep("^beta_Bh0", vnam)
-
-    for (k in basehaz_pars) {
-      vnam <- c(vnam,
-                paste0(vnam[basehaz_pars],
-                       "[", seq_len(object$Mlist$df_basehaz), "]")
-      )
-    }
-    vnam <- vnam[-basehaz_pars]
-  }
-
-  # the coef_list, containing the regression coefficient info
-  coefs <- do.call(rbind, object$coef_list)
-
-  # figure out which part of vnam is already included in "coefs" and which part
-  # needs to be added
-  rows <- unlist(lapply(paste0('\\b', vnam, '\\b'), grep, x = coefs$coef))
-  add <- sapply(vnam, function(x) {
-    !any(grepl(paste0('\\b', x, '\\b'), coefs$coef))
-  })
-
-
-
-
-  df_names <- if (is.null(coefs)) {
-    c("outcome", "outcat", "varname", "coef")
-  } else {
-    names(coefs)
-  }
-  add_pars <- as.list(setNames(rep(NA, length(df_names)), df_names))
-  add_pars$coef <- vnam[add]
-
-
-  # identify which outcome the remaining parameters belong to by matching the
-  # outcome names with the parameter names
-  patterns <- lapply(clean_survname(names(object$coef_list)), function(out) {
-    paste0("_", out, "$|_", out, "_|_", out, "\\[")
-  })
-
-  out_match <- regmatches(add_pars$coef,
-                          regexpr(paste0(patterns, collapse = "|"),
-                                  add_pars$coef))
-
-  if (length(out_match) > 0) {
-    add_pars$outcome <- gsub("^_|_$|\\[$", "", out_match)
-  }
-
-
-  params <- if (any(add)) {
-    rbind(coefs[rows, , drop = FALSE],
-          as.data.frame(add_pars))
-  } else {
-    coefs
-  }
-
-  rownames(params) <- NULL
-
-  params <- params[, setdiff(names(params), 'varnam_print')]
-
-  # has to be sorted so that the additional parameters are together with the
-  # regression coefficients
-  params[order(match(params$outcome,
-                     clean_survname(names(object$coef_list)))), ]
-}
-
 
 # help functions ---------------------------------------------------------------
 
-# used in print_functions.R (2020-06-12)
+# used in list_models (2020-08-13)
 print_seq <- function(min, max) {
   if (min == max)
     max
@@ -329,12 +232,7 @@ print_seq <- function(min, max) {
 
 
 
-# used in print_functions.R
-print_title <- function(name, var) {
-  cat(paste0(name, " model for ", dQuote(var), "\n"))
-}
-
-# used in print_functions.R
+# used in list_models()
 print_refcat <- function(rc) {
   cat(paste0("* Reference category: ", dQuote(rc), "\n"))
 }
@@ -360,9 +258,9 @@ get_priortype <- function(modeltype, family) {
          'clmm' = 'ordinal',
          'mlogit' = 'multinomial',
          'mlogitmm' = 'multinomial',
-        'survreg' = 'surv',
-        'coxph' = 'surv',
-        'JM' = 'surv')
+         'survreg' = 'surv',
+         'coxph' = 'surv',
+         'JM' = 'surv')
 }
 
 
@@ -374,3 +272,4 @@ paste_regcoef_prior <- function(data_list, modeltype, family) {
          data_list[[paste0('tau_reg_', get_priortype(modeltype, family))]],
          ")")
 }
+

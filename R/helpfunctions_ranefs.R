@@ -51,11 +51,51 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
   }
 
   if (length(newrandom) > 0) {
-    hc_list <- mapply(get_hc_list, lvl = lvls, rdfmla = newrandom,
-                      MoreArgs = list(Mlist = Mlist), SIMPLIFY = FALSE)
+    hc_list <- mapply(
+      get_hc_list,
+      lvl = lvls,
+      rdfmla = newrandom,
+      MoreArgs = list(Mlist = Mlist),
+      SIMPLIFY = FALSE
+    )
 
-    orga_hc_parelmts(resplvl, lvls, all_lvls = all_lvls, hc_list = hc_list,
-                     parelmts = parelmts, lp = lp)
+    incompl <- lapply(hc_list, attr, "incomplete")
+
+
+    warnings <- nlapply(names(incompl), function(lvl) {
+      if (any(incompl[[lvl]]) &&
+          any(!is.na(do.call(rbind, unname(
+            Mlist$scale_pars
+          )))[names(incompl[[lvl]]), ])) {
+        w <- warnmsg(
+          "There are missing values in a variable for which a random effect
+          is specified (%s). It will not be possible to re-scale the
+          random effects %s and their variance covariance matrix %s back
+          to the original scale of the data. If you are not interested in
+          the estimated random effects or their (co)variances this is not a
+          problem. The fixed effects estimates are not affected by this.
+          If you are interested in the random effects or the (co)variances
+          you need to specify that %s are not scaled (using the argument %s).",
+          dQuote(names(incompl[[lvl]])[incompl[[lvl]]]),
+          dQuote(paste0("b_", varname, "_", lvl)),
+          dQuote(paste0("D_", varname, "_", lvl)),
+          paste_and(dQuote(names(incompl[[lvl]]))),
+          dQuote("scale_params")
+        )
+        w
+      }
+    })
+
+    structure(
+      orga_hc_parelmts(
+      resplvl,
+      lvls,
+      all_lvls = all_lvls,
+      hc_list = hc_list,
+      parelmts = parelmts,
+      lp = lp
+    ),
+    warnings = warnings)
   }
 }
 
@@ -81,8 +121,10 @@ get_hc_list <- function(lvl, rdfmla, Mlist) {
                  contrasts.arg = contr_list[intersect(all_vars(rdfmla),
                                                       names(contr_list))]))
 
+
+
   # check for involvement in interactions
-  inters <- Mlist$interactions
+  inters <- Mlist$interactions[!names(Mlist$interactions) %in% Znam]
 
   # identify if there are elements of interaction in Z
   inZ <- if (length(inters) > 0)
@@ -103,7 +145,9 @@ get_hc_list <- function(lvl, rdfmla, Mlist) {
         }
       )
     }, simplify = FALSE),
-    intercept = attr(terms(rdfmla), 'intercept')
+    intercept = attr(terms(rdfmla), 'intercept'),
+    incomplete = lvapply(Mlist$data[, all_vars(rdfmla), drop = FALSE],
+                         function(x) any(is.na(x)))
   )
 }
 
@@ -198,7 +242,8 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_list, parelmts, lp) {
            rd_slope_coefs = rd_slope_coefs,
            rd_slope_interact_coefs = rd_slope_interact_coefs
       ),
-      'rd_intercept' = "(Intercept)" %in% names(hc_list[[k]])
+      'rd_intercept' = "(Intercept)" %in% names(hc_list[[k]]),
+      "incomplete" = attr(hc_list[[k]], "incomplete")
     )
   }, simplify = FALSE)
 

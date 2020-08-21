@@ -150,6 +150,7 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
           function(i) length(unique(i)) == 1)
 
           Ds[Ddiag, "tail-prob."] <- NA
+          attr(Ds, "warnings") <- attr(object$info_list[[varname]]$hc_list, "warnings")
           Ds
         }
       }
@@ -266,10 +267,15 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
 
       if (!is.null(x$res[[k]]$rd_vcov)) {
         cat("\nPosterior summary of random effects covariance matrix:\n")
+        warnings <- attr(x$res[[k]]$rd_vcov, "warnings")
+        attr(x$res[[k]]$rd_vcov, "warnings") <- NULL
         print(x$res[[k]]$rd_vcov, digits = digits, na.print = "")
+        if (!is.null(unlist(warnings))) {
+          warnmsg(warnings)
+        }
       }
 
-      if (!is.null(x$res[[k]]$sigma)) {
+      if (!is.null(x$res[[k]]$sigma))  {
         cat("\nPosterior summary of residual std. deviation:\n")
         print(x$res[[k]]$sigma, digits = digits, na.print = "")
       }
@@ -515,23 +521,41 @@ print.JointAI <- function(x, digits = max(4, getOption("digits") - 4), ...) {
 
     for (k in seq_along(coefs)) {
       varname <- names(coefs)[k]
+
+      intercepts <- if (x$info_list[[varname]]$modeltype %in%
+                        c("clm", "clmm")) {
+        stats <- t(t(colMeans(MCMC[, grep(paste0("gamma_", varname),
+                                          colnames(MCMC))])))
+        get_intercepts(stats, varname,
+                       lvls = levels(x$Mlist$refs[[varname]]),
+                       rev = x$info_list[[varname]]$rev)
+      }
+
       cat("\n", "Bayesian",
           print_type(x$info_list[[varname]]$modeltype,
                      x$info_list[[varname]]$family), "for",
           dQuote(varname), "\n")
       if (x$info_list[[names(coefs)[k]]]$modeltype %in%
           c("glmm", "clmm", "mlogitmm")) {
-        cat("\nFixed effects:\n")
-        print(coefs[[k]], digits = digits)
+
+        if (!is.null(intercepts) |
+            length(coefs[[k]][x$coef_list[[varname]]$varname]) > 0) {
+          cat("\nFixed effects:\n")
+          print(c(setNames(c(intercepts), rownames(intercepts)),
+                  coefs[[k]][x$coef_list[[varname]]$varname]),
+                digits = digits)
+        }
 
         cat("\n\nRandom effects covariance matrix:\n")
         print(get_Dmat(object = x, varname = varname), digits = digits)
 
       } else {
-        if (length(coefs[[k]] > 0)) {
+        if (length(coefs[[k]][x$coef_list[[varname]]$varname] > 0) |
+            !is.null(intercepts)) {
           cat("\n\nCoefficients:\n")
-          print(coefs[[k]], digits = digits)
-        }
+          print(c(setNames(c(intercepts), rownames(intercepts)),
+                  coefs[[k]][x$coef_list[[varname]]$varname]),
+                digits = digits)        }
       }
 
       if (paste0("sigma_", varname) %in% colnames(MCMC)) {
@@ -593,7 +617,7 @@ get_missinfo <- function(object) {
 
   complcases <- lapply(names(groups), function(k) {
     cc <- complete.cases(object$data[match(unique(groups[[k]]), groups[[k]]),
-                               names(data_lvls[data_lvls == k])])
+                                     names(data_lvls[data_lvls == k])])
 
     as.data.frame(
       Filter(Negate(is.null),

@@ -158,7 +158,8 @@ get_intercepts <- function(stats, varname, lvls, rev = FALSE) {
   # - varname: name of the ordinal outcome variable
   # - lvls: levels of the ordinal factor
 
-  interc <- stats[grep(paste0("gamma_", varname), rownames(stats)), ]
+  interc <- stats[grep(paste0("gamma_", varname), rownames(stats)), ,
+                  drop = FALSE]
   attr(interc, "rownames_orig") <- rownames(interc)
 
   if (isTRUE(rev)) {
