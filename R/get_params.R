@@ -233,11 +233,13 @@ get_ranefpars <- function(info_list, Mlist, args, set = "main") {
   if (args[[paste0("RinvD_", set)]]) {
     params <- c(params,
                 unlist(lapply(ranef_info, function(x) {
-                  lapply(x$lvls, function(lvl) {
-                    paste0("RinvD_", x$varname, "_", lvl,
-                           "[", seq.int(max(1L, x$nranef[lvl])), ",",
-                           seq.int(max(1L, x$nranef[lvl])), "]")
-                  })
+                  if (x$nranef > 1) {
+                    lapply(x$lvls, function(lvl) {
+                      paste0("RinvD_", x$varname, "_", lvl,
+                             "[", seq.int(max(1L, x$nranef[lvl])), ",",
+                             seq.int(max(1L, x$nranef[lvl])), "]")
+                    })
+                  }
                 })))
   }
 
