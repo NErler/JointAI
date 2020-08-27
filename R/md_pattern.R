@@ -58,6 +58,7 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
   colnames(unaX) <- seq_len(ncol(unaX))
   Nmis <- sort(Nmis)
 
+
   if (plot) {
     if (!requireNamespace('ggplot2', quietly = TRUE))
       errormsg("This function requires the 'ggplot2' package to be installed.")
@@ -96,13 +97,21 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
             axis.text.x.top = ggplot2::element_text(angle = -90, hjust = 1)) +
       ggplot2::ylab(ylab) +
       ggplot2::xlab('')
-    print(p)
+    # print(p)
   }
 
   if (pattern) {
     rownames(unaX) <- seq_len(nrow(unaX))
     colnames(unaX) <- vars
-    rbind(cbind(unaX, Npat = Npat),
-          Nmis = c(Nmis, sum(Nmis)))
+    md_pat <- rbind(cbind(unaX, Npat = Npat),
+                    Nmis = c(Nmis, sum(Nmis)))
+  }
+
+  if (plot & pattern) {
+    list(plot = p, pattern = md_pat)
+  } else if (plot) {
+    p
+  } else if (pattern) {
+    md_pat
   }
 }
