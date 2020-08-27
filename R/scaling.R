@@ -231,7 +231,7 @@ rescale_rd_vcov <- function(MCMC, rdvcov_scale) {
 rescale_ranefs <- function(MCMC, rdvcov_scale, groups) {
   if (!is.null(unlist(rdvcov_scale))) {
     for (var in names(rdvcov_scale)) {
-      for(lvl in names(rdvcov_scale[[var]])) {
+      for (lvl in names(rdvcov_scale[[var]])) {
         colnams <- grep(paste0("b_", var, "_", lvl, "\\["),
                         colnames(MCMC), value = TRUE)
 
@@ -244,10 +244,11 @@ rescale_ranefs <- function(MCMC, rdvcov_scale, groups) {
           pos <- data.frame(apply(pos, 2, as.numeric))
           pos$name <- colnams
 
-          for(i in unique(groups[[lvl]])) {
+          for (i in unique(groups[[lvl]])) {
             MCMC[, pos$name[pos$X1 == i]] <-
               MCMC[, pos$name[pos$X1 == i]] %*%
-              t(MASS::ginv(rdvcov_scale[[var]][[lvl]]$z[groups[[lvl]] == i,]) %*%
+              t(MASS::ginv(rdvcov_scale[[var]][[lvl]]$z[groups[[lvl]] == i, ,
+                                                        drop = FALSE]) %*%
                   rdvcov_scale[[var]][[lvl]]$z_scaled[groups[[lvl]] == i,])
           }
         }
