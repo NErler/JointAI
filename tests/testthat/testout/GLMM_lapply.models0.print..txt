@@ -1381,6 +1381,53 @@ $o1
 Residual standard deviation:
 sigma_y 
       0 
+
+Call:
+lme_imp(fixed = y ~ C1 + C2 + B1 + time + (time | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = c(analysis_random = TRUE), 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear mixed model for "y" 
+
+Fixed effects:
+(Intercept)          C1          C2         B11        time 
+          0           0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept) time
+(Intercept)           0    0
+time                  0    0
+
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+Call:
+lme_imp(fixed = y ~ C1 + C2 + B1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = c(analysis_random = TRUE), 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear mixed model for "y" 
+
+Fixed effects:
+(Intercept)          C1          C2         B11 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept)
+(Intercept)           0
+
+
+
+Residual standard deviation:
+sigma_y 
+      0 
 $m0a1
 
 Call:
@@ -2877,6 +2924,57 @@ $id
 (Intercept)           0
 
 $o1
+            (Intercept)
+(Intercept)           0
+
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m9b
+
+Call:
+lme_imp(fixed = y ~ C1 + C2 + B1 + time + (time | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = c(analysis_random = TRUE), 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear mixed model for "y" 
+
+Fixed effects:
+(Intercept)          C1          C2         B11        time 
+          0           0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
+            (Intercept) time
+(Intercept)           0    0
+time                  0    0
+
+
+
+Residual standard deviation:
+sigma_y 
+      0 
+
+$m9c
+
+Call:
+lme_imp(fixed = y ~ C1 + C2 + B1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = c(analysis_random = TRUE), 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+ Bayesian linear mixed model for "y" 
+
+Fixed effects:
+(Intercept)          C1          C2         B11 
+          0           0           0           0 
+
+
+Random effects covariance matrix:
+$id
             (Intercept)
 (Intercept)           0
 

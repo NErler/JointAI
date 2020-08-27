@@ -527,3 +527,22 @@ b11            0  0    0     0          0     NaN    NaN
 time           0  0    0     0          0     NaN    NaN
 
 
+$m9b
+$m9b$y
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B11            0  0    0     0          0     NaN    NaN
+time           0  0    0     0          0     NaN    NaN
+
+
+$m9c
+$m9c$y
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B11            0  0    0     0          0     NaN    NaN
+
+

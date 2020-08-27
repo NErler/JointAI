@@ -752,3 +752,28 @@ D_y_id[1,1]    0     0
 D_y_o1[1,1]    0     0
 
 
+$m9b
+$m9b$y
+            2.5% 97.5%
+(Intercept)    0     0
+C1             0     0
+C2             0     0
+B11            0     0
+time           0     0
+sigma_y        0     0
+D_y_id[1,1]    0     0
+D_y_id[1,2]    0     0
+D_y_id[2,2]    0     0
+
+
+$m9c
+$m9c$y
+            2.5% 97.5%
+(Intercept)    0     0
+C1             0     0
+C2             0     0
+B11            0     0
+sigma_y        0     0
+D_y_id[1,1]    0     0
+
+

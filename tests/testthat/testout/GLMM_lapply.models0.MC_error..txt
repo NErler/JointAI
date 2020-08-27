@@ -630,3 +630,24 @@ sigma_y       0    0  0     NaN
 D_y_id[1,1]   0    0  0     NaN
 D_y_o1[1,1]   0    0  0     NaN
 
+$m9b
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C1            0    0  0     NaN
+C2            0    0  0     NaN
+B11           0    0  0     NaN
+time          0    0  0     NaN
+sigma_y       0    0  0     NaN
+D_y_id[1,1]   0    0  0     NaN
+D_y_id[1,2]   0    0  0     NaN
+D_y_id[2,2]   0    0  0     NaN
+
+$m9c
+            est MCSE SD MCSE/SD
+(Intercept)   0    0  0     NaN
+C1            0    0  0     NaN
+C2            0    0  0     NaN
+B11           0    0  0     NaN
+sigma_y       0    0  0     NaN
+D_y_id[1,1]   0    0  0     NaN
+

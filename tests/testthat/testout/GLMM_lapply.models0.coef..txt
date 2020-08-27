@@ -472,3 +472,17 @@ D_y_o1[1,1]
           0 
 
 
+$m9b
+$m9b$y
+(Intercept)          C1          C2         B11        time     sigma_y 
+          0           0           0           0           0           0 
+D_y_id[1,1] D_y_id[1,2] D_y_id[2,2] 
+          0           0           0 
+
+
+$m9c
+$m9c$y
+(Intercept)          C1          C2         B11     sigma_y D_y_id[1,1] 
+          0           0           0           0           0           0 
+
+

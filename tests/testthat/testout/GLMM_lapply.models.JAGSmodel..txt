@@ -4010,3 +4010,125 @@ model {
   D_y_o1[1:1, 1:1] <- inverse(invD_y_o1[ , ]) 
  
 }
+$m9b
+model { 
+
+   # Normal mixed effects model for y ----------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
+    mu_y[i] <- b_y_id[group_id[i], 1] +
+               b_y_id[group_id[i], 2] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2]
+  }
+
+  for (ii in 1:100) {
+    b_y_id[ii, 1:2] ~ dmnorm(mu_b_y_id[ii, ], invD_y_id[ , ])
+    mu_b_y_id[ii, 1] <- M_id[ii, 2] * beta[1] +
+                        (M_id[ii, 3] - spM_id[3, 1])/spM_id[3, 2] * beta[2] +
+                        (M_id[ii, 1] - spM_id[1, 1])/spM_id[1, 2] * beta[3] +
+                        M_id[ii, 4] * beta[4]
+    mu_b_y_id[ii, 2] <- beta[5]
+  }
+
+  # Priors for the model for y
+  for (k in 1:5) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_y <- sqrt(1/tau_y)
+
+  for (k in 1:2) {
+    RinvD_y_id[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)
+  }
+  invD_y_id[1:2, 1:2] ~ dwish(RinvD_y_id[ , ], KinvD_y_id)
+  D_y_id[1:2, 1:2] <- inverse(invD_y_id[ , ])
+
+
+  # Normal mixed effects model for time -------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 2] ~ dnorm(mu_time[i], tau_time)
+    mu_time[i] <- b_time_id[group_id[i], 1]
+  }
+
+  for (ii in 1:100) {
+    b_time_id[ii, 1:1] ~ dnorm(mu_b_time_id[ii, ], invD_time_id[ , ])
+    mu_b_time_id[ii, 1] <- M_id[ii, 2] * alpha[1] +
+                           (M_id[ii, 3] - spM_id[3, 1])/spM_id[3, 2] * alpha[2] +
+                           (M_id[ii, 1] - spM_id[1, 1])/spM_id[1, 2] * alpha[3] +
+                           M_id[ii, 4] * alpha[4]
+  }
+
+  # Priors for the model for time
+  for (k in 1:4) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_time <- sqrt(1/tau_time)
+
+  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (ii in 1:100) {
+    M_id[ii, 1] ~ dnorm(mu_C2[ii], tau_C2)
+    mu_C2[ii] <- M_id[ii, 2] * alpha[5] +
+                (M_id[ii, 3] - spM_id[3, 1])/spM_id[3, 2] * alpha[6] +
+                M_id[ii, 4] * alpha[7]
+  }
+
+  # Priors for the model for C2
+  for (k in 5:7) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}
+$m9c
+model { 
+
+   # Normal mixed effects model for y ----------------------------------------------
+  for (i in 1:329) {
+    M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
+    mu_y[i] <- b_y_id[group_id[i], 1]
+  }
+
+  for (ii in 1:100) {
+    b_y_id[ii, 1:1] ~ dnorm(mu_b_y_id[ii, ], invD_y_id[ , ])
+    mu_b_y_id[ii, 1] <- M_id[ii, 2] * beta[1] +
+                        (M_id[ii, 3] - spM_id[3, 1])/spM_id[3, 2] * beta[2] +
+                        (M_id[ii, 1] - spM_id[1, 1])/spM_id[1, 2] * beta[3] +
+                        M_id[ii, 4] * beta[4]
+  }
+
+  # Priors for the model for y
+  for (k in 1:4) {
+    beta[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_y <- sqrt(1/tau_y)
+
+  invD_y_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_y_id[1:1, 1:1] <- inverse(invD_y_id[ , ])
+
+
+
+  # Normal model for C2 -----------------------------------------------------------
+  for (ii in 1:100) {
+    M_id[ii, 1] ~ dnorm(mu_C2[ii], tau_C2)
+    mu_C2[ii] <- M_id[ii, 2] * alpha[1] +
+                (M_id[ii, 3] - spM_id[3, 1])/spM_id[3, 2] * alpha[2] +
+                M_id[ii, 4] * alpha[3]
+  }
+
+  # Priors for the model for C2
+  for (k in 1:3) {
+    alpha[k] ~ dnorm(mu_reg_norm, tau_reg_norm)
+  }
+  tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
+  sigma_C2 <- sqrt(1/tau_C2)
+ 
+ 
+}

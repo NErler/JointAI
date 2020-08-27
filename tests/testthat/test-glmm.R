@@ -278,7 +278,21 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
         # only lvl-1 variables, crossed random effects
         m9a = lme_imp(y ~ c1 + b1 + time + (1|id) + (1 | o1), data = longDF,
                       n.iter = 10, n.adapt = 5, seed = 2020,
-                      warn = FALSE, mess = FALSE)
+                      warn = FALSE, mess = FALSE),
+
+        # bugfix: random slope and monitor analysis_random (issue with
+        # re-scaling)
+        m9b = lme_imp(y ~ C1 + C2 +  B1 + time + (time | id), data = longDF,
+                      n.iter = 10, n.adapt = 5, seed = 2020,
+                      warn = FALSE, mess = FALSE,
+                      monitor_params = c(analysis_random = TRUE)),
+
+        # bugfix: random intercept only (gave warning about failing to trace
+        # monitor for RinvD)
+        m9c = lme_imp(y ~ C1 + C2 +  B1 + (1 | id), data = longDF,
+                      n.iter = 10, n.adapt = 5, seed = 2020,
+                      warn = FALSE, mess = FALSE,
+                      monitor_params = c(analysis_random = TRUE))
       )
     }
     )))

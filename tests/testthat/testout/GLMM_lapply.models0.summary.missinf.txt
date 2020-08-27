@@ -3203,3 +3203,113 @@ id    id    0    0
 o1    o1    0    0
 
 
+$m9b
+
+Bayesian linear mixed model fitted with JointAI
+
+Call:
+lme_imp(fixed = y ~ C1 + C2 + B1 + time + (time | id), data = longDF, 
+    n.adapt = 5, n.iter = 10, monitor_params = c(analysis_random = TRUE), 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B11            0  0    0     0          0     NaN    NaN
+time           0  0    0     0          0     NaN    NaN
+
+Posterior summary of random effects covariance matrix:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+D_y_id[1,1]    0  0    0     0                NaN    NaN
+D_y_id[1,2]    0  0    0     0          0     NaN    NaN
+D_y_id[2,2]    0  0    0     0                NaN    NaN
+
+Posterior summary of residual std. deviation:
+        Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 6:15
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 329 
+Number of groups:
+ - id: 100
+
+
+Number and proportion of complete cases:
+        level   #   %
+id         id  58  58
+lvlone lvlone 329 100
+
+Number and proportion of missing values:
+      level # NA % NA
+y    lvlone    0    0
+time lvlone    0    0
+
+   level # NA % NA
+C1    id    0    0
+B1    id    0    0
+id    id    0    0
+C2    id   42   42
+
+
+$m9c
+
+Bayesian linear mixed model fitted with JointAI
+
+Call:
+lme_imp(fixed = y ~ C1 + C2 + B1 + (1 | id), data = longDF, n.adapt = 5, 
+    n.iter = 10, monitor_params = c(analysis_random = TRUE), 
+    seed = 2020, warn = FALSE, mess = FALSE)
+
+
+Posterior summary:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+(Intercept)    0  0    0     0          0     NaN    NaN
+C1             0  0    0     0          0     NaN    NaN
+C2             0  0    0     0          0     NaN    NaN
+B11            0  0    0     0          0     NaN    NaN
+
+Posterior summary of random effects covariance matrix:
+            Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
+D_y_id[1,1]    0  0    0     0                NaN    NaN
+
+Posterior summary of residual std. deviation:
+        Mean SD 2.5% 97.5% GR-crit MCE/SD
+sigma_y    0  0    0     0     NaN    NaN
+
+
+MCMC settings:
+Iterations = 1:10
+Sample size per chain = 10 
+Thinning interval = 1 
+Number of chains = 3 
+
+Number of observations: 329 
+Number of groups:
+ - id: 100
+
+
+Number and proportion of complete cases:
+        level   #   %
+id         id  58  58
+lvlone lvlone 329 100
+
+Number and proportion of missing values:
+   level # NA % NA
+y lvlone    0    0
+
+   level # NA % NA
+C1    id    0    0
+B1    id    0    0
+id    id    0    0
+C2    id   42   42
+
+
