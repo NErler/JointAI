@@ -1,3 +1,50 @@
+
+# JointAI (version 1.0.0)
+
+## Round 1
+
+### Test environments
+* local Windows 10, R 4.0.2
+* windows server x64 (via github actions), R 3.6.3, R 4.0.2
+* ubuntu 16.04.7 LTS (via github actions), R 3.6.3, R 4.0.2, devel
+* macOS Catalina 10.15.6 (via github actions), R 4.0.2
+* win-builder (devel and release)
+
+### R CMD check results
+
+0 errors | 0 warnings | 0 notes
+
+Note: 
+
+Found the following (possibly) invalid URLs:
+  URL: http://mcmc-jags.sourceforge.net
+    From: DESCRIPTION
+          man/JointAI.Rd
+          inst/doc/ModelSpecification.html
+          README.md
+    Status: 503
+    Message: Service Unavailable
+  URL: http://mcmc-jags.sourceforge.net/
+    From: inst/doc/MCMCsettings.html
+          inst/doc/SelectingParameters.html
+    Status: 503
+    Message: Service Unavailable
+    
+It seems http://mcmc-jags.sourceforge.net/ is currently not available. This site
+is still linked to from the JAGS sourceforge repository
+(https://sourceforge.net/projects/mcmc-jags/), in which there were commits
+during the last few days. I expect that the site is only offline temporarily.
+
+
+
+### Reverse dependencies
+
+There are no reverse dependencies.
+
+
+---
+
+
 # JointAI (version 0.6.0)
 
 ## Round 1
