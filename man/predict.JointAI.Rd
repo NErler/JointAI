@@ -11,7 +11,7 @@
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
-\item{outcome}{vector of variable names or numbers identifying for which
+\item{outcome}{vector of variable names or integers identifying for which
 outcome(s) the prediction should be performed.}
 
 \item{newdata}{optional new dataset for prediction. If left empty, the
@@ -19,13 +19,17 @@ original data is used.}
 
 \item{quantiles}{quantiles of the predicted distribution of the outcome}
 
-\item{type}{the type of prediction. The default is on the scale of the
-linear predictor (\code{"link"} or \code{"lp"}). For generalized
-linear (mixed) models \code{type = "response"} transforms the
-predicted values to the scale of the response. For ordinal (mixed)
-models \code{type} may be \code{"prob"} (to obtain probabilities per
-class) or \code{"class"} to obtain the class with the highest
-posterior probability.}
+\item{type}{the type of prediction. The default is on the scale of the linear
+predictor (\code{"link"} or \code{"lp"}). Additionally, for generalized
+linear (mixed) models (incl. beta and log-normal) \code{type = "response"}
+transforms the predicted values to the scale of the response, and for
+ordinal and multinomial (mixed) models \code{type} may be \code{"prob"} (to
+obtain probabilities per class), \code{"class"} to obtain the class with
+the highest posterior probability, or \code{"lp"}. For parametric survival
+models \code{type} can be \code{"lp" } or "response", and for proportional
+hazards survival models the options are \code{"lp"}, \code{"risk"} (=
+\code{exp(lp)}), \code{"survival"} or \code{"expected"} (=
+\code{-log(survival)}).}
 
 \item{start}{the first iteration of interest
 (see \code{\link[coda]{window.mcmc}})}
@@ -51,17 +55,13 @@ should be excluded}
 }
 \value{
 A list with entries \code{dat}, \code{fit} and \code{quantiles},
-where
-\code{fit} contains the predicted values (mean over the values
-calculated from the iterations of the MCMC sample),
-\code{quantiles} contain the specified quantiles (by default 2.5\%
-and 97.5\%),
-and \code{dat} is \code{newdata}, extended with \code{fit} and
-\code{quantiles}
-(unless prediction for an ordinal outcome is done with
-\code{type = "prob"},
-in which case the quantiles are an array with three dimensions and
-are therefore not included in \code{dat}).
+where \code{fit} contains the predicted values (mean over the values
+calculated from the iterations of the MCMC sample), \code{quantiles}
+contain the specified quantiles (by default 2.5\% and 97.5\%), and \code{dat}
+is \code{newdata}, extended with \code{fit} and \code{quantiles} (unless
+prediction for an ordinal outcome is done with \code{type = "prob"}, in
+which case the quantiles are an array with three dimensions and are
+therefore not included in \code{dat}).
 }
 \description{
 Obtains predictions and corresponding credible intervals from an object of
@@ -69,24 +69,18 @@ class 'JointAI'.
 }
 \details{
 A \code{model.matrix} \eqn{X} is created from the model formula
-(currently fixed effects only) and \code{newdata}. \eqn{X\beta}
-is then calculated for
-each iteration of the MCMC sample in \code{object}, i.e.,
-\eqn{X\beta} has \code{n.iter} rows and \code{nrow(newdata)}
-columns.
-A subset of the MCMC sample can be selected using \code{start},
-\code{end} and  \code{thin}.
+(currently fixed effects only) and \code{newdata}. \eqn{X\beta} is then
+calculated for each iteration of the MCMC sample in \code{object}, i.e.,
+\eqn{X\beta} has \code{n.iter} rows and \code{nrow(newdata)} columns. A
+subset of the MCMC sample can be selected using \code{start}, \code{end}
+and  \code{thin}.
 }
 \section{Note}{
-
-\itemize{
-\item So far, \code{predict} cannot calculate predicted values for cases
-with missing values in covariates. Predicted values for such cases are
-\code{NA}.
-\item For repeated measures models prediction currently only uses fixed
-effects.
-}
-Functionality will be extended in the future.
+ \itemize{ \item So far, \code{predict} cannot calculate
+predicted values for cases with missing values in covariates. Predicted
+values for such cases are \code{NA}. \item For repeated measures models
+prediction currently only uses fixed effects. } Functionality will be
+extended in the future.
 }
 
 \examples{
