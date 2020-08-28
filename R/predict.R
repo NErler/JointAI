@@ -1,18 +1,19 @@
 #' Create a new data frame for prediction
 #'
-#' Build a \code{data.frame} for prediction, where one variable
-#' varies and all other variables are set to the reference value (median for
-#' continuous variables).
+#' Build a \code{data.frame} for prediction, where one variable varies and all
+#' other variables are set to the reference value (median for continuous
+#' variables).
 #'
 #' @inheritParams model_imp
 #' @inheritParams sharedParams
 #' @param vars name of variable that should be varying
 #' @param length number of values used in the sequence when \code{vars} is
-#'               continuous
-#' @param ... optional, additional arguments (currently not used)
+#'   continuous
+#' @param ... optional specification of the values used for some (or all) of the
+#'   variables given in \code{vars}
 #'
 #' @seealso \code{\link{predict.JointAI}}, \code{\link{lme_imp}},
-#'          \code{\link{glm_imp}}, \code{\link{lm_imp}}
+#'   \code{\link{glm_imp}}, \code{\link{lm_imp}}
 #' @examples
 #' # fit a JointAI model
 #' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
@@ -22,6 +23,12 @@
 #' newDF <- predDF(mod, vars = ~ C2)
 #'
 #' head(newDF)
+#'
+#'
+#' newDF2 <- predDF(mod, vars = ~ C2 + M2,
+#'                  C2 = seq(-0.5, 0.5, 0.25),
+#'                  M2 = levels(wideDF$M2)[2:3])
+#' newDF2
 #'
 #' @export
 

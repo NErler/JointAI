@@ -12,7 +12,8 @@ predDF(object, ...)
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
 
-\item{...}{optional, additional arguments (currently not used)}
+\item{...}{optional specification of the values used for some (or all) of the
+variables given in \code{vars}}
 
 \item{vars}{name of variable that should be varying}
 
@@ -20,9 +21,9 @@ predDF(object, ...)
 continuous}
 }
 \description{
-Build a \code{data.frame} for prediction, where one variable
-varies and all other variables are set to the reference value (median for
-continuous variables).
+Build a \code{data.frame} for prediction, where one variable varies and all
+other variables are set to the reference value (median for continuous
+variables).
 }
 \examples{
 # fit a JointAI model
@@ -33,6 +34,12 @@ mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 newDF <- predDF(mod, vars = ~ C2)
 
 head(newDF)
+
+
+newDF2 <- predDF(mod, vars = ~ C2 + M2,
+                 C2 = seq(-0.5, 0.5, 0.25),
+                 M2 = levels(wideDF$M2)[2:3])
+newDF2
 
 }
 \seealso{
