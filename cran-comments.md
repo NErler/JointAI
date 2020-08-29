@@ -42,6 +42,70 @@ during the last few days. I expect that the site is only offline temporarily.
 There are no reverse dependencies.
 
 
+### Reviewer comments:
+2020-08-28 Uwe Ligges
+
+```
+Thanks, we see:
+
+   Found the following (possibly) invalid URLs:
+     URL: https://eur01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fmcmc-jags.sourceforge.net%2F&amp;data=02%7C01%7Cn.erler%40erasmusmc.nl%7C0c7f767e3a2441d6e91708d84b44fbea%7C526638ba6af34b0fa532a1a511f4ac80%7C0%7C0%7C637342106948860379&amp;sdata=BnQmxD3TVZZhmJsK%2FEXn3VdM0yHnQiXKr%2BKoI2Lnb%2Bk%3D&amp;reserved=0
+       From: DESCRIPTION
+             man/JointAI.Rd
+             inst/doc/ModelSpecification.html
+             README.md
+       Status: 503
+       Message: Service Unavailable
+     URL: https://eur01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fmcmc-jags.sourceforge.net%2F&amp;data=02%7C01%7Cn.erler%40erasmusmc.nl%7C0c7f767e3a2441d6e91708d84b44fbea%7C526638ba6af34b0fa532a1a511f4ac80%7C0%7C0%7C637342106948860379&amp;sdata=BnQmxD3TVZZhmJsK%2FEXn3VdM0yHnQiXKr%2BKoI2Lnb%2Bk%3D&amp;reserved=0
+       From: inst/doc/MCMCsettings.html
+             inst/doc/SelectingParameters.html
+       Status: 503
+       Message: Service Unavailable
+
+
+Is this site expected to work again?
+
+
+
+     URL: https://eur01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.rdocumentation.org%2Fpackages%2FJointAI&amp;data=02%7C01%7Cn.erler%40erasmusmc.nl%7C0c7f767e3a2441d6e91708d84b44fbea%7C526638ba6af34b0fa532a1a511f4ac80%7C0%7C0%7C637342106948860379&amp;sdata=PFxlgYV9CUMysfSwpq7WUNi0jDIdFjZ%2FMKkigq0Idj4%3D&amp;reserved=0 (moved to
+https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.rdocumentation.org%2Fpackages%2FJointAI&amp;data=02%7C01%7Cn.erler%40erasmusmc.nl%7C0c7f767e3a2441d6e91708d84b44fbea%7C526638ba6af34b0fa532a1a511f4ac80%7C0%7C0%7C637342106948860379&amp;sdata=JUmFeBruGfIyJa6iwkQL%2BzRHlpJEROMCACl49KqyQnU%3D&amp;reserved=0)
+       From: README.md
+       Status: 200
+       Message: OK
+     URL: https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnerler.github.io%2FJointAI&amp;data=02%7C01%7Cn.erler%40erasmusmc.nl%7C0c7f767e3a2441d6e91708d84b44fbea%7C526638ba6af34b0fa532a1a511f4ac80%7C0%7C0%7C637342106948860379&amp;sdata=vKboFCbEcw2iztBZCmyquUy90qRk%2Fa24G4L0501FwA4%3D&amp;reserved=0 (moved to
+https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnerler.github.io%2FJointAI%2F&amp;data=02%7C01%7Cn.erler%40erasmusmc.nl%7C0c7f767e3a2441d6e91708d84b44fbea%7C526638ba6af34b0fa532a1a511f4ac80%7C0%7C0%7C637342106948860379&amp;sdata=5qBicSOWF4HDqlmiY5pud%2BkyL0vgMTcCbHm1oi2yZ4w%3D&amp;reserved=0)
+       From: DESCRIPTION
+       Status: 200
+       Message: OK
+
+
+Please change http --> https  or add trailing slashes where required.
+
+
+   The Description field should not start with the package name,
+     'This package' or similar.
+
+   Size of tarball: 9353082 bytes
+
+Not more than 5 MB for a CRAN package, please.
+
+Please fix and resubmit.
+```
+
+## Round 2
+### Submission comments
+2020-08-29
+
+All comments were addressed, specifically:
+
+* Website http://mcmc-jags.sourceforge.net/ is up again
+* URLs were changed to https (except for http://mcmc-jags.sourceforge.net/,
+  which does not have a SSL certificate)
+* The Description was adjusted (now starts with "Joint analysis and imputation
+  of incomplete data...")
+* The tarball size was reduced to <4 MB by using a different file format for
+  large output files from `testthat` tests
+
 ---
 
 
@@ -281,7 +345,7 @@ Addressed all previous comments, specifically:
   
 * I have made the requested changes in the DESCRIPTION file.
 
-* All occurences of `T` and `F` have been replaced by `TRUE` and `FALSE`.
+* All occurrences of `T` and `F` have been replaced by `TRUE` and `FALSE`.
 
 * Removed `\dontrun{}` from all but one example (all examples can be executed
   in <5 seconds). The example still in `\dontrun{}` exports a dataset and writes
