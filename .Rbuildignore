@@ -26,6 +26,9 @@
 ## Exclude large vignette
 ^vignettes/TheoreticalBackground.Rmd$
 
+## Exclude folder with test outputs which is super large
+tests/testthat/Rplots.pdf
+
 R/samplers.R
 R/plots_ppc.R
 R/simulate_data.R
