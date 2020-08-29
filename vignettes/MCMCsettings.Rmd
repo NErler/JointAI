@@ -5,6 +5,7 @@ output:
   rmarkdown::html_vignette:
     toc: true
     depth: 4
+    self_contained: false
 vignette: >
   %\VignetteIndexEntry{MCMC Settings}
   %\VignetteEncoding{UTF-8}
