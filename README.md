@@ -30,8 +30,8 @@ automatically.
 
 **JointAI** performs some preprocessing of the data and creates a
 [JAGS](http://mcmc-jags.sourceforge.net/) model, which will then
-automatically be passed to [JAGS](http://mcmc-jags.sourceforge.net/) with
-the help of the R package
+automatically be passed to [JAGS](http://mcmc-jags.sourceforge.net/)
+with the help of the R package
 [**rjags**](https://CRAN.R-project.org/package=rjags).
 
 Besides the main modelling functions, **JointAI** also provides a number
@@ -143,18 +143,18 @@ summary(lm1)
 #> 
 #> 
 #> Posterior summary:
-#>                Mean     SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)  87.662 8.6088  70.3830 104.899    0.00000    1.00 0.0271
-#> genderfemale -3.487 2.2407  -7.9563   0.818    0.10533    1.01 0.0258
-#> age           0.334 0.0683   0.1986   0.468    0.00000    1.01 0.0258
-#> WC            0.230 0.0721   0.0876   0.376    0.00133    1.00 0.0258
-#> alc>=1        6.419 2.3862   1.6656  11.112    0.00667    1.03 0.0358
-#> educhigh     -2.805 2.0681  -6.9371   1.339    0.17067    1.00 0.0258
-#> bili         -5.277 4.7332 -14.7727   3.596    0.25333    1.01 0.0290
+#>                Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
+#> (Intercept)  87.984 9.0412  70.110 107.092    0.00000    1.00 0.0258
+#> genderfemale -3.501 2.2488  -8.039   1.059    0.10400    1.00 0.0258
+#> age           0.333 0.0713   0.199   0.471    0.00000    1.01 0.0275
+#> WC            0.226 0.0757   0.072   0.373    0.00267    1.00 0.0258
+#> alc>=1        6.509 2.3290   1.899  10.859    0.01067    1.00 0.0270
+#> educhigh     -2.780 2.1237  -6.886   1.248    0.19733    1.00 0.0258
+#> bili         -5.173 4.8315 -14.599   4.109    0.28800    1.01 0.0303
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 13.5 0.725 12.2    15    1.01 0.0258
+#> sigma_SBP 13.6 0.739 12.3  15.1    1.01 0.0289
 #> 
 #> 
 #> MCMC settings:
@@ -170,19 +170,19 @@ summary(lm1)
 coef(lm1)
 #> $SBP
 #>  (Intercept) genderfemale          age           WC       alc>=1     educhigh 
-#>   87.6622381   -3.4873104    0.3335133    0.2302755    6.4194926   -2.8054874 
+#>   87.9839157   -3.5010429    0.3329532    0.2262894    6.5093606   -2.7800225 
 #>         bili    sigma_SBP 
-#>   -5.2768560   13.5278177
+#>   -5.1730414   13.5670206
 
 confint(lm1)
 #> $SBP
 #>                      2.5%       97.5%
-#> (Intercept)   70.38301720 104.8986161
-#> genderfemale  -7.95631510   0.8182921
-#> age            0.19857014   0.4678630
-#> WC             0.08761699   0.3756334
-#> alc>=1         1.66562640  11.1121370
-#> educhigh      -6.93714769   1.3389344
-#> bili         -14.77269911   3.5955383
-#> sigma_SBP     12.16165429  15.0367180
+#> (Intercept)   70.11037933 107.0920122
+#> genderfemale  -8.03905105   1.0594821
+#> age            0.19919441   0.4705334
+#> WC             0.07201019   0.3734877
+#> alc>=1         1.89897665  10.8594963
+#> educhigh      -6.88561508   1.2481772
+#> bili         -14.59898407   4.1089909
+#> sigma_SBP     12.25273343  15.1162472
 ```
