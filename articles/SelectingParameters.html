@@ -643,15 +643,15 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
 <span class="co">#&gt;                Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
-<span class="co">#&gt; (Intercept)  81.661 9.8843 62.316 101.070    0.00000    1.01 0.0577</span>
-<span class="co">#&gt; genderfemale  0.211 2.7500 -4.726   5.686    0.98667    1.08 0.0611</span>
-<span class="co">#&gt; WC            0.301 0.0752  0.162   0.448    0.00000    1.09 0.0577</span>
-<span class="co">#&gt; alc&gt;=1        6.488 2.3573  1.730  11.068    0.00667    1.03 0.0811</span>
-<span class="co">#&gt; creat         7.678 8.1065 -6.582  23.748    0.39333    1.14 0.0577</span>
+<span class="co">#&gt; (Intercept)  80.848 9.5976 62.809 100.398    0.00000    1.00 0.0577</span>
+<span class="co">#&gt; genderfemale  0.402 2.6576 -4.654   5.603    0.94667    1.01 0.0577</span>
+<span class="co">#&gt; WC            0.299 0.0802  0.155   0.461    0.00000    1.01 0.0577</span>
+<span class="co">#&gt; alc&gt;=1        6.627 2.4790  1.646  11.120    0.00667    1.04 0.0891</span>
+<span class="co">#&gt; creat         8.700 7.3623 -5.374  22.236    0.22667    1.01 0.0577</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary of residual std. deviation:</span>
 <span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span>
-<span class="co">#&gt; sigma_SBP 14.4 0.816 12.8  16.2    1.01 0.0577</span>
+<span class="co">#&gt; sigma_SBP 14.4 0.841 12.8  16.2    1.01 0.0577</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; MCMC settings:</span>
@@ -675,26 +675,26 @@
 <span class="co">#&gt; Potential scale reduction factors:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;              Point est. Upper C.I.</span>
-<span class="co">#&gt; (Intercept)        1.00       1.01</span>
-<span class="co">#&gt; genderfemale       1.02       1.08</span>
-<span class="co">#&gt; WC                 1.02       1.09</span>
-<span class="co">#&gt; alc&gt;=1             1.01       1.03</span>
-<span class="co">#&gt; creat              1.04       1.14</span>
-<span class="co">#&gt; sigma_SBP          1.00       1.01</span>
+<span class="co">#&gt; (Intercept)       1.001       1.00</span>
+<span class="co">#&gt; genderfemale      1.002       1.01</span>
+<span class="co">#&gt; WC                1.006       1.01</span>
+<span class="co">#&gt; alc&gt;=1            1.009       1.04</span>
+<span class="co">#&gt; creat             0.999       1.01</span>
+<span class="co">#&gt; sigma_SBP         1.008       1.01</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Multivariate psrf</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; 1.05</span>
+<span class="co">#&gt; 1.02</span>
 
 <span class="co"># Monte Carlo Error of the MCMC sample</span>
 <span class="fu"><a href="../reference/MC_error.html">MC_error</a></span>(<span class="no">lm5</span>)
-<span class="co">#&gt;                est   MCSE    SD MCSE/SD</span>
-<span class="co">#&gt; (Intercept)  81.66 0.5707 9.884   0.058</span>
-<span class="co">#&gt; genderfemale  0.21 0.1679 2.750   0.061</span>
-<span class="co">#&gt; WC            0.30 0.0043 0.075   0.058</span>
-<span class="co">#&gt; alc&gt;=1        6.49 0.1911 2.357   0.081</span>
-<span class="co">#&gt; creat         7.68 0.4680 8.107   0.058</span>
-<span class="co">#&gt; sigma_SBP    14.39 0.0471 0.816   0.058</span></pre></body></html></div>
+<span class="co">#&gt;               est   MCSE   SD MCSE/SD</span>
+<span class="co">#&gt; (Intercept)  80.8 0.5541 9.60   0.058</span>
+<span class="co">#&gt; genderfemale  0.4 0.1534 2.66   0.058</span>
+<span class="co">#&gt; WC            0.3 0.0046 0.08   0.058</span>
+<span class="co">#&gt; alc&gt;=1        6.6 0.2209 2.48   0.089</span>
+<span class="co">#&gt; creat         8.7 0.4251 7.36   0.058</span>
+<span class="co">#&gt; sigma_SBP    14.4 0.0486 0.84   0.058</span></pre></body></html></div>
 <p>When <code>analysis_main</code> was not switched on the default behaviour is that all parameters are displayed:</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># Re-run the model from above, now creating MCMC samples</span>
 <span class="no">lm4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">WC</span> + <span class="no">alc</span> + <span class="no">creat</span>,
@@ -713,21 +713,21 @@
 <span class="co">#&gt; Potential scale reduction factors:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                     Point est. Upper C.I.</span>
-<span class="co">#&gt; alc: (Intercept)         1.010       1.05</span>
-<span class="co">#&gt; alc: genderfemale        1.070       1.23</span>
-<span class="co">#&gt; alc: WC                  1.041       1.15</span>
-<span class="co">#&gt; alc: creat               1.022       1.06</span>
-<span class="co">#&gt; creat: (Intercept)       1.041       1.12</span>
-<span class="co">#&gt; creat: genderfemale      1.026       1.08</span>
-<span class="co">#&gt; creat: WC                1.032       1.09</span>
-<span class="co">#&gt; WC: (Intercept)          1.000       1.00</span>
-<span class="co">#&gt; WC: genderfemale         1.000       1.01</span>
-<span class="co">#&gt; sigma_creat              1.018       1.08</span>
-<span class="co">#&gt; sigma_WC                 0.999       1.01</span>
+<span class="co">#&gt; alc: (Intercept)          1.00       1.01</span>
+<span class="co">#&gt; alc: genderfemale         1.02       1.04</span>
+<span class="co">#&gt; alc: WC                   1.02       1.09</span>
+<span class="co">#&gt; alc: creat                1.02       1.07</span>
+<span class="co">#&gt; creat: (Intercept)        1.00       1.01</span>
+<span class="co">#&gt; creat: genderfemale       1.00       1.02</span>
+<span class="co">#&gt; creat: WC                 1.00       1.01</span>
+<span class="co">#&gt; WC: (Intercept)           1.00       1.00</span>
+<span class="co">#&gt; WC: genderfemale          1.01       1.05</span>
+<span class="co">#&gt; sigma_creat               1.01       1.03</span>
+<span class="co">#&gt; sigma_WC                  1.00       1.03</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Multivariate psrf</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; 1.09</span></pre></body></html></div>
+<span class="co">#&gt; 1.05</span></pre></body></html></div>
 <p>To select only some of the parameters, they can be specified directly by name via the <code>other</code> element of <code>subset</code>:</p>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">lm5</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">other</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'creat'</span>, <span class="st">'alc&gt;=1'</span>)))
 <span class="co">#&gt; </span>
@@ -740,15 +740,15 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
 <span class="co">#&gt;                Mean     SD   2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
-<span class="co">#&gt; (Intercept)  81.661 9.8843 62.316 101.070    0.00000    1.01 0.0577</span>
-<span class="co">#&gt; genderfemale  0.211 2.7500 -4.726   5.686    0.98667    1.08 0.0611</span>
-<span class="co">#&gt; WC            0.301 0.0752  0.162   0.448    0.00000    1.09 0.0577</span>
-<span class="co">#&gt; alc&gt;=1        6.488 2.3573  1.730  11.068    0.00667    1.03 0.0811</span>
-<span class="co">#&gt; creat         7.678 8.1065 -6.582  23.748    0.39333    1.14 0.0577</span>
+<span class="co">#&gt; (Intercept)  80.848 9.5976 62.809 100.398    0.00000    1.00 0.0577</span>
+<span class="co">#&gt; genderfemale  0.402 2.6576 -4.654   5.603    0.94667    1.01 0.0577</span>
+<span class="co">#&gt; WC            0.299 0.0802  0.155   0.461    0.00000    1.01 0.0577</span>
+<span class="co">#&gt; alc&gt;=1        6.627 2.4790  1.646  11.120    0.00667    1.04 0.0891</span>
+<span class="co">#&gt; creat         8.700 7.3623 -5.374  22.236    0.22667    1.01 0.0577</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary of residual std. deviation:</span>
 <span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span>
-<span class="co">#&gt; sigma_SBP 14.4 0.816 12.8  16.2    1.01 0.0577</span>
+<span class="co">#&gt; sigma_SBP 14.4 0.841 12.8  16.2    1.01 0.0577</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; MCMC settings:</span>
