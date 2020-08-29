@@ -363,9 +363,9 @@ and the matrix of initial values.
 The corresponding part of the JAGS model is:
 ```{r, echo = FALSE}
 cat(paste0('[...]\n', 
-           paste0(a4mod[66:66], collapse = "\n"),
+           paste0(a4mod[58:60], collapse = "\n"),
            '\n\n[...]\n',
-           paste0(a4mod[75:77], collapse = "\n"),
+           paste0(a4mod[69:72], collapse = "\n"),
            '\n\n[...]'))
 ```
 
@@ -385,7 +385,7 @@ mod4c$data_list['RinvD_bmi_ID']
 These diagonal elements are estimated in the model and have a Gamma prior.
 The corresponding part of the JAGS model is:
 ```{r, echo = FALSE}
-cat(paste0('[...]\n', paste(a4mod[29:35], collapse = '\n'), '\n[...]\n'))
+cat(paste0('[...]\n', paste(a4mod[25:31], collapse = '\n'), '\n[...]\n'))
 ```
 
 The element `RinvD_bmi_ID` in the initial values has to be a 2 $\times$ 2 
