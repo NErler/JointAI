@@ -23,8 +23,10 @@
 ^vignettes/ModelSpecification_files$
 
 
-## Exclude large vignette
+## Exclude (large) vignettes
 ^vignettes/TheoreticalBackground.Rmd$
+^vignettes/MinimalExample.Rmd$
+^vignettes/VisualizingIncompleteData.Rmd$
 
 ## Exclude folder with test outputs which is super large
 tests/testthat/Rplots.pdf
