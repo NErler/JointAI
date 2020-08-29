@@ -15,7 +15,7 @@ Description: The package facilitates a range of functions to perform analysis
     Incomplete covariates, if present, are automatically imputed.
     The package performs some preprocessing of the data and creates a 'JAGS'
     model, which will then automatically be passed to 'JAGS' 
-    <http://mcmc-jags.sourceforge.net> with the help of 
+    <http://mcmc-jags.sourceforge.net/> with the help of 
     the package 'rjags'.
 URL: https://nerler.github.io/JointAI
 License: GPL (>= 2)
@@ -24,7 +24,7 @@ LazyData: TRUE
 RoxygenNote: 7.1.1
 Roxygen: list(old_usage = TRUE, markdown = TRUE)
 Imports: rjags, mcmcse, coda, rlang, future, foreach, mathjaxr, survival, MASS
-SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
+SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net/)
 Suggests: 
     knitr,
     rmarkdown,

@@ -9,7 +9,7 @@ The \strong{JointAI} package performs simultaneous imputation and inference
 for incomplete or complete data under the Bayesian framework.
 Models for incomplete covariates, conditional on other covariates,
 are specified automatically and modelled jointly with the analysis model.
-MCMC sampling is performed in \href{http://mcmc-jags.sourceforge.net}{'JAGS'}
+MCMC sampling is performed in \href{http://mcmc-jags.sourceforge.net/}{'JAGS'}
 via the R package
 \href{https://CRAN.R-project.org/package=rjags}{\strong{rjags}}.
 }

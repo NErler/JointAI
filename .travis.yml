@@ -21,9 +21,9 @@ r:
   - release
   - devel
 
-cran: http://cran.rstudio.com
+cran: https://cran.rstudio.com
 repos:
-  CRAN: http://cran.rstudio.com
+  CRAN: https://cran.rstudio.com
 
 r_packages:
   - rjags
