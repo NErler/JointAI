@@ -4,14 +4,9 @@ Title: Joint Analysis and Imputation of Incomplete Data
 Authors@R: c(person("Nicole S.", "Erler", email = "n.erler@erasmusmc.nl",
                   role = c("aut", "cre"),
                   comment = c(ORCID = "0000-0002-9370-6832")))
-Description: The package facilitates a range of functions to perform analysis
-    in the presence of incomplete data in the Bayesian framework.
-    Available model types include (generalized) linear, log-normal, beta,
-    cumulative logit and multinomial logit regression models as well as
-    multi-level (mixed model) versions of these models.
-    Moreover, parametric (Weibull) and proportional hazards survival models and
-    joint models of longitudinal and survival data are implemented and it is
-    possible to fit multiple models of mixed types simultaneously.
+Description: Joint analysis and imputation of incomplete data in the Bayesian
+    framework, using (generalized) linear (mixed) models and extensions there of,
+    survival models, or joint models for longitudinal and survival data.
     Incomplete covariates, if present, are automatically imputed.
     The package performs some preprocessing of the data and creates a 'JAGS'
     model, which will then automatically be passed to 'JAGS' 
