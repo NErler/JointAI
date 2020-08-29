@@ -345,7 +345,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   test_that("jagsmodel remaines the same", {
     skip_on_cran()
-    print_output(lapply(models, "[[", "jagsmodel"), type = "value")
+    print_output(lapply(models, "[[", "jagsmodel"))
   })
 
   test_that("GRcrit and MCerror give same result", {
@@ -360,7 +360,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     print_output(lapply(models0, print))
     print_output(lapply(models0, coef))
     print_output(lapply(models0, confint))
-    print_output(lapply(models0, summary, missinfo = TRUE), type = "value")
+    print_output(lapply(models0, summary, missinfo = TRUE))
     print_output(lapply(models0, function(x) coef(summary(x))))
   })
 

@@ -129,7 +129,7 @@ test_that("data_list remaines the same", {
 
 test_that("jagsmodel remaines the same", {
   skip_on_cran()
-  print_output(lapply(models, "[[", "jagsmodel"), type = "value")
+  print_output(lapply(models, "[[", "jagsmodel"))
 })
 
 
