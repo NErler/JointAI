@@ -74,4 +74,3 @@ Binomial model for "B2"
   alpha[29:30] (normal prior(s) with mean 0 and precision 1e-04) 
 
 
-NULL
