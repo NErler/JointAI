@@ -103,8 +103,8 @@ All comments were addressed, specifically:
   which does not have a SSL certificate)
 * The Description was adjusted (now starts with "Joint analysis and imputation
   of incomplete data...")
-* The tarball size was reduced to <4 MB by using a different file format for
-  large output files from `testthat` tests
+* The tarball size was reduced by excluding vignettes from the build and by 
+  using a different file format for large output files from `testthat` tests
 
 ---
 
