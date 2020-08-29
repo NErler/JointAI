@@ -143,7 +143,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   test_that("data_list remaines the same", {
     skip_on_cran()
-    print_output(lapply(models, "[[", "data_list"))
+    print_output(lapply(models, "[[", "data_list"), type = "value")
   })
 
   test_that("jagsmodel remaines the same", {
