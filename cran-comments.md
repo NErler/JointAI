@@ -106,6 +106,58 @@ All comments were addressed, specifically:
 * The tarball size was reduced by excluding vignettes from the build and by 
   using a different file format for large output files from `testthat` tests
 
+
+
+### Automatic check failure
+Under Windows and Debian:
+
+```
+Found the following (possibly) invalid URLs:
+  URL: https://nerler.github.io/JointAI (moved to https://nerler.github.io/JointAI/)
+    From: DESCRIPTION
+    Status: 200
+    Message: OK
+```
+
+## Round 3
+### Submission comments
+2020-08-30
+
+* With regards to the automatic check:
+  a trailing slash was added to the link in the DESCRIPTION
+  
+* With regards to the current CRAN status (JointAI 0.6.1): ERROR: 1, WARN: 1, NOTE: 1, OK: 9
+  * ERROR:
+    ```
+    Version: 0.6.1
+    Check: examples, Result: ERROR
+    Running examples in 'JointAI-Ex.R' failed
+    ...
+    > plot_imp_distr(impDF, id = "id", ncol = 3)
+    Error in plot_imp_distr(impDF, id = "id", ncol = 3) : 
+      This function requires the package ggpubr to be installed.
+    ```
+    In JointAI 1.0.0 the function `plot_imp_distr()` does no longer return an 
+    error if **ggpubr** is not installed but an informative message.
+  * WARNING:
+    ```
+    Version: 0.6.1
+    Check: re-building of vignette outputs, Result: WARNING
+
+    Warning: Using formula(x) is deprecated when x is a character vector of length > 1.
+    Consider formula(paste(x, collapse = " ")) instead.
+    ```
+    This warning is due to a change in R 4.0.0 and was addressed in JointAI 1.0.0
+  * NOTE:
+    ```
+    Version: 0.6.1
+    Check: Rd cross-references, Result: NOTE
+    Undeclared package ‘ordinal’ in Rd xrefs
+    See: <https://www.r-project.org/nosvn/R.check/r-devel-linux-x86_64-fedora-clang/JointAI-00check.html>
+    ```
+    JointAI 1.0.0 does no longer link to the package **ordinal**.
+    
+    
 ---
 
 
