@@ -12,9 +12,9 @@ Description: Joint analysis and imputation of incomplete data in the Bayesian
     model, which will then automatically be passed to 'JAGS' 
     <http://mcmc-jags.sourceforge.net/> with the help of 
     the package 'rjags'.
-URL: https://nerler.github.io/JointAI
+URL: https://nerler.github.io/JointAI/
 License: GPL (>= 2)
-BugReports: https://github.com/nerler/JointAI/issues
+BugReports: https://github.com/nerler/JointAI/issues/
 LazyData: TRUE
 RoxygenNote: 7.1.1
 Roxygen: list(old_usage = TRUE, markdown = TRUE)
