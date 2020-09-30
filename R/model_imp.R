@@ -141,7 +141,7 @@
 #' but different values for \code{center}.
 #'
 #' ## Modelling multiple models simultaneously & joint models
-#' To fit multiple main models at the same time, a \code{list} of \code{fomula}
+#' To fit multiple main models at the same time, a \code{list} of \code{formula}
 #' objects can be passed to the argument \code{formula}.
 #' Outcomes of one model may be contained as covariates in another model and
 #' it is possible to combine models for variables on different levels,
@@ -288,6 +288,9 @@
 #'                                   count data\cr
 #' \code{glmm_lognorm} \tab log-normal mixed model for skewed covariates\cr
 #' \code{glmm_beta} \tab beta mixed model for continuous data in (0, 1)\cr
+#' \code{mlogitmm} \tab multinomial logit mixed model for unordered categorical
+#'                    variables;
+#'                    default for unordered factors with >2 levels\cr
 #' \code{clmm} \tab cumulative logit mixed model for ordered factors;
 #'                  default for ordered factors
 #' }
