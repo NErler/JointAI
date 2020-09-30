@@ -8,7 +8,7 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
 
 
   # data matrices --------------------------------------------------------------
-  l <- Mlist$M
+  l <- Mlist$M[nvapply(Mlist$M, ncol) > 0]
 
   # scaling parameters ---------------------------------------------------------
   incl_sp <- lvapply(Mlist$scale_pars, function(x) {
@@ -79,7 +79,8 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
     # - to identify the correct rows between different sub-levels
     # - pos is only needed when there are multiple grouping levels
     pos <- nlapply(groups[!names(groups) %in%
-                            names(which.max(Mlist$group_lvls))],
+                            names(which(Mlist$group_lvls ==
+                                          max(Mlist$group_lvls)))],
                    function(x) {
                      match(unique(x), x)
                    })

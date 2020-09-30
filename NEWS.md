@@ -1,4 +1,16 @@
+
 # JointAI (development version)
+
+## Minor improvements and bug fixes
+* `data_list`: omit data matrix `M_*` from `data_list` if `ncol == 0`
+* `data_list`: syntax to checking which `pos_*` to include can handle the case
+  with multiple grouping variables being on the same, lowest level; 
+  before `pos_*` was excluded for only one of them
+
+--------------------------------------------------------------------------------
+
+
+# JointAI (1.0.0)
 
 This version of **JointAI** contains some major changes. To extend the package
 it was necessary to change the internal structure and it was not possible to 
