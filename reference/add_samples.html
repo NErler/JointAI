@@ -57,14 +57,14 @@
 <meta property="og:title" content="Continue sampling from an object of class JointAI — add_samples" />
 <meta property="og:description" content="This function continues the sampling from the MCMC chains of an existing
 object of class 'JointAI'." />
-<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_square.png" />
+<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_191.png" />
 <meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@N_Erler" />
 <meta name="twitter:site" content="@N_Erler" />
 
 
-
+<meta name="robots" content="noindex">
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -103,7 +103,7 @@ object of class 'JointAI'." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -194,8 +194,8 @@ object of class 'JointAI'." />
 object of class 'JointAI'.<br /></p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_samples</span>(<span class='no'>object</span>, <span class='no'>n.iter</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>add_samples</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>n.iter</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span>, thin <span class='op'>=</span> <span class='cn'>NULL</span>,
+  monitor_params <span class='op'>=</span> <span class='cn'>NULL</span>, progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -253,18 +253,20 @@ contains some examples on how to specify the argument <code>monitor_params</code
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Example 1:</span>
 <span class='co'># Run an initial JointAI model:</span>
-<span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 
 <span class='co'># Continue sampling:</span>
-<span class='no'>mod_add</span> <span class='kw'>&lt;-</span> <span class='fu'>add_samples</span>(<span class='no'>mod</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>mod_add</span> <span class='op'>&lt;-</span> <span class='fu'>add_samples</span><span class='op'>(</span><span class='va'>mod</span>, n.iter <span class='op'>=</span> <span class='fl'>200</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 
 <span class='co'># Example 2:</span>
 <span class='co'># Continue sampling, but additionally sample imputed values.</span>
 <span class='co'># Note: Setting different parameters to monitor than in the original model</span>
 <span class='co'># requires add = FALSE.</span>
-<span class='no'>imps</span> <span class='kw'>&lt;-</span> <span class='fu'>add_samples</span>(<span class='no'>mod</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"imps"</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-                    <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div></pre>
+<span class='va'>imps</span> <span class='op'>&lt;-</span> <span class='fu'>add_samples</span><span class='op'>(</span><span class='va'>mod</span>, n.iter <span class='op'>=</span> <span class='fl'>200</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"imps"</span> <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+                    add <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -280,7 +282,7 @@ contains some examples on how to specify the argument <code>monitor_params</code
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

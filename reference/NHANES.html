@@ -59,14 +59,14 @@
 of the NHANES study, a study designed to assess the health and nutritional
 status of adults and children in the United States, conduced by the
 National Center for Health Statistics." />
-<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_square.png" />
+<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_191.png" />
 <meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@N_Erler" />
 <meta name="twitter:site" content="@N_Erler" />
 
 
-
+<meta name="robots" content="noindex">
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -105,7 +105,7 @@ National Center for Health Statistics." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -198,12 +198,12 @@ status of adults and children in the United States, conduced by the
 <a href='https://www.cdc.gov/nchs/'>National Center for Health Statistics</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>NHANES</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>NHANES</span><span class='op'>)</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 186 rows and 13 variables:</p><dl'>
+    <p>A data frame with 186 rows and 13 variables:</p><dl>
 <dt>SBP</dt><dd><p>systolic blood pressure</p></dd>
 <dt>gender</dt><dd><p>male or female</p></dd>
 <dt>age</dt><dd><p>in years</p></dd>
@@ -235,7 +235,8 @@ demonstration of the functionality of the JointAI package,
 and no clinical conclusions should be derived from it.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>NHANES</span>)</div><div class='output co'>#&gt;       SBP           gender         age                        race   
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>NHANES</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;       SBP           gender         age                        race   
 #&gt;  Min.   : 86.0   male  :100   Min.   :20.00   Mexican American  :28  
 #&gt;  1st Qu.:109.3   female: 86   1st Qu.:32.00   Other Hispanic    :10  
 #&gt;  Median :116.7                Median :42.00   Non-Hispanic White:73  
@@ -274,7 +275,7 @@ and no clinical conclusions should be derived from it.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -1,5 +1,5 @@
 pandoc: 2.7.3
-pkgdown: 1.5.1
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   AfterFitting: AfterFitting.html
@@ -9,7 +9,7 @@ articles:
   SelectingParameters: SelectingParameters.html
   TheoreticalBackground: TheoreticalBackground.html
   VisualizingIncompleteData: VisualizingIncompleteData.html
-last_built: 2020-09-03T06:56Z
+last_built: 2020-09-30T07:38Z
 urls:
   reference: https://nerler.github.io/JointAI//reference
   article: https://nerler.github.io/JointAI//articles

@@ -22,11 +22,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="After Fitting">
 <meta property="og:description" content="JointAI">
-<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_square.png">
+<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_191.png">
 <meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@N_Erler">
 <meta name="twitter:site" content="@N_Erler">
+<meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -51,7 +52,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -153,86 +154,91 @@
 <div id="trace-plot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#trace-plot" class="anchor"></a>Trace plot</h3>
-<p>A trace plot shows the sampled values per chain and node throughout iterations. It allows us to evaluate convergence and mixing of the chains visually, and can be obtained with the function <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code><a href="../reference/traceplot.html">traceplot()</a></code></a>:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">mod13a</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">WC</span> + <span class="no">alc</span> + <span class="no">creat</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>, <span class="kw">n.iter</span> <span class="kw">=</span> <span class="fl">500</span>,
-                 <span class="kw">seed</span> <span class="kw">=</span> <span class="fl">2020</span>)
+<p>A trace plot shows the sampled values per chain and node throughout iterations. It allows us to evaluate convergence and mixing of the chains visually, and can be obtained with the function <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code>traceplot()</code></a>:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="va">mod13a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">WC</span> <span class="op">+</span> <span class="va">alc</span> <span class="op">+</span> <span class="va">creat</span>, data <span class="op">=</span> <span class="va">NHANES</span>, n.iter <span class="op">=</span> <span class="fl">500</span>,
+                 seed <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/traceplot.html">traceplot</a></span>(<span class="no">mod13a</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-1-1.png" width="100%" style="display: block; margin: auto;"></p>
-<p>When the sampler has converged the chains show one horizontal band, as in the above figure. Consequently, when traces show a trend convergence has not been reached and more iterations are necessary (e.g., using <a href="https://nerler.github.io/JointAI/reference/add_samples.html"><code><a href="../reference/add_samples.html">add_samples()</a></code></a>).</p>
-<p>Graphical aspects of the traceplot can be controlled by specifying standard graphical arguments via the dots argument <code>"..."</code>, which are passed to <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/matplot.html"><code><a href="https://rdrr.io/r/graphics/matplot.html">matplot()</a></code></a>. This allows changing colour, line type and -width, limits, and so forth. Arguments <code>nrow</code> and/or <code>ncol</code> can be supplied to set specific numbers of rows and columns for the layout of the grid of plots.</p>
+<p>When the sampler has converged the chains show one horizontal band, as in the above figure. Consequently, when traces show a trend convergence has not been reached and more iterations are necessary (e.g., using <a href="https://nerler.github.io/JointAI/reference/add_samples.html"><code>add_samples()</code></a>).</p>
+<p>Graphical aspects of the traceplot can be controlled by specifying standard graphical arguments via the dots argument <code>"..."</code>, which are passed to <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/matplot.html"><code>matplot()</code></a>. This allows changing colour, line type and -width, limits, and so forth. Arguments <code>nrow</code> and/or <code>ncol</code> can be supplied to set specific numbers of rows and columns for the layout of the grid of plots.</p>
 <p>With the argument <code>use_ggplot</code> it is possible to get a <a href="https://CRAN.R-project.org/package=ggplot2"><strong>ggplot2</strong></a> version of the traceplot. It can be extended using standard <strong>ggplot2</strong> syntax.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="../reference/traceplot.html">traceplot</a></span>(<span class="no">mod13a</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">use_ggplot</span> <span class="kw">=</span> <span class="fl">TRUE</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">'bottom'</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span>(<span class="kw">palette</span> <span class="kw">=</span> <span class="st">'Dark2'</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod13a</span>, ncol <span class="op">=</span> <span class="fl">3</span>, use_ggplot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">'Dark2'</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/ggtrace15a-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div id="density-plot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#density-plot" class="anchor"></a>Density plot</h3>
-<p>The posterior distributions can also be visualized using the function <a href="https://nerler.github.io/JointAI/reference/densplot.html"><code><a href="../reference/densplot.html">densplot()</a></code></a>, which plots the empirical density per node per chain, or combining chains (when <code>joined = TRUE</code>).</p>
+<p>The posterior distributions can also be visualized using the function <a href="https://nerler.github.io/JointAI/reference/densplot.html"><code>densplot()</code></a>, which plots the empirical density per node per chain, or combining chains (when <code>joined = TRUE</code>).</p>
 <p>The argument <code>vlines</code> takes a list of lists, containing specifications passed to <code>abline</code>, and allows us to add (vertical) lines to the plot, e.g., marking zero:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/densplot.html">densplot</a></span>(<span class="no">mod13a</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"darkred"</span>, <span class="st">"darkblue"</span>, <span class="st">"darkgreen"</span>),
-         <span class="kw">vlines</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">v</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span>(<span class="no">mod13a</span>)$<span class="no">SBP</span>)), <span class="fl">NA</span>),
-                            <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html">grey</a></span>(<span class="fl">0.8</span>))))</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">mod13a</span>, ncol <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"darkred"</span>, <span class="st">"darkblue"</span>, <span class="st">"darkgreen"</span><span class="op">)</span>,
+         vlines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">$</span><span class="va">SBP</span><span class="op">)</span><span class="op">)</span>, <span class="cn">NA</span><span class="op">)</span>,
+                            col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html">grey</a></span><span class="op">(</span><span class="fl">0.8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;"> or marking the posterior mean and 2.5% and 97.5% quantiles:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">res</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod13a</span>)$<span class="no">res</span>$<span class="no">SBP</span>$<span class="no">regcoef</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Mean'</span>, <span class="st">'2.5%'</span>, <span class="st">'97.5%'</span>)],
-             <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod13a</span>)$<span class="no">res</span>$<span class="no">SBP</span>$<span class="no">sigma</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'Mean'</span>, <span class="st">'2.5%'</span>, <span class="st">'97.5%'</span>)])
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">SBP</span><span class="op">$</span><span class="va">regcoef</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Mean'</span>, <span class="st">'2.5%'</span>, <span class="st">'97.5%'</span><span class="op">)</span><span class="op">]</span>,
+             <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">SBP</span><span class="op">$</span><span class="va">sigma</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Mean'</span>, <span class="st">'2.5%'</span>, <span class="st">'97.5%'</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/densplot.html">densplot</a></span>(<span class="no">mod13a</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">3</span>,
-         <span class="kw">vlines</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">v</span> <span class="kw">=</span> <span class="no">res</span>[, <span class="st">'Mean'</span>], <span class="kw">lty</span> <span class="kw">=</span> <span class="fl">1</span>,
-                            <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">2</span>),
-                       <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">v</span> <span class="kw">=</span> <span class="no">res</span>[, <span class="st">"2.5%"</span>], <span class="kw">lty</span> <span class="kw">=</span> <span class="fl">2</span>),
-                       <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">v</span> <span class="kw">=</span> <span class="no">res</span>[, <span class="st">"97.5%"</span>], <span class="kw">lty</span> <span class="kw">=</span> <span class="fl">2</span>)
-         )
-)</pre></body></html></div>
+<span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">mod13a</span>, ncol <span class="op">=</span> <span class="fl">3</span>,
+         vlines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">res</span><span class="op">[</span>, <span class="st">'Mean'</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">1</span>,
+                            lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
+                       <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">res</span><span class="op">[</span>, <span class="st">"2.5%"</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
+                       <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">res</span><span class="op">[</span>, <span class="st">"97.5%"</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+         <span class="op">)</span>
+<span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/densplot15a-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p>Like with <code><a href="../reference/traceplot.html">traceplot()</a></code> it is possible to use the <strong>ggplot2</strong> version of <code><a href="../reference/densplot.html">densplot()</a></code> when setting <code>use_ggplot = TRUE</code>. Here, vertical lines can be added as additional layers:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># fit the complete-case version of the model</span>
-<span class="no">mod13a_cc</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/formula.html">formula</a></span>(<span class="no">mod13a</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>, <span class="kw">na.action</span> <span class="kw">=</span> <span class="no">na.omit</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="co"># fit the complete-case version of the model</span>
+<span class="va">mod13a_cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/formula.html">formula</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span>, na.action <span class="op">=</span> <span class="va">na.omit</span><span class="op">)</span>
 
 
 <span class="co"># make a dataset containing the quantiles of the posterior sample and</span>
 <span class="co"># confidence intervals from the complete case analysis:</span>
-<span class="no">quantDF</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">variable</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod13a</span>)$<span class="no">res</span>$<span class="no">SBP</span>$<span class="no">regcoef</span>),
-                            <span class="kw">type</span> <span class="kw">=</span> <span class="st">'2.5%'</span>,
-                            <span class="kw">model</span> <span class="kw">=</span> <span class="st">'JointAI'</span>,
-                            <span class="kw">value</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod13a</span>)$<span class="no">res</span>$<span class="no">SBP</span>$<span class="no">regcoef</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'2.5%'</span>)]
-                            ),
-                 <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">variable</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod13a</span>)$<span class="no">res</span>$<span class="no">SBP</span>$<span class="no">regcoef</span>),
-                            <span class="kw">type</span> <span class="kw">=</span> <span class="st">'97.5%'</span>,
-                            <span class="kw">model</span> <span class="kw">=</span> <span class="st">'JointAI'</span>,
-                            <span class="kw">value</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod13a</span>)$<span class="no">res</span>$<span class="no">SBP</span>$<span class="no">regcoef</span>[, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'97.5%'</span>)]
-                 ),
-                 <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">variable</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span>(<span class="no">mod13a_cc</span>)),
-                            <span class="kw">type</span> <span class="kw">=</span> <span class="st">'2.5%'</span>,
-                            <span class="kw">model</span> <span class="kw">=</span> <span class="st">'cc'</span>,
-                            <span class="kw">value</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span>(<span class="no">mod13a_cc</span>)[, <span class="st">'2.5 %'</span>]
-                 ),
-                 <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">variable</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span>(<span class="no">mod13a_cc</span>)),
-                            <span class="kw">type</span> <span class="kw">=</span> <span class="st">'97.5%'</span>,
-                            <span class="kw">model</span> <span class="kw">=</span> <span class="st">'cc'</span>,
-                            <span class="kw">value</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span>(<span class="no">mod13a_cc</span>)[, <span class="st">'97.5 %'</span>]
-                 )
-)
+<span class="va">quantDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">SBP</span><span class="op">$</span><span class="va">regcoef</span><span class="op">)</span>,
+                            type <span class="op">=</span> <span class="st">'2.5%'</span>,
+                            model <span class="op">=</span> <span class="st">'JointAI'</span>,
+                            value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">SBP</span><span class="op">$</span><span class="va">regcoef</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'2.5%'</span><span class="op">)</span><span class="op">]</span>
+                            <span class="op">)</span>,
+                 <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">SBP</span><span class="op">$</span><span class="va">regcoef</span><span class="op">)</span>,
+                            type <span class="op">=</span> <span class="st">'97.5%'</span>,
+                            model <span class="op">=</span> <span class="st">'JointAI'</span>,
+                            value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">SBP</span><span class="op">$</span><span class="va">regcoef</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'97.5%'</span><span class="op">)</span><span class="op">]</span>
+                 <span class="op">)</span>,
+                 <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">mod13a_cc</span><span class="op">)</span><span class="op">)</span>,
+                            type <span class="op">=</span> <span class="st">'2.5%'</span>,
+                            model <span class="op">=</span> <span class="st">'cc'</span>,
+                            value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">mod13a_cc</span><span class="op">)</span><span class="op">[</span>, <span class="st">'2.5 %'</span><span class="op">]</span>
+                 <span class="op">)</span>,
+                 <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">mod13a_cc</span><span class="op">)</span><span class="op">)</span>,
+                            type <span class="op">=</span> <span class="st">'97.5%'</span>,
+                            model <span class="op">=</span> <span class="st">'cc'</span>,
+                            value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">mod13a_cc</span><span class="op">)</span><span class="op">[</span>, <span class="st">'97.5 %'</span><span class="op">]</span>
+                 <span class="op">)</span>
+<span class="op">)</span>
 
 
 <span class="co"># ggplot version:</span>
-<span class="no">p13a</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/densplot.html">densplot</a></span>(<span class="no">mod13a</span>, <span class="kw">use_ggplot</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">joined</span> <span class="kw">=</span> <span class="fl">TRUE</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">'bottom'</span>)
+<span class="va">p13a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">mod13a</span>, use_ggplot <span class="op">=</span> <span class="cn">TRUE</span>, joined <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span>
 
 
 <span class="co"># add vertical lines for the:</span>
 <span class="co"># - confidence intervals from the complete case analysis</span>
 <span class="co"># - quantiles of the posterior distribution</span>
-<span class="no">p13a</span> +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">quantDF</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">xintercept</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="no">model</span>),
-             <span class="kw">lty</span> <span class="kw">=</span> <span class="fl">2</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">'CI from model: '</span>,
-                     <span class="kw">limits</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'JointAI'</span>, <span class="st">'cc'</span>),
-                     <span class="kw">values</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'blue'</span>, <span class="st">'red'</span>),
-                     <span class="kw">labels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'JointAI'</span>, <span class="st">'compl.case'</span>))</pre></body></html></div>
+<span class="va">p13a</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">quantDF</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">value</span>, color <span class="op">=</span> <span class="va">model</span><span class="op">)</span>,
+             lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">'CI from model: '</span>,
+                     limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'JointAI'</span>, <span class="st">'cc'</span><span class="op">)</span>,
+                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span>,
+                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'JointAI'</span>, <span class="st">'compl.case'</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/ggdens15a-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -242,7 +248,8 @@
 <p>A summary of the posterior distribution estimated in a <code>JointAI</code> model can be obtained using the function <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>.</p>
 <p>The posterior summary consists of the mean, standard deviation and quantiles (by default, the 2.5% and 97.5% quantiles) of the MCMC samples from all chains combined. Moreover, the tail probability (see below), Gelman-Rubin criterion (see <a href="#sec:grcrit">section below</a>) and the ratio of the Monte Carlo error to the posterior standard deviation (see <a href="#sec:mcerror">section below</a>) are given.</p>
 <p>Additionally, some essential characteristics of the MCMC samples on which the summary is based is given. This includes the range and number of iterations (“Sample size per chain”), thinning interval, and number of chains. Furthermore, the number of observations (number of rows in the data) is given.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod13a</span>)
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Bayesian linear model fitted with JointAI</span>
 <span class="co">#&gt; </span>
@@ -270,15 +277,16 @@
 <span class="co">#&gt; Thinning interval = 1 </span>
 <span class="co">#&gt; Number of chains = 3 </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Number of observations: 186</span></pre></body></html></div>
+<span class="co">#&gt; Number of observations: 186</span></pre></div>
 <p>For mixed models, <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> also returns the posterior summary of the random effects covariance matrix <code>D</code> and the number of groups. The argument <code>missinfo = TRUE</code> will add information on the missing values in the variables involved in the model:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">splines</span>)
-<span class="no">mod13b</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lme_imp</a></span>(<span class="no">bmi</span> ~ <span class="no">GESTBIR</span> + <span class="no">ETHN</span> + <span class="no">HEIGHT_M</span> + <span class="fu"><a href="../reference/ns.html">ns</a></span>(<span class="no">age</span>, <span class="kw">df</span> <span class="kw">=</span> <span class="fl">3</span>),
-                  <span class="kw">random</span> <span class="kw">=</span> ~ <span class="fl">1</span> <span class="kw">|</span> <span class="no">ID</span>,
-                  <span class="kw">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="no">simLong</span>, !<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">bmi</span>)),
-                  <span class="kw">n.iter</span> <span class="kw">=</span> <span class="fl">500</span>, <span class="kw">no_model</span> <span class="kw">=</span> <span class="st">'age'</span>, <span class="kw">seed</span> <span class="kw">=</span> <span class="fl">2020</span>)
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">splines</span><span class="op">)</span>
+<span class="va">mod13b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lme_imp</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">GESTBIR</span> <span class="op">+</span> <span class="va">ETHN</span> <span class="op">+</span> <span class="va">HEIGHT_M</span> <span class="op">+</span> <span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,
+                  random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">ID</span>,
+                  data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">simLong</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">bmi</span><span class="op">)</span><span class="op">)</span>,
+                  n.iter <span class="op">=</span> <span class="fl">500</span>, no_model <span class="op">=</span> <span class="st">'age'</span>, seed <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod13b</span>, <span class="kw">missinfo</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod13b</span>, missinfo <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Bayesian linear mixed model fitted with JointAI</span>
 <span class="co">#&gt; </span>
@@ -332,7 +340,7 @@
 <span class="co">#&gt; GESTBIR     ID    0    0</span>
 <span class="co">#&gt; ID          ID    0    0</span>
 <span class="co">#&gt; HEIGHT_M    ID    4    2</span>
-<span class="co">#&gt; ETHN        ID    6    3</span></pre></body></html></div>
+<span class="co">#&gt; ETHN        ID    6    3</span></pre></div>
 <p>At the end of the summary output, a summary of the number and proportion of missing values per variable is printed</p>
 <div id="tail-probability" class="section level3">
 <h3 class="hasAnchor">
@@ -347,8 +355,9 @@
 <div id="sec:grcrit" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sec:grcrit" class="anchor"></a>Gelman-Rubin criterion for convergence</h3>
-<p>The Gelman-Rubin criterion evaluates convergence by comparing within and between chain variability and, thus, requires at least two MCMC chains to be calculated. It is implemented for <code>JointAI</code> objects in the function <a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code><a href="../reference/GR_crit.html">GR_crit()</a></code></a>, which is based on the function <code>gelman.diag()</code> from the package <a href="https://CRAN.R-project.org/package=coda"><strong>coda</strong></a>. The upper limit of the confidence interval should not be much larger than 1.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/GR_crit.html">GR_crit</a></span>(<span class="no">mod13a</span>)
+<p>The Gelman-Rubin criterion evaluates convergence by comparing within and between chain variability and, thus, requires at least two MCMC chains to be calculated. It is implemented for <code>JointAI</code> objects in the function <a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code>GR_crit()</code></a>, which is based on the function <code>gelman.diag()</code> from the package <a href="https://CRAN.R-project.org/package=coda"><strong>coda</strong></a>. The upper limit of the confidence interval should not be much larger than 1.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="fu"><a href="../reference/GR_crit.html">GR_crit</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span>
 <span class="co">#&gt; Potential scale reduction factors:</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;              Point est. Upper C.I.</span>
@@ -361,26 +370,28 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Multivariate psrf</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; 1.01</span></pre></body></html></div>
+<span class="co">#&gt; 1.01</span></pre></div>
 <p>Besides the arguments <code>start</code>, <code>end</code>, <code>thin</code>, and <code>subset</code>, which are explained <a href="#sec:subset">below</a>, <code><a href="../reference/GR_crit.html">GR_crit()</a></code> also takes the arguments of <code>gelman.diag()</code>.</p>
 </div>
 <div id="sec:mcerror" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sec:mcerror" class="anchor"></a>Monte Carlo Error</h3>
-<p>The precision of the MCMC sample can be checked with the function <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code><a href="../reference/MC_error.html">MC_error()</a></code></a>. It uses the function <code>mcmcse::mcmcse.mat()</code> from the package <a href="https://CRAN.R-project.org/package=mcmcse"><strong>mcmcse</strong></a> to calculate the Monte Carlo error (the error that is made since the sample is finite) and compares it to the standard deviation of the posterior sample. A rule of thumb is that the Monte Carlo error should not be more than 5% of the standard deviation<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Besides the arguments explained <a href="#sec:subset">below</a>, <code><a href="../reference/MC_error.html">MC_error()</a></code> takes the arguments of <code>mcmcse.mat()</code>.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/MC_error.html">MC_error</a></span>(<span class="no">mod13a</span>)
+<p>The precision of the MCMC sample can be checked with the function <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code>MC_error()</code></a>. It uses the function <code>mcmcse::mcmcse.mat()</code> from the package <a href="https://CRAN.R-project.org/package=mcmcse"><strong>mcmcse</strong></a> to calculate the Monte Carlo error (the error that is made since the sample is finite) and compares it to the standard deviation of the posterior sample. A rule of thumb is that the Monte Carlo error should not be more than 5% of the standard deviation<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Besides the arguments explained <a href="#sec:subset">below</a>, <code><a href="../reference/MC_error.html">MC_error()</a></code> takes the arguments of <code>mcmcse.mat()</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="fu"><a href="../reference/MC_error.html">MC_error</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span>
 <span class="co">#&gt;                est   MCSE    SD MCSE/SD</span>
 <span class="co">#&gt; (Intercept)  81.08 0.2533 9.692   0.026</span>
 <span class="co">#&gt; genderfemale  0.37 0.0675 2.614   0.026</span>
 <span class="co">#&gt; WC            0.31 0.0019 0.074   0.026</span>
 <span class="co">#&gt; alc&gt;=1        6.37 0.0790 2.469   0.032</span>
 <span class="co">#&gt; creat         7.75 0.2380 7.595   0.031</span>
-<span class="co">#&gt; sigma_SBP    14.40 0.0232 0.779   0.030</span></pre></body></html></div>
+<span class="co">#&gt; sigma_SBP    14.40 0.0232 0.779   0.030</span></pre></div>
 <p><code><a href="../reference/MC_error.html">MC_error()</a></code> returns an object of class <code>MCElist</code>, which is a list containing matrices with the posterior mean, estimated Monte Carlo error, posterior standard deviation and the ratio of the Monte Carlo error to the posterior standard deviation, for the scaled (if they are part of the <code>JointAI</code> object) and unscaled (transformed back to the scale of the data) posterior samples. The associated print method prints only the latter.</p>
-<p>To facilitate quick evaluation of the Monte Carlo error to posterior standard deviation ratio, plotting of an object of class <code>MCElist</code> using <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> shows this ratio for each (selected) node and automatically adds a vertical line at the desired cut-off (by default 5%).</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="kw">mar</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="kw">mgp</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">0.6</span>, <span class="fl">0</span>), <span class="kw">mfrow</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>))
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="fu"><a href="../reference/MC_error.html">MC_error</a></span>(<span class="no">mod13a</span>))  <span class="co"># left panel: all iterations 101:600</span>
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="fu"><a href="../reference/MC_error.html">MC_error</a></span>(<span class="no">mod13a</span>, <span class="kw">end</span> <span class="kw">=</span> <span class="fl">250</span>))  <span class="co"># right panel: iterations 101:250</span></pre></body></html></div>
+<p>To facilitate quick evaluation of the Monte Carlo error to posterior standard deviation ratio, plotting of an object of class <code>MCElist</code> using <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> shows this ratio for each (selected) node and automatically adds a vertical line at the desired cut-off (by default 5%).</p>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.6</span>, <span class="fl">0</span><span class="op">)</span>, mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/MC_error.html">MC_error</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">)</span>  <span class="co"># left panel: all iterations 101:600</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/MC_error.html">MC_error</a></span><span class="op">(</span><span class="va">mod13a</span>, end <span class="op">=</span> <span class="fl">250</span><span class="op">)</span><span class="op">)</span>  <span class="co"># right panel: iterations 101:250</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/MCE15a-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -397,8 +408,9 @@
 <h4 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h4>
 <p>To display only the parameters of the imputation models, we set <code>subset = c(analysis_main = FALSE, other_models = TRUE)</code> (after re-estimating the model with the monitor for these parameters switched on):</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">mod13c</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span>(<span class="no">mod13a</span>, <span class="kw">monitor_params</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">other_models</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">mod13c</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">analysis_main</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">other_models</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="va">mod13c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod13a</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>other_models <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod13c</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">FALSE</span>, other_models <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Bayesian joint model fitted with JointAI </span>
 <span class="co">#&gt; </span>
@@ -456,33 +468,36 @@
 <span class="co">#&gt; Thinning interval = 1 </span>
 <span class="co">#&gt; Number of chains = 3 </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Number of observations: 186</span></pre></body></html></div>
+<span class="co">#&gt; Number of observations: 186</span></pre></div>
 <p>To select only some of the parameters, they can be specified directly by name via the <code>other</code> element of <code>subset</code>.</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="../reference/densplot.html">densplot</a></span>(<span class="no">mod13c</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">analysis_main</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-                               <span class="kw">other</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'beta[4]'</span>, <span class="st">'beta[5]'</span>)), <span class="kw">nrow</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">mod13c</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">FALSE</span>,
+                               other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'beta[4]'</span>, <span class="st">'beta[5]'</span><span class="op">)</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>This also works when a subset of the imputed values should be displayed:</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># re-fit the model and monitor the imputed values</span>
-<span class="no">mod13d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span>(<span class="no">mod13a</span>, <span class="kw">monitor_params</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">imps</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="co"># re-fit the model and monitor the imputed values</span>
+<span class="va">mod13d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod13a</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>imps <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># select all imputed values for 'WC' (4th column of M_lvlone)</span>
-<span class="no">sub3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="st">'M_lvlone\\[[[:digit:]]+,4\\]'</span>, <span class="fu"><a href="../reference/parameters.html">parameters</a></span>(<span class="no">mod13d</span>)$<span class="no">coef</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="no">sub3</span>
+<span class="va">sub3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">'M_lvlone\\[[[:digit:]]+,4\\]'</span>, <span class="fu"><a href="../reference/parameters.html">parameters</a></span><span class="op">(</span><span class="va">mod13d</span><span class="op">)</span><span class="op">$</span><span class="va">coef</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">sub3</span>
 <span class="co">#&gt; [1] "M_lvlone[33,4]"  "M_lvlone[150,4]"</span>
 
 <span class="co"># pass "sub3" to "subset" via "other", for example in a traceplot:</span>
-<span class="fu"><a href="../reference/traceplot.html">traceplot</a></span>(<span class="no">mod13d</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">analysis_main</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">other</span> <span class="kw">=</span> <span class="no">sub3</span>), <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod13d</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">FALSE</span>, other <span class="op">=</span> <span class="va">sub3</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/trace15d-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>When the number of imputed values is large or in order to check convergence of random effects, it may not be feasible to plot and inspect all trace plots. In that case a random subset of, for instance the random effects, can be selected (output not shown):</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># re-fit the model monitoring the random effects</span>
-<span class="no">mod13e</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span>(<span class="no">mod13b</span>, <span class="kw">monitor_params</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">ranef_main</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="co"># re-fit the model monitoring the random effects</span>
+<span class="va">mod13e</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">mod13b</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>ranef_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># extract random intercepts</span>
-<span class="no">ri</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="st">'^b_bmi_ID\\[[[:digit:]]+,1\\]$'</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">mod13e</span>$<span class="no">MCMC</span><span class="kw">[[</span><span class="fl">1</span>]]), <span class="kw">value</span> <span class="kw">=</span> <span class="no">T</span>)
+<span class="va">ri</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">'^b_bmi_ID\\[[[:digit:]]+,1\\]$'</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">mod13e</span><span class="op">$</span><span class="va">MCMC</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
 
 <span class="co"># to plot the chains of 12 randomly selected random intercepts and slopes:</span>
-<span class="fu"><a href="../reference/traceplot.html">traceplot</a></span>(<span class="no">mod13e</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">analysis_main</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-                                <span class="kw">other</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="no">ri</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">12</span>)), <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">4</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod13e</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">FALSE</span>, 
+                                other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">ri</span>, size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -491,18 +506,23 @@
 <a href="#subset-of-mcmc-samples" class="anchor"></a>Subset of MCMC samples</h3>
 <p>With the arguments <code>start</code>, <code>end</code> and <code>thin</code> it is possible to select which iterations from the MCMC sample are included in the summary. <code>start</code> and <code>end</code> specify the first and last iterations to be used, <code>thin</code> the thinning interval. Specification of <code>start</code>, thus, allows discarding a “burn-in”, i.e., the iterations before the MCMC chain had converged.</p>
 <p>If a particular chain does not have converged it can be excluded from the summary or plot using the argument <code>exclude_chains</code>. This argument takes a numeric vector identifying chains to be excluded, for example:</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">mod14</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span>(<span class="no">SBP</span> ~ <span class="no">gender</span> + <span class="no">WC</span> + <span class="no">alc</span> + <span class="no">creat</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">NHANES</span>, <span class="kw">n.iter</span> <span class="kw">=</span> <span class="fl">100</span>,
-                <span class="kw">progress.bar</span> <span class="kw">=</span> <span class="st">'none'</span>, <span class="kw">n.chains</span> <span class="kw">=</span> <span class="fl">5</span>)
+<div class="sourceCode" id="cb15"><pre class="downlit">
+<span class="va">mod14</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">WC</span> <span class="op">+</span> <span class="va">alc</span> <span class="op">+</span> <span class="va">creat</span>, data <span class="op">=</span> <span class="va">NHANES</span>, n.iter <span class="op">=</span> <span class="fl">100</span>,
+                progress.bar <span class="op">=</span> <span class="st">'none'</span>, n.chains <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/densplot.html">densplot</a></span>(<span class="no">mod14</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">3</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">mod14</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="../reference/densplot.html">densplot</a></span>(<span class="no">mod14</span>, <span class="kw">exclude_chains</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">4</span>), <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">3</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb16"><pre class="downlit">
+<span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">mod14</span>, exclude_chains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-11-2.png" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span>(<span class="no">mod14</span>, <span class="kw">thin</span> <span class="kw">=</span> <span class="fl">10</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">3</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb17"><pre class="downlit">
+<span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod14</span>, thin <span class="op">=</span> <span class="fl">10</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span>(<span class="no">mod14</span>, <span class="kw">start</span> <span class="kw">=</span> <span class="fl">150</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">3</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb18"><pre class="downlit">
+<span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod14</span>, start <span class="op">=</span> <span class="fl">150</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-12-2.png" width="672" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span>(<span class="no">mod14</span>, <span class="kw">end</span> <span class="kw">=</span> <span class="fl">120</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">3</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod14</span>, end <span class="op">=</span> <span class="fl">120</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-12-3.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -510,9 +530,10 @@
 <h2 class="hasAnchor">
 <a href="#predicted-values" class="anchor"></a>Predicted values</h2>
 <p>Often, the aim of an analysis is not only to estimate the association between outcome and covariates but to predict future outcomes or outcomes for new subjects.</p>
-<p>The function <a href="https://nerler.github.io/JointAI/reference/predict.JointAI.html"><code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code></a> allows us to obtain predicted values and corresponding credible intervals from <code>JointAI</code> objects. Note that for mixed models, currently, only marginal prediction but not prediction conditional on the random effects is implemented.</p>
+<p>The function <a href="https://nerler.github.io/JointAI/reference/predict.JointAI.html"><code>predict()</code></a> allows us to obtain predicted values and corresponding credible intervals from <code>JointAI</code> objects. Note that for mixed models, currently, only marginal prediction but not prediction conditional on the random effects is implemented.</p>
 <p>A dataset containing data which the prediction should be performed is specified via the argument <code>newdata</code>. If no <code>newdata</code> is given, the original data from the JointAI object are used. The argument <code>quantiles</code> allows the specification of the quantiles of the posterior sample that are used to obtain the credible interval (by default the 2.5% and 97.5% quantile). Arguments <code>start</code>, <code>end</code>, <code>thin</code> and <code>exclude_chains</code> control the subset of MCMC samples that is used.</p>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">mod13a</span>, <span class="kw">newdata</span> <span class="kw">=</span> <span class="no">NHANES</span>[<span class="fl">27</span>, ])
+<div class="sourceCode" id="cb20"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod13a</span>, newdata <span class="op">=</span> <span class="va">NHANES</span><span class="op">[</span><span class="fl">27</span>, <span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt; $newdata</span>
 <span class="co">#&gt;          SBP gender age             race   WC alc educ creat albu</span>
 <span class="co">#&gt; 392 126.6667   male  32 Mexican American 94.1  &lt;1  low  0.83  4.2</span>
@@ -521,33 +542,35 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $fitted</span>
 <span class="co">#&gt;        fit     2.5%    97.5%</span>
-<span class="co">#&gt; 1 116.3273 112.4343 120.1817</span></pre></body></html></div>
+<span class="co">#&gt; 1 116.3273 112.4343 120.1817</span></pre></div>
 <p><code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> returns a list with elements <code>dat</code>, <code>fit</code> and <code>quantiles</code>, containing <code>newdata</code> with the predicted values and quantiles appended, the predicted values and quantiles that form the credible interval.</p>
 <div id="prediction-to-visualize-non-linear-effects" class="section level3">
 <h3 class="hasAnchor">
 <a href="#prediction-to-visualize-non-linear-effects" class="anchor"></a>Prediction to visualize non-linear effects</h3>
-<p>Another reason to obtain predicted values is the visualization of non-linear effects, i.e., to create an effect plot. To facilitate the generation of a dataset for such a prediction, the function <a href="https://nerler.github.io/JointAI/reference/predDF.html"><code><a href="../reference/predDF.html">predDF()</a></code></a> can be used. It generates a <code>data.frame</code> that contains a sequence of values through the range of observed values for a covariate specified by the argument <code>vars</code>, and the median or reference value for all other continuous and categorical variables.</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="co"># create dataset for prediction</span>
-<span class="no">newDF</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/predDF.html">predDF</a></span>(<span class="no">mod13b</span>, <span class="kw">var</span> <span class="kw">=</span> ~ <span class="no">age</span>)
+<p>Another reason to obtain predicted values is the visualization of non-linear effects, i.e., to create an effect plot. To facilitate the generation of a dataset for such a prediction, the function <a href="https://nerler.github.io/JointAI/reference/predDF.html"><code>predDF()</code></a> can be used. It generates a <code>data.frame</code> that contains a sequence of values through the range of observed values for a covariate specified by the argument <code>vars</code>, and the median or reference value for all other continuous and categorical variables.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit">
+<span class="co"># create dataset for prediction</span>
+<span class="va">newDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/predDF.html">predDF</a></span><span class="op">(</span><span class="va">mod13b</span>, var <span class="op">=</span> <span class="op">~</span> <span class="va">age</span><span class="op">)</span>
 
 <span class="co"># obtain predicted values</span>
-<span class="no">pred</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">mod13b</span>, <span class="kw">newdata</span> <span class="kw">=</span> <span class="no">newDF</span>)
+<span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod13b</span>, newdata <span class="op">=</span> <span class="va">newDF</span><span class="op">)</span>
 <span class="co">#&gt; Warning: </span>
 <span class="co">#&gt; Prediction in multi-level settings currently only takes into</span>
 <span class="co">#&gt; account the fixed effects, i.e., assumes that the random</span>
 <span class="co">#&gt; effect realizations are equal to zero.</span>
 
 <span class="co"># plot predicted values and credible interval</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html">matplot</a></span>(<span class="no">pred</span>$<span class="no">newdata</span>$<span class="no">age</span>, <span class="no">pred</span>$<span class="no">fitted</span>,
-        <span class="kw">lty</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span>), <span class="kw">type</span> <span class="kw">=</span> <span class="st">'l'</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fl">1</span>,
-        <span class="kw">xlab</span> <span class="kw">=</span> <span class="st">'age in months'</span>, <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">'predicted value'</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html">matplot</a></span><span class="op">(</span><span class="va">pred</span><span class="op">$</span><span class="va">newdata</span><span class="op">$</span><span class="va">age</span>, <span class="va">pred</span><span class="op">$</span><span class="va">fitted</span>,
+        lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">'l'</span>, col <span class="op">=</span> <span class="fl">1</span>,
+        xlab <span class="op">=</span> <span class="st">'age in months'</span>, ylab <span class="op">=</span> <span class="st">'predicted value'</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-15-1.png" width="90%" style="display: block; margin: auto;"></p>
 <p>It is possible to have multiple variables vary and to set values for these variables:</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="co"># create dataset for prediction</span>
-<span class="no">newDF</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/predDF.html">predDF</a></span>(<span class="no">mod13b</span>, <span class="kw">var</span> <span class="kw">=</span> ~ <span class="no">age</span> + <span class="no">HEIGHT_M</span> + <span class="no">ETHN</span>, <span class="kw">HEIGHT_M</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">150</span>, <span class="fl">180</span>))
+<div class="sourceCode" id="cb22"><pre class="downlit">
+<span class="co"># create dataset for prediction</span>
+<span class="va">newDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/predDF.html">predDF</a></span><span class="op">(</span><span class="va">mod13b</span>, var <span class="op">=</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">HEIGHT_M</span> <span class="op">+</span> <span class="va">ETHN</span>, HEIGHT_M <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">150</span>, <span class="fl">180</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># obtain predicted values</span>
-<span class="no">pred</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">mod13b</span>, <span class="kw">newdata</span> <span class="kw">=</span> <span class="no">newDF</span>)
+<span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">mod13b</span>, newdata <span class="op">=</span> <span class="va">newDF</span><span class="op">)</span>
 <span class="co">#&gt; Warning: </span>
 <span class="co">#&gt; Prediction in multi-level settings currently only takes into</span>
 <span class="co">#&gt; account the fixed effects, i.e., assumes that the random</span>
@@ -555,32 +578,34 @@
 
 
 <span class="co"># plot predicted values and credible interval</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">pred</span>$<span class="no">newdata</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">age</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">fit</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">HEIGHT_M</span>),
-                         <span class="kw">fill</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">HEIGHT_M</span>))) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">ymin</span> <span class="kw">=</span> <span class="no">`2.5%`</span>, <span class="kw">ymax</span> <span class="kw">=</span> <span class="no">`97.5%`</span>), <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.3</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="kw">size</span> <span class="kw">=</span> <span class="fl">1</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="st">'ETHN'</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">legend.position</span> <span class="kw">=</span> <span class="st">'top'</span>,
-        <span class="kw">panel.grid</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>()) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_d</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">'maternal height'</span>,
-                       <span class="kw">aesthetics</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'colour'</span>, <span class="st">'fill'</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">'Expected BMI'</span>, <span class="kw">breaks</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">15</span>, <span class="fl">18</span>, <span class="fl">0.5</span>))</pre></body></html></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">pred</span><span class="op">$</span><span class="va">newdata</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, y <span class="op">=</span> <span class="va">fit</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">HEIGHT_M</span><span class="op">)</span>,
+                         fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">HEIGHT_M</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">`2.5%`</span>, ymax <span class="op">=</span> <span class="va">`97.5%`</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="st">'ETHN'</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'top'</span>,
+        panel.grid <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_d</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">'maternal height'</span>,
+                       aesthetics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'colour'</span>, <span class="st">'fill'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">'Expected BMI'</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">18</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-16-1.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="export-of-imputed-values" class="section level2">
 <h2 class="hasAnchor">
 <a href="#export-of-imputed-values" class="anchor"></a>Export of imputed values</h2>
-<p>Imputed datasets can be extracted from a <code>JointAI</code> object (in which a monitor for the imputed values has been set, i.e., <code>monitor_params = c(imps = TRUE)</code>), with the function <a href="https://nerler.github.io/JointAI/reference/get_MIdat.html"><code><a href="../reference/get_MIdat.html">get_MIdat()</a></code></a>.</p>
+<p>Imputed datasets can be extracted from a <code>JointAI</code> object (in which a monitor for the imputed values has been set, i.e., <code>monitor_params = c(imps = TRUE)</code>), with the function <a href="https://nerler.github.io/JointAI/reference/get_MIdat.html"><code>get_MIdat()</code></a>.</p>
 <p>A completed dataset is created by taking the imputed values from a randomly chosen iteration of the MCMC sample, transforming them back to the original scale if scaling had been performed before the MCMC sampling, and filling them into the original incomplete data.</p>
 <p>The argument <code>m</code> specifies the number of imputed datasets to be created, <code>include</code> controls whether the original data are included in the long format <code>data.frame</code> (default is <code>include = TRUE</code>), <code>start</code> specifies the first iteration that may be used and <code>minspace</code> is the minimum number of iterations between iterations eligible to be selected.</p>
 <p>To make the selection of iterations to form the imputed data reproducible, a seed value can be specified via the argument <code>seed</code>.</p>
 <p>When <code>export_to_SPSS = TRUE</code> the imputed data is exported to SPSS, i.e., a <code>.txt</code> file containing the data and a <code>.sps</code> file containing SPSS syntax to convert the data into an SPSS data file (with ending <code>.sav</code>) are written. Arguments <code>filename</code> and <code>resdir</code> allow the specification of the name of the <code>.txt</code> and <code>.sps</code> file and the directory they are written to.</p>
 <p><code><a href="../reference/get_MIdat.html">get_MIdat()</a></code> returns a long-format <code>data.frame</code> containing the imputed datasets (and by default the original data) stacked onto each other. The imputation number is given in the variable <code>Imputation_</code>, column <code>.id</code> contains a newly created id variable for each observation in cross-sectional data (multi-level data should already contain an id variable).</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">impDF</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/get_MIdat.html">get_MIdat</a></span>(<span class="no">mod13d</span>, <span class="kw">m</span> <span class="kw">=</span> <span class="fl">10</span>, <span class="kw">seed</span> <span class="kw">=</span> <span class="fl">2018</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb23"><pre class="downlit">
+<span class="va">impDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_MIdat.html">get_MIdat</a></span><span class="op">(</span><span class="va">mod13d</span>, m <span class="op">=</span> <span class="fl">10</span>, seed <span class="op">=</span> <span class="fl">2018</span><span class="op">)</span></pre></div>
 <p>The function <code><a href="../reference/plot_imp_distr.html">plot_imp_distr()</a></code> allows us to visually compare the distribution of the observed and imputed values.</p>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu"><a href="../reference/plot_imp_distr.html">plot_imp_distr</a></span>(<span class="no">impDF</span>, <span class="kw">nrow</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb24"><pre class="downlit">
+<span class="fu"><a href="../reference/plot_imp_distr.html">plot_imp_distr</a></span><span class="op">(</span><span class="va">impDF</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
 <p><img src="AfterFitting_files/figure-html/unnamed-chunk-18-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="footnotes">
@@ -607,7 +632,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

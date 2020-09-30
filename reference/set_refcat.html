@@ -60,14 +60,14 @@ answers given by the user,
 returns the input for the argument refcats in the main analysis
 functions
 *_imp." />
-<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_square.png" />
+<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_191.png" />
 <meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@N_Erler" />
 <meta name="twitter:site" content="@N_Erler" />
 
 
-
+<meta name="robots" content="noindex">
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -106,7 +106,7 @@ functions
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -200,7 +200,7 @@ functions
 <code><a href='model_imp.html'>*_imp</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>set_refcat</span>(<span class='no'>data</span>, <span class='no'>formula</span>, <span class='no'>covars</span>, <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>set_refcat</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>formula</span>, <span class='va'>covars</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -234,22 +234,22 @@ to specify a subset of the <code>data</code> to be considered. If non of these
 arguments is specified, all variables in <code>data</code> will be considered.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Example 1: set reference categories for the whole dataset and choose</span>
 <span class='co'># answer option 3:</span>
-<span class='fu'>set_refcat</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>)
+<span class='fu'>set_refcat</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>NHANES</span><span class='op'>)</span>
 <span class='fl'>3</span>
 
 <span class='co'># insert the returned string as argument refcats</span>
-<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>SBP</span> ~ <span class='no'>age</span> + <span class='no'>race</span> + <span class='no'>creat</span> + <span class='no'>educ</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>,
-               <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='st'>'largest'</span>)
+<span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>SBP</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>race</span> <span class='op'>+</span> <span class='va'>creat</span> <span class='op'>+</span> <span class='va'>educ</span>, data <span class='op'>=</span> <span class='va'>NHANES</span>,
+               refcats <span class='op'>=</span> <span class='st'>'largest'</span><span class='op'>)</span>
 
 <span class='co'># Example 2:</span>
 <span class='co'># specify a model formula</span>
-<span class='no'>fmla</span> <span class='kw'>&lt;-</span> <span class='no'>SBP</span> ~ <span class='no'>age</span> + <span class='no'>gender</span> + <span class='no'>race</span> + <span class='no'>bili</span> + <span class='no'>smoke</span> + <span class='no'>alc</span>
+<span class='va'>fmla</span> <span class='op'>&lt;-</span> <span class='va'>SBP</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>gender</span> <span class='op'>+</span> <span class='va'>race</span> <span class='op'>+</span> <span class='va'>bili</span> <span class='op'>+</span> <span class='va'>smoke</span> <span class='op'>+</span> <span class='va'>alc</span>
 
 <span class='co'># write the output of set_refcat to an object</span>
-<span class='no'>ref_mod2</span> <span class='kw'>&lt;-</span> <span class='fu'>set_refcat</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>, <span class='kw'>formula</span> <span class='kw'>=</span> <span class='no'>fmla</span>)
+<span class='va'>ref_mod2</span> <span class='op'>&lt;-</span> <span class='fu'>set_refcat</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>NHANES</span>, formula <span class='op'>=</span> <span class='va'>fmla</span><span class='op'>)</span>
 <span class='fl'>4</span>
 <span class='fl'>2</span>
 <span class='fl'>5</span>
@@ -257,9 +257,11 @@ arguments is specified, all variables in <code>data</code> will be considered.</
 <span class='fl'>1</span>
 
 <span class='co'># enter the output in the model specification</span>
-<span class='no'>mod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='kw'>formula</span> <span class='kw'>=</span> <span class='no'>fmla</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>NHANES</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='no'>ref_mod2</span>,
-               <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>0</span>)
-}</div></pre>
+<span class='va'>mod2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span>formula <span class='op'>=</span> <span class='va'>fmla</span>, data <span class='op'>=</span> <span class='va'>NHANES</span>, refcats <span class='op'>=</span> <span class='va'>ref_mod2</span>,
+               n.adapt <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -275,7 +277,7 @@ arguments is specified, all variables in <code>data</code> will be considered.</
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -57,14 +57,14 @@
 <meta property="og:title" content="Joint Analysis and Imputation of incomplete data — model_imp" />
 <meta property="og:description" content="Main analysis functions to estimate different types of models using MCMC
 sampling, while imputing missing values." />
-<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_square.png" />
+<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_191.png" />
 <meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@N_Erler" />
 <meta name="twitter:site" content="@N_Erler" />
 
 
-
+<meta name="robots" content="noindex">
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -103,7 +103,7 @@ sampling, while imputing missing values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -194,159 +194,159 @@ sampling, while imputing missing values." />
 sampling, while imputing missing values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>lm_imp</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>lm_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
+  thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>glm_imp</span>(<span class='no'>formula</span>, <span class='no'>family</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>glm_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>family</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
+  thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>clm_imp</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nonprop</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rev</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>clm_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
+  thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, nonprop <span class='op'>=</span> <span class='cn'>NULL</span>, rev <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>,
+  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modelname <span class='op'>=</span> <span class='cn'>NULL</span>, modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>, progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  mess <span class='op'>=</span> <span class='cn'>TRUE</span>, keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>lognorm_imp</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>lognorm_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
+  thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>betareg_imp</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>betareg_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
+  thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>mlogit_imp</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>mlogit_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
+  thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>lme_imp</span>(<span class='no'>fixed</span>, <span class='no'>data</span>, <span class='no'>random</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>lme_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>data</span>, <span class='va'>random</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
+  thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>lmer_imp</span>(<span class='no'>fixed</span>, <span class='no'>data</span>, <span class='no'>random</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>lmer_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>data</span>, <span class='va'>random</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
+  thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>glme_imp</span>(<span class='no'>fixed</span>, <span class='no'>data</span>, <span class='no'>random</span>, <span class='no'>family</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>glme_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>data</span>, <span class='va'>random</span>, <span class='va'>family</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>,
+  n.iter <span class='op'>=</span> <span class='fl'>0</span>, thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>,
+  trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>glmer_imp</span>(<span class='no'>fixed</span>, <span class='no'>data</span>, <span class='no'>random</span>, <span class='no'>family</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>glmer_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>data</span>, <span class='va'>random</span>, <span class='va'>family</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>,
+  n.iter <span class='op'>=</span> <span class='fl'>0</span>, thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>,
+  trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>betamm_imp</span>(<span class='no'>fixed</span>, <span class='no'>random</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>betamm_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>random</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
+  thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>lognormmm_imp</span>(<span class='no'>fixed</span>, <span class='no'>random</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>lognormmm_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>random</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>,
+  n.iter <span class='op'>=</span> <span class='fl'>0</span>, thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>,
+  trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>clmm_imp</span>(<span class='no'>fixed</span>, <span class='no'>data</span>, <span class='no'>random</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nonprop</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rev</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>clmm_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>data</span>, <span class='va'>random</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
+  thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, nonprop <span class='op'>=</span> <span class='cn'>NULL</span>, rev <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>,
+  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modelname <span class='op'>=</span> <span class='cn'>NULL</span>, modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>, progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  mess <span class='op'>=</span> <span class='cn'>TRUE</span>, keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>mlogitmm_imp</span>(<span class='no'>fixed</span>, <span class='no'>data</span>, <span class='no'>random</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>mlogitmm_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>data</span>, <span class='va'>random</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>,
+  n.iter <span class='op'>=</span> <span class='fl'>0</span>, thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>,
+  trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>survreg_imp</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>survreg_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
+  thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>coxph_imp</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='kw'>df_basehaz</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>coxph_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, df_basehaz <span class='op'>=</span> <span class='fl'>6</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>,
+  n.iter <span class='op'>=</span> <span class='fl'>0</span>, thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>,
+  trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>JM_imp</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='kw'>df_basehaz</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>n.adapt</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>monitor_params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>analysis_main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>auxvars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timevar</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refcats</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>no_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>assoc_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trunc</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>shrinkage</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>ppc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>hyperpars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modelname</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>modeldir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>keep_model</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>progress.bar</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep_scaled_mcmc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>JM_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, df_basehaz <span class='op'>=</span> <span class='fl'>6</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>,
+  n.iter <span class='op'>=</span> <span class='fl'>0</span>, thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, timevar <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>,
+  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, assoc_type <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>,
+  hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>, modeldir <span class='op'>=</span> <span class='cn'>NULL</span>,
+  keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -607,18 +607,19 @@ default for covariates modelled using other distributions).</p></td>
     <h2 class="hasAnchor" id="model-formulas"><a class="anchor" href="#model-formulas"></a>Model formulas</h2>
 
     
-<h3>Random effects</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Random effects</h3>
 
 
 <p>It is possible to specify multi-level models as it is done in the package
 <a href='https://CRAN.R-project.org/package=nlme'><span class="pkg">nlme</span></a>,
 using <code>fixed</code> and <code>random</code>, or as it is done in the package
 <a href='https://CRAN.R-project.org/package=lme4'><span class="pkg">lme4</span></a>,
-using <code>formula</code> and specifying the random effects in brackets:<div class="r"></p><pre><span class='no'>formula</span> <span class='kw'>=</span> <span class='no'>y</span> ~ <span class='no'>x1</span> + <span class='no'>x2</span> + <span class='no'>x3</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>id</span>)</pre><p></div></p>
+using <code>formula</code> and specifying the random effects in brackets:<div class="r"></p><pre><span class='va'>formula</span> <span class='op'>=</span> <span class='va'>y</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='va'>x2</span> <span class='op'>+</span> <span class='va'>x3</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>id</span><span class='op'>)</span>
+</pre><p></div></p>
 <p>is equivalent to<div class="r"></p><pre>fixed = y ~ x1 + x2 + x3, random = ~ 1|id
 </pre><p></div></p>
 
-<h3>Multiple levels of grouping</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Multiple levels of grouping</h3>
 
 
 <p>For multiple levels of grouping the specification using <code>formula</code>
@@ -626,7 +627,7 @@ should be used. There is no distinction between nested and crossed random
 effects, i.e., <code>... + (1 | id) + (1 | center)</code> is treated the same as
 <code>... + (1 | center/id)</code>.</p>
 
-<h3>Nested vs crossed random effects</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Nested vs crossed random effects</h3>
 
 
 <p>The distinction between nested and crossed random effects should come from
@@ -634,21 +635,22 @@ the levels of the grouping variables, i.e., if <code>id</code> is nested in
 <code>center</code>, then there cannot be observations with the same <code>id</code>
 but different values for <code>center</code>.</p>
 
-<h3>Modelling multiple models simultaneously &amp; joint models</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Modelling multiple models simultaneously &amp; joint models</h3>
 
 
-<p>To fit multiple main models at the same time, a <code>list</code> of <code>fomula</code>
+<p>To fit multiple main models at the same time, a <code>list</code> of <code>formula</code>
 objects can be passed to the argument <code>formula</code>.
 Outcomes of one model may be contained as covariates in another model and
 it is possible to combine models for variables on different levels,
-for example:<div class="r"></p><pre><span class='no'>formula</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>y</span> ~ <span class='no'>x1</span> + <span class='no'>x2</span> + <span class='no'>x3</span> + <span class='no'>x4</span> + <span class='no'>time</span> + (<span class='no'>time</span> <span class='kw'>|</span> <span class='no'>id</span>),
-                     <span class='no'>x2</span> ~ <span class='no'>x3</span> + <span class='no'>x4</span> + <span class='no'>x5</span>)</pre><p></div></p>
+for example:<div class="r"></p><pre><span class='va'>formula</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='va'>x2</span> <span class='op'>+</span> <span class='va'>x3</span> <span class='op'>+</span> <span class='va'>x4</span> <span class='op'>+</span> <span class='va'>time</span> <span class='op'>+</span> <span class='op'>(</span><span class='va'>time</span> <span class='op'>|</span> <span class='va'>id</span><span class='op'>)</span>,
+                     <span class='va'>x2</span> <span class='op'>~</span> <span class='va'>x3</span> <span class='op'>+</span> <span class='va'>x4</span> <span class='op'>+</span> <span class='va'>x5</span><span class='op'>)</span>
+</pre><p></div></p>
 <p>This principle is also used for the specification of a joint model for
 longitudinal and survival data.</p>
 <p>Note that it is not possible to specify multiple models for the same outcome
 variable.</p>
 
-<h3>Survival models with frailties or time-varying covariates</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Survival models with frailties or time-varying covariates</h3>
 
 
 <p>Random effects specified in brackets can also be used to indicate a
@@ -665,11 +667,12 @@ baseline (<code>timevar = 0</code>). If a value for a time-varying covariate nee
 filled in and there is no previous observation, the next observation will be
 carried backward.</p>
 
-<h3>Differences to basic regression models</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Differences to basic regression models</h3>
 
 
 <p>It is not possible to specify transformations of outcome variables, i.e.,
-it is not possible to use a model formula like<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>y</span>) ~ <span class='no'>x1</span> + <span class='no'>x2</span> + <span class='no'>...</span></pre><p></div></p>
+it is not possible to use a model formula like<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='va'>x2</span> <span class='op'>+</span> <span class='va'>...</span>
+</pre><p></div></p>
 <p>In the specific case of a transformation with the natural logarithm,
 a log-normal model can be used instead of a normal model.</p>
 <p>Moreover, it is not possible to use <code>.</code> to indicate that all variables in a
@@ -768,6 +771,9 @@ count data</td></tr>
 count data</td></tr>
 <tr><td><code>glmm_lognorm</code></td><td>log-normal mixed model for skewed covariates</td></tr>
 <tr><td><code>glmm_beta</code></td><td>beta mixed model for continuous data in (0, 1)</td></tr>
+<tr><td><code>mlogitmm</code></td><td>multinomial logit mixed model for unordered categorical
+variables;
+default for unordered factors with &gt;2 levels</td></tr>
 <tr><td><code>clmm</code></td><td>cumulative logit mixed model for ordered factors;
 default for ordered factors</td></tr>
 </table>
@@ -868,19 +874,21 @@ ordinal covariates, the list has to be named with the names of the
 ordinal response variables.</p>
 <p>For example, the following three specifications are equivalent and assume a
 non-proportional effect of <code>C1</code> on <code>O1</code>, but <code>C1</code> is assumed to have a
-proportional effect on the incomplete ordinal covariate <code>O2</code>:<div class="r"></p><pre><span class='fu'>clm_imp</span>(<span class='no'>O1</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>B2</span> + <span class='no'>O2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>nonprop</span> <span class='kw'>=</span> ~ <span class='no'>C1</span>)
-<span class='fu'>clm_imp</span>(<span class='no'>O1</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>B2</span> + <span class='no'>O2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>nonprop</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(~ <span class='no'>C1</span>))
-<span class='fu'>clm_imp</span>(<span class='no'>O1</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>B2</span> + <span class='no'>O2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>nonprop</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>O1</span> <span class='kw'>=</span> ~ <span class='no'>C1</span>))</pre><p></div></p>
-<p>To specify non-proportional effects on <code>O2</code>, a named list has to be provided:<div class="r"></p><pre><span class='fu'>clm_imp</span>(<span class='no'>O1</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>B2</span> + <span class='no'>O2</span> + <span class='no'>B1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>,
-        <span class='kw'>nonprop</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>O1</span> <span class='kw'>=</span> ~ <span class='no'>C1</span>,
-                       <span class='kw'>O2</span> <span class='kw'>=</span> ~ <span class='no'>C1</span> + <span class='no'>B1</span>))</pre><p></div></p>
+proportional effect on the incomplete ordinal covariate <code>O2</code>:<div class="r"></p><pre><span class='fu'>clm_imp</span><span class='op'>(</span><span class='va'>O1</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>O2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, nonprop <span class='op'>=</span> <span class='op'>~</span> <span class='va'>C1</span><span class='op'>)</span>
+<span class='fu'>clm_imp</span><span class='op'>(</span><span class='va'>O1</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>O2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, nonprop <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>C1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>clm_imp</span><span class='op'>(</span><span class='va'>O1</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>O2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, nonprop <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>O1 <span class='op'>=</span> <span class='op'>~</span> <span class='va'>C1</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p>
+<p>To specify non-proportional effects on <code>O2</code>, a named list has to be provided:<div class="r"></p><pre><span class='fu'>clm_imp</span><span class='op'>(</span><span class='va'>O1</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>O2</span> <span class='op'>+</span> <span class='va'>B1</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>,
+        nonprop <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>O1 <span class='op'>=</span> <span class='op'>~</span> <span class='va'>C1</span>,
+                       O2 <span class='op'>=</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>B1</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p>
 <p>The variables for which a non-proportional effect is assumed also have to be
 part of the regular model formula.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     
 
-<h3>Coding of variables:</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Coding of variables:</h3>
 
 
 <p>The default covariate (imputation) models are chosen based on the
@@ -892,7 +900,7 @@ assumed to be binary and its coding and default (imputation) model will be
 changed accordingly. This behaviour can be overwritten specifying a model
 type via the argument <code>models</code>.<br /></p>
 <p>Variables of type <code>logical</code> are automatically converted to unordered
-factors.<br /></p><h3>Contrasts</h3>
+factors.<br /></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Contrasts</h4>
 
 
 <p><strong>JointAI</strong> version \(\geq\) 1.0.0 uses the globally (via
@@ -906,7 +914,7 @@ that variable instead.</p>
 
 
 
-<h3>Non-linear effects and transformation of variables:</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Non-linear effects and transformation of variables:</h3>
 
 
 <p><strong>JointAI</strong> handles non-linear effects, transformation of covariates
@@ -935,7 +943,7 @@ Then only <code>x</code> is imputed and <code>x^2</code> is calculated from the 
 values of <code>x</code> internally.</p>
 <p>The same applies to interactions involving incomplete variables.</p>
 
-<h3>Sequence of models:</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Sequence of models:</h3>
 
 
 <p>Models generated automatically (i.e., not mentioned in <code>formula</code> or <code>fixed</code>
@@ -948,7 +956,7 @@ variables from the same level in their linear predictor.
 Within each level, the variable with the most missing values has the most
 variables in its linear predictor.</p>
 
-<h3>Not (yet) possible:</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Not (yet) possible:</h3>
 
 
 <ul>
@@ -981,39 +989,40 @@ or <code><a href='https://rdrr.io/pkg/survival/man/strata.html'>strata</a></code
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Example 1: Linear regression with incomplete covariates</span>
-<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'>lm_imp</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M1</span> + <span class='no'>B1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'>lm_imp</span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>M1</span> <span class='op'>+</span> <span class='va'>B1</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 
 
 <span class='co'># Example 2: Logistic regression with incomplete covariats</span>
-<span class='no'>mod2</span> <span class='kw'>&lt;-</span> <span class='fu'>glm_imp</span>(<span class='no'>B1</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>,
-                <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span>(<span class='kw'>link</span> <span class='kw'>=</span> <span class='st'>"logit"</span>), <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='va'>mod2</span> <span class='op'>&lt;-</span> <span class='fu'>glm_imp</span><span class='op'>(</span><span class='va'>B1</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>M1</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>,
+                family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span>link <span class='op'>=</span> <span class='st'>"logit"</span><span class='op'>)</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 
 
 <span class='co'># Example 3: Linear mixed model with incomplete covariates</span>
-<span class='no'>mod3</span> <span class='kw'>&lt;-</span> <span class='fu'>lme_imp</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>B2</span> + <span class='no'>c1</span> + <span class='no'>time</span>, <span class='kw'>random</span> <span class='kw'>=</span> ~ <span class='no'>time</span><span class='kw'>|</span><span class='no'>id</span>,
-                <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>longDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>300</span>)
+<span class='va'>mod3</span> <span class='op'>&lt;-</span> <span class='fu'>lme_imp</span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>c1</span> <span class='op'>+</span> <span class='va'>time</span>, random <span class='op'>=</span> <span class='op'>~</span> <span class='va'>time</span><span class='op'>|</span><span class='va'>id</span>,
+                data <span class='op'>=</span> <span class='va'>longDF</span>, n.iter <span class='op'>=</span> <span class='fl'>300</span><span class='op'>)</span>
 
 
 <span class='co'># Example 4: Parametric Weibull survival model</span>
-<span class='no'>mod4</span> <span class='kw'>&lt;-</span> <span class='fu'>survreg_imp</span>(<span class='fu'><a href='Surv.html'>Surv</a></span>(<span class='no'>time</span>, <span class='no'>status</span>) ~ <span class='no'>age</span> + <span class='no'>sex</span> + <span class='no'>meal.cal</span> + <span class='no'>wt.loss</span>,
-                    <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw pkg'>survival</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/survival/man/lung.html'>lung</a></span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='va'>mod4</span> <span class='op'>&lt;-</span> <span class='fu'>survreg_imp</span><span class='op'>(</span><span class='fu'><a href='Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>time</span>, <span class='va'>status</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>meal.cal</span> <span class='op'>+</span> <span class='va'>wt.loss</span>,
+                    data <span class='op'>=</span> <span class='fu'>survival</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/survival/man/lung.html'>lung</a></span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>The variables “status”, “sex” were converted to factors.</span></div><div class='input'>
 
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Example 5: Proportional hazards survival model</span>
-<span class='no'>mod5</span> <span class='kw'>&lt;-</span> <span class='fu'>coxph_imp</span>(<span class='fu'><a href='Surv.html'>Surv</a></span>(<span class='no'>time</span>, <span class='no'>status</span>) ~ <span class='no'>age</span> + <span class='no'>sex</span> + <span class='no'>meal.cal</span> + <span class='no'>wt.loss</span>,
-                    <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw pkg'>survival</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/survival/man/lung.html'>lung</a></span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>200</span>)
+<span class='va'>mod5</span> <span class='op'>&lt;-</span> <span class='fu'>coxph_imp</span><span class='op'>(</span><span class='fu'><a href='Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>time</span>, <span class='va'>status</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>meal.cal</span> <span class='op'>+</span> <span class='va'>wt.loss</span>,
+                    data <span class='op'>=</span> <span class='fu'>survival</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/survival/man/lung.html'>lung</a></span>, n.iter <span class='op'>=</span> <span class='fl'>200</span><span class='op'>)</span>
 
 <span class='co'># Example 6: Joint model for longitudinal and survival data</span>
-<span class='no'>mod6</span> <span class='kw'>&lt;-</span> <span class='fu'>JM_imp</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='Surv.html'>Surv</a></span>(<span class='no'>futime</span>, <span class='no'>status</span> <span class='kw'>!=</span> <span class='st'>'censored'</span>) ~ <span class='no'>age</span> + <span class='no'>sex</span> +
-                    <span class='no'>albumin</span> + <span class='no'>copper</span> + <span class='no'>trig</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>id</span>),
-                    <span class='no'>albumin</span> ~ <span class='no'>day</span> + <span class='no'>age</span> + <span class='no'>sex</span> + (<span class='no'>day</span> <span class='kw'>|</span> <span class='no'>id</span>)),
-                    <span class='kw'>timevar</span> <span class='kw'>=</span> <span class='st'>'day'</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>PBC</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='va'>mod6</span> <span class='op'>&lt;-</span> <span class='fu'>JM_imp</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>futime</span>, <span class='va'>status</span> <span class='op'>!=</span> <span class='st'>'censored'</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span>
+                    <span class='va'>albumin</span> <span class='op'>+</span> <span class='va'>copper</span> <span class='op'>+</span> <span class='va'>trig</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>id</span><span class='op'>)</span>,
+                    <span class='va'>albumin</span> <span class='op'>~</span> <span class='va'>day</span> <span class='op'>+</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='op'>(</span><span class='va'>day</span> <span class='op'>|</span> <span class='va'>id</span><span class='op'>)</span><span class='op'>)</span>,
+                    timevar <span class='op'>=</span> <span class='st'>'day'</span>, data <span class='op'>=</span> <span class='va'>PBC</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 
 <span class='co'># Example 7: Proportional hazards  model with a time-dependent covariate</span>
-<span class='no'>mod7</span> <span class='kw'>&lt;-</span> <span class='fu'>coxph_imp</span>(<span class='fu'><a href='Surv.html'>Surv</a></span>(<span class='no'>futime</span>, <span class='no'>status</span> <span class='kw'>!=</span> <span class='st'>'censored'</span>) ~ <span class='no'>age</span> + <span class='no'>sex</span> + <span class='no'>copper</span> +
-                  <span class='no'>trig</span> + <span class='no'>stage</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>id</span>),
-                  <span class='kw'>timevar</span> <span class='kw'>=</span> <span class='st'>'day'</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>PBC</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+<span class='va'>mod7</span> <span class='op'>&lt;-</span> <span class='fu'>coxph_imp</span><span class='op'>(</span><span class='fu'><a href='Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>futime</span>, <span class='va'>status</span> <span class='op'>!=</span> <span class='st'>'censored'</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>copper</span> <span class='op'>+</span>
+                  <span class='va'>trig</span> <span class='op'>+</span> <span class='va'>stage</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>id</span><span class='op'>)</span>,
+                  timevar <span class='op'>=</span> <span class='st'>'day'</span>, data <span class='op'>=</span> <span class='va'>PBC</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 
 
 
@@ -1022,15 +1031,17 @@ or <code><a href='https://rdrr.io/pkg/survival/man/strata.html'>strata</a></code
 <span class='co'># MCMC chains are run sequentially.</span>
 <span class='co'># To run MCMC chains in parallel, a strategy can be specified using the</span>
 <span class='co'># package \pkg{future} (see ?future::plan), for example:</span>
-<span class='kw pkg'>doFuture</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/doFuture/man/registerDoFuture.html'>registerDoFuture</a></span>()
-<span class='kw pkg'>future</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/future/man/plan.html'>plan</a></span>(<span class='kw pkg'>future</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/future/man/multisession.html'>multisession</a></span>, <span class='kw'>workers</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-<span class='no'>mod8</span> <span class='kw'>&lt;-</span> <span class='fu'>lm_imp</span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>B2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>n.chains</span> <span class='kw'>=</span> <span class='fl'>8</span>)
-<span class='no'>mod8</span>$<span class='no'>comp_info</span>$<span class='no'>future</span>
+<span class='fu'>doFuture</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/doFuture/man/registerDoFuture.html'>registerDoFuture</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>future</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/future/man/plan.html'>plan</a></span><span class='op'>(</span><span class='fu'>future</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/future/man/multisession.html'>multisession</a></span>, workers <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>mod8</span> <span class='op'>&lt;-</span> <span class='fu'>lm_imp</span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>500</span>, n.chains <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>
+<span class='va'>mod8</span><span class='op'>$</span><span class='va'>comp_info</span><span class='op'>$</span><span class='va'>future</span>
 <span class='co'># To re-set the strategy to sequential computation, the sequential strategy</span>
 <span class='co'># can be specified:</span>
-<span class='kw pkg'>future</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/future/man/plan.html'>plan</a></span>(<span class='kw pkg'>future</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/future/man/sequential.html'>sequential</a></span>)
+<span class='fu'>future</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/future/man/plan.html'>plan</a></span><span class='op'>(</span><span class='fu'>future</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/future/man/sequential.html'>sequential</a></span><span class='op'>)</span>
 
-}</div></pre>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -1046,7 +1057,7 @@ or <code><a href='https://rdrr.io/pkg/survival/man/strata.html'>strata</a></code
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

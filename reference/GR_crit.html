@@ -57,14 +57,14 @@
 <meta property="og:title" content="Gelman-Rubin criterion for convergence — GR_crit" />
 <meta property="og:description" content="Calculates the Gelman-Rubin criterion for convergence
 (uses gelman.diag from package coda)." />
-<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_square.png" />
+<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_191.png" />
 <meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@N_Erler" />
 <meta name="twitter:site" content="@N_Erler" />
 
 
-
+<meta name="robots" content="noindex">
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -103,7 +103,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -194,10 +194,10 @@
 (uses <code><a href='https://rdrr.io/pkg/coda/man/gelman.diag.html'>gelman.diag</a></code> from package <strong>coda</strong>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>GR_crit</span>(<span class='no'>object</span>, <span class='kw'>confidence</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>transform</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>autoburnin</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>multivariate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude_chains</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>thin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mess</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>GR_crit</span><span class='op'>(</span><span class='va'>object</span>, confidence <span class='op'>=</span> <span class='fl'>0.95</span>, transform <span class='op'>=</span> <span class='cn'>FALSE</span>, autoburnin <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  multivariate <span class='op'>=</span> <span class='cn'>TRUE</span>, subset <span class='op'>=</span> <span class='cn'>NULL</span>, exclude_chains <span class='op'>=</span> <span class='cn'>NULL</span>,
+  start <span class='op'>=</span> <span class='cn'>NULL</span>, end <span class='op'>=</span> <span class='cn'>NULL</span>, thin <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -290,8 +290,9 @@ of iterative simulations.
 contains some examples how to specify the argument <code>subset</code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>C2</span> + <span class='no'>M2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='fu'>GR_crit</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; Potential scale reduction factors:
+    <pre class="examples"><div class='input'><span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>M2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+<span class='fu'>GR_crit</span><span class='op'>(</span><span class='va'>mod1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Potential scale reduction factors:
 #&gt; 
 #&gt;             Point est. Upper C.I.
 #&gt; (Intercept)      1.004       1.02
@@ -323,7 +324,7 @@ contains some examples how to specify the argument <code>subset</code>.</p></div
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

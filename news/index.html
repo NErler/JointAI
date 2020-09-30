@@ -55,14 +55,14 @@
   
 
 <meta property="og:title" content="Changelog" />
-<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_square.png" />
+<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_191.png" />
 <meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@N_Erler" />
 <meta name="twitter:site" content="@N_Erler" />
 
 
-
+<meta name="robots" content="noindex">
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -101,7 +101,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -190,98 +190,15 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#jointai-development-version" class="anchor"></a>JointAI (development version)<small> Unreleased </small>
 </h1>
-<p>This version of <strong>JointAI</strong> contains some major changes. To extend the package it was necessary to change the internal structure and it was not possible to assure backward compatibility.</p>
-<div id="new-features" class="section level2">
+<div id="minor-improvements-and-bug-fixes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>New features</h2>
-<div id="new-analysis-model-types" class="section level3">
-<h3 class="hasAnchor">
-<a href="#new-analysis-model-types" class="anchor"></a>New analysis model types</h3>
+<a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
 <ul>
 <li>
-<code><a href="../reference/model_imp.html">betareg_imp()</a></code>: beta regression</li>
-<li>
-<code><a href="../reference/model_imp.html">betamm_imp()</a></code>: beta mixed model</li>
-<li>
-<code><a href="../reference/model_imp.html">lognorm_imp()</a></code>: log-normal regression model</li>
-<li>
-<code><a href="../reference/model_imp.html">lognormmm_imp()</a></code>: log-normal mixed model</li>
-<li>
-<code><a href="../reference/model_imp.html">mlogit_imp()</a></code>: multinomial logit model</li>
-<li>
-<code><a href="../reference/model_imp.html">mlogitmm_imp()</a></code>: multinomial mixed model</li>
-<li>
-<code><a href="../reference/model_imp.html">JM_imp()</a></code>: joint model for longitudinal and survival data</li>
-</ul>
-</div>
-<div id="hierarchical-models-with-multiple-levels-of-grouping" class="section level3">
-<h3 class="hasAnchor">
-<a href="#hierarchical-models-with-multiple-levels-of-grouping" class="anchor"></a>Hierarchical models with multiple levels of grouping</h3>
-<p>It is now possible to fit <strong>hierarchical models with more than one level of grouping</strong>, with nested as well as crossed random effects (check <a href="https://nerler.github.io/JointAI/reference/model_imp.html">the help file</a>) of the main model function for details on how to specify such random effects structures.</p>
-<p>This does also apply to survival models, i.e., it is possible to specify a random effects structure to model survival outcomes in data with a hierarchical structure, e.g., in a multi-centre setting.</p>
-</div>
-<div id="proportional-hazards-model-with-time-dependent-covariates" class="section level3">
-<h3 class="hasAnchor">
-<a href="#proportional-hazards-model-with-time-dependent-covariates" class="anchor"></a>Proportional hazards model with time-dependent covariates</h3>
-<p><code><a href="../reference/model_imp.html">coxph_imp()</a></code> can now handle <strong>time-dependent covariates</strong> using last-observation-carried-forward. This requires to add <code>(1 | &lt;id variable&gt;)</code> to the model formula to identify which rows belong to the same subject, and to specify the argument <code>timevar</code> to identify the variable that contains the observation time of the longitudinal measurements.</p>
-</div>
-<div id="multivariate-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#multivariate-models" class="anchor"></a>Multivariate models</h3>
-<p>By providing a list of model formulas it is possible to fit multiple analysis models (of different types) simultaneously. The models can share covariates and it is possible to have the response of one model as covariate in another model (in a sequential manner, however, not circular).</p>
-</div>
-<div id="partial-proportional-odds-models-for-ordinal-responses" class="section level3">
-<h3 class="hasAnchor">
-<a href="#partial-proportional-odds-models-for-ordinal-responses" class="anchor"></a>Partial proportional odds models for ordinal responses</h3>
-<p>As before, proportional odds are assumed by default for all covariates of a cumulative logit model. The argument <code>nonprop</code> accepts a one-sided formula or a named list of one-sided formulas in which the covariates are specified for which non-proportional odds should be assumed.</p>
-<p>Additionally, the argument <code>rev</code> is available to specify a vector of names of ordinal responses for which the odds should be inverted. For details, see the <a href="https://nerler.github.io/JointAI/reference/model_imp.html">the help file</a>.</p>
-</div>
-<div id="other-new-features" class="section level3">
-<h3 class="hasAnchor">
-<a href="#other-new-features" class="anchor"></a>Other new features</h3>
-<ul>
-<li>The functions <code><a href="../reference/model_imp.html">lmer_imp()</a></code> and <code><a href="../reference/model_imp.html">glmer_imp()</a></code> are aliases for <code><a href="../reference/model_imp.html">lme_imp()</a></code> and <code><a href="../reference/model_imp.html">glme_imp()</a></code>.</li>
-<li>All mixed models can be specified using the <strong>nlme</strong> type specification (using <code>fixed</code> and <code>random</code>) as well as using specification as in <strong>lme4</strong> (with a combined model formula for fixed and random effects).</li>
-<li>The argument <code>df_basehaz</code> in <code><a href="../reference/model_imp.html">coxph_imp()</a></code> and <code><a href="../reference/model_imp.html">JM_imp()</a></code> allows setting the number of degrees of freedom in the B-spline basis used to model the baseline hazard.</li>
-<li>The global setting <code><a href="https://rdrr.io/r/base/options.html">options("contrasts")</a></code> is no longer ignored. For completely observed covariates, any of the contrasts available in base R are possible and <code><a href="https://rdrr.io/r/base/options.html">options("contrasts")</a></code> is used to determine which contrasts to use. For covariates with missing values, effect coding (<code>contr.sum</code>) and dummy coding (<code>contr.treatment</code>) are possible. This means that for completely observed ordered factors the default is <code>contr.poly</code>, but for incomplete ordered factors the default is <code>contr.treatment</code>.</li>
-</ul>
-</div>
-</div>
-<div id="other-changes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-changes" class="anchor"></a>Other changes</h2>
-<ul>
-<li>Within <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, the argument <code>multivariate</code> to the function <code><a href="../reference/GR_crit.html">GR_crit()</a></code> is now set to <code>FALSE</code> to avoid issues. The multivariate version can still be obtained by using <code><a href="../reference/GR_crit.html">GR_crit()</a></code> directly.</li>
-<li>The parameters of the baseline hazard for <code><a href="../reference/model_imp.html">coxph_imp()</a></code> and <code><a href="../reference/model_imp.html">JM_imp()</a></code> are monitored automatically when “analysis_main = TRUE”.</li>
-<li>The function <code>get_models()</code> is no longer exported because it now requires more input variables and is no longer convenient to use. To obtain the default specification of the model types use one of the main functions (<code>*_imp()</code>), set <code>n.adapt = 0</code> (and <code>n.iter = 0</code>), and obtain the model types as <code>&lt;mymodel&gt;$models</code>.</li>
-<li>
-<code><a href="../reference/list_models.html">list_models()</a></code> now returns information on all sub-models, including the main analysis models (previously it included only information on covariates).</li>
-<li>The output of <code><a href="../reference/parameters.html">parameters()</a></code> has changed. The function returns a list of matrices, one per analysis model, with information on the response variable, response category, name of the regression coefficient and its associated covariate.</li>
-<li>The argument <code>missinfo = TRUE</code> in <code>summar()</code> adds information on the missing values in the data involved in a JointAI model (number and proportion of complete cases, number and proportion of missing values per variable).</li>
-<li>The argument <code>ridge</code> has changed to <code>shrinkage</code>. If <code>shrinkage = "ridge"</code>, a ridge prior is used for all regression coefficients in all sub-models. If a vector of response variable names is provided to <code>shinkage</code>, ridge priors are only used for the coefficients in these models.</li>
-<li>
-<code><a href="../reference/default_hyperpars.html">default_hyperpars()</a></code>: The default hyper-parameters for random effects are no longer provided as a function but more consistently with the hyper-parameters for other model parts, as a vector (within the list of all hyper-parameters).</li>
-<li>
-<code><a href="../reference/default_hyperpars.html">default_hyperpars()</a></code>: <strong>the default number of degrees of freedom in the Wishart distribution used for the inverse of the random effects covariance matrix is now the number of random effects + 1 (was the number of random effects before).</strong>
+<code>data_list</code>: omit data matrix <code>M_*</code> from <code>data_list</code> if <code>ncol == 0</code>
 </li>
-<li>The effect of using a <code>seed</code> in <strong>JointAI</strong> is now only local, i.e., in functions in which <code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code> is called, the random number generator state <code>.Random.seed</code> before setting the seed is recorded, and re-set to that value on exiting the function.</li>
-<li>In <code><a href="../reference/predDF.html">predDF()</a></code> the argument <code>var</code> has changed to <code>vars</code> and expects a formula. This extends the functionality of <code><a href="../reference/predDF.html">predDF()</a></code> to let multiple variables vary.</li>
-<li>Some of the elements of a <code>JointAI</code> object have changed. Potentially relevant for users:
-<ul>
 <li>
-<code>JointAI</code> objects now contain information on the computational time and environment they were run in: the element <code>comp_info</code> contains the time-stamp the model was fitted, the duration of the computation, the JointAI version number and the R session info.</li>
-<li>The JAGS model is stored as character string in the element <code>jagsmodel</code>.</li>
-</ul>
-</li>
-<li>The arguments <code>warn</code> and <code>mess</code> now also affect the output of <strong>rjags</strong>.</li>
-<li>The <strong>doFuture</strong> package is used for parallel computation instead of <strong>doParallel</strong>. Parallel computation is specified by setting a <code><a href="https://rdrr.io/pkg/future/man/plan.html">future::plan()</a></code> for how the “future” should be handled. As a consequence, the arguments <code>parallel</code> and <code>n.cores</code> are no longer used. Information on the setting that was used with regards to parallel computation is returned in a <code>JointAI object</code> via <code>comp_list$future</code>.</li>
-</ul>
-</div>
-<div id="bug-fixes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
-<ul>
-<li>Scaling of continuous covariates is no longer done in the data, but in the JAGS model. This fixes the issue that previously the estimated variance parameters of continuous covariates and variance parameters of their random effects were incorrect (this issue only affected the covariate models, not the main analysis model).</li>
+<code>data_list</code>: syntax to checking which <code>pos_*</code> to include can handle the case with multiple grouping variables being on the same, lowest level; before <code>pos_*</code> was excluded for only one of them</li>
 </ul>
 <hr>
 </div>
@@ -345,7 +262,7 @@
 <code><a href="https://rdrr.io/r/utils/citation.html">citation()</a></code> now refers to a manuscript on arXiv</li>
 <li>
 <code>glmm_lognorm</code> available to impute level-1 covariates with a log-normal mixed model</li>
-<li>methods <code><a href="https://rdrr.io/r/stats/residuals.html">residuals()</a></code> and <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> available for (some of the) main analysis types (details see documentation)</li>
+<li>methods <code><a href="https://rdrr.io/r/stats/residuals.html">residuals()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> available for (some of the) main analysis types (details see documentation)</li>
 <li>argument <code>models</code> added to <code>get_models()</code> so that the user can specify to also include models for complete covariates (which are then positioned in the sequence of models according to the systematic used in <strong>JointAI</strong>). Specification of a model not needed for imputation prints a notification.</li>
 <li>
 <code>JointAI</code> objects (most types) now also include residuals and fitted values (so far, only using fixed effects)</li>
@@ -734,7 +651,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -59,14 +59,14 @@
 data.frames per grouping level. Each of the data.frames
 has columns variable, #NA (number of missing values) and
 %NA (proportion of missing values in percent)." />
-<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_square.png" />
+<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_191.png" />
 <meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@N_Erler" />
 <meta name="twitter:site" content="@N_Erler" />
 
 
-
+<meta name="robots" content="noindex">
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -105,7 +105,7 @@ has columns variable, #NA (number of missing values) and
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -198,7 +198,7 @@ has columns <code>variable</code>, <code>#NA</code> (number of missing values) a
 <code>%NA</code> (proportion of missing values in percent).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_missinfo</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='fu'>get_missinfo</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -211,8 +211,9 @@ has columns <code>variable</code>, <code>#NA</code> (number of missing values) a
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mod</span> <span class='kw'>&lt;-</span>  <span class='fu'><a href='model_imp.html'>lm_imp</a></span>(<span class='no'>y</span> ~ <span class='no'>C1</span> + <span class='no'>B2</span> + <span class='no'>C2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>wideDF</span>, <span class='kw'>n.iter</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='fu'>get_missinfo</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt; $complete_cases
+    <pre class="examples"><div class='input'><span class='va'>mod</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>C2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+<span class='fu'>get_missinfo</span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $complete_cases
 #&gt;         #  %
 #&gt; lvlone 77 77
 #&gt; 
@@ -242,7 +243,7 @@ has columns <code>variable</code>, <code>#NA</code> (number of missing values) a
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

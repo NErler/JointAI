@@ -60,14 +60,14 @@ liver. This dataset was obtained from the survival package:
 the variables copper and trig from survival::pbc were
 merged into survival::pbcseq and several categorical variables were
 re-coded." />
-<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_square.png" />
+<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_191.png" />
 <meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@N_Erler" />
 <meta name="twitter:site" content="@N_Erler" />
 
 
-
+<meta name="robots" content="noindex">
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -106,7 +106,7 @@ re-coded." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -210,7 +210,7 @@ and 21 variables.</p>
 
     
 
-<dl'>
+<dl>
 <dt>id</dt><dd><p>case number</p></dd>
 <dt>futime</dt><dd><p>number of days between registration and the earlier of death,
 transplantation, or end of follow-up</p></dd>
@@ -222,7 +222,7 @@ transplantation, or end of follow-up</p></dd>
 
     
 
-<dl'>
+<dl>
 <dt>trt</dt><dd><p>D-pen (D-penicillamine) vs  placebo</p></dd>
 <dt>age</dt><dd><p>in years</p></dd>
 <dt>sex</dt><dd><p>male or female</p></dd>
@@ -235,7 +235,7 @@ transplantation, or end of follow-up</p></dd>
 
     
 
-<dl'>
+<dl>
 <dt>day</dt><dd><p>number of days between enrolment and this visit date; all
 measurements below refer to this date</p></dd>
 <dt>albumin</dt><dd><p>serum albumin (mg/dl)</p></dd>
@@ -257,7 +257,8 @@ measurements below refer to this date</p></dd>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>PBC</span>)</div><div class='output co'>#&gt;        id            futime            status          trt           age       
+    <pre class="examples"><div class='input'> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>PBC</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;        id            futime            status          trt           age       
 #&gt;  Min.   :  1.0   Min.   :  41   censored  :1073   D-pen  :967   Min.   :26.28  
 #&gt;  1st Qu.: 61.0   1st Qu.:2055   transplant: 147   placebo:978   1st Qu.:41.79  
 #&gt;  Median :126.0   Median :2963   dead      : 725                 Median :48.87  
@@ -313,7 +314,7 @@ measurements below refer to this date</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

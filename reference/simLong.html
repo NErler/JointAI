@@ -63,14 +63,14 @@ head circumference was measured repeatedly and their age in months was
 recorded at each measurement. Furthermore, the data contain several baseline
 variables with information on the mothers' demographics and socio-economic
 status." />
-<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_square.png" />
+<meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_191.png" />
 <meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@N_Erler" />
 <meta name="twitter:site" content="@N_Erler" />
 
 
-
+<meta name="robots" content="noindex">
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -109,7 +109,7 @@ status." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -206,9 +206,9 @@ variables with information on the mothers' demographics and socio-economic
 status.</p>
     </div>
 
-    <pre class="usage"><span class='no'>simLong</span>
+    <pre class="usage"><span class='va'>simLong</span>
 
-<span class='no'>simWide</span></pre>
+<span class='va'>simWide</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -219,7 +219,7 @@ status.</p>
 <p>An object of class <code>data.frame</code> with 200 rows and 81 columns.</p>
     <h2 class="hasAnchor" id="baseline-covariates"><a class="anchor" href="#baseline-covariates"></a>Baseline covariates</h2>
 
-    <p>(in <code>simLong</code> and <code>simWide</code>)</p><dl'>
+    <p>(in <code>simLong</code> and <code>simWide</code>)</p><dl>
 <dt>GESTBIR</dt><dd><p>gestational age at birth (in weeks)</p></dd>
 <dt>ETHN</dt><dd><p>ethnicity (binary: European vs. other)</p></dd>
 <dt>AGE_M</dt><dd><p>age of the mother at intake</p></dd>
@@ -239,7 +239,7 @@ mid, high)</p></dd>
 
     <h2 class="hasAnchor" id="long-format-variables"><a class="anchor" href="#long-format-variables"></a>Long-format variables</h2>
 
-    <p>(only in <code>simLong</code>)</p><dl'>
+    <p>(only in <code>simLong</code>)</p><dl>
 <dt>time</dt><dd><p>measurement occasion/visit
 (by design, children should be measured at/around
 1, 2, 3, 4, 7, 11, 15, 20, 26, 32, 40 and 50 months of age)</p></dd>
@@ -254,7 +254,7 @@ mid, high)</p></dd>
 
     <h2 class="hasAnchor" id="wide-format-variables"><a class="anchor" href="#wide-format-variables"></a>Wide-format variables</h2>
 
-    <p>(only in <code>simWide</code>)</p><dl'>
+    <p>(only in <code>simWide</code>)</p><dl>
 <dt>age1, age2, age3, age4, age7, age11, age15, age20, age26, age32,
 age40, age50</dt><dd><p>child age at the repeated measurements in months</p></dd>
 <dt>bmi1, bmi2, bmi3, bmi4, bmi7, bmi11, bmi15, bmi20, bmi26, bmi32,
@@ -273,7 +273,8 @@ behaviour (3 ordered categories)</p></dd>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>simLong</span>)</div><div class='output co'>#&gt;     GESTBIR            ETHN          AGE_M          HEIGHT_M      PARITY    
+    <pre class="examples"><div class='input'> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>simLong</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     GESTBIR            ETHN          AGE_M          HEIGHT_M      PARITY    
 #&gt;  Min.   :37.21   European:1620   Min.   :16.40   Min.   :151.7   0   :1440  
 #&gt;  1st Qu.:39.30   other   : 708   1st Qu.:26.91   1st Qu.:163.6   &gt;= 1: 888  
 #&gt;  Median :40.17   NA's    :  72   Median :30.26   Median :169.1   NA's:  72  
@@ -304,7 +305,8 @@ behaviour (3 ordered categories)</p></dd>
 #&gt;  Mean   : 78.96   Mean   :10295   NA's      :592                     
 #&gt;  3rd Qu.: 91.58   3rd Qu.:13460                                      
 #&gt;  Max.   :116.83   Max.   :23855                                      
-#&gt;  NA's   :479      NA's   :210                                        </div><div class='input'> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>simWide</span>)</div><div class='output co'>#&gt;     GESTBIR            ETHN         AGE_M          HEIGHT_M      PARITY   
+#&gt;  NA's   :479      NA's   :210                                        </div><div class='input'> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>simWide</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     GESTBIR            ETHN         AGE_M          HEIGHT_M      PARITY   
 #&gt;  Min.   :37.21   European:135   Min.   :16.40   Min.   :151.7   0   :120  
 #&gt;  1st Qu.:39.30   other   : 59   1st Qu.:26.91   1st Qu.:163.6   &gt;= 1: 74  
 #&gt;  Median :40.17   NA's    :  6   Median :30.26   Median :169.1   NA's:  6  
@@ -480,7 +482,7 @@ behaviour (3 ordered categories)</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
