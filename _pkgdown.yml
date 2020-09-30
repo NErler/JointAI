@@ -9,7 +9,7 @@ home:
 template:
   opengraph:
     image:
-      src: man/figures/JointAI_square.png
+      src: man/figures/JointAI_191.png
       alt: "JointAI: An R package for Joint Analysis and Imputation"
     twitter:
       creator: "@N_Erler"
