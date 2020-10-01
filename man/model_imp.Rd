@@ -351,6 +351,9 @@ Implemented options are "underl.value"
 Gaussian, Gamma, beta or log-normal distribution)
 covariates) and "obs.value" (the observed/imputed value;
 default for covariates modelled using other distributions).}
+
+\item{rd_vcov}{character string or list specifying the structure of the
+random effects variance covariance matrix.}
 }
 \value{
 An object of class \link[=JointAIObject]{JointAI}.

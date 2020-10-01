@@ -20,6 +20,8 @@
 #'               family function, a family function or the result of a call to
 #'               a family function. (For more details see below and
 #'               \code{\link[stats]{family}}.)
+#' @param rd_vcov character string or list specifying the structure of the
+#'                random effects variance covariance matrix.
 #' @param monitor_params named list or vector specifying which parameters
 #'                       should be monitored (more details below)
 #' @param inits optional; specification of initial values in the form of a list
@@ -583,6 +585,7 @@ NULL
 
 model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                       family = NULL, df_basehaz = NULL,
+                      rd_vcov = "blockdiag",
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                       monitor_params = c(analysis_main = TRUE), auxvars = NULL,
                       timevar = NULL, refcats = NULL,
@@ -635,7 +638,8 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                            scale_vars = scale_vars, refcats = refcats,
                            nonprop = nonprop, rev = rev,
                            warn = warn, mess = mess, ppc = ppc,
-                           shrinkage = shrinkage, df_basehaz = df_basehaz)
+                           shrinkage = shrinkage, df_basehaz = df_basehaz,
+                           rd_vcov = rd_vcov)
 
   # * model dimensions ---------------------------------------------------------
   par_index_main <- get_model_dim(Mlist$lp_cols[names(Mlist$lp_cols) %in%
