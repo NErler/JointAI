@@ -44,16 +44,18 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
     rd <- remove_grouping(Mlist$random[[varname]])
     if (all(lvls %in% names(rd))) {
       rd[lvls]
+    } else if (length(lvls) == 0) {
+      NULL
     } else {
-      errormsg("Some grouping levels are missing from the random effects
-               structure of %s.", dQuote(varname))
+      rd
+      # errormsg("Some grouping levels are missing from the random effects
+      #          structure of %s.", dQuote(varname))
     }
   }
 
   if (length(newrandom) > 0) {
     hc_list <- mapply(
       get_hc_list,
-      lvl = lvls,
       rdfmla = newrandom,
       MoreArgs = list(Mlist = Mlist),
       SIMPLIFY = FALSE
@@ -89,7 +91,7 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
     structure(
       orga_hc_parelmts(
       resplvl,
-      lvls,
+      intersect(lvls, names(newrandom)),
       all_lvls = all_lvls,
       hc_list = hc_list,
       parelmts = parelmts,
@@ -104,7 +106,7 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
 
 
 # used in get_hc_info() (2020-06-11)
-get_hc_list <- function(lvl, rdfmla, Mlist) {
+get_hc_list <- function(rdfmla, Mlist) {
   # - lvl: character string of a level of the hierarchy
   # - rdfmla: the random effects formula corresponding to level lvl for the
   #            current sub-model
@@ -277,6 +279,7 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_list, parelmts, lp) {
         nonprop = nonprop
       )
     }, simplify = FALSE)
+
 
   list(hcvars = hcvars, othervars = lapply(othervars, "[[", "other"),
        nonprop = lapply(othervars, "[[", "nonprop"))
