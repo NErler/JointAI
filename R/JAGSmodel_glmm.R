@@ -88,8 +88,8 @@ jagsmodel_glmm <- function(info) {
          info$trafos,
          tab(), "}", "\n",
          "\n",
-         paste0(sapply(names(rdintercept), write_ranefs, info = info,
-                       rdintercept = rdintercept, rdslopes = rdslopes),
+         paste0(unlist(sapply(names(rdintercept), write_ranefs, info = info,
+                       rdintercept = rdintercept, rdslopes = rdslopes)),
                 collapse = ''),
          tab(), "# Priors for the model for ", info$varname, "\n",
          tab(), "for (k in ", min(unlist(info$parelmts)), ":",
@@ -102,7 +102,8 @@ jagsmodel_glmm <- function(info) {
          "\n",
          paste0(
            sapply(names(info$hc_list$hcvars), function(x) {
-             ranef_priors(info$nranef[x], paste0(info$varname, "_", x))
+             ranef_priors(info$nranef[x], paste0(info$varname, "_", x),
+                          rd_vcov = info$rd_vcov)
            }), collapse = "\n")
   )
 }

@@ -708,3 +708,84 @@ get_nonprop_lp <- function(nonprop, dsgn_mat_lvls, data, refs, fixed) {
 
   })
 }
+
+
+get_nranef <- function(idvar, random, data) {
+  nlapply(idvar, function(lvl) {
+    ivapply(remove_grouping(random), function(x) {
+      ncol(model.matrix(x[[lvl]], data = data))
+    })
+  })
+}
+
+
+#' First validation for rd_vcov
+#'
+#' Check if rd_vcov is a list with elements for all grouping levels or does
+#' not specify a grouping level. If valid, make sure it is a list per grouping
+#' level by duplicating the contents if necessary.
+#'
+#' @param rd_vcov the random effects variance covariance structure provided by
+#'                the user
+#' @param idvar vector with the names of the grouping variables
+#'              (without "lvlone")
+#' @tag internal
+#' @value a named list per grouping level where each elements contains
+#'        information on how the random effects variance-covariance matrices on
+#'        that level are structured. Per level it can be either a character
+#'        string (e.g. `"full"`) or a list specifying structures per (groups) of
+#'        variable(s) (e.g. `list(full = c("a", "b"), indep = "c")`)
+check_rd_vcov_list <- function(rd_vcov, idvar) {
+
+  if (!inherits(rd_vcov, "list") | all(!idvar %in% names(rd_vcov))) {
+    nlapply(idvar, function(x) rd_vcov)
+  } else if (inherits(rd_vcov, "list") & any(!idvar %in% names(rd_vcov))) {
+    errormsg("Please provide information on the variance-covariance structure
+             of the random effects for all levels.")
+  } else {
+    rd_vcov
+  }
+}
+
+myfun <- function(rd_vcov, idvar, nranef) {
+  nlapply(idvar, function(lvl) {
+    if (rd_vcov[[lvl]] == "full") {
+      list("full" = names(nranef[[lvl]]))
+    }
+  })
+}
+
+check_rd_vcov <- function(rd_vcov, idvar, nranef) {
+
+  rd_vcov <- make_rd_vcov_list(rd_vcov, idvar)
+
+
+  if (any(unlist(lapply(rd_vcov, names)) == "full")) {
+    for (lvl in idvar) {
+      for (k in which(names(rd_vcov[[lvl]]) == "full")) {
+        ranef_nr <- paste0(
+          cumsum(c(1, nranef[[lvl]][rd_vcov[[k]]]))[
+            -(length(nranef[[lvl]][rd_vcov[[lvl]][[k]]]) + 1)],
+          ":",
+          cumsum(nranef[[lvl]][rd_vcov[[lvl]][[k]]])
+        )
+        attr(rd_vcov[[lvl]][[k]], "ranef_nrs") <-
+          setNames(ranef_nr, rd_vcov[[lvl]][[k]])
+      }
+
+      if (sum(names(rd_vcov[[lvl]]) %in% "full") > 1) {
+        rd_full <- which(names(rd_vcov[[lvl]]) %in% "full")
+        for (k in seq_along(rd_full)) {
+          attr(rd_vcov[[lvl]][[rd_full[k]]], "name") <- k
+        }
+      }
+    }
+  } else {
+    nlapply(idvar, function(lvl) {
+      list("full" = names(nranef[[lvl]]))
+    })
+  }
+
+}
+
+

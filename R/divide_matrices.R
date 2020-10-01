@@ -5,7 +5,8 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                             models = NULL,  timevar = NULL, no_model = NULL,
                             nonprop = NULL, rev = NULL,
                             ppc = TRUE, shrinkage = FALSE,
-                            warn = TRUE, mess = TRUE, df_basehaz = 6, ...) {
+                            warn = TRUE, mess = TRUE, df_basehaz = 6,
+                            rd_vcov = rd_vcov, ...) {
 
   # id's and groups ------------------------------------------------------------
   # extract the id variable from the random effects formula and get groups
@@ -239,6 +240,9 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
                            groups[[gsub("M_", "", k)]]), , drop = FALSE]
   }
 
+
+
+
   list(data = data,
        fixed = fixed, random = random, models = models,
 
@@ -259,6 +263,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
        ppc = ppc,
        shrinkage = shrinkage,
        df_basehaz = df_basehaz,
+       rd_vcov = rd_vcov,
 
        scale_pars = scale_pars,
        outcomes = outcomes,
