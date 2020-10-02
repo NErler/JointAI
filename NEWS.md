@@ -6,6 +6,8 @@
 * `data_list`: syntax to checking which `pos_*` to include can handle the case
   with multiple grouping variables being on the same, lowest level; 
   before `pos_*` was excluded for only one of them
+* random effects: it is now possible to use different grouping levels in
+  different sub-models (when providing a list of model formulas)
 
 --------------------------------------------------------------------------------
 
