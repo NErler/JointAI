@@ -99,22 +99,48 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
     # This is done for all models that could contain time-varying covariates /
     # multi-level models. In case of a JM, there will always also be a mixed
     # model, so it does not be mentioned in the list of models separately.
-    l <- c(l,
-           unlist(unname(
-             lapply(info_list[modeltypes %in%
-                                c("coxph", "glmm", "clmm", "mlogitmm")],
-                    function(x) {
-                      unlist(unname(
-                        lapply(names(x$hc_list$hcvars), function(k) {
-                          nranef <- x$nranef[k]
-                          setNames(get_RinvD(nranef, hyp$ranef["KinvD_expr"]),
-                                   paste(c("RinvD", "KinvD"), x$varname,
-                                         k, sep = "_")
-                          )
-                        })), recursive = FALSE)
-                    })
-           ), recursive = FALSE)
-    )
+    rd_hyp_pars <- lapply(
+      info_list[modeltypes %in% c("coxph", "glmm", "clmm", "mlogitmm")],
+      function(info) {
+        rd_hyp <- lapply(names(info$hc_list$hcvars), function(lvl) {
+          if (info$rd_vcov[[lvl]] == "blockdiag") {
+            get_RinvD(info$nranef[lvl],
+                      hyp$ranef["KinvD_expr"],
+                      names = paste(c("RinvD", "KinvD"),
+                                    info$varname, lvl, sep = "_")
+            )
+          } else if (info$rd_vcov[[lvl]] == "indep" & info$nranef[lvl] > 1) {
+            get_invD_indep(nranef = info$nranef[lvl],
+                           name = paste("invD", info$varname, lvl,
+                                                         sep = "_"))
+          }
+        })
+        unlist(rd_hyp, recursive = FALSE)
+      })
+    l <- c(l, unlist(unname(rd_hyp_pars), recursive = FALSE))
+
+    rd_hyp_full <- lapply(names(Mlist$rd_vcov), function(lvl) {
+      if (any(names(Mlist$rd_vcov[[lvl]]) == "full")) {
+        k <- which(names(Mlist$rd_vcov[[lvl]]) == "full")
+
+        rd_hyp_full_lvl <- lapply(
+          which(names(Mlist$rd_vcov[[lvl]]) == "full"),
+          function(k) {
+
+            nranef <- sapply(attr(Mlist$rd_vcov[[lvl]][[k]], "ranef_index"),
+                             function(nr) eval(parse(text = nr)))
+            nam <- attr(Mlist$rd_vcov[[lvl]][[k]], "name")
+
+            get_RinvD(max(unlist(nranef)),
+                      hyp$ranef["KinvD_expr"],
+                      paste0(c("RinvD", "KinvD"), nam, "_", lvl))
+          })
+        unlist(rd_hyp_full_lvl, recursive = FALSE)
+      }
+    })
+
+    l <- c(l, unlist(rd_hyp_full, recursive = FALSE))
+
   }
 
 
@@ -442,15 +468,22 @@ default_hyperpars <- function() {
 }
 
 
-get_RinvD <- function(nranef, KinvD_expr = "nranef + 1.0") {
+get_RinvD <- function(nranef, KinvD_expr = "nranef + 1.0", names) {
   if (nranef > 1L) {
     RinvD <- diag(as.numeric(rep(NA, nranef)))
     KinvD <- eval(parse(text = KinvD_expr))
   } else {
     RinvD <- KinvD <- NULL
   }
-  list(
-    RinvD = RinvD,
-    KinvD = KinvD
-  )
+
+  setNames(
+    list(
+      RinvD = RinvD,
+      KinvD = KinvD
+    ), names)
+}
+
+get_invD_indep <- function(nranef, name) {
+  setNames(list(diag(as.numeric(rep(NA, nranef)))),
+           name)
 }
