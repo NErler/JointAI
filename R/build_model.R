@@ -3,10 +3,57 @@
 # Mlist contains the info on the interactions that is needed here
 write_model <- function(info_list, Mlist, modelfile = "") {
 
-    cat("model {", "\n\n",
+  index <- get_indices(Mlist)
+
+  rd_vcov_full <- lapply(names(Mlist$rd_vcov), function(lvl) {
+    if (any(names(Mlist$rd_vcov[[lvl]]) == "full")) {
+      lapply(which(names(Mlist$rd_vcov[[lvl]]) == "full"), function(k) {
+
+        rd_vcov <- Mlist$rd_vcov[[lvl]][[k]]
+
+        nam <- attr(rd_vcov, "name")
+        nranef <- sapply(attr(rd_vcov, "ranef_index"),
+                         function(nr) eval(parse(text = nr)))
+
+        rd_lps <- lapply(rd_vcov, function(x) {
+          c(
+            paste_rdintercept_lp(info_list[[x]])[[lvl]],
+            paste_rdslope_lp(info_list[[x]])[[lvl]]
+          )
+        })
+
+
+
+        paste0("\r",
+          tab(), "for (", index[lvl], " in 1:", Mlist$N[lvl], ") {", "\n",
+
+          # distribution specification
+          ranef_distr(nam = paste0(nam, "_", lvl),
+                      index = index[lvl],
+                      nranef = max(unlist(nranef))),
+
+          paste_mu_b_full(lps = unlist(rd_lps, recursive = FALSE),
+                          nranef, paste0(nam, "_", lvl), index[lvl]),
+          "\n",
+          tab(), "}", "\n\n",
+          ranef_priors(max(unlist(nranef)), paste0(nam, "_", lvl),
+                       rd_vcov = "full")
+        )
+      })
+    }
+  })
+
+  cat("model {", "\n\n",
       paste0(lapply(info_list, function(k) {
         get(paste0("jagsmodel_", tolower(k$modeltype)))(k)
       }), collapse = "\n\n\n"),
+
+      if (length(unlist(rd_vcov_full)) > 0) {
+        paste0("\n\n\r", tab(),
+               "# correlated random effects specification --------------------\n",
+               "\r", unlist(rd_vcov_full)
+        )
+      },
 
       '\n',
       if (any(sapply(Mlist$interactions, "attr", "has_NAs"))) {

@@ -11,6 +11,15 @@ jagsmodel_mlogitmm <- function(info) {
   rdslopes <- paste_rdslope_lp(info)
   Z_predictor <- paste_lp_ranef_part(info)
 
+  ranefpriors <- paste0(
+    unlist(
+      lapply(names(info$hc_list$hcvars), function(x) {
+        if (info$rd_vcov[[x]] != "full") {
+          ranef_priors(info$nranef[x], paste0("_", info$varname, "_", x),
+                       rd_vcov = info$rd_vcov)
+        }
+      })), collapse = "\n")
+
   # syntax for probabilities, using min-max-trick for numeric stability
   # i.e.,
   # "p_M2[ii, 1] <- min(1-1e-7, max(1e-7, phi_M2[ii, 1] / sum(phi_M2[ii, ])))"
@@ -65,9 +74,6 @@ jagsmodel_mlogitmm <- function(info) {
          get_priordistr(info$shrinkage, type = 'multinomial',
                         parname = info$parname),
          tab(), "}", "\n",
-         paste0(
-           sapply(names(info$hc_list$hcvars), function(x) {
-             ranef_priors(info$nranef[x], paste0(info$varname, "_", x))
-           }), collapse = "\n")
+         ranefpriors
   )
 }

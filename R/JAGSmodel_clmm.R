@@ -17,6 +17,18 @@ jagsmodel_clmm <- function(info) {
   rdslopes <- paste_rdslope_lp(info)
   Z_predictor <- paste_lp_ranef_part(info)
 
+
+  ranefpriors <- paste0(
+    unlist(
+      lapply(names(info$hc_list$hcvars), function(x) {
+        if (info$rd_vcov[[x]] != "full") {
+          ranef_priors(info$nranef[x], paste0("_", info$varname, "_", x),
+                       rd_vcov = info$rd_vcov)
+        }
+      })), collapse = "\n")
+
+
+
   linpred_nonprop <- if (!is.null(attr(info$parelmts[[info$resp_mat]],
                                        'nonprop'))) {
     nonprop <- lapply(write_nonprop(info), add_linebreaks, indent = indent + 2)
@@ -123,10 +135,7 @@ jagsmodel_clmm <- function(info) {
          write_priors_clm(info),
          # paste_ppc_prior,
          "\n",
-         paste0(
-           sapply(names(info$hc_list$hcvars), function(x) {
-             ranef_priors(info$nranef[x], paste0(info$varname, "_", x))
-           }), collapse = "\n")
+         ranefpriors
   )
 }
 

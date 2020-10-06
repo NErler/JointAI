@@ -303,16 +303,16 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
                          surv_lvl = info$surv_lvl, isgk = isgk)
 
 
-      rd_nam <- if (info$rd_vcov == "full") {
-        attr(info$rd_vcov, "name")
+      rd_nam <- if (isTRUE(info$rd_vcov[[lvl]] == "full")) {
+        attr(info$rd_vcov[[lvl]], "name")
       } else {
         paste0("_", info$varname)
       }
 
-      ranef_nrs <- if (is.null(attr(info$rd_vcov, "ranef_nrs"))) {
+      ranef_nrs <- if (is.null(attr(info$rd_vcov[[lvl]], "ranef_index"))) {
         1:info$nranef
       } else {
-        eval(parse(text = attr(info$rd_vcov, "ranef_nrs")))
+        eval(parse(text = attr(info$rd_vcov[[lvl]], "ranef_index")))
       }
 
       # generate the random intercept part to enter the linear predictor of
@@ -557,19 +557,14 @@ write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
   # - rdintercept: list of random intercept linear predictors as strings
   # - rdslopes: list of list of random slope linear predictors as strings
 
-  # specify distribution for the random effects, based on their dimension
-  norm.distr  <- if (info$nranef[lvl] < 2L) {"dnorm"} else {"dmnorm"}
-
   if (info$rd_vcov != "full") {
     # write the model part for the random effects distribution
     paste0(
       tab(), "for (", info$index[lvl], " in 1:", info$N[lvl], ") {", "\n",
 
       # distribution specification
-      tab(4L), "b_", info$varname, "_", lvl, "[", info$index[lvl], ", 1:",
-      info$nranef[lvl], "] ~ ", norm.distr,
-      "(mu_b_", info$varname, "_", lvl, "[", info$index[lvl], ", ], invD_",
-      info$varname, "_", lvl, "[ , ])", "\n",
+      ranef_distr(nam = paste0("_", info$varname, "_", lvl),
+                  index = info$index[lvl], nranef = info$nranef[lvl]),
 
       # specification of the means structure of the random effects
       paste_mu_b(rdintercept[[lvl]], rdslopes[[lvl]],
@@ -577,6 +572,19 @@ write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
       "\n",
       tab(), "}", "\n\n")
   }
+}
+
+
+ranef_distr <- function(nam, index, nranef) {
+  # specify distribution for the random effects, based on their dimension
+  norm_distr  <- if (nranef < 2L) {"dnorm"} else {"dmnorm"}
+
+  paste0(
+    tab(4L), "b", nam, "[", index, ", 1:",
+    nranef, "] ~ ", norm_distr,
+    "(mu_b", nam, "[", index, ", ], invD",
+    nam, "[ , ])", "\n"
+  )
 }
 
 
@@ -635,51 +643,88 @@ paste_mu_b <- function(rdintercept, rdslopes, varname, index) {
 
 
 
+# used in write_ranefs() (2020-06-10)
+paste_mu_b_full <- function(lps, nranef, nam, index) {
+  lps <- Filter(Negate(is.null), lps)
+
+  rd_lp <- paste0(tab(4L),
+                  paste_data(matnam = paste0("mu_b", nam), index = index,
+                             col = unlist(nranef)),
+                  " <- ",
+                  lapply(lps, add_linebreaks,
+                         indent = 4L + 4L + max(0, nchar(nam)) + 1L +
+                           nchar(index) + 8L)
+  )
+
+  # combine the random intercept and random slope part
+  paste0(rd_lp, collapse = "\n")
+}
+
+
+
 # used in jagsmodels that use random effects (2020-06-10)
-ranef_priors <- function(nranef, varname, rd_vcov) {
+ranef_priors <- function(nranef, nam, rd_vcov) {
   # write prior distribution part for random effects variance parameters
   # - nranef: number/dimension of the random effects
-  # - varname: name of the outcome of the sub-model
+  # - nam: name of the outcome of the sub-model
   # - rd_vcov: structure of the random effect variance-covariance matrix
 
+  if (nranef == 1L) {
+    rd_vcov_univ(nam)
+  } else if (rd_vcov == "indep") {
+    rd_vcov_indep(nranef, nam)
+  } else if (rd_vcov %in% c("full", "blockdiag")) {
+    rd_vcov_full(nranef, nam)
+  } else {
+    errormsg("I do not know %s type %s.",
+             dQuote("rd_vcov"), dQuote(rd_vcov))
+  }
+}
 
-  # based on number of random effects, use Gamma or Wishart distribution
+rd_vcov_univ <- function(nam) {
+
   # (Truncation in Gamma to prevent JAGS error when values get too small or
   # too large)
-  invD_distr <- if (nranef == 1L | rd_vcov == "indep") {
-    "dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)"
-  } else {
-    paste0("dwish(RinvD_", varname, "[ , ], KinvD_", varname, ")")
-  }
 
-
+  invD_distr <- "dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)"
   paste0("\n",
-         if (rd_vcov == "indep") {
-           paste0(
-             tab(), "for (k in 1:", nranef, ") {", "\n",
-             tab(4L), "invD_", varname, "[k, k] ~ ", invD_distr, "\n",
-             tab(), "}", "\n")
-         } else if (rd_vcov == "blockdiag") {
-           c(
-             if (nranef > 1L) {
-               paste0(
-                 tab(), "for (k in 1:", nranef, ") {", "\n",
-                 tab(4L), "RinvD_", varname,
-                 "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)", "\n",
-                 tab(), "}", "\n")
-             },
-             paste0("\r", tab(),
-                    "invD_", varname, "[1:", nranef, ", 1:", nranef, "] ~ ",
-                    invD_distr, "\n")
-           )
-         },
-         if (rd_vcov %in% c("indep", "blockdiag")) {
-           paste0("\r", tab(), "D_", varname, "[1:", nranef, ", 1:", nranef,
-                  "] <- inverse(invD_", varname, "[ , ])"
-           )
-         }
+         tab(), "invD", nam, "[1, 1] ~ ", invD_distr, "\n",
+         tab(), "D", nam, "[1, 1] <- 1 / (invD", nam, "[1, 1])"
   )
 }
+
+rd_vcov_indep <- function(nranef, nam) {
+
+  # (Truncation in Gamma to prevent JAGS error when values get too small or
+  # too large)
+
+  invD_distr <- "dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)"
+  paste0("\n",
+    tab(), "for (k in 1:", nranef, ") {", "\n",
+    tab(4L), "invD", nam, "[k, k] ~ ", invD_distr, "\n",
+    tab(), "}", "\n",
+    tab(), "D", nam, "[1:", nranef, ", 1:", nranef,
+    "] <- inverse(invD", nam, "[ , ])"
+  )
+}
+
+rd_vcov_full <- function(nranef, nam) {
+
+  invD_distr <- paste0("dwish(RinvD", nam, "[ , ], KinvD", nam, ")")
+
+  paste0("\n",
+    tab(), "for (k in 1:", nranef, ") {", "\n",
+    tab(4L), "RinvD", nam,
+    "[k, k] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)", "\n",
+    tab(), "}", "\n",
+    tab(),
+    "invD", nam, "[1:", nranef, ", 1:", nranef, "] ~ ",
+    invD_distr, "\n",
+    tab(), "D", nam, "[1:", nranef, ", 1:", nranef,
+    "] <- inverse(invD", nam, "[ , ])"
+  )
+}
+
 
 
 # Joint model ------------------------------------------------------------------
