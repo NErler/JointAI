@@ -103,11 +103,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
 
 
   # index name -----------------------------------------------------------------
-  index <- setNames(vapply(seq_along(sort(Mlist$group_lvls)),
-                           function(k) paste0(rep("i", k), collapse = ""),
-                           FUN.VALUE = character(1L)),
-                    names(sort(Mlist$group_lvls)))
-
+  index <- get_indices(Mlist)
 
 
   # transformations ------------------------------------------------------------
@@ -533,4 +529,13 @@ get_parelmts <- function(k, Mlist, par_index_main, par_index_other, lp) {
       setNames(parnums, names(lp[[lvl]]))
     }
   })
+}
+
+
+
+get_indices <- function(Mlist) {
+  setNames(vapply(seq_along(sort(Mlist$group_lvls)),
+                  function(q) paste0(rep("i", q), collapse = ""),
+                  FUN.VALUE = character(1L)),
+           names(sort(Mlist$group_lvls)))
 }
