@@ -222,14 +222,19 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
 
 # help functions ---------------------------------------------------------------
 
-# used in list_models (2020-08-13)
+# used in list_models and helpfunctions for rd_vcov (2020-08-13)
 print_seq <- function(min, max) {
-  if (min == max)
-    max
-  else
-    paste0(min, ":", max)
-}
 
+  m <- Map(function(min, max) {
+    if (min == max) {
+      max
+    } else {
+      paste0(min, ":", max)
+    }
+  }, min = min, max = max)
+
+  unlist(m)
+}
 
 
 # used in list_models()
