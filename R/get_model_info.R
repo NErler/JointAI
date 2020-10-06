@@ -182,25 +182,15 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
 
 
   # random effects variance covariance matrix
-  rd_vcov <- if (is.list(Mlist$rd_vcov)) {
-    types <- lvapply(Mlist$rd_vcov, function(x) {
-      if (!inherits(x, "character")) {
-        errormsg("The argument %s should either be a character string or a list
-               of (vectors of) character strings.", dQuote("rd_vcov"))
-      }
-      k %in% x
-    })
-    if (sum(types) != 1) {
-      errormsg("The variable %s was mentioned %s times in the argument %s, but
-               it should appear exactly once (if you want to use different
-               settings for different outcomes).", dQuote(k), sum(types))
-    }
+  rd_vcov <- lapply(Mlist$rd_vcov, function(x) {
 
-    type <- names(types[types])
-    attr(type, "ranef_nrs") <- attr(Mlist$rd_vcov[[names(types[types])]],
-                                    "ranef_nrs")[k]
+    w <- which(lvapply(x, function(z) k %in% z))
+    type <- names(w)
+
+    attr(type, "ranef_index") <- attr(x[[w]], "ranef_index")[k]
+    attr(type, "name") <- attr(x[[type]], "name")
     type
-  }
+  })
 
   # shrinkage ------------------------------------------------------------------
   shrinkage <- if (k %in% names(Mlist$shrinkage)) {
