@@ -13,8 +13,16 @@ the user}
 \item{idvar}{vector with the names of the grouping variables
 (without "lvlone")}
 }
+\value{
+A named list per grouping level where each elements contains
+information on how the random effects variance-covariance matrices on
+that level are structured. Per level it can be either a character
+string (e.g. \code{"full"}) or a list specifying structures per (groups) of
+variable(s) (e.g. \code{list(full = c("a", "b"), indep = "c")})
+}
 \description{
 Check if rd_vcov is a list with elements for all grouping levels or does
 not specify a grouping level. If valid, make sure it is a list per grouping
 level by duplicating the contents if necessary.
 }
+\keyword{internal}
