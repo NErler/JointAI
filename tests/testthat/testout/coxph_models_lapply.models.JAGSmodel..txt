@@ -254,8 +254,8 @@ model {
     beta_Bh0_Srv_ftm_stts_cn[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
   }
 
-  invD_Srv_ftm_stts_cn_center[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_Srv_ftm_stts_cn_center[1:1, 1:1] <- inverse(invD_Srv_ftm_stts_cn_center[ , ])
+  invD_Srv_ftm_stts_cn_center[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Srv_ftm_stts_cn_center[1, 1] <- 1 / (invD_Srv_ftm_stts_cn_center[1, 1])
 
 
   # Normal mixed effects model for trig -------------------------------------------
@@ -283,8 +283,8 @@ model {
   tau_trig ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_trig <- sqrt(1/tau_trig)
 
-  invD_trig_center[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_trig_center[1:1, 1:1] <- inverse(invD_trig_center[ , ])
+  invD_trig_center[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_trig_center[1, 1] <- 1 / (invD_trig_center[1, 1])
 
 
   # Normal mixed effects model for copper -----------------------------------------
@@ -310,8 +310,8 @@ model {
   tau_copper ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_copper <- sqrt(1/tau_copper)
 
-  invD_copper_center[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_copper_center[1:1, 1:1] <- inverse(invD_copper_center[ , ]) 
+  invD_copper_center[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_copper_center[1, 1] <- 1 / (invD_copper_center[1, 1]) 
  
 }
 $m4a
@@ -433,8 +433,8 @@ model {
     beta_Bh0_Srv_ftm_stts_cn[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
   }
 
-  invD_Srv_ftm_stts_cn_center[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_Srv_ftm_stts_cn_center[1:1, 1:1] <- inverse(invD_Srv_ftm_stts_cn_center[ , ]) 
+  invD_Srv_ftm_stts_cn_center[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Srv_ftm_stts_cn_center[1, 1] <- 1 / (invD_Srv_ftm_stts_cn_center[1, 1]) 
  
 }
 $m4d
@@ -479,7 +479,7 @@ model {
     beta_Bh0_Srv_ftm_stts_cn[k] ~ dnorm(mu_reg_surv, tau_reg_surv)
   }
 
-  invD_Srv_ftm_stts_cn_center[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_Srv_ftm_stts_cn_center[1:1, 1:1] <- inverse(invD_Srv_ftm_stts_cn_center[ , ]) 
+  invD_Srv_ftm_stts_cn_center[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Srv_ftm_stts_cn_center[1, 1] <- 1 / (invD_Srv_ftm_stts_cn_center[1, 1]) 
  
 }

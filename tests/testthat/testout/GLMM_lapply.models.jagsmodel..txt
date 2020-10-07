@@ -19,8 +19,8 @@ model {
   tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_y <- sqrt(1/tau_y)
 
-  invD_y_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_y_id[1:1, 1:1] <- inverse(invD_y_id[ , ]) 
+  invD_y_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_y_id[1, 1] <- 1 / (invD_y_id[1, 1]) 
  
 }
 $m0a2
@@ -44,8 +44,8 @@ model {
   tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_y <- sqrt(1/tau_y)
 
-  invD_y_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_y_id[1:1, 1:1] <- inverse(invD_y_id[ , ]) 
+  invD_y_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_y_id[1, 1] <- 1 / (invD_y_id[1, 1]) 
  
 }
 $m0a3
@@ -69,8 +69,8 @@ model {
   tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_y <- sqrt(1/tau_y)
 
-  invD_y_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_y_id[1:1, 1:1] <- inverse(invD_y_id[ , ]) 
+  invD_y_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_y_id[1, 1] <- 1 / (invD_y_id[1, 1]) 
  
 }
 $m0a4
@@ -95,8 +95,8 @@ model {
   tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_y <- sqrt(1/tau_y)
 
-  invD_y_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_y_id[1:1, 1:1] <- inverse(invD_y_id[ , ]) 
+  invD_y_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_y_id[1, 1] <- 1 / (invD_y_id[1, 1]) 
  
 }
 $m0b1
@@ -118,8 +118,8 @@ model {
     beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
   }
 
-  invD_b1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_b1_id[1:1, 1:1] <- inverse(invD_b1_id[ , ]) 
+  invD_b1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_b1_id[1, 1] <- 1 / (invD_b1_id[1, 1]) 
  
 }
 $m0b2
@@ -141,8 +141,8 @@ model {
     beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
   }
 
-  invD_b1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_b1_id[1:1, 1:1] <- inverse(invD_b1_id[ , ]) 
+  invD_b1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_b1_id[1, 1] <- 1 / (invD_b1_id[1, 1]) 
  
 }
 $m0b3
@@ -164,8 +164,8 @@ model {
     beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
   }
 
-  invD_b1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_b1_id[1:1, 1:1] <- inverse(invD_b1_id[ , ]) 
+  invD_b1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_b1_id[1, 1] <- 1 / (invD_b1_id[1, 1]) 
  
 }
 $m0b4
@@ -187,8 +187,8 @@ model {
     beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
   }
 
-  invD_b1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_b1_id[1:1, 1:1] <- inverse(invD_b1_id[ , ]) 
+  invD_b1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_b1_id[1, 1] <- 1 / (invD_b1_id[1, 1]) 
  
 }
 $m0c1
@@ -217,8 +217,8 @@ model {
   tau_L1 ~ dgamma(shape_tau_gamma, rate_tau_gamma)
   sigma_L1 <- sqrt(1/tau_L1)
 
-  invD_L1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1_id[1:1, 1:1] <- inverse(invD_L1_id[ , ]) 
+  invD_L1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1_id[1, 1] <- 1 / (invD_L1_id[1, 1]) 
  
 }
 $m0c2
@@ -246,8 +246,8 @@ model {
   tau_L1 ~ dgamma(shape_tau_gamma, rate_tau_gamma)
   sigma_L1 <- sqrt(1/tau_L1)
 
-  invD_L1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1_id[1:1, 1:1] <- inverse(invD_L1_id[ , ]) 
+  invD_L1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1_id[1, 1] <- 1 / (invD_L1_id[1, 1]) 
  
 }
 $m0d1
@@ -269,8 +269,8 @@ model {
     beta[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
   }
 
-  invD_p1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_p1_id[1:1, 1:1] <- inverse(invD_p1_id[ , ]) 
+  invD_p1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_p1_id[1, 1] <- 1 / (invD_p1_id[1, 1]) 
  
 }
 $m0d2
@@ -292,8 +292,8 @@ model {
     beta[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
   }
 
-  invD_p1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_p1_id[1:1, 1:1] <- inverse(invD_p1_id[ , ]) 
+  invD_p1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_p1_id[1, 1] <- 1 / (invD_p1_id[1, 1]) 
  
 }
 $m0e1
@@ -317,8 +317,8 @@ model {
   tau_L1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_L1 <- sqrt(1/tau_L1)
 
-  invD_L1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1_id[1:1, 1:1] <- inverse(invD_L1_id[ , ]) 
+  invD_L1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1_id[1, 1] <- 1 / (invD_L1_id[1, 1]) 
  
 }
 $m0f1
@@ -346,8 +346,8 @@ model {
   tau_Be1 ~ dgamma(shape_tau_beta, rate_tau_beta)
 
 
-  invD_Be1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_Be1_id[1:1, 1:1] <- inverse(invD_Be1_id[ , ]) 
+  invD_Be1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Be1_id[1, 1] <- 1 / (invD_Be1_id[1, 1]) 
  
 }
 $m1a
@@ -372,8 +372,8 @@ model {
   tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_y <- sqrt(1/tau_y)
 
-  invD_y_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_y_id[1:1, 1:1] <- inverse(invD_y_id[ , ]) 
+  invD_y_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_y_id[1, 1] <- 1 / (invD_y_id[1, 1]) 
  
 }
 $m1b
@@ -396,8 +396,8 @@ model {
     beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
   }
 
-  invD_b1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_b1_id[1:1, 1:1] <- inverse(invD_b1_id[ , ]) 
+  invD_b1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_b1_id[1, 1] <- 1 / (invD_b1_id[1, 1]) 
  
 }
 $m1c
@@ -427,8 +427,8 @@ model {
   tau_L1 ~ dgamma(shape_tau_gamma, rate_tau_gamma)
   sigma_L1 <- sqrt(1/tau_L1)
 
-  invD_L1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1_id[1:1, 1:1] <- inverse(invD_L1_id[ , ]) 
+  invD_L1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1_id[1, 1] <- 1 / (invD_L1_id[1, 1]) 
  
 }
 $m1d
@@ -451,8 +451,8 @@ model {
     beta[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
   }
 
-  invD_p1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_p1_id[1:1, 1:1] <- inverse(invD_p1_id[ , ]) 
+  invD_p1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_p1_id[1, 1] <- 1 / (invD_p1_id[1, 1]) 
  
 }
 $m1e
@@ -477,8 +477,8 @@ model {
   tau_L1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_L1 <- sqrt(1/tau_L1)
 
-  invD_L1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1_id[1:1, 1:1] <- inverse(invD_L1_id[ , ]) 
+  invD_L1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1_id[1, 1] <- 1 / (invD_L1_id[1, 1]) 
  
 }
 $m1f
@@ -507,8 +507,8 @@ model {
   tau_Be1 ~ dgamma(shape_tau_beta, rate_tau_beta)
 
 
-  invD_Be1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_Be1_id[1:1, 1:1] <- inverse(invD_Be1_id[ , ]) 
+  invD_Be1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Be1_id[1, 1] <- 1 / (invD_Be1_id[1, 1]) 
  
 }
 $m2a
@@ -533,8 +533,8 @@ model {
   tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_y <- sqrt(1/tau_y)
 
-  invD_y_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_y_id[1:1, 1:1] <- inverse(invD_y_id[ , ])
+  invD_y_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_y_id[1, 1] <- 1 / (invD_y_id[1, 1])
 
 
   # Normal mixed effects model for c2 ---------------------------------------------
@@ -555,8 +555,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ]) 
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1]) 
  
 }
 $m2b
@@ -579,8 +579,8 @@ model {
     beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
   }
 
-  invD_b2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_b2_id[1:1, 1:1] <- inverse(invD_b2_id[ , ])
+  invD_b2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_b2_id[1, 1] <- 1 / (invD_b2_id[1, 1])
 
 
   # Normal mixed effects model for c2 ---------------------------------------------
@@ -601,8 +601,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ]) 
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1]) 
  
 }
 $m2c
@@ -632,8 +632,8 @@ model {
   tau_L1mis ~ dgamma(shape_tau_gamma, rate_tau_gamma)
   sigma_L1mis <- sqrt(1/tau_L1mis)
 
-  invD_L1mis_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1mis_id[1:1, 1:1] <- inverse(invD_L1mis_id[ , ])
+  invD_L1mis_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1mis_id[1, 1] <- 1 / (invD_L1mis_id[1, 1])
 
 
   # Normal mixed effects model for c2 ---------------------------------------------
@@ -654,8 +654,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ]) 
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1]) 
  
 }
 $m2d
@@ -678,8 +678,8 @@ model {
     beta[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
   }
 
-  invD_p2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_p2_id[1:1, 1:1] <- inverse(invD_p2_id[ , ])
+  invD_p2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_p2_id[1, 1] <- 1 / (invD_p2_id[1, 1])
 
 
   # Normal mixed effects model for c2 ---------------------------------------------
@@ -700,8 +700,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ]) 
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1]) 
  
 }
 $m2e
@@ -726,8 +726,8 @@ model {
   tau_L1mis ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_L1mis <- sqrt(1/tau_L1mis)
 
-  invD_L1mis_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1mis_id[1:1, 1:1] <- inverse(invD_L1mis_id[ , ])
+  invD_L1mis_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1mis_id[1, 1] <- 1 / (invD_L1mis_id[1, 1])
 
 
   # Normal mixed effects model for c2 ---------------------------------------------
@@ -748,8 +748,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ]) 
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1]) 
  
 }
 $m2f
@@ -778,8 +778,8 @@ model {
   tau_Be2 ~ dgamma(shape_tau_beta, rate_tau_beta)
 
 
-  invD_Be2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_Be2_id[1:1, 1:1] <- inverse(invD_Be2_id[ , ])
+  invD_Be2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Be2_id[1, 1] <- 1 / (invD_Be2_id[1, 1])
 
 
   # Normal mixed effects model for c2 ---------------------------------------------
@@ -800,8 +800,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ]) 
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1]) 
  
 }
 $m3a
@@ -825,8 +825,8 @@ model {
   tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_y <- sqrt(1/tau_y)
 
-  invD_y_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_y_id[1:1, 1:1] <- inverse(invD_y_id[ , ])
+  invD_y_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_y_id[1, 1] <- 1 / (invD_y_id[1, 1])
 
 
 
@@ -864,8 +864,8 @@ model {
     beta[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
   }
 
-  invD_b2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_b2_id[1:1, 1:1] <- inverse(invD_b2_id[ , ])
+  invD_b2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_b2_id[1, 1] <- 1 / (invD_b2_id[1, 1])
 
 
 
@@ -910,8 +910,8 @@ model {
   tau_L1mis ~ dgamma(shape_tau_gamma, rate_tau_gamma)
   sigma_L1mis <- sqrt(1/tau_L1mis)
 
-  invD_L1mis_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1mis_id[1:1, 1:1] <- inverse(invD_L1mis_id[ , ])
+  invD_L1mis_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1mis_id[1, 1] <- 1 / (invD_L1mis_id[1, 1])
 
 
 
@@ -949,8 +949,8 @@ model {
     beta[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
   }
 
-  invD_p2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_p2_id[1:1, 1:1] <- inverse(invD_p2_id[ , ])
+  invD_p2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_p2_id[1, 1] <- 1 / (invD_p2_id[1, 1])
 
 
 
@@ -990,8 +990,8 @@ model {
   tau_L1mis ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_L1mis <- sqrt(1/tau_L1mis)
 
-  invD_L1mis_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1mis_id[1:1, 1:1] <- inverse(invD_L1mis_id[ , ])
+  invD_L1mis_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1mis_id[1, 1] <- 1 / (invD_L1mis_id[1, 1])
 
 
 
@@ -1035,8 +1035,8 @@ model {
   tau_Be2 ~ dgamma(shape_tau_beta, rate_tau_beta)
 
 
-  invD_Be2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_Be2_id[1:1, 1:1] <- inverse(invD_Be2_id[ , ])
+  invD_Be2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Be2_id[1, 1] <- 1 / (invD_Be2_id[1, 1])
 
 
 
@@ -1080,8 +1080,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Poisson mixed effects model for p2 --------------------------------------------
@@ -1103,8 +1103,8 @@ model {
     alpha[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
   }
 
-  invD_p2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_p2_id[1:1, 1:1] <- inverse(invD_p2_id[ , ])
+  invD_p2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_p2_id[1, 1] <- 1 / (invD_p2_id[1, 1])
 
 
   # Normal mixed effects model for c2 ---------------------------------------------
@@ -1127,8 +1127,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
   # Gamma mixed effects model for L1mis -------------------------------------------
@@ -1155,8 +1155,8 @@ model {
   tau_L1mis ~ dgamma(shape_tau_gamma, rate_tau_gamma)
   sigma_L1mis <- sqrt(1/tau_L1mis)
 
-  invD_L1mis_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1mis_id[1:1, 1:1] <- inverse(invD_L1mis_id[ , ])
+  invD_L1mis_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1mis_id[1, 1] <- 1 / (invD_L1mis_id[1, 1])
 
 
   # Beta mixed effects model for Be2 ----------------------------------------------
@@ -1181,8 +1181,8 @@ model {
   tau_Be2 ~ dgamma(shape_tau_beta, rate_tau_beta)
 
 
-  invD_Be2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_Be2_id[1:1, 1:1] <- inverse(invD_Be2_id[ , ])
+  invD_Be2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Be2_id[1, 1] <- 1 / (invD_Be2_id[1, 1])
 
 
 
@@ -1227,8 +1227,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Poisson mixed effects model for p2 --------------------------------------------
@@ -1250,8 +1250,8 @@ model {
     alpha[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
   }
 
-  invD_p2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_p2_id[1:1, 1:1] <- inverse(invD_p2_id[ , ])
+  invD_p2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_p2_id[1, 1] <- 1 / (invD_p2_id[1, 1])
 
 
   # Binomial mixed effects model for b2 -------------------------------------------
@@ -1275,8 +1275,8 @@ model {
     alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
   }
 
-  invD_b2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_b2_id[1:1, 1:1] <- inverse(invD_b2_id[ , ])
+  invD_b2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_b2_id[1, 1] <- 1 / (invD_b2_id[1, 1])
 
 
   # Normal mixed effects model for c2 ---------------------------------------------
@@ -1299,8 +1299,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
   # Log-normal mixed effects model for L1mis --------------------------------------
@@ -1321,8 +1321,8 @@ model {
   tau_L1mis ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_L1mis <- sqrt(1/tau_L1mis)
 
-  invD_L1mis_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1mis_id[1:1, 1:1] <- inverse(invD_L1mis_id[ , ]) 
+  invD_L1mis_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1mis_id[1, 1] <- 1 / (invD_L1mis_id[1, 1]) 
  
 }
 $m4c
@@ -1350,8 +1350,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Poisson mixed effects model for p2 --------------------------------------------
@@ -1373,8 +1373,8 @@ model {
     alpha[k] ~ dnorm(mu_reg_poisson, tau_reg_poisson)
   }
 
-  invD_p2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_p2_id[1:1, 1:1] <- inverse(invD_p2_id[ , ])
+  invD_p2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_p2_id[1, 1] <- 1 / (invD_p2_id[1, 1])
 
 
   # Binomial mixed effects model for b2 -------------------------------------------
@@ -1398,8 +1398,8 @@ model {
     alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
   }
 
-  invD_b2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_b2_id[1:1, 1:1] <- inverse(invD_b2_id[ , ])
+  invD_b2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_b2_id[1, 1] <- 1 / (invD_b2_id[1, 1])
 
 
   # Normal mixed effects model for c2 ---------------------------------------------
@@ -1421,8 +1421,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
   # Gamma mixed effects model for L1mis -------------------------------------------
@@ -1447,8 +1447,8 @@ model {
   tau_L1mis ~ dgamma(shape_tau_gamma, rate_tau_gamma)
   sigma_L1mis <- sqrt(1/tau_L1mis)
 
-  invD_L1mis_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1mis_id[1:1, 1:1] <- inverse(invD_L1mis_id[ , ]) 
+  invD_L1mis_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1mis_id[1, 1] <- 1 / (invD_L1mis_id[1, 1]) 
  
 }
 $m4d
@@ -1478,8 +1478,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Poisson mixed effects model for p2 --------------------------------------------
@@ -1503,8 +1503,8 @@ model {
     tau_reg_poisson_ridge_alpha[k] ~ dgamma(0.01, 0.01)
   }
 
-  invD_p2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_p2_id[1:1, 1:1] <- inverse(invD_p2_id[ , ])
+  invD_p2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_p2_id[1, 1] <- 1 / (invD_p2_id[1, 1])
 
 
   # Binomial mixed effects model for b2 -------------------------------------------
@@ -1530,8 +1530,8 @@ model {
     tau_reg_binom_ridge_alpha[k] ~ dgamma(0.01, 0.01)
   }
 
-  invD_b2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_b2_id[1:1, 1:1] <- inverse(invD_b2_id[ , ])
+  invD_b2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_b2_id[1, 1] <- 1 / (invD_b2_id[1, 1])
 
 
   # Normal mixed effects model for c2 ---------------------------------------------
@@ -1555,8 +1555,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
   # Gamma mixed effects model for L1mis -------------------------------------------
@@ -1583,8 +1583,8 @@ model {
   tau_L1mis ~ dgamma(shape_tau_gamma, rate_tau_gamma)
   sigma_L1mis <- sqrt(1/tau_L1mis)
 
-  invD_L1mis_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1mis_id[1:1, 1:1] <- inverse(invD_L1mis_id[ , ])
+  invD_L1mis_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1mis_id[1, 1] <- 1 / (invD_L1mis_id[1, 1])
 
 
   # Normal mixed effects model for Be2 --------------------------------------------
@@ -1606,8 +1606,8 @@ model {
   tau_Be2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_Be2 <- sqrt(1/tau_Be2)
 
-  invD_Be2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_Be2_id[1:1, 1:1] <- inverse(invD_Be2_id[ , ]) 
+  invD_Be2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Be2_id[1, 1] <- 1 / (invD_Be2_id[1, 1]) 
  
 }
 $m5a
@@ -1675,8 +1675,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
 
@@ -1720,8 +1720,8 @@ model {
   gamma_o2[2] <- gamma_o2[1] - exp(delta_o2[1])
   gamma_o2[3] <- gamma_o2[2] - exp(delta_o2[2])
 
-  invD_o2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_o2_id[1:1, 1:1] <- inverse(invD_o2_id[ , ])
+  invD_o2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_o2_id[1, 1] <- 1 / (invD_o2_id[1, 1])
 
 
   # Normal mixed effects model for time -------------------------------------------
@@ -1744,8 +1744,8 @@ model {
   tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_time <- sqrt(1/tau_time)
 
-  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+  invD_time_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1, 1] <- 1 / (invD_time_id[1, 1])
 
 
   # Multinomial logit model for M2 ------------------------------------------------
@@ -1848,8 +1848,8 @@ model {
   tau_L1mis ~ dgamma(shape_tau_gamma, rate_tau_gamma)
   sigma_L1mis <- sqrt(1/tau_L1mis)
 
-  invD_L1mis_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_L1mis_id[1:1, 1:1] <- inverse(invD_L1mis_id[ , ])
+  invD_L1mis_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_L1mis_id[1, 1] <- 1 / (invD_L1mis_id[1, 1])
 
 
   # Beta mixed effects model for Be2 ----------------------------------------------
@@ -1882,8 +1882,8 @@ model {
   tau_Be2 ~ dgamma(shape_tau_beta, rate_tau_beta)
 
 
-  invD_Be2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_Be2_id[1:1, 1:1] <- inverse(invD_Be2_id[ , ])
+  invD_Be2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_Be2_id[1, 1] <- 1 / (invD_Be2_id[1, 1])
 
 
   # Normal mixed effects model for c1 ---------------------------------------------
@@ -1911,8 +1911,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Normal mixed effects model for time -------------------------------------------
@@ -1935,8 +1935,8 @@ model {
   tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_time <- sqrt(1/tau_time)
 
-  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+  invD_time_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1, 1] <- 1 / (invD_time_id[1, 1])
 
 
 
@@ -1984,8 +1984,8 @@ model {
   tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_y <- sqrt(1/tau_y)
 
-  invD_y_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_y_id[1:1, 1:1] <- inverse(invD_y_id[ , ])
+  invD_y_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_y_id[1, 1] <- 1 / (invD_y_id[1, 1])
 
 
   # Binomial mixed effects model for b2 -------------------------------------------
@@ -2010,8 +2010,8 @@ model {
     alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
   }
 
-  invD_b2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_b2_id[1:1, 1:1] <- inverse(invD_b2_id[ , ])
+  invD_b2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_b2_id[1, 1] <- 1 / (invD_b2_id[1, 1])
 
 
 
@@ -2086,8 +2086,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Normal mixed effects model for time -------------------------------------------
@@ -2111,8 +2111,8 @@ model {
   tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_time <- sqrt(1/tau_time)
 
-  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+  invD_time_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1, 1] <- 1 / (invD_time_id[1, 1])
 
 
 
@@ -2291,8 +2291,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Normal mixed effects model for time -------------------------------------------
@@ -2315,8 +2315,8 @@ model {
   tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_time <- sqrt(1/tau_time)
 
-  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+  invD_time_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1, 1] <- 1 / (invD_time_id[1, 1])
 
 
 
@@ -2394,8 +2394,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
 
@@ -2472,8 +2472,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Normal mixed effects model for time -------------------------------------------
@@ -2496,8 +2496,8 @@ model {
   tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_time <- sqrt(1/tau_time)
 
-  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+  invD_time_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1, 1] <- 1 / (invD_time_id[1, 1])
 
 
 
@@ -2570,8 +2570,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ]) 
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1]) 
  
 }
 $m8b
@@ -2627,8 +2627,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ]) 
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1]) 
  
 }
 $m8c
@@ -2684,8 +2684,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
   # Normal mixed effects model for c1 ---------------------------------------------
@@ -2707,8 +2707,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
 
@@ -2787,8 +2787,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
   # Normal mixed effects model for c1 ---------------------------------------------
@@ -2810,8 +2810,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Normal mixed effects model for time -------------------------------------------
@@ -2832,8 +2832,8 @@ model {
   tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_time <- sqrt(1/tau_time)
 
-  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+  invD_time_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1, 1] <- 1 / (invD_time_id[1, 1])
 
 
 
@@ -2917,8 +2917,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
   # Normal mixed effects model for c1 ---------------------------------------------
@@ -2942,8 +2942,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Normal mixed effects model for time -------------------------------------------
@@ -2966,8 +2966,8 @@ model {
   tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_time <- sqrt(1/tau_time)
 
-  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+  invD_time_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1, 1] <- 1 / (invD_time_id[1, 1])
 
 
 
@@ -3052,8 +3052,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
   # Normal mixed effects model for c1 ---------------------------------------------
@@ -3077,8 +3077,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
 
@@ -3163,8 +3163,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
 
@@ -3249,8 +3249,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
   # Normal mixed effects model for c1 ---------------------------------------------
@@ -3274,8 +3274,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Normal mixed effects model for time -------------------------------------------
@@ -3298,8 +3298,8 @@ model {
   tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_time <- sqrt(1/tau_time)
 
-  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+  invD_time_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1, 1] <- 1 / (invD_time_id[1, 1])
 
 
 
@@ -3384,8 +3384,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
   # Normal mixed effects model for c1 ---------------------------------------------
@@ -3409,8 +3409,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
 
@@ -3494,8 +3494,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
   # Normal mixed effects model for c1 ---------------------------------------------
@@ -3519,8 +3519,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Normal mixed effects model for time -------------------------------------------
@@ -3543,8 +3543,8 @@ model {
   tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_time <- sqrt(1/tau_time)
 
-  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+  invD_time_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1, 1] <- 1 / (invD_time_id[1, 1])
 
 
 
@@ -3628,8 +3628,8 @@ model {
   tau_c2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c2 <- sqrt(1/tau_c2)
 
-  invD_c2_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c2_id[1:1, 1:1] <- inverse(invD_c2_id[ , ])
+  invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1])
 
 
   # Normal mixed effects model for c1 ---------------------------------------------
@@ -3653,8 +3653,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Normal mixed effects model for time -------------------------------------------
@@ -3677,8 +3677,8 @@ model {
   tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_time <- sqrt(1/tau_time)
 
-  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+  invD_time_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1, 1] <- 1 / (invD_time_id[1, 1])
 
 
 
@@ -3763,8 +3763,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Normal mixed effects model for time -------------------------------------------
@@ -3787,8 +3787,8 @@ model {
   tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_time <- sqrt(1/tau_time)
 
-  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+  invD_time_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1, 1] <- 1 / (invD_time_id[1, 1])
 
 
 
@@ -3906,8 +3906,8 @@ model {
   tau_c1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_c1 <- sqrt(1/tau_c1)
 
-  invD_c1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_c1_id[1:1, 1:1] <- inverse(invD_c1_id[ , ])
+  invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
   # Normal mixed effects model for time -------------------------------------------
@@ -3930,8 +3930,8 @@ model {
   tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_time <- sqrt(1/tau_time)
 
-  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+  invD_time_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1, 1] <- 1 / (invD_time_id[1, 1])
 
 
   # Binomial mixed effects model for b1 -------------------------------------------
@@ -3952,8 +3952,8 @@ model {
     alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
   }
 
-  invD_b1_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_b1_id[1:1, 1:1] <- inverse(invD_b1_id[ , ])
+  invD_b1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_b1_id[1, 1] <- 1 / (invD_b1_id[1, 1])
 
 
 
@@ -4003,11 +4003,11 @@ model {
   tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_y <- sqrt(1/tau_y)
 
-  invD_y_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_y_id[1:1, 1:1] <- inverse(invD_y_id[ , ])
+  invD_y_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_y_id[1, 1] <- 1 / (invD_y_id[1, 1])
 
-  invD_y_o1[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_y_o1[1:1, 1:1] <- inverse(invD_y_o1[ , ]) 
+  invD_y_o1[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_y_o1[1, 1] <- 1 / (invD_y_o1[1, 1]) 
  
 }
 $m9b
@@ -4064,8 +4064,8 @@ model {
   tau_time ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_time <- sqrt(1/tau_time)
 
-  invD_time_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_time_id[1:1, 1:1] <- inverse(invD_time_id[ , ])
+  invD_time_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_time_id[1, 1] <- 1 / (invD_time_id[1, 1])
 
 
 
@@ -4110,8 +4110,8 @@ model {
   tau_y ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_y <- sqrt(1/tau_y)
 
-  invD_y_id[1:1, 1:1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
-  D_y_id[1:1, 1:1] <- inverse(invD_y_id[ , ])
+  invD_y_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
+  D_y_id[1, 1] <- 1 / (invD_y_id[1, 1])
 
 
 
