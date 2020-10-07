@@ -4,10 +4,13 @@
 \alias{parameters}
 \title{Parameter names of an JointAI object}
 \usage{
-parameters(object, mess = TRUE, warn = TRUE, ...)
+parameters(object, expand_ranef = FALSE, mess = TRUE, warn = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
+
+\item{expand_ranef}{logical; should all elements of the random effects
+vectors/matrices be shown separately?}
 
 \item{mess}{logical; should messages be given? Default is
 \code{TRUE}.}
