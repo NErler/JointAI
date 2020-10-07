@@ -230,9 +230,9 @@ test_that("get_nranef", {
   )
 
   expect_equal(
-    get_nranef(idvar = "id", random = list(~ (1 | id),  ~ time | id),
+    get_nranef(idvar = "id", random = list(a = ~ (1 | id),  b = ~ time | id),
                data = longDF),
-    list(id = c(1, 2))
+    list(id = c(a = 1, b = 2))
   )
 
   expect_equal(
