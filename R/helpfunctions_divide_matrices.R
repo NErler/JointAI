@@ -873,13 +873,22 @@ get_nranef <- function(idvar, random, data) {
       rm_gr <- remove_grouping(random)
       if (lvl %in% names(rm_gr)) {
         ncol(model.matrix(remove_grouping(random)[[lvl]], data = data))
-      } else 0
+      } else 0L
     } else if (inherits(random, "list")) {
-      ivapply(remove_grouping(random), function(x) {
-        if (lvl %in% names(x)) {
-          ncol(model.matrix(x[[lvl]], data = data))
-        } else {0}
-      })
+      if (length(random) == 1L) {
+        rm_gr <- remove_grouping(random)
+        nrd <- if (lvl %in% names(rm_gr)) {
+          ncol(model.matrix(remove_grouping(random)[[lvl]], data = data))
+        } else 0L
+      } else {
+        nrd <- ivapply(remove_grouping(random), function(x) {
+          if (lvl %in% names(x)) {
+            ncol(model.matrix(x[[lvl]], data = data))
+          } else {0L}
+        })
+      }
+      names(nrd) <- names(random)
+      nrd
     } else {
       errormsg("I expected either a formula or list of formulas.")
     }
