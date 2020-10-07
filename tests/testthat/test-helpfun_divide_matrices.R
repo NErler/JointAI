@@ -174,11 +174,8 @@ test_that("check_rd_vcov", {
                                     ranef_index = c(c = "1:2", d = "3:4"),
                                     name = 2)),
          center = list(full = structure(c("a", "b"),
-                                        ranef_index = c(a = 1, b = 2),
-                                        name = 1),
-                       full = structure("d",
-                                        ranef_index = c(d = "1:2"),
-                                        name = 2)))
+                                        ranef_index = c(a = 1, b = 2)),
+                       blockdiag = "d"))
   )
 
   expect_equal(
