@@ -316,12 +316,13 @@ plot_prep <- function(object, start = NULL, end = NULL, thin = NULL,
 
   if (!is.null(outcome)) {
     outcomes <- clean_survname(names(object$fixed)[outcome])
-    params <- parameters(object)
-    selected_params <- params$coef[params$outcome %in% outcomes]
+    params <- parameters(object, expand_ranef = TRUE)
+    selected_params <- params$coef[lvapply(params$outcome,
+                                           function(x) any(outcomes %in% x))]
 
     if (any(!selected_params %in% colnames(object$MCMC[[1]]))) {
-      errormsg("Not all of the that were selected are present in the MCMC sample
-             (%s). Please contact the package maintainer.",
+      errormsg("Not all of the parameters that were selected are present in the
+                MCMC sample (%s). Please contact the package maintainer.",
                paste_and(dQuote(
                  selected_params[!selected_params %in% colnames(MCMC[[1]])]
                ))
