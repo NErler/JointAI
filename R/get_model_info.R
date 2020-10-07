@@ -185,11 +185,15 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
   rd_vcov <- lapply(Mlist$rd_vcov, function(x) {
 
     w <- which(lvapply(x, function(z) k %in% z))
-    type <- names(w)
+    if (length(w) > 0L) {
+      type <- names(w)
 
-    attr(type, "ranef_index") <- attr(x[[w]], "ranef_index")[k]
-    attr(type, "name") <- attr(x[[type]], "name")
-    type
+      attr(type, "ranef_index") <- attr(x[[w]], "ranef_index")[k]
+      attr(type, "name") <- attr(x[[w]], "name")
+      type
+    } else {
+      "blockdiag"
+    }
   })
 
   # shrinkage ------------------------------------------------------------------
