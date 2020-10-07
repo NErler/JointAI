@@ -139,6 +139,8 @@ test_that("check_full_blockdiag", {
                                         full = c("d", "e"))))
 })
 
+
+# check_rd_vcov ---------------------------------------------------------------
 test_that("check_rd_vcov", {
 
   expect_equal(
@@ -193,7 +195,7 @@ test_that("check_rd_vcov", {
                                     name = 2)),
          center = list(full = structure(c("a", "b"),
                                         ranef_index = c(a = 1, b = 2)),
-                       full = "d"
+                       indep = "d"
          ))
   )
 

@@ -167,7 +167,7 @@ test_that("MCMC is mcmc.list", {
   }
 })
 
-test_that("MCMC samples can be plottet", {
+test_that("MCMC samples can be plotted", {
   for (k in seq_along(models)) {
     expect_silent(traceplot(models[[k]]))
     expect_silent(densplot(models[[k]]))
