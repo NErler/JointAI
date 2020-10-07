@@ -57,6 +57,17 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
     names(object$fixed[outcome])
   }
   res_list <- sapply(vars, function(varname) {
+
+    rdnam <- if (any(object$info_list[[varname]]$rd_vcov == "full")) {
+      nlapply(names(object$info_list[[varname]]$rd_vcov),
+              function(lvl) {
+                paste0("^", c("b", "D", "invD", "RinvD", "KinvD"),
+                  attr(object$info_list[[varname]]$rd_vcov[[lvl]],
+                       "name"),
+                  "_", lvl, "\\b")
+              })
+    }
+
     MCMCsub <- MCMC[, intersect(
       colnames(MCMC),
       c(
@@ -68,7 +79,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
         grep(paste0("_", object$info_list[[varname]]$varname, "_"),
              colnames(MCMC),
              value = TRUE
-        )
+        ),
+        unlist(lapply(unlist(rdnam), grep, colnames(MCMC), value = TRUE))
       )
     ), drop = FALSE]
 
