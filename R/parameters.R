@@ -5,6 +5,8 @@
 #' which a monitor is set.
 #'
 #' @inheritParams sharedParams
+#' @param expand_ranef logical; should all elements of the random effects
+#'                     vectors/matrices be shown separately?
 #' @param ... currently not used
 #'
 #' @examples
@@ -17,7 +19,8 @@
 #'
 #' @export
 #'
-parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
+parameters <- function(object, expand_ranef = FALSE, mess = TRUE, warn = TRUE,
+                       ...) {
 
   if (!inherits(object, "JointAI"))
     errormsg("Use only with 'JointAI' objects.")
@@ -33,6 +36,15 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
   vnam <- expand_params(pattern = "^beta_Bh0",
                         vnam = vnam,
                         n = object$Mlist$df_basehaz)
+
+
+  # expand random effects
+  if (expand_ranef) {
+    vnam <- expand_ranefs(pattern = paste0("^b[[:print:]]*_", object$Mlist$idvar,
+                                           "$", collapse = "|"),
+                          vnam = vnam,
+                          MCMC_names = colnames(object$MCMC[[1]]))
+  }
 
   # expand ordinal intercepts
   gammas <- grep("^gamma_", vnam, value = TRUE)
@@ -63,6 +75,17 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
   add_pars <- as.list(setNames(rep(NA, length(df_names)), df_names))
   add_pars$coef <- vnam[add]
 
+  pat_full <- unlist(
+    lapply(names(object$Mlist$rd_vcov), function(lvl) {
+        lapply(which(names(object$Mlist$rd_vcov[[lvl]]) == "full"), function(k) {
+          list(
+            pattern = paste0("^", c("D", "invD", "RinvD", "KinvD", "b"),
+                             attr(object$Mlist$rd_vcov[[lvl]][[k]], "name"),
+                             "_", lvl),
+            vars = as.character(object$Mlist$rd_vcov[[lvl]][[k]])
+          )
+        })
+    }), recursive = FALSE)
 
   # identify which outcome the remaining parameters belong to by matching the
   # outcome names with the parameter names
@@ -70,18 +93,27 @@ parameters <- function(object, mess = TRUE, warn = TRUE, ...) {
     paste0("_", out, "$|_", out, "_|_", out, "\\[")
   })
 
-  out_match <- regmatches(add_pars$coef,
-                          regexpr(paste0(patterns, collapse = "|"),
-                                  add_pars$coef))
+
+  matches <- regexpr(paste0(patterns, collapse = "|"), add_pars$coef)
+  out_match <- regmatches(add_pars$coef, matches)
 
   if (length(out_match) > 0) {
-    add_pars$outcome <- gsub("^_|_$|\\[$", "", out_match)
+    add_pars$outcome <- rep(NA, length(add_pars$coef))
+    add_pars$outcome[matches > 0] <- gsub("^_|_$|\\[$", "", out_match)
+  }
+
+  for (x in pat_full) {
+    r <- unlist(lapply(x$pattern, grep, add_pars$coef))
+    add_pars$outcome[r] <- list(x$vars)
   }
 
 
+
   params <- if (any(add)) {
-    rbind(coefs[rows, , drop = FALSE],
-          as.data.frame(add_pars))
+    add_df <- as.data.frame(add_pars[-which(names(add_pars) == "outcome")])
+    add_df$outcome <- add_pars$outcome
+
+    rbind(coefs[rows, , drop = FALSE], add_df)
   } else {
     coefs
   }
@@ -104,10 +136,22 @@ expand_params <- function(pattern, vnam, n) {
     pars <- grep(pattern, vnam)
 
     for (k in pars) {
-      vnam <- c(vnam, paste0(vnam[pars], "[", seq_len(n), "]"))
+      vnam <- c(vnam, paste0(vnam[k], "[", seq_len(n), "]"))
     }
     vnam <- vnam[-pars]
   }
   vnam
 }
 
+expand_ranefs <- function(pattern, vnam, MCMC_names) {
+  if (any(grepl(pattern, vnam))) {
+    pos <- grep(pattern, vnam)
+
+    for (k in pos) {
+      vnam <- c(vnam,
+                grep(paste0("^", vnam[k], "\\["), MCMC_names, value = TRUE))
+    }
+    vnam <- vnam[-pos]
+  }
+  vnam
+}
