@@ -49,9 +49,10 @@ write_model <- function(info_list, Mlist, modelfile = "") {
       }), collapse = "\n\n\n"),
 
       if (length(unlist(rd_vcov_full)) > 0) {
-        paste0("\n\n\r", tab(),
-               "# correlated random effects specification --------------------\n",
-               "\r", unlist(rd_vcov_full)
+        paste0("\n\n\n\r", tab(),
+               "# correlated random effects specification ",
+               paste0(rep("-", 40), collapse = ""), "\n",
+               "\r", paste0(unlist(rd_vcov_full), collapse = "\n\n\n")
         )
       },
 
