@@ -13,10 +13,10 @@ jagsmodel_mlogitmm <- function(info) {
 
   ranefpriors <- paste0(
     unlist(
-      lapply(names(info$hc_list$hcvars), function(x) {
-        if (info$rd_vcov[[x]] != "full") {
-          ranef_priors(info$nranef[x], paste0("_", info$varname, "_", x),
-                       rd_vcov = info$rd_vcov)
+      lapply(names(info$hc_list$hcvars), function(lvl) {
+        if (info$rd_vcov[[lvl]] != "full") {
+          ranef_priors(info$nranef[lvl], paste0("_", info$varname, "_", lvl),
+                       rd_vcov = info$rd_vcov[[lvl]])
         }
       })), collapse = "\n")
 
