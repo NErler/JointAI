@@ -557,7 +557,7 @@ write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
   # - rdintercept: list of random intercept linear predictors as strings
   # - rdslopes: list of list of random slope linear predictors as strings
 
-  if (info$rd_vcov != "full") {
+  if (info$rd_vcov[[lvl]] != "full") {
     # write the model part for the random effects distribution
     paste0(
       tab(), "for (", info$index[lvl], " in 1:", info$N[lvl], ") {", "\n",
