@@ -58,15 +58,16 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
   }
   res_list <- sapply(vars, function(varname) {
 
-    rdnam <- if (any(object$info_list[[varname]]$rd_vcov == "full")) {
-      nlapply(names(object$info_list[[varname]]$rd_vcov),
+    rdnam <- nlapply(names(object$info_list[[varname]]$rd_vcov),
               function(lvl) {
-                paste0("^", c("b", "D", "invD", "RinvD", "KinvD"),
-                  attr(object$info_list[[varname]]$rd_vcov[[lvl]],
-                       "name"),
-                  "_", lvl, "\\b")
+                if (object$info_list[[varname]]$rd_vcov[[lvl]] == "full") {
+                  paste0("^", c("b", "D", "invD", "RinvD", "KinvD"),
+                         attr(object$info_list[[varname]]$rd_vcov[[lvl]],
+                              "name"),
+                         "_", lvl, "\\b")
+                }
               })
-    }
+
 
     MCMCsub <- MCMC[, intersect(
       colnames(MCMC),
@@ -149,22 +150,40 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
 
       rd_vcov <- if (!is.null(object$info_list[[varname]]$hc_list)) {
-        Ds <- stats[grep(paste0("^D_", object$info_list[[varname]]$varname, "_",
-                                paste0(names(object$Mlist$group_lvls),
-                                       collapse = "|"),
-                                "\\[[[:digit:]]+,[[:digit:]]+\\]"),
-                         rownames(stats), value = TRUE), , drop = FALSE]
+        Dpat <- nlapply(object$Mlist$idvar, function(lvl) {
+          if (object$info_list[[varname]]$rd_vcov[[lvl]] == "full") {
+            paste0("^D[[:digit:]]*_", lvl, "\\[[[:digit:]]+,[[:digit:]]+\\]")
+          } else {
+            paste0("^D_", object$info_list[[varname]]$varname, "_", lvl,
+                   "\\[[[:digit:]]+,[[:digit:]]+\\]")
+          }
+        })
 
-        if (nrow(Ds) > 0) {
-          Ddiag <- sapply(strsplit(sub("\\]", "",
-                                       sub("^[[:print:]]*\\[", "", rownames(Ds))
-          ), ","),
-          function(i) length(unique(i)) == 1)
+        Ds <- nlapply(names(Dpat), function(lvl) {
+          D <- stats[grep(Dpat[[lvl]], rownames(stats), value = TRUE), ,
+                     drop = FALSE]
 
-          Ds[Ddiag, "tail-prob."] <- NA
-          attr(Ds, "warnings") <- attr(object$info_list[[varname]]$hc_list, "warnings")
-          Ds
-        }
+          if (nrow(D) > 0) {
+            Ddiag <- sapply(strsplit(sub("\\]", "",
+                                         sub("^[[:print:]]*\\[", "",
+                                             rownames(D))
+            ), ","),
+            function(i) length(unique(i)) == 1)
+
+            D[Ddiag, "tail-prob."] <- NA
+            attr(D, "warnings") <- attr(object$info_list[[varname]]$hc_list,
+                                         "warnings")
+            attr(D, "rd_vcov") <- object$info_list[[varname]]$rd_vcov[[lvl]]
+
+            for (k in which(names(object$Mlist$rd_vcov[[lvl]]) == "full")) {
+              if (varname %in% object$Mlist$rd_vcov[[lvl]][[k]]) {
+                attr(D, "ranef_index") <- attr(object$Mlist$rd_vcov[[lvl]][[k]],
+                                               "ranef_index")
+              }
+            }
+          }
+          D
+        })
       }
 
       assoc_type <- if (object$info_list[[varname]]$modeltype %in% "JM") {
@@ -188,7 +207,11 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
                        c(rownames(regcoef),
                          rownames(sigma),
                          attr(intercepts, "rownames_orig"),
-                         rownames(rd_vcov),
+                         if (is.list(rd_vcov)) {
+                           rownames(do.call(rbind, rd_vcov))
+                         } else {
+                           rownames(rd_vcov)
+                         },
                          rownames(wb_shape))
       )
 
@@ -278,13 +301,53 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
       }
 
       if (!is.null(x$res[[k]]$rd_vcov)) {
-        cat("\nPosterior summary of random effects covariance matrix:\n")
-        warnings <- attr(x$res[[k]]$rd_vcov, "warnings")
-        attr(x$res[[k]]$rd_vcov, "warnings") <- NULL
-        print(x$res[[k]]$rd_vcov, digits = digits, na.print = "")
-        if (!is.null(unlist(warnings))) {
-          warnmsg(warnings)
+        cat("\n\nPosterior summary of random effects covariance matrix:\n")
+        for (lvl in names(x$res[[k]]$rd_vcov)) {
+          warnings <- attr(x$res[[k]]$rd_vcov[[lvl]], "warnings")
+          rd_vcov <- attr(x$res[[k]]$rd_vcov[[lvl]], "rd_vcov")
+          ranef_index <- attr(x$res[[k]]$rd_vcov[[lvl]], "ranef_index")
+          attr(x$res[[k]]$rd_vcov[[lvl]], "warnings") <- NULL
+          attr(x$res[[k]]$rd_vcov[[lvl]], "rd_vcov") <- NULL
+          attr(x$res[[k]]$rd_vcov[[lvl]], "ranef_index") <- NULL
+
+          if (length(names(x$res[[k]]$rd_vcov)) > 1) {
+            cat(paste0("\n* For level ", dQuote(lvl), ":", "\n"))
+          }
+
+          w <- if (rd_vcov == "full") {
+            which(names(x$res)[k] == names(ranef_index))
+          }
+
+          print_d <- rd_vcov == "full" &&
+            (w == 1 || if (w > 1) {
+               all(lvapply(x$res[names(ranef_index
+               )[seq_len(w - 1)]], is.null))}
+            )
+
+          if (print_d || rd_vcov != "full") {
+            if (!is.null(ranef_index)) {
+              ranef_index <- sapply(ranef_index, function(nr)
+                eval(parse(text = nr)))
+
+              cat(paste0("\r", tab(), "Indices:"),
+                  paste0(names(ranef_index), ": ",
+                         paste0(ranef_index), collapse = ", "),
+                  "\n"
+              )
+            }
+            print(x$res[[k]]$rd_vcov[[lvl]], digits = digits, na.print = "")
+
+            if (!is.null(unlist(warnings))) {
+              warnmsg(warnings)
+            }
+          } else {
+            w_ref <- min(which(!lvapply(x$res[names(ranef_index
+            )[seq_len(w - 1)]], is.null)))
+            cat(paste0(tab(), "(see model for ",
+                       dQuote(names(ranef_index)[w_ref]), ")"))
+          }
         }
+        cat("\n")
       }
 
       if (!is.null(x$res[[k]]$sigma))  {
