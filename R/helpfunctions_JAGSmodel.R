@@ -309,10 +309,12 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
         paste0("_", info$varname)
       }
 
-      ranef_nrs <- if (is.null(attr(info$rd_vcov[[lvl]], "ranef_index"))) {
-        1:info$nranef
-      } else {
-        eval(parse(text = attr(info$rd_vcov[[lvl]], "ranef_index")))
+      ranef_nrs <- if (!is.null(info$rd_vcov[[lvl]])) {
+        if (is.null(attr(info$rd_vcov[[lvl]], "ranef_index"))) {
+          1:info$nranef[lvl]
+        } else {
+          eval(parse(text = attr(info$rd_vcov[[lvl]], "ranef_index")))
+        }
       }
 
       # generate the random intercept part to enter the linear predictor of
