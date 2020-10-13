@@ -44,30 +44,30 @@ predDF.JointAI <- function(object, vars, length = 100L, ...) {
   if (!inherits(object, "JointAI"))
     stop("Use only with 'JointAI' objects.\n")
 
-  predDF.list(formulas = c(object$fixed,
-                           object$random,
-                           object$auxvars,
-                           if (!is.null(object$Mlist$timevar))
-                             as.formula(paste0("~", object$Mlist$timevar))
+  predDF.list(object = c(object$fixed,
+                         object$random,
+                         object$auxvars,
+                         if (!is.null(object$Mlist$timevar))
+                           as.formula(paste0("~", object$Mlist$timevar))
   ),
-  dat = object$data, vars = vars,
+  data = object$data, vars = vars,
   length = length, idvar = object$Mlist$idvar, ...)
 }
 
 
-# @rdname predDF
-# @export
-predDF.formula <- function(formula, dat, vars, length = 100L, ...) {
-  if (!inherits(formula, "formula"))
+#' @rdname predDF
+#' @export
+predDF.formula <- function(object, data, vars, length = 100L, ...) {
+  if (!inherits(object, "formula"))
     stop("Use only with 'formula' objects.\n")
 
-  predDF(formulas = check_formula_list(formula), dat = dat, vars = vars,
+  predDF(object = check_formula_list(object), data = data, vars = vars,
          length = length, ...)
 }
 
 # @rdname predDF
 # @export
-predDF.list <- function(formulas, dat, vars, length = 100L, idvar = NULL, ...) {
+predDF.list <- function(object, data, vars, length = 100L, idvar = NULL, ...) {
 
   id_vars <- extract_id(vars, warn = FALSE)
   varying <- all_vars(vars)
@@ -75,7 +75,7 @@ predDF.list <- function(formulas, dat, vars, length = 100L, idvar = NULL, ...) {
   if (is.null(idvar))
     idvar <- "id"
 
-  allvars <- all_vars(formulas)
+  allvars <- all_vars(object)
 
   if (any(!varying %in% allvars)) {
     errormsg("%s was not used in the model formula.", varying)
@@ -83,28 +83,28 @@ predDF.list <- function(formulas, dat, vars, length = 100L, idvar = NULL, ...) {
 
   vals <- nlapply(allvars, function(k) {
     if (k %in% varying) {
-      if (is.factor(dat[, k])) {
+      if (is.factor(data[, k])) {
         if (k %in% names(list(...))) {
           list(...)[[k]]
         } else {
-          unique(na.omit(dat[, k]))
+          unique(na.omit(data[, k]))
         }
       } else {
         if (k %in% names(list(...))) {
           list(...)[[k]]
         } else {
-          seq(min(dat[, k], na.rm = TRUE),
-              max(dat[, k], na.rm = TRUE), length = length)
+          seq(min(data[, k], na.rm = TRUE),
+              max(data[, k], na.rm = TRUE), length = length)
         }
       }
     } else {
-      if (is.factor(dat[, k])) {
-        factor(levels(dat[, k])[1L], levels = levels(dat[, k]))
-      } else if (is.logical(dat[, k]) | is.character(dat[, k])) {
-        factor(levels(as.factor(dat[, k]))[1L],
-               levels = levels(as.factor(dat[, k])))
-      } else if (is.numeric(dat[, k])) {
-        median(dat[, k], na.rm = TRUE)
+      if (is.factor(data[, k])) {
+        factor(levels(data[, k])[1L], levels = levels(data[, k]))
+      } else if (is.logical(data[, k]) | is.character(data[, k])) {
+        factor(levels(as.factor(data[, k]))[1L],
+               levels = levels(as.factor(data[, k])))
+      } else if (is.numeric(data[, k])) {
+        median(data[, k], na.rm = TRUE)
       }
     }
   })
