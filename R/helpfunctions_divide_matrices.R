@@ -825,7 +825,9 @@ check_rd_vcov <- function(rd_vcov, nranef) {
 
   idvar <- names(nranef)
 
-  rd_vcov <- expand_rd_vcov_full(rd_vcov, rd_outnam = nlapply(nranef, names))
+  rd_vcov <- expand_rd_vcov_full(rd_vcov,
+                                 rd_outnam = nlapply(nranef, function(r) {
+                                   names(r)[r > 0L]}))
 
   rd_vcov <- check_full_blockdiag(rd_vcov)
 
