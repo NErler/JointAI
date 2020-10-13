@@ -9,6 +9,8 @@
 * random effects: it is now possible to use different grouping levels in
   different sub-models (when providing a list of model formulas)
 * `predDF()` bug fix: the parameter for all methods is now called `object`
+* `add_samples()`: remove unnecessary call to `doFuture::registerDoFuture()`
+
 
 --------------------------------------------------------------------------------
 
