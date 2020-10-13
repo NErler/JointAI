@@ -199,7 +199,10 @@ variables).</p>
     <pre class="usage"><span class='fu'>predDF</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for JointAI</span>
-<span class='fu'>predDF</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>vars</span>, length <span class='op'>=</span> <span class='fl'>100L</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>predDF</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>vars</span>, length <span class='op'>=</span> <span class='fl'>100L</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for formula</span>
+<span class='fu'>predDF</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>data</span>, <span class='va'>vars</span>, length <span class='op'>=</span> <span class='fl'>100L</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -221,6 +224,11 @@ variables given in <code>vars</code></p></td>
       <th>length</th>
       <td><p>number of values used in the sequence when <code>vars</code> is
 continuous</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>a <code>data.frame</code> containing the original data
+(more details below)</p></td>
     </tr>
     </table>
 
