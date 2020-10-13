@@ -326,12 +326,12 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
 
           if (print_d || rd_vcov != "full") {
             if (!is.null(ranef_index)) {
-              ranef_index <- sapply(ranef_index, function(nr)
+              ranef_index <- lapply(ranef_index, function(nr)
                 eval(parse(text = nr)))
 
               cat(paste0("\r", tab(), "Indices:"),
                   paste0(names(ranef_index), ": ",
-                         paste0(ranef_index), collapse = ", "),
+                         paste0(ranef_index), collapse = "; "),
                   "\n"
               )
             }
