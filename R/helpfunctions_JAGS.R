@@ -56,7 +56,10 @@ run_jags <- function(i, data_list, modelfile, n_adapt, n_iter, var_names,
 
 
 run_samples <- function(adapt, n_iter, var_names, thin) {
+  sink(tempfile())
   adapt$recompile()
+  sink()
+
   mcmc <- rjags::coda.samples(adapt,
     n.iter = n_iter,
     variable.names = var_names,
