@@ -87,7 +87,6 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
 
   t0 <- Sys.time()
   if (future_info$parallel) {
-    doFuture::registerDoFuture()
     if (mess)
       msg("Parallel sampling with %s workers started (%s).",
           eval(future_info$workers), Sys.time())
