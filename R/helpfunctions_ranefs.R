@@ -148,6 +148,7 @@ get_hc_list <- function(rdfmla, Mlist) {
       )
     }, simplify = FALSE),
     intercept = attr(terms(rdfmla), 'intercept'),
+    Znam = Znam,
     incomplete = lvapply(Mlist$data[, all_vars(rdfmla), drop = FALSE],
                          function(x) any(is.na(x)))
   )
@@ -244,8 +245,9 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_list, parelmts, lp) {
            rd_slope_coefs = rd_slope_coefs,
            rd_slope_interact_coefs = rd_slope_interact_coefs
       ),
-      'rd_intercept' = "(Intercept)" %in% names(hc_list[[k]]),
-      "incomplete" = attr(hc_list[[k]], "incomplete")
+      rd_intercept = "(Intercept)" %in% names(hc_list[[k]]),
+      incomplete = attr(hc_list[[k]], "incomplete"),
+      Znam = attr(hc_list[[k]], "Znam")
     )
   }, simplify = FALSE)
 
