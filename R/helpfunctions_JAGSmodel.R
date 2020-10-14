@@ -313,7 +313,8 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
         if (is.null(attr(info$rd_vcov[[lvl]], "ranef_index"))) {
           1:info$nranef[lvl]
         } else {
-          eval(parse(text = attr(info$rd_vcov[[lvl]], "ranef_index")))
+          eval(parse(text = attr(info$rd_vcov[[lvl]],
+                                 "ranef_index")[info$varname]))
         }
       }
 
