@@ -188,11 +188,9 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
     if (length(w) > 0L) {
       type <- names(w)
 
-      attr(type, "ranef_index") <- attr(x[[w]], "ranef_index")[k]
+      attr(type, "ranef_index") <- attr(x[[w]], "ranef_index")
       attr(type, "name") <- attr(x[[w]], "name")
       type
-    } else {
-      "blockdiag"
     }
   })
 
