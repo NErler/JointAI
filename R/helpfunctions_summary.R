@@ -50,63 +50,121 @@ prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL,
 }
 
 
+get_D_names <- function(params, varname, lvls) {
+  nams <- nlapply(lvls, function(lvl) {
+    params$coef[
+      lvapply(params$outcome, function(x) varname %in% x) &
+        grepl(paste0("^D[[:digit:]]*_[", varname, "_]*", lvl, "\\["),
+              params$coef)
+    ]
+  })
+
+  Filter(length, nams)
+}
+
 
 # used in print.JointAI() (2020-06-10)
-get_Dmat <- function(object, varname) {
+get_Dmat <- function(object, varname, lvls = "all") {
   # Return the posterior mean of the random effects variance matrices in
   # matrix form (one matrix per grouping level)
   # - object: object of class JointAI
   # - varname: name of the outcome of the sub-model
+  # - lvls: vector of the levels for which the D matrix should be returned
+
+  if (lvls == "all") {
+    lvls <- object$Mlist$idvar
+  }
 
     MCMC <- prep_MCMC(object, start = NULL, end = NULL, thin = NULL,
                       subset = NULL, exclude_chains = NULL, warn = TRUE,
                       mess = TRUE)
 
+    Ds <- get_D_names(parameters(object), varname = varname, lvls = lvls)
 
-    pat <- sapply(names(object$Mlist$group_lvls), function(lvl)
-      paste0("^D_", varname, "_", lvl))
-
-    # find the right column names in the MCMC sample matrix
-    Ds <- sapply(pat, function(p)
-      grep(paste0(p, "\\[[[:digit:]]+,[[:digit:]]+\\]"),
-           colnames(MCMC), value = TRUE),
-      simplify = FALSE)
-
-    Dpos <- mapply(function(pat, Ds) {
-      t(sapply(strsplit(gsub(paste0(pat, "|\\[|\\]"), "", Ds), ","),
+    Dpos <- lapply(Ds, function(d) {
+      t(sapply(strsplit(gsub("[[:print:]]+\\[|\\]", "", d), ","),
                as.numeric))
-    }, pat = pat, Ds = Ds)
-
-    contr_list <- lapply(object$Mlist$refs, attr, "contr_matrix")
-
-    Dmat <- lapply(remove_grouping(object$random[[varname]]), function(r) {
-      term <- terms(r)
-
-      dimnam <- colnames(
-        model.matrix(r, object$data,
-                     contrasts.arg = contr_list[intersect(
-                       names(contr_list),
-                       sapply(attr(term, "variables")[-1], deparse,
-                              width.cutoff = 500)
-                     )]
-        ))
-
-      matrix(nrow = length(dimnam), ncol = length(dimnam),
-             dimnames = list(dimnam, dimnam))
     })
 
-    for (i in names(Dmat)) {
-      for (k in seq_along(Ds[[i]])) {
-        Dmat[[i]][Dpos[[i]][k, 1], Dpos[[i]][k, 2]] <- mean(MCMC[, Ds[[i]][k]])
-      }
-      Dmat[[i]][is.na(Dmat[[i]])] <- t(Dmat[[i]])[is.na(Dmat[[i]])]
-    }
+    Dmat <- nlapply(names(Dpos), function(lvl) {
+      nam <- get_rdvcov_names(object, varname, lvl)
 
+      m <- matrix(nrow = max(Dpos[[lvl]][, 1]),
+                  ncol = max(Dpos[[lvl]][, 2]),
+                  dimnames = list(nam$nam, nam$nam))
+      structure(m,
+                class = "Dmat",
+                structure = nam
+      )
+    })
+
+
+    for (lvl in names(Dmat)) {
+      for (k in seq_along(Ds[[lvl]])) {
+        Dmat[[lvl]][Dpos[[lvl]][k, 1],
+                    Dpos[[lvl]][k, 2]] <- mean(MCMC[, Ds[[lvl]][k]])
+      }
+      Dmat[[lvl]][is.na(Dmat[[lvl]])] <- t(Dmat[[lvl]])[is.na(Dmat[[lvl]])]
+    }
 
   Dmat
 }
 
 
+#' @rdname summary.JointAI
+#' @export
+print.Dmat <- function(x, digits = getOption("digits"),
+                       scientific = getOption("scipen"), ...) {
+
+  r <- rbind(c(rep("", 2), attr(x, "structure")$variable),
+             c(rep("", 2), colnames(x)),
+             cbind(attr(x, "structure")$variable,
+                   rownames(x),
+                   unname(format(x, digits = digits,
+                                 scientific = scientific, ...))
+             )
+  )
+
+  cat(format_Dmat(r), sep = c(rep(" ",  ncol(r) - 1), "\n"))
+}
+
+
+format_Dmat <- function(r) {
+  spaces <- sapply(max(nchar(r)) - nchar(r), function(k) {
+    if (k > 0L) {
+      paste0(rep(" ", k), collapse = "")
+    } else {
+      ""
+    }
+  })
+  matrix(nrow = nrow(r), ncol = ncol(r), data = paste0(spaces, r)  )
+
+}
+
+get_rdvcov_names <- function(object, varname, lvl) {
+
+  pos <- sapply(attr(object$info_list[[varname]]$rd_vcov[[lvl]], "ranef_index"),
+                function(nr) eval(parse(text = nr)))
+
+  if (length(pos) > 0L) {
+    nam <- nlapply(names(pos), function(v) {
+      attr(object$info_list[[v]]$hc_list$hcvars[[lvl]], "Znam")
+    })
+    melt_list(
+      Map(function(pos, nam) {
+        cbind(pos, nam)
+      }, pos = pos, nam = nam), varname = "variable"
+    )
+
+  } else {
+    nam <- attr(object$info_list[[varname]]$hc_list$hcvars[[lvl]], "Znam")
+    if (!is.null(nam)) {
+      data.frame(pos = seq_along(nam),
+                 nam = nam,
+                 variable = varname)
+    }
+  }
+}
 
 # used in print.summary.JointAI(), print.JointAI(), list_models() (2020-06-18)
 print_type <- function(type, family = NULL, upper = FALSE) {
