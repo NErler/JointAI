@@ -8,8 +8,8 @@
   before `pos_*` was excluded for only one of them
 * random effects: it is now possible to use different grouping levels in
   different sub-models (when providing a list of model formulas)
-* `add_samples()`: remove unnecesary call to `doFuture::registerDoFuture()`
-
+* `add_samples()`: remove unnecessary call to `doFuture::registerDoFuture()`
+* `predDF()` bug fix: the parameter for all methods is now called `object`
 
 --------------------------------------------------------------------------------
 
