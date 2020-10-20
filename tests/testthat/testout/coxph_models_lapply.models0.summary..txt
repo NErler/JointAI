@@ -141,8 +141,8 @@ Bayesian proportional hazards model fitted with JointAI
 Call:
 coxph_imp(formula = Surv(futime, status != "censored") ~ copper + 
     sex + age + abs(age - copper) + log(trig), data = PBC2, n.adapt = 2, 
-    n.iter = 10, trunc = list(trig = c(1e-04, NA)), seed = 2020, 
-    warn = FALSE, mess = FALSE)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE, trunc = list(trig = c(1e-04, 
+        NA)))
 
 
 Number of events: 169 
@@ -180,8 +180,8 @@ Bayesian proportional hazards model fitted with JointAI
 Call:
 coxph_imp(formula = Surv(futime, status != "censored") ~ copper + 
     sex + age + abs(age - copper) + log(trig) + (1 | center), 
-    data = PBC2, n.adapt = 2, n.iter = 10, trunc = list(trig = c(1e-04, 
-        NA)), seed = 2020, warn = FALSE, mess = FALSE)
+    data = PBC2, n.adapt = 2, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE, trunc = list(trig = c(1e-04, NA)))
 
 
 Number of events: 169 

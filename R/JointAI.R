@@ -253,6 +253,11 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #'              \strong{rjags} during compilation as well as the progress bar
 #'              for the adaptive phase will be suppressed,
 #'              (see \code{\link[rjags]{jags.model}})
+#' @param progress.bar character string specifying the type of
+#'                 progress bar. Possible values are "text" (default), "gui",
+#'                 and "none" (see \code{\link[rjags]{update}}). Note: when
+#'                 sampling is performed in parallel it is not possible to
+#'                 display a progress bar.
 #' @param thin thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
 #'             For example, \code{thin = 1} (default) will keep the MCMC samples
 #'             from all iterations; \code{thin = 5} would only keep every 5th
@@ -270,8 +275,6 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #' @param xlab,ylab labels for the x- and y-axis
 #' @param idvars name of the column that specifies the multi-level grouping
 #'               structure
-#' @param ridge logical; should the parameters of the main model be penalized
-#'              using ridge regression? Default is \code{FALSE}
 #' @param seed optional; seed value (for reproducibility)
 #' @param ppc logical: should monitors for posterior predictive checks be
 #'                     set? (not yet used)

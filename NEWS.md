@@ -1,6 +1,15 @@
 
 # JointAI (development version)
 
+## New features
+* `custom`: new argument in the main analysis functions that allows the user
+  to replace the JAGS syntax for sub-models with custom syntax. The argument
+  expects a named list where the names are the names of the variables 
+  for which the custom model will be used.
+* `append_data_list`: new argument in the main analysis functions that allows
+  the user to add elements to the list of data that is passed to JAGS. This 
+  may be necessary for custom sub-models.
+
 ## Minor improvements and bug fixes
 * `data_list`: omit data matrix `M_*` from `data_list` if `ncol == 0`
 * `data_list`: syntax to checking which `pos_*` to include can handle the case
@@ -10,6 +19,7 @@
   different sub-models (when providing a list of model formulas)
 * `add_samples()`: remove unnecessary call to `doFuture::registerDoFuture()`
 * `predDF()` bug fix: the parameter for all methods is now called `object`
+
 
 --------------------------------------------------------------------------------
 

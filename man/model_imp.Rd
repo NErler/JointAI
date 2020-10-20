@@ -23,157 +23,105 @@
 \usage{
 lm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  refcats = NULL, models = NULL, no_model = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, warn = TRUE, mess = TRUE,
+  ...)
 
 glm_imp(formula, family, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  refcats = NULL, models = NULL, no_model = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, warn = TRUE, mess = TRUE,
+  ...)
 
 clm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
   refcats = NULL, nonprop = NULL, rev = NULL, models = NULL,
-  no_model = NULL, trunc = NULL, shrinkage = FALSE, ppc = TRUE,
-  seed = NULL, inits = NULL, scale_vars = NULL, hyperpars = NULL,
-  modelname = NULL, modeldir = NULL, keep_model = FALSE,
-  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
-  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
+  no_model = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, warn = TRUE, mess = TRUE, ...)
 
 lognorm_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  refcats = NULL, models = NULL, no_model = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, warn = TRUE, mess = TRUE,
+  ...)
 
 betareg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  refcats = NULL, models = NULL, no_model = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, warn = TRUE, mess = TRUE,
+  ...)
 
 mlogit_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  refcats = NULL, models = NULL, no_model = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, warn = TRUE, mess = TRUE,
+  ...)
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  refcats = NULL, models = NULL, no_model = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, warn = TRUE, mess = TRUE,
+  ...)
 
 lmer_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  refcats = NULL, models = NULL, no_model = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, warn = TRUE, mess = TRUE,
+  ...)
 
 glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
   auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
-  trunc = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
-  inits = NULL, scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  warn = TRUE, mess = TRUE, ...)
 
 glmer_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
   auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
-  trunc = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
-  inits = NULL, scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  warn = TRUE, mess = TRUE, ...)
 
 betamm_imp(fixed, random, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  refcats = NULL, models = NULL, no_model = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, warn = TRUE, mess = TRUE,
+  ...)
 
 lognormmm_imp(fixed, random, data, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
   auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
-  trunc = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
-  inits = NULL, scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  warn = TRUE, mess = TRUE, ...)
 
 clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
   refcats = NULL, nonprop = NULL, rev = NULL, models = NULL,
-  no_model = NULL, trunc = NULL, shrinkage = FALSE, ppc = TRUE,
-  seed = NULL, inits = NULL, scale_vars = NULL, hyperpars = NULL,
-  modelname = NULL, modeldir = NULL, keep_model = FALSE,
-  overwrite = NULL, quiet = TRUE, progress.bar = "text", warn = TRUE,
-  mess = TRUE, keep_scaled_mcmc = FALSE, ...)
+  no_model = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, warn = TRUE, mess = TRUE, ...)
 
 mlogitmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
   auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
-  trunc = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
-  inits = NULL, scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  warn = TRUE, mess = TRUE, ...)
 
 survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, trunc = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  refcats = NULL, models = NULL, no_model = NULL, shrinkage = FALSE,
+  ppc = TRUE, seed = NULL, inits = NULL, warn = TRUE, mess = TRUE,
+  ...)
 
 coxph_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
   auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
-  trunc = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
-  inits = NULL, scale_vars = NULL, hyperpars = NULL, modelname = NULL,
-  modeldir = NULL, keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
+  warn = TRUE, mess = TRUE, ...)
 
 JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
   auxvars = NULL, timevar = NULL, refcats = NULL, models = NULL,
-  no_model = NULL, assoc_type = NULL, trunc = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, scale_vars = NULL,
-  hyperpars = NULL, modelname = NULL, modeldir = NULL,
-  keep_model = FALSE, overwrite = NULL, quiet = TRUE,
-  progress.bar = "text", warn = TRUE, mess = TRUE,
-  keep_scaled_mcmc = FALSE, ...)
+  no_model = NULL, assoc_type = NULL, shrinkage = FALSE, ppc = TRUE,
+  seed = NULL, inits = NULL, warn = TRUE, mess = TRUE, ...)
 }
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})
@@ -232,10 +180,6 @@ Note that this is only possible for completely observed
 variables and implies the assumptions of independence between
 the excluded variable and the incomplete variables.}
 
-\item{trunc}{optional; named list specifying limits of truncation for the
-distribution of the named incomplete variables (see the vignette
-\href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support}{ModelSpecification})}
-
 \item{shrinkage}{optional; either a character string naming the shrinkage
 method to be used for regression coefficients in all models
 or a named vector specifying the type of shrinkage to be
@@ -253,60 +197,62 @@ created by \strong{JointAI}, initial values are then generated
 by JAGS.
 It is an error to supply an initial value for an observed node.}
 
-\item{scale_vars}{optional; named vector of (continuous) variables that will
-be centred and scaled (such that mean = 0 and sd = 1)
-when they enter a linear predictor to improve
-convergence of the MCMC sampling. Default is that all
-numeric variables and integer variables with >20 different
-values will be scaled.
-If set to \code{FALSE} no scaling will be done.}
-
-\item{hyperpars}{optional; list of hyper-parameters, as obtained by
-\code{\link{default_hyperpars}()}}
-
-\item{modelname}{optional; character string specifying the name of the model
-file (including the ending, either .R or .txt).
-If unspecified a random name will be generated.}
-
-\item{modeldir}{optional; directory containing the model file or directory
-in which the model file should be written. If unspecified a
-temporary directory will be created.}
-
-\item{keep_model}{logical; whether the created JAGS model file should be
-saved or removed from (\code{FALSE}; default) when the
-sampling has finished.}
-
-\item{overwrite}{logical; whether an existing model file with the specified
-\code{<modeldir>/<modelname>} should be overwritten.
-If set to \code{FALSE} and a model already exists, that
-model will be used.
-If unspecified (\code{NULL}) and a file exists, the user is
-asked for input on how to proceed.}
-
-\item{quiet}{logical; if \code{TRUE} then messages generated by
-\strong{rjags} during compilation as well as the progress bar
-for the adaptive phase will be suppressed,
-(see \code{\link[rjags]{jags.model}})}
-
-\item{progress.bar}{character string specifying the type of progress bar.
-Possible values are "text", "gui", and "none" (see
-\code{\link[rjags]{update}}).
-Note: when sampling is performed in parallel it is
-currently not possible to display a progress bar.}
-
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}.}
 
 \item{mess}{logical; should messages be given? Default is
 \code{TRUE}.}
 
-\item{keep_scaled_mcmc}{should the "original" MCMC sample
-(i.e., the scaled version returned by
-\code{coda.samples()}) be kept?
-(The MCMC sample that is re-scaled to the scale of
-the data is always kept.)}
-
-\item{...}{additional, optional arguments (not used)}
+\item{...}{additional, optional arguments
+\describe{
+\item{\code{trunc}}{named list specifying limits of truncation for the
+distribution of the named incomplete variables (see the
+vignette
+\href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support}{ModelSpecification})}
+\item{\code{hyperpars}}{list of hyper-parameters, as obtained by
+\code{\link{default_hyperpars}()}}
+\item{\code{scale_vars}}{named vector of (continuous) variables that
+will be centred and scaled (such that mean = 0 and sd = 1)
+when they enter a linear predictor to improve
+convergence of the MCMC sampling. Default is that all
+numeric variables and integer variables with >20 different
+values will be scaled.
+If set to \code{FALSE} no scaling will be done.}
+\item{\code{custom}}{named list of JAGS model chunks (character strings)
+that replace the model for the given variable.}
+\item{\code{append_data_list}}{list that will be appended to the list
+containing the data that is passed to \strong{rjags}
+(\code{data_list}). This may be necessary if additional data /
+variables are needed for custom (covariate) models.}
+\item{\code{progress.bar}}{character string specifying the type of
+progress bar. Possible values are "text" (default), "gui",
+and "none" (see \code{\link[rjags]{update}}). Note: when
+sampling is performed in parallel it is not possible to
+display a progress bar.}
+\item{\code{quiet}}{logical; if \code{TRUE} then messages generated by
+\strong{rjags} during compilation as well as the progress bar
+for the adaptive phase will be suppressed,
+(see \code{\link[rjags]{jags.model}})}
+\item{\code{keep_scaled_mcmc}}{should the "original" MCMC sample (i.e.,
+the scaled version returned by \code{coda.samples()}) be
+kept? (The MCMC sample that is re-scaled to the scale of the
+data is always kept.)}
+\item{\code{modelname}}{character string specifying the name of the
+model file (including the ending, either .R or .txt). If
+unspecified a random name will be generated.}
+\item{\code{modeldir}}{directory containing the model file or directory
+in which the model file should be written. If unspecified a
+temporary directory will be created.}
+\item{\code{overwrite}}{logical; whether an existing model file with
+the specified \code{<modeldir>/<modelname>} should be
+overwritten. If set to \code{FALSE} and a model already
+exists, that model will be used. If unspecified (\code{NULL})
+and a file exists, the user is asked for input on how to
+proceed.}
+\item{\code{keep_model}}{logical; whether the created JAGS model file
+should be saved or removed from (\code{FALSE}; default) when
+the sampling has finished.}
+}}
 
 \item{family}{only for \code{glm_imp} and \code{glmm_imp}/\code{glmer_imp}:
 a description of the distribution and link function to
@@ -322,8 +268,8 @@ regular model formula, and the names of the list should be
 the names of the ordinal response variables.}
 
 \item{rev}{optional character vector; vector of ordinal outcome variable
-names for which the odds should be reversed, i.e., logit(y <= k) instead
-of logit(y > k).}
+names for which the odds should be reversed, i.e.,
+\eqn{logit(y\le k)} instead of \eqn{logit(y > k)}.}
 
 \item{fixed}{a two sided formula describing the fixed-effects part of the
 model (see \code{\link[stats]{formula}})}
@@ -660,6 +606,50 @@ To specify non-proportional effects on \code{O2}, a named list has to be provide
 
 The variables for which a non-proportional effect is assumed also have to be
 part of the regular model formula.
+}
+
+\section{Custom model parts}{
+
+Via the argument \code{custom} it is possible to provide custom sub-models that
+replace the sub-models that are automatically generated by \strong{JointAI}.
+
+Using this feature it is, for instance, possible to use the value of
+a repeatedly measured variable at a specific time point as covariate in
+another model. An example would be the use of "baseline" cholesterol
+(\code{chol} at \code{day = 0}) as covariate in a survival model.
+
+First, the variable \code{chol0} is added to the \code{PBC} data.
+For most patients the value of cholesterol at baseline is observed, but not
+for all. It is important that the data has a row with \code{day = 0} for each
+patient.\if{html}{\out{<div class="r">}}\preformatted{PBC <- merge(PBC,
+             subset(PBC, day == 0, select = c("id", "chol")),
+             by = "id", suffixes = c("", "0"))
+}\if{html}{\out{</div>}}
+
+Next, the custom piece of JAGS model syntax needs to be specified.
+We loop here only over the patients for which the baseline cholesterol
+is missing.\if{html}{\out{<div class="r">}}\preformatted{calc_chol0 <- "
+for (ii in 1:28) \{
+  M_id[row_chol0_id[ii], 3] <- M_lvlone[row_chol0_lvlone[ii], 1]
+  \}"
+}\if{html}{\out{</div>}}
+
+To be able to run the model with the custom imputation "model" for baseline
+cholesterol we need to provide the numbers of the rows in the data matrices
+that contain the missing values of baseline cholesterol and the rows that
+contain the imputed cholesterol at \code{day = 0}:\if{html}{\out{<div class="r">}}\preformatted{row_chol0_lvlone <- which(PBC$day == 0 & is.na(PBC$chol0))
+row_chol0_id <- match(PBC$id, unique(PBC$id))[row_chol0_lvlone]
+}\if{html}{\out{</div>}}
+
+Then we pass both the custom sub-model and the additional data to the
+analysis function \code{coxph_imp()}. Note that we explicitly need to specify
+the model for \code{chol}.\if{html}{\out{<div class="r">}}\preformatted{coxph_imp(list(Surv(futime, status != "censored") ~ age + sex + chol0,
+               chol ~ age + sex + day + (day | id)),
+          no_model = "day", data = PBC,
+          append_data_list = list(row_chol0_lvlone = row_chol0_lvlone,
+                                  row_chol0_id = row_chol0_id),
+          custom = list(chol0 = calc_chol0))
+}\if{html}{\out{</div>}}
 }
 
 \section{Note}{

@@ -73,147 +73,153 @@ list_models <- function(object, predvars = TRUE, regcoef = TRUE,
     errormsg("Use only with 'JointAI' objects.\n")
 
   for (i in object$info_list) {
-    cat(print_type(i$modeltype, i$family, upper = TRUE), "for",
-        dQuote(i$varname), '\n')
-    if (!is.null(i$family))
-      cat(tab(), "family:", i$family, "\n")
-    if (!is.null(i$link))
-      cat(tab(), "link:", i$link, "\n")
+    if (!is.null(i$custom)) {
+      cat("Custom model for", dQuote(i$varname), '\n')
+      cat(i$custom, "\n")
+    } else {
 
-    # * parametrization --------------------------------------------------------
-    if (i$family %in% c('Gamma', 'beta') && !is.null(i$family)) {
-      cat("* Parametrization:\n")
+      cat(print_type(i$modeltype, i$family, upper = TRUE), "for",
+          dQuote(i$varname), '\n')
+      if (!is.null(i$family))
+        cat(tab(), "family:", i$family, "\n")
+      if (!is.null(i$link))
+        cat(tab(), "link:", i$link, "\n")
 
-      if (i$family %in% 'beta')
-        cat(paste0(tab(), "- shape 1: shape1_", i$varname,
-                   " = mu_", i$varname, " * tau_", i$varname, "\n",
-                   tab(), "- shape 2: shape2_", i$varname,
-                   " = (1 - mu_", i$varname, ") * tau_", i$varname, "\n")
-        )
-      if (i$family %in% 'Gamma')
-        cat(paste0(
-          tab(), "- shape: shape_", i$varname,
-          " = mu_", i$varname, "^2 * tau_", i$varname, "\n",
-          tab(), "- rate: rate_", i$varname,
-          " = mu_", i$varname, " * tau_", i$varname, "\n")
-        )
-    }
+      # * parametrization --------------------------------------------------------
+      if (i$family %in% c('Gamma', 'beta') && !is.null(i$family)) {
+        cat("* Parametrization:\n")
 
-    # refcat -------------------------------------------------------------------
-    if (refcat & i$varname %in% names(object$Mlist$refs)) {
-      print_refcat(object$Mlist$refs[[i$varname]])
-    }
+        if (i$family %in% 'beta')
+          cat(paste0(tab(), "- shape 1: shape1_", i$varname,
+                     " = mu_", i$varname, " * tau_", i$varname, "\n",
+                     tab(), "- shape 2: shape2_", i$varname,
+                     " = (1 - mu_", i$varname, ") * tau_", i$varname, "\n")
+          )
+        if (i$family %in% 'Gamma')
+          cat(paste0(
+            tab(), "- shape: shape_", i$varname,
+            " = mu_", i$varname, "^2 * tau_", i$varname, "\n",
+            tab(), "- rate: rate_", i$varname,
+            " = mu_", i$varname, " * tau_", i$varname, "\n")
+          )
+      }
 
-    # * predvars ---------------------------------------------------------------
-    if (predvars) {
-      cat("* Predictor variables:\n")
-      if (length(unlist(i$lp)) > 0)
-        cat(strwrap(paste0(names(unlist(unname(i$lp))), collapse = ", "),
-                    prefix = "\n", initial = '', exdent = 2, indent = 2),
-            "\n")
-      else
-        cat(' (no predictor variables)', '\n')
-    }
+      # refcat -------------------------------------------------------------------
+      if (refcat & i$varname %in% names(object$Mlist$refs)) {
+        print_refcat(object$Mlist$refs[[i$varname]])
+      }
 
-    # * regcoef ---------------------------------------------------------------
-    if (regcoef & any(!sapply(i$parelmts, is.null))) {
-      cat("* Regression coefficients:\n")
-      if (i$modeltype %in% c('mlogit', 'mlogitmm')) {
-        cat(
-          paste0(tab(), attr(object$Mlist$refs[[i$varname]], "dummies"), ": ",
-                 i$parname, "[",
-                 sapply(unlist(i$parelmts, recursive = FALSE), function(x) {
-                   print_seq(min(x), max(x))
-                 }),
-                 "]", collapse = "\n"),
-          if (priors) {
-            paste_regcoef_prior(object$data_list, i$modeltype, i$family)
-          }, "\n")
-      } else {
-        cat(paste0(tab(),
-                   i$parname, "[", print_seq(min(unlist(i$parelmts)),
-                                             max(unlist(i$parelmts))),
-                   "]"),
+      # * predvars ---------------------------------------------------------------
+      if (predvars) {
+        cat("* Predictor variables:\n")
+        if (length(unlist(i$lp)) > 0)
+          cat(strwrap(paste0(names(unlist(unname(i$lp))), collapse = ", "),
+                      prefix = "\n", initial = '', exdent = 2, indent = 2),
+              "\n")
+        else
+          cat(' (no predictor variables)', '\n')
+      }
+
+      # * regcoef ---------------------------------------------------------------
+      if (regcoef & any(!sapply(i$parelmts, is.null))) {
+        cat("* Regression coefficients:\n")
+        if (i$modeltype %in% c('mlogit', 'mlogitmm')) {
+          cat(
+            paste0(tab(), attr(object$Mlist$refs[[i$varname]], "dummies"), ": ",
+                   i$parname, "[",
+                   sapply(unlist(i$parelmts, recursive = FALSE), function(x) {
+                     print_seq(min(x), max(x))
+                   }),
+                   "]", collapse = "\n"),
             if (priors) {
               paste_regcoef_prior(object$data_list, i$modeltype, i$family)
             }, "\n")
-      }
-    }
-
-    # * opar -------------------------------------------------------------------
-    if (otherpars) {
-      if (i$family %in% c('gaussian', 'lognorm', 'Gamma') &&
-          !is.null(i$family)) {
-        cat("* Precision of ", dQuote(i$varname), ":\n")
-        cat(paste0(tab(), "tau_", i$varname, " ",
-
-                   if (priors) {
-                     paste0("(Gamma prior with shape parameter ",
-                            object$data_list[[paste0("shape_tau_",
-                                                     get_priortype(i$modeltype,
-                                                                   i$family))]],
-                            " and rate parameter ",
-                            object$data_list[[paste0("rate_tau_",
-                                                     get_priortype(i$modeltype,
-                                                                   i$family))]],
-                            ")")
-                   }, "\n"))
-      }
-      if (i$modeltype %in% c('clm', 'clmm')) {
-        cat(paste0("* Intercepts:\n",
-                   tab(), "- ", levels(object$Mlist$refs[[i$varname]])[1],
-                   ": gamma_", i$varname,
-                   "[1] ",
-                   if (priors) {
-                     paste0("(normal prior with mean ",
-                            object$data_list$mu_delta_ordinal,
-                            " and precision ",
-                            object$data_list$tau_delta_ordinal, ")")
-                   }, "\n"))
-        for (j in 2:length(attr(object$Mlist$refs[[i$varname]], "dummies"))) {
-          cat(paste0(tab(), "- ", levels(object$Mlist$refs[[i$varname]])[j],
-                     ": gamma_", i$varname, "[", j, "] = gamma_",
-                     i$varname, "[", j - 1, "] + exp(delta_",
-                     i$varname, "[", j - 1, "])\n"))
-        }
-        cat(paste0("* Increments:\n",
-                   tab(), "delta_", i$varname,
-                   "[",print_seq(1,
-                                 length(
-                                   levels(object$Mlist$refs[[i$varname]])) - 2),
-                   "] ",
-                   if (priors) {
-                     paste0("(normal prior(s) with mean ",
-                            object$data_list$mu_delta_ordinal,
-                            " and precision ",
-                            object$data_list$tau_delta_ordinal, ")")
-                   }, "\n"))
-      }
-      if (i$modeltype %in% c('survreg')) {
-        cat(paste0('* Shape parameter:\n',
-                   tab(), 'shape_', i$varname,
-                   if (priors) {
-                     ' (exponential prior with rate 0.01)'
-                   }, "\n"))
-      }
-      if (i$modeltype %in% c('coxph', 'JM')) {
-        cat(paste0('* Regression coefficients of the baseline hazard:\n',
-                   tab(), 'beta_Bh0_', i$varname, "[",
-                   print_seq(1, i$df_basehaz),
-                   "]",
-                   if (priors) {
-                     paste0(" (normal priors with mean ", object$data_list$mu_reg_surv,
-                            " and precision ", object$data_list$tau_reg_surv, ")")
-                   }, "\n"))
-        if (i$modeltype %in% 'JM') {
-          cat(paste0("* association types:\n",
-                     paste0(tab(), "- ", names(i$assoc_type), ": ",
-                            i$assoc_type, collapse = "\n")
-          ))
+        } else {
+          cat(paste0(tab(),
+                     i$parname, "[", print_seq(min(unlist(i$parelmts)),
+                                               max(unlist(i$parelmts))),
+                     "]"),
+              if (priors) {
+                paste_regcoef_prior(object$data_list, i$modeltype, i$family)
+              }, "\n")
         }
       }
+
+      # * opar -------------------------------------------------------------------
+      if (otherpars) {
+        if (i$family %in% c('gaussian', 'lognorm', 'Gamma') &&
+            !is.null(i$family)) {
+          cat("* Precision of ", dQuote(i$varname), ":\n")
+          cat(paste0(tab(), "tau_", i$varname, " ",
+
+                     if (priors) {
+                       paste0("(Gamma prior with shape parameter ",
+                              object$data_list[[paste0("shape_tau_",
+                                                       get_priortype(i$modeltype,
+                                                                     i$family))]],
+                              " and rate parameter ",
+                              object$data_list[[paste0("rate_tau_",
+                                                       get_priortype(i$modeltype,
+                                                                     i$family))]],
+                              ")")
+                     }, "\n"))
+        }
+        if (i$modeltype %in% c('clm', 'clmm')) {
+          cat(paste0("* Intercepts:\n",
+                     tab(), "- ", levels(object$Mlist$refs[[i$varname]])[1],
+                     ": gamma_", i$varname,
+                     "[1] ",
+                     if (priors) {
+                       paste0("(normal prior with mean ",
+                              object$data_list$mu_delta_ordinal,
+                              " and precision ",
+                              object$data_list$tau_delta_ordinal, ")")
+                     }, "\n"))
+          for (j in 2:length(attr(object$Mlist$refs[[i$varname]], "dummies"))) {
+            cat(paste0(tab(), "- ", levels(object$Mlist$refs[[i$varname]])[j],
+                       ": gamma_", i$varname, "[", j, "] = gamma_",
+                       i$varname, "[", j - 1, "] + exp(delta_",
+                       i$varname, "[", j - 1, "])\n"))
+          }
+          cat(paste0("* Increments:\n",
+                     tab(), "delta_", i$varname,
+                     "[",print_seq(1,
+                                   length(
+                                     levels(object$Mlist$refs[[i$varname]])) - 2),
+                     "] ",
+                     if (priors) {
+                       paste0("(normal prior(s) with mean ",
+                              object$data_list$mu_delta_ordinal,
+                              " and precision ",
+                              object$data_list$tau_delta_ordinal, ")")
+                     }, "\n"))
+        }
+        if (i$modeltype %in% c('survreg')) {
+          cat(paste0('* Shape parameter:\n',
+                     tab(), 'shape_', i$varname,
+                     if (priors) {
+                       ' (exponential prior with rate 0.01)'
+                     }, "\n"))
+        }
+        if (i$modeltype %in% c('coxph', 'JM')) {
+          cat(paste0('* Regression coefficients of the baseline hazard:\n',
+                     tab(), 'beta_Bh0_', i$varname, "[",
+                     print_seq(1, i$df_basehaz),
+                     "]",
+                     if (priors) {
+                       paste0(" (normal priors with mean ", object$data_list$mu_reg_surv,
+                              " and precision ", object$data_list$tau_reg_surv, ")")
+                     }, "\n"))
+          if (i$modeltype %in% 'JM') {
+            cat(paste0("* association types:\n",
+                       paste0(tab(), "- ", names(i$assoc_type), ": ",
+                              i$assoc_type, collapse = "\n")
+            ))
+          }
+        }
+      }
+      cat("\n\n")
     }
-    cat("\n\n")
   }
 }
 
