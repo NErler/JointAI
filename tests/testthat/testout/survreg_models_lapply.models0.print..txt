@@ -50,8 +50,8 @@ Coefficients:
 Call:
 survreg_imp(formula = Surv(futime, status != "censored") ~ copper + 
     sex + age + abs(age - copper) + log(trig), data = PBC2, n.adapt = 5, 
-    n.iter = 10, trunc = list(trig = c(1e-04, NA)), seed = 2020, 
-    warn = FALSE, mess = FALSE)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE, trunc = list(trig = c(1e-04, 
+        NA)))
 
  Bayesian weibull survival model for "Surv(futime, status != "censored")" 
 
@@ -65,8 +65,8 @@ abs(age - copper)         log(trig)
 Call:
 survreg_imp(formula = Surv(futime, status != "censored") ~ copper + 
     sex + age + abs(age - copper) + log(trig) + (1 | center), 
-    data = PBC2, n.adapt = 5, n.iter = 10, trunc = list(trig = c(1e-04, 
-        NA)), seed = 2020, warn = FALSE, mess = FALSE)
+    data = PBC2, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE, trunc = list(trig = c(1e-04, NA)))
 
  Bayesian weibull survival model for "Surv(futime, status != "censored")" 
 
@@ -137,8 +137,8 @@ $m3a
 Call:
 survreg_imp(formula = Surv(futime, status != "censored") ~ copper + 
     sex + age + abs(age - copper) + log(trig), data = PBC2, n.adapt = 5, 
-    n.iter = 10, trunc = list(trig = c(1e-04, NA)), seed = 2020, 
-    warn = FALSE, mess = FALSE)
+    n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE, trunc = list(trig = c(1e-04, 
+        NA)))
 
  Bayesian weibull survival model for "Surv(futime, status != "censored")" 
 
@@ -154,8 +154,8 @@ $m3b
 Call:
 survreg_imp(formula = Surv(futime, status != "censored") ~ copper + 
     sex + age + abs(age - copper) + log(trig) + (1 | center), 
-    data = PBC2, n.adapt = 5, n.iter = 10, trunc = list(trig = c(1e-04, 
-        NA)), seed = 2020, warn = FALSE, mess = FALSE)
+    data = PBC2, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    mess = FALSE, trunc = list(trig = c(1e-04, NA)))
 
  Bayesian weibull survival model for "Surv(futime, status != "censored")" 
 

@@ -414,8 +414,8 @@ Call:
 lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF, 
     n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
         P2 = "glm_poisson_identity", L1mis = "glm_gamma_log", 
-        B2 = "glm_binomial_log"), trunc = list(Be2 = c(0, 1)), 
-    seed = 2020, warn = FALSE, mess = FALSE)
+        B2 = "glm_binomial_log"), seed = 2020, warn = FALSE, 
+    mess = FALSE, trunc = list(Be2 = c(0, 1)))
 
  Bayesian linear model for "C1" 
 
@@ -730,8 +730,8 @@ sigma_C1
 
 Call:
 lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
-    data = NHANES, n.adapt = 5, n.iter = 5, trunc = list(bili = c(1e-05, 
-        1e+10)), seed = 2020, warn = FALSE, mess = FALSE)
+    data = NHANES, n.adapt = 5, n.iter = 5, seed = 2020, warn = FALSE, 
+    mess = FALSE, trunc = list(bili = c(1e-05, 1e+10)))
 
  Bayesian linear model for "SBP" 
 
@@ -1272,8 +1272,8 @@ Call:
 lm_imp(formula = C1 ~ C2 + B2 + P2 + L1mis + Be2, data = wideDF, 
     n.adapt = 5, n.iter = 10, models = c(C2 = "glm_gaussian_log", 
         P2 = "glm_poisson_identity", L1mis = "glm_gamma_log", 
-        B2 = "glm_binomial_log"), trunc = list(Be2 = c(0, 1)), 
-    seed = 2020, warn = FALSE, mess = FALSE)
+        B2 = "glm_binomial_log"), seed = 2020, warn = FALSE, 
+    mess = FALSE, trunc = list(Be2 = c(0, 1)))
 
  Bayesian linear model for "C1" 
 
@@ -1626,8 +1626,8 @@ $m6d
 
 Call:
 lm_imp(formula = SBP ~ age + gender + log(bili) + exp(creat), 
-    data = NHANES, n.adapt = 5, n.iter = 5, trunc = list(bili = c(1e-05, 
-        1e+10)), seed = 2020, warn = FALSE, mess = FALSE)
+    data = NHANES, n.adapt = 5, n.iter = 5, seed = 2020, warn = FALSE, 
+    mess = FALSE, trunc = list(bili = c(1e-05, 1e+10)))
 
  Bayesian linear model for "SBP" 
 

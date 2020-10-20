@@ -700,8 +700,8 @@ Call:
 lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + Be2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_log", 
         p2 = "glmm_poisson_identity", L1mis = "glmm_gamma_log", 
-        b2 = "glmm_binomial_log"), trunc = list(Be2 = c(0, 1)), 
-    shrinkage = "ridge", seed = 2020, warn = FALSE, mess = FALSE)
+        b2 = "glmm_binomial_log"), shrinkage = "ridge", seed = 2020, 
+    warn = FALSE, mess = FALSE, trunc = list(Be2 = c(0, 1)))
 
  Bayesian linear mixed model for "c1" 
 
@@ -2201,8 +2201,8 @@ Call:
 lme_imp(fixed = c1 ~ c2 + b2 + p2 + L1mis + Be2 + (1 | id), data = longDF, 
     n.adapt = 5, n.iter = 10, models = c(c2 = "glmm_gaussian_log", 
         p2 = "glmm_poisson_identity", L1mis = "glmm_gamma_log", 
-        b2 = "glmm_binomial_log"), trunc = list(Be2 = c(0, 1)), 
-    shrinkage = "ridge", seed = 2020, warn = FALSE, mess = FALSE)
+        b2 = "glmm_binomial_log"), shrinkage = "ridge", seed = 2020, 
+    warn = FALSE, mess = FALSE, trunc = list(Be2 = c(0, 1)))
 
  Bayesian linear mixed model for "c1" 
 
