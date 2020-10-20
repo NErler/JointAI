@@ -152,7 +152,7 @@ jagsmodel_coxph <- function(info) {
   logh_pred <- paste(
     c(paste0("logh0_", info$varname, "[", index, "] + eta_", info$varname,
              "[", index, "]"),
-      if (info$resp_mat[2L] != "M_lvlone") {
+      if (info$resp_mat[2L] != "M_lvlone" & !is.null(info$parelmts$M_lvlone)) {
         paste_linpred_jm(varname = info$varname,
                          parname = info$parname,
                          parelmts = info$parelmts[["M_lvlone"]],
@@ -171,7 +171,8 @@ jagsmodel_coxph <- function(info) {
   surv_predictor <- paste0(
     paste0(
       c(paste0("gkw[k] * exp(logh0s_", info$varname, "[", index, ", k]"),
-        if (info$resp_mat[2L] != "M_lvlone") {
+        if (info$resp_mat[2L] != "M_lvlone" &
+            !is.null(info$parelmts$M_lvlone)) {
           paste_linpred_jm(varname = info$varname,
                            parname = info$parname,
                            parelmts = info$parelmts[["M_lvlone"]],
