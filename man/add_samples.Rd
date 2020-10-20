@@ -26,11 +26,11 @@ be monitored. For details, see
 \href{https://nerler.github.io/JointAI/articles/SelectingParameters.html}{Parameter Selection}.
 Ignored when \code{add = TRUE}.}
 
-\item{progress.bar}{character string specifying the type of progress bar.
-Possible values are "text", "gui", and "none" (see
-\code{\link[rjags]{update}}).
-Note: when sampling is performed in parallel it is
-currently not possible to display a progress bar.}
+\item{progress.bar}{character string specifying the type of
+progress bar. Possible values are "text" (default), "gui",
+and "none" (see \code{\link[rjags]{update}}). Note: when
+sampling is performed in parallel it is not possible to
+display a progress bar.}
 
 \item{mess}{logical; should messages be given? Default is
 \code{TRUE}.}
