@@ -270,8 +270,6 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #' @param xlab,ylab labels for the x- and y-axis
 #' @param idvars name of the column that specifies the multi-level grouping
 #'               structure
-#' @param ridge logical; should the parameters of the main model be penalized
-#'              using ridge regression? Default is \code{FALSE}
 #' @param seed optional; seed value (for reproducibility)
 #' @param ppc logical: should monitors for posterior predictive checks be
 #'                     set? (not yet used)
