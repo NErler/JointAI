@@ -5,8 +5,12 @@ write_model <- function(info_list, Mlist, modelfile = "") {
 
     cat("model {", "\n\n",
       paste0(lapply(info_list, function(k) {
-        get(paste0("jagsmodel_", tolower(k$modeltype)))(k)
-      }), collapse = "\n\n\n"),
+        if (is.null(k$custom)) {
+          get(paste0("jagsmodel_", tolower(k$modeltype)))(k)
+        } else {
+          k$custom
+        }
+        }), collapse = "\n\n\n"),
 
       '\n',
       if (any(sapply(Mlist$interactions, "attr", "has_NAs"))) {
