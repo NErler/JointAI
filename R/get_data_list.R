@@ -2,7 +2,8 @@
 # get list of data to be passed to JAGS #
 # # # # # # # # # # # # # # # # # # # # #
 
-get_data_list <- function(Mlist, info_list, hyperpars) {
+get_data_list <- function(Mlist, info_list, hyperpars,
+                          append_data_list = NULL) {
   modeltypes <- cvapply(info_list, "[[", "modeltype")
   families <- unlist(nlapply(info_list, "[[", "family"))
 
@@ -259,6 +260,11 @@ get_data_list <- function(Mlist, info_list, hyperpars) {
   #     }
   #   }
   # }
+
+
+  if (!is.null(append_data_list)) {
+    l <- c(l, append_data_list)
+  }
 
   l[!lvapply(l, is.null)]
 }
