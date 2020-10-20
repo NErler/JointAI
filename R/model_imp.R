@@ -28,27 +28,7 @@
 #'              created by \strong{JointAI}, initial values are then generated
 #'              by JAGS.
 #'              It is an error to supply an initial value for an observed node.
-#' @param progress.bar character string specifying the type of progress bar.
-#'                     Possible values are "text", "gui", and "none" (see
-#'                     \code{\link[rjags]{update}}).
-#'                     Note: when sampling is performed in parallel it is
-#'                     currently not possible to display a progress bar.
 #' @inheritParams sharedParams
-#' @param modelname optional; character string specifying the name of the model
-#'                  file (including the ending, either .R or .txt).
-#'                  If unspecified a random name will be generated.
-#' @param modeldir optional; directory containing the model file or directory
-#'                 in which the model file should be written. If unspecified a
-#'                 temporary directory will be created.
-#' @param overwrite logical; whether an existing model file with the specified
-#'                  \code{<modeldir>/<modelname>} should be overwritten.
-#'                  If set to \code{FALSE} and a model already exists, that
-#'                  model will be used.
-#'                  If unspecified (\code{NULL}) and a file exists, the user is
-#'                  asked for input on how to proceed.
-#' @param keep_model logical; whether the created JAGS model file should be
-#'                   saved or removed from (\code{FALSE}; default) when the
-#'                   sampling has finished.
 #' @param auxvars optional; one-sided formula of variables that should be used
 #'                as predictors in the imputation procedure (and will be imputed
 #'                if necessary) but are not part of the analysis model(s).
@@ -74,30 +54,6 @@
 #'                a subset of the categorical variables the default will be
 #'                used for the remaining variables.
 #'                (See also \code{\link{set_refcat}})
-#' @param trunc optional; named list specifying limits of truncation for the
-#'              distribution of the named incomplete variables (see the vignette
-#'              \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support}{ModelSpecification})
-#' @param hyperpars optional; list of hyper-parameters, as obtained by
-#'                  \code{\link{default_hyperpars}()}
-#' @param append_data_list optional; list that will be appended to the list
-#'                         containing the data that is passed to **rjags**
-#'                         (`data_list`). This may be necessary if additional
-#'                         data / variables are needed for custom (covariate)
-#'                         models.
-#' @param custom optional; named list of JAGS model chunks (character strings)
-#'               that replace the model for the given variable.
-#' @param scale_vars optional; named vector of (continuous) variables that will
-#'                   be centred and scaled (such that mean = 0 and sd = 1)
-#'                   when they enter a linear predictor to improve
-#'                   convergence of the MCMC sampling. Default is that all
-#'                   numeric variables and integer variables with >20 different
-#'                   values will be scaled.
-#'                   If set to \code{FALSE} no scaling will be done.
-#' @param keep_scaled_mcmc should the "original" MCMC sample
-#'                         (i.e., the scaled version returned by
-#'                         \code{coda.samples()}) be kept?
-#'                         (The MCMC sample that is re-scaled to the scale of
-#'                         the data is always kept.)
 #' @param df_basehaz degrees of freedom for the B-spline used to model the
 #'                   baseline hazard in proportional hazards models
 #'                  (\code{coxph_imp} and \code{JM_imp})
@@ -106,14 +62,64 @@
 #'                  or a named vector specifying the type of shrinkage to be
 #'                  used in the models given as names.
 #' @param rev optional character vector; vector of ordinal outcome variable
-#'   names for which the odds should be reversed, i.e., logit(y <= k) instead
-#'   of logit(y > k).
+#'            names for which the odds should be reversed, i.e.,
+#'            \eqn{logit(y\le k)} instead of \eqn{logit(y > k)}.
 #' @param nonprop optional named list of one-sided formulas specifying
 #'                covariates that have non-proportional effects in cumulative
 #'                logit models. These covariates should also be part of the
 #'                regular model formula, and the names of the list should be
 #'                the names of the ordinal response variables.
-#' @param ... additional, optional arguments (not used)
+#' @param ... additional, optional arguments
+#'            \describe{
+#'            \item{`trunc`}{named list specifying limits of truncation for the
+#'                 distribution of the named incomplete variables (see the
+#'                 vignette
+#'                 \href{https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support}{ModelSpecification})}
+#'            \item{`hyperpars`}{list of hyper-parameters, as obtained by
+#'                 \code{\link{default_hyperpars}()}}
+#'            \item{`scale_vars`}{named vector of (continuous) variables that
+#'                 will be centred and scaled (such that mean = 0 and sd = 1)
+#'                 when they enter a linear predictor to improve
+#'                 convergence of the MCMC sampling. Default is that all
+#'                 numeric variables and integer variables with >20 different
+#'                 values will be scaled.
+#'                 If set to \code{FALSE} no scaling will be done.}
+#'            \item{`custom`}{named list of JAGS model chunks (character strings)
+#'                 that replace the model for the given variable.}
+#'            \item{`append_data_list`}{list that will be appended to the list
+#'                 containing the data that is passed to **rjags**
+#'                 (`data_list`). This may be necessary if additional data /
+#'                 variables are needed for custom (covariate) models.}
+#'            \item{`progress.bar`}{character string specifying the type of
+#'                 progress bar. Possible values are "text" (default), "gui",
+#'                 and "none" (see \code{\link[rjags]{update}}). Note: when
+#'                 sampling is performed in parallel it is not possible to
+#'                 display a progress bar.}
+#'            \item{`quiet`}{logical; if \code{TRUE} then messages generated by
+#'                 \strong{rjags} during compilation as well as the progress bar
+#'                 for the adaptive phase will be suppressed,
+#'                 (see \code{\link[rjags]{jags.model}})}
+#'            \item{`keep_scaled_mcmc`}{should the "original" MCMC sample (i.e.,
+#'                 the scaled version returned by \code{coda.samples()}) be
+#'                 kept? (The MCMC sample that is re-scaled to the scale of the
+#'                 data is always kept.)}
+#'            \item{`modelname`}{character string specifying the name of the
+#'                  model file (including the ending, either .R or .txt). If
+#'                  unspecified a random name will be generated.}
+#'            \item{`modeldir`}{directory containing the model file or directory
+#'                 in which the model file should be written. If unspecified a
+#'                 temporary directory will be created.}
+#'            \item{`overwrite`}{logical; whether an existing model file with
+#'                 the specified \code{<modeldir>/<modelname>} should be
+#'                 overwritten. If set to \code{FALSE} and a model already
+#'                 exists, that model will be used. If unspecified (\code{NULL})
+#'                 and a file exists, the user is asked for input on how to
+#'                 proceed.}
+#'            \item{`keep_model`}{logical; whether the created JAGS model file
+#'                 should be saved or removed from (\code{FALSE}; default) when
+#'                 the sampling has finished.}
+#' }
+#'
 #' @name model_imp
 #'
 #' @return An object of class \link[=JointAIObject]{JointAI}.
@@ -872,14 +878,10 @@ lm_imp <- function(formula, data,
                    n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                    monitor_params = c(analysis_main = TRUE), auxvars = NULL,
                    refcats = NULL,
-                   models = NULL, no_model = NULL, trunc = NULL,
+                   models = NULL, no_model = NULL,
                    shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                   scale_vars = NULL, hyperpars = NULL,
-                   modelname = NULL, modeldir = NULL,
-                   keep_model = FALSE, overwrite = NULL,
-                   quiet = TRUE, progress.bar = "text",
                    warn = TRUE, mess = TRUE,
-                   keep_scaled_mcmc = FALSE, ...) {
+                   ...) {
 
 
   if (missing(formula)) errormsg("No model formula specified.")
@@ -901,14 +903,10 @@ glm_imp <- function(formula, family, data,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                     monitor_params = c(analysis_main = TRUE), auxvars = NULL,
                     refcats = NULL,
-                    models = NULL, no_model = NULL, trunc = NULL,
+                    models = NULL, no_model = NULL,
                     shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                    scale_vars = NULL, hyperpars = NULL,
-                    modelname = NULL, modeldir = NULL,
-                    keep_model = FALSE, overwrite = NULL,
-                    quiet = TRUE, progress.bar = "text",
                     warn = TRUE, mess = TRUE,
-                    keep_scaled_mcmc = FALSE, ...) {
+                    ...) {
 
   if (missing(formula)) errormsg("No model formula specified.")
   if (missing(family))
@@ -929,14 +927,9 @@ clm_imp <- function(formula, data,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                     monitor_params = c(analysis_main = TRUE), auxvars = NULL,
                     refcats = NULL, nonprop = NULL, rev = NULL,
-                    models = NULL, no_model = NULL, trunc = NULL,
+                    models = NULL, no_model = NULL,
                     shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                    scale_vars = NULL, hyperpars = NULL,
-                    modelname = NULL, modeldir = NULL,
-                    keep_model = FALSE, overwrite = NULL,
-                    quiet = TRUE, progress.bar = "text",
-                    warn = TRUE, mess = TRUE,
-                    keep_scaled_mcmc = FALSE, ...) {
+                    warn = TRUE, mess = TRUE, ...) {
 
   if (missing(formula)) errormsg("No model formula specified.")
 
@@ -955,15 +948,9 @@ lognorm_imp <- function(formula, data,
                         n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                         monitor_params = c(analysis_main = TRUE),
                         auxvars = NULL, refcats = NULL,
-                        models = NULL, no_model = NULL, trunc = NULL,
+                        models = NULL, no_model = NULL,
                         shrinkage = FALSE, ppc = TRUE, seed = NULL,
-                        inits = NULL,
-                        scale_vars = NULL, hyperpars = NULL,
-                        modelname = NULL, modeldir = NULL,
-                        keep_model = FALSE, overwrite = NULL,
-                        quiet = TRUE, progress.bar = "text",
-                        warn = TRUE, mess = TRUE,
-                        keep_scaled_mcmc = FALSE, ...) {
+                        inits = NULL, warn = TRUE, mess = TRUE, ...) {
 
   if (missing(formula)) errormsg("No model formula specified.")
 
@@ -983,15 +970,9 @@ betareg_imp <- function(formula, data,
                         n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                         monitor_params = c(analysis_main = TRUE),
                         auxvars = NULL, refcats = NULL,
-                        models = NULL, no_model = NULL, trunc = NULL,
+                        models = NULL, no_model = NULL,
                         shrinkage = FALSE, ppc = TRUE, seed = NULL,
-                        inits = NULL,
-                        scale_vars = NULL, hyperpars = NULL,
-                        modelname = NULL, modeldir = NULL,
-                        keep_model = FALSE, overwrite = NULL,
-                        quiet = TRUE, progress.bar = "text",
-                        warn = TRUE, mess = TRUE,
-                        keep_scaled_mcmc = FALSE, ...) {
+                        inits = NULL, warn = TRUE, mess = TRUE, ...) {
 
   if (missing(formula)) errormsg("No model formula specified.")
 
@@ -1009,14 +990,9 @@ mlogit_imp <- function(formula, data,
                        n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                        monitor_params = c(analysis_main = TRUE), auxvars = NULL,
                        refcats = NULL,
-                       models = NULL, no_model = NULL, trunc = NULL,
+                       models = NULL, no_model = NULL,
                        shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                       scale_vars = NULL, hyperpars = NULL,
-                       modelname = NULL, modeldir = NULL,
-                       keep_model = FALSE, overwrite = NULL,
-                       quiet = TRUE, progress.bar = "text",
-                       warn = TRUE, mess = TRUE,
-                       keep_scaled_mcmc = FALSE, ...) {
+                       warn = TRUE, mess = TRUE, ...) {
 
   if (missing(formula)) errormsg("No model formula specified.")
 
@@ -1034,14 +1010,9 @@ lme_imp <- function(fixed, data, random,
                     n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                     monitor_params = c(analysis_main = TRUE), auxvars = NULL,
                     refcats = NULL,
-                    models = NULL, no_model = NULL, trunc = NULL,
+                    models = NULL, no_model = NULL,
                     shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                    scale_vars = NULL, hyperpars = NULL,
-                    modelname = NULL, modeldir = NULL,
-                    keep_model = FALSE, overwrite = NULL,
-                    quiet = TRUE, progress.bar = "text",
-                    warn = TRUE, mess = TRUE,
-                    keep_scaled_mcmc = FALSE, ...) {
+                    warn = TRUE, mess = TRUE, ...) {
 
   arglist <- prep_arglist(analysis_type = "lme",
                           family = gaussian(),
@@ -1068,14 +1039,9 @@ glme_imp <- function(fixed, data, random, family,
                      n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                      monitor_params = c(analysis_main = TRUE), auxvars = NULL,
                      refcats = NULL,
-                     models = NULL, no_model = NULL, trunc = NULL,
+                     models = NULL, no_model = NULL,
                      shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                     scale_vars = NULL, hyperpars = NULL,
-                     modelname = NULL, modeldir = NULL,
-                     keep_model = FALSE, overwrite = NULL,
-                     quiet = TRUE, progress.bar = "text",
-                     warn = TRUE, mess = TRUE,
-                     keep_scaled_mcmc = FALSE, ...) {
+                     warn = TRUE, mess = TRUE, ...) {
 
   if (missing(family))
     errormsg("The argument %s needs to be specified.", dQuote(family))
@@ -1106,15 +1072,9 @@ betamm_imp <- function(fixed, random, data,
                        n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                        monitor_params = c(analysis_main = TRUE),
                        auxvars = NULL, refcats = NULL,
-                       models = NULL, no_model = NULL, trunc = NULL,
+                       models = NULL, no_model = NULL,
                        shrinkage = FALSE, ppc = TRUE, seed = NULL,
-                       inits = NULL,
-                       scale_vars = NULL, hyperpars = NULL,
-                       modelname = NULL, modeldir = NULL,
-                       keep_model = FALSE, overwrite = NULL,
-                       quiet = TRUE, progress.bar = "text",
-                       warn = TRUE, mess = TRUE,
-                       keep_scaled_mcmc = FALSE, ...) {
+                       inits = NULL, warn = TRUE, mess = TRUE, ...) {
 
   arglist <- prep_arglist(analysis_type = "glmm_beta",
                           formals = formals(), call = match.call(),
@@ -1134,15 +1094,9 @@ lognormmm_imp <- function(fixed, random, data,
                           n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                           monitor_params = c(analysis_main = TRUE),
                           auxvars = NULL, refcats = NULL,
-                          models = NULL, no_model = NULL, trunc = NULL,
+                          models = NULL, no_model = NULL,
                           shrinkage = FALSE, ppc = TRUE, seed = NULL,
-                          inits = NULL,
-                          scale_vars = NULL, hyperpars = NULL,
-                          modelname = NULL, modeldir = NULL,
-                          keep_model = FALSE, overwrite = NULL,
-                          quiet = TRUE, progress.bar = "text",
-                          warn = TRUE, mess = TRUE,
-                          keep_scaled_mcmc = FALSE, ...) {
+                          inits = NULL, warn = TRUE, mess = TRUE, ...) {
 
   arglist <- prep_arglist(analysis_type = "glmm_lognorm",
                           formals = formals(), call = match.call(),
@@ -1160,14 +1114,9 @@ clmm_imp <- function(fixed, data, random,
                      n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                      monitor_params = c(analysis_main = TRUE), auxvars = NULL,
                      refcats = NULL, nonprop = NULL, rev = NULL,
-                     models = NULL, no_model = NULL, trunc = NULL,
+                     models = NULL, no_model = NULL,
                      shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                     scale_vars = NULL, hyperpars = NULL,
-                     modelname = NULL, modeldir = NULL,
-                     keep_model = FALSE, overwrite = NULL,
-                     quiet = TRUE, progress.bar = "text",
-                     warn = TRUE, mess = TRUE,
-                     keep_scaled_mcmc = FALSE, ...) {
+                     warn = TRUE, mess = TRUE, ...) {
 
   arglist <- prep_arglist(analysis_type = "clmm",
                           formals = formals(), call = match.call(),
@@ -1185,15 +1134,10 @@ mlogitmm_imp <- function(fixed, data, random,
                          n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                          monitor_params = c(analysis_main = TRUE),
                          auxvars = NULL, refcats = NULL,
-                         models = NULL, no_model = NULL, trunc = NULL,
+                         models = NULL, no_model = NULL,
                          shrinkage = FALSE, ppc = TRUE, seed = NULL,
                          inits = NULL,
-                         scale_vars = NULL, hyperpars = NULL,
-                         modelname = NULL, modeldir = NULL,
-                         keep_model = FALSE, overwrite = NULL,
-                         quiet = TRUE, progress.bar = "text",
-                         warn = TRUE, mess = TRUE,
-                         keep_scaled_mcmc = FALSE, ...) {
+                         warn = TRUE, mess = TRUE, ...) {
 
   arglist <- prep_arglist(analysis_type = "mlogitmm",
                           formals = formals(), call = match.call(),
@@ -1211,15 +1155,10 @@ survreg_imp <- function(formula, data,
                         n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                         monitor_params = c(analysis_main = TRUE),
                         auxvars = NULL, refcats = NULL,
-                        models = NULL, no_model = NULL, trunc = NULL,
+                        models = NULL, no_model = NULL,
                         shrinkage = FALSE, ppc = TRUE, seed = NULL,
                         inits = NULL,
-                        scale_vars = NULL, hyperpars = NULL,
-                        modelname = NULL, modeldir = NULL,
-                        keep_model = FALSE, overwrite = NULL,
-                        quiet = TRUE, progress.bar = "text",
-                        warn = TRUE, mess = TRUE,
-                        keep_scaled_mcmc = FALSE, ...) {
+                        warn = TRUE, mess = TRUE, ...) {
 
 
   if (missing(formula)) errormsg("No model formula specified.")
@@ -1250,14 +1189,9 @@ coxph_imp <- function(formula, data, df_basehaz = 6,
                       n.chains = 3, n.adapt = 100, n.iter = 0, thin = 1,
                       monitor_params = c(analysis_main = TRUE),  auxvars = NULL,
                       refcats = NULL,
-                      models = NULL, no_model = NULL, trunc = NULL,
+                      models = NULL, no_model = NULL,
                       shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                      scale_vars = NULL, hyperpars = NULL,
-                      modelname = NULL, modeldir = NULL,
-                      keep_model = FALSE, overwrite = NULL,
-                      quiet = TRUE, progress.bar = "text",
-                      warn = TRUE, mess = TRUE,
-                      keep_scaled_mcmc = FALSE, ...) {
+                      warn = TRUE, mess = TRUE, ...) {
 
 
   if (missing(formula)) errormsg("No model formula specified.")
@@ -1290,14 +1224,9 @@ JM_imp <- function(formula, data, df_basehaz = 6,
                    monitor_params = c(analysis_main = TRUE), auxvars = NULL,
                    timevar = NULL, refcats = NULL,
                    models = NULL, no_model = NULL,
-                   assoc_type = NULL, trunc = NULL,
+                   assoc_type = NULL,
                    shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-                   scale_vars = NULL, hyperpars = NULL,
-                   modelname = NULL, modeldir = NULL,
-                   keep_model = FALSE, overwrite = NULL,
-                   quiet = TRUE, progress.bar = "text",
-                   warn = TRUE, mess = TRUE,
-                   keep_scaled_mcmc = FALSE, ...) {
+                   warn = TRUE, mess = TRUE, ...) {
 
 
   if (missing(timevar))
