@@ -1,6 +1,6 @@
 # get model info for a list of models
 get_model_info <- function(Mlist, par_index_main, par_index_other, trunc = NULL,
-                           assoc_type = NULL) {
+                           assoc_type = NULL, custom = NULL) {
   args <- as.list(match.call())[-1L]
 
   setNames(lapply(names(Mlist$lp_cols), function(k) {
@@ -11,7 +11,8 @@ get_model_info <- function(Mlist, par_index_main, par_index_other, trunc = NULL,
 
 # get model info for a single model
 get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
-                            trunc = NULL, assoc_type = NULL, isgk = FALSE) {
+                            trunc = NULL, assoc_type = NULL,
+                            custom = NULL, isgk = FALSE) {
 
   arglist <- as.list(match.call())[-1L]
 
@@ -220,6 +221,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
     group_lvls = Mlist$group_lvls,
     trafos = trafos,
     trunc = trunc[[k]],
+    custom = custom[[k]],
     ppc = FALSE,
     shrinkage = shrinkage,
     refs = Mlist$refs[[k]],
