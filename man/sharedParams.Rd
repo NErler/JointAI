@@ -54,6 +54,12 @@ see \code{\link[rjags]{coda.samples}})}
 for the adaptive phase will be suppressed,
 (see \code{\link[rjags]{jags.model}})}
 
+\item{progress.bar}{character string specifying the type of
+progress bar. Possible values are "text" (default), "gui",
+and "none" (see \code{\link[rjags]{update}}). Note: when
+sampling is performed in parallel it is not possible to
+display a progress bar.}
+
 \item{thin}{thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
 For example, \code{thin = 1} (default) will keep the MCMC samples
 from all iterations; \code{thin = 5} would only keep every 5th
@@ -78,9 +84,6 @@ graphics?}
 
 \item{idvars}{name of the column that specifies the multi-level grouping
 structure}
-
-\item{ridge}{logical; should the parameters of the main model be penalized
-using ridge regression? Default is \code{FALSE}}
 
 \item{seed}{optional; seed value (for reproducibility)}
 
