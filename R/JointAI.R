@@ -253,6 +253,11 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #'              \strong{rjags} during compilation as well as the progress bar
 #'              for the adaptive phase will be suppressed,
 #'              (see \code{\link[rjags]{jags.model}})
+#' @param progress.bar character string specifying the type of
+#'                 progress bar. Possible values are "text" (default), "gui",
+#'                 and "none" (see \code{\link[rjags]{update}}). Note: when
+#'                 sampling is performed in parallel it is not possible to
+#'                 display a progress bar.
 #' @param thin thinning interval (integer; see \code{\link[coda]{window.mcmc}}).
 #'             For example, \code{thin = 1} (default) will keep the MCMC samples
 #'             from all iterations; \code{thin = 5} would only keep every 5th
