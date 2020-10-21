@@ -183,7 +183,8 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
 
 
   # random effects variance covariance matrix
-  rd_vcov <- lapply(Mlist$rd_vcov, function(x) {
+  rd_vcov <- nlapply(names(Mlist$rd_vcov), function(lvl) {
+    x <- Mlist$rd_vcov[[lvl]]
 
     w <- which(lvapply(x, function(z) k %in% z))
     if (length(w) > 0L) {
@@ -192,6 +193,8 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
       attr(type, "ranef_index") <- attr(x[[w]], "ranef_index")
       attr(type, "name") <- attr(x[[w]], "name")
       type
+    } else if (isTRUE(nranef[lvl] > 0L)) {
+      "blockdiag"
     }
   })
 
