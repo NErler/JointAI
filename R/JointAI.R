@@ -278,6 +278,18 @@ utils::globalVariables(c("i", "value", "chain", "iteration"))
 #' @param seed optional; seed value (for reproducibility)
 #' @param ppc logical: should monitors for posterior predictive checks be
 #'                     set? (not yet used)
+#' @param rd_vcov optional character string or list (of lists or character
+#'                strings) specifying the structure of the variance covariance
+#'                matrix/matrices of the random effects for multivariate
+#'                mixed models. Options are  `"full`, `"blockdiag"` (default)
+#'                and `"indep"`. Different structures can be specified per
+#'                grouping level (in multi-level models with more than two
+#'                levels) by specifying a list with elements per grouping
+#'                level. To specify different structures for different
+#'                outcomes, a list (maybe nested in the list per grouping
+#'                level) can be specified. This list should have the type
+#'                of structure as names and contain vectors of variable
+#'                names that belong to the respective structure.
 #' @name sharedParams
 NULL
 
