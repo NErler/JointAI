@@ -104,13 +104,14 @@ get_data_list <- function(Mlist, info_list, hyperpars,
       info_list[modeltypes %in% c("coxph", "glmm", "clmm", "mlogitmm")],
       function(info) {
         rd_hyp <- lapply(names(info$hc_list$hcvars), function(lvl) {
-          if (info$rd_vcov[[lvl]] == "blockdiag") {
+          if (isTRUE(info$rd_vcov[[lvl]] == "blockdiag")) {
             get_RinvD(info$nranef[lvl],
                       hyp$ranef["KinvD_expr"],
                       names = paste(c("RinvD", "KinvD"),
                                     info$varname, lvl, sep = "_")
             )
-          } else if (info$rd_vcov[[lvl]] == "indep" & info$nranef[lvl] > 1) {
+          } else if (isTRUE(info$rd_vcov[[lvl]] == "indep") &
+                     info$nranef[lvl] > 1) {
             get_invD_indep(nranef = info$nranef[lvl],
                            name = paste("invD", info$varname, lvl,
                                                          sep = "_"))

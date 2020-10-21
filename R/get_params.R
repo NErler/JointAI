@@ -202,7 +202,7 @@ get_ranefpars <- function(info_list, Mlist, args, set = "main") {
 
     b_block_indep <- lapply(names(ranef_info), function(var) {
       lapply(names(ranef_info[[var]]$rd_vcov), function(lvl) {
-        if (ranef_info[[var]]$rd_vcov[[lvl]] != "full") {
+        if (isTRUE(ranef_info[[var]]$rd_vcov[[lvl]] != "full")) {
           paste0("b_", var, "_", lvl)
         }
       })
@@ -240,7 +240,7 @@ get_ranefpars <- function(info_list, Mlist, args, set = "main") {
 
     invD_block_indep <- lapply(ranef_info, function(x) {
       lapply(x$lvls, function(lvl) {
-        if (x$rd_vcov[[lvl]] != "full") {
+        if (isTRUE(x$rd_vcov[[lvl]] != "full")) {
           get_uptri_elmts(mat = "invD",
                           dim = x$nranef[lvl],
                           name = paste0("_", x$varname, "_", lvl)
@@ -272,7 +272,7 @@ get_ranefpars <- function(info_list, Mlist, args, set = "main") {
 
     D_block_indep <- lapply(ranef_info, function(x) {
       lapply(x$lvls, function(lvl) {
-        if (x$rd_vcov[[lvl]] != "full") {
+        if (isTRUE(x$rd_vcov[[lvl]] != "full")) {
           get_uptri_elmts(mat = "D",
                           dim = x$nranef[lvl],
                           name = paste0("_", x$varname, "_", lvl)
@@ -306,7 +306,7 @@ get_ranefpars <- function(info_list, Mlist, args, set = "main") {
     RinvD_block_indep <- lapply(ranef_info, function(x) {
       if (x$nranef > 1) {
         lapply(x$lvls, function(lvl) {
-          if (x$rd_vcov[[lvl]] == "blockdiag") {
+          if (isTRUE(x$rd_vcov[[lvl]] == "blockdiag")) {
             paste0("RinvD_", x$varname, "_", lvl,
                    "[", seq.int(max(1L, x$nranef[lvl])), ",",
                    seq.int(max(1L, x$nranef[lvl])), "]")

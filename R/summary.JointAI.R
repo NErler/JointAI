@@ -60,7 +60,8 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
     rdnam <- nlapply(names(object$info_list[[varname]]$rd_vcov),
               function(lvl) {
-                if (object$info_list[[varname]]$rd_vcov[[lvl]] == "full") {
+                if (isTRUE(object$info_list[[varname]]$rd_vcov[[lvl]] ==
+                           "full")) {
                   paste0("^", c("b", "D", "invD", "RinvD", "KinvD"),
                          attr(object$info_list[[varname]]$rd_vcov[[lvl]],
                               "name"),
@@ -151,13 +152,17 @@ summary.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 
       rd_vcov <- if (!is.null(object$info_list[[varname]]$hc_list)) {
         Dpat <- nlapply(object$Mlist$idvar, function(lvl) {
-          if (object$info_list[[varname]]$rd_vcov[[lvl]] == "full") {
-            paste0("^D[[:digit:]]*_", lvl, "\\[[[:digit:]]+,[[:digit:]]+\\]")
-          } else {
-            paste0("^D_", object$info_list[[varname]]$varname, "_", lvl,
-                   "\\[[[:digit:]]+,[[:digit:]]+\\]")
+          if (isTRUE(object$info_list[[varname]]$nranef[lvl] > 0L)) {
+            if (isTRUE(object$info_list[[varname]]$rd_vcov[[lvl]] == "full")) {
+              paste0("^D[[:digit:]]*_", lvl, "\\[[[:digit:]]+,[[:digit:]]+\\]")
+            } else {
+              paste0("^D_", object$info_list[[varname]]$varname, "_", lvl,
+                     "\\[[[:digit:]]+,[[:digit:]]+\\]")
+            }
           }
         })
+
+        Dpat <- Filter(Negate(is.null), Dpat)
 
         Ds <- nlapply(names(Dpat), function(lvl) {
           D <- stats[grep(Dpat[[lvl]], rownames(stats), value = TRUE), ,
@@ -314,17 +319,17 @@ print.summary.JointAI <- function(x, digits = max(3, .Options$digits - 4),
             cat(paste0("\n* For level ", dQuote(lvl), ":", "\n"))
           }
 
-          w <- if (rd_vcov == "full") {
+          w <- if (isTRUE(rd_vcov == "full")) {
             which(names(x$res)[k] == names(ranef_index))
           }
 
-          print_d <- rd_vcov == "full" &&
+          print_d <- isTRUE(rd_vcov == "full") &&
             (w == 1 || if (w > 1) {
                all(lvapply(x$res[names(ranef_index
                )[seq_len(w - 1)]], is.null))}
             )
 
-          if (print_d || rd_vcov != "full") {
+          if (print_d || isTRUE(rd_vcov != "full")) {
             if (!is.null(ranef_index)) {
               ranef_index <- lapply(ranef_index, function(nr)
                 eval(parse(text = nr)))

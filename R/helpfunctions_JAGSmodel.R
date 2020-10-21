@@ -309,7 +309,8 @@ paste_lp_ranef_part <- function(info, isgk = FALSE) {
         paste0("_", info$varname)
       }
 
-      ranef_nrs <- if (!is.null(info$rd_vcov[[lvl]])) {
+      ranef_nrs <- if (!is.null(info$rd_vcov[[lvl]]) &
+                       isTRUE(info$nranef[lvl] > 0L)) {
         if (is.null(attr(info$rd_vcov[[lvl]], "ranef_index"))) {
           1:info$nranef[lvl]
         } else {
@@ -560,7 +561,7 @@ write_ranefs <- function(lvl, info, rdintercept, rdslopes) {
   # - rdintercept: list of random intercept linear predictors as strings
   # - rdslopes: list of list of random slope linear predictors as strings
 
-  if (info$rd_vcov[[lvl]] != "full") {
+  if (isTRUE(info$rd_vcov[[lvl]] != "full")) {
     # write the model part for the random effects distribution
     paste0(
       tab(), "for (", info$index[lvl], " in 1:", info$N[lvl], ") {", "\n",
