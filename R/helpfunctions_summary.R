@@ -112,6 +112,9 @@ get_Dmat <- function(object, varname, lvls = "all") {
 
 
 #' @rdname summary.JointAI
+#' @param scientific A penalty to be applied when deciding to print numeric
+#'                   values in fixed or exponential notation, by default the
+#'                   value obtained from `getOption("scipen")`
 #' @export
 print.Dmat <- function(x, digits = getOption("digits"),
                        scientific = getOption("scipen"), ...) {
