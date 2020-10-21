@@ -15,9 +15,11 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -48,9 +50,11 @@ o2 > 1    0  0    0     0          0     NaN    NaN
 o2 > 2    0  0    0     0          0     NaN    NaN
 o2 > 3    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o2_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -81,9 +85,11 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -115,9 +121,11 @@ o2 > 1    0  0    0     0          0     NaN    NaN
 o2 > 2    0  0    0     0          0     NaN    NaN
 o2 > 3    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o2_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -148,9 +156,11 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -182,9 +192,11 @@ o2 > 1    0  0    0     0          0     NaN    NaN
 o2 > 2    0  0    0     0          0     NaN    NaN
 o2 > 3    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o2_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -215,9 +227,11 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -249,9 +263,11 @@ o2 > 1    0  0    0     0          0     NaN    NaN
 o2 > 2    0  0    0     0          0     NaN    NaN
 o2 > 3    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o2_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -282,9 +298,11 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -316,9 +334,11 @@ o2 > 1    0  0    0     0          0     NaN    NaN
 o2 > 2    0  0    0     0          0     NaN    NaN
 o2 > 3    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o2_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -346,9 +366,11 @@ Posterior summary:
 o1.L           0  0    0     0          0     NaN    NaN
 o1.Q           0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_c1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 Posterior summary of residual std. deviation:
          Mean SD 2.5% 97.5% GR-crit MCE/SD
@@ -381,9 +403,11 @@ o22            0  0    0     0          0     NaN    NaN
 o23            0  0    0     0          0     NaN    NaN
 o24            0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_c1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 Posterior summary of residual std. deviation:
          Mean SD 2.5% 97.5% GR-crit MCE/SD
@@ -429,9 +453,11 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -476,9 +502,11 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -513,6 +541,7 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
@@ -525,6 +554,7 @@ D_o1_id[1,4]    0  0    0     0          0     NaN    NaN
 D_o1_id[2,4]    0  0    0     0          0     NaN    NaN
 D_o1_id[3,4]    0  0    0     0          0     NaN    NaN
 D_o1_id[4,4]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -562,11 +592,13 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
 D_o1_id[1,2]    0  0    0     0          0     NaN    NaN
 D_o1_id[2,2]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -601,9 +633,11 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -643,9 +677,11 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -687,9 +723,11 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -732,9 +770,11 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -778,9 +818,11 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -832,9 +874,11 @@ Posterior summary of the intercepts:
 o1 > 1    0  0    0     0          0     NaN    NaN
 o1 > 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -874,9 +918,11 @@ Posterior summary of the intercepts:
 o1 = 1    0  0    0     0          0     NaN    NaN
 o1 = 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -918,9 +964,11 @@ Posterior summary of the intercepts:
 o1 = 1    0  0    0     0          0     NaN    NaN
 o1 = 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -963,9 +1011,11 @@ Posterior summary of the intercepts:
 o1 = 1    0  0    0     0          0     NaN    NaN
 o1 = 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -1009,9 +1059,11 @@ Posterior summary of the intercepts:
 o1 = 1    0  0    0     0          0     NaN    NaN
 o1 = 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -1063,9 +1115,11 @@ Posterior summary of the intercepts:
 o1 = 1    0  0    0     0          0     NaN    NaN
 o1 = 2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
              Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_o1_id[1,1]    0  0    0     0                NaN    NaN
+
 
 
 MCMC settings:
@@ -1101,9 +1155,11 @@ x3             0  0    0     0          0     NaN    NaN
 x4             0  0    0     0          0     NaN    NaN
 time           0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
             Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_y_id[1,1]    0  0    0     0                NaN    NaN
+
 
 Posterior summary of residual std. deviation:
         Mean SD 2.5% 97.5% GR-crit MCE/SD
@@ -1140,9 +1196,11 @@ o1.Q           0  0    0     0          0     NaN    NaN
 c2             0  0    0     0          0     NaN    NaN
 b21            0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
             Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_y_id[1,1]    0  0    0     0                NaN    NaN
+
 
 Posterior summary of residual std. deviation:
         Mean SD 2.5% 97.5% GR-crit MCE/SD

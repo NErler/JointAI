@@ -194,9 +194,11 @@ age                  0  0    0     0          0     NaN    NaN
 abs(age - copper)    0  0    0     0          0     NaN    NaN
 log(trig)            0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
                               Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_Srv_ftm_stts_cn_center[1,1]    0  0    0     0                NaN    NaN
+
 
 Posterior summary of other parameters:
                             Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
@@ -324,9 +326,11 @@ sexfemale        0  0    0     0          0     NaN    NaN
 albumin          0  0    0     0          0     NaN    NaN
 log(platelet)    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
                               Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_Srv_ftm_stts_cn_center[1,1]    0  0    0     0                NaN    NaN
+
 
 Posterior summary of other parameters:
                             Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
@@ -370,9 +374,11 @@ albumin                  0  0    0     0          0     NaN    NaN
 ns(platelet, df = 2)1    0  0    0     0          0     NaN    NaN
 ns(platelet, df = 2)2    0  0    0     0          0     NaN    NaN
 
+
 Posterior summary of random effects covariance matrix:
                               Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
 D_Srv_ftm_stts_cn_center[1,1]    0  0    0     0                NaN    NaN
+
 
 Posterior summary of other parameters:
                             Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD

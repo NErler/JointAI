@@ -12,8 +12,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -34,8 +35,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -56,8 +58,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -78,8 +81,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -100,8 +104,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b1
+                        (Intercept)
+         b1 (Intercept)           0
 
 
 Call:
@@ -117,8 +122,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b1
+                        (Intercept)
+         b1 (Intercept)           0
 
 
 Call:
@@ -134,8 +140,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b1
+                        (Intercept)
+         b1 (Intercept)           0
 
 
 Call:
@@ -151,8 +158,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b1
+                        (Intercept)
+         b1 (Intercept)           0
 
 
 Call:
@@ -168,8 +176,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 L1
+                        (Intercept)
+         L1 (Intercept)           0
 
 
 
@@ -190,8 +199,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 L1
+                        (Intercept)
+         L1 (Intercept)           0
 
 
 
@@ -212,8 +222,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 p1
+                        (Intercept)
+         p1 (Intercept)           0
 
 
 Call:
@@ -229,8 +240,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 p1
+                        (Intercept)
+         p1 (Intercept)           0
 
 
 Call:
@@ -246,8 +258,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 L1
+                        (Intercept)
+         L1 (Intercept)           0
 
 
 
@@ -268,8 +281,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                Be1
+                        (Intercept)
+        Be1 (Intercept)           0
 
 
 Call:
@@ -285,8 +299,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -307,8 +322,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b1
+                        (Intercept)
+         b1 (Intercept)           0
 
 
 Call:
@@ -324,8 +340,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 L1
+                        (Intercept)
+         L1 (Intercept)           0
 
 
 
@@ -346,8 +363,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 p1
+                        (Intercept)
+         p1 (Intercept)           0
 
 
 Call:
@@ -363,8 +381,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 L1
+                        (Intercept)
+         L1 (Intercept)           0
 
 
 
@@ -385,8 +404,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                Be1
+                        (Intercept)
+        Be1 (Intercept)           0
 
 
 Call:
@@ -402,8 +422,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -424,8 +445,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b2
+                        (Intercept)
+         b2 (Intercept)           0
 
 
 Call:
@@ -441,8 +463,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                              L1mis
+                        (Intercept)
+      L1mis (Intercept)           0
 
 
 
@@ -463,8 +486,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 p2
+                        (Intercept)
+         p2 (Intercept)           0
 
 
 Call:
@@ -480,8 +504,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                              L1mis
+                        (Intercept)
+      L1mis (Intercept)           0
 
 
 
@@ -502,8 +527,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                Be2
+                        (Intercept)
+        Be2 (Intercept)           0
 
 
 Call:
@@ -519,8 +545,9 @@ C2
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -541,8 +568,9 @@ C2
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b2
+                        (Intercept)
+         b2 (Intercept)           0
 
 
 Call:
@@ -558,8 +586,9 @@ C2
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                              L1mis
+                        (Intercept)
+      L1mis (Intercept)           0
 
 
 
@@ -580,8 +609,9 @@ C2
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 p2
+                        (Intercept)
+         p2 (Intercept)           0
 
 
 Call:
@@ -597,8 +627,9 @@ C2
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                              L1mis
+                        (Intercept)
+      L1mis (Intercept)           0
 
 
 
@@ -619,8 +650,9 @@ C2
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                Be2
+                        (Intercept)
+        Be2 (Intercept)           0
 
 
 Call:
@@ -638,8 +670,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 c1
+                        (Intercept)
+         c1 (Intercept)           0
 
 
 
@@ -662,8 +695,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 c1
+                        (Intercept)
+         c1 (Intercept)           0
 
 
 
@@ -687,8 +721,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 c1
+                        (Intercept)
+         c1 (Intercept)           0
 
 
 
@@ -712,8 +747,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 c1
+                        (Intercept)
+         c1 (Intercept)           0
 
 
 
@@ -741,9 +777,10 @@ o23:abs(C1 - c2) o24:abs(C1 - c2)
 
 Random effects covariance matrix:
 $id
-            (Intercept) time
-(Intercept)           0    0
-time                  0    0
+                                  y           y
+                        (Intercept)        time
+          y (Intercept)           0           0
+          y        time           0           0
 
 
 
@@ -767,10 +804,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time I(time^2)
-(Intercept)           0    0         0
-time                  0    0         0
-I(time^2)             0    0         0
+                                 b1          b1          b1
+                        (Intercept)        time   I(time^2)
+         b1 (Intercept)           0           0           0
+         b1        time           0           0           0
+         b1   I(time^2)           0           0           0
 
 
 Call:
@@ -787,8 +825,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-     time
-time    0
+             y
+          time
+   y time    0
 
 
 
@@ -810,9 +849,10 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-          time I(time^2)
-time         0         0
-I(time^2)    0         0
+                           b1        b1
+                         time I(time^2)
+       b1      time         0         0
+       b1 I(time^2)         0         0
 
 
 Call:
@@ -828,10 +868,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-                  (Intercept) ns(time, df = 2)1 ns(time, df = 2)2
-(Intercept)                 0                 0                 0
-ns(time, df = 2)1           0                 0                 0
-ns(time, df = 2)2           0                 0                 0
+                                                    y                 y                 y
+                                          (Intercept) ns(time, df = 2)1 ns(time, df = 2)2
+                y       (Intercept)                 0                 0                 0
+                y ns(time, df = 2)1                 0                 0                 0
+                y ns(time, df = 2)2                 0                 0                 0
 
 
 
@@ -853,16 +894,12 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-                  (Intercept) bs(time, df = 3)1 bs(time, df = 3)2
-(Intercept)                 0                 0                 0
-bs(time, df = 3)1           0                 0                 0
-bs(time, df = 3)2           0                 0                 0
-bs(time, df = 3)3           0                 0                 0
-                  bs(time, df = 3)3
-(Intercept)                       0
-bs(time, df = 3)1                 0
-bs(time, df = 3)2                 0
-bs(time, df = 3)3                 0
+                                                    y                 y                 y                 y
+                                          (Intercept) bs(time, df = 3)1 bs(time, df = 3)2 bs(time, df = 3)3
+                y       (Intercept)                 0                 0                 0                 0
+                y bs(time, df = 3)1                 0                 0                 0                 0
+                y bs(time, df = 3)2                 0                 0                 0                 0
+                y bs(time, df = 3)3                 0                 0                 0                 0
 
 
 
@@ -886,16 +923,12 @@ ns(time, df = 3)2 ns(time, df = 3)3
 
 Random effects covariance matrix:
 $id
-                  (Intercept) ns(time, df = 3)1 ns(time, df = 3)2
-(Intercept)                 0                 0                 0
-ns(time, df = 3)1           0                 0                 0
-ns(time, df = 3)2           0                 0                 0
-ns(time, df = 3)3           0                 0                 0
-                  ns(time, df = 3)3
-(Intercept)                       0
-ns(time, df = 3)1                 0
-ns(time, df = 3)2                 0
-ns(time, df = 3)3                 0
+                                                    y                 y                 y                 y
+                                          (Intercept) ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3
+                y       (Intercept)                 0                 0                 0                 0
+                y ns(time, df = 3)1                 0                 0                 0                 0
+                y ns(time, df = 3)2                 0                 0                 0                 0
+                y ns(time, df = 3)3                 0                 0                 0                 0
 
 
 
@@ -919,9 +952,10 @@ ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3
 
 Random effects covariance matrix:
 $id
-            (Intercept) time
-(Intercept)           0    0
-time                  0    0
+                                  y           y
+                        (Intercept)        time
+          y (Intercept)           0           0
+          y        time           0           0
 
 
 
@@ -945,16 +979,12 @@ ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3
 
 Random effects covariance matrix:
 $id
-                  (Intercept) ns(time, df = 3)1 ns(time, df = 3)2
-(Intercept)                 0                 0                 0
-ns(time, df = 3)1           0                 0                 0
-ns(time, df = 3)2           0                 0                 0
-ns(time, df = 3)3           0                 0                 0
-                  ns(time, df = 3)3
-(Intercept)                       0
-ns(time, df = 3)1                 0
-ns(time, df = 3)2                 0
-ns(time, df = 3)3                 0
+                                                    y                 y                 y                 y
+                                          (Intercept) ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3
+                y       (Intercept)                 0                 0                 0                 0
+                y ns(time, df = 3)1                 0                 0                 0                 0
+                y ns(time, df = 3)2                 0                 0                 0                 0
+                y ns(time, df = 3)3                 0                 0                 0                 0
 
 
 
@@ -978,9 +1008,10 @@ ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3
 
 Random effects covariance matrix:
 $id
-            (Intercept) time
-(Intercept)           0    0
-time                  0    0
+                                  y           y
+                        (Intercept)        time
+          y (Intercept)           0           0
+          y        time           0           0
 
 
 
@@ -1002,10 +1033,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -1027,10 +1059,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -1052,10 +1085,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c1
-(Intercept)           0    0  0
-time                  0    0  0
-c1                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c1
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c1           0           0           0
 
 
 
@@ -1077,10 +1111,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c1
-(Intercept)           0    0  0
-time                  0    0  0
-c1                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c1
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c1           0           0           0
 
 
 
@@ -1104,10 +1139,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -1131,10 +1167,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -1158,10 +1195,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -1185,10 +1223,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c1
-(Intercept)           0    0  0
-time                  0    0  0
-c1                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c1
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c1           0           0           0
 
 
 
@@ -1212,10 +1251,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c1
-(Intercept)           0    0  0
-time                  0    0  0
-c1                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c1
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c1           0           0           0
 
 
 
@@ -1239,10 +1279,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -1266,10 +1307,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -1293,10 +1335,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time I(time^2)
-(Intercept)           0    0         0
-time                  0    0         0
-I(time^2)             0    0         0
+                                  y           y           y
+                        (Intercept)        time   I(time^2)
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y   I(time^2)           0           0           0
 
 
 
@@ -1318,9 +1361,10 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) b11
-(Intercept)           0   0
-b11                   0   0
+                                  y           y
+                        (Intercept)         b11
+          y (Intercept)           0           0
+          y         b11           0           0
 
 
 
@@ -1344,11 +1388,12 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) C1 time C1:time
-(Intercept)           0  0    0       0
-C1                    0  0    0       0
-time                  0  0    0       0
-C1:time               0  0    0       0
+                                  y           y           y           y
+                        (Intercept)          C1        time     C1:time
+          y (Intercept)           0           0           0           0
+          y          C1           0           0           0           0
+          y        time           0           0           0           0
+          y     C1:time           0           0           0           0
 
 
 
@@ -1369,12 +1414,14 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 $o1
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -1396,9 +1443,10 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time
-(Intercept)           0    0
-time                  0    0
+                                  y           y
+                        (Intercept)        time
+          y (Intercept)           0           0
+          y        time           0           0
 
 
 
@@ -1420,8 +1468,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -1443,8 +1492,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -1467,8 +1517,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -1491,8 +1542,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -1515,8 +1567,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -1539,8 +1592,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b1
+                        (Intercept)
+         b1 (Intercept)           0
 
 
 $m0b2
@@ -1558,8 +1612,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b1
+                        (Intercept)
+         b1 (Intercept)           0
 
 
 $m0b3
@@ -1577,8 +1632,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b1
+                        (Intercept)
+         b1 (Intercept)           0
 
 
 $m0b4
@@ -1596,8 +1652,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b1
+                        (Intercept)
+         b1 (Intercept)           0
 
 
 $m0c1
@@ -1615,8 +1672,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 L1
+                        (Intercept)
+         L1 (Intercept)           0
 
 
 
@@ -1639,8 +1697,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 L1
+                        (Intercept)
+         L1 (Intercept)           0
 
 
 
@@ -1663,8 +1722,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 p1
+                        (Intercept)
+         p1 (Intercept)           0
 
 
 $m0d2
@@ -1682,8 +1742,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 p1
+                        (Intercept)
+         p1 (Intercept)           0
 
 
 $m0e1
@@ -1701,8 +1762,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 L1
+                        (Intercept)
+         L1 (Intercept)           0
 
 
 
@@ -1725,8 +1787,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                Be1
+                        (Intercept)
+        Be1 (Intercept)           0
 
 
 $m1a
@@ -1744,8 +1807,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -1768,8 +1832,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b1
+                        (Intercept)
+         b1 (Intercept)           0
 
 
 $m1c
@@ -1787,8 +1852,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 L1
+                        (Intercept)
+         L1 (Intercept)           0
 
 
 
@@ -1811,8 +1877,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 p1
+                        (Intercept)
+         p1 (Intercept)           0
 
 
 $m1e
@@ -1830,8 +1897,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 L1
+                        (Intercept)
+         L1 (Intercept)           0
 
 
 
@@ -1854,8 +1922,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                Be1
+                        (Intercept)
+        Be1 (Intercept)           0
 
 
 $m2a
@@ -1873,8 +1942,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -1897,8 +1967,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b2
+                        (Intercept)
+         b2 (Intercept)           0
 
 
 $m2c
@@ -1916,8 +1987,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                              L1mis
+                        (Intercept)
+      L1mis (Intercept)           0
 
 
 
@@ -1940,8 +2012,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 p2
+                        (Intercept)
+         p2 (Intercept)           0
 
 
 $m2e
@@ -1959,8 +2032,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                              L1mis
+                        (Intercept)
+      L1mis (Intercept)           0
 
 
 
@@ -1983,8 +2057,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                Be2
+                        (Intercept)
+        Be2 (Intercept)           0
 
 
 $m3a
@@ -2002,8 +2077,9 @@ C2
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -2026,8 +2102,9 @@ C2
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 b2
+                        (Intercept)
+         b2 (Intercept)           0
 
 
 $m3c
@@ -2045,8 +2122,9 @@ C2
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                              L1mis
+                        (Intercept)
+      L1mis (Intercept)           0
 
 
 
@@ -2069,8 +2147,9 @@ C2
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 p2
+                        (Intercept)
+         p2 (Intercept)           0
 
 
 $m3e
@@ -2088,8 +2167,9 @@ C2
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                              L1mis
+                        (Intercept)
+      L1mis (Intercept)           0
 
 
 
@@ -2112,8 +2192,9 @@ C2
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                Be2
+                        (Intercept)
+        Be2 (Intercept)           0
 
 
 $m4a
@@ -2133,8 +2214,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 c1
+                        (Intercept)
+         c1 (Intercept)           0
 
 
 
@@ -2159,8 +2241,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 c1
+                        (Intercept)
+         c1 (Intercept)           0
 
 
 
@@ -2186,8 +2269,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 c1
+                        (Intercept)
+         c1 (Intercept)           0
 
 
 
@@ -2213,8 +2297,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                 c1
+                        (Intercept)
+         c1 (Intercept)           0
 
 
 
@@ -2244,9 +2329,10 @@ o23:abs(C1 - c2) o24:abs(C1 - c2)
 
 Random effects covariance matrix:
 $id
-            (Intercept) time
-(Intercept)           0    0
-time                  0    0
+                                  y           y
+                        (Intercept)        time
+          y (Intercept)           0           0
+          y        time           0           0
 
 
 
@@ -2272,10 +2358,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time I(time^2)
-(Intercept)           0    0         0
-time                  0    0         0
-I(time^2)             0    0         0
+                                 b1          b1          b1
+                        (Intercept)        time   I(time^2)
+         b1 (Intercept)           0           0           0
+         b1        time           0           0           0
+         b1   I(time^2)           0           0           0
 
 
 $m6a
@@ -2294,8 +2381,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-     time
-time    0
+             y
+          time
+   y time    0
 
 
 
@@ -2319,9 +2407,10 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-          time I(time^2)
-time         0         0
-I(time^2)    0         0
+                           b1        b1
+                         time I(time^2)
+       b1      time         0         0
+       b1 I(time^2)         0         0
 
 
 $m7a
@@ -2339,10 +2428,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-                  (Intercept) ns(time, df = 2)1 ns(time, df = 2)2
-(Intercept)                 0                 0                 0
-ns(time, df = 2)1           0                 0                 0
-ns(time, df = 2)2           0                 0                 0
+                                                    y                 y                 y
+                                          (Intercept) ns(time, df = 2)1 ns(time, df = 2)2
+                y       (Intercept)                 0                 0                 0
+                y ns(time, df = 2)1                 0                 0                 0
+                y ns(time, df = 2)2                 0                 0                 0
 
 
 
@@ -2366,16 +2456,12 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-                  (Intercept) bs(time, df = 3)1 bs(time, df = 3)2
-(Intercept)                 0                 0                 0
-bs(time, df = 3)1           0                 0                 0
-bs(time, df = 3)2           0                 0                 0
-bs(time, df = 3)3           0                 0                 0
-                  bs(time, df = 3)3
-(Intercept)                       0
-bs(time, df = 3)1                 0
-bs(time, df = 3)2                 0
-bs(time, df = 3)3                 0
+                                                    y                 y                 y                 y
+                                          (Intercept) bs(time, df = 3)1 bs(time, df = 3)2 bs(time, df = 3)3
+                y       (Intercept)                 0                 0                 0                 0
+                y bs(time, df = 3)1                 0                 0                 0                 0
+                y bs(time, df = 3)2                 0                 0                 0                 0
+                y bs(time, df = 3)3                 0                 0                 0                 0
 
 
 
@@ -2401,16 +2487,12 @@ ns(time, df = 3)2 ns(time, df = 3)3
 
 Random effects covariance matrix:
 $id
-                  (Intercept) ns(time, df = 3)1 ns(time, df = 3)2
-(Intercept)                 0                 0                 0
-ns(time, df = 3)1           0                 0                 0
-ns(time, df = 3)2           0                 0                 0
-ns(time, df = 3)3           0                 0                 0
-                  ns(time, df = 3)3
-(Intercept)                       0
-ns(time, df = 3)1                 0
-ns(time, df = 3)2                 0
-ns(time, df = 3)3                 0
+                                                    y                 y                 y                 y
+                                          (Intercept) ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3
+                y       (Intercept)                 0                 0                 0                 0
+                y ns(time, df = 3)1                 0                 0                 0                 0
+                y ns(time, df = 3)2                 0                 0                 0                 0
+                y ns(time, df = 3)3                 0                 0                 0                 0
 
 
 
@@ -2436,9 +2518,10 @@ ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3
 
 Random effects covariance matrix:
 $id
-            (Intercept) time
-(Intercept)           0    0
-time                  0    0
+                                  y           y
+                        (Intercept)        time
+          y (Intercept)           0           0
+          y        time           0           0
 
 
 
@@ -2464,16 +2547,12 @@ ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3
 
 Random effects covariance matrix:
 $id
-                  (Intercept) ns(time, df = 3)1 ns(time, df = 3)2
-(Intercept)                 0                 0                 0
-ns(time, df = 3)1           0                 0                 0
-ns(time, df = 3)2           0                 0                 0
-ns(time, df = 3)3           0                 0                 0
-                  ns(time, df = 3)3
-(Intercept)                       0
-ns(time, df = 3)1                 0
-ns(time, df = 3)2                 0
-ns(time, df = 3)3                 0
+                                                    y                 y                 y                 y
+                                          (Intercept) ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3
+                y       (Intercept)                 0                 0                 0                 0
+                y ns(time, df = 3)1                 0                 0                 0                 0
+                y ns(time, df = 3)2                 0                 0                 0                 0
+                y ns(time, df = 3)3                 0                 0                 0                 0
 
 
 
@@ -2499,9 +2578,10 @@ ns(time, df = 3)1 ns(time, df = 3)2 ns(time, df = 3)3
 
 Random effects covariance matrix:
 $id
-            (Intercept) time
-(Intercept)           0    0
-time                  0    0
+                                  y           y
+                        (Intercept)        time
+          y (Intercept)           0           0
+          y        time           0           0
 
 
 
@@ -2525,10 +2605,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -2552,10 +2633,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -2579,10 +2661,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c1
-(Intercept)           0    0  0
-time                  0    0  0
-c1                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c1
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c1           0           0           0
 
 
 
@@ -2606,10 +2689,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c1
-(Intercept)           0    0  0
-time                  0    0  0
-c1                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c1
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c1           0           0           0
 
 
 
@@ -2635,10 +2719,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -2664,10 +2749,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -2693,10 +2779,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -2722,10 +2809,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c1
-(Intercept)           0    0  0
-time                  0    0  0
-c1                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c1
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c1           0           0           0
 
 
 
@@ -2751,10 +2839,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c1
-(Intercept)           0    0  0
-time                  0    0  0
-c1                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c1
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c1           0           0           0
 
 
 
@@ -2780,10 +2869,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -2809,10 +2899,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time c2
-(Intercept)           0    0  0
-time                  0    0  0
-c2                    0    0  0
+                                  y           y           y
+                        (Intercept)        time          c2
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y          c2           0           0           0
 
 
 
@@ -2838,10 +2929,11 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time I(time^2)
-(Intercept)           0    0         0
-time                  0    0         0
-I(time^2)             0    0         0
+                                  y           y           y
+                        (Intercept)        time   I(time^2)
+          y (Intercept)           0           0           0
+          y        time           0           0           0
+          y   I(time^2)           0           0           0
 
 
 
@@ -2865,9 +2957,10 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) b11
-(Intercept)           0   0
-b11                   0   0
+                                  y           y
+                        (Intercept)         b11
+          y (Intercept)           0           0
+          y         b11           0           0
 
 
 
@@ -2893,11 +2986,12 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) C1 time C1:time
-(Intercept)           0  0    0       0
-C1                    0  0    0       0
-time                  0  0    0       0
-C1:time               0  0    0       0
+                                  y           y           y           y
+                        (Intercept)          C1        time     C1:time
+          y (Intercept)           0           0           0           0
+          y          C1           0           0           0           0
+          y        time           0           0           0           0
+          y     C1:time           0           0           0           0
 
 
 
@@ -2920,12 +3014,14 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 $o1
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
@@ -2949,9 +3045,10 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept) time
-(Intercept)           0    0
-time                  0    0
+                                  y           y
+                        (Intercept)        time
+          y (Intercept)           0           0
+          y        time           0           0
 
 
 
@@ -2975,8 +3072,9 @@ Fixed effects:
 
 Random effects covariance matrix:
 $id
-            (Intercept)
-(Intercept)           0
+                                  y
+                        (Intercept)
+          y (Intercept)           0
 
 
 
