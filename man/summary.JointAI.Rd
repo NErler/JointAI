@@ -32,6 +32,10 @@
 \item{digits}{minimal number of \emph{significant} digits, see
     \code{\link[base]{print.default}}.}
 
+\item{scientific}{A penalty to be applied when deciding to print numeric
+values in fixed or exponential notation, by default the
+value obtained from \code{getOption("scipen")}}
+
 \item{\dots}{currently not used}
 
 \item{object}{object inheriting from class 'JointAI'}

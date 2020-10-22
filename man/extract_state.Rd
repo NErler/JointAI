@@ -12,6 +12,12 @@ extract_state(object, pattern = paste0("^", c("RinvD", "invD", "tau", "b"),
 
 \item{pattern}{vector of patterns to be matched with the names of the nodes}
 }
+\value{
+A list with one element per chain of the MCMC sampler, containing the
+Returns the current state of the MCMC sampler (values of the last
+iteration) for the subset of nodes identified based on the pattern
+the user has specified.
+}
 \description{
-The current state of a preliminary model can be used as initial values
+Return the current state of a 'JointAI' model
 }
