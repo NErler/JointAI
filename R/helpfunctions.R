@@ -328,6 +328,14 @@ replace_trafo <- function(nam, trafos) {
 }
 
 
+replace_interaction <- function(nam, interactions) {
+  if (nam %in% names(interactions)) {
+    attr(interactions[[nam]], "elements")
+  } else {
+    nam
+  }
+}
+
 # used in get_model_info and predict (2020-09-06)
 #' Convert a survival outcome to a model name
 #'
