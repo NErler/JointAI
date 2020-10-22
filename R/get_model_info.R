@@ -147,6 +147,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
 
     # get the variables needed to re-fit the models for "covars" in the
     # Gauss-Kronrod quadrature
+    tvars <- unique(unlist(lapply(tvars, replace_interaction, Mlist$interactions)))
     tvars <- unlist(lapply(tvars, replace_trafo, Mlist$fcts_all))
 
     tvars <- unique(vapply(tvars[!tvars %in% Mlist$timevar],
