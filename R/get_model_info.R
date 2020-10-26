@@ -29,25 +29,27 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
   }
 
   # response matrix and column(s) --------------------------------------------
-  resp_mat <- if (k %in% names(Mlist$Mlvls)) {
-    # if the variable is a column of one of the design matrices, use the level
-    # of that matrix
-    Mlist$Mlvls[k]
-  } else if (attr(Mlist$fixed[[k]], "type") %in% c("survreg", "coxph", "JM")) {
-    # if the model is a survival model (variable name is the survival expression
-    # and not a single variable name) get the levels of the separate variables
-    # involved in the survival expression
-    if (all(names(Mlist$outcomes$outcomes[[k]]) %in% names(Mlist$Mlvls))) {
-      Mlist$Mlvls[names(Mlist$outcomes$outcomes[[k]])]
-    } else {
-      errormsg("I have identified %s as a survival outcome, but I cannot find
-               some of its elements in any of the matrices %s.",
-               dQuote(k), dQuote("M"))
-    }
-  } else {
-    errormsg("I cannot find the variable %s in any of the matrices %s.",
-             dQuote(k), dQuote("M"))
-  }
+  resp_mat <- get_resp_mat(resp = k, Mlvls = Mlist$Mlvls,
+                           outnames = names(Mlist$outcomes$outcomes[[k]]))
+  # resp_mat <- if (k %in% names(Mlist$Mlvls)) {
+  #   # if the variable is a column of one of the design matrices, use the level
+  #   # of that matrix
+  #   Mlist$Mlvls[k]
+  # } else if (attr(Mlist$fixed[[k]], "type") %in% c("survreg", "coxph", "JM")) {
+  #   # if the model is a survival model (variable name is the survival expression
+  #   # and not a single variable name) get the levels of the separate variables
+  #   # involved in the survival expression
+  #   if (all(names(Mlist$outcomes$outcomes[[k]]) %in% names(Mlist$Mlvls))) {
+  #     Mlist$Mlvls[names(Mlist$outcomes$outcomes[[k]])]
+  #   } else {
+  #     errormsg("I have identified %s as a survival outcome, but I cannot find
+  #              some of its elements in any of the matrices %s.",
+  #              dQuote(k), dQuote("M"))
+  #   }
+  # } else {
+  #   errormsg("I cannot find the variable %s in any of the matrices %s.",
+  #            dQuote(k), dQuote("M"))
+  # }
 
   resp_col <- if (k %in% names(Mlist$fixed) &&
                   attr(Mlist$fixed[[k]], "type") %in%
