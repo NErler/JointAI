@@ -177,8 +177,10 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
 
   nranef <- vapply(hc_list$hcvars, function(x) {
     as.integer(attr(x, "rd_intercept")) +
-      if (any(!vapply(x$rd_slope_coefs, is.null, FUN.VALUE = logical(1L)))) {
-        nrow(do.call(rbind, x$rd_slope_coefs))
+      if (!is.null(x$rd_slope_coefs)) {
+        nrow(x$rd_slope_coefs)
+      # if (any(!vapply(x$rd_slope_coefs, is.null, FUN.VALUE = logical(1L)))) {
+      #   nrow(do.call(rbind, x$rd_slope_coefs))
       } else {
         0L
       }
