@@ -33,31 +33,22 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
 
   all_lvls <- Mlist$group_lvls
 
-  # identify relevant levels (all higher levels)
-  lvls <- names(all_lvls)[all_lvls > all_lvls[resplvl]]
+  # identify relevant levels: all levels higher than the level of the response
+  rel_lvls <- names(all_lvls)[all_lvls > all_lvls[resplvl]]
 
   # if there is no random effects structure specified, assume random intercepts
   # at the appropriate levels
   newrandom <- check_random_lvls(Mlist$random[[varname]], rel_lvls)
 
   if (length(newrandom) > 0) {
-    hc_list <- mapply(
-      get_hc_list,
-      rdfmla = newrandom,
-      MoreArgs = list(Mlist = Mlist),
-      SIMPLIFY = FALSE
-    )
-
-    incompl <- lapply(hc_list, attr, "incomplete")
-
-
+    hc_columns <- lapply(newrandom, get_hc_columns, Mlist = Mlist)
 
     structure(
       orga_hc_parelmts(
       resplvl,
-      intersect(lvls, names(newrandom)),
+      intersect(rel_lvls, names(newrandom)),
       all_lvls = all_lvls,
-      hc_list = hc_list,
+      hc_columns = hc_columns,
       parelmts = parelmts,
       lp = lp
     ),
@@ -108,55 +99,101 @@ check_random_lvls <- function(random, rel_lvls) {
     # relevant, because this is the case in a time-dependent cox model.
     return(NULL)
   }
-# used in get_hc_info() (2020-06-11)
-get_hc_list <- function(rdfmla, Mlist) {
-  # - lvl: character string of a level of the hierarchy
-  # - rdfmla: the random effects formula corresponding to level lvl for the
-  #            current sub-model
-  # - Mlist: list of design matrices etc. (obtained from divide_matrices())
+
+  if (is.null(random)) {
+    nlapply(rel_lvls, function(x) ~ 1)
+  } else {
+    rd <- remove_grouping(random)
+
+    if (any(!names(rd) %in% rel_lvls)) {
+      errormsg("You have specified random effects for levels on which there
+               should not be random effects (%s).",
+               dQuote(setdiff(names(rd), rel_lvls)))
+    } else {
+      rd
+    }
+  }
+}
+
+
+#' Create list of column numbers containing the variables involved in the random
+#' effects
+#'
+#' @param rdfmla list of random effects formulas by grouping level. The formulas
+#'               themselves do not have a grouping level any more (output of
+#'               `check_random_lvls`)
+#' @param Mlist list of data matrices and other info, obtained by
+#'              `divide_matrices()`
+#'
+#' @return List of lists: for each random effect variable a list with elements
+#'         "main" and "interact", each of the two a vector of column numbers
+#'         (named with the name of the corresponding data matrix).
+#'         Attributes indicate if there is a random intercept, the column
+#'         names of the corresponding (hypothetical) random effect design
+#'         matrix, and if any of the involved variables have missing values.
+#'
+#' @noRd
+
+get_hc_columns <- function(rdfmla, Mlist) {
+  # used in get_hc_info() (2020-06-11)
 
   Mlvls <- Mlist$Mlvls
-  Mnam <- sapply(Mlist$M, colnames, simplify = FALSE)
-
-  contr_list <- lapply(Mlist$refs, attr, "contr_matrix")
+  Mnam <- nlapply(Mlist$M, colnames)
 
   # column names of random effect design matrices per required level
-  Znam <- colnames(
-    model.matrix(rdfmla, Mlist$data,
-                 contrasts.arg = contr_list[intersect(all_vars(rdfmla),
-                                                      names(contr_list))]))
+  z_names <- get_dsgnmat_names(rdfmla, Mlist$data, Mlist$refs)
 
-
-
-  # check for involvement in interactions
-  inters <- Mlist$interactions[!names(Mlist$interactions) %in% Znam]
+  # check for involvement in interactions, i.e., interaction between random
+  # slope variable and another variable
+  inters <- Mlist$interactions[!names(Mlist$interactions) %in% z_names]
 
   # identify if there are elements of interaction in Z
-  inZ <- if (length(inters) > 0)
-    sapply(Znam, function(x)
-      lapply(lapply(inters, attr, 'elements'), `%in%`, x), simplify = FALSE)
+  in_z <- if (length(inters) > 0L) {
+    nlapply(z_names, function(x)
+      lapply(lapply(inters, attr, 'elements'), `%in%`, x))
+  }
 
   structure(
-    sapply(Znam, function(x) {
+    nlapply(z_names, function(x) {
       list(
         # if the random effect is in the fixed effects, find the column of
         # the design matrix
-        main = if (x %in% names(Mlvls))
-          setNames(match(x, Mnam[[Mlvls[x]]]), Mlvls[x]),
+        main = if (x %in% names(Mlvls)) {
+          setNames(match(x, Mnam[[Mlvls[x]]]), Mlvls[x])
+        },
 
-        interact = if (any(unlist(inZ[[x]]))) {
-          w <- sapply(inZ[[x]], any)
+        interact = if (any(unlist(in_z[[x]]))) {
+          w <- sapply(in_z[[x]], any)
           inters[w]
         }
       )
-    }, simplify = FALSE),
-    intercept = attr(terms(rdfmla), 'intercept'),
-    Znam = Znam,
+    }),
+    rd_intercept = attr(terms(rdfmla), 'intercept'),
+    z_names = z_names,
     incomplete = lvapply(Mlist$data[, all_vars(rdfmla), drop = FALSE],
                          function(x) any(is.na(x)))
   )
 }
 
+
+
+#' Obtain the column names of a design matrix
+#'
+#' @param formula a formula or list of formulas
+#' @param data a `data.frame`
+#' @param refs a reference category object, as obtained from `divide_matrices()`
+#'
+#' @noRd
+
+get_dsgnmat_names <- function(formula, data, refs) {
+
+  contr_list <- lapply(refs, attr, "contr_matrix")
+
+  colnames(
+    model.matrix(formula, data,
+                 contrasts.arg = contr_list[intersect(all_vars(formula),
+                                                      names(contr_list))]))
+}
 
 
 
@@ -252,13 +289,14 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) 
     rd_slope_coefs <- hc_rdslope_info(hc_cols = hc_columns[[lvl]], parelmts)
     rd_slope_interact_coefs <- hc_rdslope_interact(hc_columns[[lvl]], parelmts)
 
-    elmts <- parelmts[[paste0("M_", k)]][
-      !parelmts[[paste0("M_", k)]] %in%
-        rbind(do.call(rbind, rd_slope_coefs),
-              do.call(rbind, rd_slope_interact_coefs))$parelmts]
+    elmts <- parelmts[[paste0("M_", lvl)]][
+      !parelmts[[paste0("M_", lvl)]] %in%
+        rbind(rd_slope_coefs, rd_slope_interact_coefs)$parelmts]
+        # rbind(do.call(rbind, rd_slope_coefs),
+        #       do.call(rbind, rd_slope_interact_coefs))$parelmts]
 
     rd_intercept_coefs <- if (!is.null(elmts) &
-                              attr(hc_list[[k]], 'intercept') == 1) {
+                              attr(hc_columns[[lvl]], 'rd_intercept') == 1) {
       if (is.list(elmts) | length(elmts) == 0) {
         # in case of a multinomial mixed model, there should not be
         # hierarchical centring of the random intercept.
@@ -268,8 +306,8 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) 
       } else {
         data.frame(
           term = names(elmts),
-          matrix = paste0("M_", k),
-          cols = lp[[paste0("M_", k)]][names(elmts)],
+          matrix = paste0("M_", lvl),
+          cols = lp[[paste0("M_", lvl)]][names(elmts)],
           parelmts = elmts,
           stringsAsFactors = FALSE
         )
@@ -281,46 +319,47 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) 
            rd_slope_coefs = rd_slope_coefs,
            rd_slope_interact_coefs = rd_slope_interact_coefs
       ),
-      rd_intercept = "(Intercept)" %in% names(hc_list[[k]]),
-      incomplete = attr(hc_list[[k]], "incomplete"),
-      Znam = attr(hc_list[[k]], "Znam")
+      rd_intercept = "(Intercept)" %in% names(hc_columns[[lvl]]),
+      incomplete = attr(hc_columns[[lvl]], "incomplete"),
+      z_names = attr(hc_columns[[lvl]], "z_names")
     )
   }, simplify = FALSE)
 
 
 
-  collapsed <- lapply(lapply(hcvars, function(i) {
-    lapply(i, function(j) {
-      if (is.list(j) & !is.data.frame(j))
-        do.call(rbind, j)
-      else
-        j
-    })
-  }), do.call, what = rbind)
+collapsed <- lapply(lapply(hc_vars, function(i) {
+  lapply(i, function(j) {
+    if (is.list(j) & !is.data.frame(j))
+      do.call(rbind, j)
+    else
+      j
+  })
+}), do.call, what = rbind)
 
-  used <- lapply(collapsed, "[[", "parelmts")
-
-
-  othervars <- sapply(
-    names(all_lvls)[all_lvls <= min(all_lvls[lvls])], function(lvl) {
-
-      other <- get_othervars_mat(lvl, parelmts, lp)
-      nonprop <- get_othervars_mat(lvl, lapply(parelmts, 'attr', 'nonprop'),
-                                   attr(lp, 'nonprop'))
-
-      if (!inherits(other, 'list'))
-        other <- other[!other$parelmts %in% unlist(used), ]
-
-      list(
-        other = if (all(dim(other) > 0))
-          other,
-        nonprop = nonprop
-      )
-    }, simplify = FALSE)
+used <- lapply(collapsed, "[[", "parelmts")
 
 
-  list(hcvars = hcvars, othervars = lapply(othervars, "[[", "other"),
-       nonprop = lapply(othervars, "[[", "nonprop"))
+othervars <- sapply(
+  names(all_lvls)[all_lvls <= min(all_lvls[lvls])], function(lvl) {
+
+    other <- get_othervars_mat(lvl, parelmts, lp)
+    nonprop <- get_othervars_mat(lvl, lapply(parelmts, 'attr', 'nonprop'),
+                                 attr(lp, 'nonprop'))
+
+    if (!inherits(other, 'list'))
+      other <- other[!other$parelmts %in% unlist(used), ]
+
+    list(
+      other = if (all(dim(other) > 0))
+        other,
+      nonprop = nonprop
+    )
+  }, simplify = FALSE)
+
+  list(hcvars = hc_vars,
+       othervars = lapply(othervars, "[[", "other"),
+       nonprop = lapply(othervars, "[[", "nonprop")
+  )
 }
 
 
