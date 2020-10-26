@@ -151,7 +151,7 @@ get_rdvcov_names <- function(object, varname, lvl) {
 
   if (length(pos) > 0L) {
     nam <- nlapply(names(pos), function(v) {
-      attr(object$info_list[[v]]$hc_list$hcvars[[lvl]], "Znam")
+      attr(object$info_list[[v]]$hc_list$hcvars[[lvl]], "z_names")
     })
     melt_list(
       Map(function(pos, nam) {
@@ -160,7 +160,7 @@ get_rdvcov_names <- function(object, varname, lvl) {
     )
 
   } else {
-    nam <- attr(object$info_list[[varname]]$hc_list$hcvars[[lvl]], "Znam")
+    nam <- attr(object$info_list[[varname]]$hc_list$hcvars[[lvl]], "z_names")
     if (!is.null(nam)) {
       data.frame(pos = seq_along(nam),
                  nam = nam,

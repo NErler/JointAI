@@ -147,12 +147,12 @@ get_rdvcov_scalemat <- function(scale_pars, info_list, data_list, groups) {
   lapply(info_list, function(hc) {
     if (!is.null(hc)) {
       lapply(hc$hc_list$hcvars, function(lvl) {
-        if (all(!attr(lvl, "incomplete")) & length(lvl$rd_slope_coefs) > 0) {
+        if (all(!attr(lvl, "incomplete")) & isTRUE(nrow(lvl$rd_slope_coefs) > 0L)) {
           rd_desgn_mat <- do.call(cbind,
-                                  lapply(lvl$rd_slope_coefs, function(rds_info) {
-                                    data_list[[rds_info$matrix]][
-                                      groups[[gsub("M_", "", rds_info$matrix)]],
-                                      rds_info$cols, drop = FALSE]
+                                  lapply(seq_len(nrow(lvl$rd_slope_coefs)), function(i) {
+                                    data_list[[lvl$rd_slope_coefs$matrix[i]]][
+                                      groups[[gsub("M_", "", lvl$rd_slope_coefs$matrix[i])]],
+                                      lvl$rd_slope_coefs$cols[i], drop = FALSE]
                                   }))
           if (attr(lvl, "rd_intercept")) {
             rd_desgn_mat <- cbind("(Intercept)" = 1, rd_desgn_mat)
