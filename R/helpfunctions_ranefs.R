@@ -364,13 +364,14 @@ hc_rdslope_interact <- function(hc_cols, parelmts, lvls) {
     } else {
       do.call(rbind,
               lapply(hc_cols[[var]]$interact, function(x) {
-                data.frame(term = attr(x, 'interaction'),
-                           matrix = names(x$interterm),
-                           cols = x$interterm,
+                mat <- names(x$elmts)[attr(x, 'elements') != var]
+
                 data.frame(rd_effect = var,
                            term = attr(x, 'interaction'),
+                           matrix = mat,
+                           cols = x$elmts[mat],
                            parelmts = unname(parelmts[[names(x$interterm)]][
-                             attr(x, 'interaction')]),
+                             attr(x, "interaction")]),
                            stringsAsFactors = FALSE
                 )
               })
@@ -390,7 +391,7 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) 
   # - parelmts: vector of parameter elements (from info_list)
   # - lp: linear predictor (from info_list)
 
-  hc_vars <- sapply(lvls, function(lvl) {
+  hc_vars <- nlapply(lvls, function(lvl) {
 
     rd_slope_coefs <- hc_rdslope_info(hc_cols = hc_columns[[lvl]], parelmts)
     rd_slope_interact_coefs <- hc_rdslope_interact(hc_columns[[lvl]], parelmts)
@@ -398,8 +399,6 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) 
     elmts <- parelmts[[paste0("M_", lvl)]][
       !parelmts[[paste0("M_", lvl)]] %in%
         rbind(rd_slope_coefs, rd_slope_interact_coefs)$parelmts]
-        # rbind(do.call(rbind, rd_slope_coefs),
-        #       do.call(rbind, rd_slope_interact_coefs))$parelmts]
 
     rd_intercept_coefs <- if (!is.null(elmts) &
                               attr(hc_columns[[lvl]], 'rd_intercept') == 1) {
@@ -430,20 +429,11 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) 
       incomplete = attr(hc_columns[[lvl]], "incomplete"),
       z_names = attr(hc_columns[[lvl]], "z_names")
     )
-  }, simplify = FALSE)
-
-
-
-collapsed <- lapply(lapply(hc_vars, function(i) {
-  lapply(i, function(j) {
-    if (is.list(j) & !is.data.frame(j))
-      do.call(rbind, j)
-    else
-      j
   })
-}), do.call, what = rbind)
 
-used <- lapply(collapsed, "[[", "parelmts")
+
+
+  used <- lapply(nlapply(hc_vars, do.call, what = rbind), "[[", "parelmts")
 
 
 othervars <- sapply(
