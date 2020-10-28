@@ -964,7 +964,7 @@ model {
   for (ii in 1:100) {
     b_o1_id[ii, 1:2] ~ dmnorm(mu_b_o1_id[ii, ], invD_o1_id[ , ])
     mu_b_o1_id[ii, 1] <- (M_id[ii, 2] - spM_id[2, 1])/spM_id[2, 2] * beta[1]
-    mu_b_o1_id[ii, 2] <- beta[2] + M_lvlone[ii, 7] * beta[6]
+    mu_b_o1_id[ii, 2] <- beta[2] + (M_id[ii, 2] - spM_id[2, 1])/spM_id[2, 2] * beta[6]
   }
 
 
