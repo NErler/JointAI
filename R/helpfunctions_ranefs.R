@@ -274,14 +274,16 @@ hc_rdslope_info <- function(hc_cols, parelmts) {
     elmts <- parelmts[[M_lvl]]
 
     if (is.list(elmts)) {
-      data.frame(term = ii,
+      data.frame(rd_effect = var,
+                 term = var,
                  matrix = M_lvl,
                  cols = hc_cols[[var]]$main,
                  parelmts = NA,
                  stringsAsFactors = FALSE
       )
     } else {
-      data.frame(term = var,
+      data.frame(rd_effect = var,
+                 term = var,
                  matrix = M_lvl,
                  cols = hc_cols[[var]]$main,
                  parelmts = ifelse(is.null(elmts[var]), NA, unname(elmts[var])),
@@ -350,7 +352,8 @@ hc_rdslope_interact <- function(hc_cols, parelmts, lvls) {
     if (any(lvapply(parelmts, is.list))) {
       do.call(rbind,
               lapply(hc_cols[[var]]$interact, function(x) {
-                data.frame(term = attr(x, 'interaction'),
+                data.frame(rd_effect = var,
+                           term = attr(x, 'interaction'),
                            matrix = names(x$elmts[attr(x, 'elements') != var]),
                            cols = x$elmts[attr(x, 'elements') != var],
                            parelmts = NA,
@@ -364,6 +367,8 @@ hc_rdslope_interact <- function(hc_cols, parelmts, lvls) {
                 data.frame(term = attr(x, 'interaction'),
                            matrix = names(x$interterm),
                            cols = x$interterm,
+                data.frame(rd_effect = var,
+                           term = attr(x, 'interaction'),
                            parelmts = unname(parelmts[[names(x$interterm)]][
                              attr(x, 'interaction')]),
                            stringsAsFactors = FALSE
@@ -406,6 +411,7 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) 
         NULL
       } else {
         data.frame(
+          rd_effect = "(Intercept)",
           term = names(elmts),
           matrix = paste0("M_", lvl),
           cols = lp[[paste0("M_", lvl)]][names(elmts)],
