@@ -169,67 +169,68 @@ paste_rdslope_lp <- function(info, isgk = FALSE) {
   }
 
 
+
   # for each of the grouping levels for which there are random effects do:
   nlapply(names(info$hc_list$hcvars), function(lvl) {
 
-    # name of the corresponding data matrix
-    mat <- paste0("M_", lvl)
-
-    # identify variables for which a random slope needs to be specified on the
-    # current grouping level and variables which have an interaction with one
-    # of these random slope variables
-    rds <- info$hc_list$hcvars[[lvl]]$rd_slope_coefs
-    rdsi <- info$hc_list$hcvars[[lvl]]$rd_slope_interact_coefs
-
-
-    rds_rdsi_vec <- c(
-      if (!is.null(rds)) {
-        # If there are no coefficients (= no fixed effect, only random
-        # effect), the mean of the random effect is 0, otherwise it is a
-        # linear predictor
-        ifelse(is.na(rds$parelmts),
-               "0",
-               paste_coef(parname = info$parname,
-                          parelmts = rds$parelmts)
-        )
-
-        # if (all(is.na(rds$parelmts))) {
-        #   "0"
-        # } else {
-        #   paste_coef(parname = info$parname,
-        #              parelmts = rds$parelmts[!is.na(rds$parelmts)])
-        # }
-      },
-
-      # interactions with random slope (if rdsi == NULL there are no
-      # variables that have an interaction with a random slope variable)
-      if (!is.null(rdsi)) {
-        if (!all(is.na(rdsi$parelmts))) {
-          # write the product from the scaled data part and the corresponding
-          # regression coefficients
-          rdsi <- rdsi[!is.na(rdsi$parelmts), ]
-          paste(
-            paste_scaling(x = paste_data(matnam = rdsi$matrix,
-                                         index = info$index[lvl],
-                                         col = rdsi$cols, isgk),
-                          rows = rdsi$cols,
-                          scale_pars = info$scale_pars[[mat]],
-                          scalemat = paste0("sp", mat)
-            ),
-            paste_coef(parname = info$parname,
-                       parelmts = rdsi$parelmts),
-            sep = " * ")
-        }
-      }
-    )
-
-    # combine the random slope and random slope interaction part into a
-    # linear predictor
-    if (!is.null(rds_rdsi_vec)) {
-      paste(rds_rdsi_vec, collapse = " + ")
-    }
+    get_rds_lp(info$hc_list$hcvars[[lvl]]$rd_slope_coefs,
+               info$hc_list$hcvars[[lvl]]$rd_slope_interact_coefs,
+               lvl = lvl,
+               index = info$index,
+               parname = info$parname,
+               scale_pars = info$scale_pars,
+               isgk = isgk)
   })
 }
+
+
+get_rds_lp <- function(rd_slope_coefs, rd_slope_interact_coefs = NULL,
+                       lvl, index, parname, scale_pars = NULL,
+                       isgk = FALSE) {
+
+  # name of the corresponding data matrix
+  mat <- paste0("M_", lvl)
+
+  # identify variables for which a random slope needs to be specified on the
+  # current grouping level and variables which have an interaction with one
+  # of these random slope variables
+
+
+  rd_vars <- unique(c(rd_slope_coefs$rd_effect,
+                      rd_slope_interact_coefs$rd_effect))
+
+
+  nlapply(rd_vars, function(rd) {
+
+    rds <- rd_slope_coefs[rd_slope_coefs$rd_effect == rd, ]
+    rdsi <- rd_slope_interact_coefs[
+      rd_slope_interact_coefs$rd_effect == rd &
+        !is.na(rd_slope_interact_coefs$parelmts), ]
+
+    rds_terms <- ifelse(is.na(rds$parelmts),
+                        "0",
+                        paste_coef(parname = parname,
+                                   parelmts = rds$parelmts)
+    )
+    rdsi_terms <- if (isTRUE(nrow(rdsi) > 0L)) {
+      paste(
+        paste_scaling(x = paste_data(matnam = rdsi$matrix,
+                                     index = index[lvl],
+                                     col = rdsi$cols, isgk),
+                      rows = rdsi$cols,
+                      scale_pars = scale_pars[[mat]],
+                      scalemat = paste0("sp", mat)
+        ),
+        paste_coef(parname = parname,
+                   parelmts = rdsi$parelmts),
+        sep = " * ")
+    }
+
+    paste0(c(rds_terms, rdsi_terms), collapse = " + ")
+  })
+}
+
+
 
 
 # used in jagsmodels that use random effects (2020-06-10)
