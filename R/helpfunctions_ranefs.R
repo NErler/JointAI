@@ -59,6 +59,22 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
 
 
 
+#' Create warning about not being able to re-scale the random effects
+#'
+#' When random slope variables or variables having an interaction with a random
+#' slope variable are scaled during fitting the model the random effects and
+#' their variance-covariance parameters need to be re-scaled afterwards.
+#' This only possible if there are no missing values in the scaled variables.
+#'
+#' @param incompl list of logical vectors (one per random effects level)
+#'                indicating for all random slope variables if they are
+#'                incomplete
+#' @param scale_pars list of scaling parameters, as obtained in
+#'                   `divide_matrices()`
+#' @param varname character string; name of the response variable
+#'
+#' @noRd
+#'
 rescale_ranefs_warning <- function(incompl, scale_pars, varname) {
 
   nlapply(names(incompl), function(lvl) {
@@ -92,6 +108,9 @@ rescale_ranefs_warning <- function(incompl, scale_pars, varname) {
 #' @param random random effects formula (not a list of formulas)
 #' @param rel_lvls character vector of the relevant grouping levels for that
 #'                 response variable, i.e., all higher levels.
+#'
+#' @return a list of one-sided formulas (by grouping level). The formulas do not
+#'         have any grouping specification any more.
 #' @noRd
 check_random_lvls <- function(random, rel_lvls) {
   if (length(rel_lvls) == 0L) {
@@ -128,9 +147,10 @@ check_random_lvls <- function(random, rel_lvls) {
 #' @return List of lists: for each random effect variable a list with elements
 #'         "main" and "interact", each of the two a vector of column numbers
 #'         (named with the name of the corresponding data matrix).
-#'         Attributes indicate if there is a random intercept, the column
-#'         names of the corresponding (hypothetical) random effect design
-#'         matrix, and if any of the involved variables have missing values.
+#'         Attributes indicate if there is a random intercept ("rd_intercept"),
+#'         the column names of the corresponding (hypothetical) random effect
+#'         design matrix ("z_names"), and if any of the involved variables
+#'         have missing values ("incomplete").
 #'
 #' @noRd
 
