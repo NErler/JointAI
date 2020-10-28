@@ -2647,7 +2647,7 @@ model {
     b_y_id[ii, 1:3] ~ dmnorm(mu_b_y_id[ii, ], invD_y_id[ , ])
     mu_b_y_id[ii, 1] <- M_id[ii, 2] * beta[1] + M_id[ii, 3] * beta[2]
     mu_b_y_id[ii, 2] <- beta[5]
-    mu_b_y_id[ii, 3] <- beta[3] + M_lvlone[ii, 5] * beta[6]
+    mu_b_y_id[ii, 3] <- beta[3] + M_id[ii, 3] * beta[6]
   }
 
   # Priors for the model for y
@@ -2750,7 +2750,7 @@ model {
     b_y_id[ii, 1:3] ~ dmnorm(mu_b_y_id[ii, ], invD_y_id[ , ])
     mu_b_y_id[ii, 1] <- M_id[ii, 2] * beta[1] + M_id[ii, 3] * beta[2]
     mu_b_y_id[ii, 2] <- beta[5]
-    mu_b_y_id[ii, 3] <- beta[3] + M_lvlone[ii, 5] * beta[6]
+    mu_b_y_id[ii, 3] <- beta[3] + M_id[ii, 3] * beta[6]
   }
 
   # Priors for the model for y
@@ -3455,7 +3455,7 @@ model {
                         (M_id[ii, 3] - spM_id[3, 1])/spM_id[3, 2] * beta[2] +
                         M_id[ii, 4] * beta[3]
     mu_b_y_id[ii, 2] <- beta[6]
-    mu_b_y_id[ii, 3] <- beta[4] + M_lvlone[ii, 5] * beta[7]
+    mu_b_y_id[ii, 3] <- beta[4] + M_id[ii, 4] * beta[7]
   }
 
   # Priors for the model for y
@@ -3589,7 +3589,7 @@ model {
                         (M_id[ii, 3] - spM_id[3, 1])/spM_id[3, 2] * beta[2] +
                         M_id[ii, 4] * beta[3]
     mu_b_y_id[ii, 2] <- beta[6]
-    mu_b_y_id[ii, 3] <- beta[4] + M_lvlone[ii, 5] * beta[7]
+    mu_b_y_id[ii, 3] <- beta[4] + M_id[ii, 4] * beta[7]
   }
 
   # Priors for the model for y
@@ -3715,7 +3715,9 @@ model {
                b_y_id[group_id[i], 2] * (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] +
                b_y_id[group_id[i], 3] * (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2] +
                beta[4] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] +
-               beta[6] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2]
+               beta[6] * (M_lvlone[i, 4] - spM_lvlone[4, 1])/spM_lvlone[4, 2] +
+               beta[8] * (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] +
+               beta[9] * (M_lvlone[i, 7] - spM_lvlone[7, 1])/spM_lvlone[7, 2]
   }
 
   for (ii in 1:100) {
@@ -3723,8 +3725,7 @@ model {
     mu_b_y_id[ii, 1] <- M_id[ii, 2] * beta[1] +
                         (M_id[ii, 3] - spM_id[3, 1])/spM_id[3, 2] * beta[2] +
                         M_id[ii, 4] * beta[3]
-    mu_b_y_id[ii, 2] <- beta[5] + M_lvlone[ii, 5] * beta[7] + M_lvlone[ii, 6] * beta[8] +
-                        M_lvlone[ii, 7] * beta[9]
+    mu_b_y_id[ii, 2] <- beta[5] + M_id[ii, 4] * beta[7]
     mu_b_y_id[ii, 3] <- 0
   }
 
@@ -3825,13 +3826,14 @@ model {
     M_lvlone[i, 1] ~ dnorm(mu_y[i], tau_y)
     mu_y[i] <- b_y_id[group_id[i], 1] + b_y_id[group_id[i], 2] * M_lvlone[i, 3] +
                beta[2] * (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] +
-               beta[4] * M_lvlone[i, 4] + beta[5] * M_lvlone[i, 5]
+               beta[4] * M_lvlone[i, 4] + beta[5] * M_lvlone[i, 5] +
+               beta[6] * (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2]
   }
 
   for (ii in 1:100) {
     b_y_id[ii, 1:2] ~ dmnorm(mu_b_y_id[ii, ], invD_y_id[ , ])
     mu_b_y_id[ii, 1] <- M_id[ii, 1] * beta[1]
-    mu_b_y_id[ii, 2] <- beta[3] + M_lvlone[ii, 6] * beta[6]
+    mu_b_y_id[ii, 2] <- beta[3]
   }
 
   # Priors for the model for y
