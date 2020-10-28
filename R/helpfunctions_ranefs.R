@@ -45,15 +45,15 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
 
     structure(
       orga_hc_parelmts(
-      resplvl,
-      intersect(rel_lvls, names(newrandom)),
-      all_lvls = all_lvls,
-      hc_columns = hc_columns,
-      parelmts = parelmts,
-      lp = lp
-    ),
-    warnings = rescale_ranefs_warning(lapply(hc_columns, attr, "incomplete"),
-                                      Mlist$scale_pars, varname))
+        resplvl,
+        intersect(rel_lvls, names(newrandom)),
+        all_lvls = all_lvls,
+        hc_columns = hc_columns,
+        parelmts = parelmts,
+        lp = lp
+      ),
+      warnings = rescale_ranefs_warning(lapply(hc_columns, attr, "incomplete"),
+                                        Mlist$scale_pars, varname))
   }
 }
 
