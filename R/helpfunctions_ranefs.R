@@ -396,8 +396,10 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) 
 
   hc_vars <- nlapply(lvls, function(lvl) {
 
-    rd_slope_coefs <- hc_rdslope_info(hc_cols = hc_columns[[lvl]], parelmts)
-    rd_slope_interact_coefs <- hc_rdslope_interact(hc_columns[[lvl]], parelmts)
+    rd_slope_coefs <- hc_rdslope_info(hc_columns[[lvl]], parelmts)
+    rd_slope_interact_coefs <- hc_rdslope_interact(hc_columns[[lvl]],
+                                                   parelmts,
+                                                   lvls)
 
     elmts <- parelmts[[paste0("M_", lvl)]][
       !parelmts[[paste0("M_", lvl)]] %in%
@@ -439,22 +441,22 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) 
   used <- lapply(nlapply(hc_vars, do.call, what = rbind), "[[", "parelmts")
 
 
-othervars <- sapply(
-  names(all_lvls)[all_lvls <= min(all_lvls[lvls])], function(lvl) {
+  othervars <- nlapply(
+    names(all_lvls)[all_lvls <= min(all_lvls[lvls])], function(lvl) {
 
-    other <- get_othervars_mat(lvl, parelmts, lp)
-    nonprop <- get_othervars_mat(lvl, lapply(parelmts, 'attr', 'nonprop'),
-                                 attr(lp, 'nonprop'))
+      other <- get_othervars_mat(lvl, parelmts, lp)
+      nonprop <- get_othervars_mat(lvl, lapply(parelmts, 'attr', 'nonprop'),
+                                   attr(lp, 'nonprop'))
 
-    if (!inherits(other, 'list'))
-      other <- other[!other$parelmts %in% unlist(used), ]
+      if (!inherits(other, 'list'))
+        other <- other[!other$parelmts %in% unlist(used), ]
 
-    list(
-      other = if (all(dim(other) > 0))
-        other,
-      nonprop = nonprop
-    )
-  }, simplify = FALSE)
+      list(
+        other = if (all(dim(other) > 0))
+          other,
+        nonprop = nonprop
+      )
+    })
 
   list(hcvars = hc_vars,
        othervars = lapply(othervars, "[[", "other"),
