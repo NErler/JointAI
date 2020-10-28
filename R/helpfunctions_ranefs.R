@@ -379,9 +379,12 @@ hc_rdslope_interact <- function(hc_cols, parelmts, lvls) {
     }
   })
 
-  do.call(rbind, rd_slope_interact_coefs)
-}
+  rd_slope_interact_coefs <- do.call(rbind, rd_slope_interact_coefs)
 
+  if (!is.null(rd_slope_interact_coefs)) {
+    subset(rd_slope_interact_coefs, matrix %in% paste0('M_', lvls))
+  }
+}
 
 # used in get_hc_info() (2020-06-11)
 orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) {

@@ -4,7 +4,7 @@
 \alias{hc_rdslope_interact}
 \title{Get info on the interactions with random slopes for a given level and sub-model}
 \usage{
-hc_rdslope_interact(hc_cols, parelmts)
+hc_rdslope_interact(hc_cols, parelmts, lvls)
 }
 \arguments{
 \item{hc_cols}{list of lists (one per random effect), each containing a list
