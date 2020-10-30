@@ -190,6 +190,15 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
   }
 
 
+  assoc_type <- if (modeltype %in% "JM") {
+    covrs <- unique(unlist(lapply(names(unlist(unname(lp))),
+                                  replace_dummy, Mlist$refs)))
+    get_assoc_type(intersect(tvars, covrs),
+                             Mlist$models, assoc_type, Mlist$refs)
+  } else if (modeltype %in% "coxph") {
+    "obs.value"
+  }
+
   # collect all info ---------------------------------------------------------
   list(
     varname = if (modeltype %in% c("survreg", "coxph", "JM")) {
@@ -221,12 +230,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
     shrinkage = shrinkage,
     refs = Mlist$refs[[k]],
     covnames = covnames,
-    assoc_type  = if (modeltype %in% "JM") {
-      get_assoc_type(intersect(tvars, names(unlist(unname(lp)))),
-                     Mlist$models, assoc_type, Mlist$refs)
-    } else if (modeltype %in% "coxph") {
-      "obs.value"
-    },
+    assoc_type  = assoc_type,
     tv_vars = tv_vars,
     N = Mlist$N,
     df_basehaz = Mlist$df_basehaz
