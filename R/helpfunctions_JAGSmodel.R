@@ -78,8 +78,8 @@ paste_linpred <- function(parname, parelmts, matnam, index, cols, scale_pars,
   paste(
     paste_scaling(x = paste_data(matnam, index, cols, isgk),
                   rows = cols,
-                  scale_pars = scale_pars,
-                  scalemat = paste0("sp", matnam)
+                  scale_pars = list(scale_pars)[rep(1, length(cols))],
+                  scalemat = rep(paste0("sp", matnam), length(cols))
     ),
     paste_coef(parname, parelmts),
     sep = " * ", collapse = " + ")
@@ -124,10 +124,10 @@ paste_scaling <- function(x, rows, scale_pars, scalemat) {
     x
   } else {
     cvapply(seq_along(x), function(k) {
-      if (rowSums(is.na(scale_pars[rows, ]))[k] > 0L) {
+      if (rowSums(is.na(scale_pars[[k]][rows[k], ])) > 0L) {
         x[k]
       } else {
-        paste_scale(x, row = rows, scalemat = scalemat)[k]
+        paste_scale(x[[k]], row = rows[k], scalemat = scalemat[k])
       }
     })
   }
@@ -218,8 +218,8 @@ get_rds_lp <- function(rd_slope_coefs, rd_slope_interact_coefs = NULL,
                                      index = index[lvl],
                                      col = rdsi$cols, isgk),
                       rows = rdsi$cols,
-                      scale_pars = scale_pars[[mat]],
-                      scalemat = paste0("sp", mat)
+                      scale_pars = scale_pars[rep(mat, length(rdsi$cols))],
+                      scalemat = rep(paste0("sp", mat), length(rdsi$cols))
         ),
         paste_coef(parname = parname,
                    parelmts = rdsi$parelmts),
@@ -502,8 +502,8 @@ get_rds <- function(rd_slope_coefs, lvl, varname, index, out_index,
           index = out_index,
           col = rd_slope_coefs$cols, isgk = isgk),
         rows = rd_slope_coefs$cols,
-        scale_pars = scale_pars[[unique(rd_slope_coefs$matrix)]],
-        scalemat = paste0("sp", unique(rd_slope_coefs$matrix))),
+        scale_pars = scale_pars[rd_slope_coefs$matrix],
+        scalemat = paste0("sp", rd_slope_coefs$matrix)),
       sep = " * ")
     # })
   }
@@ -549,8 +549,8 @@ paste_o <- function(x, parname, index, scale_pars, scale_mat, isgk = FALSE) {
                    col = x$cols,
                    isgk = isgk),
         rows = x$cols,
-        scale_pars = scale_pars,
-        scalemat = scale_mat),
+        scale_pars = list(scale_pars)[rep(1, length(x$cols))],
+        scalemat = rep(scale_mat, length(x$cols))),
       sep = " * "),
     collapse = " + ")
 }
@@ -770,8 +770,8 @@ paste_linpred_jm <- function(varname, parname, parelmts, matnam, index, cols,
   paste(
     paste_scaling(x = pastedat,
                   rows = cols,
-                  scale_pars = scale_pars,
-                  scalemat = paste0("sp", matnam)
+                  scale_pars = list(scale_pars)[rep(1, length(cols))],
+                  scalemat = rep(paste0("sp", matnam), length(cols))
     ),
     paste_coef(parname, parelmts),
     sep = " * ", collapse = " + ")
