@@ -35,10 +35,20 @@ get_hc_info <- function(varname, resplvl, Mlist, parelmts, lp) {
 
   # identify relevant levels: all levels higher than the level of the response
   rel_lvls <- names(all_lvls)[all_lvls > all_lvls[resplvl]]
+  # to allow time-varying covariates in survival models, the outcome level may
+  # need a random effect:
+  rel_lvls_surv <- names(all_lvls)[all_lvls >= all_lvls[resplvl]]
 
   # if there is no random effects structure specified, assume random intercepts
   # at the appropriate levels
-  newrandom <- check_random_lvls(Mlist$random[[varname]], rel_lvls)
+  newrandom <- check_random_lvls(
+    Mlist$random[[varname]],
+    rel_lvls = if (Mlist$models[varname] %in% c("coxph", "survreg", "JM") &
+                   length(rel_lvls_surv) > 1L) {
+      rel_lvls_surv
+    } else {
+      rel_lvls
+    })
 
   if (length(newrandom) > 0) {
     hc_columns <- lapply(newrandom, get_hc_columns, Mlist = Mlist)
