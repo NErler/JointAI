@@ -366,14 +366,29 @@ hc_rdslope_interact <- function(hc_cols, parelmts, lvls) {
               lapply(hc_cols[[var]]$interact, function(x) {
                 mat <- names(x$elmts)[attr(x, 'elements') != var]
 
-                data.frame(rd_effect = var,
-                           term = attr(x, 'interaction'),
-                           matrix = mat,
-                           cols = x$elmts[mat],
-                           parelmts = unname(parelmts[[names(x$interterm)]][
-                             attr(x, "interaction")]),
-                           stringsAsFactors = FALSE
-                )
+                if (length(mat) > 1L) {
+                  elmt <- paste0(attr(x,"elements")[attr(x, 'elements') != var],
+                                 collapse = ":")
+                  mat <- unlist(lapply(names(parelmts), function(p) {
+                    if (elmt %in% names(parelmts[[p]])) p
+                  }))
+                  col <- if (!is.null(mat)) {
+                    which(names(parelmts[[mat]]) == elmt)
+                  }
+                } else {
+                  col <- x$elmts[attr(x, 'elements') != var]
+                }
+
+                if (!is.null(mat)) {
+                  data.frame(rd_effect = var,
+                             term = attr(x, 'interaction'),
+                             matrix = mat,
+                             cols = col,
+                             parelmts = unname(parelmts[[names(x$interterm)]][
+                               attr(x, "interaction")]),
+                             stringsAsFactors = FALSE
+                  )
+                }
               })
       )
     }
