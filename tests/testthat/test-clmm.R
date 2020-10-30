@@ -63,7 +63,8 @@ run_clmm_models <- function() {
 
 
       # complex structures
-      m4a = clmm_imp(o1 ~ M2 + o2 * abs(C1 - C2) + log(C1) + (1 | id), data = longDF,
+      m4a = clmm_imp(o1 ~ M2 + o2 * abs(C1 - C2) + log(C1) + (1 | id),
+                     data = longDF,
                      n.adapt = 5, n.iter = 10, seed = 2020,
                      warn = FALSE, mess = FALSE),
       m4b = clmm_imp(o1 ~ ifelse(as.numeric(o2) > as.numeric(M1), 1, 0) *
