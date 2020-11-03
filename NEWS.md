@@ -10,6 +10,9 @@
 * `append_data_list`: new argument in the main analysis functions that allows
   the user to add elements to the list of data that is passed to JAGS. This 
   may be necessary for custom sub-models.
+* `rd_vcov`: new argument in the main analysis functions that allows the 
+  specification of the structure of the random effects variance-covariance
+  matrices in (multivariate) mixed models (and joint models).
 
 
 ## Minor improvements and bug fixes

@@ -281,7 +281,7 @@ where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}
 
 \item{rd_vcov}{character string or list specifying the structure of the
-random effects variance covariance matrix.}
+random effects variance covariance matrix, see details below.}
 
 \item{df_basehaz}{degrees of freedom for the B-spline used to model the
 baseline hazard in proportional hazards models
@@ -354,6 +354,46 @@ longitudinal and survival data.
 
 Note that it is not possible to specify multiple models for the same outcome
 variable.
+\subsection{Random effects variance-covariance structure}{
+
+By default, a block-diagonal structure is assumed for the variance-covariance
+matrices of the random effects in models with random effects. This means that
+per outcome and level random effects are assumed to be correlated, but
+random effects of different outcomes are modelled as independent.
+The argument \code{rd_vcov} allows the user specify different assumptions about
+these variance-covariance matrices. Implemented structures are \code{full},
+\code{blockdiag} and \code{indep} (all off-diagonal elements are zero).
+
+If \code{rd_vcov} is set to one of these options, the structure is assumed for
+all random effects variance-covariance matrices.
+Alternatively, it is possible to specify a named list of vectors, where
+the names are the structures and the vectors contain the names of the
+response variables which are included in this structure.
+
+For example, for a multivariate mixed model with five outcomes
+\code{y1}, ..., \code{y5}, the specification could be:\if{html}{\out{<div class="r">}}\preformatted{rd_vcov = list(blockdiag = c("y1", "y2"),
+               full = c("y3", "y4"),
+               indep = "y5")
+}\if{html}{\out{</div>}}
+
+This would entail that the random effects for \code{y3} and \code{y4} are assumed to
+be correlated (within and across outcomes),
+random effects for \code{y1} and \code{y2} are assumed to be correlated within each
+outcome, and the random effects for \code{y5} are assumed to be independent.
+
+It is possible to have multiple sets of response variables for which separate
+full variance-covariance matrices are used, for example:\if{html}{\out{<div class="r">}}\preformatted{rd_vcov = list(full = c("y1", "y2", "y5"),
+               full = c("y3", "y4"))
+}\if{html}{\out{</div>}}
+
+In models with multiple levels of nesting, separate structures can be
+specified per level:\if{html}{\out{<div class="r">}}\preformatted{rd_vcov = list(id = list(blockdiag = c("y1", "y2"),
+                         full = c("y3", "y4"),
+                         indep = "y5"),
+              center = "indep")
+}\if{html}{\out{</div>}}
+}
+
 }
 
 \subsection{Survival models with frailties or time-varying covariates}{

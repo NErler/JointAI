@@ -21,7 +21,7 @@
 #'               a family function. (For more details see below and
 #'               \code{\link[stats]{family}}.)
 #' @param rd_vcov character string or list specifying the structure of the
-#'                random effects variance covariance matrix.
+#'                random effects variance covariance matrix, see details below.
 #' @param monitor_params named list or vector specifying which parameters
 #'                       should be monitored (more details below)
 #' @param inits optional; specification of initial values in the form of a list
@@ -171,6 +171,51 @@
 #'
 #' Note that it is not possible to specify multiple models for the same outcome
 #' variable.
+#'
+#' ### Random effects variance-covariance structure
+#' By default, a block-diagonal structure is assumed for the variance-covariance
+#' matrices of the random effects in models with random effects. This means that
+#' per outcome and level random effects are assumed to be correlated, but
+#' random effects of different outcomes are modelled as independent.
+#' The argument `rd_vcov` allows the user specify different assumptions about
+#' these variance-covariance matrices. Implemented structures are `full`,
+#' `blockdiag` and `indep` (all off-diagonal elements are zero).
+#'
+#' If `rd_vcov` is set to one of these options, the structure is assumed for
+#' all random effects variance-covariance matrices.
+#' Alternatively, it is possible to specify a named list of vectors, where
+#' the names are the structures and the vectors contain the names of the
+#' response variables which are included in this structure.
+#'
+#' For example, for a multivariate mixed model with five outcomes
+#' `y1`, ..., `y5`, the specification could be:
+#' ```{r}
+#' rd_vcov = list(blockdiag = c("y1", "y2"),
+#'                full = c("y3", "y4"),
+#'                indep = "y5")
+#' ```
+#' This would entail that the random effects for `y3` and `y4` are assumed to
+#' be correlated (within and across outcomes),
+#' random effects for `y1` and `y2` are assumed to be correlated within each
+#' outcome, and the random effects for `y5` are assumed to be independent.
+#'
+#'
+#' It is possible to have multiple sets of response variables for which separate
+#' full variance-covariance matrices are used, for example:
+#' ```{r}
+#' rd_vcov = list(full = c("y1", "y2", "y5"),
+#'                full = c("y3", "y4"))
+#' ```
+#'
+#' In models with multiple levels of nesting, separate structures can be
+#' specified per level:
+#' ```{r}
+#' rd_vcov = list(id = list(blockdiag = c("y1", "y2"),
+#'                          full = c("y3", "y4"),
+#'                          indep = "y5"),
+#'               center = "indep")
+#' ```
+#'
 #'
 #' ## Survival models with frailties or time-varying covariates
 #' Random effects specified in brackets can also be used to indicate a
