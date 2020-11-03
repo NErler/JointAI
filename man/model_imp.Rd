@@ -59,51 +59,51 @@ mlogit_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
 
 lme_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, warn = TRUE, mess = TRUE,
-  ...)
-
-lmer_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, warn = TRUE, mess = TRUE,
-  ...)
-
-glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
-  auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  warn = TRUE, mess = TRUE, ...)
-
-glmer_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
-  auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  warn = TRUE, mess = TRUE, ...)
-
-betamm_imp(fixed, random, data, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, models = NULL, no_model = NULL, shrinkage = FALSE,
-  ppc = TRUE, seed = NULL, inits = NULL, warn = TRUE, mess = TRUE,
-  ...)
-
-lognormmm_imp(fixed, random, data, n.chains = 3, n.adapt = 100,
-  n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
-  auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  warn = TRUE, mess = TRUE, ...)
-
-clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
-  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
-  refcats = NULL, nonprop = NULL, rev = NULL, models = NULL,
+  refcats = NULL, rd_vcov = "blockdiag", models = NULL,
   no_model = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
   inits = NULL, warn = TRUE, mess = TRUE, ...)
 
+lmer_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+  refcats = NULL, rd_vcov = "blockdiag", models = NULL,
+  no_model = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, warn = TRUE, mess = TRUE, ...)
+
+glme_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL, refcats = NULL, rd_vcov = "blockdiag", models = NULL,
+  no_model = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, warn = TRUE, mess = TRUE, ...)
+
+glmer_imp(fixed, data, random, family, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL, refcats = NULL, rd_vcov = "blockdiag", models = NULL,
+  no_model = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, warn = TRUE, mess = TRUE, ...)
+
+betamm_imp(fixed, random, data, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+  refcats = NULL, rd_vcov = "blockdiag", models = NULL,
+  no_model = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, warn = TRUE, mess = TRUE, ...)
+
+lognormmm_imp(fixed, random, data, n.chains = 3, n.adapt = 100,
+  n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
+  auxvars = NULL, refcats = NULL, rd_vcov = "blockdiag", models = NULL,
+  no_model = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, warn = TRUE, mess = TRUE, ...)
+
+clmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100, n.iter = 0,
+  thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
+  refcats = NULL, nonprop = NULL, rev = NULL, rd_vcov = "blockdiag",
+  models = NULL, no_model = NULL, shrinkage = FALSE, ppc = TRUE,
+  seed = NULL, inits = NULL, warn = TRUE, mess = TRUE, ...)
+
 mlogitmm_imp(fixed, data, random, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
-  auxvars = NULL, refcats = NULL, models = NULL, no_model = NULL,
-  shrinkage = FALSE, ppc = TRUE, seed = NULL, inits = NULL,
-  warn = TRUE, mess = TRUE, ...)
+  auxvars = NULL, refcats = NULL, rd_vcov = "blockdiag", models = NULL,
+  no_model = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, warn = TRUE, mess = TRUE, ...)
 
 survreg_imp(formula, data, n.chains = 3, n.adapt = 100, n.iter = 0,
   thin = 1, monitor_params = c(analysis_main = TRUE), auxvars = NULL,
@@ -119,9 +119,10 @@ coxph_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
 
 JM_imp(formula, data, df_basehaz = 6, n.chains = 3, n.adapt = 100,
   n.iter = 0, thin = 1, monitor_params = c(analysis_main = TRUE),
-  auxvars = NULL, timevar = NULL, refcats = NULL, models = NULL,
-  no_model = NULL, assoc_type = NULL, shrinkage = FALSE, ppc = TRUE,
-  seed = NULL, inits = NULL, warn = TRUE, mess = TRUE, ...)
+  auxvars = NULL, timevar = NULL, refcats = NULL,
+  rd_vcov = "blockdiag", models = NULL, no_model = NULL,
+  assoc_type = NULL, shrinkage = FALSE, ppc = TRUE, seed = NULL,
+  inits = NULL, warn = TRUE, mess = TRUE, ...)
 }
 \arguments{
 \item{formula}{a two sided model formula (see \code{\link[stats]{formula}})
@@ -279,6 +280,9 @@ a one-sided formula of the form \code{~x1 + ... + xn | g},
 where \code{x1 + ... + xn} specifies the model for the random
 effects and \code{g} the grouping variable}
 
+\item{rd_vcov}{character string or list specifying the structure of the
+random effects variance covariance matrix.}
+
 \item{df_basehaz}{degrees of freedom for the B-spline used to model the
 baseline hazard in proportional hazards models
 (\code{coxph_imp} and \code{JM_imp})}
@@ -297,9 +301,6 @@ Implemented options are "underl.value"
 Gaussian, Gamma, beta or log-normal distribution)
 covariates) and "obs.value" (the observed/imputed value;
 default for covariates modelled using other distributions).}
-
-\item{rd_vcov}{character string or list specifying the structure of the
-random effects variance covariance matrix.}
 }
 \value{
 An object of class \link[=JointAIObject]{JointAI}.
