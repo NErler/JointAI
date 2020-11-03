@@ -22,6 +22,9 @@
 * `add_samples()`: remove unnecessary call to `doFuture::registerDoFuture()`
 * `predDF()` bug fix: the parameter for all methods is now called `object`
 * `list_models()` now also works for errored JointAI objects
+* Bug fix for models with an interaction between a repeatedly measured variable
+  and a random slope variable. (The term was wrongly written in the mean 
+  structure for the random effect instead of the main linear predictor.)
 
 --------------------------------------------------------------------------------
 
