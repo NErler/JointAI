@@ -69,7 +69,7 @@
 list_models <- function(object, predvars = TRUE, regcoef = TRUE,
                         otherpars = TRUE, priors = TRUE, refcat = TRUE) {
 
-  if (!inherits(object, "JointAI"))
+  if (!inherits(object, "JointAI") & !inherits(object, "JointAI_errored"))
     errormsg("Use only with 'JointAI' objects.\n")
 
   for (i in object$info_list) {
