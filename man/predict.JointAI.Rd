@@ -6,7 +6,8 @@
 \usage{
 \method{predict}{JointAI}(object, outcome = 1L, newdata,
   quantiles = c(0.025, 0.975), type = "lp", start = NULL, end = NULL,
-  thin = NULL, exclude_chains = NULL, mess = TRUE, warn = TRUE, ...)
+  thin = NULL, exclude_chains = NULL, mess = TRUE, warn = TRUE,
+  return_sample = FALSE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -50,6 +51,9 @@ should be excluded}
 
 \item{warn}{logical; should warnings be given? Default is
 \code{TRUE}.}
+
+\item{return_sample}{logical; should the full sample on which the summary
+(mean and quantiles) is calculated be returned?#'}
 
 \item{...}{currently not used}
 }

@@ -146,7 +146,8 @@ predDF.list <- function(object, data, vars, length = 100L, idvar = NULL, ...) {
 #'   \code{-log(survival)}).
 #' @param outcome vector of variable names or integers identifying for which
 #'   outcome(s) the prediction should be performed.
-#'
+#' @param return_sample logical; should the full sample on which the summary
+#'                      (mean and quantiles) is calculated be returned?#'
 #' @details A \code{model.matrix} \eqn{X} is created from the model formula
 #'   (currently fixed effects only) and \code{newdata}. \eqn{X\beta} is then
 #'   calculated for each iteration of the MCMC sample in \code{object}, i.e.,
@@ -195,7 +196,7 @@ predict.JointAI <- function(object, outcome = 1L, newdata,
                             type = "lp",
                             start = NULL, end = NULL, thin = NULL,
                             exclude_chains = NULL, mess = TRUE,
-                            warn = TRUE, ...) {
+                            warn = TRUE, return_sample = FALSE, ...) {
 
 
   if (!inherits(object, "JointAI")) errormsg("Use only with 'JointAI' objects.")
@@ -259,7 +260,8 @@ predict.JointAI <- function(object, outcome = 1L, newdata,
                   Mlist = get_Mlist(object), srow = object$data_list$srow,
                   coef_list = object$coef_list, info_list = object$info_list,
                   quantiles = quantiles, mess = mess, warn = warn,
-                  contr_list = lapply(object$Mlist$refs, attr, "contr_matrix"))
+                  contr_list = lapply(object$Mlist$refs, attr, "contr_matrix"),
+                  return_sample = return_sample)
     } else {
       errormsg("Prediction is not yet implemented for a model of type %s.",
                dQuote(object$info_list[[varname]]$modeltype))
@@ -267,11 +269,26 @@ predict.JointAI <- function(object, outcome = 1L, newdata,
   })
   names(preds) <- names(object$fixed)[outcome]
 
+  pred_df <- nlapply(preds, "[[", "res_df")
+  sample <- nlapply(preds, "[[", "sample")
 
   list(
-    newdata = if (length(preds) == 1L) cbind(newdata, preds[[1L]])
-    else cbind(newdata, unlist(preds, recursive = FALSE)),
-    fitted = if (length(preds) == 1L) preds[[1L]] else preds
+    newdata = if (length(preds) == 1L) {
+      cbind(newdata, pred_df[[1L]])
+
+    } else {
+        cbind(newdata, unlist(pred_df, recursive = FALSE))
+    },
+    fitted = if (length(preds) == 1L)  {
+      pred_df[[1L]]
+    } else {
+      pred_df
+    },
+    sample = if (length(preds) == 1L)  {
+      sample[[1L]]
+    } else {
+      sample
+    }
   )
 }
 
@@ -279,7 +296,7 @@ predict.JointAI <- function(object, outcome = 1L, newdata,
 predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
                         data, MCMC, varname, coef_list, info_list,
                         quantiles = c(0.025, 0.975), mess = TRUE,
-                        contr_list, Mlist, ...) {
+                        contr_list, Mlist, return_sample = FALSE, ...) {
 
   type <- match.arg(type)
 
@@ -346,7 +363,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
     colMeans(pred)
   }
 
-  # qunatiles
+  # quantiles
   quants <- if (!is.null(quantiles)) {
     if (type == "response") {
       t(apply(pred, 2L, function(q) {
@@ -355,6 +372,21 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
     } else {
       t(apply(pred, 2L, quantile, quantiles, na.rm  = TRUE))
     }
+  }
+
+  sample <- if (return_sample) {
+    s <- if (type == "response") {
+      if (info_list[[varname]]$family == "poisson") {
+        round(linkinv(pred))
+      } else {
+        linkinv(pred)
+      }
+    } else {
+      pred
+    }
+    s <- melt_data.frame(cbind(newdata, t(s)), id.vars = names(newdata))
+    names(s) <- gsub("^variable$", "iteration", names(s))
+    s
   }
 
   on.exit(options(op))
@@ -366,7 +398,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
     data.frame(fit = fit)
   }
 
-  res_df
+  list(res_df = res_df, sample = sample)
 }
 
 
@@ -376,7 +408,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
                                                        "linear"),
                             data, MCMC, varname, coef_list, info_list,
                             quantiles = c(0.025, 0.975), warn = TRUE,
-                            contr_list, ...) {
+                            contr_list, return_sample = FALSE, ...) {
 
   type <- match.arg(type)
 
@@ -430,6 +462,17 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
       t(apply(pred, 2L, quantile, quantiles, na.rm  = TRUE))
     }}
 
+  sample <- if (return_sample) {
+    s <- if (type == "response") {
+      exp(pred)
+    } else {
+      pred
+    }
+    s <- melt_data.frame(cbind(newdata, t(s)), id.vars = names(newdata))
+    names(s) <- gsub("^variable$", "iteration", names(s))
+    s
+  }
+
   on.exit(options(op))
 
   res_df <- if (!is.null(quantiles)) {
@@ -439,7 +482,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
     data.frame(fit = fit)
   }
 
-  res_df
+  list(res_df = res_df, sample = sample)
 }
 
 
@@ -447,7 +490,8 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
 predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                           type = c("lp", "risk", "expected", "survival"),
                           varname, quantiles = c(0.025, 0.975),
-                          srow = NULL, mess = TRUE, contr_list,  ...) {
+                          srow = NULL, mess = TRUE, contr_list,
+                          return_sample = FALSE, ...) {
   type <- match.arg(type)
 
   coefs <- coef_list[[varname]]
@@ -635,6 +679,22 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     }
   }
 
+
+  sample <- if (return_sample) {
+    s <- if (type == "risk") {
+      exp(logh)
+    } else if (type == "lp") {
+      logh
+    } else if (type == "expected") {
+      -log_surv
+    } else if (type == "survival") {
+      exp(log_surv)
+    }
+    s <- melt_data.frame(cbind(newdata, t(s)), id.vars = names(newdata))
+    names(s) <- gsub("^variable$", "iteration", names(s))
+    s
+  }
+
   on.exit(options(op))
 
   res_df <- if (!is.null(quantiles)) {
@@ -643,7 +703,9 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   } else {
     data.frame(fit = fit)
   }
-  res_df
+
+
+  list(res_df = res_df, sample = sample)
 }
 
 
@@ -651,7 +713,7 @@ predict_clm <- function(formula, newdata,
                         type = c("prob", "lp", "class", "response"),
                         data, MCMC, varname, coef_list, info_list,
                         quantiles = c(0.025, 0.975), warn = TRUE,
-                        contr_list, Mlist, ...) {
+                        contr_list, Mlist, return_sample = FALSE, ...) {
 
   type <- match.arg(type)
 
@@ -765,6 +827,7 @@ predict_clm <- function(formula, newdata,
         t(apply(x, 2L, quantile, probs = quantiles, na.rm = TRUE))
       })
     }
+    s <- lp
   } else if (type == "prob") {
     fit <- lapply(probs, colMeans)
     quants <- if (!is.null(quantiles)) {
@@ -772,10 +835,12 @@ predict_clm <- function(formula, newdata,
         t(apply(x, 2L, quantile, probs = quantiles, na.rm = TRUE))
       })
     }
+    s <- probs
   } else if (type == "class") {
     fit <- apply(do.call(cbind, lapply(probs, colMeans)), 1L,
                  function(x) if (all(is.na(x))) NA else which.max(x))
     quants <- NULL
+    s <- NULL
   }
 
   res_df <- if (!is.null(quants)) {
@@ -790,8 +855,18 @@ predict_clm <- function(formula, newdata,
     data.frame(fit, check.names = FALSE)
   }
 
+  sample <- if (return_sample) {
+    errormsg("Returning the sample of predicted values is not yet possible for
+             a %s.", dQuote("clm(m)"))
+    # s <- melt_data.frame(cbind(newdata, t(s)), id.vars = names(newdata))
+    # names(s) <- gsub("^variable$", "iteration", names(s))
+    # s
+  }
+
+
   on.exit(options(op))
-  res_df
+
+  list(res_df = res_df, sample = sample)
 }
 
 
@@ -801,7 +876,7 @@ predict_mlogit <- function(formula, newdata,
                            type = c("prob", "lp", "class", "response"),
                            data, MCMC, varname, coef_list, info_list,
                            quantiles = c(0.025, 0.975), warn = TRUE,
-                           contr_list, Mlist, ...) {
+                           contr_list, Mlist, return_sample = FALSE, ...) {
 
   type <- match.arg(type)
 
@@ -866,6 +941,7 @@ predict_mlogit <- function(formula, newdata,
         t(apply(x, 2L, quantile, probs = quantiles, na.rm = TRUE))
       })
     }
+    s <- lp
   } else if (type == "prob") {
     fit <- lapply(probs, colMeans)
     quants <- if (!is.null(quantiles)) {
@@ -873,6 +949,7 @@ predict_mlogit <- function(formula, newdata,
         t(apply(x, 2L, quantile, probs = quantiles, na.rm = TRUE))
       })
     }
+    s <- probs
   } else if (type == "class") {
     fit <- apply(do.call(cbind, lapply(probs, colMeans)), 1L,
                  function(x) if (all(is.na(x))) NA else which.max(x))
@@ -891,8 +968,18 @@ predict_mlogit <- function(formula, newdata,
     data.frame(fit, check.names = FALSE)
   }
 
+  sample <- if (return_sample) {
+    errormsg("Returning the sample of predicted values is not yet possible for
+             a %s or %s.", dQuote("mlogit"), dQuote("mlogitmm"))
+    # s <- melt_data.frame(cbind(newdata, t(s)), id.vars = names(newdata))
+    # names(s) <- gsub("^variable$", "iteration", names(s))
+    # s
+  }
+
+
   on.exit(options(op))
-  res_df
+  list(res_df = res_df, sample = sample)
+
 }
 
 
