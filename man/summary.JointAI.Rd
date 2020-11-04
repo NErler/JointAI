@@ -24,23 +24,6 @@
 \method{print}{JointAI}(x, digits = max(4, getOption("digits") - 4), ...)
 }
 \arguments{
-\item{x}{an object of class \code{summary.JointAI} or \code{JointAI}}
-
-\item{digits}{a non-null value for \code{digits} specifies the minimum
-    number of significant digits to be printed in values.  The default,
-    \code{NULL}, uses \code{\link[base]{getOption}("digits")}.  (For the
-    interpretation for complex numbers see \code{\link[base]{signif}}.)
-    Non-integer values will be rounded down, and only values
-    greater than or equal to 1 and no greater than 22 are accepted.
-  }
-
-\item{scientific}{A penalty to be applied when deciding to print numeric
-values in fixed or exponential notation, by default the
-value obtained from \code{getOption("scipen")}}
-
-\item{\dots}{currently not used}
-
-
 \item{object}{object inheriting from class 'JointAI'}
 
 \item{start}{the first iteration of interest
@@ -82,8 +65,13 @@ missing values be included in the summary?}
 
 \item{x}{an object of class \code{summary.JointAI} or \code{JointAI}}
 
-\item{digits}{minimal number of \emph{significant} digits, see
-    \code{\link[base]{print.default}}.}
+\item{digits}{a non-null value for \code{digits} specifies the minimum
+    number of significant digits to be printed in values.  The default,
+    \code{NULL}, uses \code{\link[base]{getOption}("digits")}.  (For the
+    interpretation for complex numbers see \code{\link[base]{signif}}.)
+    Non-integer values will be rounded down, and only values
+    greater than or equal to 1 and no greater than 22 are accepted.
+  }
 
 \item{parm}{same as \code{subset} (for consistency with \code{confint}
 method for other types of objects)}
