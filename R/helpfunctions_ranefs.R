@@ -419,6 +419,7 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_columns, parelmts, lp) 
   # - parelmts: vector of parameter elements (from info_list)
   # - lp: linear predictor (from info_list)
 
+
   hc_vars <- nlapply(lvls, function(lvl) {
 
     rd_slope_coefs <- hc_rdslope_info(hc_columns[[lvl]], parelmts)
