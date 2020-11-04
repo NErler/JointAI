@@ -193,9 +193,11 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_list, parelmts, lp) {
 
     # variables interacting with a random slope variable
     rd_slope_interact_coefs <- sapply(rdsvars, function(ii) {
+
       if (any(sapply(parelmts, is.list))) {
         do.call(rbind, sapply(hc_list[[k]][[ii]]$interact, function(x) {
-          data.frame(term = attr(x, 'interaction'),
+          if (length(names(x$elmts[attr(x, 'elements') != ii])) == 1)
+            data.frame(term = attr(x, 'interaction'),
                      matrix = names(x$elmts[attr(x, 'elements') != ii]),
                      cols = x$elmts[attr(x, 'elements') != ii],
                      parelmts = NA,
@@ -204,9 +206,11 @@ orga_hc_parelmts <- function(resplvl, lvls, all_lvls, hc_list, parelmts, lp) {
         }, simplify = FALSE))
       } else {
         do.call(rbind, sapply(hc_list[[k]][[ii]]$interact, function(x) {
+          if (length(names(x$elmts[attr(x, 'elements') != ii])) == 1 &&
+              names(x$elmts[attr(x, 'elements') != ii]) %in% paste0("M_", lvls))
           data.frame(term = attr(x, 'interaction'),
-                     matrix = names(x$interterm),
-                     cols = x$interterm,
+                     matrix = names(x$elmts[attr(x, 'elements') != ii]),
+                     cols = x$elmts[attr(x, 'elements') != ii],
                      parelmts = unname(parelmts[[names(x$interterm)]][
                        attr(x, 'interaction')]),
                      stringsAsFactors = FALSE
