@@ -203,6 +203,12 @@
 <li>
 <code><a href="../reference/predDF.html">predDF()</a></code> bug fix: the parameter for all methods is now called <code>object</code>
 </li>
+<li>
+<code><a href="../reference/add_samples.html">add_samples()</a></code>: remove unnecessary call to <code><a href="https://rdrr.io/pkg/doFuture/man/registerDoFuture.html">doFuture::registerDoFuture()</a></code>
+</li>
+<li>
+<code><a href="../reference/list_models.html">list_models()</a></code> now also works for errored JointAI objects</li>
+<li>Bug fix for models with an interaction between a repeatedly measured variable and a random slope variable. (The term was wrongly written in the mean structure for the random effect instead of the main linear predictor.)</li>
 </ul>
 <hr>
 </div>

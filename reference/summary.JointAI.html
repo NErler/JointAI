@@ -288,8 +288,12 @@ missing values be included in the summary?</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>minimal number of <em>significant</em> digits, see
-    <code><a href='https://rdrr.io/r/base/print.default.html'>print.default</a></code>.</p></td>
+      <td><p>a non-null value for <code>digits</code> specifies the minimum
+    number of significant digits to be printed in values.  The default,
+    <code>NULL</code>, uses <code><a href='https://rdrr.io/r/base/options.html'>getOption</a>("digits")</code>.  (For the
+    interpretation for complex numbers see <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></code>.)
+    Non-integer values will be rounded down, and only values
+    greater than or equal to 1 and no greater than 22 are accepted.</p></td>
     </tr>
     <tr>
       <th>parm</th>

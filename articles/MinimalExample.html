@@ -130,7 +130,8 @@
 
       
 
-      </header><script src="MinimalExample_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="MinimalExample_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="MinimalExample_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="MinimalExample_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Minimal Example</h1>
@@ -151,9 +152,9 @@
 <h2 class="hasAnchor">
 <a href="#fitting-a-linear-regression-model" class="anchor"></a>Fitting a linear regression model</h2>
 <p>Fitting a linear regression model with <strong>JointAI</strong> is straightforward with the function <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code>lm_imp()</code></a>:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">WC</span> <span class="op">+</span> <span class="va">alc</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">albu</span> <span class="op">+</span> <span class="va">bili</span>,
-              data <span class="op">=</span> <span class="va">NHANES</span>, n.iter <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">WC</span> <span class="op">+</span> <span class="va">alc</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">albu</span> <span class="op">+</span> <span class="va">bili</span>,
+              data <span class="op">=</span> <span class="va">NHANES</span>, n.iter <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></code></pre></div>
 <p>The specification of <code><a href="../reference/model_imp.html">lm_imp()</a></code> is similar to the specification of a linear regression model for complete data using <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>. In this minimal example, the only difference is that for <code><a href="../reference/model_imp.html">lm_imp()</a></code> the number of iterations <code>n.iter</code> has to be specified. Of course, there are many more parameters that can (and sometimes should) be specified. In the vignette <a href="https://nerler.github.io/JointAI/articles/ModelSpecification.html"><em>Model Specification</em></a>, many of these parameters are explained in detail.</p>
 <p><code>n.iter</code> specifies the length of the <a href="https://en.wikipedia.org/wiki/Markov_chain">Markov chain</a>, i.e., the number of draws from the posterior distribution of the parameter or unobserved value. How many iterations are necessary depends on the data and complexity of the model and can vary from as few as 100 up to thousands or millions.</p>
 <p>One important criterion is that the Markov chains need to have converged. Convergence can be evaluated visually with a trace plot.</p>
@@ -161,8 +162,8 @@
 <div id="traceplot" class="section level2">
 <h2 class="hasAnchor">
 <a href="#traceplot" class="anchor"></a>Traceplot</h2>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span></code></pre></div>
 <p><img src="MinimalExample_files/figure-html/results_lm1-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The function <a href="https://nerler.github.io/JointAI/reference/traceplot.html"><code>traceplot()</code></a> produces a plot of the sampled values across iterations per parameter. Different chains are represented by different colours.</p>
 <p>When the sampler has converged, the chains show a horizontal band, as in the above figure. Consequently, when traces show a trend, convergence has not been reached, and more iterations are necessary (e.g., using the function <a href="https://nerler.github.io/JointAI/reference/add_samples.html"><code>add_samples()</code></a>).</p>
@@ -172,8 +173,8 @@
 <h2 class="hasAnchor">
 <a href="#model-summary" class="anchor"></a>Model Summary</h2>
 <p>Results from a model fitted with <strong>JointAI</strong> can be printed using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Bayesian linear model fitted with JointAI</span>
 <span class="co">#&gt; </span>
@@ -184,22 +185,22 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
 <span class="co">#&gt;                          Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
-<span class="co">#&gt; (Intercept)            59.671 22.7929  14.7461 103.565    0.00667    1.01 0.0280</span>
-<span class="co">#&gt; genderfemale           -3.130  2.2449  -7.8207   1.351    0.15867    1.01 0.0258</span>
-<span class="co">#&gt; age                     0.364  0.0734   0.2229   0.515    0.00000    1.01 0.0258</span>
-<span class="co">#&gt; raceOther Hispanic      0.730  5.0790  -9.6400  10.392    0.89467    1.02 0.0258</span>
-<span class="co">#&gt; raceNon-Hispanic White -1.241  3.1367  -7.4232   5.134    0.67867    1.02 0.0262</span>
-<span class="co">#&gt; raceNon-Hispanic Black  9.195  3.5047   2.4286  16.185    0.00667    1.01 0.0258</span>
-<span class="co">#&gt; raceother               4.075  3.6022  -2.9964  11.293    0.24933    1.01 0.0197</span>
-<span class="co">#&gt; WC                      0.243  0.0824   0.0811   0.401    0.00533    1.00 0.0258</span>
-<span class="co">#&gt; alc&gt;=1                  7.008  2.3635   2.1270  11.573    0.00933    1.01 0.0318</span>
-<span class="co">#&gt; educhigh               -3.450  2.1321  -7.6101   0.688    0.10267    1.01 0.0258</span>
-<span class="co">#&gt; albu                    5.485  4.0415  -2.3520  13.698    0.17600    1.00 0.0294</span>
-<span class="co">#&gt; bili                   -5.744  4.9423 -15.3581   4.104    0.25733    1.01 0.0317</span>
+<span class="co">#&gt; (Intercept)            61.042 22.2623  18.3089 106.824    0.00533    1.01 0.0302</span>
+<span class="co">#&gt; genderfemale           -3.138  2.3548  -7.8302   1.387    0.19600    1.02 0.0258</span>
+<span class="co">#&gt; age                     0.365  0.0735   0.2225   0.507    0.00000    1.00 0.0258</span>
+<span class="co">#&gt; raceOther Hispanic      0.651  5.0495  -9.6773  10.629    0.88800    1.00 0.0258</span>
+<span class="co">#&gt; raceNon-Hispanic White -1.428  3.0489  -7.2998   4.695    0.65867    1.00 0.0258</span>
+<span class="co">#&gt; raceNon-Hispanic Black  9.028  3.5005   2.2345  15.646    0.00667    1.01 0.0258</span>
+<span class="co">#&gt; raceother               3.831  3.4042  -2.8154  10.434    0.26933    1.00 0.0258</span>
+<span class="co">#&gt; WC                      0.238  0.0824   0.0762   0.399    0.00400    1.00 0.0265</span>
+<span class="co">#&gt; alc&gt;=1                  7.183  2.3191   2.5999  11.859    0.00267    1.01 0.0310</span>
+<span class="co">#&gt; educhigh               -3.375  2.1053  -7.5097   0.684    0.11467    1.01 0.0281</span>
+<span class="co">#&gt; albu                    5.262  3.9925  -2.6063  13.143    0.20800    1.00 0.0303</span>
+<span class="co">#&gt; bili                   -5.698  4.8640 -15.1166   3.867    0.26133    1.01 0.0258</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary of residual std. deviation:</span>
 <span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span>
-<span class="co">#&gt; sigma_SBP 13.2 0.727 11.9  14.7       1 0.0288</span>
+<span class="co">#&gt; sigma_SBP 13.2 0.735   12  14.8       1 0.0335</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; MCMC settings:</span>
@@ -208,7 +209,7 @@
 <span class="co">#&gt; Thinning interval = 1 </span>
 <span class="co">#&gt; Number of chains = 3 </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Number of observations: 186</span></pre></div>
+<span class="co">#&gt; Number of observations: 186</span></code></pre></div>
 <p>The output gives the posterior summary, i.e., the summary of the MCMC (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Markov Chain Monte Carlo</a>) sample, which consists of all chains combined.</p>
 <p>By default, <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html"><code>summary()</code></a> will only print the posterior summary for the main model parameters of the analysis model. How one can select which parameters are shown is described in the vignette <a href="https://nerler.github.io/JointAI/articles/SelectingParameters.html"><em>Selecting Parameters</em></a>.</p>
 <p>The summary consists of the posterior mean, the standard deviation, 2.5% and 97.5% quantiles of the MCMC sample, the tail probability, the Gelman-Rubin criterion for convergence and the ratio of the Monte Carlo error to the standard deviation of the posterior sample.</p>
@@ -242,8 +243,8 @@
 <h2 class="hasAnchor">
 <a href="#plot-of-the-posterior-distributions" class="anchor"></a>Plot of the posterior distributions</h2>
 <p>The posterior distributions can be visualized using the function <code><a href="../reference/densplot.html">densplot()</a></code>:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span></code></pre></div>
 <p><img src="MinimalExample_files/figure-html/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;"></p>
 <p>By default, <code><a href="../reference/densplot.html">densplot()</a></code> plots the empirical distribution of each of the chains separately. When <code>joined = TRUE</code> the distributions of the combined chains are plotted.</p>
 </div>
