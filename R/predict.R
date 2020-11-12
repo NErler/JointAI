@@ -519,8 +519,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   )[, -1L, drop = FALSE]
 
   desgn_mat <- setNames(lapply(names(Mlist$M), function(lvl) {
-    desgn_mat_sub[, colnames(desgn_mat_sub) %in% colnames(Mlist$M[[lvl]]),
-                drop = FALSE]
+      desgn_mat_sub[, colnames(desgn_mat_sub) %in% colnames(Mlist$M[[lvl]]),
+                    drop = FALSE]
   }), names(Mlist$M))
 
 
@@ -561,7 +561,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   }
 
   eta_surv_long <- if (any(Mlist$group_lvls <
-                           Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
+                           Mlist$group_lvls[gsub("M_", "", resp_mat)]) &
+                       survinfo[[1L]]$haslong) {
     apply(lps[, , names(which(Mlist$group_lvls <
                               Mlist$group_lvls[gsub("M_", "", resp_mat)]))],
           c(1L, 2L), sum)
@@ -604,7 +605,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
 
 
     tvpred <- if (any(Mlist$group_lvls <
-                      Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
+                      Mlist$group_lvls[gsub("M_", "", resp_mat)]) &
+                  survinfo[[1L]]$haslong) {
       mat_gk <- do.call(rbind,
                       get_matgk(Mlist, gkx, surv_lvl = gsub("M_", "", resp_mat),
                               survinfo = survinfo, data = newdata,
