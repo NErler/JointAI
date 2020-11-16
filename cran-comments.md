@@ -1,3 +1,21 @@
+# JointAI (version 1.0.1)
+
+## Round 1
+
+### Test environments
+* local Windows 10, R 4.0.3
+* windows server x64 (via github actions), R 3.6.3, R 4.0.3
+* ubuntu 16.04.7 LTS (via github actions), R 3.6.3, R 4.0.3, devel
+* macOS Catalina 10.15.6 (via github actions), R 4.0.3
+* win-builder (devel and release)
+
+
+### R CMD check results
+
+0 errors | 0 warnings | 0 notes
+
+
+---
 
 # JointAI (version 1.0.0)
 
