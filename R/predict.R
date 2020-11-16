@@ -272,12 +272,12 @@ predict.JointAI <- function(object, outcome = 1L, newdata,
   pred_df <- nlapply(preds, "[[", "res_df")
   sample <- nlapply(preds, "[[", "sample")
 
-  list(
+  outlist <- list(
     newdata = if (length(preds) == 1L) {
       cbind(newdata, pred_df[[1L]])
 
     } else {
-        cbind(newdata, unlist(pred_df, recursive = FALSE))
+      cbind(newdata, unlist(pred_df, recursive = FALSE))
     },
     fitted = if (length(preds) == 1L)  {
       pred_df[[1L]]
@@ -290,6 +290,7 @@ predict.JointAI <- function(object, outcome = 1L, newdata,
       sample
     }
   )
+  Filter(Negate(is.null), outlist)
 }
 
 
