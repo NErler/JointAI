@@ -272,12 +272,12 @@ predict.JointAI <- function(object, outcome = 1L, newdata,
   pred_df <- nlapply(preds, "[[", "res_df")
   sample <- nlapply(preds, "[[", "sample")
 
-  list(
+  outlist <- list(
     newdata = if (length(preds) == 1L) {
       cbind(newdata, pred_df[[1L]])
 
     } else {
-        cbind(newdata, unlist(pred_df, recursive = FALSE))
+      cbind(newdata, unlist(pred_df, recursive = FALSE))
     },
     fitted = if (length(preds) == 1L)  {
       pred_df[[1L]]
@@ -290,6 +290,7 @@ predict.JointAI <- function(object, outcome = 1L, newdata,
       sample
     }
   )
+  Filter(Negate(is.null), outlist)
 }
 
 
@@ -330,11 +331,11 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   op <- options(na.action = na.pass)
 
   desgn_mat <- model.matrix(mt, data = newdata,
-                    contrasts.arg = contr_list[intersect(
-                      names(contr_list),
-                      cvapply(attr(mt, "variables")[-1L], deparse,
-                             width.cutoff = 500L)
-                    )]
+                            contrasts.arg = contr_list[intersect(
+                              names(contr_list),
+                              cvapply(attr(mt, "variables")[-1L], deparse,
+                                      width.cutoff = 500L)
+                            )]
   )
 
 
@@ -426,11 +427,11 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
 
   op <- options(na.action = na.pass)
   desgn_mat <- model.matrix(mt, data = newdata,
-                    contr_list[intersect(
-                      names(contr_list),
-                      cvapply(attr(mt, "variables")[-1L], deparse,
-                             width.cutoff = 500L)
-                    )]
+                            contr_list[intersect(
+                              names(contr_list),
+                              cvapply(attr(mt, "variables")[-1L], deparse,
+                                      width.cutoff = 500L)
+                            )]
   )
 
 
@@ -511,16 +512,16 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   op <- options(na.action = na.pass)
 
   desgn_mat_sub <- model.matrix(mt, data = newdata,
-                     contr_list[intersect(
-                       names(contr_list),
-                       cvapply(attr(mt, "variables")[-1L], deparse,
-                              width.cutoff = 500L)
-                     )]
+                                contr_list[intersect(
+                                  names(contr_list),
+                                  cvapply(attr(mt, "variables")[-1L], deparse,
+                                          width.cutoff = 500L)
+                                )]
   )[, -1L, drop = FALSE]
 
   desgn_mat <- setNames(lapply(names(Mlist$M), function(lvl) {
-      desgn_mat_sub[, colnames(desgn_mat_sub) %in% colnames(Mlist$M[[lvl]]),
-                    drop = FALSE]
+    desgn_mat_sub[, colnames(desgn_mat_sub) %in% colnames(Mlist$M[[lvl]]),
+                  drop = FALSE]
   }), names(Mlist$M))
 
 
@@ -555,7 +556,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                       Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
     apply(lps[, , names(which(Mlist$group_lvls >=
                                 Mlist$group_lvls[gsub("M_", "", resp_mat)]))],
-        c(1L, 2L), sum)
+          c(1L, 2L), sum)
   } else {
     0L
   }
@@ -564,7 +565,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                            Mlist$group_lvls[gsub("M_", "", resp_mat)]) &
                        survinfo[[1L]]$haslong) {
     apply(lps[, , names(which(Mlist$group_lvls <
-                              Mlist$group_lvls[gsub("M_", "", resp_mat)]))],
+                                Mlist$group_lvls[gsub("M_", "", resp_mat)]))],
           c(1L, 2L), sum)
   } else {
     0L
@@ -608,12 +609,12 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                       Mlist$group_lvls[gsub("M_", "", resp_mat)]) &
                   survinfo[[1L]]$haslong) {
       mat_gk <- do.call(rbind,
-                      get_matgk(Mlist, gkx, surv_lvl = gsub("M_", "", resp_mat),
-                              survinfo = survinfo, data = newdata,
-                              rows = seq_len(nrow(newdata)),
-                              td_cox = unique(
-                                cvapply(survinfo, "[[", "modeltype")
-                              ) == "coxph"))
+                        get_matgk(Mlist, gkx, surv_lvl = gsub("M_", "", resp_mat),
+                                  survinfo = survinfo, data = newdata,
+                                  rows = seq_len(nrow(newdata)),
+                                  td_cox = unique(
+                                    cvapply(survinfo, "[[", "modeltype")
+                                  ) == "coxph"))
 
       vars <- coefs$varname[na.omit(match(dimnames(mat_gk)[[2L]], coefs$varname))]
 
@@ -736,12 +737,12 @@ predict_clm <- function(formula, newdata,
 
   op <- options(na.action = na.pass)
   desgn_mat <- model.matrix(mt,
-                    data = newdata,
-                    contrasts.arg = contr_list[intersect(
-                      names(contr_list),
-                      cvapply(attr(mt, "variables")[-1L], deparse,
-                             width.cutoff = 500L)
-                    )]
+                            data = newdata,
+                            contrasts.arg = contr_list[intersect(
+                              names(contr_list),
+                              cvapply(attr(mt, "variables")[-1L], deparse,
+                                      width.cutoff = 500L)
+                            )]
   )[, -1L, drop = FALSE]
 
   if (warn & any(is.na(desgn_mat)))
@@ -780,7 +781,7 @@ predict_clm <- function(formula, newdata,
 
   # add the category specific intercepts to the linear predictor
   lp <- lapply(seq_along(gammas), function(k) {
-                   gammas[[k]] + eta +
+    gammas[[k]] + eta +
       if (is.null(eta_nonprop)) 0L else eta_nonprop[[k]]
   })
 
@@ -899,12 +900,12 @@ predict_mlogit <- function(formula, newdata,
 
   op <- options(na.action = na.pass)
   desgn_mat <- model.matrix(mt,
-                    data = newdata,
-                    contrasts.arg = contr_list[intersect(
-                      names(contr_list),
-                      cvapply(attr(mt, "variables")[-1L], deparse,
-                             width.cutoff = 500L)
-                    )]
+                            data = newdata,
+                            contrasts.arg = contr_list[intersect(
+                              names(contr_list),
+                              cvapply(attr(mt, "variables")[-1L], deparse,
+                                      width.cutoff = 500L)
+                            )]
   )
 
   if (warn & any(is.na(desgn_mat)))
@@ -926,7 +927,7 @@ predict_mlogit <- function(formula, newdata,
 
   phis <- lapply(lp, exp)
   sum_phis <- apply(array(dim = c(dim(phis[[1L]]), length(phis)),
-                    unlist(phis)), c(1L, 2L), sum)
+                          unlist(phis)), c(1L, 2L), sum)
 
   probs <- lapply(seq_along(phis), function(k) {
     minmax_mat(phis[[k]] / sum_phis)

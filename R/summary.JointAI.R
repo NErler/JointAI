@@ -4,7 +4,8 @@
 #' (\code{coef}) and credible interval (\code{confint}) for an object of
 #' class 'JointAI'.
 #'
-#' @inheritParams base::print.default
+#' @param digits the minimum number of significant digits to be printed in
+#'               values.
 #' @param quantiles posterior quantiles
 #' @inheritParams sharedParams
 #' @param outcome optional; vector identifying for which outcomes the summary

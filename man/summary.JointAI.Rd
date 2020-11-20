@@ -29,13 +29,8 @@
 \arguments{
 \item{x}{an object of class \code{summary.JointAI} or \code{JointAI}}
 
-\item{digits}{a non-null value for \code{digits} specifies the minimum
-    number of significant digits to be printed in values.  The default,
-    \code{NULL}, uses \code{\link[base]{getOption}("digits")}.  (For the
-    interpretation for complex numbers see \code{\link[base]{signif}}.)
-    Non-integer values will be rounded down, and only values
-    greater than or equal to 1 and no greater than 22 are accepted.
-  }
+\item{digits}{the minimum number of significant digits to be printed in
+values.}
 
 \item{scientific}{A penalty to be applied when deciding to print numeric
 values in fixed or exponential notation, by default the

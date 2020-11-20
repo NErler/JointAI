@@ -154,6 +154,7 @@
 #' @import stats
 #' @importFrom rjags coda.samples jags.model
 #' @import future
+#' @import mathjaxr
 #' @importFrom foreach foreach %dopar%
 #' @importFrom splines bs ns
 #'
