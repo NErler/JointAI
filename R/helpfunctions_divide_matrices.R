@@ -559,9 +559,9 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
   # term labels.
   auxterms <- if (!is.null(auxvars)) attr(terms(auxvars), "term.labels")
 
-  covar_terms <- c(all_vars(c(remove_lhs(fixed),
-                              remove_grouping(random))),
-                   auxterms)
+  covar_terms <- unique(c(all_vars(c(remove_lhs(fixed),
+                                     remove_grouping(random))),
+                          auxterms))
 
 
 
