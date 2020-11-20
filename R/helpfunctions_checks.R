@@ -18,10 +18,12 @@ prep_arglist <- function(analysis_type, family = NULL, formals = formals(),
   arglist$thecall <- call
 
   if (inherits(arglist$thecall$formula, "name")) {
-    arglist$thecall$formula <- eval(arglist$thecall$formula)
+    # arglist$thecall$formula <- eval(arglist$thecall$formula)
+    arglist$thecall$formula <- arglist$formula
   }
   if (inherits(arglist$thecall$fixed, "name")) {
-    arglist$thecall$fixed <- eval(arglist$thecall$fixed)
+    # arglist$thecall$fixed <- eval(arglist$thecall$fixed)
+    arglist$thecall$fixed <- arglist$fixed
   }
 
 
