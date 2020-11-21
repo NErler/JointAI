@@ -1,6 +1,10 @@
 
 # JointAI (development version)
 
+--------------------------------------------------------------------------------
+
+# JointAI (1.0.1)
+
 ## Minor improvements and bug fixes
 * `data_list`: omit data matrix `M_*` from `data_list` if `ncol == 0`
 * `data_list`: syntax to checking which `pos_*` to include can handle the case
