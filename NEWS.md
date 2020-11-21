@@ -1,6 +1,16 @@
 
 # JointAI (development version)
 
+## Bug fixes
+* `print.JointAI`: bugfix for multivariate mixed models with full
+  variance-covariance matrix of the random effects that had the same number of
+  random effects for each outcome, for which the printing of this matrix
+  resulted in an error.
+ 
+--------------------------------------------------------------------------------
+
+# JointAI (1.0.1)
+
 ## New features
 * `custom`: new argument in the main analysis functions that allows the user
   to replace the JAGS syntax for sub-models with custom syntax. The argument

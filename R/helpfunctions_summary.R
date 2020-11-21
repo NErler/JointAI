@@ -146,7 +146,7 @@ format_Dmat <- function(r) {
 
 get_rdvcov_names <- function(object, varname, lvl) {
 
-  pos <- sapply(attr(object$info_list[[varname]]$rd_vcov[[lvl]], "ranef_index"),
+  pos <- nlapply(attr(object$info_list[[varname]]$rd_vcov[[lvl]], "ranef_index"),
                 function(nr) eval(parse(text = nr)))
 
   if (length(pos) > 0L) {
