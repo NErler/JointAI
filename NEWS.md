@@ -1,6 +1,17 @@
 
 # JointAI (development version)
 
+## New features
+* `rd_vcov()`: new function added to extract the random effect variance-
+  covariance matrices (posterior means)
+  
+## Minor improvements and bug fixes
+* change in the way the model formula is contained in the model call, which 
+  should make it possible to call `*_imp()` functions from within another
+  function that has the model formula as an argument.
+* fixed issue that resulted in an error when the data was previously attached
+  to the search path
+
 --------------------------------------------------------------------------------
 
 # JointAI (1.0.1)
