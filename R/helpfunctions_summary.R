@@ -50,17 +50,51 @@ prep_MCMC <- function(object, start = NULL, end = NULL, thin = NULL,
 }
 
 
+#' Extract the random effects variance covariance matrix
+#' Returns the posterior mean of the variance-covariance matrix/matrices of
+#' the random effects in a fitted JointAI object.
+#'
+#' @inheritParams sharedParams
+#' @param outcome optional; vector of integers giving the indices of the
+#'                outcomes for which the random effects variance-covariance
+#'                matrix/matrices should be returned.
+#' @export
+rd_vcov <- function(object, outcome = NULL, start = NULL, end = NULL,
+                    thin = NULL,
+                    exclude_chains = NULL, mess = TRUE, warn = TRUE) {
+
+
+  vars <- if (is.null(outcome)) {
+    names(object$coef_list)
+  } else {
+    names(object$coef_list)[outcome]
+  }
+
+  rd_vcov_list <- nlapply(vars, function(varname) {
+    get_Dmat(object, varname, start = start, end = end, thin = thin,
+             exclude_chains = exclude_chains, mess = mess, warn = warn)
+  })
+
+  if (length(rd_vcov_list) == 1L) {
+    rd_vcov_list[[1]]
+  } else {
+    rd_vcov_list
+  }
+}
+
+
 
 # used in print.JointAI() (2020-06-10)
-get_Dmat <- function(object, varname) {
+get_Dmat <- function(object, varname, start = NULL, end = NULL, thin = NULL,
+                     exclude_chains = NULL, mess = TRUE, warn = TRUE) {
   # Return the posterior mean of the random effects variance matrices in
   # matrix form (one matrix per grouping level)
   # - object: object of class JointAI
   # - varname: name of the outcome of the sub-model
 
-    MCMC <- prep_MCMC(object, start = NULL, end = NULL, thin = NULL,
-                      subset = NULL, exclude_chains = NULL, warn = TRUE,
-                      mess = TRUE)
+    MCMC <- prep_MCMC(object, start = start, end = end, thin = thin,
+                      subset = NULL, exclude_chains = exclude_chains,
+                      warn = warn, mess = mess)
 
 
     pat <- sapply(names(object$Mlist$group_lvls), function(lvl)
