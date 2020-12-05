@@ -6,7 +6,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameter names of an JointAI object — parameters • JointAI</title>
+<title>Extract the random effects variance covariance matrix
+Returns the posterior mean of the variance-covariance matrix/matrices of
+the random effects in a fitted JointAI object. — rd_vcov • JointAI</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,9 +56,12 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Parameter names of an JointAI object — parameters" />
-<meta property="og:description" content="Returns the names of the parameters/nodes of an object of class 'JointAI' for
-which a monitor is set." />
+<meta property="og:title" content="Extract the random effects variance covariance matrix
+Returns the posterior mean of the variance-covariance matrix/matrices of
+the random effects in a fitted JointAI object. — rd_vcov" />
+<meta property="og:description" content="Extract the random effects variance covariance matrix
+Returns the posterior mean of the variance-covariance matrix/matrices of
+the random effects in a fitted JointAI object." />
 <meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_191.png" />
 <meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -184,17 +189,21 @@ which a monitor is set." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameter names of an JointAI object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/parameters.R'><code>R/parameters.R</code></a></small>
-    <div class="hidden name"><code>parameters.Rd</code></div>
+    <h1>Extract the random effects variance covariance matrix
+Returns the posterior mean of the variance-covariance matrix/matrices of
+the random effects in a fitted JointAI object.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/helpfunctions_summary.R'><code>R/helpfunctions_summary.R</code></a></small>
+    <div class="hidden name"><code>rd_vcov.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Returns the names of the parameters/nodes of an object of class 'JointAI' for
-which a monitor is set.</p>
+    <p>Extract the random effects variance covariance matrix
+Returns the posterior mean of the variance-covariance matrix/matrices of
+the random effects in a fitted JointAI object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>parameters</span><span class='op'>(</span><span class='va'>object</span>, expand_ranef <span class='op'>=</span> <span class='cn'>FALSE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>rd_vcov</span><span class='op'>(</span><span class='va'>object</span>, outcome <span class='op'>=</span> <span class='cn'>NULL</span>, start <span class='op'>=</span> <span class='cn'>NULL</span>, end <span class='op'>=</span> <span class='cn'>NULL</span>, thin <span class='op'>=</span> <span class='cn'>NULL</span>,
+  exclude_chains <span class='op'>=</span> <span class='cn'>NULL</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -204,9 +213,32 @@ which a monitor is set.</p>
       <td><p>object inheriting from class 'JointAI'</p></td>
     </tr>
     <tr>
-      <th>expand_ranef</th>
-      <td><p>logical; should all elements of the random effects
-vectors/matrices be shown separately?</p></td>
+      <th>outcome</th>
+      <td><p>optional; vector of integers giving the indices of the
+outcomes for which the random effects variance-covariance
+matrix/matrices should be returned.</p></td>
+    </tr>
+    <tr>
+      <th>start</th>
+      <td><p>the first iteration of interest
+(see <code><a href='https://rdrr.io/pkg/coda/man/window.mcmc.html'>window.mcmc</a></code>)</p></td>
+    </tr>
+    <tr>
+      <th>end</th>
+      <td><p>the last iteration of interest
+(see <code><a href='https://rdrr.io/pkg/coda/man/window.mcmc.html'>window.mcmc</a></code>)</p></td>
+    </tr>
+    <tr>
+      <th>thin</th>
+      <td><p>thinning interval (integer; see <code><a href='https://rdrr.io/pkg/coda/man/window.mcmc.html'>window.mcmc</a></code>).
+For example, <code>thin = 1</code> (default) will keep the MCMC samples
+from all iterations; <code>thin = 5</code> would only keep every 5th
+iteration.</p></td>
+    </tr>
+    <tr>
+      <th>exclude_chains</th>
+      <td><p>optional vector of the index numbers of chains that
+should be excluded</p></td>
     </tr>
     <tr>
       <th>mess</th>
@@ -218,38 +250,9 @@ vectors/matrices be shown separately?</p></td>
       <td><p>logical; should warnings be given? Default is
 <code>TRUE</code>.</p></td>
     </tr>
-    <tr>
-      <th>...</th>
-      <td><p>currently not used</p></td>
-    </tr>
     </table>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># (This function does not need MCMC samples to work, so we will set</span>
-<span class='co'># n.adapt = 0 and n.iter = 0 to reduce computational time)</span>
-<span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>M2</span> <span class='op'>+</span> <span class='va'>O2</span> <span class='op'>+</span> <span class='va'>B2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.adapt <span class='op'>=</span> <span class='fl'>0</span>,
-               n.iter <span class='op'>=</span> <span class='fl'>0</span>, mess <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: </span>
-#&gt; <span class='warning'>It is currently not possible to use “contr.poly” for incomplete</span>
-#&gt; <span class='warning'>categorical covariates. I will use “contr.treatment” instead.  You can</span>
-#&gt; <span class='warning'>specify (globally) which types of contrasts are used by changing</span>
-#&gt; <span class='warning'>“options('contrasts')”.</span></div><div class='input'>
-<span class='fu'>parameters</span><span class='op'>(</span><span class='va'>mod1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Note: “mod1” does not contain MCMC samples.</span></div><div class='output co'>#&gt;    outcome outcat     varname     coef
-#&gt; 1        y   &lt;NA&gt; (Intercept)  beta[1]
-#&gt; 2        y   &lt;NA&gt;          C1  beta[2]
-#&gt; 3        y   &lt;NA&gt;          C2  beta[3]
-#&gt; 4        y   &lt;NA&gt;         M22  beta[4]
-#&gt; 5        y   &lt;NA&gt;         M23  beta[5]
-#&gt; 6        y   &lt;NA&gt;         M24  beta[6]
-#&gt; 7        y   &lt;NA&gt;         O22  beta[7]
-#&gt; 8        y   &lt;NA&gt;         O23  beta[8]
-#&gt; 9        y   &lt;NA&gt;         O24  beta[9]
-#&gt; 10       y   &lt;NA&gt;         B21 beta[10]
-#&gt; 11       y   &lt;NA&gt;        &lt;NA&gt;  sigma_y</div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

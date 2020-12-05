@@ -62,7 +62,7 @@
 <meta name="twitter:site" content="@N_Erler" />
 
 
-
+<meta name="robots" content="noindex">
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -101,7 +101,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.1.9000</span>
       </span>
     </div>
 
@@ -190,25 +190,20 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#jointai-development-version" class="anchor"></a>JointAI (development version)<small> Unreleased </small>
 </h1>
+<div id="new-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>New features</h2>
+<ul>
+<li>
+<code><a href="../reference/rd_vcov.html">rd_vcov()</a></code>: new function added to extract the random effect variance- covariance matrices (posterior means)</li>
+</ul>
+</div>
 <div id="minor-improvements-and-bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
 <ul>
-<li>
-<code>data_list</code>: omit data matrix <code>M_*</code> from <code>data_list</code> if <code>ncol == 0</code>
-</li>
-<li>
-<code>data_list</code>: syntax to checking which <code>pos_*</code> to include can handle the case with multiple grouping variables being on the same, lowest level; before <code>pos_*</code> was excluded for only one of them</li>
-<li>random effects: it is now possible to use different grouping levels in different sub-models (when providing a list of model formulas)</li>
-<li>
-<code><a href="../reference/predDF.html">predDF()</a></code> bug fix: the parameter for all methods is now called <code>object</code>
-</li>
-<li>
-<code><a href="../reference/add_samples.html">add_samples()</a></code>: remove unnecessary call to <code><a href="https://rdrr.io/pkg/doFuture/man/registerDoFuture.html">doFuture::registerDoFuture()</a></code>
-</li>
-<li>
-<code><a href="../reference/list_models.html">list_models()</a></code> now also works for errored JointAI objects</li>
-<li>Bug fix for models with an interaction between a repeatedly measured variable and a random slope variable. (The term was wrongly written in the mean structure for the random effect instead of the main linear predictor.)</li>
+<li>change in the way the model formula is contained in the model call, which should make it possible to call <code>*_imp()</code> functions from within another function that has the model formula as an argument.</li>
+<li>fixed issue that resulted in an error when the data was previously attached to the search path</li>
 </ul>
 <hr>
 </div>

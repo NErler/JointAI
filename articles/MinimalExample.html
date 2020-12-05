@@ -27,6 +27,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:creator" content="@NErler">
 <meta name="twitter:site" content="@N_Erler">
+<meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -51,7 +52,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.1.9000</span>
       </span>
     </div>
 
@@ -184,22 +185,22 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary:</span>
 <span class="co">#&gt;                          Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD</span>
-<span class="co">#&gt; (Intercept)            61.412 22.8520  15.0781 105.484    0.00667   1.003 0.0305</span>
-<span class="co">#&gt; genderfemale           -3.107  2.2024  -7.6667   1.112    0.15200   0.999 0.0262</span>
-<span class="co">#&gt; age                     0.361  0.0737   0.2203   0.502    0.00000   1.013 0.0269</span>
-<span class="co">#&gt; raceOther Hispanic      0.896  4.9661  -8.7018  10.268    0.85733   1.003 0.0258</span>
-<span class="co">#&gt; raceNon-Hispanic White -1.403  3.1287  -7.6031   4.664    0.66000   1.008 0.0258</span>
-<span class="co">#&gt; raceNon-Hispanic Black  9.027  3.5931   2.1709  16.201    0.00667   1.014 0.0287</span>
-<span class="co">#&gt; raceother               3.853  3.5434  -3.2091  11.028    0.27733   1.005 0.0258</span>
-<span class="co">#&gt; WC                      0.240  0.0832   0.0798   0.404    0.00400   1.001 0.0258</span>
-<span class="co">#&gt; alc&gt;=1                  7.195  2.2603   2.6562  11.396    0.00000   1.008 0.0318</span>
-<span class="co">#&gt; educhigh               -3.426  2.1669  -7.5117   0.625    0.10400   1.004 0.0258</span>
-<span class="co">#&gt; albu                    5.146  4.0786  -3.1377  13.247    0.19733   1.015 0.0310</span>
-<span class="co">#&gt; bili                   -5.516  5.0735 -15.7554   4.235    0.28267   1.020 0.0279</span>
+<span class="co">#&gt; (Intercept)            59.792 22.7614  15.3014 105.078    0.01200    1.01 0.0289</span>
+<span class="co">#&gt; genderfemale           -3.022  2.2228  -7.3225   1.444    0.18933    1.00 0.0258</span>
+<span class="co">#&gt; age                     0.364  0.0724   0.2229   0.511    0.00000    1.00 0.0258</span>
+<span class="co">#&gt; raceOther Hispanic      0.712  4.9982  -8.6944  10.522    0.89733    1.02 0.0258</span>
+<span class="co">#&gt; raceNon-Hispanic White -1.338  3.1534  -7.5898   4.804    0.68400    1.01 0.0258</span>
+<span class="co">#&gt; raceNon-Hispanic Black  9.126  3.5960   2.2899  16.149    0.00933    1.02 0.0258</span>
+<span class="co">#&gt; raceother               3.883  3.6121  -3.1783  10.864    0.29600    1.00 0.0258</span>
+<span class="co">#&gt; WC                      0.242  0.0807   0.0849   0.402    0.00133    1.00       </span>
+<span class="co">#&gt; alc&gt;=1                  7.302  2.2629   2.8058  11.829    0.00267    1.01 0.0339</span>
+<span class="co">#&gt; educhigh               -3.434  2.2092  -7.7022   0.920    0.12533    1.01 0.0258</span>
+<span class="co">#&gt; albu                    5.406  4.1070  -2.5017  13.836    0.17867    1.00 0.0287</span>
+<span class="co">#&gt; bili                   -5.490  4.8826 -15.1127   4.030    0.26400    1.01 0.0282</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Posterior summary of residual std. deviation:</span>
 <span class="co">#&gt;           Mean    SD 2.5% 97.5% GR-crit MCE/SD</span>
-<span class="co">#&gt; sigma_SBP 13.2 0.713 11.8  14.7       1  0.026</span>
+<span class="co">#&gt; sigma_SBP 13.2 0.737 11.8  14.7       1 0.0303</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; MCMC settings:</span>
