@@ -1,17 +1,9 @@
 
 # JointAI (development version)
 
-## Bug fixes
-* `print.JointAI`: bugfix for multivariate mixed models with full
-  variance-covariance matrix of the random effects that had the same number of
-  random effects for each outcome, for which the printing of this matrix
-  resulted in an error.
- 
---------------------------------------------------------------------------------
-
-# JointAI (1.0.1)
-
 ## New features
+* `rd_vcov()`: new function added to extract the random effect variance-
+  covariance matrices (posterior means)
 * `custom`: new argument in the main analysis functions that allows the user
   to replace the JAGS syntax for sub-models with custom syntax. The argument
   expects a named list where the names are the names of the variables 
@@ -24,6 +16,19 @@
   specification of the structure of the random effects variance-covariance
   matrices in (multivariate) mixed models (and joint models).
 
+## Minor improvements and bug fixes
+* `print.JointAI`: bugfix for multivariate mixed models with full
+  variance-covariance matrix of the random effects that had the same number of
+  random effects for each outcome, for which the printing of this matrix
+  resulted in an error.
+* change in the way the model formula is contained in the model call, which 
+  should make it possible to call `*_imp()` functions from within another
+  function that has the model formula as an argument.
+* fixed issue that resulted in an error when the data was previously attached
+  to the search path
+
+
+# JointAI (1.0.1)
 
 ## Minor improvements and bug fixes
 * `data_list`: omit data matrix `M_*` from `data_list` if `ncol == 0`
