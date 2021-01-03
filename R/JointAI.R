@@ -142,12 +142,12 @@
 #' Dealing with missing covariates in epidemiologic studies: A comparison
 #' between multiple imputation and a full Bayesian approach.
 #' \emph{Statistics in Medicine}, 35(17), 2955-2974.
-#' doi: \href{https://doi.org/10.1002/sim.6944}{10.1002/sim.6944}
+#' \doi{10.1002/sim.6944}
 #'
 #' Erler, N.S., Rizopoulos D., Jaddoe, V.W.V., Franco, O.H. & Lesaffre, E.M.E.H. (2019).
 #' Bayesian imputation of time-varying covariates in linear mixed models.
 #' \emph{Statistical Methods in Medical Research}, 28(2), 555–568.
-#' doi: \href{https://doi.org/10.1177/0962280217730851}{10.1177/0962280217730851}
+#' \doi{10.1177/0962280217730851}
 #'
 #' @import graphics
 #' @import utils
