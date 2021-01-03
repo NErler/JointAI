@@ -112,7 +112,7 @@ class 'JointAI'." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -156,13 +156,13 @@ class 'JointAI'." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/nerler/JointAI/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://twitter.com/N_Erler">
-    <span class="fa fa-twitter fa-lg"></span>
+    <span class="fas fa-twitter fa-lg"></span>
      
   </a>
 </li>
@@ -324,17 +324,17 @@ for examples how to specify the parameter <code>subset</code>.</p></div>
 #&gt; 
 #&gt; 
 #&gt; Posterior summary:
-#&gt;                 Mean     SD    2.5%   97.5% tail-prob. GR-crit MCE/SD
-#&gt; (Intercept)  37.6037 24.507 -11.124 85.1958     0.1333   1.090 0.0543
-#&gt; C1          -28.2447 17.107 -61.349  5.6636     0.1133   1.092 0.0542
-#&gt; C2            0.9333  0.651  -0.377  2.1183     0.1867   1.019 0.0654
-#&gt; M22          -0.3471  0.668  -1.645  0.9416     0.5867   1.002 0.0577
-#&gt; M23           0.0956  0.653  -1.139  1.3270     0.8933   1.047 0.0577
-#&gt; M24          -1.1150  0.661  -2.297  0.0627     0.0867   0.997 0.0577
+#&gt;                 Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD
+#&gt; (Intercept)  34.4860 22.851  -7.340 80.972     0.1200    1.06 0.0577
+#&gt; C1          -26.0436 15.953 -58.423  3.146     0.0867    1.06 0.0577
+#&gt; C2            0.9118  0.666  -0.395  2.202     0.1733    1.01 0.0548
+#&gt; M22          -0.4060  0.621  -1.549  0.823     0.5600    1.01 0.0577
+#&gt; M23           0.0615  0.695  -1.181  1.470     0.9467    1.02 0.0577
+#&gt; M24          -1.1810  0.686  -2.651  0.192     0.0933    1.01 0.0468
 #&gt; 
 #&gt; Posterior summary of residual std. deviation:
 #&gt;         Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#&gt; sigma_y 2.22 0.161 1.93  2.53    1.01 0.0577
+#&gt; sigma_y 2.23 0.168 1.93  2.61    1.03 0.0577
 #&gt; 
 #&gt; 
 #&gt; MCMC settings:
@@ -359,19 +359,19 @@ for examples how to specify the parameter <code>subset</code>.</p></div>
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>mod1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $y
 #&gt;  (Intercept)           C1           C2          M22          M23          M24 
-#&gt;  37.60368434 -28.24471802   0.93325237  -0.34711392   0.09557549  -1.11501623 
+#&gt;  34.48600473 -26.04361802   0.91178273  -0.40599078   0.06148996  -1.18104086 
 #&gt;      sigma_y 
-#&gt;   2.21883372 
+#&gt;   2.22627935 
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>mod1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $y
 #&gt;                    2.5%      97.5%
-#&gt; (Intercept) -11.1236073 85.1958002
-#&gt; C1          -61.3494500  5.6635787
-#&gt; C2           -0.3768932  2.1182763
-#&gt; M22          -1.6449690  0.9415690
-#&gt; M23          -1.1386809  1.3270273
-#&gt; M24          -2.2967594  0.0626675
-#&gt; sigma_y       1.9343879  2.5266842
+#&gt; (Intercept)  -7.3402092 80.9717370
+#&gt; C1          -58.4225813  3.1462324
+#&gt; C2           -0.3951601  2.2018220
+#&gt; M22          -1.5487236  0.8227402
+#&gt; M23          -1.1805598  1.4696826
+#&gt; M24          -2.6507562  0.1921067
+#&gt; sigma_y       1.9348092  2.6059179
 #&gt; </div><div class='input'>
 
 </div></pre>

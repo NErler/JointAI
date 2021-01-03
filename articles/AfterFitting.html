@@ -60,7 +60,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -104,13 +104,13 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/nerler/JointAI/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://twitter.com/N_Erler">
-    <span class="fa fa-twitter fa-lg"></span>
+    <span class="fas fa-twitter fa-lg"></span>
      
   </a>
 </li>
@@ -130,8 +130,7 @@
 
       
 
-      </header><script src="AfterFitting_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="AfterFitting_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="AfterFitting_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="AfterFitting_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>After Fitting</h1>
@@ -166,7 +165,7 @@
 <p>Graphical aspects of the traceplot can be controlled by specifying standard graphical arguments via the dots argument <code>"..."</code>, which are passed to <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/matplot.html"><code>matplot()</code></a>. This allows changing colour, line type and -width, limits, and so forth. Arguments <code>nrow</code> and/or <code>ncol</code> can be supplied to set specific numbers of rows and columns for the layout of the grid of plots.</p>
 <p>With the argument <code>use_ggplot</code> it is possible to get a <a href="https://CRAN.R-project.org/package=ggplot2"><strong>ggplot2</strong></a> version of the traceplot. It can be extended using standard <strong>ggplot2</strong> syntax.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod13a</span>, ncol <span class="op">=</span> <span class="fl">3</span>, use_ggplot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">'Dark2'</span><span class="op">)</span></code></pre></div>
@@ -579,7 +578,7 @@
 
 
 <span class="co"># plot predicted values and credible interval</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">pred</span><span class="op">$</span><span class="va">newdata</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, y <span class="op">=</span> <span class="va">fit</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">HEIGHT_M</span><span class="op">)</span>,
                          fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">HEIGHT_M</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">`2.5%`</span>, ymax <span class="op">=</span> <span class="va">`97.5%`</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
