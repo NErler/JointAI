@@ -126,7 +126,7 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
   # (needed because otherwise "groups" would not fit any more after sorting)
   # and sort the data by the time variable
   data$rowiddd <- seq_len(nrow(data))
-  data <- data[order(data[timevar]), ]
+  data <- data[order(data[[timevar]]), ]
 
   # split the data by patient, and fill in values in the time-varying variables
   datlist <- lapply(split(data, data[surv_lvl]), function(x) {
