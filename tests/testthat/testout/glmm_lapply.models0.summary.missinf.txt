@@ -272,7 +272,7 @@ Bayesian binomial mixed model fitted with JointAI
 
 Call:
 glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "log"), 
-    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+    n.adapt = 50, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -285,7 +285,7 @@ D_b1_id[1,1]    0  0    0     0                NaN    NaN
 
 
 MCMC settings:
-Iterations = 6:15
+Iterations = 51:60
 Sample size per chain = 10 
 Thinning interval = 1 
 Number of chains = 3 
@@ -314,7 +314,7 @@ Bayesian binomial mixed model fitted with JointAI
 
 Call:
 glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "cloglog"), 
-    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+    n.adapt = 50, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -327,7 +327,7 @@ D_b1_id[1,1]    0  0    0     0                NaN    NaN
 
 
 MCMC settings:
-Iterations = 6:15
+Iterations = 51:60
 Sample size per chain = 10 
 Thinning interval = 1 
 Number of chains = 3 

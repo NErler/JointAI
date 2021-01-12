@@ -216,7 +216,7 @@ Bayesian binomial model fitted with JointAI
 
 Call:
 glm_imp(formula = B1 ~ 1, family = binomial(link = "log"), data = wideDF, 
-    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+    n.adapt = 150, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
 
 Posterior summary:
@@ -225,7 +225,7 @@ Posterior summary:
 
 
 MCMC settings:
-Iterations = 6:15
+Iterations = 151:160
 Sample size per chain = 10 
 Thinning interval = 1 
 Number of chains = 3 
@@ -248,7 +248,7 @@ Bayesian binomial model fitted with JointAI
 
 Call:
 glm_imp(formula = B1 ~ 1, family = binomial(link = "cloglog"), 
-    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    data = wideDF, n.adapt = 50, n.iter = 10, seed = 2020, warn = FALSE, 
     mess = FALSE)
 
 
@@ -258,7 +258,7 @@ Posterior summary:
 
 
 MCMC settings:
-Iterations = 6:15
+Iterations = 51:60
 Sample size per chain = 10 
 Thinning interval = 1 
 Number of chains = 3 

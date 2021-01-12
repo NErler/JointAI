@@ -123,7 +123,7 @@ $id
 
 Call:
 glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "log"), 
-    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+    n.adapt = 50, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian binomial mixed model for "b1" 
 
@@ -140,7 +140,7 @@ $id
 
 Call:
 glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "cloglog"), 
-    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+    n.adapt = 50, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian binomial mixed model for "b1" 
 
@@ -1566,7 +1566,7 @@ $m0b3
 
 Call:
 glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "log"), 
-    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+    n.adapt = 50, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian binomial mixed model for "b1" 
 
@@ -1585,7 +1585,7 @@ $m0b4
 
 Call:
 glme_imp(fixed = b1 ~ 1 + (1 | id), data = longDF, family = binomial(link = "cloglog"), 
-    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+    n.adapt = 50, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian binomial mixed model for "b1" 
 
