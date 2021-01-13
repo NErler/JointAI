@@ -190,31 +190,46 @@
 <div id="model-family-and-link-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#model-family-and-link-functions" class="anchor"></a>Model family and link functions</h3>
-<p>Implemented families and links for <code><a href="../reference/model_imp.html">glm_imp()</a></code>, <code><a href="../reference/model_imp.html">glme_imp()</a></code> and <code><a href="../reference/model_imp.html">glmer_imp()</a></code> are</p>
+Implemented families and links for <code><a href="../reference/model_imp.html">glm_imp()</a></code>, <code><a href="../reference/model_imp.html">glme_imp()</a></code> and <code><a href="../reference/model_imp.html">glmer_imp()</a></code> are
 <table class="table">
-<thead><tr class="header">
-<th align="left">family</th>
-<th align="left"></th>
+<thead><tr>
+<th style="text-align:left;">
+family
+</th>
+<th style="text-align:left;">
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left"><code>gaussian</code></td>
-<td align="left">with links: <code>identity</code>, <code>log</code>
+<tr>
+<td style="text-align:left;">
+<code>gaussian</code>
+</td>
+<td style="text-align:left;">
+with links: <code>identity</code>, <code>log</code>
 </td>
 </tr>
-<tr class="even">
-<td align="left"><code>binomial</code></td>
-<td align="left">with links: <code>logit</code>, <code>probit</code>, <code>log</code>, <code>cloglog</code>
+<tr>
+<td style="text-align:left;">
+<code>binomial</code>
+</td>
+<td style="text-align:left;">
+with links: <code>logit</code>, <code>probit</code>, <code>log</code>, <code>cloglog</code>
 </td>
 </tr>
-<tr class="odd">
-<td align="left"><code>Gamma</code></td>
-<td align="left">with links: <code>inverse</code>, <code>identity</code>, <code>log</code>
+<tr>
+<td style="text-align:left;">
+<code>Gamma</code>
+</td>
+<td style="text-align:left;">
+with links: <code>inverse</code>, <code>identity</code>, <code>log</code>
 </td>
 </tr>
-<tr class="even">
-<td align="left"><code>poisson</code></td>
-<td align="left">with links: <code>log</code>, <code>identity</code>
+<tr>
+<td style="text-align:left;">
+<code>poisson</code>
+</td>
+<td style="text-align:left;">
+with links: <code>log</code>, <code>identity</code>
 </td>
 </tr>
 </tbody>
@@ -613,130 +628,222 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <h2 class="hasAnchor">
 <a href="#meth" class="anchor"></a>Covariate model types</h2>
 <p><strong>JointAI</strong> automatically selects models for all incomplete covariates (and if necessary also for some complete covariates). The type of model is selected automatically based on the <code>class</code> of the variable and the number of levels.</p>
-<p>The automatically selected types for baseline (highest level) covariates are:</p>
+The automatically selected types for baseline (highest level) covariates are:
 <table class="table">
-<thead><tr class="header">
-<th align="left">name</th>
-<th align="left">model</th>
-<th align="left">variable type</th>
+<thead><tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:left;">
+model
+</th>
+<th style="text-align:left;">
+variable type
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left"><code>lm</code></td>
-<td align="left">linear regression</td>
-<td align="left">continuous variables</td>
+<tr>
+<td style="text-align:left;">
+<code>lm</code>
+</td>
+<td style="text-align:left;">
+linear regression
+</td>
+<td style="text-align:left;">
+continuous variables
+</td>
 </tr>
-<tr class="even">
-<td align="left"><code>logit</code></td>
-<td align="left">logistic regression</td>
-<td align="left">factors with two levels</td>
+<tr>
+<td style="text-align:left;">
+<code>logit</code>
+</td>
+<td style="text-align:left;">
+logistic regression
+</td>
+<td style="text-align:left;">
+factors with two levels
+</td>
 </tr>
-<tr class="odd">
-<td align="left"><code>mlogit</code></td>
-<td align="left">multinomial logit model</td>
-<td align="left">unordered factors with &gt;2 levels</td>
+<tr>
+<td style="text-align:left;">
+<code>mlogit</code>
+</td>
+<td style="text-align:left;">
+multinomial logit model
+</td>
+<td style="text-align:left;">
+unordered factors with &gt;2 levels
+</td>
 </tr>
-<tr class="even">
-<td align="left"><code>clm</code></td>
-<td align="left">cumulative logit model</td>
-<td align="left">ordered factors with &gt;2 levels</td>
+<tr>
+<td style="text-align:left;">
+<code>clm</code>
+</td>
+<td style="text-align:left;">
+cumulative logit model
+</td>
+<td style="text-align:left;">
+ordered factors with &gt;2 levels
+</td>
 </tr>
 </tbody>
 </table>
-<p>The default methods for lower level covariates are:</p>
+The default methods for lower level covariates are:
 <table class="table">
-<colgroup>
-<col width="14%">
-<col width="33%">
-<col width="51%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">name</th>
-<th align="left">model</th>
-<th align="left">variable type</th>
+<thead><tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:left;">
+model
+</th>
+<th style="text-align:left;">
+variable type
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left"><code>lmm</code></td>
-<td align="left">linear mixed model</td>
-<td align="left">continuous longitudinal variables</td>
+<tr>
+<td style="text-align:left;">
+<code>lmm</code>
+</td>
+<td style="text-align:left;">
+linear mixed model
+</td>
+<td style="text-align:left;">
+continuous longitudinal variables
+</td>
 </tr>
-<tr class="even">
-<td align="left"><code>glmm_logit</code></td>
-<td align="left">logistic mixed model</td>
-<td align="left">longitudinal factors with two levels</td>
+<tr>
+<td style="text-align:left;">
+<code>glmm_logit</code>
+</td>
+<td style="text-align:left;">
+logistic mixed model
+</td>
+<td style="text-align:left;">
+longitudinal factors with two levels
+</td>
 </tr>
-<tr class="odd">
-<td align="left"><code>mlogitmm</code></td>
-<td align="left">multinomial logit mixed model</td>
-<td align="left">longitudinal unordered factors with &gt;2 levels</td>
+<tr>
+<td style="text-align:left;">
+<code>mlogitmm</code>
+</td>
+<td style="text-align:left;">
+multinomial logit mixed model
+</td>
+<td style="text-align:left;">
+longitudinal unordered factors with &gt;2 levels
+</td>
 </tr>
-<tr class="even">
-<td align="left"><code>clmm</code></td>
-<td align="left">cumulative logit mixed model</td>
-<td align="left">longitudinal ordered factors with &gt;2 levels</td>
+<tr>
+<td style="text-align:left;">
+<code>clmm</code>
+</td>
+<td style="text-align:left;">
+cumulative logit mixed model
+</td>
+<td style="text-align:left;">
+longitudinal ordered factors with &gt;2 levels
+</td>
 </tr>
 </tbody>
 </table>
 <p>The imputation models that are chosen by default may not necessarily be appropriate for the data at hand, especially for continuous variables, which often do not comply with the assumptions of (conditional) normality.</p>
-<p>Therefore, alternative imputation methods are available for baseline covariates:</p>
+Therefore, alternative imputation methods are available for baseline covariates:
 <table class="table">
-<colgroup>
-<col width="16%">
-<col width="50%">
-<col width="32%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">name</th>
-<th align="left">model</th>
-<th align="left">variable type</th>
+<thead><tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:left;">
+model
+</th>
+<th style="text-align:left;">
+variable type
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left"><code>lognorm</code></td>
-<td align="left">normal regression of the log-transformed variable</td>
-<td align="left">right-skewed variables &gt;0</td>
+<tr>
+<td style="text-align:left;">
+<code>lognorm</code>
+</td>
+<td style="text-align:left;">
+normal regression of the log-transformed variable
+</td>
+<td style="text-align:left;">
+right-skewed variables &gt;0
+</td>
 </tr>
-<tr class="even">
-<td align="left"><code>beta</code></td>
-<td align="left">beta regression (with logit-link)</td>
-<td align="left">continuous variables with values in [0, 1]</td>
+<tr>
+<td style="text-align:left;">
+<code>beta</code>
+</td>
+<td style="text-align:left;">
+beta regression (with logit-link)
+</td>
+<td style="text-align:left;">
+continuous variables with values in [0, 1]
+</td>
 </tr>
-<tr class="odd">
-<td align="left"><code>glm_&lt;family&gt;_&lt;link&gt;</code></td>
-<td align="left">e.g. <code>glm_gamma_inverse</code> for Gamma regression with an inverse-link</td>
-<td align="left"></td>
+<tr>
+<td style="text-align:left;">
+<code>glm_&amp;lt;family&amp;gt;_&amp;lt;link&amp;gt;</code>
+</td>
+<td style="text-align:left;">
+e.g. <code>glm_gamma_inverse</code> for Gamma regression with an inverse-link
+</td>
+<td style="text-align:left;">
+</td>
 </tr>
 </tbody>
 </table>
 <p><code>lognorm</code> assumes a normal distribution for the natural logarithm of the variable, but the variable enters the linear predictor of the analysis model (and possibly other imputation models) on its original scale.</p>
-<p>For longitudinal (lower-level) covariates corresponding model types are . available:</p>
+For longitudinal (lower-level) covariates corresponding model types are . available:
 <table class="table">
-<colgroup>
-<col width="17%">
-<col width="49%">
-<col width="33%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">name</th>
-<th align="left">model</th>
-<th align="left">variable type</th>
+<thead><tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:left;">
+model
+</th>
+<th style="text-align:left;">
+variable type
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left"><code>glmm_lognorm</code></td>
-<td align="left">normal mixed model for the log-transformed variable</td>
-<td align="left">longitudinal right-skewed variables &gt;0</td>
+<tr>
+<td style="text-align:left;">
+<code>glmm_lognorm</code>
+</td>
+<td style="text-align:left;">
+normal mixed model for the log-transformed variable
+</td>
+<td style="text-align:left;">
+longitudinal right-skewed variables &gt;0
+</td>
 </tr>
-<tr class="even">
-<td align="left"><code>glmm_beta</code></td>
-<td align="left">beta regression (with logit-link)</td>
-<td align="left">continuous variables with values in [0, 1]</td>
+<tr>
+<td style="text-align:left;">
+<code>glmm_beta</code>
+</td>
+<td style="text-align:left;">
+beta regression (with logit-link)
+</td>
+<td style="text-align:left;">
+continuous variables with values in [0, 1]
+</td>
 </tr>
-<tr class="odd">
-<td align="left"><code>glmm_&lt;family&gt;_&lt;link&gt;</code></td>
-<td align="left">e.g. <code>glmm_poisson_log</code> for a poisson mixed model with log-link</td>
-<td align="left">longitudinal count variables</td>
+<tr>
+<td style="text-align:left;">
+<code>glmm_&amp;lt;family&amp;gt;_&amp;lt;link&amp;gt;</code>
+</td>
+<td style="text-align:left;">
+e.g. <code>glmm_poisson_log</code> for a poisson mixed model with log-link
+</td>
+<td style="text-align:left;">
+longitudinal count variables
+</td>
 </tr>
 </tbody>
 </table>
@@ -1002,9 +1109,9 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <code class="sourceCode R"><span class="va">mod10c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,
                  refcats <span class="op">=</span> <span class="va">refs_mod10</span>, data <span class="op">=</span> <span class="va">NHANES</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="co">#&gt; Warning: </span>
-<span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical covariates.</span>
-<span class="co">#&gt; I will use "contr.treatment" instead.  You can specify (globally) which types of</span>
-<span class="co">#&gt; contrasts are used by changing "options('contrasts')".</span></code></pre></div>
+<span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical covariates. I will use</span>
+<span class="co">#&gt; "contr.treatment" instead.  You can specify (globally) which types of contrasts are used by changing</span>
+<span class="co">#&gt; "options('contrasts')".</span></code></pre></div>
 <p><strong>Note:</strong><br> Changing a reference category via the argument <code>refcats</code> does not change the order of levels in the dataset or any of the data matrices inside <strong>JointAI</strong>. Only when, in the JAGS model, the categorical variables is converted into dummy variables, the reference category is used to determine for which levels the dummies are created.</p>
 </div>
 </div>
