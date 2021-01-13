@@ -210,7 +210,8 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     print_output(lapply(models0, coef), extra = "nonWin")
     print_output(lapply(models0, confint), extra = "nonWin")
     print_output(lapply(models0, summary), extra = "nonWin")
-    print_output(lapply(models0, function(x) coef(summary(x))), extra = "nonWin")
+    print_output(lapply(models0, function(x) coef(summary(x))),
+                 extra = "nonWin")
   })
 
 
