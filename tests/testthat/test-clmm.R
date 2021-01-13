@@ -2,6 +2,7 @@ library("JointAI")
 
 Sys.setenv(IS_CHECK = "true")
 
+
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   run_clmm_models <- function() {
 
@@ -216,8 +217,12 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
   test_that("prediction works", {
-    expect_is(predict(models$m4a, type = "lp")$fitted, "array")
+
+    local_edition(2)
+    expect_is(predict(models$m4a, type = "lp", warn = FALSE)$fitted, "array")
     expect_is(predict(models$m4a, type = "prob", warn = FALSE)$fitted, "array")
+
+    local_edition(3)
     expect_s3_class(predict(models$m4a, type = "class", warn = FALSE)$fitted,
                     "data.frame")
     expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$fitted,
@@ -232,12 +237,15 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$newdata,
                     "data.frame")
 
+    local_edition(2)
     expect_is(predict(models$m5d, type = "lp", warn = FALSE)$fitted, "array")
     expect_is(predict(models$m5d, type = "prob", warn = FALSE)$fitted, "array")
-    expect_is(predict(models$m5d, type = "class", warn = FALSE)$fitted,
-              "data.frame")
-    expect_is(predict(models$m5d, type = "response", warn = FALSE)$fitted,
-              "data.frame")
+
+    local_edition(3)
+    expect_s3_class(predict(models$m5d, type = "class", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m5d, type = "response", warn = FALSE)$fitted,
+                    "data.frame")
 
     expect_s3_class(predict(models$m5d, type = "lp", warn = FALSE)$newdata,
                     "data.frame")
@@ -268,7 +276,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   test_that("residuals work if implemented", {
     # residuals are not yet implemented
-    expect_error(residuals(models$m4a, type = "working"))
+    expect_error(residuals(models$m4a, type = "working", warn = FALSE))
   })
 
 
@@ -286,18 +294,20 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   test_that("wrong models give errors", {
     # wrong type of outcome variable
-    expect_error(clmm_imp(y ~ O1 + C1 + C2 + (1 | id), data = longDF))
+    expect_error(clmm_imp(y ~ O1 + C1 + C2 + (1 | id), data = longDF,
+                          warn = FALSE))
     # wrong model function used
     expect_error(clm_imp(o2 ~ O1 + C1 + C2 + (1 | id), data = longDF,
                          warn = FALSE))
     # variable not in data
-    expect_error(clmm_imp(o2 ~ O1 + C1 + C2 + (1 | id), data = wideDF))
+    expect_error(clmm_imp(o2 ~ O1 + C1 + C2 + (1 | id), data = wideDF,
+                          warn = FALSE))
     # model formula that can't be used
     expect_s3_class(clmm_imp(o2 ~ I(O1^2) + C1 + C2 + (1 | id), warn = FALSE,
                              data = longDF), "JointAI_errored")
-    # non-proportional effect not in main formula
+    # # non-proportional effect not in main formula
     expect_error(clmm_imp(o2 ~ O1 + C1 + (1 | id), data = longDF,
-                          nonprop = list(o2 = ~ C2)))
+                          nonprop = list(o2 = ~ C2), warn = FALSE))
   })
 
 }

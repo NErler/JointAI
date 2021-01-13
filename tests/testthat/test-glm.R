@@ -1,3 +1,4 @@
+
 library("JointAI")
 
 Sys.setenv(IS_CHECK = "true")
@@ -41,14 +42,16 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
         m0b1 = glm_imp(B1 ~ 1, family = binomial(link = "logit"), data = wideDF,
                        n.adapt = 5, n.iter = 10, seed = 2020,
                        warn = FALSE, mess = FALSE),
-        m0b2 = glm_imp(B1 ~ 1, family = binomial(link = "probit"), data = wideDF,
+        m0b2 = glm_imp(B1 ~ 1, family = binomial(link = "probit"),
+                       data = wideDF,
                        n.adapt = 5, n.iter = 10, seed = 2020,
                        warn = FALSE, mess = FALSE),
         m0b3 = glm_imp(B1 ~ 1, family = binomial(link = "log"), data = wideDF,
-                       n.adapt = 5, n.iter = 10, seed = 2020,
+                       n.adapt = 150, n.iter = 10, seed = 2020,
                        warn = FALSE, mess = FALSE),
-        m0b4 = glm_imp(B1 ~ 1, family = binomial(link = "cloglog"), data = wideDF,
-                       n.adapt = 5, n.iter = 10, seed = 2020,
+        m0b4 = glm_imp(B1 ~ 1, family = binomial(link = "cloglog"),
+                       data = wideDF,
+                       n.adapt = 50, n.iter = 10, seed = 2020,
                        warn = FALSE, mess = FALSE),
 
         m0c1 = glm_imp(L1 ~ 1, family = Gamma(link = "inverse"), data = wideDF,
@@ -61,7 +64,8 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
         m0d1 = glm_imp(P1 ~ 1, family = poisson(link = "log"), data = wideDF,
                        n.adapt = 5, n.iter = 10, seed = 2020,
                        warn = FALSE, mess = FALSE),
-        m0d2 = glm_imp(P1 ~ 1, family = poisson(link = "identity"), data = wideDF,
+        m0d2 = glm_imp(P1 ~ 1, family = poisson(link = "identity"),
+                       data = wideDF,
                        n.adapt = 5, n.iter = 10, seed = 2020,
                        warn = FALSE, mess = FALSE),
 
@@ -171,7 +175,8 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
         m5a2 = glm_imp(y ~ C2 + B2 + B1 + O1, family = gaussian(link = "log"),
                        data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020,
                        warn = FALSE, mess = FALSE),
-        m5a3 = glm_imp(y ~ C2 + B2 + B1 + O1, family = gaussian(link = "inverse"),
+        m5a3 = glm_imp(y ~ C2 + B2 + B1 + O1,
+                       family = gaussian(link = "inverse"),
                        data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020,
                        warn = FALSE, mess = FALSE),
 
@@ -336,27 +341,28 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
     # prediction with newdata
     ndf <- predDF(models$m5a1, vars = ~ C2)
     expect_s3_class(ndf, "data.frame")
-    expect_s3_class(predict(models$m5a1, newdata = ndf)$fitted, "data.frame")
+    expect_s3_class(predict(models$m5a1, newdata = ndf, warn = FALSE)$fitted,
+                    "data.frame")
   })
 
 
 
   test_that("residuals", {
-    for (k in seq_along(models)) {
-      expect_is(residuals(models[[k]], type = "response"),
-                "numeric")
+    for (k in seq_along(models)[9:20]) {
+      expect_type(residuals(models[[k]], type = "response"),
+                  "double")
 
       if (models[[k]]$analysis_type == "beta") {
         expect_error(residuals(models[[k]], type = "working"))
         expect_error(residuals(models[[k]], type = "pearson"))
       } else {
-        expect_is(residuals(models[[k]], type = "working"),
-                  "numeric")
-        expect_is(residuals(models[[k]], type = "pearson"),
-                  "numeric")
+        expect_type(residuals(models[[k]], type = "working"),
+                    "double")
+        expect_type(residuals(models[[k]], type = "pearson"),
+                    "double")
       }
     }
-    expect_is(residuals(models$m5a1), "numeric")
+    expect_type(residuals(models$m5a1), "double")
   })
 
 

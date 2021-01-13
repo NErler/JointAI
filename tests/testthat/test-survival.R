@@ -17,7 +17,8 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
                        hepato ~ day + (1 | id),
                        chol ~ day + (1 | id),
                        stage ~ age + (1 | id)),
-                  timevar = 'day', data = JointAI::PBC, n.iter = 5, n.adapt = 2)
+                  timevar = 'day', data = JointAI::PBC,
+                  warn = FALSE, n.iter = 5, n.adapt = 2)
     expect_s3_class(mod, 'JointAI')
     expect_output(list_models(mod))
     expect_s3_class(parameters(mod), 'data.frame')

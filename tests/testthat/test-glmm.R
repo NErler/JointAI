@@ -42,10 +42,10 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
                         data = longDF, n.adapt = 5, n.iter = 10, seed = 2020,
                         warn = FALSE, mess = FALSE),
         m0b3 = glme_imp(b1 ~ 1 + (1 | id), family = binomial(link = "log"),
-                        data = longDF, n.adapt = 5, n.iter = 10, seed = 2020,
+                        data = longDF, n.adapt = 50, n.iter = 10, seed = 2020,
                         warn = FALSE, mess = FALSE),
         m0b4 = glme_imp(b1 ~ 1 + (1 | id), family = binomial(link = "cloglog"),
-                        data = longDF, n.adapt = 5, n.iter = 10, seed = 2020,
+                        data = longDF, n.adapt = 50, n.iter = 10, seed = 2020,
                         warn = FALSE, mess = FALSE),
 
         m0c1 = glme_imp(L1 ~ 1 + (1 | id), family = Gamma(link = "inverse"),
@@ -366,6 +366,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   test_that("prediction works", {
     for (k in seq_along(models)) {
+
       expect_s3_class(predict(models[[k]], type = "link", warn = FALSE)$fitted,
                       "data.frame")
       expect_s3_class(predict(models[[k]], type = "response",
@@ -386,21 +387,21 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
   test_that("residuals", {
-    for (k in seq_along(models)) {
-      expect_is(residuals(models[[k]], type = "response", warn = FALSE),
-                "numeric")
+    for (k in seq_along(models)[8]) {
+      expect_type(residuals(models[[k]], type = "response", warn = FALSE),
+                  "double")
 
       if (models[[k]]$analysis_type %in% c("beta", "glmm_beta")) {
         expect_error(residuals(models[[k]], type = "working", warn = FALSE))
         expect_error(residuals(models[[k]], type = "pearson", warn = FALSE))
       } else {
-        expect_is(residuals(models[[k]], type = "working", warn = FALSE),
-                  "numeric")
-        expect_is(residuals(models[[k]], type = "pearson", warn = FALSE),
-                  "numeric")
+        expect_type(residuals(models[[k]], type = "working", warn = FALSE),
+                    "double")
+        expect_type(residuals(models[[k]], type = "pearson", warn = FALSE),
+                    "double")
       }
     }
-    expect_is(residuals(models$m5a, warn = FALSE), "numeric")
+    expect_type(residuals(models$m5a, warn = FALSE), "double")
   })
 
 

@@ -2,6 +2,8 @@ library("JointAI")
 
 Sys.setenv(IS_CHECK = "true")
 
+skip_on_cran()
+
 set_seed(2020)
 longDF$m1 <- factor(sample(c('A', 'B', 'C'), size = nrow(longDF),
                            replace = TRUE))
@@ -148,8 +150,23 @@ test_that("summary output remained the same", {
 
 
 test_that("prediction works", {
-  expect_is(predict(models$m4a, type = "lp")$fitted, "array")
+
+  expect_warning(
+    expect_warning(predict(models$m4a, type = "lp")$fitted,
+                   "Prediction in multi-level settings")
+  )
+
+  expect_warning(
+    expect_warning(predict(models$m4a, type = "prob")$fitted,
+                   "cases with missing covariates")
+  )
+
+
+  local_edition(2)
+  expect_is(predict(models$m4a, type = "lp", warn = FALSE)$fitted, "array")
   expect_is(predict(models$m4a, type = "prob", warn = FALSE)$fitted, "array")
+
+  local_edition(3)
   expect_s3_class(predict(models$m4a, type = "class", warn = FALSE)$fitted,
                   "data.frame")
   expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$fitted,
@@ -164,6 +181,7 @@ test_that("prediction works", {
   expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$newdata,
                   "data.frame")
 
+  local_edition(2)
   expect_is(predict(models$m4e, type = "lp", warn = FALSE)$fitted, "array")
   expect_is(predict(models$m4e, type = "prob", warn = FALSE)$fitted, "array")
   expect_is(predict(models$m4e, type = "class", warn = FALSE)$fitted,
@@ -171,6 +189,7 @@ test_that("prediction works", {
   expect_is(predict(models$m4e, type = "response", warn = FALSE)$fitted,
             "data.frame")
 
+  local_edition(3)
   expect_s3_class(predict(models$m4b, type = "lp", warn = FALSE)$newdata,
                   "data.frame")
   expect_s3_class(predict(models$m4b, type = "prob", warn = FALSE)$newdata,
@@ -188,7 +207,8 @@ test_that("prediction works", {
 
 test_that("residuals work if implemented", {
   # residuals are not yet implemented
-  expect_error(residuals(models$m4a, type = "working"))
+  expect_error(residuals(models$m4a, type = "working", warn = FALSE),
+               "not yet implemented")
 })
 
 

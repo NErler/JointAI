@@ -2,6 +2,8 @@ library("JointAI")
 
 Sys.setenv(IS_CHECK = "true")
 
+skip_on_cran()
+
 PBC2 <- PBC[match(unique(PBC$id), PBC$id), ]
 PBC2$center <- cut(as.numeric(PBC2$id), c(-Inf, seq(30, 270, 30), Inf))
 PBC$center <- cut(as.numeric(PBC$id), c(-Inf, seq(30, 270, 30), Inf))
@@ -13,7 +15,6 @@ PBC2$status2[11:20] <- NA
 
 
 run_survreg_models <- function() {
-
   sink(tempfile())
   on.exit(sink())
   invisible(force(suppressWarnings({
@@ -119,7 +120,21 @@ test_that("summary output remained the same", {
 
 
 test_that("prediction works", {
-  expect_s3_class(predict(models$m3b, type = "lp")$fitted, "data.frame")
+  expect_warning(
+    expect_warning(
+      predict(models$m3b, type = "lp")$fitted,
+      "Prediction in multi-level settings"),
+    "cases with missing covariates is not yet implemented")
+
+  expect_warning(
+    expect_warning(
+      predict(models$m3b, type = "response")$fitted,
+      "Prediction in multi-level settings"),
+    "cases with missing covariates is not yet implemented")
+
+
+  expect_s3_class(predict(models$m3b, type = "lp", warn = FALSE)$fitted,
+                  "data.frame")
   expect_s3_class(predict(models$m3b, type = "response", warn = FALSE)$fitted,
                   "data.frame")
 })
@@ -127,8 +142,8 @@ test_that("prediction works", {
 
 test_that("residuals", {
   # residuals are not yet implemented
-  expect_error(residuals(models$m3b, type = "working"))
-  expect_error(residuals(models$m3b, type = "response"))
+  expect_error(residuals(models$m3b, type = "working", warn = FALSE))
+  expect_error(residuals(models$m3b, type = "response", warn = FALSE))
 })
 
 

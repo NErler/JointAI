@@ -168,36 +168,57 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
   test_that("prediction works", {
-    expect_s3_class(predict(models$m3a, type = "lp")$fitted, "data.frame")
-    expect_s3_class(predict(models$m3b, type = "lp")$fitted, "data.frame")
-    expect_s3_class(predict(models$m4a, type = "lp")$fitted, "data.frame")
-    expect_s3_class(predict(models$m4b, type = "lp")$fitted, "data.frame")
-    expect_s3_class(predict(models$m4c, type = "lp")$fitted, "data.frame")
+    expect_s3_class(predict(models$m3a, type = "lp", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m3b, type = "lp", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m4a, type = "lp", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m4b, type = "lp", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m4c, type = "lp", warn = FALSE)$fitted,
+                    "data.frame")
 
-    expect_s3_class(predict(models$m3a, type = "survival")$fitted, "data.frame")
-    expect_s3_class(predict(models$m3b, type = "survival")$fitted, "data.frame")
-    expect_s3_class(predict(models$m4a, type = "survival")$fitted, "data.frame")
-    expect_s3_class(predict(models$m4b, type = "survival")$fitted, "data.frame")
-    expect_s3_class(predict(models$m4c, type = "survival")$fitted, "data.frame")
+    expect_s3_class(predict(models$m3a, type = "survival", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m3b, type = "survival", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m4a, type = "survival", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m4b, type = "survival", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m4c, type = "survival", warn = FALSE)$fitted,
+                    "data.frame")
 
-    expect_s3_class(predict(models$m3a, type = "risk")$fitted, "data.frame")
-    expect_s3_class(predict(models$m3b, type = "risk")$fitted, "data.frame")
-    expect_s3_class(predict(models$m4a, type = "risk")$fitted, "data.frame")
-    expect_s3_class(predict(models$m4b, type = "risk")$fitted, "data.frame")
-    expect_s3_class(predict(models$m4c, type = "risk")$fitted, "data.frame")
+    expect_s3_class(predict(models$m3a, type = "risk", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m3b, type = "risk", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m4a, type = "risk", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m4b, type = "risk", warn = FALSE)$fitted
+                    , "data.frame")
+    expect_s3_class(predict(models$m4c, type = "risk", warn = FALSE)$fitted,
+                    "data.frame")
 
-    expect_s3_class(predict(models$m3a, type = "expected")$fitted, "data.frame")
-    expect_s3_class(predict(models$m3b, type = "expected")$fitted, "data.frame")
-    expect_s3_class(predict(models$m4a, type = "expected")$fitted, "data.frame")
-    expect_s3_class(predict(models$m4b, type = "expected")$fitted, "data.frame")
-    expect_s3_class(predict(models$m4c, type = "expected")$fitted, "data.frame")
+    expect_s3_class(predict(models$m3a, type = "expected", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m3b, type = "expected", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m4a, type = "expected", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m4b, type = "expected", warn = FALSE)$fitted,
+                    "data.frame")
+    expect_s3_class(predict(models$m4c, type = "expected", warn = FALSE)$fitted,
+                    "data.frame")
   })
+
 
 
   test_that("residuals", {
     # residuals are not yet implemented
-    expect_error(residuals(models$m3b, type = "working"))
-    expect_error(residuals(models$m3b, type = "response"))
+    expect_error(residuals(models$m3b, type = "working", warn = FALSE))
+    expect_error(residuals(models$m3b, type = "response", warn = FALSE))
   })
 
 

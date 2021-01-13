@@ -13,6 +13,8 @@ test_that('extract_id works', {
   for (i in seq_along(runs)) {
     expect_equal(extract_id(runs[[i]]$random), runs[[i]]$ids)
   }
+
+  expect_warning(extract_id(runs[[3]]$random), "could be identified")
 })
 
 
