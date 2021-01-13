@@ -97,6 +97,7 @@ print_output <- function(x, dir = 'testout', extra = NULL, type = "output") {
     extra <- paste0("_", extra)
   }
 
+  testthat::local_edition(2)
   if (type == "value") {
     nam <- paste0(gsub(" ", "_", testthat::get_reporter()$.context),
                   "_", abbr, extra, ".rds")
@@ -109,6 +110,7 @@ print_output <- function(x, dir = 'testout', extra = NULL, type = "output") {
     testthat::expect_known_output(x, print = TRUE,
                                   file = file.path(dir, nam))
   }
+  testthat::local_edition(3)
 }
 
 set0 <- function(object) {
