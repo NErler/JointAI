@@ -1,4 +1,3 @@
-context("JM and tvar cox")
 library("JointAI")
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {

@@ -1,6 +1,4 @@
-context("help functions")
 library("JointAI")
-library("survival")
 
 test_that('extract_id works', {
   runs <- list(list(random = ~ 1 | id, ids = 'id'),

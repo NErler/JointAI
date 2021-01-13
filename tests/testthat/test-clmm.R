@@ -1,11 +1,9 @@
-context("CLMM Models")
 library("JointAI")
 
 Sys.setenv(IS_CHECK = "true")
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   run_clmm_models <- function() {
-    cat('\nRunning clmm models...\n')
 
     set_seed(1234)
     longDF <- JointAI::longDF

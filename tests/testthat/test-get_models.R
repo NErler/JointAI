@@ -1,4 +1,3 @@
-context("(Imputation) models")
 library("JointAI")
 
 
@@ -123,7 +122,6 @@ test_that("auxvars are included", {
 
 test_that("splines in random effects give an error when a model is
 needed for that variable", {
-  library(splines)
   expect_equal(get_models(fixed = y ~ c1 + C1 + ns(time, df = 2),
                           random = ~ ns(time, df = 2) | id, data = longDF),
                c(y = 'lmm')
@@ -151,34 +149,33 @@ needed for that variable", {
 
 test_that("all longitudinal variables are included when the analysis
 model is a JM", {
-  library(survival)
   expect_equal(get_models(fixed = Surv(futime, status == 2) ~ age + sex +
                             bili, random = ~ 1|id,
-                          data = pbcseq, analysis_type = 'coxph'),
+                          data = survival::pbcseq, analysis_type = 'coxph'),
                c('Surv(futime, status == 2)' = 'coxph'))
 
   expect_equal(get_models(fixed = Surv(futime , status == 2) ~ age +
                             sex + bili,
                           random = ~ 1|id, analysis_type = 'JM',
-                          data = pbcseq),
+                          data = survival::pbcseq),
                c('Surv(futime, status == 2)' = 'JM'))
 
   expect_equal(get_models(fixed = Surv(futime, status == 2) ~ age + sex +
                             bili + chol,
                           random = ~ 1|id, analysis_type = 'JM',
-                          data = pbcseq),
+                          data = survival::pbcseq),
                c('Surv(futime, status == 2)' = 'JM', chol = 'lmm'))
 
   expect_equal(get_models(fixed = Surv(futime, status == 2) ~ age + sex +
                             bili + chol,
                           random = ~ 1|id,
-                          data = pbcseq, analysis_type = 'survreg'),
+                          data = survival::pbcseq, analysis_type = 'survreg'),
                c('Surv(futime, status == 2)' = 'survreg', chol = 'lmm'))
 
   expect_equal(get_models(fixed = Surv(futime, status == 2) ~ age + sex +
                             bili + chol + day,
                           random = ~ 1|id, analysis_type = 'JM',
-                          data = pbcseq),
+                          data = survival::pbcseq),
                c('Surv(futime, status == 2)' = 'JM', chol = 'lmm'))
 
 })

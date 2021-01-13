@@ -1,4 +1,3 @@
-context("Plots")
 library("JointAI")
 
 

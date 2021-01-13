@@ -1,6 +1,4 @@
-context("GLM Models")
 library("JointAI")
-library("splines")
 
 Sys.setenv(IS_CHECK = "true")
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
@@ -22,7 +20,6 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
   run_glm_models <- function() {
-    cat('\nRunning glm models...\n')
     sink(tempfile())
     on.exit(sink())
     invisible(force(suppressWarnings({

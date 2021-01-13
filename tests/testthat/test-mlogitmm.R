@@ -1,4 +1,3 @@
-context("mlogitmm Models")
 library("JointAI")
 
 Sys.setenv(IS_CHECK = "true")
@@ -12,7 +11,6 @@ longDF$m2 <- factor(sample(c('A', 'B', 'C'), size = nrow(longDF),
 longDF$m2[sample.int(nrow(longDF), 50)] <- NA
 
 run_mlogitmm_models <- function() {
-  cat('\nRunning mlogitmm models...\n')
   sink(tempfile())
   on.exit(sink())
   invisible(force(suppressWarnings({

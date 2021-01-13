@@ -1,4 +1,3 @@
-context("Multivariate model")
 library("JointAI")
 
 test_that("Multivariate models work", {

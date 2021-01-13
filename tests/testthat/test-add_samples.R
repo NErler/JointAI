@@ -1,4 +1,3 @@
-context("add_samples")
 library("JointAI")
 
 test_that('add_samples works in simple setting',{

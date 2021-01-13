@@ -1,4 +1,3 @@
-context("survreg models")
 library("JointAI")
 
 Sys.setenv(IS_CHECK = "true")
@@ -14,7 +13,6 @@ PBC2$status2[11:20] <- NA
 
 
 run_survreg_models <- function() {
-  cat('\nRunning survreg models...\n')
 
   sink(tempfile())
   on.exit(sink())

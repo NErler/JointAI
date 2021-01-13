@@ -1,10 +1,8 @@
-context("CLM Models")
 library("JointAI")
 
 Sys.setenv(IS_CHECK = "true")
 
 run_clm_models <- function() {
-  cat('\nRunning clm models...\n')
   sink(tempfile())
   on.exit(sink())
   invisible(force(suppressWarnings({

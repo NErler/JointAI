@@ -1,10 +1,8 @@
-context("mlogit Models")
 library("JointAI")
 
 Sys.setenv(IS_CHECK = "true")
 
 run_mlogit_models <- function() {
-  cat('\nRunning mlogit models...\n')
   sink(tempfile())
   on.exit(sink())
   invisible(force(suppressWarnings({

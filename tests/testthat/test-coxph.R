@@ -1,6 +1,4 @@
-context("coxph models")
 library("JointAI")
-library("splines")
 
 Sys.setenv(IS_CHECK = "true")
 
@@ -17,7 +15,6 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
   run_coxph_models <- function() {
-    cat('\nRunning coxph models...\n')
 
     sink(tempfile())
     on.exit(sink())

@@ -1,6 +1,4 @@
-context("Print functions")
 library("JointAI")
-
 
 test_that('lme model', {
   mymod <- lme_imp(y ~ C1 + c1 + B2 + c2 + O2 + time + (time  | id),
