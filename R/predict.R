@@ -296,7 +296,7 @@ predict.JointAI <- function(object, outcome = 1L, newdata,
 
 predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
                         data, MCMC, varname, coef_list, info_list,
-                        quantiles = c(0.025, 0.975), mess = TRUE,
+                        quantiles = c(0.025, 0.975), warn = TRUE,
                         contr_list, Mlist, return_sample = FALSE, ...) {
 
   type <- match.arg(type)
@@ -339,8 +339,8 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
   )
 
 
-  if (mess & any(is.na(desgn_mat)))
-    msg("Note: Prediction for cases with missing covariates is not yet
+  if (warn & any(is.na(desgn_mat)))
+    warnmsg("Prediction for cases with missing covariates is not yet
         implemented.
         I will report %s instead of predicted values for those cases.",
         dQuote("NA"), exdent = 6L)
@@ -491,7 +491,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
 predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                           type = c("lp", "risk", "expected", "survival"),
                           varname, quantiles = c(0.025, 0.975),
-                          srow = NULL, mess = TRUE, contr_list,
+                          srow = NULL, warn = TRUE, contr_list,
                           return_sample = FALSE, ...) {
   type <- match.arg(type)
 
@@ -525,8 +525,8 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   }), names(Mlist$M))
 
 
-  if (mess & any(is.na(desgn_mat)))
-    msg("Prediction for cases with missing covariates is not yet
+  if (warn & any(is.na(desgn_mat)))
+    warnmsg("Prediction for cases with missing covariates is not yet
             implemented.")
 
   scale_pars <- do.call(rbind, unname(Mlist$scale_pars))
