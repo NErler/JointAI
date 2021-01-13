@@ -85,7 +85,9 @@ compare_modeltype <- function(mod) {
   )
 }
 
-print_output <- function(x, dir = 'testout', extra = NULL, type = "output") {
+print_output <- function(x, dir = 'testout', context = NULL, extra = NULL,
+                         type = "output") {
+
   call = as.list(match.call())$x
   input <- make.names(
     paste0(deparse(call, width.cutoff = 500), collapse = "")
@@ -99,14 +101,12 @@ print_output <- function(x, dir = 'testout', extra = NULL, type = "output") {
 
   testthat::local_edition(2)
   if (type == "value") {
-    nam <- paste0(gsub(" ", "_", testthat::get_reporter()$.context),
-                  "_", abbr, extra, ".rds")
+    nam <- paste0(context, "_", abbr, extra, ".rds")
     testthat::expect_known_value(x,
                                  file = file.path(dir, nam))
 
   } else {
-    nam <- paste0(gsub(" ", "_", testthat::get_reporter()$.context),
-                  "_", abbr, extra, ".txt")
+    nam <- paste0(context, "_", abbr, extra, ".txt")
     testthat::expect_known_output(x, print = TRUE,
                                   file = file.path(dir, nam))
   }

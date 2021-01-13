@@ -124,18 +124,19 @@ test_that("MCMC samples can be plottet", {
 
 test_that("data_list remains the same", {
   # skip_on_cran()
-  print_output(lapply(models, "[[", "data_list"), type = "value")
+  print_output(lapply(models, "[[", "data_list"), type = "value",
+               context = "clm")
 })
 
 test_that("jagsmodel remains the same", {
-  print_output(lapply(models, "[[", "jagsmodel"))
+  print_output(lapply(models, "[[", "jagsmodel"), context = "clm")
 })
 
 
 test_that("GRcrit and MCerror give same result", {
   # skip_on_cran()
-  print_output(lapply(models0, GR_crit, multivariate = FALSE))
-  print_output(lapply(models0, MC_error))
+  print_output(lapply(models0, GR_crit, multivariate = FALSE), context = "clm")
+  print_output(lapply(models0, MC_error), context = "clm")
 })
 
 
@@ -143,21 +144,22 @@ test_that("summary output remained the same on Windows", {
   # skip_on_cran()
   skip_on_os(c("mac", "linux", "solaris"))
 
-  print_output(lapply(models0, print))
-  print_output(lapply(models0, coef))
-  print_output(lapply(models0, confint))
-  print_output(lapply(models0, summary))
-  print_output(lapply(models0, function(x) coef(summary(x))))
+  print_output(lapply(models0, print), context = "clm")
+  print_output(lapply(models0, coef), context = "clm")
+  print_output(lapply(models0, confint), context = "clm")
+  print_output(lapply(models0, summary), context = "clm")
+  print_output(lapply(models0, function(x) coef(summary(x))), context = "clm")
 })
 
 test_that("summary output remained the same on non-Windows", {
   # skip_on_cran()
   skip_on_os(c("windows"))
-  print_output(lapply(models0, print), extra = "nonWin")
-  print_output(lapply(models0, coef), extra = "nonWin")
-  print_output(lapply(models0, confint), extra = "nonWin")
-  print_output(lapply(models0, summary), extra = "nonWin")
-  print_output(lapply(models0, function(x) coef(summary(x))), extra = "nonWin")
+  print_output(lapply(models0, print), extra = "nonWin", context = "clm")
+  print_output(lapply(models0, coef), extra = "nonWin", context = "clm")
+  print_output(lapply(models0, confint), extra = "nonWin", context = "clm")
+  print_output(lapply(models0, summary), extra = "nonWin", context = "clm")
+  print_output(lapply(models0, function(x) coef(summary(x))), extra = "nonWin",
+               context = "clm")
 })
 
 

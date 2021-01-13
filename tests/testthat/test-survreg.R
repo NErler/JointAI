@@ -92,29 +92,32 @@ test_that("MCMC samples can be plottet", {
 
 test_that("data_list remains the same", {
   skip_on_cran()
-  print_output(lapply(models, "[[", "data_list"), type = "value")
+  print_output(lapply(models, "[[", "data_list"), type = "value",
+               context = "survreg")
 })
 
 test_that("jagsmodel remains the same", {
   skip_on_cran()
-  print_output(lapply(models, "[[", "jagsmodel"))
+  print_output(lapply(models, "[[", "jagsmodel"), context = "survreg")
 })
 
 
 test_that("GRcrit and MCerror give same result", {
   skip_on_cran()
-  print_output(lapply(models0, GR_crit, multivariate = FALSE))
-  print_output(lapply(models0, MC_error))
+  print_output(lapply(models0, GR_crit, multivariate = FALSE),
+               context = "survreg")
+  print_output(lapply(models0, MC_error), context = "survreg")
 })
 
 
 test_that("summary output remained the same", {
   skip_on_cran()
-  print_output(lapply(models0, print))
-  print_output(lapply(models0, coef))
-  print_output(lapply(models0, confint))
-  print_output(lapply(models0, summary))
-  print_output(lapply(models0, function(x) coef(summary(x))))
+  print_output(lapply(models0, print), context = "survreg")
+  print_output(lapply(models0, coef), context = "survreg")
+  print_output(lapply(models0, confint), context = "survreg")
+  print_output(lapply(models0, summary), context = "survreg")
+  print_output(lapply(models0, function(x) coef(summary(x))),
+               context = "survreg")
 })
 
 

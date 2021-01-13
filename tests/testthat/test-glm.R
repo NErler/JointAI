@@ -300,28 +300,29 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   test_that("data_list remains the same", {
     skip_on_cran()
-    print_output(lapply(models, "[[", "data_list"), type = "value")
+    print_output(lapply(models, "[[", "data_list"), type = "value",
+                 context = "glm")
   })
 
   test_that("jagsmodel remains the same", {
     skip_on_cran()
-    print_output(lapply(models, "[[", "jagsmodel"))
+    print_output(lapply(models, "[[", "jagsmodel"), context = "glm")
   })
 
   test_that("GRcrit and MCerror give same result", {
     skip_on_cran()
-    print_output(lapply(models0, GR_crit, multivariate = FALSE))
-    print_output(lapply(models0, MC_error))
+    print_output(lapply(models0, GR_crit, multivariate = FALSE), context = "glm")
+    print_output(lapply(models0, MC_error), context = "glm")
   })
 
 
   test_that("summary output remained the same", {
     skip_on_cran()
-    print_output(lapply(models0, print))
-    print_output(lapply(models0, coef))
-    print_output(lapply(models0, confint))
-    print_output(lapply(models0, summary, missinfo = TRUE))
-    print_output(lapply(models0, function(x) coef(summary(x))))
+    print_output(lapply(models0, print), context = "glm")
+    print_output(lapply(models0, coef), context = "glm")
+    print_output(lapply(models0, confint), context = "glm")
+    print_output(lapply(models0, summary, missinfo = TRUE), context = "glm")
+    print_output(lapply(models0, function(x) coef(summary(x))), context = "glm")
   })
 
 
