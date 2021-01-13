@@ -5,13 +5,22 @@ cache: packages
 sudo: required
 warnings_are_errors: false
 
+addons:
+  apt:
+    packages:
+      - libgit2-dev
+
 r_check_args: '--as-cran'
 
 env:
   - NOT_CRAN=true IS_CHECK=true _R_CHECK_SYSTEM_CLOCK_=false
 
 before_install:
-  - sudo apt-get install jags
+  - sudo apt-get -y install jags
+  - sudo apt-get -y install libxml2-dev
+addons:
+  apt:
+    update: true
 
 os:
   - linux
