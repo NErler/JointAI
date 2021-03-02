@@ -154,6 +154,8 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
                            FUN.VALUE = character(1L))
     )
 
+    tvars <- tvars[Mlist$Mlvls[tvars] %in% paste0("M_", rep_lvls)]
+
     # get the model info for these variables
     setNames(lapply(tvars, function(i) {
       arglist_new <- arglist
