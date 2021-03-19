@@ -1,5 +1,8 @@
 # JointAI (development version)
 
+## Minor improvements and bug fixes
+* Bug fix in re-scaling of random effects variance covariance matrix in
+  multi-level models with >2 levels where some levels have only random intercept.
 
 # JointAI (1.0.2)
 

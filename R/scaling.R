@@ -146,7 +146,7 @@ get_rdvcov_scalemat <- function(scale_pars, info_list, data_list, groups) {
 
   lapply(info_list, function(hc) {
     if (!is.null(hc)) {
-      lapply(hc$hc_list$hcvars, function(lvl) {
+      l <- lapply(hc$hc_list$hcvars, function(lvl) {
         if (all(!attr(lvl, "incomplete")) & length(lvl$rd_slope_coefs) > 0) {
           rd_desgn_mat <- do.call(cbind,
                                   lapply(lvl$rd_slope_coefs, function(rds_info) {
@@ -169,6 +169,7 @@ get_rdvcov_scalemat <- function(scale_pars, info_list, data_list, groups) {
           )
         }
       })
+      Filter(Negate(is.null), l)
     }
   })
 }
