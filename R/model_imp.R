@@ -1165,9 +1165,9 @@ survreg_imp <- function(formula, data,
 
 
   fmla <- if (is.list(formula)) {
-    deparse(formula[[1]], width.cutoff = 500)
+    paste(deparse(formula[[1]], width.cutoff = 500), collapse = " ")
   } else {
-    deparse(formula, width.cutoff = 500)
+    paste(deparse(formula, width.cutoff = 500) , collapse = " ")
   }
   if (!grepl("^Surv\\(", fmla)) {
     errormsg("For a survival model, the left hand side of the model formula
@@ -1202,9 +1202,9 @@ coxph_imp <- function(formula, data, df_basehaz = 6,
   if (missing(formula)) errormsg("No model formula specified.")
 
   fmla <- if (is.list(formula)) {
-    deparse(formula[[1]], width.cutoff = 500)
+    paste(deparse(formula[[1]], width.cutoff = 500), collapse = " ")
   } else {
-    deparse(formula, width.cutoff = 500)
+    paste(deparse(formula, width.cutoff = 500), collapse = " ")
   }
   if (!grepl("^Surv\\(", fmla)) {
     errormsg("For a survival model, the left hand side of the model formula
@@ -1253,9 +1253,9 @@ JM_imp <- function(formula, data, df_basehaz = 6,
   if (missing(formula)) errormsg("No model formula specified.")
 
   fmla <- if (is.list(formula)) {
-    deparse(formula[[1]], width.cutoff = 500)
+    paste(deparse(formula[[1]], width.cutoff = 500), collapse = " ")
   } else {
-    deparse(formula, width.cutoff = 500)
+    paste(deparse(formula, width.cutoff = 500), collapse = " ")
   }
   if (!grepl("^Surv\\(", fmla)) {
     errormsg("For a survival model, the left hand side of the model formula

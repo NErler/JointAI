@@ -130,10 +130,17 @@ extract_lhs <- function(formula) {
 
 
   # get the LHS of the formula
-  lhs <- sub("[[:space:]]*\\~[[:print:]]*", "",
-             deparse(formula, width.cutoff = 500L))
+  # lhs <- sub("[[:space:]]*\\~[[:print:]]*", "",
+  #            deparse(formula, width.cutoff = 500L))
 
-  lhs
+  if (length(formula) == 3) {
+    deparse(formula[[2]], width.cutoff = 500L)
+  } else if (length(formula) == 2) {
+    ""
+  } else {
+    errormsg("Unable to extract respone from the formula.
+             Formula is not of length 2 or 3.")
+  }
 }
 
 
@@ -152,17 +159,21 @@ remove_lhs <- function(formula) {
 
 
   lapply(formula, function(x) {
-    if (!is.null(x)) {
-      lhs <- try(extract_lhs(x), silent = TRUE)
-      if (inherits(lhs, "try-error")) {
-        x
-      } else {
-        clean_lhs <- gsub("([^\\])\\(", "\\1\\\\(", extract_lhs(x))
-        as.formula(gsub(paste0("^", clean_lhs, "[[ ]]*~"), "~",
-                        deparse(x, width.cutoff = 500L)))
-      }
-    }
+    as.formula(paste("~", paste(deparse(x[[length(x)]]), collapse = " ")))
   })
+
+  # lapply(formula, function(x) {
+  #   if (!is.null(x)) {
+  #     lhs <- try(extract_lhs(x), silent = TRUE)
+  #     if (inherits(lhs, "try-error")) {
+  #       x
+  #     } else {
+  #       clean_lhs <- gsub("([^\\])\\(", "\\1\\\\(", extract_lhs(x))
+  #       as.formula(gsub(paste0("^", clean_lhs, "[[ ]]*~"), "~",
+  #                       deparse(x, width.cutoff = 500L)))
+  #     }
+  #   }
+  # })
 }
 
 
