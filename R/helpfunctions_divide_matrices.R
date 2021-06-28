@@ -399,7 +399,7 @@ model_matrix_combi <- function(fmla, data, terms_list, refs) {
   mats <- mapply(function(object, data, contr) {
     # get the subset of contrast matrices corresponding to the current formula
     # to avoid warning messages
-    covars <- cvapply(attr(terms(as.formula(remove_lhs(object)[[1L]])),
+    covars <- cvapply(attr(terms(remove_lhs(object)[[1L]]),
                           "variables")[-1L], deparse, width.cutoff = 500L)
     contr_list <- contr[intersect(covars, names(contr))]
 

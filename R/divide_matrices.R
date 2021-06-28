@@ -88,7 +88,7 @@ divide_matrices <- function(data, fixed, random = NULL, analysis_type,
     if (length(add_to_aux) > 0)
       as.formula(paste("~", paste0(add_to_aux, collapse = " + ")))
   } else {
-    as.formula(paste0(c(deparse(auxvars, width.cutoff = 500), add_to_aux),
+    as.formula(paste0(c(deparse(auxvars, width.cutoff = 500L), add_to_aux),
                       collapse = " + "))
   }
 
