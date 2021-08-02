@@ -200,8 +200,9 @@ get_ranefpars <- function(info_list, Mlist, args, set = "main") {
   # ranef
   if (args[[paste0("ranef_", set)]]) {
     params <- c(params,
-                cvapply(ranef_info, function(k)
-                  paste0("b_", k$varname, "_", k$lvls)))
+                cvapply(Filter(Negate(is.null), ranef_info), function(k)
+                    paste0("b_", k$varname, "_", k$lvls)
+                ))
   }
 
   # invD
