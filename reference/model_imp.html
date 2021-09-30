@@ -1031,12 +1031,12 @@ or <code><a href='https://rdrr.io/pkg/survival/man/strata.html'>strata</a></code
 <span class='co'># To run MCMC chains in parallel, a strategy can be specified using the</span>
 <span class='co'># package \pkg{future} (see ?future::plan), for example:</span>
 <span class='fu'>doFuture</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/doFuture/man/registerDoFuture.html'>registerDoFuture</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'>future</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/future/man/plan.html'>plan</a></span><span class='op'>(</span><span class='fu'>future</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/future/man/multisession.html'>multisession</a></span>, workers <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+<span class='fu'>future</span><span class='fu'>::</span><span class='fu'><a href='https://future.futureverse.org/reference/plan.html'>plan</a></span><span class='op'>(</span><span class='fu'>future</span><span class='fu'>::</span><span class='va'><a href='https://future.futureverse.org/reference/multisession.html'>multisession</a></span>, workers <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 <span class='va'>mod8</span> <span class='op'>&lt;-</span> <span class='fu'>lm_imp</span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>500</span>, n.chains <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>
 <span class='va'>mod8</span><span class='op'>$</span><span class='va'>comp_info</span><span class='op'>$</span><span class='va'>future</span>
 <span class='co'># To re-set the strategy to sequential computation, the sequential strategy</span>
 <span class='co'># can be specified:</span>
-<span class='fu'>future</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/future/man/plan.html'>plan</a></span><span class='op'>(</span><span class='fu'>future</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/future/man/sequential.html'>sequential</a></span><span class='op'>)</span>
+<span class='fu'>future</span><span class='fu'>::</span><span class='fu'><a href='https://future.futureverse.org/reference/plan.html'>plan</a></span><span class='op'>(</span><span class='fu'>future</span><span class='fu'>::</span><span class='va'><a href='https://future.futureverse.org/reference/sequential.html'>sequential</a></span><span class='op'>)</span>
 
 <span class='op'>}</span>
 
