@@ -644,7 +644,7 @@ get_survinfo <- function(info_list, Mlist) {
 
 
     covars <- all_vars(remove_lhs(Mlist$fixed[[k]]))
-    covar_lvls <- cvapply(Mlist$data[, covars], check_varlevel,
+    covar_lvls <- cvapply(Mlist$data[, covars, drop = FALSE], check_varlevel,
                           groups = Mlist$groups,
                           group_lvls = identify_level_relations(Mlist$groups))
     longvars <- names(covar_lvls)[covar_lvls %in% longlvls]

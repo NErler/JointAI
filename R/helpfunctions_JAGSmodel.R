@@ -120,11 +120,11 @@ paste_scaling <- function(x, rows, scale_pars, scalemat) {
   # - scale_pars: scaling matrix
   # - scalemat: name of the scaling matrix in JAGS, e.g. "spM_ID"
 
-  if (is.null(scale_pars)) {
+  if (is.null(unlist(scale_pars))) {
     x
   } else {
     cvapply(seq_along(x), function(k) {
-      if (rowSums(is.na(scale_pars[[k]][rows[k], ])) > 0L) {
+      if (rowSums(is.na(scale_pars[[k]][rows[k], , drop = FALSE])) > 0L) {
         x[k]
       } else {
         paste_scale(x[[k]], row = rows[k], scalemat = scalemat[k])
