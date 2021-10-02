@@ -614,9 +614,9 @@ default for covariates modelled using other distributions).</p></td>
 <a href='https://CRAN.R-project.org/package=nlme'><span class="pkg">nlme</span></a>,
 using <code>fixed</code> and <code>random</code>, or as it is done in the package
 <a href='https://CRAN.R-project.org/package=lme4'><span class="pkg">lme4</span></a>,
-using <code>formula</code> and specifying the random effects in brackets:<div class="r"></p><pre><span class='va'>formula</span> <span class='op'>=</span> <span class='va'>y</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='va'>x2</span> <span class='op'>+</span> <span class='va'>x3</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>id</span><span class='op'>)</span>
+using <code>formula</code> and specifying the random effects in brackets:<div class="sourceCode r"></p><pre><span class='va'>formula</span> <span class='op'>=</span> <span class='va'>y</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='va'>x2</span> <span class='op'>+</span> <span class='va'>x3</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>id</span><span class='op'>)</span>
 </pre><p></div></p>
-<p>is equivalent to<div class="r"></p><pre>fixed = y ~ x1 + x2 + x3, random = ~ 1|id
+<p>is equivalent to<div class="sourceCode r"></p><pre>fixed = y ~ x1 + x2 + x3, random = ~ 1|id
 </pre><p></div></p>
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Multiple levels of grouping</h3>
@@ -642,7 +642,7 @@ but different values for <code>center</code>.</p>
 objects can be passed to the argument <code>formula</code>.
 Outcomes of one model may be contained as covariates in another model and
 it is possible to combine models for variables on different levels,
-for example:<div class="r"></p><pre><span class='va'>formula</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='va'>x2</span> <span class='op'>+</span> <span class='va'>x3</span> <span class='op'>+</span> <span class='va'>x4</span> <span class='op'>+</span> <span class='va'>time</span> <span class='op'>+</span> <span class='op'>(</span><span class='va'>time</span> <span class='op'>|</span> <span class='va'>id</span><span class='op'>)</span>,
+for example:<div class="sourceCode r"></p><pre><span class='va'>formula</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='va'>x2</span> <span class='op'>+</span> <span class='va'>x3</span> <span class='op'>+</span> <span class='va'>x4</span> <span class='op'>+</span> <span class='va'>time</span> <span class='op'>+</span> <span class='op'>(</span><span class='va'>time</span> <span class='op'>|</span> <span class='va'>id</span><span class='op'>)</span>,
                      <span class='va'>x2</span> <span class='op'>~</span> <span class='va'>x3</span> <span class='op'>+</span> <span class='va'>x4</span> <span class='op'>+</span> <span class='va'>x5</span><span class='op'>)</span>
 </pre><p></div></p>
 <p>This principle is also used for the specification of a joint model for
@@ -671,7 +671,7 @@ carried backward.</p>
 
 
 <p>It is not possible to specify transformations of outcome variables, i.e.,
-it is not possible to use a model formula like<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='va'>x2</span> <span class='op'>+</span> <span class='va'>...</span>
+it is not possible to use a model formula like<div class="sourceCode r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='va'>x2</span> <span class='op'>+</span> <span class='va'>...</span>
 </pre><p></div></p>
 <p>In the specific case of a transformation with the natural logarithm,
 a log-normal model can be used instead of a normal model.</p>
@@ -874,11 +874,11 @@ ordinal covariates, the list has to be named with the names of the
 ordinal response variables.</p>
 <p>For example, the following three specifications are equivalent and assume a
 non-proportional effect of <code>C1</code> on <code>O1</code>, but <code>C1</code> is assumed to have a
-proportional effect on the incomplete ordinal covariate <code>O2</code>:<div class="r"></p><pre><span class='fu'>clm_imp</span><span class='op'>(</span><span class='va'>O1</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>O2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, nonprop <span class='op'>=</span> <span class='op'>~</span> <span class='va'>C1</span><span class='op'>)</span>
+proportional effect on the incomplete ordinal covariate <code>O2</code>:<div class="sourceCode r"></p><pre><span class='fu'>clm_imp</span><span class='op'>(</span><span class='va'>O1</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>O2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, nonprop <span class='op'>=</span> <span class='op'>~</span> <span class='va'>C1</span><span class='op'>)</span>
 <span class='fu'>clm_imp</span><span class='op'>(</span><span class='va'>O1</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>O2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, nonprop <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>C1</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>clm_imp</span><span class='op'>(</span><span class='va'>O1</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>O2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, nonprop <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>O1 <span class='op'>=</span> <span class='op'>~</span> <span class='va'>C1</span><span class='op'>)</span><span class='op'>)</span>
 </pre><p></div></p>
-<p>To specify non-proportional effects on <code>O2</code>, a named list has to be provided:<div class="r"></p><pre><span class='fu'>clm_imp</span><span class='op'>(</span><span class='va'>O1</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>O2</span> <span class='op'>+</span> <span class='va'>B1</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>,
+<p>To specify non-proportional effects on <code>O2</code>, a named list has to be provided:<div class="sourceCode r"></p><pre><span class='fu'>clm_imp</span><span class='op'>(</span><span class='va'>O1</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>O2</span> <span class='op'>+</span> <span class='va'>B1</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>,
         nonprop <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>O1 <span class='op'>=</span> <span class='op'>~</span> <span class='va'>C1</span>,
                        O2 <span class='op'>=</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>B1</span><span class='op'>)</span><span class='op'>)</span>
 </pre><p></div></p>
@@ -992,7 +992,7 @@ or <code><a href='https://rdrr.io/pkg/survival/man/strata.html'>strata</a></code
 <span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'>lm_imp</span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>M1</span> <span class='op'>+</span> <span class='va'>B1</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 
 
-<span class='co'># Example 2: Logistic regression with incomplete covariats</span>
+<span class='co'># Example 2: Logistic regression with incomplete covariates</span>
 <span class='va'>mod2</span> <span class='op'>&lt;-</span> <span class='fu'>glm_imp</span><span class='op'>(</span><span class='va'>B1</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>M1</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>,
                 family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span>link <span class='op'>=</span> <span class='st'>"logit"</span><span class='op'>)</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 
