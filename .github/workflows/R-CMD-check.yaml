@@ -104,8 +104,9 @@ jobs:
           _R_CHECK_FORCE_SUGGESTS_: false
           _R_CHECK_SYSTEM_CLOCK_: false
           IS_CHECK: true
-          JAGS_HOME: "C:"
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        run: |
+          Sys.setenv(JAGS_HOME = "C:\\JAGS-4.3.0")
+          rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
       - name: Show testthat output
