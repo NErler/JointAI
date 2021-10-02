@@ -751,7 +751,7 @@ or \code{\link[survival]{strata}} in survival models
 mod1 <- lm_imp(y ~ C1 + C2 + M1 + B1, data = wideDF, n.iter = 100)
 
 
-# Example 2: Logistic regression with incomplete covariats
+# Example 2: Logistic regression with incomplete covariates
 mod2 <- glm_imp(B1 ~ C1 + C2 + M1, data = wideDF,
                 family = binomial(link = "logit"), n.iter = 100)
 
