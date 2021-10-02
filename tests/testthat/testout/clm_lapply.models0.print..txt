@@ -3,7 +3,7 @@ Call:
 clm_imp(formula = O1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -14,7 +14,7 @@ Call:
 clm_imp(formula = O2 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O2" 
+ Bayesian cumulative logit model for “O2” 
 
 
 Coefficients:
@@ -25,7 +25,7 @@ Call:
 clm_imp(formula = O1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -36,7 +36,7 @@ Call:
 clm_imp(formula = O2 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O2" 
+ Bayesian cumulative logit model for “O2” 
 
 
 Coefficients:
@@ -47,7 +47,7 @@ Call:
 clm_imp(formula = O1 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -58,7 +58,7 @@ Call:
 clm_imp(formula = O2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O2" 
+ Bayesian cumulative logit model for “O2” 
 
 
 Coefficients:
@@ -69,7 +69,7 @@ Call:
 lm_imp(formula = C1 ~ O1, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian linear model for "C1" 
+ Bayesian linear model for “C1” 
 
 
 Coefficients:
@@ -85,7 +85,7 @@ Call:
 lm_imp(formula = C1 ~ O2, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian linear model for "C1" 
+ Bayesian linear model for “C1” 
 
 
 Coefficients:
@@ -101,7 +101,7 @@ Call:
 clm_imp(formula = O1 ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
     n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -119,7 +119,7 @@ clm_imp(formula = O1 ~ ifelse(as.numeric(O2) > as.numeric(M1),
     1, 0) * abs(C1 - C2) + log(C1), data = wideDF, n.adapt = 5, 
     n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -143,7 +143,7 @@ clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
         C2), seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -157,7 +157,7 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
         C2), seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -171,7 +171,7 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 * 
         C2), seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -185,7 +185,7 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
         C2), seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -199,7 +199,7 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = ~C1 + 
         M2 * C2 + O2, seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -217,7 +217,7 @@ clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
         C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -231,7 +231,7 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
         C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -245,7 +245,7 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 * 
         C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -259,7 +259,7 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
         C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -274,7 +274,7 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
         M2 * C2 + O2, rev = "O1", seed = 2020, warn = FALSE, 
     mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -292,7 +292,7 @@ Call:
 clm_imp(formula = O1 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -305,7 +305,7 @@ Call:
 clm_imp(formula = O2 ~ 1, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O2" 
+ Bayesian cumulative logit model for “O2” 
 
 
 Coefficients:
@@ -318,7 +318,7 @@ Call:
 clm_imp(formula = O1 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -331,7 +331,7 @@ Call:
 clm_imp(formula = O2 ~ C1, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O2" 
+ Bayesian cumulative logit model for “O2” 
 
 
 Coefficients:
@@ -344,7 +344,7 @@ Call:
 clm_imp(formula = O1 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -357,7 +357,7 @@ Call:
 clm_imp(formula = O2 ~ C2, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O2" 
+ Bayesian cumulative logit model for “O2” 
 
 
 Coefficients:
@@ -370,7 +370,7 @@ Call:
 lm_imp(formula = C1 ~ O1, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian linear model for "C1" 
+ Bayesian linear model for “C1” 
 
 
 Coefficients:
@@ -388,7 +388,7 @@ Call:
 lm_imp(formula = C1 ~ O2, data = wideDF, n.adapt = 5, n.iter = 10, 
     seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian linear model for "C1" 
+ Bayesian linear model for “C1” 
 
 
 Coefficients:
@@ -406,7 +406,7 @@ Call:
 clm_imp(formula = O1 ~ M2 + O2 * abs(C1 - C2) + log(C1), data = wideDF, 
     n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -426,7 +426,7 @@ clm_imp(formula = O1 ~ ifelse(as.numeric(O2) > as.numeric(M1),
     1, 0) * abs(C1 - C2) + log(C1), data = wideDF, n.adapt = 5, 
     n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -452,7 +452,7 @@ clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
         C2), seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -468,7 +468,7 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
         C2), seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -484,7 +484,7 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 * 
         C2), seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -500,7 +500,7 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
         C2), seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -516,7 +516,7 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = ~C1 + 
         M2 * C2 + O2, seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -536,7 +536,7 @@ clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
         C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -552,7 +552,7 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
         C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -568,7 +568,7 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 * 
         C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -584,7 +584,7 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
     n.iter = 10, monitor_params = list(other = "p_O1"), nonprop = list(O1 = ~C1 + 
         C2), rev = "O1", seed = 2020, warn = FALSE, mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
@@ -601,7 +601,7 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
         M2 * C2 + O2, rev = "O1", seed = 2020, warn = FALSE, 
     mess = FALSE)
 
- Bayesian cumulative logit model for "O1" 
+ Bayesian cumulative logit model for “O1” 
 
 
 Coefficients:
