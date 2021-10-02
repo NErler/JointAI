@@ -366,10 +366,10 @@ It is possible to specify multi-level models as it is done in the package
 \href{https://CRAN.R-project.org/package=nlme}{\pkg{nlme}},
 using \code{fixed} and \code{random}, or as it is done in the package
 \href{https://CRAN.R-project.org/package=lme4}{\pkg{lme4}},
-using \code{formula} and specifying the random effects in brackets:\if{html}{\out{<div class="r">}}\preformatted{formula = y ~ x1 + x2 + x3 + (1 | id)
+using \code{formula} and specifying the random effects in brackets:\if{html}{\out{<div class="sourceCode r">}}\preformatted{formula = y ~ x1 + x2 + x3 + (1 | id)
 }\if{html}{\out{</div>}}
 
-is equivalent to\if{html}{\out{<div class="r">}}\preformatted{fixed = y ~ x1 + x2 + x3, random = ~ 1|id
+is equivalent to\if{html}{\out{<div class="sourceCode r">}}\preformatted{fixed = y ~ x1 + x2 + x3, random = ~ 1|id
 }\if{html}{\out{</div>}}
 }
 
@@ -395,7 +395,7 @@ To fit multiple main models at the same time, a \code{list} of \code{formula}
 objects can be passed to the argument \code{formula}.
 Outcomes of one model may be contained as covariates in another model and
 it is possible to combine models for variables on different levels,
-for example:\if{html}{\out{<div class="r">}}\preformatted{formula = list(y ~ x1 + x2 + x3 + x4 + time + (time | id),
+for example:\if{html}{\out{<div class="sourceCode r">}}\preformatted{formula = list(y ~ x1 + x2 + x3 + x4 + time + (time | id),
                      x2 ~ x3 + x4 + x5)
 }\if{html}{\out{</div>}}
 
@@ -428,7 +428,7 @@ carried backward.
 \subsection{Differences to basic regression models}{
 
 It is not possible to specify transformations of outcome variables, i.e.,
-it is not possible to use a model formula like\if{html}{\out{<div class="r">}}\preformatted{log(y) ~ x1 + x2 + ...
+it is not possible to use a model formula like\if{html}{\out{<div class="sourceCode r">}}\preformatted{log(y) ~ x1 + x2 + ...
 }\if{html}{\out{</div>}}
 
 In the specific case of a transformation with the natural logarithm,
@@ -645,12 +645,12 @@ ordinal response variables.
 
 For example, the following three specifications are equivalent and assume a
 non-proportional effect of \code{C1} on \code{O1}, but \code{C1} is assumed to have a
-proportional effect on the incomplete ordinal covariate \code{O2}:\if{html}{\out{<div class="r">}}\preformatted{clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = ~ C1)
+proportional effect on the incomplete ordinal covariate \code{O2}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = ~ C1)
 clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = list(~ C1))
 clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = list(O1 = ~ C1))
 }\if{html}{\out{</div>}}
 
-To specify non-proportional effects on \code{O2}, a named list has to be provided:\if{html}{\out{<div class="r">}}\preformatted{clm_imp(O1 ~ C1 + C2 + B2 + O2 + B1, data = wideDF,
+To specify non-proportional effects on \code{O2}, a named list has to be provided:\if{html}{\out{<div class="sourceCode r">}}\preformatted{clm_imp(O1 ~ C1 + C2 + B2 + O2 + B1, data = wideDF,
         nonprop = list(O1 = ~ C1,
                        O2 = ~ C1 + B1))
 }\if{html}{\out{</div>}}
