@@ -44,12 +44,20 @@ iteration.}
 \item{...}{
   Arguments passed on to \code{\link[mcmcse:mcse.mat]{mcmcse::mcse.mat}}
   \describe{
-    \item{\code{size}}{represents the batch size in ``bm'' and the truncation point in ``bartlett'' and ``tukey''. Default is \code{NULL} which implies that an optimal batch size is calculated using the \code{batchSize()} function. Can take character values of \code{``sqroot''} and \code{``cuberoot''} or any numeric value between 1 and n/2. \code{``sqroot''} means size is floor(n^(1/2)) and ``cuberoot'' means size is floor(n^(1/3)).}
-    \item{\code{g}}{a function such that \eqn{E(g(x))} is the
-  quantity of interest. The default is \code{NULL}, which
-  causes the identity function to be used.}
-    \item{\code{method}}{any of \code{``bm'', ``obm'', ``bartlett'', ``tukey''}. \code{``bm''} represents batch means estimator, \code{``obm''} represents overlapping batch means estimator with, \code{``bartlett''} and \code{``tukey''} represents the modified-Bartlett window and the Tukey-Hanning windows for  spectral variance estimators. }
-    \item{\code{r}}{the lugsail parameter that converts a lag window into its lugsail equivalent. Larger values of \code{``r''} will typically imply less underestimation of \code{``cov''},  but higher variability of the estimator. Default is \code{``r = 3''} and \code{``r = 1,2''} are good choices. \code{``r > 5''} is not recommended. Non-integer values are ok.}
+    \item{\code{size}}{represents the batch size in \dQuote{\code{bm}} and the truncation point in \dQuote{\code{bartlett}} and 
+\dQuote{\code{tukey}}. Default is \code{NULL} which implies that an optimal batch size is calculated using the 
+  \code{batchSize} function. Can take character values of \dQuote{\code{sqroot}} and \dQuote{\code{cuberoot}} or any numeric
+  value between 1 and n/2. \dQuote{\code{sqroot}} means size is \eqn{\lfloor n^{1/2} \rfloor} and \dQuote{\code{cuberoot}} means size is
+  \eqn{\lfloor n^{1/3} \rfloor}.}
+    \item{\code{g}}{a function such that \eqn{E(g(x))} is the quantity of interest. The default is
+\code{NULL}, which causes the identity function to be used.}
+    \item{\code{method}}{any of \dQuote{\code{bm}},\dQuote{\code{obm}},\dQuote{\code{bartlett}}, \dQuote{\code{tukey}}. \dQuote{\code{bm}}
+represents batch means estimator, \dQuote{\code{obm}} represents overlapping batch means estimator with, \dQuote{\code{bartlett}}
+and \dQuote{\code{tukey}} represents the modified-Bartlett window and the Tukey-Hanning windows for spectral variance estimators.}
+    \item{\code{r}}{The lugsail parameters (\code{r}) that converts a lag window into its lugsail
+equivalent. Larger values of \code{r} will typically imply less underestimation of \dQuote{\code{cov}},
+but higher variability of the estimator. Default is \code{r = 3} and \code{r = 1,2} are
+also good choices although may lead to underestimates of the variance. \code{r > 5} is not recommended.}
   }}
 
 \item{data_scale}{logical; show the Monte Carlo error of the sample
