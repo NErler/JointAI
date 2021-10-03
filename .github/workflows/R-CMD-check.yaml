@@ -105,7 +105,7 @@ jobs:
           _R_CHECK_SYSTEM_CLOCK_: false
           IS_CHECK: true
         run: |
-          Sys.setenv(JAGS_HOME = "C:\\JAGS-4.3.0")
+          Sys.setenv(JAGS_HOME = readRegistry("SOFTWARE\\JAGS", maxdepth = 2, view = "32-bit")[["JAGS-4.3.0"]][["InstallDir"]])
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
