@@ -108,7 +108,7 @@ jobs:
           os = .Platform$OS.type
           if (os == "windows" & R.version$major == 3) {remotes::install_version("rjags", version = "4-10")}
           jagshome = if (os == "windows") {readRegistry("SOFTWARE\\JAGS", maxdepth = 2, view = "32-bit")}
-          Sys.setenv(JAGS_HOME = try(jagshome[["JAGS-4.3.0"]][["InstallDir"]]))
+          if (os == "windows"){Sys.setenv(JAGS_HOME = try(jagshome[["JAGS-4.3.0"]][["InstallDir"]]))}
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
