@@ -176,7 +176,7 @@
 #' By default, a block-diagonal structure is assumed for the variance-covariance
 #' matrices of the random effects in models with random effects. This means that
 #' per outcome and level random effects are assumed to be correlated, but
-#' random effects of different outcomes are modelled as independent.
+#' random effects of different outcomes are modeled as independent.
 #' The argument `rd_vcov` allows the user specify different assumptions about
 #' these variance-covariance matrices. Implemented structures are `full`,
 #' `blockdiag` and `indep` (all off-diagonal elements are zero).
