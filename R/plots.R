@@ -493,7 +493,7 @@ plot_all <- function(data, nrow = NULL, ncol = NULL,
     } else if (is.character(x)) {
       plot(0, type = "n", xaxt = "n", yaxt = "n", xlab = "", ylab = "",
            main = main, bty = 'n')
-      text(1, 0, paste0(names(data)[i],
+      text(1, 0, paste0(i,
                         " \nis coded as character\nand cannot be plotted."),
            xpd = TRUE)
     } else if (class(x) %in% c('Date', 'POSIXt')) {
