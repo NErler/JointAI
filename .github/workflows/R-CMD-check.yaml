@@ -3,10 +3,10 @@ on:
     branches:
       - master
       - JMdevel
+      - rd_vcov
   pull_request:
     branches:
       - master
-      - rd_vcov
 
 name: R-CMD-check
 
