@@ -91,7 +91,7 @@ Coefficients:
 
 Call:
 glm_imp(formula = B1 ~ 1, family = binomial(link = "log"), data = wideDF, 
-    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+    n.adapt = 150, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian binomial model for "B1" 
 
@@ -102,7 +102,7 @@ Coefficients:
 
 Call:
 glm_imp(formula = B1 ~ 1, family = binomial(link = "cloglog"), 
-    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    data = wideDF, n.adapt = 50, n.iter = 10, seed = 2020, warn = FALSE, 
     mess = FALSE)
 
  Bayesian binomial model for "B1" 
@@ -903,7 +903,7 @@ $m0b3
 
 Call:
 glm_imp(formula = B1 ~ 1, family = binomial(link = "log"), data = wideDF, 
-    n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
+    n.adapt = 150, n.iter = 10, seed = 2020, warn = FALSE, mess = FALSE)
 
  Bayesian binomial model for "B1" 
 
@@ -916,7 +916,7 @@ $m0b4
 
 Call:
 glm_imp(formula = B1 ~ 1, family = binomial(link = "cloglog"), 
-    data = wideDF, n.adapt = 5, n.iter = 10, seed = 2020, warn = FALSE, 
+    data = wideDF, n.adapt = 50, n.iter = 10, seed = 2020, warn = FALSE, 
     mess = FALSE)
 
  Bayesian binomial model for "B1" 

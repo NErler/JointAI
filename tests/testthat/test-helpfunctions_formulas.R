@@ -42,8 +42,19 @@ runs <- list(list(random = ~ 1 | id, ids = 'id', RHS = list(~ 1 | id),
 )
 
 test_that('extract_id works', {
-  for (i in seq_along(runs)) {
+  for (i in setdiff(seq_along(runs), c(4, 6))) {
     expect_equal(extract_id(runs[[i]]$random), runs[[i]]$ids)
+  }
+
+  # test all together
+  expect_equal(extract_id(lapply(runs, "[[", 'random')),
+               unlist(unique(lapply(runs, "[[", 'ids'))))
+})
+
+
+test_that('extract_id gives warning', {
+  for (i in c(4, 6)) {
+    expect_warning(extract_id(runs[[i]]$random), runs[[i]]$ids)
   }
 
   # test all together
@@ -124,10 +135,12 @@ test_that('extract_lhs works', {
 # remove_lhs -------------------------------------------------------------------
 test_that('remove_lhs works', {
   for (i in seq_along(ys)) {
-    expect_equal(remove_lhs(ys[[i]]$fixed), ys[[i]]$RHS)
+    expect_equal(remove_lhs(ys[[i]]$fixed), ys[[i]]$RHS,
+                 ignore_formula_env = TRUE)
   }
   for (i in seq_along(runs)) {
-    expect_equal(remove_lhs(runs[[i]]$random), runs[[i]]$RHS)
+    expect_equal(remove_lhs(runs[[i]]$random), runs[[i]]$RHS,
+                 ignore_formula_env = TRUE)
   }
 })
 
@@ -135,12 +148,14 @@ test_that('remove_lhs works', {
 # remove grouping --------------------------------------------------------------
 test_that('remove_grouping works', {
   for (i in seq_along(runs)) {
-    expect_equal(remove_grouping(runs[[i]]$random), runs[[i]]$nogroup)
+    expect_equal(remove_grouping(runs[[i]]$random), runs[[i]]$nogroup,
+                 ignore_formula_env = TRUE)
   }
 
   # test all together
   expect_equal(remove_grouping(lapply(runs, "[[", 'random')),
-               lapply(runs, "[[", 'nogroup'))
+               lapply(runs, "[[", 'nogroup'),
+               ignore_formula_env = TRUE)
 })
 
 
@@ -168,8 +183,8 @@ fmls <- list(
 test_that('split_formula works', {
   for (i in seq_along(fmls)) {
     expect_equal(split_formula(fmls[[i]]$fmla),
-                 list(fixed = fmls[[i]]$fixed, random = fmls[[i]]$random)
-    )
+                 list(fixed = fmls[[i]]$fixed, random = fmls[[i]]$random),
+                 ignore_formula_env = TRUE)
   }
 })
 
@@ -178,8 +193,8 @@ test_that('split_formula_list works', {
   expect_equal(
     unname(lapply(split_formula_list(lapply(fmls, "[[", "fmla")), unname)),
                list(lapply(fmls, "[[", 'fixed'),
-                    lapply(fmls, "[[", 'random'))
-  )
+                    lapply(fmls, "[[", 'random')),
+    ignore_formula_env = TRUE)
 
 })
 

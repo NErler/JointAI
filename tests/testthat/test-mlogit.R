@@ -1,10 +1,10 @@
-context("mlogit Models")
 library("JointAI")
 
 Sys.setenv(IS_CHECK = "true")
 
+skip_on_cran()
+
 run_mlogit_models <- function() {
-  cat('\nRunning mlogit models...\n')
   sink(tempfile())
   on.exit(sink())
   invisible(force(suppressWarnings({
@@ -83,35 +83,40 @@ test_that("MCMC samples can be plottet", {
 
 test_that("data_list remains the same", {
   skip_on_cran()
-  print_output(lapply(models, "[[", "data_list"), type = "value")
+  print_output(lapply(models, "[[", "data_list"), type = "value",
+               context = "mlogit")
 })
 
 test_that("jagsmodel remains the same", {
   skip_on_cran()
-  print_output(lapply(models, "[[", "jagsmodel"))
+  print_output(lapply(models, "[[", "jagsmodel"), context = "mlogit")
 })
 
 
 test_that("GRcrit and MCerror give same result", {
   skip_on_cran()
-  print_output(lapply(models0, GR_crit, multivariate = FALSE))
-  print_output(lapply(models0, MC_error))
+  print_output(lapply(models0, GR_crit, multivariate = FALSE), context = "mlogit")
+  print_output(lapply(models0, MC_error), context = "mlogit")
 })
 
 
 test_that("summary output remained the same", {
   skip_on_cran()
-  print_output(lapply(models0, print))
-  print_output(lapply(models0, coef))
-  print_output(lapply(models0, confint))
-  print_output(lapply(models0, summary))
-  print_output(lapply(models0, function(x) coef(summary(x))))
+  print_output(lapply(models0, print), context = "mlogit")
+  print_output(lapply(models0, coef), context = "mlogit")
+  print_output(lapply(models0, confint), context = "mlogit")
+  print_output(lapply(models0, summary), context = "mlogit")
+  print_output(lapply(models0, function(x) coef(summary(x))),
+               context = "mlogit")
 })
 
 
 test_that("prediction works", {
-  expect_is(predict(models$m4a, type = "lp")$fitted, "array")
+  local_edition(2)
+  expect_is(predict(models$m4a, type = "lp", warn = FALSE)$fitted, "array")
   expect_is(predict(models$m4a, type = "prob", warn = FALSE)$fitted, "array")
+
+  local_edition(3)
   expect_s3_class(predict(models$m4a, type = "class", warn = FALSE)$fitted,
                   "data.frame")
   expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$fitted,
@@ -126,8 +131,11 @@ test_that("prediction works", {
   expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$newdata,
                   "data.frame")
 
-  expect_is(predict(models$m4b, type = "lp")$fitted, "array")
+  local_edition(2)
+  expect_is(predict(models$m4b, type = "lp", warn = FALSE)$fitted, "array")
   expect_is(predict(models$m4b, type = "prob", warn = FALSE)$fitted, "array")
+
+  local_edition(3)
   expect_s3_class(predict(models$m4b, type = "class", warn = FALSE)$fitted,
                   "data.frame")
   expect_s3_class(predict(models$m4b, type = "response", warn = FALSE)$fitted,

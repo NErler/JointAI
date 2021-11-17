@@ -1,0 +1,376 @@
+---
+title: "Parameter Selection"
+subtitle: "How to specify which parameters to monitor and display in the results"
+date: "2020-06-22"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    depth: 4
+vignette: >
+  %\VignetteIndexEntry{Parameter Selection}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.align = 'center',
+  fig.path = "figures_SelectingParameters/"
+)
+library("JointAI")
+```
+
+In this vignette, we use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
+data for examples in cross-sectional data and the
+dataset [simLong](https://nerler.github.io/JointAI/reference/simLong.html) for
+examples in longitudinal data.
+For more info on these datasets, check out the vignette
+[*Visualizing Incomplete Data*](https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html),
+in which the distribution of variables and missing values in both sets is
+explored.
+
+**Note:**<br>
+In several of the examples we use `n.adapt = 0`
+(and `n.iter = 0`, which is the default) in order to prevent the MCMC sampling
+to reduce computational some time.
+`progress.bar = 'none'` prevents printing of the progress of the MCMC
+sampling, which results in lengthy output in the vignette, but is useful in
+practice.
+
+
+## Monitoring parameters
+**JointAI** uses [JAGS](http://mcmc-jags.sourceforge.net/)
+for performing the MCMC ([Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo)) sampling.
+Since JAGS only saves the values of MCMC chains for those parameters/variables for
+which the user has specified that they should be monitored, this is also the
+case in **JointAI**.
+
+For this purpose, the main functions
+[`*_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
+have an argument `monitor_params`.
+
+`monitor_params` takes a named list (often a named vector also works) with
+the following possible entries:
+
+```{r, echo = F}
+tab <- rbind(
+c("`analysis_main`", "`betas` and `sigma_main`, `tau_main` (in beta regression) or `shape_main` (in parametric survival models), `D_main` (in multi-level models) and `basehaz` (in proportional hazards models)"),
+c("`analysis_random`", "`ranef_main`, `D_main`, `invD_main`, `RinvD_main`"),
+c('`other_models`', '`alphas`, `tau_other`, `gamma_other`, `delta_other`'),
+c('`imps`', 'imputed values'),
+c('`betas`', 'regression coefficients of the main analysis model(s)'),
+c('`tau_main`', 'precision of the residuals from the analysis model(s)'),
+c('`sigma_main`', 'standard deviation of the residuals from the analysis model(s)'),
+c('`gamma_main`', 'intercepts in ordinal main model'),
+c('`delta_main`', 'increments of ordinal intercepts in main model(s)'),
+c('`ranef_main`', 'random effects of the analysis model(s)'),
+c('`D_main`', 'covariance matrix of the random effects of the main model(s)'),
+c('`invD_main`', 'inverse of `D_main`'),
+c('`RinvD_main`', 'scale matrix in Wishart prior for `invD_main`'),
+c('`alphas`', 'regression coefficients in the covariate models'),
+c('`tau_other`', 'precision parameters of the residuals from covariate models'),
+c('`gamma_other`', 'intercepts in ordinal covariate models'),
+c('`delta_other`', 'increments of ordinal intercepts in covariate models'),
+c('`ranef_other`', 'random effects of the covariate model(s)'),
+c('`D_other`', 'covariance matrix of the random effects of the covariate model(s)'),
+c('`invD_other`', 'inverse of `D_other`'),
+c('`RinvD_other`', 'scale matrix in Wishart prior for `invD_other`'),
+c('`other`', 'additional parameters')
+)
+colnames(tab) = c('name/key word', 'what is monitored')
+
+knitr::kable(tab)
+```
+
+Each of the key words works as a switch, except for `other`, which should be
+a vector of character strings.
+
+### Parameters of the analysis model
+The default setting is `monitor_params = c(analysis_main = TRUE)`, i.e.,
+only the main parameters of the analysis model are monitored, and
+monitoring is switched off for all other parameters.
+
+The main parameters are the regression coefficients of the analysis model
+(`beta`) and potentially the residual standard deviation,
+for example in linear or Gamma models, the second parameter in
+a beta distribution (parametrized with $\mu$  and $\tau$ instead of two shape
+parameters), the variance-covariance matrices of random effects used in the main
+models, the shape parameter in a parametric Weibull survival model, and the
+coefficients used in the spline specification of the baseline
+hazard of proportional hazards survival models.
+
+The function `parameters()` returns the parameters that are specified to be
+followed (even for models where no MCMC sampling was performed, i.e. when
+`n.iter = 0` and `n.adapt = 0`).
+
+For example:
+```{r lm1_1, message = FALSE}
+lm1 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES,  n.adapt = 0)
+
+parameters(lm1)
+```
+
+The column `outcome` refers to the response variable of a particular model,
+to distinguish between the regression coefficients in different sub-models,
+and the column `outcat` will contain the category of the response variable that
+a particular linear predictor corresponds to in multinomial logit models.
+
+### Imputed values & parameters of the imputation models
+To generate (multiple) imputed datasets that can be used for further analyses,
+the imputed values need to be monitored. This can be done by setting
+`monitor_params = c(imps = TRUE)`.
+
+```{r lm2_1, message = FALSE, warning = FALSE}
+lm2 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
+              data = NHANES, n.adapt = 0,
+              monitor_params = c(imps = TRUE, analysis_main = FALSE)
+)
+
+parameters(lm2)
+```
+
+**JointAI** uses separate data matrices per level in the hierarchy of a
+multi-level model. The lowest level (and only level for models with no
+hierarchical structure) is called `lvlone`, the other levels are named based
+on the corresponding grouping/id variables.
+
+For categorical variables the original variable as well as the corresponding
+dummy variables are stored in the matrices. The same is the case for interaction
+terms and transformations of variables.
+
+```{r}
+head(lm2$data_list$M_lvlone)
+```
+
+
+The parameters of the models for the incomplete variables can be selected with
+`monitor_params = c(other_models = TRUE)`. This will set monitors for the
+regression coefficients (`alpha`) and other parameters, such as precision
+(`tau_*`) and intercepts & increments (`gamma_*` and `delta_*`) in cumulative
+logit models.
+
+```{r lm3_1, message = FALSE, warning=FALSE}
+lm3 <- lm_imp(SBP ~ age + WC + alc + smoke + occup, data = NHANES, n.adapt = 0,
+              monitor_params = c(other_models = TRUE, analysis_main = FALSE)
+)
+
+parameters(lm3)
+```
+
+#### Side note: Getting information about of the imputation models
+An overview of all models that form part of the joint model, including the
+names of the parameters and the hyper-parameters can be obtained with
+```{r list_lm2}
+list_models(lm2)
+```
+
+#### Side note: How to extract imputed datasets
+Imputed datasets can be extracted and exported with the function
+[`get_MIdat()`](https://nerler.github.io/JointAI/reference/get_MIdat.html).
+A completed dataset is created by taking the imputed values from a randomly
+chosen iteration of the MCMC sample (transforming them back to the original scale,
+if scaling had been performed during the MCMC sampling)
+and filling them into the original, incomplete data.
+
+`get_MIdat()` returns a long-format `data.frame` containing the imputed datasets
+(and possibly the original data) stacked onto each other. The imputation number
+is given in the variable `Imputation_`, column `.id` contains a newly created
+id variable for each observation in cross-sectional data (multi-level data should
+already contain an id variable).
+
+`get_MIdat()` takes the arguments:
+```{r, echo = FALSE}
+tab <- rbind(object = "'an object of class 'JointAI'",
+             m = "number of datasets to be created",
+             include = "logical; should the original data be included?",
+             start = paste0("the first iteration that may be randomly chosen",
+                            " (i.e., all previous iterations are discarded as burn-in)"),
+             minspace = 'minimum number of iterations between iterations chosen as imputed values',
+             seed = "optional seed value in order to make the random selection of iterations reproducible",
+             export_to_SPSS = paste0("logical; should the datasets be exported",
+                                     " to SPSS, i.e., written as .txt and .sps file? ",
+                                     "If `export_to_SPSS = FALSE` (default) the",
+                                     " imputed data is only returned `data.frame`"),
+             resdir = 'directory the files are exported to',
+             filename = 'the name of the .txt and .sps files')
+
+tab <- cbind(paste0("`", rownames(tab), "`"), tab)
+colnames(tab) <- c('argument', 'explanation')
+
+knitr::kable(tab, row.names = FALSE)
+```
+
+### Random effects
+For mixed models, `analysis_main` also includes the random effects covariance
+matrix `D`:
+```{r, message = FALSE, warning=FALSE}
+lme1 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0)
+
+parameters(lme1)
+```
+
+Setting `analysis_random = TRUE` will switch on monitoring
+for the random effects (`ranef`), random effects covariance matrix (`D`),
+inverse of the random effects covariance matrix (`invD`) and the diagonal of the
+scale matrix of the Wishart-prior of `invD` (`RinvD`).
+
+```{r, message = FALSE, warning=FALSE}
+lme2 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
+                monitor_params = c(analysis_random = TRUE))
+
+parameters(lme2)
+```
+
+
+It is possible to select only a subset of the random effects parameters by
+specifying them directly, e.g.
+```{r, message = FALSE, warning = FALSE}
+lme3a <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
+                 monitor_params = c(analysis_main = TRUE, RinvD_main = TRUE))
+
+parameters(lme3a)
+```
+
+or by switching unwanted parts of `analysis_random` off, e.g.
+
+```{r, message = FALSE}
+lme3b <- lme_imp(bmi ~ age + EDUC, random = ~age | ID, data = simLong, n.adapt = 0,
+                monitor_params = c(analysis_main = TRUE,
+                                   analysis_random = TRUE,
+                                   RinvD_main = FALSE,
+                                   ranef_main = FALSE))
+
+parameters(lme3b)
+```
+
+
+### Other parameters
+The element `other` in `monitor_params` allows to specify one or multiple
+additional parameters to be monitored. When `other` is used with more than one
+element, `monitor_params` has to be a list.
+
+Here, we monitor the probability to be in the `alc>=1` group for subjects 1
+through 3 and the expected value of the distribution of `creat` for the first
+subject. (This may not make a lot of sense here but being able to monitor
+any node in a JAGS model can be quite useful when investigating convergence
+issues.)
+```{r, message = FALSE}
+lm4 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES,
+              monitor_params = list(analysis_main = FALSE,
+                                    other = c('p_alc[1:3]', "mu_creat[1]")))
+
+parameters(lm4)
+```
+
+
+## Subsets of Parameters for Plots, Summaries, ...
+The functions
+[`summary()`](https://nerler.github.io/JointAI/reference/summary.JointAI.html),
+[`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html),
+[`densplot()`](https://nerler.github.io/JointAI/reference/densplot.html),
+[`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.html) and
+[`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html)
+all have an argument `subset`. This argument allows us to select a subset of
+parameters to be shown in the output.
+Especially when not only the parameters of the main
+analysis model are followed, but also, for example, imputed values, looking at
+a subset may be desirable.
+For more details about these functions, see also the vignette
+[*After Fitting*](https://nerler.github.io/JointAI/articles/AfterFitting.html).
+
+`subset` follows the same logic as `monitor_params` described above.
+
+By default, only the parameters of the main analysis model are displayed if they
+were monitored:
+```{r, fig.width = 7, fig.height = 6, warning = FALSE}
+# Run a model monitoring analysis parameters and imputation parameters
+lm5 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
+              progress.bar = 'none', monitor_params = c(other_models = TRUE))
+
+# model summary
+summary(lm5)
+
+# traceplot of the MCMC sample
+traceplot(lm5)
+
+# density plot of the MCMC sample
+densplot(lm5)
+
+# Gelman-Rubin criterion
+GR_crit(lm5)
+
+# Monte Carlo Error of the MCMC sample
+MC_error(lm5)
+```
+
+When `analysis_main` was not switched on the default behaviour is that all
+parameters are displayed:
+```{r, fig.height = 1.5, message = FALSE, out.width = "100%"}
+# Re-run the model from above, now creating MCMC samples
+lm4 <- lm_imp(SBP ~ gender + WC + alc + creat,
+              data = NHANES, n.iter = 100, progress.bar = 'none',
+              monitor_params = list(analysis_main = FALSE,
+                                    other = c('mu_alc[1:3]', "mu_creat[1]")))
+
+traceplot(lm4, ncol = 4)
+```
+
+### Select a subset of the variables to display
+To display other parts of the MCMC sample, `subset` needs to be specified:
+```{r GRcrit_lm5}
+# we use lm5 from above
+GR_crit(lm5, subset = c(analysis_main = FALSE, other_models = TRUE))
+```
+
+To select only some of the parameters, they can be specified directly by
+name via the `other` element of `subset`:
+```{r trace_lm5, fig.width = 5, fig.height = 2, out.width = "60%"}
+summary(lm5, subset = list(other = c('creat', 'alc>=1')))
+```
+
+Note that the model summary will contain separate parts per sub-model when
+regression coefficients from different models are monitored.
+
+This also works when a subset of the imputed values should be displayed:
+```{r lm2_2, fig.height = 2, fig.width = 5, out.width = "50%", warning = FALSE}
+# Re-run the model from above, now creating MCMC samples
+lm2 <- lm_imp(SBP ~ age + WC + alc + smoke + occup,
+              data = NHANES, n.iter = 100, progress.bar = 'none',
+              monitor_params = c(imps = TRUE, analysis_main = FALSE)
+)
+
+# select only imputed values for 'WC' (4th column of Wc)
+sub3 <- grep('M_lvlone\\[[[:digit:]]+,5\\]', parameters(lm2)$coef, value = TRUE)
+sub3
+
+traceplot(lm2, subset = list(other = sub3), ncol = 2)
+```
+
+
+### Random subset of subject-specific values
+When the number of imputed values is larger, or in order to check convergence
+of random effects, it may not be feasible to plot all trace plots.
+In that case, a random subset of, for instance, the random effects can be selected:
+```{r, fig.height = 4, message = FALSE, warning = FALSE}
+lme4 <- lme_imp(bmi ~ age + EDUC, random = ~age | ID,
+                data = simLong, n.iter = 100, progress.bar = 'none',
+                monitor_params = c(analysis_main = FALSE, ranef_main = TRUE))
+
+# exract random intercepts
+ri <- grep('^b_bmi_ID\\[[[:digit:]]+,1\\]$', colnames(lme4$MCMC[[1]]), value = T)
+
+# extract random slopes
+rs <- grep('^b_bmi_ID\\[[[:digit:]]+,2\\]$', colnames(lme4$MCMC[[1]]), value = T)
+
+# plot the chains of 8 randomly selected random intercepts
+traceplot(lme4, subset = list(other = sample(ri, size = 8)), ncol = 4)
+
+# plot the chains of 8 randomly selected random slopes
+traceplot(lme4, subset = list(other = sample(rs, size = 8)), ncol = 4)
+```
+

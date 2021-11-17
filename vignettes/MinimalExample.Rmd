@@ -6,7 +6,7 @@ date: "2020-06-20"
 resource_files:
   - man/figures/JointAI_square.png
 opengraph:
-  image: 
+  image:
     src: "https://nerler.github.io/JointAI/reference/figures/JointAI_square.png"
     alt: "JointAI: An R package for Joint Analysis and Imputation"
   twitter:
@@ -21,37 +21,29 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.width = 7,
-  fig.align = 'center'
-)
 
-knitr::opts_knit$set(progress = FALSE)
-library(JointAI)
-```
 
 
 This vignette gives a first and very brief overview of how the package **JointAI**
 can be used. The different settings and options are explained in more depth in
-the [help pages](https://nerler.github.io/JointAI/reference/index.html) and 
+the [help pages](https://nerler.github.io/JointAI/reference/index.html) and
 other [vignettes](https://nerler.github.io/JointAI/articles/index.html).
 
 Here, we use the NHANES data that are part of the **JointAI** package.
 For more info on this data, check the
 [help file](https://nerler.github.io/JointAI/reference/NHANES.html) for the NHANES data,
-go to the [web page of the National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/index.htm) and check out the vignette 
+go to the [web page of the National Health and Nutrition Examination Survey (NHANES)](https://www.cdc.gov/nchs/nhanes/index.htm) and check out the vignette
 [*Visualizing Incomplete Data*](https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html),
 in which the NHANES data is explored.
 
 ##  Fitting a linear regression model
 Fitting a linear regression model with **JointAI** is straightforward with the
 function [`lm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html):
-```{r fit_lm1, message = FALSE}
+
+```r
 lm1 <- lm_imp(SBP ~ gender + age + race + WC + alc + educ + albu + bili,
               data = NHANES, n.iter = 500)
+#>   |                                                          |                                                  |   0%  |                                                          |*                                                 |   2%  |                                                          |**                                                |   4%  |                                                          |***                                               |   6%  |                                                          |****                                              |   8%  |                                                          |*****                                             |  10%  |                                                          |******                                            |  12%  |                                                          |*******                                           |  14%  |                                                          |********                                          |  16%  |                                                          |*********                                         |  18%  |                                                          |**********                                        |  20%  |                                                          |***********                                       |  22%  |                                                          |************                                      |  24%  |                                                          |*************                                     |  26%  |                                                          |**************                                    |  28%  |                                                          |***************                                   |  30%  |                                                          |****************                                  |  32%  |                                                          |*****************                                 |  34%  |                                                          |******************                                |  36%  |                                                          |*******************                               |  38%  |                                                          |********************                              |  40%  |                                                          |*********************                             |  42%  |                                                          |**********************                            |  44%  |                                                          |***********************                           |  46%  |                                                          |************************                          |  48%  |                                                          |*************************                         |  50%  |                                                          |**************************                        |  52%  |                                                          |***************************                       |  54%  |                                                          |****************************                      |  56%  |                                                          |*****************************                     |  58%  |                                                          |******************************                    |  60%  |                                                          |*******************************                   |  62%  |                                                          |********************************                  |  64%  |                                                          |*********************************                 |  66%  |                                                          |**********************************                |  68%  |                                                          |***********************************               |  70%  |                                                          |************************************              |  72%  |                                                          |*************************************             |  74%  |                                                          |**************************************            |  76%  |                                                          |***************************************           |  78%  |                                                          |****************************************          |  80%  |                                                          |*****************************************         |  82%  |                                                          |******************************************        |  84%  |                                                          |*******************************************       |  86%  |                                                          |********************************************      |  88%  |                                                          |*********************************************     |  90%  |                                                          |**********************************************    |  92%  |                                                          |***********************************************   |  94%  |                                                          |************************************************  |  96%  |                                                          |************************************************* |  98%  |                                                          |**************************************************| 100%
 ```
 
 The specification of `lm_imp()` is similar to the specification of a
@@ -61,25 +53,28 @@ of iterations `n.iter` has to be specified.
 Of course, there are many more parameters that can (and sometimes should)
 be specified.
 In the vignette
-[*Model Specification*](https://nerler.github.io/JointAI/articles/ModelSpecification.html), 
+[*Model Specification*](https://nerler.github.io/JointAI/articles/ModelSpecification.html),
 many of these parameters are explained in detail.
 
 `n.iter` specifies the length of the [Markov chain](https://en.wikipedia.org/wiki/Markov_chain),
 i.e., the number of draws from the posterior distribution of the parameter
 or unobserved value.
 How many iterations are necessary depends on the data and complexity of the
-model and can vary from as few as 100 up to thousands or millions. 
+model and can vary from as few as 100 up to thousands or millions.
 
 One important criterion is that the Markov chains need to have converged.
 Convergence can be evaluated visually with a trace plot.
 
 ## Traceplot
-```{r results_lm1, fig.width = 8, fig.height = 5, out.width = '100%'}
+
+```r
 traceplot(lm1)
 ```
 
+<img src="figures_MinimalExample/results_lm1-1.png" title="plot of chunk results_lm1" alt="plot of chunk results_lm1" width="100%" style="display: block; margin: auto;" />
+
 The function [`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html)
-produces a plot of the sampled values across 
+produces a plot of the sampled values across
 iterations per parameter. Different chains are represented by different colours.
 
 When the sampler has converged, the chains show a horizontal band, as in the
@@ -92,15 +87,49 @@ from the model summary.
 
 ## Model Summary
 Results from a model fitted with **JointAI** can be printed using `summary()`:
-```{r, echo = FALSE}
-options(width = 90)
-```
 
-```{r}
+
+
+```r
 summary(lm1)
+#> 
+#> Bayesian linear model fitted with JointAI
+#> 
+#> Call:
+#> lm_imp(formula = SBP ~ gender + age + race + WC + alc + educ + 
+#>     albu + bili, data = NHANES, n.iter = 500)
+#> 
+#> 
+#> Posterior summary:
+#>                          Mean      SD     2.5%   97.5% tail-prob. GR-crit MCE/SD
+#> (Intercept)            62.175 22.7300  17.3968 109.167    0.00533    1.00 0.0258
+#> genderfemale           -3.169  2.3143  -7.7968   1.230    0.15467    1.00 0.0281
+#> age                     0.361  0.0726   0.2200   0.503    0.00000    1.00 0.0258
+#> raceOther Hispanic      0.419  4.9972  -9.6118  10.125    0.93733    1.00 0.0258
+#> raceNon-Hispanic White -1.491  3.0729  -7.2896   4.572    0.61200    1.00 0.0292
+#> raceNon-Hispanic Black  8.797  3.5617   2.1012  15.660    0.01467    1.00 0.0258
+#> raceother               3.588  3.4812  -3.2597  10.519    0.29600    1.00 0.0258
+#> WC                      0.237  0.0845   0.0759   0.410    0.00667    1.00 0.0258
+#> alc>=1                  7.175  2.2572   2.7547  11.546    0.00533    1.00 0.0349
+#> educhigh               -3.361  2.1779  -7.6632   1.026    0.12800    1.01 0.0268
+#> albu                    5.100  3.9600  -2.8385  12.710    0.20667    1.01 0.0270
+#> bili                   -5.739  5.0829 -15.8350   4.136    0.25333    1.00 0.0336
+#> 
+#> Posterior summary of residual std. deviation:
+#>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
+#> sigma_SBP 13.2 0.706 11.9  14.7       1 0.0295
+#> 
+#> 
+#> MCMC settings:
+#> Iterations = 101:600
+#> Sample size per chain = 500 
+#> Thinning interval = 1 
+#> Number of chains = 3 
+#> 
+#> Number of observations: 186
 ```
 
-The output gives the posterior summary, i.e., the summary of the 
+The output gives the posterior summary, i.e., the summary of the
 MCMC ([Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo))
 sample, which consists of all chains combined.
 
@@ -116,43 +145,19 @@ Gelman-Rubin criterion for convergence and the ratio of the Monte Carlo error
 to the standard deviation of the posterior sample.
 
 #### Tail probability
-The tail probability is a measure of how likely the value 0 is under the 
-estimated posterior distribution, and is calculated as 
+The tail probability is a measure of how likely the value 0 is under the
+estimated posterior distribution, and is calculated as
 $$2\times\min\left\{Pr(\theta > 0), Pr(\theta < 0)\right\}$$
 (where $\theta$ is the parameter of interest).
 
-In the following graphics, the shaded areas represent the minimum of 
+In the following graphics, the shaded areas represent the minimum of
 $Pr(\theta > 0)$ and $Pr(\theta < 0)$:
-```{r, echo = F, fig.width = 8, fig.height = 2}
-op <- par(mfrow = c(1, 3), mgp = c(1, 0.6, 0), mar = c(2.5, 1, 2, 1))
-mus <- c(1, -1.5, -2.5)
-
-for (i in seq_along(mus)) {
-  x <- seq(-3.5, 3.5, length = 1000) + mus[i]
-  y <- dnorm(x, mean = mus[i])
-  
-  plot(x,y, type  = 'l', yaxt = 'n', xaxt = 'n',
-       xlab = expression(theta), ylab = "", cex.lab = 1.5,
-       main = paste0('tail prob. = ', round(2*pnorm(0, abs(mus[i])), 3)))
-  
-  if (mus[i] > 0) {
-    polygon(x = c(x[x < 0], max(x[x < 0])),
-            y = c(y[x < 0], min(y)), col = "#D10E3B", border = NA)
-  } else {
-    polygon(x = c(x[x > 0], min(x[x > 0])),
-            y = c(y[x > 0], min(y)), col = "#D10E3B", border = NA)
-  }
-  lines(x,y)
-  axis(side = 1, at = 0)
-  abline(v = 0, lty = 2)
-}
-par(op)
-```
+<img src="figures_MinimalExample/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" style="display: block; margin: auto;" />
 
 #### Gelman-Rubin criterion
-The Gelman-Rubin^[Gelman, A and Rubin, DB (1992) Inference from iterative 
+The Gelman-Rubin^[Gelman, A and Rubin, DB (1992) Inference from iterative
 simulation using multiple sequences, Statistical Science, 7, 457-511.<br>
-Brooks, SP. and Gelman, A. (1998) General methods for monitoring convergence of 
+Brooks, SP. and Gelman, A. (1998) General methods for monitoring convergence of
 iterative simulations. Journal of Computational and Graphical Statistics,
 7, 434-455.] criterion,
 also available via the function
@@ -165,8 +170,8 @@ can be assumed to have converged.
 The Monte Carlo error is a measure of the error that is made because the
 estimate is based on a finite sample. It can also be obtained using the function
 [`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html).
-Ideally, the Monte Carlo error should be small compared to the standard error 
-of the posterior sample. The values shown in the model summary are the Monte 
+Ideally, the Monte Carlo error should be small compared to the standard error
+of the posterior sample. The values shown in the model summary are the Monte
 Carlo error divided by the posterior standard deviation.
 
 #### Additional information
@@ -190,9 +195,12 @@ be added to the summary by setting `missinfo = TRUE`.
 
 ## Plot of the posterior distributions
 The posterior distributions can be visualized using the function `densplot()`:
-```{r, fig.width = 8, fig.height = 5}
+
+```r
 densplot(lm1)
 ```
+
+<img src="figures_MinimalExample/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" />
 
 By default, `densplot()` plots the empirical distribution of each of the chains
 separately. When `joined = TRUE` the distributions of the combined chains
@@ -202,43 +210,43 @@ are plotted.
 ## Other types of models
 Besides linear regression models, it is also possible to fit
 
-* **generalized linear models**: 
+* **generalized linear models**:
   [`glm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
 * **log-normal models**:
   [`lognorm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
 * **beta models** for continuous outcomes between 0 and 1 (proportions):
   [`betareg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
-* **cumulative logit models** for ordinal outcomes: 
+* **cumulative logit models** for ordinal outcomes:
   [`clm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
 * **multinomial logit models** for unordered factors with multiple levels:
   [`mlogit_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
 
-  
-* **linear mixed models**: 
-  [`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) or 
+
+* **linear mixed models**:
+  [`lme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) or
   [`lmer_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
   (identical)
-* **generalized linear mixed models**: 
+* **generalized linear mixed models**:
   [`glme_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html) or
   [`glmer_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
   (identical)
-* **log-normal mixed models**: 
+* **log-normal mixed models**:
   [`lognormmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
-* **beta mixed models**: 
+* **beta mixed models**:
   [`betamm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
-* **cumulative logit mixed models**: 
+* **cumulative logit mixed models**:
   [`clmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
-* **multinomial logit mixed models**: 
+* **multinomial logit mixed models**:
   [`mlogitmm_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
 
 
-* **parametric (Weibull) survival models**: 
+* **parametric (Weibull) survival models**:
   [`survreg_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
-* **proportional hazards survival models**: 
+* **proportional hazards survival models**:
   [`coxph_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
-* **joint models for longitudinal and survival data**: 
+* **joint models for longitudinal and survival data**:
   [`JM_imp()`](https://nerler.github.io/JointAI/reference/model_imp.html)
 
 
-It is also possible to specify multiple analysis models at the same time, by 
+It is also possible to specify multiple analysis models at the same time, by
 providing a list of model formulas.

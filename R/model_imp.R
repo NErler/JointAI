@@ -644,10 +644,11 @@
 #' mod1 <- lm_imp(y ~ C1 + C2 + M1 + B1, data = wideDF, n.iter = 100)
 #'
 #'
-#' # Example 2: Logistic regression with incomplete covariats
+#' # Example 2: Logistic regression with incomplete covariates
 #' mod2 <- glm_imp(B1 ~ C1 + C2 + M1, data = wideDF,
 #'                 family = binomial(link = "logit"), n.iter = 100)
 #'
+#' \dontrun{
 #'
 #' # Example 3: Linear mixed model with incomplete covariates
 #' mod3 <- lme_imp(y ~ C1 + B2 + c1 + time, random = ~ time|id,
@@ -659,7 +660,6 @@
 #'                     data = survival::lung, n.iter = 100)
 #'
 #'
-#' \dontrun{
 #' # Example 5: Proportional hazards survival model
 #' mod5 <- coxph_imp(Surv(time, status) ~ age + sex + meal.cal + wt.loss,
 #'                     data = survival::lung, n.iter = 200)
@@ -1215,9 +1215,9 @@ survreg_imp <- function(formula, data,
 
 
   fmla <- if (is.list(formula)) {
-    deparse(formula[[1]], width.cutoff = 500)
+    paste(deparse(formula[[1]], width.cutoff = 500), collapse = " ")
   } else {
-    deparse(formula, width.cutoff = 500)
+    paste(deparse(formula, width.cutoff = 500) , collapse = " ")
   }
   if (!grepl("^Surv\\(", fmla)) {
     errormsg("For a survival model, the left hand side of the model formula
@@ -1247,9 +1247,9 @@ coxph_imp <- function(formula, data, df_basehaz = 6,
   if (missing(formula)) errormsg("No model formula specified.")
 
   fmla <- if (is.list(formula)) {
-    deparse(formula[[1]], width.cutoff = 500)
+    paste(deparse(formula[[1]], width.cutoff = 500), collapse = " ")
   } else {
-    deparse(formula, width.cutoff = 500)
+    paste(deparse(formula, width.cutoff = 500), collapse = " ")
   }
   if (!grepl("^Surv\\(", fmla)) {
     errormsg("For a survival model, the left hand side of the model formula
@@ -1293,9 +1293,9 @@ JM_imp <- function(formula, data, df_basehaz = 6,
   if (missing(formula)) errormsg("No model formula specified.")
 
   fmla <- if (is.list(formula)) {
-    deparse(formula[[1]], width.cutoff = 500)
+    paste(deparse(formula[[1]], width.cutoff = 500), collapse = " ")
   } else {
-    deparse(formula, width.cutoff = 500)
+    paste(deparse(formula, width.cutoff = 500), collapse = " ")
   }
   if (!grepl("^Surv\\(", fmla)) {
     errormsg("For a survival model, the left hand side of the model formula

@@ -1,10 +1,10 @@
-context("CLM Models")
 library("JointAI")
+
+skip_on_cran()
 
 Sys.setenv(IS_CHECK = "true")
 
 run_clm_models <- function() {
-  cat('\nRunning clm models...\n')
   sink(tempfile())
   on.exit(sink())
   invisible(force(suppressWarnings({
@@ -123,48 +123,53 @@ test_that("MCMC samples can be plottet", {
 
 
 test_that("data_list remains the same", {
-  skip_on_cran()
-  print_output(lapply(models, "[[", "data_list"), type = "value")
+  # skip_on_cran()
+  print_output(lapply(models, "[[", "data_list"), type = "value",
+               context = "clm")
 })
 
 test_that("jagsmodel remains the same", {
-  skip_on_cran()
-  print_output(lapply(models, "[[", "jagsmodel"))
+  print_output(lapply(models, "[[", "jagsmodel"), context = "clm")
 })
 
 
 test_that("GRcrit and MCerror give same result", {
-  skip_on_cran()
-  print_output(lapply(models0, GR_crit, multivariate = FALSE))
-  print_output(lapply(models0, MC_error))
+  # skip_on_cran()
+  print_output(lapply(models0, GR_crit, multivariate = FALSE), context = "clm")
+  print_output(lapply(models0, MC_error), context = "clm")
 })
 
 
 test_that("summary output remained the same on Windows", {
-  skip_on_cran()
+  # skip_on_cran()
   skip_on_os(c("mac", "linux", "solaris"))
-  print_output(lapply(models0, print))
-  print_output(lapply(models0, coef))
-  print_output(lapply(models0, confint))
-  print_output(lapply(models0, summary))
-  print_output(lapply(models0, function(x) coef(summary(x))))
+
+  print_output(lapply(models0, print), context = "clm")
+  print_output(lapply(models0, coef), context = "clm")
+  print_output(lapply(models0, confint), context = "clm")
+  print_output(lapply(models0, summary), context = "clm")
+  print_output(lapply(models0, function(x) coef(summary(x))), context = "clm")
 })
 
 test_that("summary output remained the same on non-Windows", {
-  skip_on_cran()
+  # skip_on_cran()
   skip_on_os(c("windows"))
-  print_output(lapply(models0, print), extra = "nonWin")
-  print_output(lapply(models0, coef), extra = "nonWin")
-  print_output(lapply(models0, confint), extra = "nonWin")
-  print_output(lapply(models0, summary), extra = "nonWin")
-  print_output(lapply(models0, function(x) coef(summary(x))), extra = "nonWin")
+  print_output(lapply(models0, print), extra = "nonWin", context = "clm")
+  print_output(lapply(models0, coef), extra = "nonWin", context = "clm")
+  print_output(lapply(models0, confint), extra = "nonWin", context = "clm")
+  print_output(lapply(models0, summary), extra = "nonWin", context = "clm")
+  print_output(lapply(models0, function(x) coef(summary(x))), extra = "nonWin",
+               context = "clm")
 })
 
 
 
 test_that("prediction works", {
-  expect_is(predict(models$m4a, type = "lp")$fitted, "array")
+
+  local_edition(2)
+  expect_is(predict(models$m4a, type = "lp", warn = FALSE)$fitted, "array")
   expect_is(predict(models$m4a, type = "prob", warn = FALSE)$fitted, "array")
+  local_edition(3)
   expect_s3_class(predict(models$m4a, type = "class", warn = FALSE)$fitted,
                   "data.frame")
   expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$fitted,
@@ -179,12 +184,16 @@ test_that("prediction works", {
   expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$newdata,
                   "data.frame")
 
+
+  local_edition(2)
   expect_is(predict(models$m5d, type = "lp", warn = FALSE)$fitted, "array")
   expect_is(predict(models$m5d, type = "prob", warn = FALSE)$fitted, "array")
-  expect_is(predict(models$m5d, type = "class", warn = FALSE)$fitted,
-            "data.frame")
-  expect_is(predict(models$m5d, type = "response", warn = FALSE)$fitted,
-            "data.frame")
+
+  local_edition(3)
+  expect_s3_class(predict(models$m5d, type = "class", warn = FALSE)$fitted,
+                  "data.frame")
+  expect_s3_class(predict(models$m5d, type = "response", warn = FALSE)$fitted,
+                  "data.frame")
 
   expect_s3_class(predict(models$m5d, type = "lp", warn = FALSE)$newdata,
                   "data.frame")
@@ -232,11 +241,13 @@ test_that("model can be plottet", {
 
 test_that("wrong models give errors", {
   expect_error(clm_imp(y ~ O1 + C1 + C2, data = wideDF))
-  expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = longDF))
-  expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = wideDF))
-  expect_s3_class(clm_imp(O2 ~ I(O1^2) + C1 + C2, data = wideDF),
+  expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = longDF,
+                       warn = FALSE))
+  expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = wideDF,
+                       warn = FALSE))
+  expect_s3_class(clm_imp(O2 ~ I(O1^2) + C1 + C2, data = wideDF, warn = FALSE),
                   "JointAI_errored")
   expect_error(clm_imp(O2 ~ O1 + C1, data = wideDF,
-                       nonprop = list(O2 = ~ C2)))
+                       nonprop = list(O2 = ~ C2), warn = FALSE))
 })
 Sys.setenv(IS_CHECK = "")

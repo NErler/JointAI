@@ -33,4 +33,5 @@ Suggests:
 VignetteBuilder: knitr
 Encoding: UTF-8
 RdMacros: mathjaxr
+Config/testthat/edition: 3
 Language: en-GB

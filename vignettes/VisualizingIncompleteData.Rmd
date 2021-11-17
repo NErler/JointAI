@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
   fig.width = 8,
   fig.align = 'center',
   out.width = '100%'
+  # fig.path = "figures_VisualizingIncompleteData/"
 )
 library(JointAI)
 options(width = 80)
@@ -50,8 +51,8 @@ par(op)
 ```
 
 **Note:** Here, we are looking at the marginal distribution of each variable.
-Since missing values are (usually) imputed conditionally on 
-other variables, marginal plots can only be used as an indication of what 
+Since missing values are (usually) imputed conditionally on
+other variables, marginal plots can only be used as an indication of what
 type of imputation model (e.g., normal vs non-normal) is appropriate.
 
 
@@ -96,9 +97,9 @@ plot_all(simLong, allNA = TRUE, fill = '#e30f41', border = '#34111b',
 The information to which level a variable belongs is added to
 the title of each plot ("lvlone" refers to the first level, for which there is
 no grouping variable).
-Variables belonging to higher levels (e.g., center-specific variables in a 
+Variables belonging to higher levels (e.g., center-specific variables in a
 multi-center setting, or patient-specific variables in a setting with repeated
-measurements for each patient) are summarized on their respective level, 
+measurements for each patient) are summarized on their respective level,
 i.e., the counts of `ETHN`, for instance, will sum up to the number of subjects
 in the `simLong` data.
 
@@ -122,7 +123,7 @@ needs to be installed. By setting `plot = FALSE`, no plot will be generated (and
 then **ggplot2** is not required).
 
 #### Missing data pattern as a matrix
-When the argument `pattern = TRUE` is set, the missing data pattern is returned 
+When the argument `pattern = TRUE` is set, the missing data pattern is returned
 as a matrix, where observed values are represented by `1` and missing values
 by `0`:
 ```{r}
@@ -133,11 +134,11 @@ md_pattern(NHANES, pattern = T, plot = F)
 ### Changing colors
 The arguments `color` and `border` can be used to change the colour that is
 used for observed and missing values (in that order, i.e., `color` is a vector
-of length two), and the border separating the rectangles, respectively. 
+of length two), and the border separating the rectangles, respectively.
 
 ### Legend position
 The position of the legend can be controlled with the argument `legend.position`,
-which can be one of `"left"`, `"right"`, `"bottom"` or `"top"`. 
+which can be one of `"left"`, `"right"`, `"bottom"` or `"top"`.
 When `legend.position = 'none'`, no legend is printed.
 
 ### Changing the axes
@@ -150,7 +151,7 @@ missing data pattern.
 
 ```{r, fig.height = 5}
 md_pattern(NHANES, color = c('#34111b', '#e30f41'), border = 'white',
-           legend.position = 'none', print_xaxis = FALSE, 
+           legend.position = 'none', print_xaxis = FALSE,
            ylab = 'Alternative axis title')
 ```
 

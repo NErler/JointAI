@@ -126,7 +126,7 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
   # (needed because otherwise "groups" would not fit any more after sorting)
   # and sort the data by the time variable
   data$rowiddd <- seq_len(nrow(data))
-  data <- data[order(data[timevar]), ]
+  data <- data[order(data[[timevar]]), ]
 
   # split the data by patient, and fill in values in the time-varying variables
   datlist <- lapply(split(data, data[surv_lvl]), function(x) {
@@ -399,7 +399,7 @@ model_matrix_combi <- function(fmla, data, terms_list, refs) {
   mats <- mapply(function(object, data, contr) {
     # get the subset of contrast matrices corresponding to the current formula
     # to avoid warning messages
-    covars <- cvapply(attr(terms(as.formula(remove_lhs(object)[[1L]])),
+    covars <- cvapply(attr(terms(remove_lhs(object)[[1L]]),
                           "variables")[-1L], deparse, width.cutoff = 500L)
     contr_list <- contr[intersect(covars, names(contr))]
 

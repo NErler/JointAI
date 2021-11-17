@@ -28,6 +28,9 @@
 ^vignettes/MinimalExample.Rmd$
 ^vignettes/VisualizingIncompleteData.Rmd$
 
+^vignettes/*.Rmd.orig
+
+
 ## Exclude folder with test outputs which is super large
 tests/testthat/Rplots.pdf
 

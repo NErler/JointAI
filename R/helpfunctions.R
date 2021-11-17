@@ -105,13 +105,14 @@ check_cluster <- function(x, grouping) {
   # - x: a vector
   # - grouping: a list of grouping information (obtained from get_groups())
 
+  attributes(x) <- NULL
 
   lvapply(grouping, function(k) {
     # for each level of grouping, compare the original vector with a
     # reconstructed vector in which the first element per group is repeated
     # for each group member
-    !identical(unname(x[match(unique(k), k)][match(k, unique(k))]),
-               unname(x))
+    !identical(x[match(unique(k), k)][match(k, unique(k))],
+               x)
   })
 
   # returns a logical vector with length = length(groups) were TRUE means that

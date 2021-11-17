@@ -785,10 +785,11 @@ or \code{\link[survival]{strata}} in survival models
 mod1 <- lm_imp(y ~ C1 + C2 + M1 + B1, data = wideDF, n.iter = 100)
 
 
-# Example 2: Logistic regression with incomplete covariats
+# Example 2: Logistic regression with incomplete covariates
 mod2 <- glm_imp(B1 ~ C1 + C2 + M1, data = wideDF,
                 family = binomial(link = "logit"), n.iter = 100)
 
+\dontrun{
 
 # Example 3: Linear mixed model with incomplete covariates
 mod3 <- lme_imp(y ~ C1 + B2 + c1 + time, random = ~ time|id,
@@ -800,7 +801,6 @@ mod4 <- survreg_imp(Surv(time, status) ~ age + sex + meal.cal + wt.loss,
                     data = survival::lung, n.iter = 100)
 
 
-\dontrun{
 # Example 5: Proportional hazards survival model
 mod5 <- coxph_imp(Surv(time, status) ~ age + sex + meal.cal + wt.loss,
                     data = survival::lung, n.iter = 200)

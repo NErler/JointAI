@@ -1,4 +1,3 @@
-context("Plots")
 library("JointAI")
 
 
@@ -28,6 +27,8 @@ test_that('plot_imp_distr', {
 
 
 test_that('md_pattern', {
-  expect_is(md_pattern(wideDF, plot = FALSE, pattern = TRUE), 'matrix')
   expect_silent(md_pattern(wideDF))
+
+  local_edition(2)
+  expect_is(md_pattern(wideDF, plot = FALSE, pattern = TRUE), 'matrix')
 })

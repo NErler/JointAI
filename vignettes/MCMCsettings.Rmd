@@ -1,7 +1,7 @@
 ---
 title: "MCMC Settings"
 date: "2020-06-22"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     depth: 4
@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.width = 7,
   fig.align = 'center'
+  # fig.path = "figures_MCMCsettings/"
 )
 library(JointAI)
 options(width = 100)
@@ -26,11 +27,11 @@ options(width = 100)
 In **JointAI**, models are estimated in the Bayesian framework, using MCMC
 ([Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo))
 sampling.
-The sampling is done by the software [JAGS](http://mcmc-jags.sourceforge.net/) 
+The sampling is done by the software [JAGS](http://mcmc-jags.sourceforge.net/)
 ("Just Another Gibbs Sampler"),
 which performs [Gibbs](https://en.wikipedia.org/wiki/Gibbs_sampling) sampling.
 **JointAI** pre-processes the data to get it into a form that can be
-passed to JAGS and writes the JAGS model. The R package 
+passed to JAGS and writes the JAGS model. The R package
 [**rjags**](https://CRAN.R-project.org/package=rjags) is used as an interface
 to JAGS.
 
@@ -42,16 +43,16 @@ check out the vignettes [*Model Specification*](https://nerler.github.io/JointAI
 and [*TheoreticalBackground*](https://nerler.github.io/JointAI/articles/TheoreticalBackground.html).
 
 In this vignette, we use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
-data for examples in cross-sectional data and the 
+data for examples in cross-sectional data and the
 dataset [simLong](https://nerler.github.io/JointAI/reference/simLong.html) for
 examples in longitudinal data.
-For more info on these datasets, check out the vignette 
+For more info on these datasets, check out the vignette
 [*Visualizing Incomplete Data*](https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html),
 in which the distributions of variables and missing values in both sets is
 explored.
 
 **Note:**<br>
-In several examples we use `progress.bar = 'none'` which prevents printing 
+In several examples we use `progress.bar = 'none'` which prevents printing
 of the progress of the MCMC sampling, since this would result in lengthy output
 in the vignette.
 
@@ -89,10 +90,10 @@ The argument `n.chains` selects the number of chains (by default, `n.chains = 3`
 For calculating the model summary, multiple chains are merged.
 
 
-### Adaptive phase 
+### Adaptive phase
 JAGS has an adaptive mode, in which samplers are optimized (for example the
 step size is adjusted).
-Samples obtained during the adaptive mode do not form a Markov chain and are 
+Samples obtained during the adaptive mode do not form a Markov chain and are
 discarded.
 The argument `n.adapt` controls the length of this adaptive phase.
 
@@ -108,18 +109,18 @@ have sufficient precision depends on the complexity of data and model, and may
 range from as few as 100 to several million.
 
 #### Side note: How to evaluate convergence?
-Convergence can, for instance, be evaluated visually using a 
-[`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html) 
+Convergence can, for instance, be evaluated visually using a
+[`traceplot()`](https://nerler.github.io/JointAI/reference/traceplot.html)
 or using the Gelman-Rubin diagnostic criterion^[
-Gelman, A., Meng, X. L., & Stern, H. (1996). Posterior predictive assessment 
+Gelman, A., Meng, X. L., & Stern, H. (1996). Posterior predictive assessment
 of model fitness via realized discrepancies. Statistica Sinica, 733-760.]
 (implemented in [`GR_crit()`](https://nerler.github.io/JointAI/reference/GR_crit.html),
 but also returned with the model summary).
-The latter compares within and between chain variability and requires the 
+The latter compares within and between chain variability and requires the
 JointAI object to have at least two chains.
 
 #### Side note: How to check precision?
-The precision of the MCMC sample can be checked with the function 
+The precision of the MCMC sample can be checked with the function
 [`MC_error()`](https://nerler.github.io/JointAI/reference/MC_error.html).
 It calculates the Monte Carlo error (the error that is made since the sample
 is finite) and compares it to the standard deviation of the posterior sample.
@@ -141,7 +142,7 @@ which corresponds to keeping all values. A value `thin = 10` would result in
 keeping every 10th value and discarding all other values.
 
 
-### Examples 
+### Examples
 #### Default settings
 `n.adapt = 100` and `thin = 1` with 100 sampling iterations
 ```{r, message = FALSE}
@@ -208,7 +209,7 @@ For details, explanation and examples see the vignette [*Parameter Selection*](h
 
 ## Initial values
 Initial values are the starting point for the MCMC sampler. Setting good
-initial values, i.e., initial values that are likely under the posterior 
+initial values, i.e., initial values that are likely under the posterior
 distribution, can speed up convergence. By default,
 the argument `inits = NULL`, which means that initial values for the nodes
 are generated by JAGS. **JointAI** only sets the initial values for the random
@@ -225,25 +226,25 @@ It is possible to supply initial values directly as
 * a function.
 
 Initial values can be specified for every unobserved node, that is, parameters
-and missing values, but it is possible to only specify initial values for a 
+and missing values, but it is possible to only specify initial values for a
 subset of nodes.
 
 Unless the user-specified initial values contain initial values for the
 random number generator (named `.RNG.name` and `.RNG.seed`), **JointAI** will
 add these to the initial values. This is necessary for reproducibility of the
-results but also when the MCMC chains are sampled in parallel. 
+results but also when the MCMC chains are sampled in parallel.
 
 
 #### Initial values in a list of lists
-A list containing initial values should have the same length as the number of 
+A list containing initial values should have the same length as the number of
 chains, where each element is a named list of initial values. Initial values
 should differ between the chains.
 
-For example, to create initial values for the parameter vector `beta` and 
+For example, to create initial values for the parameter vector `beta` and
 the precision parameter `tau_SBP` for three chains:
 ```{r, message = FALSE}
 init_list <- lapply(1:3, function(i) {
-  list(beta = rnorm(4), 
+  list(beta = rnorm(4),
        tau_SBP = rgamma(1, 1, 1))
 })
 
@@ -261,7 +262,7 @@ mod4a$mcmc_settings$inits
 
 #### Initial values as a function
 Initial values can be specified by a function. The function should either take no
-arguments or a single argument called `chain`, and return a named list that 
+arguments or a single argument called `chain`, and return a named list that
 supplies values for one chain.
 
 For example, to create initial values for the parameter vectors `beta` and `alpha`:
@@ -289,17 +290,17 @@ parameters or unobserved data for which a distribution is specified in the
 JAGS model.
 
 Initial values have to be supplied in the format the parameter or unobserved
-value is used in the JAGS model. 
+value is used in the JAGS model.
 
 
-To find out which nodes there are in a model, the function `coef()` from 
+To find out which nodes there are in a model, the function `coef()` from
 package **rjags** can be used on a JAGS model object.
 It returns a list with the current values of the
-MCMC chains,  by default the first chain. Elements of the initial values should 
+MCMC chains,  by default the first chain. Elements of the initial values should
 have the same structure as the elements in this list.
 
 **Example:<br>**
-We are using a longitudinal model and the `simLong` data in this example. 
+We are using a longitudinal model and the `simLong` data in this example.
 The output is abbreviated to show the relevant parts.
 
 ```{r, message = FALSE, warning = FALSE}
@@ -320,7 +321,7 @@ a4mod <- capture.output(mod4c$jagsmodel)
 
 `M_ID` and `M_lvlone` are design matrices containing the the parts of the
 variables that belong to a given level of the hierarchy. In this example,
-`M_ID` contains all the subject specific variables, `M_lvlone` the time-varying 
+`M_ID` contains all the subject specific variables, `M_lvlone` the time-varying
 variables. In **JointAI**, design matrices are always named `M_<level>`, and
 `lvlone` refers to the lowest level, the level for which there is no grouping
 variable.
@@ -362,7 +363,7 @@ and the matrix of initial values.
 
 The corresponding part of the JAGS model is:
 ```{r, echo = FALSE}
-cat(paste0('[...]\n', 
+cat(paste0('[...]\n',
            paste0(a4mod[58:60], collapse = "\n"),
            '\n\n[...]\n',
            paste0(a4mod[69:72], collapse = "\n"),
@@ -371,8 +372,8 @@ cat(paste0('[...]\n',
 
 
 
-`RinvD_bmi_ID` refers to the scale matrix in the Wishart prior for the 
-inverse of the random effects design matrix `D_bmi_ID`. 
+`RinvD_bmi_ID` refers to the scale matrix in the Wishart prior for the
+inverse of the random effects design matrix `D_bmi_ID`.
 To distinguish random effects of different models and grouping levels, the
 names always end with `..._<response>_<level>`.
 
@@ -388,8 +389,8 @@ The corresponding part of the JAGS model is:
 cat(paste0('[...]\n', paste(a4mod[25:31], collapse = '\n'), '\n[...]\n'))
 ```
 
-The element `RinvD_bmi_ID` in the initial values has to be a 2 $\times$ 2 
-matrix, with positive values on the diagonal and `NA` as off-diagonal elements, 
+The element `RinvD_bmi_ID` in the initial values has to be a 2 $\times$ 2
+matrix, with positive values on the diagonal and `NA` as off-diagonal elements,
 since these are fixed in the data:
 ```{r}
 coef(mod4c$model)$RinvD_bmi_ID
@@ -398,8 +399,8 @@ coef(mod4c$model)$RinvD_bmi_ID
 
 
 Elements that are completely unobserved, like the parameter vectors `alpha`
-and `beta`, the random effects `b_<response>_<level>` (e.g. `b_bmi_ID` and 
-`b_hc_ID`) or scalar parameters `delta_<response>` or 
+and `beta`, the random effects `b_<response>_<level>` (e.g. `b_bmi_ID` and
+`b_hc_ID`) or scalar parameters `delta_<response>` or
 `tau_<response>` are entirely specified in the initial values.
 
 
@@ -424,13 +425,13 @@ specifies that the different MCMC chains are sampled in 4 different R sessions.
 This specification has to be done before the **JointAI** model function is
 called and remains in place until it is overwritten.
 
-To re-set to sequential evaluation, 
+To re-set to sequential evaluation,
 ```{r, eval = FALSE}
 future::plan(future::sequential())
 ```
 can be used.
 
-More information on parallel computation can be found in the help files and the 
+More information on parallel computation can be found in the help files and the
 [vignette of the package **future**](https://CRAN.R-project.org/package=future).
 
 Unfortunately, currently it is not possible to obtain a progress bar

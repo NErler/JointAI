@@ -1,6 +1,4 @@
-context("Print functions")
 library("JointAI")
-
 
 test_that('lme model', {
   mymod <- lme_imp(y ~ C1 + c1 + B2 + c2 + O2 + time + (time  | id),
@@ -10,8 +8,8 @@ test_that('lme model', {
 
   expect_output(list_models(mymod))
   expect_s3_class(parameters(mymod), 'data.frame')
-  print_output(list_models(mymod))
-  print_output(parameters(mymod))
+  print_output(list_models(mymod), context = "printfcts")
+  print_output(parameters(mymod), context = "printfcts")
 })
 
 
@@ -26,6 +24,6 @@ test_that('mlogitmm', {
 
   expect_output(list_models(mmod))
   expect_s3_class(parameters(mmod), 'data.frame')
-  print_output(list_models(mmod))
-  print_output(parameters(mmod))
+  print_output(list_models(mmod), context = "printfcts")
+  print_output(parameters(mmod), context = "printfcts")
 })
