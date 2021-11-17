@@ -10,7 +10,7 @@
 [![Download
 counter](https://cranlogs.r-pkg.org/badges/JointAI)](https://cran.r-project.org/package=JointAI)
 [![Rdoc](https://www.rdocumentation.org/badges/version/JointAI)](https://www.rdocumentation.org/packages/JointAI)
-[![codecov](https://codecov.io/gh/NErler/JointAI/branch/master/graph/badge.svg)](https://codecov.io/gh/NErler/JointAI)
+[![codecov](https://codecov.io/gh/NErler/JointAI/branch/master/graph/badge.svg)](https://app.codecov.io/gh/NErler/JointAI)
 [![Travis-CI Build
 Status](https://travis-ci.org/NErler/JointAI.svg?branch=master)](https://travis-ci.org/NErler/JointAI)
 [![R build
