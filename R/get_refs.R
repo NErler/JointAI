@@ -169,11 +169,11 @@ set_refcat <- function(data, formula, covars, auxvars = NULL) {
   if (q1 == 4) {
     q2 <- q3 <- setNames(numeric(length(factors)), factors)
     for (i in seq_along(factors)) {
-      q2[i] <- menu(levels(data[factors[i]]),
+      q2[i] <- menu(levels(data[[factors[i]]]),
                     title = gettextf("The reference category for %s should be",
                                      dQuote(factors[i]))
       )
-      q3[i] <- levels(data[factors[i]])[q2[i]]
+      q3[i] <- levels(data[[factors[i]]])[q2[i]]
     }
 
     out <- paste0("refcats = c(", paste0(names(q3),  " = '", q3, "'",

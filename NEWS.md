@@ -5,6 +5,9 @@
   multi-level models with >2 levels where some levels have only random intercept.
 * Bug fix in generating the names of random effect nodes to monitor when there
   are multiple analysis models and some do not have random effects.
+* Bug fix in `plot_all()` not displaying the variable name in the message shown
+  for character string variables.
+* Bug fix in `set_refcat()`: wasn't displaying the factor labels correctly
 
 # JointAI (1.0.2)
 
