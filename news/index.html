@@ -62,7 +62,7 @@
 <meta name="twitter:site" content="@N_Erler" />
 
 
-<meta name="robots" content="noindex">
+
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -101,7 +101,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -190,6 +190,18 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#jointai-development-version" class="anchor"></a>JointAI (development version)<small> Unreleased </small>
 </h1>
+<div id="new-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>New features</h2>
+<ul>
+<li>
+<code>custom</code>: new argument in the main analysis functions that allows the user to replace the JAGS syntax for sub-models with custom syntax. The argument expects a named list where the names are the names of the variables for which the custom model will be used. This feature requires some knowledge of JAGS syntax.</li>
+<li>
+<code>append_data_list</code>: new argument in the main analysis functions that allows the user to add elements to the list of data that is passed to JAGS. This may be necessary for custom sub-models.</li>
+<li>
+<code>rd_vcov</code>: new argument in the main analysis functions that allows the specification of the structure of the random effects variance-covariance matrices in (multivariate) mixed models (and joint models).</li>
+</ul>
+</div>
 <div id="minor-improvements-and-bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
@@ -198,7 +210,10 @@
 <li>Bug fix in generating the names of random effect nodes to monitor when there are multiple analysis models and some do not have random effects.</li>
 <li>Bug fix in <code><a href="../reference/plot_all.html">plot_all()</a></code> not displaying the variable name in the message shown for character string variables.</li>
 <li>Bug fix in <code><a href="../reference/set_refcat.html">set_refcat()</a></code>: wasn’t displaying the factor labels correctly</li>
+<li>
+<code>print.JointAI</code>: bugfix for multivariate mixed models with full variance-covariance matrix of the random effects that had the same number of random effects for each outcome, for which the printing of this matrix resulted in an error.</li>
 </ul>
+<hr>
 </div>
 </div>
     <div id="jointai-061" class="section level1">

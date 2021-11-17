@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Summarize the results from an object of class JointAI — summary.JointAI • JointAI</title>
+<title>Summarize the results from an object of class JointAI — print.Dmat • JointAI</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,7 +54,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Summarize the results from an object of class JointAI — summary.JointAI" />
+<meta property="og:title" content="Summarize the results from an object of class JointAI — print.Dmat" />
 <meta property="og:description" content="Obtain and print the summary, (fixed effects) coefficients
 (coef) and credible interval (confint) for an object of
 class 'JointAI'." />
@@ -65,7 +65,7 @@ class 'JointAI'." />
 <meta name="twitter:site" content="@N_Erler" />
 
 
-<meta name="robots" content="noindex">
+
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -104,7 +104,7 @@ class 'JointAI'." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -186,7 +186,7 @@ class 'JointAI'." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Summarize the results from an object of class JointAI</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/summary.JointAI.R'><code>R/summary.JointAI.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/helpfunctions_summary.R'><code>R/helpfunctions_summary.R</code></a>, <a href='https://github.com/nerler/JointAI/blob/master/R/summary.JointAI.R'><code>R/summary.JointAI.R</code></a></small>
     <div class="hidden name"><code>summary.JointAI.Rd</code></div>
     </div>
 
@@ -196,7 +196,10 @@ class 'JointAI'." />
 class 'JointAI'.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for JointAI</span>
+    <pre class="usage"><span class='co'># S3 method for Dmat</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"digits"</span><span class='op'>)</span>, scientific <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"scipen"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for JointAI</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>object</span>, start <span class='op'>=</span> <span class='cn'>NULL</span>, end <span class='op'>=</span> <span class='cn'>NULL</span>, thin <span class='op'>=</span> <span class='cn'>NULL</span>,
   quantiles <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.025</span>, <span class='fl'>0.975</span><span class='op'>)</span>, subset <span class='op'>=</span> <span class='cn'>NULL</span>, exclude_chains <span class='op'>=</span> <span class='cn'>NULL</span>,
   outcome <span class='op'>=</span> <span class='cn'>NULL</span>, missinfo <span class='op'>=</span> <span class='cn'>FALSE</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -219,6 +222,25 @@ class 'JointAI'.</p>
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>an object of class <code>summary.JointAI</code> or <code>JointAI</code></p></td>
+    </tr>
+    <tr>
+      <th>digits</th>
+      <td><p>the minimum number of significant digits to be printed in
+values.</p></td>
+    </tr>
+    <tr>
+      <th>scientific</th>
+      <td><p>A penalty to be applied when deciding to print numeric
+values in fixed or exponential notation, by default the
+value obtained from <code>getOption("scipen")</code></p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>currently not used</p></td>
+    </tr>
     <tr>
       <th>object</th>
       <td><p>object inheriting from class 'JointAI'</p></td>
@@ -277,19 +299,6 @@ missing values be included in the summary?</p></td>
       <th>mess</th>
       <td><p>logical; should messages be given? Default is
 <code>TRUE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>currently not used</p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>an object of class <code>summary.JointAI</code> or <code>JointAI</code></p></td>
-    </tr>
-    <tr>
-      <th>digits</th>
-      <td><p>the minimum number of significant digits to be printed in
-values.</p></td>
     </tr>
     <tr>
       <th>parm</th>

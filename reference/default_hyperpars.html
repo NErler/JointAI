@@ -63,7 +63,7 @@
 <meta name="twitter:site" content="@N_Erler" />
 
 
-<meta name="robots" content="noindex">
+
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -102,7 +102,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -340,6 +340,7 @@ puts most weight on the extreme values (correlation 1 or -1).</p>
 <span class='r-in'><span class='va'>hyp</span> <span class='op'>&lt;-</span> <span class='fu'>default_hyperpars</span><span class='op'>(</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>hyp</span><span class='op'>$</span><span class='va'>norm</span><span class='op'>[</span><span class='st'>'rate_tau_norm'</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1e-3</span></span>
 <span class='r-in'><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B1</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, hyperpars <span class='op'>=</span> <span class='va'>hyp</span>, mess <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in get_data_list(Mlist, info_list, hyperpars, append_data_list):</span> object 'hyp' not found</span>
 <span class='r-in'></span>
 <span class='r-in'></span>
 </pre>

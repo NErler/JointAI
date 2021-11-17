@@ -64,7 +64,7 @@ sampling, while imputing missing values." />
 <meta name="twitter:site" content="@N_Erler" />
 
 
-<meta name="robots" content="noindex">
+
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -103,7 +103,7 @@ sampling, while imputing missing values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -196,157 +196,106 @@ sampling, while imputing missing values.</p>
 
     <pre class="usage"><span class='fu'>lm_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
   thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
-  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
-  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>glm_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>family</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
   thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
-  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
-  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>clm_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
   thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
   refcats <span class='op'>=</span> <span class='cn'>NULL</span>, nonprop <span class='op'>=</span> <span class='cn'>NULL</span>, rev <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>,
-  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modelname <span class='op'>=</span> <span class='cn'>NULL</span>, modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>, progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  mess <span class='op'>=</span> <span class='cn'>TRUE</span>, keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>lognorm_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
   thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
-  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
-  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>betareg_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
   thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
-  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
-  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>mlogit_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
   thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
-  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
-  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>lme_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>data</span>, <span class='va'>random</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
   thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
-  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
-  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, rd_vcov <span class='op'>=</span> <span class='st'>"blockdiag"</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>,
+  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>lmer_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>data</span>, <span class='va'>random</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
   thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
-  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
-  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, rd_vcov <span class='op'>=</span> <span class='st'>"blockdiag"</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>,
+  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>glme_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>data</span>, <span class='va'>random</span>, <span class='va'>family</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>,
   n.iter <span class='op'>=</span> <span class='fl'>0</span>, thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
-  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>,
-  trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
-  inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, rd_vcov <span class='op'>=</span> <span class='st'>"blockdiag"</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>,
+  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>glmer_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>data</span>, <span class='va'>random</span>, <span class='va'>family</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>,
   n.iter <span class='op'>=</span> <span class='fl'>0</span>, thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
-  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>,
-  trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
-  inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, rd_vcov <span class='op'>=</span> <span class='st'>"blockdiag"</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>,
+  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>betamm_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>random</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
   thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
-  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
-  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, rd_vcov <span class='op'>=</span> <span class='st'>"blockdiag"</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>,
+  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>lognormmm_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>random</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>,
   n.iter <span class='op'>=</span> <span class='fl'>0</span>, thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
-  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>,
-  trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
-  inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, rd_vcov <span class='op'>=</span> <span class='st'>"blockdiag"</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>,
+  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>clmm_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>data</span>, <span class='va'>random</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
   thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
-  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, nonprop <span class='op'>=</span> <span class='cn'>NULL</span>, rev <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>,
-  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modelname <span class='op'>=</span> <span class='cn'>NULL</span>, modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>, progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  mess <span class='op'>=</span> <span class='cn'>TRUE</span>, keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, nonprop <span class='op'>=</span> <span class='cn'>NULL</span>, rev <span class='op'>=</span> <span class='cn'>NULL</span>, rd_vcov <span class='op'>=</span> <span class='st'>"blockdiag"</span>,
+  models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>mlogitmm_imp</span><span class='op'>(</span><span class='va'>fixed</span>, <span class='va'>data</span>, <span class='va'>random</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>,
   n.iter <span class='op'>=</span> <span class='fl'>0</span>, thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
-  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>,
-  trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
-  inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, rd_vcov <span class='op'>=</span> <span class='st'>"blockdiag"</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>,
+  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>survreg_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>, n.iter <span class='op'>=</span> <span class='fl'>0</span>,
   thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, auxvars <span class='op'>=</span> <span class='cn'>NULL</span>,
-  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>,
-  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>coxph_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, df_basehaz <span class='op'>=</span> <span class='fl'>6</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>,
   n.iter <span class='op'>=</span> <span class='fl'>0</span>, thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
   auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>,
-  trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
-  inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>, hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>,
-  modeldir <span class='op'>=</span> <span class='cn'>NULL</span>, keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+  shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>JM_imp</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, df_basehaz <span class='op'>=</span> <span class='fl'>6</span>, n.chains <span class='op'>=</span> <span class='fl'>3</span>, n.adapt <span class='op'>=</span> <span class='fl'>100</span>,
   n.iter <span class='op'>=</span> <span class='fl'>0</span>, thin <span class='op'>=</span> <span class='fl'>1</span>, monitor_params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>analysis_main <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
-  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, timevar <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>,
-  no_model <span class='op'>=</span> <span class='cn'>NULL</span>, assoc_type <span class='op'>=</span> <span class='cn'>NULL</span>, trunc <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>, inits <span class='op'>=</span> <span class='cn'>NULL</span>, scale_vars <span class='op'>=</span> <span class='cn'>NULL</span>,
-  hyperpars <span class='op'>=</span> <span class='cn'>NULL</span>, modelname <span class='op'>=</span> <span class='cn'>NULL</span>, modeldir <span class='op'>=</span> <span class='cn'>NULL</span>,
-  keep_model <span class='op'>=</span> <span class='cn'>FALSE</span>, overwrite <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  progress.bar <span class='op'>=</span> <span class='st'>"text"</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  keep_scaled_mcmc <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+  auxvars <span class='op'>=</span> <span class='cn'>NULL</span>, timevar <span class='op'>=</span> <span class='cn'>NULL</span>, refcats <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rd_vcov <span class='op'>=</span> <span class='st'>"blockdiag"</span>, models <span class='op'>=</span> <span class='cn'>NULL</span>, no_model <span class='op'>=</span> <span class='cn'>NULL</span>,
+  assoc_type <span class='op'>=</span> <span class='cn'>NULL</span>, shrinkage <span class='op'>=</span> <span class='cn'>FALSE</span>, ppc <span class='op'>=</span> <span class='cn'>TRUE</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inits <span class='op'>=</span> <span class='cn'>NULL</span>, warn <span class='op'>=</span> <span class='cn'>TRUE</span>, mess <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -430,12 +379,6 @@ variables and implies the assumptions of independence between
 the excluded variable and the incomplete variables.</p></td>
     </tr>
     <tr>
-      <th>trunc</th>
-      <td><p>optional; named list specifying limits of truncation for the
-distribution of the named incomplete variables (see the vignette
-<a href='https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support'>ModelSpecification</a>)</p></td>
-    </tr>
-    <tr>
       <th>shrinkage</th>
       <td><p>optional; either a character string naming the shrinkage
 method to be used for regression coefficients in all models
@@ -461,63 +404,6 @@ by JAGS.
 It is an error to supply an initial value for an observed node.</p></td>
     </tr>
     <tr>
-      <th>scale_vars</th>
-      <td><p>optional; named vector of (continuous) variables that will
-be centred and scaled (such that mean = 0 and sd = 1)
-when they enter a linear predictor to improve
-convergence of the MCMC sampling. Default is that all
-numeric variables and integer variables with &gt;20 different
-values will be scaled.
-If set to <code>FALSE</code> no scaling will be done.</p></td>
-    </tr>
-    <tr>
-      <th>hyperpars</th>
-      <td><p>optional; list of hyper-parameters, as obtained by
-<code><a href='default_hyperpars.html'>default_hyperpars</a>()</code></p></td>
-    </tr>
-    <tr>
-      <th>modelname</th>
-      <td><p>optional; character string specifying the name of the model
-file (including the ending, either .R or .txt).
-If unspecified a random name will be generated.</p></td>
-    </tr>
-    <tr>
-      <th>modeldir</th>
-      <td><p>optional; directory containing the model file or directory
-in which the model file should be written. If unspecified a
-temporary directory will be created.</p></td>
-    </tr>
-    <tr>
-      <th>keep_model</th>
-      <td><p>logical; whether the created JAGS model file should be
-saved or removed from (<code>FALSE</code>; default) when the
-sampling has finished.</p></td>
-    </tr>
-    <tr>
-      <th>overwrite</th>
-      <td><p>logical; whether an existing model file with the specified
-<code>&lt;modeldir&gt;/&lt;modelname&gt;</code> should be overwritten.
-If set to <code>FALSE</code> and a model already exists, that
-model will be used.
-If unspecified (<code>NULL</code>) and a file exists, the user is
-asked for input on how to proceed.</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p>logical; if <code>TRUE</code> then messages generated by
-<strong>rjags</strong> during compilation as well as the progress bar
-for the adaptive phase will be suppressed,
-(see <code><a href='https://rdrr.io/pkg/rjags/man/jags.model.html'>jags.model</a></code>)</p></td>
-    </tr>
-    <tr>
-      <th>progress.bar</th>
-      <td><p>character string specifying the type of progress bar.
-Possible values are "text", "gui", and "none" (see
-<code>update</code>).
-Note: when sampling is performed in parallel it is
-currently not possible to display a progress bar.</p></td>
-    </tr>
-    <tr>
       <th>warn</th>
       <td><p>logical; should warnings be given? Default is
 <code>TRUE</code>.</p></td>
@@ -528,16 +414,57 @@ currently not possible to display a progress bar.</p></td>
 <code>TRUE</code>.</p></td>
     </tr>
     <tr>
-      <th>keep_scaled_mcmc</th>
-      <td><p>should the "original" MCMC sample
-(i.e., the scaled version returned by
-<code>coda.samples()</code>) be kept?
-(The MCMC sample that is re-scaled to the scale of
-the data is always kept.)</p></td>
-    </tr>
-    <tr>
       <th>...</th>
-      <td><p>additional, optional arguments (not used)</p></td>
+      <td><p>additional, optional arguments</p><dl>
+<dt><code>trunc</code></dt><dd><p>named list specifying limits of truncation for the
+distribution of the named incomplete variables (see the
+vignette
+<a href='https://nerler.github.io/JointAI/articles/ModelSpecification.html#functions-with-restricted-support'>ModelSpecification</a>)</p></dd>
+<dt><code>hyperpars</code></dt><dd><p>list of hyper-parameters, as obtained by
+<code><a href='default_hyperpars.html'>default_hyperpars</a>()</code></p></dd>
+<dt><code>scale_vars</code></dt><dd><p>named vector of (continuous) variables that
+will be centred and scaled (such that mean = 0 and sd = 1)
+when they enter a linear predictor to improve
+convergence of the MCMC sampling. Default is that all
+numeric variables and integer variables with &gt;20 different
+values will be scaled.
+If set to <code>FALSE</code> no scaling will be done.</p></dd>
+<dt><code>custom</code></dt><dd><p>named list of JAGS model chunks (character strings)
+that replace the model for the given variable.</p></dd>
+<dt><code>append_data_list</code></dt><dd><p>list that will be appended to the list
+containing the data that is passed to <strong>rjags</strong>
+(<code>data_list</code>). This may be necessary if additional data /
+variables are needed for custom (covariate) models.</p></dd>
+<dt><code>progress.bar</code></dt><dd><p>character string specifying the type of
+progress bar. Possible values are "text" (default), "gui",
+and "none" (see <code>update</code>). Note: when
+sampling is performed in parallel it is not possible to
+display a progress bar.</p></dd>
+<dt><code>quiet</code></dt><dd><p>logical; if <code>TRUE</code> then messages generated by
+<strong>rjags</strong> during compilation as well as the progress bar
+for the adaptive phase will be suppressed,
+(see <code><a href='https://rdrr.io/pkg/rjags/man/jags.model.html'>jags.model</a></code>)</p></dd>
+<dt><code>keep_scaled_mcmc</code></dt><dd><p>should the "original" MCMC sample (i.e.,
+the scaled version returned by <code>coda.samples()</code>) be
+kept? (The MCMC sample that is re-scaled to the scale of the
+data is always kept.)</p></dd>
+<dt><code>modelname</code></dt><dd><p>character string specifying the name of the
+model file (including the ending, either .R or .txt). If
+unspecified a random name will be generated.</p></dd>
+<dt><code>modeldir</code></dt><dd><p>directory containing the model file or directory
+in which the model file should be written. If unspecified a
+temporary directory will be created.</p></dd>
+<dt><code>overwrite</code></dt><dd><p>logical; whether an existing model file with
+the specified <code>&lt;modeldir&gt;/&lt;modelname&gt;</code> should be
+overwritten. If set to <code>FALSE</code> and a model already
+exists, that model will be used. If unspecified (<code>NULL</code>)
+and a file exists, the user is asked for input on how to
+proceed.</p></dd>
+<dt><code>keep_model</code></dt><dd><p>logical; whether the created JAGS model file
+should be saved or removed from (<code>FALSE</code>; default) when
+the sampling has finished.</p></dd>
+
+</dl></td>
     </tr>
     <tr>
       <th>family</th>
@@ -559,8 +486,8 @@ the names of the ordinal response variables.</p></td>
     <tr>
       <th>rev</th>
       <td><p>optional character vector; vector of ordinal outcome variable
-names for which the odds should be reversed, i.e., logit(y &lt;= k) instead
-of logit(y &gt; k).</p></td>
+names for which the odds should be reversed, i.e.,
+\(logit(y\le k)\) instead of \(logit(y &gt; k)\).</p></td>
     </tr>
     <tr>
       <th>fixed</th>
@@ -573,6 +500,11 @@ model (see <code><a href='https://rdrr.io/r/stats/formula.html'>formula</a></cod
 a one-sided formula of the form <code>~x1 + ... + xn | g</code>,
 where <code>x1 + ... + xn</code> specifies the model for the random
 effects and <code>g</code> the grouping variable</p></td>
+    </tr>
+    <tr>
+      <th>rd_vcov</th>
+      <td><p>character string or list specifying the structure of the
+random effects variance covariance matrix, see details below.</p></td>
     </tr>
     <tr>
       <th>df_basehaz</th>
@@ -648,7 +580,42 @@ for example:<div class="sourceCode r"></p><pre><span class='va'>formula</span> <
 <p>This principle is also used for the specification of a joint model for
 longitudinal and survival data.</p>
 <p>Note that it is not possible to specify multiple models for the same outcome
-variable.</p>
+variable.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Random effects variance-covariance structure</h4>
+
+
+<p>By default, a block-diagonal structure is assumed for the variance-covariance
+matrices of the random effects in models with random effects. This means that
+per outcome and level random effects are assumed to be correlated, but
+random effects of different outcomes are modeled as independent.
+The argument <code>rd_vcov</code> allows the user specify different assumptions about
+these variance-covariance matrices. Implemented structures are <code>full</code>,
+<code>blockdiag</code> and <code>indep</code> (all off-diagonal elements are zero).</p>
+<p>If <code>rd_vcov</code> is set to one of these options, the structure is assumed for
+all random effects variance-covariance matrices.
+Alternatively, it is possible to specify a named list of vectors, where
+the names are the structures and the vectors contain the names of the
+response variables which are included in this structure.</p>
+<p>For example, for a multivariate mixed model with five outcomes
+<code>y1</code>, ..., <code>y5</code>, the specification could be:<div class="sourceCode r"></p><pre><span class='va'>rd_vcov</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>blockdiag <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"y1"</span>, <span class='st'>"y2"</span><span class='op'>)</span>,
+               full <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"y3"</span>, <span class='st'>"y4"</span><span class='op'>)</span>,
+               indep <span class='op'>=</span> <span class='st'>"y5"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p>This would entail that the random effects for <code>y3</code> and <code>y4</code> are assumed to
+be correlated (within and across outcomes),
+random effects for <code>y1</code> and <code>y2</code> are assumed to be correlated within each
+outcome, and the random effects for <code>y5</code> are assumed to be independent.</p>
+<p>It is possible to have multiple sets of response variables for which separate
+full variance-covariance matrices are used, for example:<div class="sourceCode r"></p><pre><span class='va'>rd_vcov</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>full <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"y1"</span>, <span class='st'>"y2"</span>, <span class='st'>"y5"</span><span class='op'>)</span>,
+               full <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"y3"</span>, <span class='st'>"y4"</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p>
+<p>In models with multiple levels of nesting, separate structures can be
+specified per level:<div class="sourceCode r"></p><pre><span class='va'>rd_vcov</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>blockdiag <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"y1"</span>, <span class='st'>"y2"</span><span class='op'>)</span>,
+                         full <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"y3"</span>, <span class='st'>"y4"</span><span class='op'>)</span>,
+                         indep <span class='op'>=</span> <span class='st'>"y5"</span><span class='op'>)</span>,
+              center <span class='op'>=</span> <span class='st'>"indep"</span><span class='op'>)</span>
+</pre><p></div></p>
+
+
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Survival models with frailties or time-varying covariates</h3>
 
@@ -884,6 +851,45 @@ proportional effect on the incomplete ordinal covariate <code>O2</code>:<div cla
 </pre><p></div></p>
 <p>The variables for which a non-proportional effect is assumed also have to be
 part of the regular model formula.</p>
+    <h2 class="hasAnchor" id="custom-model-parts"><a class="anchor" href="#custom-model-parts"></a>Custom model parts</h2>
+
+    
+
+<p>Via the argument <code>custom</code> it is possible to provide custom sub-models that
+replace the sub-models that are automatically generated by <strong>JointAI</strong>.</p>
+<p>Using this feature it is, for instance, possible to use the value of
+a repeatedly measured variable at a specific time point as covariate in
+another model. An example would be the use of "baseline" cholesterol
+(<code>chol</code> at <code>day = 0</code>) as covariate in a survival model.</p>
+<p>First, the variable <code>chol0</code> is added to the <code>PBC</code> data.
+For most patients the value of cholesterol at baseline is observed, but not
+for all. It is important that the data has a row with <code>day = 0</code> for each
+patient.<div class="sourceCode r"></p><pre><span class='va'>PBC</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span><span class='op'>(</span><span class='va'>PBC</span>,
+             <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>PBC</span>, <span class='va'>day</span> <span class='op'>==</span> <span class='fl'>0</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"id"</span>, <span class='st'>"chol"</span><span class='op'>)</span><span class='op'>)</span>,
+             by <span class='op'>=</span> <span class='st'>"id"</span>, suffixes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>""</span>, <span class='st'>"0"</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p>
+<p>Next, the custom piece of JAGS model syntax needs to be specified.
+We loop here only over the patients for which the baseline cholesterol
+is missing.<div class="sourceCode r"></p><pre><span class='va'>calc_chol0</span> <span class='op'>&lt;-</span> <span class='st'>"
+for (ii in 1:28) {
+  M_id[row_chol0_id[ii], 3] &lt;- M_lvlone[row_chol0_lvlone[ii], 1]
+  }"</span>
+</pre><p></div></p>
+<p>To be able to run the model with the custom imputation "model" for baseline
+cholesterol we need to provide the numbers of the rows in the data matrices
+that contain the missing values of baseline cholesterol and the rows that
+contain the imputed cholesterol at <code>day = 0</code>:<div class="sourceCode r"></p><pre><span class='va'>row_chol0_lvlone</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='va'>PBC</span><span class='op'>$</span><span class='va'>day</span> <span class='op'>==</span> <span class='fl'>0</span> <span class='op'>&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>PBC</span><span class='op'>$</span><span class='va'>chol0</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>row_chol0_id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/match.html'>match</a></span><span class='op'>(</span><span class='va'>PBC</span><span class='op'>$</span><span class='va'>id</span>, <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>PBC</span><span class='op'>$</span><span class='va'>id</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='va'>row_chol0_lvlone</span><span class='op'>]</span>
+</pre><p></div></p>
+<p>Then we pass both the custom sub-model and the additional data to the
+analysis function <code>coxph_imp()</code>. Note that we explicitly need to specify
+the model for <code>chol</code>.<div class="sourceCode r"></p><pre><span class='fu'>coxph_imp</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>futime</span>, <span class='va'>status</span> <span class='op'>!=</span> <span class='st'>"censored"</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>chol0</span>,
+               <span class='va'>chol</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>day</span> <span class='op'>+</span> <span class='op'>(</span><span class='va'>day</span> <span class='op'>|</span> <span class='va'>id</span><span class='op'>)</span><span class='op'>)</span>,
+          no_model <span class='op'>=</span> <span class='st'>"day"</span>, data <span class='op'>=</span> <span class='va'>PBC</span>,
+          append_data_list <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>row_chol0_lvlone <span class='op'>=</span> <span class='va'>row_chol0_lvlone</span>,
+                                  row_chol0_id <span class='op'>=</span> <span class='va'>row_chol0_id</span><span class='op'>)</span>,
+          custom <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>chol0 <span class='op'>=</span> <span class='va'>calc_chol0</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     
@@ -972,7 +978,7 @@ or <code><a href='https://rdrr.io/pkg/survival/man/strata.html'>strata</a></code
 
     <div class='dont-index'><p><code><a href='set_refcat.html'>set_refcat</a></code>,
 <code><a href='traceplot.html'>traceplot</a></code>, <code><a href='densplot.html'>densplot</a></code>,
-<code><a href='summary.JointAI.html'>summary.JointAI</a></code>, <code><a href='MC_error.html'>MC_error</a></code>,
+<code><a href='print.Dmat.html'>summary.JointAI</a></code>, <code><a href='MC_error.html'>MC_error</a></code>,
 <code><a href='GR_crit.html'>GR_crit</a></code>,
 <code><a href='predict.JointAI.html'>predict.JointAI</a></code>, <code><a href='add_samples.html'>add_samples</a></code>,
 <code><a href='JointAIObject.html'>JointAIObject</a></code>, <code><a href='add_samples.html'>add_samples</a></code>,

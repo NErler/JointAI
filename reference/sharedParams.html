@@ -63,7 +63,7 @@
 <meta name="twitter:site" content="@N_Erler" />
 
 
-<meta name="robots" content="noindex">
+
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -102,7 +102,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -271,6 +271,14 @@ for the adaptive phase will be suppressed,
 (see <code><a href='https://rdrr.io/pkg/rjags/man/jags.model.html'>jags.model</a></code>)</p></td>
     </tr>
     <tr>
+      <th>progress.bar</th>
+      <td><p>character string specifying the type of
+progress bar. Possible values are "text" (default), "gui",
+and "none" (see <code>update</code>). Note: when
+sampling is performed in parallel it is not possible to
+display a progress bar.</p></td>
+    </tr>
+    <tr>
       <th>thin</th>
       <td><p>thinning interval (integer; see <code><a href='https://rdrr.io/pkg/coda/man/window.mcmc.html'>window.mcmc</a></code>).
 For example, <code>thin = 1</code> (default) will keep the MCMC samples
@@ -312,11 +320,6 @@ graphics?</p></td>
 structure</p></td>
     </tr>
     <tr>
-      <th>ridge</th>
-      <td><p>logical; should the parameters of the main model be penalized
-using ridge regression? Default is <code>FALSE</code></p></td>
-    </tr>
-    <tr>
       <th>seed</th>
       <td><p>optional; seed value (for reproducibility)</p></td>
     </tr>
@@ -324,6 +327,21 @@ using ridge regression? Default is <code>FALSE</code></p></td>
       <th>ppc</th>
       <td><p>logical: should monitors for posterior predictive checks be
 set? (not yet used)</p></td>
+    </tr>
+    <tr>
+      <th>rd_vcov</th>
+      <td><p>optional character string or list (of lists or character
+strings) specifying the structure of the variance covariance
+matrix/matrices of the random effects for multivariate
+mixed models. Options are  <code>"full</code>, <code>"blockdiag"</code> (default)
+and <code>"indep"</code>. Different structures can be specified per
+grouping level (in multi-level models with more than two
+levels) by specifying a list with elements per grouping
+level. To specify different structures for different
+outcomes, a list (maybe nested in the list per grouping
+level) can be specified. This list should have the type
+of structure as names and contain vectors of variable
+names that belong to the respective structure.</p></td>
     </tr>
     </table>
 

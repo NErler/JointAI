@@ -34,6 +34,15 @@
     <loc>https://nerler.github.io/JointAI//reference/bs.html</loc>
   </url>
   <url>
+    <loc>https://nerler.github.io/JointAI//reference/check_full_blockdiag.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI//reference/check_rd_vcov.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI//reference/check_rd_vcov_list.html</loc>
+  </url>
+  <url>
     <loc>https://nerler.github.io/JointAI//reference/clean_survname.html</loc>
   </url>
   <url>
@@ -41,6 +50,9 @@
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/densplot.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI//reference/expand_rd_vcov_full.html</loc>
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/extract_state.html</loc>
@@ -59,6 +71,15 @@
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/get_modeltype.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI//reference/get_nranef.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI//reference/hc_rdslope_info.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI//reference/hc_rdslope_interact.html</loc>
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI//reference/list_models.html</loc>

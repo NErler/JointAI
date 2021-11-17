@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Obtain a summary of the missing values involved in an object of class JointAI — get_missinfo • JointAI</title>
+<title>Extract the number of random effects — get_nranef • JointAI</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -54,11 +54,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Obtain a summary of the missing values involved in an object of class JointAI — get_missinfo" />
-<meta property="og:description" content="This function returns a data.frame or a list of
-data.frames per grouping level. Each of the data.frames
-has columns variable, #NA (number of missing values) and
-%NA (proportion of missing values in percent)." />
+<meta property="og:title" content="Extract the number of random effects — get_nranef" />
+<meta property="og:description" content="Extract the number of random effects" />
 <meta property="og:image" content="https://nerler.github.io/JointAI/reference/figures/JointAI_191.png" />
 <meta property="og:image:alt" content="JointAI: An R package for Joint Analysis and Imputation" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -186,49 +183,39 @@ has columns variable, #NA (number of missing values) and
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Obtain a summary of the missing values involved in an object of class JointAI</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/summary.JointAI.R'><code>R/summary.JointAI.R</code></a></small>
-    <div class="hidden name"><code>get_missinfo.Rd</code></div>
+    <h1>Extract the number of random effects</h1>
+    <small class="dont-index">Source: <a href='https://github.com/nerler/JointAI/blob/master/R/helpfunctions_divide_matrices.R'><code>R/helpfunctions_divide_matrices.R</code></a></small>
+    <div class="hidden name"><code>get_nranef.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function returns a <code>data.frame</code> or a <code>list</code> of
-<code>data.frame</code>s per grouping level. Each of the <code>data.frames</code>
-has columns <code>variable</code>, <code>#NA</code> (number of missing values) and
-<code>%NA</code> (proportion of missing values in percent).</p>
+    <p>Extract the number of random effects</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_missinfo</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_nranef</span><span class='op'>(</span><span class='va'>idvar</span>, <span class='va'>random</span>, <span class='va'>data</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>object inheriting from class JointAI</p></td>
+      <th>idvar</th>
+      <td><p>vector of the names of id variables</p></td>
+    </tr>
+    <tr>
+      <th>random</th>
+      <td><p>a random effect formula or list of random effects formulas</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>a <code>data.frame</code></p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='va'>mod</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>C2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span></span>
-<span class='r-in'><span class='fu'>get_missinfo</span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $complete_cases</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>         #  %</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> lvlone 77 77</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $miss_list</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $miss_list$lvlone</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    # NA % NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> y     0    0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> C1    0    0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> C2    4    4</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> B2   20   20</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-in'></span>
-<span class='r-in'></span>
-</pre>
+    <p>a list by grouping level (<code>idvar</code>) with a named vector of the number
+of random effects per variable (=names).</p>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
