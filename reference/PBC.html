@@ -257,48 +257,49 @@ measurements below refer to this date</p></dd>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>PBC</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;        id            futime            status          trt           age       
-#&gt;  Min.   :  1.0   Min.   :  41   censored  :1073   D-pen  :967   Min.   :26.28  
-#&gt;  1st Qu.: 61.0   1st Qu.:2055   transplant: 147   placebo:978   1st Qu.:41.79  
-#&gt;  Median :126.0   Median :2963   dead      : 725                 Median :48.87  
-#&gt;  Mean   :135.4   Mean   :2941                                   Mean   :49.26  
-#&gt;  3rd Qu.:203.0   3rd Qu.:3819                                   3rd Qu.:56.15  
-#&gt;  Max.   :312.0   Max.   :5225                                   Max.   :78.44  
-#&gt;                                                                                
-#&gt;      sex            day       ascites      hepato    spiders    
-#&gt;  male  : 237   Min.   :   0   no  :1716   no  :952   no  :1311  
-#&gt;  female:1708   1st Qu.: 192   yes : 169   yes :932   yes : 576  
-#&gt;                Median : 750   NA's:  60   NA's: 61   NA's:  58  
-#&gt;                Mean   :1145                                     
-#&gt;                3rd Qu.:1838                                     
-#&gt;                Max.   :5152                                     
-#&gt;                                                                 
-#&gt;          edema           bili             chol           albumin    
-#&gt;  no         :1401   Min.   : 0.100   Min.   :  55.0   Min.   :1.17  
-#&gt;  (un)treated: 379   1st Qu.: 0.800   1st Qu.: 235.0   1st Qu.:3.11  
-#&gt;  edema      : 165   Median : 1.400   Median : 281.0   Median :3.44  
-#&gt;                     Mean   : 3.672   Mean   : 320.5   Mean   :3.39  
-#&gt;                     3rd Qu.: 3.900   3rd Qu.: 349.2   3rd Qu.:3.70  
-#&gt;                     Max.   :41.000   Max.   :1775.0   Max.   :8.01  
-#&gt;                                      NA's   :821                    
-#&gt;     alk.phos          ast            platelet        protime     stage  
-#&gt;  Min.   :   73   Min.   :   6.2   Min.   : 40.0   Min.   : 9.0   1: 95  
-#&gt;  1st Qu.:  737   1st Qu.:  72.0   1st Qu.:165.0   1st Qu.:10.1   2:266  
-#&gt;  Median : 1072   Median : 107.0   Median :228.0   Median :10.8   3:612  
-#&gt;  Mean   : 1382   Mean   : 122.7   Mean   :233.7   Mean   :11.0   4:972  
-#&gt;  3rd Qu.: 1636   3rd Qu.: 155.0   3rd Qu.:290.2   3rd Qu.:11.5          
-#&gt;  Max.   :13862   Max.   :1205.0   Max.   :991.0   Max.   :36.0          
-#&gt;  NA's   :60                       NA's   :73                            
-#&gt;      copper            trig    
-#&gt;  Min.   :  4.00   Min.   : 33  
-#&gt;  1st Qu.: 38.00   1st Qu.: 83  
-#&gt;  Median : 65.00   Median :105  
-#&gt;  Mean   : 84.54   Mean   :122  
-#&gt;  3rd Qu.:105.00   3rd Qu.:151  
-#&gt;  Max.   :588.00   Max.   :598  
-#&gt;  NA's   :8        NA's   :206  </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>PBC</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        id            futime            status          trt           age       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Min.   :  1.0   Min.   :  41   censored  :1073   D-pen  :967   Min.   :26.28  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1st Qu.: 61.0   1st Qu.:2055   transplant: 147   placebo:978   1st Qu.:41.79  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Median :126.0   Median :2963   dead      : 725                 Median :48.87  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mean   :135.4   Mean   :2941                                   Mean   :49.26  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3rd Qu.:203.0   3rd Qu.:3819                                   3rd Qu.:56.15  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Max.   :312.0   Max.   :5225                                   Max.   :78.44  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                                </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      sex            day       ascites      hepato    spiders    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  male  : 237   Min.   :   0   no  :1716   no  :952   no  :1311  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  female:1708   1st Qu.: 192   yes : 169   yes :932   yes : 576  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                Median : 750   NA's:  60   NA's: 61   NA's:  58  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                Mean   :1145                                     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                3rd Qu.:1838                                     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                Max.   :5152                                     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          edema           bili             chol           albumin    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  no         :1401   Min.   : 0.100   Min.   :  55.0   Min.   :1.17  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  (un)treated: 379   1st Qu.: 0.800   1st Qu.: 235.0   1st Qu.:3.11  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  edema      : 165   Median : 1.400   Median : 281.0   Median :3.44  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     Mean   : 3.672   Mean   : 320.5   Mean   :3.39  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     3rd Qu.: 3.900   3rd Qu.: 349.2   3rd Qu.:3.70  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     Max.   :41.000   Max.   :1775.0   Max.   :8.01  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                      NA's   :821                    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     alk.phos          ast            platelet        protime     stage  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Min.   :   73   Min.   :   6.2   Min.   : 40.0   Min.   : 9.0   1: 95  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1st Qu.:  737   1st Qu.:  72.0   1st Qu.:165.0   1st Qu.:10.1   2:266  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Median : 1072   Median : 107.0   Median :228.0   Median :10.8   3:612  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mean   : 1382   Mean   : 122.7   Mean   :233.7   Mean   :11.0   4:972  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3rd Qu.: 1636   3rd Qu.: 155.0   3rd Qu.:290.2   3rd Qu.:11.5          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Max.   :13862   Max.   :1205.0   Max.   :991.0   Max.   :36.0          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  NA's   :60                       NA's   :73                            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      copper            trig    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Min.   :  4.00   Min.   : 33  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1st Qu.: 38.00   1st Qu.: 83  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Median : 65.00   Median :105  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mean   : 84.54   Mean   :122  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3rd Qu.:105.00   3rd Qu.:151  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Max.   :588.00   Max.   :598  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  NA's   :8        NA's   :206  </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

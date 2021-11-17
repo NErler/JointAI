@@ -270,72 +270,74 @@ JointAI: Joint Analysis and Imputation of Incomplete Data in R.
 URL https://arxiv.org/abs/1907.10867.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save time)</span>
-<span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>M2</span> <span class='op'>+</span> <span class='va'>O2</span> <span class='op'>+</span> <span class='va'>B2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.adapt <span class='op'>=</span> <span class='fl'>0</span>,
-               n.iter <span class='op'>=</span> <span class='fl'>0</span>, mess <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: </span>
-#&gt; <span class='warning'>It is currently not possible to use “contr.poly” for incomplete</span>
-#&gt; <span class='warning'>categorical covariates. I will use “contr.treatment” instead.  You can</span>
-#&gt; <span class='warning'>specify (globally) which types of contrasts are used by changing</span>
-#&gt; <span class='warning'>“options('contrasts')”.</span></div><div class='input'>
-<span class='fu'>list_models</span><span class='op'>(</span><span class='va'>mod1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Linear model for “y” 
-#&gt;    family: gaussian 
-#&gt;    link: identity 
-#&gt; * Predictor variables:
-#&gt;   (Intercept), C1, C2, M22, M23, M24, O22, O23, O24, B21 
-#&gt; * Regression coefficients:
-#&gt;   beta[1:10] (normal prior(s) with mean 0 and precision 1e-04) 
-#&gt; * Precision of  “y” :
-#&gt;   tau_y (Gamma prior with shape parameter 0.01 and rate parameter 0.01)
-#&gt; 
-#&gt; 
-#&gt; Binomial model for “B2” 
-#&gt;    family: binomial 
-#&gt;    link: logit 
-#&gt; * Reference category: “0”
-#&gt; * Predictor variables:
-#&gt;   (Intercept), C1, C2, M22, M23, M24, O22, O23, O24 
-#&gt; * Regression coefficients:
-#&gt;   alpha[1:9] (normal prior(s) with mean 0 and precision 1e-04) 
-#&gt; 
-#&gt; 
-#&gt; Linear model for “C2” 
-#&gt;    family: gaussian 
-#&gt;    link: identity 
-#&gt; * Predictor variables:
-#&gt;   (Intercept), C1, M22, M23, M24, O22, O23, O24 
-#&gt; * Regression coefficients:
-#&gt;   alpha[10:17] (normal prior(s) with mean 0 and precision 1e-04) 
-#&gt; * Precision of  “C2” :
-#&gt;   tau_C2 (Gamma prior with shape parameter 0.01 and rate parameter 0.01)
-#&gt; 
-#&gt; 
-#&gt; Multinomial logit model for “M2” 
-#&gt; * Reference category: “1”
-#&gt; * Predictor variables:
-#&gt;   (Intercept), C1, O22, O23, O24 
-#&gt; * Regression coefficients:
-#&gt;   M22: alpha[18:22]
-#&gt;   M23: alpha[23:27]
-#&gt;   M24: alpha[28:32] (normal prior(s) with mean 0 and precision 1e-04) 
-#&gt; 
-#&gt; 
-#&gt; Cumulative logit model for “O2” 
-#&gt; * Reference category: “1”
-#&gt; * Predictor variables:
-#&gt;   C1 
-#&gt; * Regression coefficients:
-#&gt;   alpha[33] (normal prior(s) with mean 0 and precision 1e-04) 
-#&gt; * Intercepts:
-#&gt;   - 1: gamma_O2[1] (normal prior with mean 0 and precision 1e-04)
-#&gt;   - 2: gamma_O2[2] = gamma_O2[1] + exp(delta_O2[1])
-#&gt;   - 3: gamma_O2[3] = gamma_O2[2] + exp(delta_O2[2])
-#&gt; * Increments:
-#&gt;   delta_O2[1:2] (normal prior(s) with mean 0 and precision 1e-04)
-#&gt; 
-#&gt; </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save time)</span></span>
+<span class='r-in'><span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>M2</span> <span class='op'>+</span> <span class='va'>O2</span> <span class='op'>+</span> <span class='va'>B2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.adapt <span class='op'>=</span> <span class='fl'>0</span>,</span>
+<span class='r-in'>               n.iter <span class='op'>=</span> <span class='fl'>0</span>, mess <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> It is currently not possible to use “contr.poly” for incomplete</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> categorical covariates. I will use “contr.treatment” instead.  You can</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> specify (globally) which types of contrasts are used by changing</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> “options('contrasts')”.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>list_models</span><span class='op'>(</span><span class='va'>mod1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Linear model for “y” </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    family: gaussian </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    link: identity </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Predictor variables:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   (Intercept), C1, C2, M22, M23, M24, O22, O23, O24, B21 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Regression coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   beta[1:10] (normal prior(s) with mean 0 and precision 1e-04) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Precision of  “y” :</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   tau_y (Gamma prior with shape parameter 0.01 and rate parameter 0.01)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Binomial model for “B2” </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    family: binomial </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    link: logit </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Reference category: “0”</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Predictor variables:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   (Intercept), C1, C2, M22, M23, M24, O22, O23, O24 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Regression coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   alpha[1:9] (normal prior(s) with mean 0 and precision 1e-04) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Linear model for “C2” </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    family: gaussian </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    link: identity </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Predictor variables:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   (Intercept), C1, M22, M23, M24, O22, O23, O24 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Regression coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   alpha[10:17] (normal prior(s) with mean 0 and precision 1e-04) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Precision of  “C2” :</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   tau_C2 (Gamma prior with shape parameter 0.01 and rate parameter 0.01)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Multinomial logit model for “M2” </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Reference category: “1”</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Predictor variables:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   (Intercept), C1, O22, O23, O24 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Regression coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   M22: alpha[18:22]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   M23: alpha[23:27]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   M24: alpha[28:32] (normal prior(s) with mean 0 and precision 1e-04) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cumulative logit model for “O2” </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Reference category: “1”</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Predictor variables:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   C1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Regression coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   alpha[33] (normal prior(s) with mean 0 and precision 1e-04) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Intercepts:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - 1: gamma_O2[1] (normal prior with mean 0 and precision 1e-04)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - 2: gamma_O2[2] = gamma_O2[1] + exp(delta_O2[1])</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - 3: gamma_O2[3] = gamma_O2[2] + exp(delta_O2[2])</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Increments:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   delta_O2[1:2] (normal prior(s) with mean 0 and precision 1e-04)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

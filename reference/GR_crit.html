@@ -222,7 +222,7 @@ appropriate, will be applied.</p></td>
       <th>autoburnin</th>
       <td><p>a logical flag indicating whether only the second half
   of the series should be used in the computation.  If set to TRUE
-  (default) and <code><a href='https://rdrr.io/r/stats/start.html'>start(x)</a></code> is less than <code>end(x)/2</code> then start
+  (default) and <code>start(x)</code> is less than <code>end(x)/2</code> then start
   of series will be adjusted so that only second half of series is used.</p></td>
     </tr>
     <tr>
@@ -290,25 +290,26 @@ of iterative simulations.
 contains some examples how to specify the argument <code>subset</code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>M2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
-<span class='fu'>GR_crit</span><span class='op'>(</span><span class='va'>mod1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Potential scale reduction factors:
-#&gt; 
-#&gt;             Point est. Upper C.I.
-#&gt; (Intercept)      1.004       1.02
-#&gt; C1               1.003       1.02
-#&gt; C2               0.999       1.00
-#&gt; M22              1.005       1.01
-#&gt; M23              1.004       1.03
-#&gt; M24              1.003       1.02
-#&gt; sigma_y          1.001       1.00
-#&gt; 
-#&gt; Multivariate psrf
-#&gt; 
-#&gt; 1.01</div><div class='input'>
-
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>M2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>GR_crit</span><span class='op'>(</span><span class='va'>mod1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Potential scale reduction factors:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             Point est. Upper C.I.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)      1.004       1.02</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C1               1.003       1.02</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C2               0.999       1.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> M22              1.005       1.01</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> M23              1.004       1.03</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> M24              1.003       1.02</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sigma_y          1.001       1.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Multivariate psrf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1.01</span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

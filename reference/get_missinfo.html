@@ -211,23 +211,24 @@ has columns <code>variable</code>, <code>#NA</code> (number of missing values) a
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>mod</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>C2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
-<span class='fu'>get_missinfo</span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $complete_cases
-#&gt;         #  %
-#&gt; lvlone 77 77
-#&gt; 
-#&gt; $miss_list
-#&gt; $miss_list$lvlone
-#&gt;    # NA % NA
-#&gt; y     0    0
-#&gt; C1    0    0
-#&gt; C2    4    4
-#&gt; B2   20   20
-#&gt; 
-#&gt; </div><div class='input'>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>mod</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>B2</span> <span class='op'>+</span> <span class='va'>C2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>get_missinfo</span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $complete_cases</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         #  %</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lvlone 77 77</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $miss_list</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $miss_list$lvlone</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    # NA % NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> y     0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C1    0    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C2    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B2   20   20</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

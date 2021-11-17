@@ -234,34 +234,34 @@ to specify a subset of the <code>data</code> to be considered. If non of these
 arguments is specified, all variables in <code>data</code> will be considered.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># Example 1: set reference categories for the whole dataset and choose</span>
-<span class='co'># answer option 3:</span>
-<span class='fu'>set_refcat</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>NHANES</span><span class='op'>)</span>
-<span class='fl'>3</span>
-
-<span class='co'># insert the returned string as argument refcats</span>
-<span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>SBP</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>race</span> <span class='op'>+</span> <span class='va'>creat</span> <span class='op'>+</span> <span class='va'>educ</span>, data <span class='op'>=</span> <span class='va'>NHANES</span>,
-               refcats <span class='op'>=</span> <span class='st'>'largest'</span><span class='op'>)</span>
-
-<span class='co'># Example 2:</span>
-<span class='co'># specify a model formula</span>
-<span class='va'>fmla</span> <span class='op'>&lt;-</span> <span class='va'>SBP</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>gender</span> <span class='op'>+</span> <span class='va'>race</span> <span class='op'>+</span> <span class='va'>bili</span> <span class='op'>+</span> <span class='va'>smoke</span> <span class='op'>+</span> <span class='va'>alc</span>
-
-<span class='co'># write the output of set_refcat to an object</span>
-<span class='va'>ref_mod2</span> <span class='op'>&lt;-</span> <span class='fu'>set_refcat</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>NHANES</span>, formula <span class='op'>=</span> <span class='va'>fmla</span><span class='op'>)</span>
-<span class='fl'>4</span>
-<span class='fl'>2</span>
-<span class='fl'>5</span>
-<span class='fl'>1</span>
-<span class='fl'>1</span>
-
-<span class='co'># enter the output in the model specification</span>
-<span class='va'>mod2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span>formula <span class='op'>=</span> <span class='va'>fmla</span>, data <span class='op'>=</span> <span class='va'>NHANES</span>, refcats <span class='op'>=</span> <span class='va'>ref_mod2</span>,
-               n.adapt <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># Example 1: set reference categories for the whole dataset and choose</span></span>
+<span class='r-in'><span class='co'># answer option 3:</span></span>
+<span class='r-in'><span class='fu'>set_refcat</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>NHANES</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fl'>3</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># insert the returned string as argument refcats</span></span>
+<span class='r-in'><span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>SBP</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>race</span> <span class='op'>+</span> <span class='va'>creat</span> <span class='op'>+</span> <span class='va'>educ</span>, data <span class='op'>=</span> <span class='va'>NHANES</span>,</span>
+<span class='r-in'>               refcats <span class='op'>=</span> <span class='st'>'largest'</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Example 2:</span></span>
+<span class='r-in'><span class='co'># specify a model formula</span></span>
+<span class='r-in'><span class='va'>fmla</span> <span class='op'>&lt;-</span> <span class='va'>SBP</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>gender</span> <span class='op'>+</span> <span class='va'>race</span> <span class='op'>+</span> <span class='va'>bili</span> <span class='op'>+</span> <span class='va'>smoke</span> <span class='op'>+</span> <span class='va'>alc</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># write the output of set_refcat to an object</span></span>
+<span class='r-in'><span class='va'>ref_mod2</span> <span class='op'>&lt;-</span> <span class='fu'>set_refcat</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>NHANES</span>, formula <span class='op'>=</span> <span class='va'>fmla</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fl'>4</span></span>
+<span class='r-in'><span class='fl'>2</span></span>
+<span class='r-in'><span class='fl'>5</span></span>
+<span class='r-in'><span class='fl'>1</span></span>
+<span class='r-in'><span class='fl'>1</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># enter the output in the model specification</span></span>
+<span class='r-in'><span class='va'>mod2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span>formula <span class='op'>=</span> <span class='va'>fmla</span>, data <span class='op'>=</span> <span class='va'>NHANES</span>, refcats <span class='op'>=</span> <span class='va'>ref_mod2</span>,</span>
+<span class='r-in'>               n.adapt <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

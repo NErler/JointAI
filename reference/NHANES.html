@@ -235,31 +235,32 @@ demonstration of the functionality of the JointAI package,
 and no clinical conclusions should be derived from it.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>NHANES</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;       SBP           gender         age                        race   
-#&gt;  Min.   : 86.0   male  :100   Min.   :20.00   Mexican American  :28  
-#&gt;  1st Qu.:109.3   female: 86   1st Qu.:32.00   Other Hispanic    :10  
-#&gt;  Median :116.7                Median :42.00   Non-Hispanic White:73  
-#&gt;  Mean   :119.3                Mean   :43.51   Non-Hispanic Black:32  
-#&gt;  3rd Qu.:127.2                3rd Qu.:55.75   other             :43  
-#&gt;  Max.   :177.3                Max.   :78.00                          
-#&gt;                                                                      
-#&gt;        WC           alc       educ         creat             albu      
-#&gt;  Min.   : 64.80   &lt;1  :94   low : 70   Min.   :0.4700   Min.   :3.500  
-#&gt;  1st Qu.: 82.92   &gt;=1 :58   high:116   1st Qu.:0.7200   1st Qu.:4.100  
-#&gt;  Median : 93.85   NA's:34              Median :0.8300   Median :4.350  
-#&gt;  Mean   : 95.00                        Mean   :0.8438   Mean   :4.346  
-#&gt;  3rd Qu.:104.20                        3rd Qu.:0.9575   3rd Qu.:4.500  
-#&gt;  Max.   :135.80                        Max.   :1.3800   Max.   :5.200  
-#&gt;  NA's   :2                             NA's   :8        NA's   :8      
-#&gt;     uricacid          bili                     occup        smoke    
-#&gt;  Min.   :2.500   Min.   :0.3000   working         :98   never  :107  
-#&gt;  1st Qu.:4.500   1st Qu.:0.6000   looking for work: 5   former : 36  
-#&gt;  Median :5.400   Median :0.7000   not working     :55   current: 36  
-#&gt;  Mean   :5.353   Mean   :0.7208   NA's            :28   NA's   :  7  
-#&gt;  3rd Qu.:6.100   3rd Qu.:0.8000                                      
-#&gt;  Max.   :8.800   Max.   :1.4000                                      
-#&gt;  NA's   :8       NA's   :8                                           </div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>NHANES</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       SBP           gender         age                        race   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Min.   : 86.0   male  :100   Min.   :20.00   Mexican American  :28  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1st Qu.:109.3   female: 86   1st Qu.:32.00   Other Hispanic    :10  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Median :116.7                Median :42.00   Non-Hispanic White:73  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mean   :119.3                Mean   :43.51   Non-Hispanic Black:32  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3rd Qu.:127.2                3rd Qu.:55.75   other             :43  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Max.   :177.3                Max.   :78.00                          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        WC           alc       educ         creat             albu      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Min.   : 64.80   &lt;1  :94   low : 70   Min.   :0.4700   Min.   :3.500  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1st Qu.: 82.92   &gt;=1 :58   high:116   1st Qu.:0.7200   1st Qu.:4.100  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Median : 93.85   NA's:34              Median :0.8300   Median :4.350  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mean   : 95.00                        Mean   :0.8438   Mean   :4.346  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3rd Qu.:104.20                        3rd Qu.:0.9575   3rd Qu.:4.500  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Max.   :135.80                        Max.   :1.3800   Max.   :5.200  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  NA's   :2                             NA's   :8        NA's   :8      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     uricacid          bili                     occup        smoke    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Min.   :2.500   Min.   :0.3000   working         :98   never  :107  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1st Qu.:4.500   1st Qu.:0.6000   looking for work: 5   former : 36  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Median :5.400   Median :0.7000   not working     :55   current: 36  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mean   :5.353   Mean   :0.7208   NA's            :28   NA's   :  7  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3rd Qu.:6.100   3rd Qu.:0.8000                                      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Max.   :8.800   Max.   :1.4000                                      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  NA's   :8       NA's   :8                                           </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

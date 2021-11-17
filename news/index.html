@@ -196,6 +196,8 @@
 <ul>
 <li>Bug fix in re-scaling of random effects variance covariance matrix in multi-level models with &gt;2 levels where some levels have only random intercept.</li>
 <li>Bug fix in generating the names of random effect nodes to monitor when there are multiple analysis models and some do not have random effects.</li>
+<li>Bug fix in <code><a href="../reference/plot_all.html">plot_all()</a></code> not displaying the variable name in the message shown for character string variables.</li>
+<li>Bug fix in <code><a href="../reference/set_refcat.html">set_refcat()</a></code>: wasn’t displaying the factor labels correctly</li>
 </ul>
 </div>
 </div>
@@ -507,7 +509,7 @@
 <li>
 <code><a href="../reference/plot_all.html">plot_all()</a></code> uses <code>xpd = TRUE</code> when printing text for character variables</li>
 <li>
-<code>list_impmodels()</code> uses line break when output of predictor variables exceeds <code><a href="https://rdrr.io/r/base/options.html">getOption("width")</a></code>
+<code>list_impmodels()</code> uses line break when output of predictor variables exceeds <code>getOption("width")</code>
 </li>
 <li>
 <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> now displays tail-probabilities for off-diagonal elements of <code>D</code>

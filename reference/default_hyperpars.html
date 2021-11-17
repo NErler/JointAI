@@ -298,50 +298,51 @@ For <code>KinvD</code> equal to the number of random effects the Wishart prior
 puts most weight on the extreme values (correlation 1 or -1).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>default_hyperpars</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $norm
-#&gt;    mu_reg_norm   tau_reg_norm shape_tau_norm  rate_tau_norm 
-#&gt;          0e+00          1e-04          1e-02          1e-02 
-#&gt; 
-#&gt; $gamma
-#&gt;    mu_reg_gamma   tau_reg_gamma shape_tau_gamma  rate_tau_gamma 
-#&gt;           0e+00           1e-04           1e-02           1e-02 
-#&gt; 
-#&gt; $beta
-#&gt;    mu_reg_beta   tau_reg_beta shape_tau_beta  rate_tau_beta 
-#&gt;          0e+00          1e-04          1e-02          1e-02 
-#&gt; 
-#&gt; $binom
-#&gt;  mu_reg_binom tau_reg_binom 
-#&gt;         0e+00         1e-04 
-#&gt; 
-#&gt; $poisson
-#&gt;  mu_reg_poisson tau_reg_poisson 
-#&gt;           0e+00           1e-04 
-#&gt; 
-#&gt; $multinomial
-#&gt;  mu_reg_multinomial tau_reg_multinomial 
-#&gt;               0e+00               1e-04 
-#&gt; 
-#&gt; $ordinal
-#&gt;    mu_reg_ordinal   tau_reg_ordinal  mu_delta_ordinal tau_delta_ordinal 
-#&gt;             0e+00             1e-04             0e+00             1e-04 
-#&gt; 
-#&gt; $ranef
-#&gt; shape_diag_RinvD  rate_diag_RinvD       KinvD_expr 
-#&gt;           "0.01"          "0.001"   "nranef + 1.0" 
-#&gt; 
-#&gt; $surv
-#&gt;  mu_reg_surv tau_reg_surv 
-#&gt;        0.000        0.001 
-#&gt; </div><div class='input'>
-<span class='co'># To change the hyper-parameters:</span>
-<span class='va'>hyp</span> <span class='op'>&lt;-</span> <span class='fu'>default_hyperpars</span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>hyp</span><span class='op'>$</span><span class='va'>norm</span><span class='op'>[</span><span class='st'>'rate_tau_norm'</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1e-3</span>
-<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B1</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, hyperpars <span class='op'>=</span> <span class='va'>hyp</span>, mess <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>default_hyperpars</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $norm</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    mu_reg_norm   tau_reg_norm shape_tau_norm  rate_tau_norm </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          0e+00          1e-04          1e-02          1e-02 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $gamma</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    mu_reg_gamma   tau_reg_gamma shape_tau_gamma  rate_tau_gamma </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           0e+00           1e-04           1e-02           1e-02 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $beta</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    mu_reg_beta   tau_reg_beta shape_tau_beta  rate_tau_beta </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          0e+00          1e-04          1e-02          1e-02 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $binom</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  mu_reg_binom tau_reg_binom </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         0e+00         1e-04 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $poisson</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  mu_reg_poisson tau_reg_poisson </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           0e+00           1e-04 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $multinomial</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  mu_reg_multinomial tau_reg_multinomial </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               0e+00               1e-04 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ordinal</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    mu_reg_ordinal   tau_reg_ordinal  mu_delta_ordinal tau_delta_ordinal </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             0e+00             1e-04             0e+00             1e-04 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ranef</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> shape_diag_RinvD  rate_diag_RinvD       KinvD_expr </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           "0.01"          "0.001"   "nranef + 1.0" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $surv</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  mu_reg_surv tau_reg_surv </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        0.000        0.001 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># To change the hyper-parameters:</span></span>
+<span class='r-in'><span class='va'>hyp</span> <span class='op'>&lt;-</span> <span class='fu'>default_hyperpars</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>hyp</span><span class='op'>$</span><span class='va'>norm</span><span class='op'>[</span><span class='st'>'rate_tau_norm'</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1e-3</span></span>
+<span class='r-in'><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>B1</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, hyperpars <span class='op'>=</span> <span class='va'>hyp</span>, mess <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
