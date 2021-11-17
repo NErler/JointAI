@@ -1,4 +1,4 @@
-# JointAI (1.0.3)
+# JointAI 1.0.3
 
 
 ## New features
@@ -33,7 +33,7 @@
 
 --------------------------------------------------------------------------------
 
-# JointAI (1.0.2)
+# JointAI 1.0.2
 
 ## New features
 * `rd_vcov()`: new function added to extract the random effect variance-
@@ -50,7 +50,7 @@
 --------------------------------------------------------------------------------
 
 
-# JointAI (1.0.1)
+# JointAI 1.0.1
 
 ## Minor improvements and bug fixes
 * `data_list`: omit data matrix `M_*` from `data_list` if `ncol == 0`
@@ -69,7 +69,7 @@
 --------------------------------------------------------------------------------
 
 
-# JointAI (1.0.0)
+# JointAI 1.0.0
 
 This version of **JointAI** contains some major changes. To extend the package
 it was necessary to change the internal structure and it was not possible to 
