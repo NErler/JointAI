@@ -1,19 +1,7 @@
 # JointAI (development version)
 
-## Minor improvements and bug fixes
-* Bug fix in re-scaling of random effects variance covariance matrix in
-  multi-level models with >2 levels where some levels have only random intercept.
-* Bug fix in generating the names of random effect nodes to monitor when there
-  are multiple analysis models and some do not have random effects.
-* Bug fix in `plot_all()` not displaying the variable name in the message shown
-  for character string variables.
-* Bug fix in `set_refcat()`: wasn't displaying the factor labels correctly
-
-# JointAI (1.0.2)
 
 ## New features
-* `rd_vcov()`: new function added to extract the random effect variance-
-  covariance matrices (posterior means)
 * `custom`: new argument in the main analysis functions that allows the user
   to replace the JAGS syntax for sub-models with custom syntax. The argument
   expects a named list where the names are the names of the variables 
@@ -26,11 +14,32 @@
   specification of the structure of the random effects variance-covariance
   matrices in (multivariate) mixed models (and joint models).
 
+
+
 ## Minor improvements and bug fixes
+* Bug fix in re-scaling of random effects variance covariance matrix in
+  multi-level models with >2 levels where some levels have only random intercept.
+* Bug fix in generating the names of random effect nodes to monitor when there
+  are multiple analysis models and some do not have random effects.
+* Bug fix in `plot_all()` not displaying the variable name in the message shown
+  for character string variables.
+* Bug fix in `set_refcat()`: wasn't displaying the factor labels correctly
 * `print.JointAI`: bugfix for multivariate mixed models with full
   variance-covariance matrix of the random effects that had the same number of
   random effects for each outcome, for which the printing of this matrix
   resulted in an error.
+
+
+
+--------------------------------------------------------------------------------
+
+# JointAI (1.0.2)
+
+## New features
+* `rd_vcov()`: new function added to extract the random effect variance-
+  covariance matrices (posterior means)
+
+## Minor improvements and bug fixes
 * change in the way the model formula is contained in the model call, which 
   should make it possible to call `*_imp()` functions from within another
   function that has the model formula as an argument.
