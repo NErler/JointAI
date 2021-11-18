@@ -28,6 +28,9 @@
   variance-covariance matrix of the random effects that had the same number of
   random effects for each outcome, for which the printing of this matrix
   resulted in an error.
+* Bug fix: when using a function of a variable as auxiliary this is now (again)
+  correctly used as covariate in the linear predictor of covariate models (bug
+  was introduced in commit 15014dcd)
 
 
 
