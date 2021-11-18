@@ -220,7 +220,7 @@
 #' ## Survival models with frailties or time-varying covariates
 #' Random effects specified in brackets can also be used to indicate a
 #' multi-level structure in survival models, as would, for instance be needed
-#' in a multicentre setting, where patients are from multiple hospitals.
+#' in a multi-centre setting, where patients are from multiple hospitals.
 #'
 #' It also allows to model time-dependent covariates in a proportional
 #' hazards survival model (using \code{coxph_imp}), also in combination with
@@ -246,7 +246,7 @@
 #'
 #' Moreover, it is not possible to use `.` to indicate that all variables in a
 #' `data.frame` other than the outcome variable should be used as covariates.
-#' I.e., a formula `y ~ .` is valid in **JointAI**.
+#' I.e., a formula `y ~ .` is not valid in **JointAI**.
 #'
 #'
 #' @details # Data structure
