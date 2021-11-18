@@ -240,6 +240,8 @@ test_that("model can be plottet", {
 
 
 test_that("wrong models give errors", {
+  skip_on_os("mac")
+
   expect_error(clm_imp(y ~ O1 + C1 + C2, data = wideDF))
   expect_error(clm_imp(O2 ~ O1 + C1 + C2 + (1 | id), data = longDF,
                        warn = FALSE))
