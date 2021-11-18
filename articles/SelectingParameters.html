@@ -149,7 +149,7 @@
 <div id="monitoring-parameters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#monitoring-parameters" class="anchor"></a>Monitoring parameters</h2>
-<p><strong>JointAI</strong> uses <a href="http://mcmc-jags.sourceforge.net/">JAGS</a> for performing the MCMC (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Markov Chain Monte Carlo</a>) sampling. Since JAGS only saves the values of MCMC chains for those parameters/variables for which the user has specified that they should be monitored, this is also the case in <strong>JointAI</strong>.</p>
+<p><strong>JointAI</strong> uses <a href="https://mcmc-jags.sourceforge.io/">JAGS</a> for performing the MCMC (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Markov Chain Monte Carlo</a>) sampling. Since JAGS only saves the values of MCMC chains for those parameters/variables for which the user has specified that they should be monitored, this is also the case in <strong>JointAI</strong>.</p>
 <p>For this purpose, the main functions <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code>*_imp()</code></a> have an argument <code>monitor_params</code>.</p>
 <p><code>monitor_params</code> takes a named list (often a named vector also works) with the following possible entries:</p>
 <table class="table">
