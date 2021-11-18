@@ -103,12 +103,16 @@ GR_crit <- function(object, confidence = 0.95, transform = FALSE,
 #' provides some examples how to specify the argument \code{subset}.
 #'
 #' @examples
+#'
+#' \dontrun{
+#'
 #' mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
 #' MC_error(mod)
 #'
 #' plot(MC_error(mod), ablinepars = list(lty = 2),
 #'      plotpars = list(pch = 19, col = 'blue'))
+#' }
 #'
 #' @export
 MC_error <- function(x, subset = NULL, exclude_chains = NULL,
