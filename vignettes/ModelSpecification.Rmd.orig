@@ -1,7 +1,7 @@
 ---
 title: "Model Specification"
 date: "2020-06-20"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     depth: 4
@@ -25,21 +25,21 @@ options(width = 100)
 
 
 In this vignette, we use the [NHANES](https://nerler.github.io/JointAI/reference/NHANES.html)
-data for examples in cross-sectional data and the 
+data for examples in cross-sectional data and the
 dataset [simLong](https://nerler.github.io/JointAI/reference/simLong.html) for
 examples in longitudinal data.
-For more info on these datasets, check out the vignette 
+For more info on these datasets, check out the vignette
 [*Visualizing Incomplete Data*](https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html),
 in which the distributions of variables and missing values in both sets is
 explored.
 
 To learn more about the theoretical background of the statistical approach
-implemented in **JointAI**, check out the vignette 
+implemented in **JointAI**, check out the vignette
 [Theoretical Background](https://nerler.github.io/JointAI/articles/TheoreticalBackground.html).
 
 **Note:**<br>
 In some of the examples we use `n.adapt = 0` (and `n.iter = 0`, which is the
-default). 
+default).
 This is to prevent the MCMC sampling and thereby reduce computational time when
 compiling this vignette.
 
@@ -61,7 +61,7 @@ compiling this vignette.
 * `survreg_imp()`: parametric (Weibull) survival models
 * `coxph_imp()`: Proportional hazards survival models
 * `JM_imp()`: Joint model for longitudinal and survival data
-  
+
 Specification of these functions is similar to the specification of the complete
 data versions
 `lm()`, `glm()`, `lme()`
@@ -76,18 +76,18 @@ and [`coxph()`](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/coxp
 All functions require the arguments `formula` (or `fixed` and `random` in
 for mixed models) and `data`.
 
-Specification of the (fixed effects) model formula is demonstrated in section 
+Specification of the (fixed effects) model formula is demonstrated in section
 [Model formula](#ModelFormula),
 specification of the random random effects in section
 [Multi-level structure & longitudinal covariates](#MultiLevelStructure).
 
-Additionally, `glm_imp()`, `glme_imp()` and `glmer_imp()` require the 
-specification of the model 
+Additionally, `glm_imp()`, `glme_imp()` and `glmer_imp()` require the
+specification of the model
 [`family`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html)
-(and `link` function). 
+(and `link` function).
 
 ### Model family and link functions
-Implemented families and links for `glm_imp()`, `glme_imp()` and `glmer_imp()` 
+Implemented families and links for `glm_imp()`, `glme_imp()` and `glmer_imp()`
 are
 ```{r, echo = FALSE}
 tab <- rbind(gaussian = "with links: `identity`, `log`",
@@ -140,7 +140,7 @@ linear predictor, in which covariates (independent variables) are separated by
 An intercept is added automatically (except in proportional hazard models or
 models for ordinal outcomes).
 
-`survreg_imp()` and `coxph_imp()` expect a 
+`survreg_imp()` and `coxph_imp()` expect a
 [survival object](https://stat.ethz.ch/R-manual/R-devel/library/survival/html/Surv.html)
 (created with `Surv()`) on the left hand side of the model formula.
 Currently, only right censored data can be handled and there can only be
@@ -151,7 +151,7 @@ provide the argument `formula` or the arguments `fixed` and `random`.
 
 ### Interactions
 Interactions between variables can be introduced using `:` or `*`, which adds
-the interaction term AND the main effects, i.e., 
+the interaction term AND the main effects, i.e.,
 ```{r, eval = FALSE}
 SBP ~ age + gender + smoke * creat
 ```
@@ -167,16 +167,16 @@ mod2a <- glm_imp(educ ~ gender * (age + smoke + creat),
                  data = NHANES, family = binomial(), n.adapt = 0)
 ```
 
-The function 
+The function
 [`parameters()`](https://nerler.github.io/JointAI/reference/parameters.html)
-returns a matrix off all parameters that are specified to be followed 
+returns a matrix off all parameters that are specified to be followed
 (column `coef`) and, for regression coefficients, the name of the variable
-the coefficient relates to (`varname`), the outcome variable of the 
+the coefficient relates to (`varname`), the outcome variable of the
 respective model `outcome`. For multinomial models, which have multiple linear
-predictors, the column `outcat` identifies the category of the outcome the 
-parameters refer to. 
+predictors, the column `outcat` identifies the category of the outcome the
+parameters refer to.
 
-We use the function `parameters()` here and in other vignettes to demonstrate 
+We use the function `parameters()` here and in other vignettes to demonstrate
 the effect that different model specifications have.
 ```{r}
 parameters(mod2a)
@@ -199,8 +199,8 @@ mod2c <- glm_imp(educ ~ gender + (age + smoke + creat)^3,
 parameters(mod2c)
 ```
 
-In **JointAI**, interactions between any variables, observed or 
-incomplete, variables on different levels of a hierarchical structure, 
+In **JointAI**, interactions between any variables, observed or
+incomplete, variables on different levels of a hierarchical structure,
 can be handled.
 When an incomplete variable is involved, the interaction term is re-calculated
 within each iteration of the MCMC sampling, using the imputed values from the
@@ -215,7 +215,7 @@ match, and results may be incorrect.
 
 ### Non-linear functional forms
 In practice, associations between outcome and covariates do not always meet
-the standard assumption that all covariate effects are linear. 
+the standard assumption that all covariate effects are linear.
 Often, assuming a logarithmic, quadratic, or other non-linear effect is more
 appropriate.
 
@@ -224,30 +224,30 @@ functions such as
 [`log()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html)
 (the natural logarithm),
 [`sqrt()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/MathFun.html)
-(the square root) or 
+(the square root) or
 [`exp()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html)
 (the exponential function).
 It is also possible to use algebraic operations to calculate a new variable from
 one or more covariates. To indicate to R that the operators used in the formula
-should be interpreted as algebraic operators and not as formula operators, 
-such calculations need to be wrapped in the function 
+should be interpreted as algebraic operators and not as formula operators,
+such calculations need to be wrapped in the function
 [`I()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/AsIs.html).
 
-For example, to include a quadratic effect of the variable `x` we would have 
+For example, to include a quadratic effect of the variable `x` we would have
 to use `I(x^2)`. Just writing `x^2` would be interpreted as the interaction
 of `x` with itself, which simplifies to just `x`.
 
 
-For *completely observed covariates*, **JointAI** can handle any standard type 
-of function implemented in R. This also includes splines, e.g., using 
+For *completely observed covariates*, **JointAI** can handle any standard type
+of function implemented in R. This also includes splines, e.g., using
 [`ns()`](https://stat.ethz.ch/R-manual/R-devel/library/splines/html/ns.html) or
 [`bs()`](https://stat.ethz.ch/R-manual/R-devel/library/splines/html/bs.html)
 from the package **splines** (which is automatically installed with R).
 
-Functions involving *variables that have missing values* need to be 
-re-calculated in each iteration of the MCMC sampling. 
+Functions involving *variables that have missing values* need to be
+re-calculated in each iteration of the MCMC sampling.
 Therefore, currently, only functions that can be interpreted by
-[JAGS](http://mcmc-jags.sourceforge.net/) can be used for incomplete variables.
+[JAGS](https://mcmc-jags.sourceforge.io/) can be used for incomplete variables.
 Those functions include:
 
 * `log()`, `exp()`
@@ -256,9 +256,9 @@ Those functions include:
 * `sin()`, `cos()`
 * polynomials (using `I()`) and other algebraic operations involving one or
   multiple (in)complete variables, as long as the formula can be interpreted by
-  [JAGS](http://mcmc-jags.sourceforge.net/).
+  [JAGS](https://mcmc-jags.sourceforge.io/).
 
-The list of functions implemented in JAGS can be found in the 
+The list of functions implemented in JAGS can be found in the
 [JAGS user manual](https://sourceforge.net/projects/mcmc-jags/files/Manuals/).
 
 **Some examples:**^[Note: these examples are chosen to demonstrate functionality
@@ -285,9 +285,9 @@ mod3d <- lm_imp(SBP ~ bili + sin(creat) + cos(albu), data = NHANES)
 #### What happens inside **JointAI**?
 When a model formula includes a function of a complete or incomplete variable,
 the main effect of that variable is automatically added as an auxiliary variable.
-(For more info on auxiliary variables, see the section 
+(For more info on auxiliary variables, see the section
 ["Auxiliary variables"](#auxvars).)
-In the linear predictors of models for covariates, usually, only the main 
+In the linear predictors of models for covariates, usually, only the main
 effects are used.
 
 In `mod3b` from above, for example, the spline of age is used as predictor for
@@ -310,7 +310,7 @@ and other parameters by setting `priors`, `regcoef` and `otherpars` to `FALSE`.
 When a function of a variable is specified as an auxiliary variable,
 this function is used (as well) in the models for covariates.
 For example, in `mod3e`, waist circumference (`WC`)
-is not part of the model for `SBP`, and the auxiliary variable `I(WC^2)` is 
+is not part of the model for `SBP`, and the auxiliary variable `I(WC^2)` is
 used in the linear predictor of the imputation model for `bili`:
 <a id="mod3e"></a>
 ```{r, message = FALSE}
@@ -343,22 +343,22 @@ list_models(mod3g, priors = FALSE, regcoef = FALSE, otherpars = FALSE)
 Incomplete variables are always imputed on their original scale, i.e.,
 
 * in `mod3b` the variable `bili` is imputed and the quadratic and cubic versions
-calculated from the imputed values. 
-* Likewise, `creat` and `albu` in `mod3c` 
+calculated from the imputed values.
+* Likewise, `creat` and `albu` in `mod3c`
 are imputed separately, and `I(creat/albu^2)` calculated from the imputed (and
 observed) values.
 
 
 **Important:** <br>
-When different transformations of the same incomplete variable are used in one 
+When different transformations of the same incomplete variable are used in one
 model, it is strongly discouraged to calculate these transformations beforehand
 and to supply them as separate variables. The same is the case for interactions.
 <br>
 If, for example, a model formula contains both `x` and `x2` (where
 `x2` = `x^2`), they are treated as separate variables and imputed
 with different models.
-Imputed values of `x2` are thus not equal to the square of imputed values of 
-`x`. 
+Imputed values of `x2` are thus not equal to the square of imputed values of
+`x`.
 Instead, `x + I(x^2)` should be used in the model formula. Then, only
 `x` is imputed and used in the linear predictor of models for other
 incomplete variables, and `x^2` is calculated from the imputed values
@@ -367,7 +367,7 @@ of `x`.
 
 
 #### Functions with restricted support
-When a function has restricted support, e.g., `log(x)` is only defined for 
+When a function has restricted support, e.g., `log(x)` is only defined for
 `x > 0`, the model used to impute  `x` needs to comply with these restrictions.
 This can  either be achieved by truncating the distribution assumed for `x`,
 using the argument `trunc`, or by specifying a model for `x` that meets
@@ -381,8 +381,8 @@ use the default model for continuous variables, `"lm"`, a linear model, i.e.,
 assuming a normal distribution and truncate this distribution by specifying
 `trunc = list(bili = c(<lower>, <upper>))` (where the lower and
 upper limits are the smallest and largest allowed values) or choose a model
-(using the argument `models`; more details see the section on 
-[covariate model types](#meth)) that only imputes positive values such as a 
+(using the argument `models`; more details see the section on
+[covariate model types](#meth)) that only imputes positive values such as a
 log-normal distribution (`"glm_lognorm"`) or a Gamma distribution
 (e.g., `"glm_gamma_log"`):
 <a id="mod4"></a>
@@ -409,7 +409,7 @@ that do exist in JAGS, but not in R, by defining a new function in R that has
 the name of the function in JAGS.
 
 **Example**:<br>
-In JAGS the inverse logit transformation is defined in the function 
+In JAGS the inverse logit transformation is defined in the function
 `ilogit`. In R, there is no function `ilogit`, but the inverse logit is
 available as the distribution function of the logistic distribution `plogis()`.
 
@@ -423,10 +423,10 @@ mod5a <- lm_imp(SBP ~ age + gender + ilogit(creat), data = NHANES)
 
 
 #### Nested functions
-It is also possible to nest a function in another function. 
+It is also possible to nest a function in another function.
 
 **Example:**^[Again, this is just a demonstration of the possibilities in JointAI, but nesting
-transformations will most often result in coefficients that that do not have 
+transformations will most often result in coefficients that that do not have
 meaningful interpretation in practice.]
 
 The complementary log log transformation is restricted to values larger than 0
@@ -451,16 +451,16 @@ mod6a <- lm_imp(SBP ~ age + gender + cloglog(ilogit(creat)), data = NHANES)
 ## Multi-level structure & longitudinal covariates{#MultiLevelStructure}
 In multi-level models, additional to the fixed effects structure specified by
 the argument `fixed` a random effects structure needs to be provided via the
-argument `random`. 
+argument `random`.
 Alternatively, it is possible to provide a `formula` that contains both the
-fixed and random effects structure (corresponding to the specification used 
+fixed and random effects structure (corresponding to the specification used
 in [**lme4**](https://CRAN.R-project.org/package=lme4)).
 
 
 ### Random effects
 `random` takes a one-sided formula starting with a `~`. Variables for which a
 random effect should be included are usually separated by a `+`, and the grouping
-variable is separated by `|`. A random intercept is added automatically and 
+variable is separated by `|`. A random intercept is added automatically and
 only needs to be specified in a random intercept only model.
 
 A few examples:
@@ -471,7 +471,7 @@ A few examples:
    random effect for `time`
 * `random = ~ time + x | id` random intercept, random slope for `time` and random
    effect for variable `x`
-   
+
 The corresponding specifications using the argument `formula` would be
 
 * `<fixed effects> + (1 | id)`
@@ -495,11 +495,11 @@ needs to be used:
 
 It is possible to model both crossed and nested random effects, however the
 distinction between crossed and nested random effects must come from the coding
-of the id variables. 
+of the id variables.
 For example, if patients are nested in hospitals, all observations that have the
 same patient id also need to have the same hospital id.
 
-When this is not the case, i.e., some patients were measured at multiple 
+When this is not the case, i.e., some patients were measured at multiple
 hospitals, the random effects are crossed.
 
 There is (theoretically) no restriction as to how many grouping levels
@@ -507,7 +507,7 @@ are possible.
 
 ### Longitudinal covariates
 From **JointAI** version 0.5.0 onward imputation of longitudinal covariates is
-possible. For details the types of models that are available for covariates 
+possible. For details the types of models that are available for covariates
 in a multi-level setting, see the section [covariate model types](#meth)
 below.
 
@@ -517,19 +517,19 @@ When incomplete baseline covariates (level > 1) are involved in the model it is
 usually necessary to specify models for all variables on lower levels, even if
 they are completely observed.
 This is done automatically by **JointAI**, but it may be necessary to change
-the default model types to models that better fit the distributions of the 
+the default model types to models that better fit the distributions of the
 respective variables.
 
-It is typically not necessary to specify models for variables on higher levels 
+It is typically not necessary to specify models for variables on higher levels
 if there are no incomplete covariates on lower levels.
 For example, in a 2-level setting, if there are no missing values in level-2
-variables, it is not necessary to specify models for completely observed 
+variables, it is not necessary to specify models for completely observed
 level-1 variables. But if there are missing values in level-2 variables,
 models need to be specified for all level-1 variables.
 
 
 #### Why do we need models for completely observed covariates?
-The joint distribution of an outcome $y$, covariates $x$, random effects $b$ 
+The joint distribution of an outcome $y$, covariates $x$, random effects $b$
 and parameters $\theta$,  $p(y, x, b, \theta)$, is modelled as the product of
 univariate conditional distributions. To facilitate the specification of these
 distributions they are ordered so that longitudinal (level-1) variables may have
@@ -548,7 +548,7 @@ p(y, x, b, \theta) = & p(y \mid x_1, ..., x_4, b_y, \theta_y) && \text{analysis 
 Since the parameter vectors $\theta_{x1}$, $\theta_{x2}$, ... are assumed to be
 a priori independent, and furthermore $x_1$ is completely observed and modelled
 independently of incomplete variables,
-estimation of the other model parts is not affected by $p(x_1\mid \theta_{x1})$ 
+estimation of the other model parts is not affected by $p(x_1\mid \theta_{x1})$
 and, hence, this model can be omitted.
 
 $p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})$, on the other hand is modelled
@@ -563,7 +563,7 @@ estimation of parameters in the other parts of the model and could be omitted.
 ## Covariate model types {#meth}
 **JointAI** automatically selects models for all incomplete covariates (and if
 necessary also for some complete covariates).
-The type of model is selected automatically based on the `class` of the 
+The type of model is selected automatically based on the `class` of the
 variable and the number of levels.
 
 The automatically selected types for baseline (highest level) covariates are:
@@ -585,9 +585,9 @@ The default methods for lower level covariates are:
 ```{r, echo = FALSE}
 tab <- rbind(lmm = c("linear mixed model", "continuous longitudinal variables"),
              glmm_logit = c("logistic mixed model", "longitudinal factors with two levels"),
-             mlogitmm = c("multinomial logit mixed model", 
+             mlogitmm = c("multinomial logit mixed model",
                           "longitudinal unordered factors with >2 levels"),
-             clmm = c("cumulative logit mixed model", 
+             clmm = c("cumulative logit mixed model",
                       "longitudinal ordered factors with >2 levels")
 )
 
@@ -619,7 +619,7 @@ knitr::kable(tab, row.names = FALSE)
 
 ```
 
-`lognorm` assumes a normal distribution for the natural logarithm of the 
+`lognorm` assumes a normal distribution for the natural logarithm of the
 variable, but the variable enters the linear predictor of the analysis model
 (and possibly other imputation models) on its original scale.
 
@@ -662,16 +662,16 @@ mod8a$models
 
 
 When there is a "time" variable in the model, such as `age` (age of the child
-at the time of the measurement) in the `simLong` 
+at the time of the measurement) in the `simLong`
 it may not be meaningful to specify a model for that variable.
-Especially when the "time" variable is pre-specified by the design of the study it can 
+Especially when the "time" variable is pre-specified by the design of the study it can
 usually be assumed to be independent of the covariates and a model for it
 has no useful interpretation.
 
 The argument `no_model` allows us to exclude models for such variables
 (as long as they are completely observed):
 ```{r, message = FALSE, warning = FALSE}
-mod8b <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + SMOKE + hc + MARITAL + 
+mod8b <- lme_imp(bmi ~ GESTBIR + ETHN + HEIGHT_M + SMOKE + hc + MARITAL +
                    ns(age, df = 2),
                  random = ~ns(age, df = 2) | ID, data = simLong,
                  no_model = "age", n.adapt = 0)
@@ -695,10 +695,10 @@ Variables of type `logical` are automatically converted to binary factors.
 In **JointAI**, the models automatically specified for covariates are ordered
 by the hierarchical level of the respective response variable (descending).
 The linear predictor of each model contains the incomplete variables that are
-specified later in the sequence and all complete variables of the same or 
+specified later in the sequence and all complete variables of the same or
 lower level.
 
-Within each level, models are ordered by the proportion of missing values in 
+Within each level, models are ordered by the proportion of missing values in
 the respective response variables, so that the variable with the most missing
 values has the most covariates in its linear predictor.
 
@@ -712,13 +712,13 @@ list_models(mod8a, priors = FALSE, regcoef = FALSE, otherpars = FALSE, refcat = 
 
 ## Auxiliary variables {#auxvars}
 Auxiliary variables are variables that are not part of the analysis model, but
-should be considered as predictor variables in the imputation models because 
+should be considered as predictor variables in the imputation models because
 they can inform the imputation of unobserved values.
 
 Good auxiliary variables are ^[Van Buuren, S. (2012). Flexible imputation of missing data. Chapman and Hall/CRC. See also the [second edition online](https://stefvanbuuren.name/fimd/).]
 
 * associated with an incomplete variable of interest, or are
-* associated with the missingness of that variable, and 
+* associated with the missingness of that variable, and
 * do not have too many missing values themselves.
 Importantly, they should be observed for a large proportion of the
 cases that have a missing value in the variable to be imputed.
@@ -743,7 +743,7 @@ list_models(mod9a, priors = FALSE, regcoef = FALSE, otherpars = FALSE, refcat = 
 
 ### Functions of variables as auxiliary variables
 As shown above in [`mod3e`](#mod3e) and [`mod3f`](#mod3e), it is possible to
-specify functions of auxiliary variables. In that case, the auxiliary variable 
+specify functions of auxiliary variables. In that case, the auxiliary variable
 is not considered as linear effect but as specified by the function:
 ```{r, message = FALSE, warning = FALSE}
 mod9b <- lm_imp(SBP ~ gender + age + occup, data = NHANES,
@@ -756,7 +756,7 @@ list_models(mod9b, priors = FALSE, regcoef = FALSE, otherpars = FALSE, refcat = 
 ```
 
 **Note:**<br>
-Omitting auxiliary variables from the analysis model implies that the outcome 
+Omitting auxiliary variables from the analysis model implies that the outcome
 is independent of these variables, conditional on the other variables in the model.
 If this is not true, the model is  mis-specified which may lead to biased results
 (similar to leaving a confounding variable out of a model).
@@ -820,8 +820,8 @@ mod10a <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
 
 #### Setting reference categories for individual variables
 Alternatively, `refcats` takes a named vector, in which the reference category
-for each variable can be specified either by its number or its name, or one of 
-the three global types: "first", "last" or "largest". 
+for each variable can be specified either by its number or its name, or one of
+the three global types: "first", "last" or "largest".
 For variables for which no reference category is specified in the list the
 default is used.
 
@@ -834,7 +834,7 @@ mod10b <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
 
 To help to specify the reference category, the function
 [`set_refcat()`](https://nerler.github.io/JointAI/reference/set_refcat.html)
-can be used. 
+can be used.
 It prints the names of the categorical variables that are selected by
 
 * a specified model formula and/or
@@ -842,7 +842,7 @@ It prints the names of the categorical variables that are selected by
 * a vector of naming covariates
 
 or all categorical variables in the data if only `data` is provided,
-and asks a number of questions which the user needs to reply to by input of 
+and asks a number of questions which the user needs to reply to by input of
 a number.
 
 ```{r, echo = FALSE}
@@ -877,8 +877,8 @@ refs_mod10 <- set_refcat(NHANES, formula = formula(mod10b))
 When option 4 is chosen, a question for each categorical variable is asked,
 for example:
 ```{r }
-#> The reference category for “race” should be 
-#> 
+#> The reference category for “race” should be
+#>
 #> 1: Mexican American
 #> 2: Other Hispanic
 #> 3: Non-Hispanic White
@@ -892,7 +892,7 @@ the determined specification for the argument `refcats` is printed:
 #> In the JointAI model specify:
 #>  refcats = c(gender = 'female', race = 'Non-Hispanic White', educ = 'low',
 #>              occup = 'not working', smoke = 'never')
-#> 
+#>
 #> or use the output of this function.
 ```
 
@@ -911,13 +911,13 @@ mod10c <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
 **Note:**<br>
 Changing a reference category via the argument `refcats` does not change the
 order of levels in the dataset or any of the data matrices inside **JointAI**.
-Only when, in the JAGS model, the categorical variables is converted into 
-dummy variables, the reference category is used to determine for which levels 
+Only when, in the JAGS model, the categorical variables is converted into
+dummy variables, the reference category is used to determine for which levels
 the dummies are created.
 
 
 ## Hyper-parameters
-In the Bayesian framework, parameters are random variables for which a 
+In the Bayesian framework, parameters are random variables for which a
 distribution needs to be specified. These distributions depend on parameters
 themselves, i.e., on hyper-parameters.
 
@@ -928,8 +928,8 @@ parameters used in a `JointAI` model.
 default_hyperpars()
 ```
 
-To change the hyper-parameters in a **JointAI** model, the list obtained from 
-`default_hyperpars()` can be edited and passed to the argument `hyperpars` 
+To change the hyper-parameters in a **JointAI** model, the list obtained from
+`default_hyperpars()` can be edited and passed to the argument `hyperpars`
 in the main functions `*_imp()`.
 
 * `mu_reg_*` and `tau_reg_*` refer to the mean and precision in the
@@ -942,7 +942,7 @@ in the main functions `*_imp()`.
   of degrees of freedom depending on the number of random effects `nranef`
   (dimension of `D`).
   By default, `KinvD` will be set to the number of random effects plus one.
-* `shape_diag_RinvD` and `rate_diag_RinvD` are the scale and rate parameters 
+* `shape_diag_RinvD` and `rate_diag_RinvD` are the scale and rate parameters
   of the Gamma prior of the diagonal elements of `RinvD`.
 
 In random effects models with only one random effect, instead of the Wishart
@@ -951,7 +951,7 @@ distribution a Gamma prior is used for the inverse of `D`.
 
 ## Scaling
 When variables are measured on very different scales this can result in slow
-convergence and bad mixing. 
+convergence and bad mixing.
 Therefore, **JointAI** includes scaling of continuous covariates in the
 JAGS model (i.e., instead of writing `... + covar + ...` in the linear
 predictor, `... + (covar - mean)/sd) + ...` is written).
@@ -964,7 +964,7 @@ If `scale_vars` is a vector of variable names, scaling will only be done
 for those variables.
 
 By default, only the MCMC samples that is scaled back to the scale of the data
-is stored in a `JointAI` object. When the argument `keep_scaled_mcmc = TRUE` 
+is stored in a `JointAI` object. When the argument `keep_scaled_mcmc = TRUE`
 also the scaled sample is kept. This is mainly for de-bugging purposes.
 
 
@@ -973,13 +973,13 @@ It is possible to use shrinkage priors to penalize large regression
 coefficients. This can be specified via the argument `shrinkage`.
 At the moment, only ridge regression is implemented.
 
-Setting `shrinkage = 'ridge'` will impose ridge priors on all regression 
+Setting `shrinkage = 'ridge'` will impose ridge priors on all regression
 coefficients. To only use shrinkage for some of the sub-models (main analysis
 model and covariate models), a vector can be provided that contains the
 names of the response variables of the models in which shrinkage should be
 applied, and the type of shrinkage for each of them.
 
-For example, in `mod11a` ridge regression is used for all models, and in 
+For example, in `mod11a` ridge regression is used for all models, and in
 `modd11b` only in the models for `SBP` and `educ`:
 ```{r, warning = FALSE}
 mod11a <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
@@ -993,5 +993,5 @@ mod11b <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
 ```
 
 Ridge regression is implemented as a $\text{Ga}(0.01, 0.01)$ prior for the
-precision of the regression coefficients $\beta$ instead of setting this 
+precision of the regression coefficients $\beta$ instead of setting this
 precision to a fixed (small) value.

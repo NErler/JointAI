@@ -1,5 +1,5 @@
 Package: JointAI
-Version: 1.0.3
+Version: 1.0.2.9000
 Title: Joint Analysis and Imputation of Incomplete Data
 Authors@R: c(person("Nicole S.", "Erler", email = "n.erler@erasmusmc.nl",
                   role = c("aut", "cre"),
@@ -10,7 +10,7 @@ Description: Joint analysis and imputation of incomplete data in the Bayesian
     Incomplete covariates, if present, are automatically imputed.
     The package performs some preprocessing of the data and creates a 'JAGS'
     model, which will then automatically be passed to 'JAGS' 
-    <http://mcmc-jags.sourceforge.net/> with the help of 
+    <https://mcmc-jags.sourceforge.io/> with the help of 
     the package 'rjags'.
 URL: https://nerler.github.io/JointAI/
 License: GPL (>= 2)
@@ -19,7 +19,7 @@ LazyData: TRUE
 RoxygenNote: 7.1.2
 Roxygen: list(old_usage = TRUE, markdown = TRUE)
 Imports: rjags, mcmcse, coda, rlang, future, foreach, mathjaxr, survival, MASS
-SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net/)
+SystemRequirements: JAGS (https://mcmc-jags.sourceforge.io/)
 Suggests: 
     knitr,
     rmarkdown,

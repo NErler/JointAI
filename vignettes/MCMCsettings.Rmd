@@ -27,7 +27,7 @@ options(width = 100)
 In **JointAI**, models are estimated in the Bayesian framework, using MCMC
 ([Markov Chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo))
 sampling.
-The sampling is done by the software [JAGS](http://mcmc-jags.sourceforge.net/)
+The sampling is done by the software [JAGS](https://mcmc-jags.sourceforge.io/)
 ("Just Another Gibbs Sampler"),
 which performs [Gibbs](https://en.wikipedia.org/wiki/Gibbs_sampling) sampling.
 **JointAI** pre-processes the data to get it into a form that can be

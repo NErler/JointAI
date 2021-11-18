@@ -29,8 +29,8 @@ types simultaneously. Missing values in (if present) will be imputed
 automatically.
 
 **JointAI** performs some preprocessing of the data and creates a
-[JAGS](http://mcmc-jags.sourceforge.net/) model, which will then
-automatically be passed to [JAGS](http://mcmc-jags.sourceforge.net/)
+[JAGS](https://mcmc-jags.sourceforge.io/) model, which will then
+automatically be passed to [JAGS](https://mcmc-jags.sourceforge.io/)
 with the help of the R package
 [**rjags**](https://CRAN.R-project.org/package=rjags).
 

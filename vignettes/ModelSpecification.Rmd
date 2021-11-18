@@ -329,7 +329,7 @@ from the package **splines** (which is automatically installed with R).
 Functions involving *variables that have missing values* need to be 
 re-calculated in each iteration of the MCMC sampling. 
 Therefore, currently, only functions that can be interpreted by
-[JAGS](http://mcmc-jags.sourceforge.net/) can be used for incomplete variables.
+[JAGS](https://mcmc-jags.sourceforge.io/) can be used for incomplete variables.
 Those functions include:
 
 * `log()`, `exp()`
@@ -338,7 +338,7 @@ Those functions include:
 * `sin()`, `cos()`
 * polynomials (using `I()`) and other algebraic operations involving one or
   multiple (in)complete variables, as long as the formula can be interpreted by
-  [JAGS](http://mcmc-jags.sourceforge.net/).
+  [JAGS](https://mcmc-jags.sourceforge.io/).
 
 The list of functions implemented in JAGS can be found in the 
 [JAGS user manual](https://sourceforge.net/projects/mcmc-jags/files/Manuals/).
