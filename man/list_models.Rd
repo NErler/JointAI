@@ -72,8 +72,8 @@ Dealing with missing covariates in epidemiologic studies: A comparison
 between multiple imputation and a full Bayesian approach.
 \emph{Statistics in Medicine}, 35(17), 2955-2974.
 
-Erler, N.S., Rizopoulos D. and Lesaffre E.M.E.H. (2019).
-JointAI: Joint Analysis and Imputation of Incomplete Data in R.
-\emph{arXiv e-prints}, arXiv:1907.10867.
-URL https://arxiv.org/abs/1907.10867.
+Erler NS, Rizopoulos D, Lesaffre EMEH (2021).
+"JointAI: Joint Analysis and Imputation of Incomplete Data in R."
+\emph{Journal of Statistical Software}, \emph{100}(20), 1-56.
+doi: \href{https://doi.org/10.18637/jss.v100.i20}{10.18637/jss.v100.i20}.
 }

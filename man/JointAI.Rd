@@ -143,10 +143,10 @@ Explanation of the statistical method implemented in \strong{JointAI}.
 }
 
 \references{
-Nicole S. Erler, Dimitris Rizopoulos and Emmanuel M.E.H. Lesaffre (2019).
-JointAI: Joint Analysis and Imputation of Incomplete Data in R.
-\emph{arXiv e-prints}, arXiv:1907.10867.
-URL \href{https://arxiv.org/abs/1907.10867}{https://arxiv.org/abs/1907.10867}.
+Erler NS, Rizopoulos D, Lesaffre EMEH (2021).
+"JointAI: Joint Analysis and Imputation of Incomplete Data in R."
+\emph{Journal of Statistical Software}, \emph{100}(20), 1-56.
+doi: \href{https://doi.org/10.18637/jss.v100.i20}{10.18637/jss.v100.i20}.
 
 Erler, N.S., Rizopoulos, D., Rosmalen, J., Jaddoe, V.W.V.,
 Franco, O. H., & Lesaffre, E.M.E.H. (2016).
