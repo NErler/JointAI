@@ -9,13 +9,44 @@
 * win-builder (oldrelease, devel and release)
 
 
+
 ### R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
+
+NOTE:
+
+Possibly misspelled words in DESCRIPTION:
+  Erler (10:18)
+  Lesaffre (10:40)
+  Rizopoulos (10:25)
+  
+Found the following (possibly) invalid URLs:
+  URL: https://doi.org/10.18637/jss.v100.i20
+    From: man/JointAI.Rd
+          man/list_models.Rd
+    Status: 404
+    Message: Not Found
+
+Found the following (possibly) invalid DOIs:
+  DOI: 10.18637/jss.v100.i20
+    From: DESCRIPTION
+          inst/CITATION
+    Status: Not Found
+    Message: 404
+    
+    
+REPLY:
+The DOI/URL in the CITATION, DESCRIPTION and \reference section of man/JointAI.Rd
+and man/list_models.Rd is for a new JSS publication that will be registered
+after publication on CRAN. (And the names of the authors in the DESCRIPTION 
+are fact spelled correctly.)
+
 
 ### Reverse dependencies
 
 There are no reverse dependencies.
+
 
 ---
 
