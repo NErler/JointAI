@@ -322,69 +322,14 @@ and the vignette
 for examples how to specify the parameter <code>subset</code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>M2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span></span>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_imp.html'>lm_imp</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>C1</span> <span class='op'>+</span> <span class='va'>C2</span> <span class='op'>+</span> <span class='va'>M2</span>, data <span class='op'>=</span> <span class='va'>wideDF</span>, n.iter <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>mod1</span>, missinfo <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Bayesian linear model fitted with JointAI</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> lm_imp(formula = y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Posterior summary:</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                 Mean     SD    2.5%  97.5% tail-prob. GR-crit MCE/SD</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)  34.4860 22.851  -7.340 80.972     0.1200    1.06 0.0577</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> C1          -26.0436 15.953 -58.423  3.146     0.0867    1.06 0.0577</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> C2            0.9118  0.666  -0.395  2.202     0.1733    1.01 0.0577</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> M22          -0.4060  0.621  -1.549  0.823     0.5600    1.01 0.0577</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> M23           0.0615  0.695  -1.181  1.470     0.9467    1.02 0.0577</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> M24          -1.1810  0.686  -2.651  0.192     0.0933    1.01 0.0577</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Posterior summary of residual std. deviation:</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>         Mean    SD 2.5% 97.5% GR-crit MCE/SD</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> sigma_y 2.23 0.168 1.93  2.61    1.03 0.0577</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> MCMC settings:</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Iterations = 101:200</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Sample size per chain = 100 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Thinning interval = 1 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Number of chains = 3 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Number of observations: 100 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Number and proportion of complete cases:</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>         #  %</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> lvlone 93 93</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Number and proportion of missing values:</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    # NA % NA</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> y     0    0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> C1    0    0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> M2    3    3</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> C2    4    4</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>mod1</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $y</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  (Intercept)           C1           C2          M22          M23          M24 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  34.48600473 -26.04361802   0.91178273  -0.40599078   0.06148996  -1.18104086 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>      sigma_y </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   2.22627935 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>mod1</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $y</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                    2.5%      97.5%</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)  -7.3402092 80.9717370</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> C1          -58.4225813  3.1462324</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> C2           -0.3951601  2.2018220</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> M22          -1.5487236  0.8227402</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> M23          -1.1805598  1.4696826</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> M24          -2.6507562  0.1921067</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> sigma_y       1.9348092  2.6059179</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-in'></span>
+<span class='r-in'><span class='op'>}</span></span>
 <span class='r-in'></span>
 </pre>
   </div>
