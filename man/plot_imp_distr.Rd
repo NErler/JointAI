@@ -33,9 +33,11 @@ Plots densities and bar plots of the observed and imputed values in a
 long-format dataset (multiple imputed datasets stacked onto each other).
 }
 \examples{
+
+\dontrun{
 mod <- lme_imp(y ~ C1 + c2 + B2 + C2, random = ~ 1 | id, data = longDF,
                n.iter = 200, monitor_params = c(imps = TRUE), mess = FALSE)
 impDF <- get_MIdat(mod, m = 5)
 plot_imp_distr(impDF, id = "id", ncol = 3)
-
+}
 }

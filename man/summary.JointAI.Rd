@@ -86,12 +86,14 @@ Obtain and print the \code{summary}, (fixed effects) coefficients
 class 'JointAI'.
 }
 \examples{
+
+\dontrun{
 mod1 <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 
 summary(mod1, missinfo = TRUE)
 coef(mod1)
 confint(mod1)
-
+}
 
 }
 \seealso{

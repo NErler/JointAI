@@ -62,6 +62,8 @@ argument \code{monitor_params} in \code{\link[JointAI:model_imp]{*_imp}}.
 }
 
 \examples{
+
+\dontrun{
 # fit a model and monitor the imputed values with
 # monitor_params = c(imps = TRUE)
 
@@ -72,7 +74,7 @@ mod <- lm_imp(y ~ C1 + C2 + M2, data = wideDF,
 MIs <- get_MIdat(mod, m = 3, seed = 123)
 
 
-\dontrun{
+
 # Example 2: with export for SPSS
 # (here: to the temporary directory "temp_dir")
 

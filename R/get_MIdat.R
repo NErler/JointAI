@@ -42,6 +42,8 @@
 #' @seealso \code{\link{plot_imp_distr}}
 #'
 #' @examples
+#'
+#' \dontrun{
 #' # fit a model and monitor the imputed values with
 #' # monitor_params = c(imps = TRUE)
 #'
@@ -52,7 +54,7 @@
 #' MIs <- get_MIdat(mod, m = 3, seed = 123)
 #'
 #'
-#' \dontrun{
+#'
 #' # Example 2: with export for SPSS
 #' # (here: to the temporary directory "temp_dir")
 #'

@@ -17,12 +17,14 @@
 #' @param \dots currently not used
 #'
 #' @examples
+#'
+#' \dontrun{
 #' mod1 <- lm_imp(y ~ C1 + C2 + M2, data = wideDF, n.iter = 100)
 #'
 #' summary(mod1, missinfo = TRUE)
 #' coef(mod1)
 #' confint(mod1)
-#'
+#' }
 #'
 #' @seealso The model fitting functions \code{\link{lm_imp}},
 #'          \code{\link{glm_imp}}, \code{\link{clm_imp}}, \code{\link{lme_imp}},

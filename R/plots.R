@@ -130,6 +130,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' @param ... additional parameters passed to \code{plot()}
 #' @examples
 #'
+#' \dontrun{
 #' # fit a JointAI object:
 #' mod <- lm_imp(y ~ C1 + C2 + M1, data = wideDF, n.iter = 100)
 #'
@@ -165,7 +166,7 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #'   xlab("value") +
 #'   theme(legend.position = 'bottom') +
 #'   scale_color_brewer(palette = 'Dark2', name = 'chain')
-#'
+#' }
 #'
 #' @seealso
 #' The vignette

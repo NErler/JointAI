@@ -72,6 +72,7 @@ the MCMC sample of an object of class "JointAI".
 }
 \examples{
 
+\dontrun{
 # fit a JointAI object:
 mod <- lm_imp(y ~ C1 + C2 + M1, data = wideDF, n.iter = 100)
 
@@ -107,7 +108,7 @@ densplot(mod, use_ggplot = TRUE) +
   xlab("value") +
   theme(legend.position = 'bottom') +
   scale_color_brewer(palette = 'Dark2', name = 'chain')
-
+}
 
 }
 \seealso{
