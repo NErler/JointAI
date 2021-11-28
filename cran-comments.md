@@ -1,5 +1,6 @@
 # JointAI (version 1.0.3)
 
+
 ## Round 1
 
 ### Test environments
@@ -46,6 +47,32 @@ are fact spelled correctly.)
 ### Reverse dependencies
 
 There are no reverse dependencies.
+
+
+
+### Reviewer comments
+2021-11-27 Uwe Ligges
+
+```
+Thanks, we see:
+
+
+   Found the following URLs which should use \doi (with the DOI name only):
+     File 'JointAI.Rd':
+       https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdoi.org%2F10.18637%2Fjss.v100.i20&amp;data=04%7C01%7Cn.erler%40erasmusmc.nl%7C931c6a6ed615439baa0508d9b17be3b8%7C526638ba6af34b0fa532a1a511f4ac80%7C0%7C0%7C637735967925897409%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=GWvnOg8CZdyClEWsYiYbthNN6SZtZQzNmPTb0ROsIDQ%3D&amp;reserved=0
+     File 'list_models.Rd':
+       https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdoi.org%2F10.18637%2Fjss.v100.i20&amp;data=04%7C01%7Cn.erler%40erasmusmc.nl%7C931c6a6ed615439baa0508d9b17be3b8%7C526638ba6af34b0fa532a1a511f4ac80%7C0%7C0%7C637735967925907404%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=Xq4TyvG66rGkvJF7n75wwPcEMLUu%2BSul2mB5qr7KXNg%3D&amp;reserved=0
+
+Please fix and resubmit.
+```
+
+
+## Round 2
+### Submission comments
+2021-11-28
+
+I've fixed the DOIs the two references.
+
 
 
 ---

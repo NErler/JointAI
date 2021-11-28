@@ -135,7 +135,7 @@
 #' Erler NS, Rizopoulos D, Lesaffre EMEH (2021).
 #' "JointAI: Joint Analysis and Imputation of Incomplete Data in R."
 #' _Journal of Statistical Software_, *100*(20), 1-56.
-#' doi: \href{https://doi.org/10.18637/jss.v100.i20}{10.18637/jss.v100.i20}.
+#' \doi{10.18637/jss.v100.i20}.
 #'
 #' Erler, N.S., Rizopoulos, D., Rosmalen, J., Jaddoe, V.W.V.,
 #' Franco, O. H., & Lesaffre, E.M.E.H. (2016).
