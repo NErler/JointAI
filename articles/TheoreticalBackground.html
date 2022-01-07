@@ -39,6 +39,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -102,13 +104,13 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/nerler/JointAI/">
+  <a href="https://github.com/nerler/JointAI/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/N_Erler">
+  <a href="https://twitter.com/N_Erler" class="external-link">
     <span class="fa fa-twitter fa-lg"></span>
      
   </a>
@@ -129,25 +131,14 @@
 
       
 
-      </header><script src="TheoreticalBackground_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="TheoreticalBackground_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
-<script src="TheoreticalBackground_files/bootstrap-3.3.5/js/bootstrap.min.js"></script><script src="TheoreticalBackground_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script><script src="TheoreticalBackground_files/bootstrap-3.3.5/shim/respond.min.js"></script><style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="TheoreticalBackground_files/navigation-1.1/tabsets.js"></script><script src="TheoreticalBackground_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Theoretical Background</h1>
             
-            <h4 class="date">2020-06-20</h4>
+            <h4 data-toc-skip class="date">2020-06-20</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/TheoreticalBackground.Rmd"><code>vignettes/TheoreticalBackground.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/HEAD/vignettes/TheoreticalBackground.Rmd" class="external-link"><code>vignettes/TheoreticalBackground.Rmd</code></a></small>
       <div class="hidden name"><code>TheoreticalBackground.Rmd</code></div>
 
     </div>
@@ -204,9 +195,9 @@ parameters and missing values.</p>
 <p>In the following sections each of the three parts of the model,
 the analysis model, the imputation part and the prior distributions,
 are described in more in detail.</p>
-<div id="sec:AnalysisModel" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sec:AnalysisModel" class="anchor"></a>Analysis model</h2>
+<div class="section level2">
+<h2 id="sec:AnalysisModel">Analysis model<a class="anchor" aria-label="anchor" href="#sec:AnalysisModel"></a>
+</h2>
 <p>The analysis model of interest is described by the probability density function
 <span class="math inline">\(p(\mathbf y \mid \mathbf X, \boldsymbol\theta_{y\mid x})\)</span>.</p>
 <p>The R package <strong>JointAI</strong> can currently handle analysis models that are</p>
@@ -224,9 +215,9 @@ are described in more in detail.</p>
 data, where the survival model is a proportional hazards model and the
 longitudinal variables are modelled using generalized, ordinal, beta or
 log-normal mixed models.</p>
-<div id="generalized-linear-mixed-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#generalized-linear-mixed-models" class="anchor"></a>Generalized linear (mixed) models</h3>
+<div class="section level3">
+<h3 id="generalized-linear-mixed-models">Generalized linear (mixed) models<a class="anchor" aria-label="anchor" href="#generalized-linear-mixed-models"></a>
+</h3>
 <p>For a GLM the probability density function is chosen from the exponential family
 and has the linear predictor
 <span class="math display">\[g\{E(y_i\mid \mathbf X, \boldsymbol\theta_{y\mid x})\} = 
@@ -255,11 +246,11 @@ the documentation of
 <a href="https://nerler.github.io/JointAI/reference/model_imp.html">glm_imp()</a>).
 One exception is the square-root link, which is not available since it is not
 implemented as a link in
-<a href="https://sourceforge.net/projects/mcmc-jags/files/Manuals/4.x/">JAGS</a>.</p>
+<a href="https://sourceforge.net/projects/mcmc-jags/files/Manuals/4.x/" class="external-link">JAGS</a>.</p>
 </div>
-<div id="cumulative-logit-mixed-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#cumulative-logit-mixed-models" class="anchor"></a>Cumulative logit (mixed) models</h3>
+<div class="section level3">
+<h3 id="cumulative-logit-mixed-models">Cumulative logit (mixed) models<a class="anchor" aria-label="anchor" href="#cumulative-logit-mixed-models"></a>
+</h3>
 <p>Cumulative logit mixed models are of the form
 <span class="math display">\[\begin{eqnarray*}
 y_{ij} &amp;\sim&amp; \text{Mult}(\pi_{ij,1}, \ldots, \pi_{ij,K}),\\[2ex]
@@ -280,9 +271,9 @@ are specified. Here, the parameter vector <span class="math inline">\(\boldsymbo
 the regression coefficients <span class="math inline">\(\boldsymbol\beta\)</span>, the first intercept <span class="math inline">\(\gamma_1\)</span>
 and increments <span class="math inline">\(\delta_1, \ldots, \delta_{K-1}\)</span>.</p>
 </div>
-<div id="survival-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#survival-models" class="anchor"></a>Survival models</h3>
+<div class="section level3">
+<h3 id="survival-models">Survival models<a class="anchor" aria-label="anchor" href="#survival-models"></a>
+</h3>
 <p>Survival data are typically characterized by the observed event or censoring times,
 <span class="math inline">\(T_i\)</span>, and the event indicator, <span class="math inline">\(D_i\)</span>, which is one if the event was observed
 and zero otherwise.
@@ -315,9 +306,9 @@ in <strong>JointAI</strong> it is approximated using Gauss-Kronrod quadrature wi
 evaluation points.</p>
 </div>
 </div>
-<div id="imputation-covariate-part" class="section level2">
-<h2 class="hasAnchor">
-<a href="#imputation-covariate-part" class="anchor"></a>Imputation / covariate part</h2>
+<div class="section level2">
+<h2 id="imputation-covariate-part">Imputation / covariate part<a class="anchor" aria-label="anchor" href="#imputation-covariate-part"></a>
+</h2>
 <p>A convenient way to specify the joint distribution of the incomplete covariates
 <span class="math inline">\(\mathbf X_{mis} = (\mathbf x_{mis_1}, \ldots, \mathbf x_{mis_q})\)</span> is to use
 a sequence of conditional univariate distributions <span class="citation">(Ibrahim, Chen, and Lipsitz 2002; Erler et al. 2016)</span>
@@ -383,9 +374,9 @@ i.e., the distribution the imputed values for <span class="math inline">\(x_{i, 
 from, but the sequence of covariates models <a href="#eq:factorization">(1)</a> is
 used to describe the joint distribution.
 <a href="#eq:fullcond">(2)</a> is derived from that joint distribution.</p>
-<div id="sec:impLong" class="section level3">
-<h3 class="hasAnchor">
-<a href="#sec:impLong" class="anchor"></a>Imputation in settings with longitudinal outcomes</h3>
+<div class="section level3">
+<h3 id="sec:impLong">Imputation in settings with longitudinal outcomes<a class="anchor" aria-label="anchor" href="#sec:impLong"></a>
+</h3>
 <p>Factorizing the joint distribution into analysis model and imputation part
 also facilitates extensions to settings with more complex outcomes,
 such as repeatedly measured outcomes.
@@ -445,9 +436,9 @@ however, has <span class="math inline">\(\mathbf x_{i, mis}\)</span> in its line
 part of the full conditional distribution of <span class="math inline">\(\mathbf x_{i, mis}\)</span>, it cannot
 be omitted from the model.</p>
 </div>
-<div id="non-linear-associations-and-interactions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#non-linear-associations-and-interactions" class="anchor"></a>Non-linear associations and interactions</h3>
+<div class="section level3">
+<h3 id="non-linear-associations-and-interactions">Non-linear associations and interactions<a class="anchor" aria-label="anchor" href="#non-linear-associations-and-interactions"></a>
+</h3>
 <p>Other settings in which the fully Bayesian approach employed in <strong>JointAI</strong>
 has an advantage over standard FCS are settings with interaction terms that
 involve incomplete covariates or when the association of the outcome with an
@@ -470,9 +461,9 @@ specified, and the full conditional then derived from it, the joint distribution
 is ensured to exist.</p>
 </div>
 </div>
-<div id="sec:priors" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sec:priors" class="anchor"></a>Prior distributions</h2>
+<div class="section level2">
+<h2 id="sec:priors">Prior distributions<a class="anchor" aria-label="anchor" href="#sec:priors"></a>
+</h2>
 <p>Prior distributions have to be specified for all (hyper)parameters.
 A common prior choice for the regression coefficients is the normal distribution
 with mean zero and large variance.
@@ -488,21 +479,21 @@ uses independent gamma hyper-priors for each of the diagonal elements.
 More details about the default hyper-parameters and how to change them are given
 in the section on <a href="https://nerler.github.io/JointAI/articles/ModelSpecification.html#hyperparameters">hyper-parameters in the vignette about Model Specification</a>.</p>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2 unnumbered">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references">
 <div id="ref-Bartlett2015">
-<p>Bartlett, JW, SR Seaman, IR White, and JR Carpenter. 2015. “Multiple Imputation of Covariates by Fully Conditional Specification: Accommodating the Substantive Model.” <em>Statistical Methods in Medical Research</em>. <a href="https://doi.org/10.1177/0962280214521348">https://doi.org/10.1177/0962280214521348</a>.</p>
+<p>Bartlett, JW, SR Seaman, IR White, and JR Carpenter. 2015. “Multiple Imputation of Covariates by Fully Conditional Specification: Accommodating the Substantive Model.” <em>Statistical Methods in Medical Research</em>. <a href="https://doi.org/10.1177/0962280214521348" class="external-link">https://doi.org/10.1177/0962280214521348</a>.</p>
 </div>
 <div id="ref-Erler2016">
-<p>Erler, NS, D Rizopoulos, J van Rosmalen, VWV Jaddoe, OH Franco, and EMEH Lesaffre. 2016. “Dealing with Missing Covariates in Epidemiologic Studies: A Comparison Between Multiple Imputation and a Full Bayesian Approach.” <em>Statistics in Medicine</em> 35 (17): 2955–74. <a href="https://doi.org/10.1002/sim.6944">https://doi.org/10.1002/sim.6944</a>.</p>
+<p>Erler, NS, D Rizopoulos, J van Rosmalen, VWV Jaddoe, OH Franco, and EMEH Lesaffre. 2016. “Dealing with Missing Covariates in Epidemiologic Studies: A Comparison Between Multiple Imputation and a Full Bayesian Approach.” <em>Statistics in Medicine</em> 35 (17): 2955–74. <a href="https://doi.org/10.1002/sim.6944" class="external-link">https://doi.org/10.1002/sim.6944</a>.</p>
 </div>
 <div id="ref-Ibrahim2002">
-<p>Ibrahim, JG, MH, Chen, and SR Lipsitz. 2002. “Bayesian Methods for Generalized Linear Models with Covariates Missing at Random.” <em>Canadian Journal of Statistics</em>. <a href="https://doi.org/10.2307/3315865">https://doi.org/10.2307/3315865</a>.</p>
+<p>Ibrahim, JG, MH, Chen, and SR Lipsitz. 2002. “Bayesian Methods for Generalized Linear Models with Covariates Missing at Random.” <em>Canadian Journal of Statistics</em>. <a href="https://doi.org/10.2307/3315865" class="external-link">https://doi.org/10.2307/3315865</a>.</p>
 </div>
 <div id="ref-White2011">
-<p>White, IR, P Royston, and AM Wood. 2011. “Multiple Imputation Using Chained Equations: Issues and Guidance for Practice.” <em>Statistics in Medicine</em>. <a href="https://doi.org/10.1002/sim.4067">https://doi.org/10.1002/sim.4067</a>.</p>
+<p>White, IR, P Royston, and AM Wood. 2011. “Multiple Imputation Using Chained Equations: Issues and Guidance for Practice.” <em>Statistics in Medicine</em>. <a href="https://doi.org/10.1002/sim.4067" class="external-link">https://doi.org/10.1002/sim.4067</a>.</p>
 </div>
 </div>
 </div>
@@ -519,11 +510,13 @@ in the section on <a href="https://nerler.github.io/JointAI/articles/ModelSpecif
 
 
       <footer><div class="copyright">
-  <p>Developed by Nicole S. Erler.</p>
+  <p></p>
+<p>Developed by Nicole S. Erler.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>

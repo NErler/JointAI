@@ -2,21 +2,21 @@
   "index_name": "jointal",
   "start_urls": [
     {
-      "url": "https://nerler.github.io/JointAI//index.html",
+      "url": "https://nerler.github.io/JointAI/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "https://nerler.github.io/JointAI//reference",
+      "url": "https://nerler.github.io/JointAI/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "https://nerler.github.io/JointAI//articles",
+      "url": "https://nerler.github.io/JointAI/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "https://nerler.github.io/JointAI//sitemap.xml"
+    "https://nerler.github.io/JointAI/sitemap.xml"
   ],
   "selectors": {
     "homepage": {

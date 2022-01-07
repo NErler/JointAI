@@ -39,6 +39,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -102,13 +104,13 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/nerler/JointAI/">
+  <a href="https://github.com/nerler/JointAI/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/N_Erler">
+  <a href="https://twitter.com/N_Erler" class="external-link">
     <span class="fa fa-twitter fa-lg"></span>
      
   </a>
@@ -133,11 +135,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Minimal Example</h1>
-                        <h4 class="author">Nicole Erler</h4>
+                        <h4 data-toc-skip class="author">Nicole Erler</h4>
             
-            <h4 class="date">2020-06-20</h4>
+            <h4 data-toc-skip class="date">2020-06-20</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/master/vignettes/MinimalExample.Rmd"><code>vignettes/MinimalExample.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/nerler/JointAI/blob/HEAD/vignettes/MinimalExample.Rmd" class="external-link"><code>vignettes/MinimalExample.Rmd</code></a></small>
       <div class="hidden name"><code>MinimalExample.Rmd</code></div>
 
     </div>
@@ -145,10 +147,10 @@
     
     
 <p>This vignette gives a first and very brief overview of how the package <strong>JointAI</strong> can be used. The different settings and options are explained in more depth in the <a href="https://nerler.github.io/JointAI/reference/index.html">help pages</a> and other <a href="https://nerler.github.io/JointAI/articles/index.html">vignettes</a>.</p>
-<p>Here, we use the NHANES data that are part of the <strong>JointAI</strong> package. For more info on this data, check the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">help file</a> for the NHANES data, go to the <a href="https://www.cdc.gov/nchs/nhanes/index.htm">web page of the National Health and Nutrition Examination Survey (NHANES)</a> and check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the NHANES data is explored.</p>
-<div id="fitting-a-linear-regression-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#fitting-a-linear-regression-model" class="anchor"></a>Fitting a linear regression model</h2>
+<p>Here, we use the NHANES data that are part of the <strong>JointAI</strong> package. For more info on this data, check the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">help file</a> for the NHANES data, go to the <a href="https://www.cdc.gov/nchs/nhanes/index.htm" class="external-link">web page of the National Health and Nutrition Examination Survey (NHANES)</a> and check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the NHANES data is explored.</p>
+<div class="section level2">
+<h2 id="fitting-a-linear-regression-model">Fitting a linear regression model<a class="anchor" aria-label="anchor" href="#fitting-a-linear-regression-model"></a>
+</h2>
 <p>Fitting a linear regression model with <strong>JointAI</strong> is straightforward with the function <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code>lm_imp()</code></a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>lm1 &lt;-<span class="st"> </span><span class="kw">lm_imp</span>(SBP <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>race <span class="op">+</span><span class="st"> </span>WC <span class="op">+</span><span class="st"> </span>alc <span class="op">+</span><span class="st"> </span>educ <span class="op">+</span><span class="st"> </span>albu <span class="op">+</span><span class="st"> </span>bili,</span>
 <span id="cb1-2"><a href="#cb1-2"></a>              <span class="dt">data =</span> NHANES, <span class="dt">n.iter =</span> <span class="dv">500</span>)</span>
@@ -255,13 +257,13 @@
 <span id="cb1-103"><a href="#cb1-103"></a><span class="st">  </span><span class="er">|*************************************************</span><span class="st"> </span><span class="er">|</span><span class="st">  </span><span class="dv">98</span>%</span>
 <span id="cb1-104"><a href="#cb1-104"></a>  <span class="op">|</span><span class="st">                                                        </span></span>
 <span id="cb1-105"><a href="#cb1-105"></a><span class="st">  </span><span class="er">|**************************************************|</span><span class="st"> </span><span class="dv">100</span>%</span></code></pre></div>
-<p>The specification of <code><a href="../reference/model_imp.html">lm_imp()</a></code> is similar to the specification of a linear regression model for complete data using <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>. In this minimal example, the only difference is that for <code><a href="../reference/model_imp.html">lm_imp()</a></code> the number of iterations <code>n.iter</code> has to be specified. Of course, there are many more parameters that can (and sometimes should) be specified. In the vignette <a href="https://nerler.github.io/JointAI/articles/ModelSpecification.html"><em>Model Specification</em></a>, many of these parameters are explained in detail.</p>
-<p><code>n.iter</code> specifies the length of the <a href="https://en.wikipedia.org/wiki/Markov_chain">Markov chain</a>, i.e., the number of draws from the posterior distribution of the parameter or unobserved value. How many iterations are necessary depends on the data and complexity of the model and can vary from as few as 100 up to thousands or millions.</p>
+<p>The specification of <code><a href="../reference/model_imp.html">lm_imp()</a></code> is similar to the specification of a linear regression model for complete data using <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>. In this minimal example, the only difference is that for <code><a href="../reference/model_imp.html">lm_imp()</a></code> the number of iterations <code>n.iter</code> has to be specified. Of course, there are many more parameters that can (and sometimes should) be specified. In the vignette <a href="https://nerler.github.io/JointAI/articles/ModelSpecification.html"><em>Model Specification</em></a>, many of these parameters are explained in detail.</p>
+<p><code>n.iter</code> specifies the length of the <a href="https://en.wikipedia.org/wiki/Markov_chain" class="external-link">Markov chain</a>, i.e., the number of draws from the posterior distribution of the parameter or unobserved value. How many iterations are necessary depends on the data and complexity of the model and can vary from as few as 100 up to thousands or millions.</p>
 <p>One important criterion is that the Markov chains need to have converged. Convergence can be evaluated visually with a trace plot.</p>
 </div>
-<div id="traceplot" class="section level2">
-<h2 class="hasAnchor">
-<a href="#traceplot" class="anchor"></a>Traceplot</h2>
+<div class="section level2">
+<h2 id="traceplot">Traceplot<a class="anchor" aria-label="anchor" href="#traceplot"></a>
+</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_MinimalExample/results_lm1-1.png" title="plot of chunk results_lm1" alt="plot of chunk results_lm1" width="100%" style="display: block; margin: auto;"></p>
@@ -269,12 +271,12 @@
 <p>When the sampler has converged, the chains show a horizontal band, as in the above figure. Consequently, when traces show a trend, convergence has not been reached, and more iterations are necessary (e.g., using the function <a href="https://nerler.github.io/JointAI/reference/add_samples.html"><code>add_samples()</code></a>).</p>
 <p>When the chains have converged, we can obtain the result of the model from the model summary.</p>
 </div>
-<div id="model-summary" class="section level2">
-<h2 class="hasAnchor">
-<a href="#model-summary" class="anchor"></a>Model Summary</h2>
-<p>Results from a model fitted with <strong>JointAI</strong> can be printed using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>:</p>
+<div class="section level2">
+<h2 id="model-summary">Model Summary<a class="anchor" aria-label="anchor" href="#model-summary"></a>
+</h2>
+<p>Results from a model fitted with <strong>JointAI</strong> can be printed using <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Bayesian linear model fitted with JointAI</span>
 <span class="co">#&gt; </span>
@@ -310,28 +312,28 @@
 <span class="co">#&gt; Number of chains = 3 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Number of observations: 186</span></code></pre></div>
-<p>The output gives the posterior summary, i.e., the summary of the MCMC (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo">Markov Chain Monte Carlo</a>) sample, which consists of all chains combined.</p>
+<p>The output gives the posterior summary, i.e., the summary of the MCMC (<a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo" class="external-link">Markov Chain Monte Carlo</a>) sample, which consists of all chains combined.</p>
 <p>By default, <a href="https://nerler.github.io/JointAI/reference/summary.JointAI.html"><code>summary()</code></a> will only print the posterior summary for the main model parameters of the analysis model. How one can select which parameters are shown is described in the vignette <a href="https://nerler.github.io/JointAI/articles/SelectingParameters.html"><em>Selecting Parameters</em></a>.</p>
 <p>The summary consists of the posterior mean, the standard deviation, 2.5% and 97.5% quantiles of the MCMC sample, the tail probability, the Gelman-Rubin criterion for convergence and the ratio of the Monte Carlo error to the standard deviation of the posterior sample.</p>
-<div id="tail-probability" class="section level4">
-<h4 class="hasAnchor">
-<a href="#tail-probability" class="anchor"></a>Tail probability</h4>
+<div class="section level4">
+<h4 id="tail-probability">Tail probability<a class="anchor" aria-label="anchor" href="#tail-probability"></a>
+</h4>
 <p>The tail probability is a measure of how likely the value 0 is under the estimated posterior distribution, and is calculated as <span class="math display">\[2\times\min\left\{Pr(\theta &gt; 0), Pr(\theta &lt; 0)\right\}\]</span> (where <span class="math inline">\(\theta\)</span> is the parameter of interest).</p>
 <p>In the following graphics, the shaded areas represent the minimum of <span class="math inline">\(Pr(\theta &gt; 0)\)</span> and <span class="math inline">\(Pr(\theta &lt; 0)\)</span>: <img src="figures_MinimalExample/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" style="display: block; margin: auto;"></p>
 </div>
-<div id="gelman-rubin-criterion" class="section level4">
-<h4 class="hasAnchor">
-<a href="#gelman-rubin-criterion" class="anchor"></a>Gelman-Rubin criterion</h4>
+<div class="section level4">
+<h4 id="gelman-rubin-criterion">Gelman-Rubin criterion<a class="anchor" aria-label="anchor" href="#gelman-rubin-criterion"></a>
+</h4>
 <p>The Gelman-Rubin<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> criterion, also available via the function <a href="https://nerler.github.io/JointAI/reference/GR_crit.html"><code>GR_crit()</code></a>, compares the within and between chain variation. When it is close enough to 1<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, the chains can be assumed to have converged.</p>
 </div>
-<div id="monte-carlo-error" class="section level4">
-<h4 class="hasAnchor">
-<a href="#monte-carlo-error" class="anchor"></a>Monte Carlo error</h4>
+<div class="section level4">
+<h4 id="monte-carlo-error">Monte Carlo error<a class="anchor" aria-label="anchor" href="#monte-carlo-error"></a>
+</h4>
 <p>The Monte Carlo error is a measure of the error that is made because the estimate is based on a finite sample. It can also be obtained using the function <a href="https://nerler.github.io/JointAI/reference/MC_error.html"><code>MC_error()</code></a>. Ideally, the Monte Carlo error should be small compared to the standard error of the posterior sample. The values shown in the model summary are the Monte Carlo error divided by the posterior standard deviation.</p>
 </div>
-<div id="additional-information" class="section level4">
-<h4 class="hasAnchor">
-<a href="#additional-information" class="anchor"></a>Additional information</h4>
+<div class="section level4">
+<h4 id="additional-information">Additional information<a class="anchor" aria-label="anchor" href="#additional-information"></a>
+</h4>
 <p>In the model summary, additionally, some important characteristics of the MCMC samples on which the summary is based, are given. This includes the range and number of iterations (= <code>Sample size per chain</code>), thinning interval and number of chains.</p>
 <p>Furthermore, the number of observations (the sample size of the data) is given.</p>
 <p>With the arguments <code>start</code>, <code>end</code> and <code>thin</code> it is possible to select which iterations from the MCMC sample are included in the summary.</p>
@@ -339,18 +341,18 @@
 <p>A summary of the missing values in all variables involved in the model can be added to the summary by setting <code>missinfo = TRUE</code>.</p>
 </div>
 </div>
-<div id="plot-of-the-posterior-distributions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#plot-of-the-posterior-distributions" class="anchor"></a>Plot of the posterior distributions</h2>
+<div class="section level2">
+<h2 id="plot-of-the-posterior-distributions">Plot of the posterior distributions<a class="anchor" aria-label="anchor" href="#plot-of-the-posterior-distributions"></a>
+</h2>
 <p>The posterior distributions can be visualized using the function <code><a href="../reference/densplot.html">densplot()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_MinimalExample/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;"></p>
 <p>By default, <code><a href="../reference/densplot.html">densplot()</a></code> plots the empirical distribution of each of the chains separately. When <code>joined = TRUE</code> the distributions of the combined chains are plotted.</p>
 </div>
-<div id="other-types-of-models" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-types-of-models" class="anchor"></a>Other types of models</h2>
+<div class="section level2">
+<h2 id="other-types-of-models">Other types of models<a class="anchor" aria-label="anchor" href="#other-types-of-models"></a>
+</h2>
 <p>Besides linear regression models, it is also possible to fit</p>
 <ul>
 <li><p><strong>generalized linear models</strong>: <a href="https://nerler.github.io/JointAI/reference/model_imp.html"><code>glm_imp()</code></a></p></li>
@@ -390,11 +392,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Nicole S. Erler.</p>
+  <p></p>
+<p>Developed by Nicole S. Erler.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>

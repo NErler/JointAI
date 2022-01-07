@@ -1,165 +1,180 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://nerler.github.io/JointAI//index.html</loc>
+    <loc>https://nerler.github.io/JointAI/404.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/GR_crit.html</loc>
+    <loc>https://nerler.github.io/JointAI/articles/AfterFitting.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/JointAI.html</loc>
+    <loc>https://nerler.github.io/JointAI/articles/MCMCsettings.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/JointAIObject.html</loc>
+    <loc>https://nerler.github.io/JointAI/articles/MinimalExample.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/MC_error.html</loc>
+    <loc>https://nerler.github.io/JointAI/articles/ModelSpecification.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/NHANES.html</loc>
+    <loc>https://nerler.github.io/JointAI/articles/SelectingParameters.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/PBC.html</loc>
+    <loc>https://nerler.github.io/JointAI/articles/TheoreticalBackground.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/Surv.html</loc>
+    <loc>https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/add_samples.html</loc>
+    <loc>https://nerler.github.io/JointAI/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/all_vars.html</loc>
+    <loc>https://nerler.github.io/JointAI/authors.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/bs.html</loc>
+    <loc>https://nerler.github.io/JointAI/index.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/check_full_blockdiag.html</loc>
+    <loc>https://nerler.github.io/JointAI/news/index.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/check_rd_vcov.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/GR_crit.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/check_rd_vcov_list.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/JointAI.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/clean_survname.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/JointAIObject.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/default_hyperpars.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/MC_error.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/densplot.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/NHANES.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/expand_rd_vcov_full.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/PBC.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/extract_state.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/Surv.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/get_MIdat.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/add_samples.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/get_Mlist.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/all_vars.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/get_family.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/bs.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/get_missinfo.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/check_full_blockdiag.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/get_modeltype.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/check_rd_vcov.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/get_nranef.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/check_rd_vcov_list.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/hc_rdslope_info.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/clean_survname.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/hc_rdslope_interact.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/default_hyperpars.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/list_models.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/densplot.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/longDF.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/expand_rd_vcov_full.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/md_pattern.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/extract_state.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/model_imp.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/get_MIdat.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/ns.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/get_Mlist.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/parameters.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/get_family.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/plot.JointAI.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/get_missinfo.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/plot_all.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/get_modeltype.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/plot_imp_distr.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/get_nranef.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/predDF.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/hc_rdslope_info.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/predict.JointAI.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/hc_rdslope_interact.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/rd_vcov.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/remove_lhs.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/list_models.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/residuals.JointAI.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/longDF.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/set_refcat.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/md_pattern.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/sharedParams.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/model_imp.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/simLong.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/ns.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/summary.JointAI.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/parameters.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/traceplot.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/plot.JointAI.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//reference/wideDF.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/plot_all.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//articles/AfterFitting.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/plot_imp_distr.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//articles/MCMCsettings.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/predDF.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//articles/MinimalExample.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/predict.JointAI.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//articles/ModelSpecification.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/rd_vcov.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//articles/SelectingParameters.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/remove_lhs.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//articles/TheoreticalBackground.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/residuals.JointAI.html</loc>
   </url>
   <url>
-    <loc>https://nerler.github.io/JointAI//articles/VisualizingIncompleteData.html</loc>
+    <loc>https://nerler.github.io/JointAI/reference/set_refcat.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI/reference/sharedParams.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI/reference/simLong.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI/reference/summary.JointAI.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI/reference/traceplot.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI/reference/wideDF.html</loc>
   </url>
 </urlset>
