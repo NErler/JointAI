@@ -15,6 +15,8 @@
 #' @param ylab y-axis label
 #' @inheritParams ggplot2::theme
 #' @importFrom rlang .data
+#' @param sort_columns logical; should the columns be sorted by number of missing
+#'                    values? (default is `TRUE`)
 #' @param ... optional additional parameters, currently not used
 #'
 #' @seealso See the vignette
@@ -36,7 +38,8 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
                        border = grDevices::grey(0.5),
                        plot = TRUE, pattern = FALSE, print_xaxis = TRUE,
                        ylab = 'Number of observations per pattern',
-                       print_yaxis = TRUE, legend.position = 'bottom', ...) {
+                       print_yaxis = TRUE, legend.position = 'bottom',
+                       sort_columns = TRUE, ...) {
 
   naX <- ifelse(is.na(data), 0, 1)
   unaX <- unique(naX)
@@ -49,14 +52,19 @@ md_pattern <- function(data, color = c(grDevices::grey(0.1),
   tab <- table(NApat)
   Npat <- tab[match(NAupat, names(tab))]
 
+  # sort rows
   unaX <- unaX[order(Npat, decreasing = TRUE), ]
   Npat <- sort(Npat, decreasing = TRUE)
   rownames(unaX) <- rev(seq_len(nrow(unaX)))
 
-  vars <- colnames(unaX)[order(Nmis)]
-  unaX <- unaX[, order(Nmis)]
+  if (sort_columns) {
+    vars <- colnames(unaX)[order(Nmis)]
+    unaX <- unaX[, order(Nmis)]
+    Nmis <- sort(Nmis)
+  } else {
+    vars <- colnames(unaX)
+  }
   colnames(unaX) <- seq_len(ncol(unaX))
-  Nmis <- sort(Nmis)
 
 
   if (plot) {

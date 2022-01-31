@@ -2,6 +2,15 @@
 
 
 ## New features
+* `md_pattern()` has an additional argument `sort_columns` to provide the option to switch off the sorting of columns by number of missing values.
+
+
+-----------------------------------------------------------------------------
+
+# JointAI 1.0.3
+
+
+## New features
 * `custom`: new argument in the main analysis functions that allows the user
   to replace the JAGS syntax for sub-models with custom syntax. The argument
   expects a named list where the names are the names of the variables 
@@ -34,7 +43,7 @@
 
 
 
---------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 # JointAI 1.0.2
 

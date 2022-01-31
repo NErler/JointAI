@@ -7,7 +7,8 @@
 md_pattern(data, color = c(grDevices::grey(0.1), grDevices::grey(0.7)),
   border = grDevices::grey(0.5), plot = TRUE, pattern = FALSE,
   print_xaxis = TRUE, ylab = "Number of observations per pattern",
-  print_yaxis = TRUE, legend.position = "bottom", ...)
+  print_yaxis = TRUE, legend.position = "bottom", sort_columns = TRUE,
+  ...)
 }
 \arguments{
 \item{data}{data frame}
@@ -30,6 +31,9 @@ and y-axis (on the right) be printed?}
 
 \item{legend.position}{the position of legends ("none", "left", "right",
 "bottom", "top", or two-element numeric vector)}
+
+\item{sort_columns}{logical; should the columns be sorted by number of missing
+values? (default is \code{TRUE})}
 
 \item{...}{optional additional parameters, currently not used}
 }
