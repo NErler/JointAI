@@ -20,8 +20,9 @@ reformat_longsurvdata <- function(data, fixed, random, timevar, idvar) {
   survinfo <- extract_outcome(fixed)[grepl("^Surv\\(", fixed)]
 
   # identify levels of all variables in the data
-  datlvls <- cvapply(data, check_varlevel, groups = groups,
-                    group_lvls = identify_level_relations(groups))
+  datlvls <- get_datlvls(data, groups)
+  # datlvls <- cvapply(data, check_varlevel, groups = groups,
+  #                   group_lvls = identify_level_relations(groups))
 
   # if there are multiple survival variables and some time-varying variables
   if (length(survinfo) > 0L & any(datlvls[unlist(survinfo)] != "lvlone")) {
@@ -105,7 +106,8 @@ fill_locf <- function(data, fixed, random, auxvars, timevar, groups) {
   survout <- extract_outcome(fixed)[grepl("^Surv\\(", fixed)]
 
   # identify data levels
-  datlvls <- cvapply(data[, allvars], check_varlevel, groups = groups)
+  # datlvls <- cvapply(data[, allvars], check_varlevel, groups = groups)
+  datlvls <- get_datlvls(data[, allvars], groups)
   surv_lvl <- unique(datlvls[unlist(survout)])
 
   # identify covariates in the survival models
@@ -219,7 +221,9 @@ extract_outcome_data <- function(fixed, random = NULL, data,
     } else {
       outcomes[[i]] <- split_outcome(lhs = extract_lhs(fixed[[i]]), data = data)
       nlev <- ivapply(outcomes[[i]], function(x) length(levels(x)))
-      varlvl <- cvapply(outcomes[[i]], check_varlevel, groups = groups)
+      # varlvl <- cvapply(outcomes[[i]], check_varlevel, groups = groups)
+      varlvl <- get_datlvls(outcomes[[i]], groups)
+
 
       if (any(nlev > 2L)) {
         # ordinal variables have values 1, 2, 3, ...
@@ -566,8 +570,10 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
 
 
   # identify the levels of all variables
-  lvl <- cvapply(data[, allvars, drop = FALSE], check_varlevel, groups = groups,
-                group_lvls = identify_level_relations(groups))
+  # lvl <- cvapply(data[, allvars, drop = FALSE], check_varlevel, groups = groups,
+  #               group_lvls = identify_level_relations(groups))
+  lvl <- get_datlvls(data[, allvars, drop = FALSE], groups)
+
   group_lvls <- colSums(!identify_level_relations(groups))
 
   # make a subset containing only covariates

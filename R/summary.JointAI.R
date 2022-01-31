@@ -696,7 +696,8 @@ get_missinfo <- function(object) {
 
   groups <- object$Mlist$groups
 
-  data_lvls <- cvapply(object$data[, allvars], check_varlevel, groups = groups)
+  # data_lvls <- cvapply(object$data[, allvars], check_varlevel, groups = groups)
+  data_lvls <- get_datlvls(object$data[, allvars, drop = FALSE], groups)
 
   complcases <- lapply(names(groups), function(k) {
     cc <- complete.cases(object$data[match(unique(groups[[k]]), groups[[k]]),
@@ -712,8 +713,9 @@ get_missinfo <- function(object) {
       ), check.names = FALSE, row.names = k)
   })
 
-  dat_lvls <- sapply(object$data[allvars], check_varlevel,
-                     groups = object$Mlist$groups)
+  # dat_lvls <- sapply(object$data[allvars], check_varlevel,
+  #                    groups = object$Mlist$groups)
+  dat_lvls <- get_datlvls(object$data[allvars], object$Mlist$groups)
 
   miss_list <- sapply(unique(dat_lvls), function(lvl) {
     subdat <- object$data[match(unique(object$Mlist$groups[[lvl]]),

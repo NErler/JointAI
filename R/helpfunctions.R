@@ -133,7 +133,8 @@ identify_level_relations <- function(grouping) {
   # turn the list into a matrix, with the different levels as columns
   g <- do.call(cbind, grouping)
   # check if the grouping information varies within each of the clusters
-  res <- apply(g, 2L, check_cluster, grouping = grouping)
+  res <- apply(g, 2L, check_cluster, grouping = grouping, simplify = FALSE)
+  res <- do.call(cbind, res)
 
   if (!is.matrix(res))
     res <- t(res)
@@ -142,6 +143,39 @@ identify_level_relations <- function(grouping) {
   # TRUEs and FALSEs
   res
 }
+
+
+
+# More efficient alternative to running check_varlevel for each column of a
+# data.frame separately
+get_datlvls <- function(data, groups) {
+
+  if (!inherits(data, "data.frame"))
+    data <- as.data.frame(data)
+
+
+
+  clus <- lapply(groups, function(k) {
+    # for each level of grouping, compare the original vector with a
+    # reconstructed vector in which the first element per group is repeated
+    # for each group member
+    d_rep <- data[match(unique(k), k)[match(k, unique(k))], , drop = FALSE]
+    !unlist(Map(identical, d_rep, data))
+  })
+  clus <- do.call(cbind, clus)
+
+  lvl_rel <- identify_level_relations(groups)
+
+  k <- match(
+    data.frame(t(clus)),
+    data.frame(lvl_rel[colnames(clus), ])
+  )
+
+  k[is.na(k)] <- which.max(colSums(!lvl_rel))
+  setNames(colnames(clus)[k], rownames(clus))
+
+}
+
 
 
 # used in divide_matrices, get_modeltypes, helpfunctions_checks,

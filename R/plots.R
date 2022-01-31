@@ -460,7 +460,8 @@ plot_all <- function(data, nrow = NULL, ncol = NULL,
   if (!is.null(idvars)) {
     groups <- data[, idvars, drop = FALSE]
     groups$lvlone <- seq_len(nrow(groups))
-    varlvls <- sapply(data, check_varlevel, groups = groups)
+    varlvls <- get_datlvls(data, groups)
+    # varlvls <- sapply(data, check_varlevel, groups = groups)
   }
 
   for (i in names(data)) {
