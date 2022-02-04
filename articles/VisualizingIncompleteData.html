@@ -201,9 +201,7 @@
 </h2>
 <p>The pattern of the missing data can be visualized with the function <code><a href="../reference/md_pattern.html">md_pattern()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">NHANES</span><span class="op">)</span>
-<span class="co">#&gt; Warning in register(): Can't find generic `scale_type` in package ggplot2 to</span>
-<span class="co">#&gt; register S3 method.</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">NHANES</span><span class="op">)</span></code></pre></div>
 <p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p>In the resulting plot, variables are given in the columns and each row corresponds to one pattern of missingness across the variables. The numbers on the right margin give the number of cases per pattern. Underneath the plot, the number of missing values per variable is given. Columns are automatically sorted by number of missing values, rows by number of cases per pattern.</p>
 <p>The plot is generated with the help of <a href="https://ggplot2.tidyverse.org/" class="external-link"><code>ggplot()</code></a>, and, hence, the package <a href="https://CRAN.R-project.org/package=ggplot2" class="external-link"><strong>ggplot2</strong></a> needs to be installed. By setting <code>plot = FALSE</code>, no plot will be generated (and then <strong>ggplot2</strong> is not required).</p>
