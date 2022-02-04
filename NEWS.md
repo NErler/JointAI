@@ -5,6 +5,9 @@
 * `md_pattern()` has an additional argument `sort_columns` to provide the option to switch off the sorting of columns by number of missing values.
 
 
+## Bug fixes
+* `formula()` did not return a formula when `add_samples()` was used.
+
 -----------------------------------------------------------------------------
 
 # JointAI 1.0.3

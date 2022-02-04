@@ -426,13 +426,24 @@ formula.JointAI <- function(x, ...) {
   if (!(inherits(x, "JointAI") | inherits(x, "JointAI_errored")))
     errormsg("Use only %s with objects.", sQuote("JointAI"))
 
-  if (is.null(x$call$formula)) {
-    as.formula(x$call$fixed)
-  } else {
-    if (inherits(x$call$formula, "list")) {
-      x$call$formula
+  if (inherits(x$call, "call")) {
+    if (is.null(x$call$formula)) {
+      as.formula(x$call$fixed)
     } else {
-      as.formula(x$call$formula)
+      fmla <- eval(x$call$formula)
+      if (inherits(eval(x$call$formula), "list")) {
+        x$call$formula
+      } else {
+        as.formula(x$call$formula)
+      }
+    }
+  } else if (inherits(x$call, "list")) {
+    fmla_list <- lapply(x$call, "[[", "formula")
+    fmla_list <- lapply(fmla[lvapply(fmla, inherits, "call")], as.formula)
+    if (length(fmla_list) == 1L) {
+      fmla_list[[1]]
+    } else {
+      fmla_list
     }
   }
 }
