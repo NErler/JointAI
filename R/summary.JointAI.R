@@ -438,8 +438,14 @@ formula.JointAI <- function(x, ...) {
       }
     }
   } else if (inherits(x$call, "list")) {
-    fmla_list <- lapply(x$call, "[[", "formula")
-    fmla_list <- lapply(fmla[lvapply(fmla, inherits, "call")], as.formula)
+    fmla_list <- lapply(x$call, function(k) {
+      if (!is.null(k$formula)) {
+        k$formula
+      } else {
+        k$fixed
+      }
+    })
+    fmla_list <- lapply(fmla_list[lvapply(fmla_list, inherits, "call")], as.formula)
     if (length(fmla_list) == 1L) {
       fmla_list[[1]]
     } else {
