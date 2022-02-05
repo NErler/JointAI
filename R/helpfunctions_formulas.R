@@ -1,41 +1,3 @@
-#' Check/convert formula to list
-#'
-#' Check if an object is a list of formulas and/or NULL elements and convert
-#' it to a list if it is a formula object.
-#'
-#' Internal function; used in many help functions, get_refs, *_imp, predict
-#' (2022-02-05)
-#' @param formula any object
-#' @param convert logical; should the input be converted to a list?
-#' @keywords internal
-check_formula_list <- function(formula, convert = TRUE) {
-
-  if (is.null(formula)) {
-    return(NULL)
-  }
-
-  # if formula is a formula, turn it into a list
-  if (inherits(formula, "formula")) {
-    if (convert) {
-      formula <- list(formula)
-    }
-  } else if (inherits(formula, "list")) {
-    # check if all elements are either formulas or NULL
-    fmla_elmt <- lvapply(formula, inherits, "formula")
-    null_elmt <- lvapply(formula, is.null)
-
-    if (!all(fmla_elmt | null_elmt)) {
-      errormsg("At least one element of the provided object is not of class
-             %s.", dQuote("formula"))
-    }
-  } else {
-    errormsg("The provided object is not of class %s nor is it a %s.",
-             dQuote("formula"), dQuote("list"))
-  }
-
-  formula
-}
-
 
 # used in divide_matrices, get_models, various help functions,
 # predict (2020-06-09)
@@ -123,74 +85,7 @@ extract_outcome <- function(fixed) {
 }
 
 
-#' Extract the left hand side of a formula
-#'
-#' Extracts the left hand side from a `formula` object and returns it as
-#' character string.
-#' Relevant, for example, for survival formulas, where `Surv(...)` is a
-#' `call`.
-#'
-#' Internal; used in various help functions (2022-02-05)
-#'
-#' @param formula a `formula` object (NOT a `list` of formulas)
-#'
-#' @returns A character string.
-#'
-#' @keywords internal
-#'
-extract_lhs <- function(formula) {
 
-  if (is.null(formula)) {
-    return(NULL)
-  }
-
-  # check that formula is a formula object
-  if (!inherits(formula, "formula"))
-    errormsg("The provided formula is not a %s object.", dQuote("formula"))
-
-
-  # check that the formula has a LHS
-  if (attr(terms(formula), "response") != 1L)
-    errormsg("Unable to extract response from the formula.")
-
-
-  if (length(formula) == 3L) {
-    deparse(formula[[2L]], width.cutoff = 500L)
-    # } else if (length(formula) == 2L) {
-    # ""
-  } else {
-    # not sure this is ever needed... Can't come up with an example for a
-    # formula that has a response and length 2.
-    errormsg("Unable to extract a response from the formula.
-             Formula is not of length 3.")
-  }
-}
-
-
-#' Remove the left hand side of a (list of) formula(s)
-#'
-#' Internal function; used in divide_matrices, get_models and help functions
-#'  (2022-02-05)
-#'
-#' @param formula a formula object or a list of formula objects
-#'
-#' @returns A `formula` object or a `list` of `formula` objects.
-#'
-#' @keywords internal
-#'
-remove_lhs <- function(formula) {
-
-  formula <- check_formula_list(formula, convert = FALSE)
-
-  if (is.null(formula))
-    return(NULL)
-
-  if (inherits(formula, "list")) {
-    lapply(formula, remove_lhs)
-  } else {
-    formula(delete.response(terms(formula)))
-  }
-}
 
 
 # used in divide_matrices, get_models, and help functions (20120-06-09)
