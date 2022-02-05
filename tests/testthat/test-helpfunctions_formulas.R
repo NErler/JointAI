@@ -3,28 +3,6 @@ library("JointAI")
 library("survival")
 
 
-# check_formula_list -----------------------------------------------------------
-test_that('check_formula_list works', {
-  expect_equal(check_formula_list(y ~ x + z),
-               list(y ~ x + z))
-  expect_equal(check_formula_list(y ~ x + z | id),
-               list(y ~ x + z | id))
-  expect_equal(check_formula_list(NULL),
-               NULL)
-  expect_equal(check_formula_list(list(y ~ x + z, NULL)),
-               list(y ~ x + z, NULL))
-})
-
-
-test_that('check_formula_list gives error', {
-  expect_error(check_formula_list("y ~ x + z"))
-  expect_error(check_formula_list(33))
-  expect_error(check_formula_list(log(y)))
-  expect_error(check_formula_list(list(y ~ x + z, NULL, 33)))
-  expect_error(check_formula_list(list(y ~ x + z, NULL, "abc")))
-  expect_error(check_formula_list(list(y ~ x + z, NULL, "y ~ abc")))
-})
-
 
 
 # extract_id--------------------------------------------------------------
@@ -125,24 +103,9 @@ test_that('extract_outcome works', {
 })
 
 
-# extract_lhs ------------------------------------------------------------------
-test_that('extract_lhs works', {
-  for (i in seq_along(ys)) {
-    expect_equal( extract_lhs(ys[[i]]$fixed), ys[[i]]$LHS)
-  }
-})
 
-# remove_lhs -------------------------------------------------------------------
-test_that('remove_lhs works', {
-  for (i in seq_along(ys)) {
-    expect_equal(remove_lhs(ys[[i]]$fixed), ys[[i]]$RHS,
-                 ignore_formula_env = TRUE)
-  }
-  for (i in seq_along(runs)) {
-    expect_equal(remove_lhs(runs[[i]]$random), runs[[i]]$RHS,
-                 ignore_formula_env = TRUE)
-  }
-})
+
+
 
 
 # remove grouping --------------------------------------------------------------
