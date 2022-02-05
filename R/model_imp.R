@@ -869,9 +869,18 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                         inits = inits,
                         seed = seed)
 
+  fmla <- if (is.null(formula) & !is.null(fixed)) {
+    combine_formula_lists(fixed, random, warn = warn)
+  } else {
+    formula
+  }
+  if (length(fmla) == 1L) {
+    fmla <- fmla[[1]]
+  }
 
   object <- structure(
     list(analysis_type = analysis_type,
+         formula = fmla,
          data = Mlist$data,
          models = Mlist$models,
          fixed = Mlist$fixed,

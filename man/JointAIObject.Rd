@@ -9,6 +9,7 @@
 \code{coxph} (with attributes
 \code{family} and \code{link} for GLM-type
 models}
+\item{\code{formula}}{The formula used in the (analysis) model.}
 \item{\code{data}}{original (incomplete, but pre-processed) data}
 \item{\code{models}}{named vector specifying the the types of all sub-models}
 \item{\code{fixed}}{a list of the fixed effects formulas of the sub-model(s)

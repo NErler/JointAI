@@ -426,32 +426,34 @@ formula.JointAI <- function(x, ...) {
   if (!(inherits(x, "JointAI") | inherits(x, "JointAI_errored")))
     errormsg("Use only %s with objects.", sQuote("JointAI"))
 
-  if (inherits(x$call, "call")) {
-    if (is.null(x$call$formula)) {
-      as.formula(x$call$fixed)
-    } else {
-      fmla <- eval(x$call$formula)
-      if (inherits(eval(x$call$formula), "list")) {
-        x$call$formula
-      } else {
-        as.formula(x$call$formula)
-      }
-    }
-  } else if (inherits(x$call, "list")) {
-    fmla_list <- lapply(x$call, function(k) {
-      if (!is.null(k$formula)) {
-        k$formula
-      } else {
-        k$fixed
-      }
-    })
-    fmla_list <- lapply(fmla_list[lvapply(fmla_list, inherits, "call")], as.formula)
-    if (length(fmla_list) == 1L) {
-      fmla_list[[1]]
-    } else {
-      fmla_list
-    }
-  }
+  x$formula
+
+  #   if (inherits(x$call, "call")) {
+  #   if (is.null(x$call$formula)) {
+  #     as.formula(x$call$fixed)
+  #   } else {
+  #     fmla <- eval(x$call$formula)
+  #     if (inherits(eval(x$call$formula), "list")) {
+  #       x$call$formula
+  #     } else {
+  #       as.formula(x$call$formula)
+  #     }
+  #   }
+  # } else if (inherits(x$call, "list")) {
+  #   fmla_list <- lapply(x$call, function(k) {
+  #     if (!is.null(k$formula)) {
+  #       k$formula
+  #     } else {
+  #       k$fixed
+  #     }
+  #   })
+  #   fmla_list <- lapply(fmla_list[lvapply(fmla_list, inherits, "call")], as.formula)
+  #   if (length(fmla_list) == 1L) {
+  #     fmla_list[[1]]
+  #   } else {
+  #     fmla_list
+  #   }
+  # }
 }
 
 
