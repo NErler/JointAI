@@ -123,11 +123,22 @@ extract_outcome <- function(fixed) {
 }
 
 
-# used in various help functions (2020-06-09)
+#' Extract the left hand side of a formula
+#'
+#' Extracts the left hand side from a `formula` object and returns it as
+#' character string.
+#' Relevant, for example, for survival formulas, where `Surv(...)` is a
+#' `call`.
+#'
+#' Internal; used in various help functions (2022-02-05)
+#'
+#' @param formula a `formula` object (NOT a `list` of formulas)
+#'
+#' @returns A character string.
+#'
+#' @keywords internal
+#'
 extract_lhs <- function(formula) {
-  # Extract the outcome formula from a formula
-  # (relevant for example for survival formulas, where Surv(...) is a formula)
-  # - formula: two-sided formula (no list of formulas!!!)
 
   if (is.null(formula)) {
     return(NULL)
@@ -135,8 +146,7 @@ extract_lhs <- function(formula) {
 
   # check that formula is a formula object
   if (!inherits(formula, "formula"))
-    errormsg("The provided formula is not a %s object.",
-             dQuote("formula"))
+    errormsg("The provided formula is not a %s object.", dQuote("formula"))
 
 
   # check that the formula has a LHS
@@ -144,17 +154,15 @@ extract_lhs <- function(formula) {
     errormsg("Unable to extract response from the formula.")
 
 
-  # get the LHS of the formula
-  # lhs <- sub("[[:space:]]*\\~[[:print:]]*", "",
-  #            deparse(formula, width.cutoff = 500L))
-
-  if (length(formula) == 3) {
-    deparse(formula[[2]], width.cutoff = 500L)
-  } else if (length(formula) == 2) {
-    ""
+  if (length(formula) == 3L) {
+    deparse(formula[[2L]], width.cutoff = 500L)
+    # } else if (length(formula) == 2L) {
+    # ""
   } else {
-    errormsg("Unable to extract respone from the formula.
-             Formula is not of length 2 or 3.")
+    # not sure this is ever needed... Can't come up with an example for a
+    # formula that has a response and length 2.
+    errormsg("Unable to extract a response from the formula.
+             Formula is not of length 3.")
   }
 }
 
