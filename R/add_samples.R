@@ -58,7 +58,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   if (is.null(thin)) {
     thin <- object$mcmc_settings$thin[length(object$mcmc_settings$thin)]
   } else {
-    if (add & thin != object$mcmc_settings$thin) {
+    if (add &
+        thin != object$mcmc_settings$thin[length(object$mcmc_settings$thin)]) {
       thin <- object$mcmc_settings$thin[length(object$mcmc_settings$thin)]
 
       if (mess)
