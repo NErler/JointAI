@@ -167,36 +167,29 @@ extract_lhs <- function(formula) {
 }
 
 
-# used in divide_matrices, get_models and help functions (2020-06-09)
 #' Remove the left hand side of a (list of) formula(s)
+#'
+#' Internal function; used in divide_matrices, get_models and help functions
+#'  (2022-02-05)
+#'
 #' @param formula a formula object or a list of formula objects
-#' @export
+#'
+#' @returns A `formula` object or a `list` of `formula` objects.
+#'
 #' @keywords internal
+#'
 remove_lhs <- function(formula) {
 
-  # if formula is not a list, turn into list
-  formula <- check_formula_list(formula)
-  if (is.null(formula)) {
+  formula <- check_formula_list(formula, convert = FALSE)
+
+  if (is.null(formula))
     return(NULL)
+
+  if (inherits(formula, "list")) {
+    lapply(formula, remove_lhs)
+  } else {
+    formula(delete.response(terms(formula)))
   }
-
-
-  lapply(formula, function(x) {
-    as.formula(paste("~", paste(deparse(x[[length(x)]]), collapse = " ")))
-  })
-
-  # lapply(formula, function(x) {
-  #   if (!is.null(x)) {
-  #     lhs <- try(extract_lhs(x), silent = TRUE)
-  #     if (inherits(lhs, "try-error")) {
-  #       x
-  #     } else {
-  #       clean_lhs <- gsub("([^\\])\\(", "\\1\\\\(", extract_lhs(x))
-  #       as.formula(gsub(paste0("^", clean_lhs, "[[ ]]*~"), "~",
-  #                       deparse(x, width.cutoff = 500L)))
-  #     }
-  #   }
-  # })
 }
 
 
