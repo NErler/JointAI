@@ -1,25 +1,40 @@
+#' Check/convert formula to list
+#'
+#' Check if an object is a list of formulas and/or NULL elements and convert
+#' it to a list if it is a formula object.
+#'
+#' Internal function; used in many help functions, get_refs, *_imp, predict
+#' (2022-02-05)
+#' @param formula any object
+#' @param convert logical; should the input be converted to a list?
+#' @keywords internal
+check_formula_list <- function(formula, convert = TRUE) {
 
-# used in many help functions, get_refs, *_imp, predict (2020-06-09)
-check_formula_list <- function(formula) {
-  # check if a formula is a list, and turn it into a list if it is not.
-
-  # if formula is NULL, return NULL
   if (is.null(formula)) {
     return(NULL)
   }
 
-  # if formula is not a list, make it one
-  if (!is.list(formula))
-    formula <- list(formula)
+  # if formula is a formula, turn it into a list
+  if (inherits(formula, "formula")) {
+    if (convert) {
+      formula <- list(formula)
+    }
+  } else if (inherits(formula, "list")) {
+    # check if all elements are either formulas or NULL
+    fmla_elmt <- lvapply(formula, inherits, "formula")
+    null_elmt <- lvapply(formula, is.null)
 
-  # check that all elements of formula are either formulas or NULL
-  if (!all(lvapply(formula, function(x) inherits(x, "formula") | is.null(x))))
-    errormsg("At least one element of the provided formula is not of class
+    if (!all(fmla_elmt | null_elmt)) {
+      errormsg("At least one element of the provided object is not of class
              %s.", dQuote("formula"))
+    }
+  } else {
+    errormsg("The provided object is not of class %s nor is it a %s.",
+             dQuote("formula"), dQuote("list"))
+  }
 
   formula
 }
-
 
 
 # used in divide_matrices, get_models, various help functions,
