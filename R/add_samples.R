@@ -175,6 +175,7 @@ check_add_thinning <- function(thin, object, add, mess = TRUE) {
           (%s).", dQuote("add = TRUE"), dQuote(paste0("thin = ", thin)))
     }
   }
+  thin
 }
 
 
@@ -182,16 +183,16 @@ check_add_thinning <- function(thin, object, add, mess = TRUE) {
 check_add_varnames <- function(object, monitor_params, mess, add) {
 
   if (is.null(monitor_params)) {
-    var_names <- object$mcmc_settings$variable.names
+    object$mcmc_settings$variable.names
   } else {
     if (!identical(var_names, object$mcmc_settings$variable.names) & add)
       errormsg("When %s it is not possible to monitor different parameters than
              were monitored in the original model.", dQuote("add = TRUE"))
 
-    var_names <- do.call(get_params,
-                         c(list(Mlist = get_Mlist(object),
-                                info_list = object$info_list,
-                                mess = mess),
-                           monitor_params))
+    do.call(get_params,
+            c(list(Mlist = get_Mlist(object),
+                   info_list = object$info_list,
+                   mess = mess),
+              monitor_params))
   }
 }
