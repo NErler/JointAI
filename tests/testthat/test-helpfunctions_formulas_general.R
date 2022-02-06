@@ -267,63 +267,62 @@ test_that('split_formula_list works', {
 
 
 # extract_id--------------------------------------------------------------
-runs <- list(list(random = ~ 1 | id, ids = 'id', RHS = list(~ 1 | id),
-                  nogroup = list(id = ~ 1)),
-             list(random = ~ 0 | id, ids = 'id', RHS = list(~ 0 | id),
-                  nogroup = list(id = ~ 0)),
-             list(random = NULL, ids = NULL, RHS = NULL, nogroup = NULL),
-             list(random = y ~ a + b + c, ids = NULL, RHS = list(~a + b + c),
-                  nogroup = list(y ~ a + b + c)),
-             list(random = y ~ time | id, ids = 'id', RHS = list(~time | id),
-                  nogroup = list(id = y ~ time)),
-             list(random = y ~ 0, ids = NULL, RHS = list(~ 0),
-                  nogroup = list(y ~ 0))
-)
 
 test_that('extract_id works', {
-  for (i in setdiff(seq_along(runs), c(4, 6))) {
-    expect_equal(extract_id(runs[[i]]$random), runs[[i]]$ids)
-  }
+  # single formula
+  expect_equal(extract_id(~ 1 | id), "id")
+  expect_equal(extract_id(~ 0 | id), "id")
+  expect_equal(extract_id(~ time | id), "id")
+  expect_equal(extract_id(~ 1 | id/center), c("id", "center"))
+  expect_equal(extract_id(~ 1 | id + center), c("id", "center"))
+  expect_equal(extract_id(~ (1 | id) + (time | center)), c("id", "center"))
 
-  # test all together
-  expect_equal(extract_id(lapply(runs, "[[", 'random')),
-               unlist(unique(lapply(runs, "[[", 'ids'))))
+
+  expect_null(extract_id(NULL))
+  expect_null(extract_id(~ a + b, warn = FALSE), NULL)
+
+
+  # list of formulas
+  expect_equal(extract_id(list(a = ~ time | id,
+                               b = y ~ (time | id) + (1 | center),
+                               d = NULL,
+                               e = ~ 1 | group)),
+               c("id", "center", "group"))
+
+
 })
 
 
 test_that('extract_id gives warning', {
-  for (i in c(4, 6)) {
-    expect_warning(extract_id(runs[[i]]$random), runs[[i]]$ids)
-  }
-
-  # test all together
-  expect_equal(extract_id(lapply(runs, "[[", 'random')),
-               unlist(unique(lapply(runs, "[[", 'ids'))))
+  expect_warning(extract_id(~ a + b + c))
+  expect_warning(extract_id(~ 0))
+  expect_warning(extract_id(~ 1))
 })
 
 
-test_that('extract_id results in error', {
-  err <- list(
-    "text",
-    NA,
-    TRUE,
-    mean,
-    list(random =  ~ a | id/class, ids = c('id', 'class')),
-    list(random = ~ a | id + class, ids = c('id', 'class')),
-    list(random = list(~a | id, ~ b | id2), ids = c('id', 'id2'))
-  )
 
-  for (i in seq_along(err)) {
-    expect_error(extract_id(err[[i]]))
-  }
+test_that('extract_id gives in error', {
+  expect_error(extract_id("~ 1 | id"))
+  expect_error(extract_id(NA))
 })
 
 
-test_that('extract_id results in warning', {
-  rd_warn <- list(~1,
-                  ~a + b + c)
+# all_vars ---------------------------------------------------------------------
+test_that("all_vars works", {
+  expect_null(all_vars(NULL))
 
-  for (i in seq_along(rd_warn)) {
-    expect_warning(extract_id(rd_warn[[i]]))
-  }
+  expect_equal(all_vars(y ~ a + B + I(c/d^2) + ns(time, df = 3) +
+                          (1 | id/center)),
+               c("y", "a", "B", "c", "d", "time", "id", "center"))
+  expect_equal(all_vars(list(y ~ a + B + I(c/d^2),
+                             a ~ c + ns(time, df = 3) + (1 | id/center))),
+               c("y", "a", "B", "c", "d", "time", "id", "center"))
+})
+
+test_that("all_vars gives an error", {
+  expect_error(all_vars(NA))
+  expect_error(all_vars(1))
+  expect_error(all_vars(list(NULL, 1, "abc", ~ b + c)))
+  expect_error(all_vars(c("a", "b", "c")))
+  expect_error(all_vars("abc"))
 })
