@@ -263,3 +263,67 @@ test_that('split_formula_list works', {
          random = unlist(lapply(fmls, "[[", 'random'))),
     ignore_formula_env = TRUE)
 })
+
+
+
+# extract_id--------------------------------------------------------------
+runs <- list(list(random = ~ 1 | id, ids = 'id', RHS = list(~ 1 | id),
+                  nogroup = list(id = ~ 1)),
+             list(random = ~ 0 | id, ids = 'id', RHS = list(~ 0 | id),
+                  nogroup = list(id = ~ 0)),
+             list(random = NULL, ids = NULL, RHS = NULL, nogroup = NULL),
+             list(random = y ~ a + b + c, ids = NULL, RHS = list(~a + b + c),
+                  nogroup = list(y ~ a + b + c)),
+             list(random = y ~ time | id, ids = 'id', RHS = list(~time | id),
+                  nogroup = list(id = y ~ time)),
+             list(random = y ~ 0, ids = NULL, RHS = list(~ 0),
+                  nogroup = list(y ~ 0))
+)
+
+test_that('extract_id works', {
+  for (i in setdiff(seq_along(runs), c(4, 6))) {
+    expect_equal(extract_id(runs[[i]]$random), runs[[i]]$ids)
+  }
+
+  # test all together
+  expect_equal(extract_id(lapply(runs, "[[", 'random')),
+               unlist(unique(lapply(runs, "[[", 'ids'))))
+})
+
+
+test_that('extract_id gives warning', {
+  for (i in c(4, 6)) {
+    expect_warning(extract_id(runs[[i]]$random), runs[[i]]$ids)
+  }
+
+  # test all together
+  expect_equal(extract_id(lapply(runs, "[[", 'random')),
+               unlist(unique(lapply(runs, "[[", 'ids'))))
+})
+
+
+test_that('extract_id results in error', {
+  err <- list(
+    "text",
+    NA,
+    TRUE,
+    mean,
+    list(random =  ~ a | id/class, ids = c('id', 'class')),
+    list(random = ~ a | id + class, ids = c('id', 'class')),
+    list(random = list(~a | id, ~ b | id2), ids = c('id', 'id2'))
+  )
+
+  for (i in seq_along(err)) {
+    expect_error(extract_id(err[[i]]))
+  }
+})
+
+
+test_that('extract_id results in warning', {
+  rd_warn <- list(~1,
+                  ~a + b + c)
+
+  for (i in seq_along(rd_warn)) {
+    expect_warning(extract_id(rd_warn[[i]]))
+  }
+})

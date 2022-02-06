@@ -5,7 +5,6 @@ library("survival")
 
 
 
-# extract_id--------------------------------------------------------------
 runs <- list(list(random = ~ 1 | id, ids = 'id', RHS = list(~ 1 | id),
                   nogroup = list(id = ~ 1)),
              list(random = ~ 0 | id, ids = 'id', RHS = list(~ 0 | id),
@@ -19,53 +18,6 @@ runs <- list(list(random = ~ 1 | id, ids = 'id', RHS = list(~ 1 | id),
                   nogroup = list(y ~ 0))
 )
 
-test_that('extract_id works', {
-  for (i in setdiff(seq_along(runs), c(4, 6))) {
-    expect_equal(extract_id(runs[[i]]$random), runs[[i]]$ids)
-  }
-
-  # test all together
-  expect_equal(extract_id(lapply(runs, "[[", 'random')),
-               unlist(unique(lapply(runs, "[[", 'ids'))))
-})
-
-
-test_that('extract_id gives warning', {
-  for (i in c(4, 6)) {
-    expect_warning(extract_id(runs[[i]]$random), runs[[i]]$ids)
-  }
-
-  # test all together
-  expect_equal(extract_id(lapply(runs, "[[", 'random')),
-               unlist(unique(lapply(runs, "[[", 'ids'))))
-})
-
-
-test_that('extract_id results in error', {
-  err <- list(
-    "text",
-    NA,
-    TRUE,
-    mean,
-    list(random =  ~ a | id/class, ids = c('id', 'class')),
-    list(random = ~ a | id + class, ids = c('id', 'class')),
-    list(random = list(~a | id, ~ b | id2), ids = c('id', 'id2'))
-  )
-
-  for (i in seq_along(err)) {
-    expect_error(extract_id(err[[i]]))
-  }
-})
-
-
-test_that('extract_id results in warning', {
-  rd_warn <- list(~1,
-                  ~a + b + c)
-
-  for (i in seq_along(rd_warn)) {
-    expect_warning(extract_id(rd_warn[[i]]))
-  }
-})
 
 
 # extract_outcome ----------------------------------------------------------
