@@ -250,6 +250,7 @@ split_formula <- function(formula) {
 split_formula_list <- function(formulas) {
   # split a list of formulas into a list with fixed effects formulas and a list
   # with random effects formulas
+  formulas <- check_formula_list(formulas)
 
   l <- lapply(formulas, split_formula)
   names(l) <- cvapply(formulas, function(x) as.character(x)[2L])

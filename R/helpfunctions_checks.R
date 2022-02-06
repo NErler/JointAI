@@ -76,7 +76,7 @@ check_fixed_random <- function(arglist) {
   # if there is a "fixed" effects formula, but no "random" , check if "fixed"
   # contains the fixed and random effects
   if (!is.null(arglist$fixed) & is.null(arglist$random)) {
-    can_split <- try(split_formula_list(check_formula_list(arglist$fixed)))
+    can_split <- try(split_formula_list(arglist$fixed))
 
     if (!inherits(can_split, 'try-error') & !is.null(can_split$random[[1]])) {
       arglist$formula <- arglist$fixed
@@ -84,7 +84,7 @@ check_fixed_random <- function(arglist) {
       arglist$random <- NULL
     }
   } else if (!is.null(arglist$formula) & is.null(arglist$random)) {
-    can_split <- try(split_formula_list(check_formula_list(arglist$formula)))
+    can_split <- try(split_formula_list(arglist$formula))
 
     if (inherits(can_split, 'try-error')) {
       errormsg("I cannot split the %s into a fixed and random effects part.",
