@@ -7,6 +7,8 @@
 
 ## Bug fixes
 * `formula()` did not return a formula when `add_samples()` was used.
+* Use of `add_samples()` will now result in the `call` element of a `JointAI`
+  object being a `list` and no longer a nested list.
 
 -----------------------------------------------------------------------------
 

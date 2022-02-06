@@ -151,7 +151,7 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   newobject <- object
   newobject$sample <- newmcmc
   newobject$MCMC <- newMCMC
-  newobject$call <- list(object$call, match.call())
+  newobject$call <- c(object$call, match.call())
   newobject$mcmc_settings$variable.names <- var_names
   newobject$comp_info$future <- c(object$comp_info$future,
                                   future_info$call)
