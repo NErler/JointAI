@@ -54,38 +54,16 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   if (!inherits(object, "JointAI"))
     errormsg("Use only with 'JointAI' objects.")
 
+  # check/set settings -----------------------------------------------------
+  thin <- check_add_thinning(object = object, thin = thin, add = add,
+                             mess = mess)
 
-  if (is.null(thin)) {
-    thin <- object$mcmc_settings$thin[length(object$mcmc_settings$thin)]
-  } else {
-    if (add &
-        thin != object$mcmc_settings$thin[length(object$mcmc_settings$thin)]) {
-      thin <- object$mcmc_settings$thin[length(object$mcmc_settings$thin)]
-
-      if (mess)
-        msg("When adding samples (%s) the thinning interval cannot be
-           changed. I will use the setting of the existing object
-          (%s).", dQuote("add = TRUE"), dQuote(paste0("thin = ", thin)))
-    }
-  }
-
-  if (is.null(monitor_params)) {
-    var_names <- object$mcmc_settings$variable.names
-  } else {
-    var_names <- do.call(get_params,
-                         c(list(Mlist = get_Mlist(object),
-                                info_list = object$info_list,
-                                mess = mess),
-                           monitor_params))
-  }
-
-
-  if (!identical(var_names, object$mcmc_settings$variable.names) & add)
-    errormsg("When %s it is not possible to monitor different parameters than
-             were monitored in the original model.", dQuote("add = TRUE"))
+  var_names <- check_add_varnames(object = object,
+                                  monitor_params = monitor_params, mess = mess)
 
   future_info <- get_future_info()
 
+  # run mcmc ----------------------------------------------------------------
   t0 <- Sys.time()
   if (future_info$parallel) {
     if (mess)
@@ -106,22 +84,26 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   t1 <- Sys.time()
 
 
-
+  # process MCMC samples --------------------------------------------------------
   MCMC <- mcmc
 
   if (!all(sapply(object$Mlist$scale_pars, is.null))) {
     coefs <- try(get_coef_names(object$info_list))
+
     for (k in seq_len(length(MCMC))) {
       MCMC[[k]] <- coda::as.mcmc(
-        rescale(MCMC[[k]], coefs = do.call(rbind, coefs),
+        rescale(MCMC[[k]],
+                coefs = do.call(rbind, coefs),
                 scale_pars = do.call(rbind, unname(object$Mlist$scale_pars)),
                 info_list = object$info_list,
                 data_list = object$data_list,
                 groups = object$Mlist$groups))
+
       attr(MCMC[[k]], "mcpar") <- attr(mcmc[[k]], "mcpar")
     }
   }
 
+  # combine with/replace original samples --------------------------------------
   if (isTRUE(add)) {
     newmcmc <- if (!is.null(object$sample)) {
       coda::as.mcmc.list(
@@ -148,6 +130,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
     newMCMC <- MCMC
   }
 
+
+  # create new JointAI object --------------------------------------------------
   newobject <- object
   newobject$sample <- newmcmc
   newobject$MCMC <- newMCMC
@@ -171,4 +155,43 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   newobject$comp_info$duration <- c(object$comp_info$duration, difftime(t1, t0))
 
   return(newobject)
+}
+
+
+
+
+check_add_thinning <- function(thin, object, add, mess = TRUE) {
+
+  if (is.null(thin)) {
+    thin <- object$mcmc_settings$thin[length(object$mcmc_settings$thin)]
+  } else {
+    if (add &
+        thin != object$mcmc_settings$thin[length(object$mcmc_settings$thin)]) {
+      thin <- object$mcmc_settings$thin[length(object$mcmc_settings$thin)]
+
+      if (mess)
+        msg("When adding samples (%s) the thinning interval cannot be
+           changed. I will use the setting of the existing object
+          (%s).", dQuote("add = TRUE"), dQuote(paste0("thin = ", thin)))
+    }
+  }
+}
+
+
+
+check_add_varnames <- function(object, monitor_params, mess, add) {
+
+  if (is.null(monitor_params)) {
+    var_names <- object$mcmc_settings$variable.names
+  } else {
+    if (!identical(var_names, object$mcmc_settings$variable.names) & add)
+      errormsg("When %s it is not possible to monitor different parameters than
+             were monitored in the original model.", dQuote("add = TRUE"))
+
+    var_names <- do.call(get_params,
+                         c(list(Mlist = get_Mlist(object),
+                                info_list = object$info_list,
+                                mess = mess),
+                           monitor_params))
+  }
 }
