@@ -29,8 +29,13 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
   }
 
   # response matrix and column(s) --------------------------------------------
-  resp_mat <- get_resp_mat(resp = k, Mlvls = Mlist$Mlvls,
-                           outnames = names(Mlist$outcomes$outcomes[[k]]))
+  resp_mat <- get_resp_mat(
+    resp = k, Mlvls = Mlist$Mlvls,
+    outnames = if (!is.null(Mlist$outcomes$outcomes[[k]])) {
+      names(Mlist$outcomes$outcomes[[k]])
+    } else {
+      k
+    })
   # resp_mat <- if (k %in% names(Mlist$Mlvls)) {
   #   # if the variable is a column of one of the design matrices, use the level
   #   # of that matrix

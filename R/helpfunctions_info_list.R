@@ -11,26 +11,13 @@
 #' @return character string; the name(s) of the data matrix/matrices of the
 #'         response variable(s)
 #'
-#' @noRd
+#' @keywords internal
 
 get_resp_mat <- function(resp, Mlvls, outnames) {
-  if (resp %in% names(Mlvls)) {
-    # if the variable is a column of one of the design matrices, use the level
-    # of that matrix
-    Mlvls[resp]
-  } else if (grepl("^Surv\\(", resp)) {
-    # if the model is a survival model (variable name is the survival expression
-    # and not a single variable name) get the levels of the separate variables
-    # involved in the survival expression
-    if (all(outnames %in% names(Mlvls))) {
-      Mlvls[outnames]
-    } else {
-      errormsg("I have identified %s as a survival outcome, but I cannot find
-               some of its elements in any of the data matrices.",
-               dQuote(resp))
-    }
+  if (any(!outnames %in% names(Mlvls))) {
+    errormsg("I cannot find the variable(s) %s in any of the data matrices.",
+             paste_and(dQuote(outnames[!outnames %in% names(Mlvls)])))
   } else {
-    errormsg("I cannot find the variable %s in any of the data matrices.",
-             dQuote(resp))
+      Mlvls[outnames]
   }
 }
