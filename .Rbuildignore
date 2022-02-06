@@ -44,3 +44,4 @@ sim_mldata.R
 ^\.covrignore$
 ^\.github$
 ^codecov\.yml$
+^JointAI\.Rproj$
