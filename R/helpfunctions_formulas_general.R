@@ -185,7 +185,7 @@ extract_lhs <- function(formula) {
 
   if (length(formula) == 3L) {
     deparse(formula[[2L]], width.cutoff = 500L)
-  # } else if (length(formula) == 2L) {
+    # } else if (length(formula) == 2L) {
     # ""
   } else {
     # not sure this is ever needed... Can't come up with an example for a
@@ -196,19 +196,25 @@ extract_lhs <- function(formula) {
 }
 
 
-# used in various functions (2020-06-09)
-#' Version of `all.vars()` that can handle lists of formulas
-#' @param a formula or list of formulas
-#' @export
-#' @keywords internal
-all_vars <- function(fmla) {
-  # extract all variables involved in a formula or list of formulas
-  # - fmla: formula or list of formulas
 
-  if (is.list(fmla)) {
+#' Extract names of variables from a (list of) formula(s)
+#' Version of `all.vars()` that can handle lists of formulas
+#'
+#'
+#' @param fmla a formula or list of formulas
+#' @export
+#'
+#' @keywords internal
+
+all_vars <- function(fmla) {
+
+  if (inherits(fmla, "list")) {
     unique(unlist(lapply(fmla, all.vars)))
-  } else {
+  } else if (inherits(fmla, "formula")) {
     all.vars(fmla)
+  } else {
+    errormsg("The provided object is not a %s nor a list of %s objects.",
+             dQuote("formula"), dQuote("formula"))
   }
 }
 
