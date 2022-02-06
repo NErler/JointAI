@@ -94,6 +94,9 @@
     <loc>https://nerler.github.io/JointAI/reference/expand_rd_vcov_full.html</loc>
   </url>
   <url>
+    <loc>https://nerler.github.io/JointAI/reference/extract_id.html</loc>
+  </url>
+  <url>
     <loc>https://nerler.github.io/JointAI/reference/extract_lhs.html</loc>
   </url>
   <url>
@@ -176,6 +179,12 @@
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI/reference/simLong.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI/reference/split_formula.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI/reference/split_formula_list.html</loc>
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI/reference/summary.JointAI.html</loc>
