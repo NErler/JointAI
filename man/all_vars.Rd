@@ -2,8 +2,7 @@
 % Please edit documentation in R/helpfunctions_formulas_general.R
 \name{all_vars}
 \alias{all_vars}
-\title{Extract names of variables from a (list of) formula(s)
-Version of \code{all.vars()} that can handle lists of formulas}
+\title{Extract names of variables from a (list of) formula(s)}
 \usage{
 all_vars(fmla)
 }
@@ -11,7 +10,6 @@ all_vars(fmla)
 \item{fmla}{a formula or list of formulas}
 }
 \description{
-Extract names of variables from a (list of) formula(s)
-Version of \code{all.vars()} that can handle lists of formulas
+Version of \code{all.vars()} that can handle lists of formulas.
 }
 \keyword{internal}

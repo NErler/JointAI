@@ -198,7 +198,8 @@ extract_lhs <- function(formula) {
 
 
 #' Extract names of variables from a (list of) formula(s)
-#' Version of `all.vars()` that can handle lists of formulas
+#'
+#' Version of `all.vars()` that can handle lists of formulas.
 #'
 #'
 #' @param fmla a formula or list of formulas
@@ -212,7 +213,7 @@ all_vars <- function(fmla) {
     return(NULL)
 
   if (inherits(fmla, "list")) {
-    unique(unlist(lapply(fmla, all.vars)))
+    unique(unlist(lapply(fmla, all_vars)))
   } else if (inherits(fmla, "formula")) {
     all.vars(fmla)
   } else {
@@ -224,6 +225,7 @@ all_vars <- function(fmla) {
 
 
 #' Split a formula into fixed and random effects parts
+#'
 #' Split a lme4 style formula into nlme style formulas.
 #'
 #' Internal function, used in *_imp and help functions (2022-02-06)
@@ -267,6 +269,7 @@ split_formula <- function(formula) {
 
 
 #' Split a list of formulas into fixed and random effects parts.
+#'
 #' Calls `split_formula()` on each formula in a list to create one list of the
 #' fixed effects formulas and one list containing the random effects formulas.
 #'
@@ -346,4 +349,3 @@ extract_id <- function(random, warn = TRUE) {
 
   unique(unlist(ids))
 }
-
