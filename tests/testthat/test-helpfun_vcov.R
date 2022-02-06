@@ -1,8 +1,5 @@
-context("help functions divide_matrices")
-library("JointAI")
-
 test_that('check_rd_vcov_list', {
-  # rd_vcov is string
+  # rd_vcov is a string
   expect_equal(
     check_rd_vcov_list(rd_vcov = "full", idvar = "id"),
     list(id = "full"))
@@ -16,7 +13,7 @@ test_that('check_rd_vcov_list', {
     list(id = "indep", center = "indep"))
 
 
-  # rd_vcov is list of model structures (no level specified)
+  # rd_vcov is a list of model structures (no level specified)
   expect_equal(
     check_rd_vcov_list(rd_vcov = list(full = c("a", "b")), idvar = "id"),
     list(id = list(full = c("a", "b")))
@@ -62,7 +59,7 @@ test_that('check_rd_vcov_list', {
 })
 
 
-test_that('expand_rd_vcov_full', {
+test_that('expand_rd_vcov_full works', {
   expect_equal(
     expand_rd_vcov_full(rd_vcov = "full",
                         rd_outnam = list(id = c("a", "b"))),
