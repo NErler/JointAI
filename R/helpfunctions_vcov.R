@@ -214,7 +214,7 @@ get_nranef <- function(idvar, random, data) {
         nrd <- ivapply(remove_grouping(random), function(x) {
           if (lvl %in% names(x)) {
             ncol(model.matrix(x[[lvl]], data = data))
-          } else {0L}
+          } else 0L
         })
       }
 
