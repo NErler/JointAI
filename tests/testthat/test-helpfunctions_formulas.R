@@ -122,44 +122,6 @@ test_that('remove_grouping works', {
 })
 
 
-# split_formula-----------------------------------------------
-fmls <- list(
-  list(fmla = y ~ a + b + (b | id),
-       fixed = y ~ a + b,
-       random = ~ (b | id)),
-  list(fmla = y ~ (1|id),
-       fixed = y ~ 1,
-       random = ~ (1 | id)),
-  list(fmla = y ~ a + (a + b|id),
-       fixed = y ~ a,
-       random = ~ (a + b |id)),
-  list(fmla = y ~ a + I(a^2) + (a + I(a^2) | id),
-       fixed = y ~ a + I(a^2),
-       random = ~ (a + I(a^2) | id)),
-  list(fmla = y ~ x + (1| id/class),
-       fixed = y ~ x,
-       random = ~ (1 | id/class)),
-  list(fmla = y ~ x + (1|id) + (1|class),
-       fixed = y ~ x,
-       random = ~ (1|id) + (1|class)))
-
-test_that('split_formula works', {
-  for (i in seq_along(fmls)) {
-    expect_equal(split_formula(fmls[[i]]$fmla),
-                 list(fixed = fmls[[i]]$fixed, random = fmls[[i]]$random),
-                 ignore_formula_env = TRUE)
-  }
-})
-
-# split_formula_list --------------------------------------------------
-test_that('split_formula_list works', {
-  expect_equal(
-    unname(lapply(split_formula_list(lapply(fmls, "[[", "fmla")), unname)),
-               list(lapply(fmls, "[[", 'fixed'),
-                    lapply(fmls, "[[", 'random')),
-    ignore_formula_env = TRUE)
-
-})
 
 
 # identify_functions -----------------------------------------------------------

@@ -213,9 +213,53 @@ test_that('extract_lhs returns error', {
   expect_error(extract_lhs(list(a ~ b + c, x ~ y + z)))
 })
 
-# y ~ a + b
-# y ~ 1
-# Surv(a, b) ~ 1
-# Surv(a, b, d) ~ x + z
-# cbind(a, b, d) ~ x + z
-# y ~ C2 + ns(C1, df = 3, Boundary.knots = quantile(C1, c(0.025, 0.975)))
+
+
+# split_formula-----------------------------------------------
+fmls <- list(
+  list(fmla = y ~ a + b + (b | id),
+       fixed = list(y = y ~ a + b),
+       random = list(y = ~ (b | id))),
+  list(fmla = y ~ (1|id),
+       fixed = list(y = y ~ 1),
+       random = list(y = ~ (1 | id))),
+  list(fmla = y ~ a + (a + b|id),
+       fixed = list(y = y ~ a),
+       random = list(y = ~ (a + b |id))),
+  list(fmla = y ~ a + I(a^2) + (a + I(a^2) | id),
+       fixed = list(y = y ~ a + I(a^2)),
+       random = list(y = ~ (a + I(a^2) | id))),
+  list(fmla = y ~ x + (1| id/class),
+       fixed = list(y = y ~ x),
+       random = list(y = ~ (1 | id/class))),
+  list(fmla = y ~ x + (1|id) + (1|class),
+       fixed = list(y = y ~ x),
+       random = list(y = ~ (1|id) + (1|class))),
+  list(fmla = y ~ a + b + (id | group1 + group2),
+       fixed = list(y = y ~ a + b),
+       random = list(y = ~ (id | group1 + group2)))
+)
+
+test_that('split_formula works', {
+  for (i in seq_along(fmls)) {
+    expect_equal(split_formula(fmls[[i]]$fmla),
+                 list(fixed = fmls[[i]]$fixed[[1]],
+                      random = fmls[[i]]$random[[1]]),
+                 ignore_formula_env = TRUE)
+  }
+
+  expect_equal(split_formula(y ~ a + b),
+               list(fixed = y ~ a + b,
+                    random = NULL), ignore_formula_env = TRUE)
+})
+
+
+
+# split_formula_list --------------------------------------------------
+test_that('split_formula_list works', {
+  expect_equal(
+    split_formula_list(lapply(fmls, "[[", "fmla")),
+    list(fixed = unlist(lapply(fmls, "[[", 'fixed')),
+         random = unlist(lapply(fmls, "[[", 'random'))),
+    ignore_formula_env = TRUE)
+})
