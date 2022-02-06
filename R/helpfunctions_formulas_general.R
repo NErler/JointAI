@@ -213,10 +213,17 @@ all_vars <- function(fmla) {
 }
 
 
-# used in *_imp and help functions (2020-06-09)
+
+#' Split a formula into fixed and random effects parts
+#' Split a lme4 style formula into nlme style formulas.
+#'
+#' Internal function, used in *_imp and help functions (2022-02-06)
+#'
+#' @param formula a `formula` object
+#' @keywords internal
+#'
+
 split_formula <- function(formula) {
-  # split a lme4 type formula into fixed and random part
-  # - formula: formula of the form outcome ~ covars + (x | group) + (x | group2)
 
   # get all terms from the formula and identify which contain the vertical bar
   # (= random effects)
@@ -230,14 +237,18 @@ split_formula <- function(formula) {
                collapse = " + ")
 
   fixed <- paste0(as.character(formula)[2L], " ~ ",
-                  if (rhs == "") {1L} else {rhs}
-  )
+                  if (rhs == "") {
+                    1L
+                  } else {
+                    rhs
+                  })
 
   # build random effects formula by pasting all random effects terms in brackets
   # (to separate different random effects terms from each other), and combine
   # them with "+"
   rhs2 <- paste0("(", term_labels[which_ranef], ")", collapse = " + ")
-  # if there are random effects terms at all, combine with "~"  and convert to
+
+  # if there are random effect terms at all, combine with "~" and convert to a
   # formula object
   random <- if (rhs2 != "()") as.formula(paste0(" ~ ", rhs2))
 
@@ -246,10 +257,18 @@ split_formula <- function(formula) {
 }
 
 
-# used in *_imp() (2020-06-09)
+#' Split a list of formulas into fixed and random effects parts.
+#' Calls `split_formula()` on each formula in a list to create one list of the
+#' fixed effects formulas and one list containing the random effects formulas.
+#'
+#' Internal function, used in *_imp() (2022-02-06)
+#'
+#' @param formulas a `list` of `formula` objects
+#' @keywords internal
+#'
+
 split_formula_list <- function(formulas) {
-  # split a list of formulas into a list with fixed effects formulas and a list
-  # with random effects formulas
+
   formulas <- check_formula_list(formulas)
 
   l <- lapply(formulas, split_formula)
