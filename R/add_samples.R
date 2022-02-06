@@ -59,7 +59,8 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                              mess = mess)
 
   var_names <- check_add_varnames(object = object,
-                                  monitor_params = monitor_params, mess = mess)
+                                  monitor_params = monitor_params,
+                                  add = add, mess = mess)
 
   future_info <- get_future_info()
 
@@ -180,7 +181,7 @@ check_add_thinning <- function(thin, object, add, mess = TRUE) {
 
 
 
-check_add_varnames <- function(object, monitor_params, mess, add) {
+check_add_varnames <- function(object, monitor_params, mess = TRUE, add) {
 
   if (is.null(monitor_params)) {
     var_names <- object$mcmc_settings$variable.names
