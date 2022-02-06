@@ -1,4 +1,6 @@
-test_that('check_rd_vcov_list', {
+
+# check_rd_vcov_list -----------------------------------------------------------
+test_that("check_rd_vcov_list works", {
   # rd_vcov is a string
   expect_equal(
     check_rd_vcov_list(rd_vcov = "full", idvar = "id"),
@@ -59,7 +61,18 @@ test_that('check_rd_vcov_list', {
 })
 
 
-test_that('expand_rd_vcov_full works', {
+
+test_that("check_rd_vcov_list returns error", {
+  expect_error(check_rd_vcov_list("abc"))
+  expect_error(check_rd_vcov_list(NULL))
+  expect_error(check_rd_vcov_list(NULL, idvar = "id"))
+  expect_error(check_rd_vcov_list(NA))
+  # expect_error(check_rd_vcov_list(list(NULL), idvar = "id"))
+})
+
+
+
+test_that("expand_rd_vcov_full works", {
   expect_equal(
     expand_rd_vcov_full(rd_vcov = "full",
                         rd_outnam = list(id = c("a", "b"))),
