@@ -55,6 +55,8 @@ check_rd_vcov_list <- function(rd_vcov, idvar) {
 }
 
 
+
+
 #' Expand rd_vcov using variable names in case "full" is used
 #'
 #'
@@ -65,8 +67,8 @@ check_rd_vcov_list <- function(rd_vcov, idvar) {
 #' @keywords internal
 #' @return A named list per grouping level where each elements contains
 #'        information on how the random effects variance-covariance matrices on
-#'        that level are structured. Per level there is a list of grouping structures
-#'        containing the names of variables in each structure
+#'        that level are structured. Per level there is a list of grouping
+#'        structures containing the names of variables in each structure
 #'        (e.g. `list(full = c("a", "b"), indep = "c")`)
 
 expand_rd_vcov_full <- function(rd_vcov, rd_outnam) {
@@ -75,7 +77,7 @@ expand_rd_vcov_full <- function(rd_vcov, rd_outnam) {
   rd_vcov <- check_rd_vcov_list(rd_vcov, idvar)
 
   nlapply(idvar, function(lvl) {
-    if (is.character(rd_vcov[[lvl]]) & length(rd_vcov[[lvl]]) == 1) {
+    if (is.character(rd_vcov[[lvl]]) & length(rd_vcov[[lvl]]) == 1L) {
 
       setNames(list(rd_outnam[[lvl]]), rd_vcov[[lvl]])
 
@@ -96,7 +98,7 @@ expand_rd_vcov_full <- function(rd_vcov, rd_outnam) {
 
     } else {
       errormsg("%s should be a character string or a list.",
-               dQuote("rd_vcov[[lvl]]"))
+               dQuote(paste0("rd_vcov[[\"", lvl, "\"]]")))
     }
   })
 }
