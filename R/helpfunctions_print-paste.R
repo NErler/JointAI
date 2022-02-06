@@ -9,12 +9,18 @@ add_dashes <- function(x, width = 95L) {
 }
 
 
+#' Add line breaks to a linear predictor string
+#'
+#' Adds line breaks to a string, breaking it after a "+" sign to not exceed a
+#' given width of characters and taking into account indentation.
+#'
+#' @param string a character string (linear predictor)
+#' @param indent integer; number of characters the new line should be indented
+#' @param width integer; the maximum number of characters per line
+#'
+#' @keywords internal
 
 add_linebreaks <- function(string, indent, width = 90L) {
-  # add linebreaks to a string, breaking it after a "+" sign
-  # - string: the linear predictor string to be broken
-  # - indent: in case of a linebreak, how much should the new line be indented?
-  # - width: output width
 
   if (is.null(string)) {
     return(NULL)
@@ -51,14 +57,20 @@ add_linebreaks <- function(string, indent, width = 90L) {
   paste0(strsplit(string, " \\+ ")[[1L]], c(br, ""), collapse = "")
 }
 
+
+
+
+
 minmax <- function(x, max = "1-1e-10", min = "1e-10") {
   # wrap a character string into max(min(...)); min-max-trick in JAGSmodel
   paste0("max(", min, ", min(", max, ", ", x, "))")
 }
+
+
+
 
 tab <- function(times = 2L) {
   # creates a vector of spaces to facilitate indentation
   tb <- " "
   paste(rep(tb, times), collapse = "")
 }
-
