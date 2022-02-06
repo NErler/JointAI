@@ -206,7 +206,7 @@ get_nranef <- function(idvar, random, data) {
       if (length(random) == 1L) {
         rm_gr <- remove_grouping(random)
         nrd <- if (lvl %in% names(rm_gr)) {
-          ncol(model.matrix(rm_gr(random)[[lvl]], data = data))
+          ncol(model.matrix(rm_gr[[lvl]], data = data))
         } else 0L
 
       } else {
