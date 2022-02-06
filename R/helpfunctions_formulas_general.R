@@ -287,18 +287,19 @@ split_formula_list <- function(formulas) {
 
 
 
-# used in divide_matrices, get_models, various help functions,
-# predict (2020-06-09)
+#' Extract all id variables from a list of random effects formulas
+#'
+#' Internal function, used in `divide_matrices()`, `get_models()`,
+#' various help functions, `predict()` (2022-02-06)
+#'
+#' @param random a one-sided random effects formula or a list of such formulas
+#' @param warn logical; should warnings be printed?
+#' @keywords internal
+#'
+#'
 extract_id <- function(random, warn = TRUE) {
-  # extract all id variables involved in a random effects formula
 
-  # if random is not a list, make it one
   random <- check_formula_list(random)
-
-  # check if random is a list of formulas
-  if (!all(lvapply(random, function(x) inherits(x, "formula") | is.null(x))))
-    errormsg("At least one element of %s is not of class %s.",
-             dQuote("random"), dQuote("formula"))
 
   ids <- lapply(random, function(x) {
     # match the vertical bar (...|...)
