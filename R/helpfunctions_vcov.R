@@ -1,29 +1,56 @@
 
 #' First validation for rd_vcov
 #'
-#' Check if rd_vcov is a list with elements for all grouping levels or does
-#' not specify a grouping level. If valid, make sure it is a list per grouping
+#' Checks if `rd_vcov` is a `list` with elements for all grouping levels or does
+#' not specify a grouping level.
+#' If valid, this function also make sure that `rd_vcov` is a list per grouping
 #' level by duplicating the contents if necessary.
 #'
-#' @param rd_vcov the random effects variance covariance structure provided by
-#'                the user
-#' @param idvar vector with the names of the grouping variables
-#'              (without "lvlone")
+#' @param rd_vcov a character string or a list describing the the random effects
+#'                variance covariance structure (provided by the user)
+#' @param idvar vector with the names of all grouping variables
+#'              (except "lvlone")
+#'
 #' @keywords internal
+#'
 #' @return A named list per grouping level where each elements contains
 #'        information on how the random effects variance-covariance matrices on
-#'        that level are structured. Per level it can be either a character
-#'        string (e.g. `"full"`) or a list specifying structures per (groups) of
+#'        that level are structured.
+#'        Per level it can be either a character string (e.g. `"full"`) or a
+#'        list specifying structures per (groups) of
 #'        variable(s) (e.g. `list(full = c("a", "b"), indep = "c")`)
+
+
 check_rd_vcov_list <- function(rd_vcov, idvar) {
 
-  if (!inherits(rd_vcov, "list") | all(!idvar %in% names(rd_vcov))) {
+  if (inherits(rd_vcov, "character")) {
+    if (!rd_vcov %in% c("blockdiag", "full", "indep")) {
+      errormsg("The variance-covariance matrix for the random effects of the
+               different models (supplied to the argument %s) can only be of
+               type \"blockdiag\", \"indep\", or \"full\".
+               To specify different structures for different models or levels,
+               provide a list (details see documentation).", dQuote("rd_vcov"))
+    }
+
     nlapply(idvar, function(x) rd_vcov)
-  } else if (inherits(rd_vcov, "list") & any(!idvar %in% names(rd_vcov))) {
-    errormsg("Please provide information on the variance-covariance structure
+
+  } else if (inherits(rd_vcov, "list")) {
+
+    if (all(names(rd_vcov) %in% c("blockdiag", "full", "indep"))) {
+      nlapply(idvar, function(x) rd_vcov)
+    } else if (length(idvar) > 1L & any(!idvar %in% names(rd_vcov))) {
+      errormsg("Please provide information on the variance-covariance structure
              of the random effects for all levels.")
+    } else if (all(idvar %in% names(rd_vcov))) {
+      rd_vcov
+    } else {
+      errormsg("You provided %s in a way I didn't anticipate. Please contact
+               the package maintainer.", dQuote("rd_vcov"))
+    }
+
   } else {
-    rd_vcov
+    errormsg("The argument %s should be specified as character string
+             or a list.", dQuote("rd_vcov"))
   }
 }
 
