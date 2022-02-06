@@ -177,3 +177,52 @@ check_rd_vcov <- function(rd_vcov, nranef) {
   }
   rd_vcov
 }
+
+
+
+#' Extract the number of random effects
+#' @param idvar vector of the names of all id variables
+#' @param random a random effect formula or list of random effects formulas
+#' @param data a `data.frame`
+#' @return a list by grouping level (`idvar`) with a named vector of the number
+#'         of random effects per variable (=names).
+#' @keywords internal
+#'
+
+get_nranef <- function(idvar, random, data) {
+
+  nlapply(idvar, function(lvl) {
+
+    if (inherits(random, "formula")) {
+
+      rm_gr <- remove_grouping(random)
+
+      if (lvl %in% names(rm_gr)) {
+        ncol(model.matrix(remove_grouping(random)[[lvl]], data = data))
+      } else 0L
+
+    } else if (inherits(random, "list")) {
+
+      if (length(random) == 1L) {
+        rm_gr <- remove_grouping(random)
+        nrd <- if (lvl %in% names(rm_gr)) {
+          ncol(model.matrix(rm_gr(random)[[lvl]], data = data))
+        } else 0L
+
+      } else {
+
+        nrd <- ivapply(remove_grouping(random), function(x) {
+          if (lvl %in% names(x)) {
+            ncol(model.matrix(x[[lvl]], data = data))
+          } else {0L}
+        })
+      }
+
+      names(nrd) <- names(random)
+      nrd
+
+    } else {
+      errormsg("I expected either a formula or list of formulas.")
+    }
+  })
+}
