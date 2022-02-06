@@ -227,8 +227,8 @@ test_that("check_rd_vcov", {
 })
 
 
-
-test_that("get_nranef", {
+# get_nranef -------------------------------------------------------------------
+test_that("get_nranef works", {
 
   expect_equal(
     get_nranef(idvar = "id", random = ~ 1 | id, data = longDF),
