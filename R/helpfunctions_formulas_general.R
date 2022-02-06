@@ -208,6 +208,9 @@ extract_lhs <- function(formula) {
 
 all_vars <- function(fmla) {
 
+  if (is.null(fmla))
+    return(NULL)
+
   if (inherits(fmla, "list")) {
     unique(unlist(lapply(fmla, all.vars)))
   } else if (inherits(fmla, "formula")) {
