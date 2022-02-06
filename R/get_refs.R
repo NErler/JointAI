@@ -145,7 +145,7 @@ get_refs <- function(fmla, data, refcats = NULL, warn = TRUE) {
 #'
 #' @export
 
-set_refcat <- function(data, formula, covars, auxvars = NULL) {
+set_refcat <- function(data, formula, covars, auxvars = NULL) {# nocov start
 
   if (missing(formula) & missing(covars) & is.null(auxvars)) {
     covars <- colnames(data)
@@ -191,5 +191,5 @@ set_refcat <- function(data, formula, covars, auxvars = NULL) {
       function.", out)
 
   return(invisible(q2))
-}
+} # nocov end
 
