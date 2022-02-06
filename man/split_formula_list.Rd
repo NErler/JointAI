@@ -2,9 +2,7 @@
 % Please edit documentation in R/helpfunctions_formulas_general.R
 \name{split_formula_list}
 \alias{split_formula_list}
-\title{Split a list of formulas into fixed and random effects parts.
-Calls \code{split_formula()} on each formula in a list to create one list of the
-fixed effects formulas and one list containing the random effects formulas.}
+\title{Split a list of formulas into fixed and random effects parts.}
 \usage{
 split_formula_list(formulas)
 }
@@ -12,6 +10,10 @@ split_formula_list(formulas)
 \item{formulas}{a \code{list} of \code{formula} objects}
 }
 \description{
+Calls \code{split_formula()} on each formula in a list to create one list of the
+fixed effects formulas and one list containing the random effects formulas.
+}
+\details{
 Internal function, used in *_imp() (2022-02-06)
 }
 \keyword{internal}

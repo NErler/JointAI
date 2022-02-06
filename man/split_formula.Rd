@@ -2,8 +2,7 @@
 % Please edit documentation in R/helpfunctions_formulas_general.R
 \name{split_formula}
 \alias{split_formula}
-\title{Split a formula into fixed and random effects parts
-Split a lme4 style formula into nlme style formulas.}
+\title{Split a formula into fixed and random effects parts}
 \usage{
 split_formula(formula)
 }
@@ -11,6 +10,9 @@ split_formula(formula)
 \item{formula}{a \code{formula} object}
 }
 \description{
+Split a lme4 style formula into nlme style formulas.
+}
+\details{
 Internal function, used in *_imp and help functions (2022-02-06)
 }
 \keyword{internal}
