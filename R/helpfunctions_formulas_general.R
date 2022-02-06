@@ -283,3 +283,63 @@ split_formula_list <- function(formulas) {
   list(fixed = lapply(l, "[[", "fixed"),
        random = lapply(l, "[[", "random"))
 }
+
+
+
+
+# used in divide_matrices, get_models, various help functions,
+# predict (2020-06-09)
+extract_id <- function(random, warn = TRUE) {
+  # extract all id variables involved in a random effects formula
+
+  # if random is not a list, make it one
+  random <- check_formula_list(random)
+
+  # check if random is a list of formulas
+  if (!all(lvapply(random, function(x) inherits(x, "formula") | is.null(x))))
+    errormsg("At least one element of %s is not of class %s.",
+             dQuote("random"), dQuote("formula"))
+
+  ids <- lapply(random, function(x) {
+    # match the vertical bar (...|...)
+    rdmatch <- gregexpr(pattern = "\\([^|]*\\|[^)]*\\)",
+                        deparse(x, width.cutoff = 500L))
+
+    if (any(rdmatch[[1L]] > 0L)) {
+      # remove "(... | " from the formula
+      rd <- unlist(regmatches(deparse(x, width.cutoff = 500L),
+                              rdmatch, invert = FALSE))
+      rdid <- gregexpr(pattern = "[[:print:]]*\\|[[:space:]]*", rd)
+
+      # extract and remove )
+      id <- gsub(")", "", unlist(regmatches(rd, rdid, invert = TRUE)))
+
+      # split by + * : /
+      id <- unique(unlist(strsplit(id[id != ""],
+                                   split = "[[:space:]]*[+*:/][[:space:]]*")))
+    } else {
+      rdmatch <- gregexpr(pattern = "[[:print:]]*\\|[ ]*",
+                          deparse(x, width.cutoff = 500L))
+
+      if (any(rdmatch[[1L]] > 0L)) {
+        # remove "... | " from the formula
+        id <- unlist(regmatches(deparse(x, width.cutoff = 500L),
+                                rdmatch, invert = TRUE))
+        id <- unique(unlist(strsplit(id[id != ""],
+                                     split = "[[:space:]]*[+*:/][[:space:]]*")))
+
+      } else {
+        id <- NULL
+      }
+    }
+    id
+  })
+
+  if (is.null(unlist(ids)) & !is.null(unlist(random)))
+    if (warn)
+      warnmsg("No %s variable could be identified. I will assume that all
+              observations are independent.", dQuote("id"))
+
+  unique(unlist(ids))
+}
+
