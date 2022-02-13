@@ -13,3 +13,4 @@ docs
 tests/testthat/*.pdf
 
 bash.exe.stackdump
+sh.exe.stackdump
