@@ -34,7 +34,7 @@ paste_data <- function(matnam, index, col, isgk = FALSE) {
   # - matnam: the name of the design matrix
   # - index: the index to be used, e.g. "i" or "ii"
   # - col: the column (or vector of columns) of the design matrix
-  # - isgk: is this whithin the Gauss-Kronrod quadrature?
+  # - isgk: is this within the Gauss-Kronrod quadrature?
 
   paste0(matnam, if (isgk) {"gk"} else {""},
          "[", index, ", ", col,
