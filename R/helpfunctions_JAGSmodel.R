@@ -1136,7 +1136,13 @@ write_probs <- function(info, index, isgk = FALSE, indent = 4L) {
                               })
                      )
                    })
-
+  # if (isTRUE(isgk)) {
+  #   paste0(c(
+  #     write_pgk(info, index, indent), "",
+  #     write_psum_expit(info, index, indent)
+  #   ), collapse = "\n")
+  #
+  # } else {
 
   paste0(tab(indent),
          paste_p(1L), " <- ",
@@ -1179,7 +1185,68 @@ write_logits <- function(info, index, nonprop = FALSE, isgk = FALSE,
                     })
 
   paste0(logits, collapse = "\n")
+  # if (isTRUE(isgk)) {
+  #   paste0(write_exp_lp(info, index = index, indent = indent, nonprop = nonprop),
+  #          collapse = "\n")
+  #
+  # } else {
+
 }
+
+# write the part that calculates the exponential function of the linear predictor
+# in the quadrature part for ordinal longitudinal outcomes in joint models
+write_exp_lp <- function(info, index, nonprop = FALSE, indent = 4L) {
+  paste0(tab(indent),
+    "exp_lp_", info$varname, "[", index, ", ", 1L:(info$ncat - 1L),
+    ", 1:15] <- exp(1)^(gamma_", info$varname, "[", 1L:(info$ncat - 1L), "]",
+    " + etagk",
+    "_", info$varname, "[", index, ", 1:15", "]",
+    if (nonprop) {
+      paste0(" + eta_", info$varname, "_", 1L:(info$ncat - 1L),
+             "[", index, "]")
+    }, ")")
+}
+
+
+write_psum_expit <- function(info, index, indent = 4L) {
+  cvapply(1:(info$ncat - 1), function(r) {
+    paste0(tab(indent),
+      "psumgk_", info$varname, "[", index, ", ", r,
+      ", 1:15] <- exp_lp_", info$varname, "[", index, ", ", r,
+      ", ]/(1 + exp_lp_", info$varname, "[", index, ", ", r, ", ])",
+      if (r < info$ncat - 1) {
+        paste0(" - psumgk_", info$varname, "[", index, ", ", r + 1, ", 1:15]")
+      }
+    )
+  })
+}
+
+
+write_pgk <- function(info, index, indent = 4L) {
+  c(
+    paste0(tab(indent),
+      "pgk_", info$varname, "[", index, ", 1, 1:15] <- 1 - ifelse(",
+      "probsumgk_", info$varname, "[", index, ", ] > 1 - 1e-10, 1-1e-10, ", "\n",
+      tab(indent + 4 + nchar(info$varname) + nchar(index) + 15),
+      "ifelse(probsumgk_", info$varname, "[", index, ", ] < 1e-10, 1e-10, ",
+      "probsumgk_", info$varname, "[", index, ", ]))"
+    ),
+
+    paste0(tab(indent),
+      "pgk_", info$varname, "[", index, ", 2:", info$ncat, ", 1:15] <- ifelse(",
+      "psumgk_", info$varname, "[", index, ", , ] > 1 - 1e-10, 1-1e-10, ", "\n",
+      tab(indent + 4 + nchar(info$varname) + nchar(index) + 17),
+      "ifelse(psumgk_", info$varname, "[", index, ", , ] < 1e-10, 1e-10, ",
+      "psumgk_", info$varname, "[", index, ", , ]))"
+    ),
+
+    paste0("\n", tab(indent),
+           "probsumgk_", info$varname, "[", index, ", 1:15] <- ",
+           paste0("pgk_", info$varname, "[", index, ", ", 2:info$ncat, ", ]",
+                  collapse = " + ")
+    ))
+}
+
 
 
 write_priors_clm <- function(info) {
