@@ -225,6 +225,8 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
                              Mlist$models, assoc_type, Mlist$refs)
   } else if (modeltype %in% "coxph") {
     "obs.value"
+  } else if (isTRUE(isgk)) {
+    get_assoc_type(k, Mlist$models, assoc_type, Mlist$refs)
   }
 
   # collect all info ---------------------------------------------------------
