@@ -54,12 +54,6 @@ make_filename <- function(modeldir, modelname, keep_model, overwrite, mess) {
 
 get_initial_values <- function(inits, seed, n_chains, warn) {
   # check if initial values are supplied or should be generated
-
-  oldseed <- .Random.seed
-  on.exit({
-    .Random.seed <<- oldseed
-  })
-
   if (is.null(inits)) {
     inits <- get_rng(seed, n_chains)
 
@@ -77,6 +71,13 @@ get_initial_values <- function(inits, seed, n_chains, warn) {
       if (inherits(inits, "function")) {
         # if the initial values are supplied as a function, evaluate the
         # function
+
+        oldseed <- .Random.seed
+        on.exit({
+          .Random.seed <<- oldseed
+        })
+
+
         if (!is.null(seed)) {
           set_seed(seed)
         }
