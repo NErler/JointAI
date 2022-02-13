@@ -10,7 +10,6 @@ test_that('add_samples works in simple setting',{
 
 test_that('add_samples works in parallel', {
   skip_on_os(c("windows", "mac"))
-  doFuture::registerDoFuture()
   future::plan(future::cluster, workers = 2)
   lm2 <- lm_imp(y ~ C1 + C2 + B2, data = wideDF, n.iter = 50)
   expect_s3_class(add_samples(lm2, add = TRUE, n.iter = 50), class = "JointAI")
