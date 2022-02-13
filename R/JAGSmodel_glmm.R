@@ -146,26 +146,28 @@ glmm_in_jm <- function(info) {
   }
 
   dummies <- if (!is.null(info$dummy_cols)) {
-    paste0('\n',tab(),
+    paste0('\n',
            paste_dummies(resp_mat = paste0(info$resp_mat, "gk"),
-                         resp_col = paste0(info$resp_col, ', k'),
-                         dummy_cols = paste0(info$dummy_cols, ', k'),
+                         resp_col = paste0(info$resp_col, ', '),
+                         dummy_cols = paste0(info$dummy_cols, ', 1:15'),
                          index = index, refs = info$refs), collapse = "\n")
   }
 
 
   # write model ----------------------------------------------------------------
-  paste0(tab(6), info$resp_mat, "gk[", index, ", ", info$resp_col, ", k] ~ ",
+  paste0(tab(4), "# calculate ", info$varname, " at the event times\n",
+         tab(4), "for (k in 1:15) {\n",
+         tab(6), info$resp_mat, "gk[", index, ", ", info$resp_col, ", k] ~ ",
          distr, trunc, "\n",
          repar,
          tab(6), linkfun(paste0("mugk_", info$varname, "[", index, ", k]")),
          " <- ",
-         add_linebreaks(Z_predictor, indent = linkindent + 11 +
+         add_linebreaks(Z_predictor, indent = linkindent + 12 +
                           nchar(info$varname) + 9 + nchar(index)),
          "\n",
+         tab(4), "}\n",
          dummies,
          info$trafos,
          "\n"
   )
 }
-

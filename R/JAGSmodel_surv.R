@@ -184,7 +184,7 @@ jagsmodel_coxph <- function(info) {
   # survival
   surv_predictor <- paste0(
     paste0(
-      c(paste0("gkw[k] * exp(logh0s_", info$varname, "[", index, ", k]"),
+      c(paste0("gkw[] * exp(1)^(logh0s_", info$varname, "[", index, ", ]"),
         if (info$resp_mat[2L] != "M_lvlone" &
             !is.null(info$parelmts$M_lvlone)) {
           paste_linpred_jm(varname = info$varname,
@@ -219,14 +219,11 @@ jagsmodel_coxph <- function(info) {
          "\n\n",
 
          # Gauss-Kronrod quadrature
-         tab(4L), "for (k in 1:15) {", "\n",
-         tab(6L), "logh0s_", info$varname, "[", index, ", k] <- inprod(",
-         info$parname,
-         "_Bh0_", info$varname, "[], Bsh0_", info$varname, "[15 * (", index,
-         " - 1) + k, ])", "\n",
-         tab(6L), "Surv_", info$varname, "[", index, ", k] <- ",
-         add_linebreaks(surv_predictor, indent = indent + 6L), "\n",
-         tab(4L), "}", "\n\n",
+         tab(4L), "logh0s_", info$varname, "[", index, ", 1:15] <- ",
+         "Bsh0_", info$varname, "[, ", index, ", ] %*% ", info$parname,
+         "_Bh0_", info$varname, "[]", "\n",
+         tab(4L), "Surv_", info$varname, "[", index, ", 1:15] <- ",
+         add_linebreaks(surv_predictor, indent = indent + 4L), "\n\n",
 
          # integration
          tab(4L), "log.surv_", info$varname, "[", index, "] <- -exp(eta_",
@@ -344,7 +341,7 @@ jagsmodel_jm <- function(info) {
   # survival
   surv_predictor <- paste0(
     paste0(
-      c(paste0("gkw[k] * exp(logh0s_", info$varname, "[", index, ", k]"),
+      c(paste0("gkw[] * exp(1)^(logh0s_", info$varname, "[", index, ", ]"),
         if (info$resp_mat[2L] != "M_lvlone") {
           paste_linpred_jm(varname = info$varname,
                            parname = info$parname,
@@ -376,17 +373,13 @@ jagsmodel_jm <- function(info) {
          "\n\n",
 
          # Gauss-Kronrod quadrature
-         tab(4L), "for (k in 1:15) {", "\n",
-         tab(6L), "logh0s_", info$varname, "[", index, ", k] <- inprod(",
-         info$parname,
-         "_Bh0_", info$varname, "[], Bsh0_", info$varname, "[15 * (",
-         index, " - 1) + k, ])", "\n",
-         tab(6L), "Surv_", info$varname, "[", index, ", k] <- ",
-         add_linebreaks(surv_predictor, indent = indent + 6L),
+         "\n", tab(4L), "# Gauss-Kronrod quadrature\n",
+         tab(4L), "logh0s_", info$varname, "[", index, ", 1:15] <- ",
+         "Bsh0_", info$varname, "[, ", index, ", ] %*% ", info$parname,
+         "_Bh0_", info$varname, "[]", "\n",
+         tab(4L), "Surv_", info$varname, "[", index, ", 1:15] <- ",
+         add_linebreaks(surv_predictor, indent = indent + 4L),
          "\n\n",
-         paste0(unlist(lapply(info$tv_vars, gkmodel_in_jm, index = index)),
-                collapse = "\n"),
-         tab(4L), "}", "\n\n",
 
          # integration
          tab(4L), "log.surv_", info$varname, "[", index, "] <- -exp(eta_",
@@ -401,6 +394,12 @@ jagsmodel_jm <- function(info) {
          tab(4L), "zeros_", info$varname, "[", index, "] ~ dpois(phi_",
          info$varname,
          "[", index, "])", "\n",
+
+         # longitudinal variables
+         "\n",
+         paste0(unlist(lapply(info$tv_vars, gkmodel_in_jm, index = index)),
+                collapse = "\n"),
+         "\n",
          tab(), "}\n\n",
 
          # random effects

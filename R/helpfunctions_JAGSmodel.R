@@ -765,7 +765,7 @@ paste_obsvalue <- function(varname, matname, index, column, isgk, ...) {
   #        functions
 
   if (isgk) # "M_lvlonegk[i, 4, k]" in the GK-quadrature
-    paste0(matname, "gk[", index, ", ", column, ", k]")
+    paste0(matname, "gk[", index, ", ", column, ", 1:15]")
   else # "M_lvlone[srow_varname[i, k]" outside the quadrature
     paste0(matname, "[srow_", varname, "[", index, "], ", column, "]")
 }
@@ -783,7 +783,7 @@ paste_underlvalue <- function(varname, covname, index, isgk, ...) {
   #        functions
 
   if (isgk)
-    paste0("mugk_", covname, "[", index, ", k]")
+    paste0("mugk_", covname, "[", index, ", 1:15]")
   else
     paste0("mu_", covname, "[srow_", varname, "[", index, "]]")
 }

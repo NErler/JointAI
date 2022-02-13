@@ -212,9 +212,13 @@ get_data_list <- function(Mlist, info_list, hyperpars,
 
       l[[paste0("Bh0_", x$varname)]] <-
         splines::splineDesign(h0knots, x$survtime, ord = 4L)
-      l[[paste0("Bsh0_", x$varname)]] <-
-        splines::splineDesign(h0knots, c(t(outer(x$survtime / 2L, gkx + 1L))),
-                              ord = 4L)
+
+      Bsh0 <- splines::splineDesign(h0knots, c(t(outer(x$survtime / 2L, gkx + 1L))),
+                                    ord = 4L)
+      l[[paste0("Bsh0_", x$varname)]] <- array(
+        dim = c(15, nrow(Bsh0)/15, ncol(Bsh0)),
+        data = Bsh0)
+
 
       # vector of zeros for the "zeros trick" in JAGS
       l[[paste0("zeros_", x$varname)]] <- numeric(length(x$survtime))
