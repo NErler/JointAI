@@ -62,27 +62,19 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                   monitor_params = monitor_params,
                                   add = add, mess = mess)
 
-  future_info <- get_future_info()
 
   # run mcmc ----------------------------------------------------------------
-  t0 <- Sys.time()
-  if (future_info$parallel) {
-    if (mess)
-      msg("Parallel sampling with %s workers started (%s).",
-          eval(future_info$workers), Sys.time())
 
-    res <- foreach::`%dopar%`(foreach::foreach(i = seq_along(object$model)),
-                              run_samples(object$model[[i]], n_iter = n.iter,
-                                          thin = thin, var_names = var_names)
-    )
-    mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1]]))
-    adapt <- lapply(res, function(x) x$adapt)
-  } else {
-    mcmc <- rjags::coda.samples(object$model, variable.names = var_names,
-                                n.iter = n.iter, thin = thin,
-                                progress.bar = progress.bar)
-  }
-  t1 <- Sys.time()
+  jags_res <- run_parallel(n_adapt = NULL, n_iter = n.iter,
+                           n_chains = object$mcmc_settings$n.chains,
+                           inits = NULL, thin = thin,
+                           data_list = NULL, var_names = var_names,
+                           modelfile = NULL, quiet = TRUE,
+                           progress_bar = progress.bar, mess = mess,
+                           warn = TRUE, add_samples = TRUE,
+                           models = object$model)
+  adapt <- jags_res$adapt
+  mcmc <- jags_res$mcmc
 
 
   # process MCMC samples --------------------------------------------------------
@@ -138,9 +130,9 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
   newobject$MCMC <- newMCMC
   newobject$call <- c(object$call, match.call())
   newobject$mcmc_settings$variable.names <- var_names
-  newobject$comp_info$future <- c(object$comp_info$future,
-                                  future_info$call)
-  newobject$model <- if (future_info$parallel) {
+  newobject$comp_info$future <- c(object$comp_info$parallel,
+                                  jags_res$parallel)
+  newobject$model <- if (isTRUE(jags_res$parallel)) {
     adapt
   } else {
     object$model
@@ -153,7 +145,9 @@ add_samples <- function(object, n.iter, add = TRUE, thin = NULL,
                                     coda::thin(newMCMC))
 
   # add computational time to JointAI object
-  newobject$comp_info$duration <- c(object$comp_info$duration, difftime(t1, t0))
+  newobject$comp_info$duration <- c(object$comp_info$duration,
+                                    list("adapt" = jags_res$time_adapt,
+                                         "sample" = jags_res$time_sample))
 
   return(newobject)
 }

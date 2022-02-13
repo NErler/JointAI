@@ -818,21 +818,15 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
       msg("Note: No MCMC sample will be created when n.iter is set to 0.")
   }
 
-  future_info <- get_future_info()
-
-  run_jags <- ifelse(future_info$parallel, run_parallel, run_seq)
-
-  t0 <- Sys.time()
-  jags_res <- run_jags(n_adapt = n.adapt, n_iter = n.iter, n_chains = n.chains,
-                       inits = inits, thin = thin,
-                       n_workers = future_info$workers,
-                       data_list = data_list, var_names = var_names,
-                       modelfile = modelfile, quiet = quiet,
-                       progress_bar = progress.bar, mess = mess, warn = warn)
+  jags_res <- run_parallel(n_adapt = n.adapt, n_iter = n.iter,
+                           n_chains = n.chains, inits = inits, thin = thin,
+                           data_list = data_list, var_names = var_names,
+                           modelfile = modelfile, quiet = quiet,
+                           progress_bar = progress.bar, mess = mess,
+                           warn = warn)
   adapt <- jags_res$adapt
   mcmc <- jags_res$mcmc
 
-  t1 <- Sys.time()
 
   if (n.iter > 0 & class(mcmc) != "mcmc.list")
     warnmsg("There is no mcmc sample. Something went wrong.")
@@ -904,10 +898,14 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
          model = if (n.adapt > 0) adapt,
          sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
          MCMC = if (n.iter > 0 & !is.null(mcmc)) coda::as.mcmc.list(MCMC),
-         comp_info = list(start_time = t0,
-                          duration = t1 - t0,
+         comp_info = list(start_time = Sys.time(),
+                          duration = if (!is.null(jags_res))
+                            list("adapt" = jags_res$time_adapt,
+                                 "sample" = jags_res$time_sample),
                           JointAI_version = packageVersion("JointAI"),
-                          future = future_info$call),
+                          parallel = if (!is.null(jags_res)) jags_res$parallel,
+                          workers = if (isTRUE(jags_res$parallel))
+                            jags_res$workers),
          call = modimpcall$thecall
     ), class = "JointAI")
 
