@@ -7,10 +7,8 @@ model {
     eta_Srv_ftm_stts_cn[i] <- 0
     logh_Srv_ftm_stts_cn[i] <- logh0_Srv_ftm_stts_cn[i] + eta_Srv_ftm_stts_cn[i]
 
-    for (k in 1:15) {
-      logh0s_Srv_ftm_stts_cn[i, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (i - 1) + k, ])
-      Surv_Srv_ftm_stts_cn[i, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[i, k])
-    }
+    logh0s_Srv_ftm_stts_cn[i, 1:15] <- Bsh0_Srv_ftm_stts_cn[, i, ] %*% beta_Bh0_Srv_ftm_stts_cn[]
+    Surv_Srv_ftm_stts_cn[i, 1:15] <- gkw[] * exp(1)^(logh0s_Srv_ftm_stts_cn[i, ])
 
     log.surv_Srv_ftm_stts_cn[i] <- -exp(eta_Srv_ftm_stts_cn[i]) * M_lvlone[i, 1]/2 * sum(Surv_Srv_ftm_stts_cn[i, ])
     phi_Srv_ftm_stts_cn[i] <- 5000 - ((M_lvlone[i, 2] * logh_Srv_ftm_stts_cn[i])) - (log.surv_Srv_ftm_stts_cn[i])
@@ -35,10 +33,8 @@ model {
                               M_lvlone[i, 5] * beta[2]
     logh_Srv_ftm_stts_cn[i] <- logh0_Srv_ftm_stts_cn[i] + eta_Srv_ftm_stts_cn[i]
 
-    for (k in 1:15) {
-      logh0s_Srv_ftm_stts_cn[i, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (i - 1) + k, ])
-      Surv_Srv_ftm_stts_cn[i, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[i, k])
-    }
+    logh0s_Srv_ftm_stts_cn[i, 1:15] <- Bsh0_Srv_ftm_stts_cn[, i, ] %*% beta_Bh0_Srv_ftm_stts_cn[]
+    Surv_Srv_ftm_stts_cn[i, 1:15] <- gkw[] * exp(1)^(logh0s_Srv_ftm_stts_cn[i, ])
 
     log.surv_Srv_ftm_stts_cn[i] <- -exp(eta_Srv_ftm_stts_cn[i]) * M_lvlone[i, 1]/2 * sum(Surv_Srv_ftm_stts_cn[i, ])
     phi_Srv_ftm_stts_cn[i] <- 5000 - ((M_lvlone[i, 2] * logh_Srv_ftm_stts_cn[i])) - (log.surv_Srv_ftm_stts_cn[i])
@@ -67,10 +63,8 @@ model {
                               M_lvlone[i, 5] * beta[2]
     logh_Srv_ftm_stts_cn[i] <- logh0_Srv_ftm_stts_cn[i] + eta_Srv_ftm_stts_cn[i]
 
-    for (k in 1:15) {
-      logh0s_Srv_ftm_stts_cn[i, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (i - 1) + k, ])
-      Surv_Srv_ftm_stts_cn[i, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[i, k])
-    }
+    logh0s_Srv_ftm_stts_cn[i, 1:15] <- Bsh0_Srv_ftm_stts_cn[, i, ] %*% beta_Bh0_Srv_ftm_stts_cn[]
+    Surv_Srv_ftm_stts_cn[i, 1:15] <- gkw[] * exp(1)^(logh0s_Srv_ftm_stts_cn[i, ])
 
     log.surv_Srv_ftm_stts_cn[i] <- -exp(eta_Srv_ftm_stts_cn[i]) * M_lvlone[i, 1]/2 * sum(Surv_Srv_ftm_stts_cn[i, ])
     phi_Srv_ftm_stts_cn[i] <- 5000 - ((M_lvlone[i, 2] * logh_Srv_ftm_stts_cn[i])) - (log.surv_Srv_ftm_stts_cn[i])
@@ -98,10 +92,8 @@ model {
     eta_Srv_ftm_stts_cn[i] <- (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[1]
     logh_Srv_ftm_stts_cn[i] <- logh0_Srv_ftm_stts_cn[i] + eta_Srv_ftm_stts_cn[i]
 
-    for (k in 1:15) {
-      logh0s_Srv_ftm_stts_cn[i, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (i - 1) + k, ])
-      Surv_Srv_ftm_stts_cn[i, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[i, k])
-    }
+    logh0s_Srv_ftm_stts_cn[i, 1:15] <- Bsh0_Srv_ftm_stts_cn[, i, ] %*% beta_Bh0_Srv_ftm_stts_cn[]
+    Surv_Srv_ftm_stts_cn[i, 1:15] <- gkw[] * exp(1)^(logh0s_Srv_ftm_stts_cn[i, ])
 
     log.surv_Srv_ftm_stts_cn[i] <- -exp(eta_Srv_ftm_stts_cn[i]) * M_lvlone[i, 1]/2 * sum(Surv_Srv_ftm_stts_cn[i, ])
     phi_Srv_ftm_stts_cn[i] <- 5000 - ((M_lvlone[i, 2] * logh_Srv_ftm_stts_cn[i])) - (log.surv_Srv_ftm_stts_cn[i])
@@ -149,10 +141,8 @@ model {
                               (M_lvlone[i, 9] - spM_lvlone[9, 1])/spM_lvlone[9, 2] * beta[5]
     logh_Srv_ftm_stts_cn[i] <- logh0_Srv_ftm_stts_cn[i] + eta_Srv_ftm_stts_cn[i]
 
-    for (k in 1:15) {
-      logh0s_Srv_ftm_stts_cn[i, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (i - 1) + k, ])
-      Surv_Srv_ftm_stts_cn[i, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[i, k])
-    }
+    logh0s_Srv_ftm_stts_cn[i, 1:15] <- Bsh0_Srv_ftm_stts_cn[, i, ] %*% beta_Bh0_Srv_ftm_stts_cn[]
+    Surv_Srv_ftm_stts_cn[i, 1:15] <- gkw[] * exp(1)^(logh0s_Srv_ftm_stts_cn[i, ])
 
     log.surv_Srv_ftm_stts_cn[i] <- -exp(eta_Srv_ftm_stts_cn[i]) * M_lvlone[i, 1]/2 * sum(Surv_Srv_ftm_stts_cn[i, ])
     phi_Srv_ftm_stts_cn[i] <- 5000 - ((M_lvlone[i, 2] * logh_Srv_ftm_stts_cn[i])) - (log.surv_Srv_ftm_stts_cn[i])
@@ -229,10 +219,8 @@ model {
                               beta[5] * (M_lvlone[i, 8] - spM_lvlone[8, 1])/spM_lvlone[8, 2]
     logh_Srv_ftm_stts_cn[i] <- logh0_Srv_ftm_stts_cn[i] + eta_Srv_ftm_stts_cn[i]
 
-    for (k in 1:15) {
-      logh0s_Srv_ftm_stts_cn[i, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (i - 1) + k, ])
-      Surv_Srv_ftm_stts_cn[i, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[i, k])
-    }
+    logh0s_Srv_ftm_stts_cn[i, 1:15] <- Bsh0_Srv_ftm_stts_cn[, i, ] %*% beta_Bh0_Srv_ftm_stts_cn[]
+    Surv_Srv_ftm_stts_cn[i, 1:15] <- gkw[] * exp(1)^(logh0s_Srv_ftm_stts_cn[i, ])
 
     log.surv_Srv_ftm_stts_cn[i] <- -exp(eta_Srv_ftm_stts_cn[i]) * M_lvlone[i, 1]/2 * sum(Surv_Srv_ftm_stts_cn[i, ])
     phi_Srv_ftm_stts_cn[i] <- 5000 - ((M_lvlone[i, 2] * logh_Srv_ftm_stts_cn[i])) - (log.surv_Srv_ftm_stts_cn[i])
@@ -329,15 +317,13 @@ model {
                                 M_lvlone[srow_Srv_ftm_stts_cn[ii], 4] * beta[7] +
                                 M_lvlone[srow_Srv_ftm_stts_cn[ii], 5] * beta[8]
 
-    for (k in 1:15) {
-      logh0s_Srv_ftm_stts_cn[ii, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (ii - 1) + k, ])
-      Surv_Srv_ftm_stts_cn[ii, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[ii, k] +
-                                     (M_lvlonegk[ii, 1, k] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[4] +
-                                     (M_lvlonegk[ii, 2, k] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[5] +
-                                     M_lvlonegk[ii, 3, k] * beta[6] +
-                                     M_lvlonegk[ii, 4, k] * beta[7] +
-                                     M_lvlonegk[ii, 5, k] * beta[8])
-    }
+    logh0s_Srv_ftm_stts_cn[ii, 1:15] <- Bsh0_Srv_ftm_stts_cn[, ii, ] %*% beta_Bh0_Srv_ftm_stts_cn[]
+    Surv_Srv_ftm_stts_cn[ii, 1:15] <- gkw[] * exp(1)^(logh0s_Srv_ftm_stts_cn[ii, ] +
+                                   (M_lvlonegk[ii, 1, 1:15] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[4] +
+                                   (M_lvlonegk[ii, 2, 1:15] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[5] +
+                                   M_lvlonegk[ii, 3, 1:15] * beta[6] +
+                                   M_lvlonegk[ii, 4, 1:15] * beta[7] +
+                                   M_lvlonegk[ii, 5, 1:15] * beta[8])
 
     log.surv_Srv_ftm_stts_cn[ii] <- -exp(eta_Srv_ftm_stts_cn[ii]) * M_id[ii, 1]/2 * sum(Surv_Srv_ftm_stts_cn[ii, ])
     phi_Srv_ftm_stts_cn[ii] <- 5000 - ((M_id[ii, 2] * logh_Srv_ftm_stts_cn[ii])) - (log.surv_Srv_ftm_stts_cn[ii])
@@ -369,12 +355,10 @@ model {
                                 (M_lvlone[srow_Srv_ftm_stts_cn[ii], 1] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[5] +
                                 (M_lvlone[srow_Srv_ftm_stts_cn[ii], 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[6]
 
-    for (k in 1:15) {
-      logh0s_Srv_ftm_stts_cn[ii, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (ii - 1) + k, ])
-      Surv_Srv_ftm_stts_cn[ii, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[ii, k] +
-                                     (M_lvlonegk[ii, 1, k] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[5] +
-                                     (M_lvlonegk[ii, 2, k] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[6])
-    }
+    logh0s_Srv_ftm_stts_cn[ii, 1:15] <- Bsh0_Srv_ftm_stts_cn[, ii, ] %*% beta_Bh0_Srv_ftm_stts_cn[]
+    Surv_Srv_ftm_stts_cn[ii, 1:15] <- gkw[] * exp(1)^(logh0s_Srv_ftm_stts_cn[ii, ] +
+                                   (M_lvlonegk[ii, 1, 1:15] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[5] +
+                                   (M_lvlonegk[ii, 2, 1:15] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[6])
 
     log.surv_Srv_ftm_stts_cn[ii] <- -exp(eta_Srv_ftm_stts_cn[ii]) * M_id[ii, 1]/2 * sum(Surv_Srv_ftm_stts_cn[ii, ])
     phi_Srv_ftm_stts_cn[ii] <- 5000 - ((M_id[ii, 2] * logh_Srv_ftm_stts_cn[ii])) - (log.surv_Srv_ftm_stts_cn[ii])
@@ -406,12 +390,10 @@ model {
                                 (M_lvlone[srow_Srv_ftm_stts_cn[ii], 1] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[3] +
                                 (M_lvlone[srow_Srv_ftm_stts_cn[ii], 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[4]
 
-    for (k in 1:15) {
-      logh0s_Srv_ftm_stts_cn[ii, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (ii - 1) + k, ])
-      Surv_Srv_ftm_stts_cn[ii, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[ii, k] +
-                                     (M_lvlonegk[ii, 1, k] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[3] +
-                                     (M_lvlonegk[ii, 2, k] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[4])
-    }
+    logh0s_Srv_ftm_stts_cn[ii, 1:15] <- Bsh0_Srv_ftm_stts_cn[, ii, ] %*% beta_Bh0_Srv_ftm_stts_cn[]
+    Surv_Srv_ftm_stts_cn[ii, 1:15] <- gkw[] * exp(1)^(logh0s_Srv_ftm_stts_cn[ii, ] +
+                                   (M_lvlonegk[ii, 1, 1:15] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[3] +
+                                   (M_lvlonegk[ii, 2, 1:15] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[4])
 
     log.surv_Srv_ftm_stts_cn[ii] <- -exp(eta_Srv_ftm_stts_cn[ii]) * M_id[ii, 1]/2 * sum(Surv_Srv_ftm_stts_cn[ii, ])
     phi_Srv_ftm_stts_cn[ii] <- 5000 - ((M_id[ii, 2] * logh_Srv_ftm_stts_cn[ii])) - (log.surv_Srv_ftm_stts_cn[ii])
@@ -451,13 +433,11 @@ model {
                                 (M_lvlone[srow_Srv_ftm_stts_cn[ii], 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[4] +
                                 (M_lvlone[srow_Srv_ftm_stts_cn[ii], 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[5]
 
-    for (k in 1:15) {
-      logh0s_Srv_ftm_stts_cn[ii, k] <- inprod(beta_Bh0_Srv_ftm_stts_cn[], Bsh0_Srv_ftm_stts_cn[15 * (ii - 1) + k, ])
-      Surv_Srv_ftm_stts_cn[ii, k] <- gkw[k] * exp(logh0s_Srv_ftm_stts_cn[ii, k] +
-                                     (M_lvlonegk[ii, 1, k] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[3] +
-                                     (M_lvlonegk[ii, 2, k] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[4] +
-                                     (M_lvlonegk[ii, 3, k] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[5])
-    }
+    logh0s_Srv_ftm_stts_cn[ii, 1:15] <- Bsh0_Srv_ftm_stts_cn[, ii, ] %*% beta_Bh0_Srv_ftm_stts_cn[]
+    Surv_Srv_ftm_stts_cn[ii, 1:15] <- gkw[] * exp(1)^(logh0s_Srv_ftm_stts_cn[ii, ] +
+                                   (M_lvlonegk[ii, 1, 1:15] - spM_lvlone[1, 1])/spM_lvlone[1, 2] * beta[3] +
+                                   (M_lvlonegk[ii, 2, 1:15] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[4] +
+                                   (M_lvlonegk[ii, 3, 1:15] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[5])
 
     log.surv_Srv_ftm_stts_cn[ii] <- -exp(eta_Srv_ftm_stts_cn[ii]) * M_id[ii, 1]/2 * sum(Surv_Srv_ftm_stts_cn[ii, ])
     phi_Srv_ftm_stts_cn[ii] <- 5000 - ((M_id[ii, 2] * logh_Srv_ftm_stts_cn[ii])) - (log.surv_Srv_ftm_stts_cn[ii])
