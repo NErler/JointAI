@@ -141,8 +141,8 @@ run_parallel <- function(n_adapt, n_iter, n_chains, inits, thin = 1L,
       res <- lapply(out, future::value)
 
       mcmc <- coda::as.mcmc.list(lapply(res, function(x) x$mcmc[[1L]]))
-      time_adapt <- do.call(c, lapply(res, "[[", "time_sample"))
-      time_sample <- do.call(c, lapply(res, "[[", "time_sample"))
+      time_adapt <- max(do.call(c, lapply(res, "[[", "time_adapt")))
+      time_sample <- max(do.call(c, lapply(res, "[[", "time_sample")))
 
     list(adapt = lapply(res, "[[", "adapt"),
          mcmc = mcmc,
