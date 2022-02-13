@@ -34,9 +34,9 @@ jagsmodel_clmm <- function(info) {
     nonprop <- lapply(write_nonprop(info), add_linebreaks, indent = indent + 2)
 
     paste0("\n\n",
-         paste0(tab(4), "eta_", info$varname, "_", seq_along(nonprop),
-                "[", index, "] <- ", nonprop, collapse = "\n")
-  )}
+           paste0(tab(4), "eta_", info$varname, "_", seq_along(nonprop),
+                  "[", index, "] <- ", nonprop, collapse = "\n")
+    )}
 
 
   # syntax to set values of dummy variables,
