@@ -1170,7 +1170,8 @@ write_logits <- function(info, index, nonprop = FALSE, isgk = FALSE,
                              .isgk = isgk) {
                       paste0(tab(indent), "logit(", paste_ps(k),
                              ") <- gamma_", info$varname, "[", k, "]",
-                             " + eta_", info$varname, "[", index, "]",
+                             " + eta", if (isgk) "gk",
+                             "_", info$varname, "[", index, if (isgk) ", k", "]",
                              if (nonprop) {
                                paste0(" + eta_", info$varname, "_", k,
                                       "[", index, "]")
