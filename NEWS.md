@@ -2,13 +2,24 @@
 
 
 ## New features
-* `md_pattern()` has an additional argument `sort_columns` to provide the option to switch off the sorting of columns by number of missing values.
+* `md_pattern()` has an additional argument `sort_columns` to provide the option
+  to switch off the sorting of columns by number of missing values.
 
 
-## Bug fixes
+## Bug fixes and improvements
 * `formula()` did not return a formula when `add_samples()` was used.
 * Use of `add_samples()` will now result in the `call` element of a `JointAI`
   object being a `list` and no longer a nested list.
+* `JM_imp()` with ordinal longitudinal outcome is not using the correct 
+  version of the linear predictor in the quadrature procedure approximating the
+  integral in the survival.
+* Re-structuring of the JAGS model code for proportional hazards models to
+  reduce computational time.
+* change in how parallel computation is done: does not rely on **doFuture** and
+  **foreach** any more, only package **future** is required.
+* `comp_info` element of fitted `JointAI` object has changed due to the changes
+  in parallel computing, and computational time is not reported separately for
+  the adaptive phase and the sampling phase.
 
 -----------------------------------------------------------------------------
 
