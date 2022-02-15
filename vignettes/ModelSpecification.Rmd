@@ -425,7 +425,7 @@ list_models(mod3e, priors = FALSE, regcoef = FALSE, otherpars = FALSE)
 #>    family: gaussian 
 #>    link: identity 
 #> * Predictor variables:
-#>   (Intercept), age, genderfemale 
+#>   (Intercept), age, genderfemale, I(WC^2) 
 #> 
 #> 
 #> Linear model for "WC" 
@@ -454,7 +454,7 @@ list_models(mod3f, priors = FALSE, regcoef = FALSE, otherpars = FALSE)
 #>    family: gaussian 
 #>    link: identity 
 #> * Predictor variables:
-#>   (Intercept), age, genderfemale, WC 
+#>   (Intercept), age, genderfemale, WC, I(WC^2) 
 #> 
 #> 
 #> Linear model for "WC" 
@@ -485,7 +485,7 @@ list_models(mod3g, priors = FALSE, regcoef = FALSE, otherpars = FALSE)
 #>    family: gaussian 
 #>    link: identity 
 #> * Predictor variables:
-#>   (Intercept), age, genderfemale, WC 
+#>   (Intercept), age, genderfemale, WC, I(WC^2) 
 #> 
 #> 
 #> Linear model for "WC" 
@@ -1069,12 +1069,12 @@ list_models(mod9b, priors = FALSE, regcoef = FALSE, otherpars = FALSE, refcat = 
 #> 
 #> Multinomial logit model for "occup" 
 #> * Predictor variables:
-#>   (Intercept), genderfemale, age, educhigh, smokeformer, smokecurrent 
+#>   (Intercept), genderfemale, age, educhigh, smokeformer, smokecurrent, log(WC) 
 #> 
 #> 
 #> Cumulative logit model for "smoke" 
 #> * Predictor variables:
-#>   genderfemale, age, educhigh 
+#>   genderfemale, age, educhigh, log(WC) 
 #> 
 #> 
 #> Linear model for "WC" 
@@ -1085,7 +1085,7 @@ list_models(mod9b, priors = FALSE, regcoef = FALSE, otherpars = FALSE, refcat = 
 ```
 
 **Note:**<br>
-Omitting auxiliary variables from the analysis model implies that the outcome 
+Omitting auxiliary variables from the analysis model implies that the outcome
 is independent of these variables, conditional on the other variables in the model.
 If this is not true, the model is  mis-specified which may lead to biased results
 (similar to leaving a confounding variable out of a model).
