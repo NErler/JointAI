@@ -626,16 +626,16 @@ summary(lm5)
 #> 
 #> 
 #> Posterior summary:
-#>                Mean     SD  2.5%  97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)  80.218 9.6712 61.82 97.670    0.00000    1.01 0.0230
-#> genderfemale  0.457 2.6764 -4.63  5.985    0.88667    1.03 0.0577
-#> WC            0.313 0.0712  0.18  0.458    0.00000    1.02 0.0569
-#> alc>=1        6.400 2.4072  1.94 10.885    0.00667    1.00 0.0774
-#> creat         7.935 7.3761 -5.01 21.334    0.26667    1.09 0.0598
+#>                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+#> (Intercept)  81.737 9.9071 62.317 100.78     0.0000   1.023 0.0577
+#> genderfemale  0.213 2.5267 -4.562   4.93     0.9133   1.050 0.0577
+#> WC            0.301 0.0755  0.136   0.45     0.0000   0.999 0.0577
+#> alc>=1        6.157 2.5434  1.197  11.01     0.0333   1.009 0.0671
+#> creat         7.781 7.5670 -5.807  23.68     0.2933   1.052 0.0634
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 14.4 0.735 13.1  15.8    1.03 0.0577
+#> sigma_SBP 14.4 0.756 13.1  15.9    1.05 0.0577
 #> 
 #> 
 #> MCMC settings:
@@ -667,26 +667,26 @@ GR_crit(lm5)
 #> Potential scale reduction factors:
 #> 
 #>              Point est. Upper C.I.
-#> (Intercept)       0.999       1.01
-#> genderfemale      1.009       1.03
-#> WC                1.005       1.02
-#> alc>=1            0.996       1.00
-#> creat             1.024       1.09
-#> sigma_SBP         1.011       1.03
+#> (Intercept)       1.003      1.023
+#> genderfemale      1.012      1.050
+#> WC                0.997      0.999
+#> alc>=1            1.000      1.009
+#> creat             1.018      1.052
+#> sigma_SBP         1.012      1.055
 #> 
 #> Multivariate psrf
 #> 
-#> 1.02
+#> 1.03
 
 # Monte Carlo Error of the MCMC sample
 MC_error(lm5)
 #>                est   MCSE    SD MCSE/SD
-#> (Intercept)  80.22 0.2226 9.671   0.023
-#> genderfemale  0.46 0.1545 2.676   0.058
-#> WC            0.31 0.0041 0.071   0.057
-#> alc>=1        6.40 0.1862 2.407   0.077
-#> creat         7.93 0.4412 7.376   0.060
-#> sigma_SBP    14.37 0.0424 0.735   0.058
+#> (Intercept)  81.74 0.5720 9.907   0.058
+#> genderfemale  0.21 0.1459 2.527   0.058
+#> WC            0.30 0.0044 0.075   0.058
+#> alc>=1        6.16 0.1707 2.543   0.067
+#> creat         7.78 0.4798 7.567   0.063
+#> sigma_SBP    14.38 0.0437 0.756   0.058
 ```
 
 When `analysis_main` was not switched on the default behaviour is that all
@@ -713,21 +713,21 @@ GR_crit(lm5, subset = c(analysis_main = FALSE, other_models = TRUE))
 #> Potential scale reduction factors:
 #> 
 #>                     Point est. Upper C.I.
-#> alc: (Intercept)         1.034       1.12
-#> alc: genderfemale        1.073       1.24
-#> alc: WC                  1.004       1.01
-#> alc: creat               1.028       1.09
-#> creat: (Intercept)       0.999       1.00
-#> creat: genderfemale      0.999       1.00
-#> creat: WC                0.997       1.00
-#> WC: (Intercept)          0.998       1.00
-#> WC: genderfemale         1.008       1.02
-#> sigma_creat              1.005       1.03
-#> sigma_WC                 1.007       1.03
+#> alc: (Intercept)         1.096      1.306
+#> alc: genderfemale        1.076      1.254
+#> alc: WC                  1.045      1.143
+#> alc: creat               1.023      1.089
+#> creat: (Intercept)       1.004      1.024
+#> creat: genderfemale      1.005      1.017
+#> creat: WC                1.001      1.014
+#> WC: (Intercept)          0.997      0.997
+#> WC: genderfemale         1.001      1.001
+#> sigma_creat              1.009      1.029
+#> sigma_WC                 1.020      1.081
 #> 
 #> Multivariate psrf
 #> 
-#> 1.08
+#> 1.13
 ```
 
 To select only some of the parameters, they can be specified directly by
@@ -744,16 +744,16 @@ summary(lm5, subset = list(other = c('creat', 'alc>=1')))
 #> 
 #> 
 #> Posterior summary:
-#>                Mean     SD  2.5%  97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)  80.218 9.6712 61.82 97.670    0.00000    1.01 0.0230
-#> genderfemale  0.457 2.6764 -4.63  5.985    0.88667    1.03 0.0577
-#> WC            0.313 0.0712  0.18  0.458    0.00000    1.02 0.0569
-#> alc>=1        6.400 2.4072  1.94 10.885    0.00667    1.00 0.0774
-#> creat         7.935 7.3761 -5.01 21.334    0.26667    1.09 0.0598
+#>                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
+#> (Intercept)  81.737 9.9071 62.317 100.78     0.0000   1.023 0.0577
+#> genderfemale  0.213 2.5267 -4.562   4.93     0.9133   1.050 0.0577
+#> WC            0.301 0.0755  0.136   0.45     0.0000   0.999 0.0577
+#> alc>=1        6.157 2.5434  1.197  11.01     0.0333   1.009 0.0671
+#> creat         7.781 7.5670 -5.807  23.68     0.2933   1.052 0.0634
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 14.4 0.735 13.1  15.8    1.03 0.0577
+#> sigma_SBP 14.4 0.756 13.1  15.9    1.05 0.0577
 #> 
 #> 
 #> MCMC settings:
