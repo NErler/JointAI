@@ -48,104 +48,31 @@ have an argument `monitor_params`.
 `monitor_params` takes a named list (often a named vector also works) with
 the following possible entries:
 
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> name/key word </th>
-   <th style="text-align:left;"> what is monitored </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> `analysis_main` </td>
-   <td style="text-align:left;"> `betas` and `sigma_main`, `tau_main` (in beta regression) or `shape_main` (in parametric survival models), `D_main` (in multi-level models) and `basehaz` (in proportional hazards models) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `analysis_random` </td>
-   <td style="text-align:left;"> `ranef_main`, `D_main`, `invD_main`, `RinvD_main` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `other_models` </td>
-   <td style="text-align:left;"> `alphas`, `tau_other`, `gamma_other`, `delta_other` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `imps` </td>
-   <td style="text-align:left;"> imputed values </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `betas` </td>
-   <td style="text-align:left;"> regression coefficients of the main analysis model(s) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `tau_main` </td>
-   <td style="text-align:left;"> precision of the residuals from the analysis model(s) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `sigma_main` </td>
-   <td style="text-align:left;"> standard deviation of the residuals from the analysis model(s) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `gamma_main` </td>
-   <td style="text-align:left;"> intercepts in ordinal main model </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `delta_main` </td>
-   <td style="text-align:left;"> increments of ordinal intercepts in main model(s) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `ranef_main` </td>
-   <td style="text-align:left;"> random effects of the analysis model(s) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `D_main` </td>
-   <td style="text-align:left;"> covariance matrix of the random effects of the main model(s) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `invD_main` </td>
-   <td style="text-align:left;"> inverse of `D_main` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `RinvD_main` </td>
-   <td style="text-align:left;"> scale matrix in Wishart prior for `invD_main` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `alphas` </td>
-   <td style="text-align:left;"> regression coefficients in the covariate models </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `tau_other` </td>
-   <td style="text-align:left;"> precision parameters of the residuals from covariate models </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `gamma_other` </td>
-   <td style="text-align:left;"> intercepts in ordinal covariate models </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `delta_other` </td>
-   <td style="text-align:left;"> increments of ordinal intercepts in covariate models </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `ranef_other` </td>
-   <td style="text-align:left;"> random effects of the covariate model(s) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `D_other` </td>
-   <td style="text-align:left;"> covariance matrix of the random effects of the covariate model(s) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `invD_other` </td>
-   <td style="text-align:left;"> inverse of `D_other` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `RinvD_other` </td>
-   <td style="text-align:left;"> scale matrix in Wishart prior for `invD_other` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `other` </td>
-   <td style="text-align:left;"> additional parameters </td>
-  </tr>
-</tbody>
-</table>
+
+|name/key word     |what is monitored                                                                                                                                                                          |
+|:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|`analysis_main`   |`betas` and `sigma_main`, `tau_main` (in beta regression) or `shape_main` (in parametric survival models), `D_main` (in multi-level models) and `basehaz` (in proportional hazards models) |
+|`analysis_random` |`ranef_main`, `D_main`, `invD_main`, `RinvD_main`                                                                                                                                          |
+|`other_models`    |`alphas`, `tau_other`, `gamma_other`, `delta_other`                                                                                                                                        |
+|`imps`            |imputed values                                                                                                                                                                             |
+|`betas`           |regression coefficients of the main analysis model(s)                                                                                                                                      |
+|`tau_main`        |precision of the residuals from the analysis model(s)                                                                                                                                      |
+|`sigma_main`      |standard deviation of the residuals from the analysis model(s)                                                                                                                             |
+|`gamma_main`      |intercepts in ordinal main model                                                                                                                                                           |
+|`delta_main`      |increments of ordinal intercepts in main model(s)                                                                                                                                          |
+|`ranef_main`      |random effects of the analysis model(s)                                                                                                                                                    |
+|`D_main`          |covariance matrix of the random effects of the main model(s)                                                                                                                               |
+|`invD_main`       |inverse of `D_main`                                                                                                                                                                        |
+|`RinvD_main`      |scale matrix in Wishart prior for `invD_main`                                                                                                                                              |
+|`alphas`          |regression coefficients in the covariate models                                                                                                                                            |
+|`tau_other`       |precision parameters of the residuals from covariate models                                                                                                                                |
+|`gamma_other`     |intercepts in ordinal covariate models                                                                                                                                                     |
+|`delta_other`     |increments of ordinal intercepts in covariate models                                                                                                                                       |
+|`ranef_other`     |random effects of the covariate model(s)                                                                                                                                                   |
+|`D_other`         |covariance matrix of the random effects of the covariate model(s)                                                                                                                          |
+|`invD_other`      |inverse of `D_other`                                                                                                                                                                       |
+|`RinvD_other`     |scale matrix in Wishart prior for `invD_other`                                                                                                                                             |
+|`other`           |additional parameters                                                                                                                                                                      |
 
 Each of the key words works as a switch, except for `other`, which should be
 a vector of character strings.
@@ -421,52 +348,18 @@ id variable for each observation in cross-sectional data (multi-level data shoul
 already contain an id variable).
 
 `get_MIdat()` takes the arguments:
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> argument </th>
-   <th style="text-align:left;"> explanation </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> `object` </td>
-   <td style="text-align:left;"> 'an object of class 'JointAI' </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `m` </td>
-   <td style="text-align:left;"> number of datasets to be created </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `include` </td>
-   <td style="text-align:left;"> logical; should the original data be included? </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `start` </td>
-   <td style="text-align:left;"> the first iteration that may be randomly chosen (i.e., all previous iterations are discarded as burn-in) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `minspace` </td>
-   <td style="text-align:left;"> minimum number of iterations between iterations chosen as imputed values </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `seed` </td>
-   <td style="text-align:left;"> optional seed value in order to make the random selection of iterations reproducible </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `export_to_SPSS` </td>
-   <td style="text-align:left;"> logical; should the datasets be exported to SPSS, i.e., written as .txt and .sps file? If `export_to_SPSS = FALSE` (default) the imputed data is only returned `data.frame` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `resdir` </td>
-   <td style="text-align:left;"> directory the files are exported to </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `filename` </td>
-   <td style="text-align:left;"> the name of the .txt and .sps files </td>
-  </tr>
-</tbody>
-</table>
+
+|argument         |explanation                                                                                                                                                                 |
+|:----------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|`object`         |'an object of class 'JointAI'                                                                                                                                               |
+|`m`              |number of datasets to be created                                                                                                                                            |
+|`include`        |logical; should the original data be included?                                                                                                                              |
+|`start`          |the first iteration that may be randomly chosen (i.e., all previous iterations are discarded as burn-in)                                                                    |
+|`minspace`       |minimum number of iterations between iterations chosen as imputed values                                                                                                    |
+|`seed`           |optional seed value in order to make the random selection of iterations reproducible                                                                                        |
+|`export_to_SPSS` |logical; should the datasets be exported to SPSS, i.e., written as .txt and .sps file? If `export_to_SPSS = FALSE` (default) the imputed data is only returned `data.frame` |
+|`resdir`         |directory the files are exported to                                                                                                                                         |
+|`filename`       |the name of the .txt and .sps files                                                                                                                                         |
 
 ### Random effects
 For mixed models, `analysis_main` also includes the random effects covariance
