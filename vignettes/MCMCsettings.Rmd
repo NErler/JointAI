@@ -407,16 +407,11 @@ and `beta`, the random effects `b_<response>_<level>` (e.g. `b_bmi_ID` and
 ## Parallel sampling
 To reduce computational time, it is possible to perform sampling of multiple
 MCMC chains in parallel on multiple cores. This can be achieved with the help
-of the packages [**future**](https://CRAN.R-project.org/package=future) and
-[**doFuture**](https://CRAN.R-project.org/package=doFuture).
+of the package [**future**](https://CRAN.R-project.org/package=future).
 
-To perform parallel sampling, a parallel adapter has to be registered
-```{r, eval = FALSE}
-doFuture::registerDoFuture()
-```
-and a plan how to "resolve futures" needs to be specified; this is the
-specification that determines if sampling is performed sequentially or in
-parallel. For example,
+To perform parallel sampling, a plan how to "resolve futures" needs to be
+specified; this is the specification that determines if sampling is performed
+sequentially or in parallel. For example,
 ```{r, eval = FALSE}
 future::plan(future::multisession, workers = 4)
 ```
