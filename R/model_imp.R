@@ -831,7 +831,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
     warnmsg("There is no mcmc sample. Something went wrong.")
 
   # post processing ------------------------------------------------------------
-  if (n.iter > 0 & !is.null(mcmc)) {
+  if (n.iter > 0 & !is.null(mcmc) & !inherits(mcmc, "try-error")) {
     MCMC <- mcmc
 
     if (any(!vapply(Mlist$scale_pars, is.null, FUN.VALUE = logical(1)),
