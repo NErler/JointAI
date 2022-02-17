@@ -96,13 +96,14 @@
 #'                      \code{keep_scaled_sample = TRUE})}
 #' \item{\code{MCMC}}{MCMC sample, scaled back to the scale of the data}
 #' \item{\code{comp_info}}{a list with information on the computational setting
-#'                         (\code{start_ime}: date and time the calculation was
+#'                         (\code{start_time}: date and time the calculation was
 #'                         started, \code{duration}: computational time of the
-#'                         model (adaptive + sampling phase),
+#'                         model adaptive and sampling phase,
 #'                         \code{JointAI_version}: package version,
-#'                         \code{future}: the call to \code{future::plan()}, if
-#'                         any was found (i.e., the specification for parallel
-#'                         computation))}
+#'                         \code{R_version}: the \code{R.version.string},
+#'                         \code{parallel}: whether parallel computation was used,
+#'                         \code{workers}: if parallel computation was used, the
+#'                         number of workers)}
 #' \item{\code{fitted.values}}{fitted/predicted values (if available)}
 #' \item{\code{residuals}}{residuals (if available)}
 #' \item{\code{call}}{the original call}

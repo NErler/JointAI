@@ -902,6 +902,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                             list("adapt" = jags_res$time_adapt,
                                  "sample" = jags_res$time_sample),
                           JointAI_version = packageVersion("JointAI"),
+                          R_version = R.version.string,
                           parallel = if (!is.null(jags_res)) jags_res$parallel,
                           workers = if (isTRUE(jags_res$parallel))
                             jags_res$workers),
