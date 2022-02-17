@@ -6,13 +6,17 @@
   to switch off the sorting of columns by number of missing values.
 
 
-## Bug fixes and improvements
-* `formula()` did not return a formula when `add_samples()` was used.
-* Use of `add_samples()` will now result in the `call` element of a `JointAI`
-  object being a `list` and no longer a nested list.
+## Bug fixes
+* `formula()` now also return the model formula when `add_samples()` is used.
 * `JM_imp()` with ordinal longitudinal outcome is not using the correct 
   version of the linear predictor in the quadrature procedure approximating the
   integral in the survival.
+* Bug causing the wrong elements of the data matrix to be monitored when 
+  `monitor_params(imps = TRUE)` in survival models fixed.
+
+## Small improvements
+* Use of `add_samples()` will now result in the `call` element of a `JointAI`
+  object being a `list` and no longer a nested list.
 * Re-structuring of the JAGS model code for proportional hazards models to
   reduce computational time.
 * change in how parallel computation is done: does not rely on **doFuture** and

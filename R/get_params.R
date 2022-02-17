@@ -78,9 +78,9 @@ get_params <- function(analysis_main = TRUE,
   impvals <- if (isTRUE(args$imps)) {
     unlist(unname(lapply(names(Mlist$M), function(k) {
       if (any(is.na(Mlist$M[[k]]))) {
-        misvals <- which(is.na(Mlist$M[[k]][, colnames(Mlist$M[[k]]) %in%
-                                              names(Mlist$data), drop = FALSE]),
-                         arr.ind = TRUE)
+        misvals <- which(is.na(Mlist$M[[k]]), arr.ind = TRUE)
+        relevant_cols <- which(colnames(Mlist$M[[k]]) %in% names(Mlist$data))
+        misvals <- misvals[misvals[, "col"] %in% relevant_cols, ]
 
         apply(misvals, 1L, function(x) {
           paste0(k, "[", x[1L], ",", x[2L], "]")
