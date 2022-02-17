@@ -214,13 +214,14 @@ corresponding covariates</p></dd>
 <dd><p>MCMC sample, scaled back to the scale of the data</p></dd>
 <dt><code>comp_info</code></dt>
 <dd><p>a list with information on the computational setting
-(<code>start_ime</code>: date and time the calculation was
+(<code>start_time</code>: date and time the calculation was
 started, <code>duration</code>: computational time of the
-model (adaptive + sampling phase),
+model adaptive and sampling phase,
 <code>JointAI_version</code>: package version,
-<code>future</code>: the call to <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code>, if
-any was found (i.e., the specification for parallel
-computation))</p></dd>
+<code>R_version</code>: the <code>R.version.string</code>,
+<code>parallel</code>: whether parallel computation was used,
+<code>workers</code>: if parallel computation was used, the
+number of workers)</p></dd>
 <dt><code>fitted.values</code></dt>
 <dd><p>fitted/predicted values (if available)</p></dd>
 <dt><code>residuals</code></dt>
