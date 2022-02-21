@@ -24,6 +24,7 @@
 * `comp_info` element of fitted `JointAI` object has changed due to the changes
   in parallel computing, and computational time is not reported separately for
   the adaptive phase and the sampling phase.
+* `predict()` is now faster for proportional hazards models.
 
 -----------------------------------------------------------------------------
 

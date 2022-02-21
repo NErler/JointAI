@@ -535,28 +535,25 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   }
 
   lp_list <- lapply(desgn_mat, function(x) {
-    vapply(seq_len(nrow(x)), function(i) {
-      if (!is.null(scale_pars)) {
-        MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*%
-          (x[i, ] - scale_pars$center[match(colnames(x), rownames(scale_pars))])
-      } else {
-        MCMC[, coefs$coef[match(colnames(x),
-                                coefs$varname)], drop = FALSE] %*% x[i, ]
-      }
-    }, FUN.VALUE = numeric(nrow(MCMC)))
+    if (!is.null(scale_pars)) {
+      MCMC[, coefs$coef[match(colnames(x), coefs$varname)], drop = FALSE] %*%
+        (t(x) - scale_pars$center[match(colnames(x), rownames(scale_pars))])
+    } else {
+      t(x) %*% MCMC[, coefs$coef[match(colnames(x), coefs$varname)],
+                    drop = FALSE]
+    }
   })
-
-  lps <- array(unlist(lp_list), dim = c(nrow(lp_list[[1L]]),
-                                        ncol(lp_list[[1L]]),
-                                        length(lp_list)),
-               dimnames = list(NULL, NULL, gsub("M_", "", names(lp_list))))
 
 
   eta_surv <- if (any(Mlist$group_lvls >=
                       Mlist$group_lvls[gsub("M_", "", resp_mat)])) {
-    apply(lps[, , names(which(Mlist$group_lvls >=
-                                Mlist$group_lvls[gsub("M_", "", resp_mat)]))],
-          c(1L, 2L), sum)
+
+    lvls <- names(which(Mlist$group_lvls >=
+                          Mlist$group_lvls[gsub("M_", "", resp_mat)]))
+
+    Reduce(function(x1, x2) x1 + x2,
+           lp_list[paste0("M_", lvls)])
+
   } else {
     0L
   }
@@ -564,9 +561,13 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
   eta_surv_long <- if (any(Mlist$group_lvls <
                            Mlist$group_lvls[gsub("M_", "", resp_mat)]) &
                        survinfo[[1L]]$haslong) {
-    apply(lps[, , names(which(Mlist$group_lvls <
-                                Mlist$group_lvls[gsub("M_", "", resp_mat)]))],
-          c(1L, 2L), sum)
+
+    lvls <- names(which(Mlist$group_lvls <
+                          Mlist$group_lvls[gsub("M_", "", resp_mat)]))
+
+    Reduce(function(x1, x2) x1 + x2,
+           lp_list[paste0("M_", lvls)])
+
   } else {
     0L
   }
@@ -597,10 +598,11 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
                                       gkx + 1L))),
                             ord = 4L, outer.ok = TRUE)
 
+    mcmc_cols <- grep(paste0("\\bbeta_Bh0_", clean_survname(varname), "\\b"),
+                      colnames(MCMC))
+
     logh0s <- lapply(seq_len(nrow(MCMC)), function(m) {
-      matrix(Bsh0 %*% MCMC[m, grep(paste0("\\bbeta_Bh0_",
-                                          clean_survname(varname), "\\b"),
-                                   colnames(MCMC))],
+      matrix(Bsh0 %*% MCMC[m, mcmc_cols],
              ncol = 15L, nrow = nrow(newdata), byrow = TRUE)
     })
 
