@@ -717,7 +717,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
                       append_data_list = NULL, ...) {
 
   modimpcall <- as.list(match.call())[-1L]
-
+  start_time <- Sys.time()
 
   # checks & warnings -------------------------------------------------------
   if (!is.null(formula) & is.null(fixed) & is.null(random)) {
@@ -897,10 +897,12 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
          model = if (n.adapt > 0) adapt,
          sample = if (n.iter > 0 & !is.null(mcmc) & keep_scaled_mcmc) mcmc,
          MCMC = if (n.iter > 0 & !is.null(mcmc)) coda::as.mcmc.list(MCMC),
-         comp_info = list(start_time = Sys.time(),
-                          duration = if (!is.null(jags_res))
-                            list("adapt" = jags_res$time_adapt,
-                                 "sample" = jags_res$time_sample),
+         comp_info = list(start_time = start_time,
+                          duration = if (!is.null(jags_res)) {
+                            duration_obj(
+                              list("adapt" = jags_res$time_adapt,
+                                   "sample" = jags_res$time_sample))
+                          },
                           JointAI_version = packageVersion("JointAI"),
                           R_version = R.version.string,
                           parallel = if (!is.null(jags_res)) jags_res$parallel,
