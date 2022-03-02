@@ -638,11 +638,11 @@ default) as well as the imputed values.</p>
     
 
 <p>In the default setting for cumulative logit models, i.e, <code>rev = NULL</code>, the
-odds for a variable \(y\) with \(K\) ordered categories
+odds for a variable <em></em>\(y\) with <em></em>\(K\) ordered categories
 are defined as \[\log\left(\frac{P(y_i &gt; k)}{P(y_i \leq k)}\right) =
 \gamma_k + \eta_i, \quad k = 1, \ldots, K-1,\] where
-\(\gamma_k\) is a category specific intercept and
-\(\eta_i\) the subject specific linear predictor.</p>
+<em></em>\(\gamma_k\) is a category specific intercept and
+<em></em>\(\eta_i\) the subject specific linear predictor.</p>
 <p>To reverse the odds to \[\log\left(\frac{P(y_i \leq k)}{P(y_i &gt;
 k)}\right) = \gamma_k + \eta_i, \quad k = 1, \ldots, K-1,\] the name of
 the response variable has to be specified in the argument <code>rev</code>, e.g., <code>rev = c("y")</code>.</p>
@@ -727,7 +727,7 @@ factors.<br></p><div class="section">
 <h4 id="contrasts">Contrasts<a class="anchor" aria-label="anchor" href="#contrasts"></a></h4>
 
 
-<p><strong>JointAI</strong> version \(\geq\) 1.0.0 uses the globally (via
+<p><strong>JointAI</strong> version <em></em>\(\geq\) 1.0.0 uses the globally (via
 <code>options("contrasts")</code>) specified contrasts. However, for incomplete
 categorical variables, for which the contrasts need to be re-calculated
 within the JAGS model, currently only <code>contr.treatment</code> and <code>contr.sum</code> are

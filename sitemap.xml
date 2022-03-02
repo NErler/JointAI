@@ -94,6 +94,12 @@
     <loc>https://nerler.github.io/JointAI/reference/densplot.html</loc>
   </url>
   <url>
+    <loc>https://nerler.github.io/JointAI/reference/difftime_df.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI/reference/duration_obj.html</loc>
+  </url>
+  <url>
     <loc>https://nerler.github.io/JointAI/reference/expand_rd_vcov_full.html</loc>
   </url>
   <url>
@@ -187,6 +193,9 @@
     <loc>https://nerler.github.io/JointAI/reference/rd_vcov.html</loc>
   </url>
   <url>
+    <loc>https://nerler.github.io/JointAI/reference/reformat_difftime.html</loc>
+  </url>
+  <url>
     <loc>https://nerler.github.io/JointAI/reference/remove_lhs.html</loc>
   </url>
   <url>
@@ -206,6 +215,9 @@
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI/reference/split_formula_list.html</loc>
+  </url>
+  <url>
+    <loc>https://nerler.github.io/JointAI/reference/sum_duration.html</loc>
   </url>
   <url>
     <loc>https://nerler.github.io/JointAI/reference/summary.JointAI.html</loc>
