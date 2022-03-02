@@ -222,3 +222,65 @@ duration_obj <- function(dur) {
     })
 }
 
+
+#' Calculate the sum of the computational duration of a JointAI object
+#'
+#' @param object object of class `JointAI`
+#' @param by optional grouping information; options are `NULL` (default) to
+#'           calculate the sum over all chains and runs and both the adaptive
+#'           and sampling phase, `"run"` to get the duration per run,
+#'           `"phase"` to get the sum over all chains and runs per phase,
+#'           `"chain"` to get the sum per chain over both phases and all runs,
+#'           `"phase and run"` to get the sum over all chains, separately per
+#'           phase and run.
+#'
+#' @export
+#'
+sum_duration <- function(object, by = NULL) {
+  obj <- object$comp_info$duration
+
+  if (is.null(by) | by %in% c("phase", "phase and run", "run and phase")) {
+
+    s <- lapply(obj, function(p) {
+
+      r <- Map(function(vec, parallel) {
+        if (parallel) {
+          max(do.call(c, vec))
+        } else {
+          sum(do.call(c, vec))
+        }
+      }, vec = split(p, rownames(p)), parallel = object$comp_info$parallel)
+
+      do.call(c, r)
+    })
+
+
+    if (by %in% c("phase and run", "run and phase")) {
+      s
+    } else if (is.null(by)) {
+      sum(do.call(c, s))
+    } else if (by == "phase") {
+      lapply(s, sum)
+    }
+
+  } else if (by == "run") {
+
+    r <- do.call(cbind, obj)
+
+    s <- Map(function(vec, parallel) {
+      if (parallel) {
+        max(do.call(c, vec))
+      } else {
+        sum(do.call(c, vec))
+      }
+    }, vec = split(r, rownames(r)),
+    parallel = object$comp_info$parallel)
+
+    do.call(c, s)
+
+  } else if (by == "chain") {
+    do.call(c, lapply(c(do.call(rbind, obj)), sum))
+  }
+}
+
+

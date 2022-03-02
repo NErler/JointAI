@@ -4,7 +4,8 @@
 ## New features
 * `md_pattern()` has an additional argument `sort_columns` to provide the option
   to switch off the sorting of columns by number of missing values.
-
+* `sum_duration()`: new function to get sum of computational time across chains,
+  phases, runs, ...
 
 ## Bug fixes
 * `formula()` now also return the model formula when `add_samples()` is used.
