@@ -304,15 +304,15 @@ get_ranefpars <- function(info_list, Mlist, args, set = "main") {
     })
 
     RinvD_block_indep <- lapply(ranef_info, function(x) {
-      if (x$nranef > 1) {
-        lapply(x$lvls, function(lvl) {
+      lapply(x$lvls, function(lvl) {
+        if (x$nranef[lvl] > 1) {
           if (isTRUE(x$rd_vcov[[lvl]] == "blockdiag")) {
             paste0("RinvD_", x$varname, "_", lvl,
                    "[", seq.int(max(1L, x$nranef[lvl])), ",",
                    seq.int(max(1L, x$nranef[lvl])), "]")
           }
-        })
-      }
+        }
+      })
     })
 
     params <- c(params,
