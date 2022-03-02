@@ -23,8 +23,10 @@
   **foreach** any more, only package **future** is required.
 * `comp_info` element of fitted `JointAI` object has changed due to the changes
   in parallel computing, and computational time is not reported separately for
-  the adaptive phase and the sampling phase.
-* `predict()` is now faster for proportional hazards models.
+  the adaptive phase and the sampling phase, and separately per chain when
+  parallel computation was used.
+* `predict()` is now a lot faster for proportional hazards models.
+
 
 -----------------------------------------------------------------------------
 

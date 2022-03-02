@@ -78,7 +78,9 @@ run_jags <- function(inits, data_list, modelfile, n_chains, n_adapt, n_iter,
   }
   t2 <- Sys.time()
 
-  list(adapt = adapt, mcmc = mcmc, time_adapt = t1 - t0, time_sample = t2 - t1)
+  list(adapt = adapt, mcmc = mcmc,
+       time_adapt = t1 - t0,
+       time_sample = t2 - t1)
 }
 
 
@@ -144,10 +146,11 @@ run_parallel <- function(n_adapt, n_iter, n_chains, inits, thin = 1L,
       time_adapt <- do.call(c, lapply(res, "[[", "time_adapt"))
       time_sample <- do.call(c, lapply(res, "[[", "time_sample"))
 
-    list(adapt = lapply(res, "[[", "adapt"),
-         mcmc = mcmc,
-         time_adapt = reformat_difftime(time_adapt),
-         time_sample = reformat_difftime(time_sample))
+      list(adapt = lapply(res, "[[", "adapt"),
+           mcmc = mcmc,
+           time_adapt = difftime_df(reformat_difftime(time_adapt)),
+           time_sample = difftime_df(reformat_difftime(time_sample))
+      )
 
     } else {
 
@@ -160,13 +163,22 @@ run_parallel <- function(n_adapt, n_iter, n_chains, inits, thin = 1L,
                mess = mess, progress_bar = progress_bar,
                add_samples = add_samples, adapt = models)
     }
+
     fit$parallel <- parallel
     fit$workers <- length(f$workers)
+
+    if (!isTRUE(parallel)) {
+      fit$time_adapt <- difftime_df(fit$time_adapt)
+      fit$time_sample <- difftime_df(fit$time_sample)
+    }
     fit
   }
 }
 
 
+#' Set all elements of a `difftime` object to the same, largest meaningful unit
+#' @param dt a `difftime` object (potentially a vector of `difftime`s)
+#' @keywords internal
 reformat_difftime <- function(dt) {
   units(dt) <- "secs"
   w <- which(min(dt)/c(secs = 1, mins = 60, hours = 3600, days = 86400) > 1L)
@@ -174,3 +186,39 @@ reformat_difftime <- function(dt) {
     units(dt) <- names(w)[length(w)]
   dt
 }
+
+
+#' Converts a `difftime` object to a `data.frame`
+#' @param dt `difftime` object (vector of `difftime` objects)
+#' @keywords internal
+difftime_df <- function(dt) {
+  if (length(dt) > 1L) {
+    dt <- setNames(dt, paste0("chain", seq_along(dt)))
+  } else {
+    dt <- setNames(dt, "total")
+  }
+  as.data.frame(as.list(dt))
+}
+
+
+rbind_duration <- function(dur, dur_new) {
+  Map(function(dur_old, dur_new) {
+    rownames(dur_new) <- paste0("run ", nrow(dur_old) + 1)
+    rbind(dur_old, dur_new)
+  }, dur_old = dur, dur_new = dur_new)
+}
+
+
+#' Create a duration object
+#'
+#' Add row names to the object
+#'
+#' @param dur list of `difftime` objects
+#' @keywords internal
+duration_obj <- function(dur) {
+    lapply(dur, function(x)  {
+      rownames(x) <- paste0("run ", 1:nrow(x))
+      x
+    })
+}
+
