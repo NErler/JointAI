@@ -239,7 +239,7 @@ duration_obj <- function(dur) {
 sum_duration <- function(object, by = NULL) {
   obj <- object$comp_info$duration
 
-  if (is.null(by) | by %in% c("phase", "phase and run", "run and phase")) {
+  if (is.null(by) || by %in% c("phase", "phase and run", "run and phase")) {
 
     s <- lapply(obj, function(p) {
 
@@ -255,10 +255,10 @@ sum_duration <- function(object, by = NULL) {
     })
 
 
-    if (by %in% c("phase and run", "run and phase")) {
-      s
-    } else if (is.null(by)) {
+    if (is.null(by)) {
       sum(do.call(c, s))
+    } else if (by %in% c("phase and run", "run and phase")) {
+      s
     } else if (by == "phase") {
       lapply(s, sum)
     }
