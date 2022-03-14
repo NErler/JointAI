@@ -14,6 +14,8 @@
   integral in the survival.
 * Bug causing the wrong elements of the data matrix to be monitored when 
   `monitor_params(imps = TRUE)` in survival models fixed.
+* `predDF()`: bugfix for models including auxiliary variables (which were
+   previously not included into the data)  
 
 ## Small improvements
 * Use of `add_samples()` will now result in the `call` element of a `JointAI`

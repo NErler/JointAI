@@ -46,7 +46,7 @@ predDF.JointAI <- function(object, vars, length = 100L, ...) {
 
   predDF.list(object = c(object$fixed,
                          object$random,
-                         object$auxvars,
+                         object$Mlist$auxvars,
                          if (!is.null(object$Mlist$timevar))
                            as.formula(paste0("~", object$Mlist$timevar))
   ),
