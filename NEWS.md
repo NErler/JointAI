@@ -16,6 +16,7 @@
   `monitor_params(imps = TRUE)` in survival models fixed.
 * `predDF()`: bugfix for models including auxiliary variables (which were
    previously not included into the data)  
+* `nonprop`: bugfix for non-proportional effects in covariate models
 
 ## Small improvements
 * Use of `add_samples()` will now result in the `call` element of a `JointAI`

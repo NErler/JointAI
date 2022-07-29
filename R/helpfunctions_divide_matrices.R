@@ -657,7 +657,7 @@ get_linpreds <- function(fixed, random, data, models, auxvars = NULL,
 
 
 
-get_nonprop_lp <- function(nonprop, dsgn_mat_lvls, data, refs, fixed) {
+get_nonprop_lp <- function(nonprop, dsgn_mat_lvls, data, refs, fixed, lp_cols) {
   # get the linear predictors of covariates with non-proportional effects in
   # cumulative logit (mixed) models
 
@@ -683,7 +683,8 @@ get_nonprop_lp <- function(nonprop, dsgn_mat_lvls, data, refs, fixed) {
 
 
   lapply(names(nonprop), function(k) {
-    if (any(!all_vars(nonprop[[k]]) %in% all_vars(fixed[[k]]))) {
+    propvars <- cvapply(names(unlist(unname(lp_cols[[k]]))), replace_dummy, refs)
+    if (any(!all_vars(nonprop[[k]]) %in% propvars)) {
       errormsg(
         "All variables that have non-proportional effect (specified via the
         argument %s also need to be part of the main model formula.",
