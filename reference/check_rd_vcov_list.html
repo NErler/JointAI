@@ -110,7 +110,7 @@ level by duplicating the contents if necessary.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">check_rd_vcov_list</span><span class="op">(</span><span class="va">rd_vcov</span>, <span class="va">idvar</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">check_rd_vcov_list</span><span class="op">(</span><span class="va">rd_vcov</span>, <span class="va">idvar</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -118,13 +118,18 @@ level by duplicating the contents if necessary.</p>
     <dl><dt>rd_vcov</dt>
 <dd><p>a character string or a list describing the the random effects
 variance covariance structure (provided by the user)</p></dd>
+
+
 <dt>idvar</dt>
 <dd><p>vector with the names of all grouping variables
 (except "lvlone")</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A named list per grouping level where each elements contains
+    
+
+<p>A named list per grouping level where each elements contains
 information on how the random effects variance-covariance matrices on
 that level are structured.
 Per level it can be either a character string (e.g. <code>"full"</code>) or a
@@ -144,7 +149,7 @@ variable(s) (e.g. <code>list(full = c("a", "b"), indep = "c")</code>)</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

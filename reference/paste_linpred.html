@@ -108,29 +108,42 @@ if necessary.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">paste_linpred</span><span class="op">(</span><span class="va">parname</span>, <span class="va">parelmts</span>, <span class="va">matnam</span>, <span class="va">index</span>, <span class="va">cols</span>, <span class="va">scale_pars</span>, isgk <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">paste_linpred</span><span class="op">(</span><span class="va">parname</span>, <span class="va">parelmts</span>, <span class="va">matnam</span>, <span class="va">index</span>, <span class="va">cols</span>, <span class="va">scale_pars</span>, isgk <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>parname</dt>
 <dd><p>character string; name fo the parameter (e.g., "beta")</p></dd>
+
+
 <dt>index</dt>
 <dd><p>character string; name of the index (e.g., "i" or "ii")</p></dd>
+
+
 <dt>cols</dt>
 <dd><p>integer vector; indices of the columns of <code>matname</code>, should have
 the same length as <code>parlemts</code></p></dd>
+
+
 <dt>scale_pars</dt>
 <dd><p>matrix with row names according to the column names of
 <code>matname</code> and columns "center" and "scale"; or NULL</p></dd>
+
+
 <dt>isgk</dt>
 <dd><p>logical; is this linear predictor within the Gauss-Kronrod
 quadrature?</p></dd>
+
+
 <dt>parlemts</dt>
 <dd><p>integer vector; indices of the parameter vector to be used;
 should have the same length as <code>cols</code></p></dd>
+
+
 <dt>matname</dt>
 <dd><p>character string; name of the data matrix</p></dd>
+
 </dl></div>
 
   </div>
@@ -145,7 +158,7 @@ should have the same length as <code>cols</code></p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

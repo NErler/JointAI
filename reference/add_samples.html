@@ -106,39 +106,52 @@ object of class 'JointAI'.<br></p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">add_samples</span><span class="op">(</span><span class="va">object</span>, <span class="va">n.iter</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, thin <span class="op">=</span> <span class="cn">NULL</span>,
-  monitor_params <span class="op">=</span> <span class="cn">NULL</span>, progress.bar <span class="op">=</span> <span class="st">"text"</span>, mess <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_samples</span><span class="op">(</span><span class="va">object</span>, <span class="va">n.iter</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, thin <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  monitor_params <span class="op">=</span> <span class="cn">NULL</span>, progress.bar <span class="op">=</span> <span class="st">"text"</span>, mess <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>object inheriting from class 'JointAI'</p></dd>
+
+
 <dt>n.iter</dt>
 <dd><p>the number of additional iterations of the MCMC chain</p></dd>
+
+
 <dt>add</dt>
 <dd><p>logical; should the new MCMC samples be added to the existing
 samples (<code>TRUE</code>; default) or replace them?
 If samples are added the arguments <code>monitor_params</code> and
 <code>thin</code> are ignored.</p></dd>
+
+
 <dt>thin</dt>
 <dd><p>thinning interval (see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>);
 ignored when <code>add = TRUE</code>.</p></dd>
+
+
 <dt>monitor_params</dt>
 <dd><p>named list or vector specifying which parameters should
 be monitored. For details, see
 <code><a href="model_imp.html">*_imp</a></code> and the vignette
 <a href="https://nerler.github.io/JointAI/articles/SelectingParameters.html">Parameter Selection</a>.
 Ignored when <code>add = TRUE</code>.</p></dd>
+
+
 <dt>progress.bar</dt>
 <dd><p>character string specifying the type of
 progress bar. Possible values are "text" (default), "gui",
 and "none" (see <code>update</code>). Note: when
 sampling is performed in parallel it is not possible to
 display a progress bar.</p></dd>
+
+
 <dt>mess</dt>
 <dd><p>logical; should messages be given? Default is
 <code>TRUE</code>.</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -150,21 +163,21 @@ contains some examples on how to specify the argument <code>monitor_params</code
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Example 1:</span></span>
-<span class="r-in"><span class="co"># Run an initial JointAI model:</span></span>
-<span class="r-in"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Continue sampling:</span></span>
-<span class="r-in"><span class="va">mod_add</span> <span class="op">&lt;-</span> <span class="fu">add_samples</span><span class="op">(</span><span class="va">mod</span>, n.iter <span class="op">=</span> <span class="fl">200</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 2:</span></span>
-<span class="r-in"><span class="co"># Continue sampling, but additionally sample imputed values.</span></span>
-<span class="r-in"><span class="co"># Note: Setting different parameters to monitor than in the original model</span></span>
-<span class="r-in"><span class="co"># requires add = FALSE.</span></span>
-<span class="r-in"><span class="va">imps</span> <span class="op">&lt;-</span> <span class="fu">add_samples</span><span class="op">(</span><span class="va">mod</span>, n.iter <span class="op">=</span> <span class="fl">200</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"imps"</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span class="r-in">                    add <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Example 1:</span></span></span>
+<span class="r-in"><span><span class="co"># Run an initial JointAI model:</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Continue sampling:</span></span></span>
+<span class="r-in"><span><span class="va">mod_add</span> <span class="op">&lt;-</span> <span class="fu">add_samples</span><span class="op">(</span><span class="va">mod</span>, n.iter <span class="op">=</span> <span class="fl">200</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 2:</span></span></span>
+<span class="r-in"><span><span class="co"># Continue sampling, but additionally sample imputed values.</span></span></span>
+<span class="r-in"><span><span class="co"># Note: Setting different parameters to monitor than in the original model</span></span></span>
+<span class="r-in"><span><span class="co"># requires add = FALSE.</span></span></span>
+<span class="r-in"><span><span class="va">imps</span> <span class="op">&lt;-</span> <span class="fu">add_samples</span><span class="op">(</span><span class="va">mod</span>, n.iter <span class="op">=</span> <span class="fl">200</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"imps"</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    add <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -179,7 +192,7 @@ contains some examples on how to specify the argument <code>monitor_params</code
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

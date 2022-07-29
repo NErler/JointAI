@@ -106,108 +106,108 @@ sampling, while imputing missing values.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">lm_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,
-  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,
-  refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>,
-  ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">glm_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">family</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,
-  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,
-  refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>,
-  ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">clm_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,
-  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,
-  refcats <span class="op">=</span> <span class="cn">NULL</span>, nonprop <span class="op">=</span> <span class="cn">NULL</span>, rev <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>,
-  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,
-  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">lognorm_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,
-  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,
-  refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>,
-  ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">betareg_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,
-  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,
-  refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>,
-  ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mlogit_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,
-  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,
-  refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>,
-  ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">lme_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">data</span>, <span class="va">random</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,
-  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,
-  refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,
-  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,
-  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">lmer_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">data</span>, <span class="va">random</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,
-  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,
-  refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,
-  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,
-  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">glme_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">data</span>, <span class="va">random</span>, <span class="va">family</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>,
-  n.iter <span class="op">=</span> <span class="fl">0</span>, thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-  auxvars <span class="op">=</span> <span class="cn">NULL</span>, refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,
-  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,
-  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">glmer_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">data</span>, <span class="va">random</span>, <span class="va">family</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>,
-  n.iter <span class="op">=</span> <span class="fl">0</span>, thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-  auxvars <span class="op">=</span> <span class="cn">NULL</span>, refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,
-  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,
-  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">betamm_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">random</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,
-  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,
-  refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,
-  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,
-  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">lognormmm_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">random</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>,
-  n.iter <span class="op">=</span> <span class="fl">0</span>, thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-  auxvars <span class="op">=</span> <span class="cn">NULL</span>, refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,
-  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,
-  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">clmm_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">data</span>, <span class="va">random</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,
-  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,
-  refcats <span class="op">=</span> <span class="cn">NULL</span>, nonprop <span class="op">=</span> <span class="cn">NULL</span>, rev <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>,
-  models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">mlogitmm_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">data</span>, <span class="va">random</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>,
-  n.iter <span class="op">=</span> <span class="fl">0</span>, thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-  auxvars <span class="op">=</span> <span class="cn">NULL</span>, refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,
-  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,
-  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">survreg_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,
-  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,
-  refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>,
-  ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">coxph_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, df_basehaz <span class="op">=</span> <span class="fl">6</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>,
-  n.iter <span class="op">=</span> <span class="fl">0</span>, thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-  auxvars <span class="op">=</span> <span class="cn">NULL</span>, refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>,
-  shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>,
-  warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">JM_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, df_basehaz <span class="op">=</span> <span class="fl">6</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>,
-  n.iter <span class="op">=</span> <span class="fl">0</span>, thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-  auxvars <span class="op">=</span> <span class="cn">NULL</span>, timevar <span class="op">=</span> <span class="cn">NULL</span>, refcats <span class="op">=</span> <span class="cn">NULL</span>,
-  rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>,
-  assoc_type <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,
-  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lm_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">glm_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">family</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">clm_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  refcats <span class="op">=</span> <span class="cn">NULL</span>, nonprop <span class="op">=</span> <span class="cn">NULL</span>, rev <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">lognorm_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">betareg_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mlogit_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">lme_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">data</span>, <span class="va">random</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">lmer_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">data</span>, <span class="va">random</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">glme_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">data</span>, <span class="va">random</span>, <span class="va">family</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  n.iter <span class="op">=</span> <span class="fl">0</span>, thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  auxvars <span class="op">=</span> <span class="cn">NULL</span>, refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">glmer_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">data</span>, <span class="va">random</span>, <span class="va">family</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  n.iter <span class="op">=</span> <span class="fl">0</span>, thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  auxvars <span class="op">=</span> <span class="cn">NULL</span>, refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">betamm_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">random</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">lognormmm_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">random</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  n.iter <span class="op">=</span> <span class="fl">0</span>, thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  auxvars <span class="op">=</span> <span class="cn">NULL</span>, refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">clmm_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">data</span>, <span class="va">random</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  refcats <span class="op">=</span> <span class="cn">NULL</span>, nonprop <span class="op">=</span> <span class="cn">NULL</span>, rev <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>,</span>
+<span>  models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mlogitmm_imp</span><span class="op">(</span><span class="va">fixed</span>, <span class="va">data</span>, <span class="va">random</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  n.iter <span class="op">=</span> <span class="fl">0</span>, thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  auxvars <span class="op">=</span> <span class="cn">NULL</span>, refcats <span class="op">=</span> <span class="cn">NULL</span>, rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">survreg_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>, n.iter <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">coxph_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, df_basehaz <span class="op">=</span> <span class="fl">6</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  n.iter <span class="op">=</span> <span class="fl">0</span>, thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  auxvars <span class="op">=</span> <span class="cn">NULL</span>, refcats <span class="op">=</span> <span class="cn">NULL</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, inits <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">JM_imp</span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, df_basehaz <span class="op">=</span> <span class="fl">6</span>, n.chains <span class="op">=</span> <span class="fl">3</span>, n.adapt <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  n.iter <span class="op">=</span> <span class="fl">0</span>, thin <span class="op">=</span> <span class="fl">1</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  auxvars <span class="op">=</span> <span class="cn">NULL</span>, timevar <span class="op">=</span> <span class="cn">NULL</span>, refcats <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rd_vcov <span class="op">=</span> <span class="st">"blockdiag"</span>, models <span class="op">=</span> <span class="cn">NULL</span>, no_model <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  assoc_type <span class="op">=</span> <span class="cn">NULL</span>, shrinkage <span class="op">=</span> <span class="cn">FALSE</span>, ppc <span class="op">=</span> <span class="cn">TRUE</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  inits <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -215,25 +215,39 @@ sampling, while imputing missing values.</p>
     <dl><dt>formula</dt>
 <dd><p>a two sided model formula (see <code><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></code>)
 or a list of such formulas; (more details below).</p></dd>
+
+
 <dt>data</dt>
 <dd><p>a <code>data.frame</code> containing the original data
 (more details below)</p></dd>
+
+
 <dt>n.chains</dt>
 <dd><p>number of MCMC chains</p></dd>
+
+
 <dt>n.adapt</dt>
 <dd><p>number of iterations for adaptation of the MCMC samplers
 (see <code><a href="https://rdrr.io/pkg/rjags/man/adapt.html" class="external-link">adapt</a></code>)</p></dd>
+
+
 <dt>n.iter</dt>
 <dd><p>number of iterations of the MCMC chain (after adaptation;
 see <code><a href="https://rdrr.io/pkg/rjags/man/coda.samples.html" class="external-link">coda.samples</a></code>)</p></dd>
+
+
 <dt>thin</dt>
 <dd><p>thinning interval (integer; see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>).
 For example, <code>thin = 1</code> (default) will keep the MCMC samples
 from all iterations; <code>thin = 5</code> would only keep every 5th
 iteration.</p></dd>
+
+
 <dt>monitor_params</dt>
 <dd><p>named list or vector specifying which parameters
 should be monitored (more details below)</p></dd>
+
+
 <dt>auxvars</dt>
 <dd><p>optional; one-sided formula of variables that should be used
 as predictors in the imputation procedure (and will be imputed
@@ -241,6 +255,8 @@ if necessary) but are not part of the analysis model(s).
 For more details with regards to the behaviour with
 non-linear effects see the vignette on
 <a href="https://nerler.github.io/JointAI/articles/ModelSpecification.html#auxvars">Model Specification</a></p></dd>
+
+
 <dt>refcats</dt>
 <dd><p>optional; either one of <code>"first"</code>, <code>"last"</code>,
 <code>"largest"</code> (which sets the category for all categorical
@@ -254,6 +270,8 @@ Default is "first". If reference categories are specified for
 a subset of the categorical variables the default will be
 used for the remaining variables.
 (See also <code><a href="set_refcat.html">set_refcat</a></code>)</p></dd>
+
+
 <dt>models</dt>
 <dd><p>optional; named vector specifying the types of models for
 (incomplete) covariates.
@@ -262,22 +280,32 @@ earlier versions.
 If <code>NULL</code> (default) models will be determined
 automatically based on the class of the respective columns of
 <code>data</code>.</p></dd>
+
+
 <dt>no_model</dt>
 <dd><p>optional; vector of names of variables for which no model
 should be specified.
 Note that this is only possible for completely observed
 variables and implies the assumptions of independence between
 the excluded variable and the incomplete variables.</p></dd>
+
+
 <dt>shrinkage</dt>
 <dd><p>optional; either a character string naming the shrinkage
 method to be used for regression coefficients in all models
 or a named vector specifying the type of shrinkage to be
 used in the models given as names.</p></dd>
+
+
 <dt>ppc</dt>
 <dd><p>logical: should monitors for posterior predictive checks be
 set? (not yet used)</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>optional; seed value (for reproducibility)</p></dd>
+
+
 <dt>inits</dt>
 <dd><p>optional; specification of initial values in the form of a list
 or a function (see <code><a href="https://rdrr.io/pkg/rjags/man/jags.model.html" class="external-link">jags.model</a></code>).
@@ -285,12 +313,18 @@ If omitted, starting values for the random number generator are
 created by <strong>JointAI</strong>, initial values are then generated
 by JAGS.
 It is an error to supply an initial value for an observed node.</p></dd>
+
+
 <dt>warn</dt>
 <dd><p>logical; should warnings be given? Default is
 <code>TRUE</code>.</p></dd>
+
+
 <dt>mess</dt>
 <dd><p>logical; should messages be given? Default is
 <code>TRUE</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional, optional arguments</p><dl><dt><code>trunc</code></dt>
 <dd><p>named list specifying limits of truncation for the
@@ -365,6 +399,8 @@ the sampling has finished.</p></dd>
 
 
 </dl></dd>
+
+
 <dt>family</dt>
 <dd><p>only for <code>glm_imp</code> and <code>glmm_imp</code>/<code>glmer_imp</code>:
 a description of the distribution and link function to
@@ -372,37 +408,53 @@ be used in the model. This can be a character string naming a
 family function, a family function or the result of a call to
 a family function. (For more details see below and
 <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">family</a></code>.)</p></dd>
+
+
 <dt>nonprop</dt>
 <dd><p>optional named list of one-sided formulas specifying
 covariates that have non-proportional effects in cumulative
 logit models. These covariates should also be part of the
 regular model formula, and the names of the list should be
 the names of the ordinal response variables.</p></dd>
+
+
 <dt>rev</dt>
 <dd><p>optional character vector; vector of ordinal outcome variable
 names for which the odds should be reversed, i.e.,
 \(logit(y\le k)\) instead of \(logit(y &gt; k)\).</p></dd>
+
+
 <dt>fixed</dt>
 <dd><p>a two sided formula describing the fixed-effects part of the
 model (see <code><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></code>)</p></dd>
+
+
 <dt>random</dt>
 <dd><p>only for multi-level models:
 a one-sided formula of the form <code>~x1 + ... + xn | g</code>,
 where <code>x1 + ... + xn</code> specifies the model for the random
 effects and <code>g</code> the grouping variable</p></dd>
+
+
 <dt>rd_vcov</dt>
 <dd><p>character string or list specifying the structure of the
 random effects variance covariance matrix, see details below.</p></dd>
+
+
 <dt>df_basehaz</dt>
 <dd><p>degrees of freedom for the B-spline used to model the
 baseline hazard in proportional hazards models
 (<code>coxph_imp</code> and <code>JM_imp</code>)</p></dd>
+
+
 <dt>timevar</dt>
 <dd><p>name of the variable indicating the time of the measurement of
 a time-varying covariate in a proportional hazards survival
 model (also in a joint model).
 The variable specified in
 "timevar" will automatically be added to "no_model".</p></dd>
+
+
 <dt>assoc_type</dt>
 <dd><p>named vector specifying the type of the association used
 for a time-varying covariate in the linear predictor of the
@@ -412,10 +464,13 @@ Implemented options are "underl.value"
 Gaussian, Gamma, beta or log-normal distribution)
 covariates) and "obs.value" (the observed/imputed value;
 default for covariates modelled using other distributions).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <a href="JointAIObject.html">JointAI</a>.</p>
+    
+
+<p>An object of class <a href="JointAIObject.html">JointAI</a>.</p>
     </div>
     <div id="model-formulas">
     <h2>Model formulas</h2>
@@ -428,7 +483,7 @@ default for covariates modelled using other distributions).</p></dd>
 <a href="https://CRAN.R-project.org/package=nlme" class="external-link"><span class="pkg">nlme</span></a>,
 using <code>fixed</code> and <code>random</code>, or as it is done in the package
 <a href="https://CRAN.R-project.org/package=lme4" class="external-link"><span class="pkg">lme4</span></a>,
-using <code>formula</code> and specifying the random effects in brackets:</p><div class="sourceCode r"><pre><code><span class="va">formula</span> <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span> <span class="op">+</span> <span class="va">x3</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span></code></pre><p></p></div>
+using <code>formula</code> and specifying the random effects in brackets:</p><div class="sourceCode r"><pre><code><span><span class="va">formula</span> <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span> <span class="op">+</span> <span class="va">x3</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>is equivalent to</p><div class="sourceCode r"><pre><code>fixed = y ~ x1 + x2 + x3, random = ~ 1|id
 </code></pre><p></p></div>
 </div>
@@ -461,8 +516,8 @@ but different values for <code>center</code>.</p>
 objects can be passed to the argument <code>formula</code>.
 Outcomes of one model may be contained as covariates in another model and
 it is possible to combine models for variables on different levels,
-for example:</p><div class="sourceCode r"><pre><code><span class="va">formula</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span> <span class="op">+</span> <span class="va">x3</span> <span class="op">+</span> <span class="va">x4</span> <span class="op">+</span> <span class="va">time</span> <span class="op">+</span> <span class="op">(</span><span class="va">time</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>,
-                     <span class="va">x2</span> <span class="op">~</span> <span class="va">x3</span> <span class="op">+</span> <span class="va">x4</span> <span class="op">+</span> <span class="va">x5</span><span class="op">)</span></code></pre><p></p></div>
+for example:</p><div class="sourceCode r"><pre><code><span><span class="va">formula</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span> <span class="op">+</span> <span class="va">x3</span> <span class="op">+</span> <span class="va">x4</span> <span class="op">+</span> <span class="va">time</span> <span class="op">+</span> <span class="op">(</span><span class="va">time</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>,</span>
+<span>                     <span class="va">x2</span> <span class="op">~</span> <span class="va">x3</span> <span class="op">+</span> <span class="va">x4</span> <span class="op">+</span> <span class="va">x5</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>This principle is also used for the specification of a joint model for
 longitudinal and survival data.</p>
 <p>Note that it is not possible to specify multiple models for the same outcome
@@ -484,21 +539,21 @@ Alternatively, it is possible to specify a named list of vectors, where
 the names are the structures and the vectors contain the names of the
 response variables which are included in this structure.</p>
 <p>For example, for a multivariate mixed model with five outcomes
-<code>y1</code>, ..., <code>y5</code>, the specification could be:</p><div class="sourceCode r"><pre><code><span class="va">rd_vcov</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>blockdiag <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span><span class="op">)</span>,
-               full <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y3"</span>, <span class="st">"y4"</span><span class="op">)</span>,
-               indep <span class="op">=</span> <span class="st">"y5"</span><span class="op">)</span></code></pre><p></p></div>
+<code>y1</code>, ..., <code>y5</code>, the specification could be:</p><div class="sourceCode r"><pre><code><span><span class="va">rd_vcov</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>blockdiag <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span><span class="op">)</span>,</span>
+<span>               full <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y3"</span>, <span class="st">"y4"</span><span class="op">)</span>,</span>
+<span>               indep <span class="op">=</span> <span class="st">"y5"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>This would entail that the random effects for <code>y3</code> and <code>y4</code> are assumed to
 be correlated (within and across outcomes),
 random effects for <code>y1</code> and <code>y2</code> are assumed to be correlated within each
 outcome, and the random effects for <code>y5</code> are assumed to be independent.</p>
 <p>It is possible to have multiple sets of response variables for which separate
-full variance-covariance matrices are used, for example:</p><div class="sourceCode r"><pre><code><span class="va">rd_vcov</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>full <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y5"</span><span class="op">)</span>,
-               full <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y3"</span>, <span class="st">"y4"</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+full variance-covariance matrices are used, for example:</p><div class="sourceCode r"><pre><code><span><span class="va">rd_vcov</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>full <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y5"</span><span class="op">)</span>,</span>
+<span>               full <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y3"</span>, <span class="st">"y4"</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>In models with multiple levels of nesting, separate structures can be
-specified per level:</p><div class="sourceCode r"><pre><code><span class="va">rd_vcov</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>blockdiag <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span><span class="op">)</span>,
-                         full <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y3"</span>, <span class="st">"y4"</span><span class="op">)</span>,
-                         indep <span class="op">=</span> <span class="st">"y5"</span><span class="op">)</span>,
-              center <span class="op">=</span> <span class="st">"indep"</span><span class="op">)</span></code></pre><p></p></div>
+specified per level:</p><div class="sourceCode r"><pre><code><span><span class="va">rd_vcov</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>blockdiag <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span><span class="op">)</span>,</span>
+<span>                         full <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y3"</span>, <span class="st">"y4"</span><span class="op">)</span>,</span>
+<span>                         indep <span class="op">=</span> <span class="st">"y5"</span><span class="op">)</span>,</span>
+<span>              center <span class="op">=</span> <span class="st">"indep"</span><span class="op">)</span></span></code></pre><p></p></div>
 </div>
 
 
@@ -528,7 +583,7 @@ carried backward.</p>
 
 
 <p>It is not possible to specify transformations of outcome variables, i.e.,
-it is not possible to use a model formula like</p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span> <span class="op">+</span> <span class="va">...</span></code></pre><p></p></div>
+it is not possible to use a model formula like</p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span> <span class="op">+</span> <span class="va">...</span></span></code></pre><p></p></div>
 <p>In the specific case of a transformation with the natural logarithm,
 a log-normal model can be used instead of a normal model.</p>
 <p>Moreover, it is not possible to use <code>.</code> to indicate that all variables in a
@@ -660,12 +715,12 @@ ordinal covariates, the list has to be named with the names of the
 ordinal response variables.</p>
 <p>For example, the following three specifications are equivalent and assume a
 non-proportional effect of <code>C1</code> on <code>O1</code>, but <code>C1</code> is assumed to have a
-proportional effect on the incomplete ordinal covariate <code>O2</code>:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/model_imp.html">clm_imp</a></span><span class="op">(</span><span class="va">O1</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">B2</span> <span class="op">+</span> <span class="va">O2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, nonprop <span class="op">=</span> <span class="op">~</span> <span class="va">C1</span><span class="op">)</span>
-<span class="fu"><a href="../reference/model_imp.html">clm_imp</a></span><span class="op">(</span><span class="va">O1</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">B2</span> <span class="op">+</span> <span class="va">O2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, nonprop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">~</span> <span class="va">C1</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/model_imp.html">clm_imp</a></span><span class="op">(</span><span class="va">O1</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">B2</span> <span class="op">+</span> <span class="va">O2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, nonprop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>O1 <span class="op">=</span> <span class="op">~</span> <span class="va">C1</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
-<p>To specify non-proportional effects on <code>O2</code>, a named list has to be provided:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/model_imp.html">clm_imp</a></span><span class="op">(</span><span class="va">O1</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">B2</span> <span class="op">+</span> <span class="va">O2</span> <span class="op">+</span> <span class="va">B1</span>, data <span class="op">=</span> <span class="va">wideDF</span>,
-        nonprop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>O1 <span class="op">=</span> <span class="op">~</span> <span class="va">C1</span>,
-                       O2 <span class="op">=</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">B1</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+proportional effect on the incomplete ordinal covariate <code>O2</code>:</p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/model_imp.html">clm_imp</a></span><span class="op">(</span><span class="va">O1</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">B2</span> <span class="op">+</span> <span class="va">O2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, nonprop <span class="op">=</span> <span class="op">~</span> <span class="va">C1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/model_imp.html">clm_imp</a></span><span class="op">(</span><span class="va">O1</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">B2</span> <span class="op">+</span> <span class="va">O2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, nonprop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">~</span> <span class="va">C1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/model_imp.html">clm_imp</a></span><span class="op">(</span><span class="va">O1</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">B2</span> <span class="op">+</span> <span class="va">O2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, nonprop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>O1 <span class="op">=</span> <span class="op">~</span> <span class="va">C1</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<p>To specify non-proportional effects on <code>O2</code>, a named list has to be provided:</p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/model_imp.html">clm_imp</a></span><span class="op">(</span><span class="va">O1</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">B2</span> <span class="op">+</span> <span class="va">O2</span> <span class="op">+</span> <span class="va">B1</span>, data <span class="op">=</span> <span class="va">wideDF</span>,</span>
+<span>        nonprop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>O1 <span class="op">=</span> <span class="op">~</span> <span class="va">C1</span>,</span>
+<span>                       O2 <span class="op">=</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">B1</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>The variables for which a non-proportional effect is assumed also have to be
 part of the regular model formula.</p>
     </div>
@@ -683,28 +738,28 @@ another model. An example would be the use of "baseline" cholesterol
 <p>First, the variable <code>chol0</code> is added to the <code>PBC</code> data.
 For most patients the value of cholesterol at baseline is observed, but not
 for all. It is important that the data has a row with <code>day = 0</code> for each
-patient.</p><div class="sourceCode r"><pre><code><span class="va">PBC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">PBC</span>,
-             <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">PBC</span>, <span class="va">day</span> <span class="op">==</span> <span class="fl">0</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"chol"</span><span class="op">)</span><span class="op">)</span>,
-             by <span class="op">=</span> <span class="st">"id"</span>, suffixes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"0"</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+patient.</p><div class="sourceCode r"><pre><code><span><span class="va">PBC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">PBC</span>,</span>
+<span>             <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">PBC</span>, <span class="va">day</span> <span class="op">==</span> <span class="fl">0</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"chol"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>             by <span class="op">=</span> <span class="st">"id"</span>, suffixes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"0"</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Next, the custom piece of JAGS model syntax needs to be specified.
 We loop here only over the patients for which the baseline cholesterol
-is missing.</p><div class="sourceCode r"><pre><code><span class="va">calc_chol0</span> <span class="op">&lt;-</span> <span class="st">"
-for (ii in 1:28) {
-  M_id[row_chol0_id[ii], 3] &lt;- M_lvlone[row_chol0_lvlone[ii], 1]
-  }"</span></code></pre><p></p></div>
+is missing.</p><div class="sourceCode r"><pre><code><span><span class="va">calc_chol0</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
+<span><span class="st">for (ii in 1:28) {</span></span>
+<span><span class="st">  M_id[row_chol0_id[ii], 3] &lt;- M_lvlone[row_chol0_lvlone[ii], 1]</span></span>
+<span><span class="st">  }"</span></span></code></pre><p></p></div>
 <p>To be able to run the model with the custom imputation "model" for baseline
 cholesterol we need to provide the numbers of the rows in the data matrices
 that contain the missing values of baseline cholesterol and the rows that
-contain the imputed cholesterol at <code>day = 0</code>:</p><div class="sourceCode r"><pre><code><span class="va">row_chol0_lvlone</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">PBC</span><span class="op">$</span><span class="va">day</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">PBC</span><span class="op">$</span><span class="va">chol0</span><span class="op">)</span><span class="op">)</span>
-<span class="va">row_chol0_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="va">PBC</span><span class="op">$</span><span class="va">id</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">PBC</span><span class="op">$</span><span class="va">id</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">row_chol0_lvlone</span><span class="op">]</span></code></pre><p></p></div>
+contain the imputed cholesterol at <code>day = 0</code>:</p><div class="sourceCode r"><pre><code><span><span class="va">row_chol0_lvlone</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">PBC</span><span class="op">$</span><span class="va">day</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">PBC</span><span class="op">$</span><span class="va">chol0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">row_chol0_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="va">PBC</span><span class="op">$</span><span class="va">id</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">PBC</span><span class="op">$</span><span class="va">id</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="va">row_chol0_lvlone</span><span class="op">]</span></span></code></pre><p></p></div>
 <p>Then we pass both the custom sub-model and the additional data to the
 analysis function <code>coxph_imp()</code>. Note that we explicitly need to specify
-the model for <code>chol</code>.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/model_imp.html">coxph_imp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/Surv.html">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">status</span> <span class="op">!=</span> <span class="st">"censored"</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">chol0</span>,
-               <span class="va">chol</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">day</span> <span class="op">+</span> <span class="op">(</span><span class="va">day</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span>,
-          no_model <span class="op">=</span> <span class="st">"day"</span>, data <span class="op">=</span> <span class="va">PBC</span>,
-          append_data_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>row_chol0_lvlone <span class="op">=</span> <span class="va">row_chol0_lvlone</span>,
-                                  row_chol0_id <span class="op">=</span> <span class="va">row_chol0_id</span><span class="op">)</span>,
-          custom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>chol0 <span class="op">=</span> <span class="va">calc_chol0</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+the model for <code>chol</code>.</p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/model_imp.html">coxph_imp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/Surv.html">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">status</span> <span class="op">!=</span> <span class="st">"censored"</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">chol0</span>,</span>
+<span>               <span class="va">chol</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">day</span> <span class="op">+</span> <span class="op">(</span><span class="va">day</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>          no_model <span class="op">=</span> <span class="st">"day"</span>, data <span class="op">=</span> <span class="va">PBC</span>,</span>
+<span>          append_data_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>row_chol0_lvlone <span class="op">=</span> <span class="va">row_chol0_lvlone</span>,</span>
+<span>                                  row_chol0_id <span class="op">=</span> <span class="va">row_chol0_id</span><span class="op">)</span>,</span>
+<span>          custom <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>chol0 <span class="op">=</span> <span class="va">calc_chol0</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -818,57 +873,57 @@ or <code><a href="https://rdrr.io/pkg/survival/man/strata.html" class="external-
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Example 1: Linear regression with incomplete covariates</span></span>
-<span class="r-in"><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu">lm_imp</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M1</span> <span class="op">+</span> <span class="va">B1</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 2: Logistic regression with incomplete covariates</span></span>
-<span class="r-in"><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu">glm_imp</span><span class="op">(</span><span class="va">B1</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M1</span>, data <span class="op">=</span> <span class="va">wideDF</span>,</span>
-<span class="r-in">                family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 3: Linear mixed model with incomplete covariates</span></span>
-<span class="r-in"><span class="va">mod3</span> <span class="op">&lt;-</span> <span class="fu">lme_imp</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">B2</span> <span class="op">+</span> <span class="va">c1</span> <span class="op">+</span> <span class="va">time</span>, random <span class="op">=</span> <span class="op">~</span> <span class="va">time</span><span class="op">|</span><span class="va">id</span>,</span>
-<span class="r-in">                data <span class="op">=</span> <span class="va">longDF</span>, n.iter <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 4: Parametric Weibull survival model</span></span>
-<span class="r-in"><span class="va">mod4</span> <span class="op">&lt;-</span> <span class="fu">survreg_imp</span><span class="op">(</span><span class="fu"><a href="Surv.html">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">meal.cal</span> <span class="op">+</span> <span class="va">wt.loss</span>,</span>
-<span class="r-in">                    data <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/lung.html" class="external-link">lung</a></span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 5: Proportional hazards survival model</span></span>
-<span class="r-in"><span class="va">mod5</span> <span class="op">&lt;-</span> <span class="fu">coxph_imp</span><span class="op">(</span><span class="fu"><a href="Surv.html">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">meal.cal</span> <span class="op">+</span> <span class="va">wt.loss</span>,</span>
-<span class="r-in">                    data <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/lung.html" class="external-link">lung</a></span>, n.iter <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 6: Joint model for longitudinal and survival data</span></span>
-<span class="r-in"><span class="va">mod6</span> <span class="op">&lt;-</span> <span class="fu">JM_imp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="Surv.html">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">status</span> <span class="op">!=</span> <span class="st">'censored'</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span></span>
-<span class="r-in">                    <span class="va">albumin</span> <span class="op">+</span> <span class="va">copper</span> <span class="op">+</span> <span class="va">trig</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>,</span>
-<span class="r-in">                    <span class="va">albumin</span> <span class="op">~</span> <span class="va">day</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="op">(</span><span class="va">day</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">                    timevar <span class="op">=</span> <span class="st">'day'</span>, data <span class="op">=</span> <span class="va">PBC</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 7: Proportional hazards  model with a time-dependent covariate</span></span>
-<span class="r-in"><span class="va">mod7</span> <span class="op">&lt;-</span> <span class="fu">coxph_imp</span><span class="op">(</span><span class="fu"><a href="Surv.html">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">status</span> <span class="op">!=</span> <span class="st">'censored'</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">copper</span> <span class="op">+</span></span>
-<span class="r-in">                  <span class="va">trig</span> <span class="op">+</span> <span class="va">stage</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>,</span>
-<span class="r-in">                  timevar <span class="op">=</span> <span class="st">'day'</span>, data <span class="op">=</span> <span class="va">PBC</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 8: Parallel computation</span></span>
-<span class="r-in"><span class="co"># If no strategy how the "future" should be handled is specified, the</span></span>
-<span class="r-in"><span class="co"># MCMC chains are run sequentially.</span></span>
-<span class="r-in"><span class="co"># To run MCMC chains in parallel, a strategy can be specified using the</span></span>
-<span class="r-in"><span class="co"># package \pkg{future} (see ?future::plan), for example:</span></span>
-<span class="r-in"><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mod8</span> <span class="op">&lt;-</span> <span class="fu">lm_imp</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">B2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">500</span>, n.chains <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mod8</span><span class="op">$</span><span class="va">comp_info</span><span class="op">$</span><span class="va">future</span></span>
-<span class="r-in"><span class="co"># To re-set the strategy to sequential computation, the sequential strategy</span></span>
-<span class="r-in"><span class="co"># can be specified:</span></span>
-<span class="r-in"><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/sequential.html" class="external-link">sequential</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Example 1: Linear regression with incomplete covariates</span></span></span>
+<span class="r-in"><span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu">lm_imp</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M1</span> <span class="op">+</span> <span class="va">B1</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 2: Logistic regression with incomplete covariates</span></span></span>
+<span class="r-in"><span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu">glm_imp</span><span class="op">(</span><span class="va">B1</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M1</span>, data <span class="op">=</span> <span class="va">wideDF</span>,</span></span>
+<span class="r-in"><span>                family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 3: Linear mixed model with incomplete covariates</span></span></span>
+<span class="r-in"><span><span class="va">mod3</span> <span class="op">&lt;-</span> <span class="fu">lme_imp</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">B2</span> <span class="op">+</span> <span class="va">c1</span> <span class="op">+</span> <span class="va">time</span>, random <span class="op">=</span> <span class="op">~</span> <span class="va">time</span><span class="op">|</span><span class="va">id</span>,</span></span>
+<span class="r-in"><span>                data <span class="op">=</span> <span class="va">longDF</span>, n.iter <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 4: Parametric Weibull survival model</span></span></span>
+<span class="r-in"><span><span class="va">mod4</span> <span class="op">&lt;-</span> <span class="fu">survreg_imp</span><span class="op">(</span><span class="fu"><a href="Surv.html">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">meal.cal</span> <span class="op">+</span> <span class="va">wt.loss</span>,</span></span>
+<span class="r-in"><span>                    data <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/lung.html" class="external-link">lung</a></span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 5: Proportional hazards survival model</span></span></span>
+<span class="r-in"><span><span class="va">mod5</span> <span class="op">&lt;-</span> <span class="fu">coxph_imp</span><span class="op">(</span><span class="fu"><a href="Surv.html">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">meal.cal</span> <span class="op">+</span> <span class="va">wt.loss</span>,</span></span>
+<span class="r-in"><span>                    data <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/lung.html" class="external-link">lung</a></span>, n.iter <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 6: Joint model for longitudinal and survival data</span></span></span>
+<span class="r-in"><span><span class="va">mod6</span> <span class="op">&lt;-</span> <span class="fu">JM_imp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="Surv.html">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">status</span> <span class="op">!=</span> <span class="st">'censored'</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>                    <span class="va">albumin</span> <span class="op">+</span> <span class="va">copper</span> <span class="op">+</span> <span class="va">trig</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    <span class="va">albumin</span> <span class="op">~</span> <span class="va">day</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="op">(</span><span class="va">day</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    timevar <span class="op">=</span> <span class="st">'day'</span>, data <span class="op">=</span> <span class="va">PBC</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 7: Proportional hazards  model with a time-dependent covariate</span></span></span>
+<span class="r-in"><span><span class="va">mod7</span> <span class="op">&lt;-</span> <span class="fu">coxph_imp</span><span class="op">(</span><span class="fu"><a href="Surv.html">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">status</span> <span class="op">!=</span> <span class="st">'censored'</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">copper</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>                  <span class="va">trig</span> <span class="op">+</span> <span class="va">stage</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">id</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                  timevar <span class="op">=</span> <span class="st">'day'</span>, data <span class="op">=</span> <span class="va">PBC</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 8: Parallel computation</span></span></span>
+<span class="r-in"><span><span class="co"># If no strategy how the "future" should be handled is specified, the</span></span></span>
+<span class="r-in"><span><span class="co"># MCMC chains are run sequentially.</span></span></span>
+<span class="r-in"><span><span class="co"># To run MCMC chains in parallel, a strategy can be specified using the</span></span></span>
+<span class="r-in"><span><span class="co"># package \pkg{future} (see ?future::plan), for example:</span></span></span>
+<span class="r-in"><span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mod8</span> <span class="op">&lt;-</span> <span class="fu">lm_imp</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">B2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">500</span>, n.chains <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mod8</span><span class="op">$</span><span class="va">comp_info</span><span class="op">$</span><span class="va">future</span></span></span>
+<span class="r-in"><span><span class="co"># To re-set the strategy to sequential computation, the sequential strategy</span></span></span>
+<span class="r-in"><span><span class="co"># can be specified:</span></span></span>
+<span class="r-in"><span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/sequential.html" class="external-link">sequential</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -883,7 +938,7 @@ or <code><a href="https://rdrr.io/pkg/survival/man/strata.html" class="external-
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

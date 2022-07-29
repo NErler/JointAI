@@ -114,38 +114,53 @@ the random effects in a fitted JointAI object.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rd_vcov</span><span class="op">(</span><span class="va">object</span>, outcome <span class="op">=</span> <span class="cn">NULL</span>, start <span class="op">=</span> <span class="cn">NULL</span>, end <span class="op">=</span> <span class="cn">NULL</span>, thin <span class="op">=</span> <span class="cn">NULL</span>,
-  exclude_chains <span class="op">=</span> <span class="cn">NULL</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, warn <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rd_vcov</span><span class="op">(</span><span class="va">object</span>, outcome <span class="op">=</span> <span class="cn">NULL</span>, start <span class="op">=</span> <span class="cn">NULL</span>, end <span class="op">=</span> <span class="cn">NULL</span>, thin <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  exclude_chains <span class="op">=</span> <span class="cn">NULL</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, warn <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>object inheriting from class 'JointAI'</p></dd>
+
+
 <dt>outcome</dt>
 <dd><p>optional; vector of integers giving the indices of the
 outcomes for which the random effects variance-covariance
 matrix/matrices should be returned.</p></dd>
+
+
 <dt>start</dt>
 <dd><p>the first iteration of interest
 (see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>)</p></dd>
+
+
 <dt>end</dt>
 <dd><p>the last iteration of interest
 (see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>)</p></dd>
+
+
 <dt>thin</dt>
 <dd><p>thinning interval (integer; see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>).
 For example, <code>thin = 1</code> (default) will keep the MCMC samples
 from all iterations; <code>thin = 5</code> would only keep every 5th
 iteration.</p></dd>
+
+
 <dt>exclude_chains</dt>
 <dd><p>optional vector of the index numbers of chains that
 should be excluded</p></dd>
+
+
 <dt>mess</dt>
 <dd><p>logical; should messages be given? Default is
 <code>TRUE</code>.</p></dd>
+
+
 <dt>warn</dt>
 <dd><p>logical; should warnings be given? Default is
 <code>TRUE</code>.</p></dd>
+
 </dl></div>
 
   </div>
@@ -160,7 +175,7 @@ should be excluded</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

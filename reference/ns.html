@@ -108,34 +108,43 @@ package.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ns</span><span class="op">(</span><span class="va">x</span>, df <span class="op">=</span> <span class="cn">NULL</span>, knots <span class="op">=</span> <span class="cn">NULL</span>, intercept <span class="op">=</span> <span class="cn">FALSE</span>, Boundary.knots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ns</span><span class="op">(</span><span class="va">x</span>, df <span class="op">=</span> <span class="cn">NULL</span>, knots <span class="op">=</span> <span class="cn">NULL</span>, intercept <span class="op">=</span> <span class="cn">FALSE</span>, Boundary.knots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>the predictor variable.  Missing values are allowed.</p></dd>
+
+
 <dt>df</dt>
 <dd><p>degrees of freedom.  One can supply <code>df</code> rather than
     knots; <code>ns()</code> then chooses <code>df - 1 - intercept</code> knots at
     suitably chosen quantiles of <code>x</code> (which will ignore missing
     values).  The default, <code>df = NULL</code>, sets the number of
     inner knots as <code>length(knots)</code>.</p></dd>
+
+
 <dt>knots</dt>
 <dd><p>breakpoints that define the spline.  The default is no
     knots; together with the natural boundary conditions this results in
     a basis for linear regression on <code>x</code>.  Typical values are the
     mean or median for one knot, quantiles for more knots.  See also
     <code>Boundary.knots</code>.</p></dd>
+
+
 <dt>intercept</dt>
 <dd><p>if <code>TRUE</code>, an intercept is included in the
     basis; default is <code>FALSE</code>.</p></dd>
+
+
 <dt>Boundary.knots</dt>
 <dd><p>boundary points at which to impose the natural
     boundary conditions and anchor the B-spline basis (default the range
     of the data).  If both <code>knots</code> and <code>Boundary.knots</code> are
     supplied, the basis parameters do not depend on <code>x</code>. Data can
     extend beyond <code>Boundary.knots</code></p></dd>
+
 </dl></div>
 
   </div>
@@ -150,7 +159,7 @@ package.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

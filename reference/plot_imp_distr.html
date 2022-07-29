@@ -106,8 +106,8 @@ long-format dataset (multiple imputed datasets stacked onto each other).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_imp_distr</span><span class="op">(</span><span class="va">data</span>, imp <span class="op">=</span> <span class="st">"Imputation_"</span>, id <span class="op">=</span> <span class="st">".id"</span>, rownr <span class="op">=</span> <span class="st">".rownr"</span>,
-  ncol <span class="op">=</span> <span class="cn">NULL</span>, nrow <span class="op">=</span> <span class="cn">NULL</span>, labeller <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_imp_distr</span><span class="op">(</span><span class="va">data</span>, imp <span class="op">=</span> <span class="st">"Imputation_"</span>, id <span class="op">=</span> <span class="st">".id"</span>, rownr <span class="op">=</span> <span class="st">".rownr"</span>,</span>
+<span>  ncol <span class="op">=</span> <span class="cn">NULL</span>, nrow <span class="op">=</span> <span class="cn">NULL</span>, labeller <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -115,34 +115,47 @@ long-format dataset (multiple imputed datasets stacked onto each other).</p>
     <dl><dt>data</dt>
 <dd><p>a <code>data.frame</code> containing multiple imputations
 and the original incomplete data stacked onto each other</p></dd>
+
+
 <dt>imp</dt>
 <dd><p>the name of the variable specifying the imputation indicator</p></dd>
+
+
 <dt>id</dt>
 <dd><p>the name of the variable specifying the subject indicator</p></dd>
+
+
 <dt>rownr</dt>
 <dd><p>the name of a variable identifying which rows correspond to the
 same observation in the original (un-imputed) data</p></dd>
+
+
 <dt>ncol</dt>
 <dd><p>optional; number of columns in the plot layout;
 automatically chosen if unspecified</p></dd>
+
+
 <dt>nrow</dt>
 <dd><p>optional; number of rows in the plot layout;
 automatically chosen if unspecified</p></dd>
+
+
 <dt>labeller</dt>
 <dd><p>optional labeller to be passed to
 <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">ggplot2::facet_wrap()</a></code>
 to change the facet labels</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lme_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">c2</span> <span class="op">+</span> <span class="va">B2</span> <span class="op">+</span> <span class="va">C2</span>, random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">id</span>, data <span class="op">=</span> <span class="va">longDF</span>,</span>
-<span class="r-in">               n.iter <span class="op">=</span> <span class="fl">200</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>imps <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, mess <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">impDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_MIdat.html">get_MIdat</a></span><span class="op">(</span><span class="va">mod</span>, m <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">plot_imp_distr</span><span class="op">(</span><span class="va">impDF</span>, id <span class="op">=</span> <span class="st">"id"</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lme_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">c2</span> <span class="op">+</span> <span class="va">B2</span> <span class="op">+</span> <span class="va">C2</span>, random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">id</span>, data <span class="op">=</span> <span class="va">longDF</span>,</span></span>
+<span class="r-in"><span>               n.iter <span class="op">=</span> <span class="fl">200</span>, monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>imps <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, mess <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">impDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_MIdat.html">get_MIdat</a></span><span class="op">(</span><span class="va">mod</span>, m <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plot_imp_distr</span><span class="op">(</span><span class="va">impDF</span>, id <span class="op">=</span> <span class="st">"id"</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -157,7 +170,7 @@ to change the facet labels</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

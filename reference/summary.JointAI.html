@@ -108,85 +108,118 @@ class 'JointAI'.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for Dmat</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"digits"</span><span class="op">)</span>, scientific <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"scipen"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for JointAI</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, start <span class="op">=</span> <span class="cn">NULL</span>, end <span class="op">=</span> <span class="cn">NULL</span>, thin <span class="op">=</span> <span class="cn">NULL</span>,
-  quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>, subset <span class="op">=</span> <span class="cn">NULL</span>, exclude_chains <span class="op">=</span> <span class="cn">NULL</span>,
-  outcome <span class="op">=</span> <span class="cn">NULL</span>, missinfo <span class="op">=</span> <span class="cn">FALSE</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for summary.JointAI</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">3</span>, <span class="va">.Options</span><span class="op">$</span><span class="va">digits</span> <span class="op">-</span> <span class="fl">4</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for JointAI</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">object</span>, start <span class="op">=</span> <span class="cn">NULL</span>, end <span class="op">=</span> <span class="cn">NULL</span>, thin <span class="op">=</span> <span class="cn">NULL</span>,
-  subset <span class="op">=</span> <span class="cn">NULL</span>, exclude_chains <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for JointAI</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">object</span>, parm <span class="op">=</span> <span class="cn">NULL</span>, level <span class="op">=</span> <span class="fl">0.95</span>,
-  quantiles <span class="op">=</span> <span class="cn">NULL</span>, start <span class="op">=</span> <span class="cn">NULL</span>, end <span class="op">=</span> <span class="cn">NULL</span>, thin <span class="op">=</span> <span class="cn">NULL</span>,
-  subset <span class="op">=</span> <span class="cn">NULL</span>, exclude_chains <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for JointAI</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"digits"</span><span class="op">)</span> <span class="op">-</span> <span class="fl">4</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for Dmat</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"digits"</span><span class="op">)</span>, scientific <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"scipen"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for JointAI</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, start <span class="op">=</span> <span class="cn">NULL</span>, end <span class="op">=</span> <span class="cn">NULL</span>, thin <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>, subset <span class="op">=</span> <span class="cn">NULL</span>, exclude_chains <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  outcome <span class="op">=</span> <span class="cn">NULL</span>, missinfo <span class="op">=</span> <span class="cn">FALSE</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for summary.JointAI</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">3</span>, <span class="va">.Options</span><span class="op">$</span><span class="va">digits</span> <span class="op">-</span> <span class="fl">4</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for JointAI</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">object</span>, start <span class="op">=</span> <span class="cn">NULL</span>, end <span class="op">=</span> <span class="cn">NULL</span>, thin <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  subset <span class="op">=</span> <span class="cn">NULL</span>, exclude_chains <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for JointAI</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">object</span>, parm <span class="op">=</span> <span class="cn">NULL</span>, level <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  quantiles <span class="op">=</span> <span class="cn">NULL</span>, start <span class="op">=</span> <span class="cn">NULL</span>, end <span class="op">=</span> <span class="cn">NULL</span>, thin <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  subset <span class="op">=</span> <span class="cn">NULL</span>, exclude_chains <span class="op">=</span> <span class="cn">NULL</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for JointAI</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"digits"</span><span class="op">)</span> <span class="op">-</span> <span class="fl">4</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class <code>summary.JointAI</code> or <code>JointAI</code></p></dd>
+
+
 <dt>digits</dt>
 <dd><p>the minimum number of significant digits to be printed in
 values.</p></dd>
+
+
 <dt>scientific</dt>
 <dd><p>A penalty to be applied when deciding to print numeric
 values in fixed or exponential notation, by default the
 value obtained from <code>getOption("scipen")</code></p></dd>
+
+
 <dt>...</dt>
 <dd><p>currently not used</p></dd>
+
+
 <dt>object</dt>
 <dd><p>object inheriting from class 'JointAI'</p></dd>
+
+
 <dt>start</dt>
 <dd><p>the first iteration of interest
 (see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>)</p></dd>
+
+
 <dt>end</dt>
 <dd><p>the last iteration of interest
 (see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>)</p></dd>
+
+
 <dt>thin</dt>
 <dd><p>thinning interval (integer; see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>).
 For example, <code>thin = 1</code> (default) will keep the MCMC samples
 from all iterations; <code>thin = 5</code> would only keep every 5th
 iteration.</p></dd>
+
+
 <dt>quantiles</dt>
 <dd><p>posterior quantiles</p></dd>
+
+
 <dt>subset</dt>
 <dd><p>subset of parameters/variables/nodes (columns in the MCMC
 sample). Follows the same principle as the argument
 <code>monitor_params</code> in
 <code><a href="model_imp.html">*_imp</a></code>.</p></dd>
+
+
 <dt>exclude_chains</dt>
 <dd><p>optional vector of the index numbers of chains that
 should be excluded</p></dd>
+
+
 <dt>outcome</dt>
 <dd><p>optional; vector identifying for which outcomes the summary
 should be given, either by specifying their indices, or their
 names (LHS of the respective model formulas as character
 string).</p></dd>
+
+
 <dt>missinfo</dt>
 <dd><p>logical; should information on the number and proportion of
 missing values be included in the summary?</p></dd>
+
+
 <dt>warn</dt>
 <dd><p>logical; should warnings be given? Default is
 <code>TRUE</code>.</p></dd>
+
+
 <dt>mess</dt>
 <dd><p>logical; should messages be given? Default is
 <code>TRUE</code>.</p></dd>
+
+
 <dt>parm</dt>
 <dd><p>same as <code>subset</code> (for consistency with <code>confint</code>
 method for other types of objects)</p></dd>
+
+
 <dt>level</dt>
 <dd><p>confidence level (default is 0.95)</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -201,15 +234,15 @@ for examples how to specify the parameter <code>subset</code>.</p></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod1</span>, missinfo <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod1</span>, missinfo <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -224,7 +257,7 @@ for examples how to specify the parameter <code>subset</code>.</p></div>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

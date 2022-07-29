@@ -108,29 +108,40 @@ covariates in a JointAI object.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">list_models</span><span class="op">(</span><span class="va">object</span>, predvars <span class="op">=</span> <span class="cn">TRUE</span>, regcoef <span class="op">=</span> <span class="cn">TRUE</span>, otherpars <span class="op">=</span> <span class="cn">TRUE</span>,
-  priors <span class="op">=</span> <span class="cn">TRUE</span>, refcat <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">list_models</span><span class="op">(</span><span class="va">object</span>, predvars <span class="op">=</span> <span class="cn">TRUE</span>, regcoef <span class="op">=</span> <span class="cn">TRUE</span>, otherpars <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  priors <span class="op">=</span> <span class="cn">TRUE</span>, refcat <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>object inheriting from class 'JointAI'</p></dd>
+
+
 <dt>predvars</dt>
 <dd><p>logical; should information on the predictor variables be
 printed? (default is <code>TRUE</code>)</p></dd>
+
+
 <dt>regcoef</dt>
 <dd><p>logical; should information on the regression coefficients
 be printed? (default is <code>TRUE</code>)</p></dd>
+
+
 <dt>otherpars</dt>
 <dd><p>logical; should information on other parameters be printed?
 (default is <code>TRUE</code>)</p></dd>
+
+
 <dt>priors</dt>
 <dd><p>logical; should information on the priors
 (and hyper-parameters) be printed? (default is <code>TRUE</code>)</p></dd>
+
+
 <dt>refcat</dt>
 <dd><p>logical; should information on the reference category be
 printed? (default is <code>TRUE</code>)</p></dd>
+
 </dl></div>
     <div id="note">
     <h2>Note</h2>
@@ -173,16 +184,16 @@ between multiple imputation and a full Bayesian approach.
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save time)</span></span>
-<span class="r-in"><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M2</span> <span class="op">+</span> <span class="va">O2</span> <span class="op">+</span> <span class="va">B2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.adapt <span class="op">=</span> <span class="fl">0</span>,</span>
-<span class="r-in">               n.iter <span class="op">=</span> <span class="fl">0</span>, mess <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># (set n.adapt = 0 and n.iter = 0 to prevent MCMC sampling to save time)</span></span></span>
+<span class="r-in"><span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M2</span> <span class="op">+</span> <span class="va">O2</span> <span class="op">+</span> <span class="va">B2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.adapt <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>               n.iter <span class="op">=</span> <span class="fl">0</span>, mess <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> It is currently not possible to use “contr.poly” for incomplete</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> categorical covariates. I will use “contr.treatment” instead.  You can</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> specify (globally) which types of contrasts are used by changing</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> “options('contrasts')”.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">list_models</span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">list_models</span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear model for “y” </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    family: gaussian </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    link: identity </span>
@@ -239,7 +250,7 @@ between multiple imputation and a full Bayesian approach.
 <span class="r-out co"><span class="r-pr">#&gt;</span>   delta_O2[1:2] (normal prior(s) with mean 0 and precision 1e-04)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -254,7 +265,7 @@ between multiple imputation and a full Bayesian approach.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

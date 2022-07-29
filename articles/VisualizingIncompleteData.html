@@ -154,11 +154,11 @@
 </h2>
 <p>Using <code><a href="../reference/plot_all.html">plot_all()</a></code>, an array of histograms (for continuous variables and dates) and bar plots (for categorical variables) can be obtained.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3</span>, <span class="fl">2.5</span>, <span class="fl">1</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.8</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plot_all.html">plot_all</a></span><span class="op">(</span><span class="va">NHANES</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3</span>, <span class="fl">2.5</span>, <span class="fl">1</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.8</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot_all.html">plot_all</a></span><span class="op">(</span><span class="va">NHANES</span><span class="op">)</span></span></code></pre></div>
 <p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-1-1.png" width="100%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Note:</strong> Here, we are looking at the marginal distribution of each variable. Since missing values are (usually) imputed conditionally on other variables, marginal plots can only be used as an indication of what type of imputation model (e.g., normal vs non-normal) is appropriate.</p>
 <div class="section level3">
 <h3 id="plot-titles-proportion-of-missing-values">Plot titles: proportion of missing values<a class="anchor" aria-label="anchor" href="#plot-titles-proportion-of-missing-values"></a>
@@ -181,8 +181,8 @@
 <p>It is also possible to provide some of the other arguments of <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/hist.html" class="external-link"><code>hist()</code></a> or <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/barplot.html" class="external-link"><code>barplot()</code></a>.</p>
 <p>For example:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3</span>, <span class="fl">2.5</span>, <span class="fl">1</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.8</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plot_all.html">plot_all</a></span><span class="op">(</span><span class="va">NHANES</span>, allNA <span class="op">=</span> <span class="cn">TRUE</span>, fill <span class="op">=</span> <span class="st">'#e30f41'</span>, border <span class="op">=</span> <span class="st">'#34111b'</span>, ncol <span class="op">=</span> <span class="fl">3</span>, breaks <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3</span>, <span class="fl">2.5</span>, <span class="fl">1</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.8</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot_all.html">plot_all</a></span><span class="op">(</span><span class="va">NHANES</span>, allNA <span class="op">=</span> <span class="cn">TRUE</span>, fill <span class="op">=</span> <span class="st">'#e30f41'</span>, border <span class="op">=</span> <span class="st">'#34111b'</span>, ncol <span class="op">=</span> <span class="fl">3</span>, breaks <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
 <p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -190,9 +190,9 @@
 </h3>
 <p>When the data has a multi-level structure, e.g., subjects are nested within hospitals, or subjects have been measured repeatedly as in the <code>simLong</code> data, the level of each variable can be taken into account by specifying the names of the grouping variables (“id” variables) via the argument <code>idvars</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3</span>, <span class="fl">2.5</span>, <span class="fl">1</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.8</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plot_all.html">plot_all</a></span><span class="op">(</span><span class="va">simLong</span>, allNA <span class="op">=</span> <span class="cn">TRUE</span>, fill <span class="op">=</span> <span class="st">'#e30f41'</span>, border <span class="op">=</span> <span class="st">'#34111b'</span>,
-         ncol <span class="op">=</span> <span class="fl">3</span>, breaks <span class="op">=</span> <span class="fl">30</span>, idvars <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3</span>, <span class="fl">2.5</span>, <span class="fl">1</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.8</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plot_all.html">plot_all</a></span><span class="op">(</span><span class="va">simLong</span>, allNA <span class="op">=</span> <span class="cn">TRUE</span>, fill <span class="op">=</span> <span class="st">'#e30f41'</span>, border <span class="op">=</span> <span class="st">'#34111b'</span>,</span>
+<span>         ncol <span class="op">=</span> <span class="fl">3</span>, breaks <span class="op">=</span> <span class="fl">30</span>, idvars <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;"> The information to which level a variable belongs is added to the title of each plot (“lvlone” refers to the first level, for which there is no grouping variable). Variables belonging to higher levels (e.g., center-specific variables in a multi-center setting, or patient-specific variables in a setting with repeated measurements for each patient) are summarized on their respective level, i.e., the counts of <code>ETHN</code>, for instance, will sum up to the number of subjects in the <code>simLong</code> data.</p>
 </div>
 </div>
@@ -201,7 +201,7 @@
 </h2>
 <p>The pattern of the missing data can be visualized with the function <code><a href="../reference/md_pattern.html">md_pattern()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">NHANES</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">NHANES</span><span class="op">)</span></span></code></pre></div>
 <p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p>In the resulting plot, variables are given in the columns and each row corresponds to one pattern of missingness across the variables. The numbers on the right margin give the number of cases per pattern. Underneath the plot, the number of missing values per variable is given. Columns are automatically sorted by number of missing values, rows by number of cases per pattern.</p>
 <p>The plot is generated with the help of <a href="https://ggplot2.tidyverse.org/" class="external-link"><code>ggplot()</code></a>, and, hence, the package <a href="https://CRAN.R-project.org/package=ggplot2" class="external-link"><strong>ggplot2</strong></a> needs to be installed. By setting <code>plot = FALSE</code>, no plot will be generated (and then <strong>ggplot2</strong> is not required).</p>
@@ -210,21 +210,21 @@
 </h4>
 <p>When the argument <code>pattern = TRUE</code> is set, the missing data pattern is returned as a matrix, where observed values are represented by <code>1</code> and missing values by <code>0</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">NHANES</span>, pattern <span class="op">=</span> <span class="cn">T</span>, plot <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
-<span class="co">#&gt;      SBP gender age race educ WC smoke creat albu uricacid bili occup alc Npat</span>
-<span class="co">#&gt; 1      1      1   1    1    1  1     1     1    1        1    1     1   1  116</span>
-<span class="co">#&gt; 2      1      1   1    1    1  1     1     1    1        1    1     1   0   29</span>
-<span class="co">#&gt; 3      1      1   1    1    1  1     1     1    1        1    1     0   1   24</span>
-<span class="co">#&gt; 4      1      1   1    1    1  1     0     1    1        1    1     1   1    5</span>
-<span class="co">#&gt; 5      1      1   1    1    1  1     1     0    0        0    0     1   1    4</span>
-<span class="co">#&gt; 6      1      1   1    1    1  1     1     0    0        0    0     0   0    2</span>
-<span class="co">#&gt; 7      1      1   1    1    1  1     0     1    1        1    1     0   1    1</span>
-<span class="co">#&gt; 8      1      1   1    1    1  0     1     1    1        1    1     1   0    1</span>
-<span class="co">#&gt; 9      1      1   1    1    1  1     1     1    1        1    1     0   0    1</span>
-<span class="co">#&gt; 10     1      1   1    1    1  1     1     0    0        0    0     1   0    1</span>
-<span class="co">#&gt; 11     1      1   1    1    1  0     1     1    1        1    1     1   1    1</span>
-<span class="co">#&gt; 12     1      1   1    1    1  1     0     0    0        0    0     1   1    1</span>
-<span class="co">#&gt; Nmis   0      0   0    0    0  2     7     8    8        8    8    28  34  103</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">NHANES</span>, pattern <span class="op">=</span> <span class="cn">T</span>, plot <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      SBP gender age race educ WC smoke creat albu uricacid bili occup alc Npat</span></span>
+<span><span class="co">#&gt; 1      1      1   1    1    1  1     1     1    1        1    1     1   1  116</span></span>
+<span><span class="co">#&gt; 2      1      1   1    1    1  1     1     1    1        1    1     1   0   29</span></span>
+<span><span class="co">#&gt; 3      1      1   1    1    1  1     1     1    1        1    1     0   1   24</span></span>
+<span><span class="co">#&gt; 4      1      1   1    1    1  1     0     1    1        1    1     1   1    5</span></span>
+<span><span class="co">#&gt; 5      1      1   1    1    1  1     1     0    0        0    0     1   1    4</span></span>
+<span><span class="co">#&gt; 6      1      1   1    1    1  1     1     0    0        0    0     0   0    2</span></span>
+<span><span class="co">#&gt; 7      1      1   1    1    1  1     0     1    1        1    1     0   1    1</span></span>
+<span><span class="co">#&gt; 8      1      1   1    1    1  0     1     1    1        1    1     1   0    1</span></span>
+<span><span class="co">#&gt; 9      1      1   1    1    1  1     1     1    1        1    1     0   0    1</span></span>
+<span><span class="co">#&gt; 10     1      1   1    1    1  1     1     0    0        0    0     1   0    1</span></span>
+<span><span class="co">#&gt; 11     1      1   1    1    1  0     1     1    1        1    1     1   1    1</span></span>
+<span><span class="co">#&gt; 12     1      1   1    1    1  1     0     0    0        0    0     1   1    1</span></span>
+<span><span class="co">#&gt; Nmis   0      0   0    0    0  2     7     8    8        8    8    28  34  103</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="changing-colors-1">Changing colors<a class="anchor" aria-label="anchor" href="#changing-colors-1"></a>
@@ -242,14 +242,14 @@
 <p>To hide the x-axis, the argument <code>print_xaxis</code> can be set to <code>FALSE</code>. With the corresponding argument <code>print_yaxis = FALSE</code> the y-axis can be omitted.</p>
 <p>To change the title of the y-axis, you can change the argument <code>ylab</code>. Setting <code>ylab = ''</code> will hide the axis title, but keep the number of observations per missing data pattern.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">NHANES</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span><span class="op">)</span>, border <span class="op">=</span> <span class="st">'white'</span>,
-           legend.position <span class="op">=</span> <span class="st">'none'</span>, print_xaxis <span class="op">=</span> <span class="cn">FALSE</span>,
-           ylab <span class="op">=</span> <span class="st">'Alternative axis title'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">NHANES</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span><span class="op">)</span>, border <span class="op">=</span> <span class="st">'white'</span>,</span>
+<span>           legend.position <span class="op">=</span> <span class="st">'none'</span>, print_xaxis <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>           ylab <span class="op">=</span> <span class="st">'Alternative axis title'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p><br></p>
 <p>For the <code>simLong</code> data, the missing data pattern is:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">simLong</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/md_pattern.html">md_pattern</a></span><span class="op">(</span><span class="va">simLong</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#34111b'</span>, <span class="st">'#e30f41'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="VisualizingIncompleteData_files/figure-html/unnamed-chunk-7-1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -272,7 +272,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

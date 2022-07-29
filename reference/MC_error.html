@@ -106,45 +106,63 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">MC_error</span><span class="op">(</span><span class="va">x</span>, subset <span class="op">=</span> <span class="cn">NULL</span>, exclude_chains <span class="op">=</span> <span class="cn">NULL</span>, start <span class="op">=</span> <span class="cn">NULL</span>,
-  end <span class="op">=</span> <span class="cn">NULL</span>, thin <span class="op">=</span> <span class="cn">NULL</span>, digits <span class="op">=</span> <span class="fl">2</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for MCElist</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, data_scale <span class="op">=</span> <span class="cn">TRUE</span>, plotpars <span class="op">=</span> <span class="cn">NULL</span>,
-  ablinepars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>, minlength <span class="op">=</span> <span class="fl">20</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">MC_error</span><span class="op">(</span><span class="va">x</span>, subset <span class="op">=</span> <span class="cn">NULL</span>, exclude_chains <span class="op">=</span> <span class="cn">NULL</span>, start <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  end <span class="op">=</span> <span class="cn">NULL</span>, thin <span class="op">=</span> <span class="cn">NULL</span>, digits <span class="op">=</span> <span class="fl">2</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for MCElist</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, data_scale <span class="op">=</span> <span class="cn">TRUE</span>, plotpars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ablinepars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>, minlength <span class="op">=</span> <span class="fl">20</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>object inheriting from class 'JointAI'</p></dd>
+
+
 <dt>subset</dt>
 <dd><p>subset of parameters/variables/nodes (columns in the MCMC
 sample). Follows the same principle as the argument
 <code>monitor_params</code> in
 <code><a href="model_imp.html">*_imp</a></code>.</p></dd>
+
+
 <dt>exclude_chains</dt>
 <dd><p>optional vector of the index numbers of chains that
 should be excluded</p></dd>
+
+
 <dt>start</dt>
 <dd><p>the first iteration of interest
 (see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>)</p></dd>
+
+
 <dt>end</dt>
 <dd><p>the last iteration of interest
 (see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>)</p></dd>
+
+
 <dt>thin</dt>
 <dd><p>thinning interval (integer; see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>).
 For example, <code>thin = 1</code> (default) will keep the MCMC samples
 from all iterations; <code>thin = 5</code> would only keep every 5th
 iteration.</p></dd>
+
+
 <dt>digits</dt>
 <dd><p>number of digits for the printed output</p></dd>
+
+
 <dt>warn</dt>
 <dd><p>logical; should warnings be given? Default is
 <code>TRUE</code>.</p></dd>
+
+
 <dt>mess</dt>
 <dd><p>logical; should messages be given? Default is
 <code>TRUE</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Arguments passed on to <code><a href="https://rdrr.io/pkg/mcmcse/man/mcse.mat.html" class="external-link">mcmcse::mcse.mat</a></code></p><dl><dt><code>size</code></dt>
 <dd><p>represents the batch size in “<code>bm</code>” and the truncation point in “<code>bartlett</code>” and 
@@ -170,27 +188,41 @@ also good choices although may lead to underestimates of the variance. <code>r &
 
   
 </dl></dd>
+
+
 <dt>data_scale</dt>
 <dd><p>logical; show the Monte Carlo error of the sample
 transformed back to the scale of the data (<code>TRUE</code>) or
 on the sampling scale (this requires the argument
 <code>keep_scaled_mcmc = TRUE</code> to be set when fitting the
 model)</p></dd>
+
+
 <dt>plotpars</dt>
 <dd><p>optional; list of parameters passed to
 <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code></p></dd>
+
+
 <dt>ablinepars</dt>
 <dd><p>optional; list of parameters passed to
 <code><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a>()</code></p></dd>
+
+
 <dt>minlength</dt>
 <dd><p>number of characters the variable names are abbreviated to</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>MCElist</code> with elements <code>unscaled</code>,
+    
+
+<p>An object of class <code>MCElist</code> with elements <code>unscaled</code>,
 <code>scaled</code> and <code>digits</code>. The first two are matrices with
 columns <code>est</code> (posterior mean), <code>MCSE</code> (Monte Carlo error),
-<code>SD</code> (posterior standard deviation) and <code>MCSE/SD</code>(Monte Carlo error divided by post. standard deviation.)</p>
+<code>SD</code> (posterior standard deviation) and <code>MCSE/SD</code></p>
+
+
+<p>(Monte Carlo error divided by post. standard deviation.)</p>
     </div>
     <div id="methods-by-generic-">
     <h2>Methods (by generic)</h2>
@@ -222,17 +254,17 @@ provides some examples how to specify the argument <code>subset</code>.</p></div
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">MC_error</span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">MC_error</span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>, ablinepars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
-<span class="r-in">     plotpars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>pch <span class="op">=</span> <span class="fl">19</span>, col <span class="op">=</span> <span class="st">'blue'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">MC_error</span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">MC_error</span><span class="op">(</span><span class="va">mod</span><span class="op">)</span>, ablinepars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>     plotpars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>pch <span class="op">=</span> <span class="fl">19</span>, col <span class="op">=</span> <span class="st">'blue'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -247,7 +279,7 @@ provides some examples how to specify the argument <code>subset</code>.</p></div
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

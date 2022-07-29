@@ -118,45 +118,67 @@ needs to be installed.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_MIdat</span><span class="op">(</span><span class="va">object</span>, m <span class="op">=</span> <span class="fl">10</span>, include <span class="op">=</span> <span class="cn">TRUE</span>, start <span class="op">=</span> <span class="cn">NULL</span>, minspace <span class="op">=</span> <span class="fl">50</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>, export_to_SPSS <span class="op">=</span> <span class="cn">FALSE</span>, resdir <span class="op">=</span> <span class="cn">NULL</span>, filename <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_MIdat</span><span class="op">(</span><span class="va">object</span>, m <span class="op">=</span> <span class="fl">10</span>, include <span class="op">=</span> <span class="cn">TRUE</span>, start <span class="op">=</span> <span class="cn">NULL</span>, minspace <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>, export_to_SPSS <span class="op">=</span> <span class="cn">FALSE</span>, resdir <span class="op">=</span> <span class="cn">NULL</span>, filename <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>object inheriting from class 'JointAI'</p></dd>
+
+
 <dt>m</dt>
 <dd><p>number of imputed datasets</p></dd>
+
+
 <dt>include</dt>
 <dd><p>should the original, incomplete data be included? Default is
 <code>TRUE</code>.</p></dd>
+
+
 <dt>start</dt>
 <dd><p>the first iteration of interest
 (see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>)</p></dd>
+
+
 <dt>minspace</dt>
 <dd><p>minimum number of iterations between iterations to be chosen
 as imputed values (to prevent strong correlation between
 imputed datasets in the case of high autocorrelation of the
 MCMC chains).</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>optional seed value</p></dd>
+
+
 <dt>export_to_SPSS</dt>
 <dd><p>logical; should the completed data be exported to SPSS?</p></dd>
+
+
 <dt>resdir</dt>
 <dd><p>optional; directory for results. If unspecified and
 <code>export_to_SPSS = TRUE</code> the current working directory is
 used.</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>optional; file name (without ending). If unspecified and
 <code>export_to_SPSS = TRUE</code> a name is generated
 automatically.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>data.frame</code> in which the original data (if
+    
+
+<p>A <code>data.frame</code> in which the original data (if
 <code>include = TRUE</code>) and the imputed datasets are stacked onto
-each other.<br>The variable <code>Imputation_</code> indexes the imputation, while
+each other.<br></p>
+
+
+<p>The variable <code>Imputation_</code> indexes the imputation, while
 <code>.rownr</code> links the rows to the rows of the original data.
 In cross-sectional datasets the
 variable <code>.id</code> is added as subject identifier.</p>
@@ -176,29 +198,29 @@ argument <code>monitor_params</code> in <code><a href="model_imp.html">*_imp</a>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># fit a model and monitor the imputed values with</span></span>
-<span class="r-in"><span class="co"># monitor_params = c(imps = TRUE)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M2</span>, data <span class="op">=</span> <span class="va">wideDF</span>,</span>
-<span class="r-in">              monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>imps <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 1: without export to SPSS</span></span>
-<span class="r-in"><span class="va">MIs</span> <span class="op">&lt;-</span> <span class="fu">get_MIdat</span><span class="op">(</span><span class="va">mod</span>, m <span class="op">=</span> <span class="fl">3</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 2: with export for SPSS</span></span>
-<span class="r-in"><span class="co"># (here: to the temporary directory "temp_dir")</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">temp_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">MIs</span> <span class="op">&lt;-</span> <span class="fu">get_MIdat</span><span class="op">(</span><span class="va">mod</span>, m <span class="op">=</span> <span class="fl">3</span>, seed <span class="op">=</span> <span class="fl">123</span>, resdir <span class="op">=</span> <span class="va">temp_dir</span>,</span>
-<span class="r-in">                 filename <span class="op">=</span> <span class="st">"example_imputation"</span>,</span>
-<span class="r-in">                 export_to_SPSS <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># fit a model and monitor the imputed values with</span></span></span>
+<span class="r-in"><span><span class="co"># monitor_params = c(imps = TRUE)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M2</span>, data <span class="op">=</span> <span class="va">wideDF</span>,</span></span>
+<span class="r-in"><span>              monitor_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>imps <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 1: without export to SPSS</span></span></span>
+<span class="r-in"><span><span class="va">MIs</span> <span class="op">&lt;-</span> <span class="fu">get_MIdat</span><span class="op">(</span><span class="va">mod</span>, m <span class="op">=</span> <span class="fl">3</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 2: with export for SPSS</span></span></span>
+<span class="r-in"><span><span class="co"># (here: to the temporary directory "temp_dir")</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">temp_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">MIs</span> <span class="op">&lt;-</span> <span class="fu">get_MIdat</span><span class="op">(</span><span class="va">mod</span>, m <span class="op">=</span> <span class="fl">3</span>, seed <span class="op">=</span> <span class="fl">123</span>, resdir <span class="op">=</span> <span class="va">temp_dir</span>,</span></span>
+<span class="r-in"><span>                 filename <span class="op">=</span> <span class="st">"example_imputation"</span>,</span></span>
+<span class="r-in"><span>                 export_to_SPSS <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -213,7 +235,7 @@ argument <code>monitor_params</code> in <code><a href="model_imp.html">*_imp</a>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

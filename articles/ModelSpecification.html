@@ -224,32 +224,32 @@
 <p>The argument <code>family</code> can be provided as character string or as a function. If the link function is omitted, the <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html" class="external-link">default link</a> is used.</p>
 <p><strong>Example:</strong><br> The following three specifications are equal:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod1a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">creat</span>, data <span class="op">=</span> <span class="va">NHANES</span>,
-                 family <span class="op">=</span> <span class="st">"binomial"</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-
-<span class="va">mod1b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">creat</span>, data <span class="op">=</span> <span class="va">NHANES</span>,
-                 family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-
-<span class="va">mod1c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">creat</span>, data <span class="op">=</span> <span class="va">NHANES</span>,
-                 family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">'logit'</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-
-<span class="va">mod1a</span><span class="op">$</span><span class="va">analysis_type</span>
-<span class="co">#&gt; [1] "glm"</span>
-<span class="co">#&gt; attr(,"family")</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Family: binomial </span>
-<span class="co">#&gt; Link function: logit</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod1a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">creat</span>, data <span class="op">=</span> <span class="va">NHANES</span>,</span>
+<span>                 family <span class="op">=</span> <span class="st">"binomial"</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mod1b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">creat</span>, data <span class="op">=</span> <span class="va">NHANES</span>,</span>
+<span>                 family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mod1c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">creat</span>, data <span class="op">=</span> <span class="va">NHANES</span>,</span>
+<span>                 family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">'logit'</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mod1a</span><span class="op">$</span><span class="va">analysis_type</span></span>
+<span><span class="co">#&gt; [1] "glm"</span></span>
+<span><span class="co">#&gt; attr(,"family")</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Family: binomial </span></span>
+<span><span class="co">#&gt; Link function: logit</span></span></code></pre></div>
 <p>To use, for instance, a “probit” link instead, this needs to be specified explicitly:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod1d</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">creat</span>, data <span class="op">=</span> <span class="va">NHANES</span>,
-               family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">'probit'</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-
-<span class="va">mod1d</span><span class="op">$</span><span class="va">analysis_type</span>
-<span class="co">#&gt; [1] "glm"</span>
-<span class="co">#&gt; attr(,"family")</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Family: binomial </span>
-<span class="co">#&gt; Link function: probit</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod1d</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">creat</span>, data <span class="op">=</span> <span class="va">NHANES</span>,</span>
+<span>               family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">'probit'</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mod1d</span><span class="op">$</span><span class="va">analysis_type</span></span>
+<span><span class="co">#&gt; [1] "glm"</span></span>
+<span><span class="co">#&gt; attr(,"family")</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Family: binomial </span></span>
+<span><span class="co">#&gt; Link function: probit</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -263,98 +263,98 @@
 </h3>
 <p>Interactions between variables can be introduced using <code>:</code> or <code>*</code>, which adds the interaction term AND the main effects, i.e.,</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">*</span> <span class="va">creat</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">*</span> <span class="va">creat</span></span></code></pre></div>
 <p>is equivalent to</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">creat</span> <span class="op">+</span> <span class="va">smoke</span><span class="op">:</span><span class="va">creat</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">creat</span> <span class="op">+</span> <span class="va">smoke</span><span class="op">:</span><span class="va">creat</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="interaction-with-multiple-variables">Interaction with multiple variables<a class="anchor" aria-label="anchor" href="#interaction-with-multiple-variables"></a>
 </h4>
 <p>Interactions between multiple variables can be specified using parentheses:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod2a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">*</span> <span class="op">(</span><span class="va">age</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">creat</span><span class="op">)</span>,
-                 data <span class="op">=</span> <span class="va">NHANES</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod2a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">*</span> <span class="op">(</span><span class="va">age</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">creat</span><span class="op">)</span>,</span>
+<span>                 data <span class="op">=</span> <span class="va">NHANES</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <p>The function <a href="https://nerler.github.io/JointAI/reference/parameters.html"><code>parameters()</code></a> returns a matrix off all parameters that are specified to be followed (column <code>coef</code>) and, for regression coefficients, the name of the variable the coefficient relates to (<code>varname</code>), the outcome variable of the respective model <code>outcome</code>. For multinomial models, which have multiple linear predictors, the column <code>outcat</code> identifies the category of the outcome the parameters refer to.</p>
 <p>We use the function <code><a href="../reference/parameters.html">parameters()</a></code> here and in other vignettes to demonstrate the effect that different model specifications have.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/parameters.html">parameters</a></span><span class="op">(</span><span class="va">mod2a</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Note: "mod2a" does not contain MCMC samples.</span>
-<span class="co">#&gt;    outcome outcat                   varname     coef</span>
-<span class="co">#&gt; 1     educ   &lt;NA&gt;               (Intercept)  beta[1]</span>
-<span class="co">#&gt; 2     educ   &lt;NA&gt;              genderfemale  beta[2]</span>
-<span class="co">#&gt; 3     educ   &lt;NA&gt;                       age  beta[3]</span>
-<span class="co">#&gt; 4     educ   &lt;NA&gt;               smokeformer  beta[4]</span>
-<span class="co">#&gt; 5     educ   &lt;NA&gt;              smokecurrent  beta[5]</span>
-<span class="co">#&gt; 6     educ   &lt;NA&gt;                     creat  beta[6]</span>
-<span class="co">#&gt; 7     educ   &lt;NA&gt;          genderfemale:age  beta[7]</span>
-<span class="co">#&gt; 8     educ   &lt;NA&gt;  genderfemale:smokeformer  beta[8]</span>
-<span class="co">#&gt; 9     educ   &lt;NA&gt; genderfemale:smokecurrent  beta[9]</span>
-<span class="co">#&gt; 10    educ   &lt;NA&gt;        genderfemale:creat beta[10]</span>
-<span class="co">#&gt; 11   creat   &lt;NA&gt;               (Intercept) alpha[1]</span>
-<span class="co">#&gt; 12   creat   &lt;NA&gt;              genderfemale alpha[2]</span>
-<span class="co">#&gt; 13   creat   &lt;NA&gt;                       age alpha[3]</span>
-<span class="co">#&gt; 14   creat   &lt;NA&gt;               smokeformer alpha[4]</span>
-<span class="co">#&gt; 15   creat   &lt;NA&gt;              smokecurrent alpha[5]</span>
-<span class="co">#&gt; 16   smoke   &lt;NA&gt;              genderfemale alpha[6]</span>
-<span class="co">#&gt; 17   smoke   &lt;NA&gt;                       age alpha[7]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/parameters.html">parameters</a></span><span class="op">(</span><span class="va">mod2a</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Note: "mod2a" does not contain MCMC samples.</span></span>
+<span><span class="co">#&gt;    outcome outcat                   varname     coef</span></span>
+<span><span class="co">#&gt; 1     educ   &lt;NA&gt;               (Intercept)  beta[1]</span></span>
+<span><span class="co">#&gt; 2     educ   &lt;NA&gt;              genderfemale  beta[2]</span></span>
+<span><span class="co">#&gt; 3     educ   &lt;NA&gt;                       age  beta[3]</span></span>
+<span><span class="co">#&gt; 4     educ   &lt;NA&gt;               smokeformer  beta[4]</span></span>
+<span><span class="co">#&gt; 5     educ   &lt;NA&gt;              smokecurrent  beta[5]</span></span>
+<span><span class="co">#&gt; 6     educ   &lt;NA&gt;                     creat  beta[6]</span></span>
+<span><span class="co">#&gt; 7     educ   &lt;NA&gt;          genderfemale:age  beta[7]</span></span>
+<span><span class="co">#&gt; 8     educ   &lt;NA&gt;  genderfemale:smokeformer  beta[8]</span></span>
+<span><span class="co">#&gt; 9     educ   &lt;NA&gt; genderfemale:smokecurrent  beta[9]</span></span>
+<span><span class="co">#&gt; 10    educ   &lt;NA&gt;        genderfemale:creat beta[10]</span></span>
+<span><span class="co">#&gt; 11   creat   &lt;NA&gt;               (Intercept) alpha[1]</span></span>
+<span><span class="co">#&gt; 12   creat   &lt;NA&gt;              genderfemale alpha[2]</span></span>
+<span><span class="co">#&gt; 13   creat   &lt;NA&gt;                       age alpha[3]</span></span>
+<span><span class="co">#&gt; 14   creat   &lt;NA&gt;               smokeformer alpha[4]</span></span>
+<span><span class="co">#&gt; 15   creat   &lt;NA&gt;              smokecurrent alpha[5]</span></span>
+<span><span class="co">#&gt; 16   smoke   &lt;NA&gt;              genderfemale alpha[6]</span></span>
+<span><span class="co">#&gt; 17   smoke   &lt;NA&gt;                       age alpha[7]</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="higher-level-interactions">Higher level interactions<a class="anchor" aria-label="anchor" href="#higher-level-interactions"></a>
 </h4>
 <p>To specify interactions of a given level, <code>^</code> can be used:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># all two-way interactions:</span>
-<span class="va">mod2b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="op">(</span><span class="va">age</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">creat</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>,
-                 data <span class="op">=</span> <span class="va">NHANES</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-
-<span class="fu"><a href="../reference/parameters.html">parameters</a></span><span class="op">(</span><span class="va">mod2b</span><span class="op">)</span>
-<span class="co">#&gt;    outcome outcat            varname     coef</span>
-<span class="co">#&gt; 1     educ   &lt;NA&gt;        (Intercept)  beta[1]</span>
-<span class="co">#&gt; 2     educ   &lt;NA&gt;       genderfemale  beta[2]</span>
-<span class="co">#&gt; 3     educ   &lt;NA&gt;                age  beta[3]</span>
-<span class="co">#&gt; 4     educ   &lt;NA&gt;        smokeformer  beta[4]</span>
-<span class="co">#&gt; 5     educ   &lt;NA&gt;       smokecurrent  beta[5]</span>
-<span class="co">#&gt; 6     educ   &lt;NA&gt;              creat  beta[6]</span>
-<span class="co">#&gt; 7     educ   &lt;NA&gt;    age:smokeformer  beta[7]</span>
-<span class="co">#&gt; 8     educ   &lt;NA&gt;   age:smokecurrent  beta[8]</span>
-<span class="co">#&gt; 9     educ   &lt;NA&gt;          age:creat  beta[9]</span>
-<span class="co">#&gt; 10    educ   &lt;NA&gt;  smokeformer:creat beta[10]</span>
-<span class="co">#&gt; 11    educ   &lt;NA&gt; smokecurrent:creat beta[11]</span>
-<span class="co">#&gt; 12   creat   &lt;NA&gt;        (Intercept) alpha[1]</span>
-<span class="co">#&gt; 13   creat   &lt;NA&gt;       genderfemale alpha[2]</span>
-<span class="co">#&gt; 14   creat   &lt;NA&gt;                age alpha[3]</span>
-<span class="co">#&gt; 15   creat   &lt;NA&gt;        smokeformer alpha[4]</span>
-<span class="co">#&gt; 16   creat   &lt;NA&gt;       smokecurrent alpha[5]</span>
-<span class="co">#&gt; 17   smoke   &lt;NA&gt;       genderfemale alpha[6]</span>
-<span class="co">#&gt; 18   smoke   &lt;NA&gt;                age alpha[7]</span>
-
-<span class="co"># all two- and three-way interactions:</span>
-<span class="va">mod2c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="op">(</span><span class="va">age</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">creat</span><span class="op">)</span><span class="op">^</span><span class="fl">3</span>,
-                 data <span class="op">=</span> <span class="va">NHANES</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-
-<span class="fu"><a href="../reference/parameters.html">parameters</a></span><span class="op">(</span><span class="va">mod2c</span><span class="op">)</span>
-<span class="co">#&gt;    outcome outcat                varname     coef</span>
-<span class="co">#&gt; 1     educ   &lt;NA&gt;            (Intercept)  beta[1]</span>
-<span class="co">#&gt; 2     educ   &lt;NA&gt;           genderfemale  beta[2]</span>
-<span class="co">#&gt; 3     educ   &lt;NA&gt;                    age  beta[3]</span>
-<span class="co">#&gt; 4     educ   &lt;NA&gt;            smokeformer  beta[4]</span>
-<span class="co">#&gt; 5     educ   &lt;NA&gt;           smokecurrent  beta[5]</span>
-<span class="co">#&gt; 6     educ   &lt;NA&gt;                  creat  beta[6]</span>
-<span class="co">#&gt; 7     educ   &lt;NA&gt;        age:smokeformer  beta[7]</span>
-<span class="co">#&gt; 8     educ   &lt;NA&gt;       age:smokecurrent  beta[8]</span>
-<span class="co">#&gt; 9     educ   &lt;NA&gt;              age:creat  beta[9]</span>
-<span class="co">#&gt; 10    educ   &lt;NA&gt;      smokeformer:creat beta[10]</span>
-<span class="co">#&gt; 11    educ   &lt;NA&gt;     smokecurrent:creat beta[11]</span>
-<span class="co">#&gt; 12    educ   &lt;NA&gt;  age:smokeformer:creat beta[12]</span>
-<span class="co">#&gt; 13    educ   &lt;NA&gt; age:smokecurrent:creat beta[13]</span>
-<span class="co">#&gt; 14   creat   &lt;NA&gt;            (Intercept) alpha[1]</span>
-<span class="co">#&gt; 15   creat   &lt;NA&gt;           genderfemale alpha[2]</span>
-<span class="co">#&gt; 16   creat   &lt;NA&gt;                    age alpha[3]</span>
-<span class="co">#&gt; 17   creat   &lt;NA&gt;            smokeformer alpha[4]</span>
-<span class="co">#&gt; 18   creat   &lt;NA&gt;           smokecurrent alpha[5]</span>
-<span class="co">#&gt; 19   smoke   &lt;NA&gt;           genderfemale alpha[6]</span>
-<span class="co">#&gt; 20   smoke   &lt;NA&gt;                    age alpha[7]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># all two-way interactions:</span></span>
+<span><span class="va">mod2b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="op">(</span><span class="va">age</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">creat</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>,</span>
+<span>                 data <span class="op">=</span> <span class="va">NHANES</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/parameters.html">parameters</a></span><span class="op">(</span><span class="va">mod2b</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    outcome outcat            varname     coef</span></span>
+<span><span class="co">#&gt; 1     educ   &lt;NA&gt;        (Intercept)  beta[1]</span></span>
+<span><span class="co">#&gt; 2     educ   &lt;NA&gt;       genderfemale  beta[2]</span></span>
+<span><span class="co">#&gt; 3     educ   &lt;NA&gt;                age  beta[3]</span></span>
+<span><span class="co">#&gt; 4     educ   &lt;NA&gt;        smokeformer  beta[4]</span></span>
+<span><span class="co">#&gt; 5     educ   &lt;NA&gt;       smokecurrent  beta[5]</span></span>
+<span><span class="co">#&gt; 6     educ   &lt;NA&gt;              creat  beta[6]</span></span>
+<span><span class="co">#&gt; 7     educ   &lt;NA&gt;    age:smokeformer  beta[7]</span></span>
+<span><span class="co">#&gt; 8     educ   &lt;NA&gt;   age:smokecurrent  beta[8]</span></span>
+<span><span class="co">#&gt; 9     educ   &lt;NA&gt;          age:creat  beta[9]</span></span>
+<span><span class="co">#&gt; 10    educ   &lt;NA&gt;  smokeformer:creat beta[10]</span></span>
+<span><span class="co">#&gt; 11    educ   &lt;NA&gt; smokecurrent:creat beta[11]</span></span>
+<span><span class="co">#&gt; 12   creat   &lt;NA&gt;        (Intercept) alpha[1]</span></span>
+<span><span class="co">#&gt; 13   creat   &lt;NA&gt;       genderfemale alpha[2]</span></span>
+<span><span class="co">#&gt; 14   creat   &lt;NA&gt;                age alpha[3]</span></span>
+<span><span class="co">#&gt; 15   creat   &lt;NA&gt;        smokeformer alpha[4]</span></span>
+<span><span class="co">#&gt; 16   creat   &lt;NA&gt;       smokecurrent alpha[5]</span></span>
+<span><span class="co">#&gt; 17   smoke   &lt;NA&gt;       genderfemale alpha[6]</span></span>
+<span><span class="co">#&gt; 18   smoke   &lt;NA&gt;                age alpha[7]</span></span>
+<span></span>
+<span><span class="co"># all two- and three-way interactions:</span></span>
+<span><span class="va">mod2c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="op">(</span><span class="va">age</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">creat</span><span class="op">)</span><span class="op">^</span><span class="fl">3</span>,</span>
+<span>                 data <span class="op">=</span> <span class="va">NHANES</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/parameters.html">parameters</a></span><span class="op">(</span><span class="va">mod2c</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    outcome outcat                varname     coef</span></span>
+<span><span class="co">#&gt; 1     educ   &lt;NA&gt;            (Intercept)  beta[1]</span></span>
+<span><span class="co">#&gt; 2     educ   &lt;NA&gt;           genderfemale  beta[2]</span></span>
+<span><span class="co">#&gt; 3     educ   &lt;NA&gt;                    age  beta[3]</span></span>
+<span><span class="co">#&gt; 4     educ   &lt;NA&gt;            smokeformer  beta[4]</span></span>
+<span><span class="co">#&gt; 5     educ   &lt;NA&gt;           smokecurrent  beta[5]</span></span>
+<span><span class="co">#&gt; 6     educ   &lt;NA&gt;                  creat  beta[6]</span></span>
+<span><span class="co">#&gt; 7     educ   &lt;NA&gt;        age:smokeformer  beta[7]</span></span>
+<span><span class="co">#&gt; 8     educ   &lt;NA&gt;       age:smokecurrent  beta[8]</span></span>
+<span><span class="co">#&gt; 9     educ   &lt;NA&gt;              age:creat  beta[9]</span></span>
+<span><span class="co">#&gt; 10    educ   &lt;NA&gt;      smokeformer:creat beta[10]</span></span>
+<span><span class="co">#&gt; 11    educ   &lt;NA&gt;     smokecurrent:creat beta[11]</span></span>
+<span><span class="co">#&gt; 12    educ   &lt;NA&gt;  age:smokeformer:creat beta[12]</span></span>
+<span><span class="co">#&gt; 13    educ   &lt;NA&gt; age:smokecurrent:creat beta[13]</span></span>
+<span><span class="co">#&gt; 14   creat   &lt;NA&gt;            (Intercept) alpha[1]</span></span>
+<span><span class="co">#&gt; 15   creat   &lt;NA&gt;           genderfemale alpha[2]</span></span>
+<span><span class="co">#&gt; 16   creat   &lt;NA&gt;                    age alpha[3]</span></span>
+<span><span class="co">#&gt; 17   creat   &lt;NA&gt;            smokeformer alpha[4]</span></span>
+<span><span class="co">#&gt; 18   creat   &lt;NA&gt;           smokecurrent alpha[5]</span></span>
+<span><span class="co">#&gt; 19   smoke   &lt;NA&gt;           genderfemale alpha[6]</span></span>
+<span><span class="co">#&gt; 20   smoke   &lt;NA&gt;                    age alpha[7]</span></span></code></pre></div>
 <p>In <strong>JointAI</strong>, interactions between any variables, observed or incomplete, variables on different levels of a hierarchical structure, can be handled. When an incomplete variable is involved, the interaction term is re-calculated within each iteration of the MCMC sampling, using the imputed values from the current iteration.</p>
 <p>It is <strong>important</strong> not to pre-calculate interactions with incomplete variables as extra variables in the dataset, but to specify them in the model formula. Otherwise, imputed values of the main effect and interaction term will not match, and results may be incorrect.</p>
 </div>
@@ -382,115 +382,115 @@
 <p>The list of functions implemented in JAGS can be found in the <a href="https://sourceforge.net/projects/mcmc-jags/files/Manuals/" class="external-link">JAGS user manual</a>.</p>
 <p><strong>Some examples:</strong><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Absolute difference between bili and creat</span>
-<span class="va">mod3a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">bili</span> <span class="op">-</span> <span class="va">creat</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span>
-
-<span class="co"># Using a natural cubic spline for age (completely observed) and a quadratic</span>
-<span class="co"># and a cubic effect for bili</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">splines</span><span class="op">)</span>
-<span class="va">mod3b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">bili</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">bili</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span>
-
-<span class="co"># A function of creat and albu</span>
-<span class="va">mod3c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">creat</span><span class="op">/</span><span class="va">albu</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span>,
-                models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>creat <span class="op">=</span> <span class="st">'lognorm'</span>, albu <span class="op">=</span> <span class="st">'lognorm'</span><span class="op">)</span><span class="op">)</span>
-<span class="co"># This function may make more sense to calculate BMI as weight/height^2, but</span>
-<span class="co"># we currently do not have those variables in the NHANES dataset.</span>
-
-<span class="co"># Using the sine and cosine</span>
-<span class="va">mod3d</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">bili</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="va">creat</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">albu</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Absolute difference between bili and creat</span></span>
+<span><span class="va">mod3a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">bili</span> <span class="op">-</span> <span class="va">creat</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Using a natural cubic spline for age (completely observed) and a quadratic</span></span>
+<span><span class="co"># and a cubic effect for bili</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">splines</span><span class="op">)</span></span>
+<span><span class="va">mod3b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">bili</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">bili</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># A function of creat and albu</span></span>
+<span><span class="va">mod3c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">creat</span><span class="op">/</span><span class="va">albu</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span>,</span>
+<span>                models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>creat <span class="op">=</span> <span class="st">'lognorm'</span>, albu <span class="op">=</span> <span class="st">'lognorm'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># This function may make more sense to calculate BMI as weight/height^2, but</span></span>
+<span><span class="co"># we currently do not have those variables in the NHANES dataset.</span></span>
+<span></span>
+<span><span class="co"># Using the sine and cosine</span></span>
+<span><span class="va">mod3d</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">bili</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="va">creat</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">albu</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="what-happens-inside-jointai">What happens inside <strong>JointAI</strong>?<a class="anchor" aria-label="anchor" href="#what-happens-inside-jointai"></a>
 </h4>
 <p>When a model formula includes a function of a complete or incomplete variable, the main effect of that variable is automatically added as an auxiliary variable. (For more info on auxiliary variables, see the section <a href="#auxvars">“Auxiliary variables”</a>.) In the linear predictors of models for covariates, usually, only the main effects are used.</p>
 <p>In <code>mod3b</code> from above, for example, the spline of age is used as predictor for <code>SBP</code>, but in the imputation model for <code>bili</code>, <code>age</code> enters with a linear effect.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod3b</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; Linear model for "SBP" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), ns(age, df = 2)1, ns(age, df = 2)2, genderfemale, I(bili^2), I(bili^3) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Linear model for "bili" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod3b</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Linear model for "SBP" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), ns(age, df = 2)1, ns(age, df = 2)2, genderfemale, I(bili^2), I(bili^3) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Linear model for "bili" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale</span></span></code></pre></div>
 <p>The function <a href="https://nerler.github.io/JointAI/reference/list_models.html"><code>list_models()</code></a> prints information on all sub-models specified in a <code>JointAI</code> object. This includes the model(s) specified by the user via the model formula and all models for covariates that <strong>JointAI</strong> has specified automatically. Since here we are only interested in the predictor variables, we suppress printing of information on prior distributions, regression coefficients and other parameters by setting <code>priors</code>, <code>regcoef</code> and <code>otherpars</code> to <code>FALSE</code>.</p>
 <p><br></p>
 <p>When a function of a variable is specified as an auxiliary variable, this function is used (as well) in the models for covariates. For example, in <code>mod3e</code>, waist circumference (<code>WC</code>) is not part of the model for <code>SBP</code>, and the auxiliary variable <code>I(WC^2)</code> is used in the linear predictor of the imputation model for <code>bili</code>: <a id="mod3e"></a></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod3e</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">bili</span>, auxvars <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">WC</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span>
-
-<span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod3e</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; Linear model for "SBP" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale, bili </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Linear model for "bili" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale, I(WC^2) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Linear model for "WC" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod3e</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">bili</span>, auxvars <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">WC</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod3e</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Linear model for "SBP" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale, bili </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Linear model for "bili" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale, I(WC^2) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Linear model for "WC" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale</span></span></code></pre></div>
 <p>When <code>WC</code> is used as predictor variable in the main model and a function of <code>WC</code> is specified as auxiliary variable, both variables are used as predictors in the imputation models:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod3f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">bili</span> <span class="op">+</span> <span class="va">WC</span>, auxvars <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">WC</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span>
-
-<span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod3f</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; Linear model for "SBP" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale, bili, WC </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Linear model for "bili" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale, WC, I(WC^2) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Linear model for "WC" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod3f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">bili</span> <span class="op">+</span> <span class="va">WC</span>, auxvars <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">WC</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod3f</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Linear model for "SBP" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale, bili, WC </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Linear model for "bili" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale, WC, I(WC^2) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Linear model for "WC" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale</span></span></code></pre></div>
 <p>When a function of a covariate is used in the linear predictor of the analysis model, and that function should also be used in the linear predictor of imputation models, it is necessary to also include that function in the argument <code>auxvars</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod3g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">bili</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">WC</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">WC</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span>
-
-<span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod3g</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; Linear model for "SBP" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale, bili, I(WC^2) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Linear model for "bili" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale, WC, I(WC^2) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Linear model for "WC" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod3g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">bili</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">WC</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">WC</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod3g</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Linear model for "SBP" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale, bili, I(WC^2) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Linear model for "bili" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale, WC, I(WC^2) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Linear model for "WC" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale</span></span></code></pre></div>
 <p>Incomplete variables are always imputed on their original scale, i.e.,</p>
 <ul>
 <li>in <code>mod3b</code> the variable <code>bili</code> is imputed and the quadratic and cubic versions calculated from the imputed values.</li>
@@ -504,17 +504,17 @@
 <p>When a function has restricted support, e.g., <code>log(x)</code> is only defined for <code>x &gt; 0</code>, the model used to impute <code>x</code> needs to comply with these restrictions. This can either be achieved by truncating the distribution assumed for <code>x</code>, using the argument <code>trunc</code>, or by specifying a model for <code>x</code> that meets the restrictions. For more information on imputation methods (models for covariates), see the section <a href="#meth">Imputation model types</a>.</p>
 <p><strong>Example</strong>:<br> When using a <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code> transformation for the covariate <code>bili</code>, we can either use the default model for continuous variables, <code>"lm"</code>, a linear model, i.e., assuming a normal distribution and truncate this distribution by specifying <code>trunc = list(bili = c(&lt;lower&gt;, &lt;upper&gt;))</code> (where the lower and upper limits are the smallest and largest allowed values) or choose a model (using the argument <code>models</code>; more details see the section on <a href="#meth">covariate model types</a>) that only imputes positive values such as a log-normal distribution (<code>"glm_lognorm"</code>) or a Gamma distribution (e.g., <code>"glm_gamma_log"</code>): <a id="mod4"></a></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># truncation of the distribution of  bili</span>
-<span class="va">mod4a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">bili</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">creat</span><span class="op">)</span>,
-                trunc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>bili <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1e-5</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span>
-
-<span class="co"># log-normal model for bili</span>
-<span class="va">mod4b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">bili</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">creat</span><span class="op">)</span>,
-                models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>bili <span class="op">=</span> <span class="st">'lognorm'</span>, creat <span class="op">=</span> <span class="st">'lm'</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span>
-
-<span class="co"># gamma model with log-link for bili</span>
-<span class="va">mod4c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">bili</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">creat</span><span class="op">)</span>,
-                models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>bili <span class="op">=</span> <span class="st">'glm_gamma_log'</span>, creat <span class="op">=</span> <span class="st">'lm'</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># truncation of the distribution of  bili</span></span>
+<span><span class="va">mod4a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">bili</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">creat</span><span class="op">)</span>,</span>
+<span>                trunc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>bili <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1e-5</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># log-normal model for bili</span></span>
+<span><span class="va">mod4b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">bili</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">creat</span><span class="op">)</span>,</span>
+<span>                models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>bili <span class="op">=</span> <span class="st">'lognorm'</span>, creat <span class="op">=</span> <span class="st">'lm'</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># gamma model with log-link for bili</span></span>
+<span><span class="va">mod4c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">bili</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">creat</span><span class="op">)</span>,</span>
+<span>                models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>bili <span class="op">=</span> <span class="st">'glm_gamma_log'</span>, creat <span class="op">=</span> <span class="st">'lm'</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span></code></pre></div>
 <p>If only one-sided truncation is needed, the other limit can be provided as <code>NA</code>.</p>
 </div>
 <div class="section level4">
@@ -523,11 +523,11 @@
 <p>It is possible to use functions that have different names in R and JAGS, or that do exist in JAGS, but not in R, by defining a new function in R that has the name of the function in JAGS.</p>
 <p><strong>Example</strong>:<br> In JAGS the inverse logit transformation is defined in the function <code>ilogit</code>. In R, there is no function <code>ilogit</code>, but the inverse logit is available as the distribution function of the logistic distribution <code><a href="https://rdrr.io/r/stats/Logistic.html" class="external-link">plogis()</a></code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Define the function ilogit</span>
-<span class="va">ilogit</span> <span class="op">&lt;-</span> <span class="va">plogis</span>
-
-<span class="co"># Use ilogit in the model formula</span>
-<span class="va">mod5a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu">ilogit</span><span class="op">(</span><span class="va">creat</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Define the function ilogit</span></span>
+<span><span class="va">ilogit</span> <span class="op">&lt;-</span> <span class="va">plogis</span></span>
+<span></span>
+<span><span class="co"># Use ilogit in the model formula</span></span>
+<span><span class="va">mod5a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu">ilogit</span><span class="op">(</span><span class="va">creat</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="nested-functions">Nested functions<a class="anchor" aria-label="anchor" href="#nested-functions"></a>
@@ -537,14 +537,14 @@
 <p>The complementary log log transformation is restricted to values larger than 0 and smaller than 1. In order to use this function on a variable that exceeds this range, as is the case for <code>creat</code>, a second transformation might be used, for instance the inverse logit from the previous example.</p>
 <p>In JAGS, the complementary log-log transformation is implemented as <code>cloglog</code>, but since this function does not exist in (base) R, we first need to define it:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># define the complementary log log transformation</span>
-<span class="va">cloglog</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># define the inverse logit (in case you have not done it in the previous example)</span>
-<span class="va">ilogit</span> <span class="op">&lt;-</span> <span class="va">plogis</span>
-
-<span class="co"># nest ilogit inside cloglog</span>
-<span class="va">mod6a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu">cloglog</span><span class="op">(</span><span class="fu">ilogit</span><span class="op">(</span><span class="va">creat</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># define the complementary log log transformation</span></span>
+<span><span class="va">cloglog</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># define the inverse logit (in case you have not done it in the previous example)</span></span>
+<span><span class="va">ilogit</span> <span class="op">&lt;-</span> <span class="va">plogis</span></span>
+<span></span>
+<span><span class="co"># nest ilogit inside cloglog</span></span>
+<span><span class="va">mod6a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu">cloglog</span><span class="op">(</span><span class="fu">ilogit</span><span class="op">(</span><span class="va">creat</span><span class="op">)</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -579,8 +579,8 @@
 </ul>
 <p>It is possible to use splines in the random effects structure (but only for completely observed variables), e.g.:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod7a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lme_imp</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">GESTBIR</span> <span class="op">+</span> <span class="va">ETHN</span> <span class="op">+</span> <span class="va">HEIGHT_M</span> <span class="op">+</span> <span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
-                 random <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|</span> <span class="va">ID</span>, data <span class="op">=</span> <span class="va">simLong</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod7a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lme_imp</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">GESTBIR</span> <span class="op">+</span> <span class="va">ETHN</span> <span class="op">+</span> <span class="va">HEIGHT_M</span> <span class="op">+</span> <span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                 random <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|</span> <span class="va">ID</span>, data <span class="op">=</span> <span class="va">simLong</span><span class="op">)</span></span></code></pre></div>
 <p>Since <strong>JointAI</strong> version 1.0.0 it is possible to model multi-level data with multiple levels of grouping In that setting, the <code>formula</code> specification needs to be used:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="op">&lt;</span>fixed effects<span class="op">&gt;</span><span class="st"> </span><span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>center)</span></code></pre></div>
 <p>It is possible to model both crossed and nested random effects, however the distinction between crossed and nested random effects must come from the coding of the id variables. For example, if patients are nested in hospitals, all observations that have the same patient id also need to have the same hospital id.</p>
@@ -749,27 +749,27 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <p>In models <a href="#mod4"><code>mod4b</code> and <code>mod4c</code></a> we have already seen two examples in which the imputation model type was changed using the argument <code>models</code>.</p>
 <p><code>models</code> takes a named vector of (imputation/covariate) model types, where the names are the names of the covariates. When the vector supplied to <code>models</code> only contains specifications for a subset of the covariates, default models are used for the remaining variables.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod8a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">WC</span> <span class="op">+</span> <span class="va">alc</span> <span class="op">+</span> <span class="va">bili</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,
-                models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>bili <span class="op">=</span> <span class="st">'glm_gamma_log'</span>, WC <span class="op">=</span> <span class="st">'lognorm'</span><span class="op">)</span>,
-                data <span class="op">=</span> <span class="va">NHANES</span>, n.adapt <span class="op">=</span> <span class="fl">0</span>, progress.bar <span class="op">=</span> <span class="st">'none'</span><span class="op">)</span>
-
-<span class="va">mod8a</span><span class="op">$</span><span class="va">models</span>
-<span class="co">#&gt;                     SBP                     alc                   occup                    bili </span>
-<span class="co">#&gt; "glm_gaussian_identity"    "glm_binomial_logit"                "mlogit"         "glm_gamma_log" </span>
-<span class="co">#&gt;                   smoke                      WC </span>
-<span class="co">#&gt;                   "clm"               "lognorm"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod8a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">WC</span> <span class="op">+</span> <span class="va">alc</span> <span class="op">+</span> <span class="va">bili</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,</span>
+<span>                models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>bili <span class="op">=</span> <span class="st">'glm_gamma_log'</span>, WC <span class="op">=</span> <span class="st">'lognorm'</span><span class="op">)</span>,</span>
+<span>                data <span class="op">=</span> <span class="va">NHANES</span>, n.adapt <span class="op">=</span> <span class="fl">0</span>, progress.bar <span class="op">=</span> <span class="st">'none'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mod8a</span><span class="op">$</span><span class="va">models</span></span>
+<span><span class="co">#&gt;                     SBP                     alc                   occup                    bili </span></span>
+<span><span class="co">#&gt; "glm_gaussian_identity"    "glm_binomial_logit"                "mlogit"         "glm_gamma_log" </span></span>
+<span><span class="co">#&gt;                   smoke                      WC </span></span>
+<span><span class="co">#&gt;                   "clm"               "lognorm"</span></span></code></pre></div>
 <p>When there is a “time” variable in the model, such as <code>age</code> (age of the child at the time of the measurement) in the <code>simLong</code> it may not be meaningful to specify a model for that variable. Especially when the “time” variable is pre-specified by the design of the study it can usually be assumed to be independent of the covariates and a model for it has no useful interpretation.</p>
 <p>The argument <code>no_model</code> allows us to exclude models for such variables (as long as they are completely observed):</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod8b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lme_imp</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">GESTBIR</span> <span class="op">+</span> <span class="va">ETHN</span> <span class="op">+</span> <span class="va">HEIGHT_M</span> <span class="op">+</span> <span class="va">SMOKE</span> <span class="op">+</span> <span class="va">hc</span> <span class="op">+</span> <span class="va">MARITAL</span> <span class="op">+</span>
-                   <span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,
-                 random <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|</span> <span class="va">ID</span>, data <span class="op">=</span> <span class="va">simLong</span>,
-                 no_model <span class="op">=</span> <span class="st">"age"</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-<span class="va">mod8b</span><span class="op">$</span><span class="va">models</span>
-<span class="co">#&gt;                      bmi                       hc                    SMOKE                  MARITAL </span>
-<span class="co">#&gt; "glmm_gaussian_identity"                    "lmm"                    "clm"                 "mlogit" </span>
-<span class="co">#&gt;                     ETHN                 HEIGHT_M </span>
-<span class="co">#&gt;     "glm_binomial_logit"                     "lm"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod8b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lme_imp</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">GESTBIR</span> <span class="op">+</span> <span class="va">ETHN</span> <span class="op">+</span> <span class="va">HEIGHT_M</span> <span class="op">+</span> <span class="va">SMOKE</span> <span class="op">+</span> <span class="va">hc</span> <span class="op">+</span> <span class="va">MARITAL</span> <span class="op">+</span></span>
+<span>                   <span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                 random <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|</span> <span class="va">ID</span>, data <span class="op">=</span> <span class="va">simLong</span>,</span>
+<span>                 no_model <span class="op">=</span> <span class="st">"age"</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">mod8b</span><span class="op">$</span><span class="va">models</span></span>
+<span><span class="co">#&gt;                      bmi                       hc                    SMOKE                  MARITAL </span></span>
+<span><span class="co">#&gt; "glmm_gaussian_identity"                    "lmm"                    "clm"                 "mlogit" </span></span>
+<span><span class="co">#&gt;                     ETHN                 HEIGHT_M </span></span>
+<span><span class="co">#&gt;     "glm_binomial_logit"                     "lm"</span></span></code></pre></div>
 <p>By excluding the model for <code>age</code> we implicitly assume that incomplete baseline variables are independent of <code>age</code>.</p>
 <p><strong>Note:</strong><br> When a continuous incomplete variable has only two different values it is assumed to be binary and its coding and default imputation model will be changed accordingly. This behaviour can be overwritten when the imputation method for that variable is specified directly by the user.</p>
 <p>Variables of type <code>logical</code> are automatically converted to binary factors.</p>
@@ -780,66 +780,66 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <p>In <strong>JointAI</strong>, the models automatically specified for covariates are ordered by the hierarchical level of the respective response variable (descending). The linear predictor of each model contains the incomplete variables that are specified later in the sequence and all complete variables of the same or lower level.</p>
 <p>Within each level, models are ordered by the proportion of missing values in the respective response variables, so that the variable with the most missing values has the most covariates in its linear predictor.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_missinfo.html">get_missinfo</a></span><span class="op">(</span><span class="va">mod8a</span><span class="op">)</span>
-<span class="co">#&gt; $complete_cases</span>
-<span class="co">#&gt;          #        %</span>
-<span class="co">#&gt; lvlone 116 62.36559</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $miss_list</span>
-<span class="co">#&gt; $miss_list$lvlone</span>
-<span class="co">#&gt;        # NA      % NA</span>
-<span class="co">#&gt; SBP       0  0.000000</span>
-<span class="co">#&gt; age       0  0.000000</span>
-<span class="co">#&gt; gender    0  0.000000</span>
-<span class="co">#&gt; WC        2  1.075269</span>
-<span class="co">#&gt; smoke     7  3.763441</span>
-<span class="co">#&gt; bili      8  4.301075</span>
-<span class="co">#&gt; occup    28 15.053763</span>
-<span class="co">#&gt; alc      34 18.279570</span>
-
-<span class="co"># print information on the imputation models (and omit everything but the predictor variables)</span>
-<span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod8a</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span>, refcat <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; Linear model for "SBP" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale, WC, alc&gt;=1, bili, occuplooking for work, occupnot </span>
-<span class="co">#&gt;   working, smokeformer, smokecurrent </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Binomial model for "alc" </span>
-<span class="co">#&gt;    family: binomial </span>
-<span class="co">#&gt;    link: logit </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale, WC, bili, occuplooking for work, occupnot working, </span>
-<span class="co">#&gt;   smokeformer, smokecurrent </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multinomial logit model for "occup" </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale, WC, bili, smokeformer, smokecurrent </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Gamma model for "bili" </span>
-<span class="co">#&gt;    family: Gamma </span>
-<span class="co">#&gt;    link: log </span>
-<span class="co">#&gt; * Parametrization:</span>
-<span class="co">#&gt;   - shape: shape_bili = mu_bili^2 * tau_bili</span>
-<span class="co">#&gt;   - rate: rate_bili = mu_bili * tau_bili</span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale, WC, smokeformer, smokecurrent </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Cumulative logit model for "smoke" </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   age, genderfemale, WC </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Log-normal model for "WC" </span>
-<span class="co">#&gt;    family: lognorm </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), age, genderfemale</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_missinfo.html">get_missinfo</a></span><span class="op">(</span><span class="va">mod8a</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $complete_cases</span></span>
+<span><span class="co">#&gt;          #        %</span></span>
+<span><span class="co">#&gt; lvlone 116 62.36559</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $miss_list</span></span>
+<span><span class="co">#&gt; $miss_list$lvlone</span></span>
+<span><span class="co">#&gt;        # NA      % NA</span></span>
+<span><span class="co">#&gt; SBP       0  0.000000</span></span>
+<span><span class="co">#&gt; age       0  0.000000</span></span>
+<span><span class="co">#&gt; gender    0  0.000000</span></span>
+<span><span class="co">#&gt; WC        2  1.075269</span></span>
+<span><span class="co">#&gt; smoke     7  3.763441</span></span>
+<span><span class="co">#&gt; bili      8  4.301075</span></span>
+<span><span class="co">#&gt; occup    28 15.053763</span></span>
+<span><span class="co">#&gt; alc      34 18.279570</span></span>
+<span></span>
+<span><span class="co"># print information on the imputation models (and omit everything but the predictor variables)</span></span>
+<span><span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod8a</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span>, refcat <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Linear model for "SBP" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale, WC, alc&gt;=1, bili, occuplooking for work, occupnot </span></span>
+<span><span class="co">#&gt;   working, smokeformer, smokecurrent </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Binomial model for "alc" </span></span>
+<span><span class="co">#&gt;    family: binomial </span></span>
+<span><span class="co">#&gt;    link: logit </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale, WC, bili, occuplooking for work, occupnot working, </span></span>
+<span><span class="co">#&gt;   smokeformer, smokecurrent </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multinomial logit model for "occup" </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale, WC, bili, smokeformer, smokecurrent </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Gamma model for "bili" </span></span>
+<span><span class="co">#&gt;    family: Gamma </span></span>
+<span><span class="co">#&gt;    link: log </span></span>
+<span><span class="co">#&gt; * Parametrization:</span></span>
+<span><span class="co">#&gt;   - shape: shape_bili = mu_bili^2 * tau_bili</span></span>
+<span><span class="co">#&gt;   - rate: rate_bili = mu_bili * tau_bili</span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale, WC, smokeformer, smokecurrent </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Cumulative logit model for "smoke" </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   age, genderfemale, WC </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Log-normal model for "WC" </span></span>
+<span><span class="co">#&gt;    family: lognorm </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), age, genderfemale</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -855,58 +855,58 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <p>In the main functions, <code>*_imp()</code>, auxiliary variables can be specified with the argument <code>auxvars</code>, which is a one-sided formula.</p>
 <p><strong>Example:</strong><br> We might consider the variables <code>educ</code> and <code>smoke</code> as predictors for the imputation of <code>occup</code>:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod9a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">occup</span>, auxvars <span class="op">=</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">smoke</span>,
-                data <span class="op">=</span> <span class="va">NHANES</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod9a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">occup</span>, auxvars <span class="op">=</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">smoke</span>,</span>
+<span>                data <span class="op">=</span> <span class="va">NHANES</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <p>The variables <code>educ</code> and <code>smoke</code> are not used as predictors in the analysis model. They are, however, used as predictors in the imputation for <code>occup</code> and imputed themselves (if they have missing values):</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod9a</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span>, refcat <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; Linear model for "SBP" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), genderfemale, age, occuplooking for work, occupnot working </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multinomial logit model for "occup" </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), genderfemale, age, educhigh, smokeformer, smokecurrent </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Cumulative logit model for "smoke" </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   genderfemale, age, educhigh</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod9a</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span>, refcat <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Linear model for "SBP" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), genderfemale, age, occuplooking for work, occupnot working </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multinomial logit model for "occup" </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), genderfemale, age, educhigh, smokeformer, smokecurrent </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Cumulative logit model for "smoke" </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   genderfemale, age, educhigh</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="functions-of-variables-as-auxiliary-variables">Functions of variables as auxiliary variables<a class="anchor" aria-label="anchor" href="#functions-of-variables-as-auxiliary-variables"></a>
 </h3>
 <p>As shown above in <a href="#mod3e"><code>mod3e</code></a> and <a href="#mod3e"><code>mod3f</code></a>, it is possible to specify functions of auxiliary variables. In that case, the auxiliary variable is not considered as linear effect but as specified by the function:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod9b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">occup</span>, data <span class="op">=</span> <span class="va">NHANES</span>,
-                auxvars <span class="op">=</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">WC</span><span class="op">)</span>,
-                trunc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>WC <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1e-10</span>, <span class="fl">1e10</span><span class="op">)</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod9b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">occup</span>, data <span class="op">=</span> <span class="va">NHANES</span>,</span>
+<span>                auxvars <span class="op">=</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">WC</span><span class="op">)</span>,</span>
+<span>                trunc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>WC <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1e-10</span>, <span class="fl">1e10</span><span class="op">)</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod9b</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span>, refcat <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; Linear model for "SBP" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), genderfemale, age, occuplooking for work, occupnot working </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multinomial logit model for "occup" </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), genderfemale, age, educhigh, smokeformer, smokecurrent, log(WC) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Cumulative logit model for "smoke" </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   genderfemale, age, educhigh, log(WC) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Linear model for "WC" </span>
-<span class="co">#&gt;    family: gaussian </span>
-<span class="co">#&gt;    link: identity </span>
-<span class="co">#&gt; * Predictor variables:</span>
-<span class="co">#&gt;   (Intercept), genderfemale, age, educhigh</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod9b</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span>, refcat <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Linear model for "SBP" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), genderfemale, age, occuplooking for work, occupnot working </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multinomial logit model for "occup" </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), genderfemale, age, educhigh, smokeformer, smokecurrent, log(WC) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Cumulative logit model for "smoke" </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   genderfemale, age, educhigh, log(WC) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Linear model for "WC" </span></span>
+<span><span class="co">#&gt;    family: gaussian </span></span>
+<span><span class="co">#&gt;    link: identity </span></span>
+<span><span class="co">#&gt; * Predictor variables:</span></span>
+<span><span class="co">#&gt;   (Intercept), genderfemale, age, educhigh</span></span></code></pre></div>
 <p><strong>Note:</strong><br> Omitting auxiliary variables from the analysis model implies that the outcome is independent of these variables, conditional on the other variables in the model. If this is not true, the model is mis-specified which may lead to biased results (similar to leaving a confounding variable out of a model).</p>
 </div>
 </div>
@@ -919,10 +919,10 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <p>In practice, most often, dummy coding is used for categorical predictor variables, i.e., a binary variables is created for each category, except the reference category. These binary variables have value one when that category was observed and zero otherwise.</p>
 <p>This is the default behaviour for unordered factors in R (<code><a href="https://rdrr.io/r/stats/contrast.html" class="external-link">contr.treatment()</a></code>). For ordered factors orthogonal polynomials (<code><a href="https://rdrr.io/r/stats/contrast.html" class="external-link">contr.poly()</a></code>) are used. The type of contrasts (i.e. “coding”) to be used for unordered and ordered factors can be checked and set in the global options:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">'contrasts'</span><span class="op">)</span>
-<span class="co">#&gt; $contrasts</span>
-<span class="co">#&gt;         unordered           ordered </span>
-<span class="co">#&gt; "contr.treatment"      "contr.poly"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">'contrasts'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $contrasts</span></span>
+<span><span class="co">#&gt;         unordered           ordered </span></span>
+<span><span class="co">#&gt; "contr.treatment"      "contr.poly"</span></span></code></pre></div>
 <p>Since the imputation of incomplete factors is done in the original variable, the re-coding from the original categorical variable into dummy variables or other contrasts needs to be done within the JAGS model. Currently, only dummy coding and reference coding (<code><a href="https://rdrr.io/r/stats/contrast.html" class="external-link">contr.sum()</a></code>) are possible for factors with missing values. This means that, if the default <code>contr.poly</code> is set for ordinal factors, a warning message is printed and dummy coding is used for these variables instead.</p>
 </div>
 <div class="section level3">
@@ -942,25 +942,25 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 </ul>
 <p>For example:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod10a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,
-                 refcats <span class="op">=</span> <span class="st">"largest"</span>, data <span class="op">=</span> <span class="va">NHANES</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-<span class="co">#&gt; Warning: </span>
-<span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical covariates.</span>
-<span class="co">#&gt; I will use "contr.treatment" instead.  You can specify (globally) which types of</span>
-<span class="co">#&gt; contrasts are used by changing "options('contrasts')".</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod10a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,</span>
+<span>                 refcats <span class="op">=</span> <span class="st">"largest"</span>, data <span class="op">=</span> <span class="va">NHANES</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: </span></span>
+<span><span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical covariates.</span></span>
+<span><span class="co">#&gt; I will use "contr.treatment" instead.  You can specify (globally) which types of</span></span>
+<span><span class="co">#&gt; contrasts are used by changing "options('contrasts')".</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="setting-reference-categories-for-individual-variables">Setting reference categories for individual variables<a class="anchor" aria-label="anchor" href="#setting-reference-categories-for-individual-variables"></a>
 </h4>
 <p>Alternatively, <code>refcats</code> takes a named vector, in which the reference category for each variable can be specified either by its number or its name, or one of the three global types: “first”, “last” or “largest”. For variables for which no reference category is specified in the list the default is used.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod10b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,
-                 refcats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>occup <span class="op">=</span> <span class="st">"not working"</span>, race <span class="op">=</span> <span class="fl">3</span>, educ <span class="op">=</span> <span class="st">'largest'</span><span class="op">)</span>,
-                 data <span class="op">=</span> <span class="va">NHANES</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-<span class="co">#&gt; Warning: </span>
-<span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical covariates.</span>
-<span class="co">#&gt; I will use "contr.treatment" instead.  You can specify (globally) which types of</span>
-<span class="co">#&gt; contrasts are used by changing "options('contrasts')".</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod10b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,</span>
+<span>                 refcats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>occup <span class="op">=</span> <span class="st">"not working"</span>, race <span class="op">=</span> <span class="fl">3</span>, educ <span class="op">=</span> <span class="st">'largest'</span><span class="op">)</span>,</span>
+<span>                 data <span class="op">=</span> <span class="va">NHANES</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: </span></span>
+<span><span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical covariates.</span></span>
+<span><span class="co">#&gt; I will use "contr.treatment" instead.  You can specify (globally) which types of</span></span>
+<span><span class="co">#&gt; contrasts are used by changing "options('contrasts')".</span></span></code></pre></div>
 <p>To help to specify the reference category, the function <a href="https://nerler.github.io/JointAI/reference/set_refcat.html"><code>set_refcat()</code></a> can be used. It prints the names of the categorical variables that are selected by</p>
 <ul>
 <li>a specified model formula and/or</li>
@@ -969,44 +969,44 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 </ul>
 <p>or all categorical variables in the data if only <code>data</code> is provided, and asks a number of questions which the user needs to reply to by input of a number.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">refs_mod10</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/set_refcat.html">set_refcat</a></span><span class="op">(</span><span class="va">NHANES</span>, formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="va">mod10b</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; The categorical variables are:</span>
-<span class="co">#&gt; - "gender"</span>
-<span class="co">#&gt; - "race"</span>
-<span class="co">#&gt; - "educ"</span>
-<span class="co">#&gt; - "occup"</span>
-<span class="co">#&gt; - "smoke"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; How do you want to specify the reference categories?</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; 1: Use the first category for each variable.</span>
-<span class="co">#&gt; 2: Use the last category for each variabe.</span>
-<span class="co">#&gt; 3: Use the largest category for each variable.</span>
-<span class="co">#&gt; 4: Specify the reference categories individually.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">refs_mod10</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/set_refcat.html">set_refcat</a></span><span class="op">(</span><span class="va">NHANES</span>, formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="va">mod10b</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The categorical variables are:</span></span>
+<span><span class="co">#&gt; - "gender"</span></span>
+<span><span class="co">#&gt; - "race"</span></span>
+<span><span class="co">#&gt; - "educ"</span></span>
+<span><span class="co">#&gt; - "occup"</span></span>
+<span><span class="co">#&gt; - "smoke"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; How do you want to specify the reference categories?</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 1: Use the first category for each variable.</span></span>
+<span><span class="co">#&gt; 2: Use the last category for each variabe.</span></span>
+<span><span class="co">#&gt; 3: Use the largest category for each variable.</span></span>
+<span><span class="co">#&gt; 4: Specify the reference categories individually.</span></span></code></pre></div>
 <p>When option 4 is chosen, a question for each categorical variable is asked, for example:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#&gt; The reference category for “race” should be</span>
-<span class="co">#&gt;</span>
-<span class="co">#&gt; 1: Mexican American</span>
-<span class="co">#&gt; 2: Other Hispanic</span>
-<span class="co">#&gt; 3: Non-Hispanic White</span>
-<span class="co">#&gt; 4: Non-Hispanic Black</span>
-<span class="co">#&gt; 5: other</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#&gt; The reference category for “race” should be</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; 1: Mexican American</span></span>
+<span><span class="co">#&gt; 2: Other Hispanic</span></span>
+<span><span class="co">#&gt; 3: Non-Hispanic White</span></span>
+<span><span class="co">#&gt; 4: Non-Hispanic Black</span></span>
+<span><span class="co">#&gt; 5: other</span></span></code></pre></div>
 <p>After specification of the reference categories for all categorical variables, the determined specification for the argument <code>refcats</code> is printed:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#&gt; In the JointAI model specify:</span>
-<span class="co">#&gt;  refcats = c(gender = 'female', race = 'Non-Hispanic White', educ = 'low',</span>
-<span class="co">#&gt;              occup = 'not working', smoke = 'never')</span>
-<span class="co">#&gt;</span>
-<span class="co">#&gt; or use the output of this function.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#&gt; In the JointAI model specify:</span></span>
+<span><span class="co">#&gt;  refcats = c(gender = 'female', race = 'Non-Hispanic White', educ = 'low',</span></span>
+<span><span class="co">#&gt;              occup = 'not working', smoke = 'never')</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; or use the output of this function.</span></span></code></pre></div>
 <p><code><a href="../reference/set_refcat.html">set_refcat()</a></code> also returns a named vector that can be passed to the argument <code>refcats</code>:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod10c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,
-                 refcats <span class="op">=</span> <span class="va">refs_mod10</span>, data <span class="op">=</span> <span class="va">NHANES</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-<span class="co">#&gt; Warning: </span>
-<span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical covariates.</span>
-<span class="co">#&gt; I will use "contr.treatment" instead.  You can specify (globally) which types of</span>
-<span class="co">#&gt; contrasts are used by changing "options('contrasts')".</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod10c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,</span>
+<span>                 refcats <span class="op">=</span> <span class="va">refs_mod10</span>, data <span class="op">=</span> <span class="va">NHANES</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: </span></span>
+<span><span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical covariates.</span></span>
+<span><span class="co">#&gt; I will use "contr.treatment" instead.  You can specify (globally) which types of</span></span>
+<span><span class="co">#&gt; contrasts are used by changing "options('contrasts')".</span></span></code></pre></div>
 <p><strong>Note:</strong><br> Changing a reference category via the argument <code>refcats</code> does not change the order of levels in the dataset or any of the data matrices inside <strong>JointAI</strong>. Only when, in the JAGS model, the categorical variables is converted into dummy variables, the reference category is used to determine for which levels the dummies are created.</p>
 </div>
 </div>
@@ -1017,42 +1017,42 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <p>In the Bayesian framework, parameters are random variables for which a distribution needs to be specified. These distributions depend on parameters themselves, i.e., on hyper-parameters.</p>
 <p>The function <code><a href="../reference/default_hyperpars.html">default_hyperpars()</a></code> returns a list containing the default hyper parameters used in a <code>JointAI</code> model.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/default_hyperpars.html">default_hyperpars</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; $norm</span>
-<span class="co">#&gt;    mu_reg_norm   tau_reg_norm shape_tau_norm  rate_tau_norm </span>
-<span class="co">#&gt;          0e+00          1e-04          1e-02          1e-02 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $gamma</span>
-<span class="co">#&gt;    mu_reg_gamma   tau_reg_gamma shape_tau_gamma  rate_tau_gamma </span>
-<span class="co">#&gt;           0e+00           1e-04           1e-02           1e-02 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $beta</span>
-<span class="co">#&gt;    mu_reg_beta   tau_reg_beta shape_tau_beta  rate_tau_beta </span>
-<span class="co">#&gt;          0e+00          1e-04          1e-02          1e-02 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $binom</span>
-<span class="co">#&gt;  mu_reg_binom tau_reg_binom </span>
-<span class="co">#&gt;         0e+00         1e-04 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $poisson</span>
-<span class="co">#&gt;  mu_reg_poisson tau_reg_poisson </span>
-<span class="co">#&gt;           0e+00           1e-04 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $multinomial</span>
-<span class="co">#&gt;  mu_reg_multinomial tau_reg_multinomial </span>
-<span class="co">#&gt;               0e+00               1e-04 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $ordinal</span>
-<span class="co">#&gt;    mu_reg_ordinal   tau_reg_ordinal  mu_delta_ordinal tau_delta_ordinal </span>
-<span class="co">#&gt;             0e+00             1e-04             0e+00             1e-04 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $ranef</span>
-<span class="co">#&gt; shape_diag_RinvD  rate_diag_RinvD       KinvD_expr </span>
-<span class="co">#&gt;           "0.01"          "0.001"   "nranef + 1.0" </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $surv</span>
-<span class="co">#&gt;  mu_reg_surv tau_reg_surv </span>
-<span class="co">#&gt;        0.000        0.001</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/default_hyperpars.html">default_hyperpars</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $norm</span></span>
+<span><span class="co">#&gt;    mu_reg_norm   tau_reg_norm shape_tau_norm  rate_tau_norm </span></span>
+<span><span class="co">#&gt;          0e+00          1e-04          1e-02          1e-02 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $gamma</span></span>
+<span><span class="co">#&gt;    mu_reg_gamma   tau_reg_gamma shape_tau_gamma  rate_tau_gamma </span></span>
+<span><span class="co">#&gt;           0e+00           1e-04           1e-02           1e-02 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $beta</span></span>
+<span><span class="co">#&gt;    mu_reg_beta   tau_reg_beta shape_tau_beta  rate_tau_beta </span></span>
+<span><span class="co">#&gt;          0e+00          1e-04          1e-02          1e-02 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $binom</span></span>
+<span><span class="co">#&gt;  mu_reg_binom tau_reg_binom </span></span>
+<span><span class="co">#&gt;         0e+00         1e-04 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $poisson</span></span>
+<span><span class="co">#&gt;  mu_reg_poisson tau_reg_poisson </span></span>
+<span><span class="co">#&gt;           0e+00           1e-04 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $multinomial</span></span>
+<span><span class="co">#&gt;  mu_reg_multinomial tau_reg_multinomial </span></span>
+<span><span class="co">#&gt;               0e+00               1e-04 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ordinal</span></span>
+<span><span class="co">#&gt;    mu_reg_ordinal   tau_reg_ordinal  mu_delta_ordinal tau_delta_ordinal </span></span>
+<span><span class="co">#&gt;             0e+00             1e-04             0e+00             1e-04 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ranef</span></span>
+<span><span class="co">#&gt; shape_diag_RinvD  rate_diag_RinvD       KinvD_expr </span></span>
+<span><span class="co">#&gt;           "0.01"          "0.001"   "nranef + 1.0" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $surv</span></span>
+<span><span class="co">#&gt;  mu_reg_surv tau_reg_surv </span></span>
+<span><span class="co">#&gt;        0.000        0.001</span></span></code></pre></div>
 <p>To change the hyper-parameters in a <strong>JointAI</strong> model, the list obtained from <code><a href="../reference/default_hyperpars.html">default_hyperpars()</a></code> can be edited and passed to the argument <code>hyperpars</code> in the main functions <code>*_imp()</code>.</p>
 <ul>
 <li>
@@ -1080,17 +1080,17 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <p>Setting <code>shrinkage = 'ridge'</code> will impose ridge priors on all regression coefficients. To only use shrinkage for some of the sub-models (main analysis model and covariate models), a vector can be provided that contains the names of the response variables of the models in which shrinkage should be applied, and the type of shrinkage for each of them.</p>
 <p>For example, in <code>mod11a</code> ridge regression is used for all models, and in <code>modd11b</code> only in the models for <code>SBP</code> and <code>educ</code>:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod11a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,
-                data <span class="op">=</span> <span class="va">NHANES</span>, shrinkage <span class="op">=</span> <span class="st">'ridge'</span>,
-                n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Note: No MCMC sample will be created when n.iter is set to 0.</span>
-
-<span class="va">mod11b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,
-                data <span class="op">=</span> <span class="va">NHANES</span>, shrinkage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>SBP <span class="op">=</span> <span class="st">'ridge'</span>, educ <span class="op">=</span> <span class="st">'ridge'</span><span class="op">)</span>,
-                n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Note: No MCMC sample will be created when n.iter is set to 0.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod11a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,</span>
+<span>                data <span class="op">=</span> <span class="va">NHANES</span>, shrinkage <span class="op">=</span> <span class="st">'ridge'</span>,</span>
+<span>                n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Note: No MCMC sample will be created when n.iter is set to 0.</span></span>
+<span></span>
+<span><span class="va">mod11b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,</span>
+<span>                data <span class="op">=</span> <span class="va">NHANES</span>, shrinkage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>SBP <span class="op">=</span> <span class="st">'ridge'</span>, educ <span class="op">=</span> <span class="st">'ridge'</span><span class="op">)</span>,</span>
+<span>                n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Note: No MCMC sample will be created when n.iter is set to 0.</span></span></code></pre></div>
 <p>Ridge regression is implemented as a <span class="math inline">\(\text{Ga}(0.01, 0.01)\)</span> prior for the precision of the regression coefficients <span class="math inline">\(\beta\)</span> instead of setting this precision to a fixed (small) value.</p>
 </div>
 <div class="footnotes">
@@ -1120,7 +1120,7 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

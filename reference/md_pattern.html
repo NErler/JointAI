@@ -106,41 +106,60 @@ matrix.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">md_pattern</span><span class="op">(</span><span class="va">data</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html" class="external-link">grey</a></span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span>, <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html" class="external-link">grey</a></span><span class="op">(</span><span class="fl">0.7</span><span class="op">)</span><span class="op">)</span>,
-  border <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html" class="external-link">grey</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span>, plot <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="cn">FALSE</span>,
-  print_xaxis <span class="op">=</span> <span class="cn">TRUE</span>, ylab <span class="op">=</span> <span class="st">"Number of observations per pattern"</span>,
-  print_yaxis <span class="op">=</span> <span class="cn">TRUE</span>, legend.position <span class="op">=</span> <span class="st">"bottom"</span>, sort_columns <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">md_pattern</span><span class="op">(</span><span class="va">data</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html" class="external-link">grey</a></span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span>, <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html" class="external-link">grey</a></span><span class="op">(</span><span class="fl">0.7</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  border <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html" class="external-link">grey</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span>, plot <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  print_xaxis <span class="op">=</span> <span class="cn">TRUE</span>, ylab <span class="op">=</span> <span class="st">"Number of observations per pattern"</span>,</span>
+<span>  print_yaxis <span class="op">=</span> <span class="cn">TRUE</span>, legend.position <span class="op">=</span> <span class="st">"bottom"</span>, sort_columns <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>data frame</p></dd>
+
+
 <dt>color</dt>
 <dd><p>vector of length two, that specifies the colour used to indicate
 observed and missing values (in that order)</p></dd>
+
+
 <dt>border</dt>
 <dd><p>colour of the grid</p></dd>
+
+
 <dt>plot</dt>
 <dd><p>logical; should the missing data pattern be plotted?
 (default is <code>TRUE</code>)</p></dd>
+
+
 <dt>pattern</dt>
 <dd><p>logical; should the missing data pattern be returned as
 matrix? (default is <code>FALSE</code>)</p></dd>
+
+
 <dt>print_xaxis, print_yaxis</dt>
 <dd><p>logical; should the x-axis (below the plot)
 and y-axis (on the right) be printed?</p></dd>
+
+
 <dt>ylab</dt>
 <dd><p>y-axis label</p></dd>
+
+
 <dt>legend.position</dt>
 <dd><p>the position of legends ("none", "left", "right",
 "bottom", "top", or two-element numeric vector)</p></dd>
+
+
 <dt>sort_columns</dt>
 <dd><p>logical; should the columns be sorted by number of missing
 values? (default is <code>TRUE</code>)</p></dd>
+
+
 <dt>...</dt>
 <dd><p>optional additional parameters, currently not used</p></dd>
+
 </dl></div>
     <div id="note">
     <h2>Note</h2>
@@ -157,11 +176,11 @@ for more examples.</p></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1.5</span>, <span class="fl">1.5</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.6</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">md_pattern</span><span class="op">(</span><span class="va">wideDF</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">1.5</span>, <span class="fl">1.5</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.6</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">md_pattern</span><span class="op">(</span><span class="va">wideDF</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="md_pattern-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -176,7 +195,7 @@ for more examples.</p></div>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

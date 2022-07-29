@@ -106,46 +106,62 @@ the MCMC sample of an object of class "JointAI".</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">densplot</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for JointAI</span>
-<span class="fu">densplot</span><span class="op">(</span><span class="va">object</span>, start <span class="op">=</span> <span class="cn">NULL</span>, end <span class="op">=</span> <span class="cn">NULL</span>, thin <span class="op">=</span> <span class="cn">NULL</span>,
-  subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="cn">NULL</span>,
-  exclude_chains <span class="op">=</span> <span class="cn">NULL</span>, vlines <span class="op">=</span> <span class="cn">NULL</span>, nrow <span class="op">=</span> <span class="cn">NULL</span>, ncol <span class="op">=</span> <span class="cn">NULL</span>,
-  joined <span class="op">=</span> <span class="cn">FALSE</span>, use_ggplot <span class="op">=</span> <span class="cn">FALSE</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">densplot</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for JointAI</span></span>
+<span><span class="fu">densplot</span><span class="op">(</span><span class="va">object</span>, start <span class="op">=</span> <span class="cn">NULL</span>, end <span class="op">=</span> <span class="cn">NULL</span>, thin <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, outcome <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  exclude_chains <span class="op">=</span> <span class="cn">NULL</span>, vlines <span class="op">=</span> <span class="cn">NULL</span>, nrow <span class="op">=</span> <span class="cn">NULL</span>, ncol <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  joined <span class="op">=</span> <span class="cn">FALSE</span>, use_ggplot <span class="op">=</span> <span class="cn">FALSE</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>object inheriting from class 'JointAI'</p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional parameters passed to <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code></p></dd>
+
+
 <dt>start</dt>
 <dd><p>the first iteration of interest
 (see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>)</p></dd>
+
+
 <dt>end</dt>
 <dd><p>the last iteration of interest
 (see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>)</p></dd>
+
+
 <dt>thin</dt>
 <dd><p>thinning interval (integer; see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>).
 For example, <code>thin = 1</code> (default) will keep the MCMC samples
 from all iterations; <code>thin = 5</code> would only keep every 5th
 iteration.</p></dd>
+
+
 <dt>subset</dt>
 <dd><p>subset of parameters/variables/nodes (columns in the MCMC
 sample). Follows the same principle as the argument
 <code>monitor_params</code> in
 <code><a href="model_imp.html">*_imp</a></code>.</p></dd>
+
+
 <dt>outcome</dt>
 <dd><p>optional; vector identifying a subset of sub-models included
 in the output, either by specifying their indices (using the
 order used in the list of model formulas), or their
 names (LHS of the respective model formula as character
 string)</p></dd>
+
+
 <dt>exclude_chains</dt>
 <dd><p>optional vector of the index numbers of chains that
 should be excluded</p></dd>
+
+
 <dt>vlines</dt>
 <dd><p>list, where each element is a named list of parameters that
 can be passed to <code><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">graphics::abline()</a></code> to create
@@ -153,23 +169,36 @@ vertical lines.
 Each of the list elements needs to contain at least
 <code>v = &lt;x location&gt;</code>, where &lt;x location&gt; is a vector of the
 same length as the number of plots (see examples).</p></dd>
+
+
 <dt>nrow</dt>
 <dd><p>optional; number of rows in the plot layout;
 automatically chosen if unspecified</p></dd>
+
+
 <dt>ncol</dt>
 <dd><p>optional; number of columns in the plot layout;
 automatically chosen if unspecified</p></dd>
+
+
 <dt>joined</dt>
 <dd><p>logical; should the chains be combined before plotting?</p></dd>
+
+
 <dt>use_ggplot</dt>
 <dd><p>logical; Should ggplot be used instead of the base
 graphics?</p></dd>
+
+
 <dt>warn</dt>
 <dd><p>logical; should warnings be given? Default is
 <code>TRUE</code>.</p></dd>
+
+
 <dt>mess</dt>
 <dd><p>logical; should messages be given? Default is
 <code>TRUE</code>.</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -180,45 +209,45 @@ contains some examples how to specify the argument <code>subset</code>.</p></div
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># fit a JointAI object:</span></span>
-<span class="r-in"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M1</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 1: basic densityplot</span></span>
-<span class="r-in"><span class="fu">densplot</span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">densplot</span><span class="op">(</span><span class="va">mod</span>, exclude_chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 2: use vlines to mark zero</span></span>
-<span class="r-in"><span class="fu">densplot</span><span class="op">(</span><span class="va">mod</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkred"</span>, <span class="st">"darkblue"</span>, <span class="st">"darkgreen"</span><span class="op">)</span>,</span>
-<span class="r-in">         vlines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">y</span><span class="op">$</span><span class="va">regcoef</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">                            col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html" class="external-link">grey</a></span><span class="op">(</span><span class="fl">0.8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 3: use vlines to visualize posterior mean and 2.5%/97.5% quantiles</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">y</span><span class="op">$</span><span class="va">regcoef</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Mean'</span>, <span class="st">'2.5%'</span>, <span class="st">'97.5%'</span><span class="op">)</span><span class="op">]</span>,</span>
-<span class="r-in">             <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">y</span><span class="op">$</span><span class="va">sigma</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Mean'</span>, <span class="st">'2.5%'</span>, <span class="st">'97.5%'</span><span class="op">)</span>,</span>
-<span class="r-in">             drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
-<span class="r-in">             <span class="op">)</span></span>
-<span class="r-in"><span class="fu">densplot</span><span class="op">(</span><span class="va">mod</span>, vlines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">res</span><span class="op">[</span>, <span class="st">"Mean"</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">1</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
-<span class="r-in">                            <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">res</span><span class="op">[</span>, <span class="st">"2.5%"</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
-<span class="r-in">                            <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">res</span><span class="op">[</span>, <span class="st">"97.5%"</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 4: ggplot version</span></span>
-<span class="r-in"><span class="fu">densplot</span><span class="op">(</span><span class="va">mod</span>, use_ggplot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example 5: change how the ggplot version looks</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">densplot</span><span class="op">(</span><span class="va">mod</span>, use_ggplot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"value"</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span> <span class="op">+</span></span>
-<span class="r-in">  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">'Dark2'</span>, name <span class="op">=</span> <span class="st">'chain'</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># fit a JointAI object:</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M1</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 1: basic densityplot</span></span></span>
+<span class="r-in"><span><span class="fu">densplot</span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">densplot</span><span class="op">(</span><span class="va">mod</span>, exclude_chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 2: use vlines to mark zero</span></span></span>
+<span class="r-in"><span><span class="fu">densplot</span><span class="op">(</span><span class="va">mod</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkred"</span>, <span class="st">"darkblue"</span>, <span class="st">"darkgreen"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         vlines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">y</span><span class="op">$</span><span class="va">regcoef</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                            col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html" class="external-link">grey</a></span><span class="op">(</span><span class="fl">0.8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 3: use vlines to visualize posterior mean and 2.5%/97.5% quantiles</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">y</span><span class="op">$</span><span class="va">regcoef</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Mean'</span>, <span class="st">'2.5%'</span>, <span class="st">'97.5%'</span><span class="op">)</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>             <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">y</span><span class="op">$</span><span class="va">sigma</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Mean'</span>, <span class="st">'2.5%'</span>, <span class="st">'97.5%'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>             drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span></span>
+<span class="r-in"><span>             <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">densplot</span><span class="op">(</span><span class="va">mod</span>, vlines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">res</span><span class="op">[</span>, <span class="st">"Mean"</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">1</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                            <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">res</span><span class="op">[</span>, <span class="st">"2.5%"</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                            <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">res</span><span class="op">[</span>, <span class="st">"97.5%"</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 4: ggplot version</span></span></span>
+<span class="r-in"><span><span class="fu">densplot</span><span class="op">(</span><span class="va">mod</span>, use_ggplot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 5: change how the ggplot version looks</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">densplot</span><span class="op">(</span><span class="va">mod</span>, use_ggplot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"value"</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">'Dark2'</span>, name <span class="op">=</span> <span class="st">'chain'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -233,7 +262,7 @@ contains some examples how to specify the argument <code>subset</code>.</p></div
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

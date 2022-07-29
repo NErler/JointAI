@@ -108,14 +108,16 @@ package.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bs</span><span class="op">(</span><span class="va">x</span>, df <span class="op">=</span> <span class="cn">NULL</span>, knots <span class="op">=</span> <span class="cn">NULL</span>, degree <span class="op">=</span> <span class="fl">3</span>, intercept <span class="op">=</span> <span class="cn">FALSE</span>,
-  Boundary.knots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bs</span><span class="op">(</span><span class="va">x</span>, df <span class="op">=</span> <span class="cn">NULL</span>, knots <span class="op">=</span> <span class="cn">NULL</span>, degree <span class="op">=</span> <span class="fl">3</span>, intercept <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  Boundary.knots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>the predictor variable.  Missing values are allowed.</p></dd>
+
+
 <dt>df</dt>
 <dd><p>degrees of freedom; one can specify <code>df</code> rather than
     <code>knots</code>; <code>bs()</code> then chooses <code>df-degree</code> (minus one
@@ -123,24 +125,33 @@ package.</p>
     (which will ignore missing values).  The default, <code>NULL</code>,
     takes the number of inner knots as <code>length(knots)</code>.  If that is
     zero as per default, that corresponds to <code>df = degree - intercept</code>.</p></dd>
+
+
 <dt>knots</dt>
 <dd><p>the <em>internal</em> breakpoints that define the
     spline.  The default is <code>NULL</code>, which results in a basis for
     ordinary polynomial regression.  Typical values are the mean or
     median for one knot, quantiles for more knots.  See also
     <code>Boundary.knots</code>.</p></dd>
+
+
 <dt>degree</dt>
 <dd><p>degree of the piecewise polynomial---default is <code>3</code> for
     cubic splines.</p></dd>
+
+
 <dt>intercept</dt>
 <dd><p>if <code>TRUE</code>, an intercept is included in the
     basis; default is <code>FALSE</code>.</p></dd>
+
+
 <dt>Boundary.knots</dt>
 <dd><p>boundary points at which to anchor the B-spline
     basis (default the range of the non-<code><a href="https://rdrr.io/r/base/NA.html" class="external-link">NA</a></code> data).  If both
     <code>knots</code> and <code>Boundary.knots</code> are supplied, the basis
     parameters do not depend on <code>x</code>.  Data can extend beyond
     <code>Boundary.knots</code>.</p></dd>
+
 </dl></div>
 
   </div>
@@ -155,7 +166,7 @@ package.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

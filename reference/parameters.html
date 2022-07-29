@@ -106,39 +106,48 @@ which a monitor is set.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">parameters</span><span class="op">(</span><span class="va">object</span>, expand_ranef <span class="op">=</span> <span class="cn">FALSE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parameters</span><span class="op">(</span><span class="va">object</span>, expand_ranef <span class="op">=</span> <span class="cn">FALSE</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>object inheriting from class 'JointAI'</p></dd>
+
+
 <dt>expand_ranef</dt>
 <dd><p>logical; should all elements of the random effects
 vectors/matrices be shown separately?</p></dd>
+
+
 <dt>mess</dt>
 <dd><p>logical; should messages be given? Default is
 <code>TRUE</code>.</p></dd>
+
+
 <dt>warn</dt>
 <dd><p>logical; should warnings be given? Default is
 <code>TRUE</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>currently not used</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># (This function does not need MCMC samples to work, so we will set</span></span>
-<span class="r-in"><span class="co"># n.adapt = 0 and n.iter = 0 to reduce computational time)</span></span>
-<span class="r-in"><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M2</span> <span class="op">+</span> <span class="va">O2</span> <span class="op">+</span> <span class="va">B2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.adapt <span class="op">=</span> <span class="fl">0</span>,</span>
-<span class="r-in">               n.iter <span class="op">=</span> <span class="fl">0</span>, mess <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># (This function does not need MCMC samples to work, so we will set</span></span></span>
+<span class="r-in"><span><span class="co"># n.adapt = 0 and n.iter = 0 to reduce computational time)</span></span></span>
+<span class="r-in"><span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="va">M2</span> <span class="op">+</span> <span class="va">O2</span> <span class="op">+</span> <span class="va">B2</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.adapt <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>               n.iter <span class="op">=</span> <span class="fl">0</span>, mess <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> It is currently not possible to use “contr.poly” for incomplete</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> categorical covariates. I will use “contr.treatment” instead.  You can</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> specify (globally) which types of contrasts are used by changing</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> “options('contrasts')”.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">parameters</span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">parameters</span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Note: “mod1” does not contain MCMC samples.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    outcome outcat     varname     coef</span>
@@ -153,7 +162,7 @@ vectors/matrices be shown separately?</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9        y   &lt;NA&gt;         O24  beta[9]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10       y   &lt;NA&gt;         B21 beta[10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11       y   &lt;NA&gt;        &lt;NA&gt;  sigma_y</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -168,7 +177,7 @@ vectors/matrices be shown separately?</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

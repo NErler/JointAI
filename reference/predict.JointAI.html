@@ -106,25 +106,33 @@ class 'JointAI'.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for JointAI</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">object</span>, outcome <span class="op">=</span> <span class="fl">1L</span>, <span class="va">newdata</span>,
-  quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"lp"</span>, start <span class="op">=</span> <span class="cn">NULL</span>, end <span class="op">=</span> <span class="cn">NULL</span>,
-  thin <span class="op">=</span> <span class="cn">NULL</span>, exclude_chains <span class="op">=</span> <span class="cn">NULL</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>,
-  return_sample <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for JointAI</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">object</span>, outcome <span class="op">=</span> <span class="fl">1L</span>, <span class="va">newdata</span>,</span>
+<span>  quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"lp"</span>, start <span class="op">=</span> <span class="cn">NULL</span>, end <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  thin <span class="op">=</span> <span class="cn">NULL</span>, exclude_chains <span class="op">=</span> <span class="cn">NULL</span>, mess <span class="op">=</span> <span class="cn">TRUE</span>, warn <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  return_sample <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>object inheriting from class 'JointAI'</p></dd>
+
+
 <dt>outcome</dt>
 <dd><p>vector of variable names or integers identifying for which
 outcome(s) the prediction should be performed.</p></dd>
+
+
 <dt>newdata</dt>
 <dd><p>optional new dataset for prediction. If left empty, the
 original data is used.</p></dd>
+
+
 <dt>quantiles</dt>
 <dd><p>quantiles of the predicted distribution of the outcome</p></dd>
+
+
 <dt>type</dt>
 <dd><p>the type of prediction. The default is on the scale of the linear
 predictor (<code>"link"</code> or <code>"lp"</code>). Additionally, for generalized
@@ -137,37 +145,62 @@ models <code>type</code> can be <code>"lp" </code> or "response", and for propor
 hazards survival models the options are <code>"lp"</code>, <code>"risk"</code> (=
 <code>exp(lp)</code>), <code>"survival"</code> or <code>"expected"</code> (=
 <code>-log(survival)</code>).</p></dd>
+
+
 <dt>start</dt>
 <dd><p>the first iteration of interest
 (see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>)</p></dd>
+
+
 <dt>end</dt>
 <dd><p>the last iteration of interest
 (see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>)</p></dd>
+
+
 <dt>thin</dt>
 <dd><p>thinning interval (integer; see <code><a href="https://rdrr.io/pkg/coda/man/window.mcmc.html" class="external-link">window.mcmc</a></code>).
 For example, <code>thin = 1</code> (default) will keep the MCMC samples
 from all iterations; <code>thin = 5</code> would only keep every 5th
 iteration.</p></dd>
+
+
 <dt>exclude_chains</dt>
 <dd><p>optional vector of the index numbers of chains that
 should be excluded</p></dd>
+
+
 <dt>mess</dt>
 <dd><p>logical; should messages be given? Default is
 <code>TRUE</code>.</p></dd>
+
+
 <dt>warn</dt>
 <dd><p>logical; should warnings be given? Default is
 <code>TRUE</code>.</p></dd>
+
+
 <dt>return_sample</dt>
 <dd><p>logical; should the full sample on which the summary
 (mean and quantiles) is calculated be returned?#'</p></dd>
+
+
 <dt>...</dt>
 <dd><p>currently not used</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list with entries <code>dat</code>, <code>fit</code> and <code>quantiles</code>,
+    
+
+<p>A list with entries <code>dat</code>, <code>fit</code> and <code>quantiles</code>,
 where <code>fit</code> contains the predicted values (mean over the values
-calculated from the iterations of the MCMC sample), <code>quantiles</code>contain the specified quantiles (by default 2.5% and 97.5%), and <code>dat</code>is <code>newdata</code>, extended with <code>fit</code> and <code>quantiles</code> (unless
+calculated from the iterations of the MCMC sample), <code>quantiles</code></p>
+
+
+<p>contain the specified quantiles (by default 2.5% and 97.5%), and <code>dat</code></p>
+
+
+<p>is <code>newdata</code>, extended with <code>fit</code> and <code>quantiles</code> (unless
 prediction for an ordinal outcome is done with <code>type = "prob"</code>, in
 which case the quantiles are an array with three dimensions and are
 therefore not included in <code>dat</code>).</p>
@@ -198,26 +231,26 @@ extended in the future.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># fit model</span></span>
-<span class="r-in"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">C2</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># calculate the fitted values</span></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># fit model</span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">C1</span> <span class="op">+</span> <span class="va">C2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">C2</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">wideDF</span>, n.iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># calculate the fitted values</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Prediction for cases with missing covariates is not yet implemented.  I</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>       will report “NA” instead of predicted values for those cases.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># create dataset for prediction</span></span>
-<span class="r-in"><span class="va">newDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="predDF.html">predDF</a></span><span class="op">(</span><span class="va">mod</span>, vars <span class="op">=</span> <span class="op">~</span> <span class="va">C2</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># obtain predicted values</span></span>
-<span class="r-in"><span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">newDF</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot predicted values and 95% confidence band</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">newDF</span><span class="op">$</span><span class="va">C2</span>, <span class="va">pred</span><span class="op">$</span><span class="va">fitted</span>, lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">xlab <span class="op">=</span> <span class="st">'C2'</span>, ylab <span class="op">=</span> <span class="st">'predicted values'</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create dataset for prediction</span></span></span>
+<span class="r-in"><span><span class="va">newDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="predDF.html">predDF</a></span><span class="op">(</span><span class="va">mod</span>, vars <span class="op">=</span> <span class="op">~</span> <span class="va">C2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># obtain predicted values</span></span></span>
+<span class="r-in"><span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">mod</span>, newdata <span class="op">=</span> <span class="va">newDF</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot predicted values and 95% confidence band</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">newDF</span><span class="op">$</span><span class="va">C2</span>, <span class="va">pred</span><span class="op">$</span><span class="va">fitted</span>, lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"l"</span>, col <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>xlab <span class="op">=</span> <span class="st">'C2'</span>, ylab <span class="op">=</span> <span class="st">'predicted values'</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="predict.JointAI-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -232,7 +265,7 @@ extended in the future.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
