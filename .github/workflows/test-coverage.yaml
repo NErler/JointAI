@@ -37,21 +37,6 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        env:
-          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
-        run: |
-          Rscript -e "remotes::install_github('r-hub/sysreqs')"
-          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
-          sudo -s eval "$sysreqs"
-
-      - name: Install JAGS macOS
-        if: runner.os == 'macOS'
-        run: |
-          rm '/usr/local/bin/gfortran'
-          brew install jags
-
       - name: Download JAGS Windows
         if: runner.os == 'Windows'
         run: (New-Object System.Net.WebClient).DownloadFile('https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Windows/JAGS-4.3.1.exe', 'C:\JAGS-4.3.1.exe')
@@ -61,6 +46,7 @@ jobs:
         if: runner.os == 'Windows'
         run: C:\JAGS-4.3.1.exe /S
         shell: cmd
+
 
       - name: Install dependencies
         run: |
@@ -73,7 +59,5 @@ jobs:
         env:
           IS_CHECK: true
         run: |
-          jagshome = readRegistry("SOFTWARE\\JAGS", maxdepth = 2, view = "32-bit")
-          Sys.setenv(JAGS_HOME = jagshome[["JAGS-4.3.1"]][["InstallDir"]])
           covr::codecov(quiet = FALSE, type = "all")
         shell: Rscript {0}
