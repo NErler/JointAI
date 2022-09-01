@@ -1,8 +1,7 @@
 $m0a
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- 0
@@ -24,13 +23,11 @@ model {
   gamma_O1[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
   gamma_O1[2] <- gamma_O1[1] - exp(delta_O1[1])
   gamma_O1[3] <- gamma_O1[2] - exp(delta_O1[2]) 
- 
-}
+ }
 $m0b
 model { 
 
- 
-  # Cumulative logit model for O2 -------------------------------------------------
+   # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- 0
@@ -52,13 +49,11 @@ model {
   gamma_O2[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
   gamma_O2[2] <- gamma_O2[1] - exp(delta_O2[1])
   gamma_O2[3] <- gamma_O2[2] - exp(delta_O2[2]) 
- 
-}
+ }
 $m1a
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[1]
@@ -84,13 +79,11 @@ model {
   gamma_O1[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
   gamma_O1[2] <- gamma_O1[1] - exp(delta_O1[1])
   gamma_O1[3] <- gamma_O1[2] - exp(delta_O1[2]) 
- 
-}
+ }
 $m1b
 model { 
 
- 
-  # Cumulative logit model for O2 -------------------------------------------------
+   # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 3] - spM_lvlone[3, 1])/spM_lvlone[3, 2] * beta[1]
@@ -116,13 +109,11 @@ model {
   gamma_O2[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
   gamma_O2[2] <- gamma_O2[1] - exp(delta_O2[1])
   gamma_O2[3] <- gamma_O2[2] - exp(delta_O2[2]) 
- 
-}
+ }
 $m2a
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[1]
@@ -150,8 +141,7 @@ model {
   gamma_O1[3] <- gamma_O1[2] - exp(delta_O1[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 3] * alpha[1]
@@ -164,13 +154,11 @@ model {
   tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_C2 <- sqrt(1/tau_C2)
  
- 
-}
+ }
 $m2b
 model { 
 
- 
-  # Cumulative logit model for O2 -------------------------------------------------
+   # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 2] - spM_lvlone[2, 1])/spM_lvlone[2, 2] * beta[1]
@@ -198,8 +186,7 @@ model {
   gamma_O2[3] <- gamma_O2[2] - exp(delta_O2[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 3] * alpha[1]
@@ -212,13 +199,11 @@ model {
   tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_C2 <- sqrt(1/tau_C2)
  
- 
-}
+ }
 $m3a
 model { 
 
- 
-  # Normal model for C1 -----------------------------------------------------------
+   # Normal model for C1 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dnorm(mu_C1[i], tau_C1)
     mu_C1[i] <- M_lvlone[i, 2] * beta[1] + M_lvlone[i, 3] * beta[2] +
@@ -232,13 +217,11 @@ model {
   tau_C1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_C1 <- sqrt(1/tau_C1)
  
- 
-}
+ }
 $m3b
 model { 
 
- 
-  # Normal model for C1 -----------------------------------------------------------
+   # Normal model for C1 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dnorm(mu_C1[i], tau_C1)
     mu_C1[i] <- M_lvlone[i, 3] * beta[1] + M_lvlone[i, 4] * beta[2] +
@@ -254,8 +237,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- 0
@@ -281,13 +263,11 @@ model {
   gamma_O2[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
   gamma_O2[2] <- gamma_O2[1] - exp(delta_O2[1])
   gamma_O2[3] <- gamma_O2[2] - exp(delta_O2[2]) 
- 
-}
+ }
 $m4a
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- M_lvlone[i, 6] * beta[1] + M_lvlone[i, 7] * beta[2] +
@@ -322,8 +302,7 @@ model {
   gamma_O1[3] <- gamma_O1[2] - exp(delta_O1[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 5] * alpha[1] + M_lvlone[i, 6] * alpha[2] +
@@ -379,8 +358,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[24]
@@ -418,13 +396,11 @@ model {
     M_lvlone[i, 16] <- M_lvlone[i, 11] * M_lvlone[i, 12]
   }
 
- 
-}
+ }
 $m4b
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- (M_lvlone[i, 5] - spM_lvlone[5, 1])/spM_lvlone[5, 2] * beta[1] +
@@ -455,8 +431,7 @@ model {
   gamma_O1[3] <- gamma_O1[2] - exp(delta_O1[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 4] * alpha[1] + M_lvlone[i, 9] * alpha[2] +
@@ -479,8 +454,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 3] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- M_lvlone[i, 12] * alpha[9] + M_lvlone[i, 13] * alpha[10] +
@@ -522,13 +496,11 @@ model {
     M_lvlone[i, 8] <- M_lvlone[i, 5] * M_lvlone[i, 6]
   }
 
- 
-}
+ }
 $m5a
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- M_lvlone[i, 7] * beta[1] + M_lvlone[i, 8] * beta[2] +
@@ -565,8 +537,7 @@ model {
   gamma_O1[3] <- gamma_O1[2] - exp(delta_O1[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 5] * alpha[1] +
@@ -621,8 +592,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[24]
@@ -652,13 +622,11 @@ model {
   gamma_O2[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
   gamma_O2[2] <- gamma_O2[1] - exp(delta_O2[1])
   gamma_O2[3] <- gamma_O2[2] - exp(delta_O2[2]) 
- 
-}
+ }
 $m5b
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- M_lvlone[i, 7] * beta[1] + M_lvlone[i, 8] * beta[2] +
@@ -696,8 +664,7 @@ model {
   gamma_O1[3] <- gamma_O1[2] - exp(delta_O1[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 5] * alpha[1] +
@@ -752,8 +719,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[24]
@@ -789,13 +755,11 @@ model {
     M_lvlone[i, 13] <- M_lvlone[i, 6] * M_lvlone[i, 2]
   }
 
- 
-}
+ }
 $m5c
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- M_lvlone[i, 7] * beta[1] + M_lvlone[i, 8] * beta[2] +
@@ -835,8 +799,7 @@ model {
   gamma_O1[3] <- gamma_O1[2] - exp(delta_O1[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 5] * alpha[1] +
@@ -891,8 +854,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[24]
@@ -928,13 +890,11 @@ model {
     M_lvlone[i, 13] <- M_lvlone[i, 6] * M_lvlone[i, 2]
   }
 
- 
-}
+ }
 $m5d
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- M_lvlone[i, 7] * beta[1] + M_lvlone[i, 8] * beta[2] +
@@ -974,8 +934,7 @@ model {
   gamma_O1[3] <- gamma_O1[2] - exp(delta_O1[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 5] * alpha[1] +
@@ -1030,8 +989,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[24]
@@ -1069,13 +1027,11 @@ model {
     M_lvlone[i, 15] <- M_lvlone[i, 9] * M_lvlone[i, 2]
   }
 
- 
-}
+ }
 $m5e
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- 0
@@ -1131,8 +1087,7 @@ model {
   gamma_O1[3] <- gamma_O1[2] - exp(delta_O1[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 5] * alpha[1] +
@@ -1187,8 +1142,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[24]
@@ -1226,13 +1180,11 @@ model {
     M_lvlone[i, 15] <- M_lvlone[i, 9] * M_lvlone[i, 2]
   }
 
- 
-}
+ }
 $m6a
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- M_lvlone[i, 7] * beta[1] + M_lvlone[i, 8] * beta[2] +
@@ -1269,8 +1221,7 @@ model {
   gamma_O1[3] <- gamma_O1[2] + exp(delta_O1[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 5] * alpha[1] +
@@ -1325,8 +1276,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[24]
@@ -1356,13 +1306,11 @@ model {
   gamma_O2[1] ~ dnorm(mu_delta_ordinal, tau_delta_ordinal)
   gamma_O2[2] <- gamma_O2[1] - exp(delta_O2[1])
   gamma_O2[3] <- gamma_O2[2] - exp(delta_O2[2]) 
- 
-}
+ }
 $m6b
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- M_lvlone[i, 7] * beta[1] + M_lvlone[i, 8] * beta[2] +
@@ -1400,8 +1348,7 @@ model {
   gamma_O1[3] <- gamma_O1[2] + exp(delta_O1[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 5] * alpha[1] +
@@ -1456,8 +1403,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[24]
@@ -1493,13 +1439,11 @@ model {
     M_lvlone[i, 13] <- M_lvlone[i, 6] * M_lvlone[i, 2]
   }
 
- 
-}
+ }
 $m6c
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- M_lvlone[i, 7] * beta[1] + M_lvlone[i, 8] * beta[2] +
@@ -1539,8 +1483,7 @@ model {
   gamma_O1[3] <- gamma_O1[2] + exp(delta_O1[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 5] * alpha[1] +
@@ -1595,8 +1538,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[24]
@@ -1632,13 +1574,11 @@ model {
     M_lvlone[i, 13] <- M_lvlone[i, 6] * M_lvlone[i, 2]
   }
 
- 
-}
+ }
 $m6d
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- M_lvlone[i, 7] * beta[1] + M_lvlone[i, 8] * beta[2] +
@@ -1678,8 +1618,7 @@ model {
   gamma_O1[3] <- gamma_O1[2] + exp(delta_O1[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 5] * alpha[1] +
@@ -1734,8 +1673,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[24]
@@ -1773,13 +1711,11 @@ model {
     M_lvlone[i, 15] <- M_lvlone[i, 9] * M_lvlone[i, 2]
   }
 
- 
-}
+ }
 $m6e
 model { 
 
- 
-  # Cumulative logit model for O1 -------------------------------------------------
+   # Cumulative logit model for O1 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dcat(p_O1[i, 1:4])
     eta_O1[i] <- 0
@@ -1835,8 +1771,7 @@ model {
   gamma_O1[3] <- gamma_O1[2] + exp(delta_O1[2])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 5] * alpha[1] +
@@ -1891,8 +1826,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 6] - spM_lvlone[6, 1])/spM_lvlone[6, 2] * alpha[24]
@@ -1930,5 +1864,4 @@ model {
     M_lvlone[i, 15] <- M_lvlone[i, 9] * M_lvlone[i, 2]
   }
 
- 
-}
+ }
