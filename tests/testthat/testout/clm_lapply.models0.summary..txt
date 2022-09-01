@@ -816,9 +816,9 @@ O14: C2    0  0    0     0          0     NaN    NaN
 
 Posterior summary of the intercepts:
        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-O1 = 1    0  0    0     0          0     NaN    NaN
-O1 = 2    0  0    0     0          0     NaN    NaN
-O1 = 3    0  0    0     0          0     NaN    NaN
+O1 ≤ 1    0  0    0     0          0     NaN    NaN
+O1 ≤ 2    0  0    0     0          0     NaN    NaN
+O1 ≤ 3    0  0    0     0          0     NaN    NaN
 
 
 MCMC settings:
@@ -857,9 +857,9 @@ O14: C2    0  0    0     0          0     NaN    NaN
 
 Posterior summary of the intercepts:
        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-O1 = 1    0  0    0     0          0     NaN    NaN
-O1 = 2    0  0    0     0          0     NaN    NaN
-O1 = 3    0  0    0     0          0     NaN    NaN
+O1 ≤ 1    0  0    0     0          0     NaN    NaN
+O1 ≤ 2    0  0    0     0          0     NaN    NaN
+O1 ≤ 3    0  0    0     0          0     NaN    NaN
 
 
 MCMC settings:
@@ -900,9 +900,9 @@ O14: C1:C2    0  0    0     0          0     NaN    NaN
 
 Posterior summary of the intercepts:
        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-O1 = 1    0  0    0     0          0     NaN    NaN
-O1 = 2    0  0    0     0          0     NaN    NaN
-O1 = 3    0  0    0     0          0     NaN    NaN
+O1 ≤ 1    0  0    0     0          0     NaN    NaN
+O1 ≤ 2    0  0    0     0          0     NaN    NaN
+O1 ≤ 3    0  0    0     0          0     NaN    NaN
 
 
 MCMC settings:
@@ -943,9 +943,9 @@ O14: C2    0  0    0     0          0     NaN    NaN
 
 Posterior summary of the intercepts:
        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-O1 = 1    0  0    0     0          0     NaN    NaN
-O1 = 2    0  0    0     0          0     NaN    NaN
-O1 = 3    0  0    0     0          0     NaN    NaN
+O1 ≤ 1    0  0    0     0          0     NaN    NaN
+O1 ≤ 2    0  0    0     0          0     NaN    NaN
+O1 ≤ 3    0  0    0     0          0     NaN    NaN
 
 
 MCMC settings:
@@ -1005,9 +1005,9 @@ O14: M24:C2    0  0    0     0          0     NaN    NaN
 
 Posterior summary of the intercepts:
        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-O1 = 1    0  0    0     0          0     NaN    NaN
-O1 = 2    0  0    0     0          0     NaN    NaN
-O1 = 3    0  0    0     0          0     NaN    NaN
+O1 ≤ 1    0  0    0     0          0     NaN    NaN
+O1 ≤ 2    0  0    0     0          0     NaN    NaN
+O1 ≤ 3    0  0    0     0          0     NaN    NaN
 
 
 MCMC settings:

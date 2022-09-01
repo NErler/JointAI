@@ -221,7 +221,7 @@ clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24     C1     C2 
+O1 ≤ 1 O1 ≤ 2 O1 ≤ 3    M22    M23    M24    O22    O23    O24     C1     C2 
      0      0      0      0      0      0      0      0      0      0      0 
     C1     C2     C1     C2 
      0      0      0      0 
@@ -235,7 +235,7 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24  C1:C2     C1 
+O1 ≤ 1 O1 ≤ 2 O1 ≤ 3    M22    M23    M24    O22    O23    O24  C1:C2     C1 
      0      0      0      0      0      0      0      0      0      0      0 
     C2     C1     C2     C1     C2 
      0      0      0      0      0 
@@ -249,7 +249,7 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24     C1     C2 
+O1 ≤ 1 O1 ≤ 2 O1 ≤ 3    M22    M23    M24    O22    O23    O24     C1     C2 
      0      0      0      0      0      0      0      0      0      0      0 
  C1:C2     C1     C2  C1:C2     C1     C2  C1:C2 
      0      0      0      0      0      0      0 
@@ -263,7 +263,7 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24 M22:C2 M23:C2 
+O1 ≤ 1 O1 ≤ 2 O1 ≤ 3    M22    M23    M24    O22    O23    O24 M22:C2 M23:C2 
      0      0      0      0      0      0      0      0      0      0      0 
 M24:C2     C1     C2     C1     C2     C1     C2 
      0      0      0      0      0      0      0 
@@ -278,7 +278,7 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-O1 = 1 O1 = 2 O1 = 3     C1    M22    M23    M24     C2    O22    O23    O24 
+O1 ≤ 1 O1 ≤ 2 O1 ≤ 3     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
 M22:C2 M23:C2 M24:C2     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
@@ -540,7 +540,7 @@ clm_imp(formula = O1 ~ C1 + C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24     C1     C2 
+O1 ≤ 1 O1 ≤ 2 O1 ≤ 3    M22    M23    M24    O22    O23    O24     C1     C2 
      0      0      0      0      0      0      0      0      0      0      0 
     C1     C2     C1     C2 
      0      0      0      0 
@@ -556,7 +556,7 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24  C1:C2     C1 
+O1 ≤ 1 O1 ≤ 2 O1 ≤ 3    M22    M23    M24    O22    O23    O24  C1:C2     C1 
      0      0      0      0      0      0      0      0      0      0      0 
     C2     C1     C2     C1     C2 
      0      0      0      0      0 
@@ -572,7 +572,7 @@ clm_imp(formula = O1 ~ C1 * C2 + M2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24     C1     C2 
+O1 ≤ 1 O1 ≤ 2 O1 ≤ 3    M22    M23    M24    O22    O23    O24     C1     C2 
      0      0      0      0      0      0      0      0      0      0      0 
  C1:C2     C1     C2  C1:C2     C1     C2  C1:C2 
      0      0      0      0      0      0      0 
@@ -588,7 +588,7 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-O1 = 1 O1 = 2 O1 = 3    M22    M23    M24    O22    O23    O24 M22:C2 M23:C2 
+O1 ≤ 1 O1 ≤ 2 O1 ≤ 3    M22    M23    M24    O22    O23    O24 M22:C2 M23:C2 
      0      0      0      0      0      0      0      0      0      0      0 
 M24:C2     C1     C2     C1     C2     C1     C2 
      0      0      0      0      0      0      0 
@@ -605,7 +605,7 @@ clm_imp(formula = O1 ~ C1 + M2 * C2 + O2, data = wideDF, n.adapt = 5,
 
 
 Coefficients:
-O1 = 1 O1 = 2 O1 = 3     C1    M22    M23    M24     C2    O22    O23    O24 
+O1 ≤ 1 O1 ≤ 2 O1 ≤ 3     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 
 M22:C2 M23:C2 M24:C2     C1    M22    M23    M24     C2    O22    O23    O24 
      0      0      0      0      0      0      0      0      0      0      0 

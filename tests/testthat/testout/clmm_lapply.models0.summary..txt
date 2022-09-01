@@ -1200,8 +1200,8 @@ o13: b21    0  0    0     0          0     NaN    NaN
 
 Posterior summary of the intercepts:
        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-o1 = 1    0  0    0     0          0     NaN    NaN
-o1 = 2    0  0    0     0          0     NaN    NaN
+o1 ≤ 1    0  0    0     0          0     NaN    NaN
+o1 ≤ 2    0  0    0     0          0     NaN    NaN
 
 
 Posterior summary of random effects covariance matrix:
@@ -1246,8 +1246,8 @@ o13: c1    0  0    0     0          0     NaN    NaN
 
 Posterior summary of the intercepts:
        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-o1 = 1    0  0    0     0          0     NaN    NaN
-o1 = 2    0  0    0     0          0     NaN    NaN
+o1 ≤ 1    0  0    0     0          0     NaN    NaN
+o1 ≤ 2    0  0    0     0          0     NaN    NaN
 
 
 Posterior summary of random effects covariance matrix:
@@ -1293,8 +1293,8 @@ o13: c1:C2    0  0    0     0          0     NaN    NaN
 
 Posterior summary of the intercepts:
        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-o1 = 1    0  0    0     0          0     NaN    NaN
-o1 = 2    0  0    0     0          0     NaN    NaN
+o1 ≤ 1    0  0    0     0          0     NaN    NaN
+o1 ≤ 2    0  0    0     0          0     NaN    NaN
 
 
 Posterior summary of random effects covariance matrix:
@@ -1341,8 +1341,8 @@ o13: c1    0  0    0     0          0     NaN    NaN
 
 Posterior summary of the intercepts:
        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-o1 = 1    0  0    0     0          0     NaN    NaN
-o1 = 2    0  0    0     0          0     NaN    NaN
+o1 ≤ 1    0  0    0     0          0     NaN    NaN
+o1 ≤ 2    0  0    0     0          0     NaN    NaN
 
 
 Posterior summary of random effects covariance matrix:
@@ -1397,8 +1397,8 @@ o13: c1        0  0    0     0          0     NaN    NaN
 
 Posterior summary of the intercepts:
        Mean SD 2.5% 97.5% tail-prob. GR-crit MCE/SD
-o1 = 1    0  0    0     0          0     NaN    NaN
-o1 = 2    0  0    0     0          0     NaN    NaN
+o1 ≤ 1    0  0    0     0          0     NaN    NaN
+o1 ≤ 2    0  0    0     0          0     NaN    NaN
 
 
 Posterior summary of random effects covariance matrix:

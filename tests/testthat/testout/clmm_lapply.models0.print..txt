@@ -459,7 +459,7 @@ clmm_imp(fixed = o1 ~ C1 + C2 + b2 + O2 + (1 | id), data = longDF,
  Bayesian cumulative logit mixed model for "o1" 
 
 Fixed effects:
-o1 = 1 o1 = 2    O22    O23     C1     C2     C1     C2    b21    b21 
+o1 ≤ 1 o1 ≤ 2    O22    O23     C1     C2     C1     C2    b21    b21 
      0      0      0      0      0      0      0      0      0      0 
 
 
@@ -479,7 +479,7 @@ clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF,
  Bayesian cumulative logit mixed model for "o1" 
 
 Fixed effects:
-o1 = 1 o1 = 2    M22    M23    M24    O22    O23  c1:C2     C2     C2     c1 
+o1 ≤ 1 o1 ≤ 2    M22    M23    M24    O22    O23  c1:C2     C2     C2     c1 
      0      0      0      0      0      0      0      0      0      0      0 
     c1 
      0 
@@ -501,7 +501,7 @@ clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF,
  Bayesian cumulative logit mixed model for "o1" 
 
 Fixed effects:
-o1 = 1 o1 = 2    M22    M23    M24    O22    O23     C2     C2     c1  c1:C2 
+o1 ≤ 1 o1 ≤ 2    M22    M23    M24    O22    O23     C2     C2     c1  c1:C2 
      0      0      0      0      0      0      0      0      0      0      0 
     c1  c1:C2 
      0      0 
@@ -523,7 +523,7 @@ clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF,
  Bayesian cumulative logit mixed model for "o1" 
 
 Fixed effects:
-o1 = 1 o1 = 2    M22    M23    M24    O22    O23 M22:C2 M23:C2 M24:C2     C2 
+o1 ≤ 1 o1 ≤ 2    M22    M23    M24    O22    O23 M22:C2 M23:C2 M24:C2     C2 
      0      0      0      0      0      0      0      0      0      0      0 
     C2     c1     c1 
      0      0      0 
@@ -545,7 +545,7 @@ clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF,
  Bayesian cumulative logit mixed model for "o1" 
 
 Fixed effects:
-o1 = 1 o1 = 2    M22    M23    M24     C2    O22    O23 M22:C2 M23:C2 M24:C2 
+o1 ≤ 1 o1 ≤ 2    M22    M23    M24     C2    O22    O23 M22:C2 M23:C2 M24:C2 
      0      0      0      0      0      0      0      0      0      0      0 
    M22    M23    M24     C2    O22    O23 M22:C2 M23:C2 M24:C2     c1     c1 
      0      0      0      0      0      0      0      0      0      0      0 
@@ -1113,7 +1113,7 @@ clmm_imp(fixed = o1 ~ C1 + C2 + b2 + O2 + (1 | id), data = longDF,
  Bayesian cumulative logit mixed model for "o1" 
 
 Fixed effects:
-o1 = 1 o1 = 2    O22    O23     C1     C2     C1     C2    b21    b21 
+o1 ≤ 1 o1 ≤ 2    O22    O23     C1     C2     C1     C2    b21    b21 
      0      0      0      0      0      0      0      0      0      0 
 
 
@@ -1135,7 +1135,7 @@ clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF,
  Bayesian cumulative logit mixed model for "o1" 
 
 Fixed effects:
-o1 = 1 o1 = 2    M22    M23    M24    O22    O23  c1:C2     C2     C2     c1 
+o1 ≤ 1 o1 ≤ 2    M22    M23    M24    O22    O23  c1:C2     C2     C2     c1 
      0      0      0      0      0      0      0      0      0      0      0 
     c1 
      0 
@@ -1159,7 +1159,7 @@ clmm_imp(fixed = o1 ~ c1 * C2 + M2 + O2 + (1 | id), data = longDF,
  Bayesian cumulative logit mixed model for "o1" 
 
 Fixed effects:
-o1 = 1 o1 = 2    M22    M23    M24    O22    O23     C2     C2     c1  c1:C2 
+o1 ≤ 1 o1 ≤ 2    M22    M23    M24    O22    O23     C2     C2     c1  c1:C2 
      0      0      0      0      0      0      0      0      0      0      0 
     c1  c1:C2 
      0      0 
@@ -1183,7 +1183,7 @@ clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF,
  Bayesian cumulative logit mixed model for "o1" 
 
 Fixed effects:
-o1 = 1 o1 = 2    M22    M23    M24    O22    O23 M22:C2 M23:C2 M24:C2     C2 
+o1 ≤ 1 o1 ≤ 2    M22    M23    M24    O22    O23 M22:C2 M23:C2 M24:C2     C2 
      0      0      0      0      0      0      0      0      0      0      0 
     C2     c1     c1 
      0      0      0 
@@ -1207,7 +1207,7 @@ clmm_imp(fixed = o1 ~ c1 + M2 * C2 + O2 + (1 | id), data = longDF,
  Bayesian cumulative logit mixed model for "o1" 
 
 Fixed effects:
-o1 = 1 o1 = 2    M22    M23    M24     C2    O22    O23 M22:C2 M23:C2 M24:C2 
+o1 ≤ 1 o1 ≤ 2    M22    M23    M24     C2    O22    O23 M22:C2 M23:C2 M24:C2 
      0      0      0      0      0      0      0      0      0      0      0 
    M22    M23    M24     C2    O22    O23 M22:C2 M23:C2 M24:C2     c1     c1 
      0      0      0      0      0      0      0      0      0      0      0 
