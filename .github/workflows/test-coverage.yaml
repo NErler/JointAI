@@ -54,12 +54,12 @@ jobs:
 
       - name: Download JAGS Windows
         if: runner.os == 'Windows'
-        run: (New-Object System.Net.WebClient).DownloadFile('https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Windows/JAGS-4.3.0.exe', 'C:\JAGS-4.3.0.exe')
+        run: (New-Object System.Net.WebClient).DownloadFile('https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Windows/JAGS-4.3.1.exe', 'C:\JAGS-4.3.1.exe')
         shell: powershell
 
       - name: Install JAGS Windows
         if: runner.os == 'Windows'
-        run: C:\JAGS-4.3.0.exe /S
+        run: C:\JAGS-4.3.1.exe /S
         shell: cmd
 
       - name: Install dependencies
@@ -74,6 +74,6 @@ jobs:
           IS_CHECK: true
         run: |
           jagshome = readRegistry("SOFTWARE\\JAGS", maxdepth = 2, view = "32-bit")
-          Sys.setenv(JAGS_HOME = jagshome[["JAGS-4.3.0"]][["InstallDir"]])
+          Sys.setenv(JAGS_HOME = jagshome[["JAGS-4.3.1"]][["InstallDir"]])
           covr::codecov(quiet = FALSE, type = "all")
         shell: Rscript {0}
