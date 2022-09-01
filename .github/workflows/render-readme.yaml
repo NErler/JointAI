@@ -8,14 +8,21 @@ name: Render README
 jobs:
   render:
     name: Render README
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@v1
       - uses: r-lib/actions/setup-pandoc@v1
 
-      - name: Install JAGS
-        run: sudo apt-get install jags
+      - name: Download JAGS Windows
+        if: runner.os == 'Windows'
+        run: (New-Object System.Net.WebClient).DownloadFile('https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Windows/JAGS-4.3.1.exe', 'C:\JAGS-4.3.1.exe')
+        shell: powershell
+
+      - name: Install JAGS Windows
+        if: runner.os == 'Windows'
+        run: C:\JAGS-4.3.1.exe /S
+        shell: cmd
 
       - name: Install rmarkdown, remotes, and the local package
         run: |
