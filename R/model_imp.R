@@ -827,7 +827,7 @@ model_imp <- function(formula = NULL, fixed = NULL, data, random = NULL,
   mcmc <- jags_res$mcmc
 
 
-  if (n.iter > 0 & class(mcmc) != "mcmc.list")
+  if (n.iter > 0 & !inherits(mcmc, "mcmc.list"))
     warnmsg("There is no mcmc sample. Something went wrong.")
 
   # post processing ------------------------------------------------------------
