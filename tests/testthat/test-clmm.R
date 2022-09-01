@@ -1,7 +1,7 @@
 library("JointAI")
 
-Sys.setenv(IS_CHECK = "true")
-
+# Sys.setenv(IS_CHECK = "true")
+skip_on_cran()
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   run_clmm_models <- function() {
@@ -179,63 +179,49 @@ test_that("MCMC samples can be plotted", {
 
 test_that("data_list remains the same", {
   skip_on_cran()
-  print_output(lapply(models, "[[", "data_list"), type = "value",
-               context = "clmm")
+  expect_snapshot(lapply(models, "[[", "data_list"))
 })
 
 test_that("jagsmodel remains the same", {
   skip_on_cran()
-  print_output(lapply(models, "[[", "jagsmodel"),
-               context = "clmm")
+  expect_snapshot(lapply(models, "[[", "jagsmodel"))
 })
 
 
 test_that("GRcrit and MCerror give same result", {
   skip_on_cran()
-  print_output(lapply(models0, GR_crit, multivariate = FALSE),
-               context = "clmm")
-  print_output(lapply(models0, MC_error),
-               context = "clmm")
+  expect_snapshot(lapply(models0, GR_crit, multivariate = FALSE))
+  expect_snapshot(lapply(models0, MC_error))
 })
 
 test_that("summary output remained the same on Windows", {
   skip_on_cran()
   skip_on_os(c("mac", "linux", "solaris"))
-  print_output(lapply(models0, print),
-               context = "clmm")
-  print_output(lapply(models0, coef),
-               context = "clmm")
-  print_output(lapply(models0, confint),
-               context = "clmm")
-  print_output(lapply(models0, summary),
-               context = "clmm")
-  print_output(lapply(models0, function(x) coef(summary(x))),
-               context = "clmm")
+  expect_snapshot(lapply(models0, print))
+  expect_snapshot(lapply(models0, coef))
+  expect_snapshot(lapply(models0, confint))
+  expect_snapshot(lapply(models0, summary))
+  expect_snapshot(lapply(models0, function(x) coef(summary(x))))
 })
 
 test_that("summary output remained the same on non-Windows", {
   skip_on_cran()
   skip_on_os(c("windows"))
-  print_output(lapply(models0, print), extra = "nonWin",
-               context = "clmm")
-  print_output(lapply(models0, coef), extra = "nonWin",
-               context = "clmm")
-  print_output(lapply(models0, confint), extra = "nonWin",
-               context = "clmm")
-  print_output(lapply(models0, summary), extra = "nonWin",
-               context = "clmm")
-  print_output(lapply(models0, function(x) coef(summary(x))),
-               extra = "nonWin", context = "clmm")
+  expect_snapshot(lapply(models0, print))
+  expect_snapshot(lapply(models0, coef))
+  expect_snapshot(lapply(models0, confint))
+  expect_snapshot(lapply(models0, summary))
+  expect_snapshot(lapply(models0, function(x) coef(summary(x))))
 })
 
 
 test_that("prediction works", {
 
-  local_edition(2)
-  expect_is(predict(models$m4a, type = "lp", warn = FALSE)$fitted, "array")
-  expect_is(predict(models$m4a, type = "prob", warn = FALSE)$fitted, "array")
+  expect_equal(class(predict(models$m4a, type = "lp", warn = FALSE)$fitted),
+               "array")
+  expect_equal(class(predict(models$m4a, type = "prob", warn = FALSE)$fitted),
+               "array")
 
-  local_edition(3)
   expect_s3_class(predict(models$m4a, type = "class", warn = FALSE)$fitted,
                   "data.frame")
   expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$fitted,
@@ -250,11 +236,11 @@ test_that("prediction works", {
   expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$newdata,
                   "data.frame")
 
-  local_edition(2)
-  expect_is(predict(models$m5d, type = "lp", warn = FALSE)$fitted, "array")
-  expect_is(predict(models$m5d, type = "prob", warn = FALSE)$fitted, "array")
+  expect_equal(class(predict(models$m5d, type = "lp", warn = FALSE)$fitted),
+               "array")
+  expect_equal(class(predict(models$m5d, type = "prob", warn = FALSE)$fitted),
+               "array")
 
-  local_edition(3)
   expect_s3_class(predict(models$m5d, type = "class", warn = FALSE)$fitted,
                   "data.frame")
   expect_s3_class(predict(models$m5d, type = "response", warn = FALSE)$fitted,
@@ -326,4 +312,4 @@ test_that("model can be plottet", {
   })
 
 }
-Sys.setenv(IS_CHECK = "")
+# Sys.setenv(IS_CHECK = "")

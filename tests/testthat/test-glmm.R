@@ -1,6 +1,8 @@
 library("JointAI")
 
-Sys.setenv(IS_CHECK = "true")
+# Sys.setenv(IS_CHECK = "true")
+skip_on_cran()
+
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
   set_seed(1234)
@@ -337,31 +339,25 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
   test_that("data_list remains the same", {
-    skip_on_cran()
-    print_output(lapply(models, "[[", "data_list"), type = "value",
-                 context = "glmm")
+    expect_snapshot(lapply(models, "[[", "data_list"))
   })
 
   test_that("jagsmodel remains the same", {
-    skip_on_cran()
-    print_output(lapply(models, "[[", "jagsmodel"), context = "glmm")
+    expect_snapshot(lapply(models, "[[", "jagsmodel"))
   })
 
   test_that("GRcrit and MCerror give same result", {
-    skip_on_cran()
-    print_output(lapply(models0, GR_crit, multivariate = FALSE), context = "glmm")
-    print_output(lapply(models0, MC_error), context = "glmm")
+    expect_snapshot(lapply(models0, GR_crit, multivariate = FALSE))
+    expect_snapshot(lapply(models0, MC_error))
   })
 
 
   test_that("summary output remained the same", {
-    skip_on_cran()
-    print_output(lapply(models0, print), context = "glmm")
-    print_output(lapply(models0, coef), context = "glmm")
-    print_output(lapply(models0, confint), context = "glmm")
-    print_output(lapply(models0, summary, missinfo = TRUE), context = "glmm")
-    print_output(lapply(models0, function(x) coef(summary(x))),
-                 context = "glmm")
+    expect_snapshot(lapply(models0, print))
+    expect_snapshot(lapply(models0, coef))
+    expect_snapshot(lapply(models0, confint))
+    expect_snapshot(lapply(models0, summary, missinfo = TRUE))
+    expect_snapshot(lapply(models0, function(x) coef(summary(x))))
   })
 
 
@@ -443,4 +439,4 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 #                       models = c(Be2 = "betareg")))
 # })
 
-Sys.setenv(IS_CHECK = "")
+# Sys.setenv(IS_CHECK = "")

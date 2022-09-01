@@ -1,6 +1,6 @@
 library("JointAI")
 
-Sys.setenv(IS_CHECK = "true")
+# Sys.setenv(IS_CHECK = "true")
 
 skip_on_cran()
 
@@ -123,32 +123,25 @@ test_that("MCMC samples can be plottet", {
 })
 
 test_that("data_list remains the same", {
-  skip_on_cran()
-  print_output(lapply(models, "[[", "data_list"), type = "value",
-               context = "mlogitmm")
+  expect_snapshot(lapply(models, "[[", "data_list"))
 })
 
 test_that("jagsmodel remains the same", {
-  skip_on_cran()
-  print_output(lapply(models, "[[", "jagsmodel"), context = "mlogitmm")
+  expect_snapshot(lapply(models, "[[", "jagsmodel"))
 })
 
 test_that("GRcrit and MCerror give same result", {
-  skip_on_cran()
-  print_output(lapply(models0, GR_crit, multivariate = FALSE),
-               context = "mlogitmm")
-  print_output(lapply(models0, MC_error), context = "mlogitmm")
+  expect_snapshot(lapply(models0, GR_crit, multivariate = FALSE))
+  expect_snapshot(lapply(models0, MC_error))
 })
 
 
 test_that("summary output remained the same", {
-  skip_on_cran()
-  print_output(lapply(models0, print), context = "mlogitmm")
-  print_output(lapply(models0, coef), context = "mlogitmm")
-  print_output(lapply(models0, confint), context = "mlogitmm")
-  print_output(lapply(models0, summary), context = "mlogitmm")
-  print_output(lapply(models0, function(x) coef(summary(x))),
-               context = "mlogitmm")
+  expect_snapshot(lapply(models0, print))
+  expect_snapshot(lapply(models0, coef))
+  expect_snapshot(lapply(models0, confint))
+  expect_snapshot(lapply(models0, summary))
+  expect_snapshot(lapply(models0, function(x) coef(summary(x))))
 })
 
 
@@ -165,11 +158,11 @@ test_that("prediction works", {
   )
 
 
-  local_edition(2)
-  expect_is(predict(models$m4a, type = "lp", warn = FALSE)$fitted, "array")
-  expect_is(predict(models$m4a, type = "prob", warn = FALSE)$fitted, "array")
+  expect_equal(class(predict(models$m4a, type = "lp", warn = FALSE)$fitted),
+               "array")
+  expect_equal(class(predict(models$m4a, type = "prob", warn = FALSE)$fitted),
+               "array")
 
-  local_edition(3)
   expect_s3_class(predict(models$m4a, type = "class", warn = FALSE)$fitted,
                   "data.frame")
   expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$fitted,
@@ -184,15 +177,15 @@ test_that("prediction works", {
   expect_s3_class(predict(models$m4a, type = "response", warn = FALSE)$newdata,
                   "data.frame")
 
-  local_edition(2)
-  expect_is(predict(models$m4e, type = "lp", warn = FALSE)$fitted, "array")
-  expect_is(predict(models$m4e, type = "prob", warn = FALSE)$fitted, "array")
-  expect_is(predict(models$m4e, type = "class", warn = FALSE)$fitted,
-            "data.frame")
-  expect_is(predict(models$m4e, type = "response", warn = FALSE)$fitted,
-            "data.frame")
+  expect_equal(class(predict(models$m4e, type = "lp", warn = FALSE)$fitted),
+                     "array")
+  expect_equal(class(predict(models$m4e, type = "prob", warn = FALSE)$fitted),
+               "array")
+  expect_s3_class(predict(models$m4e, type = "class", warn = FALSE)$fitted,
+                  "data.frame")
+  expect_s3_class(predict(models$m4e, type = "response", warn = FALSE)$fitted,
+                  "data.frame")
 
-  local_edition(3)
   expect_s3_class(predict(models$m4b, type = "lp", warn = FALSE)$newdata,
                   "data.frame")
   expect_s3_class(predict(models$m4b, type = "prob", warn = FALSE)$newdata,
@@ -241,4 +234,4 @@ test_that("wrong models give errors", {
                                data = longDF), "JointAI_errored")
 
 })
-Sys.setenv(IS_CHECK = "")
+# Sys.setenv(IS_CHECK = "")
