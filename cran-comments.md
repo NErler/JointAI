@@ -1,3 +1,24 @@
+
+# JointAI (version 1.0.4)
+
+
+## Round 1
+
+### Test environments
+* local Windows 10, R 4.2.1
+* windows server x64 (via github actions), R 4.1.2
+* ubuntu 20.04.3 LTS (via github actions), R 4.0.5, R 4.1.2, devel
+* win-builder (oldrelease, devel and release)
+
+
+
+### R CMD check results
+
+0 errors | 0 warnings | 1 note
+
+
+---
+
 # JointAI (version 1.0.3)
 
 
