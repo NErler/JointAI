@@ -1,6 +1,5 @@
 library("JointAI")
 
-# Sys.setenv(IS_CHECK = "true")
 skip_on_cran()
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {

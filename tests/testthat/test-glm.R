@@ -1,8 +1,9 @@
 
 library("JointAI")
 
-# Sys.setenv(IS_CHECK = "true")
 skip_on_cran()
+
+cat("ON CRAN:", testthat:::on_cran(), "\n")
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   set_seed(1234)
