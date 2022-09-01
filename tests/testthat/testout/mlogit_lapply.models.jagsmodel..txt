@@ -21,8 +21,7 @@ model {
     beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
   }
  
- 
-}
+ }
 $m0b
 model { 
 
@@ -46,8 +45,7 @@ model {
     beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
   }
  
- 
-}
+ }
 $m1a
 model { 
 
@@ -74,8 +72,7 @@ model {
     beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
   }
  
- 
-}
+ }
 $m1b
 model { 
 
@@ -102,8 +99,7 @@ model {
     beta[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
   }
  
- 
-}
+ }
 $m2a
 model { 
 
@@ -132,8 +128,7 @@ model {
 
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 3] * alpha[1]
@@ -146,8 +141,7 @@ model {
   tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_C2 <- sqrt(1/tau_C2)
  
- 
-}
+ }
 $m2b
 model { 
 
@@ -176,8 +170,7 @@ model {
 
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 3] * alpha[1]
@@ -190,13 +183,11 @@ model {
   tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_C2 <- sqrt(1/tau_C2)
  
- 
-}
+ }
 $m3a
 model { 
 
- 
-  # Normal model for C1 -----------------------------------------------------------
+   # Normal model for C1 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dnorm(mu_C1[i], tau_C1)
     mu_C1[i] <- M_lvlone[i, 2] * beta[1] + M_lvlone[i, 3] * beta[2] +
@@ -210,13 +201,11 @@ model {
   tau_C1 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_C1 <- sqrt(1/tau_C1)
  
- 
-}
+ }
 $m3b
 model { 
 
- 
-  # Normal model for C1 -----------------------------------------------------------
+   # Normal model for C1 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 1] ~ dnorm(mu_C1[i], tau_C1)
     mu_C1[i] <- M_lvlone[i, 3] * beta[1] + M_lvlone[i, 4] * beta[2] +
@@ -257,8 +246,7 @@ model {
     alpha[k] ~ dnorm(mu_reg_multinomial, tau_reg_multinomial)
   }
  
- 
-}
+ }
 $m4a
 model { 
 
@@ -308,8 +296,7 @@ model {
 
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 5] * alpha[1] + M_lvlone[i, 6] * alpha[2] +
@@ -365,8 +352,7 @@ model {
 
 
 
-
-  # Cumulative logit model for O2 -------------------------------------------------
+  # Cumulative logit model for O2 -------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 4] ~ dcat(p_O2[i, 1:4])
     eta_O2[i] <- (M_lvlone[i, 17] - spM_lvlone[17, 1])/spM_lvlone[17, 2] * alpha[24]
@@ -404,8 +390,7 @@ model {
     M_lvlone[i, 16] <- M_lvlone[i, 11] * M_lvlone[i, 12]
   }
 
- 
-}
+ }
 $m4b
 model { 
 
@@ -443,8 +428,7 @@ model {
 
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (i in 1:100) {
     M_lvlone[i, 2] ~ dnorm(mu_C2[i], tau_C2)
     mu_C2[i] <- M_lvlone[i, 4] * alpha[1] + M_lvlone[i, 9] * alpha[2] +
@@ -508,5 +492,4 @@ model {
     M_lvlone[i, 8] <- M_lvlone[i, 5] * M_lvlone[i, 6]
   }
 
- 
-}
+ }

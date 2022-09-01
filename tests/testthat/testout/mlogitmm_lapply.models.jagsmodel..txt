@@ -30,8 +30,7 @@ model {
 
   invD_m1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
   D_m1_id[1, 1] <- 1 / (invD_m1_id[1, 1]) 
- 
-}
+ }
 $m0b
 model { 
 
@@ -64,8 +63,7 @@ model {
 
   invD_m2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
   D_m2_id[1, 1] <- 1 / (invD_m2_id[1, 1]) 
- 
-}
+ }
 $m1a
 model { 
 
@@ -100,8 +98,7 @@ model {
 
   invD_m1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
   D_m1_id[1, 1] <- 1 / (invD_m1_id[1, 1]) 
- 
-}
+ }
 $m1b
 model { 
 
@@ -136,8 +133,7 @@ model {
 
   invD_m2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
   D_m2_id[1, 1] <- 1 / (invD_m2_id[1, 1]) 
- 
-}
+ }
 $m1c
 model { 
 
@@ -172,8 +168,7 @@ model {
 
   invD_m1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
   D_m1_id[1, 1] <- 1 / (invD_m1_id[1, 1]) 
- 
-}
+ }
 $m1d
 model { 
 
@@ -208,8 +203,7 @@ model {
 
   invD_m2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
   D_m2_id[1, 1] <- 1 / (invD_m2_id[1, 1]) 
- 
-}
+ }
 $m2a
 model { 
 
@@ -246,8 +240,7 @@ model {
   D_m1_id[1, 1] <- 1 / (invD_m1_id[1, 1])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (ii in 1:100) {
     M_id[ii, 1] ~ dnorm(mu_C2[ii], tau_C2)
     mu_C2[ii] <- M_id[ii, 2] * alpha[1]
@@ -260,8 +253,7 @@ model {
   tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_C2 <- sqrt(1/tau_C2)
  
- 
-}
+ }
 $m2b
 model { 
 
@@ -298,8 +290,7 @@ model {
   D_m2_id[1, 1] <- 1 / (invD_m2_id[1, 1])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (ii in 1:100) {
     M_id[ii, 1] ~ dnorm(mu_C2[ii], tau_C2)
     mu_C2[ii] <- M_id[ii, 2] * alpha[1]
@@ -312,8 +303,7 @@ model {
   tau_C2 ~ dgamma(shape_tau_norm, rate_tau_norm)
   sigma_C2 <- sqrt(1/tau_C2)
  
- 
-}
+ }
 $m2c
 model { 
 
@@ -370,8 +360,7 @@ model {
 
   invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
   D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1]) 
- 
-}
+ }
 $m2d
 model { 
 
@@ -428,8 +417,7 @@ model {
 
   invD_c2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
   D_c2_id[1, 1] <- 1 / (invD_c2_id[1, 1]) 
- 
-}
+ }
 $m3a
 model { 
 
@@ -454,8 +442,7 @@ model {
 
   invD_c1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
   D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1]) 
- 
-}
+ }
 $m3b
 model { 
 
@@ -515,8 +502,7 @@ model {
 
   invD_m2_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
   D_m2_id[1, 1] <- 1 / (invD_m2_id[1, 1]) 
- 
-}
+ }
 $m4a
 model { 
 
@@ -645,8 +631,7 @@ model {
 
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (ii in 1:100) {
     M_id[ii, 2] ~ dnorm(mu_C2[ii], tau_C2)
     mu_C2[ii] <- M_id[ii, 3] * alpha[22] +
@@ -671,8 +656,7 @@ model {
     M_lvlone[i, 6] <- M_lvlone[i, 4] * M_id[group_id[i], 7]
   }
 
- 
-}
+ }
 $m4b
 model { 
 
@@ -764,8 +748,7 @@ model {
   D_m2_id[1, 1] <- 1 / (invD_m2_id[1, 1])
 
 
-
-  # Normal model for C2 -----------------------------------------------------------
+  # Normal model for C2 -----------------------------------------------------------
   for (ii in 1:100) {
     M_id[ii, 1] ~ dnorm(mu_C2[ii], tau_C2)
     mu_C2[ii] <- M_id[ii, 2] * alpha[13] + M_id[ii, 5] * alpha[14] +
@@ -790,8 +773,7 @@ model {
     M_lvlone[i, 4] <- M_lvlone[i, 3] * M_id[group_id[i], 3]
   }
 
- 
-}
+ }
 $m4c
 model { 
 
@@ -895,8 +877,7 @@ model {
   D_c1_id[1, 1] <- 1 / (invD_c1_id[1, 1])
 
 
-
-  # Binomial model for B2 ---------------------------------------------------------
+  # Binomial model for B2 ---------------------------------------------------------
   for (ii in 1:100) {
     M_id[ii, 1] ~ dbern(max(1e-16, min(1 - 1e-16, mu_B2[ii])))
     logit(mu_B2[ii]) <- M_id[ii, 2] * alpha[8] +
@@ -911,8 +892,7 @@ model {
     alpha[k] ~ dnorm(mu_reg_binom, tau_reg_binom)
   }
  
- 
-}
+ }
 $m4d
 model { 
 
@@ -997,8 +977,7 @@ model {
     M_lvlone[i, 8] <- M_lvlone[i, 5] * M_lvlone[i, 6]
   }
 
- 
-}
+ }
 $m4e
 model { 
 
@@ -1040,5 +1019,4 @@ model {
 
   invD_m1_id[1, 1] ~ dgamma(shape_diag_RinvD, rate_diag_RinvD)T(1e-16, 1e16)
   D_m1_id[1, 1] <- 1 / (invD_m1_id[1, 1]) 
- 
-}
+ }
