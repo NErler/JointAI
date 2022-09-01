@@ -9,7 +9,8 @@
 \alias{print.JointAI}
 \title{Summarize the results from an object of class JointAI}
 \usage{
-\method{print}{Dmat}(x, digits = getOption("digits"), scientific = getOption("scipen"), ...)
+\method{print}{Dmat}(x, digits = getOption("digits"),
+  scientific = getOption("scipen"), ...)
 
 \method{summary}{JointAI}(object, start = NULL, end = NULL, thin = NULL,
   quantiles = c(0.025, 0.975), subset = NULL, exclude_chains = NULL,

@@ -4,7 +4,8 @@
 \alias{ns}
 \title{Generate a Basis Matrix for Natural Cubic Splines}
 \usage{
-ns(x, df = NULL, knots = NULL, intercept = FALSE, Boundary.knots = range(x))
+ns(x, df = NULL, knots = NULL, intercept = FALSE,
+  Boundary.knots = range(x))
 }
 \arguments{
 \item{x}{the predictor variable.  Missing values are allowed.}

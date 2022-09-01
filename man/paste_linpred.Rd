@@ -4,7 +4,8 @@
 \alias{paste_linpred}
 \title{Write a linear predictor}
 \usage{
-paste_linpred(parname, parelmts, matnam, index, cols, scale_pars, isgk = FALSE)
+paste_linpred(parname, parelmts, matnam, index, cols, scale_pars,
+  isgk = FALSE)
 }
 \arguments{
 \item{parname}{character string; name fo the parameter (e.g., "beta")}

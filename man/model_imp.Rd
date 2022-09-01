@@ -316,10 +316,14 @@ It is possible to specify multi-level models as it is done in the package
 \href{https://CRAN.R-project.org/package=nlme}{\pkg{nlme}},
 using \code{fixed} and \code{random}, or as it is done in the package
 \href{https://CRAN.R-project.org/package=lme4}{\pkg{lme4}},
-using \code{formula} and specifying the random effects in brackets:\if{html}{\out{<div class="sourceCode r">}}\preformatted{formula = y ~ x1 + x2 + x3 + (1 | id)
+using \code{formula} and specifying the random effects in brackets:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{formula = y ~ x1 + x2 + x3 + (1 | id)
 }\if{html}{\out{</div>}}
 
-is equivalent to\if{html}{\out{<div class="sourceCode r">}}\preformatted{fixed = y ~ x1 + x2 + x3, random = ~ 1|id
+is equivalent to
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fixed = y ~ x1 + x2 + x3, random = ~ 1|id
 }\if{html}{\out{</div>}}
 }
 
@@ -345,7 +349,9 @@ To fit multiple main models at the same time, a \code{list} of \code{formula}
 objects can be passed to the argument \code{formula}.
 Outcomes of one model may be contained as covariates in another model and
 it is possible to combine models for variables on different levels,
-for example:\if{html}{\out{<div class="sourceCode r">}}\preformatted{formula = list(y ~ x1 + x2 + x3 + x4 + time + (time | id),
+for example:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{formula = list(y ~ x1 + x2 + x3 + x4 + time + (time | id),
                      x2 ~ x3 + x4 + x5)
 }\if{html}{\out{</div>}}
 
@@ -373,7 +379,9 @@ the names are the structures and the vectors contain the names of the
 response variables which are included in this structure.
 
 For example, for a multivariate mixed model with five outcomes
-\code{y1}, ..., \code{y5}, the specification could be:\if{html}{\out{<div class="sourceCode r">}}\preformatted{rd_vcov = list(blockdiag = c("y1", "y2"),
+\code{y1}, ..., \code{y5}, the specification could be:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rd_vcov = list(blockdiag = c("y1", "y2"),
                full = c("y3", "y4"),
                indep = "y5")
 }\if{html}{\out{</div>}}
@@ -384,12 +392,16 @@ random effects for \code{y1} and \code{y2} are assumed to be correlated within e
 outcome, and the random effects for \code{y5} are assumed to be independent.
 
 It is possible to have multiple sets of response variables for which separate
-full variance-covariance matrices are used, for example:\if{html}{\out{<div class="sourceCode r">}}\preformatted{rd_vcov = list(full = c("y1", "y2", "y5"),
+full variance-covariance matrices are used, for example:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rd_vcov = list(full = c("y1", "y2", "y5"),
                full = c("y3", "y4"))
 }\if{html}{\out{</div>}}
 
 In models with multiple levels of nesting, separate structures can be
-specified per level:\if{html}{\out{<div class="sourceCode r">}}\preformatted{rd_vcov = list(id = list(blockdiag = c("y1", "y2"),
+specified per level:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rd_vcov = list(id = list(blockdiag = c("y1", "y2"),
                          full = c("y3", "y4"),
                          indep = "y5"),
               center = "indep")
@@ -420,7 +432,9 @@ carried backward.
 \subsection{Differences to basic regression models}{
 
 It is not possible to specify transformations of outcome variables, i.e.,
-it is not possible to use a model formula like\if{html}{\out{<div class="sourceCode r">}}\preformatted{log(y) ~ x1 + x2 + ...
+it is not possible to use a model formula like
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{log(y) ~ x1 + x2 + ...
 }\if{html}{\out{</div>}}
 
 In the specific case of a transformation with the natural logarithm,
@@ -637,12 +651,16 @@ ordinal response variables.
 
 For example, the following three specifications are equivalent and assume a
 non-proportional effect of \code{C1} on \code{O1}, but \code{C1} is assumed to have a
-proportional effect on the incomplete ordinal covariate \code{O2}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = ~ C1)
+proportional effect on the incomplete ordinal covariate \code{O2}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = ~ C1)
 clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = list(~ C1))
 clm_imp(O1 ~ C1 + C2 + B2 + O2, data = wideDF, nonprop = list(O1 = ~ C1))
 }\if{html}{\out{</div>}}
 
-To specify non-proportional effects on \code{O2}, a named list has to be provided:\if{html}{\out{<div class="sourceCode r">}}\preformatted{clm_imp(O1 ~ C1 + C2 + B2 + O2 + B1, data = wideDF,
+To specify non-proportional effects on \code{O2}, a named list has to be provided:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{clm_imp(O1 ~ C1 + C2 + B2 + O2 + B1, data = wideDF,
         nonprop = list(O1 = ~ C1,
                        O2 = ~ C1 + B1))
 }\if{html}{\out{</div>}}
@@ -666,14 +684,18 @@ another model. An example would be the use of "baseline" cholesterol
 First, the variable \code{chol0} is added to the \code{PBC} data.
 For most patients the value of cholesterol at baseline is observed, but not
 for all. It is important that the data has a row with \code{day = 0} for each
-patient.\if{html}{\out{<div class="sourceCode r">}}\preformatted{PBC <- merge(PBC,
+patient.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{PBC <- merge(PBC,
              subset(PBC, day == 0, select = c("id", "chol")),
              by = "id", suffixes = c("", "0"))
 }\if{html}{\out{</div>}}
 
 Next, the custom piece of JAGS model syntax needs to be specified.
 We loop here only over the patients for which the baseline cholesterol
-is missing.\if{html}{\out{<div class="sourceCode r">}}\preformatted{calc_chol0 <- "
+is missing.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{calc_chol0 <- "
 for (ii in 1:28) \{
   M_id[row_chol0_id[ii], 3] <- M_lvlone[row_chol0_lvlone[ii], 1]
   \}"
@@ -682,13 +704,17 @@ for (ii in 1:28) \{
 To be able to run the model with the custom imputation "model" for baseline
 cholesterol we need to provide the numbers of the rows in the data matrices
 that contain the missing values of baseline cholesterol and the rows that
-contain the imputed cholesterol at \code{day = 0}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{row_chol0_lvlone <- which(PBC$day == 0 & is.na(PBC$chol0))
+contain the imputed cholesterol at \code{day = 0}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{row_chol0_lvlone <- which(PBC$day == 0 & is.na(PBC$chol0))
 row_chol0_id <- match(PBC$id, unique(PBC$id))[row_chol0_lvlone]
 }\if{html}{\out{</div>}}
 
 Then we pass both the custom sub-model and the additional data to the
 analysis function \code{coxph_imp()}. Note that we explicitly need to specify
-the model for \code{chol}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{coxph_imp(list(Surv(futime, status != "censored") ~ age + sex + chol0,
+the model for \code{chol}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{coxph_imp(list(Surv(futime, status != "censored") ~ age + sex + chol0,
                chol ~ age + sex + day + (day | id)),
           no_model = "day", data = PBC,
           append_data_list = list(row_chol0_lvlone = row_chol0_lvlone,

@@ -18,17 +18,7 @@ traceplot(object, ...)
 \item{...}{
   Arguments passed on to \code{\link[graphics:matplot]{graphics::matplot}}
   \describe{
-    \item{\code{lty}}{vector of line types, widths, and end styles.
-    The first element is for the first column, the second element for
-    the second column, etc., even if lines are not plotted for all
-    columns. Line types will be used cyclically until all plots are
-    drawn.}
-    \item{\code{lwd}}{vector of line types, widths, and end styles.
-    The first element is for the first column, the second element for
-    the second column, etc., even if lines are not plotted for all
-    columns. Line types will be used cyclically until all plots are
-    drawn.}
-    \item{\code{lend}}{vector of line types, widths, and end styles.
+    \item{\code{lty,lwd,lend}}{vector of line types, widths, and end styles.
     The first element is for the first column, the second element for
     the second column, etc., even if lines are not plotted for all
     columns. Line types will be used cyclically until all plots are

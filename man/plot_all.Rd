@@ -28,9 +28,7 @@ if \code{TRUE} it is given for all variables}
 \item{idvars}{name of the column that specifies the multi-level grouping
 structure}
 
-\item{xlab}{labels for the x- and y-axis}
-
-\item{ylab}{labels for the x- and y-axis}
+\item{xlab, ylab}{labels for the x- and y-axis}
 
 \item{...}{additional parameters passed to \code{\link[graphics]{barplot}}
 and \code{\link[graphics]{hist}}}

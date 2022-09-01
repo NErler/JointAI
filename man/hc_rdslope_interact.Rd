@@ -31,7 +31,9 @@ and one row per (main) random effect
 Get info on the interactions with random slopes for a given level and sub-model
 }
 \details{
-Argument \code{hc_cols} should have the structure:\if{html}{\out{<div class="sourceCode r">}}\preformatted{list(
+Argument \code{hc_cols} should have the structure:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{list(
   "(Intercept)" = list(main = c(M_id = 1),
                        interact = NULL),
   time = list(main = c(M_lvlone = 4),

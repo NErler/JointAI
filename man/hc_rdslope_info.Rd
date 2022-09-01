@@ -33,7 +33,9 @@ Get info on the main effects in a random slope structure
 for a given level and sub-model
 }
 \details{
-Argument \code{hc_cols} should have the structure:\if{html}{\out{<div class="sourceCode r">}}\preformatted{list(
+Argument \code{hc_cols} should have the structure:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{list(
   "(Intercept)" = list(main = c(M_id = 1),
                        interact = NULL),
   time = list(main = c(M_lvlone = 4),

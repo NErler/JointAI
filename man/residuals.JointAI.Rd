@@ -4,7 +4,8 @@
 \alias{residuals.JointAI}
 \title{Extract residuals from an object of class JointAI}
 \usage{
-\method{residuals}{JointAI}(object, type = c("working", "pearson", "response"), warn = TRUE, ...)
+\method{residuals}{JointAI}(object, type = c("working", "pearson",
+  "response"), warn = TRUE, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}

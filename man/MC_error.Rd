@@ -85,11 +85,11 @@ columns \code{est} (posterior mean), \code{MCSE} (Monte Carlo error),
 Calculate, print and plot the Monte Carlo error of the samples from a
 'JointAI' model, combining the samples from all MCMC chains.
 }
-\section{Methods (by generic)}{
+\section{Functions}{
 \itemize{
-\item \code{plot}: plot Monte Carlo error
-}}
+\item \code{plot(MCElist)}: plot Monte Carlo error
 
+}}
 \note{
 Lesaffre & Lawson (2012; p. 195) suggest the Monte Carlo error of a
 parameter should not be more than 5\% of the posterior standard
