@@ -7,7 +7,8 @@
 ### Test environments
 * local Windows 10, R 4.2.1
 * windows server x64 (via github actions), R 4.1.2
-* ubuntu 20.04.3 LTS (via github actions), R 4.0.5, R 4.1.2, devel
+* ubuntu 20.04.4 LTS (via github actions), R 4.1.3, R 4.2.1, devel
+* mac-OS 10.16 (via github actions), R 4.2.1
 * win-builder (oldrelease, devel and release)
 
 
