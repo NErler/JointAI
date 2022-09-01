@@ -121,10 +121,10 @@ traceplot.JointAI <- function(object, start = NULL, end = NULL, thin = NULL,
 #' the MCMC sample of an object of class "JointAI".
 #' @inheritParams traceplot
 #' @param vlines list, where each element is a named list of parameters that
-#'               can be passed to `graphics::abline()` to create
+#'               can be passed to \code{graphics::abline()} to create
 #'               vertical lines.
 #'               Each of the list elements needs to contain at least
-#'               `v = <x location>`, where <x location> is a vector of the
+#'               \code{v = <x location>} where <x location> is a vector of the
 #'               same length as the number of plots (see examples).
 #' @param joined logical; should the chains be combined before plotting?
 #' @param ... additional parameters passed to \code{plot()}
