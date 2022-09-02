@@ -4,6 +4,8 @@ library("JointAI")
 
 skip_on_cran()
 
+cat("ON CRAN:", testthat:::on_cran(), "\n")
+
 set_seed(2020)
 longDF$m1 <- factor(sample(c('A', 'B', 'C'), size = nrow(longDF),
                            replace = TRUE))
@@ -16,6 +18,7 @@ run_mlogitmm_models <- function() {
   sink(tempfile())
   on.exit(sink())
   invisible(force(suppressWarnings({
+
 
     models <- list(
 
