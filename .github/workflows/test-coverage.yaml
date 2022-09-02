@@ -1,63 +1,41 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches:
-      - master
-      - JMdevel
+    branches: [main, master]
   pull_request:
-    branches:
-      - master
+    branches: [main, master]
 
 name: test-coverage
 
 jobs:
   test-coverage:
-    runs-on: windows-latest
-    if: "! contains(toJSON(github.event.commits.*.message), '[skip-covr]')"
-
+    runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
       - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-r@master
-
-      - uses: r-lib/actions/setup-pandoc@master
-
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
-
-      - name: Cache R packages
-        uses: actions/cache@v1
+      - uses: r-lib/actions/setup-r@v2
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-
-      - name: Download JAGS Windows
-        if: runner.os == 'Windows'
-        run: (New-Object System.Net.WebClient).DownloadFile('https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Windows/JAGS-4.3.1.exe', 'C:\JAGS-4.3.1.exe')
-        shell: powershell
-
-      - name: Install JAGS Windows
-        if: runner.os == 'Windows'
-        run: C:\JAGS-4.3.1.exe /S
-        shell: cmd
+          use-public-rspm: true
 
 
-      - name: Install dependencies
+      - name: Install system dependencies
+        if: runner.os == 'Linux'
         run: |
-          install.packages(c("remotes"))
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("covr")
-        shell: Rscript {0}
+          while read -r cmd
+          do
+            eval sudo $cmd
+          done < <(Rscript -e 'cat(remotes::system_requirements("ubuntu", "20.04"), sep = "\n")')
+
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::covr
+          needs: coverage
 
       - name: Test coverage
-        env:
-          IS_CHECK: true
-        run: |
-          covr::codecov(quiet = FALSE, type = "all")
+        run: covr::codecov(quiet = FALSE)
         shell: Rscript {0}
