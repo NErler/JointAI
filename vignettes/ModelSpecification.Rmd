@@ -1044,9 +1044,9 @@ For example:
 mod10a <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
                  refcats = "largest", data = NHANES, n.adapt = 0)
 #> Warning: 
-#> It is currently not possible to use "contr.poly" for incomplete categorical covariates.
-#> I will use "contr.treatment" instead.  You can specify (globally) which types of
-#> contrasts are used by changing "options('contrasts')".
+#> It is currently not possible to use "contr.poly" for incomplete categorical covariates. I
+#> will use "contr.treatment" instead.  You can specify (globally) which types of contrasts
+#> are used by changing "options('contrasts')".
 ```
 
 #### Setting reference categories for individual variables
@@ -1062,9 +1062,9 @@ mod10b <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
                  refcats = list(occup = "not working", race = 3, educ = 'largest'),
                  data = NHANES, n.adapt = 0)
 #> Warning: 
-#> It is currently not possible to use "contr.poly" for incomplete categorical covariates.
-#> I will use "contr.treatment" instead.  You can specify (globally) which types of
-#> contrasts are used by changing "options('contrasts')".
+#> It is currently not possible to use "contr.poly" for incomplete categorical covariates. I
+#> will use "contr.treatment" instead.  You can specify (globally) which types of contrasts
+#> are used by changing "options('contrasts')".
 ```
 
 
@@ -1135,9 +1135,9 @@ the determined specification for the argument `refcats` is printed:
 mod10c <- lm_imp(SBP ~ gender + age + race + educ + occup + smoke,
                  refcats = refs_mod10, data = NHANES, n.adapt = 0)
 #> Warning: 
-#> It is currently not possible to use "contr.poly" for incomplete categorical covariates.
-#> I will use "contr.treatment" instead.  You can specify (globally) which types of
-#> contrasts are used by changing "options('contrasts')".
+#> It is currently not possible to use "contr.poly" for incomplete categorical covariates. I
+#> will use "contr.treatment" instead.  You can specify (globally) which types of contrasts
+#> are used by changing "options('contrasts')".
 ```
 
 

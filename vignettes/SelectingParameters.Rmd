@@ -520,15 +520,15 @@ summary(lm5)
 #> 
 #> Posterior summary:
 #>                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)  81.737 9.9071 62.317 100.78     0.0000   1.023 0.0577
-#> genderfemale  0.213 2.5267 -4.562   4.93     0.9133   1.050 0.0577
-#> WC            0.301 0.0755  0.136   0.45     0.0000   0.999 0.0577
-#> alc>=1        6.157 2.5434  1.197  11.01     0.0333   1.009 0.0671
-#> creat         7.781 7.5670 -5.807  23.68     0.2933   1.052 0.0634
+#> (Intercept)  81.088 9.4594 62.852 97.814      0.000    1.02 0.0577
+#> genderfemale  0.315 2.5308 -4.366  5.680      0.933    1.02 0.0577
+#> WC            0.311 0.0721  0.173  0.455      0.000    1.00 0.0577
+#> alc>=1        6.288 2.3944  1.946 10.938      0.000    1.07 0.0657
+#> creat         7.239 8.1750 -7.610 25.142      0.387    1.00 0.0577
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 14.4 0.756 13.1  15.9    1.05 0.0577
+#> sigma_SBP 14.4 0.789 12.9  15.9       1 0.0577
 #> 
 #> 
 #> MCMC settings:
@@ -543,7 +543,7 @@ summary(lm5)
 traceplot(lm5)
 ```
 
-<img src="figures_SelectingParameters/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
+<img src="figures_SelectingParameters/unnamed-chunk-9-1.png" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
 
 ```r
 
@@ -551,7 +551,7 @@ traceplot(lm5)
 densplot(lm5)
 ```
 
-<img src="figures_SelectingParameters/unnamed-chunk-9-2.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
+<img src="figures_SelectingParameters/unnamed-chunk-9-2.png" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
 
 ```r
 
@@ -560,12 +560,12 @@ GR_crit(lm5)
 #> Potential scale reduction factors:
 #> 
 #>              Point est. Upper C.I.
-#> (Intercept)       1.003      1.023
-#> genderfemale      1.012      1.050
-#> WC                0.997      0.999
-#> alc>=1            1.000      1.009
-#> creat             1.018      1.052
-#> sigma_SBP         1.012      1.055
+#> (Intercept)       1.008       1.02
+#> genderfemale      1.005       1.02
+#> WC                1.000       1.00
+#> alc>=1            1.018       1.07
+#> creat             0.999       1.00
+#> sigma_SBP         0.999       1.00
 #> 
 #> Multivariate psrf
 #> 
@@ -574,12 +574,12 @@ GR_crit(lm5)
 # Monte Carlo Error of the MCMC sample
 MC_error(lm5)
 #>                est   MCSE    SD MCSE/SD
-#> (Intercept)  81.74 0.5720 9.907   0.058
-#> genderfemale  0.21 0.1459 2.527   0.058
-#> WC            0.30 0.0044 0.075   0.058
-#> alc>=1        6.16 0.1707 2.543   0.067
-#> creat         7.78 0.4798 7.567   0.063
-#> sigma_SBP    14.38 0.0437 0.756   0.058
+#> (Intercept)  81.09 0.5461 9.459   0.058
+#> genderfemale  0.32 0.1461 2.531   0.058
+#> WC            0.31 0.0042 0.072   0.058
+#> alc>=1        6.29 0.1573 2.394   0.066
+#> creat         7.24 0.4720 8.175   0.058
+#> sigma_SBP    14.35 0.0456 0.789   0.058
 ```
 
 When `analysis_main` was not switched on the default behaviour is that all
@@ -595,7 +595,7 @@ lm4 <- lm_imp(SBP ~ gender + WC + alc + creat,
 traceplot(lm4, ncol = 4)
 ```
 
-<img src="figures_SelectingParameters/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" width="100%" style="display: block; margin: auto;" />
+<img src="figures_SelectingParameters/unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10" width="100%" style="display: block; margin: auto;" />
 
 ### Select a subset of the variables to display
 To display other parts of the MCMC sample, `subset` needs to be specified:
@@ -606,21 +606,21 @@ GR_crit(lm5, subset = c(analysis_main = FALSE, other_models = TRUE))
 #> Potential scale reduction factors:
 #> 
 #>                     Point est. Upper C.I.
-#> alc: (Intercept)         1.096      1.306
-#> alc: genderfemale        1.076      1.254
-#> alc: WC                  1.045      1.143
-#> alc: creat               1.023      1.089
-#> creat: (Intercept)       1.004      1.024
-#> creat: genderfemale      1.005      1.017
-#> creat: WC                1.001      1.014
-#> WC: (Intercept)          0.997      0.997
-#> WC: genderfemale         1.001      1.001
-#> sigma_creat              1.009      1.029
-#> sigma_WC                 1.020      1.081
+#> alc: (Intercept)          1.02       1.06
+#> alc: genderfemale         1.03       1.07
+#> alc: WC                   1.02       1.05
+#> alc: creat                1.03       1.07
+#> creat: (Intercept)        1.00       1.00
+#> creat: genderfemale       1.00       1.01
+#> creat: WC                 1.00       1.01
+#> WC: (Intercept)           1.00       1.00
+#> WC: genderfemale          1.01       1.01
+#> sigma_creat               1.00       1.02
+#> sigma_WC                  1.01       1.03
 #> 
 #> Multivariate psrf
 #> 
-#> 1.13
+#> 1.06
 ```
 
 To select only some of the parameters, they can be specified directly by
@@ -638,15 +638,15 @@ summary(lm5, subset = list(other = c('creat', 'alc>=1')))
 #> 
 #> Posterior summary:
 #>                Mean     SD   2.5%  97.5% tail-prob. GR-crit MCE/SD
-#> (Intercept)  81.737 9.9071 62.317 100.78     0.0000   1.023 0.0577
-#> genderfemale  0.213 2.5267 -4.562   4.93     0.9133   1.050 0.0577
-#> WC            0.301 0.0755  0.136   0.45     0.0000   0.999 0.0577
-#> alc>=1        6.157 2.5434  1.197  11.01     0.0333   1.009 0.0671
-#> creat         7.781 7.5670 -5.807  23.68     0.2933   1.052 0.0634
+#> (Intercept)  81.088 9.4594 62.852 97.814      0.000    1.02 0.0577
+#> genderfemale  0.315 2.5308 -4.366  5.680      0.933    1.02 0.0577
+#> WC            0.311 0.0721  0.173  0.455      0.000    1.00 0.0577
+#> alc>=1        6.288 2.3944  1.946 10.938      0.000    1.07 0.0657
+#> creat         7.239 8.1750 -7.610 25.142      0.387    1.00 0.0577
 #> 
 #> Posterior summary of residual std. deviation:
 #>           Mean    SD 2.5% 97.5% GR-crit MCE/SD
-#> sigma_SBP 14.4 0.756 13.1  15.9    1.05 0.0577
+#> sigma_SBP 14.4 0.789 12.9  15.9       1 0.0577
 #> 
 #> 
 #> MCMC settings:
@@ -678,7 +678,7 @@ sub3
 traceplot(lm2, subset = list(other = sub3), ncol = 2)
 ```
 
-<img src="figures_SelectingParameters/lm2_2-1.png" title="plot of chunk lm2_2" alt="plot of chunk lm2_2" width="50%" style="display: block; margin: auto;" />
+<img src="figures_SelectingParameters/lm2_2-1.png" alt="plot of chunk lm2_2" width="50%" style="display: block; margin: auto;" />
 
 
 ### Random subset of subject-specific values
@@ -701,7 +701,7 @@ rs <- grep('^b_bmi_ID\\[[[:digit:]]+,2\\]$', colnames(lme4$MCMC[[1]]), value = T
 traceplot(lme4, subset = list(other = sample(ri, size = 8)), ncol = 4)
 ```
 
-<img src="figures_SelectingParameters/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
+<img src="figures_SelectingParameters/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
 
 ```r
 
@@ -709,5 +709,5 @@ traceplot(lme4, subset = list(other = sample(ri, size = 8)), ncol = 4)
 traceplot(lme4, subset = list(other = sample(rs, size = 8)), ncol = 4)
 ```
 
-<img src="figures_SelectingParameters/unnamed-chunk-11-2.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
+<img src="figures_SelectingParameters/unnamed-chunk-11-2.png" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
 

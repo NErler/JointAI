@@ -55,7 +55,7 @@ mod13a <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 500,
 traceplot(mod13a)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" width="100%" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1" width="100%" style="display: block; margin: auto;" />
 
 
 When the sampler has converged the chains show one horizontal band, as in the above figure.
@@ -78,7 +78,7 @@ traceplot(mod13a, ncol = 3, use_ggplot = TRUE) +
   scale_color_brewer(palette = 'Dark2')
 ```
 
-<img src="figures_AfterFitting/ggtrace15a-1.png" title="plot of chunk ggtrace15a" alt="plot of chunk ggtrace15a" width="100%" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/ggtrace15a-1.png" alt="plot of chunk ggtrace15a" width="100%" style="display: block; margin: auto;" />
 
 
 ### Density plot
@@ -97,7 +97,7 @@ densplot(mod13a, ncol = 3, col = c("darkred", "darkblue", "darkgreen"),
                             col = grey(0.8))))
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="100%" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="100%" style="display: block; margin: auto;" />
 or marking the posterior mean and 2.5% and 97.5% quantiles:
 
 ```r
@@ -113,7 +113,7 @@ densplot(mod13a, ncol = 3,
 )
 ```
 
-<img src="figures_AfterFitting/densplot15a-1.png" title="plot of chunk densplot15a" alt="plot of chunk densplot15a" width="100%" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/densplot15a-1.png" alt="plot of chunk densplot15a" width="100%" style="display: block; margin: auto;" />
 
 
 Like with `traceplot()` it is possible to use the **ggplot2** version of `densplot()`
@@ -167,7 +167,7 @@ p13a +
                      labels = c('JointAI', 'compl.case'))
 ```
 
-<img src="figures_AfterFitting/ggdens15a-1.png" title="plot of chunk ggdens15a" alt="plot of chunk ggdens15a" width="100%" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/ggdens15a-1.png" alt="plot of chunk ggdens15a" width="100%" style="display: block; margin: auto;" />
 
 
 ## Model Summary
@@ -304,7 +304,7 @@ estimated posterior distribution.
 The figure visualizes three examples of posterior distributions
 and the corresponding minimum of $Pr(\theta > 0)$ and $Pr(\theta < 0)$
 (shaded area):
-<img src="figures_AfterFitting/tailprob-1.png" title="plot of chunk tailprob" alt="plot of chunk tailprob" width="100%" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/tailprob-1.png" alt="plot of chunk tailprob" width="100%" style="display: block; margin: auto;" />
 
 
 ## Evaluation criteria
@@ -393,7 +393,7 @@ plot(MC_error(mod13a))  # left panel: all iterations 101:600
 plot(MC_error(mod13a, end = 250))  # right panel: iterations 101:250
 ```
 
-<img src="figures_AfterFitting/MCE15a-1.png" title="plot of chunk MCE15a" alt="plot of chunk MCE15a" width="100%" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/MCE15a-1.png" alt="plot of chunk MCE15a" width="100%" style="display: block; margin: auto;" />
 
 
 ## Subset of output {#sec:subset}
@@ -494,7 +494,7 @@ densplot(mod13c, subset = list(analysis_main = FALSE,
                                other = c('beta[4]', 'beta[5]')), nrow = 1)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
 
 This also works when a subset of the imputed values should be displayed:
 
@@ -513,7 +513,7 @@ sub3
 traceplot(mod13d, subset = list(analysis_main = FALSE, other = sub3), ncol = 2)
 ```
 
-<img src="figures_AfterFitting/trace15d-1.png" title="plot of chunk trace15d" alt="plot of chunk trace15d" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/trace15d-1.png" alt="plot of chunk trace15d" style="display: block; margin: auto;" />
 
 When the number of imputed values is large or in order to check convergence
 of random effects, it may not be feasible to plot and inspect all trace plots.
@@ -534,7 +534,7 @@ traceplot(mod13e, subset = list(analysis_main = FALSE,
                                 other = sample(ri, size = 12)), ncol = 4)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" />
 
 
 ### Subset of MCMC samples
@@ -556,32 +556,32 @@ mod14 <- lm_imp(SBP ~ gender + WC + alc + creat, data = NHANES, n.iter = 100,
 densplot(mod14, ncol = 3)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
 
 ```r
 densplot(mod14, exclude_chains = c(2,4), ncol = 3)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-15-2.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/unnamed-chunk-15-2.png" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
 
 
 ```r
 traceplot(mod14, thin = 10, ncol = 3)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
 
 ```r
 traceplot(mod14, start = 150, ncol = 3)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-16-2.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/unnamed-chunk-16-2.png" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
 
 ```r
 traceplot(mod14, end = 120, ncol = 3)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-16-3.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/unnamed-chunk-16-3.png" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
 
 
 
@@ -652,7 +652,7 @@ matplot(pred$newdata$age, pred$fitted,
         xlab = 'age in months', ylab = 'predicted value')
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="90%" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/unnamed-chunk-19-1.png" alt="plot of chunk unnamed-chunk-19" width="90%" style="display: block; margin: auto;" />
 
 It is possible to have multiple variables vary and to set values for these
 variables:
@@ -684,7 +684,7 @@ ggplot(pred$newdata, aes(x = age, y = fit, color = factor(HEIGHT_M),
   scale_y_continuous(name = 'Expected BMI', breaks = seq(15, 18, 0.5))
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" width="90%" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/unnamed-chunk-20-1.png" alt="plot of chunk unnamed-chunk-20" width="90%" style="display: block; margin: auto;" />
 
 
 
@@ -732,5 +732,5 @@ of the observed and imputed values.
 plot_imp_distr(impDF, nrow = 1)
 ```
 
-<img src="figures_AfterFitting/unnamed-chunk-22-1.png" title="plot of chunk unnamed-chunk-22" alt="plot of chunk unnamed-chunk-22" width="100%" style="display: block; margin: auto;" />
+<img src="figures_AfterFitting/unnamed-chunk-22-1.png" alt="plot of chunk unnamed-chunk-22" width="100%" style="display: block; margin: auto;" />
 
