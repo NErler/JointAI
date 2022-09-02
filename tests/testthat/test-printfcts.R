@@ -1,5 +1,7 @@
 library("JointAI")
 
+skip_on_cran()
+
 test_that('lme model', {
   mymod <- lme_imp(y ~ C1 + c1 + B2 + c2 + O2 + time + (time  | id),
                    data = longDF, n.adapt = 10, n.iter = 10,
@@ -8,8 +10,8 @@ test_that('lme model', {
 
   expect_output(list_models(mymod))
   expect_s3_class(parameters(mymod), 'data.frame')
-  print_output(list_models(mymod), context = "printfcts")
-  print_output(parameters(mymod), context = "printfcts")
+  expect_snapshot(list_models(mymod))
+  expect_snapshot(parameters(mymod))
 })
 
 
@@ -24,6 +26,6 @@ test_that('mlogitmm', {
 
   expect_output(list_models(mmod))
   expect_s3_class(parameters(mmod), 'data.frame')
-  print_output(list_models(mmod), context = "printfcts")
-  print_output(parameters(mmod), context = "printfcts")
+  expect_snapshot(list_models(mmod))
+  expect_snapshot(parameters(mmod))
 })
