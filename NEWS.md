@@ -1,6 +1,8 @@
 # JointAI Development Vesion
 
 
+# JointAI 1.0.4
+
 ## New features
 * `md_pattern()` has an additional argument `sort_columns` to provide the option
   to switch off the sorting of columns by number of missing values.
