@@ -28,7 +28,6 @@ knitr::opts_chunk$set(
 
 
 
-
 The package **JointAI** provides functionality to perform joint analysis and
 imputation of a range of model types in the Bayesian framework. Implemented are
 (generalized) linear regression models and extensions thereof, models for
