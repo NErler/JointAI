@@ -9,7 +9,7 @@
 [![](https://cranlogs.r-pkg.org/badges/grand-total/JointAI)](https://CRAN.R-project.org/package=JointAI)
 [![Download
 counter](https://cranlogs.r-pkg.org/badges/JointAI)](https://cran.r-project.org/package=JointAI)
-[![codecov](https://codecov.io/gh/NErler/JointAI/branch/master/graph/badge.svg)](https://codecov.io/gh/NErler/JointAI)
+[![codecov](https://codecov.io/gh/NErler/JointAI/branch/master/graph/badge.svg)](https://app.codecov.io/gh/NErler/JointAI)
 [![Travis-CI Build
 Status](https://travis-ci.org/NErler/JointAI.svg?branch=master)](https://travis-ci.org/NErler/JointAI)
 [![R build
@@ -104,8 +104,6 @@ plot_all(NHANES[c(1, 5:6, 8:12)], fill = '#D10E3B', border = '#460E1B', ncol = 4
 
 ``` r
 md_pattern(NHANES, color = c('#460E1B', '#D10E3B'))
-#> Warning in register(): Can't find generic `scale_type` in package ggplot2 to
-#> register S3 method.
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
