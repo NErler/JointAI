@@ -161,7 +161,7 @@
 <span>                 seed <span class="op">=</span> <span class="fl">2020</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1" width="100%" style="display: block; margin: auto;"></p>
 <p>When the sampler has converged the chains show one horizontal band, as in the above figure. Consequently, when traces show a trend convergence has not been reached and more iterations are necessary (e.g., using <a href="https://nerler.github.io/JointAI/reference/add_samples.html"><code>add_samples()</code></a>).</p>
 <p>Graphical aspects of the traceplot can be controlled by specifying standard graphical arguments via the dots argument <code>"..."</code>, which are passed to <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/matplot.html" class="external-link"><code>matplot()</code></a>. This allows changing colour, line type and -width, limits, and so forth. Arguments <code>nrow</code> and/or <code>ncol</code> can be supplied to set specific numbers of rows and columns for the layout of the grid of plots.</p>
 <p>With the argument <code>use_ggplot</code> it is possible to get a <a href="https://CRAN.R-project.org/package=ggplot2" class="external-link"><strong>ggplot2</strong></a> version of the traceplot. It can be extended using standard <strong>ggplot2</strong> syntax.</p>
@@ -170,7 +170,7 @@
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod13a</span>, ncol <span class="op">=</span> <span class="fl">3</span>, use_ggplot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">'bottom'</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">'Dark2'</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/ggtrace15a-1.png" title="plot of chunk ggtrace15a" alt="plot of chunk ggtrace15a" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/ggtrace15a-1.png" alt="plot of chunk ggtrace15a" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="density-plot">Density plot<a class="anchor" aria-label="anchor" href="#density-plot"></a>
@@ -181,7 +181,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">mod13a</span>, ncol <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkred"</span>, <span class="st">"darkblue"</span>, <span class="st">"darkgreen"</span><span class="op">)</span>,</span>
 <span>         vlines <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">$</span><span class="va">SBP</span><span class="op">)</span><span class="op">)</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
 <span>                            col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html" class="external-link">grey</a></span><span class="op">(</span><span class="fl">0.8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" width="100%" style="display: block; margin: auto;"> or marking the posterior mean and 2.5% and 97.5% quantiles:</p>
+<p><img src="figures_AfterFitting/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="100%" style="display: block; margin: auto;"> or marking the posterior mean and 2.5% and 97.5% quantiles:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">SBP</span><span class="op">$</span><span class="va">regcoef</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Mean'</span>, <span class="st">'2.5%'</span>, <span class="st">'97.5%'</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>             <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">$</span><span class="va">res</span><span class="op">$</span><span class="va">SBP</span><span class="op">$</span><span class="va">sigma</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Mean'</span>, <span class="st">'2.5%'</span>, <span class="st">'97.5%'</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
@@ -193,7 +193,7 @@
 <span>                       <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">res</span><span class="op">[</span>, <span class="st">"97.5%"</span><span class="op">]</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span>         <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/densplot15a-1.png" title="plot of chunk densplot15a" alt="plot of chunk densplot15a" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/densplot15a-1.png" alt="plot of chunk densplot15a" width="100%" style="display: block; margin: auto;"></p>
 <p>Like with <code><a href="../reference/traceplot.html">traceplot()</a></code> it is possible to use the <strong>ggplot2</strong> version of <code><a href="../reference/densplot.html">densplot()</a></code> when setting <code>use_ggplot = TRUE</code>. Here, vertical lines can be added as additional layers:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># fit the complete-case version of the model</span></span>
@@ -240,7 +240,7 @@
 <span>                     limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'JointAI'</span>, <span class="st">'cc'</span><span class="op">)</span>,</span>
 <span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span>,</span>
 <span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'JointAI'</span>, <span class="st">'compl.case'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/ggdens15a-1.png" title="plot of chunk ggdens15a" alt="plot of chunk ggdens15a" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/ggdens15a-1.png" alt="plot of chunk ggdens15a" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -348,7 +348,7 @@
 <div class="section level3">
 <h3 id="tail-probability">Tail probability<a class="anchor" aria-label="anchor" href="#tail-probability"></a>
 </h3>
-<p>The tail probability, calculated as <span class="math inline">\(2\times\min\left\{Pr(\theta &gt; 0), Pr(\theta &lt; 0)\right\},\)</span> where <span class="math inline">\(\theta\)</span> is the parameter of interest, is a measure of how likely the value 0 is under the estimated posterior distribution. The figure visualizes three examples of posterior distributions and the corresponding minimum of <span class="math inline">\(Pr(\theta &gt; 0)\)</span> and <span class="math inline">\(Pr(\theta &lt; 0)\)</span> (shaded area): <img src="figures_AfterFitting/tailprob-1.png" title="plot of chunk tailprob" alt="plot of chunk tailprob" width="100%" style="display: block; margin: auto;"></p>
+<p>The tail probability, calculated as <span class="math inline">\(2\times\min\left\{Pr(\theta &gt; 0), Pr(\theta &lt; 0)\right\},\)</span> where <span class="math inline">\(\theta\)</span> is the parameter of interest, is a measure of how likely the value 0 is under the estimated posterior distribution. The figure visualizes three examples of posterior distributions and the corresponding minimum of <span class="math inline">\(Pr(\theta &gt; 0)\)</span> and <span class="math inline">\(Pr(\theta &lt; 0)\)</span> (shaded area): <img src="figures_AfterFitting/tailprob-1.png" alt="plot of chunk tailprob" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -395,7 +395,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.6</span>, <span class="fl">0</span><span class="op">)</span>, mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/MC_error.html">MC_error</a></span><span class="op">(</span><span class="va">mod13a</span><span class="op">)</span><span class="op">)</span>  <span class="co"># left panel: all iterations 101:600</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/MC_error.html">MC_error</a></span><span class="op">(</span><span class="va">mod13a</span>, end <span class="op">=</span> <span class="fl">250</span><span class="op">)</span><span class="op">)</span>  <span class="co"># right panel: iterations 101:250</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/MCE15a-1.png" title="plot of chunk MCE15a" alt="plot of chunk MCE15a" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/MCE15a-1.png" alt="plot of chunk MCE15a" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -477,7 +477,7 @@
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">mod13c</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                               other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'beta[4]'</span>, <span class="st">'beta[5]'</span><span class="op">)</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;"></p>
 <p>This also works when a subset of the imputed values should be displayed:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># re-fit the model and monitor the imputed values</span></span>
@@ -490,7 +490,7 @@
 <span></span>
 <span><span class="co"># pass "sub3" to "subset" via "other", for example in a traceplot:</span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod13d</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">FALSE</span>, other <span class="op">=</span> <span class="va">sub3</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/trace15d-1.png" title="plot of chunk trace15d" alt="plot of chunk trace15d" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/trace15d-1.png" alt="plot of chunk trace15d" style="display: block; margin: auto;"></p>
 <p>When the number of imputed values is large or in order to check convergence of random effects, it may not be feasible to plot and inspect all trace plots. In that case a random subset of, for instance the random effects, can be selected (output not shown):</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># re-fit the model monitoring the random effects</span></span>
@@ -502,7 +502,7 @@
 <span><span class="co"># to plot the chains of 12 randomly selected random intercepts and slopes:</span></span>
 <span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod13e</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>analysis_main <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                                other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">ri</span>, size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level3">
@@ -515,19 +515,19 @@
 <span>                progress.bar <span class="op">=</span> <span class="st">'none'</span>, n.chains <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">mod14</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/densplot.html">densplot</a></span><span class="op">(</span><span class="va">mod14</span>, exclude_chains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/unnamed-chunk-15-2.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/unnamed-chunk-15-2.png" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod14</span>, thin <span class="op">=</span> <span class="fl">10</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/unnamed-chunk-16-1.png" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod14</span>, start <span class="op">=</span> <span class="fl">150</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/unnamed-chunk-16-2.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/unnamed-chunk-16-2.png" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/traceplot.html">traceplot</a></span><span class="op">(</span><span class="va">mod14</span>, end <span class="op">=</span> <span class="fl">120</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/unnamed-chunk-16-3.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/unnamed-chunk-16-3.png" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -567,7 +567,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">pred</span><span class="op">$</span><span class="va">newdata</span><span class="op">$</span><span class="va">age</span>, <span class="va">pred</span><span class="op">$</span><span class="va">fitted</span>,</span>
 <span>        lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">'l'</span>, col <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>        xlab <span class="op">=</span> <span class="st">'age in months'</span>, ylab <span class="op">=</span> <span class="st">'predicted value'</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/unnamed-chunk-19-1.png" alt="plot of chunk unnamed-chunk-19" width="90%" style="display: block; margin: auto;"></p>
 <p>It is possible to have multiple variables vary and to set values for these variables:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create dataset for prediction</span></span>
@@ -593,7 +593,7 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_fill_viridis_d</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">'maternal height'</span>,</span>
 <span>                       aesthetics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'colour'</span>, <span class="st">'fill'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">'Expected BMI'</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">18</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/unnamed-chunk-20-1.png" alt="plot of chunk unnamed-chunk-20" width="90%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -610,7 +610,7 @@
 <p>The function <code><a href="../reference/plot_imp_distr.html">plot_imp_distr()</a></code> allows us to visually compare the distribution of the observed and imputed values.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_imp_distr.html">plot_imp_distr</a></span><span class="op">(</span><span class="va">impDF</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figures_AfterFitting/unnamed-chunk-22-1.png" title="plot of chunk unnamed-chunk-22" alt="plot of chunk unnamed-chunk-22" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figures_AfterFitting/unnamed-chunk-22-1.png" alt="plot of chunk unnamed-chunk-22" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="footnotes">
 <hr>
