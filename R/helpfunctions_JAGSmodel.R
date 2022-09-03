@@ -76,7 +76,7 @@ paste_coef <- function(parname, parelmts) {
 #' @param x vector of character strings; to be scaled, typically matrix columns
 #' @param rows integer vector; row numbers of the matrix containing the scaling
 #'             information
-#' @param scale_pars matrix containing the scalign information, with columns
+#' @param scale_pars matrix containing the scaling information, with columns
 #'                   "center" and "scale"
 #' @param scalemat the name of the scaling matrix in the JAGS model
 #'                 (e.g. "spM_id")

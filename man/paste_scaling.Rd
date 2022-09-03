@@ -12,7 +12,7 @@ paste_scaling(x, rows, scale_pars, scalemat)
 \item{rows}{integer vector; row numbers of the matrix containing the scaling
 information}
 
-\item{scale_pars}{matrix containing the scalign information, with columns
+\item{scale_pars}{matrix containing the scaling information, with columns
 "center" and "scale"}
 
 \item{scalemat}{the name of the scaling matrix in the JAGS model

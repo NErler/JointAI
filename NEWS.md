@@ -1,4 +1,4 @@
-# JointAI Development Vesion
+# JointAI Development Version
 
 
 # JointAI 1.0.4
