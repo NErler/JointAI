@@ -307,26 +307,26 @@
 <span><span class="va">init_list</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; [[1]]$beta</span></span>
-<span><span class="co">#&gt; [1] -0.50459050 -0.03125725  0.28303539  1.52560602</span></span>
+<span><span class="co">#&gt; [1]  0.98180721 -0.13232190 -0.08910872 -0.32089069</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$tau_SBP</span></span>
-<span><span class="co">#&gt; [1] 2.509837</span></span>
+<span><span class="co">#&gt; [1] 2.261221</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
 <span><span class="co">#&gt; [[2]]$beta</span></span>
-<span><span class="co">#&gt; [1]  0.4479225 -2.3130983 -0.1082095 -0.2300070</span></span>
+<span><span class="co">#&gt; [1] -0.09902429 -0.48920770 -1.14972425 -0.33205214</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]$tau_SBP</span></span>
-<span><span class="co">#&gt; [1] 0.1790482</span></span>
+<span><span class="co">#&gt; [1] 1.6953</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]</span></span>
 <span><span class="co">#&gt; [[3]]$beta</span></span>
-<span><span class="co">#&gt; [1] -0.5389389  0.4795569  0.8242279 -0.6496359</span></span>
+<span><span class="co">#&gt; [1]  0.6344460 -0.1508987  1.4343681 -0.4751287</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]$tau_SBP</span></span>
-<span><span class="co">#&gt; [1] 0.8685091</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.239896</span></span></code></pre></div>
 <p>The list is then passed to the argument <code>inits</code>. The amended version of the user provided lists of initial values are stored in the JointAI object:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod4a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">WC</span>, data <span class="op">=</span> <span class="va">NHANES</span>, progress.bar <span class="op">=</span> <span class="st">'none'</span>,</span>
@@ -335,44 +335,44 @@
 <span><span class="va">mod4a</span><span class="op">$</span><span class="va">mcmc_settings</span><span class="op">$</span><span class="va">inits</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; [[1]]$beta</span></span>
-<span><span class="co">#&gt; [1] -0.50459050 -0.03125725  0.28303539  1.52560602</span></span>
+<span><span class="co">#&gt; [1]  0.98180721 -0.13232190 -0.08910872 -0.32089069</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$tau_SBP</span></span>
-<span><span class="co">#&gt; [1] 2.509837</span></span>
+<span><span class="co">#&gt; [1] 2.261221</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$.RNG.name</span></span>
-<span><span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span></span>
+<span><span class="co">#&gt; [1] "base::Wichmann-Hill"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$.RNG.seed</span></span>
-<span><span class="co">#&gt; [1] 10423</span></span>
+<span><span class="co">#&gt; [1] 25227</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
 <span><span class="co">#&gt; [[2]]$beta</span></span>
-<span><span class="co">#&gt; [1]  0.4479225 -2.3130983 -0.1082095 -0.2300070</span></span>
+<span><span class="co">#&gt; [1] -0.09902429 -0.48920770 -1.14972425 -0.33205214</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]$tau_SBP</span></span>
-<span><span class="co">#&gt; [1] 0.1790482</span></span>
+<span><span class="co">#&gt; [1] 1.6953</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]$.RNG.name</span></span>
-<span><span class="co">#&gt; [1] "base::Mersenne-Twister"</span></span>
+<span><span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]$.RNG.seed</span></span>
-<span><span class="co">#&gt; [1] 73745</span></span>
+<span><span class="co">#&gt; [1] 73935</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]</span></span>
 <span><span class="co">#&gt; [[3]]$beta</span></span>
-<span><span class="co">#&gt; [1] -0.5389389  0.4795569  0.8242279 -0.6496359</span></span>
+<span><span class="co">#&gt; [1]  0.6344460 -0.1508987  1.4343681 -0.4751287</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]$tau_SBP</span></span>
-<span><span class="co">#&gt; [1] 0.8685091</span></span>
+<span><span class="co">#&gt; [1] 0.239896</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]$.RNG.name</span></span>
-<span><span class="co">#&gt; [1] "base::Super-Duper"</span></span>
+<span><span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]$.RNG.seed</span></span>
-<span><span class="co">#&gt; [1] 58853</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 78829</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="initial-values-as-a-function">Initial values as a function<a class="anchor" aria-label="anchor" href="#initial-values-as-a-function"></a>
@@ -387,10 +387,10 @@
 <span></span>
 <span><span class="fu">inits_fun</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $beta</span></span>
-<span><span class="co">#&gt; [1] -0.9351923 -0.3839382  1.9204447  0.3384682</span></span>
+<span><span class="co">#&gt; [1] -0.6356070 -0.3055528  0.8793469 -0.2782208</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $alpha</span></span>
-<span><span class="co">#&gt; [1] -0.07066784  1.12673047  0.60939865</span></span>
+<span><span class="co">#&gt; [1]  0.1742126 -0.4677082 -1.0433514</span></span>
 <span></span>
 <span></span>
 <span><span class="va">mod4b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">WC</span>, data <span class="op">=</span> <span class="va">NHANES</span>, progress.bar <span class="op">=</span> <span class="st">'none'</span>,</span>
@@ -399,44 +399,44 @@
 <span><span class="va">mod4b</span><span class="op">$</span><span class="va">mcmc_settings</span><span class="op">$</span><span class="va">inits</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; [[1]]$beta</span></span>
-<span><span class="co">#&gt; [1]  0.7514524 -0.8720740  0.3316645  0.8140112</span></span>
+<span><span class="co">#&gt; [1]  0.96865024 -0.05027993 -0.52892431 -0.25514484</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$alpha</span></span>
-<span><span class="co">#&gt; [1]  0.5051482 -0.8222867 -0.3449841</span></span>
+<span><span class="co">#&gt; [1] -0.6841551 -1.2568492 -0.3380750</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$.RNG.name</span></span>
 <span><span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$.RNG.seed</span></span>
-<span><span class="co">#&gt; [1] 66668</span></span>
+<span><span class="co">#&gt; [1] 47693</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
 <span><span class="co">#&gt; [[2]]$beta</span></span>
-<span><span class="co">#&gt; [1]  0.24036698 -0.08820242  0.19433026  2.66363800</span></span>
+<span><span class="co">#&gt; [1] -1.661920  1.131845  1.304162  2.903652</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]$alpha</span></span>
-<span><span class="co">#&gt; [1]  0.9460067 -1.2935603 -1.1426963</span></span>
+<span><span class="co">#&gt; [1] -0.4217985  0.8747177  0.1813449</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]$.RNG.name</span></span>
-<span><span class="co">#&gt; [1] "base::Super-Duper"</span></span>
+<span><span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]$.RNG.seed</span></span>
-<span><span class="co">#&gt; [1] 31868</span></span>
+<span><span class="co">#&gt; [1] 84350</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]</span></span>
 <span><span class="co">#&gt; [[3]]$beta</span></span>
-<span><span class="co">#&gt; [1] -0.5145103  0.4608846 -0.4758482  0.4042195</span></span>
+<span><span class="co">#&gt; [1] -0.8920179  0.1102568  0.5086341  1.0578035</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]$alpha</span></span>
-<span><span class="co">#&gt; [1]  1.3016916 -1.1338717  0.4988606</span></span>
+<span><span class="co">#&gt; [1] -0.4049666  0.6928784 -0.9261224</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]$.RNG.name</span></span>
-<span><span class="co">#&gt; [1] "base::Marsaglia-Multicarry"</span></span>
+<span><span class="co">#&gt; [1] "base::Super-Duper"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[3]]$.RNG.seed</span></span>
-<span><span class="co">#&gt; [1] 95871</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 61097</span></span></code></pre></div>
 <p>When a function is supplied, the function will be evaluated once per chain and the resulting list is stored.</p>
 </div>
 </div>
@@ -455,18 +455,18 @@
 <span><span class="co">#&gt; List of 15</span></span>
 <span><span class="co">#&gt;  $ M_ID        : num [1:200, 1:5] NA NA NA NA NA 1 NA NA NA NA ...</span></span>
 <span><span class="co">#&gt;  $ M_lvlone    : num [1:2400, 1:3] NA NA 0 0 NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;  $ RinvD_bmi_ID: num [1:2, 1:2] 2.158 NA NA 0.455</span></span>
-<span><span class="co">#&gt;  $ alpha       : num [1:7] 45.5006 0.1483 -0.0883 0.3032 3.8665 ...</span></span>
-<span><span class="co">#&gt;  $ b_bmi_ID    : num [1:200, 1:2] 15.7 16.9 15 15.8 17.3 ...</span></span>
-<span><span class="co">#&gt;  $ b_hc_ID     : num [1:200, 1] 44 45 48 47.3 46.3 ...</span></span>
-<span><span class="co">#&gt;  $ beta        : num [1:6] 16.596 -0.0639 -0.6336 -0.2248 -1.3219 ...</span></span>
-<span><span class="co">#&gt;  $ delta_SMOKE : num -1.24</span></span>
-<span><span class="co">#&gt;  $ gamma_SMOKE : num [1:2] -1.27 NA</span></span>
-<span><span class="co">#&gt;  $ invD_bmi_ID : num [1:2, 1:2] 1.55 -1.39 -1.39 7.34</span></span>
-<span><span class="co">#&gt;  $ invD_hc_ID  : num [1, 1] 0.666</span></span>
+<span><span class="co">#&gt;  $ RinvD_bmi_ID: num [1:2, 1:2] 2.817 NA NA 0.303</span></span>
+<span><span class="co">#&gt;  $ alpha       : num [1:7] 45.408 -0.094 -0.345 0.177 3.801 ...</span></span>
+<span><span class="co">#&gt;  $ b_bmi_ID    : num [1:200, 1:2] 16 17 15.2 15.5 17.4 ...</span></span>
+<span><span class="co">#&gt;  $ b_hc_ID     : num [1:200, 1] 44.2 45.1 47.7 48 45.5 ...</span></span>
+<span><span class="co">#&gt;  $ beta        : num [1:6] 16.5469 -0.0585 -0.1878 -0.2727 -1.375 ...</span></span>
+<span><span class="co">#&gt;  $ delta_SMOKE : num -1.46</span></span>
+<span><span class="co">#&gt;  $ gamma_SMOKE : num [1:2] -1.32 NA</span></span>
+<span><span class="co">#&gt;  $ invD_bmi_ID : num [1:2, 1:2] 1.63 -1.38 -1.38 6.99</span></span>
+<span><span class="co">#&gt;  $ invD_hc_ID  : num [1, 1] 0.745</span></span>
 <span><span class="co">#&gt;  $ mu_b_bmi_ID : num [1:200, 1:2] NA NA NA NA NA NA NA NA NA NA ...</span></span>
-<span><span class="co">#&gt;  $ tau_HEIGHT_M: num 0.0187</span></span>
-<span><span class="co">#&gt;  $ tau_bmi     : num 4.84</span></span>
+<span><span class="co">#&gt;  $ tau_HEIGHT_M: num 0.0179</span></span>
+<span><span class="co">#&gt;  $ tau_bmi     : num 4.81</span></span>
 <span><span class="co">#&gt;  $ tau_hc      : num 0.238</span></span></code></pre></div>
 <p><code>M_ID</code> and <code>M_lvlone</code> are design matrices containing the the parts of the variables that belong to a given level of the hierarchy. In this example, <code>M_ID</code> contains all the subject specific variables, <code>M_lvlone</code> the time-varying variables. In <strong>JointAI</strong>, design matrices are always named <code>M_&lt;level&gt;</code>, and <code>lvlone</code> refers to the lowest level, the level for which there is no grouping variable.</p>
 <p>The first eight rows of <code>M_ID</code> in the data that is passed to JAGS (which is stored in <code>data_list</code> in a JointAI object) are:</p>
@@ -530,9 +530,9 @@
 <p>The element <code>RinvD_bmi_ID</code> in the initial values has to be a 2 <span class="math inline">\(\times\)</span> 2 matrix, with positive values on the diagonal and <code>NA</code> as off-diagonal elements, since these are fixed in the data:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">mod4c</span><span class="op">$</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">RinvD_bmi_ID</span></span>
-<span><span class="co">#&gt;         [,1]      [,2]</span></span>
-<span><span class="co">#&gt; [1,] 2.15819        NA</span></span>
-<span><span class="co">#&gt; [2,]      NA 0.4548085</span></span></code></pre></div>
+<span><span class="co">#&gt;          [,1]      [,2]</span></span>
+<span><span class="co">#&gt; [1,] 2.817405        NA</span></span>
+<span><span class="co">#&gt; [2,]       NA 0.3031673</span></span></code></pre></div>
 <p>Elements that are completely unobserved, like the parameter vectors <code>alpha</code> and <code>beta</code>, the random effects <code>b_&lt;response&gt;_&lt;level&gt;</code> (e.g. <code>b_bmi_ID</code> and <code>b_hc_ID</code>) or scalar parameters <code>delta_&lt;response&gt;</code> or <code>tau_&lt;response&gt;</code> are entirely specified in the initial values.</p>
 </div>
 </div>
