@@ -159,7 +159,7 @@ check_classes <- function(data, fixed = NULL, random = NULL, auxvars = NULL,
 drop_levels <- function(data, allvars, mess = TRUE) {
 
   data_orig <- data
-  data[allvars] <- droplevels(data[allvars])
+  # data[allvars] <- droplevels(data[allvars])
 
   if (mess) {
     lvl1 <- sapply(data_orig[allvars], function(x) length(levels(x)))

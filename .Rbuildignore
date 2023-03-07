@@ -45,3 +45,6 @@ sim_mldata.R
 ^\.github$
 ^codecov\.yml$
 ^JointAI\.Rproj$
+
+
+revdep/

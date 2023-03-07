@@ -38,7 +38,7 @@ find_scalevars <- function(mat, refs, fcts_all, interactions, data) {
     k <- replace_dummy(k, refs)
 
     if (k %in% names(data)) {
-      if (is.numeric(data[, k])) k
+      if (is.numeric(data[, k]) & any(!is.na(data[, k]))) k
     } else if (k %in% fcts_all$colname) {
       # When splines are used, "k" can't be evaluated, so we use the column
       # 'fct' instead. The result of "eval" for splines is then a matrix,
