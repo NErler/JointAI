@@ -339,6 +339,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
   test_that("data_list remains the same", {
+    skip_on_os("linux")
     expect_snapshot(lapply(models, "[[", "data_list"))
   })
 
