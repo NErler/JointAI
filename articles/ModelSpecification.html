@@ -27,6 +27,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@N_Erler">
 <meta name="twitter:site" content="@N_Erler">
+<meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -53,7 +54,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">JointAI</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.0.4.9000</span>
       </span>
     </div>
 
@@ -131,7 +132,7 @@
 
       
 
-      </header><script src="ModelSpecification_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Model Specification</h1>
@@ -145,13 +146,25 @@
 
     
     
-<p>In this vignette, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a> data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a> for examples in longitudinal data. For more info on these datasets, check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing Incomplete Data</em></a>, in which the distributions of variables and missing values in both sets is explored.</p>
-<p>To learn more about the theoretical background of the statistical approach implemented in <strong>JointAI</strong>, check out the vignette <a href="https://nerler.github.io/JointAI/articles/TheoreticalBackground.html">Theoretical Background</a>.</p>
-<p><strong>Note:</strong><br> In some of the examples we use <code>n.adapt = 0</code> (and <code>n.iter = 0</code>, which is the default). This is to prevent the MCMC sampling and thereby reduce computational time when compiling this vignette.</p>
+<p>In this vignette, we use the <a href="https://nerler.github.io/JointAI/reference/NHANES.html">NHANES</a>
+data for examples in cross-sectional data and the dataset <a href="https://nerler.github.io/JointAI/reference/simLong.html">simLong</a>
+for examples in longitudinal data. For more info on these datasets,
+check out the vignette <a href="https://nerler.github.io/JointAI/articles/VisualizingIncompleteData.html"><em>Visualizing
+Incomplete Data</em></a>, in which the distributions of variables and
+missing values in both sets is explored.</p>
+<p>To learn more about the theoretical background of the statistical
+approach implemented in <strong>JointAI</strong>, check out the vignette
+<a href="https://nerler.github.io/JointAI/articles/TheoreticalBackground.html">Theoretical
+Background</a>.</p>
+<p><strong>Note:</strong><br> In some of the examples we use
+<code>n.adapt = 0</code> (and <code>n.iter = 0</code>, which is the
+default). This is to prevent the MCMC sampling and thereby reduce
+computational time when compiling this vignette.</p>
 <div class="section level2">
 <h2 id="analysis-model-type">Analysis model type<a class="anchor" aria-label="anchor" href="#analysis-model-type"></a>
 </h2>
-<p><strong>JointAI</strong> has several main functions (which are abbreviated with <code>*_imp()</code>):</p>
+<p><strong>JointAI</strong> has several main functions (which are
+abbreviated with <code>*_imp()</code>):</p>
 <ul>
 <li>
 <code><a href="../reference/model_imp.html">lm_imp()</a></code>: linear regression</li>
@@ -162,15 +175,20 @@
 <li>
 <code><a href="../reference/model_imp.html">betareg_imp()</a></code>: beta regression</li>
 <li>
-<code><a href="../reference/model_imp.html">clm_imp()</a></code>: cumulative logit models for ordinal data</li>
+<code><a href="../reference/model_imp.html">clm_imp()</a></code>: cumulative logit models for ordinal
+data</li>
 <li>
-<code><a href="../reference/model_imp.html">mlogit_imp()</a></code>: multinomial logit models for unordered factors</li>
+<code><a href="../reference/model_imp.html">mlogit_imp()</a></code>: multinomial logit models for unordered
+factors</li>
 <li>
-<code><a href="../reference/model_imp.html">lme_imp()</a></code> / <code><a href="../reference/model_imp.html">lmer_imp()</a></code>: linear mixed effects regression</li>
+<code><a href="../reference/model_imp.html">lme_imp()</a></code> / <code><a href="../reference/model_imp.html">lmer_imp()</a></code>: linear mixed
+effects regression</li>
 <li>
-<code><a href="../reference/model_imp.html">glme_imp()</a></code> / <code><a href="../reference/model_imp.html">glmer_imp()</a></code>: generalized linear mixed effects regression</li>
+<code><a href="../reference/model_imp.html">glme_imp()</a></code> / <code><a href="../reference/model_imp.html">glmer_imp()</a></code>: generalized
+linear mixed effects regression</li>
 <li>
-<code><a href="../reference/model_imp.html">lognormmm_imp()</a></code>: log-normal mixed effects regression</li>
+<code><a href="../reference/model_imp.html">lognormmm_imp()</a></code>: log-normal mixed effects
+regression</li>
 <li>
 <code><a href="../reference/model_imp.html">betamm_imp()</a></code>: beta mixed effects regression</li>
 <li>
@@ -178,20 +196,37 @@
 <li>
 <code><a href="../reference/model_imp.html">mlogitmm_imp()</a></code>: multinomial logit mixed models</li>
 <li>
-<code><a href="../reference/model_imp.html">survreg_imp()</a></code>: parametric (Weibull) survival models</li>
+<code><a href="../reference/model_imp.html">survreg_imp()</a></code>: parametric (Weibull) survival
+models</li>
 <li>
 <code><a href="../reference/model_imp.html">coxph_imp()</a></code>: Proportional hazards survival models</li>
 <li>
-<code><a href="../reference/model_imp.html">JM_imp()</a></code>: Joint model for longitudinal and survival data</li>
+<code><a href="../reference/model_imp.html">JM_imp()</a></code>: Joint model for longitudinal and survival
+data</li>
 </ul>
-<p>Specification of these functions is similar to the specification of the complete data versions <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>, <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm()</a></code>, <code>lme()</code> (from package <a href="https://CRAN.R-project.org/package=nlme" class="external-link"><strong>nlme</strong></a>) or <a href="https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html" class="external-link"><code>lmer()</code></a> (from package <a href="https://CRAN.R-project.org/package=lme4" class="external-link"><strong>lme4</strong></a>) and <a href="https://stat.ethz.ch/R-manual/R-devel/library/survival/html/survreg.html" class="external-link"><code>survreg()</code></a> and <a href="https://stat.ethz.ch/R-manual/R-devel/library/survival/html/coxph.html" class="external-link"><code>coxph()</code></a> (from package <a href="https://CRAN.R-project.org/package=survival" class="external-link"><strong>survival</strong></a>).</p>
-<p>All functions require the arguments <code>formula</code> (or <code>fixed</code> and <code>random</code> in for mixed models) and <code>data</code>.</p>
-<p>Specification of the (fixed effects) model formula is demonstrated in section <a href="#ModelFormula">Model formula</a>, specification of the random random effects in section <a href="#MultiLevelStructure">Multi-level structure &amp; longitudinal covariates</a>.</p>
-<p>Additionally, <code><a href="../reference/model_imp.html">glm_imp()</a></code>, <code><a href="../reference/model_imp.html">glme_imp()</a></code> and <code><a href="../reference/model_imp.html">glmer_imp()</a></code> require the specification of the model <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html" class="external-link"><code>family</code></a> (and <code>link</code> function).</p>
+<p>Specification of these functions is similar to the specification of
+the complete data versions <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>, <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm()</a></code>,
+<code>lme()</code> (from package <a href="https://CRAN.R-project.org/package=nlme" class="external-link"><strong>nlme</strong></a>)
+or <a href="https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/lme.html" class="external-link"><code>lmer()</code></a>
+(from package <a href="https://CRAN.R-project.org/package=lme4" class="external-link"><strong>lme4</strong></a>)
+and <a href="https://stat.ethz.ch/R-manual/R-devel/library/survival/html/survreg.html" class="external-link"><code>survreg()</code></a>
+and <a href="https://stat.ethz.ch/R-manual/R-devel/library/survival/html/coxph.html" class="external-link"><code>coxph()</code></a>
+(from package <a href="https://CRAN.R-project.org/package=survival" class="external-link"><strong>survival</strong></a>).</p>
+<p>All functions require the arguments <code>formula</code> (or
+<code>fixed</code> and <code>random</code> in for mixed models) and
+<code>data</code>.</p>
+<p>Specification of the (fixed effects) model formula is demonstrated in
+section <a href="#ModelFormula">Model formula</a>, specification of the
+random random effects in section <a href="#MultiLevelStructure">Multi-level structure &amp; longitudinal
+covariates</a>.</p>
+<p>Additionally, <code><a href="../reference/model_imp.html">glm_imp()</a></code>, <code><a href="../reference/model_imp.html">glme_imp()</a></code> and
+<code><a href="../reference/model_imp.html">glmer_imp()</a></code> require the specification of the model <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html" class="external-link"><code>family</code></a>
+(and <code>link</code> function).</p>
 <div class="section level3">
 <h3 id="model-family-and-link-functions">Model family and link functions<a class="anchor" aria-label="anchor" href="#model-family-and-link-functions"></a>
 </h3>
-<p>Implemented families and links for <code><a href="../reference/model_imp.html">glm_imp()</a></code>, <code><a href="../reference/model_imp.html">glme_imp()</a></code> and <code><a href="../reference/model_imp.html">glmer_imp()</a></code> are</p>
+<p>Implemented families and links for <code><a href="../reference/model_imp.html">glm_imp()</a></code>,
+<code><a href="../reference/model_imp.html">glme_imp()</a></code> and <code><a href="../reference/model_imp.html">glmer_imp()</a></code> are</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">family</th>
@@ -200,28 +235,35 @@
 <tbody>
 <tr class="odd">
 <td align="left"><code>gaussian</code></td>
-<td align="left">with links: <code>identity</code>, <code>log</code>
+<td align="left">with links: <code>identity</code>,
+<code>log</code>
 </td>
 </tr>
 <tr class="even">
 <td align="left"><code>binomial</code></td>
-<td align="left">with links: <code>logit</code>, <code>probit</code>, <code>log</code>, <code>cloglog</code>
+<td align="left">with links: <code>logit</code>, <code>probit</code>,
+<code>log</code>, <code>cloglog</code>
 </td>
 </tr>
 <tr class="odd">
 <td align="left"><code>Gamma</code></td>
-<td align="left">with links: <code>inverse</code>, <code>identity</code>, <code>log</code>
+<td align="left">with links: <code>inverse</code>,
+<code>identity</code>, <code>log</code>
 </td>
 </tr>
 <tr class="even">
 <td align="left"><code>poisson</code></td>
-<td align="left">with links: <code>log</code>, <code>identity</code>
+<td align="left">with links: <code>log</code>,
+<code>identity</code>
 </td>
 </tr>
 </tbody>
 </table>
-<p>The argument <code>family</code> can be provided as character string or as a function. If the link function is omitted, the <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html" class="external-link">default link</a> is used.</p>
-<p><strong>Example:</strong><br> The following three specifications are equal:</p>
+<p>The argument <code>family</code> can be provided as character string
+or as a function. If the link function is omitted, the <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html" class="external-link">default
+link</a> is used.</p>
+<p><strong>Example:</strong><br> The following three specifications are
+equal:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod1a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">creat</span>, data <span class="op">=</span> <span class="va">NHANES</span>,</span>
 <span>                 family <span class="op">=</span> <span class="st">"binomial"</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
@@ -238,7 +280,8 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Family: binomial </span></span>
 <span><span class="co">#&gt; Link function: logit</span></span></code></pre></div>
-<p>To use, for instance, a “probit” link instead, this needs to be specified explicitly:</p>
+<p>To use, for instance, a “probit” link instead, this needs to be
+specified explicitly:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod1d</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">creat</span>, data <span class="op">=</span> <span class="va">NHANES</span>,</span>
 <span>               family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">'probit'</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
@@ -254,13 +297,28 @@
 <div class="section level2">
 <h2 id="ModelFormula">Model formula<a class="anchor" aria-label="anchor" href="#ModelFormula"></a>
 </h2>
-<p>The arguments <code>formula</code> and <code>fixed</code> take a two-sided <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html" class="external-link"><code>formula</code></a> object, where <code>~</code> separates the response (outcome / dependent variable) from the linear predictor, in which covariates (independent variables) are separated by <code>+</code>. An intercept is added automatically (except in proportional hazard models or models for ordinal outcomes).</p>
-<p><code><a href="../reference/model_imp.html">survreg_imp()</a></code> and <code><a href="../reference/model_imp.html">coxph_imp()</a></code> expect a <a href="https://stat.ethz.ch/R-manual/R-devel/library/survival/html/Surv.html" class="external-link">survival object</a> (created with <code><a href="../reference/Surv.html">Surv()</a></code>) on the left hand side of the model formula. Currently, only right censored data can be handled and there can only be one type of event (i.e., no competing risks or multi-state models).</p>
-<p>Note: <code>formula</code> and <code>fixed</code> can not be specified together. You either need to provide the argument <code>formula</code> or the arguments <code>fixed</code> and <code>random</code>.</p>
+<p>The arguments <code>formula</code> and <code>fixed</code> take a
+two-sided <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/formula.html" class="external-link"><code>formula</code></a>
+object, where <code>~</code> separates the response (outcome / dependent
+variable) from the linear predictor, in which covariates (independent
+variables) are separated by <code>+</code>. An intercept is added
+automatically (except in proportional hazard models or models for
+ordinal outcomes).</p>
+<p><code><a href="../reference/model_imp.html">survreg_imp()</a></code> and <code><a href="../reference/model_imp.html">coxph_imp()</a></code> expect a <a href="https://stat.ethz.ch/R-manual/R-devel/library/survival/html/Surv.html" class="external-link">survival
+object</a> (created with <code><a href="../reference/Surv.html">Surv()</a></code>) on the left hand side of
+the model formula. Currently, only right censored data can be handled
+and there can only be one type of event (i.e., no competing risks or
+multi-state models).</p>
+<p>Note: <code>formula</code> and <code>fixed</code> can not be
+specified together. You either need to provide the argument
+<code>formula</code> or the arguments <code>fixed</code> and
+<code>random</code>.</p>
 <div class="section level3">
 <h3 id="interactions">Interactions<a class="anchor" aria-label="anchor" href="#interactions"></a>
 </h3>
-<p>Interactions between variables can be introduced using <code>:</code> or <code>*</code>, which adds the interaction term AND the main effects, i.e.,</p>
+<p>Interactions between variables can be introduced using <code>:</code>
+or <code>*</code>, which adds the interaction term AND the main effects,
+i.e.,</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">*</span> <span class="va">creat</span></span></code></pre></div>
 <p>is equivalent to</p>
@@ -269,12 +327,22 @@
 <div class="section level4">
 <h4 id="interaction-with-multiple-variables">Interaction with multiple variables<a class="anchor" aria-label="anchor" href="#interaction-with-multiple-variables"></a>
 </h4>
-<p>Interactions between multiple variables can be specified using parentheses:</p>
+<p>Interactions between multiple variables can be specified using
+parentheses:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod2a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">*</span> <span class="op">(</span><span class="va">age</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">creat</span><span class="op">)</span>,</span>
 <span>                 data <span class="op">=</span> <span class="va">NHANES</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
-<p>The function <a href="https://nerler.github.io/JointAI/reference/parameters.html"><code>parameters()</code></a> returns a matrix off all parameters that are specified to be followed (column <code>coef</code>) and, for regression coefficients, the name of the variable the coefficient relates to (<code>varname</code>), the outcome variable of the respective model <code>outcome</code>. For multinomial models, which have multiple linear predictors, the column <code>outcat</code> identifies the category of the outcome the parameters refer to.</p>
-<p>We use the function <code><a href="../reference/parameters.html">parameters()</a></code> here and in other vignettes to demonstrate the effect that different model specifications have.</p>
+<p>The function <a href="https://nerler.github.io/JointAI/reference/parameters.html"><code>parameters()</code></a>
+returns a matrix off all parameters that are specified to be followed
+(column <code>coef</code>) and, for regression coefficients, the name of
+the variable the coefficient relates to (<code>varname</code>), the
+outcome variable of the respective model <code>outcome</code>. For
+multinomial models, which have multiple linear predictors, the column
+<code>outcat</code> identifies the category of the outcome the
+parameters refer to.</p>
+<p>We use the function <code><a href="../reference/parameters.html">parameters()</a></code> here and in other
+vignettes to demonstrate the effect that different model specifications
+have.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/parameters.html">parameters</a></span><span class="op">(</span><span class="va">mod2a</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -301,7 +369,8 @@
 <div class="section level4">
 <h4 id="higher-level-interactions">Higher level interactions<a class="anchor" aria-label="anchor" href="#higher-level-interactions"></a>
 </h4>
-<p>To specify interactions of a given level, <code>^</code> can be used:</p>
+<p>To specify interactions of a given level, <code>^</code> can be
+used:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># all two-way interactions:</span></span>
 <span><span class="va">mod2b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">glm_imp</a></span><span class="op">(</span><span class="va">educ</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="op">(</span><span class="va">age</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">creat</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>,</span>
@@ -354,18 +423,48 @@
 <span><span class="co">#&gt; 18   creat   &lt;NA&gt;           smokecurrent alpha[5]</span></span>
 <span><span class="co">#&gt; 19   smoke   &lt;NA&gt;           genderfemale alpha[6]</span></span>
 <span><span class="co">#&gt; 20   smoke   &lt;NA&gt;                    age alpha[7]</span></span></code></pre></div>
-<p>In <strong>JointAI</strong>, interactions between any variables, observed or incomplete, variables on different levels of a hierarchical structure, can be handled. When an incomplete variable is involved, the interaction term is re-calculated within each iteration of the MCMC sampling, using the imputed values from the current iteration.</p>
-<p>It is <strong>important</strong> not to pre-calculate interactions with incomplete variables as extra variables in the dataset, but to specify them in the model formula. Otherwise, imputed values of the main effect and interaction term will not match, and results may be incorrect.</p>
+<p>In <strong>JointAI</strong>, interactions between any variables,
+observed or incomplete, variables on different levels of a hierarchical
+structure, can be handled. When an incomplete variable is involved, the
+interaction term is re-calculated within each iteration of the MCMC
+sampling, using the imputed values from the current iteration.</p>
+<p>It is <strong>important</strong> not to pre-calculate interactions
+with incomplete variables as extra variables in the dataset, but to
+specify them in the model formula. Otherwise, imputed values of the main
+effect and interaction term will not match, and results may be
+incorrect.</p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="non-linear-functional-forms">Non-linear functional forms<a class="anchor" aria-label="anchor" href="#non-linear-functional-forms"></a>
 </h3>
-<p>In practice, associations between outcome and covariates do not always meet the standard assumption that all covariate effects are linear. Often, assuming a logarithmic, quadratic, or other non-linear effect is more appropriate.</p>
-<p>Non-linear associations can be specified in the model formula using functions such as <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html" class="external-link"><code>log()</code></a> (the natural logarithm), <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/MathFun.html" class="external-link"><code>sqrt()</code></a> (the square root) or <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html" class="external-link"><code>exp()</code></a> (the exponential function). It is also possible to use algebraic operations to calculate a new variable from one or more covariates. To indicate to R that the operators used in the formula should be interpreted as algebraic operators and not as formula operators, such calculations need to be wrapped in the function <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/AsIs.html" class="external-link"><code>I()</code></a>.</p>
-<p>For example, to include a quadratic effect of the variable <code>x</code> we would have to use <code>I(x^2)</code>. Just writing <code>x^2</code> would be interpreted as the interaction of <code>x</code> with itself, which simplifies to just <code>x</code>.</p>
-<p>For <em>completely observed covariates</em>, <strong>JointAI</strong> can handle any standard type of function implemented in R. This also includes splines, e.g., using <a href="https://stat.ethz.ch/R-manual/R-devel/library/splines/html/ns.html" class="external-link"><code>ns()</code></a> or <a href="https://stat.ethz.ch/R-manual/R-devel/library/splines/html/bs.html" class="external-link"><code>bs()</code></a> from the package <strong>splines</strong> (which is automatically installed with R).</p>
-<p>Functions involving <em>variables that have missing values</em> need to be re-calculated in each iteration of the MCMC sampling. Therefore, currently, only functions that can be interpreted by <a href="https://mcmc-jags.sourceforge.io/" class="external-link">JAGS</a> can be used for incomplete variables. Those functions include:</p>
+<p>In practice, associations between outcome and covariates do not
+always meet the standard assumption that all covariate effects are
+linear. Often, assuming a logarithmic, quadratic, or other non-linear
+effect is more appropriate.</p>
+<p>Non-linear associations can be specified in the model formula using
+functions such as <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html" class="external-link"><code>log()</code></a>
+(the natural logarithm), <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/MathFun.html" class="external-link"><code>sqrt()</code></a>
+(the square root) or <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Log.html" class="external-link"><code>exp()</code></a>
+(the exponential function). It is also possible to use algebraic
+operations to calculate a new variable from one or more covariates. To
+indicate to R that the operators used in the formula should be
+interpreted as algebraic operators and not as formula operators, such
+calculations need to be wrapped in the function <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/AsIs.html" class="external-link"><code>I()</code></a>.</p>
+<p>For example, to include a quadratic effect of the variable
+<code>x</code> we would have to use <code>I(x^2)</code>. Just writing
+<code>x^2</code> would be interpreted as the interaction of
+<code>x</code> with itself, which simplifies to just <code>x</code>.</p>
+<p>For <em>completely observed covariates</em>, <strong>JointAI</strong>
+can handle any standard type of function implemented in R. This also
+includes splines, e.g., using <a href="https://stat.ethz.ch/R-manual/R-devel/library/splines/html/ns.html" class="external-link"><code>ns()</code></a>
+or <a href="https://stat.ethz.ch/R-manual/R-devel/library/splines/html/bs.html" class="external-link"><code>bs()</code></a>
+from the package <strong>splines</strong> (which is automatically
+installed with R).</p>
+<p>Functions involving <em>variables that have missing values</em> need
+to be re-calculated in each iteration of the MCMC sampling. Therefore,
+currently, only functions that can be interpreted by <a href="https://mcmc-jags.sourceforge.io/" class="external-link">JAGS</a> can be used for
+incomplete variables. Those functions include:</p>
 <ul>
 <li>
 <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp()</a></code>
@@ -376,9 +475,12 @@
 <li>
 <code><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin()</a></code>, <code><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos()</a></code>
 </li>
-<li>polynomials (using <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>) and other algebraic operations involving one or multiple (in)complete variables, as long as the formula can be interpreted by <a href="https://mcmc-jags.sourceforge.io/" class="external-link">JAGS</a>.</li>
+<li>polynomials (using <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>) and other algebraic operations
+involving one or multiple (in)complete variables, as long as the formula
+can be interpreted by <a href="https://mcmc-jags.sourceforge.io/" class="external-link">JAGS</a>.</li>
 </ul>
-<p>The list of functions implemented in JAGS can be found in the <a href="https://sourceforge.net/projects/mcmc-jags/files/Manuals/" class="external-link">JAGS user manual</a>.</p>
+<p>The list of functions implemented in JAGS can be found in the <a href="https://sourceforge.net/projects/mcmc-jags/files/Manuals/" class="external-link">JAGS
+user manual</a>.</p>
 <p><strong>Some examples:</strong><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Absolute difference between bili and creat</span></span>
@@ -400,8 +502,15 @@
 <div class="section level4">
 <h4 id="what-happens-inside-jointai">What happens inside <strong>JointAI</strong>?<a class="anchor" aria-label="anchor" href="#what-happens-inside-jointai"></a>
 </h4>
-<p>When a model formula includes a function of a complete or incomplete variable, the main effect of that variable is automatically added as an auxiliary variable. (For more info on auxiliary variables, see the section <a href="#auxvars">“Auxiliary variables”</a>.) In the linear predictors of models for covariates, usually, only the main effects are used.</p>
-<p>In <code>mod3b</code> from above, for example, the spline of age is used as predictor for <code>SBP</code>, but in the imputation model for <code>bili</code>, <code>age</code> enters with a linear effect.</p>
+<p>When a model formula includes a function of a complete or incomplete
+variable, the main effect of that variable is automatically added as an
+auxiliary variable. (For more info on auxiliary variables, see the
+section <a href="#auxvars">“Auxiliary variables”</a>.) In the linear
+predictors of models for covariates, usually, only the main effects are
+used.</p>
+<p>In <code>mod3b</code> from above, for example, the spline of age is
+used as predictor for <code>SBP</code>, but in the imputation model for
+<code>bili</code>, <code>age</code> enters with a linear effect.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod3b</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Linear model for "SBP" </span></span>
@@ -416,9 +525,22 @@
 <span><span class="co">#&gt;    link: identity </span></span>
 <span><span class="co">#&gt; * Predictor variables:</span></span>
 <span><span class="co">#&gt;   (Intercept), age, genderfemale</span></span></code></pre></div>
-<p>The function <a href="https://nerler.github.io/JointAI/reference/list_models.html"><code>list_models()</code></a> prints information on all sub-models specified in a <code>JointAI</code> object. This includes the model(s) specified by the user via the model formula and all models for covariates that <strong>JointAI</strong> has specified automatically. Since here we are only interested in the predictor variables, we suppress printing of information on prior distributions, regression coefficients and other parameters by setting <code>priors</code>, <code>regcoef</code> and <code>otherpars</code> to <code>FALSE</code>.</p>
+<p>The function <a href="https://nerler.github.io/JointAI/reference/list_models.html"><code>list_models()</code></a>
+prints information on all sub-models specified in a <code>JointAI</code>
+object. This includes the model(s) specified by the user via the model
+formula and all models for covariates that <strong>JointAI</strong> has
+specified automatically. Since here we are only interested in the
+predictor variables, we suppress printing of information on prior
+distributions, regression coefficients and other parameters by setting
+<code>priors</code>, <code>regcoef</code> and <code>otherpars</code> to
+<code>FALSE</code>.</p>
 <p><br></p>
-<p>When a function of a variable is specified as an auxiliary variable, this function is used (as well) in the models for covariates. For example, in <code>mod3e</code>, waist circumference (<code>WC</code>) is not part of the model for <code>SBP</code>, and the auxiliary variable <code>I(WC^2)</code> is used in the linear predictor of the imputation model for <code>bili</code>: <a id="mod3e"></a></p>
+<p>When a function of a variable is specified as an auxiliary variable,
+this function is used (as well) in the models for covariates. For
+example, in <code>mod3e</code>, waist circumference (<code>WC</code>) is
+not part of the model for <code>SBP</code>, and the auxiliary variable
+<code>I(WC^2)</code> is used in the linear predictor of the imputation
+model for <code>bili</code>: <a id="mod3e"></a></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod3e</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">bili</span>, auxvars <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">WC</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
 <span></span>
@@ -442,7 +564,9 @@
 <span><span class="co">#&gt;    link: identity </span></span>
 <span><span class="co">#&gt; * Predictor variables:</span></span>
 <span><span class="co">#&gt;   (Intercept), age, genderfemale</span></span></code></pre></div>
-<p>When <code>WC</code> is used as predictor variable in the main model and a function of <code>WC</code> is specified as auxiliary variable, both variables are used as predictors in the imputation models:</p>
+<p>When <code>WC</code> is used as predictor variable in the main model
+and a function of <code>WC</code> is specified as auxiliary variable,
+both variables are used as predictors in the imputation models:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod3f</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">bili</span> <span class="op">+</span> <span class="va">WC</span>, auxvars <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">WC</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
 <span></span>
@@ -466,7 +590,10 @@
 <span><span class="co">#&gt;    link: identity </span></span>
 <span><span class="co">#&gt; * Predictor variables:</span></span>
 <span><span class="co">#&gt;   (Intercept), age, genderfemale</span></span></code></pre></div>
-<p>When a function of a covariate is used in the linear predictor of the analysis model, and that function should also be used in the linear predictor of imputation models, it is necessary to also include that function in the argument <code>auxvars</code>:</p>
+<p>When a function of a covariate is used in the linear predictor of the
+analysis model, and that function should also be used in the linear
+predictor of imputation models, it is necessary to also include that
+function in the argument <code>auxvars</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod3g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">bili</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">WC</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, auxvars <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">WC</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span>
 <span></span>
@@ -490,18 +617,53 @@
 <span><span class="co">#&gt;    link: identity </span></span>
 <span><span class="co">#&gt; * Predictor variables:</span></span>
 <span><span class="co">#&gt;   (Intercept), age, genderfemale</span></span></code></pre></div>
-<p>Incomplete variables are always imputed on their original scale, i.e.,</p>
+<p>Incomplete variables are always imputed on their original scale,
+i.e.,</p>
 <ul>
-<li>in <code>mod3b</code> the variable <code>bili</code> is imputed and the quadratic and cubic versions calculated from the imputed values.</li>
-<li>Likewise, <code>creat</code> and <code>albu</code> in <code>mod3c</code> are imputed separately, and <code>I(creat/albu^2)</code> calculated from the imputed (and observed) values.</li>
+<li>in <code>mod3b</code> the variable <code>bili</code> is imputed and
+the quadratic and cubic versions calculated from the imputed
+values.</li>
+<li>Likewise, <code>creat</code> and <code>albu</code> in
+<code>mod3c</code> are imputed separately, and
+<code>I(creat/albu^2)</code> calculated from the imputed (and observed)
+values.</li>
 </ul>
-<p><strong>Important:</strong> <br> When different transformations of the same incomplete variable are used in one model, it is strongly discouraged to calculate these transformations beforehand and to supply them as separate variables. The same is the case for interactions. <br> If, for example, a model formula contains both <code>x</code> and <code>x2</code> (where <code>x2</code> = <code>x^2</code>), they are treated as separate variables and imputed with different models. Imputed values of <code>x2</code> are thus not equal to the square of imputed values of <code>x</code>. Instead, <code>x + I(x^2)</code> should be used in the model formula. Then, only <code>x</code> is imputed and used in the linear predictor of models for other incomplete variables, and <code>x^2</code> is calculated from the imputed values of <code>x</code>.</p>
+<p><strong>Important:</strong> <br> When different transformations of
+the same incomplete variable are used in one model, it is strongly
+discouraged to calculate these transformations beforehand and to supply
+them as separate variables. The same is the case for interactions. <br>
+If, for example, a model formula contains both <code>x</code> and
+<code>x2</code> (where <code>x2</code> = <code>x^2</code>), they are
+treated as separate variables and imputed with different models. Imputed
+values of <code>x2</code> are thus not equal to the square of imputed
+values of <code>x</code>. Instead, <code>x + I(x^2)</code> should be
+used in the model formula. Then, only <code>x</code> is imputed and used
+in the linear predictor of models for other incomplete variables, and
+<code>x^2</code> is calculated from the imputed values of
+<code>x</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="functions-with-restricted-support">Functions with restricted support<a class="anchor" aria-label="anchor" href="#functions-with-restricted-support"></a>
 </h4>
-<p>When a function has restricted support, e.g., <code>log(x)</code> is only defined for <code>x &gt; 0</code>, the model used to impute <code>x</code> needs to comply with these restrictions. This can either be achieved by truncating the distribution assumed for <code>x</code>, using the argument <code>trunc</code>, or by specifying a model for <code>x</code> that meets the restrictions. For more information on imputation methods (models for covariates), see the section <a href="#meth">Imputation model types</a>.</p>
-<p><strong>Example</strong>:<br> When using a <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code> transformation for the covariate <code>bili</code>, we can either use the default model for continuous variables, <code>"lm"</code>, a linear model, i.e., assuming a normal distribution and truncate this distribution by specifying <code>trunc = list(bili = c(&lt;lower&gt;, &lt;upper&gt;))</code> (where the lower and upper limits are the smallest and largest allowed values) or choose a model (using the argument <code>models</code>; more details see the section on <a href="#meth">covariate model types</a>) that only imputes positive values such as a log-normal distribution (<code>"glm_lognorm"</code>) or a Gamma distribution (e.g., <code>"glm_gamma_log"</code>): <a id="mod4"></a></p>
+<p>When a function has restricted support, e.g., <code>log(x)</code> is
+only defined for <code>x &gt; 0</code>, the model used to impute
+<code>x</code> needs to comply with these restrictions. This can either
+be achieved by truncating the distribution assumed for <code>x</code>,
+using the argument <code>trunc</code>, or by specifying a model for
+<code>x</code> that meets the restrictions. For more information on
+imputation methods (models for covariates), see the section <a href="#meth">Imputation model types</a>.</p>
+<p><strong>Example</strong>:<br> When using a <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log()</a></code>
+transformation for the covariate <code>bili</code>, we can either use
+the default model for continuous variables, <code>"lm"</code>, a linear
+model, i.e., assuming a normal distribution and truncate this
+distribution by specifying
+<code>trunc = list(bili = c(&lt;lower&gt;, &lt;upper&gt;))</code> (where
+the lower and upper limits are the smallest and largest allowed values)
+or choose a model (using the argument <code>models</code>; more details
+see the section on <a href="#meth">covariate model types</a>) that only
+imputes positive values such as a log-normal distribution
+(<code>"glm_lognorm"</code>) or a Gamma distribution (e.g.,
+<code>"glm_gamma_log"</code>): <a id="mod4"></a></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># truncation of the distribution of  bili</span></span>
 <span><span class="va">mod4a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">bili</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">creat</span><span class="op">)</span>,</span>
@@ -514,13 +676,20 @@
 <span><span class="co"># gamma model with log-link for bili</span></span>
 <span><span class="va">mod4c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">bili</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">creat</span><span class="op">)</span>,</span>
 <span>                models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>bili <span class="op">=</span> <span class="st">'glm_gamma_log'</span>, creat <span class="op">=</span> <span class="st">'lm'</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">NHANES</span><span class="op">)</span></span></code></pre></div>
-<p>If only one-sided truncation is needed, the other limit can be provided as <code>NA</code>.</p>
+<p>If only one-sided truncation is needed, the other limit can be
+provided as <code>NA</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="functions-that-are-not-available-in-r">Functions that are not available in R<a class="anchor" aria-label="anchor" href="#functions-that-are-not-available-in-r"></a>
 </h4>
-<p>It is possible to use functions that have different names in R and JAGS, or that do exist in JAGS, but not in R, by defining a new function in R that has the name of the function in JAGS.</p>
-<p><strong>Example</strong>:<br> In JAGS the inverse logit transformation is defined in the function <code>ilogit</code>. In R, there is no function <code>ilogit</code>, but the inverse logit is available as the distribution function of the logistic distribution <code><a href="https://rdrr.io/r/stats/Logistic.html" class="external-link">plogis()</a></code>.</p>
+<p>It is possible to use functions that have different names in R and
+JAGS, or that do exist in JAGS, but not in R, by defining a new function
+in R that has the name of the function in JAGS.</p>
+<p><strong>Example</strong>:<br> In JAGS the inverse logit
+transformation is defined in the function <code>ilogit</code>. In R,
+there is no function <code>ilogit</code>, but the inverse logit is
+available as the distribution function of the logistic distribution
+<code><a href="https://rdrr.io/r/stats/Logistic.html" class="external-link">plogis()</a></code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Define the function ilogit</span></span>
 <span><span class="va">ilogit</span> <span class="op">&lt;-</span> <span class="va">plogis</span></span>
@@ -533,8 +702,14 @@
 </h4>
 <p>It is also possible to nest a function in another function.</p>
 <p><strong>Example:</strong><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
-<p>The complementary log log transformation is restricted to values larger than 0 and smaller than 1. In order to use this function on a variable that exceeds this range, as is the case for <code>creat</code>, a second transformation might be used, for instance the inverse logit from the previous example.</p>
-<p>In JAGS, the complementary log-log transformation is implemented as <code>cloglog</code>, but since this function does not exist in (base) R, we first need to define it:</p>
+<p>The complementary log log transformation is restricted to values
+larger than 0 and smaller than 1. In order to use this function on a
+variable that exceeds this range, as is the case for <code>creat</code>,
+a second transformation might be used, for instance the inverse logit
+from the previous example.</p>
+<p>In JAGS, the complementary log-log transformation is implemented as
+<code>cloglog</code>, but since this function does not exist in (base)
+R, we first need to define it:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># define the complementary log log transformation</span></span>
 <span><span class="va">cloglog</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
@@ -550,71 +725,132 @@
 <div class="section level2">
 <h2 id="MultiLevelStructure">Multi-level structure &amp; longitudinal covariates<a class="anchor" aria-label="anchor" href="#MultiLevelStructure"></a>
 </h2>
-<p>In multi-level models, additional to the fixed effects structure specified by the argument <code>fixed</code> a random effects structure needs to be provided via the argument <code>random</code>. Alternatively, it is possible to provide a <code>formula</code> that contains both the fixed and random effects structure (corresponding to the specification used in <a href="https://CRAN.R-project.org/package=lme4" class="external-link"><strong>lme4</strong></a>).</p>
+<p>In multi-level models, additional to the fixed effects structure
+specified by the argument <code>fixed</code> a random effects structure
+needs to be provided via the argument <code>random</code>.
+Alternatively, it is possible to provide a <code>formula</code> that
+contains both the fixed and random effects structure (corresponding to
+the specification used in <a href="https://CRAN.R-project.org/package=lme4" class="external-link"><strong>lme4</strong></a>).</p>
 <div class="section level3">
 <h3 id="random-effects">Random effects<a class="anchor" aria-label="anchor" href="#random-effects"></a>
 </h3>
-<p><code>random</code> takes a one-sided formula starting with a <code>~</code>. Variables for which a random effect should be included are usually separated by a <code>+</code>, and the grouping variable is separated by <code>|</code>. A random intercept is added automatically and only needs to be specified in a random intercept only model.</p>
+<p><code>random</code> takes a one-sided formula starting with a
+<code>~</code>. Variables for which a random effect should be included
+are usually separated by a <code>+</code>, and the grouping variable is
+separated by <code>|</code>. A random intercept is added automatically
+and only needs to be specified in a random intercept only model.</p>
 <p>A few examples:</p>
 <ul>
 <li>
-<code>random = ~ 1 | id</code>: random intercept only, with <code>id</code> as grouping variable</li>
+<code>random = ~ 1 | id</code>: random intercept only, with
+<code>id</code> as grouping variable</li>
 <li>
-<code>random = ~ time | id</code>: random intercept and slope for variable <code>time</code>
+<code>random = ~ time | id</code>: random intercept and slope for
+variable <code>time</code>
 </li>
 <li>
-<code>random = ~ time + I(time^2) | id</code>: random intercept, slope and quadratic random effect for <code>time</code>
+<code>random = ~ time + I(time^2) | id</code>: random intercept,
+slope and quadratic random effect for <code>time</code>
 </li>
 <li>
-<code>random = ~ time + x | id</code> random intercept, random slope for <code>time</code> and random effect for variable <code>x</code>
+<code>random = ~ time + x | id</code> random intercept, random slope
+for <code>time</code> and random effect for variable <code>x</code>
 </li>
 </ul>
-<p>The corresponding specifications using the argument <code>formula</code> would be</p>
+<p>The corresponding specifications using the argument
+<code>formula</code> would be</p>
 <ul>
 <li><code>&lt;fixed effects&gt; + (1 | id)</code></li>
 <li><code>&lt;fixed effects&gt; + (time | id)</code></li>
 <li><code>&lt;fixed effects&gt; + (time + I(time^2) | id)</code></li>
 <li><code>&lt;fixed effects&gt; + (time + x | id)</code></li>
 </ul>
-<p>It is possible to use splines in the random effects structure (but only for completely observed variables), e.g.:</p>
+<p>It is possible to use splines in the random effects structure (but
+only for completely observed variables), e.g.:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod7a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lme_imp</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">GESTBIR</span> <span class="op">+</span> <span class="va">ETHN</span> <span class="op">+</span> <span class="va">HEIGHT_M</span> <span class="op">+</span> <span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
 <span>                 random <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|</span> <span class="va">ID</span>, data <span class="op">=</span> <span class="va">simLong</span><span class="op">)</span></span></code></pre></div>
-<p>Since <strong>JointAI</strong> version 1.0.0 it is possible to model multi-level data with multiple levels of grouping In that setting, the <code>formula</code> specification needs to be used:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="op">&lt;</span>fixed effects<span class="op">&gt;</span><span class="st"> </span><span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>id) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>center)</span></code></pre></div>
-<p>It is possible to model both crossed and nested random effects, however the distinction between crossed and nested random effects must come from the coding of the id variables. For example, if patients are nested in hospitals, all observations that have the same patient id also need to have the same hospital id.</p>
-<p>When this is not the case, i.e., some patients were measured at multiple hospitals, the random effects are crossed.</p>
-<p>There is (theoretically) no restriction as to how many grouping levels are possible.</p>
+<p>Since <strong>JointAI</strong> version 1.0.0 it is possible to model
+multi-level data with multiple levels of grouping In that setting, the
+<code>formula</code> specification needs to be used:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>fixed effects<span class="sc">&gt;</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> center)</span></code></pre></div>
+<p>It is possible to model both crossed and nested random effects,
+however the distinction between crossed and nested random effects must
+come from the coding of the id variables. For example, if patients are
+nested in hospitals, all observations that have the same patient id also
+need to have the same hospital id.</p>
+<p>When this is not the case, i.e., some patients were measured at
+multiple hospitals, the random effects are crossed.</p>
+<p>There is (theoretically) no restriction as to how many grouping
+levels are possible.</p>
 </div>
 <div class="section level3">
 <h3 id="longitudinal-covariates">Longitudinal covariates<a class="anchor" aria-label="anchor" href="#longitudinal-covariates"></a>
 </h3>
-<p>From <strong>JointAI</strong> version 0.5.0 onward imputation of longitudinal covariates is possible. For details the types of models that are available for covariates in a multi-level setting, see the section <a href="#meth">covariate model types</a> below.</p>
-<p><strong>Note:</strong><br> When incomplete baseline covariates (level &gt; 1) are involved in the model it is usually necessary to specify models for all variables on lower levels, even if they are completely observed. This is done automatically by <strong>JointAI</strong>, but it may be necessary to change the default model types to models that better fit the distributions of the respective variables.</p>
-<p>It is typically not necessary to specify models for variables on higher levels if there are no incomplete covariates on lower levels. For example, in a 2-level setting, if there are no missing values in level-2 variables, it is not necessary to specify models for completely observed level-1 variables. But if there are missing values in level-2 variables, models need to be specified for all level-1 variables.</p>
+<p>From <strong>JointAI</strong> version 0.5.0 onward imputation of
+longitudinal covariates is possible. For details the types of models
+that are available for covariates in a multi-level setting, see the
+section <a href="#meth">covariate model types</a> below.</p>
+<p><strong>Note:</strong><br> When incomplete baseline covariates (level
+&gt; 1) are involved in the model it is usually necessary to specify
+models for all variables on lower levels, even if they are completely
+observed. This is done automatically by <strong>JointAI</strong>, but it
+may be necessary to change the default model types to models that better
+fit the distributions of the respective variables.</p>
+<p>It is typically not necessary to specify models for variables on
+higher levels if there are no incomplete covariates on lower levels. For
+example, in a 2-level setting, if there are no missing values in level-2
+variables, it is not necessary to specify models for completely observed
+level-1 variables. But if there are missing values in level-2 variables,
+models need to be specified for all level-1 variables.</p>
 <div class="section level4">
 <h4 id="why-do-we-need-models-for-completely-observed-covariates">Why do we need models for completely observed covariates?<a class="anchor" aria-label="anchor" href="#why-do-we-need-models-for-completely-observed-covariates"></a>
 </h4>
-<p>The joint distribution of an outcome <span class="math inline">\(y\)</span>, covariates <span class="math inline">\(x\)</span>, random effects <span class="math inline">\(b\)</span> and parameters <span class="math inline">\(\theta\)</span>, <span class="math inline">\(p(y, x, b, \theta)\)</span>, is modelled as the product of univariate conditional distributions. To facilitate the specification of these distributions they are ordered so that longitudinal (level-1) variables may have baseline (level-2) variables in their linear predictors but not vice versa.</p>
+<p>The joint distribution of an outcome <span class="math inline">\(y\)</span>, covariates <span class="math inline">\(x\)</span>, random effects <span class="math inline">\(b\)</span> and parameters <span class="math inline">\(\theta\)</span>, <span class="math inline">\(p(y,
+x, b, \theta)\)</span>, is modelled as the product of univariate
+conditional distributions. To facilitate the specification of these
+distributions they are ordered so that longitudinal (level-1) variables
+may have baseline (level-2) variables in their linear predictors but not
+vice versa.</p>
 <p>For example: <span class="math display">\[\begin{align}
-p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \text{analysis model}\\
-&amp; p(x_1\mid \theta_{x1}) &amp;&amp; \text{model for a complete baseline covariate}\\
-&amp; p(x_2\mid x_1, \theta_{x2}) &amp;&amp; \text{model for an incomplete baseline covariate}\\
-&amp; p(x_3\mid x_1, x_2, b_{x3}, \theta_{x3}) &amp;&amp; \text{model for a complete longitudinal covariate}\\
-&amp; p(x_4\mid x_1, x_2, x_3, b_{x4}, \theta_{x4}) &amp;&amp; \text{model for an incomplete longitudinal covariate}\\
-&amp; p(b_y|\theta_b) p(b_{x3}|\theta_b) p(b_{x4}|\theta_b) &amp;&amp; \text{models for the random effects}\\
-&amp; p(\theta_y) p(\theta_{x1}) \ldots p(\theta_{x4}) p(\theta_b) &amp;&amp; \text{prior distributions}\end{align}\]</span></p>
-<p>Since the parameter vectors <span class="math inline">\(\theta_{x1}\)</span>, <span class="math inline">\(\theta_{x2}\)</span>, … are assumed to be a priori independent, and furthermore <span class="math inline">\(x_1\)</span> is completely observed and modelled independently of incomplete variables, estimation of the other model parts is not affected by <span class="math inline">\(p(x_1\mid \theta_{x1})\)</span> and, hence, this model can be omitted.</p>
-<p><span class="math inline">\(p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})\)</span>, on the other hand is modelled conditional on the incomplete covariate <span class="math inline">\(x_2\)</span> and can therefore not be omitted.</p>
-<p>If there were no incomplete baseline covariates, i.e., if <span class="math inline">\(x_2\)</span> was completely observed, <span class="math inline">\(p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})\)</span> would also not affect the estimation of parameters in the other parts of the model and could be omitted.</p>
+p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y)
+&amp;&amp; \text{analysis model}\\
+&amp; p(x_1\mid \theta_{x1}) &amp;&amp; \text{model for a complete
+baseline covariate}\\
+&amp; p(x_2\mid x_1, \theta_{x2}) &amp;&amp; \text{model for an
+incomplete baseline covariate}\\
+&amp; p(x_3\mid x_1, x_2, b_{x3}, \theta_{x3}) &amp;&amp; \text{model
+for a complete longitudinal covariate}\\
+&amp; p(x_4\mid x_1, x_2, x_3, b_{x4}, \theta_{x4}) &amp;&amp;
+\text{model for an incomplete longitudinal covariate}\\
+&amp; p(b_y|\theta_b) p(b_{x3}|\theta_b) p(b_{x4}|\theta_b) &amp;&amp;
+\text{models for the random effects}\\
+&amp; p(\theta_y) p(\theta_{x1}) \ldots p(\theta_{x4}) p(\theta_b)
+&amp;&amp; \text{prior distributions}\end{align}\]</span></p>
+<p>Since the parameter vectors <span class="math inline">\(\theta_{x1}\)</span>, <span class="math inline">\(\theta_{x2}\)</span>, … are assumed to be a priori
+independent, and furthermore <span class="math inline">\(x_1\)</span> is
+completely observed and modelled independently of incomplete variables,
+estimation of the other model parts is not affected by <span class="math inline">\(p(x_1\mid \theta_{x1})\)</span> and, hence, this
+model can be omitted.</p>
+<p><span class="math inline">\(p(x_3 \mid x_1, x_2, b_{x3},
+\theta_{x3})\)</span>, on the other hand is modelled conditional on the
+incomplete covariate <span class="math inline">\(x_2\)</span> and can
+therefore not be omitted.</p>
+<p>If there were no incomplete baseline covariates, i.e., if <span class="math inline">\(x_2\)</span> was completely observed, <span class="math inline">\(p(x_3 \mid x_1, x_2, b_{x3}, \theta_{x3})\)</span>
+would also not affect the estimation of parameters in the other parts of
+the model and could be omitted.</p>
 </div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="meth">Covariate model types<a class="anchor" aria-label="anchor" href="#meth"></a>
 </h2>
-<p><strong>JointAI</strong> automatically selects models for all incomplete covariates (and if necessary also for some complete covariates). The type of model is selected automatically based on the <code>class</code> of the variable and the number of levels.</p>
-<p>The automatically selected types for baseline (highest level) covariates are:</p>
+<p><strong>JointAI</strong> automatically selects models for all
+incomplete covariates (and if necessary also for some complete
+covariates). The type of model is selected automatically based on the
+<code>class</code> of the variable and the number of levels.</p>
+<p>The automatically selected types for baseline (highest level)
+covariates are:</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">name</th>
@@ -679,8 +915,12 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 </tr>
 </tbody>
 </table>
-<p>The imputation models that are chosen by default may not necessarily be appropriate for the data at hand, especially for continuous variables, which often do not comply with the assumptions of (conditional) normality.</p>
-<p>Therefore, alternative imputation methods are available for baseline covariates:</p>
+<p>The imputation models that are chosen by default may not necessarily
+be appropriate for the data at hand, especially for continuous
+variables, which often do not comply with the assumptions of
+(conditional) normality.</p>
+<p>Therefore, alternative imputation methods are available for baseline
+covariates:</p>
 <table class="table">
 <colgroup>
 <col width="16%">
@@ -705,13 +945,18 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 </tr>
 <tr class="odd">
 <td align="left"><code>glm_&lt;family&gt;_&lt;link&gt;</code></td>
-<td align="left">e.g. <code>glm_gamma_inverse</code> for Gamma regression with an inverse-link</td>
+<td align="left">e.g. <code>glm_gamma_inverse</code> for Gamma
+regression with an inverse-link</td>
 <td align="left"></td>
 </tr>
 </tbody>
 </table>
-<p><code>lognorm</code> assumes a normal distribution for the natural logarithm of the variable, but the variable enters the linear predictor of the analysis model (and possibly other imputation models) on its original scale.</p>
-<p>For longitudinal (lower-level) covariates corresponding model types are . available:</p>
+<p><code>lognorm</code> assumes a normal distribution for the natural
+logarithm of the variable, but the variable enters the linear predictor
+of the analysis model (and possibly other imputation models) on its
+original scale.</p>
+<p>For longitudinal (lower-level) covariates corresponding model types
+are . available:</p>
 <table class="table">
 <colgroup>
 <col width="17%">
@@ -726,7 +971,8 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <tbody>
 <tr class="odd">
 <td align="left"><code>glmm_lognorm</code></td>
-<td align="left">normal mixed model for the log-transformed variable</td>
+<td align="left">normal mixed model for the log-transformed
+variable</td>
 <td align="left">longitudinal right-skewed variables &gt;0</td>
 </tr>
 <tr class="even">
@@ -736,17 +982,26 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 </tr>
 <tr class="odd">
 <td align="left"><code>glmm_&lt;family&gt;_&lt;link&gt;</code></td>
-<td align="left">e.g. <code>glmm_poisson_log</code> for a poisson mixed model with log-link</td>
+<td align="left">e.g. <code>glmm_poisson_log</code> for a poisson mixed
+model with log-link</td>
 <td align="left">longitudinal count variables</td>
 </tr>
 </tbody>
 </table>
-<p>Logistic (mixed) models can be abbreviated <code>glm_logit</code> (<code>glmm_logit</code>).</p>
+<p>Logistic (mixed) models can be abbreviated <code>glm_logit</code>
+(<code>glmm_logit</code>).</p>
 <div class="section level3">
 <h3 id="specification-of-covariate-model-types">Specification of covariate model types<a class="anchor" aria-label="anchor" href="#specification-of-covariate-model-types"></a>
 </h3>
-<p>In models <a href="#mod4"><code>mod4b</code> and <code>mod4c</code></a> we have already seen two examples in which the imputation model type was changed using the argument <code>models</code>.</p>
-<p><code>models</code> takes a named vector of (imputation/covariate) model types, where the names are the names of the covariates. When the vector supplied to <code>models</code> only contains specifications for a subset of the covariates, default models are used for the remaining variables.</p>
+<p>In models <a href="#mod4"><code>mod4b</code> and
+<code>mod4c</code></a> we have already seen two examples in which the
+imputation model type was changed using the argument
+<code>models</code>.</p>
+<p><code>models</code> takes a named vector of (imputation/covariate)
+model types, where the names are the names of the covariates. When the
+vector supplied to <code>models</code> only contains specifications for
+a subset of the covariates, default models are used for the remaining
+variables.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod8a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">WC</span> <span class="op">+</span> <span class="va">alc</span> <span class="op">+</span> <span class="va">bili</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,</span>
 <span>                models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>bili <span class="op">=</span> <span class="st">'glm_gamma_log'</span>, WC <span class="op">=</span> <span class="st">'lognorm'</span><span class="op">)</span>,</span>
@@ -757,8 +1012,14 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <span><span class="co">#&gt; "glm_gaussian_identity"    "glm_binomial_logit"                "mlogit"         "glm_gamma_log" </span></span>
 <span><span class="co">#&gt;                   smoke                      WC </span></span>
 <span><span class="co">#&gt;                   "clm"               "lognorm"</span></span></code></pre></div>
-<p>When there is a “time” variable in the model, such as <code>age</code> (age of the child at the time of the measurement) in the <code>simLong</code> it may not be meaningful to specify a model for that variable. Especially when the “time” variable is pre-specified by the design of the study it can usually be assumed to be independent of the covariates and a model for it has no useful interpretation.</p>
-<p>The argument <code>no_model</code> allows us to exclude models for such variables (as long as they are completely observed):</p>
+<p>When there is a “time” variable in the model, such as
+<code>age</code> (age of the child at the time of the measurement) in
+the <code>simLong</code> it may not be meaningful to specify a model for
+that variable. Especially when the “time” variable is pre-specified by
+the design of the study it can usually be assumed to be independent of
+the covariates and a model for it has no useful interpretation.</p>
+<p>The argument <code>no_model</code> allows us to exclude models for
+such variables (as long as they are completely observed):</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod8b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lme_imp</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">GESTBIR</span> <span class="op">+</span> <span class="va">ETHN</span> <span class="op">+</span> <span class="va">HEIGHT_M</span> <span class="op">+</span> <span class="va">SMOKE</span> <span class="op">+</span> <span class="va">hc</span> <span class="op">+</span> <span class="va">MARITAL</span> <span class="op">+</span></span>
 <span>                   <span class="fu"><a href="../reference/ns.html">ns</a></span><span class="op">(</span><span class="va">age</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
@@ -769,15 +1030,28 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <span><span class="co">#&gt; "glmm_gaussian_identity"                    "lmm"                    "clm"                 "mlogit" </span></span>
 <span><span class="co">#&gt;                     ETHN                 HEIGHT_M </span></span>
 <span><span class="co">#&gt;     "glm_binomial_logit"                     "lm"</span></span></code></pre></div>
-<p>By excluding the model for <code>age</code> we implicitly assume that incomplete baseline variables are independent of <code>age</code>.</p>
-<p><strong>Note:</strong><br> When a continuous incomplete variable has only two different values it is assumed to be binary and its coding and default imputation model will be changed accordingly. This behaviour can be overwritten when the imputation method for that variable is specified directly by the user.</p>
-<p>Variables of type <code>logical</code> are automatically converted to binary factors.</p>
+<p>By excluding the model for <code>age</code> we implicitly assume that
+incomplete baseline variables are independent of <code>age</code>.</p>
+<p><strong>Note:</strong><br> When a continuous incomplete variable has
+only two different values it is assumed to be binary and its coding and
+default imputation model will be changed accordingly. This behaviour can
+be overwritten when the imputation method for that variable is specified
+directly by the user.</p>
+<p>Variables of type <code>logical</code> are automatically converted to
+binary factors.</p>
 </div>
 <div class="section level3">
 <h3 id="order-of-the-sequence-of-imputation-models">Order of the sequence of imputation models<a class="anchor" aria-label="anchor" href="#order-of-the-sequence-of-imputation-models"></a>
 </h3>
-<p>In <strong>JointAI</strong>, the models automatically specified for covariates are ordered by the hierarchical level of the respective response variable (descending). The linear predictor of each model contains the incomplete variables that are specified later in the sequence and all complete variables of the same or lower level.</p>
-<p>Within each level, models are ordered by the proportion of missing values in the respective response variables, so that the variable with the most missing values has the most covariates in its linear predictor.</p>
+<p>In <strong>JointAI</strong>, the models automatically specified for
+covariates are ordered by the hierarchical level of the respective
+response variable (descending). The linear predictor of each model
+contains the incomplete variables that are specified later in the
+sequence and all complete variables of the same or lower level.</p>
+<p>Within each level, models are ordered by the proportion of missing
+values in the respective response variables, so that the variable with
+the most missing values has the most covariates in its linear
+predictor.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_missinfo.html">get_missinfo</a></span><span class="op">(</span><span class="va">mod8a</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $complete_cases</span></span>
@@ -844,19 +1118,30 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <div class="section level2">
 <h2 id="auxvars">Auxiliary variables<a class="anchor" aria-label="anchor" href="#auxvars"></a>
 </h2>
-<p>Auxiliary variables are variables that are not part of the analysis model, but should be considered as predictor variables in the imputation models because they can inform the imputation of unobserved values.</p>
+<p>Auxiliary variables are variables that are not part of the analysis
+model, but should be considered as predictor variables in the imputation
+models because they can inform the imputation of unobserved values.</p>
 <p>Good auxiliary variables are <a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 <ul>
 <li>associated with an incomplete variable of interest, or are</li>
 <li>associated with the missingness of that variable, and</li>
-<li>do not have too many missing values themselves. Importantly, they should be observed for a large proportion of the cases that have a missing value in the variable to be imputed.</li>
+<li>do not have too many missing values themselves. Importantly, they
+should be observed for a large proportion of the cases that have a
+missing value in the variable to be imputed.</li>
 </ul>
-<p>In the main functions, <code>*_imp()</code>, auxiliary variables can be specified with the argument <code>auxvars</code>, which is a one-sided formula.</p>
-<p><strong>Example:</strong><br> We might consider the variables <code>educ</code> and <code>smoke</code> as predictors for the imputation of <code>occup</code>:</p>
+<p>In the main functions, <code>*_imp()</code>, auxiliary variables can
+be specified with the argument <code>auxvars</code>, which is a
+one-sided formula.</p>
+<p><strong>Example:</strong><br> We might consider the variables
+<code>educ</code> and <code>smoke</code> as predictors for the
+imputation of <code>occup</code>:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod9a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">occup</span>, auxvars <span class="op">=</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">smoke</span>,</span>
 <span>                data <span class="op">=</span> <span class="va">NHANES</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
-<p>The variables <code>educ</code> and <code>smoke</code> are not used as predictors in the analysis model. They are, however, used as predictors in the imputation for <code>occup</code> and imputed themselves (if they have missing values):</p>
+<p>The variables <code>educ</code> and <code>smoke</code> are not used
+as predictors in the analysis model. They are, however, used as
+predictors in the imputation for <code>occup</code> and imputed
+themselves (if they have missing values):</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/list_models.html">list_models</a></span><span class="op">(</span><span class="va">mod9a</span>, priors <span class="op">=</span> <span class="cn">FALSE</span>, regcoef <span class="op">=</span> <span class="cn">FALSE</span>, otherpars <span class="op">=</span> <span class="cn">FALSE</span>, refcat <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Linear model for "SBP" </span></span>
@@ -877,7 +1162,9 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <div class="section level3">
 <h3 id="functions-of-variables-as-auxiliary-variables">Functions of variables as auxiliary variables<a class="anchor" aria-label="anchor" href="#functions-of-variables-as-auxiliary-variables"></a>
 </h3>
-<p>As shown above in <a href="#mod3e"><code>mod3e</code></a> and <a href="#mod3e"><code>mod3f</code></a>, it is possible to specify functions of auxiliary variables. In that case, the auxiliary variable is not considered as linear effect but as specified by the function:</p>
+<p>As shown above in <a href="#mod3e"><code>mod3e</code></a> and <a href="#mod3e"><code>mod3f</code></a>, it is possible to specify
+functions of auxiliary variables. In that case, the auxiliary variable
+is not considered as linear effect but as specified by the function:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod9b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">occup</span>, data <span class="op">=</span> <span class="va">NHANES</span>,</span>
 <span>                auxvars <span class="op">=</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">WC</span><span class="op">)</span>,</span>
@@ -906,7 +1193,11 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <span><span class="co">#&gt;    link: identity </span></span>
 <span><span class="co">#&gt; * Predictor variables:</span></span>
 <span><span class="co">#&gt;   (Intercept), genderfemale, age, educhigh</span></span></code></pre></div>
-<p><strong>Note:</strong><br> Omitting auxiliary variables from the analysis model implies that the outcome is independent of these variables, conditional on the other variables in the model. If this is not true, the model is mis-specified which may lead to biased results (similar to leaving a confounding variable out of a model).</p>
+<p><strong>Note:</strong><br> Omitting auxiliary variables from the
+analysis model implies that the outcome is independent of these
+variables, conditional on the other variables in the model. If this is
+not true, the model is mis-specified which may lead to biased results
+(similar to leaving a confounding variable out of a model).</p>
 </div>
 </div>
 <div class="section level2">
@@ -915,25 +1206,51 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <div class="section level3">
 <h3 id="coding">Coding<a class="anchor" aria-label="anchor" href="#coding"></a>
 </h3>
-<p>In practice, most often, dummy coding is used for categorical predictor variables, i.e., a binary variables is created for each category, except the reference category. These binary variables have value one when that category was observed and zero otherwise.</p>
-<p>This is the default behaviour for unordered factors in R (<code><a href="https://rdrr.io/r/stats/contrast.html" class="external-link">contr.treatment()</a></code>). For ordered factors orthogonal polynomials (<code><a href="https://rdrr.io/r/stats/contrast.html" class="external-link">contr.poly()</a></code>) are used. The type of contrasts (i.e. “coding”) to be used for unordered and ordered factors can be checked and set in the global options:</p>
+<p>In practice, most often, dummy coding is used for categorical
+predictor variables, i.e., a binary variables is created for each
+category, except the reference category. These binary variables have
+value one when that category was observed and zero otherwise.</p>
+<p>This is the default behaviour for unordered factors in R
+(<code><a href="https://rdrr.io/r/stats/contrast.html" class="external-link">contr.treatment()</a></code>). For ordered factors orthogonal
+polynomials (<code><a href="https://rdrr.io/r/stats/contrast.html" class="external-link">contr.poly()</a></code>) are used. The type of contrasts
+(i.e. “coding”) to be used for unordered and ordered factors can be
+checked and set in the global options:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">'contrasts'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $contrasts</span></span>
 <span><span class="co">#&gt;         unordered           ordered </span></span>
 <span><span class="co">#&gt; "contr.treatment"      "contr.poly"</span></span></code></pre></div>
-<p>Since the imputation of incomplete factors is done in the original variable, the re-coding from the original categorical variable into dummy variables or other contrasts needs to be done within the JAGS model. Currently, only dummy coding and reference coding (<code><a href="https://rdrr.io/r/stats/contrast.html" class="external-link">contr.sum()</a></code>) are possible for factors with missing values. This means that, if the default <code>contr.poly</code> is set for ordinal factors, a warning message is printed and dummy coding is used for these variables instead.</p>
+<p>Since the imputation of incomplete factors is done in the original
+variable, the re-coding from the original categorical variable into
+dummy variables or other contrasts needs to be done within the JAGS
+model. Currently, only dummy coding and reference coding
+(<code><a href="https://rdrr.io/r/stats/contrast.html" class="external-link">contr.sum()</a></code>) are possible for factors with missing values.
+This means that, if the default <code>contr.poly</code> is set for
+ordinal factors, a warning message is printed and dummy coding is used
+for these variables instead.</p>
 </div>
 <div class="section level3">
 <h3 id="reference-categories">Reference categories<a class="anchor" aria-label="anchor" href="#reference-categories"></a>
 </h3>
-<p>In <strong>JointAI</strong>, the first category of a categorical variable is set to be the reference category when using for dummy or reference coding. However, this may not always allow the desired interpretation of the regression coefficients. Moreover, when categories are unbalanced, setting the largest group as reference may result in better mixing of the MCMC chains.</p>
-<p>For unordered factors, it is possible to change the reference category directly in the data, for example using the base R function <code><a href="https://rdrr.io/r/stats/relevel.html" class="external-link">relevel()</a></code>. For ordinal variables, however, this is not possible, and especially when the ordinal variable needs imputation it is desirable to maintain the ordering in the categories.</p>
-<p>Therefore, <strong>JointAI</strong> allows specification of the reference category separately for each variable, via the argument <code>refcats</code>.</p>
+<p>In <strong>JointAI</strong>, the first category of a categorical
+variable is set to be the reference category when using for dummy or
+reference coding. However, this may not always allow the desired
+interpretation of the regression coefficients. Moreover, when categories
+are unbalanced, setting the largest group as reference may result in
+better mixing of the MCMC chains.</p>
+<p>For unordered factors, it is possible to change the reference
+category directly in the data, for example using the base R function
+<code><a href="https://rdrr.io/r/stats/relevel.html" class="external-link">relevel()</a></code>. For ordinal variables, however, this is not
+possible, and especially when the ordinal variable needs imputation it
+is desirable to maintain the ordering in the categories.</p>
+<p>Therefore, <strong>JointAI</strong> allows specification of the
+reference category separately for each variable, via the argument
+<code>refcats</code>.</p>
 <div class="section level4">
 <h4 id="setting-reference-categories-for-all-variables">Setting reference categories for all variables<a class="anchor" aria-label="anchor" href="#setting-reference-categories-for-all-variables"></a>
 </h4>
-<p>To specify the choice of reference category globally for all variables in the model, <code>refcats</code> can be set as</p>
+<p>To specify the choice of reference category globally for all
+variables in the model, <code>refcats</code> can be set as</p>
 <ul>
 <li><code>refcats = "first"</code></li>
 <li><code>refcats = "last"</code></li>
@@ -951,7 +1268,11 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <div class="section level4">
 <h4 id="setting-reference-categories-for-individual-variables">Setting reference categories for individual variables<a class="anchor" aria-label="anchor" href="#setting-reference-categories-for-individual-variables"></a>
 </h4>
-<p>Alternatively, <code>refcats</code> takes a named vector, in which the reference category for each variable can be specified either by its number or its name, or one of the three global types: “first”, “last” or “largest”. For variables for which no reference category is specified in the list the default is used.</p>
+<p>Alternatively, <code>refcats</code> takes a named vector, in which
+the reference category for each variable can be specified either by its
+number or its name, or one of the three global types: “first”, “last” or
+“largest”. For variables for which no reference category is specified in
+the list the default is used.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod10b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,</span>
 <span>                 refcats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>occup <span class="op">=</span> <span class="st">"not working"</span>, race <span class="op">=</span> <span class="fl">3</span>, educ <span class="op">=</span> <span class="st">'largest'</span><span class="op">)</span>,</span>
@@ -960,13 +1281,17 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <span><span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical covariates. I</span></span>
 <span><span class="co">#&gt; will use "contr.treatment" instead.  You can specify (globally) which types of contrasts</span></span>
 <span><span class="co">#&gt; are used by changing "options('contrasts')".</span></span></code></pre></div>
-<p>To help to specify the reference category, the function <a href="https://nerler.github.io/JointAI/reference/set_refcat.html"><code>set_refcat()</code></a> can be used. It prints the names of the categorical variables that are selected by</p>
+<p>To help to specify the reference category, the function <a href="https://nerler.github.io/JointAI/reference/set_refcat.html"><code>set_refcat()</code></a>
+can be used. It prints the names of the categorical variables that are
+selected by</p>
 <ul>
 <li>a specified model formula and/or</li>
 <li>a vector of auxiliary variables, or</li>
 <li>a vector of naming covariates</li>
 </ul>
-<p>or all categorical variables in the data if only <code>data</code> is provided, and asks a number of questions which the user needs to reply to by input of a number.</p>
+<p>or all categorical variables in the data if only <code>data</code> is
+provided, and asks a number of questions which the user needs to reply
+to by input of a number.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">refs_mod10</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/set_refcat.html">set_refcat</a></span><span class="op">(</span><span class="va">NHANES</span>, formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="va">mod10b</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; The categorical variables are:</span></span>
@@ -982,7 +1307,8 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <span><span class="co">#&gt; 2: Use the last category for each variabe.</span></span>
 <span><span class="co">#&gt; 3: Use the largest category for each variable.</span></span>
 <span><span class="co">#&gt; 4: Specify the reference categories individually.</span></span></code></pre></div>
-<p>When option 4 is chosen, a question for each categorical variable is asked, for example:</p>
+<p>When option 4 is chosen, a question for each categorical variable is
+asked, for example:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#&gt; The reference category for “race” should be</span></span>
 <span><span class="co">#&gt;</span></span>
@@ -991,14 +1317,17 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <span><span class="co">#&gt; 3: Non-Hispanic White</span></span>
 <span><span class="co">#&gt; 4: Non-Hispanic Black</span></span>
 <span><span class="co">#&gt; 5: other</span></span></code></pre></div>
-<p>After specification of the reference categories for all categorical variables, the determined specification for the argument <code>refcats</code> is printed:</p>
+<p>After specification of the reference categories for all categorical
+variables, the determined specification for the argument
+<code>refcats</code> is printed:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#&gt; In the JointAI model specify:</span></span>
 <span><span class="co">#&gt;  refcats = c(gender = 'female', race = 'Non-Hispanic White', educ = 'low',</span></span>
 <span><span class="co">#&gt;              occup = 'not working', smoke = 'never')</span></span>
 <span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt; or use the output of this function.</span></span></code></pre></div>
-<p><code><a href="../reference/set_refcat.html">set_refcat()</a></code> also returns a named vector that can be passed to the argument <code>refcats</code>:</p>
+<p><code><a href="../reference/set_refcat.html">set_refcat()</a></code> also returns a named vector that can be
+passed to the argument <code>refcats</code>:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod10c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,</span>
 <span>                 refcats <span class="op">=</span> <span class="va">refs_mod10</span>, data <span class="op">=</span> <span class="va">NHANES</span>, n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
@@ -1006,15 +1335,24 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <span><span class="co">#&gt; It is currently not possible to use "contr.poly" for incomplete categorical covariates. I</span></span>
 <span><span class="co">#&gt; will use "contr.treatment" instead.  You can specify (globally) which types of contrasts</span></span>
 <span><span class="co">#&gt; are used by changing "options('contrasts')".</span></span></code></pre></div>
-<p><strong>Note:</strong><br> Changing a reference category via the argument <code>refcats</code> does not change the order of levels in the dataset or any of the data matrices inside <strong>JointAI</strong>. Only when, in the JAGS model, the categorical variables is converted into dummy variables, the reference category is used to determine for which levels the dummies are created.</p>
+<p><strong>Note:</strong><br> Changing a reference category via the
+argument <code>refcats</code> does not change the order of levels in the
+dataset or any of the data matrices inside <strong>JointAI</strong>.
+Only when, in the JAGS model, the categorical variables is converted
+into dummy variables, the reference category is used to determine for
+which levels the dummies are created.</p>
 </div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="hyper-parameters">Hyper-parameters<a class="anchor" aria-label="anchor" href="#hyper-parameters"></a>
 </h2>
-<p>In the Bayesian framework, parameters are random variables for which a distribution needs to be specified. These distributions depend on parameters themselves, i.e., on hyper-parameters.</p>
-<p>The function <code><a href="../reference/default_hyperpars.html">default_hyperpars()</a></code> returns a list containing the default hyper parameters used in a <code>JointAI</code> model.</p>
+<p>In the Bayesian framework, parameters are random variables for which
+a distribution needs to be specified. These distributions depend on
+parameters themselves, i.e., on hyper-parameters.</p>
+<p>The function <code><a href="../reference/default_hyperpars.html">default_hyperpars()</a></code> returns a list
+containing the default hyper parameters used in a <code>JointAI</code>
+model.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/default_hyperpars.html">default_hyperpars</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $norm</span></span>
@@ -1052,32 +1390,70 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <span><span class="co">#&gt; $surv</span></span>
 <span><span class="co">#&gt;  mu_reg_surv tau_reg_surv </span></span>
 <span><span class="co">#&gt;        0.000        0.001</span></span></code></pre></div>
-<p>To change the hyper-parameters in a <strong>JointAI</strong> model, the list obtained from <code><a href="../reference/default_hyperpars.html">default_hyperpars()</a></code> can be edited and passed to the argument <code>hyperpars</code> in the main functions <code>*_imp()</code>.</p>
+<p>To change the hyper-parameters in a <strong>JointAI</strong> model,
+the list obtained from <code><a href="../reference/default_hyperpars.html">default_hyperpars()</a></code> can be edited
+and passed to the argument <code>hyperpars</code> in the main functions
+<code>*_imp()</code>.</p>
 <ul>
 <li>
-<code>mu_reg_*</code> and <code>tau_reg_*</code> refer to the mean and precision in the distribution for regression coefficients.</li>
+<code>mu_reg_*</code> and <code>tau_reg_*</code> refer to the mean
+and precision in the distribution for regression coefficients.</li>
 <li>
-<code>shape_tau_*</code> and <code>rate_tau_*</code> are the shape and rate parameters of a Gamma distribution that is used has prior for precision parameters.</li>
+<code>shape_tau_*</code> and <code>rate_tau_*</code> are the shape
+and rate parameters of a Gamma distribution that is used has prior for
+precision parameters.</li>
 <li>
-<code>KinvD</code> refers to the degrees of freedom in the Wishart prior used for the inverse of the random effects design matrix <code>D</code>. <code>KinvD_exp</code> should be a string that can be evaluated to calculate the number of degrees of freedom depending on the number of random effects <code>nranef</code> (dimension of <code>D</code>). By default, <code>KinvD</code> will be set to the number of random effects plus one.</li>
+<code>KinvD</code> refers to the degrees of freedom in the Wishart
+prior used for the inverse of the random effects design matrix
+<code>D</code>. <code>KinvD_exp</code> should be a string that can be
+evaluated to calculate the number of degrees of freedom depending on the
+number of random effects <code>nranef</code> (dimension of
+<code>D</code>). By default, <code>KinvD</code> will be set to the
+number of random effects plus one.</li>
 <li>
-<code>shape_diag_RinvD</code> and <code>rate_diag_RinvD</code> are the scale and rate parameters of the Gamma prior of the diagonal elements of <code>RinvD</code>.</li>
+<code>shape_diag_RinvD</code> and <code>rate_diag_RinvD</code> are
+the scale and rate parameters of the Gamma prior of the diagonal
+elements of <code>RinvD</code>.</li>
 </ul>
-<p>In random effects models with only one random effect, instead of the Wishart distribution a Gamma prior is used for the inverse of <code>D</code>.</p>
+<p>In random effects models with only one random effect, instead of the
+Wishart distribution a Gamma prior is used for the inverse of
+<code>D</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="scaling">Scaling<a class="anchor" aria-label="anchor" href="#scaling"></a>
 </h2>
-<p>When variables are measured on very different scales this can result in slow convergence and bad mixing. Therefore, <strong>JointAI</strong> includes scaling of continuous covariates in the JAGS model (i.e., instead of writing <code>... + covar + ...</code> in the linear predictor, <code>... + (covar - mean)/sd) + ...</code> is written). The scaling parameters (mean and standard deviation) are calculated based on the design matrices containing the original data. Results are transformed back to the original scale.</p>
-<p>By setting the argument <code>scale_vars = FALSE</code> the scaling can be prevented. If <code>scale_vars</code> is a vector of variable names, scaling will only be done for those variables.</p>
-<p>By default, only the MCMC samples that is scaled back to the scale of the data is stored in a <code>JointAI</code> object. When the argument <code>keep_scaled_mcmc = TRUE</code> also the scaled sample is kept. This is mainly for de-bugging purposes.</p>
+<p>When variables are measured on very different scales this can result
+in slow convergence and bad mixing. Therefore, <strong>JointAI</strong>
+includes scaling of continuous covariates in the JAGS model (i.e.,
+instead of writing <code>... + covar + ...</code> in the linear
+predictor, <code>... + (covar - mean)/sd) + ...</code> is written). The
+scaling parameters (mean and standard deviation) are calculated based on
+the design matrices containing the original data. Results are
+transformed back to the original scale.</p>
+<p>By setting the argument <code>scale_vars = FALSE</code> the scaling
+can be prevented. If <code>scale_vars</code> is a vector of variable
+names, scaling will only be done for those variables.</p>
+<p>By default, only the MCMC samples that is scaled back to the scale of
+the data is stored in a <code>JointAI</code> object. When the argument
+<code>keep_scaled_mcmc = TRUE</code> also the scaled sample is kept.
+This is mainly for de-bugging purposes.</p>
 </div>
 <div class="section level2">
 <h2 id="shrinkage">Shrinkage<a class="anchor" aria-label="anchor" href="#shrinkage"></a>
 </h2>
-<p>It is possible to use shrinkage priors to penalize large regression coefficients. This can be specified via the argument <code>shrinkage</code>. At the moment, only ridge regression is implemented.</p>
-<p>Setting <code>shrinkage = 'ridge'</code> will impose ridge priors on all regression coefficients. To only use shrinkage for some of the sub-models (main analysis model and covariate models), a vector can be provided that contains the names of the response variables of the models in which shrinkage should be applied, and the type of shrinkage for each of them.</p>
-<p>For example, in <code>mod11a</code> ridge regression is used for all models, and in <code>modd11b</code> only in the models for <code>SBP</code> and <code>educ</code>:</p>
+<p>It is possible to use shrinkage priors to penalize large regression
+coefficients. This can be specified via the argument
+<code>shrinkage</code>. At the moment, only ridge regression is
+implemented.</p>
+<p>Setting <code>shrinkage = 'ridge'</code> will impose ridge priors on
+all regression coefficients. To only use shrinkage for some of the
+sub-models (main analysis model and covariate models), a vector can be
+provided that contains the names of the response variables of the models
+in which shrinkage should be applied, and the type of shrinkage for each
+of them.</p>
+<p>For example, in <code>mod11a</code> ridge regression is used for all
+models, and in <code>modd11b</code> only in the models for
+<code>SBP</code> and <code>educ</code>:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod11a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_imp.html">lm_imp</a></span><span class="op">(</span><span class="va">SBP</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">occup</span> <span class="op">+</span> <span class="va">smoke</span>,</span>
 <span>                data <span class="op">=</span> <span class="va">NHANES</span>, shrinkage <span class="op">=</span> <span class="st">'ridge'</span>,</span>
@@ -1090,14 +1466,21 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 <span>                n.adapt <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Note: No MCMC sample will be created when n.iter is set to 0.</span></span></code></pre></div>
-<p>Ridge regression is implemented as a <span class="math inline">\(\text{Ga}(0.01, 0.01)\)</span> prior for the precision of the regression coefficients <span class="math inline">\(\beta\)</span> instead of setting this precision to a fixed (small) value.</p>
+<p>Ridge regression is implemented as a <span class="math inline">\(\text{Ga}(0.01, 0.01)\)</span> prior for the
+precision of the regression coefficients <span class="math inline">\(\beta\)</span> instead of setting this precision
+to a fixed (small) value.</p>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
-<li id="fn1"><p>Note: these examples are chosen to demonstrate functionality and may not fit the data.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>Again, this is just a demonstration of the possibilities in JointAI, but nesting transformations will most often result in coefficients that that do not have meaningful interpretation in practice.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>Van Buuren, S. (2012). Flexible imputation of missing data. Chapman and Hall/CRC. See also the <a href="https://stefvanbuuren.name/fimd/" class="external-link">second edition online</a>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Note: these examples are chosen to demonstrate
+functionality and may not fit the data.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Again, this is just a demonstration of the possibilities
+in JointAI, but nesting transformations will most often result in
+coefficients that that do not have meaningful interpretation in
+practice.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Van Buuren, S. (2012). Flexible imputation of missing
+data. Chapman and Hall/CRC. See also the <a href="https://stefvanbuuren.name/fimd/" class="external-link">second edition online</a>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
@@ -1119,7 +1502,7 @@ p(y, x, b, \theta) = &amp; p(y \mid x_1, ..., x_4, b_y, \theta_y) &amp;&amp; \te
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
