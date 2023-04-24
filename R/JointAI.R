@@ -194,21 +194,7 @@ ns <- splines::ns
 #' package.
 #'
 #' @inheritParams splines::bs
-#' @export
-#' @keywords internal
-
-# bs <- splines::bs
-
-bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
-               Boundary.knots = range(x), warn.outside = TRUE) {
-
-    args <- formals(splines::bs)
-    newargs <- as.list(match.call())[-1]
-    args[intersect(names(args),
-                   names(newargs))] <- newargs[intersect(names(args), names(newargs))]
-
-    do.call(splines::bs, args)
-}
+bs <- splines::bs
 
 
 .onLoad <- function(libname, pkgname) {

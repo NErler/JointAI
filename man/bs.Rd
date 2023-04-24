@@ -44,4 +44,3 @@ This function just calls \code{bs()} from the
 \href{https://CRAN.R-project.org/package=splines}{\strong{splines}}
 package.
 }
-\keyword{internal}
