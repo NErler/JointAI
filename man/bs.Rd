@@ -2,7 +2,7 @@
 % Please edit documentation in R/JointAI.R
 \name{bs}
 \alias{bs}
-\title{Generate a Basis Matrix for Natural Cubic Splines}
+\title{B-Spline Basis for Polynomial Splines}
 \usage{
 bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
   Boundary.knots = range(x), warn.outside = TRUE)
