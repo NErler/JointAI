@@ -187,14 +187,14 @@ Surv <- survival::Surv
 ns <- splines::ns
 
 
-#' B-Spline Basis for Polynomial Splines
-#'
-#' This function just calls \code{bs()} from the
-#' \href{https://CRAN.R-project.org/package=splines}{\strong{splines}}
-#' package.
-#'
-#' @inheritParams splines::bs
-bs <- splines::bs
+# #' B-Spline Basis for Polynomial Splines
+# #'
+# #' This function just calls \code{bs()} from the
+# #' \href{https://CRAN.R-project.org/package=splines}{\strong{splines}}
+# #' package.
+# #'
+# #' @inheritParams splines::bs
+# bs <- splines::bs
 
 
 .onLoad <- function(libname, pkgname) {
