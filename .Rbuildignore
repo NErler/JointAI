@@ -10,6 +10,7 @@
 ^inst/WORDLIST$
 ^inst/Ideas\.*$
 
+revdep
 bash.exe.stackdump
 
 ^cran-comments\.md$
