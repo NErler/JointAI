@@ -34,6 +34,10 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
     \code{knots} and \code{Boundary.knots} are supplied, the basis
     parameters do not depend on \code{x}.  Data can extend beyond
     \code{Boundary.knots}.}
+
+\item{warn.outside}{\code{\link{logical}} indicating if a
+    \code{\link{warning}} should be signalled in case some \code{x} values
+    are outside the boundary knots.}
 }
 \description{
 This function just calls \code{bs()} from the
