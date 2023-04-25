@@ -65,7 +65,8 @@ predDF.formula <- function(object, data, vars, length = 100L, ...) {
          length = length, ...)
 }
 
-# @rdname predDF
+#' @rdname predDF
+#' @param idvar optional name of an ID variable
 # @export
 predDF.list <- function(object, data, vars, length = 100L, idvar = NULL, ...) {
 

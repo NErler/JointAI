@@ -4,6 +4,7 @@
 \alias{predDF}
 \alias{predDF.JointAI}
 \alias{predDF.formula}
+\alias{predDF.list}
 \title{Create a new data frame for prediction}
 \usage{
 predDF(object, ...)
@@ -11,6 +12,8 @@ predDF(object, ...)
 \method{predDF}{JointAI}(object, vars, length = 100L, ...)
 
 \method{predDF}{formula}(object, data, vars, length = 100L, ...)
+
+\method{predDF}{list}(object, data, vars, length = 100L, idvar = NULL, ...)
 }
 \arguments{
 \item{object}{object inheriting from class 'JointAI'}
@@ -25,6 +28,8 @@ continuous}
 
 \item{data}{a \code{data.frame} containing the original data
 (more details below)}
+
+\item{idvar}{optional name of an ID variable}
 }
 \description{
 Build a \code{data.frame} for prediction, where one variable varies and all
