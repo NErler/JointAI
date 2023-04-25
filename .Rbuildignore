@@ -10,6 +10,7 @@
 ^inst/WORDLIST$
 ^inst/Ideas\.*$
 
+revdep
 bash.exe.stackdump
 
 ^cran-comments\.md$
@@ -46,5 +47,5 @@ sim_mldata.R
 ^codecov\.yml$
 ^JointAI\.Rproj$
 
-
 revdep/
+^CRAN-SUBMISSION$

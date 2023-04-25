@@ -90,16 +90,16 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id',
       ggplot2::scale_fill_manual(name = '', limits = c(FALSE, TRUE),
                         values = c('dodgerblue3', 'midnightblue'),
                         labels = c('imputed', 'observed')) +
-      ggplot2::scale_size_manual(name = '',
-                        limits = c(FALSE, TRUE),
-                        values = c(0.5, 1.3),
-                        labels = c('imputed', 'observed')) +
+      ggplot2::scale_linewidth_manual(name = '',
+                                      limits = c(FALSE, TRUE),
+                                      values = c(0.5, 1.3),
+                                      labels = c('imputed', 'observed')) +
       ggplot2::xlab('')
       if (unique(na.omit(dat$type) == 'numeric')) {
         if (min(table(dat[, imp])) == 1) {
           pl + ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
                                              color = get(imp) == 0,
-                                             size = get(imp) == 0),
+                                             linewidth = get(imp) == 0),
                                      geom = 'line',
                                 position = 'identity', na.rm = TRUE) +
             ggplot2::geom_point(data = subset(dat, get(imp) > 0),
@@ -109,7 +109,7 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id',
                                 alpha = 0.5, show.legend = FALSE)
         } else {
           pl + ggplot2::stat_density(ggplot2::aes(x = as.numeric(.data$value),
-                                             size = get(imp) == 0,
+                                             linewidth = get(imp) == 0,
                                              color = get(imp) == 0,
                                              group = get(imp)), geom = 'line',
                                 position = 'identity', na.rm = TRUE)

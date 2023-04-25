@@ -1,7 +1,8 @@
-# JointAI (development version)
+# JointAI 1.0.5
 
-# JointAI Development Version
+(update request by CRAN)
 
+--------------------------------------------------------------------------------
 
 # JointAI 1.0.4
 

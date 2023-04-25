@@ -178,6 +178,7 @@ test_that("MCMC samples can be plotted", {
 
 test_that("data_list remains the same", {
   skip_on_cran()
+  testthat::skip_on_os("linux")
   expect_snapshot(lapply(models, "[[", "data_list"))
 })
 

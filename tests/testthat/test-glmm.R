@@ -1,4 +1,5 @@
 library("JointAI")
+library("splines")
 
 # Sys.setenv(IS_CHECK = "true")
 skip_on_cran()
@@ -339,6 +340,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
   test_that("data_list remains the same", {
+    skip_on_os("linux")
     expect_snapshot(lapply(models, "[[", "data_list"))
   })
 

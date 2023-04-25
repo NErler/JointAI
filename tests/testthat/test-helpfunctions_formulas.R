@@ -1,4 +1,4 @@
-context("help functions for formulas")
+
 library("JointAI")
 library("survival")
 
