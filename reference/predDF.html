@@ -114,7 +114,10 @@ variables).</p>
 <span><span class="fu">predDF</span><span class="op">(</span><span class="va">object</span>, <span class="va">vars</span>, length <span class="op">=</span> <span class="fl">100L</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for formula</span></span>
-<span><span class="fu">predDF</span><span class="op">(</span><span class="va">object</span>, <span class="va">data</span>, <span class="va">vars</span>, length <span class="op">=</span> <span class="fl">100L</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">predDF</span><span class="op">(</span><span class="va">object</span>, <span class="va">data</span>, <span class="va">vars</span>, length <span class="op">=</span> <span class="fl">100L</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for list</span></span>
+<span><span class="fu">predDF</span><span class="op">(</span><span class="va">object</span>, <span class="va">data</span>, <span class="va">vars</span>, length <span class="op">=</span> <span class="fl">100L</span>, idvar <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -140,6 +143,10 @@ continuous</p></dd>
 <dt>data</dt>
 <dd><p>a <code>data.frame</code> containing the original data
 (more details below)</p></dd>
+
+
+<dt>idvar</dt>
+<dd><p>optional name of an ID variable</p></dd>
 
 </dl></div>
     <div id="see-also">
