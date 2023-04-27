@@ -188,7 +188,7 @@ convert_variables <- function(data, allvars, mess = TRUE, data_orig = NULL) {
   for (k in allvars) {
 
     # replace NaN values with NA
-    data[is.nan(data[, k]), k] <- NA
+    data[is.nan(unlist(data[, k])), k] <- NA
 
     # set continuous variables with just two values to binary
     if (!inherits(data[, k], 'factor') &
