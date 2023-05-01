@@ -13,7 +13,11 @@ warnmsg <- function(x, ..., exdent = 0L) {
           call. = FALSE, immediate. = TRUE)
 }
 
-paste_and <- function(x) {
+paste_and <- function(x, dQ = FALSE) {
+
+  if (dQ)
+    x <- dQuote(x)
+
   x1 <- paste0(x[-length(x)], collapse = ", ")
 
   if (length(x) > 1L) {
