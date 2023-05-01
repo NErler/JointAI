@@ -161,7 +161,8 @@ extract_fcts <- function(fixed, data, random = NULL, auxvars = NULL,
     fct_list <- get_fct_df_list(varlist = get_varlist(fl), data = data)
 
     # convert to data.frame
-    fct_df <- melt_list(fct_list, varname = "type")
+    fct_df <- melt_data_frame_list(fct_list, id_vars = names(fct_list[[1]]),
+                                   lname = "type")
 
     # remove duplicates
     subset(fct_df,
