@@ -97,7 +97,7 @@ get_models <- function(fixed, random = NULL, data, auxvars = NULL,
                  ordered = ordered, type = NA)
     }, simplify = FALSE)
 
-    varinfo <- melt_data.frame_list(varinfo, id.vars = colnames(varinfo[[1]]))
+    varinfo <- melt_data_frame_list(varinfo, id_vars = colnames(varinfo[[1]]))
 
 
 

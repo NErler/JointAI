@@ -387,7 +387,7 @@ predict_glm <- function(formula, newdata, type = c("link", "response", "lp"),
     } else {
       pred
     }
-    s <- melt_data.frame(cbind(newdata, t(s)), id.vars = names(newdata))
+    s <- melt_data_frame(cbind(newdata, t(s)), id_vars = names(newdata))
     names(s) <- gsub("^variable$", "iteration", names(s))
     s
   }
@@ -471,7 +471,7 @@ predict_survreg <- function(formula, newdata, type = c("response", "link",
     } else {
       pred
     }
-    s <- melt_data.frame(cbind(newdata, t(s)), id.vars = names(newdata))
+    s <- melt_data_frame(cbind(newdata, t(s)), id_vars = names(newdata))
     names(s) <- gsub("^variable$", "iteration", names(s))
     s
   }
@@ -697,7 +697,7 @@ predict_coxph <- function(Mlist, coef_list, MCMC, newdata, data, info_list,
     } else if (type == "survival") {
       exp(log_surv)
     }
-    s <- melt_data.frame(cbind(newdata, t(s)), id.vars = names(newdata))
+    s <- melt_data_frame(cbind(newdata, t(s)), id_vars = names(newdata))
     names(s) <- gsub("^variable$", "iteration", names(s))
     s
   }
@@ -865,7 +865,7 @@ predict_clm <- function(formula, newdata,
   sample <- if (return_sample) {
     errormsg("Returning the sample of predicted values is not yet possible for
              a %s.", dQuote("clm(m)"))
-    # s <- melt_data.frame(cbind(newdata, t(s)), id.vars = names(newdata))
+    # s <- melt_data_frame(cbind(newdata, t(s)), id_vars = names(newdata))
     # names(s) <- gsub("^variable$", "iteration", names(s))
     # s
   }
@@ -978,7 +978,7 @@ predict_mlogit <- function(formula, newdata,
   sample <- if (return_sample) {
     errormsg("Returning the sample of predicted values is not yet possible for
              a %s or %s.", dQuote("mlogit"), dQuote("mlogitmm"))
-    # s <- melt_data.frame(cbind(newdata, t(s)), id.vars = names(newdata))
+    # s <- melt_data_frame(cbind(newdata, t(s)), id_vars = names(newdata))
     # names(s) <- gsub("^variable$", "iteration", names(s))
     # s
   }

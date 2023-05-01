@@ -51,9 +51,9 @@ plot_imp_distr <- function(data, imp = 'Imputation_', id = '.id',
 
   type <- sapply(subDF, is.factor)
 
-  DFlong <- melt_data.frame(subDF, id.vars = c(imp, id, rownr))
+  DFlong <- melt_data_frame(subDF, id_vars = c(imp, id, rownr))
 
-  wlong <- melt_data.frame(w, id.vars = c(imp, id, rownr), valname = 'mis')
+  wlong <- melt_data_frame(w, id_vars = c(imp, id, rownr), valname = 'mis')
   wlong <- unique(wlong)
 
 
