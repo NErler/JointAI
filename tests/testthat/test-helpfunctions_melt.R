@@ -71,7 +71,7 @@ test_that("melt_matrix() works as expected", {
   expect_equal(names(melt_matrix(m,
                                  varnames = c("abc", "def"),
                                  valname = "thevalue")),
-                     c("abc", "def", "thevalue")
+               c("abc", "def", "thevalue")
   )
 
   # if there are no dimnames all output variables are integers
@@ -150,3 +150,51 @@ test_that("melt_matrix_list() works as expected", {
 
 
 
+test_that("melt_data_frame() works as expected", {
+
+  # Test that melt_data_frame() throws an error for non-data.frame objects
+  expect_error(melt_data_frame(1:4))
+  expect_error(melt_data_frame(list(1:4)))
+  expect_error(melt_data_frame(NULL))
+  expect_error(melt_data_frame(NA))
+  expect_error(melt_data_frame(matrix(2, 2, 0)))
+
+
+  # Test that melt_data_frame() works as expected for regular data.frame's
+  d <- data.frame(x = 1:5, id = LETTERS[1:5],
+                  y = c(NA, rnorm(4)),
+                  z = factor(sample(letters[1:3], 5, replace = TRUE))
+  )
+
+  expect_s3_class(melt_data_frame(d), "data.frame")
+  expect_equal(dim(melt_data_frame(d)),
+               c(nrow(d) * ncol(d), 2))
+
+  expect_equal(dim(melt_data_frame(d, id_vars = "id")),
+               c(nrow(d) * (ncol(d) - 1), 2 + 1))
+
+  expect_equal(dim(melt_data_frame(d, id_vars = c("id", "x"))),
+               c(nrow(d) * (ncol(d) - 2), 2 + 2))
+
+
+  # Test that melt_data_frame() works as expected for irregular data.frame's
+  d <- data.frame(id = LETTERS[1:5],
+                  y = c(NA, rnorm(4)),
+                  z = factor(NA, levels = 1:5)
+  )
+  d$x <- replicate(5, rnorm(2), simplify = FALSE)
+
+
+  expect_s3_class(melt_data_frame(d), "data.frame")
+  expect_equal(names(melt_data_frame(d)), c("variable", "value"))
+  expect_equal(names(melt_data_frame(d, varname = "thevariable",
+                                     valname = "thevalue")),
+               c("thevariable", "thevalue"))
+
+
+  # expect an error when data contain an array variable
+  d$x2 <- matrix(nrow = 5, ncol = 3, data = 0)
+  expect_error(melt_data_frame(d, id_vars = "id"))
+  expect_error(melt_data_frame(d, id_vars = c("id", "x2")))
+
+})
