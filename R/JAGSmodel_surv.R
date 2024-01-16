@@ -178,6 +178,7 @@ jagsmodel_coxph <- function(info) {
                          covnames = vector(mode = "list",
                                            length = length(info$lp[["M_lvlone"]]
                                                            )),
+                         trafo = info$fcts_all,
                          isgk = FALSE)
       }), collapse = " + ")
 
@@ -198,6 +199,7 @@ jagsmodel_coxph <- function(info) {
                            covnames = vector(mode = "list",
                                              length = length(
                                                info$lp[["M_lvlone"]])),
+                           trafo = info$fcts_all,
                            isgk = TRUE)
         }
       ), collapse = " + "),
@@ -333,7 +335,10 @@ jagsmodel_jm <- function(info) {
                          cols = info$lp[["M_lvlone"]],
                          scale_pars = info$scale_pars[["M_lvlone"]],
                          assoc_type = info$assoc_type,
-                         covnames = names(info$lp[["M_lvlone"]]),
+                         covnames = cvapply(names(info$lp[["M_lvlone"]]),
+                                            replace_trafo,
+                                            info$fcts_all),
+                         trafo = info$fcts_all,
                          isgk = FALSE)
       }), collapse = " + ")
 
@@ -351,7 +356,10 @@ jagsmodel_jm <- function(info) {
                            cols = info$lp[["M_lvlone"]],
                            scale_pars = info$scale_pars[["M_lvlone"]],
                            assoc_type = info$assoc_type,
-                           covnames = names(info$lp[["M_lvlone"]]),
+                           covnames = cvapply(names(info$lp[["M_lvlone"]]),
+                                              replace_trafo,
+                                              info$fcts_all),
+                           trafo = info$fcts_all,
                            isgk = TRUE)
         }
       ), collapse = " + "),

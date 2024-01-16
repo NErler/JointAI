@@ -116,7 +116,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
 
   # transformations ------------------------------------------------------------
   trafos <- paste_trafos(Mlist, varname = k,
-                         index = index[gsub("M_", "", resp_mat[1L])],
+                         index = if (isgk) "ii" else index[gsub("M_", "", resp_mat[1L])],
                          isgk = isgk)
 
   # JM settings ----------------------------------------------------------------
@@ -221,12 +221,15 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
   assoc_type <- if (modeltype %in% "JM") {
     covrs <- unique(unlist(lapply(names(unlist(unname(lp))),
                                   replace_dummy, Mlist$refs)))
-    get_assoc_type(intersect(tvars, covrs),
+    covrs <- setNames(unlist(lapply(covrs, replace_trafo, Mlist$fcts_all)),
+                      covrs)
+
+    get_assoc_type(covrs[covrs %in% tvars],
                              Mlist$models, assoc_type, Mlist$refs)
   } else if (modeltype %in% "coxph") {
     "obs.value"
   } else if (isTRUE(isgk)) {
-    get_assoc_type(k, Mlist$models, assoc_type, Mlist$refs)
+    get_assoc_type(setNames(k, k), Mlist$models, assoc_type, Mlist$refs)
   }
 
   # collect all info ---------------------------------------------------------
@@ -256,6 +259,7 @@ get_model1_info <- function(k, Mlist, par_index_main, par_index_other,
     rd_vcov = rd_vcov,
     group_lvls = Mlist$group_lvls,
     trafos = trafos,
+    fcts_all = Mlist$fcts_all,
     trunc = trunc[[k]],
     custom = custom[[k]],
     ppc = FALSE,
@@ -437,7 +441,7 @@ get_assoc_type <- function(covnames, models, assoc_type, refs) {
   fmlys <- lapply(models[covnames], get_family)
 
   assoc_type <- setNames(rep("obs.value", length(covnames)),
-                         covnames)
+                         names(covnames))
   assoc_type[fmlys %in% c("gaussian", "Gamma", "lognorm", "beta")] <-
     "underl.value"
 

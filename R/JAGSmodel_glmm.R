@@ -164,10 +164,9 @@ glmm_in_jm <- function(info) {
          " <- ",
          add_linebreaks(Z_predictor, indent = linkindent + 12 +
                           nchar(info$varname) + 9 + nchar(index)),
-         "\n",
+         tab(6), info$trafos,
          tab(4), "}\n",
          dummies,
-         info$trafos,
          "\n"
   )
 }

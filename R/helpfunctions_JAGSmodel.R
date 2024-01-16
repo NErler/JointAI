@@ -706,7 +706,8 @@ rd_vcov_full <- function(nranef, nam) {
 # Joint model ------------------------------------------------------------------
 
 paste_linpred_jm <- function(varname, parname, parelmts, matnam, index, cols,
-                             scale_pars, assoc_type, covnames, isgk = FALSE) {
+                             scale_pars, assoc_type, covnames, isgk = FALSE,
+                             trafo = NULL) {
   # - varname: name of the survival outcome
   # - parname: name of the parameter, e.g. "beta"
   # - parelmts: vector specifying which elements of the parameter vector are
@@ -732,8 +733,24 @@ paste_linpred_jm <- function(varname, parname, parelmts, matnam, index, cols,
                                 index = index, columns = cols,
                                 assoc_type = assoc_type, isgk = isgk)
 
+  # wrap in trafo if there is a trafo of the time-dep variable in the lin.pred
+  # of the survival model
+  if (!is.null(unlist(covnames))) {
+    pastedat <- Map(function(covname, colname, strng) {
+      if (colname %in% trafo$colname) {
+        fct <- trafo$fct[trafo$colname == colname]
+        if (trafo$type[trafo$colname == colname] == "I") {
+          fct <- gsub("\\)$", "", gsub("^I\\(", "", fct))
+        }
+        gsub(pattern = covname, replacement = strng, x = fct)
+      } else {
+        strng
+      }
+    }, covname = covnames, colname = names(covnames), strng = pastedat)
+  }
+
   paste(
-    paste_scaling(x = pastedat,
+    paste_scaling(x = unlist(pastedat),
                   rows = cols,
                   scale_pars = list(scale_pars)[rep(1, length(cols))],
                   scalemat = rep(paste0("sp", matnam), length(cols))
