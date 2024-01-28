@@ -1,5 +1,4 @@
 library("JointAI")
-library("splines")
 
 # Sys.setenv(IS_CHECK = "true")
 skip_on_cran()
