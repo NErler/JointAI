@@ -335,9 +335,8 @@ jagsmodel_jm <- function(info) {
                          cols = info$lp[["M_lvlone"]],
                          scale_pars = info$scale_pars[["M_lvlone"]],
                          assoc_type = info$assoc_type,
-                         covnames = cvapply(names(info$lp[["M_lvlone"]]),
-                                            replace_trafo,
-                                            info$fcts_all),
+                         covnames = setNames(make.names(names(info$lp[["M_lvlone"]])),
+                                             names(info$lp[["M_lvlone"]])),
                          trafo = info$fcts_all,
                          isgk = FALSE)
       }), collapse = " + ")
@@ -356,9 +355,8 @@ jagsmodel_jm <- function(info) {
                            cols = info$lp[["M_lvlone"]],
                            scale_pars = info$scale_pars[["M_lvlone"]],
                            assoc_type = info$assoc_type,
-                           covnames = cvapply(names(info$lp[["M_lvlone"]]),
-                                              replace_trafo,
-                                              info$fcts_all),
+                           covnames = setNames(make.names(names(info$lp[["M_lvlone"]])),
+                                               names(info$lp[["M_lvlone"]])),
                            trafo = info$fcts_all,
                            isgk = TRUE)
         }
