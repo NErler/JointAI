@@ -3,6 +3,7 @@
 ^doc$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+.Rproj.user
 ^\.travis\.yml$
 ^README\.Rmd$
 ^README-.*\.png$
