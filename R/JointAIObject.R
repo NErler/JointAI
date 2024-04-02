@@ -70,7 +70,7 @@
 #' \item{\code{jagsmodel}}{The JAGS model as character string.}
 #' \item{\code{mcmc_settings}}{a list containing MCMC sampling related
 #'                             information with elements
-#'      \itemize{
+#'      \describe{
 #'      \item{\code{modelfile}: }{path and name of the JAGS model file}
 #'      \item{\code{n.chains}: }{number of MCMC chains}
 #'      \item{\code{n.adapt}: }{number of iterations in the adaptive phase}
