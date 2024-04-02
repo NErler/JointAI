@@ -576,7 +576,7 @@ will be used.
 (for beta regression) or \code{shape_main}
 (for parametric survival models), \code{gamma_main}
 (for cumulative logit models),
-code{D_main} (for multi-level models) and
+\code{D_main} (for multi-level models) and
 \code{basehaz} in proportional hazards models)\cr
 \code{analysis_random} \tab \code{ranef_main}, \code{D_main},
 \code{invD_main}, \code{RinvD_main}\cr

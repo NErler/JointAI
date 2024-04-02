@@ -9,7 +9,7 @@ paste_coef(parname, parelmts)
 \arguments{
 \item{parname}{character string; name of the coefficient (e.g., "beta")}
 
-\item{parlemts}{vector of integers; the index of the parameter vector}
+\item{parelmts}{vector of integers; the index of the parameter vector}
 }
 \value{
 A vector of character strings of the form \code{beta[3]}.

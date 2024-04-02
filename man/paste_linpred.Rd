@@ -10,6 +10,11 @@ paste_linpred(parname, parelmts, matnam, index, cols, scale_pars,
 \arguments{
 \item{parname}{character string; name fo the parameter (e.g., "beta")}
 
+\item{parelmts}{integer vector; indices of the parameter vector to be used;
+should have the same length as \code{cols}}
+
+\item{matnam}{character string; name of the data matrix}
+
 \item{index}{character string; name of the index (e.g., "i" or "ii")}
 
 \item{cols}{integer vector; indices of the columns of \code{matname}, should have
@@ -20,11 +25,6 @@ the same length as \code{parlemts}}
 
 \item{isgk}{logical; is this linear predictor within the Gauss-Kronrod
 quadrature?}
-
-\item{parlemts}{integer vector; indices of the parameter vector to be used;
-should have the same length as \code{cols}}
-
-\item{matname}{character string; name of the data matrix}
 }
 \description{
 Construct a linear predictor from parameter names and indices, the name of
