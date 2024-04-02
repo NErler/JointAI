@@ -8,9 +8,9 @@
 #' if necessary.
 #'
 #' @param parname character string; name fo the parameter (e.g., "beta")
-#' @param parlemts integer vector; indices of the parameter vector to be used;
+#' @param parelmts integer vector; indices of the parameter vector to be used;
 #'                 should have the same length as `cols`
-#' @param matname character string; name of the data matrix
+#' @param matnam character string; name of the data matrix
 #' @param index character string; name of the index (e.g., "i" or "ii")
 #' @param cols integer vector; indices of the columns of `matname`, should have
 #'             the same length as `parlemts`
@@ -56,7 +56,7 @@ paste_data <- function(matnam, index, col, isgk = FALSE) {
 #' Write the coefficient part of a linear predictor
 #'
 #' @param parname character string; name of the coefficient (e.g., "beta")
-#' @param parlemts vector of integers; the index of the parameter vector
+#' @param parelmts vector of integers; the index of the parameter vector
 #'
 #' @return A vector of character strings of the form `beta[3]`.
 #'
