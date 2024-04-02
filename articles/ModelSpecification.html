@@ -773,7 +773,7 @@ only for completely observed variables), e.g.:</p>
 <p>Since <strong>JointAI</strong> version 1.0.0 it is possible to model
 multi-level data with multiple levels of grouping In that setting, the
 <code>formula</code> specification needs to be used:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>fixed effects<span class="sc">&gt;</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> center)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="sc">&lt;</span>fixed effects<span class="sc">&gt;</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> center)</span></code></pre></div>
 <p>It is possible to model both crossed and nested random effects,
 however the distinction between crossed and nested random effects must
 come from the coding of the id variables. For example, if patients are

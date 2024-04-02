@@ -179,7 +179,8 @@ described by a vector of parameters <span class="math inline">\(\boldsymbol\thet
 and the second factor is the joint distribution of the incomplete variables,
 i.e., the imputation part of the model,
 described by parameters <span class="math inline">\(\boldsymbol\theta_x\)</span>, and
-<span class="math inline">\(\boldsymbol\theta = (\boldsymbol\theta_{y\mid x}^\top, \boldsymbol\theta_x^\top)^\top\)</span>.</p>
+<span class="math inline">\(\boldsymbol\theta = (\boldsymbol\theta_{y\mid x}^\top,
+\boldsymbol\theta_x^\top)^\top\)</span>.</p>
 <p>Explicitly specifying the joint distribution of all
 data is one of the major advantages of the Bayesian approach,
 since this facilitates the use of all available information
@@ -320,7 +321,8 @@ p(\mathbf x_{mis_1}, \ldots, \mathbf x_{mis_q} \mid \mathbf X_{obs}, \boldsymbol
 &amp;   &amp; \prod_{\ell=2}^q p(\mathbf x_{mis_{\ell}} \mid \mathbf X_{obs}, \mathbf x_{mis_1},
 \ldots, \mathbf x_{mis_{\ell-1}}, \boldsymbol\theta_{x_\ell}),\tag{1}
 \end{eqnarray}\]</span>
-with <span class="math inline">\(\boldsymbol\theta_{x} = (\boldsymbol\theta_{x_1}^\top, \ldots, \boldsymbol\theta_{x_q}^\top)^\top\)</span>.</p>
+with <span class="math inline">\(\boldsymbol\theta_{x} = (\boldsymbol\theta_{x_1}^\top, \ldots,
+\boldsymbol\theta_{x_q}^\top)^\top\)</span>.</p>
 <p>Each of the conditional distributions is a member of the exponential family,
 extended with distributions for ordinal categorical variables,
 and chosen according to the type of the respective variable.
@@ -383,7 +385,8 @@ also facilitates extensions to settings with more complex outcomes,
 such as repeatedly measured outcomes.
 In the case where the analysis model is a GLMM or ordinal mixed model,
 the conditional distribution of the outcome in <a href="#eq:fullcond">(2)</a>,
-<span class="math inline">\(p\left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis}, \boldsymbol\theta_{y\mid x} \right),\)</span>
+<span class="math inline">\(p\left(y_i \mid \mathbf x_{i, obs}, \mathbf x_{i, mis}, \boldsymbol\theta_{y\mid x}
+\right),\)</span>
 has to be replaced by
 <span class="math display" id="eq:lmmpartfullcond">\[\begin{eqnarray}
 \left\{\prod_{j=1}^{n_i} p \left(y_{ij} \mid \mathbf x_{i, obs},
@@ -483,7 +486,7 @@ in the section on <a href="https://nerler.github.io/JointAI/articles/ModelSpecif
 <div class="section level2 unnumbered">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-Bartlett2015" class="csl-entry">
 Bartlett, JW, SR Seaman, IR White, and JR Carpenter. 2015. <span>“Multiple Imputation of Covariates by Fully Conditional Specification: Accommodating the Substantive Model.”</span> <em>Statistical Methods in Medical Research</em>. <a href="https://doi.org/10.1177/0962280214521348" class="external-link">https://doi.org/10.1177/0962280214521348</a>.
 </div>
