@@ -157,9 +157,8 @@
 #' @import mathjaxr
 #' @importFrom splines bs ns
 #'
-#' @docType package
 #' @name JointAI
-NULL
+"_PACKAGE"
 
 
 #' Create a Survival Object
